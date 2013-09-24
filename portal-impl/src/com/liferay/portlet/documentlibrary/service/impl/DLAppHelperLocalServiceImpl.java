@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUt
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -835,35 +836,47 @@ public class DLAppHelperLocalServiceImpl
 
 		// File version
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
+			new HashMap<String, Serializable>(), new ServiceContext());
+
+		if (DLAppHelperThreadLocal.isEnabled()) {
+
+			// File shortcut
+
+			dlFileShortcutLocalService.enableFileShortcuts(
+				fileEntry.getFileEntryId());
+
+			// File rank
+
+			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
+
+			// Sync
+
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_RESTORE_FROM_TRASH, fileEntry);
+		}
+
+		// Trash
 
 		List<TrashVersion> trashVersions = trashVersionLocalService.getVersions(
 			trashEntry.getEntryId());
 
-		workflowContext.put("trashVersions", (Serializable)trashVersions);
+		for (TrashVersion trashVersion : trashVersions) {
+			DLFileVersion trashDLFileVersion =
+				dlFileVersionPersistence.findByPrimaryKey(
+					trashVersion.getClassPK());
 
-		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
-			workflowContext, new ServiceContext());
+			trashDLFileVersion.setStatus(trashVersion.getStatus());
+
+			dlFileVersionPersistence.update(trashDLFileVersion);
+		}
+
+		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
 		}
-
-		// File shortcut
-
-		dlFileShortcutLocalService.enableFileShortcuts(
-			fileEntry.getFileEntryId());
-
-		// File rank
-
-		dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
-
-		// Sync
-
-		registerDLSyncEventCallback(
-			DLSyncConstants.EVENT_RESTORE_FROM_TRASH, fileEntry);
 
 		// Social
 
@@ -929,10 +942,28 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileRankLocalService.enableFileRanksByFolderId(folder.getFolderId());
 
+		// Folders, file entries, and file shortcuts
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		List<Object> foldersAndFileEntriesAndFileShortcuts =
+			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
+				dlFolder.getGroupId(), dlFolder.getFolderId(), null, false,
+				queryDefinition);
+
+		dlAppHelperLocalService.restoreDependentsFromTrash(
+			foldersAndFileEntriesAndFileShortcuts);
+
 		// Sync
 
 		registerDLSyncEventCallback(
 			DLSyncConstants.EVENT_RESTORE_FROM_TRASH, folder);
+
+		// Trash
+
+		trashEntryLocalService.deleteEntry(
+			DLFolderConstants.getClassName(), dlFolder.getFolderId());
 
 		// Social
 
@@ -1397,24 +1428,63 @@ public class DLAppHelperLocalServiceImpl
 
 		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		workflowContext.put("dlFileVersions", (Serializable)dlFileVersions);
-
 		int oldStatus = fileVersion.getStatus();
 
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_IN_TRASH, workflowContext,
-			new ServiceContext());
+			WorkflowConstants.STATUS_IN_TRASH,
+			new HashMap<String, Serializable>(), new ServiceContext());
 
-		// File entry
+		if (DLAppHelperThreadLocal.isEnabled()) {
+
+			// File shortcut
+
+			dlFileShortcutLocalService.disableFileShortcuts(
+				fileEntry.getFileEntryId());
+
+			// File rank
+
+			dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
+
+			// Sync
+
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_MOVE_TO_TRASH, fileEntry);
+		}
+
+		// Trash
+
+		int oldDLFileVersionStatus = WorkflowConstants.STATUS_ANY;
+
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
+			new ArrayList<ObjectValuePair<Long, Integer>>();
+
+		if ((dlFileVersions != null) && !dlFileVersions.isEmpty()) {
+			DLFileVersion oldDLFileVersion = dlFileVersions.get(0);
+
+			oldDLFileVersionStatus = oldDLFileVersion.getStatus();
+
+			dlFileVersionStatusOVPs = getDlFileVersionStatuses(dlFileVersions);
+		}
+
+		for (DLFileVersion curDLFileVersion : dlFileVersions) {
+			curDLFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+			dlFileVersionPersistence.update(curDLFileVersion);
+		}
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId());
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", dlFileEntry.getTitle());
+
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, dlFileEntry.getGroupId(),
+			DLFileEntryConstants.getClassName(), dlFileEntry.getFileEntryId(),
+			dlFileEntry.getUuid(), dlFileEntry.getClassName(),
+			oldDLFileVersionStatus, dlFileVersionStatusOVPs,
+			typeSettingsProperties);
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
@@ -1425,20 +1495,6 @@ public class DLAppHelperLocalServiceImpl
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return fileEntry;
 		}
-
-		// File shortcut
-
-		dlFileShortcutLocalService.disableFileShortcuts(
-			fileEntry.getFileEntryId());
-
-		// File rank
-
-		dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
-
-		// Sync
-
-		registerDLSyncEventCallback(
-			DLSyncConstants.EVENT_MOVE_TO_TRASH, fileEntry);
 
 		// Social
 
@@ -1488,6 +1544,19 @@ public class DLAppHelperLocalServiceImpl
 			dlFileRankLocalService.enableFileRanksByFolderId(
 				folder.getFolderId());
 
+			// Folders, file entries, and file shortcuts
+
+			QueryDefinition queryDefinition = new QueryDefinition(
+				WorkflowConstants.STATUS_ANY);
+
+			List<Object> foldersAndFileEntriesAndFileShortcuts =
+				dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
+					dlFolder.getGroupId(), dlFolder.getFolderId(), null, false,
+					queryDefinition);
+
+			dlAppHelperLocalService.restoreDependentsFromTrash(
+				foldersAndFileEntriesAndFileShortcuts);
+
 			// Sync
 
 			registerDLSyncEventCallback(
@@ -1519,18 +1588,37 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			DLFolderConstants.getClassName(), dlFolder.getFolderId());
-
-		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
-
-		dlFolder.setName(trashTitle);
-
-		dlFolderPersistence.update(dlFolder);
-
 		// File rank
 
 		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
+
+		// Trash
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", dlFolder.getName());
+
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
+			dlFolder.getFolderId(), dlFolder.getUuid(), null,
+			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
+
+		dlFolder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
+
+		dlFolderPersistence.update(dlFolder);
+
+		// Folders, file entries, and file shortcuts
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		List<Object> foldersAndFileEntriesAndFileShortcuts =
+			dlFolderLocalService.getFoldersAndFileEntriesAndFileShortcuts(
+				dlFolder.getGroupId(), dlFolder.getFolderId(), null, false,
+				queryDefinition);
+
+		dlAppHelperLocalService.moveDependentsToTrash(
+			foldersAndFileEntriesAndFileShortcuts);
 
 		// Sync
 

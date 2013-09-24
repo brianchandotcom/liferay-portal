@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -1041,18 +1040,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		dlFolderPersistence.update(dlFolder);
 
-		// Folders, file entries, and file shortcuts
-
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
-
-		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			getFoldersAndFileEntriesAndFileShortcuts(
-				dlFolder.getGroupId(), folderId, null, false, queryDefinition);
-
-		dlAppHelperLocalService.updateDependentStatus(
-			user, foldersAndFileEntriesAndFileShortcuts, status);
-
 		// Asset
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
@@ -1062,24 +1049,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			assetEntryLocalService.updateVisible(
 				DLFolder.class.getName(), dlFolder.getFolderId(), false);
-		}
-
-		// Trash
-
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-			typeSettingsProperties.put("title", dlFolder.getName());
-
-			trashEntryLocalService.addTrashEntry(
-				userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
-				dlFolder.getFolderId(), dlFolder.getUuid(), null,
-				WorkflowConstants.STATUS_APPROVED, null,
-				typeSettingsProperties);
-		}
-		else {
-			trashEntryLocalService.deleteEntry(
-				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 
 		// Indexer

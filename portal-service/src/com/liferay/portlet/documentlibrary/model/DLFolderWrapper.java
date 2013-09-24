@@ -1087,11 +1087,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer() {
-		return _dlFolder.getTrashContainer();
-	}
-
-	@Override
 	public boolean hasInheritableLock() {
 		return _dlFolder.hasInheritableLock();
 	}

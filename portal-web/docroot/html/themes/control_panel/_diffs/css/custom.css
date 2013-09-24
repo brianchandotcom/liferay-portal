@@ -523,7 +523,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				line-height: 20px;
 				margin: 0;
 				padding: 0 28px 0 5px;
-				text-transform: capitalize;
 				vertical-align: middle;
 
 				.control-panel-site-selector {
@@ -579,7 +578,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background: #F3F3F3;
 				font-size: 14px;
 				font-weight: 200;
-				text-transform: capitalize;
+				text-transform: none;
 			}
 		}
 	}

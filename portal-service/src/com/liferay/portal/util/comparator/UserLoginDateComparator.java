@@ -49,6 +49,18 @@ public class UserLoginDateComparator extends OrderByComparator {
 		int value = DateUtil.compareTo(
 			user1.getLoginDate(), user2.getLoginDate());
 
+		if (value == 0) {
+			value = user1.getLastName().compareTo(user2.getLastName());
+		}
+
+		if (value == 0) {
+			value = user1.getFirstName().compareTo(user2.getFirstName());
+		}
+
+		if (value == 0) {
+			value = user1.getMiddleName().compareTo(user2.getMiddleName());
+		}
+
 		if (_ascending) {
 			return value;
 		}

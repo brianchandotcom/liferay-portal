@@ -18,6 +18,36 @@
 
 <%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
 
+<liferay-ui:error exception="<%= LayoutTypeException.class %>">
+
+	<%
+	LayoutTypeException lte = (LayoutTypeException)errorException;
+
+	String type = BeanParamUtil.getString(selLayout, request, "type");
+	%>
+
+	<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT %>">
+		<liferay-ui:message arguments='<%= Validator.isNull(lte.getLayoutType()) ? type : "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
+	</c:if>
+
+	<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
+		<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" />
+	</c:if>
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= LayoutNameException.class %>" message="please-enter-a-valid-name" />
+
+<liferay-ui:error exception="<%= RequiredLayoutException.class %>">
+
+	<%
+	RequiredLayoutException rle = (RequiredLayoutException)errorException;
+	%>
+
+	<c:if test="<%= rle.getType() == RequiredLayoutException.AT_LEAST_ONE %>">
+		<liferay-ui:message key="you-must-have-at-least-one-page" />
+	</c:if>
+</liferay-ui:error>
+
 <%
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;

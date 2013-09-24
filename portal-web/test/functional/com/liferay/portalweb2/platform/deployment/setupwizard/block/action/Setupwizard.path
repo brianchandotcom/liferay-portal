@@ -72,43 +72,8 @@
 </tr>
 <!--DATABASE-->
 <tr>
-	<td>DATABASE_CONFIGURED_JDBC_URL_LABEL</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dt[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATABASE_CONFIGURED_JDBC_VALUE</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dd[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dt[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_VALUE</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dd[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATABASE_CONFIGURED_USER_NAME_LABEL</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dt[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATABASE_CONFIGURED_USER_NAME_VALUE</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dd[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATABASE_CONFIGURED_PASSWORD_LABEL</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dt[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATABASE_CONFIGURED_PASSWORD_VALUE</td>
-	<td>//div[@id='defaultDatabaseOptions']/dl/dd[4]</td>
+	<td>//div[@id='defaultDatabaseOptions']/p/strong</td>
 	<td></td>
 </tr>
 <tr>

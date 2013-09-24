@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.announcements.action;
 
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -60,6 +61,8 @@ public class EditEntryAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			SanitizedServletResponse.disableXSSAuditor(actionResponse);
+
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateEntry(actionRequest);
 			}
@@ -72,6 +75,9 @@ public class EditEntryAction extends PortletAction {
 
 			if (Validator.isNotNull(redirect)) {
 				actionResponse.sendRedirect(redirect);
+
+				SanitizedServletResponse.disableXSSAuditorOnNextRequest(
+					actionRequest);
 			}
 		}
 		catch (Exception e) {

@@ -78,6 +78,8 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.security.InvalidKeyException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -183,6 +185,7 @@ public class EditGroupAction extends PortletAction {
 					 e instanceof GroupFriendlyURLException ||
 					 e instanceof GroupNameException ||
 					 e instanceof GroupParentException ||
+					 e instanceof InvalidKeyException ||
 					 e instanceof LayoutSetVirtualHostException ||
 					 e instanceof LocaleException ||
 					 e instanceof PendingBackgroundTaskException ||

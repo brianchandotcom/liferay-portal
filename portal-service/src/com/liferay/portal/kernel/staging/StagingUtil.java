@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -453,6 +454,23 @@ public class StagingUtil {
 
 		getStaging().updateLastImportSettings(
 			layoutElement, layout, portletDataContext);
+	}
+
+	public static void updateLastPublishDate(
+		long sourceGroupId, boolean privateLayout, Date lastPublishDate)
+	throws Exception {
+
+		getStaging().updateLastPublishDate(
+			sourceGroupId, privateLayout, lastPublishDate);
+	}
+
+	public static void updateLastPublishDate(
+			String portletId, PortletPreferences jxPreferences,
+			Date lastPublishDate)
+		throws Exception {
+
+		getStaging().updateLastPublishDate(
+			portletId, jxPreferences, lastPublishDate);
 	}
 
 	public static void updateStaging(

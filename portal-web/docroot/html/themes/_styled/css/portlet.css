@@ -20,6 +20,7 @@ body.portlet {
 		right: 3px;
 		text-align: right;
 		top: 3px;
+		z-index: 300;
 
 		a {
 			color: inherit;

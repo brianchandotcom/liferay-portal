@@ -29,7 +29,7 @@ import java.util.Set;
 public class MimeTypesUtil {
 
 	/**
-	 * Returns the content type from an file.
+	 * Returns the content type from the file.
 	 *
 	 * @param  file the file of the content
 	 * @return the content type if it is a supported format or an
@@ -40,11 +40,11 @@ public class MimeTypesUtil {
 	}
 
 	/**
-	 * Returns the content type from an file and file name.
+	 * Returns the content type from the file and file name.
 	 *
 	 * @param  file the file of the content (optionally <code>null</code>)
-	 * @param  fileName the full name or extension of file (e.g., "Test.doc",
-	 *         ".doc")
+	 * @param  fileName the full name or extension of the file (e.g.,
+	 *         "Test.doc", ".doc")
 	 * @return the content type if it is a supported format or an
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
@@ -53,7 +53,7 @@ public class MimeTypesUtil {
 	}
 
 	/**
-	 * Returns the content type from an input stream and file name.
+	 * Returns the content type from the input stream and file name.
 	 *
 	 * <p>
 	 * The input stream is not reset upon return of this method. This needs to
@@ -63,8 +63,8 @@ public class MimeTypesUtil {
 	 *
 	 * @param  inputStream the input stream of the content (optionally
 	 *         <code>null</code>)
-	 * @param  fileName the full name or extension of file (e.g., "Test.doc",
-	 *         ".doc")
+	 * @param  fileName the full name or extension of the file (e.g.,
+	 *         "Test.doc", ".doc")
 	 * @return the content type if it is a supported format or an
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
@@ -75,7 +75,7 @@ public class MimeTypesUtil {
 	}
 
 	/**
-	 * Returns the content type from a file name.
+	 * Returns the content type from the file name.
 	 *
 	 * @param  fileName the full name or extension of the file (e.g.,
 	 *         "Test.doc", ".doc")
@@ -87,9 +87,9 @@ public class MimeTypesUtil {
 	}
 
 	/**
-	 * Returns the content type from a file extension.
+	 * Returns the content type from the file extension.
 	 *
-	 * @param  extension of the file (e.g., "doc")
+	 * @param  extension the extension of the file (e.g., "doc")
 	 * @return the content type if it is a supported format or an
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
@@ -98,7 +98,7 @@ public class MimeTypesUtil {
 	}
 
 	/**
-	 * Returns the possible file extensions for a given content type.
+	 * Returns the possible file extensions for the content type.
 	 *
 	 * @param  contentType the content type of the file (e.g., "image/jpeg")
 	 * @return the set of extensions if it is a known content type or an empty

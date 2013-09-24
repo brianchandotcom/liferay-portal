@@ -80,6 +80,7 @@ public class ATag extends BaseATag {
 
 		String ariaRole = getAriaRole();
 		String cssClass = getCssClass();
+		Map<String, Object> data = getData();
 		String href = getHref();
 		String id = getId();
 		String label = getLabel();
@@ -88,8 +89,6 @@ public class ATag extends BaseATag {
 		String onClick = getOnClick();
 		String target = getTarget();
 		String title = getTitle();
-
-		Map<String, Object> data = getData();
 
 		if (Validator.isNotNull(href)) {
 			jspWriter.write("<a ");

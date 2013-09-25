@@ -730,7 +730,8 @@ public class JournalArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_F, queryDefinition);
+			String sql = CustomSQLUtil.get(
+				COUNT_BY_G_F, queryDefinition, "JournalArticle");
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -881,13 +882,13 @@ public class JournalArticleFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
+			qPos.add(classNameId);
 			qPos.add(userId);
 
 			for (long folderId : folderIds) {
 				qPos.add(folderId);
 			}
 
-			qPos.add(classNameId);
 			qPos.add(queryDefinition.getStatus());
 
 			Iterator<Long> itr = q.iterate();
@@ -936,11 +937,12 @@ public class JournalArticleFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(
-				COUNT_BY_C_G_F_C_A_V_T_D_C_T_S_T_D_R, queryDefinition);
+				COUNT_BY_C_G_F_C_A_V_T_D_C_T_S_T_D_R, queryDefinition,
+				"JournalArticle");
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+					sql, "(JournalArticle.groupId = ?) AND", StringPool.BLANK);
 			}
 
 			if (folderIds.isEmpty()) {
@@ -954,43 +956,48 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "articleId", StringPool.LIKE, false, articleIds);
+				sql, "JournalArticle.articleId", StringPool.LIKE, false,
+				articleIds);
 
 			if ((version == null) || (version <= 0)) {
 				sql = StringUtil.replace(
-					sql, "(version = ?) [$AND_OR_CONNECTOR$]",
+					sql, "(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]",
 					StringPool.BLANK);
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(title)", StringPool.LIKE, false, titles);
+				sql, "lower(JournalArticle.title)", StringPool.LIKE, false,
+				titles);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, false, descriptions);
+				sql, "JournalArticle.description", StringPool.LIKE, false,
+				descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "content", StringPool.LIKE, false, contents);
+				sql, "JournalArticle.content", StringPool.LIKE, false,
+				contents);
 
 			if (Validator.isNull(type)) {
 				sql = StringUtil.replace(
-					sql, _TYPE_UNNAMESPACED_SQL, StringPool.BLANK);
+					sql, _TYPE_NAMESPACED_SQL, StringPool.BLANK);
 			}
 
 			if (isNullArray(ddmStructureKeys)) {
 				sql = StringUtil.replace(
-					sql, _STRUCTURE_ID_UNNAMESPACED_SQL, StringPool.BLANK);
+					sql, _STRUCTURE_ID_NAMESPACED_SQL, StringPool.BLANK);
 			}
 			else {
 				sql = CustomSQLUtil.replaceKeywords(
-					sql, "structureId", StringPool.LIKE, false,
+					sql, "JournalArticle.structureId", StringPool.LIKE, false,
 					ddmStructureKeys);
 			}
 
 			if (isNullArray(ddmTemplateKeys)) {
 				sql = StringUtil.replace(
-					sql, _TEMPLATE_ID_UNNAMESPACED_SQL, StringPool.BLANK);
+					sql, _TEMPLATE_ID_NAMESPACED_SQL, StringPool.BLANK);
 			}
 			else {
 				sql = CustomSQLUtil.replaceKeywords(
-					sql, "templateId", StringPool.LIKE, false, ddmTemplateKeys);
+					sql, "JournalArticle.templateId", StringPool.LIKE, false,
+					ddmTemplateKeys);
 			}
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -1009,6 +1016,8 @@ public class JournalArticleFinderImpl
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
 
 			if (groupId > 0) {
 				qPos.add(groupId);
@@ -1048,8 +1057,6 @@ public class JournalArticleFinderImpl
 			if (!isNullArray(ddmTemplateKeys)) {
 				qPos.add(ddmTemplateKeys, 2);
 			}
-
-			qPos.add(companyId);
 
 			Iterator<Long> itr = q.iterate();
 

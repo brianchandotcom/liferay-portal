@@ -138,6 +138,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 List results = null;
 int total = 0;
+
+int status = WorkflowConstants.STATUS_ANY;
 %>
 
 <c:choose>
@@ -149,11 +151,15 @@ int total = 0;
 		if (displayTerms.getNavigation().equals("mine")) {
 			userId = themeDisplay.getUserId();
 		}
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId);
+		else if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+
+		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status);
 
 		searchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -182,10 +188,8 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		int status = WorkflowConstants.STATUS_APPROVED;
-
-		if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
-			status = WorkflowConstants.STATUS_ANY;
+		if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
+			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
 		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
@@ -270,6 +274,12 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
 						rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 						rowURL.setParameter("articleId", curArticle.getArticleId());
+
+						if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
+							status = WorkflowConstants.STATUS_APPROVED;
+						}
+
+						rowURL.setParameter("status", String.valueOf(status));
 						%>
 
 						<liferay-ui:icon

@@ -170,11 +170,6 @@
 			<finder-column name="classNameId" />
 			<finder-column name="layoutUuid" />
 		</finder>
-		<finder name="G_C_NotST" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="status" comparator="!=" />
-		</finder>
 		<finder name="G_A_V" return-type="JournalArticle" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="articleId" />
@@ -194,12 +189,6 @@
 			<finder-column name="companyId" />
 			<finder-column name="version" />
 			<finder-column name="status" />
-		</finder>
-		<finder name="G_U_C_NotST" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-			<finder-column name="classNameId" />
-			<finder-column name="status" comparator="!=" />
 		</finder>
 
 		<!-- References -->

@@ -1059,16 +1059,17 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupArticles(
-		HttpPrincipal httpPrincipal, long groupId, long userId, int start,
-		int end,
+		HttpPrincipal httpPrincipal, long groupId, long userId,
+		long rootFolderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class,
 					"getGroupArticles", _getGroupArticlesParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, start, end, orderByComparator);
+					userId, rootFolderId, status, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -1076,6 +1077,10 @@ public class JournalArticleServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
@@ -1132,15 +1137,16 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int getGroupArticlesCount(HttpPrincipal httpPrincipal,
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, long rootFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class,
 					"getGroupArticlesCount",
 					_getGroupArticlesCountParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId);
+					userId, rootFolderId);
 
 			Object returnObj = null;
 
@@ -1148,6 +1154,10 @@ public class JournalArticleServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
@@ -1165,7 +1175,7 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static int getGroupArticlesCount(HttpPrincipal httpPrincipal,
-		long groupId, long userId, long rootFolderId)
+		long groupId, long userId, long rootFolderId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1174,7 +1184,7 @@ public class JournalArticleServiceHttp {
 					_getGroupArticlesCountParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, rootFolderId);
+					userId, rootFolderId, status);
 
 			Object returnObj = null;
 
@@ -2368,7 +2378,7 @@ public class JournalArticleServiceHttp {
 			long.class, java.util.List.class
 		};
 	private static final Class<?>[] _getGroupArticlesParameterTypes27 = new Class[] {
-			long.class, long.class, int.class, int.class,
+			long.class, long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getGroupArticlesParameterTypes28 = new Class[] {
@@ -2376,10 +2386,10 @@ public class JournalArticleServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getGroupArticlesCountParameterTypes29 = new Class[] {
-			long.class, long.class
+			long.class, long.class, long.class
 		};
 	private static final Class<?>[] _getGroupArticlesCountParameterTypes30 = new Class[] {
-			long.class, long.class, long.class
+			long.class, long.class, long.class, int.class
 		};
 	private static final Class<?>[] _getLatestArticleParameterTypes31 = new Class[] {
 			long.class

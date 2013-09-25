@@ -107,7 +107,7 @@
 		saveInstance.on(
 			'click',
 			function(event) {
-				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>';
+				config.title = '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>';
 
 				config.id = '<portlet:namespace />ruleGroups';
 				config.uri = '<%= selectRuleGroupURL %>';
@@ -123,7 +123,7 @@
 		managePriorities.on(
 			'click',
 			function(event) {
-				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-priorities") %>';
+				config.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-priorities") %>';
 
 				config.id = '<portlet:namespace />ruleGroupsPriorities';
 				config.uri = '<%= managePrioritiesURL %>';

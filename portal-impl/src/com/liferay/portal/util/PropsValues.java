@@ -1524,6 +1524,8 @@ public class PropsValues {
 
 	public static final String[] PORTLET_FILTERS_SYSTEM = PropsUtil.getArray(PropsKeys.PORTLET_FILTERS_SYSTEM);
 
+	public static String[] PORTLET_ID_CHECK_WHITELIST = PropsUtil.getArray(PropsKeys.PORTLET_ID_CHECK_WHITELIST);
+
 	public static final String PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION = PropsUtil.get(PropsKeys.PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION);
 
 	public static final boolean PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION_LAYOUT = PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION.equalsIgnoreCase("layout");

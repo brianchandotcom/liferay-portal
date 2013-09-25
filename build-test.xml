@@ -2503,8 +2503,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
-		<antcall target="generate-tests" inheritAll="false" />
-
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>

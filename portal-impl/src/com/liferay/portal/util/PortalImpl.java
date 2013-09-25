@@ -689,7 +689,7 @@ public class PortalImpl implements Portal {
 		PortalMessages.add(
 			request, PortalMessages.KEY_JSP_PATH,
 			"/html/common/themes/user_locale_options.jsp");
-		PortalMessages.add(request, PortalMessages.KEY_TIMEOUT, 0);
+		PortalMessages.add(request, PortalMessages.KEY_TIMEOUT, -1);
 	}
 
 	@Override

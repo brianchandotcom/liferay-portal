@@ -36,9 +36,13 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 	String portletId = (String)PortalMessages.get(request, PortalMessages.KEY_PORTLET_ID);
 	int timeout = GetterUtil.getInteger(PortalMessages.get(request, PortalMessages.KEY_TIMEOUT), 10000);
 	boolean useAnimation = GetterUtil.getBoolean(PortalMessages.get(request, PortalMessages.KEY_ANIMATION), true);
+
+	if (useAnimation) {
+		cssClass = cssClass + " hide";
+	}
 %>
 
-	<div class="hide <%= cssClass %>" id="portalMessageContainer">
+	<div class="alert alert-block taglib-portal-message <%= cssClass %>" id="portalMessageContainer">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(jspPath) %>">
 				<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
@@ -60,8 +64,8 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 						top: '0px'
 					},
 				closeText: false,
-				content: portalMessageContainer.html(),
-				noticeClass: 'hide taglib-portal-message <%= cssClass %>',
+				node: '#portalMessageContainer',
+				noticeClass: 'hide <%= cssClass %>',
 				timeout: <%= timeout %>,
 				toggleText: false,
 				useAnimation: <%= useAnimation %>

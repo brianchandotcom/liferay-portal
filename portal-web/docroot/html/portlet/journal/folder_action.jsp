@@ -28,13 +28,13 @@ else {
 	folder = (JournalFolder)request.getAttribute("view_entries.jsp-folder");
 }
 
+boolean folderSelected = GetterUtil.getBoolean(request.getAttribute("view_entries.jsp-folderSelected"));
+
 String modelResource = null;
 String modelResourceDescription = null;
 String resourcePrimKey = null;
 
 boolean hasPermissionsPermission = false;
-
-boolean mergeWithParentFolderDisabled = GetterUtil.getBoolean(request.getAttribute("view_entries.jsp-folderSelected"));
 
 if (folder != null) {
 	modelResource= JournalFolder.class.getName();
@@ -62,7 +62,7 @@ else {
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
-						<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(mergeWithParentFolderDisabled) %>" />
+						<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
 					</portlet:renderURL>
 
 					<liferay-ui:icon

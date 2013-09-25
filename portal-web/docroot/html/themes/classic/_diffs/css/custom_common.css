@@ -584,8 +584,8 @@
 			border-width: 1px;
 
 			.accordion-heading {
-				overflow: hidden;
 				background: #F2F2F2;
+				overflow: hidden;
 				position: static;
 
 				.accordion-toggle {

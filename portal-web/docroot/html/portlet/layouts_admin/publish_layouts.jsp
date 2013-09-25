@@ -86,7 +86,7 @@ if (liveGroup.isStaged()) {
 	}
 }
 
-treeId = treeId + selGroup.getGroupId();
+treeId = treeId + liveGroupId;
 
 String publishActionKey = "copy";
 

@@ -56,7 +56,7 @@ if (endDateTime > 0) {
 	endDate = new Date(endDateTime);
 }
 
-String treeId = "layoutsExportTree";
+String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
 
 long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId + "SelectedNode"), ','));
 

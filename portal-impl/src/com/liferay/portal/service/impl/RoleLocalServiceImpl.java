@@ -597,6 +597,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return role;
 	}
 
+	/**
+	 * Returns all those roles which are related to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return roles within the group
+	 * @throws PortalException if a system exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<Role> getGroupRelatedRoles(long groupId)
 		throws PortalException, SystemException {

@@ -131,24 +131,24 @@ public class LDAPAuth implements Authenticator {
 
 		String authMethod = PrefsPropsUtil.getString(
 			companyId, PropsKeys.LDAP_AUTH_METHOD);
-		InitialLdapContext innerCtx = null;
 
 		if (authMethod.equals(AUTH_METHOD_BIND)) {
+			Hashtable<String, Object> env =
+				(Hashtable<String, Object>)ctx.getEnvironment();
+
+			env.put(Context.SECURITY_PRINCIPAL, userDN);
+			env.put(Context.SECURITY_CREDENTIALS, password);
+			env.put(
+				Context.REFERRAL,
+				PrefsPropsUtil.getString(companyId, PropsKeys.LDAP_REFERRAL));
+
+			// Do not use pooling because principal changes
+
+			env.put("com.sun.jndi.ldap.connect.pool", "false");
+
+			InitialLdapContext innerCtx = null;
+
 			try {
-				Hashtable<String, Object> env =
-					(Hashtable<String, Object>)ctx.getEnvironment();
-
-				env.put(Context.SECURITY_PRINCIPAL, userDN);
-				env.put(Context.SECURITY_CREDENTIALS, password);
-				env.put(
-					Context.REFERRAL,
-					PrefsPropsUtil.getString(
-						companyId, PropsKeys.LDAP_REFERRAL));
-
-				// Do not use pooling because principal changes
-
-				env.put("com.sun.jndi.ldap.connect.pool", "false");
-
 				innerCtx = new InitialLdapContext(env, null);
 
 				// Get LDAP bind results

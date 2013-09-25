@@ -140,7 +140,7 @@ AUI.add(
 					selectFlag: function(languageId) {
 						var instance = this;
 
-						var inputPlaceholder = instance.get('inputPlaceholder');
+						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
 
 						var inputLanguage = instance._getInputLanguage(languageId);
 						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
@@ -380,7 +380,13 @@ AUI.add(
 
 							var inputLocalizedInstance = instances[id];
 
-							if (!inputLocalizedInstance) {
+							var createInstance = !(inputLocalizedInstance && inputLocalizedInstance.get(STR_INPUT_PLACEHOLDER).compareTo(A.one('#' + id)));
+
+							if (createInstance) {
+								if (inputLocalizedInstance) {
+									inputLocalizedInstance.destroy();
+								}
+
 								inputLocalizedInstance = new InputLocalized(config);
 
 								instances[id] = inputLocalizedInstance;

@@ -92,7 +92,7 @@ AUI.add(
 
 		var SELECTOR_CATEGORY_MESSAGES_EDIT = '#categoryMessagesEdit';
 
-		var SELECTOR_CATEGORY_NAME_INPUT = '.category-name input';
+		var SELECTOR_CATEGORY_NAME_INPUT = '.category-name';
 
 		var SELECTOR_FLOATING_TRIGGER = '.lfr-floating-trigger';
 
@@ -106,7 +106,7 @@ AUI.add(
 
 		var SELECTOR_VOCABULARY_CATEGORY_MESSAGES = '#vocabularyCategoryMessages';
 
-		var SELECTOR_VOCABULARY_NAME_INPUT = '.vocabulary-name input';
+		var SELECTOR_VOCABULARY_NAME_INPUT = '.vocabulary-name';
 
 		var SELECTOR_VOCABULARY_SELECT_LIST = '.vocabulary-select-list';
 
@@ -1059,14 +1059,6 @@ AUI.add(
 						return filteredCategories;
 					},
 
-					_focusCategoryPanelAdd: function() {
-						var instance = this;
-
-						var inputCategoryAddNameNode = instance._inputCategoryNameNode || instance._categoryFormAdd.one(SELECTOR_CATEGORY_NAME_INPUT);
-
-						Util.focusFormField(inputCategoryAddNameNode);
-					},
-
 					_focusVocabularyPanelAdd: function() {
 						var instance = this;
 
@@ -1650,8 +1642,6 @@ AUI.add(
 						instance._categoryFormAdd = categoryFormAdd;
 
 						instance._loadVocabularySelect(instance._vocabularies, instance._selectedVocabularyId);
-
-						instance._focusCategoryPanelAdd();
 					},
 
 					_initializeCategoryPanelEdit: function() {
@@ -2702,13 +2692,7 @@ AUI.add(
 
 							vocabularyPanelAdd._syncUIPosAlign();
 
-							var afterSuccess = A.bind(
-								'_initializeVocabularyPanelAdd',
-								instance,
-								function() {
-									instance._focusVocabularyPanelAdd();
-								}
-							);
+							var afterSuccess = A.bind('_initializeVocabularyPanelAdd', instance);
 
 							vocabularyPanelAdd.plug(
 								A.Plugin.IO,

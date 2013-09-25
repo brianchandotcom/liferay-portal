@@ -146,46 +146,134 @@ public class DLFileEntryFinderTest {
 	}
 
 	@Test
-	public void testCountByG_U_F_M() throws Exception {
+	public void testCountByG_U_F_M_StatusAny() throws Exception {
 		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(3, doCountBy_G_U_F_M(0, null, queryDefinition));
-		Assert.assertEquals(
-			2, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusAnyByMimeType() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
 		Assert.assertEquals(
 			2, doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusAnyByMimeTypeAndUserId()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
 		Assert.assertEquals(
 			1,
 			doCountBy_G_U_F_M(
 				_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusAnyByUserId() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			2, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApproved() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(2, doCountBy_G_U_F_M(0, null, queryDefinition));
-		Assert.assertEquals(
-			1, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByMimeType() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
 		Assert.assertEquals(
 			1,
 			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByMimeTypeAndUserId()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
 		Assert.assertEquals(
 			0,
 			doCountBy_G_U_F_M(
 				_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusApprovedByUserId() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertEquals(
+			1, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrash() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(2, doCountBy_G_U_F_M(0, null, queryDefinition));
-		Assert.assertEquals(
-			1, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrashByMimeType() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
 		Assert.assertEquals(
 			1,
 			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrashByMimeTypeAndUserId()
+		throws Exception {
+
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
 		Assert.assertEquals(
 			0,
 			doCountBy_G_U_F_M(
 				_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition));
+	}
+
+	@Test
+	public void testCountByG_U_F_M_StatusInTrashByUserId() throws Exception {
+		QueryDefinition queryDefinition = new QueryDefinition();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+
+		Assert.assertEquals(
+			1, doCountBy_G_U_F_M(_folder.getUserId(), null, queryDefinition));
 	}
 
 	@Test

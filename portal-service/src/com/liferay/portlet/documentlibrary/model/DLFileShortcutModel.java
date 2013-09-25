@@ -382,9 +382,9 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
-	 * Returns the classPK of this document library file shortcut
+	 * Returns the class primary key of the trash entry for this document library file shortcut.
 	 *
-	 * @return the classPK of this document library file shortcut
+	 * @return the class primary key of the trash entry for this document library file shortcut
 	 */
 	@Override
 	public long getTrashEntryClassPK();

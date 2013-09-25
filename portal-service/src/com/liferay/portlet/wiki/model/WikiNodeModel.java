@@ -349,9 +349,9 @@ public interface WikiNodeModel extends BaseModel<WikiNode>, ContainerModel,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
-	 * Returns the classPK of this wiki node
+	 * Returns the class primary key of the trash entry for this wiki node.
 	 *
-	 * @return the classPK of this wiki node
+	 * @return the class primary key of the trash entry for this wiki node
 	 */
 	@Override
 	public long getTrashEntryClassPK();

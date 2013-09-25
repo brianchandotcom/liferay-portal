@@ -595,9 +595,9 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
-	* Returns the classPK of this bookmarks folder
+	* Returns the class primary key of the trash entry for this bookmarks folder.
 	*
-	* @return the classPK of this bookmarks folder
+	* @return the class primary key of the trash entry for this bookmarks folder
 	*/
 	@Override
 	public long getTrashEntryClassPK() {

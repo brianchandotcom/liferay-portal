@@ -756,9 +756,9 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
-	* Returns the classPK of this message boards thread
+	* Returns the class primary key of the trash entry for this message boards thread.
 	*
-	* @return the classPK of this message boards thread
+	* @return the class primary key of the trash entry for this message boards thread
 	*/
 	@Override
 	public long getTrashEntryClassPK() {

@@ -786,9 +786,9 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* Returns the classPK of this blogs entry
+	* Returns the class primary key of the trash entry for this blogs entry.
 	*
-	* @return the classPK of this blogs entry
+	* @return the class primary key of the trash entry for this blogs entry
 	*/
 	@Override
 	public long getTrashEntryClassPK() {

@@ -525,9 +525,9 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
-	 * Returns the classPK of this message-boards message
+	 * Returns the class primary key of the trash entry for this message-boards message.
 	 *
-	 * @return the classPK of this message-boards message
+	 * @return the class primary key of the trash entry for this message-boards message
 	 */
 	@Override
 	public long getTrashEntryClassPK();

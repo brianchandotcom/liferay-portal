@@ -123,7 +123,7 @@ OrderByComparator orderByComparator = BackgroundTaskComparatorFactoryUtil.getBac
 					<liferay-ui:icon
 						image="download"
 						label="<%= true %>"
-						message='<%= MapUtil.getString(taskContextMap, "fileName") %>'
+						message='<%= HtmlUtil.escape(MapUtil.getString(taskContextMap, "fileName")) %>'
 					/>
 				</c:otherwise>
 			</c:choose>

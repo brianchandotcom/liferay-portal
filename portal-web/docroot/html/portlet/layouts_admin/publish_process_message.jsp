@@ -47,11 +47,10 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 
 		<div class="progress progress-striped active">
 			<div class="bar" style="width: <%= percentage %>%;">
-
-			  <c:if test="<%= allModelAdditionCountersTotal > 0 %>">
-				  <%= currentModelAdditionCountersTotal %> / <%= allModelAdditionCountersTotal %>
-			  </c:if>
-		  </div>
+				<c:if test="<%= allModelAdditionCountersTotal > 0 %>">
+					<%= currentModelAdditionCountersTotal %> / <%= allModelAdditionCountersTotal %>
+				</c:if>
+			</div>
 		</div>
 
 		<%
@@ -106,7 +105,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		<c:choose>
 			<c:when test="<%= jsonObject == null %>">
 				<div class="alert <%= backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED ? "alert-error" : StringPool.BLANK %> publish-error">
-					<%= backgroundTask.getStatusMessage() %>
+					<liferay-ui:message arguments="<%= backgroundTask.getStatusMessage() %>" key="unable-to-execute-process-x" />
 				</div>
 			</c:when>
 			<c:otherwise>

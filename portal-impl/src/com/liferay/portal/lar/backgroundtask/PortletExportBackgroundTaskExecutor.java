@@ -16,6 +16,8 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
@@ -65,6 +67,14 @@ public class PortletExportBackgroundTaskExecutor
 			userId, backgroundTask.getBackgroundTaskId(), fileName, larFile);
 
 		return BackgroundTaskResult.SUCCESS;
+	}
+
+	@Override
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
+			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
+
+		return jsonObject.toString();
 	}
 
 }

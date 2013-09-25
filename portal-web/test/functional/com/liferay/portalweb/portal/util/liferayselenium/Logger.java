@@ -233,7 +233,7 @@ public class Logger {
 
 			String fileName =
 				_liferaySelenium.getProjectDir() +
-					"portal-web\\test-results\\functional\\report.html";
+					"portal-web/test-results/functional/report.html";
 
 			File file = new File(fileName);
 

@@ -75,6 +75,12 @@ if (Validator.isNotNull(historyKey)) {
 		</c:when>
 		<c:otherwise>
 			<div class="taglib-form-navigator row-fluid" id="<portlet:namespace />tabs">
+				<liferay-util:buffer var="formSectionsBuffer">
+					<div class="form-navigator-content span8">
+						<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
+					</div>
+				</liferay-util:buffer>
+
 				<ul class="form-navigator nav nav-list span4 well">
 					<%= Validator.isNotNull(htmlTop) ? htmlTop : StringPool.BLANK %>
 
@@ -163,9 +169,7 @@ if (Validator.isNotNull(historyKey)) {
 					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
 				</ul>
 
-				<div class="form-navigator-content span8">
-					<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
-				</div>
+				<%= formSectionsBuffer %>
 			</div>
 
 			<aui:script use="aui-event-input,aui-tabview,aui-url,history,io-form">

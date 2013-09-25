@@ -18,6 +18,7 @@ import com.liferay.portal.cache.ehcache.EhcacheStreamBootstrapCacheLoader;
 import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHan
 import com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.rpc.RPCDatagramReceiveHandler;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
@@ -43,7 +45,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.WebKeys;
@@ -175,6 +176,10 @@ public class StartupAction extends SimpleAction {
 
 		ClusterExecutorUtil.initialize();
 
+		if (!SPIUtil.isSPI()) {
+			ClusterMasterExecutorUtil.initialize();
+		}
+
 		// Ehache bootstrap
 
 		EhcacheStreamBootstrapCacheLoader.start();
@@ -198,10 +203,6 @@ public class StartupAction extends SimpleAction {
 		// Liferay JspFactory
 
 		JspFactorySwapper.swap();
-
-		// Background tasks
-
-		BackgroundTaskLocalServiceUtil.cleanUpBackgroundTasks();
 
 		// Jericho
 

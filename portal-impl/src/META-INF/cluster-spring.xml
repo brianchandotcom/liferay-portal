@@ -38,6 +38,11 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" class="com.liferay.portal.cluster.ClusterMasterExecutorImpl">
 		<property name="clusterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterExecutor" />
+		<property name="clusterMasterTokenAcquisitionListeners">
+			<util:set>
+				<bean class="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenAcquisitionListener" />
+			</util:set>
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil" class="com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil">
 		<property name="clusterMasterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" />

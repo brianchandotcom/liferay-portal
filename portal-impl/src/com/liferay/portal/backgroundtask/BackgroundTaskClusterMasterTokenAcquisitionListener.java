@@ -12,25 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cluster;
+package com.liferay.portal.backgroundtask;
 
-import java.io.Serializable;
-
-import java.util.Map;
+import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenAcquisitionListener;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 
 /**
  * @author Michael C. Han
  */
-public class ClusterMasterClusterInvokeAcceptor
-	implements ClusterInvokeAcceptor {
+public class BackgroundTaskClusterMasterTokenAcquisitionListener
+	extends BaseClusterMasterTokenAcquisitionListener {
 
 	@Override
-	public boolean accept(Map<String, Serializable> context) {
-		if (ClusterMasterExecutorUtil.isMaster()) {
-			return true;
-		}
+	protected void doMasterTokenAcquired() throws Exception {
+		BackgroundTaskLocalServiceUtil.cleanUpBackgroundTasks();
+	}
 
-		return false;
+	@Override
+	protected void doMasterTokenReleased() throws Exception {
 	}
 
 }

@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>SEARCH_ALL_ORGANIZATIONS</td>
-	<td>//a[@id='_125_allOrganizationsLink']</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'All Organizations')]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_ALL_USERS</td>
-	<td>//a[@id='_125_allUsersLink']</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'All Users')]/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -4,6 +4,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="Organization#tearDownCP" />
+
 		<execute macro="Site#tearDownCP" />
 
 		<execute macro="User#tearDownCP" />
@@ -480,6 +482,142 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
+	<command name="OrganizationsView">
+		<var name="orgName1" value="Organization Name 1" />
+		<var name="orgName2" value="Organization Name 2" />
+		<var name="orgName3" value="Organization Name 3" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName1}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${orgName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="${orgName1}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="${orgName1}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Organization#allowMembershipManagementCP" />
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${orgName1}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_LABEL" value1="1 User" />
+
+		<execute macro="Site#viewMemberOrganizationCP">
+			<var name="orgName" value="${orgName1}" />
+			<var name="toolTip" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName2}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName3}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${orgName1}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${orgName1}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberOrganizationCP">
+			<var name="orgName" value="${orgName2}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${orgName1}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#viewMemberOrganizationCP">
+			<var name="orgName" value="${orgName2}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${orgName1}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberOrganizationCP">
+			<var name="orgName" value="${orgName3}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${orgName1}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#viewMemberOrganizationCP">
+			<var name="orgName" value="${orgName3}" />
 		</execute>
 	</command>
 

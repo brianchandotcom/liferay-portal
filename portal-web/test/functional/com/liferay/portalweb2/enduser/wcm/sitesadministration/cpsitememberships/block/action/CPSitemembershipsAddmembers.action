@@ -13,5 +13,9 @@
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
 		</case>
+
+		<case locator-key1="USER_TABLE_NAME">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 </definition>

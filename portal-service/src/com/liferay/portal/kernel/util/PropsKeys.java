@@ -743,6 +743,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_VALID_NAME_REGEXP = "dl.file.valid.name.regexp";
 
+	public static final String DL_FOLDER_VALID_NAME_REGEXP = "dl.folder.valid.name.regexp";
+
 	public static final String DL_PUBLISH_TO_LIVE_BY_DEFAULT = "dl.publish.to.live.by.default";
 
 	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";
@@ -1190,6 +1192,8 @@ public interface PropsKeys {
 	public static final String JOURNAL_ERROR_TEMPLATE = "journal.error.template";
 
 	public static final String JOURNAL_FEED_FORCE_AUTOGENERATE_ID = "journal.feed.force.autogenerate.id";
+
+	public static final String JOURNAL_FOLDER_VALID_NAME_REGEXP = "journal.folder.valid.name.regexp";
 
 	public static final String JOURNAL_IMAGE_EXTENSIONS = "journal.image.extensions";
 

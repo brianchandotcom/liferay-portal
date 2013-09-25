@@ -3,24 +3,31 @@
 		<case locator-key1="ADD">
 			<execute function="AssertClick#assertTextClickAtClickSidebar" />
 		</case>
+
 		<case locator-key1="ADD_APPLICATION_LINK">
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
+
 		<case locator-key1="ADD_CONTENT_LINK">
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
+
 		<case locator-key1="ADD_PAGE_LINK">
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
+
 		<case locator-key1="USER_MY_DASHBOARD">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="USER_MY_ACCOUNT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="startsWith" locator-key1="ADMIN_SITE_ADMINISTRATION">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="contains" locator1="//span[@data-title='">
 			<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" />
 		</case>
@@ -36,26 +43,39 @@
 		<case locator-key1="ADD">
 			<execute function="Click#clickAtSidebarClickAt" />
 		</case>
+
 		<case locator-key1="ADMIN">
 			<execute function="Click#textClickAtClickDockbar" value1="Admin" />
 		</case>
+
 		<case locator-key1="ADMIN_CONTROL_PANEL">
 			<execute function="Click#textClickAtAndWait" value1="Control Panel" />
 		</case>
+
 		<case locator-key1="ADMIN_SITE_ADMINISTRATION">
 			<execute function="Click#textClickAtAndWait" value1="Site Administration" />
 		</case>
+
 		<case locator-key1="EDIT">
 			<execute function="Click#clickAtSidebarClickAt" />
 		</case>
+
 		<case locator-key1="MY_SITES">
 			<execute function="Click#textClickAtClickDockbar" value1="My Sites" />
 		</case>
+
 		<case locator-key1="USER_SIGN_OUT">
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
+
 		<case comparator="startsWith" locator1="//span[@data-title='">
 			<execute function="Click#pauseMakeVisibleClickAt" />
+		</case>
+	</command>
+
+	<command name="isElementNotPresent">
+		<case comparator="startsWith" locator1="//div[@id='_145_">
+			<execute function="IsElementNotPresent#isNotVisible" />
 		</case>
 	</command>
 

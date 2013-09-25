@@ -215,6 +215,12 @@ if (Validator.isNotNull(historyKey)) {
 					modifiedSectionsNode.val(modifiedSections.join());
 
 					tabNode.addClass('section-modified');
+				}
+
+				function updateSectionError() {
+					var tabNode = tabview.get('selection').get('boundingBox');
+
+					var sectionId = tabNode.getData('sectionId');
 
 					tabNode.toggleClass(
 						'section-error',
@@ -281,6 +287,8 @@ if (Validator.isNotNull(historyKey)) {
 					formNode.all('.modify-link').on('click', updateSectionStatus);
 
 					formNode.delegate('change', updateSectionStatus, 'input, select, textarea');
+
+					formNode.on('blur', updateSectionError, 'input, select, textarea');
 				}
 
 				var currentUrl = new A.Url(location.href);

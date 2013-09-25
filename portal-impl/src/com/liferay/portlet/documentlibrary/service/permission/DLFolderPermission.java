@@ -106,7 +106,8 @@ public class DLFolderPermission {
 				}
 			}
 
-			return true;
+			return DLPermission.contains(
+				permissionChecker, dlFolder.getGroupId(), actionId);
 		}
 
 		return _hasPermission(permissionChecker, dlFolder, actionId);

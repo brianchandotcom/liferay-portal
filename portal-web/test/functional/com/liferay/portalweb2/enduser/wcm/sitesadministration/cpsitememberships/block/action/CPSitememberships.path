@@ -62,17 +62,17 @@
 <!--ADD_MEMBERS_MENULIST-->
 <tr>
 	<td>ADD_MEMBERS_MENULIST_USER</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User')]/span[@class='nav-item-label']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MEMBERS_MENULIST_ORGANIZATION</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Organization')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Organization')]/span[@class='nav-item-label']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_MEMBERS_MENULIST_USER_GROUPS</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User Group')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'User Group')]/span[@class='nav-item-label']</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,6 +140,11 @@
 </tr>
 <!--USER_TABLE-->
 <tr>
+	<td>USER_TABLE_LABEL</td>
+	<td>//input[@id='_174_keywords_users']/../../../../../..//div/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_TABLE_NAME</td>
 	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]</td>
 	<td></td>
@@ -188,7 +193,23 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_SEARCH_BUTTON</td>
-	<td>//input[@id='_174_keywords_organizations']/../following-sibling::button[contains(.,'Search')]</td>
+	<td>//input[@id='_174_keywords_organizations']/..//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATION_TABLE-->
+<tr>
+	<td>ORGANIZATION_TABLE_NAME</td>
+	<td>//div[contains(@id,'organizationsSearchContainerSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_TOOLTIP</td>
+	<td>//div[contains(@id,'organizationsSearchContainerSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]//span[contains(@class,'tooltip-text')]</td>
 	<td></td>
 </tr>
 <tr>

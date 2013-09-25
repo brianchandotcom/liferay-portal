@@ -1,5 +1,9 @@
 <definition>
 	<command name="assertClick">
+		<case locator-key1="ADD_MEMBERS_MENULIST_ORGANIZATION">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
 		<case locator-key1="ADD_MEMBERS_MENULIST_USER">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
@@ -22,8 +26,20 @@
 	</command>
 	
 	<command name="assertTextEquals">
+		<case locator-key1="ORGANIZATION_TABLE_NAME">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="ORGANIZATION_TABLE_TOOLTIP">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+		</case>
+
+		<case locator-key1="USER_TABLE_LABEL">
+			<execute function="AssertTextEquals#assertText" />
 		</case>
 	</command>
 </definition>

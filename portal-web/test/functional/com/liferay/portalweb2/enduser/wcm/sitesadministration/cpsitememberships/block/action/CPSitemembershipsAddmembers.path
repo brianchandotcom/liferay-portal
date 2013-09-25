@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_ORGANIZATION_FIELD</td>
+	<td>//input[@id='toggle_id_users_admin_organization_searchkeywords']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_BUTTON</td>
 	<td>//button[contains(.,'Search')]</td>
 	<td></td>
@@ -68,6 +73,27 @@
 <tr>
 	<td>USER_TABLE_SCREEN_NAME</td>
 	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_TABLE-->
+<tr>
+	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_174_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'organizationsSearchContainerSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]/input[@name='_174_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_NAME</td>
+	<td>//div[contains(@id,'organizationsSearchContainerSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[2]</td>
 	<td></td>
 </tr>
 </tbody>

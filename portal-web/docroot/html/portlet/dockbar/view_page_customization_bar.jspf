@@ -16,178 +16,183 @@
 
 <%
 	String cssInfoItems = "info-items";
+
+	Boolean customizablePage = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
+
 	Boolean infoItemsHidden = GetterUtil.getBoolean(SessionClicks.get(request, "infoItemsHidden", "false"));
+
+	Boolean pageIsLinked = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
+
+	Boolean siteTemplateChanged = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
 
 	if (infoItemsHidden) {
 		cssInfoItems = cssInfoItems + " hide";
 	}
 %>
 
-<c:if test="<%= (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission %>">
+<c:if test="<%= siteTemplateChanged || pageIsLinked || customizablePage %>">
 	<aui:nav-item cssClass="<%= cssInfoItems %>">
-		<div class="page-customization-bar">
-			<div class="page-customization-bar-text">
-				<span class="page-customization-bar-message">
-					<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
-				</span>
-
-				<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
-			</div>
-
-			<div class="page-customization-bar-form">
-				<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
-					<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-				</liferay-portlet:actionURL>
-
-				<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.LAYOUTS_ADMIN) %>">
-					<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
-					<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-					<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-
-					<aui:button cssClass="btn-link" name="submit" type="submit" value="Reset Changes" />
-				</aui:form>
-			</div>
-		</div>
-	</aui:nav-item>
-
-	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
-</c:if>
-
-<c:if test="<%= (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE) %>">
-	<aui:nav-item cssClass="<%= cssInfoItems %>">
-		<div class="page-customization-bar">
-			<div class="page-customization-bar-text">
-				<c:choose>
-					<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
-						<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
-					</c:when>
-					<c:when test="<%= layout instanceof VirtualLayout %>">
-						<liferay-ui:message key="this-page-belongs-to-a-user-group" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-	</aui:nav-item>
-
-	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
-</c:if>
-
-<c:if test="<%= !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE) %>">
-	<aui:nav-item cssClass="<%= cssInfoItems %>">
-		<div class="page-customization-bar">
-			<div class="page-customization-bar-text">
-				<c:choose>
-					<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
-
+		<div class="page-customization-bar-container">
+			<c:if test="<%= siteTemplateChanged %>">
+				<div class="page-customization-bar">
+					<div class="page-customization-bar-text">
 						<span class="page-customization-bar-message">
-							<liferay-ui:message key="you-can-customize-this-page" />
+							<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
 						</span>
 
-						<liferay-ui:icon-help message="customizable-user-help" />
-					</c:when>
-					<c:otherwise>
-						<span class="page-customization-bar-message">
-							<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
-						</span>
+						<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
+					</div>
 
-						<c:if test="<%= hasLayoutUpdatePermission %>">
-							<liferay-ui:icon-help message="customizable-admin-help" />
-						</c:if>
-					</c:otherwise>
-				</c:choose>
-			</div>
+					<div class="page-customization-bar-form">
+						<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
+							<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+						</liferay-portlet:actionURL>
 
-			<%
-			String taglibImage = "search";
-			String taglibMessage = "view-default-page";
+						<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.LAYOUTS_ADMIN) %>">
+							<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
+							<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+							<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
-			if (!layoutTypePortlet.isCustomizedView()) {
-				taglibMessage = "view-my-customized-page";
-			}
-			else if (layoutTypePortlet.isDefaultUpdated()) {
-				taglibImage = "activate";
-				taglibMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
-			}
-			%>
-
-			<liferay-ui:icon cssClass='<%= layoutTypePortlet.isCustomizedView() ? StringPool.BLANK : "page-customization-bar-form" %>' id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
-
-			<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-				<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetCustomizationViewURL">
-					<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-					<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-					<portlet:param name="<%= Constants.CMD %>" value="reset_customized_view" />
-				</liferay-portlet:actionURL>
-
-				<%
-				String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
-				%>
-
-				<liferay-ui:icon image="../portlet/refresh" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
+							<aui:button cssClass="btn-link" name="submit" type="submit" value="Reset Changes" />
+						</aui:form>
+					</div>
+				</div>
 			</c:if>
 
-		</div>
-	</aui:nav-item>
+			<c:if test="<%= pageIsLinked %>">
+				<div class="page-customization-bar">
+					<div class="page-customization-bar-text">
+						<c:choose>
+							<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
+								<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
+							</c:when>
+							<c:when test="<%= layout instanceof VirtualLayout %>">
+								<liferay-ui:message key="this-page-belongs-to-a-user-group" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</c:if>
 
-	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
+			<c:if test="<%= customizablePage %>">
+				<div class="page-customization-bar">
+					<div class="page-customization-bar-text">
+						<c:choose>
+							<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
 
-	<aui:script>
-		Liferay.provide(
-			window,
-			'<portlet:namespace />toggleCustomizedView',
-			function(event) {
-				var A = AUI();
+								<span class="page-customization-bar-message">
+									<liferay-ui:message key="you-can-customize-this-page" />
+								</span>
 
-				A.io.request(
-					themeDisplay.getPathMain() + '/portal/update_layout',
-					{
-						data: {
-							cmd: 'toggle_customized_view',
-							customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
-							p_auth: '<%= AuthTokenUtil.getToken(request) %>'
-						},
-						on: {
-							success: function(event, id, obj) {
-								window.location.href = themeDisplay.getLayoutURL();
-							}
-						}
+								<liferay-ui:icon-help message="customizable-user-help" />
+							</c:when>
+							<c:otherwise>
+								<span class="page-customization-bar-message">
+									<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
+								</span>
+
+								<c:if test="<%= hasLayoutUpdatePermission %>">
+									<liferay-ui:icon-help message="customizable-admin-help" />
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
+					<%
+					String taglibImage = "search";
+					String taglibMessage = "view-default-page";
+
+					if (!layoutTypePortlet.isCustomizedView()) {
+						taglibMessage = "view-my-customized-page";
 					}
-				);
-			},
-			['aui-io-request']
-		);
-	</aui:script>
+					else if (layoutTypePortlet.isDefaultUpdated()) {
+						taglibImage = "activate";
+						taglibMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
+					}
+					%>
 
-	<aui:script use="aui-base">
-		var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');
+					<liferay-ui:icon cssClass='<%= layoutTypePortlet.isCustomizedView() ? StringPool.BLANK : "page-customization-bar-form" %>' id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
 
-		if (toggleCustomizedView) {
-			toggleCustomizedView.on('click', <portlet:namespace />toggleCustomizedView);
-		}
-	</aui:script>
-</c:if>
+					<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
+						<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetCustomizationViewURL">
+							<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+							<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
+							<portlet:param name="<%= Constants.CMD %>" value="reset_customized_view" />
+						</liferay-portlet:actionURL>
 
-<c:if test="<%= (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE) %>">
-	<aui:nav-item cssClass="<%= cssInfoItems %>">
-		<div class="page-customization-bar">
-			<div class="page-customization-bar-text">
-				<c:choose>
-					<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
-						<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
-					</c:when>
-					<c:when test="<%= layout instanceof VirtualLayout %>">
-						<liferay-ui:message key="this-page-belongs-to-a-user-group" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
-					</c:otherwise>
-				</c:choose>
-			</div>
+						<%
+						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+						%>
+
+						<liferay-ui:icon image="../portlet/refresh" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
+					</c:if>
+				</div>
+
+				<aui:script>
+					Liferay.provide(
+						window,
+						'<portlet:namespace />toggleCustomizedView',
+						function(event) {
+							var A = AUI();
+
+							A.io.request(
+								themeDisplay.getPathMain() + '/portal/update_layout',
+								{
+									data: {
+										cmd: 'toggle_customized_view',
+										customized_view: '<%= String.valueOf(!layoutTypePortlet.isCustomizedView()) %>',
+										p_auth: '<%= AuthTokenUtil.getToken(request) %>'
+									},
+									on: {
+										success: function(event, id, obj) {
+											window.location.href = themeDisplay.getLayoutURL();
+										}
+									}
+								}
+							);
+						},
+						['aui-io-request']
+					);
+				</aui:script>
+
+				<aui:script use="aui-base">
+					var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');
+
+					if (toggleCustomizedView) {
+						toggleCustomizedView.on('click', <portlet:namespace />toggleCustomizedView);
+					}
+				</aui:script>
+			</c:if>
 		</div>
-	</aui:nav-item>
 
-	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
+		<aui:nav-item cssClass="info-link-container">
+			<div class="info-button">
+				<a class="info-link" href="#1"><i class="icon-info"></i></a>
+				<div class="diamond"></div>
+			</div>
+		</aui:nav-item>
+
+		<aui:script use="aui-base, liferay-store">
+			A.one('.info-link-container').on(
+				'click',
+				function(event) {
+					var currentTarget = event.currentTarget;
+
+					var infoItems = currentTarget.ancestor('.nav-account-controls').one('.info-items');
+
+					event.preventDefault();
+
+					currentTarget.ancestor('ul').one('.info-items').toggleClass('hide');
+
+					Liferay.Store(
+						'infoItemsHidden',
+						infoItems.hasClass('hide')
+					);
+				}
+			);
+		</aui:script>
+	</aui:nav-item>
 </c:if>

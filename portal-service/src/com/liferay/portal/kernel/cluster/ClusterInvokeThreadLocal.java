@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.kernel.cluster;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 

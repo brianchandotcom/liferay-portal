@@ -31,4 +31,6 @@ public @interface Clusterable {
 	public Class<? extends ClusterInvokeAcceptor> acceptor()
 		default ClusterInvokeAcceptor.class;
 
+	public boolean onMaster() default false;
+
 }

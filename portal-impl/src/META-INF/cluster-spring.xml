@@ -36,4 +36,10 @@
 	<bean id="com.liferay.portal.kernel.cluster.ClusterLinkUtil" class="com.liferay.portal.kernel.cluster.ClusterLinkUtil">
 		<property name="clusterLink" ref="com.liferay.portal.kernel.cluster.ClusterLink" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" class="com.liferay.portal.cluster.ClusterMasterExecutorImpl">
+		<property name="clusterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterExecutor" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil" class="com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil">
+		<property name="clusterMasterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" />
+	</bean>
 </beans>

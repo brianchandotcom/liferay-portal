@@ -3,8 +3,15 @@
 		<case locator-key1="ORGANIZATION_INFORMATION_ORGANIZATION_SITE">
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>
+
 		<case locator-key1="SAVE_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="DETAILS_TYPE">
+			<execute function="AssertTextEquals#assertValue" />
 		</case>
 	</command>
 </definition>

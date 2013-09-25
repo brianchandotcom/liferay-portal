@@ -1,6 +1,8 @@
 <definition>
 	<execute test-case-command="CPUsersandorganizations#AddOrganizations" />
+	<execute test-case-command="CPUsersandorganizations#AddUserScreenNameNumber" />
 	<execute test-case-command="CPUsersandorganizations#EditOrganizationSite" />
+	<execute test-case-command="CPUsersandorganizations#ErrorAddUserScreenNameNumberSiteId" />
 	<execute test-case-command="CPUsersandorganizations#LoginUser" />
 	<execute test-case-command="CPUsersandorganizations#RemoveMember" />
 	<execute test-case-command="CPUsersandorganizations#ViewBack" />

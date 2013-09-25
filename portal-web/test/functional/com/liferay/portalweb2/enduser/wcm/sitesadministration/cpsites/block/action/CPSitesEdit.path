@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ID</td>
+	<td>//div[@class='control-group field-wrapper']/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>

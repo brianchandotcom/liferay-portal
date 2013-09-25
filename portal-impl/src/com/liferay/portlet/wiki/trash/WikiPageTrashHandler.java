@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.SystemEvent;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -146,6 +147,15 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public ContainerModel getParentContainerModel(TrashedModel trashedModel)
+		throws PortalException, SystemException {
+
+		WikiPage page = (WikiPage)trashedModel;
+
+		return page.getNode();
+	}
+
+	@Override
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException, SystemException {
 
@@ -201,6 +211,16 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		WikiNode node = page.getNode();
 
 		return node.getName();
+	}
+
+	@Override
+	public TrashEntry getTrashEntry(long classPK)
+		throws PortalException, SystemException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
+			classPK, WorkflowConstants.STATUS_ANY, false);
+
+		return page.getTrashEntry();
 	}
 
 	@Override

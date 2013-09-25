@@ -176,8 +176,6 @@ AUI.add(
 						instance._nameInput.on('input', instance._updateNavigationProxy, instance);
 
 						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
-
-						Liferay.once('dockbarHidePanel', instance._onHide, instance);
 					},
 
 					_cancelAction: function(event) {
@@ -214,12 +212,6 @@ AUI.add(
 						}
 
 						return instance._formValidator;
-					},
-
-					_onHide: function(event) {
-						var instance = this;
-
-						Liferay.InputLocalized.unregister(instance._nameInput.get(STR_ID));
 					},
 
 					_updateActivePage: function(event) {

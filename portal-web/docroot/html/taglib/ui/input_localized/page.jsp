@@ -134,12 +134,6 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 		</c:when>
 	</c:choose>
 
-	<c:if test="<%= autoFocus %>">
-		<aui:script>
-			Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>');
-		</aui:script>
-	</c:if>
-
 	<c:if test="<%= (availableLocales.length > 0) && Validator.isNull(languageId) %>">
 
 		<%
@@ -246,46 +240,57 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 	</aui:script>
 </c:if>
 
-<c:if test="<%= (availableLocales.length > 0) && Validator.isNull(languageId) %>">
-	<aui:script use="liferay-input-localized">
-		var defaultLanguageId = '<%= defaultLanguageId %>';
+<c:choose>
+	<c:when test="<%= (availableLocales.length > 0) && Validator.isNull(languageId) %>">
+		<aui:script use="liferay-input-localized">
+			var defaultLanguageId = '<%= defaultLanguageId %>';
 
-		var available = {};
+			var available = {};
 
-		<%
-		for (Locale availableLocale : availableLocales) {
-			String availableLanguageId = LocaleUtil.toLanguageId(availableLocale);
-		%>
+			<%
+			for (Locale availableLocale : availableLocales) {
+				String availableLanguageId = LocaleUtil.toLanguageId(availableLocale);
+			%>
 
-			available['<%= availableLanguageId %>'] = '<%= availableLocale.getDisplayName(locale) %>';
+				available['<%= availableLanguageId %>'] = '<%= availableLocale.getDisplayName(locale) %>';
 
-		<%
-		}
-		%>
-
-		var availableLanguageIds = A.Array.dedupe(
-			[defaultLanguageId].concat(A.Object.keys(available))
-		);
-
-		Liferay.InputLocalized.register(
-			'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
-			{
-				boundingBox: '#<portlet:namespace /><%= id %>BoundingBox',
-				columns: 20,
-				contentBox: '#<portlet:namespace /><%= id %>ContentBox',
-
-				<c:if test='<%= type.equals("editor") %>'>
-					editor: window['<portlet:namespace /><%= fieldName %>'],
-				</c:if>
-
-				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
-				items: availableLanguageIds,
-				lazy: <%= !type.equals("editor") %>,
-				name: '<portlet:namespace /><%= name + StringPool.UNDERLINE %>',
-				namespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
-				toggleSelection: false,
-				translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
+			<%
 			}
-		);
-	</aui:script>
-</c:if>
+			%>
+
+			var availableLanguageIds = A.Array.dedupe(
+				[defaultLanguageId].concat(A.Object.keys(available))
+			);
+
+			Liferay.InputLocalized.register(
+				'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
+				{
+					boundingBox: '#<portlet:namespace /><%= id %>BoundingBox',
+					columns: 20,
+					contentBox: '#<portlet:namespace /><%= id %>ContentBox',
+
+					<c:if test='<%= type.equals("editor") %>'>
+						editor: window['<portlet:namespace /><%= fieldName %>'],
+					</c:if>
+
+					inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
+					items: availableLanguageIds,
+					lazy: <%= !type.equals("editor") %>,
+					name: '<portlet:namespace /><%= name + StringPool.UNDERLINE %>',
+					namespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
+					toggleSelection: false,
+					translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
+				}
+			);
+
+			<c:if test="<%= autoFocus %>">
+				Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>');
+			</c:if>
+		</aui:script>
+	</c:when>
+	<c:otherwise>
+		<c:if test="<%= autoFocus %>">
+			Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>');
+		</c:if>
+	</c:otherwise>
+</c:choose>

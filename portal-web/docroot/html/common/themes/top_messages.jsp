@@ -16,6 +16,12 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
+<%
+if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) && !user.isDefaultUser() && (user.getLocale() != locale)) {
+	PortalUtil.addUserLocaleOptionsMessage(request);
+}
+%>
+
 <c:if test="<%= ShutdownUtil.isInProcess() %>">
 	<div class="alert alert-block" id="lfrShutdownMessage">
 		<span class="notice-label"><liferay-ui:message key="maintenance-alert" /></span> <span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>

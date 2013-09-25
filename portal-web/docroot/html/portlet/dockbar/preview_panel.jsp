@@ -63,7 +63,7 @@
 </div>
 
 <aui:script use="liferay-dockbar-device-preview">
-	new Liferay.Dockbar.DevicePreview(
+	var devicePreview = new Liferay.Dockbar.DevicePreview(
 		{
 			devices: {
 				autosize: {},
@@ -97,4 +97,6 @@
 			namespace: '<portlet:namespace />'
 		}
 	);
+
+	Liferay.once('dockbarHidePanel', A.bind('destroy', devicePreview));
 </aui:script>

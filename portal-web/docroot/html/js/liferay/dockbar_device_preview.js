@@ -54,8 +54,6 @@ AUI.add(
 
 		var TPL_DEVICE_SIZE_STATUS = '<div class="lfr-device-size-status"><span class="lfr-device-size-status-content"></span></div>';
 
-		var TPL_DEVICE_SKIN = '<div class="lfr-device-skin smartphone"></div>';
-
 		var WIN = A.config.win;
 
 		var DevicePreview = A.Component.create(
@@ -89,7 +87,6 @@ AUI.add(
 						instance._closePanelButton = instance.byId('closePanelPreview');
 
 						instance._devicePreviewNode = A.Node.create(Lang.sub(TPL_DEVICE_PREVIEW));
-						instance._deviceSkin = A.Node.create(TPL_DEVICE_SKIN);
 
 						BODY.append(instance._devicePreviewNode);
 
@@ -121,6 +118,8 @@ AUI.add(
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandles)).detach();
+
+						instance._devicePreviewNode.remove();
 					},
 
 					_bindUI: function() {

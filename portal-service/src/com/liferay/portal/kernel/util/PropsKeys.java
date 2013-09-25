@@ -2427,6 +2427,8 @@ public interface PropsKeys {
 
 	public static final String TRANSACTIONAL_CACHE_ENABLED = "transactional.cache.enable";
 
+	public static final String TRANSACTIONAL_CACHE_NAMES = "transactional.cache.names";
+
 	public static final String TRANSLATIONS_DISABLED = "translations.disabled";
 
 	public static final String TRANSLATOR_DEFAULT_LANGUAGES = "translator.default.languages";

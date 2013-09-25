@@ -472,7 +472,7 @@ public interface ${entity.name}Model extends
 			/**
 			 * Sets the container model ID of this ${entity.humanName}.
 			 *
-			 * @param container model ID of this ${entity.humanName}
+			 * @param containerModelId the container model ID of this ${entity.humanName}
 			 */
 			@Override
 			public void setContainerModelId(long containerModelId);
@@ -498,7 +498,7 @@ public interface ${entity.name}Model extends
 			/**
 			 * Sets the parent container model ID of this ${entity.humanName}.
 			 *
-			 * @param parent container model ID of this ${entity.humanName}
+			 * @param parentContainerModelId the parent container model ID of this ${entity.humanName}
 			 */
 			@Override
 			public void setParentContainerModelId(long parentContainerModelId);

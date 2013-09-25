@@ -28,12 +28,6 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("chooseCallback", chooseCallback);
 %>
 
-<c:if test="<%= Validator.isNotNull(chooseCallback) %>">
-	<liferay-ui:header
-		title="device-families"
-	/>
-</c:if>
-
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />

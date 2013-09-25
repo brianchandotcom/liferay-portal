@@ -14,6 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * <p>
  * This contains several utility methods for the purpose of determining folder
@@ -59,5 +65,16 @@ public class DLFolderConstants {
 			return DEFAULT_PARENT_FOLDER_ID;
 		}
 	}
+
+	public static boolean isValidName(String name) {
+		Matcher matcher = DL_FOLDER_VALID_NAME_REGEXP.matcher(name);
+
+		return matcher.matches();
+	}
+
+	private static final Pattern DL_FOLDER_VALID_NAME_REGEXP =
+		Pattern.compile(
+			PropsUtil.get(PropsKeys.DL_FOLDER_VALID_NAME_REGEXP),
+			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
 }

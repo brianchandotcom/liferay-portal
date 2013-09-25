@@ -42,7 +42,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -1186,7 +1185,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	protected void validateFolderName(String name) throws PortalException {
-		if (!AssetUtil.isValidWord(name)) {
+		if (!DLFolderConstants.isValidName(name)) {
 			throw new FolderNameException();
 		}
 	}

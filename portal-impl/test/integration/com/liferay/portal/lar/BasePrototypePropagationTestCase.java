@@ -213,9 +213,9 @@ public abstract class BasePrototypePropagationTestCase extends PowerMockito {
 				"lfrScopeType", "company");
 		}
 
-		LayoutTestUtil.updatePortletPreferences(
-			prototypeLayout.getPlid(), journalContentPortletId,
-			layoutSetPrototypePortletPreferences);
+		layoutSetPrototypePortletPreferences.store();
+
+		layout = propagateChanges(layout);
 
 		PortletPreferences portletPreferences =
 			LayoutTestUtil.getPortletPreferences(

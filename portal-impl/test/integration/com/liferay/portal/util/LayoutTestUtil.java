@@ -31,9 +31,9 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -195,14 +195,13 @@ public class LayoutTestUtil {
 		}
 
 		PortletPreferences portletPreferences = getPortletPreferences(
-			layout.getCompanyId(), layout.getPlid(), newPortletId);
+			layout, newPortletId);
 
 		for (String key : preferenceMap.keySet()) {
 			portletPreferences.setValues(key, preferenceMap.get(key));
 		}
 
-		updatePortletPreferences(
-			layout.getPlid(), newPortletId, portletPreferences);
+		portletPreferences.store();
 
 		return newPortletId;
 	}
@@ -255,17 +254,17 @@ public class LayoutTestUtil {
 			Layout layout, String portletId)
 		throws Exception {
 
-		return getPortletPreferences(
-				layout.getCompanyId(), layout.getPlid(), portletId);
+		return PortletPreferencesFactoryUtil.getPortletSetup(
+			layout, portletId, null);
 	}
 
 	public static PortletPreferences getPortletPreferences(
-			long companyId, long plid, String portletId)
+			long plid, String portletId)
 		throws Exception {
 
-		return PortletPreferencesLocalServiceUtil.getPreferences(
-			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		return getPortletPreferences(layout, portletId);
 	}
 
 	public static List<Portlet> getPortlets(Layout layout) throws Exception {
@@ -315,16 +314,6 @@ public class LayoutTestUtil {
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
-	}
-
-	public static void updatePortletPreferences(
-			long plid, String portletId, PortletPreferences portletPreferences)
-		throws Exception {
-
-		PortletPreferencesLocalServiceUtil.updatePreferences(
-			PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
-			portletPreferences);
 	}
 
 }

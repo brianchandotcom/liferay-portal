@@ -1081,23 +1081,31 @@ public class PortletExporter {
 		// Portlet preferences
 
 		if (exportPortletSetup) {
+
+			// Layout preferences
+
 			exportPortletPreferences(
 				portletDataContext, PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, false, layout, plid,
 				portletId, portletElement);
 
+			// Group preferences
+
 			exportPortletPreferences(
 				portletDataContext, portletDataContext.getScopeGroupId(),
-				PortletKeys.PREFS_OWNER_TYPE_GROUP, false, layout, plid,
-				portletId, portletElement);
+				PortletKeys.PREFS_OWNER_TYPE_GROUP, false, layout,
+				PortletKeys.PREFS_PLID_SHARED, portlet.getRootPortletId(),
+				portletElement);
+
+			// Company preferences
 
 			exportPortletPreferences(
 				portletDataContext, portletDataContext.getCompanyId(),
 				PortletKeys.PREFS_OWNER_TYPE_COMPANY, false, layout, plid,
-				portletId, portletElement);
+				portlet.getRootPortletId(), portletElement);
 		}
 
-		// Portlet preferences
+		// Portlet User preferences
 
 		if (exportPortletUserPreferences) {
 			List<PortletPreferences> portletPreferencesList =
@@ -1126,12 +1134,13 @@ public class PortletExporter {
 					PortletPreferencesLocalServiceUtil.getPortletPreferences(
 						portletDataContext.getScopeGroupId(),
 						PortletKeys.PREFS_OWNER_TYPE_GROUP,
-						PortletKeys.PREFS_PLID_SHARED, portletId);
+						PortletKeys.PREFS_PLID_SHARED,
+						portlet.getRootPortletId());
 
 				exportPortletPreference(
 					portletDataContext, portletDataContext.getScopeGroupId(),
 					PortletKeys.PREFS_OWNER_TYPE_GROUP, false,
-					groupPortletPreferences, portletId,
+					groupPortletPreferences, portlet.getRootPortletId(),
 					PortletKeys.PREFS_PLID_SHARED, portletElement);
 			}
 			catch (NoSuchPortletPreferencesException nsppe) {
@@ -1333,7 +1342,7 @@ public class PortletExporter {
 
 				portletPreferences =
 					PortletPreferencesLocalServiceUtil.getPortletPreferences(
-						ownerId, ownerType, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						ownerId, ownerType, LayoutConstants.DEFAULT_PLID,
 						portletId);
 			}
 			else {

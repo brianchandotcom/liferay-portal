@@ -71,6 +71,14 @@
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>
 
+	<command name="deletePG">
+		<var name="portletLocator" value="//h1[@class='portlet-title']/span[contains(.,'${portletName}')]/../../menu//a[@title='Options']" />
+
+		<execute action="BasePortlet#assertClick" locator1="${portletLocator}" value1="Options" />
+		<execute action="BasePortlet#assertClick" locator-key1="REMOVE" value1="Remove" />
+		<execute action="BasePortlet#confirm" locator-key1="PORTLET_CONFIRM" value1="Are you sure you want to remove this component?" />
+	</command>
+
 	<command name="gotoPortletOptions">
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
 

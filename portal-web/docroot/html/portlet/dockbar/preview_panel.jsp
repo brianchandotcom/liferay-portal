@@ -98,5 +98,5 @@
 		}
 	);
 
-	Liferay.once('dockbarHidePanel', A.bind("destroy", devicePreview));
+	Liferay.once('dockbarHidePanel', A.bind('destroy', devicePreview));
 </aui:script>

@@ -62,6 +62,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		margin-bottom: 0.5em;
 	}
 
+	.taglib-portal-message {
+		margin-bottom: 0;
+	}
+
 	/* ---------- Control panel secondary nav ---------- */
 
 	.control-panel-bar-secondary {

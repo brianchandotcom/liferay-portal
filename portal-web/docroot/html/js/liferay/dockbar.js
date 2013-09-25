@@ -54,6 +54,8 @@ AUI.add(
 					);
 
 					BODY.addClass('dockbar-ready');
+
+					Liferay.on(['noticeHide', 'noticeShow'], instance._toggleControlsOffset, instance);
 				}
 			},
 
@@ -147,6 +149,28 @@ AUI.add(
 				item.toggleClass('lfr-portlet-used', force);
 
 				instance._addContentNode.focusManager.refresh();
+			},
+
+			_toggleControlsOffset: function(event) {
+				if (!event.useAnimation) {
+					var instance = this;
+
+					var force = false;
+
+					if (event.type === 'noticeShow') {
+						force = true;
+					}
+
+					var namespace = instance._namespace;
+
+					var navAccountControls = A.one('#' + namespace + 'navAccountControls');
+
+					navAccountControls.toggleClass('nav-account-controls-notice', force);
+
+					var navAddControls = A.one('#' + namespace + 'navAddControls');
+
+					navAddControls.toggleClass('nav-add-controls-notice', force);
+				}
 			},
 
 			_togglePanel: function(panelId) {

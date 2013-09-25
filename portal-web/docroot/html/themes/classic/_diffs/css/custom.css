@@ -66,6 +66,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		margin-bottom: 6px;
 	}
 
+	.taglib-portal-message {
+		margin-bottom: 0;
+	}
+
 	/* ---------- Dockbar ---------- */
 
 	.dockbar {
@@ -129,11 +133,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.nav-account-controls {
 			border-top: 1px solid #00AEFF;
+
+			&.nav-account-controls-notice {
+				margin-top: 10px;
+				top: 50px;
+			}
 		}
 
 		.nav-add-controls {
 			background: transparent;
 			border-top-width: 0;
+
+			&.nav-add-controls-notice {
+				top: 70px;
+			}
 
 			> li {
 				> a {

@@ -10,6 +10,7 @@
 		<resource-root path="postgresql.jar" />
 	</resources>
 	<dependencies>
+		<module name="ibm.jdk" />
 		<module name="javax.api" />
 		<module name="javax.mail.api" />
 		<module name="javax.servlet.api" />

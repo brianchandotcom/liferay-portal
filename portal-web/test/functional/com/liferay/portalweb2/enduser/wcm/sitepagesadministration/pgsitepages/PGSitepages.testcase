@@ -1,0 +1,114 @@
+<definition>
+	<var name="pageName" value="Embedded Portlet Page" />
+	<var name="portletName" value="Web Content Display" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="AddEmbeddedPortlet">
+		<var name="fieldKey" value="EMBEDDED_PORTLETS" />
+		<var name="fieldLabel" value="embeddedPortlets" />
+		<var name="fieldName" value="Embedded Portlets" />
+		<var name="webContentContent"><![CDATA[<runtime-portlet name='11' />]]></var>
+		<var name="webContentContentEdit"><![CDATA[<runtime-portlet name='16' />]]></var>
+		<var name="webContentTitle" value="Embedded Portlets" />
+		<var name="webContentJavascript" value="true" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="EmbeddedPortlets#viewDisabledPG" />
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="embeddedPortletTitle" value="Portal Directory" />
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentJavascript" value="${webContentJavascript}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="EmbeddedPortlets#viewPG">
+			<var name="embeddedPortletId" value="11" />
+			<var name="embeddedPortletTitle" value="Portal Directory" />
+			<var name="fieldKey" value="${fieldKey}" />
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="WebContent#editPGViaWCD">
+			<var name="embeddedPortletTitle" value="Currency Converter" />
+			<var name="webContentContentEdit" value="${webContentContentEdit}" />
+			<var name="webContentJavascript" value="${webContentJavascript}" />
+			<var name="webContentTitleEdit" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="EmbeddedPortlets#viewPG">
+			<var name="embeddedPortletId" value="11" />
+			<var name="embeddedPortletTitle" value="Portal Directory" />
+			<var name="fieldKey" value="${fieldKey}" />
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="viewNumber" value="1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="EmbeddedPortlets#viewPG">
+			<var name="embeddedPortletId" value="16" />
+			<var name="embeddedPortletTitle" value="Currency Converter" />
+			<var name="fieldKey" value="${fieldKey}" />
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="viewNumber" value="2" />
+		</execute>
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="EmbeddedPortlets#removeReferencePG">
+			<var name="fieldKey" value="${fieldKey}" />
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="EmbeddedPortlets#viewDisabledPG" />
+	</command>
+</definition>

@@ -1,0 +1,42 @@
+<definition>
+	<command name="removeReferencePG">
+		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+
+		<execute macro="Dockbar#showEditField">
+			<var name="fieldKey" value="${fieldKey}" />
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute action="Dockbar#check" locator-key1="EMBEDDED_PORTLETS_CHECKBOX_1" />
+		<execute action="Dockbar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="viewDisabledPG">
+		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+
+		<execute action="Dockbar#assertTextNotPresent" locator-key1="EDIT_EMBEDDED_PORTLETS" value1="Embedded Portlets" />
+	</command>
+
+	<command name="viewPG">
+		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+
+		<execute macro="Dockbar#showEditField">
+			<var name="fieldKey" value="${fieldKey}" />
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<if>
+			<isset var="viewNumber" />
+			<then>
+				<execute action="Dockbar#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_PORTLET_ID_${viewNumber}" value1="${embeddedPortletId}" />
+				<execute action="Dockbar#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_TITLE_${viewNumber}" value1="${embeddedPortletTitle}" />
+			</then>
+			<else>
+				<execute action="Dockbar#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_PORTLET_ID_1" value1="${embeddedPortletId}" />
+				<execute action="Dockbar#assertTextEquals" locator-key1="EMBEDDED_PORTLETS_TITLE_1" value1="${embeddedPortletTitle}" />
+			</else>
+		</if>
+	</command>
+</definition>

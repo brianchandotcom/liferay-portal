@@ -29,18 +29,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MINIMIZE</td>
-	<td>//img[@title='Minimize']</td>
+	<td>MAXIMIZE</td>
+	<td>//li[contains(@class,'portlet-maximize-icon')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MAXIMIZE</td>
-	<td>//img[@title='Maximize']</td>
+	<td>MINIMIZE</td>
+	<td>//li[contains(@class,'portlet-minimize-icon')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMOVE</td>
-	<td>//img[@title='Remove']</td>
+	<td>//li[contains(@class,'portlet-close-icon')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +51,11 @@
 <tr>
 	<td>INFO_MESSSAGE</td>
 	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_CONFIRM</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

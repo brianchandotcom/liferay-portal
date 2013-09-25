@@ -135,18 +135,114 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_PAGE</td>
-	<td>//a[@title='Manage Page']</td>
+	<td>EDIT_PERMISSIONS</td>
+	<td>//li[@data-value='permissions']/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_PAGE_LAYOUT</td>
-	<td>//li[contains(@class,'page-layout')]/a[@title='Manage Page']</td>
+	<td>EDIT_DELETE</td>
+	<td>//li[@data-value='delete']/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_PAGE_CUSTOMIZATIONS</td>
-	<td>//a[@id='_145_manageCustomization']</td>
+	<td>EDIT_COPY_APPLICATIONS</td>
+	<td>//li[@data-value='copy-applications']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_DETAILS</td>
+	<td>//div[@id='_145_details']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_SEO</td>
+	<td>//div[@id='_145_seo']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_LOOK_AND_FEEL</td>
+	<td>//div[@id='_145_lookAndFeel']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_JAVASCRIPT</td>
+	<td>//div[@id='_145_javascript']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_CUSTOM_FIELDS</td>
+	<td>//div[@id='_145_customFields']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_ADVANCED</td>
+	<td>//div[@id='_145_advanced']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_MOBILE_DEVICE_RULES</td>
+	<td>//div[@id='_145_mobileDeviceRules']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_EMBEDDED_PORTLETS</td>
+	<td>//div[@id='_145_embeddedPortlets']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_CUSTOMIZATION_SETTINGS</td>
+	<td>//div[@id='_145_customizationSettings']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMBEDDED_PORTLETS-->
+<tr>
+	<td>EMBEDDED_PORTLETS_CHECKBOX_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_CHECKBOX_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[1]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_PORTLET_ID_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_PORTLET_ID_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_TITLE_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_TITLE_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_STATUS_1</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[1]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_PORTLETS_STATUS_2</td>
+	<td>//div[@id='_145_embeddedPortlets']//tbody/tr[2]/td[4]</td>
 	<td></td>
 </tr>
 <tr>

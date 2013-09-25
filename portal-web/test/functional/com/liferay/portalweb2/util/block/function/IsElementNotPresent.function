@@ -12,6 +12,8 @@
 	</command>
 
 	<command name="isNotVisible">
+		<execute selenium="waitForElementPresent" />
+
 		<execute selenium="isNotVisible" />
 	</command>
 </definition>

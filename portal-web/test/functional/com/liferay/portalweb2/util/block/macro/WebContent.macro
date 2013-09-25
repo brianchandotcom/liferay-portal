@@ -70,7 +70,15 @@
 		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 		<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<if>
+			<equals arg1="${webContentJavascript}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addPGViaPanel">
@@ -190,7 +198,15 @@
 		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContentEdit}" />
 		<execute action="PGWebcontentdisplayEditwebcontent#click" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContentEdit}" />
+		<if>
+			<equals arg1="${webContentJavascript}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator1="//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]" value1="${embeddedPortletTitle}" />
+			</then>
+			<else>
+				<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContentEdit}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="moveToRecycleBinCP">

@@ -88,22 +88,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_DISPLAY_STYLE_BUTTON</td>
-	<td>//div[contains(@id,'displayStyleButtons')]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ICON_VIEW_BUTTON</td>
-	<td>//button[@data-displaystyle='icon']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_DESCRIPTIVE_VIEW_BUTTON</td>
-	<td>//button[@data-displaystyle='descriptive']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_LIST_VIEW_BUTTON</td>
-	<td>//button[@data-displaystyle='list']</td>
+	<td>//div[@id='_15_displayStyleButtons']/div/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,12 @@
+<definition>
+	<command name="showEditField">
+		<if>
+			<condition action="Dockbar#isElementNotPresent" locator1="//div[@id='_145_${fieldLabel}Content']" value1="${fieldName}" />
+			<then>
+				<execute action="Dockbar#assertClick" locator-key1="EDIT_${fieldKey}" value1="${fieldName}" />
+			</then>
+		</if>
+
+		<execute action="Dockbar#assertElementPresent" locator1="_145_${fieldLabel}Content" />
+	</command>
+</definition>

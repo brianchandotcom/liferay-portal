@@ -25,6 +25,10 @@
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -69,6 +73,10 @@
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -110,6 +118,10 @@
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -149,6 +161,10 @@
 	<target name="test-${test.ant.script.command}-bundled-tomcat-sql-server-2008-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="sql-server-2008" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -203,6 +219,10 @@
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -235,6 +255,10 @@
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -265,6 +289,10 @@
 	<target name="test-${test.ant.script.command}-jboss-eap-mysql-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="mysql" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -304,6 +332,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -334,6 +366,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-jetty-mysql-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="mysql" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -368,6 +404,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -398,6 +438,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-tomcat-db2-9.7-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="db2-9.7" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -443,6 +487,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="db2-10.1" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -486,6 +534,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="hsql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -518,6 +570,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -548,6 +604,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-tomcat-mysql-google-chrome">
 		<antcall target="generate-test-properties">
 			<param name="database" value="mysql" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -583,6 +643,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -616,6 +680,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -647,6 +715,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-tomcat-oracle-10-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="oracle-10" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -692,6 +764,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="oracle-11" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -733,6 +809,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-8.4-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="postgresql-8.4" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -778,6 +858,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="postgresql-9.0" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -819,6 +903,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.2-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="postgresql-9.2" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -864,6 +952,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="sql-server-2005" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -905,6 +997,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-tomcat-sql-server-2008-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="sql-server-2008" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -950,6 +1046,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="sybase" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -993,6 +1093,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -1025,6 +1129,10 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 	<target name="test-${test.ant.script.command}-weblogic-12.1-mysql-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="mysql" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -1063,6 +1171,10 @@ app.server.weblogic.version.build=1211</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -1096,6 +1208,10 @@ app.server.weblogic.version.build=1211</echo>
 			<param name="database" value="mysql" />
 		</antcall>
 
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
+		</antcall>
+
 		<antcall target="print-scm-revision" />
 
 		<antcall target="clean-up-test-properties" />
@@ -1126,6 +1242,10 @@ app.server.weblogic.version.build=1211</echo>
 	<target name="test-${test.ant.script.command}-websphere-8.0-mysql-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="mysql" />
+		</antcall>
+
+		<antcall target="generate-tests" inheritAll="false">
+			<param name="test.class" value="${test.ant.script.suite}" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />

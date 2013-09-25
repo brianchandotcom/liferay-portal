@@ -222,6 +222,9 @@ public class EditFolderAction extends PortletAction {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
+		boolean mergeWithParentFolder = ParamUtil.getBoolean(
+			actionRequest, "mergeWithParentFolder");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalFolder.class.getName(), actionRequest);
 
@@ -238,8 +241,8 @@ public class EditFolderAction extends PortletAction {
 			// Update folder
 
 			JournalFolderServiceUtil.updateFolder(
-				folderId, parentFolderId, name, description, false,
-				serviceContext);
+				folderId, parentFolderId, name, description,
+				mergeWithParentFolder, serviceContext);
 		}
 	}
 

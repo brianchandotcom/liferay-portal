@@ -55,22 +55,22 @@ String headerCssClass = StringPool.BLANK;
 if (collapsible) {
 	contentCssClass += "toggler-content";
 	headerCssClass += "toggler-header";
-}
 
-if (BrowserSnifferUtil.isMobile(request)) {
-	state = "closed";
-}
+	if (BrowserSnifferUtil.isMobile(request)) {
+		state = "closed";
+	}
 
-if (state == null) {
-	state = GetterUtil.getString(SessionClicks.get(request, id, null), defaultState);
-}
+	if (state == null) {
+		state = GetterUtil.getString(SessionClicks.get(request, id, null), defaultState);
+	}
 
-if (state.equals("open")) {
-	contentCssClass += " toggler-content-expanded";
-	headerCssClass += " toggler-header-expanded";
-}
-else {
-	contentCssClass += " toggler-content-collapsed";
-	headerCssClass += " toggler-header-collapsed";
+	if (state.equals("open")) {
+		contentCssClass += " toggler-content-expanded";
+		headerCssClass += " toggler-header-expanded";
+	}
+	else {
+		contentCssClass += " toggler-content-collapsed";
+		headerCssClass += " toggler-header-collapsed";
+	}
 }
 %>

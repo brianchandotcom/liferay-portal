@@ -584,20 +584,17 @@
 			border-width: 1px;
 
 			.accordion-heading {
+				background: #F2F2F2;
 				overflow: hidden;
+				position: static;
 
-				&.toggler-header-collapsed, &.toggler-header-expanded {
-					background: #F2F2F2;
-					position: static;
+				.accordion-toggle {
+					color: #999;
+					padding-left: 8px;
 
-					.accordion-toggle {
-						color: #999;
-						padding-left: 8px;
-
-						&:after, &:before {
-							float: right;
-							font-size: 22px;
-						}
+					&:after, &:before {
+						float: right;
+						font-size: 22px;
 					}
 				}
 			}

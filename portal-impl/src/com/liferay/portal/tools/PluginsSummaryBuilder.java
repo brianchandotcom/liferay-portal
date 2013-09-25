@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +35,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -522,6 +524,17 @@ public class PluginsSummaryBuilder {
 			pluginPackagePropertiesFile, pluginPackagePropertiesContent);
 
 		FileUtil.write(relengChangeLogFile, sb.toString());
+
+		File relengChangeLogHASHFile = new File(
+			relengChangeLogFile.getParentFile(),
+			"liferay-releng.changelog.HASH");
+
+		FileInputStream fileInputStream = new FileInputStream(
+			relengChangeLogFile);
+
+		String md5 = DigestUtils.md5Hex(fileInputStream);
+
+		FileUtil.write(relengChangeLogHASHFile, md5);
 	}
 
 	private String _updateRelengPropertiesFile(

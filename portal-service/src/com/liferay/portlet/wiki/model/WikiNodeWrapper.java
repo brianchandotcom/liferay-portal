@@ -681,7 +681,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	/**
 	* Sets the container model ID of this wiki node.
 	*
-	* @param container model ID of this wiki node
+	* @param containerModelId the container model ID of this wiki node
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
@@ -711,7 +711,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	/**
 	* Sets the parent container model ID of this wiki node.
 	*
-	* @param parent container model ID of this wiki node
+	* @param parentContainerModelId the parent container model ID of this wiki node
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {

@@ -519,7 +519,7 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	/**
 	 * Sets the container model ID of this message boards category.
 	 *
-	 * @param container model ID of this message boards category
+	 * @param containerModelId the container model ID of this message boards category
 	 */
 	@Override
 	public void setContainerModelId(long containerModelId);
@@ -543,7 +543,7 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	/**
 	 * Sets the parent container model ID of this message boards category.
 	 *
-	 * @param parent container model ID of this message boards category
+	 * @param parentContainerModelId the parent container model ID of this message boards category
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);

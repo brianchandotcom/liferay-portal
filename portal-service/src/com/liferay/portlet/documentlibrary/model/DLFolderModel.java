@@ -582,7 +582,7 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	/**
 	 * Sets the container model ID of this document library folder.
 	 *
-	 * @param container model ID of this document library folder
+	 * @param containerModelId the container model ID of this document library folder
 	 */
 	@Override
 	public void setContainerModelId(long containerModelId);
@@ -606,7 +606,7 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	/**
 	 * Sets the parent container model ID of this document library folder.
 	 *
-	 * @param parent container model ID of this document library folder
+	 * @param parentContainerModelId the parent container model ID of this document library folder
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);

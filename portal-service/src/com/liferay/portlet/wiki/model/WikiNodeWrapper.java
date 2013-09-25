@@ -540,9 +540,9 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	/**
-	* Returns the classPK of this wiki node
+	* Returns the class primary key of the trash entry for this wiki node.
 	*
-	* @return the classPK of this wiki node
+	* @return the class primary key of the trash entry for this wiki node
 	*/
 	@Override
 	public long getTrashEntryClassPK() {

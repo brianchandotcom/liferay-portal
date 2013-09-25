@@ -1335,6 +1335,11 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getTrashEntry();
 	}
 
+	/**
+	* Returns the class primary key of the trash entry for this journal article.
+	*
+	* @return the class primary key of the trash entry for this journal article
+	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _journalArticle.getTrashEntryClassPK();

@@ -7,7 +7,9 @@
 </#if>
 
 ${ifType} (
-	<#if ifElement.element("condition")??>
+	<#if ifElement.element("and")??>
+		<#assign conditionalElement = ifElement.element("and")>
+	<#elseif ifElement.element("condition")??>
 		<#assign conditionalElement = ifElement.element("condition")>
 	<#elseif ifElement.element("contains")??>
 		<#assign conditionalElement = ifElement.element("contains")>
@@ -17,6 +19,8 @@ ${ifType} (
 		<#assign conditionalElement = ifElement.element("isset")>
 	<#elseif ifElement.element("not")??>
 		<#assign conditionalElement = ifElement.element("not")>
+	<#elseif ifElement.element("or")??>
+		<#assign conditionalElement = ifElement.element("or")>
 	</#if>
 
 	<#assign ifConditionalElement = conditionalElement>

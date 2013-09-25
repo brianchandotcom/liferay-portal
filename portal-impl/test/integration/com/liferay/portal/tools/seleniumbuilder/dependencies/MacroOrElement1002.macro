@@ -1,0 +1,17 @@
+<definition>
+	<command name="name">
+		<if>
+			<or>
+				<isset var="var1" />
+				<condition action="isAction" />
+			</or>
+			<then>
+				<execute action="action" />
+			</then>
+			<else>
+				<execute action="action" />
+			</else>
+			<fail />
+		</if>
+	</command>
+</definition>

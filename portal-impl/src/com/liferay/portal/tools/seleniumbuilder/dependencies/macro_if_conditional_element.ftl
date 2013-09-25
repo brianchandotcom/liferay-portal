@@ -1,4 +1,26 @@
-<#if ifConditionalElement.getName() == "condition">
+<#if ifConditionalElement.getName() == "and">
+		<#assign conditionalCases = ifConditionalElement.elements()>
+
+		<#assign firstCase = true>
+
+		(
+		<#list conditionalCases as conditionalCase>
+			<#if !firstCase>
+				&&
+			</#if>
+
+			<#assign caseTypes = ["and", "condition", "contains", "equals", "isset", "not", "or"]>
+
+			<#if caseTypes?seq_contains(conditionalCase.getName())>
+				<#assign ifConditionalElement = conditionalCase>
+
+				<#include "macro_if_conditional_element.ftl">
+			</#if>
+
+			<#assign firstCase = false>
+		</#list>
+		)
+<#elseif ifConditionalElement.getName() == "condition">
 	<#if ifConditionalElement.attributeValue("action")??>
 		<#assign actionElement = ifConditionalElement>
 
@@ -56,7 +78,9 @@
 	commandScopeVariables.containsKey("${var}")
 <#elseif ifConditionalElement.getName() == "not">
 	!(
-		<#if ifConditionalElement.element("condition")??>
+		<#if ifConditionalElement.element("and")??>
+			<#assign ifConditionalElement = ifConditionalElement.element("and")>
+		<#elseif ifConditionalElement.element("condition")??>
 			<#assign ifConditionalElement = ifConditionalElement.element("condition")>
 		<#elseif ifConditionalElement.element("contains")??>
 			<#assign ifConditionalElement = ifConditionalElement.element("contains")>
@@ -66,8 +90,32 @@
 			<#assign ifConditionalElement = ifConditionalElement.element("isset")>
 		<#elseif ifConditionalElement.element("not")??>
 			<#assign ifConditionalElement = ifConditionalElement.element("not")>
+		<#elseif ifConditionalElement.element("or")??>
+			<#assign ifConditionalElement = ifConditionalElement.element("or")>
 		</#if>
 
 		<#include "macro_if_conditional_element.ftl">
 	)
+<#elseif ifConditionalElement.getName() == "or" >
+		<#assign conditionalCases = ifConditionalElement.elements()>
+
+		<#assign firstCase = true>
+
+		(
+		<#list conditionalCases as conditionalCase>
+			<#if !firstCase>
+				||
+			</#if>
+
+			<#assign caseTypes = ["and", "condition", "contains", "equals", "isset", "not", "or"]>
+
+			<#if caseTypes?seq_contains(conditionalCase.getName())>
+				<#assign ifConditionalElement = conditionalCase>
+
+				<#include "macro_if_conditional_element.ftl">
+			</#if>
+
+			<#assign firstCase = false>
+		</#list>
+		)
 </#if>

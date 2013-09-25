@@ -656,9 +656,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				continue;
 			}
 
-			TrashVersion trashVersion =
-				trashVersionLocalService.fetchVersion(
-					trashEntryId, WikiPage.class.getName(), page.getPageId());
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				trashEntryId, WikiPage.class.getName(), page.getPageId());
 
 			int oldStatus = WorkflowConstants.STATUS_APPROVED;
 

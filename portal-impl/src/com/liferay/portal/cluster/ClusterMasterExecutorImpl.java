@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
-import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
@@ -34,7 +33,10 @@ import com.liferay.portal.service.LockLocalServiceUtil;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Michael C. Han
@@ -56,7 +58,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
-	public <T> T executeOnMaster(MethodHandler methodHandler)
+	public <T> Future<T> executeOnMaster(MethodHandler methodHandler)
 		throws SystemException {
 
 		if (!_clusterExecutor.isEnabled()) {
@@ -65,7 +67,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			}
 
 			try {
-				return (T)methodHandler.invoke(true);
+				return new LocalFuture<T>((T)methodHandler.invoke(true));
 			}
 			catch (Exception e) {
 				throw new SystemException(e);
@@ -84,13 +86,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			FutureClusterResponses futureClusterResponses =
 				_clusterExecutor.execute(clusterRequest);
 
-			ClusterNodeResponses clusterNodeResponses =
-				futureClusterResponses.get(_timeout, TimeUnit.SECONDS);
-
-			ClusterNodeResponse clusterNodeResponse =
-				clusterNodeResponses.getClusterResponse(address);
-
-			return (T)clusterNodeResponse.getResult();
+			return new RemoteFuture<T>(address, futureClusterResponses);
 		}
 		catch (Exception e) {
 			throw new SystemException(
@@ -98,6 +94,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		}
 	}
 
+	@Override
 	public void initialize() {
 		if (!_clusterExecutor.isEnabled()) {
 			return;
@@ -124,6 +121,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		}
 	}
 
+	@Override
 	public boolean isMaster() {
 		return _master;
 	}
@@ -147,10 +145,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 		_clusterMasterTokenTransitionListeners.addAll(
 			clusterMasterTokenTransitionListeners);
-	}
-
-	public void setTimeout(int timeout) {
-		_timeout = timeout;
 	}
 
 	@Override
@@ -247,7 +241,88 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		_clusterMasterTokenTransitionListeners =
 		new HashSet<ClusterMasterTokenTransitionListener>();
 	private volatile String _localClusterNodeAddress;
-	private int _timeout = 10;
+
+	private static class LocalFuture<T> implements Future<T> {
+
+		public LocalFuture(T result) {
+			_result = result;
+		}
+
+		@Override
+		public boolean cancel(boolean mayInterruptIfRunning) {
+			return false;
+		}
+
+		@Override
+		public boolean isCancelled() {
+			return false;
+		}
+
+		@Override
+		public boolean isDone() {
+			return true;
+		}
+
+		@Override
+		public T get() {
+			return _result;
+		}
+
+		@Override
+		public T get(long timeout, TimeUnit unit) {
+			return _result;
+		}
+
+		private final T _result;
+
+	}
+
+	private static class RemoteFuture<T> implements Future<T> {
+
+		public RemoteFuture(
+			Address address, FutureClusterResponses futureClusterResponses) {
+
+			_address = address;
+			_futureClusterResponses = futureClusterResponses;
+		}
+
+		@Override
+		public boolean cancel(boolean mayInterruptIfRunning) {
+			return _futureClusterResponses.cancel(mayInterruptIfRunning);
+		}
+
+		@Override
+		public boolean isCancelled() {
+			return _futureClusterResponses.isCancelled();
+		}
+
+		@Override
+		public boolean isDone() {
+			return _futureClusterResponses.isDone();
+		}
+
+		@Override
+		public T get() throws ExecutionException, InterruptedException {
+			ClusterNodeResponses clusterNodeResponses =
+				_futureClusterResponses.get();
+
+			return (T)clusterNodeResponses.getClusterResponse(_address);
+		}
+
+		@Override
+		public T get(long timeout, TimeUnit unit)
+			throws InterruptedException, TimeoutException {
+
+			ClusterNodeResponses clusterNodeResponses =
+				_futureClusterResponses.get(timeout, unit);
+
+			return (T)clusterNodeResponses.getClusterResponse(_address);
+		}
+
+		private final Address _address;
+		private final FutureClusterResponses _futureClusterResponses;
+
+	}
 
 	private class ClusterMasterTokenClusterEventListener
 		implements ClusterEventListener {

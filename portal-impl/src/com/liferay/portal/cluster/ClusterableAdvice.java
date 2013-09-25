@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -39,6 +40,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -130,8 +133,12 @@ public class ClusterableAdvice
 		MethodHandler methodHandler = createMethodHandler(
 			clusterable.acceptor(), methodInvocation);
 
-		Object result = ClusterMasterExecutorUtil.executeOnMaster(
+		Future<Object> futureResult = ClusterMasterExecutorUtil.executeOnMaster(
 			methodHandler);
+
+		Object result = futureResult.get(
+			PropsValues.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT,
+			TimeUnit.SECONDS);
 
 		if (returnType == void.class) {
 			result = nullResult;

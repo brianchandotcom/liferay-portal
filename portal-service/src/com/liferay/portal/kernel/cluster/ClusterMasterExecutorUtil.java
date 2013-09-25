@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.MethodHandler;
 
+import java.util.concurrent.Future;
+
 /**
  * @author Michael C. Han
  */
 public class ClusterMasterExecutorUtil {
 
-	public static <T> T executeOnMaster(MethodHandler methodHandler)
+	public static <T> Future<T> executeOnMaster(MethodHandler methodHandler)
 		throws SystemException {
 
 		ClusterMasterExecutor clusterMasterExecutor =

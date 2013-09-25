@@ -194,6 +194,14 @@ else {
 
 								on: {
 									click: function(event) {
+										event.currentTarget.setAttrs(
+											{
+												disabled: true,
+												icon: 'icon-loading',
+												label: '<liferay-ui:message key="loading" />...'
+											}
+										);
+
 										A.io.request(
 											'<%= publishURL %>',
 											{

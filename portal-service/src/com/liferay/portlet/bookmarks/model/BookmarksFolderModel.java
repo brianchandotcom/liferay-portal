@@ -491,7 +491,7 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	/**
 	 * Sets the container model ID of this bookmarks folder.
 	 *
-	 * @param container model ID of this bookmarks folder
+	 * @param containerModelId the container model ID of this bookmarks folder
 	 */
 	@Override
 	public void setContainerModelId(long containerModelId);
@@ -515,7 +515,7 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	/**
 	 * Sets the parent container model ID of this bookmarks folder.
 	 *
-	 * @param parent container model ID of this bookmarks folder
+	 * @param parentContainerModelId the parent container model ID of this bookmarks folder
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);

@@ -581,7 +581,7 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	/**
 	 * Sets the container model ID of this message boards thread.
 	 *
-	 * @param container model ID of this message boards thread
+	 * @param containerModelId the container model ID of this message boards thread
 	 */
 	@Override
 	public void setContainerModelId(long containerModelId);
@@ -605,7 +605,7 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	/**
 	 * Sets the parent container model ID of this message boards thread.
 	 *
-	 * @param parent container model ID of this message boards thread
+	 * @param parentContainerModelId the parent container model ID of this message boards thread
 	 */
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);

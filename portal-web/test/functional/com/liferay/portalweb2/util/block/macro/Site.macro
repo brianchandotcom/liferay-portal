@@ -125,6 +125,19 @@
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addMemberOrganizationCP">
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_ADD_MEMBERS" value1="Add Members" />
+		<execute action="CPSitememberships#assertClick" locator-key1="ADD_MEMBERS_MENULIST_ORGANIZATION" value1="Organization" />
+		<execute action="CPSitemembershipsAddmembers#type" locator-key1="SEARCH_ORGANIZATION_FIELD" value1="${orgName}" />
+		<execute action="CPSitemembershipsAddmembers#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPSitemembershipsAddmembers#check" locator-key1="ORGANIZATION_TABLE_CHECKBOX" />
+		<execute action="CPSitemembershipsAddmembers#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addSiteTemplateCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Site Template" />
@@ -370,14 +383,6 @@
 		<execute action="CPSitemembershipsAddmembers#assertTextNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
-	<command name="viewMemberCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
-	</command>
-
 	<command name="viewCP">
 		<var name="key_siteName" value="${siteName}" />
 
@@ -405,6 +410,28 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+	</command>
+
+	<command name="viewMemberCP">
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+	</command>
+
+	<command name="viewMemberOrganizationCP">
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPSitememberships#assertClick" locator-key1="NAVIGATION_ORGANIZATIONS" value1="Organizations" />
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<if>
+			<equals arg1="${toolTip}" arg2="true" />
+			<then>
+				<execute action="CPSitememberships#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TOOLTIP" value1="This site belongs to ${orgName} which is an organization" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewMySitesViaMySitesPG">

@@ -154,6 +154,7 @@ int status = WorkflowConstants.STATUS_ANY;
 		else if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
+
 		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status);
 
 		searchContainer.setTotal(total);
@@ -277,6 +278,7 @@ for (int i = 0; i < results.size(); i++) {
 						if (!permissionChecker.isCompanyAdmin() || !permissionChecker.isGroupAdmin(scopeGroupId)) {
 							status = WorkflowConstants.STATUS_APPROVED;
 						}
+
 						rowURL.setParameter("status", String.valueOf(status));
 						%>
 

@@ -44,6 +44,10 @@ import java.util.concurrent.TimeoutException;
 public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 	public void destroy() {
+		if (!_enabled) {
+			return;
+		}
+
 		try {
 			_clusterExecutor.removeClusterEventListener(_clusterEventListener);
 
@@ -61,9 +65,10 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	public <T> Future<T> executeOnMaster(MethodHandler methodHandler)
 		throws SystemException {
 
-		if (!_clusterExecutor.isEnabled()) {
+		if (!_enabled) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Cluster executor is disabled, run on local node.");
+				_log.warn(
+					"Cluster master executor is disabled, run on local node.");
 			}
 
 			try {
@@ -114,6 +119,8 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			if (!_localClusterNodeAddress.equals(masterAddressString)) {
 				notifyMasterTokenTransitionListeners(false);
 			}
+
+			_enabled = true;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
@@ -240,6 +247,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	private Set<ClusterMasterTokenTransitionListener>
 		_clusterMasterTokenTransitionListeners =
 		new HashSet<ClusterMasterTokenTransitionListener>();
+	private boolean _enabled;
 	private volatile String _localClusterNodeAddress;
 
 	private static class LocalFuture<T> implements Future<T> {

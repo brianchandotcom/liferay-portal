@@ -194,6 +194,10 @@ else {
 
 								on: {
 									click: function(event) {
+										event.currentTarget.set('disabled', true);
+										event.currentTarget.set('icon', 'icon-loading');
+										event.currentTarget.set('label', '<liferay-ui:message key="loading" />...');
+
 										A.io.request(
 											'<%= publishURL %>',
 											{

@@ -760,11 +760,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.getTrashEntry();
 	}
 
-	/**
-	* Returns the classPK of this document library folder
-	*
-	* @return the classPK of this document library folder
-	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _dlFolder.getTrashEntryClassPK();
@@ -1084,11 +1079,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolder.getPathArray();
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer() {
-		return _dlFolder.getTrashContainer();
 	}
 
 	@Override

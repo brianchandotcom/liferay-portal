@@ -24,7 +24,7 @@
 			[$JOIN$]
 			WHERE
 				(DLFileEntry.groupId = ?) AND
-				([$STATUS$]) AND
+				([$STATUS$])
 				[$FOLDER_ID$]
 		]]>
 	</sql>
@@ -58,7 +58,7 @@
 			WHERE
 				(DLFileVersion.groupId = ?) AND
 				(DLFileVersion.userId = ?) AND
-				([$STATUS$]) AND
+				([$STATUS$])
 				[$FOLDER_ID$]
 		]]>
 	</sql>
@@ -192,7 +192,7 @@
 					[$JOIN$]
 					WHERE
 						(DLFileEntry.groupId = ?) AND
-						([$STATUS$]) AND
+						([$STATUS$])
 						[$FOLDER_ID$]
 				) TEMP_TABLE
 				INNER JOIN
@@ -215,7 +215,7 @@
 					WHERE
 						(DLFileVersion.groupId = ?) AND
 						(DLFileVersion.userId = ?) AND
-						([$STATUS$]) AND
+						([$STATUS$])
 						[$FOLDER_ID$]
 				) TEMP_TABLE
 				INNER JOIN

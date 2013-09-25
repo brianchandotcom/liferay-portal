@@ -604,11 +604,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		return _dlFileShortcut.getTrashEntry();
 	}
 
-	/**
-	* Returns the classPK of this document library file shortcut
-	*
-	* @return the classPK of this document library file shortcut
-	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _dlFileShortcut.getTrashEntryClassPK();
@@ -862,13 +857,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public java.lang.String getToTitle() {
 		return _dlFileShortcut.getToTitle();
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileShortcut.getTrashContainer();
 	}
 
 	@Override

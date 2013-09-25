@@ -468,11 +468,6 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	@Override
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
-	/**
-	 * Returns the classPK of this document library folder
-	 *
-	 * @return the classPK of this document library folder
-	 */
 	@Override
 	public long getTrashEntryClassPK();
 

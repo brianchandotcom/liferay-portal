@@ -144,33 +144,6 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 	}
 
 	@Override
-	public DLFolder getTrashContainer() {
-		DLFolder dlFolder = null;
-
-		try {
-			dlFolder = getParentFolder();
-		}
-		catch (Exception e) {
-			return null;
-		}
-
-		while (dlFolder != null) {
-			if (dlFolder.isInTrash()) {
-				return dlFolder;
-			}
-
-			try {
-				dlFolder = dlFolder.getParentFolder();
-			}
-			catch (Exception e) {
-				return null;
-			}
-		}
-
-		return null;
-	}
-
-	@Override
 	public boolean hasInheritableLock() {
 		try {
 			return DLFolderServiceUtil.hasInheritableLock(getFolderId());
@@ -208,16 +181,6 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		if (getTrashContainer() != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	@Override

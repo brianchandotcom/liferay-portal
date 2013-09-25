@@ -26,6 +26,10 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
+}
+
 String groupDescriptiveName = group.getDescriptiveName(locale);
 
 Role role = (Role)request.getAttribute(WebKeys.ROLE);

@@ -259,6 +259,7 @@ public class ShoppingCouponLocalServiceImpl
 
 		if (!autoCode) {
 			if (Validator.isNull(code) || Validator.isNumber(code) ||
+				(code.indexOf(CharPool.COMMA) != -1) ||
 				(code.indexOf(CharPool.SPACE) != -1)) {
 
 				throw new CouponCodeException();

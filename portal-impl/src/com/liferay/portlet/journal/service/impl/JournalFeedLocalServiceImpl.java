@@ -392,6 +392,7 @@ public class JournalFeedLocalServiceImpl
 
 		if (!autoFeedId) {
 			if (Validator.isNull(feedId) || Validator.isNumber(feedId) ||
+				(feedId.indexOf(CharPool.COMMA) != -1) ||
 				(feedId.indexOf(CharPool.SPACE) != -1)) {
 
 				throw new FeedIdException();

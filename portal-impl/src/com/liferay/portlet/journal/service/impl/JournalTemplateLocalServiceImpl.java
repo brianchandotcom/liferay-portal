@@ -626,6 +626,7 @@ public class JournalTemplateLocalServiceImpl
 
 		if (Validator.isNull(templateId) ||
 			Validator.isNumber(templateId) ||
+			(templateId.indexOf(CharPool.COMMA) != -1) ||
 			(templateId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new TemplateIdException();

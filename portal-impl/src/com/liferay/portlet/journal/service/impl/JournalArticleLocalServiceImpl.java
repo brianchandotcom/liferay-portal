@@ -6614,6 +6614,7 @@ public class JournalArticleLocalServiceImpl
 
 	protected void validate(String articleId) throws PortalException {
 		if (Validator.isNull(articleId) ||
+			(articleId.indexOf(CharPool.COMMA) != -1) ||
 			(articleId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new ArticleIdException();

@@ -4,12 +4,49 @@
 $addContentPanelWidth: 350px;
 $devicePreviewPanelWidth: 220px;
 $editLayoutPanelWidth: 460px;
+$diamondSize: 12px;
 
 .aui {
 	.dockbar {
 		left: 0;
 		right: 0;
 		top: 0;
+
+		&.navbar-static-top {
+			position: relative;
+
+			.collapse {
+				position: static;
+
+				.nav-account-controls {
+					position: static;
+				}
+			}
+		}
+
+		.btn-link {
+			color: #FFF;
+		}
+
+		.diamond {
+			border: $diamondSize solid transparent;
+			border-bottom-color: #1485EB;
+			height: 0;
+			position: relative;
+			top: -$diamondSize;
+			width: 0;
+
+			&:after {
+				border: $diamondSize solid transparent;
+				border-top-color: #1485EB;
+				content: '';
+				height: 0;
+				left: -$diamondSize;
+				position: absolute;
+				top: $diamondSize;
+				width: 0;
+			}
+		}
 
 		.impersonating-user {
 			.alert-icon{
@@ -20,6 +57,18 @@ $editLayoutPanelWidth: 460px;
 				border-width: 0;
 				margin-bottom: 6px;
 			}
+		}
+
+		.info-button {
+			top: 9px;
+		}
+
+		.info-items {
+			left: 0;
+			position: absolute;
+			top: 100%;
+			width: 100%;
+			z-index: 1;
 		}
 
 		.navbar-inner {
@@ -89,7 +138,7 @@ $editLayoutPanelWidth: 460px;
 			margin-top: -2px;
 			text-decoration: none;
 			vertical-align: middle;
-			width: 27px;
+			width: 20px;
 		}
 	}
 
@@ -98,8 +147,28 @@ $editLayoutPanelWidth: 460px;
 			height: 0;
 			position: absolute;
 
+			&.navbar-static-top {
+				.collapse {
+					position: relative;
+
+					.nav-account-controls {
+						position: fixed;
+					}
+				}
+			}
+
 			.divider-vertical {
 				display: none;
+			}
+
+			.info-button {
+				top: $diamondSize;
+			}
+
+			.info-items {
+				left: auto;
+				position: static;
+				width: auto;
 			}
 
 			.navbar-inner {
@@ -109,10 +178,11 @@ $editLayoutPanelWidth: 460px;
 				width: 0;
 
 				.nav {
-					background-color: #333;
 					border-bottom-width: 0;
 
 					> li {
+						background-color: #333;
+
 						> a {
 							color: #FFF;
 							line-height: 31px;
@@ -141,6 +211,10 @@ $editLayoutPanelWidth: 460px;
 								background-color: #555;
 								color: #FFF;
 							}
+						}
+
+						&.info-items {
+							background-color: transparent;
 						}
 
 						&.staging-toggle {
@@ -271,22 +345,30 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.info-items {
+			height: 1px;
 			width: 715px;
+
+			a, .btn-link {
+				color: #FFF;
+				text-decoration: underline;
+
+				&:hover {
+					text-decoration: none;
+
+					.taglib-text {
+						text-decoration: none;
+					}
+				}
+			}
 
 			.btn-link {
 				border-width: 0;
-				color: #FFF;
 				font-size: 14px;
 				font-weight: 300;
 				margin: 0 0 0 6px;
 				padding: 0;
-				text-decoration: underline;
 
 				@include text-shadow(none);
-
-				&:hover {
-					text-decoration: none;
-				}
 			}
 		}
 
@@ -515,16 +597,15 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	.info-button {
+		cursor: pointer;
 		display: inline-block;
 		position: relative;
-		right: 9px;
-		top: 15px;
+		right: $diamondSize;
 		z-index: 1;
 
 		a {
 			color: #FFF;
-			margin-left: -3px;
-			padding: 0 10px;
+			padding: 2px 10px;
 			position: absolute;
 			text-decoration: none;
 			z-index: 1;
@@ -538,6 +619,7 @@ $editLayoutPanelWidth: 460px;
 
 	.page-customization-bar {
 		background-color: #555;
+		background-color: rgba(0, 0, 0, 0.5);
 
 		@include box-sizing(border-box);
 
@@ -567,14 +649,18 @@ $editLayoutPanelWidth: 460px;
 			display: table-cell;
 			text-align: center;
 			vertical-align: middle;
-			width: 20%;
+			width: 25%;
 		}
 
 		.page-customization-bar-text {
 			display: table-cell;
 			height: 51px;
 			vertical-align: middle;
-			width: 80%;
+			width: 75%;
+		}
+
+		.page-customization-bar-container {
+			position: absolute;
 		}
 
 		.reset-prototype {
@@ -585,16 +671,6 @@ $editLayoutPanelWidth: 460px;
 	@media (max-width: 1140px) {
 		.dockbar-split .dockbar .info-items {
 			width: 515px;
-		}
-
-		.page-customization-bar {
-			.page-customization-bar-form {
-				width: 25%;
-			}
-
-			.page-customization-bar-text {
-				width: 75%;
-			}
 		}
 	}
 }

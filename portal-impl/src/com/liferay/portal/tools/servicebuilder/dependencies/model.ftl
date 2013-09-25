@@ -353,6 +353,11 @@ public interface ${entity.name}Model extends
 		@Override
 		public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
+		/**
+		 * Returns the class primary key of the trash entry for this ${entity.humanName}.
+		 *
+		 * @return the class primary key of the trash entry for this ${entity.humanName}
+		 */
 		@Override
 		public long getTrashEntryClassPK();
 

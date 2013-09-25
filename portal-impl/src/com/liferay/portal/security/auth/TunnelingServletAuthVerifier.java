@@ -147,7 +147,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 				TunnelUtil.getSharedSecretKey(), login);
 		}
 		catch (EncryptorException ee) {
-			throw new AuthException("Unable to decrypt login.", ee);
+			throw new AuthException("Unable to decrypt login", ee);
 		}
 		catch (InvalidKeyException ike) {
 			throw new AuthException(ike.getMessage());
@@ -155,7 +155,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 
 		if (!password.equals(expectedPassword)) {
 			throw new AuthException(
-				"Tunneling servlet shared secrets do not match.");
+				"Tunneling servlet shared secrets do not match");
 		}
 
 		User user = null;
@@ -187,7 +187,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 		}
 
 		if (user == null) {
-			throw new AuthException("Internal Server Error.");
+			throw new AuthException("Internal Server Error");
 		}
 
 		String[] credentials = new String[2];

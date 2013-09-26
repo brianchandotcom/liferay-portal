@@ -120,6 +120,8 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.Serializable;
 
+import java.security.InvalidKeyException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -2661,6 +2663,10 @@ public class StagingImpl implements Staging {
 			throw ree;
 		}
 		catch (SystemException se) {
+			if (se.getCause() instanceof InvalidKeyException) {
+				throw (InvalidKeyException)se.getCause();
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.BAD_CONNECTION, se.getMessage());
 

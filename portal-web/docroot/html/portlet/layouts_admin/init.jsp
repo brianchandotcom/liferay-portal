@@ -85,6 +85,8 @@ page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermiss
 page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %>
 
+<%@ page import="java.security.InvalidKeyException" %>
+
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 

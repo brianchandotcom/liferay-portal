@@ -71,6 +71,8 @@ page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
+<%@ page import="java.security.InvalidKeyException" %>
+
 <%
 boolean filterManageableGroups = true;
 

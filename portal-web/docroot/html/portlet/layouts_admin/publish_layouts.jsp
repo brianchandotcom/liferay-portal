@@ -228,6 +228,16 @@ else {
 
 				<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
 
+				<liferay-ui:error exception="<%= InvalidKeyException.class %>">
+
+					<%
+					InvalidKeyException ike = (InvalidKeyException)errorException;
+					%>
+
+					<%= ike.getMessage() %>
+
+				</liferay-ui:error>
+
 				<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
 
 					<%
@@ -274,6 +284,10 @@ else {
 
 					<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
 						<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" />
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(ree.getMessage()) %>">
+						<%= ree.getMessage() %>
 					</c:if>
 				</liferay-ui:error>
 

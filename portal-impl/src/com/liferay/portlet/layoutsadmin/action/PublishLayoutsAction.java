@@ -26,9 +26,12 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.sites.action.ActionUtil;
+
+import java.security.InvalidKeyException;
 
 import java.util.Date;
 
@@ -142,6 +145,7 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 				setForward(actionRequest, "portlet.layouts_admin.error");
 			}
 			else if (e instanceof DuplicateLockException ||
+					 e instanceof InvalidKeyException ||
 					 e instanceof LayoutPrototypeException ||
 					 e instanceof RemoteExportException ||
 					 e instanceof RemoteOptionsException ||
@@ -149,7 +153,12 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				redirect = ParamUtil.getString(actionRequest, "pagesRedirect");
+				redirect = ParamUtil.getString(
+					actionRequest, "pagesRedirect", redirect);
+
+				redirect = StringUtil.replace(
+					redirect, "tabs2=current-and-previous",
+					"tabs2=new-publication-process");
 
 				sendRedirect(
 					portletConfig, actionRequest, actionResponse, redirect,

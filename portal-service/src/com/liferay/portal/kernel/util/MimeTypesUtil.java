@@ -32,7 +32,7 @@ public class MimeTypesUtil {
 	 * Returns the content type from the file.
 	 *
 	 * @param  file the file of the content
-	 * @return the content type if it is a supported format or an
+	 * @return the content type if it is a supported format or
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(File file) {
@@ -45,7 +45,7 @@ public class MimeTypesUtil {
 	 * @param  file the file of the content (optionally <code>null</code>)
 	 * @param  fileName the full name or extension of the file (e.g.,
 	 *         "Test.doc", ".doc")
-	 * @return the content type if it is a supported format or an
+	 * @return the content type if it is a supported format or
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(File file, String fileName) {
@@ -65,7 +65,7 @@ public class MimeTypesUtil {
 	 *         <code>null</code>)
 	 * @param  fileName the full name or extension of the file (e.g.,
 	 *         "Test.doc", ".doc")
-	 * @return the content type if it is a supported format or an
+	 * @return the content type if it is a supported format or
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(
@@ -79,7 +79,7 @@ public class MimeTypesUtil {
 	 *
 	 * @param  fileName the full name or extension of the file (e.g.,
 	 *         "Test.doc", ".doc")
-	 * @return the content type if it is a supported format or an
+	 * @return the content type if it is a supported format or
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(String fileName) {
@@ -90,7 +90,7 @@ public class MimeTypesUtil {
 	 * Returns the content type from the file extension.
 	 *
 	 * @param  extension the extension of the file (e.g., "doc")
-	 * @return the content type if it is a supported format or an
+	 * @return the content type if it is a supported format or
 	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getExtensionContentType(String extension) {

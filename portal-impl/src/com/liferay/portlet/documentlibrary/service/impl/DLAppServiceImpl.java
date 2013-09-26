@@ -224,7 +224,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	/**
 	 * Adds a file entry and associated metadata. It is created based on a
-	 * {@link java.io.InputStream} object.
+	 * {@link InputStream} object.
 	 *
 	 * <p>
 	 * This method takes two file names, the <code>sourceFileName</code> and the
@@ -395,8 +395,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a temporary file entry. It is created based on a {@link
-	 * java.io.InputStream} object.
+	 * Adds a temporary file entry. It is created based on the {@link
+	 * InputStream} object.
 	 *
 	 * <p>
 	 * This allows a client to upload a file into a temporary location and
@@ -2933,7 +2933,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * Updates a file entry and associated metadata based on an {@link java.io.
+	 * Updates a file entry and associated metadata based on an {@link
 	 * InputStream} object. If the file data is <code>null</code>, then only the
 	 * associated metadata (i.e., <code>title</code>, <code>description</code>,
 	 * and parameters in the <code>serviceContext</code>) will be updated.

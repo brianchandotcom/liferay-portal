@@ -47,6 +47,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryExportActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeExportActionableDynamicQuery;
@@ -108,6 +109,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		DLAppLocalServiceUtil.deleteAll(portletDataContext.getScopeGroupId());
+
+		DLFileEntryTypeLocalServiceUtil.deleteFileEntryTypes(
+			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}

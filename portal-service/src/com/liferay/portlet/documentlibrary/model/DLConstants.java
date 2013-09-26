@@ -14,24 +14,26 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
- * @author Samuel Kong
+ * @author Everest Liu
  */
-public class DLFileEntryConstants {
+public class DLConstants {
 
-	public static final int DEFAULT_READ_COUNT = 0;
+	public static boolean isValidName(String fileName) {
+		Matcher matcher = DL_FILE_VALID_NAME_REGEXP.matcher(fileName);
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		PropsUtil.get("lock.expiration.time." + getClassName()));
-
-	public static final String PRIVATE_WORKING_COPY_VERSION = "PWC";
-
-	public static final String VERSION_DEFAULT = "1.0";
-
-	public static String getClassName() {
-		return DLFileEntry.class.getName();
+		return fileName == null || matcher.matches();
 	}
+
+	private static final Pattern DL_FILE_VALID_NAME_REGEXP =
+		Pattern.compile(
+			PropsUtil.get(PropsKeys.DL_VALID_NAME_REGEXP),
+			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+
 }

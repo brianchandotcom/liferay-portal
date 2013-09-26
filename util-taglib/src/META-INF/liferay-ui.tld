@@ -2322,6 +2322,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>languageId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>languageIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -195,7 +195,7 @@ boolean expired = true;
 										</c:if>
 
 										<div class="locale-actions">
-											<liferay-ui:language displayStyle="<%= 0 %>" languageIds="<%= availableLocales %>" />
+											<liferay-ui:language displayStyle="<%= 0 %>" formAction="<%= currentURL.toString() %>" languageId="<%= LanguageUtil.getLanguageId(request) %>" languageIds="<%= availableLocales %>" />
 										</div>
 									</c:if>
 								</c:if>

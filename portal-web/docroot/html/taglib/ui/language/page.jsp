@@ -44,10 +44,11 @@ if (Validator.isNull(formAction)) {
 	formAction = liferayPortletURL.toString();
 }
 
-String name = (String)request.getAttribute("liferay-ui:language:name");
-Locale[] locales = (Locale[])request.getAttribute("liferay-ui:language:locales");
 boolean displayCurrentLocale = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);
 int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:language:displayStyle"));
+String languageId = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:languageId"), LocaleUtil.toLanguageId(locale));
+Locale[] locales = (Locale[])request.getAttribute("liferay-ui:language:locales");
+String name = (String)request.getAttribute("liferay-ui:language:name");
 
 Map langCounts = new HashMap();
 
@@ -111,10 +112,9 @@ for (int i = 0; i < locales.length; i++) {
 
 		<%
 		for (int i = 0; i < locales.length; i++) {
-			String currentLanguageId = LocaleUtil.toLanguageId(locale);
-			String languageId = LocaleUtil.toLanguageId(locales[i]);
+			String currentLanguageId = LocaleUtil.toLanguageId(locales[i]);
 
-			if (!displayCurrentLocale && currentLanguageId.equals(languageId)) {
+			if (!displayCurrentLocale && languageId.equals(currentLanguageId)) {
 				continue;
 			}
 
@@ -137,20 +137,20 @@ for (int i = 0; i < locales.length; i++) {
 			<c:choose>
 				<c:when test="<%= (displayStyle == LanguageTag.LIST_LONG_TEXT) || (displayStyle == LanguageTag.LIST_SHORT_TEXT) %>">
 					<c:choose>
-						<c:when test="<%= currentLanguageId.equals(languageId) %>">
+						<c:when test="<%= languageId.equals(currentLanguageId) %>">
 							<span class="<%= cssClassName %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></span>
 						</c:when>
 						<c:otherwise>
-							<aui:a cssClass="<%= cssClassName %>" href="<%= HttpUtil.addParameter(formAction, namespace + name, LocaleUtil.toLanguageId(locales[i])) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></aui:a>
+							<aui:a cssClass="<%= cssClassName %>" href="<%= HttpUtil.addParameter(formAction, namespace + name, currentLanguageId) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></aui:a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:icon
-						image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
+						image='<%= "../language/" + currentLanguageId %>'
 						lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"
 						message="<%= LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages) %>"
-						url="<%= currentLanguageId.equals(languageId) ? null : HttpUtil.addParameter(formAction, namespace + name, LocaleUtil.toLanguageId(locales[i])) %>"
+						url="<%= languageId.equals(currentLanguageId) ? null : HttpUtil.setParameter(formAction, namespace + name, currentLanguageId) %>"
 					/>
 				</c:otherwise>
 			</c:choose>

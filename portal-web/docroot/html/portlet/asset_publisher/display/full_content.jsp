@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String languageId = LanguageUtil.getLanguageId(request);
 
 List results = (List)request.getAttribute("view.jsp-results");
 
@@ -35,7 +36,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
 
-String title = (String)request.getAttribute("view.jsp-title");
+String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(languageId));
 
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
@@ -70,8 +71,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			<c:if test="<%= (enableConversions && assetRenderer.isConvertible()) && !print %>">
 
 				<%
-				String languageId = LanguageUtil.getLanguageId(request);
-
 				PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
 				%>
 
@@ -82,8 +81,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			<c:if test="<%= (showAvailableLocales && assetRenderer.isLocalizable()) && !print %>">
 
 				<%
-				String languageId = LanguageUtil.getLanguageId(request);
-
 				String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();
 				%>
 
@@ -93,7 +90,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 					</c:if>
 
 					<div class="locale-actions">
-						<liferay-ui:language displayStyle="<%= 0 %>" languageIds="<%= availableLanguageIds %>" />
+						<liferay-ui:language displayStyle="<%= 0 %>" formAction="<%= currentURL.toString() %>" languageId="<%= languageId %>" languageIds="<%= availableLanguageIds %>" />
 					</div>
 				</c:if>
 			</c:if>
@@ -150,7 +147,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				contentId="<%= String.valueOf(assetEntry.getEntryId()) %>"
 				displayStyle="<%= socialBookmarksDisplayStyle %>"
 				target="_blank"
-				title="<%= assetEntry.getTitle(locale) %>"
+				title="<%= title %>"
 				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
 			/>
 		</c:if>
@@ -171,7 +168,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				<liferay-ui:flags
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
-					contentTitle="<%= assetRenderer.getTitle(locale) %>"
+					contentTitle="<%= title %>"
 					reportedUserId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>
@@ -181,7 +178,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			<liferay-ui:social-bookmarks
 				displayStyle="<%= socialBookmarksDisplayStyle %>"
 				target="_blank"
-				title="<%= assetEntry.getTitle(locale) %>"
+				title="<%= title %>"
 				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
 			/>
 		</c:if>

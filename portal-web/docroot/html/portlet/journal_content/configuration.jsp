@@ -249,38 +249,43 @@ catch (NoSuchArticleException nsae) {
 	</aui:fieldset>
 
 	<aui:fieldset>
-		<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
+		<aui:field-wrapper>
+			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
+		</aui:field-wrapper>
 
-		<%
-		for (String conversion : conversions) {
-		%>
+		<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
 
-			<label class="checkbox">
-				<input <%= ArrayUtil.contains(extensions, conversion) ? "checked": "" %> <%= openOfficeServerEnabled ? "" : "disabled" %> name="<portlet:namespace />extensions" type="checkbox" value="<%= conversion %>" />
+			<%
+			for (String conversion : conversions) {
+			%>
 
-				<liferay-ui:message key="convert-to" /> .<%= conversion %>
+				<label class="checkbox">
+					<input <%= ArrayUtil.contains(extensions, conversion) ? "checked": "" %> <%= openOfficeServerEnabled ? "" : "disabled" %> name="<portlet:namespace />extensions" type="checkbox" value="<%= conversion %>" />
 
-				<c:if test="<%= !openOfficeServerEnabled %>">
-					<liferay-ui:icon-help message="enabling-openoffice-integration-provides-document-conversion-functionality" />
-				</c:if>
-			</label>
-		<%
-		}
-		%>
+					<liferay-ui:message key="convert-to" /> .<%= conversion %>
+				</label>
 
-		<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= enablePrint %>" />
+			<%
+			}
+			%>
 
-		<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+		</aui:field-wrapper>
 
-		<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
+		<aui:field-wrapper>
+			<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= enablePrint %>" />
 
-		<c:if test="<%= PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED %>">
-			<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
+			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
 
-			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
-		</c:if>
+			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 
-		<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= enableViewCountIncrement %>" />
+			<c:if test="<%= PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED %>">
+				<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
+
+				<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+			</c:if>
+
+			<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= enableViewCountIncrement %>" />
+		</aui:field-wrapper>
 	</aui:fieldset>
 
 	<aui:button-row>

@@ -103,16 +103,10 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return false;
 		}
 
-		MBDiscussion discussion = MBDiscussionLocalServiceUtil.fetchDiscussion(
-			subscriptionClassName, subscriptionClassPK);
-
-		MBThread discussionThread = MBThreadLocalServiceUtil.fetchThread(
-			discussion.getThreadId());
-
 		if (Validator.isNotNull(inferredClassName)) {
 			Boolean hasPermission = hasPermission(
 				permissionChecker, inferredClassName, inferredClassPK,
-				ActionKeys.VIEW, discussionThread);
+				ActionKeys.VIEW);
 
 			if ((hasPermission == null) || !hasPermission) {
 				return false;
@@ -121,7 +115,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 		Boolean hasPermission = hasPermission(
 			permissionChecker, subscriptionClassName, subscriptionClassPK,
-			ActionKeys.SUBSCRIBE, discussionThread);
+			ActionKeys.SUBSCRIBE);
 
 		if (hasPermission != null) {
 			return hasPermission;
@@ -132,27 +126,34 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 	protected Boolean hasPermission(
 			PermissionChecker permissionChecker, String className, long classPK,
-			String actionId, MBThread discussionThread)
+			String actionId)
 		throws PortalException, SystemException {
 
-		if (discussionThread != null) {
+		MBDiscussion mbDiscussion =
+			MBDiscussionLocalServiceUtil.fetchDiscussion(className, classPK);
+
+		if (mbDiscussion != null) {
 			if (className.equals(Layout.class.getName())) {
 				return LayoutPermissionUtil.contains(
 					permissionChecker, classPK, ActionKeys.VIEW);
 			}
-			else if (className.equals(WorkflowInstance.class.getName())) {
+
+			MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(
+				mbDiscussion.getThreadId());
+
+			if (className.equals(WorkflowInstance.class.getName())) {
 				return permissionChecker.hasPermission(
-					discussionThread.getGroupId(),
-					PortletKeys.WORKFLOW_DEFINITIONS,
-					discussionThread.getGroupId(), ActionKeys.VIEW);
+					mbThread.getGroupId(), PortletKeys.WORKFLOW_DEFINITIONS,
+					mbThread.getGroupId(), ActionKeys.VIEW);
 			}
 
 			return MBDiscussionPermission.contains(
-				permissionChecker, discussionThread.getCompanyId(),
-				discussionThread.getGroupId(), className, classPK,
-				discussionThread.getUserId(), ActionKeys.VIEW);
+				permissionChecker, mbThread.getCompanyId(),
+				mbThread.getGroupId(), className, classPK, mbThread.getUserId(),
+				ActionKeys.VIEW);
 		}
-		else if (className.equals(BlogsEntry.class.getName())) {
+
+		if (className.equals(BlogsEntry.class.getName())) {
 			return BlogsPermission.contains(
 				permissionChecker, classPK, actionId);
 		}

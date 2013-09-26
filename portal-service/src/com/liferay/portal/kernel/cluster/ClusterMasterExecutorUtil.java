@@ -62,9 +62,9 @@ public class ClusterMasterExecutorUtil {
 		return _clusterMasterExecutor.isMaster();
 	}
 
-	public static void registerClusterMasterTokenAcquisitionListener(
+	public static void registerClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
-			clusterMasterTokenAcquisitionListener) {
+			clusterMasterTokenTransitionListener) {
 
 		ClusterMasterExecutor clusterMasterExecutor =
 			getClusterMasterExecutor();
@@ -73,13 +73,13 @@ public class ClusterMasterExecutorUtil {
 			return;
 		}
 
-		_clusterMasterExecutor.registerClusterMasterTokenAcquisitionListener(
-			clusterMasterTokenAcquisitionListener);
+		_clusterMasterExecutor.registerClusterMasterTokenTransitionListener(
+			clusterMasterTokenTransitionListener);
 	}
 
-	public static void unregisterClusterMasterTokenAcquisitionListener(
+	public static void unregisterClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
-			clusterMasterTokenAcquisitionListener) {
+			clusterMasterTokenTransitionListener) {
 
 		ClusterMasterExecutor clusterMasterExecutor =
 			getClusterMasterExecutor();
@@ -88,8 +88,8 @@ public class ClusterMasterExecutorUtil {
 			return;
 		}
 
-		_clusterMasterExecutor.unregisterClusterMasterTokenAcquisitionListener(
-			clusterMasterTokenAcquisitionListener);
+		_clusterMasterExecutor.unregisterClusterMasterTokenTransitionListener(
+			clusterMasterTokenTransitionListener);
 	}
 
 	public void setClusterMasterExecutor(

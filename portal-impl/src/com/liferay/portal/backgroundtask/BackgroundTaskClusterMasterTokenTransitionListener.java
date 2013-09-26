@@ -14,14 +14,14 @@
 
 package com.liferay.portal.backgroundtask;
 
-import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenAcquisitionListener;
+import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 
 /**
  * @author Michael C. Han
  */
-public class BackgroundTaskClusterMasterTokenAcquisitionListener
-	extends BaseClusterMasterTokenAcquisitionListener {
+public class BackgroundTaskClusterMasterTokenTransitionListener
+	extends BaseClusterMasterTokenTransitionListener {
 
 	@Override
 	protected void doMasterTokenAcquired() throws Exception {

@@ -8,11 +8,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.cluster.AddressSerializerUtil" class="com.liferay.portal.kernel.cluster.AddressSerializerUtil">
-		<property name="addressSerializer">
-			<bean class="com.liferay.portal.cluster.AddressSerializerImpl" />
-		</property>
-	</bean>
 	<bean id="chainableMethodAdviceInjector.clusterableAdvice" class="com.liferay.portal.spring.aop.ChainableMethodAdviceInjector">
 		<property name="injectCondition">
 			<util:constant static-field="com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED" />
@@ -38,9 +33,9 @@
 	</bean>
 	<bean id="com.liferay.portal.kernel.cluster.ClusterMasterExecutor" class="com.liferay.portal.cluster.ClusterMasterExecutorImpl">
 		<property name="clusterExecutor" ref="com.liferay.portal.kernel.cluster.ClusterExecutor" />
-		<property name="clusterMasterTokenAcquisitionListeners">
+		<property name="clusterMasterTokenTransitionListeners">
 			<util:set>
-				<bean class="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenAcquisitionListener" />
+				<bean class="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenTransitionListener" />
 			</util:set>
 		</property>
 	</bean>

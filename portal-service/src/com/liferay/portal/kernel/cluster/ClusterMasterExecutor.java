@@ -29,11 +29,11 @@ public interface ClusterMasterExecutor {
 
 	public boolean isMaster();
 
-	public void registerClusterMasterTokenAcquisitionListener(
+	public void registerClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenAcquisitionListener);
 
-	public void unregisterClusterMasterTokenAcquisitionListener(
+	public void unregisterClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenAcquisitionListener);
 

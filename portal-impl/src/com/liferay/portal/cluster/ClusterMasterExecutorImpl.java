@@ -129,24 +129,24 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
-	public void registerClusterMasterTokenAcquisitionListener(
+	public void registerClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
-			clusterMasterTokenAcquisitionListener) {
+			clusterMasterTokenTransitionListener) {
 
-		_clusterMasterTokenAcquisitionListeners.add(
-			clusterMasterTokenAcquisitionListener);
+		_clusterMasterTokenTransitionListeners.add(
+			clusterMasterTokenTransitionListener);
 	}
 
 	public void setClusterExecutor(ClusterExecutor clusterExecutor) {
 		_clusterExecutor = clusterExecutor;
 	}
 
-	public void setClusterMasterTokenAcquisitionListeners(
+	public void setClusterMasterTokenTransitionListeners(
 		Set<ClusterMasterTokenTransitionListener>
-			clusterMasterTokenAcquisitionListeners) {
+			clusterMasterTokenTransitionListeners) {
 
-		_clusterMasterTokenAcquisitionListeners.addAll(
-			clusterMasterTokenAcquisitionListeners);
+		_clusterMasterTokenTransitionListeners.addAll(
+			clusterMasterTokenTransitionListeners);
 	}
 
 	public void setTimeout(int timeout) {
@@ -154,12 +154,12 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
-	public void unregisterClusterMasterTokenAcquisitionListener(
+	public void unregisterClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
-			clusterMasterTokenAcquisitionListener) {
+			clusterMasterTokenTransitionListener) {
 
-		_clusterMasterTokenAcquisitionListeners.remove(
-			clusterMasterTokenAcquisitionListener);
+		_clusterMasterTokenTransitionListeners.remove(
+			clusterMasterTokenTransitionListener);
 	}
 
 	protected String getMasterAddressString() throws SystemException {
@@ -221,14 +221,14 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		boolean masterTokenAcquired) {
 
 		for (ClusterMasterTokenTransitionListener
-			clusterMasterTokenAcquisitionListener :
-				_clusterMasterTokenAcquisitionListeners) {
+			clusterMasterTokenTransitionListener :
+			_clusterMasterTokenTransitionListeners) {
 
 			if (masterTokenAcquired) {
-				clusterMasterTokenAcquisitionListener.masterTokenAcquired();
+				clusterMasterTokenTransitionListener.masterTokenAcquired();
 			}
 			else {
-				clusterMasterTokenAcquisitionListener.masterTokenReleased();
+				clusterMasterTokenTransitionListener.masterTokenReleased();
 			}
 		}
 	}
@@ -244,7 +244,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	private ClusterEventListener _clusterEventListener;
 	private ClusterExecutor _clusterExecutor;
 	private Set<ClusterMasterTokenTransitionListener>
-		_clusterMasterTokenAcquisitionListeners =
+		_clusterMasterTokenTransitionListeners =
 		new HashSet<ClusterMasterTokenTransitionListener>();
 	private volatile String _localClusterNodeAddress;
 	private int _timeout = 10;
@@ -259,7 +259,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			}
 			catch (Exception e) {
 				_log.error(
-					"Unable to update background task manager cluster lock", e);
+					"Unable to update cluster master lock", e);
 			}
 		}
 	}

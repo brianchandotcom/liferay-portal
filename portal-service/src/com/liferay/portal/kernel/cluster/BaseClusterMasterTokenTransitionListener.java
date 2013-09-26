@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 /**
  * @author Michael C. Han
  */
-public abstract class BaseClusterMasterTokenAcquisitionListener
+public abstract class BaseClusterMasterTokenTransitionListener
 	implements ClusterMasterTokenTransitionListener {
 
 	@Override
@@ -52,6 +52,6 @@ public abstract class BaseClusterMasterTokenAcquisitionListener
 	protected abstract void doMasterTokenReleased() throws Exception;
 
 	private static Log _log = LogFactoryUtil.getLog(
-		BaseClusterMasterTokenAcquisitionListener.class);
+		BaseClusterMasterTokenTransitionListener.class);
 
 }

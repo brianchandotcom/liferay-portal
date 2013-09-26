@@ -16,6 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -28,6 +29,11 @@ public class VerifyBlogs extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		updateEntryAssets();
+		verifyStatus();
+	}
+
+	protected void updateEntryAssets() throws Exception {
 		List<BlogsEntry> entries =
 			BlogsEntryLocalServiceUtil.getNoAssetEntries();
 
@@ -53,6 +59,12 @@ public class VerifyBlogs extends VerifyProcess {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for entries");
 		}
+	}
+
+	protected void verifyStatus() throws Exception {
+		runSQL(
+			"update BlogEntry set status = " +
+				WorkflowConstants.STATUS_APPROVED + " where status is null");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyBlogs.class);

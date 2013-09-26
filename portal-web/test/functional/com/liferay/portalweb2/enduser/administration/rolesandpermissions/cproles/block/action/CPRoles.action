@@ -3,16 +3,18 @@
 		<case comparator="startsWith" locator-key1="ADD_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="startsWith" locator-key1="ROLE_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="SEARCH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 
 	<command name="isElementPresent">
-		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS_">
+		<case comparator="startsWith" locator-key1="ROLE_TABLE_ACTIONS">
 			<execute function="IsElementPresent#pauseIsElementPresent" />
 		</case>
 	</command>

@@ -1699,6 +1699,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<replace file="portal-impl/src/portal-ext.properties" token="setup.wizard.enabled=false" value="" />
 			</then>
 		</if>
+
+		<copy
+			file="portal-impl/src/portal-ext.properties"
+			tofile="${app.server.classes.portal.dir}/portal-ext.properties"
+		/>
 	</target>
 
 	<target name="prepare-portal-properties">

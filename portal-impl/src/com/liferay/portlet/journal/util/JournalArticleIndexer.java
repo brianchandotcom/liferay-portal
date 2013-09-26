@@ -388,7 +388,16 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String title = document.get(
 			snippetLocale, prefix + Field.TITLE, Field.TITLE);
 
-		String content = getBasicContentSummary(document, snippetLocale);
+		String content = StringPool.BLANK;
+
+		String ddmStructureKey = document.get("ddmStructureKey");
+
+		if (Validator.isNotNull(ddmStructureKey)) {
+			content = getDDMContentSummary(document, snippetLocale);
+		}
+		else {
+			content = getBasicContentSummary(document, snippetLocale);
+		}
 
 		String groupId = document.get(Field.GROUP_ID);
 		String articleId = document.get("articleId");

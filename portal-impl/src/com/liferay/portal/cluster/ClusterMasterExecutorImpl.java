@@ -341,8 +341,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 				getMasterAddressString();
 			}
 			catch (Exception e) {
-				_log.error(
-					"Unable to update cluster master lock", e);
+				_log.error("Unable to update cluster master lock", e);
 			}
 		}
 	}

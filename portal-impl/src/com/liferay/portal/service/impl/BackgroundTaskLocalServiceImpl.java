@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.cluster.ClusterMasterClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -195,7 +196,7 @@ public class BackgroundTaskLocalServiceImpl
 		return backgroundTask;
 	}
 
-	@Clusterable(onMaster = true)
+	@Clusterable(acceptor = ClusterMasterClusterInvokeAcceptor.class)
 	@Override
 	public void cleanUpBackgroundTask(
 		final BackgroundTask backgroundTask, final int status) {
@@ -245,7 +246,7 @@ public class BackgroundTaskLocalServiceImpl
 		);
 	}
 
-	@Clusterable(onMaster = true)
+	@Clusterable(acceptor = ClusterMasterClusterInvokeAcceptor.class)
 	@Override
 	public void cleanUpBackgroundTasks() throws SystemException {
 		List<BackgroundTask> backgroundTasks =
@@ -528,7 +529,7 @@ public class BackgroundTaskLocalServiceImpl
 		return StringPool.BLANK;
 	}
 
-	@Clusterable(onMaster = true)
+	@Clusterable(acceptor = ClusterMasterClusterInvokeAcceptor.class)
 	@Override
 	public void resumeBackgroundTask(long backgroundTaskId)
 		throws SystemException {
@@ -550,7 +551,7 @@ public class BackgroundTaskLocalServiceImpl
 		MessageBusUtil.sendMessage(DestinationNames.BACKGROUND_TASK, message);
 	}
 
-	@Clusterable(onMaster = true)
+	@Clusterable(acceptor = ClusterMasterClusterInvokeAcceptor.class)
 	@Override
 	public void triggerBackgroundTask(long backgroundTaskId) {
 		Message message = new Message();

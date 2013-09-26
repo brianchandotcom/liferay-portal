@@ -14,23 +14,13 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Clusterable {
+public interface ClusterMasterTokenTransitionListener {
 
-	public Class<? extends ClusterInvokeAcceptor> acceptor()
-		default ClusterInvokeAcceptor.class;
+	public void masterTokenAcquired();
 
-	public boolean onMaster() default false;
+	public void masterTokenReleased();
 
 }

@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public class ClusterInvokeThreadLocal {
+public class ClusterMasterClusterInvokeAcceptor
+	implements ClusterInvokeAcceptor {
 
-	public static boolean isEnabled() {
-		return _enabled.get();
+	@Override
+	public boolean accept(Map<String, Serializable> context) {
+		if (ClusterMasterExecutorUtil.isMaster()) {
+			return true;
+		}
+
+		return false;
 	}
-
-	public static void setEnabled(boolean enabled) {
-		_enabled.set(enabled);
-	}
-
-	private static ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<Boolean>(
-			ClusterInvokeThreadLocal.class + "._enabled", true);
 
 }

@@ -1,0 +1,12 @@
+<definition>
+	<command name="name">
+		<if>
+			<or />
+			<isset var="var1" />
+			<isset var="var2" />
+			<then>
+				<execute macro="BlogsEntry#addPG" />
+			</then>
+		</if>
+	</command>
+</definition>

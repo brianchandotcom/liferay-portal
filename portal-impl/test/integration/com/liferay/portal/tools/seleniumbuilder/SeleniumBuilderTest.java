@@ -720,6 +720,64 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroAndElement1001_1() throws Exception {
+		test(
+			"MacroAndElement1001_1.macro",
+			"Error 1001: Missing (then) child element in " + _DIR_NAME +
+				"/MacroAndElement1001_1.macro:3");
+	}
+
+	@Test
+	public void testMacroAndElement1001_2() throws Exception {
+		test(
+			"MacroAndElement1001_2.macro",
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME + "/MacroAndElement1001_2.macro:8");
+	}
+
+	@Test
+	public void testMacroAndElement1001_3() throws Exception {
+		test(
+			"MacroAndElement1001_3.macro",
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+				"/MacroAndElement1001_3.macro:4");
+	}
+
+	@Test
+	public void testMacroAndElement1001_4() throws Exception {
+		test(
+			"MacroAndElement1001_4.macro",
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+				"/MacroAndElement1001_4.macro:4");
+	}
+
+	@Test
+	public void testMacroAndElement1002() throws Exception {
+		test(
+			"MacroAndElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroAndElement1002.macro:14");
+	}
+
+	@Test
+	public void testMacroAndElement1007_1() throws Exception {
+		test(
+			"MacroAndElement1007_1.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroAndElement1007_1.macro");
+	}
+
+	@Test
+	public void testMacroAndElement1007_2() throws Exception {
+		test(
+			"MacroAndElement1007_2.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroAndElement1007_2.macro");
+	}
+
+	@Test
 	public void testMacroCommandElement1001() throws Exception {
 		test(
 			"MacroCommandElement1001.macro",
@@ -1027,8 +1085,8 @@ public class SeleniumBuilderTest {
 	public void testMacroElseifElement1001_1() throws Exception {
 		test(
 			"MacroElseifElement1001_1.macro",
-			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
-				"element in " + _DIR_NAME +
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
 				"/MacroElseifElement1001_1.macro:8");
 	}
 
@@ -1044,8 +1102,8 @@ public class SeleniumBuilderTest {
 	public void testMacroElseifElement1001_3() throws Exception {
 		test(
 			"MacroElseifElement1001_3.macro",
-			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
-				"element in " + _DIR_NAME +
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
 				"/MacroElseifElement1001_3.macro:8");
 	}
 
@@ -1237,8 +1295,9 @@ public class SeleniumBuilderTest {
 	public void testMacroIfElement1001_1() throws Exception {
 		test(
 			"MacroIfElement1001_1.macro",
-			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
-				"element in " + _DIR_NAME + "/MacroIfElement1001_1.macro:3");
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+					"/MacroIfElement1001_1.macro:3");
 	}
 
 	@Test
@@ -1253,8 +1312,9 @@ public class SeleniumBuilderTest {
 	public void testMacroIfElement1001_3() throws Exception {
 		test(
 			"MacroIfElement1001_3.macro",
-			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
-				"element in " + _DIR_NAME + "/MacroIfElement1001_3.macro:3");
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+					"/MacroIfElement1001_3.macro:3");
 	}
 
 	@Test
@@ -1325,8 +1385,8 @@ public class SeleniumBuilderTest {
 	public void testMacroNotElement1001_3() throws Exception {
 		test(
 			"MacroNotElement1001_3.macro",
-			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
-				"element in " + _DIR_NAME +
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
 				"/MacroNotElement1001_3.macro:4");
 	}
 
@@ -1334,8 +1394,8 @@ public class SeleniumBuilderTest {
 	public void testMacroNotElement1001_4() throws Exception {
 		test(
 			"MacroNotElement1001_4.macro",
-			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
-				"element in " + _DIR_NAME +
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
 				"/MacroNotElement1001_4.macro:4");
 	}
 
@@ -1353,6 +1413,64 @@ public class SeleniumBuilderTest {
 			"MacroNotElement1007.macro",
 			"Error 1007: Poorly formed XML in " + _DIR_NAME +
 				"/MacroNotElement1007.macro");
+	}
+
+	@Test
+	public void testMacroOrElement1001_1() throws Exception {
+		test(
+			"MacroOrElement1001_1.macro",
+			"Error 1001: Missing (then) child element in " + _DIR_NAME +
+				"/MacroOrElement1001_1.macro:3");
+	}
+
+	@Test
+	public void testMacroOrElement1001_2() throws Exception {
+		test(
+			"MacroOrElement1001_2.macro",
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME + "/MacroOrElement1001_2.macro:8");
+	}
+
+	@Test
+	public void testMacroOrElement1001_3() throws Exception {
+		test(
+			"MacroOrElement1001_3.macro",
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+				"/MacroOrElement1001_3.macro:4");
+	}
+
+	@Test
+	public void testMacroOrElement1001_4() throws Exception {
+		test(
+			"MacroOrElement1001_4.macro",
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+				"/MacroOrElement1001_4.macro:4");
+	}
+
+	@Test
+	public void testMacroOrElement1002() throws Exception {
+		test(
+			"MacroOrElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroOrElement1002.macro:14");
+	}
+
+	@Test
+	public void testMacroOrElement1007_1() throws Exception {
+		test(
+			"MacroOrElement1007_1.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroOrElement1007_1.macro");
+	}
+
+	@Test
+	public void testMacroOrElement1007_2() throws Exception {
+		test(
+			"MacroOrElement1007_2.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroOrElement1007_2.macro");
 	}
 
 	@Test

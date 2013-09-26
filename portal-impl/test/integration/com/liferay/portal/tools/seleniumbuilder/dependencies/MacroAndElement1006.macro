@@ -1,0 +1,13 @@
+<definition>
+	<command name="name">
+		<if>
+			<and>
+				<condition action="BaseLiferay" />
+				<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_NAME_X" />
+			</and>
+			<then>
+				<execute macro="BlogsEntry#addPG" />
+			</then>
+		</if>
+	</command>
+</definition>

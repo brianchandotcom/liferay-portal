@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<and>
+				<isset var="var1" />
+				<isset var="var2" />
+			</or>
+		</if>
+	</command>
+</definition>

@@ -71,18 +71,23 @@
 </tr>
 <!--ROLE_TABLE-->
 <tr>
-	<td>ROLE_TABLE_TITLE_1</td>
-	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td>ROLE_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_TABLE_TYPE_1</td>
-	<td>xpath=(//tr/td[2]/a)[1]</td>
+	<td>ROLE_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[4]/div/a[@title='Actions'])[1]</td>
+	<td>//tr/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[4]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

@@ -707,6 +707,7 @@
 
 	<command name="AddRegularRole">
 		<var name="roleName" value="Roles Regrole Name" />
+		<var name="roleType" value="Regular" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
@@ -722,6 +723,7 @@
 
 		<execute macro="Role#viewCP">
 			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
 		</execute>
 	</command>
 

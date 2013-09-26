@@ -48,6 +48,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTROL_PANEL_GENERAL_PERMISSIONS-->
+<tr>
+	<td>CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL</td>
+	<td>//input[@value='90VIEW_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_PAGES_SITE_PAGES_SITE-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION</td>

@@ -12,25 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
-
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+package com.liferay.portal.kernel.cluster;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public class ClusterInvokeThreadLocal {
+public interface ClusterMasterTokenTransitionListener {
 
-	public static boolean isEnabled() {
-		return _enabled.get();
-	}
+	public void masterTokenAcquired();
 
-	public static void setEnabled(boolean enabled) {
-		_enabled.set(enabled);
-	}
-
-	private static ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<Boolean>(
-			ClusterInvokeThreadLocal.class + "._enabled", true);
+	public void masterTokenReleased();
 
 }

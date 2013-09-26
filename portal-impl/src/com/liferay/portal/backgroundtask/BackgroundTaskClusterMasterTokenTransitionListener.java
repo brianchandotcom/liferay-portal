@@ -12,25 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cluster;
+package com.liferay.portal.backgroundtask;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Clusterable {
+public class BackgroundTaskClusterMasterTokenTransitionListener
+	extends BaseClusterMasterTokenTransitionListener {
 
-	public Class<? extends ClusterInvokeAcceptor> acceptor()
-		default ClusterInvokeAcceptor.class;
+	@Override
+	protected void doMasterTokenAcquired() throws Exception {
+		BackgroundTaskLocalServiceUtil.cleanUpBackgroundTasks();
+	}
 
-	public boolean onMaster() default false;
+	@Override
+	protected void doMasterTokenReleased() throws Exception {
+	}
 
 }

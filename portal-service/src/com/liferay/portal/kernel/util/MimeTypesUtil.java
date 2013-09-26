@@ -28,10 +28,26 @@ import java.util.Set;
  */
 public class MimeTypesUtil {
 
+	/**
+	 * Returns the content type from an file.
+	 *
+	 * @param  file the file of the content
+	 * @return the content type if it is a supported format or an
+	 *         "application/octet-stream" if it is an unsupported format
+	 */
 	public static String getContentType(File file) {
 		return getMimeTypes().getContentType(file);
 	}
 
+	/**
+	 * Returns the content type from an file and file name.
+	 *
+	 * @param  file the file of the content (optionally <code>null</code>)
+	 * @param  fileName the full name or extension of file (e.g., "Test.doc",
+	 *         ".doc")
+	 * @return the content type if it is a supported format or an
+	 *         "application/octet-stream" if it is an unsupported format
+	 */
 	public static String getContentType(File file, String fileName) {
 		return getMimeTypes().getContentType(file, fileName);
 	}
@@ -39,12 +55,18 @@ public class MimeTypesUtil {
 	/**
 	 * Returns the content type from an input stream and file name.
 	 *
+	 * <p>
+	 * The input stream is not reset upon return of this method. This needs to
+	 * be handled by the caller if the input stream is to be reused.
+	 * Alternatively, use the method {@link #getContentType(File, String)}.
+	 * </p>
+	 *
 	 * @param  inputStream the input stream of the content (optionally
 	 *         <code>null</code>)
 	 * @param  fileName the full name or extension of file (e.g., "Test.doc",
 	 *         ".doc")
-	 * @return the content type if it is a supported format or an empty string
-	 *         if it is an unsupported format
+	 * @return the content type if it is a supported format or an
+	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(
 		InputStream inputStream, String fileName) {
@@ -57,13 +79,20 @@ public class MimeTypesUtil {
 	 *
 	 * @param  fileName the full name or extension of the file (e.g.,
 	 *         "Test.doc", ".doc")
-	 * @return the content type if it is a supported format or an empty string
-	 *         if it is an unsupported format
+	 * @return the content type if it is a supported format or an
+	 *         "application/octet-stream" if it is an unsupported format
 	 */
 	public static String getContentType(String fileName) {
 		return getMimeTypes().getContentType(fileName);
 	}
 
+	/**
+	 * Returns the content type from a file extension.
+	 *
+	 * @param  extension of the file (e.g., "doc")
+	 * @return the content type if it is a supported format or an
+	 *         "application/octet-stream" if it is an unsupported format
+	 */
 	public static String getExtensionContentType(String extension) {
 		return getMimeTypes().getExtensionContentType(extension);
 	}

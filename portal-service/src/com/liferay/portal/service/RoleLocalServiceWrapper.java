@@ -909,6 +909,14 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.getRoles(companyId);
 	}
 
+	/**
+	* Returns all the roles with the types.
+	*
+	* @param companyId the primary key of the company
+	* @param types the role types (optionally <code>null</code>)
+	* @return the roles with the types
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getRoles(
 		long companyId, int[] types)
@@ -977,6 +985,16 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.getTeamRole(companyId, teamId);
 	}
 
+	/**
+	* Returns the team role map for the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the team role map for the group
+	* @throws PortalException if a group with the primary key could not be
+	found, if a role could not be found in one of the group's teams,
+	or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.util.Map<com.liferay.portal.model.Team, com.liferay.portal.model.Role> getTeamRoleMap(
 		long groupId)
@@ -985,6 +1003,16 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.getTeamRoleMap(groupId);
 	}
 
+	/**
+	* Returns the team roles in the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the team roles in the group
+	* @throws PortalException if a group with the primary key could not be
+	found, if a role could not be found in one of the group's teams,
+	or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
 		long groupId)
@@ -993,6 +1021,18 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		return _roleLocalService.getTeamRoles(groupId);
 	}
 
+	/**
+	* Returns the team roles in the group, excluding the specified role IDs.
+	*
+	* @param groupId the primary key of the group
+	* @param excludedRoleIds the primary keys of the roles to exclude
+	(optionally <code>null</code>)
+	* @return the team roles in the group, excluding the specified role IDs
+	* @throws PortalException if a group with the primary key could not be
+	found, if a role could not be found in one of the group's teams,
+	or if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
 		long groupId, long[] excludedRoleIds)

@@ -734,6 +734,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return rolePersistence.findByCompanyId(companyId);
 	}
 
+	/**
+	 * Returns all the roles with the types.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  types the role types (optionally <code>null</code>)
+	 * @return the roles with the types
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<Role> getRoles(long companyId, int[] types)
 		throws SystemException {
@@ -808,6 +816,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return rolePersistence.findByC_C_C(companyId, classNameId, teamId);
 	}
 
+	/**
+	 * Returns the team role map for the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the team role map for the group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if a role could not be found in one of the group's teams,
+	 *         or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Map<Team, Role> getTeamRoleMap(long groupId)
 		throws PortalException, SystemException {
@@ -815,6 +833,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return getTeamRoleMap(groupId, null);
 	}
 
+	/**
+	 * Returns the team roles in the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the team roles in the group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if a role could not be found in one of the group's teams,
+	 *         or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<Role> getTeamRoles(long groupId)
 		throws PortalException, SystemException {
@@ -822,6 +850,18 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return getTeamRoles(groupId, null);
 	}
 
+	/**
+	 * Returns the team roles in the group, excluding the specified role IDs.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  excludedRoleIds the primary keys of the roles to exclude
+	 *         (optionally <code>null</code>)
+	 * @return the team roles in the group, excluding the specified role IDs
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if a role could not be found in one of the group's teams,
+	 *         or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<Role> getTeamRoles(long groupId, long[] excludedRoleIds)
 		throws PortalException, SystemException {

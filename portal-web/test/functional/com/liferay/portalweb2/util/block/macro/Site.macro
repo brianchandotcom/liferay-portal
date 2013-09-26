@@ -350,6 +350,30 @@
 		</while>
 	</command>
 
+	<command name="viewChildChildCP">
+		<var name="key_childSiteName" value="${childSiteName}" />
+
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${childSiteName}" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_TYPE" value1="${siteType}" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitesChild#assertClick" locator-key1="SITE_TABLE_CHILD_SITE" value1="This site has 1 child site." />
+
+		<var name="key_childChildSiteName" value="${childChildSiteName}" />
+		<var name="key_childSiteName" value="${childSiteName}" />
+
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_NAME" value1="${childSiteName}" />
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${childChildSiteName}" />
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_TYPE" value1="${siteType}" />
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_USERS" value1="1 User" />
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
+		<execute action="CPSitesChildChild#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+	</command>
+
 	<command name="viewChildCP">
 		<var name="key_siteName" value="${siteName}" />
 

@@ -780,11 +780,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getTrashEntry();
 	}
 
-	/**
-	* Returns the class primary key of the trash entry for this wiki page.
-	*
-	* @return the class primary key of the trash entry for this wiki page
-	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _wikiPage.getTrashEntryClassPK();
@@ -1093,11 +1088,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPage getRedirectPage() {
 		return _wikiPage.getRedirectPage();
-	}
-
-	@Override
-	public com.liferay.portlet.wiki.model.WikiNode getTrashContainer() {
-		return _wikiPage.getTrashContainer();
 	}
 
 	@Override

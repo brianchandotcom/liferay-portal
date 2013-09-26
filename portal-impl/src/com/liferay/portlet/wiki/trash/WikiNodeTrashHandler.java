@@ -161,6 +161,15 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public TrashEntry getTrashEntry(long classPK)
+		throws PortalException, SystemException {
+
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+
+		return node.getTrashEntry();
+	}
+
+	@Override
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 

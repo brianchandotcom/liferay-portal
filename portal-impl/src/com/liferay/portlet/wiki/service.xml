@@ -66,6 +66,7 @@
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
 	<entity name="WikiPage" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
 
@@ -257,6 +258,7 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 
 		<!-- Transactions -->
 

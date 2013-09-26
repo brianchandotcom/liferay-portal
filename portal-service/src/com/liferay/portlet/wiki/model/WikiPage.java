@@ -71,8 +71,6 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public com.liferay.portlet.wiki.model.WikiPage getRedirectPage();
 
-	public com.liferay.portlet.wiki.model.WikiNode getTrashContainer();
-
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getViewableChildPages();
 
 	public com.liferay.portlet.wiki.model.WikiPage getViewableParentPage();

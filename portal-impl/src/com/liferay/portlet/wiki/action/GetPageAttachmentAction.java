@@ -121,7 +121,7 @@ public class GetPageAttachmentAction extends PortletAction {
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
-			(dlFileEntry.isInTrash() || dlFileEntry.isInTrashContainer())) {
+			dlFileEntry.isInTrash()) {
 
 			return;
 		}

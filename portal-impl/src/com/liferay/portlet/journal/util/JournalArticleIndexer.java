@@ -279,7 +279,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		deleteDocument(article.getCompanyId(), article.getId());
 
-		updateArticles(article);
+		reindexArticleVersions(article);
 	}
 
 	@Override
@@ -414,11 +414,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		Document document = getDocument(article);
-
 		if (!article.isIndexable() ||
 			(PortalUtil.getClassNameId(DDMStructure.class) ==
 				article.getClassNameId())) {
+
+			Document document = getDocument(article);
 
 			SearchEngineUtil.deleteDocument(
 				getSearchEngineId(), article.getCompanyId(),
@@ -427,10 +427,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			return;
 		}
 
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), article.getCompanyId(), document);
-
-		updateArticles(article);
+		reindexArticleVersions(article);
 	}
 
 	@Override
@@ -533,6 +530,52 @@ public class JournalArticleIndexer extends BaseIndexer {
 			ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
 	}
 
+	protected Collection<Document> getArticleVersions(JournalArticle article)
+		throws PortalException, SystemException {
+
+		Collection<Document> documents = new ArrayList<Document>();
+
+		JournalArticle latestIndexableArticle =
+			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+				article.getResourcePrimKey());
+
+		List<JournalArticle> articles =
+			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
+				article.getResourcePrimKey());
+
+		for (JournalArticle curArticle : articles) {
+			if (!curArticle.isIndexable() ||
+				((latestIndexableArticle != null) &&
+				 (curArticle.getId() == latestIndexableArticle.getId()))) {
+
+				continue;
+			}
+
+			Document document = getDocument(curArticle);
+
+			document.addKeyword("head", false);
+
+			documents.add(document);
+		}
+
+		if (latestIndexableArticle != null) {
+			Document document = getDocument(latestIndexableArticle);
+
+			document.addKeyword("head", true);
+
+			documents.add(document);
+		}
+		else if (article.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			Document document = getDocument(article);
+
+			document.addKeyword("head", true);
+
+			documents.add(document);
+		}
+
+		return documents;
+	}
+
 	protected String[] getLanguageIds(
 		String defaultLanguageId, String content) {
 
@@ -568,12 +611,12 @@ public class JournalArticleIndexer extends BaseIndexer {
 			}
 
 			@Override
-			protected void performAction(Object object) throws PortalException {
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+
 				JournalArticle article = (JournalArticle)object;
 
-				Document document = getDocument(article);
-
-				documents.add(document);
+				documents.addAll(getArticleVersions(article));
 			}
 
 		};
@@ -586,48 +629,12 @@ public class JournalArticleIndexer extends BaseIndexer {
 			getSearchEngineId(), companyId, documents);
 	}
 
-	protected void updateArticles(JournalArticle article) throws Exception {
-		JournalArticle latestIndexableArticle =
-			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
-				article.getResourcePrimKey());
+	protected void reindexArticleVersions(JournalArticle article)
+		throws PortalException, SystemException {
 
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
-				article.getResourcePrimKey());
-
-		for (JournalArticle curArticle : articles) {
-			if (!curArticle.isIndexable() ||
-				((latestIndexableArticle != null) &&
-				 (curArticle.getId() == latestIndexableArticle.getId()))) {
-
-				continue;
-			}
-
-			Document document = getDocument(curArticle);
-
-			document.addKeyword("head", false);
-
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), curArticle.getCompanyId(), document);
-		}
-
-		if (latestIndexableArticle != null) {
-			Document document = getDocument(latestIndexableArticle);
-
-			document.addKeyword("head", true);
-
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), latestIndexableArticle.getCompanyId(),
-				document);
-		}
-		else if (article.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-			Document document = getDocument(article);
-
-			document.addKeyword("head", true);
-
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), article.getCompanyId(), document);
-		}
+		SearchEngineUtil.updateDocuments(
+			getSearchEngineId(), article.getCompanyId(),
+			getArticleVersions(article));
 	}
 
 }

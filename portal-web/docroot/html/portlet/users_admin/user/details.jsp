@@ -40,9 +40,9 @@ if (selContact != null) {
 <aui:fieldset cssClass="span6">
 	<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
-	<liferay-ui:error exception="<%= DuplicateUserScreenNameException.class %>" message="the-screen-name-you-requested-is-already-taken" />
+	<liferay-ui:error exception="<%= DuplicateUserScreenNameException.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
 
-	<liferay-ui:error exception="<%= GroupFriendlyURLException.class %>">
+	<liferay-ui:error exception="<%= GroupFriendlyURLException.class %>" focusField="screenName">
 
 		<%
 		GroupFriendlyURLException gfurle = (GroupFriendlyURLException)errorException;
@@ -53,7 +53,7 @@ if (selContact != null) {
 		</c:if>
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= ReservedUserScreenNameException.class %>" message="the-screen-name-you-requested-is-reserved" />
+	<liferay-ui:error exception="<%= ReservedUserScreenNameException.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved" />
 
 	<liferay-ui:error exception="<%= UserFieldException.class %>">
 
@@ -78,7 +78,7 @@ if (selContact != null) {
 		<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" />
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= UserScreenNameException.class %>" message="please-enter-a-valid-screen-name" />
+	<liferay-ui:error exception="<%= UserScreenNameException.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
 
 	<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">
 		<c:choose>
@@ -86,14 +86,14 @@ if (selContact != null) {
 				<aui:input disabled="<%= true %>" name="screenName" />
 			</c:when>
 			<c:otherwise>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="screenName" />
+				<aui:input name="screenName" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
 
-	<liferay-ui:error exception="<%= DuplicateUserEmailAddressException.class %>" message="the-email-address-you-requested-is-already-taken" />
-	<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" message="the-email-address-you-requested-is-reserved" />
-	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" message="please-enter-a-valid-email-address" />
+	<liferay-ui:error exception="<%= DuplicateUserEmailAddressException.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-already-taken" />
+	<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-reserved" />
+	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" focusField="emailAddress" message="please-enter-a-valid-email-address" />
 
 	<c:choose>
 		<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "emailAddress") %>'>

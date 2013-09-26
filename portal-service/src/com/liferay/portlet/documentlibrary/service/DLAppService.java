@@ -144,7 +144,7 @@ public interface DLAppService extends BaseService {
 
 	/**
 	* Adds a file entry and associated metadata. It is created based on a
-	* {@link java.io.InputStream} object.
+	* {@link InputStream} object.
 	*
 	* <p>
 	* This method takes two file names, the <code>sourceFileName</code> and the
@@ -244,7 +244,7 @@ public interface DLAppService extends BaseService {
 	* @param tempFolderName the temporary folder's name
 	* @param file the file's data (optionally <code>null</code>)
 	* @param mimeType the file's MIME type
-	* @return the file's name
+	* @return the temporary file entry
 	* @throws PortalException if the file name was invalid
 	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.kernel.util.TempFileUtil
@@ -256,6 +256,29 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Adds a temporary file entry. It is created based on the {@link
+	* InputStream} object.
+	*
+	* <p>
+	* This allows a client to upload a file into a temporary location and
+	* manipulate its metadata prior to making it available for public usage.
+	* This is different from checking in and checking out a file entry.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param folderId the primary key of the folder where the file entry will
+	eventually reside
+	* @param fileName the file's original name
+	* @param tempFolderName the temporary folder's name
+	* @param inputStream the file's data
+	* @param mimeType the file's MIME type
+	* @return the temporary file entry
+	* @throws PortalException if the file name was invalid or if a portal
+	exception occurred
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portal.kernel.util.TempFileUtil
+	*/
 	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
 		long groupId, long folderId, java.lang.String fileName,
 		java.lang.String tempFolderName, java.io.InputStream inputStream,
@@ -2047,7 +2070,7 @@ public interface DLAppService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates a file entry and associated metadata based on an {@link java.io.
+	* Updates a file entry and associated metadata based on an {@link
 	* InputStream} object. If the file data is <code>null</code>, then only the
 	* associated metadata (i.e., <code>title</code>, <code>description</code>,
 	* and parameters in the <code>serviceContext</code>) will be updated.

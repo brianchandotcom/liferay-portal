@@ -152,8 +152,8 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
-	* Adds a file entry and associated metadata based on an {@link
-	* java.io.InputStream} object.
+	* Adds a file entry and associated metadata based on an {@link InputStream}
+	* object.
 	*
 	* <p>
 	* This method takes two file names, the <code>sourceFileName</code> and the
@@ -781,7 +781,7 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
-	* Updates a file entry and associated metadata based on an {@link java.io.
+	* Updates a file entry and associated metadata based on an {@link
 	* InputStream} object. If the file data is <code>null</code>, then only the
 	* associated metadata (i.e., <code>title</code>, <code>description</code>,
 	* and parameters in the <code>serviceContext</code>) will be updated.

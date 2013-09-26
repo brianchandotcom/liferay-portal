@@ -63,7 +63,7 @@ public class VerifyBlogs extends VerifyProcess {
 
 	protected void verifyStatus() throws Exception {
 		runSQL(
-			"update BlogEntry set status = " +
+			"update BlogsEntry set status = " +
 				WorkflowConstants.STATUS_APPROVED + " where status is null");
 	}
 

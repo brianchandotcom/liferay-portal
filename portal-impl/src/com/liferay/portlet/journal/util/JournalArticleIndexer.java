@@ -386,17 +386,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String title = document.get(
 			snippetLocale, prefix + Field.TITLE, Field.TITLE);
 
-		String content = document.get(
-			snippetLocale, prefix + Field.DESCRIPTION, prefix + Field.CONTENT);
-
-		if (Validator.isBlank(content)) {
-			content = document.get(
-				snippetLocale, Field.DESCRIPTION, Field.CONTENT);
-		}
-
-		if (content.length() > 200) {
-			content = StringUtil.shorten(content, 200);
-		}
+		String content = getBasicContentSummary(document, snippetLocale);
 
 		String groupId = document.get(Field.GROUP_ID);
 		String articleId = document.get("articleId");
@@ -528,6 +518,26 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		return DDMIndexerUtil.extractAttributes(
 			ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
+	}
+
+	protected String getBasicContentSummary(
+		Document document, Locale snippetLocale) {
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String content = document.get(
+			snippetLocale, prefix + Field.DESCRIPTION, prefix + Field.CONTENT);
+
+		if (Validator.isBlank(content)) {
+			content = document.get(
+				snippetLocale, Field.DESCRIPTION, Field.CONTENT);
+		}
+
+		if (content.length() > 200) {
+			content = StringUtil.shorten(content, 200);
+		}
+
+		return content;
 	}
 
 	protected Collection<Document> getArticleVersions(JournalArticle article)

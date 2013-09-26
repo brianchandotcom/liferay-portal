@@ -91,7 +91,12 @@
 </tr>
 <!--INLINE_PERMISSIONS-->
 <tr>
-	<td>INLINE_PERMISSIONS_ADD_ENTRY</td>
+	<td>INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_DOCUMENT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_ADD_ENTRY']</td>
 	<td></td>
 </tr>
@@ -122,37 +127,42 @@
 </tr>
 <!--CONTENT_PERMISSIONS-->
 <tr>
-	<td>CONTENT_PERMISSIONS_ADD_DISCUSSION</td>
+	<td>CONTENT_PERMISSIONS_ACCESS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ACCESS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_ADD_DISCUSSION']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERMISSIONS_DELETE</td>
+	<td>CONTENT_PERMISSIONS_DELETE_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_DELETE']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERMISSIONS_DELETE_DISCUSSION</td>
+	<td>CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_DELETE_DISCUSSION']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERMISSIONS_PERMISSIONS</td>
+	<td>CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERMISSIONS_UPDATE</td>
+	<td>CONTENT_PERMISSIONS_UPDATE_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_UPDATE']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERMISSIONS_UPDATE_DISCUSSION</td>
+	<td>CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_UPDATE_DISCUSSION']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERMISSIONS_VIEW</td>
+	<td>CONTENT_PERMISSIONS_VIEW_CHECKBOX</td>
 	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
 	<td></td>
 </tr>

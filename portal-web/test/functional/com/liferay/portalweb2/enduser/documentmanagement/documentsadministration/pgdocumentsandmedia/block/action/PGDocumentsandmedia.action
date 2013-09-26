@@ -20,6 +20,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementNotPresent">
+		<case locator-key1="FOLDER_MENULIST_DELETE">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />

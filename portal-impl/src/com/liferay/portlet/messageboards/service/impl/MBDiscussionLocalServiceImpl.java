@@ -61,6 +61,15 @@ public class MBDiscussionLocalServiceImpl
 	}
 
 	@Override
+	public MBDiscussion fetchDiscussion(String className, long classPK)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return mbDiscussionPersistence.fetchByC_C(classNameId, classPK);
+	}
+
+	@Override
 	public MBDiscussion getDiscussion(long discussionId)
 		throws PortalException, SystemException {
 

@@ -1100,9 +1100,9 @@ public class SeleniumBuilderFileUtil {
 			else if (elementName.equals("isset")) {
 				validateSimpleElement(fileName, element, new String[] {"var"});
 			}
-			else if (elementName.equals("and") || 
-					elementName.equals("not") ||
-					elementName.equals("or")) {
+			else if (elementName.equals("and") || elementName.equals("not") ||
+					 elementName.equals("or")) {
+
 				validateIfElement(
 					fileName, element, allowedBlockChildElementNames,
 					allowedExecuteAttributeNames,
@@ -1119,9 +1119,10 @@ public class SeleniumBuilderFileUtil {
 				1001, fileName, ifElement, allowedIfConditionElementNames);
 		}
 
-		if (ifElement.getName() == "and" || 
-			ifElement.getName() == "not" ||
-			ifElement.getName() == "or") {
+		if (Validator.equals(ifElement.getName(), "and") ||
+			Validator.equals(ifElement.getName(), "not") ||
+			Validator.equals(ifElement.getName(), "or")) {
+
 			return;
 		}
 

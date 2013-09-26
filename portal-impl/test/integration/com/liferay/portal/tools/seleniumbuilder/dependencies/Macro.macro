@@ -14,7 +14,10 @@
 		</execute>
 
 		<if>
-			<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_${name}E" />
+			<and>
+				<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_${name}E" />
+				<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_${name}E" />
+			</and>
 			<then>
 				<var name="name" value="value" />
 
@@ -23,7 +26,10 @@
 		</if>
 
 		<if>
-			<condition action="BaseLiferay#isElementPresent" />
+			<or>
+				<condition action="BaseLiferay#isElementPresent" />
+				<condition action="BaseLiferay#isElementPresent" />
+			</or>
 			<then>
 				<var name="name" value="value" />
 

@@ -1,24 +1,22 @@
+<#assign conditionalCaseNames = ["and", "condition", "contains", "equals", "isset", "not", "or"]>
+
 <#if ifConditionalElement.getName() == "and">
 		<#assign conditionalCases = ifConditionalElement.elements()>
 
 		<#assign firstCase = true>
 
 		(
-		<#list conditionalCases as conditionalCase>
-			<#if !firstCase>
-				&&
-			</#if>
+			<#list conditionalCases as conditionalCase>
+				<#if conditionalCaseNames?seq_contains(conditionalCase.getName())>
+					<#assign ifConditionalElement = conditionalCase>
 
-			<#assign caseTypes = ["and", "condition", "contains", "equals", "isset", "not", "or"]>
+					<#include "macro_if_conditional_element.ftl">
+				</#if>
 
-			<#if caseTypes?seq_contains(conditionalCase.getName())>
-				<#assign ifConditionalElement = conditionalCase>
-
-				<#include "macro_if_conditional_element.ftl">
-			</#if>
-
-			<#assign firstCase = false>
-		</#list>
+				<#if conditionalCase_has_next>
+					&&
+				</#if>
+			</#list>
 		)
 <#elseif ifConditionalElement.getName() == "condition">
 	<#if ifConditionalElement.attributeValue("action")??>
@@ -102,20 +100,16 @@
 		<#assign firstCase = true>
 
 		(
-		<#list conditionalCases as conditionalCase>
-			<#if !firstCase>
-				||
-			</#if>
+			<#list conditionalCases as conditionalCase>
+				<#if conditionalCaseNames?seq_contains(conditionalCase.getName())>
+					<#assign ifConditionalElement = conditionalCase>
 
-			<#assign caseTypes = ["and", "condition", "contains", "equals", "isset", "not", "or"]>
+					<#include "macro_if_conditional_element.ftl">
+				</#if>
 
-			<#if caseTypes?seq_contains(conditionalCase.getName())>
-				<#assign ifConditionalElement = conditionalCase>
-
-				<#include "macro_if_conditional_element.ftl">
-			</#if>
-
-			<#assign firstCase = false>
-		</#list>
+				<#if conditionalCase_has_next>
+					||
+				</#if>
+			</#list>
 		)
 </#if>

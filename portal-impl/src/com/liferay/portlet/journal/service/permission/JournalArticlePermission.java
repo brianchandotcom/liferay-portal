@@ -115,9 +115,8 @@ public class JournalArticlePermission {
 			}
 		}
 
-		if ((article.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			!actionId.equals(ActionKeys.EXPIRE)) {
+		if (article.getFolderId() !=
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			try {
 				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
@@ -132,7 +131,8 @@ public class JournalArticlePermission {
 					return false;
 				}
 
-				if (JournalFolderPermission.contains(
+				if (!actionId.equals(ActionKeys.EXPIRE) ||
+					JournalFolderPermission.contains(
 						permissionChecker, folder, actionId)) {
 
 					return true;
@@ -143,6 +143,12 @@ public class JournalArticlePermission {
 					throw nsfe;
 				}
 			}
+		}
+		else if (actionId.equals(ActionKeys.VIEW) &&
+				 PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+
+			return JournalPermission.contains(
+				permissionChecker, article.getGroupId(), actionId);
 		}
 
 		if (permissionChecker.hasOwnerPermission(

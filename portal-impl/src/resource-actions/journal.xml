@@ -58,8 +58,12 @@
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults />
-			<guest-defaults />
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
 			<guest-unsupported>
 				<action-key>ADD_ARTICLE</action-key>
 				<action-key>ADD_FEED</action-key>
@@ -67,7 +71,6 @@
 				<action-key>ADD_STRUCTURE</action-key>
 				<action-key>ADD_TEMPLATE</action-key>
 				<action-key>SUBSCRIBE</action-key>
-				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

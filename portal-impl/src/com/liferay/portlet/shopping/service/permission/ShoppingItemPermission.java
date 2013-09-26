@@ -63,17 +63,22 @@ public class ShoppingItemPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-			if (item.getCategoryId() !=
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+
+			if (item.getCategoryId() ==
 					ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				ShoppingCategory category = item.getCategory();
+				return ShoppingPermission.contains(
+					permissionChecker, item.getGroupId(), actionId);
+			}
 
-				if (!ShoppingCategoryPermission.contains(
-						permissionChecker, category, ActionKeys.VIEW)) {
+			ShoppingCategory category = item.getCategory();
 
-					return false;
-				}
+			if (!ShoppingCategoryPermission.contains(
+					permissionChecker, category, actionId)) {
+
+				return false;
 			}
 		}
 

@@ -103,7 +103,8 @@ public class JournalFolderPermission {
 			}
 
 			if (actionId.equals(ActionKeys.VIEW)) {
-				return true;
+				return JournalPermission.contains(
+					permissionChecker, folder.getGroupId(), actionId);
 			}
 
 			folderId = originalFolderId;
@@ -146,12 +147,11 @@ public class JournalFolderPermission {
 			return JournalPermission.contains(
 				permissionChecker, groupId, actionId);
 		}
-		else {
-			JournalFolder folder =
-				JournalFolderLocalServiceUtil.getJournalFolder(folderId);
 
-			return contains(permissionChecker, folder, actionId);
-		}
+		JournalFolder folder = JournalFolderLocalServiceUtil.getJournalFolder(
+			folderId);
+
+		return contains(permissionChecker, folder, actionId);
 	}
 
 }

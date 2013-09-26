@@ -61,23 +61,26 @@ public class BookmarksEntryPermission {
 
 			long folderId = entry.getFolderId();
 
-			if (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				try {
-					BookmarksFolder folder =
-						BookmarksFolderLocalServiceUtil.getFolder(folderId);
+			if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				return BookmarksPermission.contains(
+					permissionChecker, entry.getGroupId(), actionId);
+			}
 
-					if (!BookmarksFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.ACCESS) &&
-						!BookmarksFolderPermission.contains(
-							permissionChecker, folder, ActionKeys.VIEW)) {
+			try {
+				BookmarksFolder folder =
+					BookmarksFolderLocalServiceUtil.getFolder(folderId);
 
-						return false;
-					}
+				if (!BookmarksFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.ACCESS) &&
+					!BookmarksFolderPermission.contains(
+						permissionChecker, folder, ActionKeys.VIEW)) {
+
+					return false;
 				}
-				catch (NoSuchFolderException nsfe) {
-					if (!entry.isInTrash()) {
-						throw nsfe;
-					}
+			}
+			catch (NoSuchFolderException nsfe) {
+				if (!entry.isInTrash()) {
+					throw nsfe;
 				}
 			}
 		}

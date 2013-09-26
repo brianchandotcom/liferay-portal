@@ -101,24 +101,27 @@ public class MBMessagePermission {
 
 			long categoryId = message.getCategoryId();
 
-			if ((categoryId !=
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-				(categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
+			if ((categoryId ==
+					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
+				(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-				try {
-					MBCategory category =
-						MBCategoryLocalServiceUtil.getCategory(categoryId);
+				return MBPermission.contains(
+					permissionChecker, message.getGroupId(), actionId);
+			}
 
-					if (!MBCategoryPermission.contains(
-							permissionChecker, category, actionId)) {
+			try {
+				MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+					categoryId);
 
-						return false;
-					}
+				if (!MBCategoryPermission.contains(
+						permissionChecker, category, actionId)) {
+
+					return false;
 				}
-				catch (NoSuchCategoryException nsce) {
-					if (!message.isInTrash()) {
-						throw nsce;
-					}
+			}
+			catch (NoSuchCategoryException nsce) {
+				if (!message.isInTrash()) {
+					throw nsce;
 				}
 			}
 		}

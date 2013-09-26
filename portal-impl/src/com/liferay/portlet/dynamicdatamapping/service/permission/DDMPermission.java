@@ -17,7 +17,9 @@ package com.liferay.portlet.dynamicdatamapping.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Bruno Basto
@@ -41,8 +43,18 @@ public class DDMPermission {
 		PermissionChecker permissionChecker, long groupId, String name,
 		String actionId) {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, RESOURCE_NAME, groupId, name, actionId);
+		Boolean hasPermission = null;
+
+		if (actionId.equals(ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+			hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, groupId, RESOURCE_NAME, groupId,
+				PortletKeys.PORTLET_DISPLAY_TEMPLATES, actionId);
+		}
+		else {
+			hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, groupId, RESOURCE_NAME, groupId, name,
+				actionId);
+		}
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

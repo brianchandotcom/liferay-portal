@@ -449,6 +449,10 @@ public class JournalConverterImpl implements JournalConverter {
 				jsonObject.put("privateLayout", true);
 			}
 
+			if (values.length > 2) {
+				jsonObject.put("groupId", values[2]);
+			}
+
 			serializable = jsonObject.toString();
 		}
 		else if (DDMImpl.TYPE_SELECT.equals(type)) {
@@ -688,18 +692,28 @@ public class JournalConverterImpl implements JournalConverter {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				fieldValue);
 
+			long groupId = jsonObject.getLong("groupId");
+
 			String layoutId = jsonObject.getString("layoutId");
 
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
+			StringBundler sb = new StringBundler();
+
+			sb.append(layoutId);
+			sb.append(StringPool.AT);
+
 			if (privateLayout) {
-				fieldValue = layoutId.concat(StringPool.AT).concat("private");
+				sb.append("private");
 			}
 			else {
-				fieldValue = layoutId.concat(StringPool.AT).concat("public");
+				sb.append("public");
 			}
 
-			dynamicContentElement.addCDATA(fieldValue);
+			sb.append(StringPool.AT);
+			sb.append(groupId);
+
+			dynamicContentElement.addCDATA(sb.toString());
 		}
 		else if (DDMImpl.TYPE_SELECT.equals(fieldType) &&
 				 Validator.isNotNull(fieldValue)) {

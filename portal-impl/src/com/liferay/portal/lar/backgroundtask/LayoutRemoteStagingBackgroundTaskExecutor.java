@@ -19,6 +19,8 @@ import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -75,6 +77,12 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
+			Date lastPublishDate = new Date();
+
+			if (endDate != null) {
+				lastPublishDate = endDate;
+			}
+
 			file = exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteGroupId, startDate, endDate, httpPrincipal);
@@ -119,6 +127,14 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			StagingServiceHttp.publishStagingRequest(
 				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
+
+			boolean updateLastPublishDate = MapUtil.getBoolean(
+				parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
+
+			if (updateLastPublishDate) {
+				StagingUtil.updateLastPublishDate(
+					sourceGroupId, privateLayout, lastPublishDate);
+			}
 		}
 		finally {
 			StreamUtil.cleanUp(fileInputStream);

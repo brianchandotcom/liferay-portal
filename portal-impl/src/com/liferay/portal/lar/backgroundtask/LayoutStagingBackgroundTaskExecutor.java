@@ -16,6 +16,7 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -63,6 +64,12 @@ public class LayoutStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
+			Date lastPublishDate = new Date();
+
+			if (endDate != null) {
+				lastPublishDate = endDate;
+			}
+
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIds, parameterMap,
 				startDate, endDate);
@@ -77,6 +84,14 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			LayoutLocalServiceUtil.importLayouts(
 				userId, targetGroupId, privateLayout, parameterMap, file);
+
+			boolean updateLastPublishDate = MapUtil.getBoolean(
+				parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
+
+			if (updateLastPublishDate) {
+				StagingUtil.updateLastPublishDate(
+					sourceGroupId, privateLayout, lastPublishDate);
+			}
 		}
 		finally {
 			FileUtil.delete(file);

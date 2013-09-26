@@ -33,7 +33,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Alexander Chow
  */
-public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
+public class UpgradeSearch extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {

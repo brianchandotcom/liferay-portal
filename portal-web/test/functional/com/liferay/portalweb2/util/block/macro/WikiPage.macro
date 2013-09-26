@@ -66,6 +66,7 @@
 		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 		<execute action="CPWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute action="CPWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
+		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 
 		<execute action="CPWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
@@ -112,6 +113,34 @@
 		<execute action="PGWikiDraftpages#assertElementPresent" locator-key1="PENDING_APPROVAL_TABLE_DATE" />
 	</command>
 
+	<command name="compareVersionsCP">
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="CPWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
+
+		<execute action="CPWikiWikipageDetails#assertClick" locator-key1="NAVIGATION_HISTORY" value1="History" />
+
+		<var name="key_wikiPageVersionNew" value="${wikiPageVersionNew}" />
+		<var name="key_wikiPageVersionOld" value="${wikiPageVersionOld}" />
+
+		<execute action="CPWikiWikipageHistory#assertClick" locator-key1="ACTIVITIES_TABLE_COMPARE_TO" value1="Compare to..." />
+
+		<execute action="CPWikiWikipageHistorySelectversion#selectFrame" locator-key1="SELECT_VERSION_IFRAME" />
+		<execute action="CPWikiWikipageHistorySelectversion#assertTextEquals" locator-key1="SELECT_VERSION_VERSION_NEW" value1="${wikiPageVersionNew}" />
+		<execute action="CPWikiWikipageHistorySelectversion#assertElementPresent" locator-key1="SELECT_VERSION_DATE_NEW" />
+		<execute action="CPWikiWikipageHistorySelectversion#assertTextEquals" locator-key1="SELECT_VERSION_VERSION_OLD" value1="${wikiPageVersionOld}" />
+		<execute action="CPWikiWikipageHistorySelectversion#assertElementPresent" locator-key1="SELECT_VERSION_DATE_OLD" />
+		<execute action="CPWikiWikipageHistorySelectversion#assertClick" locator-key1="SELECT_VERSION_CHOOSE_BUTTON_OLD" value1="Choose" />
+		<execute action="CPWikiWikipageHistorySelectversion#selectFrame" value1="relative=top" />
+
+		<execute action="CPWikiWikipageHistory#assertTextEquals" locator-key1="COMPARE_VERSIONS_DIFF" value1="${wikiPageVersionDiff}" />
+	</command>
+
 	<command name="deleteFrontPagePG">
 		<var name="wikiPageTitle" value="FrontPage" />
 
@@ -123,6 +152,23 @@
 		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE_1" />
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="editPageCP">
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPWikiEditpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContentEdit}" />
+		<execute action="CPWikiEditpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContentEdit}" />
+
+		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="moveToRecycleBinCP">

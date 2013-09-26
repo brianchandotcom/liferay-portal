@@ -1,0 +1,58 @@
+<definition>
+	<command name="configureSetupPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGSitesdirectoryConfiguration#selectFrame" locator-key1="SITES_DIRECTORY_IFRAME" />
+
+		<if>
+			<isset var="directorySites" />
+			<then>
+				<execute action="PGSitesdirectoryConfiguration#select" locator-key1="SETUP_SITES_SELECT" value1="${directorySites}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="directoryDisplayStyle" />
+			<then>
+				<execute action="PGSitesdirectoryConfiguration#select" locator-key1="SETUP_DISPLAY_STYLE_SELECT" value1="${directoryDisplayStyle}" />
+			</then>
+		</if>
+
+		<execute action="PGSitesdirectoryConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGSitesdirectoryConfiguration#selectFrameTop" />
+	</command>
+
+	<command name="viewDefaultConfigurationPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGSitesdirectoryConfiguration#selectFrame" locator-key1="SITES_DIRECTORY_IFRAME" />
+		<execute action="PGSitesdirectoryConfiguration#assertTextEquals" locator-key1="SETUP_SITES_SELECT" value1="Top Level Parent Level Siblings Children" />
+		<execute action="PGSitesdirectoryConfiguration#assertTextEquals" locator-key1="SETUP_DISPLAY_STYLE_SELECT" value1="Icon Descriptive List List Hierarchy" />
+		<execute action="PGSitesdirectoryConfiguration#selectFrameTop" />
+	</command>
+
+	<command name="viewDescriptivePG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="DESCRIPTIVE_SITE_ENTRY" value1="${siteName}" />
+	</command>
+
+	<command name="viewListHierarchyPG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE" value1="${siteName}" />
+
+		<if>
+			<isset var="childSiteName" />
+			<then>
+				<var name="key_childSiteName" value="${childSiteName}" />
+
+				<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName}" />
+			</then>
+		</if>
+	</command>
+</definition>

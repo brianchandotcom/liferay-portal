@@ -11,6 +11,8 @@
 
 	<execute test-suite="PGSitepagesP5" />
 
+	<execute test-suite="PGSitesdirectoryP5" />
+
 	<execute test-suite="PGStagingP5" />
 
 	<execute test-suite="PGWebcontentdisplayP5" />

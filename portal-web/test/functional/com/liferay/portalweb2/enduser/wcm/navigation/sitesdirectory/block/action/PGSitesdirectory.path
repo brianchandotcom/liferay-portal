@@ -38,7 +38,38 @@
 	<td>//div[@class='sites-directory-taglib nav-menu']/div/a/div[2]/span/span[contains(.,'${key_orgName}')]</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DESCRIPTIVE-->
+<tr>
+	<td>DESCRIPTIVE_SITE_ENTRY</td>
+	<td>//div[@class='entry-metadata']/span/span[contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_HIERARCHY-->
+<tr>
+	<td>LIST_HIERARCHY_PARENT_SITE</td>
+	<td>//ul[@class='sites level-1']/li[contains(.,'${key_siteName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_HIERARCHY_CHILD_SITE</td>
+	<td>//ul[@class='sites level-1']/li[contains(.,'${key_siteName}')]/ul[@class='sites level-2']/li[contains(.,'${key_childSiteName}')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

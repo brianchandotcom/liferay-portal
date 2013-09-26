@@ -200,6 +200,13 @@ public class SitesUtil {
 		return getSites().isContentSharingWithChildrenEnabled(group);
 	}
 
+	public static boolean isFirstLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws SystemException {
+
+		return getSites().isFirstLayout(groupId, privateLayout, layoutId);
+	}
+
 	public static boolean isLayoutDeleteable(Layout layout) {
 		return getSites().isLayoutDeleteable(layout);
 	}

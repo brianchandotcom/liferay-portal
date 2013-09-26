@@ -827,6 +827,21 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
+	public boolean isFirstLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws SystemException {
+
+		Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if ((firstLayout != null) && (firstLayout.getLayoutId() == layoutId )) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isLayoutDeleteable(Layout layout) {
 		try {
 			if (layout instanceof VirtualLayout) {

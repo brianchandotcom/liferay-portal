@@ -28,12 +28,19 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ResourcePermissionLocalService;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
@@ -258,6 +265,21 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		validateFriendlyURLs(groupId, privateLayout, layoutId, friendlyURLMap);
 	}
 
+	public void validateFirstLayout(Layout layout)
+		throws PortalException, SystemException {
+
+		Group group = layout.getGroup();
+
+		if (group.isGuest() && !_hasGuestViewPermission(layout)) {
+			LayoutTypeException lte = new LayoutTypeException(
+				LayoutTypeException.FIRST_LAYOUT_PERMISSION);
+
+			throw lte;
+		}
+
+		validateFirstLayout(layout.getType());
+	}
+
 	public void validateFirstLayout(String type) throws PortalException {
 		if (Validator.isNull(type) || !PortalUtil.isLayoutFirstPageable(type)) {
 			LayoutTypeException lte = new LayoutTypeException(
@@ -436,6 +458,22 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 	@BeanReference(type = LayoutSetPersistence.class)
 	protected LayoutSetPersistence layoutSetPersistence;
+
+	@BeanReference(type = ResourcePermissionLocalService.class)
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	private boolean _hasGuestViewPermission(Layout layout)
+		throws PortalException, SystemException {
+
+		Role role = RoleLocalServiceUtil.getRole(
+			layout.getCompanyId(), RoleConstants.GUEST);
+
+		return resourcePermissionLocalService.hasResourcePermission(
+			layout.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(layout.getPlid()), role.getRoleId(),
+			ActionKeys.VIEW);
+	}
 
 	private static final int _PRIORITY_BUFFER = 1000000;
 

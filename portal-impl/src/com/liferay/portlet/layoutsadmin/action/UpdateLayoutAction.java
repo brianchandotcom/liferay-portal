@@ -199,6 +199,16 @@ public class UpdateLayoutAction extends JSONAction {
 					"layout.types." + lte.getLayoutType());
 			}
 
+			if (cmd.equals("delete") &&
+				(lte.getType() ==
+					LayoutTypeException.FIRST_LAYOUT_PERMISSION)) {
+
+				return themeDisplay.translate(
+					"you-cannot-delete-this-page-because-the-next-page-does-" +
+						"not-have-view-permissions-for-guest-and-it-cannot-" +
+							"be-the-first-page");
+			}
+
 			if ((cmd.equals("display_order") || cmd.equals("priority")) &&
 				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
 

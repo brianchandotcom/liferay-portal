@@ -34,6 +34,10 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 		<liferay-ui:message arguments='<%= Validator.isNull(lte.getLayoutType()) ? type : "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
 	</c:if>
 
+	<c:if test="<%= lte.getType() == LayoutTypeException.FIRST_LAYOUT_PERMISSION %>">
+		<liferay-ui:message key="you-cannot-delete-this-page-because-the-next-page-does-not-have-view-permissions-for-guest-and-it-cannot-be-the-first-page" />
+	</c:if>
+
 	<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
 		<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" />
 	</c:if>

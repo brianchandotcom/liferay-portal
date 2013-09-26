@@ -23,6 +23,8 @@ public class LayoutTypeException extends PortalException {
 
 	public static final int FIRST_LAYOUT = 2;
 
+	public static final int FIRST_LAYOUT_PERMISSION = 3;
+
 	public static final int NOT_PARENTABLE = 1;
 
 	public LayoutTypeException(int type) {

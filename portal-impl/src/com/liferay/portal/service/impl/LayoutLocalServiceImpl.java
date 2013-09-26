@@ -559,8 +559,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				if (firstLayout.getLayoutId() == layout.getLayoutId()) {
 					Layout secondLayout = rootLayouts.get(1);
 
-					layoutLocalServiceHelper.validateFirstLayout(
-						secondLayout.getType());
+					layoutLocalServiceHelper.validateFirstLayout(secondLayout);
 				}
 			}
 		}
@@ -2696,7 +2695,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout firstLayout = layouts.get(0);
 
-		layoutLocalServiceHelper.validateFirstLayout(firstLayout.getType());
+		layoutLocalServiceHelper.validateFirstLayout(firstLayout);
 
 		int newPriority = LayoutConstants.FIRST_PRIORITY;
 

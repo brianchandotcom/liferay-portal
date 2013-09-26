@@ -147,6 +147,10 @@ public interface Sites {
 	public boolean isContentSharingWithChildrenEnabled(Group group)
 		throws SystemException;
 
+	public boolean isFirstLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws SystemException;
+
 	public boolean isLayoutDeleteable(Layout layout);
 
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)

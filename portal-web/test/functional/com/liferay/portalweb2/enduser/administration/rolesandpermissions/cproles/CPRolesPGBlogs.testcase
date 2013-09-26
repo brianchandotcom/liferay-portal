@@ -111,7 +111,7 @@
 		<var name="orgType" value="Regular Organization" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="pageTypeSite" value="Organization" />
-		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY" />
+		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Orgrole Name" />
 		<var name="roleType" value="Organization" />
@@ -308,7 +308,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY" />
+		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -483,7 +483,7 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="pageTypeSite" value="Site" />
-		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY" />
+		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -752,7 +752,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
 		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
@@ -973,7 +973,7 @@
 		<var name="orgType" value="Regular Organization" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="pageTypeSite" value="Organization" />
-		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Orgrole Name" />
 		<var name="roleType" value="Organization" />
@@ -1226,7 +1226,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -1446,7 +1446,7 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="pageTypeSite" value="Site" />
-		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
@@ -1691,7 +1691,7 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE_CHECKBOX" />
 		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />

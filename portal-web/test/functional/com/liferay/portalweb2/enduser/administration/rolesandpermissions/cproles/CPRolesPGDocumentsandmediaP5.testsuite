@@ -1,0 +1,7 @@
+<definition>
+	<execute test-case-command="CPRolesPGDocumentsandmedia#AddDMDocumentRegRole" />
+	<execute test-case-command="CPRolesPGDocumentsandmedia#AddDMDocumentSiteMemberRoleInline" />
+	<execute test-case-command="CPRolesPGDocumentsandmedia#AddDMDocumentSiteRole" />
+	<execute test-case-command="CPRolesPGDocumentsandmedia#ViewDMFolderGuestInline" />
+	<execute test-case-command="CPRolesPGDocumentsandmedia#DeleteDMFolderRegRoleInline" />
+</definition>

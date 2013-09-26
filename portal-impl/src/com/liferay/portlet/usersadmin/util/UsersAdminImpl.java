@@ -501,18 +501,18 @@ public class UsersAdminImpl implements UsersAdmin {
 				actionRequest, "addressCity" + addressesIndex);
 			String zip = ParamUtil.getString(
 				actionRequest, "addressZip" + addressesIndex);
+			long countryId = ParamUtil.getLong(
+				actionRequest, "addressCountryId" + addressesIndex);
 
 			if (Validator.isNull(street1) && Validator.isNull(street2) &&
 				Validator.isNull(street3) && Validator.isNull(city) &&
-				Validator.isNull(zip)) {
+				Validator.isNull(zip) && (countryId == 0)) {
 
 				continue;
 			}
 
 			long regionId = ParamUtil.getLong(
 				actionRequest, "addressRegionId" + addressesIndex);
-			long countryId = ParamUtil.getLong(
-				actionRequest, "addressCountryId" + addressesIndex);
 			int typeId = ParamUtil.getInteger(
 				actionRequest, "addressTypeId" + addressesIndex);
 			boolean mailing = ParamUtil.getBoolean(

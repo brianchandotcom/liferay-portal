@@ -13,7 +13,6 @@
 
 	<command name="AddMember">
 		<var name="siteName" value="Site Name" />
-		<var name="siteScopeName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -39,7 +38,7 @@
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Memberships" />
 		</execute>
 

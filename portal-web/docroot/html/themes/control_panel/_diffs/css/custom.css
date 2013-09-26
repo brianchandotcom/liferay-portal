@@ -69,6 +69,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Control panel secondary nav ---------- */
 
 	.control-panel-bar-secondary {
+		margin-left: 10px;
 		padding-top: 1.1em;
 
 		&.nav-pills {

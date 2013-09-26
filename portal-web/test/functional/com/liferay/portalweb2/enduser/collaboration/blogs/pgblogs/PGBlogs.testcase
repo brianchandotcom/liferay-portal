@@ -449,6 +449,258 @@
 		</execute>
 	</command>
 
+	<command name="SearchBlogsEntryContent">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Blogs" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Entry" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Content" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Blogs1" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Entry1" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Content1" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryContentQuotes">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs Entry Content"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Entry"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Content"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Entry1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Content1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs Entry Content1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTitle">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="${entryTitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Blogs" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Entry" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Title" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Blogs1" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Entry1" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm" value="Title1" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTitleQuotes">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs Entry Title"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Entry"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Title"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Entry1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Title1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySearchTerm">"Blogs Entry Title1"</var>
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
 	<command name="ViewBlogsEntryRSS">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

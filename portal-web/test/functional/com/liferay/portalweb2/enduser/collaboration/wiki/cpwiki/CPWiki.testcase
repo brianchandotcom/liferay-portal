@@ -47,6 +47,44 @@
 		</execute>
 	</command>
 
+	<command name="CompareVersionsWikiPage">
+		<var name="wikiNodeName" value="Main" />
+		<var name="wikiPageContent" value="Wiki Page Content" />
+		<var name="wikiPageContentEdit" value="Wiki Page Content Edit" />
+		<var name="wikiPageTitle" value="Wiki Page Title" />
+		<var name="wikiPageVersionDiff" value="Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#addPageCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#editPageCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#compareVersionsCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageVersionDiff" value="${wikiPageVersionDiff}" />
+			<var name="wikiPageVersionNew" value="1.1" />
+			<var name="wikiPageVersionOld" value="1.0" />
+		</execute>
+	</command>
+
 	<command name="DeleteWikiNode">
 		<var name="wikiNodeDescription" value="Wiki Node Description" />
 		<var name="wikiNodeName" value="Wiki Node Name" />

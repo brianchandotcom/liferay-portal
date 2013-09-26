@@ -10,6 +10,10 @@
 	<execute test-case-command="PGBlogs#RateBlogsEntry4Stars" />
 	<execute test-case-command="PGBlogs#SaveBlogsEntryDraft" />
 	<execute test-case-command="PGBlogs#SaveBlogsEntryDraftAuto" />
+	<execute test-case-command="PGBlogs#SearchBlogsEntryContent" />
+	<execute test-case-command="PGBlogs#SearchBlogsEntryContentQuotes" />
+	<execute test-case-command="PGBlogs#SearchBlogsEntryTitle" />
+	<execute test-case-command="PGBlogs#SearchBlogsEntryTitleQuotes" />
 	<execute test-case-command="PGBlogs#ViewBlogsEntryRSS" />
 	<execute test-case-command="PGBlogs#ViewBlogsEntryViewCount" />
 </definition>

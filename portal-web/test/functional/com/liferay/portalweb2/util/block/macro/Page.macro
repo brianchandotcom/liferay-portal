@@ -171,6 +171,12 @@
 					<var name="pageTypeURL" value="/site-name" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Child" />
+				<then>
+					<var name="pageTypeURL" value="/child-sitename" />
+				</then>
+			</elseif>
 			<else>
 				<var name="pageTypeURL" value="/guest" />
 			</else>

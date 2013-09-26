@@ -62,7 +62,7 @@ if (stagedLocally) {
 				Liferay.Util.openWindow(
 					{
 						id: 'publishProcesses',
-						title: Liferay.Language.get('current-and-previous'),
+						title: Liferay.Language.get('initial-publication'),
 						uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
 					}
 				);

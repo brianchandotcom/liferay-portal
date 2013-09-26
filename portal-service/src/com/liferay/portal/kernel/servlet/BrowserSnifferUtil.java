@@ -56,6 +56,10 @@ public class BrowserSnifferUtil {
 		return getBrowserSniffer().isAir(request);
 	}
 
+	public static boolean isAndroid(HttpServletRequest request) {
+		return getBrowserSniffer().isAndroid(request);
+	}
+
 	public static boolean isChrome(HttpServletRequest request) {
 		return getBrowserSniffer().isChrome(request);
 	}

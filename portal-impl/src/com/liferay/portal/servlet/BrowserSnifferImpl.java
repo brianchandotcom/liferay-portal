@@ -117,6 +117,17 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	@Override
+	public boolean isAndroid(HttpServletRequest request) {
+		String userAgent = getUserAgent(request);
+
+		if (userAgent.contains("android")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isChrome(HttpServletRequest request) {
 		String userAgent = getUserAgent(request);
 
@@ -260,6 +271,10 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		float majorVersion = getMajorVersion(request);
 
 		if (isChrome(request)) {
+			return true;
+		}
+
+		if (isAndroid(request)) {
 			return true;
 		}
 

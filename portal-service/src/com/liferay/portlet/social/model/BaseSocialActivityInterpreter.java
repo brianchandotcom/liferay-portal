@@ -58,6 +58,16 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, SocialActivity activity,
+			String actionId, ServiceContext serviceContext)
+		throws Exception {
+
+		return hasPermissions(
+			permissionChecker, activity, actionId, serviceContext);
+	}
+
+	@Override
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ServiceContext serviceContext) {
 

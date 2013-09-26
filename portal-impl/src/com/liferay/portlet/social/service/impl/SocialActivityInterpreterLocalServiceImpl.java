@@ -107,6 +107,13 @@ public class SocialActivityInterpreterLocalServiceImpl
 		return _activityInterpreters;
 	}
 
+	@Override
+	public List<SocialActivityInterpreter> getActivityInterpreters(
+		String selector) {
+
+		return _activityInterpreters.get(selector);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	 *             SocialActivity, ServiceContext)}

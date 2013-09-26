@@ -80,6 +80,11 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		return getService().getActivityInterpreters();
 	}
 
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getActivityInterpreters(
+		java.lang.String selector) {
+		return getService().getActivityInterpreters(selector);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	SocialActivity, ServiceContext)}

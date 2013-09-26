@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,12 +31,15 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityModel;
+import com.liferay.portlet.social.model.SocialActivitySoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +55,7 @@ import java.util.Map;
  * @see com.liferay.portlet.social.model.SocialActivityModel
  * @generated
  */
+@JSON(strict = true)
 public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	implements SocialActivityModel {
 	/*
@@ -101,6 +106,58 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 	public static long RECEIVERUSERID_COLUMN_BITMASK = 128L;
 	public static long TYPE_COLUMN_BITMASK = 256L;
 	public static long USERID_COLUMN_BITMASK = 512L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static SocialActivity toModel(SocialActivitySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		SocialActivity model = new SocialActivityImpl();
+
+		model.setActivityId(soapModel.getActivityId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setActivitySetId(soapModel.getActivitySetId());
+		model.setMirrorActivityId(soapModel.getMirrorActivityId());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
+		model.setParentClassNameId(soapModel.getParentClassNameId());
+		model.setParentClassPK(soapModel.getParentClassPK());
+		model.setType(soapModel.getType());
+		model.setExtraData(soapModel.getExtraData());
+		model.setReceiverUserId(soapModel.getReceiverUserId());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<SocialActivity> toModels(SocialActivitySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<SocialActivity> models = new ArrayList<SocialActivity>(soapModels.length);
+
+		for (SocialActivitySoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivity"));
 
@@ -246,6 +303,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		}
 	}
 
+	@JSON
 	@Override
 	public long getActivityId() {
 		return _activityId;
@@ -256,6 +314,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		_activityId = activityId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -278,6 +337,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -300,6 +360,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -332,6 +393,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalUserId;
 	}
 
+	@JSON
 	@Override
 	public long getCreateDate() {
 		return _createDate;
@@ -354,6 +416,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalCreateDate;
 	}
 
+	@JSON
 	@Override
 	public long getActivitySetId() {
 		return _activitySetId;
@@ -376,6 +439,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalActivitySetId;
 	}
 
+	@JSON
 	@Override
 	public long getMirrorActivityId() {
 		return _mirrorActivityId;
@@ -418,6 +482,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		setClassNameId(classNameId);
 	}
 
+	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -440,6 +505,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalClassNameId;
 	}
 
+	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -462,6 +528,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalClassPK;
 	}
 
+	@JSON
 	@Override
 	public long getParentClassNameId() {
 		return _parentClassNameId;
@@ -472,6 +539,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		_parentClassNameId = parentClassNameId;
 	}
 
+	@JSON
 	@Override
 	public long getParentClassPK() {
 		return _parentClassPK;
@@ -482,6 +550,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		_parentClassPK = parentClassPK;
 	}
 
+	@JSON
 	@Override
 	public int getType() {
 		return _type;
@@ -504,6 +573,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		return _originalType;
 	}
 
+	@JSON
 	@Override
 	public String getExtraData() {
 		if (_extraData == null) {
@@ -519,6 +589,7 @@ public class SocialActivityModelImpl extends BaseModelImpl<SocialActivity>
 		_extraData = extraData;
 	}
 
+	@JSON
 	@Override
 	public long getReceiverUserId() {
 		return _receiverUserId;

@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.Time;
  */
 public class PropsValues {
 
+	public static final int ACTIVITY_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ACTIVITY_FILTER_SEARCH_LIMIT));
+
 	public static String[] ADMIN_ANALYTICS_TYPES =  StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_ANALYTICS_TYPES));
 
 	public static String[] ADMIN_DEFAULT_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_GROUP_NAMES));

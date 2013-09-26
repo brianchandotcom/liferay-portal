@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -26,6 +27,11 @@ public interface SocialActivityInterpreter {
 	public String[] getClassNames();
 
 	public String getSelector();
+
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, SocialActivity activity,
+			String actionId, ServiceContext serviceContext)
+		throws Exception;
 
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ServiceContext serviceContext);

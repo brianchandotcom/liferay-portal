@@ -78,6 +78,12 @@ public class SocialActivityInterpreterLocalServiceWrapper
 		return _socialActivityInterpreterLocalService.getActivityInterpreters();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getActivityInterpreters(
+		java.lang.String selector) {
+		return _socialActivityInterpreterLocalService.getActivityInterpreters(selector);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	SocialActivity, ServiceContext)}

@@ -408,6 +408,7 @@
 	<bean id="com.liferay.portlet.shopping.service.ShoppingOrderItemLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingOrderItemLocalServiceImpl" />
 	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderItemPersistence" class="com.liferay.portlet.shopping.service.persistence.ShoppingOrderItemPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialActivityLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" />
+	<bean id="com.liferay.portlet.social.service.SocialActivityService" class="com.liferay.portlet.social.service.impl.SocialActivityServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityPersistence" class="com.liferay.portlet.social.service.persistence.SocialActivityPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityFinder" class="com.liferay.portlet.social.service.persistence.SocialActivityFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialActivityAchievementLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl" />

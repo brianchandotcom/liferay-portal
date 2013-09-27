@@ -1,15 +1,76 @@
 <definition>
-	<command name="searchPG">
+	<command name="searchNoPG">
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
 		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 
-		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE_1" value1="${searchAssetTitle}" />
-		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TYPE_1" value1="${searchAssetType}" />
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertElementNotPresent" locator-key1="ASSET_ENTRY_TABLE_TITLE" />
+		<execute action="PGSearchResults#assertElementNotPresent" locator-key1="ASSET_ENTRY_TABLE_TYPE" />
 
 		<if>
 			<isset var="searchAssetSummary" />
 			<then>
-				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_SUMMARY_1" value1="${searchAssetSummary}" />
+				<execute action="PGSearchResults#assertElementNotPresent" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No results were found that matched the keywords: ${searchTerm}." />
+			</then>
+		</if>
+	</command>
+
+	<command name="searchPG">
+		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
+		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
+
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
+
+		<if>
+			<isset var="searchAssetSummary" />
+			<then>
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewSearchNoPG">
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertElementNotPresent" locator-key1="ASSET_ENTRY_TABLE_TITLE" />
+		<execute action="PGSearchResults#assertElementNotPresent" locator-key1="ASSET_ENTRY_TABLE_TYPE" />
+
+		<if>
+			<isset var="searchAssetSummary" />
+			<then>
+				<execute action="PGSearchResults#assertElementNotPresent" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No results were found that matched the keywords: ${searchTerm}." />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewSearchPG">
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_TYPE" value1="${searchAssetType}" />
+
+		<if>
+			<isset var="searchAssetSummary" />
+			<then>
+				<execute action="PGSearchResults#assertTextEquals" locator-key1="ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
 			</then>
 		</if>
 	</command>

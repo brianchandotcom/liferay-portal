@@ -228,6 +228,10 @@ public class SubscriptionSender implements Serializable {
 
 		_initialized = true;
 
+		if ((groupId == 0) && (serviceContext != null)) {
+			setScopeGroupId(serviceContext.getScopeGroupId());
+		}
+
 		Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 		setContextAttribute("[$COMPANY_ID$]", company.getCompanyId());

@@ -1,6 +1,7 @@
 package ${seleniumBuilderContext.getTestCasePackageName(testCaseName)};
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -44,13 +45,31 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 	@Override
 	public void setUp() throws Exception {
-		selenium = SeleniumUtil.getSelenium();
+		try {
+			selenium = SeleniumUtil.getSelenium();
 
-		if (Validator.isNull(selenium.getPrimaryTestSuiteName())) {
-			selenium.setPrimaryTestSuiteName("${seleniumBuilderContext.getTestCaseClassName(testCaseName)}");
+			if (Validator.isNull(selenium.getPrimaryTestSuiteName())) {
+				selenium.setPrimaryTestSuiteName("${seleniumBuilderContext.getTestCaseClassName(testCaseName)}");
+			}
+
+			selenium.startLogger();
 		}
+		catch (Exception e) {
+			Runtime runtime = Runtime.getRuntime();
 
-		selenium.startLogger();
+			if (OSDetector.isWindows()) {
+				String[] commands = { "tskill", "firefox" };
+
+				runtime.exec(commands);
+			}
+			else {
+				String[] commands = { "killall", "firefox" };
+
+				runtime.exec(commands);
+			}
+
+			throw e;
+		}
 	}
 
 	<#assign commandElements = rootElement.elements("command")>

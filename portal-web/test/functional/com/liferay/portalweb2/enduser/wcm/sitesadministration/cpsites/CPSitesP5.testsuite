@@ -5,4 +5,5 @@
 	<execute test-case-command="CPSites#EditSite" />
 	<execute test-case-command="CPSites#SearchSite" />
 	<execute test-case-command="CPSites#ViewDisplayParentSiteViaSitesDirectory" />
+	<execute test-case-command="CPSites#ViewSiteHierarchiesViaSitesDirectory" />
 </definition>

@@ -150,7 +150,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<aui:nav-item cssClass='<%= ((layoutSetBranches != null) ? " active" : StringPool.BLANK) + " staging-toggle" %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" label="staging" />
+					<aui:nav-item cssClass='<%= ((layoutSetBranches != null) ? " active" : StringPool.BLANK) + " staging-toggle" %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" id="stagingLink" label="staging" />
 				</c:otherwise>
 			</c:choose>
 
@@ -179,6 +179,10 @@ if (layout != null) {
 				<c:otherwise>
 					<aui:nav-item anchorCssClass="staging-link" cssClass="active live-link staging-toggle" dropdown="<%= true %>" id="liveLink" label="live" toggle="<%= true %>">
 						<aui:nav-item cssClass="row-fluid">
+							<span class="alert alert-warning warning-content hide" id="<portlet:namespace />warningMessage">
+								<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
+							</span>
+
 							<div class="staging-details">
 
 								<%
@@ -204,4 +208,45 @@ if (layout != null) {
 			);
 		</aui:script>
 	</c:if>
+
+	<aui:script use="aui-base">
+		var stagingLink = A.one('#<portlet:namespace />stagingLink');
+
+		Liferay.provide(
+			window,
+			'<portlet:namespace />checkBackgroundTasks',
+			function() {
+				Liferay.Service(
+					'/backgroundtask/get-background-tasks-count',
+					{
+						groupId: '<%= liveGroup.getGroupId() %>',
+						taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>',
+						completed: false
+					},
+					function(obj) {
+						var warningMessage = A.one('#<portlet:namespace />warningMessage');
+
+						if (obj > 0) {
+							stagingLink.hide();
+
+							if (warningMessage) {
+								warningMessage.show();
+							}
+
+							setTimeout(<portlet:namespace />checkBackgroundTasks, 5000);
+						}
+						else {
+							stagingLink.show();
+
+							if (warningMessage){
+								warningMessage.hide();
+							}
+						}
+					}
+				);
+			}
+		);
+
+		<portlet:namespace />checkBackgroundTasks();
+	</aui:script>
 </c:if>

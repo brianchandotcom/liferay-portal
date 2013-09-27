@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1774,7 +1775,8 @@ public class PortletImporter {
 			portlet.getPortletDataHandlerInstance();
 
 		if (importData || (portletDataHandler == null) ||
-			portletDataHandler.isDisplayPortlet()) {
+			(portletDataHandler.isDisplayPortlet() &&
+				!MergeLayoutPrototypesThreadLocal.isInProgress())) {
 
 			PortletPreferencesLocalServiceUtil.updatePreferences(
 				ownerId, ownerType, plid, portletId, xml);

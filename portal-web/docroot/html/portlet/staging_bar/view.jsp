@@ -301,6 +301,12 @@ if (layout != null) {
 
 													<c:choose>
 														<c:when test="<%= lastImportDate > 0 %>">
+
+															<%
+															request.setAttribute("view.jsp-lastImportDate", lastImportDate);
+															request.setAttribute("view.jsp-typeSettingsProperties", typeSettingsProperties);
+															%>
+
 															<liferay-util:include page="/html/portlet/staging_bar/last_publication_date_message.jsp" />
 														</c:when>
 														<c:otherwise>

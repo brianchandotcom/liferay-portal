@@ -17,6 +17,9 @@
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
 <%
+long lastImportDate = (Long)request.getAttribute("view.jsp-lastImportDate");
+UnicodeProperties typeSettingsProperties = (UnicodeProperties)request.getAttribute("view.jsp-typeSettingsProperties");
+
 String lastImportLayoutSetBranchName = null;
 
 long lastImportLayoutSetBranchId = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-layout-set-branch-id"));

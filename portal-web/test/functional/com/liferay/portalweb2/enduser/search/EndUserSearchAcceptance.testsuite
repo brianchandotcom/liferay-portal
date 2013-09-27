@@ -1,3 +1,5 @@
 <definition>
 	<execute test-suite="PGSearchAcceptance" />
+
+	<execute test-suite="PGWebcontentsearchAcceptance" />
 </definition>

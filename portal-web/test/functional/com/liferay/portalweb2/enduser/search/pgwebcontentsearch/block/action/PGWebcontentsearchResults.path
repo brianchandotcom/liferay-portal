@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>PGWebcontentsearchResults</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebcontentsearchResults</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebcontentsearchResults</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@name='_77_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ICON</td>
+	<td>//input[@id='_77_search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS</td>
+	<td>//div[@class='search-results']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESULTS_TABLE-->
+<tr>
+	<td>RESULTS_TABLE_NUMBER</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_TABLE_LANGUAGE</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[2]/span/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_TABLE_CONTENT</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[4]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

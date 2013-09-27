@@ -236,6 +236,33 @@
 		<execute action="CPWebcontentPreview#assertTextEquals" locator-key1="BODY_FIELD" value1="Text: ${webContentText}" />
 	</command>
 
+	<command name="searchPGViaWCS">
+		<var name='key_webContentSearchResultsName' value="${webContentSearchResultsName}" />
+
+		<execute action="PGWebcontentsearch#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchTerm}" />
+		<execute action="PGWebcontentsearch#click" locator-key1="SEARCH_ICON" />
+
+		<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="RESULTS_TABLE_NAME" value1="${webContentSearchResultsName}" />
+		<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="RESULTS_TABLE_CONTENT" value1="${webContentSearchResultsContent}" />
+	</command>
+
+	<command name="searchNoPGViaWCS">
+		<var name='key_webContentSearchResultsName' value="${webContentSearchResultsName}" />
+
+		<execute action="PGWebcontentsearch#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchTerm}" />
+		<execute action="PGWebcontentsearch#click" locator-key1="SEARCH_ICON" />
+
+		<execute action="PGWebcontentsearchResults#assertElementNotPresent" locator-key1="RESULTS_TABLE_NAME" />
+		<execute action="PGWebcontentsearchResults#assertElementNotPresent" locator-key1="RESULTS_TABLE_CONTENT" />
+
+		<if>
+			<equals arg1="${webContentSearchNoResults}" arg2="true" />
+			<then>
+				<execute action="PGWebcontentsearchResults#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
+			</then>
+		</if>
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

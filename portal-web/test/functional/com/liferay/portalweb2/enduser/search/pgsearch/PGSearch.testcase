@@ -25,12 +25,120 @@
 
 		<execute macro="User#tearDownCP" />
 
+		<execute macro="WebContent#tearDownCP" />
+
 		<execute macro="WikiPage#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="SearchBlogsEntry">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="${entryContent}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Blogs Title" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Blogs Content" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Entry" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Blogs1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Entry1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Content1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryQuotes">
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -65,7 +173,210 @@
 			<var name="searchAssetSummary" value="${entryContent}" />
 			<var name="searchAssetTitle" value="${entryTitle}" />
 			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Blogs Entry Title"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Entry Title"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Title"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Blogs Entry Content"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Blogs Entry"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Blogs"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Entry Content"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Entry"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Content"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Blogs Content"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Blogs1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Entry1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Title1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Content1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Blogs Entry Title1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Blogs Entry Content1"</var>
+		</execute>
+	</command>
+
+	<command name="SearchDocumentsAndMediaDocument">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.txt" />
+		<var name="dmDocumentSize" value="0k" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
 			<var name="searchTerm" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="DM" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Document" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="DM Document" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="DM Title" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Document Title" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="DM1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Document1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${dmDocumentTitle}" />
+			<var name="searchAssetType" value="Document" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
 		</execute>
 	</command>
 
@@ -106,9 +417,157 @@
 			<var name="searchAssetType" value="Message Boards Message" />
 			<var name="searchTerm" value="${threadSubject}" />
 		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchTerm" value="${threadBody}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchTerm" value="MB" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchTerm" value="Thread" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchTerm" value="Message" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchTerm" value="Subject" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchTerm" value="Body" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="MB1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Thread1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Message1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Subject1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${threadBody}" />
+			<var name="searchAssetTitle" value="${threadSubject}" />
+			<var name="searchAssetType" value="Message Boards Message" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Body1" />
+		</execute>
 	</command>
 
 	<command name="SearchUser">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
+			<var name="searchAssetType" value="User" />
+			<var name="searchTerm" value="userfn userln" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
+			<var name="searchAssetType" value="User" />
+			<var name="searchTerm" value="userfn" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
+			<var name="searchAssetType" value="User" />
+			<var name="searchTerm" value="userln" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
+			<var name="searchAssetType" value="User" />
+			<var name="searchTerm" value="usersn" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
+			<var name="searchAssetType" value="User" />
+			<var name="searchTerm" value="userfn1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
+			<var name="searchAssetType" value="User" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="userln1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
+			<var name="searchAssetType" value="User" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="usersn1" />
+		</execute>
+	</command>
+
+	<command name="SearchUserWildcard">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -139,6 +598,97 @@
 			<var name="searchAssetTitle" value="${userFirstName} ${userLastName}" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="userf*" />
+		</execute>
+	</command>
+
+	<command name="SearchWebContent">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WC" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="WC1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="WebContent1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${webContentContent}" />
+			<var name="searchAssetTitle" value="${webContentTitle}" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="Content1" />
 		</execute>
 	</command>
 
@@ -179,6 +729,72 @@
 			<var name="searchAssetTitle" value="${wikiPageTitle}" />
 			<var name="searchAssetType" value="Wiki Page" />
 			<var name="searchTerm" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchTerm" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchTerm" value="Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchTerm" value="Title" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchTerm" value="Content" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Wiki1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Page1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Title1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${wikiPageContent}" />
+			<var name="searchAssetTitle" value="${wikiPageTitle}" />
+			<var name="searchAssetType" value="Wiki Page" />
+			<var name="searchTerm" value="Content1" />
 		</execute>
 	</command>
 </definition>

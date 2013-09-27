@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="PGWebcontentsearch#SearchWebContent" />
+	<execute test-case-command="PGWebcontentsearch#SearchWebContentQuotes" />
+</definition>

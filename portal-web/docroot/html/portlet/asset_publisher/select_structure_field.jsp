@@ -71,7 +71,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
 				</liferay-portlet:resourceURL>
 
-				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>'>
+				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>' onSubmit="event.preventDefault()">
 
 					<%
 					com.liferay.portlet.dynamicdatamapping.storage.Field ddmField = new com.liferay.portlet.dynamicdatamapping.storage.Field();

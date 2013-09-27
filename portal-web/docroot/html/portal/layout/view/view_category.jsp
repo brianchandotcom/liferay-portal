@@ -53,7 +53,7 @@ if (!portletCategories.isEmpty() || !portlets.isEmpty()) {
 	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName());
 %>
 
-	<liferay-ui:panel collapsible="<%= false %>" cssClass="lfr-content-category panel-page-category unstyled" extended="<%= true %>" title="<%= title %>">
+	<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-content-category panel-page-category unstyled" extended="<%= true %>" title="<%= title %>">
 		<aui:nav cssClass="nav-list">
 
 			<%

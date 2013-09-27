@@ -68,6 +68,12 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		HttpPrincipal httpPrincipal = (HttpPrincipal)taskContextMap.get(
 			"httpPrincipal");
 
+		Date lastPublishDate = endDate;
+
+		if (lastPublishDate == null) {
+			lastPublishDate = new Date();
+		}
+
 		clearBackgroundTaskStatus(backgroundTask);
 
 		long stagingRequestId = 0;
@@ -126,12 +132,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 			if (updateLastPublishDate) {
-				Date lastPublishDate = endDate;
-
-				if (lastPublishDate == null) {
-					lastPublishDate = new Date();
-				}
-
 				StagingUtil.updateLastPublishDate(
 					sourceGroupId, privateLayout, lastPublishDate);
 			}

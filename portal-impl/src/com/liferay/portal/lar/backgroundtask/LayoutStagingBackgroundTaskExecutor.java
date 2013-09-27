@@ -58,6 +58,12 @@ public class LayoutStagingBackgroundTaskExecutor
 		Date startDate = (Date)taskContextMap.get("startDate");
 		Date endDate = (Date)taskContextMap.get("endDate");
 
+		Date lastPublishDate = endDate;
+
+		if (lastPublishDate == null) {
+			lastPublishDate = new Date();
+		}
+
 		clearBackgroundTaskStatus(backgroundTask);
 
 		File file = null;
@@ -83,12 +89,6 @@ public class LayoutStagingBackgroundTaskExecutor
 				parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 			if (updateLastPublishDate) {
-				Date lastPublishDate = endDate;
-
-				if (lastPublishDate == null) {
-					lastPublishDate = new Date();
-				}
-
 				StagingUtil.updateLastPublishDate(
 					sourceGroupId, privateLayout, lastPublishDate);
 			}

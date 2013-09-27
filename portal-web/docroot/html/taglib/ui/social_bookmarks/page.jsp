@@ -23,7 +23,7 @@
 	%>
 
 	<div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
-		<liferay-ui:icon-menu icon="/html/themes/classic/images/common/share.png" message="share">
+		<liferay-ui:icon-menu direction="right" icon="/html/themes/classic/images/common/share.png" message="share">
 
 			<%
 			for (int i = 0; i < typesArray.length; i++) {
@@ -39,10 +39,10 @@
 	</div>
 
 	<aui:script use="liferay-social-bookmarks">
-		var socialBookmarks = new Liferay.SocialBookmarks(
+		new Liferay.SocialBookmarks(
 			{
 				contentBox: '#<%= randomNamespace %>socialBookmarks'
 			}
-		).render();
+		);
 	</aui:script>
 </c:if>

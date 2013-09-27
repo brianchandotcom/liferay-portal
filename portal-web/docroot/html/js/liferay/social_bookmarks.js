@@ -13,25 +13,23 @@ AUI.add(
 
 		var SocialBookmarks = A.Component.create(
 			{
+				ATTRS: {
+					contentBox: {
+						setter: A.one
+					}
+				},
+
+				EXTENDS: A.Base,
+
 				NAME: NAME,
 
-				NS: NAME,
-
 				prototype: {
-					initializer: function(config) {
+					initializer: function() {
 						var instance = this;
 
-						instance.config = config;
-					},
+						var menuList = instance.get('contentBox').one('.lfr-menu-list');
 
-					render: function() {
-						var instance = this;
-
-						var config = instance.config;
-
-						var contentBox = A.one(config.contentBox).one('.lfr-menu-list');
-
-						contentBox.delegate(
+						menuList.delegate(
 							'click',
 							function(event) {
 								event.preventDefault();
@@ -47,9 +45,7 @@ AUI.add(
 
 								var url = event.currentTarget.attr('href');
 
-								window.open(url, null, shareWindowFeatures.join(',')).focus();
-
-								void('');
+								WIN.getDOM().open(url, null, shareWindowFeatures.join(',')).focus();
 							},
 							'.social-bookmark .taglib-icon'
 						);

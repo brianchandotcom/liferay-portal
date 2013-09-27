@@ -69,6 +69,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTROL_PANEL-->
+<tr>
+	<td>CONTROL_PANEL_GENERAL_PERMISSIONS</td>
+	<td>//div[contains(.,'Control Panel') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'General Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_PAGES-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES</td>

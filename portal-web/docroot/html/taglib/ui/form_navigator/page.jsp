@@ -88,7 +88,6 @@ if (Validator.isNotNull(historyKey)) {
 					String[] modifiedSections = StringUtil.split(ParamUtil.getString(request, "modifiedSections"));
 
 					String errorSection = (String)request.getAttribute("errorSection");
-					String focusField = (String)request.getAttribute("focusField");
 
 					if (Validator.isNull(errorSection)) {
 						modifiedSections = null;
@@ -307,11 +306,18 @@ if (Validator.isNotNull(historyKey)) {
 				}
 
 				if (formNode) {
-					var focusField = formNode.one('.form-section.active input:not([type="hidden"]).field');
+					<%
+					String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
+					%>
 
-					<c:if test="<%= Validator.isNotNull(focusField) %>">
-						focusField = formNode.one('#<portlet:namespace /><%= focusField %>');
-					</c:if>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(focusField) %>">
+							var focusField = formNode.one('#<portlet:namespace /><%= focusField %>');
+						</c:when>
+						<c:otherwise>
+							var focusField = formNode.one('.form-section.active input:not([type="hidden"]).field');
+						</c:otherwise>
+					</c:choose>
 
 					if (focusField) {
 						Liferay.Util.focusFormField(focusField);

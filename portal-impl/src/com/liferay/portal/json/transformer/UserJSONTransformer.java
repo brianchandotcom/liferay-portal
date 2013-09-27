@@ -16,8 +16,10 @@ package com.liferay.portal.json.transformer;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.permission.UserPermissionUtil;
 
 /**
  * @author Igor Spasic
@@ -34,9 +36,12 @@ public class UserJSONTransformer extends FlexjsonObjectJSONTransformer {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker != null) {
+			boolean hasViewPermission = UserPermissionUtil.contains(
+				permissionChecker, user.getUserId(), ActionKeys.VIEW);
+
 			long userId = permissionChecker.getUserId();
 
-			if (user.getUserId() == userId) {
+			if (hasViewPermission || (user.getUserId() == userId)) {
 				hidePrivateUserData = false;
 			}
 		}

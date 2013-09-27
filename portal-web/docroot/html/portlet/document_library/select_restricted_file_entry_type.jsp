@@ -26,16 +26,6 @@
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<liferay-ui:header
-		title="document-types"
-	/>
-
-	<liferay-ui:search-form
-		page="/html/portlet/document_library/file_entry_type_search.jsp"
-	/>
-
-	<div class="separator"><!-- --></div>
-
 	<liferay-ui:search-container
 		searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
 	>

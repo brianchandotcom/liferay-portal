@@ -698,7 +698,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append(layoutId);
 			sb.append(StringPool.AT);

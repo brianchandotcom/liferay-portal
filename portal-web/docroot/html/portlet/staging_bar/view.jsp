@@ -341,6 +341,7 @@ if (layout != null) {
 
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">
+
 					<%
 					UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 

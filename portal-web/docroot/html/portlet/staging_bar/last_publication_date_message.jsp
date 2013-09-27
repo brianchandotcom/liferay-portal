@@ -123,4 +123,3 @@ if (Validator.isNull(publisherName)) {
 		</span>
 	</c:otherwise>
 </c:choose>
-

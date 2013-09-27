@@ -34,7 +34,6 @@ public class BrowserSnifferImplTest {
 
 	@Test
 	public void testIsAndroid() throws IOException {
-
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(getClass().getResourceAsStream(
 				"dependencies/user_agents.csv")));

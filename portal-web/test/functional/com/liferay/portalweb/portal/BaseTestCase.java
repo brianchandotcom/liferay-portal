@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portalweb.portal.util.LiferaySeleneseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
@@ -33,17 +34,35 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 
 	@Override
 	public void setUp() throws Exception {
-		Class<?> clazz = getClass();
+		try {
+			Class<?> clazz = getClass();
 
-		String className = clazz.getName();
+			String className = clazz.getName();
 
-		if (className.contains("evaluatelog")) {
-			return;
+			if (className.contains("evaluatelog")) {
+				return;
+			}
+
+			selenium = SeleniumUtil.getSelenium();
+
+			selenium.startLogger();
 		}
+		catch (Exception e) {
+			Runtime runtime = Runtime.getRuntime();
 
-		selenium = SeleniumUtil.getSelenium();
+			if (OSDetector.isWindows()) {
+				String[] commands = { "tskill", "firefox" };
 
-		selenium.startLogger();
+				runtime.exec(commands);
+			}
+			else {
+				String[] commands = { "killall", "firefox" };
+
+				runtime.exec(commands);
+			}
+
+			throw e;
+		}
 	}
 
 	@Override

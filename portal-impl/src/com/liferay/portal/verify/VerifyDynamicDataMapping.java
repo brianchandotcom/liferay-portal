@@ -48,8 +48,11 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -124,10 +127,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		_ddlRecordSetClassNameId = PortalUtil.getClassNameId(
-			DDLRecordSet.class);
-		_dlFileEntryMetadataClassNameId = PortalUtil.getClassNameId(
-			DLFileEntryMetadata.class);
+		setUpClassNameIds();
 
 		List<DDMStructure> structures =
 			DDMStructureLocalServiceUtil.getStructures();
@@ -221,6 +221,15 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		return false;
 	}
 
+	protected void setUpClassNameIds() {
+		_ddmStructureClassNameId = PortalUtil.getClassNameId(
+			DDMStructure.class);
+		_ddlRecordSetClassNameId = PortalUtil.getClassNameId(
+			DDLRecordSet.class);
+		_dlFileEntryMetadataClassNameId = PortalUtil.getClassNameId(
+			DLFileEntryMetadata.class);
+	}
+
 	protected void updateDDLFileUploadReferences(long ddlRecordSetId)
 		throws Exception {
 
@@ -303,9 +312,16 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateFileUploadReferences(structureLink);
 		}
 
-		String xsd = updateXSD(structure.getXsd());
+		updateStructure(structure, updateXSD(structure.getXsd()));
 
-		updateStructure(structure, xsd);
+		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(
+			structure.getGroupId(), _ddmStructureClassNameId,
+			structure.getStructureId(),
+			DDMTemplateConstants.TEMPLATE_TYPE_FORM);
+
+		for (DDMTemplate template : templates) {
+			updateTemplate(template, updateXSD(template.getScript()));
+		}
 	}
 
 	protected void updateFileUploadReferences(DDMStructureLink structureLink)
@@ -367,6 +383,16 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		DDMStructureLocalServiceUtil.updateDDMStructure(structure);
 	}
 
+	protected void updateTemplate(DDMTemplate template, String script)
+		throws Exception {
+
+		script = DDMXMLUtil.formatXML(script);
+
+		template.setScript(script);
+
+		DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
+	}
+
 	protected String updateXSD(String xsd) throws Exception {
 		Document document = SAXReaderUtil.read(xsd);
 
@@ -425,6 +451,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	}
 
 	private long _ddlRecordSetClassNameId;
+	private long _ddmStructureClassNameId;
 	private long _dlFileEntryMetadataClassNameId;
 
 }

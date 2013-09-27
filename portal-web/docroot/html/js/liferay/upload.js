@@ -20,9 +20,16 @@ AUI.add(
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
-					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" id="{id}">',
-						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
-						'<span class="file-title" title="{name}">{name}</span>',
+					'<tpl if="!values.title">',
+						'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" data-title="{name}" id="{id}">',
+							'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" data-title="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
+							'<span class="file-title" title="{name}">{name}</span>',
+					'</tpl>',
+					'<tpl if="values.title">',
+						'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" data-title="{[values.title]}" id="{id}">',
+							'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" data-title="{[values.title]}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
+							'<span class="file-title" title="{[values.title]}">{[values.title]}</span>',
+					'</tpl>',
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
 						'</span>',
@@ -404,10 +411,19 @@ AUI.add(
 							var files = AArray.map(
 								fileNames,
 								function(item, index, collection) {
+									var title = item;
+
+									var pos = title.indexOf('--tempRandomSuffix--');
+
+									if (pos != -1) {
+										title = title.substr(0, pos);
+									}
+
 									return {
 										id: A.guid(),
 										name: item,
-										temp: true
+										temp: true,
+										title: title
 									};
 								}
 							);
@@ -785,6 +801,26 @@ AUI.add(
 
 									li.remove(true);
 								}
+								else if (data.name) {
+									file.selected = true;
+									file.temp = true;
+									file.name = data.name;
+									file.title = data.title;
+
+									var newLi = A.Node.create(instance._fileListTPL.parse([file]));
+
+									var input = newLi.one('input');
+
+									if (input) {
+										input.attr('checked', true);
+
+										input.show();
+									}
+
+									li.placeBefore(newLi);
+
+									li.remove(true);
+								}
 								else {
 									li.replaceClass('file-uploading', 'pending-file upload-complete selectable selected');
 
@@ -1045,7 +1081,7 @@ AUI.add(
 							var hasSelectedFiles = (selectedFilesCount > 0);
 
 							if (hasSelectedFiles) {
-								selectedFileName = selectedFiles.item(0).ancestor().attr('data-fileName');
+								selectedFileName = selectedFiles.item(0).ancestor().attr('data-title');
 							}
 
 							if (metadataContainer) {

@@ -53,12 +53,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
 			long classNameId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityPersistence.findByClassNameId(
 			classNameId, start, end);
@@ -85,13 +86,14 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
 			long mirrorActivityId, long classNameId, long classPK, int start,
 			int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityPersistence.findByM_C_C(
 			mirrorActivityId, classNameId, classPK, start, end);
@@ -118,13 +120,14 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
 			long mirrorActivityId, String className, long classPK, int start,
 			int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
@@ -150,12 +153,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
 			String className, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
@@ -168,10 +172,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  classNameId the target asset's class name ID
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getActivitiesCount(long classNameId) throws SystemException {
+	public int getActivitiesCount(long classNameId)
+		throws PortalException, SystemException {
+
 		return socialActivityPersistence.countByClassNameId(classNameId);
 	}
 
@@ -184,12 +191,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  classNameId the target asset's class name ID
 	 * @param  classPK the primary key of the target asset
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getActivitiesCount(
 			long mirrorActivityId, long classNameId, long classPK)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityPersistence.countByM_C_C(
 			mirrorActivityId, classNameId, classPK);
@@ -204,12 +212,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  className the target asset's class name
 	 * @param  classPK the primary key of the target asset
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getActivitiesCount(
 			long mirrorActivityId, String className, long classPK)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
@@ -221,10 +230,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  className the target asset's class name
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getActivitiesCount(String className) throws SystemException {
+	public int getActivitiesCount(String className)
+		throws PortalException, SystemException {
+
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return getActivitiesCount(classNameId);
@@ -248,7 +260,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	@Override
 	public List<SocialActivity> getActivitySetActivities(
 			long activitySetId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityPersistence.findByActivitySetId(
 			activitySetId, start, end);
@@ -275,12 +287,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getGroupActivities(
 			long groupId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByGroupId(groupId, start, end);
 	}
@@ -294,10 +307,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getGroupActivitiesCount(long groupId) throws SystemException {
+	public int getGroupActivitiesCount(long groupId)
+		throws PortalException, SystemException {
+
 		return socialActivityFinder.countByGroupId(groupId);
 	}
 
@@ -323,12 +339,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getGroupUsersActivities(
 			long groupId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByGroupUsers(groupId, start, end);
 	}
@@ -343,11 +360,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getGroupUsersActivitiesCount(long groupId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.countByGroupUsers(groupId);
 	}
@@ -386,12 +404,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getOrganizationActivities(
 			long organizationId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByOrganizationId(
 			organizationId, start, end);
@@ -403,11 +422,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  organizationId the primary key of the organization
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getOrganizationActivitiesCount(long organizationId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.countByOrganizationId(organizationId);
 	}
@@ -430,12 +450,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getOrganizationUsersActivities(
 			long organizationId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByOrganizationUsers(
 			organizationId, start, end);
@@ -447,11 +468,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  organizationId the primary key of the organization
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getOrganizationUsersActivitiesCount(long organizationId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.countByOrganizationUsers(organizationId);
 	}
@@ -474,12 +496,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getRelationActivities(
 			long userId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByRelation(userId, start, end);
 	}
@@ -504,12 +527,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getRelationActivities(
 			long userId, int type, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByRelationType(
 			userId, type, start, end);
@@ -521,10 +545,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getRelationActivitiesCount(long userId) throws SystemException {
+	public int getRelationActivitiesCount(long userId)
+		throws PortalException, SystemException {
+
 		return socialActivityFinder.countByRelation(userId);
 	}
 
@@ -536,11 +563,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  type the relationship type
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getRelationActivitiesCount(long userId, int type)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.countByRelationType(userId, type);
 	}
@@ -562,12 +590,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getUserActivities(
 			long userId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityPersistence.findByUserId(userId, start, end);
 	}
@@ -577,10 +606,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserActivitiesCount(long userId) throws SystemException {
+	public int getUserActivitiesCount(long userId)
+		throws PortalException, SystemException {
+
 		return socialActivityPersistence.countByUserId(userId);
 	}
 
@@ -602,12 +634,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getUserGroupsActivities(
 			long userId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByUserGroups(userId, start, end);
 	}
@@ -618,11 +651,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getUserGroupsActivitiesCount(long userId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.countByUserGroups(userId);
 	}
@@ -645,12 +679,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getUserGroupsAndOrganizationsActivities(
 			long userId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByUserGroupsAndOrganizations(
 			userId, start, end);
@@ -662,11 +697,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getUserGroupsAndOrganizationsActivitiesCount(long userId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.countByUserGroupsAndOrganizations(userId);
 	}
@@ -689,12 +725,13 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivity> getUserOrganizationsActivities(
 			long userId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.findByUserOrganizations(userId, start, end);
 	}
@@ -705,11 +742,12 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @return the number of matching activities
+	 * @throws PortalException if permission checker is not initialized
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return socialActivityFinder.countByUserOrganizations(userId);
 	}

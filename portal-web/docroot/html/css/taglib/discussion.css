@@ -76,6 +76,8 @@
 
 	.lfr-discussion-message {
 		padding-bottom: 1em;
+
+		@include word-break(break-all);
 	}
 
 	.taglib-ratings {

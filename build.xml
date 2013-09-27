@@ -7,6 +7,13 @@
 		<antcall target="clean" />
 		<antcall target="start" />
 		<antcall target="deploy" />
+		<if>
+			<equals arg1="${jrebel.auto.setup}" arg2="on" />
+			<then>
+				<antcall target="setup-jrebel" />
+			</then>
+		</if>
+
 	</target>
 
 	<target name="clean">

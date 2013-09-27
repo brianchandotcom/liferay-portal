@@ -16,7 +16,6 @@ package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -46,15 +45,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 	public PollsDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("questionId");
-		setExportControls(
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "selected-question", true, true,
-				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(
-						NAMESPACE, "votes", true, false, null,
-						PollsVote.class.getName())
-				},
-				PollsQuestion.class.getName()));
+		setExportControls(new PortletDataHandlerControl[0]);
 		setPublishToLiveByDefault(PropsValues.POLLS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
@@ -156,18 +147,14 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 				portletDataContext, choiceElement);
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				PollsPortletDataHandler.NAMESPACE, "votes")) {
+		Element votesElement = portletDataContext.getImportDataGroupElement(
+			PollsVote.class);
 
-			Element votesElement = portletDataContext.getImportDataGroupElement(
-				PollsVote.class);
+		List<Element> voteElements = votesElement.elements();
 
-			List<Element> voteElements = votesElement.elements();
-
-			for (Element voteElement : voteElements) {
-				StagedModelDataHandlerUtil.importReferenceStagedModel(
-					portletDataContext, voteElement);
-			}
+		for (Element voteElement : voteElements) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, voteElement);
 		}
 
 		long questionId = GetterUtil.getLong(

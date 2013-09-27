@@ -17,7 +17,6 @@ package com.liferay.portlet.wiki.lar;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -46,14 +45,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 	public WikiDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("title", "nodeId");
-		setExportControls(
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "selected-node", true, true,
-				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(
-						NAMESPACE, "referenced-content")
-				},
-				WikiPage.class.getName()));
+		setExportControls(new PortletDataHandlerControl[0]);
 	}
 
 	@Override

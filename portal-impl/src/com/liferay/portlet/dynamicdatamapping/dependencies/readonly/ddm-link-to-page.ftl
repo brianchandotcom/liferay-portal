@@ -5,7 +5,13 @@
 
 	<#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 
-	<#assign fieldLayout = layoutLocalService.fetchLayout(fieldLayoutJSONObject.getLong("groupId"), fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
+	<#if (fieldLayoutJSONObject.getLong("groupId") > 0)>
+		<#assign fieldLayoutGroupId = fieldLayoutJSONObject.getLong("groupId")>
+	<#else>
+		<#assign fieldLayoutGroupId = scopeGroupId>
+	</#if>
+
+	<#assign fieldLayout = layoutLocalService.fetchLayout(fieldLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), fieldLayoutJSONObject.getLong("layoutId"))!"">
 
 	<#if (fieldLayout?? && fieldLayout != "")>
 		<@aui["field-wrapper"] label=escape(label)>

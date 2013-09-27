@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -48,6 +49,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
@@ -386,16 +388,15 @@ public class JournalArticleIndexer extends BaseIndexer {
 		String title = document.get(
 			snippetLocale, prefix + Field.TITLE, Field.TITLE);
 
-		String content = document.get(
-			snippetLocale, prefix + Field.DESCRIPTION, prefix + Field.CONTENT);
+		String content = StringPool.BLANK;
 
-		if (Validator.isBlank(content)) {
-			content = document.get(
-				snippetLocale, Field.DESCRIPTION, Field.CONTENT);
+		String ddmStructureKey = document.get("ddmStructureKey");
+
+		if (Validator.isNotNull(ddmStructureKey)) {
+			content = getDDMContentSummary(document, snippetLocale);
 		}
-
-		if (content.length() > 200) {
-			content = StringUtil.shorten(content, 200);
+		else {
+			content = getBasicContentSummary(document, snippetLocale);
 		}
 
 		String groupId = document.get(Field.GROUP_ID);
@@ -528,6 +529,59 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		return DDMIndexerUtil.extractAttributes(
 			ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
+	}
+
+	protected String getBasicContentSummary(
+		Document document, Locale snippetLocale) {
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String content = document.get(
+			snippetLocale, prefix + Field.DESCRIPTION, prefix + Field.CONTENT);
+
+		if (Validator.isBlank(content)) {
+			content = document.get(
+				snippetLocale, Field.DESCRIPTION, Field.CONTENT);
+		}
+
+		if (content.length() > 200) {
+			content = StringUtil.shorten(content, 200);
+		}
+
+		return content;
+	}
+
+	protected String getDDMContentSummary(
+		Document document, Locale snippetLocale) {
+
+		String content = StringPool.BLANK;
+
+		try {
+			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+			String articleId = document.get("articleId");
+			double version = GetterUtil.getDouble(document.get(Field.VERSION));
+
+			JournalArticle article =
+				JournalArticleLocalServiceUtil.getArticle(
+					groupId, articleId, version);
+
+			JournalArticleDisplay articleDisplay =
+				JournalArticleLocalServiceUtil.getArticleDisplay(
+					article, null, Constants.VIEW,
+					LocaleUtil.toLanguageId(snippetLocale), 1, null, null);
+
+			content = HtmlUtil.escape(articleDisplay.getDescription());
+
+			content = HtmlUtil.replaceNewLine(content);
+
+			if (Validator.isNull(content)) {
+				content = HtmlUtil.stripHtml(articleDisplay.getContent());
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return content;
 	}
 
 	protected Collection<Document> getArticleVersions(JournalArticle article)

@@ -33,8 +33,6 @@ import com.liferay.util.EncryptorException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import java.security.InvalidKeyException;
-
 import java.util.Properties;
 import java.util.StringTokenizer;
 
@@ -78,8 +76,7 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 				ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 					response.getOutputStream());
 
-				objectOutputStream.writeObject(
-					new SystemException(ae.getMessage()));
+				objectOutputStream.writeObject(ae);
 
 				objectOutputStream.flush();
 
@@ -149,14 +146,17 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 				TunnelUtil.getSharedSecretKey(), login);
 		}
 		catch (EncryptorException ee) {
-			throw new AuthException("Unable to decrypt login", ee);
+			throw new RemoteAuthException(
+				AuthException.INTERNAL_SERVER_ERROR, "Unable to decrypt login",
+				ee);
 		}
-		catch (InvalidKeyException ike) {
-			throw new AuthException(ike.getMessage());
+		catch (AuthException ae) {
+			throw new RemoteAuthException(ae.getType(), ae.getMessage());
 		}
 
 		if (!password.equals(expectedPassword)) {
-			throw new AuthException(
+			throw new RemoteAuthException(
+				RemoteAuthException.WRONG_SHARED_SECRET,
 				"Tunneling servlet shared secrets do not match");
 		}
 
@@ -189,7 +189,8 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 		}
 
 		if (user == null) {
-			throw new AuthException("Internal server error");
+			throw new RemoteAuthException(
+				AuthException.INTERNAL_SERVER_ERROR, "Internal server error");
 		}
 
 		String[] credentials = new String[2];

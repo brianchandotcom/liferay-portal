@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PropsValues;
@@ -39,7 +40,6 @@ import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.security.InvalidKeyException;
 import java.security.Key;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -55,18 +55,20 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TunnelUtil {
 
-	public static Key getSharedSecretKey() throws InvalidKeyException {
+	public static Key getSharedSecretKey() throws AuthException {
 		String sharedSecret = PropsValues.TUNNELING_SERVLET_SHARED_SECRET;
 
 		if (Validator.isNull(sharedSecret)) {
-			throw new InvalidKeyException(
+			throw new AuthException(
+				AuthException.NO_SHARED_SECRET,
 				"The tunneling servlet shared secret is not set");
 		}
 
 		if ((sharedSecret.length() != 16) && (sharedSecret.length() != 32) &&
 			(sharedSecret.length() != 64)) {
 
-			throw new InvalidKeyException(
+			throw new AuthException(
+				AuthException.INVALID_SHARED_SECRET,
 				"The tunneling servlet shared secret must be 16, 32 or 64 " +
 					"characters long");
 		}

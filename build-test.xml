@@ -2288,19 +2288,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<property name="test.liferay.portal.version" value="${lp.version}" />
 		<property name="test.liferay.portal.version.major" value="${lp.version.major}" />
 
-		<if>
-			<not>
-				<available file="git-commit-plugins" />
-			</not>
-			<then>
-				<exec dir="${lp.plugins.dir}" executable="git" outputproperty="git.commit.plugins.rev.parse">
-					<arg line="rev-parse HEAD" />
-				</exec>
-
-				<echo file="git-commit-plugins">${git.commit.plugins.rev.parse}</echo>
-			</then>
-		</if>
-
 		<loadfile property="test.liferay.plugins.git.id" srcFile="git-commit-plugins" />
 
 		<var name="lp.version" unset="true" />

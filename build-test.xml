@@ -753,28 +753,28 @@
 	<target name="check-config">
 		<if>
 			<not>
-				<isset property="app-server" />
+				<isset property="app.server" />
 			</not>
 			<then>
-				<property name="app-server" value="tomcat" />
+				<property name="app.server" value="tomcat" />
 			</then>
 		</if>
 
 		<if>
 			<not>
 				<or>
-					<equals arg1="${app-server}" arg2="glassfish" />
-					<equals arg1="${app-server}" arg2="jboss" />
-					<equals arg1="${app-server}" arg2="jonas" />
-					<equals arg1="${app-server}" arg2="resin" />
-					<equals arg1="${app-server}" arg2="tomcat" />
-					<equals arg1="${app-server}" arg2="weblogic" />
-					<equals arg1="${app-server}" arg2="websphere-7.0" />
-					<equals arg1="${app-server}" arg2="websphere-8.0" />
+					<equals arg1="${app.server}" arg2="glassfish" />
+					<equals arg1="${app.server}" arg2="jboss" />
+					<equals arg1="${app.server}" arg2="jonas" />
+					<equals arg1="${app.server}" arg2="resin" />
+					<equals arg1="${app.server}" arg2="tomcat" />
+					<equals arg1="${app.server}" arg2="weblogic" />
+					<equals arg1="${app.server}" arg2="websphere-7.0" />
+					<equals arg1="${app.server}" arg2="websphere-8.0" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "app-server" to one of the following:${line.separator}glassfish, jboss, jonas, resin, tomcat, weblogic, websphere-7.0, websphere-8.0</fail>
+				<fail>Please set "app.server" to one of the following:${line.separator}glassfish, jboss, jonas, resin, tomcat, weblogic, websphere-7.0, websphere-8.0</fail>
 			</then>
 		</if>
 
@@ -2271,6 +2271,149 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</exec>
 			</else>
 		</if>
+	</target>
+
+	<target name="process-test-results-file">
+		<if>
+			<not>
+				<available file="git-commit-portal" />
+			</not>
+			<then>
+				<antcall target="record-git-commit-portal" />
+			</then>
+		</if>
+
+		<loadfile property="test.liferay.portal.git.id" srcFile="git-commit-portal" />
+
+		<property name="test.liferay.portal.version" value="${lp.version}" />
+		<property name="test.liferay.portal.version.major" value="${lp.version.major}" />
+
+		<loadfile property="test.liferay.plugins.git.id" srcFile="git-commit-plugins" />
+
+		<var name="lp.version" unset="true" />
+
+		<property file="${lp.plugins.dir}/build.${user.name}.properties" />
+		<property file="${lp.plugins.dir}/build.${env.COMPUTERNAME}.properties" />
+		<property file="${lp.plugins.dir}/build.${env.HOST}.properties" />
+		<property file="${lp.plugins.dir}/build.${env.HOSTNAME}.properties" />
+		<property file="${lp.plugins.dir}/build.properties" />
+
+		<property name="test.liferay.plugins.version" value="${lp.version}" />
+
+		<script classpathref="project.classpath" language="beanshell">
+			String testLiferayPluginsVersion = project.getProperty("test.liferay.plugins.version");
+
+			int x = testLiferayPluginsVersion.lastIndexOf(".");
+
+			String testLiferayPluginsVersionMajor = testLiferayPluginsVersion.substring(0, x).trim();
+
+			project.setProperty("test.liferay.plugins.version.major", testLiferayPluginsVersionMajor);
+		</script>
+
+		<property name="test.app.server" value="${test.app.server.name}.${test.app.server.version}" />
+		<property name="test.browser" value="${test.browser.name}.${test.browser.version}" />
+		<property name="test.database" value="${test.database.name}.${test.database.version}" />
+		<property name="test.java" value="${test.java.name}.${test.java.version}" />
+		<property name="test.os" value="${test.os.name}.${test.os.version}" />
+
+		<propertycopy
+			name="test.unique.id"
+			from="${test.os}.${test.java}.${test.app.server}.${test.database}.${test.browser}"
+			silent="true"
+		/>
+
+		<property name="file.properties">
+			<![CDATA[
+<environmentproperties>
+	<property name="app.server.name" value="${test.app.server.name}" />
+	<property name="app.server.version" value="${test.app.server.version}" />
+	<property name="browser.name" value="${test.browser.name}" />
+	<property name="browser.version" value="${test.browser.version}" />
+	<property name="database.name" value="${test.database.name}" />
+	<property name="database.version" value="${test.database.version}" />
+	<property name="java.name" value="${test.java.name}" />
+	<property name="java.version" value="${test.java.version}" />
+	<property name="os.name" value="${test.os.name}" />
+	<property name="os.version" value="${test.os.version}" />
+	<property name="unique.id" value="${test.unique.id}" />
+</environmentproperties>
+<liferayversionproperties>
+	<property name="liferay.plugins.edition" value="${test.liferay.plugins.edition}" />
+	<property name="liferay.plugins.git.id" value="${test.liferay.plugins.git.id}" />
+	<property name="liferay.plugins.version" value="${test.liferay.plugins.version}" />
+	<property name="liferay.plugins.version.major" value="${test.liferay.plugins.version.major}" />
+	<property name="liferay.portal.edition" value="${test.liferay.portal.edition}" />
+	<property name="liferay.portal.git.id" value="${test.liferay.portal.git.id}" />
+	<property name="liferay.portal.version" value="${test.liferay.portal.version}" />
+	<property name="liferay.portal.version.major" value="${test.liferay.portal.version.major}" />
+</liferayversionproperties>
+			]]>
+		</property>
+
+		<for param="file.name">
+			<path>
+				<fileset
+					dir="portal-web/test-results/functional"
+					includes="TEST-*.xml"
+				/>
+			</path>
+			<sequential>
+				<var name="file.name" value="@{file.name}" />
+
+				<script classpathref="project.classpath" language="beanshell">
+					<![CDATA[
+						import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+						import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+						import com.liferay.portal.kernel.util.StringUtil;
+						import com.liferay.portal.kernel.util.StringPool;
+						import com.liferay.portal.util.FileImpl;
+
+						FileImpl fileUtil = FileImpl.getInstance();
+
+						String fileName = project.getProperty("file.name");
+
+						fileName = StringUtil.replace(
+							fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+						String newFileContent = "";
+
+						try {
+							String oldFileContent = fileUtil.read(fileName);
+
+							UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+								new UnsyncStringReader(oldFileContent));
+
+							String line = "";
+
+							while ((line = unsyncBufferedReader.readLine()) != null) {
+								line = line.trim();
+
+								if (line.matches("<.*propert(ies|y).*") || line.contains("<?xml")) {
+									continue;
+								}
+
+								newFileContent += line + "\n";
+							}
+						}
+						catch (Exception e) {
+						}
+
+						String fileProperties = project.getProperty("file.properties");
+
+						newFileContent = StringUtil.replaceFirst(
+							newFileContent, "<testcase", fileProperties.trim() + "\n<testcase");
+
+						while (newFileContent.contains("\n\n")) {
+							newFileContent = StringUtil.replace(newFileContent, "\n\n", "\n");
+						}
+
+						project.setProperty("file.content", newFileContent);
+					]]>
+				</script>
+
+				<echo file="@{file.name}">${file.content}</echo>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="rebuild-database" depends="generate-test-properties,build-sql-file">

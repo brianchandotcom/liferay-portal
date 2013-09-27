@@ -152,11 +152,11 @@ $editLayoutPanelWidth: 460px;
 								}
 							}
 
-							span {
+							span.nav-item-label {
 								padding: 5px 10px;
 							}
 
-							&.active span {
+							&.active span.nav-item-label {
 								background-color: #080;
 							}
 						}

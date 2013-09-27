@@ -743,3 +743,11 @@ body.portlet {
 		zoom: 1;
 	}
 }
+
+.ie8 {
+	.dockbar, .lfr-icon-action, .logo {
+		img {
+			max-width: none;
+		}
+	}
+}

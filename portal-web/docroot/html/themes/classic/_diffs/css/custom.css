@@ -129,6 +129,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.dockbar-split .dockbar .navbar-inner {
 		.nav {
 			background-color: $dockbarGradientEnd;
+
+			li.dropdown.open {
+				> .dropdown-toggle {
+					background-color: $dockbarOpenGradientEnd;
+				}
+			}
 		}
 
 		.nav-account-controls {

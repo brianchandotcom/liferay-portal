@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -46,7 +44,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Raymond Augé
  */
-@Transactional(isolation = Isolation.PORTAL, rollbackFor = {Exception.class})
 public interface Staging {
 
 	public String buildRemoteURL(

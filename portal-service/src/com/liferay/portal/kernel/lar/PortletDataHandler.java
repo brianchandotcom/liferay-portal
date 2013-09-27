@@ -173,6 +173,8 @@ public interface PortletDataHandler {
 
 	public boolean isDataSiteLevel();
 
+	public boolean isDisplayPortlet();
+
 	/**
 	 * Returns whether the data exported by this handler should be included by
 	 * default when publishing to live. This should only be <code>true</code>

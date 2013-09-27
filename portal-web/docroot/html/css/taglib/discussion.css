@@ -76,6 +76,8 @@
 
 	.lfr-discussion-message {
 		padding-bottom: 1em;
+
+		@include word-break(break-all);
 	}
 
 	.taglib-ratings {
@@ -216,10 +218,4 @@
 		background: #DDD;
 		border-radius: 4px;
 	}
-}
-
-/* Extras */
-
-.taglib-discussion .lfr-discussion-message {
-	@include word-break(break-all);
 }

@@ -80,6 +80,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -118,6 +119,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -158,6 +160,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -195,6 +198,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -219,6 +223,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param classNameId the target asset's class name ID
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getActivitiesCount(long classNameId)
@@ -244,6 +249,7 @@ public class SocialActivityServiceSoap {
 	* @param classNameId the target asset's class name ID
 	* @param classPK the primary key of the target asset
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getActivitiesCount(long mirrorActivityId,
@@ -270,6 +276,7 @@ public class SocialActivityServiceSoap {
 	* @param className the target asset's class name
 	* @param classPK the primary key of the target asset
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getActivitiesCount(long mirrorActivityId,
@@ -292,6 +299,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param className the target asset's class name
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getActivitiesCount(java.lang.String className)
@@ -367,6 +375,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getGroupActivities(
@@ -393,6 +402,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getGroupActivitiesCount(long groupId)
@@ -431,6 +441,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getGroupUsersActivities(
@@ -459,6 +470,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getGroupUsersActivitiesCount(long groupId)
@@ -515,6 +527,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getOrganizationActivities(
@@ -539,6 +552,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param organizationId the primary key of the organization
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getOrganizationActivitiesCount(long organizationId)
@@ -573,6 +587,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getOrganizationUsersActivities(
@@ -597,6 +612,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param organizationId the primary key of the organization
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getOrganizationUsersActivitiesCount(long organizationId)
@@ -631,6 +647,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getRelationActivities(
@@ -669,6 +686,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getRelationActivities(
@@ -693,6 +711,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getRelationActivitiesCount(long userId)
@@ -717,6 +736,7 @@ public class SocialActivityServiceSoap {
 	* @param userId the primary key of the user
 	* @param type the relationship type
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getRelationActivitiesCount(long userId, int type)
@@ -751,6 +771,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserActivities(
@@ -773,6 +794,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getUserActivitiesCount(long userId)
@@ -807,6 +829,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserGroupsActivities(
@@ -831,6 +854,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getUserGroupsActivitiesCount(long userId)
@@ -865,6 +889,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserGroupsAndOrganizationsActivities(
@@ -889,6 +914,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getUserGroupsAndOrganizationsActivitiesCount(long userId)
@@ -923,6 +949,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserOrganizationsActivities(
@@ -947,6 +974,7 @@ public class SocialActivityServiceSoap {
 	*
 	* @param userId the primary key of the user
 	* @return the number of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static int getUserOrganizationsActivitiesCount(long userId)

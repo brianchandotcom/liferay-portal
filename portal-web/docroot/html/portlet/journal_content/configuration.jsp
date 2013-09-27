@@ -259,10 +259,10 @@ catch (NoSuchArticleException nsae) {
 			for (String conversion : conversions) {
 			%>
 
-				<label class="checkbox">
+				<label class="checkbox inline">
 					<input <%= ArrayUtil.contains(extensions, conversion) ? "checked": "" %> <%= openOfficeServerEnabled ? "" : "disabled" %> name="<portlet:namespace />extensions" type="checkbox" value="<%= conversion %>" />
 
-					<liferay-ui:message key="convert-to" /> .<%= conversion %>
+					<%= StringUtil.toUpperCase(conversion) %>
 				</label>
 
 			<%

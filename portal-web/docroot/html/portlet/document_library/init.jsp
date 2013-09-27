@@ -100,6 +100,7 @@ page import="com.liferay.portlet.dynamicdatamapping.StructureNameException" %><%
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearch" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearchTerms" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.Fields" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil" %><%@

@@ -86,6 +86,12 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	<aui:model-context bean="<%= fileEntryType %>" model="<%= DLFileEntryType.class %>" />
 
 	<aui:fieldset cssClass="edit-file-entry-type">
+		<c:if test="<%= DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructureId) > 0 %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-any-field-name-is-renamed-or-removed" />
+			</div>
+		</c:if>
+
 		<aui:input name="name" />
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="detailsMetadataFields" persistState="<%= true %>" title="details">

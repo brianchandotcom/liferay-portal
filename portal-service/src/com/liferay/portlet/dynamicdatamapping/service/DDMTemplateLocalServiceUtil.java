@@ -877,6 +877,23 @@ public class DDMTemplateLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of templates matching the group, class name ID and
+	* class PK.
+	*
+	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for the template's
+	related model
+	* @param classPK the primary key of the template's related entity
+	* @return the number of matching templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getTemplatesCount(long groupId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplatesCount(groupId, classNameId, classPK);
+	}
+
+	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the
 	* template names and descriptions.

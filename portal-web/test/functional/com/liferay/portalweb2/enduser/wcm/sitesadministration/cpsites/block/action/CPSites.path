@@ -179,18 +179,13 @@
 </tr>
 <!--SITE_MENULIST-->
 <tr>
-	<td>SITE_MENULIST_EDIT_SETTINGS</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit Settings')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_MENULIST_SITE_ADMINISTRATION</td>
 	<td>//a[@role='menuitem' and contains(.,'Site Administration')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_MENULIST_MANAGE_MEMBERSHIPS</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Memberships')]</td>
+	<td>SITE_MENULIST_ADD_CHILD_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Child Site')]</td>
 	<td></td>
 </tr>
 <tr>

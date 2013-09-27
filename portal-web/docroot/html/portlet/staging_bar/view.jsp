@@ -294,31 +294,10 @@ if (layout != null) {
 												<c:otherwise>
 
 													<%
-													typeSettingsProperties = liveLayout.getTypeSettingsProperties();
-
-													long lastImportDate = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-date"));
+													request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
 													%>
 
-													<c:choose>
-														<c:when test="<%= lastImportDate > 0 %>">
-
-															<%
-															request.setAttribute("view.jsp-lastImportDate", lastImportDate);
-															request.setAttribute("view.jsp-typeSettingsProperties", typeSettingsProperties);
-															%>
-
-															<liferay-util:include page="/html/portlet/staging_bar/last_publication_date_message.jsp" />
-														</c:when>
-														<c:otherwise>
-															<span class="staging-live-group-name">
-																<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" />
-															</span>
-
-															<span class="staging-live-help">
-																<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' />
-															</span>
-														</c:otherwise>
-													</c:choose>
+													<liferay-util:include page="/html/portlet/staging_bar/last_publication_date_message.jsp" />
 												</c:otherwise>
 											</c:choose>
 										</div>
@@ -361,11 +340,7 @@ if (layout != null) {
 			</c:choose>
 
 			<c:choose>
-				<c:when test="<%= !group.isStagedRemotely() %>">
-					<aui:nav-item cssClass='<%= (!group.isStagingGroup() ? "active" : StringPool.BLANK) + " live-link staging-toggle" %>' href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
-				</c:when>
-				<c:otherwise>
-
+				<c:when test="<%= group.isStagedRemotely() %>">
 					<%
 					UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 
@@ -379,6 +354,23 @@ if (layout != null) {
 					%>
 
 					<aui:nav-item cssClass="remote-live-link" href="<%= remoteURL %>" iconClass="icon-external-link-sign" label="go-to-remote-live" />
+				</c:when>
+				<c:when test="<%= group.isStagingGroup() %>">
+					<aui:nav-item cssClass='<%= (!group.isStagingGroup() ? "active" : StringPool.BLANK) + " live-link staging-toggle" %>' href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
+				</c:when>
+				<c:otherwise>
+					<aui:nav-item anchorCssClass="staging-link" cssClass="site-variations" dropdown="<%= true %>" iconClass="icon-cog" label="live">
+						<aui:nav-item cssClass="row-fluid">
+							<div class="staging-details">
+
+								<%
+								request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
+								%>
+
+								<liferay-util:include page="/html/portlet/staging_bar/last_publication_date_message.jsp" />
+							</div>
+						</aui:nav-item>
+					</aui:nav-item>
 				</c:otherwise>
 			</c:choose>
 		</c:if>

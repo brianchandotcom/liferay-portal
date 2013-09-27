@@ -17,8 +17,9 @@
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
 <%
-long lastImportDate = (Long)request.getAttribute("view.jsp-lastImportDate");
 UnicodeProperties typeSettingsProperties = (UnicodeProperties)request.getAttribute("view.jsp-typeSettingsProperties");
+
+long lastImportDate = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-date"));
 
 String lastImportLayoutSetBranchName = null;
 
@@ -84,28 +85,42 @@ if (Validator.isNull(publisherName)) {
 }
 %>
 
-<c:if test="<%= Validator.isNotNull(lastImportLayoutSetBranchName) && Validator.isNotNull(publisherName) %>">
-	<span class="last-publication-branch">
-		<liferay-ui:message arguments='<%= new String[] {"<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>", "<em>" + LanguageUtil.get(pageContext, HtmlUtil.escape(lastImportLayoutSetBranchName)) + "</em>"} %>' key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>' />
+<c:choose>
+	<c:when test="<%= lastImportDate > 0 %>">
+		<c:if test="<%= Validator.isNotNull(lastImportLayoutSetBranchName) && Validator.isNotNull(publisherName) %>">
+			<span class="last-publication-branch">
+				<liferay-ui:message arguments='<%= new String[] {"<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>", "<em>" + LanguageUtil.get(pageContext, HtmlUtil.escape(lastImportLayoutSetBranchName)) + "</em>"} %>' key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>' />
 
-		<c:if test="<%= (Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1)) || Validator.isNotNull(lastImportLayoutRevisionId) %>">
-			<span class="last-publication-variation-details">(
-				<c:if test="<%= Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1) %>">
-					<span class="variation-name">
-						<liferay-ui:message key="variation" />: <strong><liferay-ui:message key="<%= HtmlUtil.escape(lastImportLayoutBranchName) %>" /></strong>
-					</span>
-				</c:if>
+				<c:if test="<%= (Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1)) || Validator.isNotNull(lastImportLayoutRevisionId) %>">
+					<span class="last-publication-variation-details">(
+						<c:if test="<%= Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1) %>">
+							<span class="variation-name">
+								<liferay-ui:message key="variation" />: <strong><liferay-ui:message key="<%= HtmlUtil.escape(lastImportLayoutBranchName) %>" /></strong>
+							</span>
+						</c:if>
 
-				<c:if test="<%= Validator.isNotNull(lastImportLayoutRevisionId) %>">
-					<span class="layout-version">
-						<liferay-ui:message key="version" />: <strong><%= lastImportLayoutRevisionId %></strong>
-					</span>
+						<c:if test="<%= Validator.isNotNull(lastImportLayoutRevisionId) %>">
+							<span class="layout-version">
+								<liferay-ui:message key="version" />: <strong><%= lastImportLayoutRevisionId %></strong>
+							</span>
+						</c:if>
+					)</span>
 				</c:if>
-			)</span>
+			</span>
+
+			<span class="last-publication-user">
+				<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(pageContext, (System.currentTimeMillis() - lastImportDate), true), publisherName} %>" key="x-ago-by-x" />
+			</span>
 		</c:if>
-	</span>
+	</c:when>
+	<c:otherwise>
+		<span class="staging-live-group-name">
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" />
+		</span>
 
-	<span class="last-publication-user">
-		<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(pageContext, (System.currentTimeMillis() - lastImportDate), true), publisherName} %>" key="x-ago-by-x" />
-	</span>
-</c:if>
+		<span class="staging-live-help">
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' />
+		</span>
+	</c:otherwise>
+</c:choose>
+

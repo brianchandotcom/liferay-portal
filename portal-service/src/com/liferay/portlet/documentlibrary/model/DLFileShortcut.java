@@ -45,9 +45,5 @@ public interface DLFileShortcut extends DLFileShortcutModel, PersistedModel {
 
 	public java.lang.String getToTitle();
 
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public boolean isInHiddenFolder();
 }

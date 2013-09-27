@@ -635,20 +635,28 @@ public class DLFileEntryFinderImpl
 
 		StringBundler sb = new StringBundler(7);
 
-		if ((folderIds != null) && !folderIds.isEmpty()) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(getFolderIds(folderIds, tableName));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
+		if (((folderIds != null) && !folderIds.isEmpty()) ||
+			ArrayUtil.isNotEmpty(mimeTypes)) {
 
-		if (ArrayUtil.isNotEmpty(mimeTypes)) {
-			sb.append(WHERE_AND);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(getMimeTypes(mimeTypes, tableName));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
+			if ((folderIds != null) && !folderIds.isEmpty()) {
+				sb.append(WHERE_AND);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(getFolderIds(folderIds, tableName));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
 
-		return StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
+			if (ArrayUtil.isNotEmpty(mimeTypes)) {
+				sb.append(WHERE_AND);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(getMimeTypes(mimeTypes, tableName));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			return StringUtil.replace(sql, "[$FOLDER_ID$]", sb.toString());
+		}
+		else {
+			return StringUtil.replace(sql, "[$FOLDER_ID$]", StringPool.BLANK);
+		}
 	}
 
 	protected String getFolderIds(List<Long> folderIds, String tableName) {

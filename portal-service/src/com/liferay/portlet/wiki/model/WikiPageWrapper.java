@@ -780,6 +780,11 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getTrashEntry();
 	}
 
+	/**
+	* Returns the class primary key of the trash entry for this wiki page.
+	*
+	* @return the class primary key of the trash entry for this wiki page
+	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _wikiPage.getTrashEntryClassPK();

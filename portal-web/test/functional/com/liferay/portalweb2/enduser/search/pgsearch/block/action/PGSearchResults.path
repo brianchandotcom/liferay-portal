@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_RESULTS</td>
 	<td>//div[@class='search-results']</td>
 	<td></td>
@@ -51,18 +56,18 @@
 </tr>
 <!--ASSET_ENTRY_TABLE-->
 <tr>
-	<td>ASSET_ENTRY_TABLE_TITLE_1</td>
-	<td>//span[@class='asset-entry-title']/a</td>
+	<td>ASSET_ENTRY_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_searchAssetTitle}')]//span[@class='asset-entry-title']/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_TYPE_1</td>
-	<td>//span[@class='asset-entry-type']</td>
+	<td>ASSET_ENTRY_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_searchAssetTitle}')]//span[@class='asset-entry-type']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_SUMMARY_1</td>
-	<td>//span[@class='asset-entry-summary']</td>
+	<td>ASSET_ENTRY_TABLE_SUMMARY</td>
+	<td>//tr[contains(.,'${key_searchAssetTitle}')]//span[@class='asset-entry-summary']</td>
 	<td></td>
 </tr>
 </tbody>

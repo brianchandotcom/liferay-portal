@@ -1858,7 +1858,7 @@ AUI.add(
 								vocabulary.categoriesCount++;
 							}
 
-							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'), SELECTOR_CATEGORY_MESSAGES_EDIT);
+							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
 
 							instance._selectVocabulary(instance._selectedVocabularyId);
 
@@ -2178,7 +2178,7 @@ AUI.add(
 						var exception = response.exception;
 
 						if (!response.exception) {
-							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'), SELECTOR_VOCABULARY_MESSAGES_EDIT);
+							instance._sendMessage(MESSAGE_TYPE_SUCCESS, Liferay.Language.get('your-request-processed-successfully'));
 
 							instance._displayList(
 								function() {

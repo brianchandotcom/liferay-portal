@@ -14,12 +14,20 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+import com.liferay.portlet.social.model.impl.SocialActivityInterpreterImpl;
 import com.liferay.portlet.social.service.base.SocialActivityServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -704,6 +712,74 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 		throws SystemException {
 
 		return socialActivityFinder.countByUserOrganizations(userId);
+	}
+
+	protected List<SocialActivity> filterActivities(
+			List<SocialActivity> activities, int start, int end)
+		throws PortalException {
+
+		List<SocialActivityInterpreter> activityInterpreters =
+			socialActivityInterpreterLocalService.getActivityInterpreters(
+				StringPool.BLANK);
+
+		List<SocialActivity> filteredActivities =
+			new ArrayList<SocialActivity>();
+
+		for (SocialActivity activity : activities) {
+			if (hasPermission(activity, activityInterpreters)) {
+				filteredActivities.add(activity);
+			}
+
+			if ((end != QueryUtil.ALL_POS) &&
+				(filteredActivities.size() > end)) {
+
+				break;
+			}
+		}
+
+		if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
+			if (end > filteredActivities.size()) {
+				end = filteredActivities.size();
+			}
+
+			if (start > filteredActivities.size()) {
+				start = filteredActivities.size();
+			}
+
+			filteredActivities = filteredActivities.subList(start, end);
+		}
+
+		return filteredActivities;
+	}
+
+	protected boolean hasPermission(
+			SocialActivity activity,
+			List<SocialActivityInterpreter> activityInterpreters)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (int i = 0; i < activityInterpreters.size(); i++) {
+			SocialActivityInterpreterImpl activityInterpreter =
+				(SocialActivityInterpreterImpl)activityInterpreters.get(i);
+
+			if (activityInterpreter.hasClassName(activity.getClassName())) {
+				try {
+					if (activityInterpreter.hasPermission(
+							permissionChecker, activity, ActionKeys.VIEW,
+							serviceContext)) {
+
+						return true;
+					}
+				}
+				catch (Exception e) {
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

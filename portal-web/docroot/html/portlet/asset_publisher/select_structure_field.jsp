@@ -53,7 +53,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + name %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= name.equals(ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
+				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + name %>" data-form-id="<%= renderResponse.getNamespace() + name + "fieldForm" %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= name.equals(ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
 			</liferay-ui:search-container-column-text>
 
 			<%
@@ -72,6 +72,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 				</liferay-portlet:resourceURL>
 
 				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>' onSubmit="event.preventDefault()">
+					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + name %>' />
 
 					<%
 					com.liferay.portlet.dynamicdatamapping.storage.Field ddmField = new com.liferay.portlet.dynamicdatamapping.storage.Field();
@@ -121,37 +122,57 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 	var selectDDMStructureFieldForm = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
 
+	var fieldSubtypeForms = selectDDMStructureFieldForm.all('form');
+
+	var toggleDisabledFormFields = function(form, state) {
+		Liferay.Util.toggleDisabled(form.all('input, select, textarea'), state);
+	};
+
+	var submitForm = function(applyButton) {
+		var result = Util.getAttributes(applyButton, 'data-');
+
+		var form = A.one('#' + result.form);
+
+		A.io.request(
+			form.attr('action'),
+			{
+				dataType: 'json',
+				form: {
+					id: form
+				},
+				on: {
+					success: function(event, id, obj) {
+						var jsonArray = this.get('responseData');
+
+						result['className'] = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
+						result['displayValue'] = jsonArray.displayValue;
+						result['value'] = jsonArray.value;
+
+						Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+						Util.getWindow().hide();
+					}
+				}
+			}
+		);
+	};
+
 	selectDDMStructureFieldForm.delegate(
 		'click',
 		function(event) {
-			var result = Util.getAttributes(event.currentTarget, 'data-');
-
-			var form = A.one('#' + result.form);
-
-			A.io.request(
-				form.attr('action'),
-				{
-					dataType: 'json',
-					form: {
-						id: form
-					},
-					on: {
-						success: function(event, id, obj) {
-							var jsonArray = this.get('responseData');
-
-							result['className'] = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
-							result['displayValue'] = jsonArray.displayValue;
-							result['value'] = jsonArray.value;
-
-							Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
-
-							Util.getWindow().hide();
-						}
-					}
-				}
-			);
+			submitForm(event.currentTarget);
 		},
 		'.selector-button'
+	);
+
+	selectDDMStructureFieldForm.delegate(
+		'submit',
+		function(event) {
+			var buttonId = event.target.one('#<portlet:namespace />buttonId').attr('value');
+
+			submitForm(selectDDMStructureFieldForm.one('#' + buttonId));
+		},
+		'form'
 	);
 
 	A.one('#<portlet:namespace />tuplesSearchContainer').delegate(
@@ -159,10 +180,18 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		function(event) {
 			var buttonId = event.target.attr('data-button-id');
 
+			var formId = event.target.attr('data-form-id');
+
 			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.selector-button'), true);
 
 			Liferay.Util.toggleDisabled('#' + buttonId, false);
+
+			toggleDisabledFormFields(fieldSubtypeForms, true);
+
+			toggleDisabledFormFields(A.one('#' + formId), false);
 		},
 		'input[name=<portlet:namespace />selectStructureFieldSubtype]'
 	);
+
+	toggleDisabledFormFields(fieldSubtypeForms, true);
 </aui:script>

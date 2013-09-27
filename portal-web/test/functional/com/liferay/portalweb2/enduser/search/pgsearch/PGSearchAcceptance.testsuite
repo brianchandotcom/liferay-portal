@@ -1,6 +1,10 @@
 <definition>
 	<execute test-case-command="PGSearch#SearchBlogsEntry" />
+	<execute test-case-command="PGSearch#SearchBlogsEntryQuotes" />
+	<execute test-case-command="PGSearch#SearchDocumentsAndMediaDocument" />
 	<execute test-case-command="PGSearch#SearchMessageBoardsThread" />
+	<execute test-case-command="PGSearch#SearchWebContent" />
 	<execute test-case-command="PGSearch#SearchUser" />
+	<execute test-case-command="PGSearch#SearchUserWildcard" />
 	<execute test-case-command="PGSearch#SearchWikiPage" />
 </definition>

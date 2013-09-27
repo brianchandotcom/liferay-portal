@@ -89,8 +89,8 @@ if (layout != null) {
 			<aui:nav-item cssClass='<%= (!group.isStagingGroup() ? "active" : StringPool.BLANK) + " live-link staging-toggle" %>' href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
 		</c:if>
 
-		<aui:nav-item anchorCssClass="staging-link" cssClass="site-variations" dropdown="<%= true %>" iconClass="icon-cog" label="staging">
-			<c:if test="<%= stagingGroup != null %>">
+		<c:if test="<%= stagingGroup != null %>">
+			<aui:nav-item anchorCssClass="staging-link" cssClass="site-variations" dropdown="<%= true %>" iconClass="icon-cog" label="staging">
 				<aui:nav-item cssClass="row-fluid">
 					<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 						<div class="site-pages-variation-options span6">
@@ -439,8 +439,9 @@ if (layout != null) {
 						);
 					}
 				</aui:script>
-			</c:if>
-		</aui:nav-item>
+			</aui:nav-item>
+		</c:if>
+
 
 		<c:if test="<%= group.isStagedRemotely() %>">
 

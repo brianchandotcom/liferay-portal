@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
+<%
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFileEntryType");
+%>
+
 <liferay-util:include page="/html/portlet/document_library/file_entry_type_toolbar.jsp">
 	<liferay-util:param name="strutsAction" value="/document_library/select_restricted_file_entry_type" />
 </liferay-util:include>
@@ -25,7 +29,7 @@
 	<portlet:param name="includeBasicFileEntryType" value="1" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectFileEntryTypeFm">
 	<liferay-ui:search-container
 		searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
 	>
@@ -38,29 +42,40 @@
 			keyProperty="fileEntryTypeId"
 			modelVar="fileEntryType"
 		>
-
-			<%
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("javascript:Liferay.Util.getOpener().");
-			sb.append(renderResponse.getNamespace());
-			sb.append("selectFileEntryType('");
-			sb.append(fileEntryType.getFileEntryTypeId());
-			sb.append("', '");
-			sb.append(HtmlUtil.escapeJS(fileEntryType.getName(locale)));
-			sb.append("', Liferay.Util.getWindow());");
-
-			String rowHREF = sb.toString();
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="name"
 				value="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>"
 			/>
 
+			<liferay-ui:search-container-column-text>
+
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("fileentrytypeid", fileEntryType.getFileEntryTypeId());
+				data.put("fileentrytypename", fileEntryType.getName(locale));
+				%>
+
+				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectFileEntryTypeFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+			Util.getWindow().hide();
+		},
+		'.selector-button'
+	);
+</aui:script>

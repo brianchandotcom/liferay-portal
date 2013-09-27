@@ -304,11 +304,20 @@ if (workflowEnabled) {
 	var documentTypesChanged = false;
 
 	function <portlet:namespace />openFileEntryTypeSelector() {
-		Liferay.Util.openWindow(
+		Liferay.Util.selectEntity(
 			{
+				dialog: {
+					constrain: true,
+					modal: true,
+					width: 1024
+				},
+				eventName: '<portlet:namespace />selectFileEntryType',
 				id: '<portlet:namespace />fileEntryTypeSeclector',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "document-types") %>',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/select_restricted_file_entry_type" /><portlet:param name="includeBasicFileEntryType" value="1" /></portlet:renderURL>'
+			},
+			function(event) {
+				<portlet:namespace />selectFileEntryType(event.fileentrytypeid, event.fileentrytypename);
 			}
 		);
 	}
@@ -332,7 +341,7 @@ if (workflowEnabled) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectFileEntryType',
-		function(fileEntryTypeId, fileEntryTypeName, dialog) {
+		function(fileEntryTypeId, fileEntryTypeName) {
 			var A = AUI();
 
 			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />dlFileEntryTypesSearchContainer');
@@ -371,10 +380,6 @@ if (workflowEnabled) {
 			option.show();
 
 			select.append(option);
-
-			if (dialog) {
-				dialog.hide();
-			}
 		},
 		['liferay-search-container']
 	);

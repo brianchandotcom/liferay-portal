@@ -113,7 +113,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 					</aui:fieldset>
 				</c:if>
 
-				<c:if test="<%= portletDataHandler != null %>">
+				<c:if test="<%= (portletDataHandler != null) && !portletDataHandler.isDisplayPortlet() %>">
 
 					<%
 					Date startDate = null;

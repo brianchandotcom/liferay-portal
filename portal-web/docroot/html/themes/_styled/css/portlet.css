@@ -745,11 +745,9 @@ body.portlet {
 }
 
 .ie8 {
-	&.aui {
-		.dockbar, .lfr-icon-action, .logo {
-			img {
-				max-width: none;
-			}
+	.dockbar, .lfr-icon-action, .logo {
+		img {
+			max-width: none;
 		}
 	}
 }

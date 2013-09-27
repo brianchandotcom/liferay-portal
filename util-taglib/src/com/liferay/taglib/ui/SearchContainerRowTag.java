@@ -73,15 +73,15 @@ public class SearchContainerRowTag<R>
 		if (!_headerNamesAssigned && (_headerNames != null) &&
 			!_headerNames.isEmpty()) {
 
-			SearchContainerTag<R> searchContainerTag =
-				(SearchContainerTag<R>)findAncestorWithClass(
-					this, SearchContainerTag.class);
+			List<String> headerNames =
+				_searchContainer.getHeaderNames();
 
-			SearchContainer<R> searchContainer =
-				searchContainerTag.getSearchContainer();
+			if ((headerNames!= null) &&
+				headerNames.isEmpty()) {
 
-			searchContainer.setHeaderNames(_headerNames);
-			searchContainer.setOrderableHeaders(_orderableHeaders);
+				_searchContainer.setHeaderNames(_headerNames);
+				_searchContainer.setOrderableHeaders(_orderableHeaders);
+			}
 
 			_headerNamesAssigned = true;
 		}
@@ -140,13 +140,12 @@ public class SearchContainerRowTag<R>
 				"Requires liferay-ui:search-container-results");
 		}
 
-		SearchContainer<R> searchContainer =
-			searchContainerTag.getSearchContainer();
+		_searchContainer = searchContainerTag.getSearchContainer();
 
-		searchContainer.setClassName(_className);
+		_searchContainer.setClassName(_className);
 
-		_resultRows = searchContainer.getResultRows();
-		_results = searchContainer.getResults();
+		_resultRows = _searchContainer.getResultRows();
+		_results = _searchContainer.getResults();
 
 		if ((_results != null) && !_results.isEmpty()) {
 			processRow();
@@ -339,6 +338,7 @@ public class SearchContainerRowTag<R>
 	private String _rowIdProperty;
 	private int _rowIndex;
 	private String _rowVar = DEFAULT_ROW_VAR;
+	private SearchContainer<R> _searchContainer;
 	private boolean _stringKey;
 
 }

@@ -64,6 +64,12 @@
 			<then>
 				<var name="permissionNavigationValue" value="Portal" />
 			</then>
+			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES_SITE" />
+				<then>
+					<var name="permissionNavigationValue" value="Sites" />
+				</then>
+			</elseif>
 		</if>
 
 		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />

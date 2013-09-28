@@ -1,7 +1,6 @@
 package ${seleniumBuilderContext.getTestCasePackageName(testCaseName)};
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -55,14 +54,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			selenium.startLogger();
 		}
 		catch (Exception e) {
-			Runtime runtime = Runtime.getRuntime();
-
-			if (OSDetector.isWindows()) {
-				runtime.exec(new String[] {"tskill", "firefox"});
-			}
-			else {
-				runtime.exec(new String[] {"killall", "firefox"});
-			}
+			killBrowser();
 
 			throw e;
 		}

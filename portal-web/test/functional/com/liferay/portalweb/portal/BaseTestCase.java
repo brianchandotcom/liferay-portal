@@ -48,14 +48,7 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			selenium.startLogger();
 		}
 		catch (Exception e) {
-			Runtime runtime = Runtime.getRuntime();
-
-			if (OSDetector.isWindows()) {
-				runtime.exec(new String[] {"tskill", "firefox"});
-			}
-			else {
-				runtime.exec(new String[] {"killall", "firefox"});
-			}
+			killBrowser();
 
 			throw e;
 		}
@@ -72,11 +65,36 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 		if (!primaryTestSuiteName.endsWith("TestSuite") &&
 			(testCaseCount < 1)) {
 
-			SeleniumUtil.stopSelenium();
+			try {
+				SeleniumUtil.stopSelenium();
+			}
+			catch (Exception e) {
+				killBrowser();
+
+				throw e;
+			}
 		}
 
 		if (TestPropsValues.TESTING_CLASS_METHOD) {
-			SeleniumUtil.stopSelenium();
+			try {
+				SeleniumUtil.stopSelenium();
+			}
+			catch (Exception e) {
+				killBrowser();
+
+				throw e;
+			}
+		}
+	}
+
+	protected void killBrowser() throws Exception {
+		Runtime runtime = Runtime.getRuntime();
+
+		if (OSDetector.isWindows()) {
+			runtime.exec(new String[] {"tskill", "firefox"});
+		}
+		else {
+			runtime.exec(new String[] {"killall", "firefox"});
 		}
 	}
 

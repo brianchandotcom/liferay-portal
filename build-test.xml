@@ -44,6 +44,15 @@
 
 	<target name="build-sql-file">
 		<if>
+			<equals arg1="${test.database.minimal}" arg2="true" />
+			<then>
+				<var name="database.create.suffix" unset="true" />
+
+				<var name="database.create.suffix" value="-minimal" />
+			</then>
+		</if>
+
+		<if>
 			<isset property="sql.legacy.url" />
 			<then>
 				<delete dir="sql/legacy" failonerror="false" />
@@ -106,17 +115,8 @@
 						</not>
 					</or>
 					<then>
-						<if>
-							<isset property="test.database.minimal" />
-							<then>
-								<property name="sql.dir" value="sql\create-minimal\" />
-								<property name="sql.file" value="create-minimal-${database.family}.sql" />
-							</then>
-							<else>
-								<property name="sql.dir" value="sql\create\" />
-								<property name="sql.file" value="create-${database.family}.sql" />
-							</else>
-						</if>
+						<property name="sql.dir" value="sql\create${database.create.suffix}\" />
+						<property name="sql.file" value="create${database.create.suffix}-${database.family}.sql" />
 					</then>
 				</if>
 
@@ -1956,7 +1956,11 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		</if>
 
 		<if>
-			<isset property="test.database.minimal" />
+			<or>
+				<equals arg1="${database.create.suffix}" arg2="-bare" />
+				<equals arg1="${database.create.suffix}" arg2="-minimal" />
+				<isset property="test.database.minimal" />
+			</or>
 			<then>
 				<replace
 					file="portal-web/test/test-portal-web.properties"
@@ -2316,7 +2320,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 						<if>
 							<not>
-								<isset property="test.database.minimal" />
+								<or>
+									<equals arg1="${test.database.minimal}" arg2="true" />
+									<equals arg1="${database.create.suffix}" arg2="-bare" />
+									<equals arg1="${database.create.suffix}" arg2="-minimal" />
+								</or>
 							</not>
 							<then>
 								<copy file="sql/${database.name}.properties" tofile="${user.home}/liferay/data/hsql/${database.name}.properties" />

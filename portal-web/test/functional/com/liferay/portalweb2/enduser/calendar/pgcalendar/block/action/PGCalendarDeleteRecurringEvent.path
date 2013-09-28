@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>PGCalendarDeleteRecurringEvent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarDeleteRecurringEvent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGCalendarDeleteRecurringEvent</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_RECURRING_EVENT_HEADER</td>
+	<td>//div[contains(@class,'modal-header')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_RECURRING_EVENT_BODY</td>
+	<td>//div[contains(@class,'modal-body')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ONLY_THIS_INSTANCE_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Only This Instance')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_FOLLOWING_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'All Following')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_EVENTS_IN_THE_SERIES_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'All Events in the Series')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_THIS_CHANGE_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Cancel This Change')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

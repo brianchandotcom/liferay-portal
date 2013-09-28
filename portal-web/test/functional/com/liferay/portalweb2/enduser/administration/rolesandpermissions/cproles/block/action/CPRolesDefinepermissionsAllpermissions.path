@@ -59,7 +59,43 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTROL_PANEL_SITES_SITES-->
+<tr>
+	<td>CONTROL_PANEL_SITES_SITES_ACCESS_IN_CONTROL_PANEL</td>
+	<td>//input[@value='134ACCESS_IN_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_SITES_SITES_SITE_MANAGE_PAGES</td>
+	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_LAYOUTS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_SITES_SITES_SITE_VIEW</td>
+	<td>//input[@value='com.liferay.portal.model.GroupVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_PAGES_SITE_PAGES_SITE-->
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_ADD_SITE</td>
+	<td>//input[@value='com.liferay.portal.model.GroupADD_COMMUNITY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_MANAGE_SUBSITES</td>
+	<td>//input[@value='com.liferay.portal.model.GroupMANAGE_SUBGROUPS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_UPDATE</td>
+	<td>//input[@value='com.liferay.portal.model.GroupUPDATE']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION</td>
 	<td>//input[@value='com.liferay.portal.model.GroupVIEW_SITE_ADMINISTRATION']</td>

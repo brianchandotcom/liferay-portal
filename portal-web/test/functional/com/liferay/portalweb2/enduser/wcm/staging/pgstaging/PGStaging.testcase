@@ -283,6 +283,43 @@
 		</execute>
 	</command>
 
+	<command name="LayoutScope">
+		<var name="pageName" value="Staging Test Page" />
+		<var name="scopeName" value="${pageName}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageBoardsPortlet#configureScopePG">
+			<var name="scopeName" value="${scopeName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#deactivateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
 	<command name="StagingPublishPortlet">
 		<var name="pageName" value="Staging Portlet Test Page" />
 

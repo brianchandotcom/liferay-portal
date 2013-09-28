@@ -4,11 +4,18 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
 		<execute macro="User#tearDownCP" />
 
-		<execute macro="Role#tearDownCP" />	
+		<execute macro="Role#tearDownCP" />
 
 		<execute macro="Site#tearDownCP" />
+
+		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
 	<command name="SearchPermissions">
@@ -173,5 +180,323 @@
 		<execute macro="Site#viewSiteAdminPermissionsCP">
 			<var name="siteName" value="${childSiteName}" />
 		</execute>
+	</command>
+
+	<command name="ViewSiteManageChildSiteSiteRole">
+		<var name="childSiteName1" value="Child SiteName1" />
+		<var name="childSiteName2" value="Child SiteName2" />
+		<var name="pageName" value="Site Page" />
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_SITES_SITES_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition1Value" value="Access in Control Panel" />
+		<var name="permissionDefinition2Key" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_ADD_SITE" />
+		<var name="permissionDefinition2Value" value="Add Site" />
+		<var name="permissionDefinition3Key" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_UPDATE" />
+		<var name="permissionDefinition3Value" value="Update" />
+		<var name="permissionDefinition4Key" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_MANAGE_SUBSITES" />
+		<var name="permissionDefinition4Value" value="Manage Subsites" />
+		<var name="permissionNavigation1Key" value="CONTROL_PANEL_SITES_SITES" />
+		<var name="permissionNavigation1Value" value="Sites" />
+		<var name="permissionNavigation2Key" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+		<var name="permissionNavigation2Value" value="Site Pages" />
+		<var name="regRoleName" value="Regrole Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageType" value="Public" />
+		<var name="siteRoleName" value="Siterole Name" />
+		<var name="siteRoleType" value="Site" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+ 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${siteRoleName}" />
+			<var name="roleType" value="${siteRoleType}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageType" value="${sitePageType}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="${siteName}" />
+			<var name="siteName" value="${childSiteName1}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${childSiteName1}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${childSiteName1}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${regRoleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="${regRoleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
+			<var name="roleName" value="${regRoleName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
+			<var name="roleName" value="${siteRoleName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
+			<var name="roleName" value="${siteRoleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_ADD_CHILD_SITE" value1="Add Child Site" />
+
+		<execute action="CPSitesAdd#type" locator-key1="DETAILS_NAME" value1="${childSiteName2}" />
+		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" />
+
+		<execute action="CPSitesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<var name="key_siteName" value="${childSiteName1}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertElementNotPresent" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+
+		<var name="key_siteName" value="${childSiteName2}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition4Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition4Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
+			<var name="roleName" value="${siteRoleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<var name="key_siteName" value="${childSiteName1}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+
+		<var name="key_siteName" value="${childSiteName2}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition4Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition4Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
+			<var name="roleName" value="${siteRoleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<var name="key_siteName" value="${childSiteName1}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertElementNotPresent" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+
+		<var name="key_siteName" value="${childSiteName2}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+	</command>
+
+	<command name="ViewSiteManagePagesRegRole">
+		<var name="pageName" value="Site Page" />
+		<var name="permissionDefinitionKey1" value="CONTROL_PANEL_SITES_SITES_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinitionKey2" value="CONTROL_PANEL_SITES_SITES_SITE_MANAGE_PAGES" />
+		<var name="permissionDefinitionKey3" value="CONTROL_PANEL_SITES_SITES_SITE_VIEW" />
+		<var name="permissionDefinitionValue1" value="Access in Control Panel" />
+		<var name="permissionDefinitionValue2" value="Manage Pages" />
+		<var name="permissionDefinitionValue3" value="View" />
+		<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
+		<var name="permissionNavigationValue" value="Sites" />
+		<var name="roleName" value="Regrole Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageType" value="Public" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpRegRoleLoginUserCP">
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue1}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue2}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey3}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue3}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<var name="key_siteName" value="Liferay" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue2}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey3}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue3}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
 	</command>
 </definition>

@@ -1,3 +1,5 @@
 <definition>
 	<execute test-case-command="CPRolesCPSites#SearchPermissions" />
+	<execute test-case-command="CPRolesCPSites#ViewSiteManageChildSiteSiteRole" />
+	<execute test-case-command="CPRolesCPSites#ViewSiteManagePagesRegRole" />
 </definition>

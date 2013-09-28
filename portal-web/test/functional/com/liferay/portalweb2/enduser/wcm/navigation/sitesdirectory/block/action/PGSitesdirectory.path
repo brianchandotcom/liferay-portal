@@ -48,6 +48,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--BREADCRUMB-->
+<tr>
+	<td>BREADCRUMB</td>
+	<td>//nav[@id='breadcrumbs']/ul</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DESCRIPTIVE-->
 <tr>
 	<td>DESCRIPTIVE_SITE_ENTRY</td>

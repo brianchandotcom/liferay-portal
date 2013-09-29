@@ -110,7 +110,7 @@ if (layout != null) {
 												String sitePagesVariationLabel = "staging";
 
 												if (layoutSetBranches.size() != 1) {
-													 sitePagesVariationLabel = HtmlUtil.escape(curLayoutSetBranch.getName());
+													sitePagesVariationLabel = HtmlUtil.escape(curLayoutSetBranch.getName());
 												}
 
 												sitePagesVariationLabel = LanguageUtil.get(pageContext, sitePagesVariationLabel);

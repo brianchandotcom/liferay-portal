@@ -212,7 +212,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 				%>
 
 			</aui:nav>
-		 </liferay-ui:panel>
+		</liferay-ui:panel>
 	</div>
 
 	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= newCategoryPath.replace(':', '-') %>" />

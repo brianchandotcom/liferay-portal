@@ -302,7 +302,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					document.<%= formName %>.<%= namespace %>addUserPermissionsBox.checked = false;
 				}
 				else if (!document.<%= formName %>.<%= namespace %>addGroupPermissionsBox.checked &&
-						 !document.<%= formName %>.<%= namespace %>addGuestPermissionsBox.checked) {
+						!document.<%= formName %>.<%= namespace %>addGuestPermissionsBox.checked) {
 
 					document.<%= formName %>.<%= namespace %>addUserPermissionsBox.checked = true;
 				}

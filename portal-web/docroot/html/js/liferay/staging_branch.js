@@ -97,9 +97,9 @@ AUI.add(
 
 					if (!mergeDialog) {
 						mergeDialog = Liferay.Util.Window.getWindow(
-						    {
+							{
 								title: Liferay.Language.get('merge')
-						    }
+							}
 						);
 
 						mergeDialog.plug(

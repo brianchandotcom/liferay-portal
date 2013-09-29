@@ -34,12 +34,12 @@ int defaultSpeed = 3000;
 
 <aui:form>
 	<aui:fieldset column="<%= true %>">
-		 <aui:col width="<%= 50 %>">
-			 <aui:button onClick='<%= renderResponse.getNamespace() + "showPrevious();" %>' value="previous" />
-			 <aui:button onClick='<%= renderResponse.getNamespace() + "play();" %>' value="play" />
-			 <aui:button onClick='<%= renderResponse.getNamespace() + "pause();" %>' value="pause" />
-			 <aui:button onClick='<%= renderResponse.getNamespace() + "showNext();" %>' value="next" />
-		 </aui:col>
+		<aui:col width="<%= 50 %>">
+			<aui:button onClick='<%= renderResponse.getNamespace() + "showPrevious();" %>' value="previous" />
+			<aui:button onClick='<%= renderResponse.getNamespace() + "play();" %>' value="play" />
+			<aui:button onClick='<%= renderResponse.getNamespace() + "pause();" %>' value="pause" />
+			<aui:button onClick='<%= renderResponse.getNamespace() + "showNext();" %>' value="next" />
+		</aui:col>
 		<aui:col width="<%= 50 %>">
 			<aui:select inlineLabel="left" name="speed" onChange='<%= renderResponse.getNamespace() + "pause();" + renderResponse.getNamespace() + "speed = this[this.selectedIndex].value * 1000;" + renderResponse.getNamespace() + "play();" %>'>
 

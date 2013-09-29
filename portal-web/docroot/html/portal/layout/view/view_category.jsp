@@ -88,7 +88,7 @@ if (!portletCategories.isEmpty() || !portlets.isEmpty()) {
 			%>
 
 		</aui:nav>
-	 </liferay-ui:panel>
+	</liferay-ui:panel>
 
 <%
 }

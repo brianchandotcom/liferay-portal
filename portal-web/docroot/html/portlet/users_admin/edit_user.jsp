@@ -196,7 +196,7 @@ if (selUser != null) {
 
 <portlet:renderURL var="editUserRenderURL">
 	<portlet:param name="struts_action" value="/users_admin/edit_user" />
-	<portlet:param name="backURL" value="<%= backURL %>"></portlet:param>
+	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= editUserActionURL %>" method="post" name="fm">

@@ -81,31 +81,33 @@ if (bodyContent != null) {
 
 								container.toggleClass('open');
 
-								var menuOpen = container.hasClass('open');
+								<c:if test="<%= !toggle %>">
+									var menuOpen = container.hasClass('open');
 
-								var handle = Liferay.Data['<%= id %>Handle'];
+									var handle = Liferay.Data['<%= id %>Handle'];
 
-								if (menuOpen && !handle) {
-									handle = currentTarget.on(
-										eventOutside,
-										function(event) {
-											if (!event.target.ancestor('#<%= id %>')) {
-												Liferay.Data['<%= id %>Handle'] = null;
+										if (menuOpen && !handle) {
+											handle = currentTarget.on(
+												eventOutside,
+												function(event) {
+													if (!event.target.ancestor('#<%= id %>')) {
+														Liferay.Data['<%= id %>Handle'] = null;
 
-												handle.detach();
+														handle.detach();
 
-												container.removeClass('open');
-											}
+														container.removeClass('open');
+													}
+												}
+											);
 										}
-									);
-								}
-								else if (handle) {
-									handle.detach();
+										else if (handle) {
+											handle.detach();
 
-									handle = null;
-								}
+											handle = null;
+										}
 
-								Liferay.Data['<%= id %>Handle'] = handle;
+									Liferay.Data['<%= id %>Handle'] = handle;
+								</c:if>
 							}
 						);
 					}

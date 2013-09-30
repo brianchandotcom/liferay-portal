@@ -33,7 +33,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -134,27 +133,18 @@ public class JournalContentPortletDataHandler
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
-		if (articleGroupId != portletDataContext.getScopeGroupId()) {
+		if (articleGroupId != previousScopeGroupId) {
 			portletDataContext.setScopeGroupId(articleGroupId);
 		}
 
 		JournalArticle article = null;
 
-		try {
-			article = JournalArticleLocalServiceUtil.getLatestArticle(
-				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
-		}
-		catch (NoSuchArticleException nsae) {
-		}
+		article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+			articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
 		if (article == null) {
-			try {
-				article = JournalArticleLocalServiceUtil.getLatestArticle(
-					articleGroupId, articleId,
-					WorkflowConstants.STATUS_EXPIRED);
-			}
-			catch (NoSuchArticleException nsae) {
-			}
+			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				articleGroupId, articleId, WorkflowConstants.STATUS_EXPIRED);
 		}
 
 		if (article == null) {

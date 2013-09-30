@@ -947,6 +947,11 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getExtraSettingsFileEntriesCount() throws SystemException {
+		return dlFileEntryFinder.countByExtraSettings();
+	}
+
+	@Override
 	public File getFile(
 			long userId, long fileEntryId, String version,
 			boolean incrementCounter)
@@ -1058,6 +1063,16 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileEntry> getFileEntries(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.findByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition);
+	}
+
+	@Override
 	public List<DLFileEntry> getFileEntries(long folderId, String name)
 		throws SystemException {
 
@@ -1096,6 +1111,16 @@ public class DLFileEntryLocalServiceImpl
 
 		return dlFileEntryFinder.countByG_F(
 			groupId, folderIds, new QueryDefinition(status));
+	}
+
+	@Override
+	public int getFileEntriesCount(
+			long groupId, long userId, List<Long> folderIds, String[] mimeTypes,
+			QueryDefinition queryDefinition)
+		throws Exception {
+
+		return dlFileEntryFinder.countByG_U_F_M(
+			groupId, userId, folderIds, mimeTypes, queryDefinition);
 	}
 
 	@Override

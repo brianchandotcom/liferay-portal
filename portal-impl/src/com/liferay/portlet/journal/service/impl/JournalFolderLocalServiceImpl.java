@@ -35,6 +35,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.FolderNameException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -1041,7 +1042,7 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	protected void validateFolderName(String name) throws PortalException {
-		if (!JournalFolderConstants.isValidName(name)) {
+		if (!AssetUtil.isValidWord(name)) {
 			throw new FolderNameException();
 		}
 

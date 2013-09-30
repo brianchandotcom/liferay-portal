@@ -1191,8 +1191,6 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_FEED_FORCE_AUTOGENERATE_ID = "journal.feed.force.autogenerate.id";
 
-	public static final String JOURNAL_FOLDER_VALID_NAME_REGEXP = "journal.folder.valid.name.regexp";
-
 	public static final String JOURNAL_IMAGE_EXTENSIONS = "journal.image.extensions";
 
 	public static final String JOURNAL_IMAGE_SMALL_MAX_SIZE = "journal.image.small.max.size";

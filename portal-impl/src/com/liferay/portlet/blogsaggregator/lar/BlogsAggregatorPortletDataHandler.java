@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -43,11 +42,11 @@ public class BlogsAggregatorPortletDataHandler
 	@Override
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return updateExportPortletPreferences(
-			portletDataContext, portletId, portletPreferences, rootElement);
+			portletDataContext, portletId, portletPreferences);
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class BlogsAggregatorPortletDataHandler
 
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		long organizationId = GetterUtil.getLong(
@@ -74,7 +73,8 @@ public class BlogsAggregatorPortletDataHandler
 
 			ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 				portletDataContext, portlet, portletPreferences,
-				"organizationId", Organization.class.getName(), rootElement);
+				"organizationId", Organization.class.getName(),
+				portletDataContext.getExportDataRootElement());
 		}
 
 		return portletPreferences;

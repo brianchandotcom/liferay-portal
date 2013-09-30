@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -36,8 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -238,7 +235,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		long rootFolderId = GetterUtil.getLong(
@@ -247,13 +244,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				portletDataContext.getCompanyId(), portletId);
-
-			portletDataContext.addReferenceElement(
-				portlet, rootElement, folder, Folder.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(NAMESPACE, "folders"));
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, folder);
 		}
 
 		return portletPreferences;
@@ -269,24 +261,25 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId > 0) {
-			String rootFolderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, Folder.class.getName(), rootFolderId);
+			Element folderGroupElement =
+				portletDataContext.getImportDataGroupElement(Folder.class);
 
-			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
-				rootFolderPath);
+			List<Element> folderElements = folderGroupElement.elements();
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folder);
+			if (!folderElements.isEmpty()) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, folderElements.get(0));
 
-			Map<Long, Long> folderIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					Folder.class);
+				Map<Long, Long> folderIds =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						Folder.class);
 
-			rootFolderId = MapUtil.getLong(
-				folderIds, rootFolderId, rootFolderId);
+				rootFolderId = MapUtil.getLong(
+					folderIds, rootFolderId, rootFolderId);
 
-			portletPreferences.setValue(
-				"rootFolderId", String.valueOf(rootFolderId));
+				portletPreferences.setValue(
+					"rootFolderId", String.valueOf(rootFolderId));
+			}
 		}
 
 		return portletPreferences;

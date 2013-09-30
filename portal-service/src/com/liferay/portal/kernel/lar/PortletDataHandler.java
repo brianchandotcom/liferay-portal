@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.lar;
 
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
 
 import javax.portlet.PortletPreferences;
@@ -174,6 +173,8 @@ public interface PortletDataHandler {
 
 	public boolean isDataSiteLevel();
 
+	public boolean isDisplayPortlet();
+
 	/**
 	 * Returns whether the data exported by this handler should be included by
 	 * default when publishing to live. This should only be <code>true</code>
@@ -197,7 +198,7 @@ public interface PortletDataHandler {
 
 	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws PortletDataException;
 
 	public PortletPreferences processImportPortletPreferences(

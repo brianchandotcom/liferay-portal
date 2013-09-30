@@ -197,7 +197,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -212,7 +212,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext.getScopeGroupId(), hiddenNodeName);
 
 			portletDataContext.addReferenceElement(
-				portlet, rootElement, wikiNode, WikiNode.class,
+				portlet, portletDataContext.getExportDataRootElement(),
+				wikiNode, WikiNode.class,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
 				!portletDataContext.getBooleanParameter(
 					NAMESPACE, "wiki-pages"));
@@ -227,7 +228,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext.getScopeGroupId(), visibleNodeName);
 
 			portletDataContext.addReferenceElement(
-				portlet, rootElement, wikiNode, WikiNode.class,
+				portlet, portletDataContext.getExportDataRootElement(),
+				wikiNode, WikiNode.class,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
 				!portletDataContext.getBooleanParameter(
 					NAMESPACE, "wiki-pages"));

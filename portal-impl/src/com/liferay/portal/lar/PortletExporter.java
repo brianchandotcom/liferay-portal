@@ -1256,8 +1256,7 @@ public class PortletExporter {
 
 				jxPortletPreferences =
 					portletDataHandler.processExportPortletPreferences(
-						portletDataContext, portletId, jxPortletPreferences,
-						parentElement);
+						portletDataContext, portletId, jxPortletPreferences);
 			}
 			finally {
 				portletDataContext.setExportDataRootElement(

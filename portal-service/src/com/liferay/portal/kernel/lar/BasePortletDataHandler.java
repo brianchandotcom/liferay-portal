@@ -360,6 +360,17 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public boolean isDisplayPortlet() {
+		if (isDataPortletInstanceLevel() &&
+			!ArrayUtil.isEmpty(getDataPortletPreferences())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isPublishToLiveByDefault() {
 		return _publishToLiveByDefault;
 	}
@@ -393,7 +404,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
 		String displayStyle = getDisplayTemplate(
@@ -426,7 +437,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		try {
 			return doProcessExportPortletPreferences(
-				portletDataContext, portletId, portletPreferences, rootElement);
+				portletDataContext, portletId, portletPreferences);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -630,7 +641,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return portletPreferences;

@@ -176,7 +176,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		long rootFolderId = GetterUtil.getLong(
@@ -190,7 +190,8 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext.getCompanyId(), portletId);
 
 			portletDataContext.addReferenceElement(
-				portlet, rootElement, folder, BookmarksFolder.class,
+				portlet, portletDataContext.getExportDataRootElement(), folder,
+				BookmarksFolder.class,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
 				!portletDataContext.getBooleanParameter(NAMESPACE, "entries"));
 		}

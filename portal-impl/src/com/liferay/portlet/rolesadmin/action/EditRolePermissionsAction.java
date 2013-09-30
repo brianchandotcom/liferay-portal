@@ -46,6 +46,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.bookmarks.service.permission.BookmarksPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.journal.service.permission.JournalPermission;
+import com.liferay.portlet.messageboards.service.permission.MBPermission;
+import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermission;
+import com.liferay.portlet.shopping.service.permission.ShoppingPermission;
 
 import java.util.HashMap;
 import java.util.List;
@@ -311,6 +317,9 @@ public class EditRolePermissionsAction extends PortletAction {
 				ResourceActionsUtil.getResourceActions(null, modelResource));
 		}
 
+		int rootResourceScope = ResourceConstants.SCOPE_COMPANY;
+		String[] rootResourceGroupIds = null;
+
 		String[] selectedTargets = StringUtil.split(
 			ParamUtil.getString(actionRequest, "selectedTargets"));
 
@@ -364,8 +373,19 @@ public class EditRolePermissionsAction extends PortletAction {
 					updateViewControlPanelPermission(
 						role, themeDisplay.getScopeGroupId(), selResource,
 						scope, groupIds);
+
+					rootResourceScope = scope;
+					rootResourceGroupIds = groupIds;
 				}
 			}
+		}
+
+		// LPS-38031
+
+		if (rootResourceGroupIds != null) {
+			updateViewRootResourcePermission(
+				role, themeDisplay.getScopeGroupId(), portletResource,
+				rootResourceScope, rootResourceGroupIds);
 		}
 
 		// Send redirect
@@ -449,6 +469,26 @@ public class EditRolePermissionsAction extends PortletAction {
 			updateAction(
 				role, scopeGroupId, selResource, actionId, true, scope,
 				groupIds);
+		}
+	}
+
+	protected void updateViewRootResourcePermission(
+			Role role, long scopeGroupId, String portletId, int scope,
+			String[] groupIds)
+		throws Exception {
+
+		String modelResource = ResourceActionsUtil.getPortletRootModelResource(
+			portletId);
+
+		if (modelResource != null) {
+			List<String> actions = ResourceActionsUtil.getModelResourceActions(
+				modelResource);
+
+			if (actions.contains(ActionKeys.VIEW)) {
+				updateAction(
+					role, scopeGroupId, modelResource, ActionKeys.VIEW, true,
+					scope, groupIds);
+			}
 		}
 	}
 

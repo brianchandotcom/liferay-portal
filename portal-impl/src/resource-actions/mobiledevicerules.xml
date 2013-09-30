@@ -24,6 +24,7 @@
 		<portlet-ref>
 			<portlet-name>178</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>

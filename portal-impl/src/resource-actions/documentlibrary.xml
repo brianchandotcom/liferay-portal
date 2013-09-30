@@ -32,6 +32,7 @@
 			<portlet-name>31</portlet-name>
 			<portlet-name>110</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>

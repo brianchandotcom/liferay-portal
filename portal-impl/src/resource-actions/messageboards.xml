@@ -47,6 +47,7 @@
 			<portlet-name>19</portlet-name>
 			<portlet-name>162</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>

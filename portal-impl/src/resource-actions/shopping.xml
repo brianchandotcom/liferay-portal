@@ -26,6 +26,7 @@
 		<portlet-ref>
 			<portlet-name>34</portlet-name>
 		</portlet-ref>
+		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>

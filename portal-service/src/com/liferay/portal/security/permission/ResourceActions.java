@@ -125,6 +125,8 @@ public interface ResourceActions {
 
 	public List<String> getPortletResourceLayoutManagerActions(String name);
 
+	public String getPortletRootModelResource(String portletName);
+
 	public List<String> getResourceActions(String name);
 
 	public List<String> getResourceActions(

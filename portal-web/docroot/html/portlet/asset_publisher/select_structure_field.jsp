@@ -125,7 +125,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 	var fieldSubtypeForms = structureFormContainer.all('form');
 
 	var toggleDisabledFormFields = function(form, state) {
-		Liferay.Util.toggleDisabled(form.all('input, select, textarea'), state);
+		Util.toggleDisabled(form.all('input, select, textarea'), state);
 	};
 
 	var submitForm = function(applyButton) {
@@ -142,11 +142,11 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 				},
 				on: {
 					success: function(event, id, obj) {
-						var jsonArray = this.get('responseData');
+						var respondData = this.get('responseData');
 
-						result['className'] = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
-						result['displayValue'] = jsonArray.displayValue;
-						result['value'] = jsonArray.value;
+						result.className = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
+						result.displayValue = respondData.displayValue;
+						result.value = respondData.value;
 
 						Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
@@ -181,12 +181,11 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			var target = event.currentTarget;
 
 			var buttonId = target.attr('data-button-id');
-
 			var formId = target.attr('data-form-id');
 
-			Liferay.Util.toggleDisabled(structureFormContainer.all('.selector-button'), true);
+			Util.toggleDisabled(structureFormContainer.all('.selector-button'), true);
 
-			Liferay.Util.toggleDisabled('#' + buttonId, false);
+			Util.toggleDisabled('#' + buttonId, false);
 
 			toggleDisabledFormFields(fieldSubtypeForms, true);
 

@@ -203,6 +203,15 @@ public class EditGroupAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
+				int stagingType = ParamUtil.getInteger(
+					actionRequest, "stagingType");
+
+				if (stagingType != StagingConstants.TYPE_NOT_STAGED) {
+					redirect = HttpUtil.setParameter(
+						redirect, actionResponse.getNamespace() + "stagingType",
+						stagingType);
+				}
+
 				sendRedirect(
 					portletConfig, actionRequest, actionResponse, redirect,
 					closeRedirect);

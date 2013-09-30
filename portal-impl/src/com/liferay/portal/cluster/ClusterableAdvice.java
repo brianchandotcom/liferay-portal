@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
@@ -29,13 +31,17 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -77,6 +83,64 @@ public class ClusterableAdvice
 			methodHandler, true);
 
 		ClusterExecutorUtil.execute(clusterRequest);
+	}
+
+	@Override
+	public Object before(MethodInvocation methodInvocation) throws Throwable {
+		if (!ClusterInvokeThreadLocal.isEnabled()) {
+			return null;
+		}
+
+		Clusterable clusterable = findAnnotation(methodInvocation);
+
+		if (clusterable == _nullClusterable) {
+			return null;
+		}
+
+		if (!clusterable.onMaster()) {
+			return null;
+		}
+
+		Method method = methodInvocation.getMethod();
+
+		Class<?> returnType = method.getReturnType();
+
+		if (ClusterMasterExecutorUtil.isMaster()) {
+			Object result = methodInvocation.proceed();
+
+			if (returnType == void.class) {
+				result = nullResult;
+			}
+
+			return result;
+		}
+
+		Object thisObject = methodInvocation.getThis();
+
+		if (!(thisObject instanceof IdentifiableBean)) {
+			_log.error(
+				"Not clustering calls for " + thisObject.getClass().getName() +
+					" because it does not implement " +
+						IdentifiableBean.class.getName());
+
+			return null;
+		}
+
+		MethodHandler methodHandler = createMethodHandler(
+			clusterable.acceptor(), methodInvocation);
+
+		Future<Object> futureResult = ClusterMasterExecutorUtil.executeOnMaster(
+			methodHandler);
+
+		Object result = futureResult.get(
+			PropsValues.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT,
+			TimeUnit.SECONDS);
+
+		if (returnType == void.class) {
+			result = nullResult;
+		}
+
+		return result;
 	}
 
 	@Override
@@ -188,6 +252,11 @@ public class ClusterableAdvice
 			@Override
 			public Class<? extends Annotation> annotationType() {
 				return Clusterable.class;
+			}
+
+			@Override
+			public boolean onMaster() {
+				return false;
 			}
 
 		};

@@ -14,23 +14,23 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Shuyang Zhou
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Clusterable {
+public class ClusterInvokeThreadLocal {
 
-	public Class<? extends ClusterInvokeAcceptor> acceptor()
-		default ClusterInvokeAcceptor.class;
+	public static boolean isEnabled() {
+		return _enabled.get();
+	}
 
-	public boolean onMaster() default false;
+	public static void setEnabled(boolean enabled) {
+		_enabled.set(enabled);
+	}
+
+	private static ThreadLocal<Boolean> _enabled =
+		new AutoResetThreadLocal<Boolean>(
+			ClusterInvokeThreadLocal.class + "._enabled", true);
 
 }

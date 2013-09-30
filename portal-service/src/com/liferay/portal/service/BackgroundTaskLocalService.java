@@ -275,6 +275,9 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void cleanUpBackgroundTask(
+		com.liferay.portal.model.BackgroundTask backgroundTask, int status);
+
 	public void cleanUpBackgroundTasks()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -401,4 +404,6 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 
 	public void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void triggerBackgroundTask(long backgroundTaskId);
 }

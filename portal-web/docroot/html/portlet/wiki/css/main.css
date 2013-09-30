@@ -26,7 +26,7 @@
 		}
 
 		ul {
-		 	margin-top: 0;
+			margin-top: 0;
 		}
 
 		li.toclevel-1 {
@@ -233,6 +233,14 @@
 
 	.page-actions {
 		margin-top: 1.5em;
+
+		&:after {
+			clear: both;
+			content: ".";
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
 	}
 
 	.page-actions .article-actions {

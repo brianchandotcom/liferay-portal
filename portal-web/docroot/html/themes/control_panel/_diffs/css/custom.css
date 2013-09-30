@@ -545,6 +545,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					&.open {
 						.dropdown-toggle {
+							@include box-shadow(none);
+
 							i.caret {
 								background-position: 0 -20px;
 							}

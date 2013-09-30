@@ -99,8 +99,13 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String pathInfo = request.getPathInfo();
 
-		request.setAttribute(
-			WebKeys.FRIENDLY_URL, _friendlyURLPathPrefix.concat(pathInfo));
+		String friendlyURL = _friendlyURLPathPrefix;
+
+		if (Validator.isNotNull(pathInfo)) {
+			friendlyURL = friendlyURL.concat(pathInfo);
+		}
+
+		request.setAttribute(WebKeys.FRIENDLY_URL, friendlyURL);
 
 		Object[] redirectArray = null;
 

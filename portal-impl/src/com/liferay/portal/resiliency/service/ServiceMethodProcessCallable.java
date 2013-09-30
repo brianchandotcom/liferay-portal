@@ -14,7 +14,6 @@
 
 package com.liferay.portal.resiliency.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -44,12 +43,7 @@ public class ServiceMethodProcessCallable
 	public ServiceMethodProcessCallable() {
 	}
 
-	public ServiceMethodProcessCallable(
-		String servletContextName, String beanIdentifier,
-		MethodHandler methodHandler) {
-
-		_servletContextName = servletContextName;
-		_beanIdentifier = beanIdentifier;
+	public ServiceMethodProcessCallable(MethodHandler methodHandler) {
 		_methodHandler = methodHandler;
 
 		PermissionChecker permissionChecker =
@@ -81,10 +75,7 @@ public class ServiceMethodProcessCallable
 				}
 			}
 
-			Object bean = PortletBeanLocatorUtil.locate(
-				_servletContextName, _beanIdentifier);
-
-			return (Serializable)_methodHandler.invoke(bean);
+			return (Serializable)_methodHandler.invoke(false);
 		}
 		catch (Exception e) {
 			throw new ProcessException(e);
@@ -99,23 +90,17 @@ public class ServiceMethodProcessCallable
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		_beanIdentifier = objectInput.readUTF();
 		_methodHandler = (MethodHandler)objectInput.readObject();
-		_servletContextName = objectInput.readUTF();
 		_userId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeUTF(_beanIdentifier);
 		objectOutput.writeObject(_methodHandler);
-		objectOutput.writeUTF(_servletContextName);
 		objectOutput.writeLong(_userId);
 	}
 
-	private String _beanIdentifier;
 	private MethodHandler _methodHandler;
-	private String _servletContextName;
 	private long _userId;
 
 }

@@ -243,7 +243,8 @@ if (Validator.isNotNull(content)) {
 
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 										<liferay-ui:icon
-											image="add"
+											cssClass="btn"
+											iconClass="icon-search"
 											label="<%= true %>"
 											message="select"
 											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
@@ -291,8 +292,9 @@ if (Validator.isNotNull(content)) {
 										%>
 
 										<liferay-ui:icon
-											image="add"
+											iconClass="icon-search"
 											label="<%= true %>"
+											linkCssClass="btn"
 											message="select"
 											url="<%= sb.toString() %>"
 										/>

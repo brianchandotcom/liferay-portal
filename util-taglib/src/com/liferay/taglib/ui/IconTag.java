@@ -53,6 +53,10 @@ public class IconTag extends IncludeTag {
 		_data = data;
 	}
 
+	public void setIconClass(String iconClass) {
+		_iconClass = iconClass;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -123,6 +127,7 @@ public class IconTag extends IncludeTag {
 		_ariaRole = null;
 		_cssClass = null;
 		_data = null;
+		_iconClass = null;
 		_id = null;
 		_image = null;
 		_imageHover = null;
@@ -203,6 +208,7 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:ariaRole", _ariaRole);
 		request.setAttribute("liferay-ui:icon:cssClass", _cssClass);
 		request.setAttribute("liferay-ui:icon:data", _data);
+		request.setAttribute("liferay-ui:icon:iconClass", _iconClass);
 		request.setAttribute("liferay-ui:icon:id", id);
 		request.setAttribute("liferay-ui:icon:image", _image);
 		request.setAttribute("liferay-ui:icon:imageHover", _imageHover);
@@ -233,6 +239,7 @@ public class IconTag extends IncludeTag {
 	private String _ariaRole;
 	private String _cssClass;
 	private Map<String, Object> _data;
+	private String _iconClass;
 	private String _id;
 	private String _image;
 	private String _imageHover;

@@ -241,8 +241,9 @@ if (workflowEnabled) {
 
 						<liferay-ui:icon
 							cssClass="modify-link select-file-entry-type"
-							image="add"
+							iconClass="icon-search"
 							label="<%= true %>"
+							linkCssClass="btn"
 							message="select-document-type"
 							url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
 						/>

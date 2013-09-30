@@ -8,4 +8,12 @@ a.taglib-icon {
 			text-decoration: underline;
 		}
 	}
+
+	&.btn {
+		&:focus, &:hover {
+			.taglib-text {
+				text-decoration: none;
+			}
+		}
+	}
 }

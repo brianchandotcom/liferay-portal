@@ -67,6 +67,8 @@ page import="com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskEx
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %><%@
+page import="com.liferay.portal.security.auth.AuthException" %><%@
+page import="com.liferay.portal.security.auth.RemoteAuthException" %><%@
 page import="com.liferay.portal.theme.NavItem" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@
 page import="com.liferay.portal.util.LayoutView" %><%@
@@ -84,8 +86,6 @@ page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServ
 page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %>
-
-<%@ page import="java.security.InvalidKeyException" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);

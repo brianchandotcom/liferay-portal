@@ -132,13 +132,37 @@ if (stagedLocally) {
 		<div class="<%= showRemoteOptions ? StringPool.BLANK : "hide" %> staging-section" id="<portlet:namespace />remoteStagingOptions">
 			<br />
 
-			<liferay-ui:error exception="<%= InvalidKeyException.class %>">
+			<liferay-ui:error exception="<%= AuthException.class %>">
 
 				<%
-				InvalidKeyException ike = (InvalidKeyException)errorException;
+				AuthException ae = (AuthException)errorException;
 				%>
 
-				<%= ike.getMessage() %>
+				<c:if test="<%= ae instanceof RemoteAuthException %>">
+
+					<%
+					RemoteAuthException rae = (RemoteAuthException)errorException;
+					%>
+
+					<liferay-ui:message arguments='<%= "<em>" + rae.getURL() + "</em>" %>' key="an-unexpected-error-occurred-in-the-remote-server-at-x" />
+				</c:if>
+
+				<c:if test="<%= ae.getType() == AuthException.INTERNAL_SERVER_ERROR %>">
+					<liferay-ui:message key="internal-server-error" />
+				</c:if>
+
+				<c:if test="<%= ae.getType() == AuthException.NO_SHARED_SECRET %>">
+					<liferay-ui:message key="the-tunneling-servlet-shared-secret-is-not-set" />
+				</c:if>
+
+				<c:if test="<%= ae.getType() == AuthException.INVALID_SHARED_SECRET %>">
+					<liferay-ui:message key="the-tunneling-servlet-shared-secret-must-be-16,-32-or-64-characters-long" />
+				</c:if>
+
+				<c:if test="<%= ae.getType() == RemoteAuthException.WRONG_SHARED_SECRET %>">
+					<liferay-ui:message key="the-tunneling-servlet-shared-secrets-do-not-match" />
+				</c:if>
+
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= RemoteExportException.class %>">
@@ -157,10 +181,6 @@ if (stagedLocally) {
 
 				<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
 					<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" />
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(ree.getMessage()) %>">
-					<%= ree.getMessage() %>
 				</c:if>
 			</liferay-ui:error>
 

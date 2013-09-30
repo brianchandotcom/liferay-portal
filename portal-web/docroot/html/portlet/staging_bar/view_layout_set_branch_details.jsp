@@ -25,19 +25,13 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 	<div class="site-pages-variation-options span6">
-		<h5>
-			<span class="site-pages-variation-label"><liferay-ui:message key="site-variations-for" /></span>
-
-			<span class="site-name"><%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %></span>
-		</h5>
-
 		<liferay-util:buffer var="taglibMessage">
 			<liferay-ui:message key="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" />
 
 			(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)
 		</liferay-util:buffer>
 
-		<liferay-ui:icon-menu cssClass="layout-set-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
+		<liferay-ui:icon-menu cssClass="icon-globe layout-set-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
 
 			<%
 			for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
@@ -65,24 +59,32 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 		</liferay-ui:icon-menu>
 
-		<i class="icon-angle-right"></i>
-
 		<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
 		</portlet:renderURL>
 
 		<div class="manage-layout-set-branches page-variations">
-			<aui:icon
-				cssClass="manage-layout-set-branches-link"
+			<liferay-ui:icon
 				id="manageLayoutSetBranches"
-				image="cog"
-				label="manage-site-pages-variations"
+				image="../aui/cog"
+				message="manage-site-pages-variations"
 				url="<%= layoutSetBranchesURL %>"
 			/>
 		</div>
 	</div>
 
 	<aui:script use="aui-base">
+		var layoutSetBranchSelector = A.one('.layout-set-branch-selector');
+
+		if (layoutSetBranchSelector) {
+			layoutSetBranchSelector.on(
+				'mouseover',
+				function(event) {
+					Liferay.Portal.ToolTip.show(layoutSetBranchSelector, '<liferay-ui:message key="site-pages-variation" />')
+				}
+			);
+		}
+
 		var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
 
 		if (layoutSetBranchesLink) {

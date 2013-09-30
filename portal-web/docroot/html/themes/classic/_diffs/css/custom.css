@@ -389,16 +389,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		li {
 			.page-variations {
-				clear: both;
-				margin-bottom: 10px;
-				text-decoration: underline;
-
-				&:hover {
-					text-decoration: none;
-				}
+				display: inline-block;
+	            margin-left: 15px;
 
 				a {
-					padding: 6px 15px 6px 0;
 					text-decoration: none;
 				}
 			}

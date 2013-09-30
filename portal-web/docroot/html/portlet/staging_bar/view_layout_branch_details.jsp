@@ -24,11 +24,6 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 %>
 
 <div class="page-variations-options span6">
-	<h5>
-		<span class="page-variation-label"><liferay-ui:message key="page-variations-for" /></span>
-
-		<span class="page-name"><%= HtmlUtil.escape(layout.getName(locale)) %></span>
-	</h5>
 
 	<%
 	List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutRevision.getLayoutSetBranchId(), LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
@@ -36,8 +31,11 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 	<div class="layout-info">
 		<div class="variations-options">
+			<liferay-util:buffer var="taglibMessage">
+				<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
+			</liferay-util:buffer>
 
-			<liferay-ui:icon-menu cssClass="layout-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= HtmlUtil.escape(layoutBranch.getName()) %>" showWhenSingleIcon="<%= true %>">
+			<liferay-ui:icon-menu cssClass="icon-file layout-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
 
 				<%
 				for (LayoutRevision rootLayoutRevision : layoutRevisions) {
@@ -71,11 +69,10 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 			</portlet:renderURL>
 
 			<div class="manage-page-variations page-variations">
-				<aui:icon
-					cssClass="manage-layout-set-branches-link"
+				<liferay-ui:icon
 					id="manageLayoutRevisions"
-					image="cog"
-					label="manage-page-variations"
+					image="../aui/cog"
+					message="manage-page-variations"
 					url="<%= layoutBranchesURL %>"
 				/>
 			</div>
@@ -92,6 +89,17 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 </div>
 
 <aui:script use="aui-base">
+	var layoutBranchSelector = A.one('.layout-branch-selector');
+
+	if (layoutBranchSelector) {
+		layoutBranchSelector.on(
+	    	'mouseover',
+			function(event) {
+				Liferay.Portal.ToolTip.show(layoutBranchSelector, '<liferay-ui:message key="page-variation" />')
+			}
+		);
+	}
+
 	var layoutRevisionsLink = A.one('#<portlet:namespace />manageLayoutRevisions');
 
 	if (layoutRevisionsLink) {

@@ -14,135 +14,77 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 
-import javax.portlet.PortletPreferences;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
- * @author Alexander Chow
+ * @author Julio Camarero
  */
-public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences extends UpgradeProcess {
 
-	@Override
-	protected String[] getPortletIds() {
-		return new String[] {PortletKeys.SEARCH};
-	}
-
-	protected JSONObject upgradeDataJSONObject(JSONObject dataJSONObject)
+	protected void deletePortletPreferences(long portletPreferencesId)
 		throws Exception {
 
-		JSONArray valuesJSONArray = dataJSONObject.getJSONArray("values");
-
-		boolean hasBookmarksEntry = false;
-		boolean hasDLFileEntry = false;
-		boolean hasJournalArticle = false;
-
-		for (int i = 0; i < valuesJSONArray.length(); i++) {
-			String value = valuesJSONArray.getString(i);
-
-			if (value.equals(BookmarksEntry.class.getName())) {
-				hasBookmarksEntry = true;
-			}
-
-			if (value.equals(DLFileEntryConstants.getClassName())) {
-				hasDLFileEntry = true;
-			}
-
-			if (value.equals(JournalArticle.class.getName())) {
-				hasJournalArticle = true;
-			}
-		}
-
-		if (!hasBookmarksEntry && !hasDLFileEntry && !hasJournalArticle) {
-			return null;
-		}
-
-		if (hasBookmarksEntry) {
-			valuesJSONArray.put(BookmarksFolder.class.getName());
-		}
-
-		if (hasDLFileEntry) {
-			valuesJSONArray.put(DLFolderConstants.getClassName());
-		}
-
-		if (hasJournalArticle) {
-			valuesJSONArray.put(JournalFolder.class.getName());
-		}
-
-		dataJSONObject.put("values", valuesJSONArray);
-
-		return dataJSONObject;
+		runSQL(
+			"delete from PortletPreferences where portletPreferencesId = " +
+				portletPreferencesId);
 	}
 
 	@Override
-	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
-		throws Exception {
+	protected void doUpgrade() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-		String searchConfiguration = portletPreferences.getValue(
-			"searchConfiguration", null);
+			StringBundler sb = new StringBundler(4);
 
-		if (Validator.isNull(searchConfiguration)) {
-			return null;
-		}
+			sb.append("select PortletPreferences.portletPreferencesId, ");
+			sb.append("PortletPreferences.plid,");
+			sb.append("PortletPreferences.portletId, Layout.typeSettings ");
+			sb.append("from PortletPreferences inner join Layout on ");
+			sb.append("PortletPreferences.plid = Layout.plid where ");
+			sb.append("preferences like '%<portlet-preferences />%'");
 
-		JSONObject searchConfigurationJSONObject =
-			JSONFactoryUtil.createJSONObject(searchConfiguration);
+			String sql = sb.toString();
 
-		JSONArray oldFacetsJSONArray =
-			searchConfigurationJSONObject.getJSONArray("facets");
+			ps = con.prepareStatement(sql);
 
-		if (oldFacetsJSONArray == null) {
-			return null;
-		}
+			rs = ps.executeQuery();
 
-		JSONArray newFacetsJSONArray = JSONFactoryUtil.createJSONArray();
+			while (rs.next()) {
+				long portletPreferencesId = rs.getLong("portletPreferencesId");
+				String portletId = rs.getString("portletId");
+				String typeSettings = rs.getString("typeSettings");
 
-		for (int i = 0; i < oldFacetsJSONArray.length(); i++) {
-			JSONObject oldFacetJSONObject = oldFacetsJSONArray.getJSONObject(i);
-
-			String fieldName = oldFacetJSONObject.getString("fieldName");
-
-			if (fieldName.equals("entryClassName")) {
-				JSONObject oldDataJSONObject = oldFacetJSONObject.getJSONObject(
-					"data");
-
-				JSONObject newDataJSONObject = upgradeDataJSONObject(
-					oldDataJSONObject);
-
-				if (newDataJSONObject == null) {
-					return null;
+				if (typeSettings.contains(portletId)) {
+					continue;
 				}
 
-				oldFacetJSONObject.put("data", newDataJSONObject);
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Deleting PortletPreferences with id=" +
+							portletPreferencesId);
+				}
+
+				deletePortletPreferences(portletPreferencesId);
 			}
-
-			newFacetsJSONArray.put(oldFacetJSONObject);
 		}
-
-		searchConfigurationJSONObject.put("facets", newFacetsJSONArray);
-
-		portletPreferences.setValue(
-			"searchConfiguration", searchConfigurationJSONObject.toString());
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		UpgradePortletPreferences.class);
 
 }

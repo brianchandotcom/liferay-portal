@@ -246,6 +246,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		else if (fieldValue instanceof Integer) {
 			jsonObject.put("value", (Integer)fieldValue);
 		}
+		else if (fieldValue instanceof Number) {
+			jsonObject.put("value", String.valueOf(fieldValue));
+		}
 		else {
 			jsonObject.put("value", (String)fieldValue);
 		}

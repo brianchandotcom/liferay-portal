@@ -53,7 +53,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + name %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= name.equals(ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
+				<input data-button-id="<%= renderResponse.getNamespace() + "applyButton" + name %>" data-form-id="<%= renderResponse.getNamespace() + name + "fieldForm" %>" name="<portlet:namespace />selectStructureFieldSubtype" type="radio" <%= name.equals(ddmStructureFieldName) ? "checked" : StringPool.BLANK %> />
 			</liferay-ui:search-container-column-text>
 
 			<%
@@ -71,7 +71,8 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
 				</liferay-portlet:resourceURL>
 
-				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>'>
+				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>' onSubmit="event.preventDefault()">
+					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + name %>' />
 
 					<%
 					com.liferay.portlet.dynamicdatamapping.storage.Field ddmField = new com.liferay.portlet.dynamicdatamapping.storage.Field();
@@ -119,50 +120,79 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 <aui:script use="aui-base,aui-io">
 	var Util = Liferay.Util;
 
-	var selectDDMStructureFieldForm = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
+	var structureFormContainer = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
 
-	selectDDMStructureFieldForm.delegate(
-		'click',
-		function(event) {
-			var result = Util.getAttributes(event.currentTarget, 'data-');
+	var fieldSubtypeForms = structureFormContainer.all('form');
 
-			var form = A.one('#' + result.form);
+	var toggleDisabledFormFields = function(form, state) {
+		Util.toggleDisabled(form.all('input, select, textarea'), state);
+	};
 
-			A.io.request(
-				form.attr('action'),
-				{
-					dataType: 'json',
-					form: {
-						id: form
-					},
-					on: {
-						success: function(event, id, obj) {
-							var jsonArray = this.get('responseData');
+	var submitForm = function(applyButton) {
+		var result = Util.getAttributes(applyButton, 'data-');
 
-							result['className'] = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
-							result['displayValue'] = jsonArray.displayValue;
-							result['value'] = jsonArray.value;
+		var form = A.one('#' + result.form);
 
-							Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+		A.io.request(
+			form.attr('action'),
+			{
+				dataType: 'json',
+				form: {
+					id: form
+				},
+				on: {
+					success: function(event, id, obj) {
+						var respondData = this.get('responseData');
 
-							Util.getWindow().hide();
-						}
+						result.className = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
+						result.displayValue = respondData.displayValue;
+						result.value = respondData.value;
+
+						Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+						Util.getWindow().hide();
 					}
 				}
-			);
+			}
+		);
+	};
+
+	structureFormContainer.delegate(
+		'click',
+		function(event) {
+			submitForm(event.currentTarget);
 		},
 		'.selector-button'
+	);
+
+	structureFormContainer.delegate(
+		'submit',
+		function(event) {
+			var buttonId = event.currentTarget.one('#<portlet:namespace />buttonId').attr('value');
+
+			submitForm(structureFormContainer.one('#' + buttonId));
+		},
+		'form'
 	);
 
 	A.one('#<portlet:namespace />tuplesSearchContainer').delegate(
 		'click',
 		function(event) {
-			var buttonId = event.target.attr('data-button-id');
+			var target = event.currentTarget;
 
-			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.selector-button'), true);
+			var buttonId = target.attr('data-button-id');
+			var formId = target.attr('data-form-id');
 
-			Liferay.Util.toggleDisabled('#' + buttonId, false);
+			Util.toggleDisabled(structureFormContainer.all('.selector-button'), true);
+
+			Util.toggleDisabled('#' + buttonId, false);
+
+			toggleDisabledFormFields(fieldSubtypeForms, true);
+
+			toggleDisabledFormFields(A.one('#' + formId), false);
 		},
 		'input[name=<portlet:namespace />selectStructureFieldSubtype]'
 	);
+
+	toggleDisabledFormFields(fieldSubtypeForms, true);
 </aui:script>

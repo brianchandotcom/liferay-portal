@@ -14,18 +14,17 @@
 
 package com.liferay.portal.resiliency.service;
 
-import com.liferay.portal.kernel.bean.IdentifiableBean;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.bean.IdentifiableBeanInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
-import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.security.ac.AccessControl;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+
+import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -51,10 +50,6 @@ public class PortalResiliencyAdvice
 
 		Object targetObject = methodInvocation.getThis();
 
-		if (targetObject == null) {
-			return null;
-		}
-
 		Class<?> targetClass = targetObject.getClass();
 
 		String servletContextName = ClassLoaderPool.getContextName(
@@ -69,36 +64,28 @@ public class PortalResiliencyAdvice
 			return null;
 		}
 
-		if (!(targetObject instanceof IdentifiableBean)) {
-			Class<?> clazz = targetObject.getClass();
-
-			_log.error(
-				"Unable to bridge portal resiliency call for " +
-					clazz.getName() + " because it does not implement " +
-						IdentifiableBean.class.getName());
-
-			return null;
-		}
-
-		IdentifiableBean identifiableBean = (IdentifiableBean)targetObject;
-
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(
-				servletContextName, identifiableBean.getBeanIdentifier(),
-				new MethodHandler(
-					methodInvocation.getMethod(),
-					methodInvocation.getArguments()));
+				IdentifiableBeanInvokerUtil.createMethodHandler(
+					methodInvocation));
 
-		return IntrabandRPCUtil.execute(
+		Object result = IntrabandRPCUtil.execute(
 			spi.getRegistrationReference(), serviceMethodProcessCallable);
+
+		Method method = methodInvocation.getMethod();
+
+		Class<?> returnType = method.getReturnType();
+
+		if (returnType == void.class) {
+			result = nullResult;
+		}
+
+		return result;
 	}
 
 	@Override
 	public AccessControlled getNullAnnotation() {
 		return AccessControl.NULL_ACCESS_CONTROLLED;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		PortalResiliencyAdvice.class);
 
 }

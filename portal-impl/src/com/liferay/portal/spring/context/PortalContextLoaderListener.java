@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.module.framework.EmptyModuleFramework;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
@@ -203,7 +204,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			ModuleFrameworkUtilAdapter.startFramework();
 		}
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			_log.error("Can't load Module Framework", e);
+
+			ModuleFrameworkUtilAdapter.setModuleFramework(
+				new EmptyModuleFramework());
+
+			_log.warn("Module Framework not available!");
 		}
 
 		SecurityManagerUtil.applySmartStrategy();

@@ -306,12 +306,12 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_REPEAT</td>
-	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event-approved')]</td>
+	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event-approved') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_REPEAT_TITLE</td>
-	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event-approved')]/div[@class='scheduler-event-content']</td>
+	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event-approved') and contains(@data-startdate,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>

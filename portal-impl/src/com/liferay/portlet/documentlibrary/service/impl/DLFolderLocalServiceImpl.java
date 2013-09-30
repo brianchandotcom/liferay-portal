@@ -871,19 +871,18 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			}
 
 			for (long fileEntryTypeId : fileEntryTypeIds) {
-				if (overrideFileEntryTypes) {
-					String workflowDefinition = ParamUtil.getString(
-						serviceContext, "workflowDefinition" + fileEntryTypeId);
+				String workflowDefinition = StringPool.BLANK;
 
-					workflowDefinitionOVPs.add(
-						new ObjectValuePair<Long, String>(
-							fileEntryTypeId, workflowDefinition));
+				if (overrideFileEntryTypes ||
+					(folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+					workflowDefinition = ParamUtil.getString(
+						serviceContext, "workflowDefinition" + fileEntryTypeId);
 				}
-				else {
-					workflowDefinitionOVPs.add(
-						new ObjectValuePair<Long, String>(
-							fileEntryTypeId, StringPool.BLANK));
-				}
+
+				workflowDefinitionOVPs.add(
+					new ObjectValuePair<Long, String>(
+						fileEntryTypeId, workflowDefinition));
 			}
 
 			workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(

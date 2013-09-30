@@ -43,8 +43,6 @@ if (layout != null) {
 <c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 
 	<%
-	PortletURL portletURL = renderResponse.createRenderURL();
-
 	String liveFriendlyURL = null;
 
 	if (liveGroup != null) {
@@ -89,10 +87,23 @@ if (layout != null) {
 					<c:if test="<%= stagingGroup != null %>">
 						<aui:nav-item anchorCssClass="staging-link" cssClass="active staging-toggle site-variations" dropdown="<%= true %>" id="stagingLink" label="staging" toggle="<%= true %>">
 							<aui:nav-item cssClass="row-fluid">
+
+								<%
+								request.setAttribute("view.jsp-layoutRevision", layoutRevision);
+								request.setAttribute("view.jsp-layoutSetBranches", layoutSetBranches);
+								request.setAttribute("view.jsp-stagingFriendlyURL", stagingFriendlyURL);
+								%>
+
 								<liferay-util:include page="/html/portlet/staging_bar/view_layout_set_branch_details.jsp" />
 
 								<c:choose>
 									<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
+
+										<%
+										request.setAttribute("view.jsp-layoutBranch", layoutBranch);
+										request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
+										%>
+
 										<liferay-util:include page="/html/portlet/staging_bar/view_layout_branch_details.jsp" />
 
 										<liferay-ui:staging cssClass="publish-link" extended="<%= false %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />

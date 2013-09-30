@@ -16,6 +16,12 @@
 
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
+<%
+LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view.jsp-layoutRevision");
+List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttribute("view.jsp-layoutSetBranches");
+String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriendlyURL");
+%>
+
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 	<div class="site-pages-variation-options span6">
 		<h5>

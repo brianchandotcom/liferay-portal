@@ -16,6 +16,15 @@
 
 <%@ include file="/html/portlet/staging_bar/init.jsp" %>
 
+<%
+LayoutBranch layoutBranch = (LayoutBranch)request.getAttribute("view.jsp-layoutBranch");
+LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view.jsp-layoutRevision");
+LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("view.jsp-layoutSetBranch");
+String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriendlyURL");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+%>
+
 <div class="page-variations-options span6">
 	<h5>
 		<span class="page-variation-label"><liferay-ui:message key="page-variations-for" /></span>

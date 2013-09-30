@@ -131,9 +131,10 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 			</liferay-ui:search-container>
 
 			<liferay-ui:icon
-				cssClass="btn modify-link select-metadata"
+				cssClass="modify-link select-metadata"
 				iconClass="icon-search"
 				label="<%= true %>"
+				linkCssClass="btn"
 				message="select-metadata-set"
 				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 			/>

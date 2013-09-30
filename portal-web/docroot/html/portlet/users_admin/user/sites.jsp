@@ -93,10 +93,11 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 	<br />
 
 	<liferay-ui:icon
-		cssClass="btn modify-link"
+		cssClass="modify-link"
 		iconClass="icon-search"
 		id="selectSiteLink"
 		label="<%= true %>"
+		linkCssClass="btn"
 		message="select"
 		url="javascript:;"
 	/>

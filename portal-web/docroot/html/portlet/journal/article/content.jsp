@@ -263,7 +263,6 @@ if (Validator.isNotNull(content)) {
 
 							<aui:fieldset cssClass="article-template-toolbar">
 								<div class="journal-form-presentation-label">
-<<<<<<< HEAD
 									<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 
 									<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
@@ -293,9 +292,9 @@ if (Validator.isNotNull(content)) {
 										%>
 
 										<liferay-ui:icon
-											cssClass="btn"
 											iconClass="icon-search"
 											label="<%= true %>"
+											linkCssClass="btn"
 											message="select"
 											url="<%= sb.toString() %>"
 										/>

@@ -140,9 +140,9 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 						<c:if test="<%= ((template == null) || (template.getClassPK() == 0)) %>">
 							<liferay-ui:icon
-								cssClass="btn"
 								iconClass="icon-search"
 								label="<%= true %>"
+								linkCssClass="btn"
 								message="select"
 								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 							/>

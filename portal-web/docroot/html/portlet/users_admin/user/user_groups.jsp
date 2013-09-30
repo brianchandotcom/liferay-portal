@@ -68,10 +68,11 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 	<br />
 
 	<liferay-ui:icon
-		cssClass="btn modify-link"
+		cssClass="modify-link"
 		iconClass="icon-search"
 		id="openUserGroupsLink"
 		label="<%= true %>"
+		linkCssClass="btn"
 		message="select"
 		url="javascript:;"
 	/>

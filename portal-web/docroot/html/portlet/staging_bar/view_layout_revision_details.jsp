@@ -52,7 +52,7 @@ else {
 
 <div class="layout-actions">
 	<c:choose>
-		<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+		<c:when test="<%= layoutRevision.isIncomplete() %>">
 			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
 		</c:when>
 		<c:otherwise>
@@ -73,7 +73,7 @@ else {
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletDisplay.getId() %>'
 
-			<c:if test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+			<c:if test="<%= layoutRevision.isIncomplete() %>">
 				, hideHistory: true
 			</c:if>
 		}
@@ -135,7 +135,7 @@ else {
 
 				LayoutRevision firstChildLayoutRevision = childLayoutRevisions.get(0);
 
-				if (firstChildLayoutRevision.getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+				if (firstChildLayoutRevision.isInactive()) {
 				%>
 
 					var redoButton = stagingBar.redoButton;
@@ -189,7 +189,7 @@ else {
 									<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 									<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 									<portlet:param name="major" value="true" />
-									<portlet:param name="workflowAction" value="<%= String.valueOf((layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+									<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
 								</portlet:actionURL>
 
 								on: {
@@ -208,7 +208,7 @@ else {
 												after: {
 													success: function() {
 														<c:choose>
-															<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+															<c:when test="<%= layoutRevision.isIncomplete() %>">
 																location.href = '<%= currentURL %>';
 															</c:when>
 															<c:otherwise>
@@ -242,7 +242,7 @@ else {
 						<%
 						String label = null;
 
-						if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+						if (layoutRevision.isIncomplete()) {
 							label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
 						}
 						else {

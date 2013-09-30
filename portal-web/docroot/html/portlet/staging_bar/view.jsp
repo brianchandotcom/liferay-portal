@@ -100,11 +100,7 @@ if (layout != null) {
 										<aui:select cssClass="variation-options" label="" name="sitePageVariations">
 
 											<%
-											for (int i = 0; i < layoutSetBranches.size(); i++) {
-												LayoutSetBranch curLayoutSetBranch = null;
-
-												curLayoutSetBranch = layoutSetBranches.get(i);
-
+											for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
 												boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 
 												String sitePagesVariationLabel = "staging";
@@ -112,8 +108,6 @@ if (layout != null) {
 												if (layoutSetBranches.size() != 1) {
 													sitePagesVariationLabel = HtmlUtil.escape(curLayoutSetBranch.getName());
 												}
-
-												sitePagesVariationLabel = LanguageUtil.get(pageContext, sitePagesVariationLabel);
 											%>
 
 												<portlet:actionURL var="layoutSetBranchURL">
@@ -126,7 +120,7 @@ if (layout != null) {
 												</portlet:actionURL>
 
 												<aui:option selected="<%= selected %>" value="<%= layoutSetBranchURL %>">
-													<%= sitePagesVariationLabel %>
+													<liferay-ui:message key="<%= sitePagesVariationLabel %>" />
 
 													<c:if test="<%= selected %>">
 														(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)
@@ -156,10 +150,6 @@ if (layout != null) {
 										</div>
 									</div>
 								</c:if>
-
-								<%
-								UnicodeProperties typeSettingsProperties = null;
-								%>
 
 								<c:choose>
 									<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
@@ -198,14 +188,8 @@ if (layout != null) {
 														<aui:select cssClass="variation-options" label="" name="pageVariations">
 
 														<%
-														for (int i = 0; i < layoutRevisions.size(); i++) {
-															LayoutBranch curLayoutBranch = null;
-
-															LayoutRevision rootLayoutRevision = layoutRevisions.get(i);
-
-															curLayoutBranch = rootLayoutRevision.getLayoutBranch();
-
-															boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
+														for (LayoutRevision rootLayoutRevision : layoutRevisions) {
+															LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
 														%>
 
 															<portlet:actionURL var="layoutBranchURL">
@@ -217,7 +201,7 @@ if (layout != null) {
 																<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
 															</portlet:actionURL>
 
-															<aui:option label="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutBranchURL %>" />
+															<aui:option label="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" selected="<%= curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId() %>" value="<%= layoutBranchURL %>" />
 
 														<%
 														}
@@ -240,19 +224,18 @@ if (layout != null) {
 														</div>
 													</div>
 
-													<div class="variations-content">
-														<c:if test="<%= Validator.isNotNull(layoutBranch.getDescription()) %>">
+													<c:if test="<%= Validator.isNotNull(layoutBranch.getDescription()) %>">
+														<div class="variations-content">
 															<div class="layout-branch-description">
 																<%= HtmlUtil.escape(layoutBranch.getDescription()) %>
 															</div>
-														</c:if>
+														</div>
 
 														<%
 														request.setAttribute("view.jsp-layoutRevision", layoutRevision);
 														request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
 														%>
-
-													</div>
+													</c:if>
 												</div>
 											</aui:form>
 										</div>

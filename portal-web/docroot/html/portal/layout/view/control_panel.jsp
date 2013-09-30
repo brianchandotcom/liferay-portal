@@ -140,7 +140,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 												String backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
 												%>
 
-												<a class="back-one-level" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
+												<a class="previous-level" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 													<i class="control-panel-back-icon icon-circle-arrow-left"></i>
 
 													<span class="helper-hidden-accessible">

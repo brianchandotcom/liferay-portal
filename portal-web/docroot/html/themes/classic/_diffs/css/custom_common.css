@@ -153,7 +153,7 @@
 
 	/* ---------- Main ---------- */
 
-	.back-one-level {
+	.previous-level {
 		&:focus {
 			color: #0A68CD;
 		}

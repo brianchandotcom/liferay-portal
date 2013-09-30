@@ -263,6 +263,15 @@
 	display: none;
 }
 
+.previous-level {
+	display: inline-block;
+	font-size: 21px;
+	line-height: 21px;
+	margin-right: 5px;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
 /* ---------- Menus ---------- */
 
 .lfr-menu-list {

@@ -172,7 +172,7 @@ if (stagedLocally) {
 				%>
 
 				<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
-					<liferay-ui:message arguments="<%= ree.getURL() %>" key="there-was-a-bad-connection-with-the-remote-server-at-x" />
+					<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" />
 				</c:if>
 
 				<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">

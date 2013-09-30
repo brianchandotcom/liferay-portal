@@ -213,11 +213,11 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 						%>
 
 						<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
-							<%= LanguageUtil.format(pageContext, "could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server", "<em>" + ree.getURL() + "</em>") %>
+							<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" />
 						</c:if>
 
 						<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
-							<%= LanguageUtil.format(pageContext, "remote-group-with-id-x-does-not-exist", ree.getGroupId()) %>
+							<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="no-site-exists-on-the-remote-server-with-site-id-x" />
 						</c:if>
 
 						<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">

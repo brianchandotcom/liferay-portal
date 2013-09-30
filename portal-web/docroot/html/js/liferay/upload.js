@@ -20,16 +20,9 @@ AUI.add(
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
-					'<tpl if="!values.title">',
-						'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" data-title="{name}" id="{id}">',
-							'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" data-title="{name}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
-							'<span class="file-title" title="{name}">{name}</span>',
-					'</tpl>',
-					'<tpl if="values.title">',
-						'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" data-title="{[values.title]}" id="{id}">',
-							'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" data-title="{[values.title]}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
-							'<span class="file-title" title="{[values.title]}">{[values.title]}</span>',
-					'</tpl>',
+					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{name}" data-title="{[ values.title ? values.title : name ]}" id="{id}">',
+						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{name}" data-title="{[ values.title ? values.title : name ]}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{name}" />',
+						'<span class="file-title" title="{[ values.title ? values.title : name ]}">{[ values.title ? values.title : name ]}</span>',
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
 						'</span>',
@@ -208,6 +201,10 @@ AUI.add(
 					},
 					tempFileURL: {
 						value: ''
+					},
+					tempRandomSuffix: {
+						validator: Lang.isString,
+						value: null
 					},
 					uploadFile: {
 						value: ''
@@ -413,10 +410,14 @@ AUI.add(
 								function(item, index, collection) {
 									var title = item;
 
-									var pos = title.indexOf('--tempRandomSuffix--');
+									var tempRandomSuffix = instance.get('tempRandomSuffix');
 
-									if (pos != -1) {
-										title = title.substr(0, pos);
+									if (tempRandomSuffix) {
+										var pos = title.indexOf(tempRandomSuffix);
+
+										if (pos != -1) {
+											title = title.substr(0, pos);
+										}
 									}
 
 									return {
@@ -765,6 +766,10 @@ AUI.add(
 
 						var data = event.data;
 
+						var input;
+
+						var newLiNode;
+
 						try {
 							data = A.JSON.parse(data);
 						}
@@ -777,15 +782,15 @@ AUI.add(
 							file.messageListItems = data.messageListItems;
 							file.warningMessages = data.warningMessages;
 
-							var newLi = instance._fileListTPL.parse([file]);
+							newLiNode = instance._fileListTPL.parse([file]);
 
 							if (li) {
-								li.placeBefore(newLi);
+								li.placeBefore(newLiNode);
 
 								li.remove(true);
 							}
 							else {
-								instance._fileListContent.prepend(newLi);
+								instance._fileListContent.prepend(newLiNode);
 							}
 						}
 						else {
@@ -795,9 +800,9 @@ AUI.add(
 									file.temp = true;
 									file.warningMessages = data.warningMessages;
 
-									var newLi = instance._fileListTPL.parse([file]);
+									newLiNode = instance._fileListTPL.parse([file]);
 
-									li.placeBefore(newLi);
+									li.placeBefore(newLiNode);
 
 									li.remove(true);
 								}
@@ -807,9 +812,9 @@ AUI.add(
 									file.name = data.name;
 									file.title = data.title;
 
-									var newLi = A.Node.create(instance._fileListTPL.parse([file]));
+									newLiNode = A.Node.create(instance._fileListTPL.parse([file]));
 
-									var input = newLi.one('input');
+									input = newLiNode.one('input');
 
 									if (input) {
 										input.attr('checked', true);
@@ -817,14 +822,14 @@ AUI.add(
 										input.show();
 									}
 
-									li.placeBefore(newLi);
+									li.placeBefore(newLiNode);
 
 									li.remove(true);
 								}
 								else {
 									li.replaceClass('file-uploading', 'pending-file upload-complete selectable selected');
 
-									var input = li.one('input');
+									input = li.one('input');
 
 									if (input) {
 										input.attr('checked', true);

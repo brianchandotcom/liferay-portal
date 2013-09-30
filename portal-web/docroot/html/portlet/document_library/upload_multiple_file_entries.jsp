@@ -76,6 +76,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 							tempFolderName: 'com.liferay.portlet.documentlibrary.action.EditFileEntryAction'
 						}
 					},
+					tempRandomSuffix: '<%= EditFileEntryAction.TEMP_RANDOM_SUFFIX %>',
 					uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />'
 				}
 			);

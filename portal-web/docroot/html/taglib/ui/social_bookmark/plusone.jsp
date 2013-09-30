@@ -18,8 +18,8 @@
 
 <liferay-ui:icon
 	cssClass="social-bookmark"
+	image="../aui/google-plus-sign"
 	message="<%= type %>"
 	method="get"
-	src="/html/themes/classic/images/common/logo-plusone.png"
 	url='<%= "https://plus.google.com/share?url=" + url %>'
 />

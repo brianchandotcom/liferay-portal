@@ -23,7 +23,7 @@
 	%>
 
 	<div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
-		<liferay-ui:icon-menu direction="right" icon="/html/themes/classic/images/common/share.png" message="share">
+		<liferay-ui:icon-menu direction="right" icon="../aui/share-sign" message="share">
 
 			<%
 			for (int i = 0; i < typesArray.length; i++) {

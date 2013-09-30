@@ -18,8 +18,8 @@
 
 <liferay-ui:icon
 	cssClass="social-bookmark"
+	image="../aui/twitter-sign"
 	message="<%= type %>"
 	method="get"
-	src="/html/themes/classic/images/common/logo-twitter.png"
 	url='<%= "https://twitter.com/intent/tweet?text=" + HtmlUtil.escapeURL(title) + "&tw_p=tweetbutton&url=" + url %>'
 />

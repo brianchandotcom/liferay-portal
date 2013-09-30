@@ -18,8 +18,8 @@
 
 <liferay-ui:icon
 	cssClass="social-bookmark"
+	image="../aui/facebook-sign"
 	message="<%= type %>"
 	method="get"
-	src="/html/themes/classic/images/common/logo-facebook.png"
 	url='<%= "http://www.facebook.com/sharer.php?u=" +  url %>'
 />

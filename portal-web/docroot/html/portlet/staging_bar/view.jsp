@@ -89,24 +89,22 @@ if (layout != null) {
 					<c:if test="<%= stagingGroup != null %>">
 						<aui:nav-item anchorCssClass="staging-link" cssClass="active staging-toggle site-variations" dropdown="<%= true %>" id="stagingLink" label="staging" toggle="<%= true %>">
 							<aui:nav-item cssClass="row-fluid">
-
-								<%
-								request.setAttribute("view.jsp-layoutRevision", layoutRevision);
-								request.setAttribute("view.jsp-layoutSetBranches", layoutSetBranches);
-								request.setAttribute("view.jsp-stagingFriendlyURL", stagingFriendlyURL);
-								%>
-
-								<liferay-util:include page="/html/portlet/staging_bar/view_layout_set_branch_details.jsp" />
-
 								<c:choose>
 									<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
 
 										<%
 										request.setAttribute("view.jsp-layoutBranch", layoutBranch);
+										request.setAttribute("view.jsp-layoutRevision", layoutRevision);
 										request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
+										request.setAttribute("view.jsp-layoutSetBranches", layoutSetBranches);
+										request.setAttribute("view.jsp-stagingFriendlyURL", stagingFriendlyURL);
 										%>
 
-										<liferay-util:include page="/html/portlet/staging_bar/view_layout_branch_details.jsp" />
+										<c:if test="<%= !layoutRevision.isIncomplete() %>">
+											<liferay-util:include page="/html/portlet/staging_bar/view_layout_set_branch_details.jsp" />
+
+											<liferay-util:include page="/html/portlet/staging_bar/view_layout_branch_details.jsp" />
+										</c:if>
 
 										<portlet:actionURL var="editLayoutRevisionURL">
 											<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
@@ -123,12 +121,6 @@ if (layout != null) {
 											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
 											<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
-
-												<%
-												request.setAttribute("view.jsp-layoutRevision", layoutRevision);
-												request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
-												%>
-
 												<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
 											</div>
 										</aui:form>

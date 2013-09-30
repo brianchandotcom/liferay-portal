@@ -120,9 +120,9 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 <aui:script use="aui-base,aui-io">
 	var Util = Liferay.Util;
 
-	var selectDDMStructureFieldForm = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
+	var structureFormContainer = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
 
-	var fieldSubtypeForms = selectDDMStructureFieldForm.all('form');
+	var fieldSubtypeForms = structureFormContainer.all('form');
 
 	var toggleDisabledFormFields = function(form, state) {
 		Liferay.Util.toggleDisabled(form.all('input, select, textarea'), state);
@@ -157,7 +157,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		);
 	};
 
-	selectDDMStructureFieldForm.delegate(
+	structureFormContainer.delegate(
 		'click',
 		function(event) {
 			submitForm(event.currentTarget);
@@ -165,12 +165,12 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		'.selector-button'
 	);
 
-	selectDDMStructureFieldForm.delegate(
+	structureFormContainer.delegate(
 		'submit',
 		function(event) {
-			var buttonId = event.target.one('#<portlet:namespace />buttonId').attr('value');
+			var buttonId = event.currentTarget.one('#<portlet:namespace />buttonId').attr('value');
 
-			submitForm(selectDDMStructureFieldForm.one('#' + buttonId));
+			submitForm(structureFormContainer.one('#' + buttonId));
 		},
 		'form'
 	);
@@ -178,11 +178,13 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 	A.one('#<portlet:namespace />tuplesSearchContainer').delegate(
 		'click',
 		function(event) {
-			var buttonId = event.target.attr('data-button-id');
+			var target = event.currentTarget;
 
-			var formId = event.target.attr('data-form-id');
+			var buttonId = target.attr('data-button-id');
 
-			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.selector-button'), true);
+			var formId = target.attr('data-form-id');
+
+			Liferay.Util.toggleDisabled(structureFormContainer.all('.selector-button'), true);
 
 			Liferay.Util.toggleDisabled('#' + buttonId, false);
 

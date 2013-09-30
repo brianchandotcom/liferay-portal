@@ -378,6 +378,12 @@ public class JournalArticleAssetRenderer
 
 		preferences.setValue("articleId", _article.getArticleId());
 		preferences.setValue("groupId", String.valueOf(_article.getGroupId()));
+
+		Layout layout = themeDisplay.getLayout();
+
+		JournalContentSearchLocalServiceUtil.updateContentSearch(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			portletId, _article.getArticleId(), true);
 	}
 
 	@Override

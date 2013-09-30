@@ -250,9 +250,9 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 		List<Element> journalArticleElements =
 			journalArticlesElement.elements();
 
-		for (Element referenceDataElement : journalArticleElements) {
+		for (Element journalArticleElement : journalArticleElements) {
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, referenceDataElement);
+				portletDataContext, journalArticleElement);
 		}
 	}
 

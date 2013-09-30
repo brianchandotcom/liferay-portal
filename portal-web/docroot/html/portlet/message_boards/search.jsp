@@ -135,7 +135,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				containerIcon="../common/conversation"
 				containerName="<%= MBUtil.getAbsolutePath(renderRequest, message.getCategoryId()) %>"
 				containerType='<%= LanguageUtil.get(locale, "category") %>'
-				cssClass='<%= MathUtil.isEven(index) ? "search alt" : "search" %>'
+				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : StringPool.BLANK %>"
 				fileEntryTuples="<%= searchResult.getFileEntryTuples() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"

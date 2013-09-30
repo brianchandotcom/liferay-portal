@@ -130,6 +130,20 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		}
 	}
 
+	private boolean _belongsToLayout(
+		LayoutRevision layoutRevision, Layout layout) {
+
+		if (layoutRevision == null) {
+			return false;
+		}
+
+		if (layoutRevision.getPlid() == layout.getPlid()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private Object _clone() {
 		return ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(), new Class[] {Layout.class},
@@ -181,24 +195,28 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		long layoutRevisionId = ParamUtil.getLong(
 			serviceContext, "layoutRevisionId");
 
-		if (layoutRevisionId <= 0) {
-			layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(
-				user, layoutSetBranchId, layout.getPlid());
-		}
-
 		if (layoutRevisionId > 0) {
 			layoutRevision =
 				LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
 					layoutRevisionId);
-
-			if (layoutRevision.getStatus() !=
-					WorkflowConstants.STATUS_INACTIVE) {
-
-				return layoutRevision;
-			}
-
-			layoutRevision = null;
 		}
+
+		if ((layoutRevisionId <= 0) ||
+			!_belongsToLayout(layoutRevision, layout)) {
+
+			layoutRevisionId = StagingUtil.getRecentLayoutRevisionId(
+				user, layoutSetBranchId, layout.getPlid());
+
+			layoutRevision =
+				LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
+					layoutRevisionId);
+		}
+
+		if ((layoutRevision != null) && !layoutRevision.isInactive()) {
+			return layoutRevision;
+		}
+
+		layoutRevision = null;
 
 		List<LayoutRevision> layoutRevisions =
 			LayoutRevisionLocalServiceUtil.getLayoutRevisions(

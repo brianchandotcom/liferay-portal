@@ -166,7 +166,7 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 			FileEntry fileEntry = null;
 			Folder folder = null;
 
-			if (searchResult.getClassName().equals(DLFileEntry.class.getName())) {
+			if (searchResult.getClassName().equals(DLFileEntry.class.getName()) || FileEntry.class.isAssignableFrom(Class.forName(searchResult.getClassName()))) {
 				fileEntry = DLAppLocalServiceUtil.getFileEntry(searchResult.getClassPK());
 			}
 			else if (searchResult.getClassName().equals(DLFolder.class.getName())) {

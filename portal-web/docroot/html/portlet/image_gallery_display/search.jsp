@@ -100,7 +100,7 @@ boolean useAssetEntryQuery = false;
 
 			long entryClassPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			if (entryClassName.equals(DLFileEntry.class.getName())) {
+			if (entryClassName.equals(DLFileEntry.class.getName()) || FileEntry.class.isAssignableFrom(Class.forName(entryClassName))) {
 				results.add(DLAppLocalServiceUtil.getFileEntry(entryClassPK));
 			}
 			else if (entryClassName.equals(DLFolder.class.getName())) {

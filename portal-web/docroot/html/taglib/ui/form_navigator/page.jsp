@@ -306,6 +306,7 @@ if (Validator.isNotNull(historyKey)) {
 				}
 
 				if (formNode) {
+
 					<%
 					String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
 					%>

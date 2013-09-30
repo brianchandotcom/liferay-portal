@@ -44,8 +44,6 @@ else {
 String keywords = ParamUtil.getString(request, "keywords");
 
 String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(portletPreferences, renderRequest);
-
-boolean useAssetEntryQuery = false;
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">

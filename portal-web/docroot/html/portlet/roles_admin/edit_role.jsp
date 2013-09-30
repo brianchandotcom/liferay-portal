@@ -41,14 +41,14 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 	</liferay-util:include>
 </c:if>
 
+<portlet:actionURL var="editRoleActionURL">
+	<portlet:param name="struts_action" value="/roles_admin/edit_role" />
+</portlet:actionURL>
+
 <portlet:renderURL var="editRoleRenderURL">
 	<portlet:param name="struts_action" value="/roles_admin/edit_role" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
-
-<portlet:actionURL var="editRoleActionURL">
-	<portlet:param name="struts_action" value="/roles_admin/edit_role" />
-</portlet:actionURL>
 
 <aui:form action="<%= editRoleActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (role == null) ? Constants.ADD : Constants.UPDATE %>" />

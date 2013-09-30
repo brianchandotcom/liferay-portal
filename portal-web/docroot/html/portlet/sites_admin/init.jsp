@@ -39,6 +39,8 @@ page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.lar.LayoutExporter" %><%@
 page import="com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
+page import="com.liferay.portal.security.auth.AuthException" %><%@
+page import="com.liferay.portal.security.auth.RemoteAuthException" %><%@
 page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %><%@
@@ -70,8 +72,6 @@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
-
-<%@ page import="java.security.InvalidKeyException" %>
 
 <%
 boolean filterManageableGroups = true;

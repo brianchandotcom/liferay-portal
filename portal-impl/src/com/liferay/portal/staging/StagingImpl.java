@@ -88,6 +88,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.RemoteAuthException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -120,8 +121,6 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.Serializable;
-
-import java.security.InvalidKeyException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -303,6 +302,11 @@ public class StagingImpl implements Staging {
 			ree.setGroupId(remoteGroupId);
 
 			throw ree;
+		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(url);
+
+			throw rae;
 		}
 		catch (SystemException se) {
 			RemoteExportException ree = new RemoteExportException(
@@ -2021,6 +2025,11 @@ public class StagingImpl implements Staging {
 
 			throw ree;
 		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(remoteURL);
+
+			throw rae;
+		}
 		catch (SystemException se) {
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.BAD_CONNECTION);
@@ -2061,6 +2070,11 @@ public class StagingImpl implements Staging {
 			ree.setGroupId(remoteGroupId);
 
 			throw ree;
+		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(remoteURL);
+
+			throw rae;
 		}
 		catch (SystemException se) {
 			RemoteExportException ree = new RemoteExportException(
@@ -2628,6 +2642,11 @@ public class StagingImpl implements Staging {
 
 			throw ree;
 		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(remoteURL);
+
+			throw rae;
+		}
 		catch (SystemException se) {
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.BAD_CONNECTION);
@@ -2722,11 +2741,12 @@ public class StagingImpl implements Staging {
 
 			throw ree;
 		}
-		catch (SystemException se) {
-			if (se.getCause() instanceof InvalidKeyException) {
-				throw (InvalidKeyException)se.getCause();
-			}
+		catch (RemoteAuthException rae) {
+			rae.setURL(remoteURL);
 
+			throw rae;
+		}
+		catch (SystemException se) {
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.BAD_CONNECTION, se.getMessage());
 

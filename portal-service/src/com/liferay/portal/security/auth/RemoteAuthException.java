@@ -14,56 +14,49 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
- * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
  */
-public class AuthException extends PortalException {
+public class RemoteAuthException extends AuthException {
 
-	public static final int INTERNAL_SERVER_ERROR = 1;
+	public static final int WRONG_SHARED_SECRET = 1001;
 
-	public static final int INVALID_SHARED_SECRET = 2;
-
-	public static final int NO_SHARED_SECRET = 4;
-
-	public AuthException() {
+	public RemoteAuthException() {
 		super();
 	}
 
-	public AuthException(int type) {
-		_type = type;
+	public RemoteAuthException(int type) {
+		super(type);
 	}
 
-	public AuthException(int type, String msg) {
-		super(msg);
-
-		_type = type;
+	public RemoteAuthException(int type, String msg) {
+		super(type, msg);
 	}
 
-	public AuthException(int type, String msg, Throwable cause) {
-		super(msg, cause);
-
-		_type = type;
+	public RemoteAuthException(int type, String msg, Throwable cause) {
+		super(type, msg, cause);
 	}
 
-	public AuthException(String msg) {
+	public RemoteAuthException(String msg) {
 		super(msg);
 	}
 
-	public AuthException(String msg, Throwable cause) {
+	public RemoteAuthException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public AuthException(Throwable cause) {
+	public RemoteAuthException(Throwable cause) {
 		super(cause);
 	}
 
-	public int getType() {
-		return _type;
+	public String getURL() {
+		return _url;
 	}
 
-	private int _type;
+	public void setURL(String url) {
+		_url = url;
+	}
+
+	private String _url;
 
 }

@@ -180,6 +180,8 @@ public class LiferayLocalRepository
 
 	@Override
 	public void deleteAll() throws PortalException, SystemException {
+		dlFileEntryTypeLocalService.deleteFileEntryTypes(getGroupId());
+
 		dlFolderLocalService.deleteAll(getGroupId());
 	}
 

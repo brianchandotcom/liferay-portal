@@ -155,9 +155,8 @@ public class LDAPAuth implements Authenticator {
 			if (ldapAuthResult != null) {
 				return ldapAuthResult;
 			}
-			else {
-				ldapAuthResult = new LDAPAuthResult();
-			}
+
+			ldapAuthResult = new LDAPAuthResult();
 
 			InitialLdapContext innerCtx = null;
 

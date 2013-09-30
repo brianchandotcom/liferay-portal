@@ -52,7 +52,7 @@
 	<target name="build-alloy">
 		<antcall target="build-alloy-bootstrap" />
 
-		<property name="alloy.version" value="2.0.0pr7" />
+		<property name="alloy.version" value="2.0.0rc1" />
 
 		<property name="alloy.file" value="alloy-${alloy.version}.zip" />
 

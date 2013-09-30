@@ -3,7 +3,7 @@
 
 	.app-view-entry-taglib.entry-display-style {
 		&.display-icon {
-		    width: 140px;
+			width: 140px;
 			height: 100%;
 		}
 

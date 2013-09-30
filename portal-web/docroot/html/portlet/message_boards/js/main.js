@@ -345,7 +345,7 @@ AUI.add(
 				var emoticonOverlay = new A.OverlayContext(
 					{
 						align: {
-							 points: ['tr', 'br']
+							points: ['tr', 'br']
 						},
 						contentBox: instance._emoticons,
 						hideDelay: 500,

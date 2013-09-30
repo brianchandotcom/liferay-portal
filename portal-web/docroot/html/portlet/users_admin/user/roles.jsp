@@ -406,8 +406,8 @@ userGroupRoles.addAll(siteRoles);
 	function <portlet:namespace />deleteGroupRole(roleId, groupId) {
 		for (var i = 0; i < <portlet:namespace />groupRolesRoleIds.length; i++) {
 			if ((<portlet:namespace />groupRolesRoleIds[i] == roleId) && (<portlet:namespace />groupRolesGroupIds[i] == groupId)) {
-				 <portlet:namespace />groupRolesGroupIds.splice(i, 1);
-				 <portlet:namespace />groupRolesRoleIds.splice(i, 1);
+				<portlet:namespace />groupRolesGroupIds.splice(i, 1);
+				<portlet:namespace />groupRolesRoleIds.splice(i, 1);
 
 				break;
 			}

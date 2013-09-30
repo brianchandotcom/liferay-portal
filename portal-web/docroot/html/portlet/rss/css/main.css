@@ -6,7 +6,7 @@
 	}
 
 	.feed-description {
-	 	margin: 0 0 5px 0;
+		margin: 0 0 5px 0;
 	}
 
 	.feed-entries {
@@ -47,13 +47,13 @@
 	}
 
 	.feed-image-left {
-	 	margin: 4px 0 4px 20px;
-	 	text-align: left;
+		margin: 4px 0 4px 20px;
+		text-align: left;
 	}
 
 	.feed-image-right {
 		float: right;
-	 	margin: 0 0 4px 4px;
+		margin: 0 0 4px 4px;
 	}
 
 	.feed-published-date {

@@ -220,6 +220,11 @@ if (layout != null) {
 														</div>
 
 														<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
+															<%
+															request.setAttribute("view.jsp-layoutRevision", layoutRevision);
+															request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
+															%>
+
 															<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
 														</div>
 													</div>
@@ -230,11 +235,6 @@ if (layout != null) {
 																<%= HtmlUtil.escape(layoutBranch.getDescription()) %>
 															</div>
 														</div>
-
-														<%
-														request.setAttribute("view.jsp-layoutRevision", layoutRevision);
-														request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
-														%>
 													</c:if>
 												</div>
 											</aui:form>

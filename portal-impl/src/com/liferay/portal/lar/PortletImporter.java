@@ -1774,7 +1774,7 @@ public class PortletImporter {
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (importData || (portletDataHandler == null) ||
+		if (importData ||
 			(portletDataHandler.isDisplayPortlet() &&
 				!MergeLayoutPrototypesThreadLocal.isInProgress())) {
 

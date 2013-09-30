@@ -26,12 +26,12 @@ import java.util.regex.Pattern;
 public class DLConstants {
 
 	public static boolean isValidName(String fileName) {
-		Matcher matcher = DL_FILE_VALID_NAME_REGEXP.matcher(fileName);
+		Matcher matcher = DL_VALID_NAME_REGEXP.matcher(fileName);
 
 		return fileName == null || matcher.matches();
 	}
 
-	private static final Pattern DL_FILE_VALID_NAME_REGEXP =
+	private static final Pattern DL_VALID_NAME_REGEXP =
 		Pattern.compile(
 			PropsUtil.get(PropsKeys.DL_VALID_NAME_REGEXP),
 			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);

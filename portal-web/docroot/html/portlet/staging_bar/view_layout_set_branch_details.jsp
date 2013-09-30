@@ -18,6 +18,7 @@
 
 <%
 LayoutRevision layoutRevision = (LayoutRevision)request.getAttribute("view.jsp-layoutRevision");
+LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("view.jsp-layoutSetBranch");
 List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttribute("view.jsp-layoutSetBranches");
 String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriendlyURL");
 %>
@@ -30,17 +31,17 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 			<span class="site-name"><%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %></span>
 		</h5>
 
-		<aui:select cssClass="variation-options" label="" name="sitePageVariations">
+		<liferay-util:buffer var="taglibMessage">
+			<liferay-ui:message key="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" />
+
+			(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)
+		</liferay-util:buffer>
+
+		<liferay-ui:icon-menu cssClass="layout-set-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
 
 			<%
 			for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
 				boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
-
-				String sitePagesVariationLabel = "staging";
-
-				if (layoutSetBranches.size() != 1) {
-					sitePagesVariationLabel = HtmlUtil.escape(curLayoutSetBranch.getName());
-				}
 			%>
 
 				<portlet:actionURL var="layoutSetBranchURL">
@@ -52,19 +53,17 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
 				</portlet:actionURL>
 
-				<aui:option selected="<%= selected %>" value="<%= layoutSetBranchURL %>">
-					<liferay-ui:message key="<%= sitePagesVariationLabel %>" />
-
-					<c:if test="<%= selected %>">
-						(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)
-					</c:if>
-				</aui:option>
+				<liferay-ui:icon
+					cssClass='<%= selected ? "selected" : null %>'
+					message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
+					url='<%= layoutSetBranchURL %>'
+				/>
 
 			<%
 			}
 			%>
 
-		</aui:select>
+		</liferay-ui:icon-menu>
 
 		<i class="icon-angle-right"></i>
 

@@ -24,6 +24,10 @@
 		}
 	}
 
+	.layout-branch-selector, .layout-set-branch-selector {
+		font-size: inherit;
+	}
+
 	.page-variation-label, .site-pages-variation-label {
 		font-weight: 300;
 	}

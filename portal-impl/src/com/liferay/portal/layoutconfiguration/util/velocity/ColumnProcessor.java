@@ -26,6 +26,11 @@ public interface ColumnProcessor {
 
 	public String processMax() throws Exception;
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #processMax()}
+	 */
+	public String processMax(String classNames) throws Exception;
+
 	public String processPortlet(String portletId) throws Exception;
 
 }

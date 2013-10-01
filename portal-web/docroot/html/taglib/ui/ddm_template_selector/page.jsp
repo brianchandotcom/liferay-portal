@@ -35,6 +35,8 @@ boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("li
 long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(themeDisplay.getScopeGroupId());
 
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
+
+DDMTemplate ddmTemplate = null;
 %>
 
 <aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
@@ -61,8 +63,6 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	</c:if>
 
 	<%
-	DDMTemplate ddmTemplate = null;
-
 	Map<String,Object> data = new HashMap<String,Object>();
 
 	if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {

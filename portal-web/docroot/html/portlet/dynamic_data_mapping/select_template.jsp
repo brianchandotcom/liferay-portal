@@ -20,6 +20,7 @@
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
+long templateId = ParamUtil.getLong(request, "templateId");
 
 DDMStructure structure = null;
 
@@ -91,7 +92,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<c:if test="<%= template.getTemplateId() != classPK %>">
+				<c:if test="<%= template.getTemplateId() != templateId %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();

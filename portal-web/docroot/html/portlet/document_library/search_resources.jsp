@@ -214,7 +214,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 					String className = searchResult.getClassName();
 
-					if (className.equals(DLFileEntry.class.getName()) || FileEntry.class.isAssignableFrom(Class.forName(searchResult.getClassName()))) {
+					if (className.equals(DLFileEntry.class.getName()) || FileEntry.class.isAssignableFrom(Class.forName(className))) {
 						fileEntry = DLAppLocalServiceUtil.getFileEntry(searchResult.getClassPK());
 					}
 					else if (className.equals(DLFolder.class.getName())) {

@@ -87,7 +87,7 @@ if (layout != null) {
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
-						<aui:nav-item anchorCssClass="staging-link" cssClass="active staging-toggle site-variations" dropdown="<%= true %>" label="staging" toggle="<%= true %>">
+						<aui:nav-item anchorCssClass="staging-link" cssClass="active staging-toggle site-variations" dropdown="<%= true %>" id="stagingLink" label="staging" toggle="<%= true %>">
 							<aui:nav-item cssClass="row-fluid">
 								<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 									<div class="site-pages-variation-options span6">
@@ -360,7 +360,7 @@ if (layout != null) {
 					<aui:nav-item cssClass='<%= (!group.isStagingGroup() ? "active" : StringPool.BLANK) + " live-link staging-toggle" %>' href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
 				</c:when>
 				<c:otherwise>
-					<aui:nav-item anchorCssClass="staging-link" cssClass="active live-link staging-toggle" dropdown="<%= true %>" label="live" toggle="<%= true %>">
+					<aui:nav-item anchorCssClass="staging-link" cssClass="active live-link staging-toggle" dropdown="<%= true %>" id="liveLink" label="live" toggle="<%= true %>">
 						<aui:nav-item cssClass="row-fluid">
 							<div class="staging-details">
 

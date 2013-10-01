@@ -3356,12 +3356,6 @@ public class JournalArticleLocalServiceImpl
 
 		// Trash
 
-		for (JournalArticle articleVersion : articleVersions) {
-			articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-			journalArticlePersistence.update(articleVersion);
-		}
-
 		JournalArticleResource articleResource =
 			journalArticleResourceLocalService.getArticleResource(
 				article.getResourcePrimKey());
@@ -3378,12 +3372,11 @@ public class JournalArticleLocalServiceImpl
 		String trashArticleId = TrashUtil.getTrashTitle(
 			trashEntry.getEntryId());
 
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
+		for (JournalArticle articleVersion : articleVersions) {
+			articleVersion.setArticleId(trashArticleId);
+			articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				journalArticlePersistence.update(articleVersion);
-			}
+			journalArticlePersistence.update(articleVersion);
 		}
 
 		articleResource.setArticleId(trashArticleId);

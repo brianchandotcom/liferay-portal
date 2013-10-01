@@ -1484,8 +1484,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			WikiPage.class.getName(), page.getResourcePrimKey());
+		// Trash
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", page.getTitle());
+
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, page.getGroupId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(), page.getUuid(), null, oldStatus,
+			null, typeSettingsProperties);
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
@@ -1533,6 +1541,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				movePageToTrash(userId, curPage);
 			}
 		}
+
+		// Asset
+
+		assetEntryLocalService.updateVisible(
+			WikiPage.class.getName(), page.getResourcePrimKey(), false);
 
 		// Social
 
@@ -1645,6 +1658,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				restorePageFromTrash(userId, curPage);
 			}
 		}
+
+		// Trash
+
+		trashEntryLocalService.deleteEntry(
+			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		// Social
 
@@ -2022,44 +2040,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 				notifySubscribers(node, page, serviceContext, update);
 			}
-
-			// Indexer
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				WikiPage.class);
-
-			indexer.reindex(page);
-
-			// Cache
-
-			clearPageCache(page);
-		}
-
-		if ((oldStatus == WorkflowConstants.STATUS_IN_TRASH) &&
-			(status != WorkflowConstants.STATUS_IN_TRASH)) {
-
-			// Trash
-
-			trashEntryLocalService.deleteEntry(
-				WikiPage.class.getName(), page.getResourcePrimKey());
-		}
-		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-
-			// Asset
-
-			assetEntryLocalService.updateVisible(
-				WikiPage.class.getName(), page.getResourcePrimKey(), false);
-
-			// Trash
-
-			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-			typeSettingsProperties.put("title", page.getTitle());
-
-			trashEntryLocalService.addTrashEntry(
-				userId, page.getGroupId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), page.getUuid(), null, oldStatus,
-				null, typeSettingsProperties);
 
 			// Indexer
 

@@ -68,12 +68,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
 		long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getActivities(classNameId, start, end);
 	}
 
@@ -98,12 +100,15 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
 		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getActivities(mirrorActivityId,
 			classNameId, classPK, start, end);
 	}
@@ -129,13 +134,15 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
 		long mirrorActivityId, java.lang.String className, long classPK,
 		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getActivities(mirrorActivityId,
 			className, classPK, start, end);
 	}
@@ -158,12 +165,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
 		java.lang.String className, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getActivities(className, start, end);
 	}
 
@@ -251,7 +260,8 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivitySetActivities(
 		long activitySetId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getActivitySetActivities(activitySetId,
 			start, end);
 	}
@@ -277,12 +287,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupActivities(
 		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getGroupActivities(groupId, start, end);
 	}
 
@@ -325,12 +337,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupUsersActivities(
 		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getGroupUsersActivities(groupId, start,
 			end);
 	}
@@ -387,12 +401,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationActivities(
 		long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getOrganizationActivities(organizationId,
 			start, end);
 	}
@@ -429,12 +445,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationUsersActivities(
 		long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getOrganizationUsersActivities(organizationId,
 			start, end);
 	}
@@ -471,12 +489,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
 		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getRelationActivities(userId, start, end);
 	}
 
@@ -500,12 +520,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
 		long userId, int type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getRelationActivities(userId, type,
 			start, end);
 	}
@@ -557,12 +579,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserActivities(
 		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getUserActivities(userId, start, end);
 	}
 
@@ -597,12 +621,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsActivities(
 		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getUserGroupsActivities(userId, start, end);
 	}
 
@@ -638,12 +664,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsAndOrganizationsActivities(
 		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getUserGroupsAndOrganizationsActivities(userId,
 			start, end);
 	}
@@ -680,12 +708,14 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
+	* @throws PortalException if permission checker is not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserOrganizationsActivities(
 		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _socialActivityService.getUserOrganizationsActivities(userId,
 			start, end);
 	}

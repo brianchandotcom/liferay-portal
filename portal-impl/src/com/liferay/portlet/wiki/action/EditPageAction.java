@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -80,6 +81,13 @@ public class EditPageAction extends PortletAction {
 		WikiPage page = null;
 
 		try {
+			boolean isHTMLContent = ParamUtil.getString(
+				actionRequest, "format").equals("html");
+
+			if (isHTMLContent) {
+				SanitizedServletResponse.disableXSSAuditor(actionResponse);
+			}
+
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				page = updatePage(actionRequest);
 			}
@@ -121,6 +129,11 @@ public class EditPageAction extends PortletAction {
 				}
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+
+				if (isHTMLContent) {
+					SanitizedServletResponse.disableXSSAuditorOnNextRequest(
+						actionRequest);
+				}
 			}
 		}
 		catch (Exception e) {

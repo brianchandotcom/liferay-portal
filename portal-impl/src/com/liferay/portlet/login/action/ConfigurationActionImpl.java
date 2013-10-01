@@ -15,6 +15,7 @@
 package com.liferay.portlet.login.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,6 +42,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		if (tabs1.equals("email-notifications") && tabs2.equals("general")) {
 			validateEmailFrom(actionRequest);
 		}
+
+		SanitizedServletResponse.disableXSSAuditor(actionResponse);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

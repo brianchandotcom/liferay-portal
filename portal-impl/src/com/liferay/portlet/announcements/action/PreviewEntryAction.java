@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.announcements.action;
 
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,6 +95,8 @@ public class PreviewEntryAction extends PortletAction {
 		entry.setAlert(alert);
 
 		actionRequest.setAttribute(WebKeys.ANNOUNCEMENTS_ENTRY, entry);
+
+		SanitizedServletResponse.disableXSSAuditor(actionResponse);
 	}
 
 	@Override

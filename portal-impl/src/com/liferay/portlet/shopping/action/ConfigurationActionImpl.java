@@ -15,6 +15,7 @@
 package com.liferay.portlet.shopping.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -76,6 +77,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			else if (tabs3.equals("shipping-email")) {
 				updateEmailOrderShipping(actionRequest, preferences);
 			}
+
+			SanitizedServletResponse.disableXSSAuditor(actionResponse);
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {

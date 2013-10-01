@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -117,6 +118,8 @@ public class EditArticleAction extends PortletAction {
 		String oldUrlTitle = StringPool.BLANK;
 
 		try {
+			SanitizedServletResponse.disableXSSAuditor(actionResponse);
+
 			if (Validator.isNull(cmd)) {
 				UploadException uploadException =
 					(UploadException)actionRequest.getAttribute(
@@ -221,6 +224,8 @@ public class EditArticleAction extends PortletAction {
 				}
 			}
 
+			boolean redirectSent = false;
+
 			if (cmd.equals(Constants.DELETE_TRANSLATION) ||
 				cmd.equals(Constants.TRANSLATE)) {
 
@@ -235,6 +240,8 @@ public class EditArticleAction extends PortletAction {
 					portletConfig, actionRequest, article, redirect);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+
+				redirectSent = true;
 			}
 			else {
 				WindowState windowState = actionRequest.getWindowState();
@@ -245,6 +252,8 @@ public class EditArticleAction extends PortletAction {
 					layout.isTypeControlPanel()) {
 
 					sendRedirect(actionRequest, actionResponse, redirect);
+
+					redirectSent = true;
 				}
 				else {
 					redirect = PortalUtil.escapeRedirect(redirect);
@@ -261,8 +270,15 @@ public class EditArticleAction extends PortletAction {
 						}
 
 						actionResponse.sendRedirect(redirect);
+
+						redirectSent = true;
 					}
 				}
+			}
+
+			if (redirectSent) {
+				SanitizedServletResponse.disableXSSAuditorOnNextRequest(
+					actionRequest);
 			}
 		}
 		catch (Exception e) {

@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,6 +36,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
+
+		SanitizedServletResponse.disableXSSAuditor(actionResponse);
 
 		if (tabs2.equals("email-from")) {
 			validateEmailFrom(actionRequest);

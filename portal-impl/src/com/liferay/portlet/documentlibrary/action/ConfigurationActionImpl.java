@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,6 +46,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
 
 		if (Validator.isNotNull(cmd)) {
+			SanitizedServletResponse.disableXSSAuditor(actionResponse);
+
 			if (tabs2.equals("display-settings")) {
 				validateRootFolder(actionRequest);
 			}

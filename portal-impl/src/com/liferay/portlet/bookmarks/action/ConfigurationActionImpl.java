@@ -15,6 +15,7 @@
 package com.liferay.portlet.bookmarks.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -37,6 +38,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		throws Exception {
 
 		validateRootFolder(actionRequest);
+
+		SanitizedServletResponse.disableXSSAuditor(actionResponse);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

@@ -3,22 +3,7 @@
 <project name="portal-test-tck" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="prepare-tck">
-		<antcall target="prepare-portal-ext-properties" />
-
-		<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-tck.url=true</echo>
-
-		<exec executable="cmd.exe">
-			<arg line="/c svn revert portal-web/docroot/WEB-INF/web.xml" />
-		</exec>
-
-		<antcall target="clean" />
-		<antcall target="start" />
-
-		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
-
+	<target name="prepare-tck-286">
 		<delete dir="tools/tck" />
 
 		<if>
@@ -46,8 +31,16 @@ tck.url=true</echo>
 		<echo file="tools/tck/bin/build.properties" append="true">
 
 work.dir=${basedir.unix}/tools/tck/work</echo>
+	</target>
 
-		<delete dir="${user.home}/liferay" />
+	<target name="run-tck-286-tomcat">
+		<antcall target="prepare-portal-ext-properties">
+			<param name="tck.url" value="true" />
+		</antcall>
+
+		<antcall target="rebuild-database" inheritAll="false" />
+
+		<antcall target="prepare-tck-286" />
 
 		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 			<property name="plugin.types" value="portlets" />
@@ -59,20 +52,29 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 			<property name="simple.server.portal.dir" value="${app.server.tomcat.portal.dir}" />
 		</ant>
 
+		<if>
+			<not>
+				<isset property="test.package" />
+			</not>
+			<then>
+				<property name="test.package" value="com.sun.ts.tests" />
+			</then>
+		</if>
+
+		<script classpathref="project.classpath" language="beanshell">
+			import com.liferay.portal.kernel.util.StringUtil;
+
+			String testPackage = project.getProperty("test.package");
+
+			project.setProperty("test.directory", StringUtil.replace(testPackage, ".", "/"));
+		</script>
+
 		<copy todir="${user.home}/liferay/deploy" flatten="true">
 			<fileset
-				dir="tools/tck"
+				dir="tools/tck/dist/${test.directory}"
 				includes="**/*.war"
 			/>
 		</copy>
-
-		<antcall target="rebuild-database" inheritAll="false">
-			<param name="skip.delete-liferay-home" value="true" />
-		</antcall>
-	</target>
-
-	<target name="run-tck-286-tomcat">
-		<antcall target="prepare-tck" />
 
 		<parallel>
 			<exec dir="${app.server.tomcat.bin.dir}" executable="catalina${file.suffix.bat}" resolveexecutable="true">
@@ -84,9 +86,9 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 					<http url="http://localhost:8080" />
 				</waitfor>
 
-				<sleep seconds="60" />
+				<sleep seconds="30" />
 
-				<exec dir="tools/tck/src/com" executable="${basedir}/tools/tck/bin/tsant.bat">
+				<exec dir="tools/tck/src/${test.directory}" executable="${basedir}/tools/tck/bin/tsant.bat">
 					<arg line="runclient" />
 					<env key="TS_HOME" value="${basedir}\tools\tck" />
 				</exec>

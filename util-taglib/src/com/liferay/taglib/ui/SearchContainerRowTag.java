@@ -73,12 +73,9 @@ public class SearchContainerRowTag<R>
 		if (!_headerNamesAssigned && (_headerNames != null) &&
 			!_headerNames.isEmpty()) {
 
-			List<String> headerNames =
-				_searchContainer.getHeaderNames();
+			List<String> headerNames = _searchContainer.getHeaderNames();
 
-			if ((headerNames!= null) &&
-				headerNames.isEmpty()) {
-
+			if ((headerNames != null) && headerNames.isEmpty()) {
 				_searchContainer.setHeaderNames(_headerNames);
 				_searchContainer.setOrderableHeaders(_orderableHeaders);
 			}

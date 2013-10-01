@@ -65,6 +65,8 @@
 
 		<action path="/portal/protected" forward="/portal/protected.jsp" />
 
+		<action path="/portal/rate_entry" type="com.liferay.portal.action.RateEntryAction" />
+
 		<action path="/portal/render_portlet" type="com.liferay.portal.action.RenderPortletAction">
 			<forward name="/portal/render_portlet" path="/portal/render_portlet.jsp" />
 		</action>
@@ -116,10 +118,6 @@
 		<action path="/portal/verify_email_address" type="com.liferay.portal.action.VerifyEmailAddressAction">
 			<forward name="portal.verify_email_address" path="portal.verify_email_address" />
 		</action>
-
-		<!-- Taglib actions -->
-
-		<action path="/taglib/rate_entry" type="com.liferay.portlet.ratings.action.RateEntryAction" />
 
 		<!-- Activities -->
 

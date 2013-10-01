@@ -449,8 +449,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			!path.equals(_PATH_C) &&
 			!path.startsWith(_PATH_COMMON) &&
 			!path.contains(_PATH_J_SECURITY_CHECK) &&
-			!path.startsWith(_PATH_PORTAL) &&
-			!path.startsWith(_PATH_TAGLIB)) {
+			!path.startsWith(_PATH_PORTAL)) {
 
 			return true;
 		}

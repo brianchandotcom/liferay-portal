@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.module.framework.NoOpModuleFramework;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -203,7 +204,14 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			ModuleFrameworkUtilAdapter.startFramework();
 		}
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			_log.error(
+				"Can't load Module Framework. This problem is usually " +
+					"caused by an old version of an application server. " +
+						"Portal will continue working but OSGi plugins will " +
+							"not work", e);
+
+			ModuleFrameworkUtilAdapter.setModuleFramework(
+				new NoOpModuleFramework());
 		}
 
 		SecurityManagerUtil.applySmartStrategy();

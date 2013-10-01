@@ -749,8 +749,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 	@include respond-to(phone, tablet) {
 		ul.form-navigator.well {
 			.button-holder {
-				bottom: 0;
+				padding-bottom: 20px;
 				position: absolute;
+				top: 100%;
 			}
 		}
 
@@ -766,7 +767,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.tabbable-content.taglib-form-navigator {
-			padding-bottom: 50px;
 			position: relative;
 		}
 
@@ -788,10 +788,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.accordion .accordion-group {
 				@include box-shadow(none);
 			}
-		}
-
-		.tabbable-content.taglib-form-navigator {
-			padding-bottom: 100px;
 		}
 
 		.span6 {

@@ -443,6 +443,22 @@ public class FileChecker extends BaseChecker {
 						}
 					}
 
+					if (ServerDetector.isJetty()) {
+						String jettyHome = System.getProperty("jetty.home");
+
+						if (fileName.startsWith(jettyHome)) {
+							continue;
+						}
+					}
+
+					if (ServerDetector.isResin()) {
+						String resinHome = System.getProperty("resin.home");
+
+						if (fileName.startsWith(resinHome)) {
+							continue;
+						}
+					}
+
 					addCanonicalPath(paths, fileName);
 				}
 			}

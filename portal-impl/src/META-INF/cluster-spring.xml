@@ -17,6 +17,15 @@
 		</property>
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>
+	<bean id="chainableMethodAdviceInjector.spiClusterableAdvice" class="com.liferay.portal.spring.aop.ChainableMethodAdviceInjector">
+		<property name="injectCondition">
+			<bean class="com.liferay.portal.kernel.resiliency.spi.SPIUtil" factory-method="isSPI" />
+		</property>
+		<property name="newChainableMethodAdvice">
+			<bean class="com.liferay.portal.cluster.SPIClusterableAdvice" />
+		</property>
+		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.cluster.ClusterExecutor" class="com.liferay.portal.cluster.ClusterExecutorImpl">
 		<property name="shortcutLocalMethod" value="true" />
 	</bean>

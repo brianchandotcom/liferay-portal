@@ -14,35 +14,34 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
-import com.liferay.portal.spring.aop.ChainableMethodAdviceInjector;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.process.ProcessCallable;
+import com.liferay.portal.kernel.process.ProcessException;
+import com.liferay.portal.kernel.util.MethodHandler;
+
+import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClusterableChainableMethodAdviceInjector
-	extends ChainableMethodAdviceInjector {
+public class MethodHandlerProcessCallable<T extends Serializable>
+	implements ProcessCallable<T> {
+
+	public MethodHandlerProcessCallable(MethodHandler methodHandler) {
+		_methodHandler = methodHandler;
+	}
 
 	@Override
-	public void inject() {
-		setInjectCondition(PropsValues.CLUSTER_LINK_ENABLED);
-		setNewChainableMethodAdvice(new ClusterableAdvice());
-
-		super.inject();
-
-		if (SPIUtil.isSPI()) {
-			setInjectCondition(true);
-			setNewChainableMethodAdvice(new SPIClusterableAdvice());
-
-			super.inject();
+	public T call() throws ProcessException {
+		try {
+			return (T)_methodHandler.invoke(false);
+		}
+		catch (Exception e) {
+			throw new ProcessException(e);
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setServletContextName(String servletContextName) {
-	}
+	private static final long serialVersionUID = 1L;
+
+	private MethodHandler _methodHandler;
 
 }

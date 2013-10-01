@@ -14,35 +14,34 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
-import com.liferay.portal.spring.aop.ChainableMethodAdviceInjector;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
+import com.liferay.portal.kernel.cluster.Clusterable;
+
+import java.lang.annotation.Annotation;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClusterableChainableMethodAdviceInjector
-	extends ChainableMethodAdviceInjector {
+public class NullClusterable implements Clusterable {
+
+	public static final Clusterable NULL_CLUSTERABLE = new NullClusterable();
 
 	@Override
-	public void inject() {
-		setInjectCondition(PropsValues.CLUSTER_LINK_ENABLED);
-		setNewChainableMethodAdvice(new ClusterableAdvice());
-
-		super.inject();
-
-		if (SPIUtil.isSPI()) {
-			setInjectCondition(true);
-			setNewChainableMethodAdvice(new SPIClusterableAdvice());
-
-			super.inject();
-		}
+	public Class<? extends ClusterInvokeAcceptor> acceptor() {
+		return null;
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setServletContextName(String servletContextName) {
+	@Override
+	public Class<? extends Annotation> annotationType() {
+		return Clusterable.class;
+	}
+
+	@Override
+	public boolean onMaster() {
+		return false;
+	}
+
+	private NullClusterable() {
 	}
 
 }

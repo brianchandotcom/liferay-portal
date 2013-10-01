@@ -67,6 +67,8 @@ public class ErrorTag extends TagSupport {
 					Validator.isNotNull(errorMarkerValue)) {
 
 					request.setAttribute(errorMarkerKey, errorMarkerValue);
+					request.setAttribute(
+						"liferay-ui:error:focusField", _focusField);
 				}
 			}
 
@@ -137,6 +139,10 @@ public class ErrorTag extends TagSupport {
 		}
 	}
 
+	public void setFocusField(String focusField) {
+		_focusField = focusField;
+	}
+
 	public void setKey(String key) {
 		_key = key;
 	}
@@ -181,6 +187,7 @@ public class ErrorTag extends TagSupport {
 
 	private String _endPage;
 	private Class<?> _exception;
+	private String _focusField;
 	private String _key;
 	private String _message;
 	private String _rowBreak = StringPool.BLANK;

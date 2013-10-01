@@ -22,20 +22,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.base.AssetEntryServiceBaseImpl;
-import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
-import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -218,36 +215,19 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		AssetEntryQuery filteredEntryQuery = new AssetEntryQuery(entryQuery);
 
 		filteredEntryQuery.setAllCategoryIds(
-			filterCategoryIds(entryQuery.getAllCategoryIds()));
+			AssetUtil.filterCategoryIds(
+				entryQuery.getAllCategoryIds(), getPermissionChecker()));
 		filteredEntryQuery.setAllTagIdsArray(
-			filterTagIdsArray(entryQuery.getAllTagIdsArray()));
+			AssetUtil.filterTagIdsArray(
+				entryQuery.getAllTagIdsArray(), getPermissionChecker()));
 		filteredEntryQuery.setAnyCategoryIds(
-			filterCategoryIds(entryQuery.getAnyCategoryIds()));
+			AssetUtil.filterCategoryIds(
+				entryQuery.getAnyCategoryIds(), getPermissionChecker()));
 		filteredEntryQuery.setAnyTagIds(
-			filterTagIds(entryQuery.getAnyTagIds()));
+			AssetUtil.filterTagIds(
+				entryQuery.getAnyTagIds(), getPermissionChecker()));
 
 		return filteredEntryQuery;
-	}
-
-	protected long[] filterCategoryIds(long[] categoryIds)
-		throws PortalException, SystemException {
-
-		List<Long> viewableCategoryIds = new ArrayList<Long>();
-
-		for (long categoryId : categoryIds) {
-			AssetCategory category = assetCategoryPersistence.fetchByPrimaryKey(
-				categoryId);
-
-			if ((category != null) &&
-				AssetCategoryPermission.contains(
-					getPermissionChecker(), categoryId, ActionKeys.VIEW)) {
-
-				viewableCategoryIds.add(categoryId);
-			}
-		}
-
-		return ArrayUtil.toArray(
-			viewableCategoryIds.toArray(new Long[viewableCategoryIds.size()]));
 	}
 
 	protected Object[] filterEntryQuery(
@@ -351,50 +331,6 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		threadLocalCache.put(key, results);
 
 		return results;
-	}
-
-	protected long[] filterTagIds(long[] tagIds)
-		throws PortalException, SystemException {
-
-		List<Long> viewableTagIds = new ArrayList<Long>();
-
-		for (long tagId : tagIds) {
-			if (AssetTagPermission.contains(
-					getPermissionChecker(), tagId, ActionKeys.VIEW)) {
-
-				viewableTagIds.add(tagId);
-			}
-		}
-
-		return ArrayUtil.toArray(
-			viewableTagIds.toArray(new Long[viewableTagIds.size()]));
-	}
-
-	protected long[][] filterTagIdsArray(long[][] tagIdsArray)
-		throws PortalException, SystemException {
-
-		List<long[]> viewableTagIdsArray = new ArrayList<long[]>();
-
-		for (int i = 0; i< tagIdsArray.length; i++) {
-			long[] tagIds = tagIdsArray[i];
-
-			List<Long> viewableTagIds = new ArrayList<Long>();
-
-			for (long tagId : tagIds) {
-				if (AssetTagPermission.contains(
-						getPermissionChecker(), tagId, ActionKeys.VIEW)) {
-
-					viewableTagIds.add(tagId);
-				}
-			}
-
-			viewableTagIdsArray.add(
-				ArrayUtil.toArray(
-					viewableTagIds.toArray(new Long[viewableTagIds.size()])));
-		}
-
-		return viewableTagIdsArray.toArray(
-			new long[viewableTagIdsArray.size()][]);
 	}
 
 	protected boolean hasEntryQueryResults(

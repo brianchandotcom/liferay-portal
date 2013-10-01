@@ -26,11 +26,14 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +95,11 @@ public class AssetSearcher extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		long[] allCategoryIds = _assetEntryQuery.getAllCategoryIds();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long[] allCategoryIds = AssetUtil.filterCategoryIds(
+			_assetEntryQuery.getAllCategoryIds(), permissionChecker);
 
 		if (allCategoryIds.length == 0) {
 			return;
@@ -137,7 +144,11 @@ public class AssetSearcher extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		long[] allTagIds = _assetEntryQuery.getAllTagIds();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long[] allTagIds = AssetUtil.filterTagIds(
+			_assetEntryQuery.getAllTagIds(), permissionChecker);
 
 		if (allTagIds.length == 0) {
 			return;
@@ -157,7 +168,11 @@ public class AssetSearcher extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		long[] anyCategoryIds = _assetEntryQuery.getAnyCategoryIds();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long[] anyCategoryIds = AssetUtil.filterCategoryIds(
+			_assetEntryQuery.getAnyCategoryIds(), permissionChecker);
 
 		if (anyCategoryIds.length == 0) {
 			return;
@@ -197,7 +212,11 @@ public class AssetSearcher extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		long[] anyTagIds = _assetEntryQuery.getAnyTagIds();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long[] anyTagIds = AssetUtil.filterTagIds(
+			_assetEntryQuery.getAnyTagIds(), permissionChecker);
 
 		if (anyTagIds.length == 0) {
 			return;

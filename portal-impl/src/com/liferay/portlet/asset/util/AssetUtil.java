@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.comparator.ModelResourceComparator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -59,6 +61,8 @@ import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.assetpublisher.util.AssetSearcher;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -143,6 +147,74 @@ public class AssetUtil {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, assetCategory.getTitleCurrentValue(),
 			portletURL.toString());
+	}
+
+	public static long[] filterCategoryIds(
+			long[] categoryIds, PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		List<Long> viewableCategoryIds = new ArrayList<Long>();
+
+		for (long categoryId : categoryIds) {
+			AssetCategory category =
+				AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
+
+			if ((category != null) &&
+				AssetCategoryPermission.contains(
+					permissionChecker, categoryId, ActionKeys.VIEW)) {
+
+				viewableCategoryIds.add(categoryId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			viewableCategoryIds.toArray(new Long[viewableCategoryIds.size()]));
+	}
+
+	public static long[] filterTagIds(
+			long[] tagIds, PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		List<Long> viewableTagIds = new ArrayList<Long>();
+
+		for (long tagId : tagIds) {
+			if (AssetTagPermission.contains(
+					permissionChecker, tagId, ActionKeys.VIEW)) {
+
+				viewableTagIds.add(tagId);
+			}
+		}
+
+		return ArrayUtil.toArray(
+			viewableTagIds.toArray(new Long[viewableTagIds.size()]));
+	}
+
+	public static long[][] filterTagIdsArray(
+			long[][] tagIdsArray, PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		List<long[]> viewableTagIdsArray = new ArrayList<long[]>();
+
+		for (int i = 0; i< tagIdsArray.length; i++) {
+			long[] tagIds = tagIdsArray[i];
+
+			List<Long> viewableTagIds = new ArrayList<Long>();
+
+			for (long tagId : tagIds) {
+				if (AssetTagPermission.contains(
+						permissionChecker, tagId, ActionKeys.VIEW)) {
+
+					viewableTagIds.add(tagId);
+				}
+			}
+
+			viewableTagIdsArray.add(
+				ArrayUtil.toArray(
+					viewableTagIds.toArray(new Long[viewableTagIds.size()])));
+		}
+
+		return viewableTagIdsArray.toArray(
+			new long[viewableTagIdsArray.size()][]);
 	}
 
 	public static PortletURL getAddPortletURL(

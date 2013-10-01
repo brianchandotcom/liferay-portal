@@ -23,6 +23,9 @@ import com.liferay.portlet.social.service.base.SocialRequestServiceBaseImpl;
 import com.liferay.portlet.social.service.permission.SocialRequestPermissionUtil;
 
 /**
+ * Provides the remote service for updating social requests. Its methods include
+ * permission checks.
+ *
  * @author Brian Wing Shun Chan
  */
 public class SocialRequestServiceImpl extends SocialRequestServiceBaseImpl {

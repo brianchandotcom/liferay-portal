@@ -35,6 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Provides the remote service for accessing social activities. Its methods
+ * include permission checks.
+ *
  * @author Zsolt Berentey
  */
 public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {

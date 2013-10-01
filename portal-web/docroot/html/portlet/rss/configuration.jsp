@@ -288,7 +288,8 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 	new Liferay.AutoFields(
 		{
 			contentBox: 'fieldset.subscriptions',
-			fieldIndexes: '<portlet:namespace />subscriptionIndexes'
+			fieldIndexes: '<portlet:namespace />subscriptionIndexes',
+			namespace: '<portlet:namespace />'
 		}
 	).render();
 </aui:script>

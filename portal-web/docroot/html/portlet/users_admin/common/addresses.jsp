@@ -132,6 +132,7 @@ else {
 				{
 					contentBox: '#<portlet:namespace />addresses > fieldset',
 					fieldIndexes: '<portlet:namespace />addressesIndexes',
+					namespace: '<portlet:namespace />',
 					on: {
 						'clone': function(event) {
 							var row = event.row;

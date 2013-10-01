@@ -337,6 +337,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						{
 							contentBox: '#<portlet:namespace />queryRules > fieldset',
 							fieldIndexes: '<portlet:namespace />queryLogicIndexes',
+							namespace: '<portlet:namespace />',
 							url: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/edit_query_rule" /></portlet:renderURL>'
 						}
 					).render();

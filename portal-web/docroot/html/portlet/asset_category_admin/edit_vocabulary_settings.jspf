@@ -137,7 +137,8 @@ if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 	var autoFields = new Liferay.AutoFields(
 		{
 			contentBox: '#<portlet:namespace />extraFields',
-			fieldIndexes: '<portlet:namespace />indexes'
+			fieldIndexes: '<portlet:namespace />indexes',
+			namespace: '<portlet:namespace />'
 		}
 	).render();
 

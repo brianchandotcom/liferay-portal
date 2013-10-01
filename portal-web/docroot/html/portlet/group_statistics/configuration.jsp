@@ -57,6 +57,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				{
 					contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
 					fieldIndexes: '<portlet:namespace />preferences--displayActivityCounterNameIndexes--',
+					namespace: '<portlet:namespace />',
 					url: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/add_group_statistics_activity_counter" /></portlet:renderURL>'
 				}
 			).render();

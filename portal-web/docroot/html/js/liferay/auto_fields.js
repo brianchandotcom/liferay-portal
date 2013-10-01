@@ -37,6 +37,8 @@ AUI.add(
 
 		var AutoFields = A.Component.create(
 			{
+				AUGMENTS: [Liferay.PortletBase],
+
 				EXTENDS: A.Base,
 
 				NAME: 'autofields',
@@ -377,9 +379,11 @@ AUI.add(
 						A.io.request(
 							instance.url,
 							{
-								data: {
-									index: guid
-								},
+								data: instance.ns(
+									{
+										index: guid
+									}
+								),
 								on: {
 									success: function(event, id, obj) {
 										var responseData = this.get('responseData');
@@ -438,6 +442,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-data-set-deprecated', 'aui-io-request', 'aui-parse-content', 'base', 'liferay-undo-manager', 'sortable']
+		requires: ['aui-base', 'aui-data-set-deprecated', 'aui-io-request', 'aui-parse-content', 'base', 'liferay-portlet-base', 'liferay-undo-manager', 'sortable']
 	}
 );

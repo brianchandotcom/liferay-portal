@@ -57,6 +57,10 @@ public class FilterMapping {
 			return false;
 		}
 
+		if (uri == null) {
+			return false;
+		}
+
 		Matcher matcher = _uriJSessionIdPattern.matcher(uri);
 
 		uri = matcher.replaceFirst(StringPool.BLANK);

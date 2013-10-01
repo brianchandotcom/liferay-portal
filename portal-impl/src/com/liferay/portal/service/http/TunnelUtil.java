@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.http;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -61,10 +59,7 @@ public class TunnelUtil {
 		String sharedSecret = PropsValues.TUNNELING_SERVLET_SHARED_SECRET;
 
 		if (Validator.isNull(sharedSecret)) {
-			AuthException authException = new AuthException(
-				LanguageUtil.get(
-					LocaleUtil.ENGLISH,
-					"the-tunneling-servlet-shared-secret-is-not-set"));
+			AuthException authException = new AuthException();
 
 			authException.setType(AuthException.NO_SHARED_SECRET);
 
@@ -74,11 +69,9 @@ public class TunnelUtil {
 		if ((sharedSecret.length() != 16) && (sharedSecret.length() != 32) &&
 			(sharedSecret.length() != 64)) {
 
-			AuthException authException = new AuthException(
-				"the-tunneling-servlet-shared-secret-must-be-16,-32,-or-64-" +
-					"characters-long");
+			AuthException authException = new AuthException();
 
-			authException.setType(AuthException.NO_SHARED_SECRET);
+			authException.setType(AuthException.INVALID_SHARED_SECRET);
 
 			throw authException;
 		}

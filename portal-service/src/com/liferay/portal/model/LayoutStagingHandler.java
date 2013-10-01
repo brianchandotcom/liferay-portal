@@ -147,7 +147,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if (!serviceContext.isSignedIn()) {
+		if ((serviceContext == null) || !serviceContext.isSignedIn()) {
 			LayoutRevision lastLayoutRevision = null;
 
 			lastLayoutRevision =

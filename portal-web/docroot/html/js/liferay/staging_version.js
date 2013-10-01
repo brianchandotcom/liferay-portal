@@ -21,66 +21,30 @@ AUI.add(
 				destructor: function() {
 					var instance = this;
 
-					instance._destroyToolbarContent();
+					instance._cleanup();
+				},
 
-					A.Array.invoke(instance._eventHandles, 'detach');
+				_cleanup: function() {
+					var instance = this;
+
+					if (instance._eventHandles) {
+						A.Array.invoke(instance._eventHandles, 'detach');
+					}
 				},
 
 				_onInit: function(event) {
 					var instance = this;
 
+					instance._cleanup();
+
 					var namespace = instance._namespace;
 
-					var cssClass = 'btn-link';
-
-					instance._destroyToolbarContent();
-
-					var layoutRevisionToolbar = new A.Toolbar(
-						{
-							boundingBox: A.byIdNS(namespace, 'layoutRevisionToolbar')
-						}
-					).render();
-
-					if (!event.hideHistory) {
-						layoutRevisionToolbar.add(
-							{
-								cssClass: cssClass + ' history',
-								label: Liferay.Language.get('history'),
-								on: {
-									click: A.bind('_onViewHistory', instance)
-								}
-							}
-						);
-					}
-
-					StagingBar.layoutRevisionToolbar = layoutRevisionToolbar;
-
-					var redoText = Liferay.Language.get('redo');
-					var undoText = Liferay.Language.get('undo');
-
-					StagingBar.redoButton = new A.Button(
-						{
-							cssClass: cssClass + ' redo-button',
-							label: redoText,
-							on: {
-								click: A.bind('_onRevisionChange', instance, 'redo')
-							},
-							title: redoText
-						}
-					);
-
-					StagingBar.undoButton = new A.Button(
-						{
-							cssClass: cssClass + ' undo-button',
-							label: undoText,
-							on: {
-								click: A.bind('_onRevisionChange', instance, 'undo')
-							},
-							title: undoText
-						}
-					);
-
-					var eventHandles = [];
+					var eventHandles = [
+						Liferay.on(namespace + 'submit', instance._onSubmit, instance),
+						Liferay.on(namespace + 'viewHistory', instance._onViewHistory, instance),
+						Liferay.on(namespace + 'undo', instance._onRevisionChange, instance, 'undo'),
+						Liferay.on(namespace + 'redo', instance._onRevisionChange, instance, 'redo')
+					];
 
 					var layoutRevisionDetails = A.byIdNS(namespace, 'layoutRevisionDetails');
 
@@ -100,8 +64,6 @@ AUI.add(
 													layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'));
 												},
 												success: function(event, id, obj) {
-													instance._destroyToolbarContent();
-
 													var response = this.get('responseData');
 
 													layoutRevisionDetails.plug(A.Plugin.ParseContent);
@@ -116,29 +78,7 @@ AUI.add(
 						);
 					}
 
-					eventHandles.push(Liferay.on(event.portletId + ':portletRefreshed', A.bind('destructor', instance)));
-
 					instance._eventHandles = eventHandles;
-				},
-
-				_destroyToolbarContent: function() {
-					if (StagingBar.layoutRevisionToolbar) {
-						StagingBar.layoutRevisionToolbar.destroy();
-
-						StagingBar.layoutRevisionToolbar = null;
-					}
-
-					if (StagingBar.redoButton) {
-						StagingBar.redoButton.destroy();
-
-						StagingBar.redoButton = null;
-					}
-
-					if (StagingBar.undoButton) {
-						StagingBar.undoButton.destroy();
-
-						StagingBar.undoButton = null;
-					}
 				},
 
 				_getGraphDialog: function() {
@@ -181,32 +121,49 @@ AUI.add(
 					return graphDialog;
 				},
 
-				_onRevisionChange: function(type, event) {
+				_onRevisionChange: function(event, type) {
 					var instance = this;
 
 					var confirmText = MAP_TEXT_REVISION[type];
 					var cmd = MAP_CMD_REVISION[type];
 
 					if (confirm(confirmText)) {
-						var button = event.currentTarget.get('contentBox');
-
 						instance._updateRevision(
 							cmd,
-							button.attr('data-layoutRevisionId'),
-							button.attr('data-layoutSetBranchId')
+							event.layoutRevisionId,
+							event.layoutSetBranchId
 						);
 					}
 				},
 
-				_onViewHistory: function(event) {
+				_onSubmit: function(event) {
 					var instance = this;
 
-					var namespace = instance._namespace;
+					var submitLink = A.byIdNS(instance._namespace, 'submitLink');
 
-					var form = A.byIdNS(namespace, 'fm');
+					if (submitLink) {
+						submitLink.html(Liferay.Language.get('loading') + '...');
+					}
 
-					var layoutRevisionId = form.one('#' + namespace + 'layoutRevisionId').val();
-					var layoutSetBranchId = form.one('#' + namespace + 'layoutSetBranchId').val();
+					A.io.request(
+						event.publishURL,
+						{
+							after: {
+								success: function() {
+									if (event.incomplete) {
+										location.href = event.currentURL;
+									}
+									else {
+										Liferay.fire('updatedLayout');
+									}
+								}
+							}
+						}
+					);
+				},
+
+				_onViewHistory: function(event) {
+					var instance = this;
 
 					var graphDialog = instance._getGraphDialog();
 
@@ -214,8 +171,8 @@ AUI.add(
 
 					var data = graphDialogIO.get('data');
 
-					data.layoutRevisionId = layoutRevisionId;
-					data.layoutSetBranchId = layoutSetBranchId;
+					data.layoutRevisionId = event.layoutRevisionId;;
+					data.layoutSetBranchId = event.layoutSetBranchId;
 
 					graphDialogIO.set('data', data);
 					graphDialogIO.start();
@@ -261,6 +218,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-button', 'aui-toolbar', 'liferay-node', 'liferay-staging']
+		requires: ['liferay-node', 'liferay-staging']
 	}
 );

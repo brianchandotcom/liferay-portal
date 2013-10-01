@@ -200,15 +200,23 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 				<span class="header-title">
 					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1)) %>
 				</span>
-			</legend>
 
-			<%
-			PortletURL marketplaceURL = PortletURLFactoryUtil.create(request, PortletKeys.MARKETPLACE_STORE, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-			%>
-			<a class="btn" href="<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>" id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
-					
-			<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
-			</c:if>
+				<%
+				PortletURL marketplaceURL = PortletURLFactoryUtil.create(request, PortletKeys.MARKETPLACE_STORE, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				%>
+
+				<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
+					<liferay-ui:icon
+						cssClass="manage-layout-set-branches-link pull-right"
+						iconClass="icon-inbox"
+						id="installMore"
+						label="<%= true %>"
+						linkCssClass="btn"
+						message="install-more"
+						url='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>'
+					/>
+				</c:if>
+			</legend>
 
 			<c:if test="<%= themes.size() > 1 %>">
 				<ul class="lfr-theme-list unstyled">

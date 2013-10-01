@@ -239,6 +239,10 @@
 	}
 
 	.dockbar {
+		&.navbar .navbar-inner {
+			min-height: 40px;
+		}
+
 		.navbar-inner {
 			background: #333;
 
@@ -352,8 +356,22 @@
 		}
 	}
 
+	.app-view-taglib .lfr-header-row-content .select-all-entries {
+		left: 15px;
+		top: 14px;
+	}
+
 	.navbar {
-		.container .btn {
+		.btn-group, .navbar-search {
+			margin-bottom: 8px;
+			margin-top: 8px;
+		}
+
+		.btn-navbar {
+			padding: 10px;
+		}
+
+		.container .btn-navbar {
 			background: transparent;
 			border-color: #DDD;
 
@@ -380,6 +398,10 @@
 			background-color: #FFF;
 			color: #555;
 			text-decoration: none;
+		}
+
+		.navbar-inner {
+			min-height: 47px;
 		}
 	}
 

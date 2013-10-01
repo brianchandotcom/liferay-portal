@@ -50,32 +50,79 @@ else {
 }
 %>
 
-<div class="layout-actions">
-	<c:choose>
-		<c:when test="<%= layoutRevision.isIncomplete() %>">
-			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
-		</c:when>
-		<c:otherwise>
-			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+<c:if test="<%= !layoutRevision.isIncomplete() %>">
 
-			<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" showIcon="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-		</c:otherwise>
-	</c:choose>
-</div>
+	<%
+	String taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "viewHistory', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'});";
+	%>
 
-<aui:script position="inline" use="liferay-staging-version">
-	var stagingBar = Liferay.StagingBar;
+	<liferay-ui:icon
+		id="viewHistoryLink"
+		image="../aui/time"
+		message="history"
+		method="get"
+		url="<%= taglibURL %>"
+	/>
+</c:if>
 
-	stagingBar.init(
-		{
-			namespace: '<portlet:namespace />',
-			portletId: '<%= portletDisplay.getId() %>'
+<c:if test="<%= !hasWorkflowTask %>">
+	<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
+
+		<%
+		String taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "undo', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'});";
+		%>
+
+		<liferay-ui:icon
+			id="undoLink"
+			image="../aui/undo"
+			message="undo"
+			url="<%= taglibURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= layoutRevision.hasChildren() %>">
+
+		<%
+		List<LayoutRevision> childLayoutRevisions = layoutRevision.getChildren();
+
+		LayoutRevision firstChildLayoutRevision = childLayoutRevisions.get(0);
+
+		if (firstChildLayoutRevision.isInactive()) {
+		%>
+
+			<%
+			String taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "redo', {layoutRevisionId: '" + firstChildLayoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + firstChildLayoutRevision.getLayoutSetBranchId() + "'});";
+			%>
+
+			<liferay-ui:icon
+				id="redoLink"
+				image="../aui/repeat"
+				message="redo"
+				url="<%= taglibURL %>"
+			/>
+
+		<%
 		}
-	);
-</aui:script>
+		%>
+	</c:if>
+</c:if>
 
-<c:choose>
-	<c:when test="<%= hasWorkflowTask %>">
+<c:if test="<%= !layoutRevision.isIncomplete() %>">
+	<div class="layout-actions">
+		<c:choose>
+			<c:when test="<%= layoutRevision.isIncomplete() %>">
+				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
+			</c:when>
+			<c:otherwise>
+				<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+
+				<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" showIcon="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+	<c:if test="<%= hasWorkflowTask %>">
+
 		<%
 		long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
@@ -107,125 +154,81 @@ else {
 			url="<%= portletURL.toString() %>"
 			useDialog="<%= true %>"
 		/>
-	</c:when>
-	<c:otherwise>
-		<c:if test="<%= layoutRevision.hasChildren() %>">
+	</c:if>
+</c:if>
 
-			<%
-			List<LayoutRevision> childLayoutRevisions = layoutRevision.getChildren();
-
-			LayoutRevision firstChildLayoutRevision = childLayoutRevisions.get(0);
-
-			if (firstChildLayoutRevision.isInactive()) {
-			%>
-
-				<%
-				String taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "redo', {layoutRevisionId: '" + firstChildLayoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + firstChildLayoutRevision.getLayoutSetBranchId() + "'});";
-				%>
-
-				<liferay-ui:icon
-					id="redoLink"
-					image="../aui/repeat"
-					message="redo"
-					url="<%= taglibURL %>"
-				/>
-
-			<%
-			}
-			%>
-		</c:if>
-
-		<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
-
-			<%
-			String taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "undo', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'});";
-			%>
-
-			<liferay-ui:icon
-				id="undoLink"
-				image="../aui/undo"
-				message="undo"
-				url="<%= taglibURL %>"
-			/>
-		</c:if>
+<c:if test="<%= !hasWorkflowTask %>">
+	<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 
 		<%
-		String taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "viewHistory', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'});";
+		String label = null;
+
+		if (layoutRevision.isIncomplete()) {
+			label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
+		}
+		else {
+			if (workflowEnabled) {
+				label = "submit-for-publication";
+			}
+			else {
+				label = "mark-as-ready-for-publication";
+			}
+		}
+		%>
+
+		<portlet:actionURL var="publishURL">
+			<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
+			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
+			<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+			<portlet:param name="major" value="true" />
+			<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+		</portlet:actionURL>
+
+		<%
+		List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
+
+		String taglibURL = null;
+
+		if (!workflowEnabled && pendingLayoutRevisions.isEmpty()) {
+			taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'});";
+		}
 		%>
 
 		<liferay-ui:icon
-			id="viewHistoryLink"
-			image="../aui/time"
-			message="history"
-			method="get"
+			cssClass="submit-link"
+			id="submitLink"
+			image="../aui/check"
+			label="<%= true %>"
+			message="<%= label %>"
 			url="<%= taglibURL %>"
 		/>
 
-		<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
+		<c:if test="<%= workflowEnabled%>">
 
 			<%
-			List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
-			%>
+			String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
 
-			<portlet:actionURL var="publishURL">
-				<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
-				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
-				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-				<portlet:param name="major" value="true" />
-				<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-			</portlet:actionURL>
+			LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
 
-			<c:if test="<%= workflowEnabled%>">
-
-				<%
-				String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
-
-				LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
-
-				if ((pendingLayoutRevision != null) && (pendingLayoutRevision.getUserId() == user.getUserId())) {
-					submitMessage = "you-cannot-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
-				}
-				%>
-
-				<liferay-ui:icon-help message="<%= submitMessage %>" />
-			</c:if>
-
-			<%
-			String label = null;
-
-			if (layoutRevision.isIncomplete()) {
-				label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
-			}
-			else {
-				if (workflowEnabled) {
-					label = "submit-for-publication";
-				}
-				else {
-					label = "mark-as-ready-for-publication";
-				}
+			if ((pendingLayoutRevision != null) && (pendingLayoutRevision.getUserId() == user.getUserId())) {
+				submitMessage = "you-cannot-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
 			}
 			%>
 
-			<%
-			taglibURL = null;
-
-			if (!workflowEnabled && pendingLayoutRevisions.isEmpty()) {
-				taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'});";
-			}
-			%>
-
-			<liferay-ui:icon
-				cssClass="submit-link"
-				id="submitLink"
-				image="../aui/check"
-				label="<%= true %>"
-				message="<%= label %>"
-				url="<%= taglibURL %>"
-			/>
-
-
+			<liferay-ui:icon-help message="<%= submitMessage %>" />
 		</c:if>
-	</c:otherwise>
-</c:choose>
+	</c:if>
+</c:if>
+
+<aui:script position="inline" use="liferay-staging-version">
+	var stagingBar = Liferay.StagingBar;
+
+	stagingBar.init(
+		{
+			namespace: '<portlet:namespace />',
+			portletId: '<%= portletDisplay.getId() %>'
+		}
+	);
+</aui:script>

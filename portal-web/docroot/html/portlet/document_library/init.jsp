@@ -63,6 +63,7 @@ page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchMetadataSetException" %><%@
 page import="com.liferay.portlet.documentlibrary.RepositoryNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.SourceFileNameException" %><%@
+page import="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@

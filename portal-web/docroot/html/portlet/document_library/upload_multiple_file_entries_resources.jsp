@@ -200,7 +200,7 @@ long assetClassPK = 0;
 
 											var selectedFilesCount = selectedFiles.size();
 
-											var selectedFilesText = selectedFiles.item(0).attr('data-fileName');
+											var selectedFilesText = selectedFiles.item(0).attr('data-title');
 
 											if (selectedFilesCount > 1) {
 												if (selectedFilesCount == totalFilesCount) {

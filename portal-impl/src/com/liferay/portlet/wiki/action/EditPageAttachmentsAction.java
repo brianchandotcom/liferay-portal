@@ -237,8 +237,11 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 	protected void addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse, String selectedFileName,
-			List<String> validFileNames, List<KeyValuePair> invalidFileNameKVPs)
+			List<KeyValuePair> validFileNameKVPs,
+			List<KeyValuePair> invalidFileNameKVPs)
 		throws Exception {
+
+		String originalSelectedFileName = selectedFileName;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -259,7 +262,8 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 			WikiPageServiceUtil.addPageAttachment(
 				nodeId, title, selectedFileName, inputStream, mimeType);
 
-			validFileNames.add(selectedFileName);
+			validFileNameKVPs.add(
+				new KeyValuePair(selectedFileName, originalSelectedFileName));
 		}
 		catch (Exception e) {
 			String errorMessage = getAddMultipleFileEntriesErrorMessage(

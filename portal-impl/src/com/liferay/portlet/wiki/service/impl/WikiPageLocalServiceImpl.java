@@ -64,6 +64,7 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchPageException;
@@ -90,6 +91,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -1480,11 +1482,27 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(page);
 		}
 
+		List<WikiPage> pageVersions = wikiPagePersistence.findByG_N_H(
+			page.getResourcePrimKey(), page.getNodeId(), false);
+
+		pageVersions = ListUtil.sort(pageVersions, new PageVersionComparator());
+
+		List<ObjectValuePair<Long, Integer>> pageVersionStatusOVPs =
+			new ArrayList<ObjectValuePair<Long, Integer>>();
+
+		if ((pageVersions != null) && !pageVersions.isEmpty()) {
+			pageVersionStatusOVPs = getPageVersionStatuses(pageVersions);
+		}
+
 		page = updateStatus(
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
 
 		// Trash
+
+		WikiPageResource pageResource =
+			wikiPageResourcePersistence.fetchByPrimaryKey(
+				page.getResourcePrimKey());
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
@@ -1492,8 +1510,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
 			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(), page.getUuid(), null, oldStatus,
-			null, typeSettingsProperties);
+			page.getResourcePrimKey(), pageResource.getUuid(), null, oldStatus,
+			pageVersionStatusOVPs, typeSettingsProperties);
 
 		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
@@ -1506,18 +1524,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(redirectPage);
 		}
 
-		List<WikiPage> versionPages = wikiPagePersistence.findByR_N_H(
-			page.getResourcePrimKey(), page.getNodeId(), false);
+		for (WikiPage pageVersion : pageVersions) {
+			pageVersion.setTitle(trashTitle);
+			pageVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-		for (WikiPage versionPage : versionPages) {
-			versionPage.setTitle(trashTitle);
-
-			wikiPagePersistence.update(versionPage);
+			wikiPagePersistence.update(pageVersion);
 		}
-
-		WikiPageResource pageResource =
-			wikiPageResourcePersistence.fetchByPrimaryKey(
-				page.getResourcePrimKey());
 
 		pageResource.setTitle(trashTitle);
 
@@ -1560,6 +1572,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		if (!pageVersions.isEmpty()) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				WikiPage.class);
+
+			for (WikiPage pageVersion : pageVersions) {
+				indexer.reindex(pageVersion);
+			}
+		}
 
 		// Workflow
 
@@ -1617,13 +1638,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(redirectPage);
 		}
 
-		List<WikiPage> versionPages = wikiPagePersistence.findByR_N_H(
+		List<WikiPage> pageVersions = wikiPagePersistence.findByR_N_H(
 			page.getResourcePrimKey(), page.getNodeId(), false);
 
-		for (WikiPage versionPage : versionPages) {
-			versionPage.setTitle(originalTitle);
+		for (WikiPage pageVersion : pageVersions) {
+			pageVersion.setTitle(originalTitle);
 
-			wikiPagePersistence.update(versionPage);
+			wikiPagePersistence.update(pageVersion);
 		}
 
 		WikiPageResource pageResource =
@@ -1661,6 +1682,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Trash
 
+		List<TrashVersion> trashVersions = trashVersionLocalService.getVersions(
+			trashEntry.getEntryId());
+
+		for (TrashVersion trashVersion : trashVersions) {
+			WikiPage trashArticleVersion = wikiPagePersistence.findByPrimaryKey(
+				trashVersion.getClassPK());
+
+			trashArticleVersion.setStatus(trashVersion.getStatus());
+
+			wikiPagePersistence.update(trashArticleVersion);
+		}
+
 		trashEntryLocalService.deleteEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
@@ -1676,6 +1709,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		if (!pageVersions.isEmpty()) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				WikiPage.class);
+
+			for (WikiPage pageVersion : pageVersions) {
+				indexer.reindex(pageVersion);
+			}
+		}
 	}
 
 	@Override
@@ -2211,6 +2253,28 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			return portletURL.toString();
 		}
+	}
+
+	protected List<ObjectValuePair<Long, Integer>> getPageVersionStatuses(
+		List<WikiPage> pages) {
+
+		List<ObjectValuePair<Long, Integer>> pageVersionStatusOVPs =
+			new ArrayList<ObjectValuePair<Long, Integer>>(pages.size());
+
+		for (WikiPage page : pages) {
+			int status = page.getStatus();
+
+			if (status == WorkflowConstants.STATUS_PENDING) {
+				status = WorkflowConstants.STATUS_DRAFT;
+			}
+
+			ObjectValuePair<Long, Integer> pageVersionStatusOVP =
+				new ObjectValuePair<Long, Integer>(page.getPageId(), status);
+
+			pageVersionStatusOVPs.add(pageVersionStatusOVP);
+		}
+
+		return pageVersionStatusOVPs;
 	}
 
 	protected String getParentPageTitle(WikiPage page) {

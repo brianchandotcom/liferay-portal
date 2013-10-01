@@ -37,13 +37,7 @@ if (dropdown) {
 	anchorCssClass += " dropdown-toggle";
 }
 
-String stateCssClass = StringPool.BLANK;
-
 if (Validator.isNull(state)) {
 	state = GetterUtil.getString(SessionClicks.get(request, id, null));
-}
-
-if (state.equals("open")) {
-	stateCssClass = " open";
 }
 %>

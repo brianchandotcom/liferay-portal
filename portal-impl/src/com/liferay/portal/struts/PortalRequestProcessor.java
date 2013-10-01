@@ -449,7 +449,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			!path.equals(_PATH_C) &&
 			!path.startsWith(_PATH_COMMON) &&
 			!path.contains(_PATH_J_SECURITY_CHECK) &&
-			!path.startsWith(_PATH_PORTAL)) {
+			!path.startsWith(_PATH_PORTAL) &&
+			!path.startsWith(_PATH_TAGLIB)) {
 
 			return true;
 		}
@@ -1028,6 +1029,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	private static final String _PATH_PORTAL_VERIFY_EMAIL_ADDRESS =
 		"/portal/verify_email_address";
+
+	private static final String _PATH_TAGLIB = "/taglib";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);

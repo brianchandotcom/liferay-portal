@@ -117,6 +117,10 @@
 			<forward name="portal.verify_email_address" path="portal.verify_email_address" />
 		</action>
 
+		<!-- Taglib actions -->
+
+		<action path="/taglib/rate_entry" type="com.liferay.portlet.ratings.action.RateEntryAction" />
+
 		<!-- Activities -->
 
 		<action path="/activities/rss" type="com.liferay.portlet.activities.action.RSSAction" />
@@ -1633,10 +1637,6 @@
 		<action path="/quick_note/save" type="com.liferay.portlet.quicknote.action.SaveAction" />
 
 		<action path="/quick_note/view" forward="portlet.quick_note.view" />
-
-		<!-- Ratings -->
-
-		<action path="/ratings/rate_entry" type="com.liferay.portlet.ratings.action.RateEntryAction" />
 
 		<!-- Recent Documents -->
 

@@ -790,6 +790,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 		}
 
+		.tabbable-content.taglib-form-navigator {
+			padding-bottom: 100px;
+		}
+
 		.span6 {
 			&.article-structure, &.article-template {
 				float: left;

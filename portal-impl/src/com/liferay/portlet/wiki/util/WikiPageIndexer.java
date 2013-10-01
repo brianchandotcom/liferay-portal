@@ -246,6 +246,10 @@ public class WikiPageIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		WikiPage page = (WikiPage)obj;
 
+		if (!page.isApproved() && !page.isInTrash()) {
+			return;
+		}
+
 		if (Validator.isNotNull(page.getRedirectTitle())) {
 			return;
 		}

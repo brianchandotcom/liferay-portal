@@ -24,7 +24,11 @@ import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
+import java.io.Serializable;
+
 import java.lang.reflect.Method;
+
+import java.util.concurrent.Future;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -69,8 +73,10 @@ public class PortalResiliencyAdvice
 				IdentifiableBeanInvokerUtil.createMethodHandler(
 					methodInvocation));
 
-		Object result = IntrabandRPCUtil.execute(
+		Future<Serializable> futureResult = IntrabandRPCUtil.execute(
 			spi.getRegistrationReference(), serviceMethodProcessCallable);
+
+		Object result = futureResult.get();
 
 		Method method = methodInvocation.getMethod();
 

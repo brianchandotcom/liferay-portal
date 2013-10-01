@@ -50,41 +50,14 @@ public class ReflectionUtil {
 			Class<?> clazz, String name, Class<?> ... parameterTypes)
 		throws Exception {
 
-		Method method = clazz.getMethod(name, parameterTypes);
+		return doGetBridgeMethod(true, clazz, name, parameterTypes);
+	}
 
-		if (method.isBridge()) {
-			return method;
-		}
+	public static Method getDeclaredBridgeMethod(
+			Class<?> clazz, String name, Class<?> ... parameterTypes)
+		throws Exception {
 
-		bridge:
-		for (Method currentMethod : clazz.getMethods()) {
-			if (!currentMethod.isBridge() ||
-				!name.equals(currentMethod.getName())) {
-
-				continue;
-			}
-
-			Class<?>[] currentParameterTypes =
-				currentMethod.getParameterTypes();
-
-			if (currentParameterTypes.length != parameterTypes.length) {
-				continue;
-			}
-
-			for (int i = 0; i < currentParameterTypes.length; i++) {
-				if (!currentParameterTypes[i].isAssignableFrom(
-						parameterTypes[i])) {
-
-					continue bridge;
-				}
-			}
-
-			return currentMethod;
-		}
-
-		throw new NoSuchMethodException(
-			"No bridge method on " + clazz + " with name " + name +
-				" and parameter types " + Arrays.toString(parameterTypes));
+		return doGetBridgeMethod(false, clazz, name, parameterTypes);
 	}
 
 	public static Field getDeclaredField(Class<?> clazz, String name)
@@ -278,6 +251,64 @@ public class ReflectionUtil {
 		throws Exception {
 
 		return newEnumElement(enumClass, null, name, ordinal, (Object[])null);
+	}
+
+	protected static Method doGetBridgeMethod(
+			boolean publicMethod, Class<?> clazz, String name,
+			Class<?> ... parameterTypes)
+		throws Exception {
+
+		Method method = null;
+
+		if (publicMethod) {
+			method = clazz.getMethod(name, parameterTypes);
+		}
+		else {
+			method = clazz.getDeclaredMethod(name, parameterTypes);
+		}
+
+		if (method.isBridge()) {
+			return method;
+		}
+
+		Method[] methods = null;
+
+		if (publicMethod) {
+			methods = clazz.getMethods();
+		}
+		else {
+			methods = clazz.getDeclaredMethods();
+		}
+
+		bridge:
+		for (Method currentMethod : methods) {
+			if (!currentMethod.isBridge() ||
+				!name.equals(currentMethod.getName())) {
+
+				continue;
+			}
+
+			Class<?>[] currentParameterTypes =
+				currentMethod.getParameterTypes();
+
+			if (currentParameterTypes.length != parameterTypes.length) {
+				continue;
+			}
+
+			for (int i = 0; i < currentParameterTypes.length; i++) {
+				if (!currentParameterTypes[i].isAssignableFrom(
+						parameterTypes[i])) {
+
+					continue bridge;
+				}
+			}
+
+			return currentMethod;
+		}
+
+		throw new NoSuchMethodException(
+			"No bridge method on " + clazz + " with name " + name +
+				" and parameter types " + Arrays.toString(parameterTypes));
 	}
 
 	private static void _getInterfaces(

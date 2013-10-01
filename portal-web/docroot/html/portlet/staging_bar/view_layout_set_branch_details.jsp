@@ -24,11 +24,11 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 %>
 
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
-	<div class="site-pages-variation-options span6">
+	<div class="site-pages-variation-options span5">
 		<liferay-util:buffer var="taglibMessage">
 			<liferay-ui:message key="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>" />
 
-			(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)
+			<small>(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)</small>
 		</liferay-util:buffer>
 
 		<liferay-ui:icon-menu cssClass="icon-globe layout-set-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">

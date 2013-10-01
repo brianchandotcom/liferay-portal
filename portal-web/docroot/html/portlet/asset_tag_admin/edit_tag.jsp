@@ -154,7 +154,8 @@ else {
 		var autoFields = new Liferay.AutoFields(
 			{
 				contentBox: 'fieldset#<portlet:namespace />tagProperties',
-				fieldIndexes: '<portlet:namespace />tagPropertiesIndexes'
+				fieldIndexes: '<portlet:namespace />tagPropertiesIndexes',
+				namespace: '<portlet:namespace />'
 			}
 		).render();
 

@@ -108,7 +108,8 @@ else {
 			new Liferay.AutoFields(
 				{
 					contentBox: '#<portlet:namespace />additionalEmailAddresses > fieldset',
-					fieldIndexes: '<portlet:namespace />emailAddressesIndexes'
+					fieldIndexes: '<portlet:namespace />emailAddressesIndexes',
+					namespace: '<portlet:namespace />'
 				}
 			).render();
 		}

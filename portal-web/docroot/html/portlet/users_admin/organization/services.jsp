@@ -221,7 +221,8 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 			new Liferay.AutoFields(
 				{
 					contentBox: '#<portlet:namespace />services > fieldset',
-					fieldIndexes: '<portlet:namespace />orgLaborsIndexes'
+					fieldIndexes: '<portlet:namespace />orgLaborsIndexes',
+					namespace: '<portlet:namespace />'
 				}
 			).render();
 		}

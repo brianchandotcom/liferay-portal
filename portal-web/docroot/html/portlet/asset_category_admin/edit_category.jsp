@@ -198,7 +198,8 @@ String categoryPropertiesId = "categoryProperties";
 	var autoFields = new Liferay.AutoFields(
 		{
 			contentBox: 'fieldset#<portlet:namespace /><%= categoryPropertiesId %>',
-			fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes'
+			fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes',
+			namespace: '<portlet:namespace />'
 		}
 	).render();
 

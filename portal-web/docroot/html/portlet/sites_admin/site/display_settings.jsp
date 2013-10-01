@@ -16,25 +16,10 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
+<h3><liferay-ui:message key="display-settings" /></h3>
+
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-%>
-
-<liferay-ui:error-marker key="errorSection" value="displaySettings" />
-
-<h3><liferay-ui:message key="language" /></h3>
-
-<%
-UnicodeProperties typeSettingsProperties = null;
-
-if (liveGroup != null) {
-	typeSettingsProperties = liveGroup.getTypeSettingsProperties();
-}
-else {
-	typeSettingsProperties = new UnicodeProperties();
-}
-
-boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty("inheritLocales"), true);
 
 LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
 LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
@@ -46,9 +31,26 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 }
 %>
 
-<aui:input checked="<%= inheritLocales %>" disabled="<%= disabledLocaleInput %>" id="inheritLocales" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
+<aui:fieldset id="language" label="language">
+	<liferay-ui:error-marker key="errorSection" value="displaySettings" />
 
-<aui:input checked="<%= !inheritLocales %>" disabled="<%= disabledLocaleInput %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-site" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
+		<%
+		UnicodeProperties typeSettingsProperties = null;
+
+		if (liveGroup != null) {
+			typeSettingsProperties = liveGroup.getTypeSettingsProperties();
+		}
+		else {
+			typeSettingsProperties = new UnicodeProperties();
+		}
+
+		boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty("inheritLocales"), true);
+		%>
+
+		<aui:input checked="<%= inheritLocales %>" disabled="<%= disabledLocaleInput %>" id="inheritLocales" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
+
+		<aui:input checked="<%= !inheritLocales %>" disabled="<%= disabledLocaleInput %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-site" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
+</aui:fieldset>
 
 <aui:fieldset id="customLocalesFieldset">
 	<aui:fieldset cssClass="default-language" label="default-language">

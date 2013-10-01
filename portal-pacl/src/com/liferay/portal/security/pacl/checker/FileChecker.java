@@ -376,6 +376,10 @@ public class FileChecker extends BaseChecker {
 			addPermission(_workDir, actions);
 			addPermission(_workDir + "/-", actions);
 
+			if (ServerDetector.isWebLogic()) {
+				addPermission(_workDir + "/../-", actions);
+			}
+
 			if (servletContext != null) {
 				File tempDir = (File)servletContext.getAttribute(
 					JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);

@@ -342,26 +342,26 @@ public class DLImpl implements DL {
 			return themeDisplay.translate("home");
 		}
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
-		List<DLFolder> dlFolders = dlFolder.getAncestors();
+		List<Folder> folders = folder.getAncestors();
 
-		Collections.reverse(dlFolders);
+		Collections.reverse(folders);
 
-		StringBundler sb = new StringBundler((dlFolders.size() * 3) + 5);
+		StringBundler sb = new StringBundler((folders.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
 
-		for (DLFolder curDLFolder : dlFolders) {
+		for (Folder curFolder : folders) {
 			sb.append(StringPool.RAQUO);
 			sb.append(StringPool.SPACE);
-			sb.append(curDLFolder.getName());
+			sb.append(curFolder.getName());
 		}
 
 		sb.append(StringPool.RAQUO);
 		sb.append(StringPool.SPACE);
-		sb.append(dlFolder.getName());
+		sb.append(folder.getName());
 
 		return sb.toString();
 	}

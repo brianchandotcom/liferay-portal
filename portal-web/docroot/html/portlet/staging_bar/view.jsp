@@ -110,20 +110,11 @@ if (layout != null) {
 											<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
 										</portlet:actionURL>
 
-										<aui:form action="<%= editLayoutRevisionURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
-											<aui:input name="<%= Constants.CMD %>" type="hidden" />
-											<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-											<aui:input name="groupId" type="hidden" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
-											<aui:input name="layoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
-											<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
-											<aui:input name="updateRecentLayoutRevisionId" type="hidden" value="<%= false %>" />
-
+										<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
 											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-											<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
-												<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
-											</div>
-										</aui:form>
+											<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
+										</div>
 
 										<liferay-ui:staging cssClass="publish-link" extended="<%= false %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />
 									</c:when>

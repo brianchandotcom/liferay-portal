@@ -35,33 +35,40 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 				<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranch.getName()) %>" />
 			</liferay-util:buffer>
 
-			<liferay-ui:icon-menu cssClass="icon-file layout-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
+			<c:choose>
+				<c:when test="<%= layoutRevisions.size() == 1 %>">
+					<span class="icon-file"><%= taglibMessage %></span>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:icon-menu cssClass="icon-file layout-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
 
-				<%
-				for (LayoutRevision rootLayoutRevision : layoutRevisions) {
-					LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
-				%>
+						<%
+						for (LayoutRevision rootLayoutRevision : layoutRevisions) {
+							LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
+						%>
 
-					<portlet:actionURL var="layoutBranchURL">
-						<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-						<portlet:param name="<%= Constants.CMD %>" value="select_layout_branch" />
-						<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
-						<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
-						<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
-					</portlet:actionURL>
+							<portlet:actionURL var="layoutBranchURL">
+								<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+								<portlet:param name="<%= Constants.CMD %>" value="select_layout_branch" />
+								<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+								<portlet:param name="groupId" value="<%= String.valueOf(curLayoutBranch.getGroupId()) %>" />
+								<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutSetBranchId()) %>" />
+								<portlet:param name="layoutBranchId" value="<%= String.valueOf(curLayoutBranch.getLayoutBranchId()) %>" />
+							</portlet:actionURL>
 
-					<liferay-ui:icon
-						cssClass='<%= (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId()) ? "selected" : null %>'
-						message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
-						url='<%= layoutBranchURL %>'
-					/>
+							<liferay-ui:icon
+								cssClass='<%= (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId()) ? "selected" : null %>'
+								message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
+								url='<%= layoutBranchURL %>'
+							/>
 
-				<%
-				}
-				%>
+						<%
+						}
+						%>
 
-			</liferay-ui:icon-menu>
+					</liferay-ui:icon-menu>
+				</c:otherwise>
+			</c:choose>
 
 			<portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/staging_bar/view_layout_branches" />

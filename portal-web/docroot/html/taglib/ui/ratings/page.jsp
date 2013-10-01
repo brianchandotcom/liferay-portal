@@ -47,7 +47,7 @@ if (!setRatingsStats) {
 }
 
 if (Validator.isNull(url)) {
-	url = themeDisplay.getPathMain() + "/ratings/rate_entry";
+	url = themeDisplay.getPathMain() + "/portal/rate_entry";
 }
 
 double yourScore = 0.0;

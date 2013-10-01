@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.action;
+package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

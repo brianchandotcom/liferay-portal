@@ -65,6 +65,8 @@
 
 		<action path="/portal/protected" forward="/portal/protected.jsp" />
 
+		<action path="/portal/rate_entry" type="com.liferay.portal.action.RateEntryAction" />
+
 		<action path="/portal/render_portlet" type="com.liferay.portal.action.RenderPortletAction">
 			<forward name="/portal/render_portlet" path="/portal/render_portlet.jsp" />
 		</action>
@@ -1633,10 +1635,6 @@
 		<action path="/quick_note/save" type="com.liferay.portlet.quicknote.action.SaveAction" />
 
 		<action path="/quick_note/view" forward="portlet.quick_note.view" />
-
-		<!-- Ratings -->
-
-		<action path="/ratings/rate_entry" type="com.liferay.portlet.ratings.action.RateEntryAction" />
 
 		<!-- Recent Documents -->
 

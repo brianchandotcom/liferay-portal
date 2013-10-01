@@ -45,6 +45,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
@@ -76,6 +78,14 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 
 			if (methodName.equals("getLayoutType")) {
 				return _getLayoutType();
+			}
+			else if (methodName.equals("getRegularURL")) {
+				Class<?> layoutRevisionClass = _layoutRevision.getClass();
+
+				method = layoutRevisionClass.getMethod(
+					methodName, HttpServletRequest.class);
+
+				return method.invoke(_layoutRevision, arguments);
 			}
 			else if (methodName.equals("toEscapedModel")) {
 				if (_layout.isEscapedModel()) {

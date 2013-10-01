@@ -946,6 +946,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portlet.SecurityPortletContainerWrapper">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portlet.admin">
 		<priority value="ERROR" />
 	</category>

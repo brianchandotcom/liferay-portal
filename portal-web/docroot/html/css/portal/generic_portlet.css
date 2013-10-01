@@ -107,7 +107,7 @@
 	font-weight: bold;
 }
 
-.lfr-checkbox-preselected, .lfr-configurator-visibility {
+.lfr-checkbox-preselected, .lfr-configurator-visibility .portlet-content {
 	@include opacity(0.5);
 }
 

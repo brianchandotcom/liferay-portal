@@ -543,7 +543,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			if (Validator.isNotNull(previousPath) &&
 				(previousPath.compareTo(path) > 0) &&
-				(!previousPath.startsWith("/portal/") ||
+				(!(previousPath.startsWith("/portal/")
+					|| previousPath.startsWith("/taglib/")) ||
 				 path.startsWith("/portal/"))) {
 
 				processErrorMessage(fileName, "sort: " + fileName + " " + path);

@@ -139,7 +139,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 			<span class="taglib-text-icon"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
 		</c:when>
 		<c:otherwise>
-			<span class="taglib-text <%= label ? StringPool.BLANK : "hide-accessible"%>"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
+			<span class="taglib-text <%= label ? StringPool.BLANK : "hide-accessible" %>"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
 		</c:otherwise>
 	</c:choose>
 </liferay-util:buffer>
@@ -175,13 +175,13 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	</c:when>
 	<c:otherwise>
 		<span class="<%= cssClass %>"
-		    <c:if test="<%= !label && Validator.isNotNull(message) %>">
+			<c:if test="<%= !label && Validator.isNotNull(message) %>">
 				onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="<%= HtmlUtil.escapeJS(message) %>" />')"
-		    </c:if>
+			</c:if>
 		>
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>'  target="<%= target %>">
+					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
 				</c:when>

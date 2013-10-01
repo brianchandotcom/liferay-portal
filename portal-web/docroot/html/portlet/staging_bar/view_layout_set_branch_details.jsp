@@ -33,7 +33,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 		<c:choose>
 			<c:when test="<%= layoutSetBranches.size() == 1 %>">
-				<span class="icon-globe"><%= taglibMessage %></span>
+				<span class="icon-globe layout-set-branch-selector"><%= taglibMessage %></span>
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:icon-menu cssClass="icon-globe layout-set-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
@@ -55,7 +55,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 						<liferay-ui:icon
 							cssClass='<%= selected ? "selected" : null %>'
 							message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
-							url='<%= layoutSetBranchURL %>'
+							url="<%= layoutSetBranchURL %>"
 						/>
 
 					<%

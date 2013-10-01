@@ -37,7 +37,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 			<c:choose>
 				<c:when test="<%= layoutRevisions.size() == 1 %>">
-					<span class="icon-file"><%= taglibMessage %></span>
+					<span class="icon-file layout-branch-selector"><%= taglibMessage %></span>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:icon-menu cssClass="icon-file layout-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">
@@ -59,7 +59,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 							<liferay-ui:icon
 								cssClass='<%= (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId()) ? "selected" : null %>'
 								message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
-								url='<%= layoutBranchURL %>'
+								url="<%= layoutBranchURL %>"
 							/>
 
 						<%
@@ -100,7 +100,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 	if (layoutBranchSelector) {
 		layoutBranchSelector.on(
-	    	'mouseover',
+			'mouseover',
 			function(event) {
 				Liferay.Portal.ToolTip.show(layoutBranchSelector, '<liferay-ui:message key="page-variation" />')
 			}

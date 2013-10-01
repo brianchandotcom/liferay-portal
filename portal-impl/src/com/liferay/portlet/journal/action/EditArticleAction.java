@@ -240,6 +240,7 @@ public class EditArticleAction extends PortletAction {
 					portletConfig, actionRequest, article, redirect);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+
 				redirectSent = true;
 			}
 			else {
@@ -251,6 +252,7 @@ public class EditArticleAction extends PortletAction {
 					layout.isTypeControlPanel()) {
 
 					sendRedirect(actionRequest, actionResponse, redirect);
+
 					redirectSent = true;
 				}
 				else {
@@ -268,6 +270,7 @@ public class EditArticleAction extends PortletAction {
 						}
 
 						actionResponse.sendRedirect(redirect);
+
 						redirectSent = true;
 					}
 				}

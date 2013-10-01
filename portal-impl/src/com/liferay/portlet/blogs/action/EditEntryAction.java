@@ -190,6 +190,7 @@ public class EditEntryAction extends PortletAction {
 					portletConfig, actionRequest, entry, redirect);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
+
 				redirectSent = true;
 			}
 			else {
@@ -197,6 +198,7 @@ public class EditEntryAction extends PortletAction {
 
 				if (!windowState.equals(LiferayWindowState.POP_UP)) {
 					sendRedirect(actionRequest, actionResponse, redirect);
+
 					redirectSent = true;
 				}
 				else {
@@ -216,6 +218,7 @@ public class EditEntryAction extends PortletAction {
 						}
 
 						actionResponse.sendRedirect(redirect);
+
 						redirectSent = true;
 					}
 				}

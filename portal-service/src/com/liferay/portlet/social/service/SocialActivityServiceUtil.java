@@ -74,7 +74,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
@@ -105,7 +105,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
@@ -139,7 +139,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
@@ -170,7 +170,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getActivities(
@@ -284,7 +284,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupActivities(
@@ -332,7 +332,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getGroupUsersActivities(
@@ -392,7 +392,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationActivities(
@@ -433,7 +433,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getOrganizationUsersActivities(
@@ -475,7 +475,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
@@ -505,7 +505,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getRelationActivities(
@@ -560,7 +560,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserActivities(
@@ -600,7 +600,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsActivities(
@@ -641,7 +641,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserGroupsAndOrganizationsActivities(
@@ -683,7 +683,7 @@ public class SocialActivityServiceUtil {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivity> getUserOrganizationsActivities(

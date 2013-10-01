@@ -77,7 +77,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -107,7 +107,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -138,7 +138,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -166,7 +166,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -271,7 +271,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -317,7 +317,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -374,7 +374,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -413,7 +413,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -452,7 +452,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -481,7 +481,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -533,7 +533,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -571,7 +571,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -610,7 +610,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -649,7 +649,7 @@ public interface SocialActivityService extends BaseService {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

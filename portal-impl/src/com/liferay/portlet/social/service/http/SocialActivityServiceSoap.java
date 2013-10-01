@@ -80,7 +80,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -119,7 +119,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -160,7 +160,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -198,7 +198,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getActivities(
@@ -371,7 +371,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getGroupActivities(
@@ -436,7 +436,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getGroupUsersActivities(
@@ -521,7 +521,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getOrganizationActivities(
@@ -580,7 +580,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getOrganizationUsersActivities(
@@ -639,7 +639,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getRelationActivities(
@@ -678,7 +678,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getRelationActivities(
@@ -761,7 +761,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserActivities(
@@ -818,7 +818,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserGroupsActivities(
@@ -877,7 +877,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserGroupsAndOrganizationsActivities(
@@ -936,7 +936,7 @@ public class SocialActivityServiceSoap {
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @return the range of matching activities
-	* @throws PortalException if permission checker is not initialized
+	* @throws PortalException if a permission checker was not initialized
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySoap[] getUserOrganizationsActivities(

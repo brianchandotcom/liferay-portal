@@ -192,7 +192,7 @@ else {
 
 			String taglibURL = null;
 
-			if (!workflowEnabled && pendingLayoutRevisions.isEmpty()) {
+			if (!workflowEnabled || pendingLayoutRevisions.isEmpty()) {
 				taglibURL = "javascript: Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'});";
 			}
 			%>
@@ -206,7 +206,7 @@ else {
 				url="<%= taglibURL %>"
 			/>
 
-			<c:if test="<%= workflowEnabled%>">
+			<c:if test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
 
 				<%
 				String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
@@ -218,7 +218,18 @@ else {
 				}
 				%>
 
-				<liferay-ui:icon-help message="<%= submitMessage %>" />
+				<aui:script use="aui-base">
+					var submitLink = A.one('.submit-link');
+
+					if (submitLink) {
+						submitLink.on(
+							'mouseover',
+							function(event) {
+								Liferay.Portal.ToolTip.show(submitLink, '<liferay-ui:message key="<%= submitMessage %>" />')
+							}
+						);
+					}
+				</aui:script>
 			</c:if>
 		</c:if>
 	</c:if>

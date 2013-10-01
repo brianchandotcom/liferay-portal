@@ -16,13 +16,15 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
+<h3><liferay-ui:message key="display-settings" /></h3>
+
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="displaySettings" />
 
-<h3><liferay-ui:message key="language" /></h3>
+<h4><liferay-ui:message key="language" /></h4>
 
 <%
 UnicodeProperties typeSettingsProperties = null;

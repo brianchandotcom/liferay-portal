@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
+<h3><liferay-ui:message key="categorization" /></h3>
+
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>

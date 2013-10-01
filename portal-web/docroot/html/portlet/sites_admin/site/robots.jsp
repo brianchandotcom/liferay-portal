@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
+<h3><liferay-ui:message key="robots" /></h3>
+
 <%
 Long liveGroupId = (Long)request.getAttribute("site.liveGroupId");
 

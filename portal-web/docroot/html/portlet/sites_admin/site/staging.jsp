@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
+<h3><liferay-ui:message key="staging" /></h3>
+
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 long liveGroupId = ((Long)request.getAttribute("site.liveGroupId")).longValue();

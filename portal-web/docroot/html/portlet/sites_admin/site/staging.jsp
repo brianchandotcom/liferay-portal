@@ -206,17 +206,18 @@ if (stagedLocally) {
 			var remoteStagingOptions = A.one('#<portlet:namespace />remoteStagingOptions');
 			var stagedPortlets = A.one('#<portlet:namespace />stagedPortlets');
 
-			var stagingTypes = A.all('#<portlet:namespace />stagingTypes input');
+			var stagingTypes = A.one('#<portlet:namespace />stagingTypes');
 
-			stagingTypes.on(
-				'change',
+			stagingTypes.delegate(
+				'click',
 				function(event) {
 					var value = event.currentTarget.val();
 
 					stagedPortlets.toggle(value != '<%= StagingConstants.TYPE_NOT_STAGED %>');
 
 					remoteStagingOptions.toggle(value == '<%= StagingConstants.TYPE_REMOTE_STAGING %>');
-				}
+				},
+				'input'
 			);
 		</aui:script>
 	</c:when>

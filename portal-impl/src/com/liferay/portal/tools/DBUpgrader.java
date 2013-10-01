@@ -229,8 +229,20 @@ public class DBUpgrader {
 			_disableTransactions();
 		}
 
+		boolean verified = release.isVerified();
+
+		if (verified) {
+			if (release.getBuildNumber() == 
+							ReleaseInfo.getParentBuildNumber()) {
+				verified = true;
+			}
+			else {
+				verified = false;
+			}
+		}
+
 		try {
-			StartupHelperUtil.verifyProcess(release.isVerified());
+			StartupHelperUtil.verifyProcess(verified);
 		}
 		catch (Exception e) {
 			_updateReleaseState(ReleaseConstants.STATE_VERIFY_FAILURE);
@@ -253,7 +265,7 @@ public class DBUpgrader {
 
 		// Update release
 
-		boolean verified = StartupHelperUtil.isVerified();
+		verified = StartupHelperUtil.isVerified();
 
 		if (release.isVerified()) {
 			verified = true;

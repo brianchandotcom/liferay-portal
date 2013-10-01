@@ -146,10 +146,10 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />
-
-							<%@ include file="/html/portlet/document_library/file_entries_template.jspf" %>
 						</c:otherwise>
 					</c:choose>
+
+					<%@ include file="/html/portlet/document_library/file_entries_template.jspf" %>
 				</div>
 
 				<div class="document-entries-pagination"></div>

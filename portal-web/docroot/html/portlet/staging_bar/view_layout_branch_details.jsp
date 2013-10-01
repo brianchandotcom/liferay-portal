@@ -37,7 +37,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 			<c:choose>
 				<c:when test="<%= layoutRevisions.size() == 1 %>">
-					<span class="icon-file layout-branch-selector"><%= taglibMessage %></span>
+					<span class="layout-branch-selector"><i class="icon-file"></i> <%= taglibMessage %></span>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:icon-menu cssClass="icon-file layout-branch-selector" direction="down" extended="<%= false %>" icon="" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>">

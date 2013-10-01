@@ -32,6 +32,30 @@ AUI.add(
 					}
 				},
 
+				_getNotification: function() {
+					var instance = this;
+
+					var notification = instance._notification;
+
+					if (!notification) {
+						notification = new Liferay.Notice(
+							{
+								closeText: false,
+								content: Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'),
+								noticeClass: 'hide',
+								timeout: 10000,
+								toggleText: false,
+								type: 'warning',
+								useAnimation: true
+							}
+						);
+
+						instance._notification = notification;
+					}
+
+					return notification;
+				},
+
 				_onInit: function(event) {
 					var instance = this;
 
@@ -128,11 +152,7 @@ AUI.add(
 					var cmd = MAP_CMD_REVISION[type];
 
 					if (confirm(confirmText)) {
-						instance._updateRevision(
-							cmd,
-							event.layoutRevisionId,
-							event.layoutSetBranchId
-						);
+						instance._updateRevision(cmd, event.layoutRevisionId, event.layoutSetBranchId);
 					}
 				},
 
@@ -149,6 +169,11 @@ AUI.add(
 						event.publishURL,
 						{
 							after: {
+								failure: function(){
+									var layoutRevisionDetails = A.byIdNS(namespace, 'layoutRevisionDetails');
+
+									layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'));
+								},
 								success: function() {
 									if (event.incomplete) {
 										location.href = event.currentURL;
@@ -171,7 +196,7 @@ AUI.add(
 
 					var data = graphDialogIO.get('data');
 
-					data.layoutRevisionId = event.layoutRevisionId;;
+					data.layoutRevisionId = event.layoutRevisionId;
 					data.layoutSetBranchId = event.layoutSetBranchId;
 
 					graphDialogIO.set('data', data);
@@ -204,6 +229,9 @@ AUI.add(
 								p_v_l_s_g_id: themeDisplay.getSiteGroupId()
 							},
 							on: {
+								failure: function() {
+									instance._getNotification().show;
+								},
 								success: function(event, id, obj) {
 									window.location.reload();
 								}

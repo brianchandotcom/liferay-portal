@@ -219,12 +219,12 @@ else {
 				}
 				%>
 
-				<aui:script use="aui-base">
+				<aui:script use="aui-base,event-mouseenter">
 					var submitLink = A.one('.submit-link');
 
 					if (submitLink) {
 						submitLink.on(
-							'mouseover',
+							'mouseenter',
 							function(event) {
 								Liferay.Portal.ToolTip.show(submitLink, '<liferay-ui:message key="<%= submitMessage %>" />')
 							}

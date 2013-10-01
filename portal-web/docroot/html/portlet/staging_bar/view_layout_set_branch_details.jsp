@@ -80,12 +80,12 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 		</div>
 	</div>
 
-	<aui:script use="aui-base">
+	<aui:script use="aui-base,event-mouseenter">
 		var layoutSetBranchSelector = A.one('.layout-set-branch-selector');
 
 		if (layoutSetBranchSelector) {
 			layoutSetBranchSelector.on(
-				'mouseover',
+				'mouseenter',
 				function(event) {
 					Liferay.Portal.ToolTip.show(layoutSetBranchSelector, '<liferay-ui:message key="site-pages-variation" />')
 				}

@@ -3547,12 +3547,10 @@ public class JournalArticleLocalServiceImpl
 			journalArticlePersistence.findByG_A(
 				article.getGroupId(), article.getArticleId());
 
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
+		for (JournalArticle articleVersion : articleVersions) {
+			articleVersion.setArticleId(trashArticleId);
 
-				journalArticlePersistence.update(articleVersion);
-			}
+			journalArticlePersistence.update(articleVersion);
 		}
 
 		article.setArticleId(trashArticleId);

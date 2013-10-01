@@ -99,7 +99,9 @@ public class HotDeployImpl implements HotDeploy {
 
 	@Override
 	public synchronized void fireUndeployEvent(HotDeployEvent hotDeployEvent) {
-		for (HotDeployListener hotDeployListener : _hotDeployListeners) {
+		for (int i = _hotDeployListeners.size() - 1; i >= 0; i--) {
+			HotDeployListener hotDeployListener = _hotDeployListeners.get(i);
+
 			try {
 				PortletClassLoaderUtil.setClassLoader(
 					hotDeployEvent.getContextClassLoader());

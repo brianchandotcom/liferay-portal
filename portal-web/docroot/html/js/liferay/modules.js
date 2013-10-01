@@ -262,7 +262,6 @@
 						path: 'history.js',
 						requires: [
 							'history-hash',
-							'liferay-history-html5',
 							'querystring-parse-simple'
 						]
 					},

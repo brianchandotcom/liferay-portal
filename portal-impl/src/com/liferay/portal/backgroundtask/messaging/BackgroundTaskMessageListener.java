@@ -130,9 +130,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				}
 			}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to execute background task", e);
-			}
+			_log.error("Unable to execute background task", e);
 		}
 		finally {
 			BackgroundTaskLocalServiceUtil.amendBackgroundTask(

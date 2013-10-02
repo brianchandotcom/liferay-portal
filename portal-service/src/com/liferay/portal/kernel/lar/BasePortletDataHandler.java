@@ -166,9 +166,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		// Setup
 
 		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				companyId, groupId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portlet,
-				privateLayout, false) > 0) ||
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portlet, false )
+				> 0) ||
 			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
 				portlet.getRootPortletId(), false) > 0) ||
@@ -198,12 +198,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		// User preferences
 
 		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				companyId, groupId, -1, PortletKeys.PREFS_OWNER_TYPE_USER, plid,
-				portlet, privateLayout, false) > 0) ||
+				-1, PortletKeys.PREFS_OWNER_TYPE_USER, plid, portlet, false)
+				> 0) ||
 			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				companyId, groupId, groupId, PortletKeys.PREFS_OWNER_TYPE_USER,
-				PortletKeys.PREFS_PLID_SHARED, portlet, privateLayout, false)
-				> 0)) {
+				groupId, PortletKeys.PREFS_OWNER_TYPE_USER,
+				PortletKeys.PREFS_PLID_SHARED, portlet, false) > 0)) {
 
 			configurationControls.add(
 				new PortletDataHandlerBoolean(

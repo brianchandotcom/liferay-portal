@@ -252,7 +252,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(0);
 }
 
-.site-variations-tabview-list .tab-content, .staging-tabview-list .tab-active .tab-content {
+.site-variations-tabview-list .tab-content, .staging-tabview-list .tab-active .tab-content, .tagselector-content .textboxlistentry-holder .lfr-tag-selector-input:focus {
 	@include box-shadow(none);
 }
 

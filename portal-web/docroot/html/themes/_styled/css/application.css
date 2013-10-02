@@ -87,6 +87,7 @@
 .tagselector-content {
 	border-width: 0;
 	margin-bottom: 15px;
+	overflow: visible;
 	padding: 0;
 
 	.textboxlistentry-holder {

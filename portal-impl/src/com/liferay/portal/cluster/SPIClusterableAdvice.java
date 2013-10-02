@@ -14,35 +14,29 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.Clusterable;
-import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPI;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-import com.liferay.portal.util.PropsValues;
+
+import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClusterableAdvice
+public class SPIClusterableAdvice
 	extends AnnotationChainableMethodAdvice<Clusterable> {
 
 	@Override
 	public void afterReturning(MethodInvocation methodInvocation, Object result)
 		throws Throwable {
-
-		if (!ClusterInvokeThreadLocal.isEnabled()) {
-			return;
-		}
 
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
@@ -50,22 +44,17 @@ public class ClusterableAdvice
 			return;
 		}
 
-		MethodHandler methodHandler =
-			ClusterableInvokerUtil.createMethodHandler(
-				clusterable.acceptor(), methodInvocation);
+		SPI spi = SPIUtil.getSPI();
 
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			methodHandler, true);
-
-		ClusterExecutorUtil.execute(clusterRequest);
+		IntrabandRPCUtil.execute(
+			spi.getRegistrationReference(),
+			new MethodHandlerProcessCallable<Serializable>(
+				ClusterableInvokerUtil.createMethodHandler(
+					clusterable.acceptor(), methodInvocation)));
 	}
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		if (!ClusterInvokeThreadLocal.isEnabled()) {
-			return null;
-		}
-
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
 		if (clusterable == NullClusterable.NULL_CLUSTERABLE) {
@@ -76,30 +65,19 @@ public class ClusterableAdvice
 			return null;
 		}
 
+		SPI spi = SPIUtil.getSPI();
+
+		Future<Serializable> futureResult = IntrabandRPCUtil.execute(
+			spi.getRegistrationReference(),
+			new MethodHandlerProcessCallable<Serializable>(
+				ClusterableInvokerUtil.createMethodHandler(
+					clusterable.acceptor(), methodInvocation)));
+
+		Object result = futureResult.get();
+
 		Method method = methodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
-
-		if (ClusterMasterExecutorUtil.isMaster()) {
-			Object result = methodInvocation.proceed();
-
-			if (returnType == void.class) {
-				result = nullResult;
-			}
-
-			return result;
-		}
-
-		MethodHandler methodHandler =
-			ClusterableInvokerUtil.createMethodHandler(
-				clusterable.acceptor(), methodInvocation);
-
-		Future<Object> futureResult = ClusterMasterExecutorUtil.executeOnMaster(
-			methodHandler);
-
-		Object result = futureResult.get(
-			PropsValues.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT,
-			TimeUnit.SECONDS);
 
 		if (returnType == void.class) {
 			result = nullResult;

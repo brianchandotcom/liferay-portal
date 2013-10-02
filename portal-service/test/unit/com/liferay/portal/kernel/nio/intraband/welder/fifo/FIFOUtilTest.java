@@ -157,9 +157,7 @@ public class FIFOUtilTest {
 
 		File tempFolder = new File("tempFolder");
 
-		tempFolder.mkdirs();
-
-		tempFolder.setReadOnly();
+		tempFolder.delete();
 
 		String oldTempFolder = System.getProperty("java.io.tmpdir");
 
@@ -202,9 +200,7 @@ public class FIFOUtilTest {
 
 		File tempFolder = new File("tempFolder");
 
-		tempFolder.mkdirs();
-
-		tempFolder.setReadOnly();
+		tempFolder.delete();
 
 		String oldTempFolder = System.getProperty("java.io.tmpdir");
 

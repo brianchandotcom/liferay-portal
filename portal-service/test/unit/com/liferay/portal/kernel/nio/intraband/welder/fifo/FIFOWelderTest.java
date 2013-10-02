@@ -88,9 +88,7 @@ public class FIFOWelderTest {
 
 		File tempFolder = new File("tempFolder");
 
-		tempFolder.mkdirs();
-
-		tempFolder.setReadOnly();
+		tempFolder.delete();
 
 		System.setProperty("java.io.tmpdir", tempFolder.getAbsolutePath());
 

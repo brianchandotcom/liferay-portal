@@ -361,7 +361,7 @@
 </tr>
 <tr>
 	<td>USER_SIGN_OUT</td>
-	<td>//li[@class='sign-out']/a</td>
+	<td>//li[@class='sign-out ']/a</td>
 	<td></td>
 </tr>
 </tbody>

@@ -315,15 +315,15 @@ public class JournalArticleLocalServiceImpl
 
 		Date now = new Date();
 
+		if (autoArticleId) {
+			articleId = String.valueOf(counterLocalService.increment());
+		}
+
 		validate(
 			user.getCompanyId(), groupId, classNameId, articleId, autoArticleId,
 			version, titleMap, content, type, ddmStructureKey, ddmTemplateKey,
 			expirationDate, smallImage, smallImageURL, smallImageFile,
 			smallImageBytes);
-
-		if (autoArticleId) {
-			articleId = String.valueOf(counterLocalService.increment());
-		}
 
 		long id = counterLocalService.increment();
 
@@ -6597,13 +6597,13 @@ public class JournalArticleLocalServiceImpl
 
 		if (!autoArticleId) {
 			validate(articleId);
-		}
 
-		JournalArticle article = journalArticlePersistence.fetchByG_A_V(
-			groupId, articleId, version);
+			JournalArticle article = journalArticlePersistence.fetchByG_A_V(
+				groupId, articleId, version);
 
-		if (article != null) {
-			throw new DuplicateArticleIdException();
+			if (article != null) {
+				throw new DuplicateArticleIdException();
+			}
 		}
 
 		validate(

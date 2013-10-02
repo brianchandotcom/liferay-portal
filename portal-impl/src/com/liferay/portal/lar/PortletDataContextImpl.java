@@ -2099,8 +2099,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 				Map<String, Serializable> expandoBridgeAttributes =
 					(Map<String, Serializable>)getZipEntryAsObject(expandoPath);
 
-				serviceContext.setExpandoBridgeAttributes(
-					expandoBridgeAttributes);
+				if (expandoBridgeAttributes != null) {
+					serviceContext.setExpandoBridgeAttributes(
+						expandoBridgeAttributes);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {

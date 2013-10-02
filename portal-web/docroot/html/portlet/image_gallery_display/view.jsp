@@ -59,7 +59,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		<%
 		String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(portletPreferences, renderRequest);
 
-		List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, themeDisplay.getUserId(), folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.DEFAULT_DELTA, null);
+		List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, -1, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.DEFAULT_DELTA, null);
 		%>
 
 		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, fileEntries) %>

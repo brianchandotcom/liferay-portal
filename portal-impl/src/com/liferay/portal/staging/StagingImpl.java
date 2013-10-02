@@ -119,6 +119,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.layoutsadmin.lar.StagedTheme;
 
 import java.io.Serializable;
 
@@ -698,9 +699,19 @@ public class StagingImpl implements Staging {
 			JSONObject errorMessageJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
+			String className = missingReference.getClassName();
 			Map<String, String> referrers = missingReference.getReferrers();
 
-			if (referrers.size() == 1) {
+			if (className.equals(StagedTheme.class.getName())) {
+				errorMessageJSONObject.put(
+					"info",
+					LanguageUtil.format(
+						locale,
+						"the-referenced-theme-x-is-not-deployed-in-the-" +
+							"current-environment",
+						missingReference.getClassPk()));
+			}
+			else if (referrers.size() == 1) {
 				Set<Map.Entry<String, String>> referrerDisplayNames =
 					referrers.entrySet();
 

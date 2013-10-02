@@ -43,7 +43,7 @@ else {
 		BlogsEntry entry = null;
 
 		try {
-			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+			entry = BlogsEntryServiceUtil.getEntry(entryId);
 
 			entry = entry.toEscapedModel();
 		}

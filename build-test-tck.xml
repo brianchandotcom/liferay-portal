@@ -31,6 +31,12 @@
 		<echo file="tools/tck/bin/build.properties" append="true">
 
 work.dir=${basedir.unix}/tools/tck/work</echo>
+
+		<chmod
+			dir="tools/tck/bin/"
+			includes="tsant*"
+			perm="744"
+		/>
 	</target>
 
 	<target name="record-test-tck-packages">
@@ -137,9 +143,13 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 
 				<sleep seconds="30" />
 
-				<exec dir="tools/tck/src/${test.directory}" executable="${basedir}/tools/tck/bin/tsant.bat">
+				<condition property="tsant.file.suffix.bat" value=".bat" else="">
+					<contains string="${os.name}" substring="Windows" casesensitive="false" />
+				</condition>
+
+				<exec dir="tools/tck/src/${test.directory}" executable="${basedir}/tools/tck/bin/tsant${tsant.file.suffix.bat}">
 					<arg line="runclient" />
-					<env key="TS_HOME" value="${basedir}\tools\tck" />
+					<env key="TS_HOME" value="${basedir}/tools/tck" />
 				</exec>
 
 				<exec dir="${app.server.tomcat.bin.dir}" executable="shutdown${file.suffix.bat}" resolveexecutable="true" />

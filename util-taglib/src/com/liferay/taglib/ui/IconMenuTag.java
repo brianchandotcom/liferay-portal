@@ -322,9 +322,15 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("\">");
 
 					if (_showArrow && _direction.equals("left")) {
-						jspWriter.write("<i class=\"" +
-							(_useIconCaret ? "icon-caret-left" : "caret") +
-							"\"></i> ");
+						String caret = "caret";
+
+						if (_useIconCaret) {
+							caret = "icon-caret-left";
+						}
+
+						jspWriter.write("<i class=\"");
+						jspWriter.write(caret);
+						jspWriter.write("\"></i> ");
 					}
 
 					boolean auiImage = false;
@@ -352,9 +358,15 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					}
 
 					if (_showArrow && !_direction.equals("left")) {
-						jspWriter.write("<i class=\"" +
-							(_useIconCaret ? "icon-caret-" + _direction : "caret") +
-							"\"></i> ");
+						String caret = "caret";
+
+						if (_useIconCaret) {
+							caret = "icon-caret-" + _direction;
+						}
+
+						jspWriter.write("<i class=\"");
+						jspWriter.write(caret);
+						jspWriter.write("\"></i> ");
 					}
 
 					jspWriter.write("</a>");

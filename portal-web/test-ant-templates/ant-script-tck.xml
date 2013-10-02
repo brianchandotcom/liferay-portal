@@ -12,6 +12,10 @@
 
 		<antcall target="clean-up-test-properties" />
 
+		<antcall target="unzip-tomcat" />
+
+		<antcall target="all" />
+
 		<antcall target="run-${test.ant.script.command}-tomcat" />
 	</target>
 </project>

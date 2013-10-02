@@ -16,18 +16,18 @@
 
 <%
 if (searchTerms.isAdvancedSearch()) {
-	total = DDLRecordSetLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.isAndOperator());
+	total = DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.isAndOperator());
 
 	searchContainer.setTotal(total);
 
-	results = DDLRecordSetLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 else {
-	total = DDLRecordSetLocalServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+	total = DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
 
 	searchContainer.setTotal(total);
 
-	results = DDLRecordSetLocalServiceUtil.search(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	results = DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, searchTerms.getKeywords(), DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
 searchContainer.setResults(results);

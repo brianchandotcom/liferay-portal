@@ -237,7 +237,7 @@ public class DLFileEntryLocalServiceImpl
 
 		addFileVersion(
 			user, dlFileEntry, serviceContext.getModifiedDate(now), extension,
-			mimeType, title, description, null, StringPool.BLANK,
+			mimeType, title, description, changeLog, StringPool.BLANK,
 			fileEntryTypeId, fieldsMap, DLFileEntryConstants.VERSION_DEFAULT,
 			size, WorkflowConstants.STATUS_DRAFT, serviceContext);
 

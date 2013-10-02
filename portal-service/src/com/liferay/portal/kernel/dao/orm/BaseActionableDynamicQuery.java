@@ -16,12 +16,17 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.BaseLocalService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -69,6 +74,10 @@ public abstract class BaseActionableDynamicQuery
 
 		while (startPrimaryKey <= maxPrimaryKey) {
 			performActions(startPrimaryKey, endPrimaryKey);
+
+			intervalCompleted(startPrimaryKey, endPrimaryKey);
+
+			indexInterval();
 
 			startPrimaryKey = endPrimaryKey;
 			endPrimaryKey += _interval;
@@ -146,6 +155,11 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
+	public void setDocuments(Collection<Document> documents) {
+		_documents = documents;
+	}
+
+	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
@@ -163,6 +177,11 @@ public abstract class BaseActionableDynamicQuery
 	@Override
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName) {
 		_primaryKeyPropertyName = primaryKeyPropertyName;
+	}
+
+	@Override
+	public void setSearchEngineId(String searchEngineId) {
+		_searchEngineId = searchEngineId;
 	}
 
 	protected void addCriteria(DynamicQuery dynamicQuery) {
@@ -211,6 +230,31 @@ public abstract class BaseActionableDynamicQuery
 		return ProjectionFactoryUtil.rowCount();
 	}
 
+	protected Collection<Document> getDocuments() {
+		return _documents;
+	}
+
+	protected String getSearchEngineId() {
+		return _searchEngineId;
+	}
+
+	protected void indexInterval() throws PortalException, SystemException {
+		if (Validator.isNull(_searchEngineId) || (_documents == null) ||
+			_documents.isEmpty()) {
+
+			return;
+		}
+
+		SearchEngineUtil.updateDocuments(
+			_searchEngineId, _companyId, new ArrayList<Document>(_documents));
+
+		_documents.clear();
+	}
+
+	protected void intervalCompleted(long startPrimaryKey, long endPrimaryKey)
+		throws PortalException, SystemException {
+	}
+
 	protected abstract void performAction(Object object)
 		throws PortalException, SystemException;
 
@@ -218,11 +262,13 @@ public abstract class BaseActionableDynamicQuery
 	private ClassLoader _classLoader;
 	private Class<?> _clazz;
 	private long _companyId;
+	private Collection<Document> _documents;
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;
 	private String _primaryKeyPropertyName;
+	private String _searchEngineId;
 
 }

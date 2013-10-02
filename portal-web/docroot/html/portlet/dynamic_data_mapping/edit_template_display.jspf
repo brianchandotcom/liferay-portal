@@ -500,7 +500,7 @@ private String[] _getDataContentArray(TemplateVariableDefinition templateVariabl
 
 		String variableName = templateVariableDefinitionClass.getSimpleName();
 
-		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\"", language);
+		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")", language);
 		dataContentArray[1] = _getVariableReferenceCode(variableName, null, language);
 	}
 	else if (templateVariableDefinition.isCollection()) {
@@ -620,9 +620,13 @@ private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDef
 
 private String _getVariableAssignmentCode(String variableName, String variableValue, String language) {
 	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
-		return "<#assign " + variableName + " = " + variableValue + ")>";
+		return "<#assign " + variableName + " = " + variableValue + ">";
 	}
 	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
+		if (!variableValue.startsWith(StringPool.DOUBLE_QUOTE) && !variableValue.startsWith(StringPool.QUOTE) && !variableValue.startsWith(StringPool.OPEN_BRACKET) && !variableValue.startsWith(StringPool.OPEN_CURLY_BRACE) && !Validator.isNumber(variableValue)) {
+			variableValue = StringPool.DOLLAR + variableValue;
+		}
+
 		return "#set ($" + variableName + " = " + variableValue + ")";
 	}
 

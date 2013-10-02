@@ -98,6 +98,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				},
 				FileEntry.class.getName()),
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "document-types", true, false, null,
+				DLFileEntryType.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "shortcuts", true, false, null,
 				DLFileShortcut.class.getName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
@@ -141,15 +144,19 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
-			ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
-				getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
-
-			fileEntryTypeActionableDynamicQuery.performActions();
-
 			ActionableDynamicQuery fileEntryActionableDynamicQuery =
 				getFileEntryActionableDynamicQuery(portletDataContext);
 
 			fileEntryActionableDynamicQuery.performActions();
+		}
+
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "document-types")) {
+
+			ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
+				getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
+
+			fileEntryTypeActionableDynamicQuery.performActions();
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
@@ -177,16 +184,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		portletDataContext.importPortletPermissions(DLPermission.RESOURCE_NAME);
 
-		Element fileEntryTypesElement =
-			portletDataContext.getImportDataGroupElement(DLFileEntryType.class);
-
-		List<Element> fileEntryTypeElements = fileEntryTypesElement.elements();
-
-		for (Element fileEntryTypeElement : fileEntryTypeElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fileEntryTypeElement);
-		}
-
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
 			Element foldersElement =
 				portletDataContext.getImportDataGroupElement(Folder.class);
@@ -208,6 +205,22 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			for (Element fileEntryElement : fileEntryElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, fileEntryElement);
+			}
+		}
+
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "document-types")) {
+
+			Element fileEntryTypesElement =
+				portletDataContext.getImportDataGroupElement(
+					DLFileEntryType.class);
+
+			List<Element> fileEntryTypeElements =
+				fileEntryTypesElement.elements();
+
+			for (Element fileEntryTypeElement : fileEntryTypeElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, fileEntryTypeElement);
 			}
 		}
 
@@ -245,6 +258,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			final PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws Exception {
+
+		ActionableDynamicQuery dlFileEntryTypeActionableDynamicQuery =
+			getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
+
+		dlFileEntryTypeActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery dlFileShortcutActionableDynamicQuery =
 			getDLFileShortcutActionableDynamicQuery(portletDataContext);

@@ -1668,11 +1668,14 @@ public class CMISRepository extends BaseCmisRepository {
 
 		queryConfig.setAttribute("capabilityQuery", capabilityQuery.value());
 
-		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
-			searchContext, query);
-
 		String productName = repositoryInfo.getProductName();
 		String productVersion = repositoryInfo.getProductVersion();
+
+		queryConfig.setAttribute("repositoryProductName", productName);
+		queryConfig.setAttribute("repositoryProductVersion", productVersion);
+
+		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, query);
 
 		if (productName.contains("Nuxeo") && productVersion.contains("5.4")) {
 			queryString +=

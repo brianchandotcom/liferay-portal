@@ -17,11 +17,13 @@ package com.liferay.portal.kernel.repository.cmis.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -34,11 +36,17 @@ import java.util.Date;
 public class CMISParameterValueUtil {
 
 	public static String formatParameterValue(String field, String value) {
-		return formatParameterValue(field, value, false);
+		return formatParameterValue(field, value, false, null);
 	}
 
 	public static String formatParameterValue(
 		String field, String value, boolean wildcard) {
+
+		return formatParameterValue(field, value, wildcard, null);
+	}
+
+	public static String formatParameterValue(
+		String field, String value, boolean wildcard, QueryConfig queryConfig) {
 
 		if (field.equals(Field.CREATE_DATE) ||
 			field.equals(Field.MODIFIED_DATE)) {
@@ -62,10 +70,26 @@ public class CMISParameterValueUtil {
 			}
 		}
 		else {
-			value = StringUtil.replace(
-				value,
-				new String[] {StringPool.APOSTROPHE, StringPool.UNDERLINE},
-				new String[] {"\\'", "\\_"});
+			String productName = StringPool.BLANK;
+
+			if (queryConfig != null) {
+				productName = (String)queryConfig.getAttribute(
+					"repositoryProductName");
+			}
+
+			if (Validator.isNotNull(productName) &&
+				productName.startsWith("Alfresco")) {
+
+				value = StringUtil.replace(
+					value, new String[] {StringPool.APOSTROPHE},
+					new String[] {"\\'"});
+			}
+			else {
+				value = StringUtil.replace(
+					value,
+					new String[] {StringPool.APOSTROPHE, StringPool.UNDERLINE},
+					new String[] {"\\'", "\\_"});
+			}
 
 			if (wildcard) {
 				value = StringUtil.replace(

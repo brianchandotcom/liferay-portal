@@ -11,13 +11,6 @@ AUI.add(
 
 		var Placeholders = A.Component.create(
 			{
-				addPlaceholder: function(inputTarget) {
-					if (!inputTarget.val()) {
-						inputTarget.addClass(PLACEHOLDER_TEXT_CLASS);
-
-						inputTarget.val(inputTarget.attr(STR_PLACEHOLDER));
-					}
-				},
 				EXTENDS: A.Plugin.Base,
 				NAME: 'placeholders',
 				NS: STR_PLACEHOLDER,
@@ -82,6 +75,14 @@ AUI.add(
 				}
 			}
 		);
+
+		Placeholders.addPlaceholder = function(inputTarget) {
+			if (!inputTarget.val()) {
+				inputTarget.addClass(PLACEHOLDER_TEXT_CLASS);
+
+				inputTarget.val(inputTarget.attr(STR_PLACEHOLDER));
+			}
+		};
 
 		Liferay.Form.Placeholders = Placeholders;
 

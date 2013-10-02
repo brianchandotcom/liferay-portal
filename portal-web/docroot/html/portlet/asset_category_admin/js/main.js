@@ -3000,6 +3000,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-io-plugin-deprecated', 'aui-live-search-deprecated', 'aui-modal', 'aui-pagination', 'autocomplete-base', 'aui-tree-view', 'dd', 'escape', 'json', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-util-window']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-io-plugin-deprecated', 'aui-live-search-deprecated', 'aui-modal', 'aui-pagination', 'autocomplete-base', 'aui-tree-view', 'dd', 'escape', 'json', 'liferay-form', 'liferay-history-manager', 'liferay-portlet-url', 'liferay-util-window']
 	}
 );

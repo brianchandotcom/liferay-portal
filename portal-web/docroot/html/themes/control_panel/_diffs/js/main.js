@@ -46,19 +46,23 @@ if (!themeDisplay.isStatePopUp()) {
 				_bindUI: function() {
 					var instance = this;
 
-					Liferay.set('controlPanelSidebarHidden', body.hasClass(CSS_PANELS_MINIMIZED));
+					var panelHolder = instance._panelHolder;
 
-					Liferay.after('controlPanelSidebarHiddenChange', instance._afterHiddenChange, instance);
+					if (panelHolder) {
+						Liferay.set('controlPanelSidebarHidden', body.hasClass(CSS_PANELS_MINIMIZED));
 
-					if (body.hasClass(CSS_PANELS_MINIMIZED)) {
-						instance._panelHolderAccordionHandle = instance._panelHolderAccordionDisable();
+						Liferay.after('controlPanelSidebarHiddenChange', instance._afterHiddenChange, instance);
 
-						instance._panelHolder.delegate('click', instance._panelHolderHandleClick, '.toggler-header');
+						if (body.hasClass(CSS_PANELS_MINIMIZED)) {
+							instance._panelHolderAccordionHandle = instance._panelHolderAccordionDisable();
 
-						instance._controlPanelTools.on('click', instance._toggleHidden, instance);
+							panelHolder.delegate('click', instance._panelHolderHandleClick, '.toggler-header');
+
+							instance._controlPanelTools.on('click', instance._toggleHidden, instance);
+						}
+
+						instance._panelToggleButton.on('click', instance._toggleHidden, instance);
 					}
-
-					instance._panelToggleButton.on('click', instance._toggleHidden, instance);
 
 					if (instance._searchPanelHolder) {
 						Liferay.publish(
@@ -211,18 +215,7 @@ if (!themeDisplay.isStatePopUp()) {
 
 					var accordionGroup = currentTarget.ancestor('.accordion-group');
 
-					var togglerContent = accordionGroup.one('.toggler-content');
-
-					if (accordionGroup.hasClass('open')) {
-						accordionGroup.removeClass('open');
-					}
-					else {
-						if (togglerContent) {
-							togglerContent.setStyle('marginTop', '');
-						}
-
-						accordionGroup.addClass('open');
-					}
+					accordionGroup.toggleClass('open');
 
 					currentTarget.once(
 						'clickoutside',

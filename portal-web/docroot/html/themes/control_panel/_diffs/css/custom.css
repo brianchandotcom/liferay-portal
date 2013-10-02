@@ -189,11 +189,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.input-localized .input-localized-content {
-		margin-left: 6px;
-		margin-top: 0;
-	}
-
 	/* ---------- Dockbar ---------- */
 
 	.dockbar {
@@ -412,10 +407,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.minimize-panels a {
 			background: url(../images/custom/panel_close.png) no-repeat;
+			display: none;
 			color: #FFF;
 			font-size: 20px;
 			height: 17px;
-			opacity: 0;
 			position: absolute;
 			right: -18px;
 			text-align: center;
@@ -431,7 +426,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		&:hover {
 			.minimize-panels a {
-				opacity: 1;
+				display: block;
 			}
 		}
 
@@ -467,18 +462,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 								color: #FFF;
 							}
 						}
-					}
-
-					.accordion-inner {
-						background: #FCFCFC;
-						border: solid #D1D1D1;
-						border-width: 1px 0 0;
-						padding: 6px 0;
-					}
-
-					.category-portlets {
-						list-style: none;
-						margin: 0;
 					}
 				}
 			}
@@ -582,30 +565,34 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.minimize-panels a {
-				background: url(../images/custom/panel_open.png) no-repeat;
+				background-image: url(../images/custom/panel_open.png);
 			}
 
 			.portlet-borderless-container {
 				padding: 0;
 
 				.accordion {
+					.toggler-header .accordion-toggle {
+						background: none no-repeat right;
+					}
+
 					#panel-manage-site_administration\.configuration .toggler-header .accordion-toggle {
-						background: url(../images/custom/panel_icons_white_server_bg.png) no-repeat right;
+						background-image: url(../images/custom/panel_icons_white_server_bg.png);
 						right: 8px;
 					}
 
 					#panel-manage-site_administration\.content .toggler-header .accordion-toggle {
-						background: url(../images/custom/panel_icons_white_portal_bg.png) no-repeat right;
+						background-image: url(../images/custom/panel_icons_white_portal_bg.png);
 						right: 4px;
 					}
 
 					#panel-manage-site_administration\.pages .toggler-header .accordion-toggle {
-						background: url(../images/custom/panel_icons_white_marketplace_bg.png) no-repeat right;
+						background-image: url(../images/custom/panel_icons_white_marketplace_bg.png);
 						right: 4px;
 					}
 
 					#panel-manage-site_administration\.users .toggler-header .accordion-toggle {
-						background: url(../images/custom/panel_icons_white_marketplace_bg.png) no-repeat right;
+						background-image: url(../images/custom/panel_icons_white_marketplace_bg.png);
 						right: 4px;
 					}
 
@@ -654,8 +641,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.toggler-content {
-				position: absolute;
 				left: -250px;
+				position: absolute;
 				top: -1px;
 				width: 225px;
 				z-index: 1;
@@ -769,10 +756,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Control panel general ---------- */
 
-	.btn-group.control-panel-site-selector.open a {
-		@include box-shadow(none);
-	}
-
 	.control-panel-site-selector .caret {
 		border-width: 6px;
 		margin-top: 5px;
@@ -838,6 +821,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.datepicker-button-wrapper & {
 			@include border-radius(4px);
 		}
+	}
+
+	.btn-group.control-panel-site-selector.open a {
+		@include box-shadow(none);
 	}
 
 	.dropdown-menu {
@@ -1007,25 +994,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 
 					.accordion {
+						border-width: 0;
 						float: left;
 						width: 80%;
 
-						#panel-manage-site_administration\.configuration .toggler-header .accordion-toggle {
-							background-position: center;
-							right: auto;
-						}
-
-						#panel-manage-site_administration\.content .toggler-header .accordion-toggle {
-							background-position: center;
-							right: auto;
-						}
-
-						#panel-manage-site_administration\.pages .toggler-header .accordion-toggle {
-							background-position: center;
-							right: auto;
-						}
-
-						#panel-manage-site_administration\.users .toggler-header .accordion-toggle {
+						.toggler-header .accordion-toggle {
 							background-position: center;
 							right: auto;
 						}
@@ -1050,6 +1023,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 							&.open {
 								.toggler-content {
 									left: -1px;
+									margin-top: 0 !important;
 									position: absolute;
 									width: 100%;
 								}

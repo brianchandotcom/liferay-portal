@@ -40,11 +40,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 	%>
 
 	<c:if test="<%= categoriesCount > 0 %>">
-		<liferay-ui:panel collapsible="<%= categoriesPanelCollapsible %>" extended="<%= categoriesPanelExtended %>" id="messageBoardsCategoriesPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, (category != null) ? "subcategories" : "categories") %>'>
+		<liferay-ui:panel collapsible="<%= categoriesPanelCollapsible %>" extended="<%= categoriesPanelExtended %>" id="messageBoardsCategoriesPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, (category != null) ? "subcategories[message-board]" : "categories[message-board]") %>'>
 			<liferay-ui:search-container
 				curParam="cur1"
 				deltaConfigurable="<%= false %>"
-				headerNames="category,categories,threads,posts"
+				headerNames="category[message-board],categories[message-board],threads,posts"
 				iteratorURL="<%= portletURL %>"
 				total="<%= categoriesCount %>"
 			>
@@ -57,6 +57,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					escapedModel="<%= true %>"
 					keyProperty="categoryId"
 					modelVar="curCategory"
+
 				>
 					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
 

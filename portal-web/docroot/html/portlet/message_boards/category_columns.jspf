@@ -40,7 +40,7 @@
 
 	if (subcategoriesCount > 0) {
 		buffer.append("<br /><span class=\"subcategories\">");
-		buffer.append(LanguageUtil.get(pageContext, "subcategories"));
+		buffer.append(LanguageUtil.get(pageContext, "subcategories[message-board]"));
 		buffer.append("</span>: ");
 
 		for (int j = 0; j < subcategories.size(); j++) {

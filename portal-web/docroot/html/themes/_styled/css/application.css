@@ -97,6 +97,10 @@
 		padding: 5px;
 		position: relative;
 
+		li {
+			line-height: 1;
+		}
+
 		.lfr-tag-selector-input {
 			border-width: 0;
 			margin-bottom: 0;

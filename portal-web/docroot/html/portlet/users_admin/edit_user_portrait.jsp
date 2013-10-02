@@ -30,6 +30,9 @@ long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_
 			Liferay.Util.getWindow().hide();
 		</aui:script>
 	</c:when>
+	<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'>
+		<img src="<%= selUser.getPortraitURL(themeDisplay) %>" />
+	</c:when>
 	<c:otherwise>
 		<portlet:actionURL var="editUserPortraitURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />

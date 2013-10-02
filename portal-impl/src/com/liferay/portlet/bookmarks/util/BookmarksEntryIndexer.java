@@ -188,6 +188,8 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 
 		};
 
+		actionableDynamicQuery.setCompanyId(companyId);
+
 		actionableDynamicQuery.setDocuments(documents);
 
 		actionableDynamicQuery.setGroupId(groupId);

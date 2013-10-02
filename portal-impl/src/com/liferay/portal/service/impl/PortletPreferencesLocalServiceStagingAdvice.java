@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -63,6 +64,11 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 				return getPortletPreferences(methodInvocation);
 			}
+			else if (methodName.equals("getPortletPreferencesCount") &&
+					 ((arguments.length == 3) || (arguments.length == 5))) {
+
+				return getPortletPreferencesCount(methodInvocation);
+			}
 			else if (methodName.equals("getPreferences")) {
 				return getPreferences(methodInvocation);
 			}
@@ -105,6 +111,45 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			layout);
 
 		arguments[2] = layoutRevision.getLayoutRevisionId();
+
+		return method.invoke(methodInvocation.getThis(), arguments);
+	}
+
+	protected Object getPortletPreferencesCount(
+			MethodInvocation methodInvocation)
+		throws Throwable {
+
+		Method method = methodInvocation.getMethod();
+		Object[] arguments = methodInvocation.getArguments();
+
+		long plid = LayoutConstants.DEFAULT_PLID;
+
+		if (arguments.length == 3) {
+			plid = (Long)arguments[1];
+		}
+		else {
+			plid = (Long)arguments[2];
+		}
+
+		if (plid <= 0) {
+			return methodInvocation.proceed();
+		}
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		if (!LayoutStagingUtil.isBranchingLayout(layout)) {
+			return methodInvocation.proceed();
+		}
+
+		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+			layout);
+
+		if (arguments.length == 3) {
+			arguments[1] = layoutRevision.getLayoutRevisionId();
+		}
+		else {
+			arguments[2] = layoutRevision.getLayoutRevisionId();
+		}
 
 		return method.invoke(methodInvocation.getThis(), arguments);
 	}

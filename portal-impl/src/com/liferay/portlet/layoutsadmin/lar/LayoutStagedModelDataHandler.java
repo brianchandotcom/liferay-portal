@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.LayoutExporter;
-import com.liferay.portal.lar.ThemeExporter;
-import com.liferay.portal.lar.ThemeImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
@@ -521,22 +519,6 @@ public class LayoutStagedModelDataHandler
 			ImageLocalServiceUtil.deleteImage(importedLayout.getIconImageId());
 		}
 
-		boolean importThemeSettings = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.THEME_REFERENCE);
-
-		if (importThemeSettings) {
-			importedLayout.setThemeId(layout.getThemeId());
-			importedLayout.setColorSchemeId(layout.getColorSchemeId());
-		}
-		else {
-			importedLayout.setThemeId(StringPool.BLANK);
-			importedLayout.setColorSchemeId(StringPool.BLANK);
-		}
-
-		importedLayout.setWapThemeId(layout.getWapThemeId());
-		importedLayout.setWapColorSchemeId(layout.getWapColorSchemeId());
-		importedLayout.setCss(layout.getCss());
 		importedLayout.setPriority(layout.getPriority());
 		importedLayout.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
 		importedLayout.setLayoutPrototypeLinkEnabled(
@@ -546,6 +528,8 @@ public class LayoutStagedModelDataHandler
 			layoutElement, importedLayout, portletDataContext);
 
 		fixImportTypeSettings(importedLayout);
+
+		importTheme(portletDataContext, layout, importedLayout);
 
 		LayoutLocalServiceUtil.updateLayout(importedLayout);
 
@@ -562,8 +546,6 @@ public class LayoutStagedModelDataHandler
 		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
 
 		importLayoutFriendlyURLs(portletDataContext, layout);
-
-		importTheme(portletDataContext, layout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
@@ -672,9 +654,27 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
-		ThemeExporter themeExporter = new ThemeExporter();
+		boolean exportThemeSettings = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.THEME_REFERENCE);
 
-		themeExporter.exportTheme(portletDataContext, layout);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Export theme settings " + exportThemeSettings);
+		}
+
+		if (exportThemeSettings &&
+			!portletDataContext.isPerformDirectBinaryImport() &&
+			!layout.isInheritLookAndFeel()) {
+
+			StagedTheme stagedTheme = new StagedTheme(layout.getTheme());
+
+			Element layoutElement = portletDataContext.getExportDataElement(
+				layout);
+
+			portletDataContext.addReferenceElement(
+				layout, layoutElement, stagedTheme,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+		}
 	}
 
 	protected Object[] extractFriendlyURLInfo(Layout layout) {
@@ -943,12 +943,32 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected void importTheme(
-			PortletDataContext portletDataContext, Layout layout)
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
 		throws Exception {
 
-		ThemeImporter themeImporter = new ThemeImporter();
+		boolean importThemeSettings = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.THEME_REFERENCE);
 
-		themeImporter.importTheme(portletDataContext, layout);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Import theme settings " + importThemeSettings);
+		}
+
+		if (importThemeSettings) {
+			importedLayout.setColorSchemeId(layout.getColorSchemeId());
+			importedLayout.setCss(layout.getCss());
+			importedLayout.setThemeId(layout.getThemeId());
+			importedLayout.setWapColorSchemeId(layout.getWapColorSchemeId());
+			importedLayout.setWapThemeId(layout.getWapThemeId());
+		}
+		else {
+			importedLayout.setColorSchemeId(StringPool.BLANK);
+			importedLayout.setCss(StringPool.BLANK);
+			importedLayout.setThemeId(StringPool.BLANK);
+			importedLayout.setWapColorSchemeId(StringPool.BLANK);
+			importedLayout.setWapThemeId(StringPool.BLANK);
+		}
 	}
 
 	protected void initNewLayoutPermissions(

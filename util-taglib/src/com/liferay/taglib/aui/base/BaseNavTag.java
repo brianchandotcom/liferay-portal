@@ -107,7 +107,7 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_ariaLabel = null;
 		_ariaRole = null;
-		_collapsible = true;
+		_collapsible = false;
 		_cssClass = null;
 		_icon = null;
 		_id = null;
@@ -145,7 +145,7 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 
 	private java.lang.String _ariaLabel = null;
 	private java.lang.String _ariaRole = null;
-	private boolean _collapsible = true;
+	private boolean _collapsible = false;
 	private java.lang.String _cssClass = null;
 	private java.lang.String _icon = null;
 	private java.lang.String _id = null;

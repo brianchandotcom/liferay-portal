@@ -22,9 +22,8 @@ public interface PortletPreferencesFinder {
 		java.lang.String portletId, boolean excludeDefaultPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public long countByC_G_O_O_P_P_P(long companyId, long groupId,
-		long ownerId, int ownerType, long plid, java.lang.String portletId,
-		boolean privateLayout, boolean excludeDefaultPreferences)
+	public long countByO_O_P_P_P(long ownerId, int ownerType, long plid,
+		java.lang.String portletId, boolean excludeDefaultPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.PortletPreferences> findByPortletId(

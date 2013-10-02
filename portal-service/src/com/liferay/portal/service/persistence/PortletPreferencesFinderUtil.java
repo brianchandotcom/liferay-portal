@@ -29,13 +29,12 @@ public class PortletPreferencesFinderUtil {
 			excludeDefaultPreferences);
 	}
 
-	public static long countByC_G_O_O_P_P_P(long companyId, long groupId,
-		long ownerId, int ownerType, long plid, java.lang.String portletId,
-		boolean privateLayout, boolean excludeDefaultPreferences)
+	public static long countByO_O_P_P_P(long ownerId, int ownerType, long plid,
+		java.lang.String portletId, boolean excludeDefaultPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByC_G_O_O_P_P_P(companyId, groupId, ownerId,
-			ownerType, plid, portletId, privateLayout, excludeDefaultPreferences);
+				   .countByO_O_P_P_P(ownerId, ownerType, plid, portletId,
+			excludeDefaultPreferences);
 	}
 
 	public static java.util.List<com.liferay.portal.model.PortletPreferences> findByPortletId(

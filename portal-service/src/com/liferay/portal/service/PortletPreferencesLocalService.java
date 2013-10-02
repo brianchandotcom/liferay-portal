@@ -314,9 +314,8 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPortletPreferencesCount(long companyId, long groupId,
-		long ownerId, int ownerType, long plid,
-		com.liferay.portal.model.Portlet portlet, boolean privateLayout,
+	public long getPortletPreferencesCount(long ownerId, int ownerType,
+		long plid, com.liferay.portal.model.Portlet portlet,
 		boolean excludeDefaultPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

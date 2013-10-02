@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Account;
@@ -344,7 +345,7 @@ public class BreadcrumbTag extends IncludeTag {
 		_showCurrentPortlet = true;
 		_showGuestGroup = _SHOW_GUEST_GROUP;
 		_showLayout = true;
-		_showParentGroups = _SHOW_PARENT_GROUPS;
+		_showParentGroups = null;
 		_showPortletBreadcrumb = true;
 	}
 
@@ -473,6 +474,8 @@ public class BreadcrumbTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		_initShowParentGroups(request);
+
 		request.setAttribute(
 			"liferay-ui:breadcrumb:breadcrumbString",
 			getBreadcrumbString(request));
@@ -499,6 +502,34 @@ public class BreadcrumbTag extends IncludeTag {
 			String.valueOf(_showPortletBreadcrumb));
 	}
 
+	private void _initShowParentGroups(HttpServletRequest request) {
+		if (_showParentGroups != null) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (Validator.isNull(_selLayout)) {
+				setSelLayout(themeDisplay.getLayout());
+			}
+
+			Group group = _selLayout.getGroup();
+
+			UnicodeProperties typeSettingsProperties =
+				group.getTypeSettingsProperties();
+
+			_showParentGroups = GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty(
+					"breadcrumbShowParentGroups"),
+				_SHOW_PARENT_GROUPS);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
 	private static final String _PAGE = "/html/taglib/ui/breadcrumb/page.jsp";
 
 	private static final boolean _SHOW_GUEST_GROUP = GetterUtil.getBoolean(
@@ -516,7 +547,7 @@ public class BreadcrumbTag extends IncludeTag {
 	private boolean _showCurrentPortlet = true;
 	private boolean _showGuestGroup = _SHOW_GUEST_GROUP;
 	private boolean _showLayout = true;
-	private boolean _showParentGroups = _SHOW_PARENT_GROUPS;
+	private Boolean _showParentGroups = null;
 	private boolean _showPortletBreadcrumb = true;
 
 }

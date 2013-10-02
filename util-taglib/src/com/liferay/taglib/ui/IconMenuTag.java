@@ -222,6 +222,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		_startPage = startPage;
 	}
 
+	public void setUseIconCaret(boolean useIconCaret) {
+		_useIconCaret = useIconCaret;
+	}
+
 	protected String getEndPage() {
 		if (Validator.isNull(_endPage)) {
 			return _END_PAGE;
@@ -318,7 +322,9 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("\">");
 
 					if (_showArrow && _direction.equals("left")) {
-						jspWriter.write("<i class=\"caret\"></i> ");
+						jspWriter.write("<i class=\"" +
+							(_useIconCaret ? "icon-caret-left" : "caret") +
+							"\"></i> ");
 					}
 
 					boolean auiImage = false;
@@ -346,7 +352,9 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					}
 
 					if (_showArrow && !_direction.equals("left")) {
-						jspWriter.write(" <i class=\"caret\"></i>");
+						jspWriter.write("<i class=\"" +
+							(_useIconCaret ? "icon-caret-" + _direction : "caret") +
+							"\"></i> ");
 					}
 
 					jspWriter.write("</a>");
@@ -422,5 +430,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private boolean _showExpanded;
 	private boolean _showWhenSingleIcon;
 	private String _startPage;
+	private boolean _useIconCaret = false;
 
 }

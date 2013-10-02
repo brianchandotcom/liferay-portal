@@ -17,8 +17,6 @@ package com.liferay.portlet.social.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -884,17 +882,11 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 					}
 				}
 				catch (Exception e) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(e, e);
-					}
 				}
 			}
 		}
 
 		return false;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		SocialActivityServiceImpl.class);
 
 }

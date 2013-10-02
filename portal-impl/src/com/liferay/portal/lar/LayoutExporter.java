@@ -384,6 +384,12 @@ public class LayoutExporter {
 			}
 		}
 
+		Element missingReferencesElement = rootElement.addElement(
+			"missing-references");
+
+		portletDataContext.setMissingReferencesElement(
+			missingReferencesElement);
+
 		if (layoutSetBranch != null) {
 			_themeExporter.exportTheme(portletDataContext, layoutSetBranch);
 		}
@@ -440,12 +446,6 @@ public class LayoutExporter {
 					});
 			}
 		}
-
-		Element missingReferencesElement = rootElement.addElement(
-			"missing-references");
-
-		portletDataContext.setMissingReferencesElement(
-			missingReferencesElement);
 
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Layout.class));

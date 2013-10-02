@@ -818,26 +818,20 @@
 				(PortletPreferences.preferences != '[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]')
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.PortletPreferencesFinder.countByC_G_O_O_P_P_P">
+	<sql id="com.liferay.portal.service.persistence.PortletPreferencesFinder.countByO_O_P_P_P">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
 			FROM
 				PortletPreferences
-			INNER JOIN
-				Layout ON
-					(Layout.plid = PortletPreferences.plid)
 			WHERE
-				(Layout.companyId = ?) AND
-				(Layout.groupId = ?) AND
 				(PortletPreferences.ownerId = ?) AND
 				(PortletPreferences.ownerType = ?) AND
 				(
 					(PortletPreferences.portletId = ?) OR
 					(PortletPreferences.portletId LIKE ?)
 				) AND
-				(Layout.plid = ?) AND
-				(Layout.privateLayout = ?) AND
+				(PortletPreferences.plid = ?) AND
 				(PortletPreferences.preferences != '[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]')
 		]]>
 	</sql>

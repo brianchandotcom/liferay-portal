@@ -46,7 +46,6 @@ AUI.add(
 					remoteGroupIdNode: defaultConfig,
 					secureConnectionNode: defaultConfig,
 					setupNode: defaultConfig,
-					themeNode: defaultConfig,
 					themeReferenceNode: defaultConfig,
 					userPreferencesNode: defaultConfig
 				},
@@ -1129,10 +1128,6 @@ AUI.add(
 
 						if (instance._isChecked('layoutSetSettingsNode')) {
 							selectedPages.push(Liferay.Language.get('site-pages-settings'));
-						}
-
-						if (instance._isChecked('themeNode')) {
-							selectedPages.push(Liferay.Language.get('theme'));
 						}
 
 						if (instance._isChecked('themeReferenceNode')) {

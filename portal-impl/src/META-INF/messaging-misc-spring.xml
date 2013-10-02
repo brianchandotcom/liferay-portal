@@ -62,6 +62,9 @@
 	<bean id="destination.subscription_sender" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/subscription_sender" />
 	</bean>
+	<bean id="destination.subscription_removal_on_leaving_group" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+		<property name="name" value="liferay/subscription_removal_on_leaving_group" />
+	</bean>
 
 	<!-- Listeners -->
 
@@ -110,6 +113,7 @@
 		</property>
 	</bean>
 	<bean id="messageListener.subscription_sender" class="com.liferay.portal.messaging.SubscriptionSenderMessageListener" />
+	<bean id="messageListener.subscription_removal_on_leaving_group" class="com.liferay.portal.subscription.SubscriptionRemovalOnLeavingGroupListener" />
 
 	<!-- Configurator -->
 
@@ -133,6 +137,7 @@
 				<ref bean="destination.marketplace" />
 				<ref bean="destination.message_boards_mailing_list" />
 				<ref bean="destination.subscription_sender" />
+				<ref bean="destination.subscription_removal_on_leaving_group" />
 			</list>
 		</property>
 		<property name="messageBus">
@@ -219,6 +224,11 @@
 				<entry key="liferay/subscription_sender">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.subscription_sender" />
+					</list>
+				</entry>
+				<entry key="liferay/subscription_removal_on_leaving_group">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.subscription_removal_on_leaving_group" />
 					</list>
 				</entry>
 			</map>

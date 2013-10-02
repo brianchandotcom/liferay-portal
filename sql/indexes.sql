@@ -75,7 +75,7 @@ create unique index IX_56682CC4 on AssetTagStats (tagId, classNameId);
 
 create index IX_B22D908C on AssetVocabulary (companyId);
 create index IX_B6B8CA0E on AssetVocabulary (groupId);
-create unique index IX_C0AAD74D on AssetVocabulary (groupId, name);
+create index IX_C0AAD74D on AssetVocabulary (groupId, name);
 create index IX_55F58818 on AssetVocabulary (uuid_);
 create index IX_C4E6FD10 on AssetVocabulary (uuid_, companyId);
 create unique index IX_1B2B8792 on AssetVocabulary (uuid_, groupId);

@@ -75,7 +75,7 @@
 		</finder>
 		<finder name="G_LikeN_V" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="name" comparator="LIKE" />
+			<finder-column name="name" case-sensitive="false" comparator="LIKE" />
 			<finder-column name="vocabularyId" arrayable-operator="OR" />
 		</finder>
 		<finder name="P_N_V" return-type="AssetCategory" unique="true">
@@ -439,6 +439,10 @@
 		<finder name="G_N" return-type="AssetVocabulary" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
+		</finder>
+		<finder name="G_LikeN" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="name" case-sensitive="false" comparator="LIKE" />
 		</finder>
 
 		<!-- References -->

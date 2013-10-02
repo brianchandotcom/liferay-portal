@@ -418,7 +418,7 @@ public class MBMessageIndexer extends BaseIndexer {
 			long companyId, long groupId, final long categoryId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new MBMessageActionableDynamicQuery() {
@@ -446,17 +446,18 @@ public class MBMessageIndexer extends BaseIndexer {
 
 				Document document = getDocument(message);
 
-				documents.add(document);
+				getDocuments().add(document);
 			}
 
 		};
 
+		actionableDynamicQuery.setDocuments(documents);
+
 		actionableDynamicQuery.setGroupId(groupId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void reindexRoot(final long companyId)

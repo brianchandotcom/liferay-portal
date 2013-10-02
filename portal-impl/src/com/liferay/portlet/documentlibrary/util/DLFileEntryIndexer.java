@@ -562,7 +562,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			long companyId, final long groupId, final long dataRepositoryId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new DLFileEntryActionableDynamicQuery() {
@@ -584,18 +584,19 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				Document document = getDocument(dlFileEntry);
 
 				if (document != null) {
-					documents.add(document);
+					getDocuments().add(document);
 				}
 			}
 
 		};
 
+		actionableDynamicQuery.setDocuments(documents);
+
 		actionableDynamicQuery.setGroupId(groupId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void reindexFolders(final long companyId)

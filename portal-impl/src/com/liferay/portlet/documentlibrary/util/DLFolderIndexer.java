@@ -224,7 +224,7 @@ public class DLFolderIndexer extends BaseIndexer {
 	protected void reindexFolders(final long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new DLFolderActionableDynamicQuery() {
@@ -243,7 +243,7 @@ public class DLFolderIndexer extends BaseIndexer {
 				Document document = getDocument(dlFolder);
 
 				if (document != null) {
-					documents.add(document);
+					getDocuments().add(document);
 				}
 			}
 
@@ -251,10 +251,11 @@ public class DLFolderIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setDocuments(documents);
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLFolderIndexer.class);

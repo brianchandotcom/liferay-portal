@@ -52,7 +52,7 @@ public final class DummyModuleFramework implements ModuleFramework {
 
 	@Override
 	public Object getFramework() {
-		return new Object();
+		return null;
 	}
 
 	@Override

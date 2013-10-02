@@ -725,7 +725,6 @@
 				<name>collapsible</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
-				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
 				<name>cssClass</name>

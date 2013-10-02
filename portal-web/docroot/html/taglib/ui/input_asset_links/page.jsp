@@ -1,4 +1,3 @@
-<%@ page import="com.liferay.portal.kernel.staging.StagingUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -74,11 +73,16 @@ else {
 
 long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
-Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
-AssetRendererFactory originalAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+boolean stagedLocally = scopeGroup.isStaged() && !scopeGroup.isStagedRemotely();
+boolean stagedReferrerPortlet = false;
 
-boolean isStagedSource = group.isStagedPortlet(originalAssetRendererFactory.getPortletId());
+if (stagedLocally) {
+	AssetRendererFactory referrerAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+	stagedReferrerPortlet = scopeGroup.isStagedPortlet(referrerAssetRendererFactory.getPortletId());
+}
 
 PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
@@ -99,8 +103,12 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 			long groupId = scopeGroupId;
 
-			if (isStagedSource) {
-				groupId = group.getLiveGroupId();
+			if (stagedLocally) {
+				boolean stagedReferencePortlet = scopeGroup.isStagedPortlet(assetRendererFactory.getPortletId());
+
+				if (stagedReferrerPortlet && !stagedReferencePortlet) {
+					groupId = scopeGroup.getLiveGroupId();
+				}
 			}
 
 			List<Long> groupIds = new ArrayList<Long>();

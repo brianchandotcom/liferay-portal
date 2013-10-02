@@ -119,6 +119,92 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiNodeSoap[] getNodes(
+		long groupId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId);
+
+			return com.liferay.portlet.wiki.model.WikiNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiNodeSoap[] getNodes(
+		long groupId, int status) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId,
+					status);
+
+			return com.liferay.portlet.wiki.model.WikiNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiNodeSoap[] getNodes(
+		long groupId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId,
+					start, end);
+
+			return com.liferay.portlet.wiki.model.WikiNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiNodeSoap[] getNodes(
+		long groupId, int status, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId,
+					status, start, end);
+
+			return com.liferay.portlet.wiki.model.WikiNodeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getNodesCount(long groupId) throws RemoteException {
+		try {
+			int returnValue = WikiNodeServiceUtil.getNodesCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getNodesCount(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = WikiNodeServiceUtil.getNodesCount(groupId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiNodeSoap moveNodeToTrash(
 		long nodeId) throws RemoteException {
 		try {

@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 nodeId = ParamUtil.getLong(request, "nodeId", nodeId);
 
-List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(scopeGroupId);
+List<WikiNode> nodes = WikiNodeServiceUtil.getNodes(scopeGroupId);
 
 boolean nodeInGroup = false;
 %>

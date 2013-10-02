@@ -20,7 +20,7 @@
 page import="com.liferay.portlet.wiki.model.WikiNode" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPage" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPageConstants" %><%@
-page import="com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil" %><%@
+page import="com.liferay.portlet.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %>
 
 <%

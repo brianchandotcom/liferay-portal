@@ -16,6 +16,7 @@ package com.liferay.portlet.wiki.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -25,6 +26,8 @@ import com.liferay.portlet.wiki.service.permission.WikiPermission;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -78,6 +81,62 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 			getPermissionChecker(), groupId, name, ActionKeys.VIEW);
 
 		return wikiNodeLocalService.getNode(groupId, name);
+	}
+
+	@Override
+	public List<WikiNode> getNodes(long groupId)
+		throws PortalException, SystemException {
+
+		return getNodes(groupId, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public List<WikiNode> getNodes(long groupId, int status)
+		throws PortalException, SystemException {
+
+		List<WikiNode> nodes = wikiNodePersistence.filterFindByG_S(
+			groupId, status);
+
+		if (nodes.isEmpty()) {
+			nodes = new ArrayList<WikiNode>();
+
+			List<WikiNode> allNodes = wikiNodeLocalService.getNodes(
+				groupId, status);
+
+			for (WikiNode node : allNodes) {
+				if (WikiNodePermission.contains(
+						getPermissionChecker(), node, ActionKeys.VIEW)) {
+
+					nodes.add(node);
+				}
+			}
+		}
+
+		return nodes;
+	}
+
+	@Override
+	public List<WikiNode> getNodes(long groupId, int start, int end)
+		throws PortalException, SystemException {
+
+		return getNodes(groupId, WorkflowConstants.STATUS_APPROVED, start, end);
+	}
+
+	@Override
+	public List<WikiNode> getNodes(long groupId, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		return wikiNodePersistence.filterFindByG_S(groupId, status, start, end);
+	}
+
+	@Override
+	public int getNodesCount(long groupId) throws SystemException {
+		return getNodesCount(groupId, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public int getNodesCount(long groupId, int status) throws SystemException {
+		return wikiNodePersistence.filterCountByG_S(groupId, status);
 	}
 
 	@Override

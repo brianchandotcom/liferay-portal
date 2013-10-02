@@ -70,7 +70,7 @@ page import="com.liferay.portlet.wiki.model.WikiPageConstants" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPageDisplay" %><%@
 page import="com.liferay.portlet.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.portlet.wiki.model.impl.WikiPageImpl" %><%@
-page import="com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil" %><%@
+page import="com.liferay.portlet.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil" %><%@
 page import="com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil" %><%@
 page import="com.liferay.portlet.wiki.service.WikiPageServiceUtil" %><%@
@@ -92,7 +92,7 @@ boolean enablePageRatings = PropsValues.WIKI_PAGE_RATINGS_ENABLED && GetterUtil.
 boolean enableComments = PropsValues.WIKI_PAGE_COMMENTS_ENABLED && GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null), true);
 boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
 
-List<WikiNode> allNodes = WikiNodeLocalServiceUtil.getNodes(scopeGroupId);
+List<WikiNode> allNodes = WikiNodeServiceUtil.getNodes(scopeGroupId);
 List<String> allNodeNames = WikiUtil.getNodeNames(allNodes);
 
 String[] visibleNodes = null;

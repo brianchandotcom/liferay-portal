@@ -34,6 +34,7 @@
 				display: block;
 				margin-top: 5px;
 				width: 100%;
+				@include box-sizing(border-box);
 			}
 		}
 

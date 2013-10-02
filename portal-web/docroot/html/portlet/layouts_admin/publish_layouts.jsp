@@ -463,7 +463,6 @@ else {
 			remoteGroupIdNode: '#<portlet:namespace />remoteGroupId',
 			secureConnectionNode: '#secureConnectionCheckbox',
 			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox',
-			themeNode: '#<%= PortletDataHandlerKeys.THEME %>Checkbox',
 			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>Checkbox'
 		}

@@ -72,16 +72,16 @@
 	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.countByC_G_N_D_S">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT recordSetId) AS COUNT_VALUE
+				COUNT(DISTINCT DDLRecordSet.recordSetId) AS COUNT_VALUE
 			FROM
 				DDLRecordSet
 			WHERE
-				(companyId = ?) AND
-				(groupId = ?) AND
-				(scope = ?) AND
+				(DDLRecordSet.companyId = ?) AND
+				(DDLRecordSet.groupId = ?) AND
+				(DDLRecordSet.scope = ?) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$])
+					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -92,12 +92,12 @@
 			FROM
 				DDLRecordSet
 			WHERE
-				(companyId = ?) AND
-				(groupId = ?) AND
-				(scope = ?) AND
+				(DDLRecordSet.companyId = ?) AND
+				(DDLRecordSet.groupId = ?) AND
+				(DDLRecordSet.scope = ?) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$])
+					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY
 				DDLRecordSet.recordSetId DESC

@@ -24,16 +24,53 @@
 		}
 	}
 
+	.row-fluid .layout-revision-info {
+		float: right;
+		line-height: 16px;
+
+		&.incomplete {
+			float: none;
+			padding: 0 15px;
+		}
+
+		.layout-revision-version {
+			display: block;
+			font-size: 0.8em;
+
+			label {
+				color: #CCC;
+				display: inline;
+				font-size: 0.9em;
+			}
+		}
+
+		.submit-link {
+			margin-left: 1em;
+		}
+
+		.workflow-status {
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	.layout-branch-selector, .layout-set-branch-selector {
+		font-size: inherit;
+	}
+
 	.page-variation-label, .site-pages-variation-label {
 		font-weight: 300;
 	}
 
-	.page-variations-options, .site-pages-variation-options, .staging-details {
+	.page-variations-options {
+		padding: 0 15px 0 0;
+	}
+
+	.site-pages-variation-options, .staging-details {
 		padding: 0 15px;
 	}
 
 	.publish-link-container {
-		clear: both;
 		padding: 15px 0 5px;
 		text-align: center;
 

@@ -587,9 +587,10 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		long layoutSetBranchId = 0;
 
 		if (!showIncomplete) {
+			long userId = 0;
+
 			try {
-				long userId = GetterUtil.getLong(
-					PrincipalThreadLocal.getName());
+				userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
 
 				if (userId > 0) {
 					User user = UserLocalServiceUtil.getUser(userId);
@@ -601,6 +602,9 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 				}
 			}
 			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("No layoutSetBranchId found for user " + userId);
+				}
 			}
 		}
 

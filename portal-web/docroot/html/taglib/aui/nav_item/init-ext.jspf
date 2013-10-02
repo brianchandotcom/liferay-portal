@@ -36,4 +36,8 @@ if (dropdown) {
 	cssClass += " dropdown";
 	anchorCssClass += " dropdown-toggle";
 }
+
+if (Validator.isNull(state)) {
+	state = GetterUtil.getString(SessionClicks.get(request, id, null));
+}
 %>

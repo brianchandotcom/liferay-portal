@@ -13,8 +13,6 @@ AUI.add(
 
 				instance._stagingBar = A.oneNS(namespace, '#stagingBar');
 
-				instance._bindUI();
-
 				Liferay.publish(
 					{
 						fireOnce: true
@@ -29,22 +27,6 @@ AUI.add(
 				);
 
 				Liferay.fire('initStagingBar', config);
-			},
-
-			_bindUI: function() {
-				var instance = this;
-
-				var stagingBar = instance._stagingBar;
-
-				if (stagingBar) {
-					stagingBar.delegate(
-						'change',
-						function(event) {
-							A.config.win.location.href = event.currentTarget.val();
-						},
-						'select.variation-options'
-					);
-				}
 			}
 		};
 

@@ -85,8 +85,16 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		return _selected;
 	}
 
+	public java.lang.String getState() {
+		return _state;
+	}
+
 	public java.lang.String getTitle() {
 		return _title;
+	}
+
+	public boolean getToggle() {
+		return _toggle;
 	}
 
 	public boolean getUseDialog() {
@@ -175,10 +183,22 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("selected", selected);
 	}
 
+	public void setState(java.lang.String state) {
+		_state = state;
+
+		setScopedAttribute("state", state);
+	}
+
 	public void setTitle(java.lang.String title) {
 		_title = title;
 
 		setScopedAttribute("title", title);
+	}
+
+	public void setToggle(boolean toggle) {
+		_toggle = toggle;
+
+		setScopedAttribute("toggle", toggle);
 	}
 
 	public void setUseDialog(boolean useDialog) {
@@ -208,7 +228,9 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_id = null;
 		_label = null;
 		_selected = false;
+		_state = null;
 		_title = null;
+		_toggle = false;
 		_useDialog = false;
 		_wrapDropDownMenu = true;
 	}
@@ -238,7 +260,9 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "selected", _selected);
+		setNamespacedAttribute(request, "state", _state);
 		setNamespacedAttribute(request, "title", _title);
+		setNamespacedAttribute(request, "toggle", _toggle);
 		setNamespacedAttribute(request, "useDialog", _useDialog);
 		setNamespacedAttribute(request, "wrapDropDownMenu", _wrapDropDownMenu);
 	}
@@ -264,7 +288,9 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;
 	private boolean _selected = false;
+	private java.lang.String _state = null;
 	private java.lang.String _title = null;
+	private boolean _toggle = false;
 	private boolean _useDialog = false;
 	private boolean _wrapDropDownMenu = true;
 

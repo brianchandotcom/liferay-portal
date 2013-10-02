@@ -285,7 +285,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 					type: 'warning',
 					useAnimation: true
 				}
-			)
+			);
 		}
 
 		return notification;

@@ -29,7 +29,7 @@ if (bodyContent != null) {
 %>
 
 <c:if test="<%= !dropdown || Validator.isNotNull(bodyContentString.trim()) %>">
-	<li class="<%= cssClass %><%= selected ? " active" : StringPool.BLANK %>" id="<%= id %>" role="presentation" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+	<li class="<%= cssClass %><%= selected ? " active " : StringPool.SPACE %><%= state %>" id="<%= id %>" role="presentation" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(iconClass) || Validator.isNotNull(label) %>">
 			<c:if test="<%= Validator.isNotNull(href) %>">
 				<c:choose>
@@ -64,7 +64,7 @@ if (bodyContent != null) {
 		</c:if>
 
 		<c:if test="<%= dropdown %>">
-			<aui:script use="aui-base,event-move,event-outside">
+			<aui:script use="aui-base,event-move,event-outside,liferay-store">
 				A.Event.defineOutside('touchend');
 
 				var container = A.one('#<%= id %>');
@@ -83,29 +83,40 @@ if (bodyContent != null) {
 
 								var menuOpen = container.hasClass('open');
 
-								var handle = Liferay.Data['<%= id %>Handle'];
+								<c:choose>
+									<c:when test="<%= !toggle %>">
+										var handle = Liferay.Data['<%= id %>Handle'];
 
-								if (menuOpen && !handle) {
-									handle = currentTarget.on(
-										eventOutside,
-										function(event) {
-											if (!event.target.ancestor('#<%= id %>')) {
-												Liferay.Data['<%= id %>Handle'] = null;
+											if (menuOpen && !handle) {
+												handle = currentTarget.on(
+													eventOutside,
+													function(event) {
+														if (!event.target.ancestor('#<%= id %>')) {
+															Liferay.Data['<%= id %>Handle'] = null;
 
+															handle.detach();
+
+															container.removeClass('open');
+														}
+													}
+												);
+											}
+											else if (handle) {
 												handle.detach();
 
-												container.removeClass('open');
+												handle = null;
 											}
-										}
-									);
-								}
-								else if (handle) {
-									handle.detach();
 
-									handle = null;
-								}
+										Liferay.Data['<%= id %>Handle'] = handle;
+									</c:when>
+									<c:otherwise>
+										var data = {};
 
-								Liferay.Data['<%= id %>Handle'] = handle;
+										data['<%= id %>'] = menuOpen ? 'open' : 'closed';
+
+										Liferay.Store(data);
+									</c:otherwise>
+								</c:choose>
 							}
 						);
 					}

@@ -112,11 +112,24 @@ else {
 
 <div class="layout-revision-info <%= layoutRevision.isIncomplete() ? "incomplete" : "span7" %>">
 	<c:if test="<%= !layoutRevision.isIncomplete() %>">
-		<span class="layout-revision-version"><label><liferay-ui:message key="version" /></label>: <span class=""><%= layoutRevision.getLayoutRevisionId() %></span></span>
+		<span class="layout-revision-version"><label><liferay-ui:message key="version" />:</label> <span class=""><%= layoutRevision.getLayoutRevisionId() %></span></span>
 
 		<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-		<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
+		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
+
+		<aui:script position="inline" use="aui-base,event-mouseenter">
+			var taglibWorflowStatus = A.one('.layout-revision-info').one('.taglib-workflow-status');
+
+			if (taglibWorflowStatus) {
+				taglibWorflowStatus.on(
+					'mouseenter',
+					function(event) {
+						Liferay.Portal.ToolTip.show(taglibWorflowStatus, '<liferay-ui:message key="<%= taglibHelpMessage %>" />');
+					}
+				);
+			}
+		</aui:script>
 
 		<c:if test="<%= hasWorkflowTask %>">
 
@@ -199,9 +212,9 @@ else {
 			%>
 
 			<liferay-ui:icon
-				cssClass="submit-link"
+				cssClass="label label-submit"
 				id="submitLink"
-				image="../aui/check"
+				image="../aui/ok"
 				label="<%= true %>"
 				message="<%= label %>"
 				url="<%= taglibURL %>"

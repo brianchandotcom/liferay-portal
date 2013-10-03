@@ -81,12 +81,11 @@ long licenseId = BeanParamUtil.getLong(license, request, "licenseId");
 </tr>
 </table>
 
-<br />
+<div class="btn-toolbar">
+	<aui:button cssClass="btn-primary" type="submit" value="save" />
 
-<input type="submit" value="<liferay-ui:message key="save" />" />
-
-<input onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
-
+	<aui:button onClick='<%= "location.href = \'" + HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) + "\';" %>' value="cancel" />
+</div>
 </form>
 
 <aui:script>

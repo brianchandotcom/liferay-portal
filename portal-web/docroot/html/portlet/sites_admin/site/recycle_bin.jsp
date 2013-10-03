@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
+<h3><liferay-ui:message key="recycle-bin" /></h3>
+
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 

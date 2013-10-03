@@ -16,11 +16,11 @@
 
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
+<h3><liferay-ui:message key="custom-fields" /></h3>
+
 <%
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>
-
-<h3><liferay-ui:message key="custom-fields" /></h3>
 
 <aui:fieldset>
 	<liferay-ui:custom-attribute-list

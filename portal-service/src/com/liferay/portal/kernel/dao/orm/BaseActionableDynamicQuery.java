@@ -37,7 +37,7 @@ public abstract class BaseActionableDynamicQuery
 
 	@Override
 	public void performActions() throws PortalException, SystemException {
-		long count = performCount();
+		long count = doPerformCount();
 
 		if (count > _interval) {
 			performActionsInMultipleIntervals();
@@ -73,15 +73,7 @@ public abstract class BaseActionableDynamicQuery
 
 	@Override
 	public long performCount() throws PortalException, SystemException {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			_clazz, _classLoader);
-
-		addDefaultCriteria(dynamicQuery);
-
-		addCriteria(dynamicQuery);
-
-		return (Long)executeDynamicQuery(
-			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
+		return doPerformCount();
 	}
 
 	@Override
@@ -175,6 +167,18 @@ public abstract class BaseActionableDynamicQuery
 		}
 
 		_documents.addAll(documents);
+	}
+
+	protected long doPerformCount() throws PortalException, SystemException {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			_clazz, _classLoader);
+
+		addDefaultCriteria(dynamicQuery);
+
+		addCriteria(dynamicQuery);
+
+		return (Long)executeDynamicQuery(
+			_dynamicQueryCountMethod, dynamicQuery, getCountProjection());
 	}
 
 	protected Object executeDynamicQuery(

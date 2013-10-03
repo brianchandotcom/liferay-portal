@@ -71,7 +71,7 @@
 		<var name="templateFile" value="xsl_template.xsl" />
 		<var name="templateLanguage" value="xsl" />
 		<var name="templateName" value="WC Template Name" />
-		<var name="templateScript"><![CDATA[/root/dynamic-element[@name='name']]]></var>
+		<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

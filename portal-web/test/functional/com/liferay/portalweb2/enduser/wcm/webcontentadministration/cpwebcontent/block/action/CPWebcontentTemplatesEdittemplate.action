@@ -10,12 +10,8 @@
 	</command>
 
 	<command name="assertTextEquals">
-		<case locator-key1="SCRIPT_CONTENT_FIELD">
-			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-
 		<case locator-key1="STRUCTURE">
-			<execute function="AssertTextEquals#assertPartialText" />
+			<execute function="AssertTextEquals#assertValue" />
 		</case>
 	</command>
 

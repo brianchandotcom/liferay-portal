@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE</td>
-	<td>//div[@class='control-group field-wrapper' and contains(.,'Structure')]</td>
+	<td>//div[@class='control-group field-wrapper']/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,8 +73,13 @@
 <!--SCRIPT-->
 <tr>
 	<td>SCRIPT_CONTENT_FIELD</td>
-	<td>//div[@id='_166_richEditor']/div/div[@class='ace_content']</td>
+	<td>//div[@id='_166_richEditor']/div/div/div[3]/div[7]/div/span[@class='ace_string']</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='_166_richEditor']/div/div/div[3]/div[7]/div/span[@class='ace_string']</td>
+	<td>&quot;/root/dynamic-element[@name='text']&quot;</td>
 </tr>
 <tr>
 	<td>SCRIPT_FIELDS_1</td>

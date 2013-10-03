@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE</td>
-	<td>//div[@class='control-group field-wrapper' and contains(.,'Structure')]</td>
+	<td>//div[@class='control-group field-wrapper']/input</td>
 	<td></td>
 </tr>
 <tr>

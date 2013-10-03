@@ -11,7 +11,7 @@
 
 	<command name="assertTextEquals">
 		<case locator-key1="STRUCTURE">
-			<execute function="AssertTextEquals#assertPartialText" />
+			<execute function="AssertTextEquals#assertValue" />
 		</case>
 	</command>
 

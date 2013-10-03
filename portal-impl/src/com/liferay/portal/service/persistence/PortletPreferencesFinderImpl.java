@@ -43,10 +43,10 @@ public class PortletPreferencesFinderImpl
 	implements PortletPreferencesFinder {
 
 	public static final String COUNT_BY_O_O_P =
-	PortletPreferencesFinder.class.getName() + ".countByO_O_P";
+		PortletPreferencesFinder.class.getName() + ".countByO_O_P";
 
-	public static final String COUNT_BY_C_G_O_O_P_P_P =
-		PortletPreferencesFinder.class.getName() + ".countByC_G_O_O_P_P_P";
+	public static final String COUNT_BY_O_O_P_P_P =
+		PortletPreferencesFinder.class.getName() + ".countByO_O_P_P_P";
 
 	public static final String FIND_BY_PORTLET_ID =
 		PortletPreferencesFinder.class.getName() + ".findByPortletId";
@@ -128,9 +128,8 @@ public class PortletPreferencesFinderImpl
 	}
 
 	@Override
-	public long countByC_G_O_O_P_P_P(
-			long companyId, long groupId, long ownerId, int ownerType,
-			long plid, String portletId, boolean privateLayout,
+	public long countByO_O_P_P_P(
+			long ownerId, int ownerType, long plid, String portletId,
 			boolean excludeDefaultPreferences)
 		throws SystemException {
 
@@ -139,7 +138,7 @@ public class PortletPreferencesFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_C_G_O_O_P_P_P);
+			String sql = CustomSQLUtil.get(COUNT_BY_O_O_P_P_P);
 
 			if (ownerId == -1) {
 				sql = StringUtil.replace(sql, _OWNER_ID_SQL, StringPool.BLANK);
@@ -151,9 +150,6 @@ public class PortletPreferencesFinderImpl
 			else {
 				sql = StringUtil.replace(
 					sql, _PORTLET_ID_INSTANCE_SQL, StringPool.BLANK);
-
-				sql = StringUtil.replace(
-					sql, _PRIVATE_LAYOUT_SQL, StringPool.BLANK);
 			}
 
 			if (excludeDefaultPreferences) {
@@ -172,9 +168,6 @@ public class PortletPreferencesFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(companyId);
-			qPos.add(groupId);
-
 			if (ownerId != -1) {
 				qPos.add(ownerId);
 			}
@@ -187,7 +180,6 @@ public class PortletPreferencesFinderImpl
 			}
 			else {
 				qPos.add(portletId.concat("%_INSTANCE_%"));
-				qPos.add(privateLayout);
 			}
 
 			int count = 0;
@@ -335,7 +327,7 @@ public class PortletPreferencesFinderImpl
 	private static final String _OWNER_ID_SQL =
 		"(PortletPreferences.ownerId = ?) AND";
 
-	private static final String _PLID_SQL = "(Layout.plid = ?) AND";
+	private static final String _PLID_SQL = "(PortletPreferences.plid = ?) AND";
 
 	private static final String _PORTLET_ID_INSTANCE_SQL =
 		"OR (PortletPreferences.portletId LIKE ?)";
@@ -343,8 +335,5 @@ public class PortletPreferencesFinderImpl
 	private static final String _PREFERENCES_SQL =
 		"AND (PortletPreferences.preferences != " +
 			"'[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]')";
-
-	private static final String _PRIVATE_LAYOUT_SQL =
-		"AND (Layout.privateLayout = ?)";
 
 }

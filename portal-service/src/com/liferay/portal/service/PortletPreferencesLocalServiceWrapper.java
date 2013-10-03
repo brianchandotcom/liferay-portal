@@ -399,14 +399,12 @@ public class PortletPreferencesLocalServiceWrapper
 	}
 
 	@Override
-	public long getPortletPreferencesCount(long companyId, long groupId,
-		long ownerId, int ownerType, long plid,
-		com.liferay.portal.model.Portlet portlet, boolean privateLayout,
+	public long getPortletPreferencesCount(long ownerId, int ownerType,
+		long plid, com.liferay.portal.model.Portlet portlet,
 		boolean excludeDefaultPreferences)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _portletPreferencesLocalService.getPortletPreferencesCount(companyId,
-			groupId, ownerId, ownerType, plid, portlet, privateLayout,
-			excludeDefaultPreferences);
+		return _portletPreferencesLocalService.getPortletPreferencesCount(ownerId,
+			ownerType, plid, portlet, excludeDefaultPreferences);
 	}
 
 	@Override

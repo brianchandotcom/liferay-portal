@@ -4254,6 +4254,10 @@ public class StringUtil {
 		// Align head
 
 		for (index = 0; index < s.length(); index++) {
+			if (index >= wildcard.length()) {
+				return false;
+			}
+
 			char c = wildcard.charAt(index);
 
 			if (c == multipleWildcardCharacter) {

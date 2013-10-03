@@ -207,7 +207,12 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void registerDLSyncEventCallback(java.lang.String event,
-		java.lang.String type, long typePK)
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void registerDLSyncEventCallback(java.lang.String event,
+		com.liferay.portal.kernel.repository.model.Folder folder)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreFileEntryFromTrash(long userId,

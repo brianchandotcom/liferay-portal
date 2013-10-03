@@ -250,9 +250,16 @@ public class DLAppHelperLocalServiceUtil {
 	}
 
 	public static void registerDLSyncEventCallback(java.lang.String event,
-		java.lang.String type, long typePK)
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().registerDLSyncEventCallback(event, fileEntry);
+	}
+
+	public static void registerDLSyncEventCallback(java.lang.String event,
+		com.liferay.portal.kernel.repository.model.Folder folder)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().registerDLSyncEventCallback(event, type, typePK);
+		getService().registerDLSyncEventCallback(event, folder);
 	}
 
 	public static void restoreFileEntryFromTrash(long userId,

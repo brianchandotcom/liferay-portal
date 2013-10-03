@@ -651,6 +651,17 @@ public class StringUtilTest {
 				s, wildcard, CharPool.UNDERLINE, CharPool.PERCENT,
 				CharPool.BACK_SLASH, true));
 
+		// Head match with an insufficient wildcard
+
+		s = "abc";
+		wildcard = "ab";
+
+		Assert.assertFalse(
+			s,
+			StringUtil.wildcardMatches(
+				s, wildcard, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, true));
+
 		// Head mismatch with a single wildcard character
 
 		s = "abc";

@@ -50,6 +50,12 @@ public interface Staging {
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId, boolean privateLayout);
 
+	public void checkDefaultLayoutSetBranches(
+			long userId, Group liveGroup, boolean branchingPublic,
+			boolean branchingPrivate, boolean remote,
+			ServiceContext serviceContext)
+		throws Exception;
+
 	public void copyFromLive(PortletRequest PortletRequest) throws Exception;
 
 	public void copyFromLive(PortletRequest PortletRequest, Portlet portlet)

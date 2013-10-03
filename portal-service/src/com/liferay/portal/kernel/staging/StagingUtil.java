@@ -56,6 +56,17 @@ public class StagingUtil {
 			remoteGroupId, privateLayout);
 	}
 
+	public static void checkDefaultLayoutSetBranches(
+			long userId, Group liveGroup, boolean branchingPublic,
+			boolean branchingPrivate, boolean remote,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		getStaging().checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, false,
+			serviceContext);
+	}
+
 	public static void copyFromLive(PortletRequest PortletRequest)
 		throws Exception {
 

@@ -582,13 +582,13 @@ public class DLFileEntryLocalServiceImpl
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					existingDLFileVersion.getSize(),
 					WorkflowConstants.STATUS_DRAFT,
-					serviceContext.getModifiedDate(), serviceContext);
+					serviceContext.getModifiedDate(null), serviceContext);
 			}
 			else {
 				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
 
 				dlFileVersion = addFileVersion(
-					user, dlFileEntry, serviceContext.getModifiedDate(),
+					user, dlFileEntry, serviceContext.getModifiedDate(null),
 					dlFileVersion.getExtension(), dlFileVersion.getMimeType(),
 					dlFileVersion.getTitle(), dlFileVersion.getDescription(),
 					dlFileVersion.getChangeLog(),

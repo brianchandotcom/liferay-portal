@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -382,6 +383,9 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
+			document.addText(
+				Field.CONTENT,
+				extractDDMContent(dlFileVersion, LocaleUtil.getDefault()));
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
@@ -532,6 +536,43 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			doReindex(dlFileEntry);
 		}
+	}
+
+	protected String extractDDMContent(
+			DLFileVersion dlFileVersion, Locale locale)
+		throws Exception {
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
+				dlFileVersion.getFileEntryTypeId());
+
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+		StringBundler sb = new StringBundler(ddmStructures.size());
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			Fields fields = null;
+
+			try {
+				DLFileEntryMetadata fileEntryMetadata =
+					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						dlFileVersion.getFileVersionId());
+
+				fields = StorageEngineUtil.getFields(
+					fileEntryMetadata.getDDMStorageId());
+			}
+			catch (Exception e) {
+			}
+
+			if (fields != null) {
+				sb.append(
+					DDMIndexerUtil.extractAttributes(
+						ddmStructure, fields, locale));
+			}
+		}
+
+		return sb.toString();
 	}
 
 	@Override

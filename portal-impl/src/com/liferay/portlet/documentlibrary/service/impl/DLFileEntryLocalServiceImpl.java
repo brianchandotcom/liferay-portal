@@ -390,19 +390,19 @@ public class DLFileEntryLocalServiceImpl
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
-		}
 
-		// Folder
+			// Folder
 
-		if (dlFileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (dlFileEntry.getFolderId() !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-				dlFileEntry.getFolderId());
+				DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
+					dlFileEntry.getFolderId());
 
-			dlFolder.setLastPostDate(dlFileEntry.getModifiedDate());
+				dlFolder.setLastPostDate(latestDLFileVersion.getModifiedDate());
 
-			dlFolderPersistence.update(dlFolder);
+				dlFolderPersistence.update(dlFolder);
+			}
 		}
 
 		// Workflow

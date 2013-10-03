@@ -77,6 +77,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_HIERARCHY_PARENT_SITE_CURRENT</td>
+	<td>//ul[@class='sites level-1']/li[contains(.,'${key_siteName}')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_HIERARCHY_CHILD_SITE</td>
 	<td>//ul[@class='sites level-1']/li[contains(.,'${key_siteName}')]/ul[@class='sites level-2']/li[contains(.,'${key_childSiteName}')]/a</td>
 	<td></td>

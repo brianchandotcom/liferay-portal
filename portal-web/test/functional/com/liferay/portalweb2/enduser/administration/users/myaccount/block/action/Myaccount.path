@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>MY_ACCOUNT_IFRAME</td>
-	<td>//iframe[contains(@src,'controlPanelCategory=my')]</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
 	<td></td>
 </tr>
 <tr>

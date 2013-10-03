@@ -16,10 +16,38 @@
 
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
-<liferay-ui:icon
-	cssClass="social-bookmark"
-	image="../aui/google-plus-sign"
-	message="<%= type %>"
-	method="get"
-	url='<%= "https://plus.google.com/share?url=" + url %>'
-/>
+<%
+String plusOneDisplayStyle = "medium";
+
+if (displayStyle.equals("vertical")) {
+	plusOneDisplayStyle = "tall";
+}
+%>
+
+<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_plusone">
+	<script type="text/javascript">
+		window.___gcfg = {
+			lang: '<%= locale.getLanguage() %>-<%= locale.getCountry() %>'
+		};
+
+		(function() {
+			var script = document.createElement('script');
+
+			script.async = true;
+			script.type = 'text/javascript';
+
+			script.src = 'https://apis.google.com/js/plusone.js';
+
+			var firstScript = document.getElementsByTagName('script')[0];
+
+			firstScript.parentNode.insertBefore(script, firstScript);
+		})();
+	</script>
+</liferay-util:html-bottom>
+
+<g:plusone
+	count="<%= !displayStyle.equals("simple") %>"
+	href="<%= url %>"
+	size="<%= plusOneDisplayStyle %>"
+>
+</g:plusone>

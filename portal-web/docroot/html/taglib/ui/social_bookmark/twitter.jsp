@@ -16,10 +16,16 @@
 
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
-<liferay-ui:icon
-	cssClass="social-bookmark"
-	image="../aui/twitter-sign"
-	message="<%= type %>"
-	method="get"
-	url='<%= "https://twitter.com/intent/tweet?text=" + HtmlUtil.escapeURL(title) + "&tw_p=tweetbutton&url=" + url %>'
-/>
+<%
+String twitterDisplayStyle = "none";
+
+if (displayStyle.equals("horizontal") || displayStyle.equals("vertical")) {
+	twitterDisplayStyle = displayStyle;
+}
+%>
+
+<a class="twitter-share-button" data-count="<%= twitterDisplayStyle %>" data-lang="<%= locale.getDisplayLanguage() %>" data-text="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= url %>" href="http://twitter.com/share"><liferay-ui:message key="tweet" /></a>
+
+<liferay-util:html-bottom outputKey="twitter">
+	<script src="<%= HttpUtil.getProtocol(request) %>://platform.twitter.com/widgets.js" type="text/javascript"></script>
+</liferay-util:html-bottom>

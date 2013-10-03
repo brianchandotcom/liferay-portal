@@ -886,9 +886,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			new String[] {PortletDataHandlerKeys.
 				PORTLETS_MERGE_MODE_ADD_TO_BOTTOM});
 		parameterMap.put(
-			PortletDataHandlerKeys.THEME,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
 			PortletDataHandlerKeys.THEME_REFERENCE,
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(

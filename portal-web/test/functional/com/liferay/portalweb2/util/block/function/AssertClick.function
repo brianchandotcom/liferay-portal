@@ -106,4 +106,12 @@
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
+
+	<command name="waitForDMHomeAssertTextEqualsClick">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="waitForVisible" argument1="//a[@class='browse-folder yui3-dd-drop']" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
 </definition>

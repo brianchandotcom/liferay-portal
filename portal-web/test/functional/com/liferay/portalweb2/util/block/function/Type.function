@@ -38,12 +38,16 @@
 	</command>
 
 	<command name="typeFrameWaitForCKEditor">
-		<execute selenium="waitForVisible" />
-
 		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
 
-		<execute selenium="typeFrame" />
+		<execute function="Type#typeFrame" />
 
 		<execute selenium="pause" argument1="1000" />
+	</command>
+
+	<command name="typeWaitForCKEditor">
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+
+		<execute function="Type#type" />
 	</command>
 </definition>

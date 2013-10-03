@@ -620,24 +620,16 @@ AUI.add(
 					_createLiveSearch: function() {
 						var instance = this;
 
-						var searchInput = instance._searchInput;
-
-						var formPlaceholders = !!Liferay.Form.Placeholders;
-
-						if (formPlaceholders) {
-							searchInput.val('');
-						}
-
 						var liveSearch = new LiveSearch(
 							{
-								inputNode: searchInput,
+								inputNode: instance._searchInput,
 								minQueryLength: 0,
 								queryDelay: 300
 							}
 						);
 
-						if (formPlaceholders) {
-							Liferay.Form.Placeholders.addPlaceholder(searchInput);
+						if (Liferay.Form.Placeholders) {
+							liveSearch.sendRequest('');
 						}
 
 						liveSearch.after(STR_QUERY, instance._processSearch, instance);

@@ -25,7 +25,15 @@ AUI.add(
 						if (formNode) {
 							var placeholderInputs = formNode.all(SELECTOR_PLACEHOLDER_INPUTS);
 
-							placeholderInputs.each(A.bind(Placeholders.addPlaceholder, instance));
+							placeholderInputs.each(
+								function(item, index, collection) {
+									if (!item.val()) {
+										item.addClass(PLACEHOLDER_TEXT_CLASS);
+
+										item.val(item.attr(STR_PLACEHOLDER));
+									}
+								}
+							);
 
 							instance.host = host;
 
@@ -68,21 +76,15 @@ AUI.add(
 								}
 							}
 							else if (!value) {
-								Placeholders.addPlaceholder.call(instance, currentTarget);
+								currentTarget.val(placeholder);
+
+								currentTarget.addClass(PLACEHOLDER_TEXT_CLASS);
 							}
 						}
 					}
 				}
 			}
 		);
-
-		Placeholders.addPlaceholder = function(inputTarget) {
-			if (!inputTarget.val()) {
-				inputTarget.addClass(PLACEHOLDER_TEXT_CLASS);
-
-				inputTarget.val(inputTarget.attr(STR_PLACEHOLDER));
-			}
-		};
 
 		Liferay.Form.Placeholders = Placeholders;
 

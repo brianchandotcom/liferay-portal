@@ -455,12 +455,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				dynamicQuery.add(
 					classNameIdProperty.eq(stagedModelType.getClassNameId()));
 
-				Property referrerClassNameIdProperty =
-					PropertyFactoryUtil.forName("referrerClassNameId");
+				if (stagedModelType.getReferrerClassNameId() >= 0) {
+					Property referrerClassNameIdProperty =
+						PropertyFactoryUtil.forName("referrerClassNameId");
 
-				dynamicQuery.add(
-					referrerClassNameIdProperty.eq(
-						stagedModelType.getReferrerClassNameId()));
+					dynamicQuery.add(
+						referrerClassNameIdProperty.eq(
+							stagedModelType.getReferrerClassNameId()));
+				}
 
 				Property typeProperty = PropertyFactoryUtil.forName("type");
 

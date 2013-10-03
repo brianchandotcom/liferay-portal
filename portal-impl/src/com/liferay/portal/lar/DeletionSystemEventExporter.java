@@ -114,9 +114,11 @@ public class DeletionSystemEventExporter {
 							classNameIdProperty.eq(
 								stagedModelType.getClassNameId()));
 
-						conjunction.add(
-							referrerClassNameIdProperty.eq(
-								stagedModelType.getReferrerClassNameId()));
+						if (stagedModelType.getReferrerClassNameId() >= 0) {
+							conjunction.add(
+								referrerClassNameIdProperty.eq(
+									stagedModelType.getReferrerClassNameId()));
+						}
 
 						referrerClassNameIdDisjunction.add(conjunction);
 					}

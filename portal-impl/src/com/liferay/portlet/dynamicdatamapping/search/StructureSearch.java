@@ -17,9 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.search;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -30,16 +28,7 @@ import javax.portlet.PortletURL;
  */
 public class StructureSearch extends SearchContainer<DDMStructure> {
 
-	static List<String> headerNames = new ArrayList<String>();
 	static Map<String, String> orderableHeaders = new HashMap<String, String>();
-
-	static {
-		headerNames.add("id");
-		headerNames.add("name");
-		headerNames.add("class-name-id");
-		headerNames.add("storage-type");
-		headerNames.add("modified-date");
-	}
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
@@ -49,7 +38,7 @@ public class StructureSearch extends SearchContainer<DDMStructure> {
 		super(
 			portletRequest, new StructureDisplayTerms(portletRequest),
 			new StructureSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
+			DEFAULT_DELTA, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		StructureDisplayTerms displayTerms =
 			(StructureDisplayTerms)getDisplayTerms();

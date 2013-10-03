@@ -562,8 +562,6 @@ public class DLFileEntryLocalServiceImpl
 		if (!version.equals(
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 
-			Date modifiedDate = serviceContext.getModifiedDate(new Date());
-
 			long existingDLFileVersionId = ParamUtil.getLong(
 				serviceContext, "existingDLFileVersionId");
 
@@ -583,14 +581,14 @@ public class DLFileEntryLocalServiceImpl
 					existingDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					existingDLFileVersion.getSize(),
-					WorkflowConstants.STATUS_DRAFT, modifiedDate,
-					serviceContext);
+					WorkflowConstants.STATUS_DRAFT,
+					serviceContext.getModifiedDate(), serviceContext);
 			}
 			else {
 				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
 
 				dlFileVersion = addFileVersion(
-					user, dlFileEntry, modifiedDate,
+					user, dlFileEntry, serviceContext.getModifiedDate(),
 					dlFileVersion.getExtension(), dlFileVersion.getMimeType(),
 					dlFileVersion.getTitle(), dlFileVersion.getDescription(),
 					dlFileVersion.getChangeLog(),

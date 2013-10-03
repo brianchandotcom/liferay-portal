@@ -61,15 +61,26 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	function <portlet:namespace />updateCart() {
 		var itemIds = "";
 		var count = 0;
+		var validQuantities = true;
+		var invalidSKUlist = "";
 
 		<%
 		int itemsCount= 0;
 
 		for (ShoppingCartItem cartItem : items.keySet()) {
 			ShoppingItem item = cartItem.getItem();
+
+			ShoppingItemPrice[] itemPrices = (ShoppingItemPrice[])ShoppingItemPriceLocalServiceUtil.getItemPrices(item.getItemId()).toArray(new ShoppingItemPrice[0]);
+
+			int maxQuantityPossible = getMaxQuantityPossible(itemPrices);
 		%>
 
 			count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= itemsCount %>_count.value;
+
+			if ((count == "") || (isNaN(count)) || (count < 0 ) || ((count > <%= maxQuantityPossible %>) && (<%= maxQuantityPossible %> != 0))) {
+				validQuantities = false;
+				invalidSKUlist += "\n<%= item.getSku() %>";
+			}
 
 			for (var i = 0; i < count; i++) {
 				itemIds += "<%= cartItem.getCartItemId() %>,";
@@ -84,7 +95,11 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 		document.<portlet:namespace />fm.<portlet:namespace />itemIds.value = itemIds;
 
-		submitForm(document.<portlet:namespace />fm);
+		if (validQuantities) {
+			submitForm(document.<portlet:namespace />fm);
+		} else {
+			alert("<%= UnicodeLanguageUtil.get(pageContext, "please-enter-valid-quantities-for-the-following-SKUs-x") %>" + invalidSKUlist);
+		}
 	}
 </aui:script>
 
@@ -332,7 +347,9 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 		sb.setIndex(0);
 
-		if (minQuantityMultiple && (item.getMinQuantity() > 0)) {
+		int maxQuantityPossible = getMaxQuantityPossible(itemPrices);
+
+		if (minQuantityMultiple && (item.getMinQuantity() > 1) && (maxQuantityPossible != 0)) {
 			sb.append("<select name=\"");
 			sb.append(renderResponse.getNamespace());
 			sb.append("item_");
@@ -343,7 +360,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 			sb.append("<option value=\"0\">0</option>");
 
-			for (int j = 1; j <= 10; j++) {
+			for (int j = 1; j <=  maxQuantityPossible / item.getMinQuantity(); j++) {
 				int curQuantity = item.getMinQuantity() * j;
 
 				sb.append("<option ");
@@ -518,3 +535,22 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		<aui:button onClick='<%= renderResponse.getNamespace() + "checkout();" %>' value="checkout" />
 	</aui:button-row>
 </aui:form>
+
+<%!
+private static int getMaxQuantityPossible(ShoppingItemPrice[] itemPrices) {
+	int maxQuantityPossible = 0;
+
+	for (int j = 0; j < itemPrices.length; j++) {
+		ShoppingItemPrice itemPrice = itemPrices[j];
+
+		if (itemPrice.getMaxQuantity() == 0) {
+			maxQuantityPossible = 0;
+			break;
+		} else if (maxQuantityPossible < itemPrice.getMaxQuantity()) {
+			maxQuantityPossible = itemPrice.getMaxQuantity();
+		}
+	}
+
+	return maxQuantityPossible;
+}
+%>

@@ -364,9 +364,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				if (dlFileEntry.isInTrash() ||
-					dlFileEntry.isInTrashContainer()) {
-
+				if (dlFileEntry.isInTrash()) {
 					return;
 				}
 
@@ -434,7 +432,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				DLFolder dlFolder = (DLFolder)object;
 
-				if (dlFolder.isInTrash() || dlFolder.isInTrashContainer()) {
+				if (dlFolder.isInTrash()) {
 					return;
 				}
 

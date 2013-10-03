@@ -38,6 +38,14 @@ public class SocialBookmarkTag extends IncludeTag {
 		_contentId = contentId;
 	}
 
+	public void setDisplayStyle(String displayStyle) {
+		_displayStyle = displayStyle;
+	}
+
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
 	public void setTarget(String target) {
 		_target = target;
 	}
@@ -63,13 +71,28 @@ public class SocialBookmarkTag extends IncludeTag {
 		_url = null;
 	}
 
+	protected String getDisplayStyle() {
+		String displayStyle = _displayStyle;
+
+		if (Validator.isNull(displayStyle)) {
+			String[] displayStyles = PropsUtil.getArray(
+				PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+
+			displayStyle = displayStyles[0];
+		}
+
+		return displayStyle;
+	}
+
 	@Override
 	protected String getPage() {
 		String[] socialTypes = PropsUtil.getArray(
 			PropsKeys.SOCIAL_BOOKMARK_TYPES);
 
 		if (ArrayUtil.contains(socialTypes, _type)) {
-			if (Validator.isNotNull(_jspPath)) {
+			String displayStyle = getDisplayStyle();
+
+			if (!displayStyle.equals("menu") && Validator.isNotNull(_jspPath)) {
 				return _jspPath;
 			}
 			else {
@@ -106,13 +129,29 @@ public class SocialBookmarkTag extends IncludeTag {
 
 		_jspPath = jspPath;
 
-		if (Validator.isNull(_jspPath)) {
+		String icon = _icon;
+
+		String displayStyle = getDisplayStyle();
+
+		if (displayStyle.equals("menu") || Validator.isNull(_jspPath)) {
+			if (Validator.isNull(icon)) {
+				icon = PropsUtil.get(
+					PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(_type));
+
+				if (Validator.isNull(icon)) {
+					icon = "../aui/share";
+				}
+			}
+
 			request.setAttribute(
 				"liferay-ui:social-bookmark:postUrl", getPostUrl());
+			request.setAttribute("liferay-ui:social-bookmark:icon", icon);
 		}
 
 		request.setAttribute(
 			"liferay-ui:social-bookmark:contentId", _contentId);
+		request.setAttribute(
+			"liferay-ui:social-bookmark:displayStyle", _displayStyle);
 		request.setAttribute("liferay-ui:social-bookmark:target", _target);
 		request.setAttribute("liferay-ui:social-bookmark:title", _title);
 		request.setAttribute("liferay-ui:social-bookmark:type", _type);
@@ -126,6 +165,8 @@ public class SocialBookmarkTag extends IncludeTag {
 		new HashMap<String, String>();
 
 	private String _contentId;
+	private String _displayStyle;
+	private String _icon;
 	private String _jspPath;
 	private String _target;
 	private String _title;

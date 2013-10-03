@@ -43,9 +43,9 @@ boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue
 boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
 String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", null);
 
-String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
-
 if (Validator.isNull(socialBookmarksDisplayStyle)) {
+	String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+
 	socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
 }
 

@@ -23,26 +23,48 @@
 	%>
 
 	<div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
-		<liferay-ui:icon-menu direction="right" icon="../aui/share-sign" message="share">
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("menu") %>'>
+				<liferay-ui:icon-menu direction="right" icon="../aui/share-sign" message="share">
 
-			<%
-			for (int i = 0; i < typesArray.length; i++) {
-			%>
+					<%
+					for (int i = 0; i < typesArray.length; i++) {
+					%>
 
-				<liferay-ui:social-bookmark contentId="<%= contentId %>" target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
+						<liferay-ui:social-bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</liferay-ui:icon-menu>
+				</liferay-ui:icon-menu>
+
+				<aui:script use="liferay-social-bookmarks">
+					new Liferay.SocialBookmarks(
+						{
+							contentBox: '#<%= randomNamespace %>socialBookmarks'
+						}
+					);
+				</aui:script>
+			</c:when>
+			<c:otherwise>
+				<ul class="unstyled">
+
+					<%
+					for (int i = 0; i < typesArray.length; i++) {
+						String styleClass = "taglib-social-bookmark-" + typesArray[i];
+					%>
+
+						<li class="<%= styleClass %>">
+							<liferay-ui:social-bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>"  target="<%= target %>" title="<%= title %>" type="<%= typesArray[i] %>" url="<%= url %>" />
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</c:otherwise>
+		</c:choose>
 	</div>
-
-	<aui:script use="liferay-social-bookmarks">
-		new Liferay.SocialBookmarks(
-			{
-				contentBox: '#<%= randomNamespace %>socialBookmarks'
-			}
-		);
-	</aui:script>
 </c:if>

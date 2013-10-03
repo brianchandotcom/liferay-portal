@@ -17,6 +17,8 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmarks:displayStyle"));
+
 String contentId = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:contentId"));
 String types = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:types"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:url"));

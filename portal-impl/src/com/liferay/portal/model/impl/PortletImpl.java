@@ -1027,7 +1027,7 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public List<Indexer> getIndexerInstances() {
 		if (_indexerClasses.isEmpty() &&
-			!_portletClass.equals(AlloyPortlet.class.getName())) {
+			!_portletClass.contains(AlloyPortlet.class.getSimpleName())) {
 
 			return Collections.emptyList();
 		}

@@ -79,6 +79,43 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+		long companyId, long groupId, java.lang.String keywords, int scope,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSetService.search(companyId, groupId, keywords, scope,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int scope, boolean andOperator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSetService.search(companyId, groupId, name,
+			description, scope, andOperator, start, end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long companyId, long groupId,
+		java.lang.String keywords, int scope)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSetService.searchCount(companyId, groupId, keywords,
+			scope);
+	}
+
+	@Override
+	public int searchCount(long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int scope, boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSetService.searchCount(companyId, groupId, name,
+			description, scope, andOperator);
+	}
+
+	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)

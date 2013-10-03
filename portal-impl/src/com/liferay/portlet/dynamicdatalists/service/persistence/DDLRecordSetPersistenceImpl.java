@@ -45,6 +45,7 @@ import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetModelImpl;
+import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetPersistence;
 
 import java.io.Serializable;
 

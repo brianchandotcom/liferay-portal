@@ -33,7 +33,7 @@ if (record != null) {
 	recordVersion = record.getLatestRecordVersion();
 }
 
-DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(recordSetId);
+DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(recordSetId);
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 

@@ -166,7 +166,7 @@ $editLayoutPanelWidth: 460px;
 				.nav-account-controls {
 					left: auto;
 					margin-right: 0;
-					padding: 0 5px;
+					padding: 0;
 					position: fixed;
 					right: 5em;
 					z-index: 325;
@@ -262,6 +262,30 @@ $editLayoutPanelWidth: 460px;
 					display: block;
 					padding: 10px 15px;
 					line-height: 31px;
+				}
+			}
+		}
+
+		.info-link-container {
+			width: 0;
+		}
+
+		.info-items {
+			width: 715px;
+
+			.btn-link {
+				border-width: 0;
+				color: #FFF;
+				font-size: 14px;
+				font-weight: 300;
+				margin: 0 0 0 6px;
+				padding: 0;
+				text-decoration: underline;
+
+				@include text-shadow(none);
+
+				&:hover {
+					text-decoration: none;
 				}
 			}
 		}
@@ -486,20 +510,44 @@ $editLayoutPanelWidth: 460px;
 
 	/* ---------- Customization bar ---------- */
 
-	.page-customization-bar {
-		background-color: #999;
-		color: #FFF;
-		font-size: 1.2em;
-		font-weight: bold;
-		min-height: 30px;
-		padding: 5px;
-	}
-
 	.controls-hidden .page-customization-bar {
 		display: none;
 	}
 
+	.info-button {
+		display: inline-block;
+		position: relative;
+		right: 9px;
+		top: 15px;
+		z-index: 1;
+
+		a {
+			color: #FFF;
+			margin-left: -3px;
+			padding: 0 10px;
+			position: absolute;
+			text-decoration: none;
+			z-index: 1;
+		}
+
+		.icon-stop {
+			color: #1485EB;
+			font-size: 20px;
+		}
+	}
+
 	.page-customization-bar {
+		background-color: #555;
+
+		@include box-sizing(border-box);
+
+		color: #FFF;
+		display: table;
+		font-size: 14px;
+		font-weight: 300;
+		padding: 0 15px;
+		width: 100%;
+
 		.customized-icon {
 			margin: 5px;
 			vertical-align: middle;
@@ -515,9 +563,38 @@ $editLayoutPanelWidth: 460px;
 			padding: 0 1em;
 		}
 
+		.page-customization-bar-form {
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+			width: 20%;
+		}
+
+		.page-customization-bar-text {
+			display: table-cell;
+			height: 51px;
+			vertical-align: middle;
+			width: 80%;
+		}
+
 		.reset-prototype {
 			display: inline;
-			padding-left: 1em;
+		}
+	}
+
+	@media (max-width: 1140px) {
+		.dockbar-split .dockbar .info-items {
+			width: 515px;
+		}
+
+		.page-customization-bar {
+			.page-customization-bar-form {
+				width: 25%;
+			}
+
+			.page-customization-bar-text {
+				width: 75%;
+			}
 		}
 	}
 }

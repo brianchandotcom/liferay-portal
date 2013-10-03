@@ -1,0 +1,20 @@
+<aui:nav-item cssClass="info-link-container">
+	<div class="info-button">
+		<a class="info-link" href="#1"><i class="icon-info"></i></a>
+		<i class="icon-stop icon-rotate-45"></i>
+	</div>
+</aui:nav-item>
+
+<aui:script use="aui-base, liferay-store">
+	A.one('.info-link-container').on('click', function(event) {
+		var currentTarget = event.currentTarget;
+		var infoItems = currentTarget.ancestor('.nav-account-controls').one('.info-items');
+
+		event.preventDefault();
+
+		currentTarget.ancestor('ul').one('.info-items').toggleClass('hide');
+
+		Liferay.Store('infoItemsHidden', infoItems.hasClass('hide'));
+
+	});
+</aui:script>

@@ -1,61 +1,89 @@
+<%
+	String cssInfoItems = "info-items";
+	Boolean infoItemsHidden = GetterUtil.getBoolean(SessionClicks.get(request, "infoItemsHidden", "false"));
+
+	if (infoItemsHidden) {
+		cssInfoItems = cssInfoItems + " hide";
+	}
+%>
+
 <c:if test="<%= (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission %>">
-	<div class="page-customization-bar">
-		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/edit.png" />
+	<aui:nav-item cssClass="<%= cssInfoItems %>">
+		<div class="page-customization-bar">
+			<div class="page-customization-bar-text">
+				<span class="page-customization-bar-message">
+					<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
+				</span>
 
-		<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
+				<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
+			</div>
 
-		<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
-			<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-		</liferay-portlet:actionURL>
+			<div class="page-customization-bar-form">
+				<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
+					<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+				</liferay-portlet:actionURL>
 
-		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.LAYOUTS_ADMIN) %>">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
-			<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
+				<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.LAYOUTS_ADMIN) %>">
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
+					<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+					<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
-			<aui:button name="submit" type="submit" value="reset" />
-		</aui:form>
-	</div>
+					<aui:button cssClass="btn-link" name="submit" type="submit" value="Reset Changes" />
+				</aui:form>
+			</div>
+		</div>
+	</aui:nav-item>
+
+	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
+
 </c:if>
 
 <c:if test="<%= (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE) %>">
-	<div class="page-customization-bar">
-		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/site_icon.png" />
+	<aui:nav-item cssClass="info-items <%= cssInfoItems %>">
+		<div class="page-customization-bar">
+			<div class="page-customization-bar-text">
+				<c:choose>
+					<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
+						<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
+					</c:when>
+					<c:when test="<%= layout instanceof VirtualLayout %>">
+						<liferay-ui:message key="this-page-belongs-to-a-user-group" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</aui:nav-item>
 
-		<c:choose>
-			<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
-				<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
-			</c:when>
-			<c:when test="<%= layout instanceof VirtualLayout %>">
-				<liferay-ui:message key="this-page-belongs-to-a-user-group" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
-			</c:otherwise>
-		</c:choose>
-	</div>
+	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
 </c:if>
 
 <c:if test="<%= !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE) %>">
-	<div class="page-customization-bar">
-		<img alt="" class="customized-icon" src="<%= themeDisplay.getPathThemeImages() %>/common/guest_icon.png" />
+	<aui:nav-item cssClass="info-items <%= cssInfoItems %>">
+		<div class="page-customization-bar">
+			<div class="page-customization-bar-text">
+				<c:choose>
+					<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
 
-		<c:choose>
-			<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
-				<liferay-ui:message key="you-can-customize-this-page" />
+						<span class="page-customization-bar-message">
+							<liferay-ui:message key="you-can-customize-this-page" />
+						</span>
 
-				<liferay-ui:icon-help message="customizable-user-help" />
-			</c:when>
-			<c:otherwise>
-				<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
+						<liferay-ui:icon-help message="customizable-user-help" />
+					</c:when>
+					<c:otherwise>
+						<span class="page-customization-bar-message">
+							<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
+						</span>
 
-				<c:if test="<%= hasLayoutUpdatePermission %>">
-					<liferay-ui:icon-help message="customizable-admin-help" />
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-
-		<span class="page-customization-actions">
+						<c:if test="<%= hasLayoutUpdatePermission %>">
+							<liferay-ui:icon-help message="customizable-admin-help" />
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			</div>
 
 			<%
 			String taglibImage = "search";
@@ -70,7 +98,7 @@
 			}
 			%>
 
-			<liferay-ui:icon cssClass='<%= layoutTypePortlet.isCustomizedView() ? StringPool.BLANK : "false" %>' id="toggleCustomizedView" image="<%= taglibImage %>" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
+			<liferay-ui:icon cssClass='<%= layoutTypePortlet.isCustomizedView() ? StringPool.BLANK : "page-customization-bar-form" %>' id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
 
 			<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
 				<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetCustomizationViewURL">
@@ -85,8 +113,11 @@
 
 				<liferay-ui:icon image="../portlet/refresh" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
 			</c:if>
-		</span>
-	</div>
+
+		</div>
+	</aui:nav-item>
+
+	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
 
 	<aui:script>
 		Liferay.provide(
@@ -122,4 +153,26 @@
 			toggleCustomizedView.on('click', <portlet:namespace />toggleCustomizedView);
 		}
 	</aui:script>
+</c:if>
+
+<c:if test="<%= (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE) %>">
+	<aui:nav-item cssClass="info-items <%= cssInfoItems %>">
+		<div class="page-customization-bar">
+			<div class="page-customization-bar-text">
+				<c:choose>
+					<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
+						<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
+					</c:when>
+					<c:when test="<%= layout instanceof VirtualLayout %>">
+						<liferay-ui:message key="this-page-belongs-to-a-user-group" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</aui:nav-item>
+
+	<%@ include file="/html/portlet/dockbar/view_page_customization_toggle.jspf" %>
 </c:if>

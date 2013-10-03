@@ -170,7 +170,7 @@ public class BlogsIndexer extends BaseIndexer {
 	protected void reindexEntries(long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new BlogsEntryActionableDynamicQuery() {
@@ -198,17 +198,18 @@ public class BlogsIndexer extends BaseIndexer {
 
 				Document document = getDocument(entry);
 
-				documents.add(document);
+				getDocuments().add(document);
 			}
 
 		};
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setDocuments(documents);
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

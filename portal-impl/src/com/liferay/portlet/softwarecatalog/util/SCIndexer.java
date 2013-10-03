@@ -209,7 +209,7 @@ public class SCIndexer extends BaseIndexer {
 	protected void reindexProductEntries(long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new SCProductEntryActionableDynamicQuery() {
@@ -220,17 +220,18 @@ public class SCIndexer extends BaseIndexer {
 
 				Document document = getDocument(productEntry);
 
-				documents.add(document);
+				getDocuments().add(document);
 			}
 
 		};
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setDocuments(documents);
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

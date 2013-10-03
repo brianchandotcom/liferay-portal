@@ -415,7 +415,7 @@ public class UserIndexer extends BaseIndexer {
 	protected void reindexUsers(long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new UserActionableDynamicQuery() {
@@ -427,7 +427,7 @@ public class UserIndexer extends BaseIndexer {
 				if (!user.isDefaultUser()) {
 					Document document = getDocument(user);
 
-					documents.add(document);
+					getDocuments().add(document);
 				}
 			}
 
@@ -435,10 +435,11 @@ public class UserIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setDocuments(documents);
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

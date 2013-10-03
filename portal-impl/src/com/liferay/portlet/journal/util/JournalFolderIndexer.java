@@ -191,7 +191,7 @@ public class JournalFolderIndexer extends BaseIndexer {
 	protected void reindexFolders(long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalFolderActionableDynamicQuery() {
@@ -203,7 +203,7 @@ public class JournalFolderIndexer extends BaseIndexer {
 				Document document = getDocument(folder);
 
 				if (document != null) {
-					documents.add(document);
+					getDocuments().add(document);
 				}
 			}
 
@@ -211,10 +211,11 @@ public class JournalFolderIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setDocuments(documents);
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(JournalFolderIndexer.class);

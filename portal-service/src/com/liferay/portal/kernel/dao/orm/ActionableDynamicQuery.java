@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.service.BaseLocalService;
+
+import java.util.Collection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,6 +39,8 @@ public interface ActionableDynamicQuery {
 
 	public void setCompanyId(long companyId);
 
+	public void setDocuments(Collection<Document> documents);
+
 	public void setGroupId(long groupId);
 
 	public void setGroupIdPropertyName(String groupIdPropertyName);
@@ -43,5 +48,7 @@ public interface ActionableDynamicQuery {
 	public void setInterval(int interval);
 
 	public void setPrimaryKeyPropertyName(String primaryKeyPropertyName);
+
+	public void setSearchEngineId(String searchEngineId);
 
 }

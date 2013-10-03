@@ -202,7 +202,7 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 	protected void reindexFolders(long companyId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new BookmarksFolderActionableDynamicQuery() {
@@ -213,17 +213,18 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 
 				Document document = getDocument(folder);
 
-				documents.add(document);
+				getDocuments().add(document);
 			}
 
 		};
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setDocuments(documents);
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

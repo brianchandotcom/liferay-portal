@@ -303,7 +303,7 @@ public class OrganizationIndexer extends BaseIndexer {
 	}
 
 	protected void reindexOrganizations(long companyId) throws Exception {
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new OrganizationActionableDynamicQuery() {
@@ -314,17 +314,18 @@ public class OrganizationIndexer extends BaseIndexer {
 
 				Document document = getDocument(organization);
 
-				documents.add(document);
+				getDocuments().add(document);
 			}
 
 		};
 
 		actionableDynamicQuery.setCompanyId(companyId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setDocuments(documents);
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

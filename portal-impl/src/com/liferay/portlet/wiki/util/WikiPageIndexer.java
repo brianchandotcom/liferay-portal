@@ -302,7 +302,7 @@ public class WikiPageIndexer extends BaseIndexer {
 	protected void reindexPages(long companyId, long groupId, final long nodeId)
 		throws PortalException, SystemException {
 
-		final Collection<Document> documents = new ArrayList<Document>();
+		Collection<Document> documents = new ArrayList<Document>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new WikiPageActionableDynamicQuery() {
@@ -324,17 +324,20 @@ public class WikiPageIndexer extends BaseIndexer {
 
 				Document document = getDocument(page);
 
-				documents.add(document);
+				getDocuments().add(document);
 			}
 
 		};
 
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.setDocuments(documents);
+
 		actionableDynamicQuery.setGroupId(groupId);
 
-		actionableDynamicQuery.performActions();
+		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
+		actionableDynamicQuery.performActions();
 	}
 
 }

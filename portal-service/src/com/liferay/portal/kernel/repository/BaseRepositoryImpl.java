@@ -135,7 +135,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return getFileEntriesCount(folderId);
 	}
@@ -274,7 +274,7 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 	@Override
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return getFileEntriesCount(rootFolderId);
 	}

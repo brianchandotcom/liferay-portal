@@ -171,13 +171,15 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	}
 
 	@Override
-	public int getFileEntriesCount(long folderId) throws SystemException {
+	public int getFileEntriesCount(long folderId) 
+		throws PortalException, SystemException {
+		
 		return _baseCmisRepository.getFileEntriesCount(folderId);
 	}
 
 	@Override
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return _baseCmisRepository.getFileEntriesCount(
 			folderId, fileEntryTypeId);
@@ -286,7 +288,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 	@Override
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return _baseCmisRepository.getFoldersFileEntriesCount(
 			folderIds, status);
@@ -337,7 +339,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 	@Override
 	public int getMountFoldersCount(long parentFolderId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return _baseCmisRepository.getMountFoldersCount(parentFolderId);
 	}

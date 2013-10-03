@@ -32,6 +32,7 @@ import com.liferay.portlet.documentlibrary.service.base.DLFolderServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,8 +91,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status, int start, int end)
 		throws PortalException, SystemException {
 
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, null);
@@ -103,7 +107,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -114,7 +124,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -151,8 +167,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public List<Long> getFolderIds(long groupId, long folderId)
 		throws PortalException, SystemException {
 
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
 
 		List<Long> folderIds = getSubfolderIds(groupId, folderId, true);
 
@@ -168,8 +187,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, parentFolderId, ActionKeys.VIEW);
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, parentFolderId,
+				ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
 
 		if (includeMountfolders) {
 			return dlFolderPersistence.filterFindByG_P_H_S(
@@ -199,8 +222,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, obc);
@@ -210,29 +236,17 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	@Override
-	public int getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders)
-		throws PortalException, SystemException {
-
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
-
-		QueryDefinition queryDefinition = new QueryDefinition(status);
-
-		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
-			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
-	}
-
-	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, obc);
@@ -245,7 +259,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -253,11 +273,18 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
+
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -267,7 +294,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return getFoldersCount(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, true);
@@ -277,7 +304,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public int getFoldersCount(
 			long groupId, long parentFolderId, int status,
 			boolean includeMountfolders)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, parentFolderId,
+				ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		if (includeMountfolders) {
 			return dlFolderPersistence.filterCountByG_P_H_S(
@@ -295,8 +329,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, parentFolderId, ActionKeys.VIEW);
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, parentFolderId,
+				ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
 
 		return dlFolderPersistence.filterFindByG_M_P_H(
 			groupId, true, parentFolderId, false, start, end, obc);
@@ -304,7 +342,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public int getMountFoldersCount(long groupId, long parentFolderId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, parentFolderId,
+				ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		return dlFolderPersistence.filterCountByG_M_P_H(
 			groupId, true, parentFolderId, false);
@@ -315,8 +360,11 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			List<Long> folderIds, long groupId, long folderId)
 		throws PortalException, SystemException {
 
-		DLFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return;
+		}
 
 		List<DLFolder> dlFolders = dlFolderPersistence.filterFindByG_P_H_S(
 			groupId, folderId, false, WorkflowConstants.STATUS_APPROVED);

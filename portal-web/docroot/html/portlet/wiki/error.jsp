@@ -79,7 +79,7 @@
 					</div>
 
 					<div class="btn-toolbar">
-						<input class="btn" onClick="location.href = '<%= editPageURL.toString() %>'" type="button" value="<%= LanguageUtil.get(pageContext, "edit-draft") %>" />
+						<aui:button onClick='<%= "location.href = \'" + editPageURL.toString() + "\';" %>' value="edit-draft" />
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -95,9 +95,9 @@
 			</div>
 
 			<div class="btn-toolbar">
-				<input class="btn" onClick="location.href = '<%= searchURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "search-for-x", HtmlUtil.escapeAttribute(title)) %>" />
+				<aui:button onClick='<%= "location.href = \'" + searchURL.toString() + "\';" %>' value='<%= LanguageUtil.format(pageContext, "search-for-x", HtmlUtil.escapeAttribute(title)) %>' />
 
-				<input class="btn" onClick="location.href = '<%= editPageURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "create-page-x", HtmlUtil.escapeAttribute(title)) %>" />
+				<aui:button onClick='<%= "location.href = \'" + editPageURL.toString() + "\';" %>' value='<%= LanguageUtil.format(pageContext, "create-page-x", HtmlUtil.escapeAttribute(title)) %>' />
 			</div>
 		</c:otherwise>
 	</c:choose>

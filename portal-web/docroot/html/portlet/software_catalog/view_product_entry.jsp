@@ -230,9 +230,9 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 <c:if test="<%= SCProductEntryPermission.contains(permissionChecker, productEntryId, ActionKeys.UPDATE) %>">
 
 	<div class="btn-toolbar">
-		<input class="btn" onClick="location.href = '<%= editProductEntryURL.toString() %>';" type="button" value="<liferay-ui:message key="edit-product" />" />
+		<aui:button onClick='<%= "location.href = \'" + editProductEntryURL.toString() + "\';" %>' value="edit-product" />
 
-		<input class="btn" onClick="location.href = '<%= addProductVersionURL.toString() %>';" type="button" value="<liferay-ui:message key="add-product-version" />" />
+		<aui:button onClick='<%= "location.href = \'" + addProductVersionURL.toString() + "\';" %>' value="add-product-version" />
 	</div>
 </c:if>
 

@@ -496,10 +496,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
 					"classNameId");
 
-				long repositoryClassNameId = PortalUtil.getClassNameId(
+				long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
 					LiferayRepository.class);
 
-				dynamicQuery.add(classNameIdProperty.ne(repositoryClassNameId));
+				dynamicQuery.add(
+					classNameIdProperty.ne(liferayRepositoryClassNameId));
 
 				Property portletIdProperty = PropertyFactoryUtil.forName(
 					"portletId");

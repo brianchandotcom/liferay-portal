@@ -21,16 +21,29 @@ String displayPosition = (String)request.getAttribute("liferay-ui:social-bookmar
 String displayStyle = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:displayStyle");
 boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:social-bookmarks-settings:enabled"));
 String types = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:types");
+
+String[] displayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = displayStyles[0];
+}
 %>
 
 <aui:fieldset>
 	<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enabled %>" />
 
 	<div class="social-boomarks-options" id="<portlet:namespace />socialBookmarksOptions">
-		<aui:select label="display-style" name="preferences--displayStyle--">
-			<aui:option label="simple" selected='<%= displayStyle.equals("simple") %>' />
-			<aui:option label="vertical" selected='<%= displayStyle.equals("vertical") %>' />
-			<aui:option label="horizontal" selected='<%= displayStyle.equals("horizontal") %>' />
+		<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
+
+			<%
+			for (String curDisplayStyle : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES)) {
+			%>
+
+			<aui:option label="<%= curDisplayStyle %>" selected='<%= displayStyle.equals(curDisplayStyle) %>' />
+
+			<%
+			}
+			%>
 		</aui:select>
 
 		<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--">

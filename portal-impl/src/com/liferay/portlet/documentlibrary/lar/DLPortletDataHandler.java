@@ -15,10 +15,12 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
@@ -33,8 +35,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Repository;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.persistence.RepositoryExportActionableDynamicQuery;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -74,7 +81,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(DLFileRank.class),
 			new StagedModelType(DLFileShortcut.class),
 			new StagedModelType(FileEntry.class),
-			new StagedModelType(Folder.class));
+			new StagedModelType(Folder.class),
+			new StagedModelType(Repository.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "folders", true, false, null,
@@ -86,6 +94,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "previews-and-thumbnails")
 				},
 				FileEntry.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "repositories", true, false, null,
+				Repository.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "shortcuts", true, false, null,
 				DLFileShortcut.class.getName()));
@@ -141,6 +152,13 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			fileEntryActionableDynamicQuery.performActions();
 		}
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
+			ActionableDynamicQuery repositoryActionableDynamicQuery =
+				getRepositoryActionableDynamicQuery(portletDataContext);
+
+			repositoryActionableDynamicQuery.performActions();
+		}
+
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
 			ActionableDynamicQuery fileShortcutActionableDynamicQuery =
 				getDLFileShortcutActionableDynamicQuery(portletDataContext);
@@ -193,6 +211,18 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
+			Element repositoriesElement =
+				portletDataContext.getImportDataGroupElement(Repository.class);
+
+			List<Element> repositoryElements = repositoriesElement.elements();
+
+			for (Element repositoryElement : repositoryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, repositoryElement);
+			}
+		}
+
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
 			Element fileShortcutsElement =
 				portletDataContext.getImportDataGroupElement(
@@ -230,6 +260,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			getFolderActionableDynamicQuery(portletDataContext);
 
 		folderActionableDynamicQuery.performCount();
+
+		ActionableDynamicQuery repositoryActionableDynamicQuery =
+			getRepositoryActionableDynamicQuery(portletDataContext);
+
+		repositoryActionableDynamicQuery.performCount();
 	}
 
 	@Override
@@ -443,6 +478,45 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, folder);
+			}
+
+		};
+	}
+
+	protected ActionableDynamicQuery getRepositoryActionableDynamicQuery(
+			final PortletDataContext portletDataContext)
+		throws Exception {
+
+		return new RepositoryExportActionableDynamicQuery(portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				super.addCriteria(dynamicQuery);
+
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				long repositoryClassNameId = PortalUtil.getClassNameId(
+					LiferayRepository.class);
+
+				dynamicQuery.add(classNameIdProperty.ne(repositoryClassNameId));
+
+				Property portletIdProperty = PropertyFactoryUtil.forName(
+					"portletId");
+
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+				disjunction.add(portletIdProperty.isNull());
+				disjunction.add(portletIdProperty.eq(StringPool.BLANK));
+
+				dynamicQuery.add(disjunction);
+			}
+
+			@Override
+			protected StagedModelType getStagedModelType() {
+				return new StagedModelType(
+					PortalUtil.getClassNameId(Repository.class.getName()),
+					StagedModelType.REFERRER_CLASS_NAME_ID_ALL);
 			}
 
 		};

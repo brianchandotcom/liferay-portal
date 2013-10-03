@@ -119,6 +119,77 @@ public class DDLRecordSetServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap[] search(
+		long companyId, long groupId, java.lang.String keywords, int scope,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> returnValue =
+				DDLRecordSetServiceUtil.search(companyId, groupId, keywords,
+					scope, start, end, orderByComparator);
+
+			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap[] search(
+		long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int scope, boolean andOperator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> returnValue =
+				DDLRecordSetServiceUtil.search(companyId, groupId, name,
+					description, scope, andOperator, start, end,
+					orderByComparator);
+
+			return com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(long companyId, long groupId,
+		java.lang.String keywords, int scope) throws RemoteException {
+		try {
+			int returnValue = DDLRecordSetServiceUtil.searchCount(companyId,
+					groupId, keywords, scope);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(long companyId, long groupId,
+		java.lang.String name, java.lang.String description, int scope,
+		boolean andOperator) throws RemoteException {
+		try {
+			int returnValue = DDLRecordSetServiceUtil.searchCount(companyId,
+					groupId, name, description, scope, andOperator);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSetSoap updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)

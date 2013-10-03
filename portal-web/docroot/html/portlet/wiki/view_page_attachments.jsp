@@ -106,14 +106,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "att
 				/>
 			</c:if>
 
-			<div class="btn-toolbar">
-				<portlet:renderURL var="addAttachmentsURL">
-					<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:renderURL>
+			<portlet:renderURL var="addAttachmentsURL">
+				<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+				<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+				<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
 
+			<div class="btn-toolbar">
 				<aui:button onClick='<%= "location.href = \'" + addAttachmentsURL + "\';" %>' value="add-attachments" />
 			</div>
 		</c:otherwise>

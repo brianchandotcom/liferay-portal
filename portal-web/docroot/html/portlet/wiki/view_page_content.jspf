@@ -29,14 +29,14 @@ try {
 				</div>
 
 				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
-					<div class="btn-toolbar">
-						<portlet:renderURL var="removeRedirectURL">
-							<portlet:param name="struts_action" value="/wiki/edit_page" />
-							<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-							<portlet:param name="title" value="<%= title %>" />
-							<portlet:param name="removeRedirect" value="true" />
-						</portlet:renderURL>
+					<portlet:renderURL var="removeRedirectURL">
+						<portlet:param name="struts_action" value="/wiki/edit_page" />
+						<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+						<portlet:param name="title" value="<%= title %>" />
+						<portlet:param name="removeRedirect" value="true" />
+					</portlet:renderURL>
 
+					<div class="btn-toolbar">
 						<aui:button onClick='<%= "location.href = \'" + removeRedirectURL + "\';" %>' value="remove-redirect" />
 					</div>
 				</c:if>

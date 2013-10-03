@@ -462,12 +462,6 @@ AUI.add(
 
 						var searchInput = A.one('#' + instance._prefixedPortletId + 'tagsAdminSearchInput');
 
-						var formPlaceholders = !!Liferay.Form.Placeholders;
-
-						if (formPlaceholders) {
-							searchInput.val('');
-						}
-
 						var tagsSearch = new TagsSearch(
 							{
 								inputNode: searchInput,
@@ -476,8 +470,8 @@ AUI.add(
 							}
 						);
 
-						if (formPlaceholders) {
-							Liferay.Form.Placeholders.addPlaceholder(searchInput);
+						if (Liferay.Form.Placeholders) {
+							tagsSearch.sendRequest('');
 						}
 
 						tagsSearch.after(

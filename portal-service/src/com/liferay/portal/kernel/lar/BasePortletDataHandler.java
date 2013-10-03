@@ -167,7 +167,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portlet, false )
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portlet, false)
 				> 0) ||
 			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP,

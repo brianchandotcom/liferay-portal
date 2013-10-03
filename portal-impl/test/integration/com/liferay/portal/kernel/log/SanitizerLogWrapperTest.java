@@ -15,17 +15,23 @@
 package com.liferay.portal.kernel.log;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.CaptureAppender;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.Log4JLoggerTestUtil;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -39,21 +45,21 @@ import org.junit.runner.RunWith;
 public class SanitizerLogWrapperTest {
 
 	@BeforeClass
-	public static void setUpClass() {
-		char[] _chars = new char[128];
+	public static void setUpClass() throws Exception {
+		char[] chars = new char[128];
 
-		for (int i = 0; i < _chars.length; i++) {
-			_chars[i] = (char)i;
+		for (int i = 0; i < chars.length; i++) {
+			chars[i] = (char)i;
 		}
 
-		_message = new String(_chars);
+		_message = new String(chars);
 
 		String sanitizedMessageSuffix = " [Sanitized]";
 
 		_expectedMessageChars =
-			new char[_chars.length + sanitizedMessageSuffix.length()];
+			new char[chars.length + sanitizedMessageSuffix.length()];
 
-		for (int i = 0; i < _chars.length; i++) {
+		for (int i = 0; i < chars.length; i++) {
 			if ((i == 9) || ((i >= 32) && (i != 127))) {
 				_expectedMessageChars[i] = (char)i;
 			}
@@ -64,7 +70,36 @@ public class SanitizerLogWrapperTest {
 
 		System.arraycopy(
 			sanitizedMessageSuffix.toCharArray(), 0, _expectedMessageChars,
-			_chars.length, sanitizedMessageSuffix.length());
+			chars.length, sanitizedMessageSuffix.length());
+
+		_systemProperties = new Properties(System.getProperties());
+
+		System.setProperty("log.sanitizer.enabled", "true");
+		System.setProperty("log.sanitizer.escape.html.enabled", "false");
+		System.setProperty("log.sanitizer.replacement.character", "95");
+
+		StringBundler sb = new StringBundler(191);
+
+		sb.append("9,");
+
+		for (int i = 32; i <= 126; i++) {
+			sb.append(i);
+			sb.append(",");
+		}
+
+		System.setProperty("log.sanitizer.whitelist.characters", sb.toString());
+
+		Field field = ReflectionUtil.getDeclaredField(
+			SanitizerLogWrapper.class, "_LOG_SANITIZER_ENABLED");
+
+		field.set(null, true);
+
+		SanitizerLogWrapper.init();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		System.setProperties(_systemProperties);
 	}
 
 	@Before
@@ -74,7 +109,9 @@ public class SanitizerLogWrapperTest {
 		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
 			loggerName, Level.ALL);
 
-		_log = LogFactoryUtil.getLog(loggerName);
+		LogFactory logFactory = LogFactoryUtil.getLogFactory();
+
+		_log = new SanitizerLogWrapper(logFactory.getLog(loggerName));
 	}
 
 	@After
@@ -177,6 +214,7 @@ public class SanitizerLogWrapperTest {
 
 	private static char[] _expectedMessageChars;
 	private static String _message;
+	private static Properties _systemProperties;
 
 	private CaptureAppender _captureAppender;
 

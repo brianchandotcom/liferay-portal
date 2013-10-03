@@ -66,36 +66,5 @@
 		<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
 	</c:if>
 
-	<aui:fieldset>
-		<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enableSocialBookmarks %>" />
-
-		<div class="social-boomarks-options" id="<portlet:namespace />socialBookmarksOptions">
-			<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
-				<aui:option label="simple" selected='<%= socialBookmarksDisplayStyle.equals("simple") %>' />
-				<aui:option label="vertical" selected='<%= socialBookmarksDisplayStyle.equals("vertical") %>' />
-				<aui:option label="horizontal" selected='<%= socialBookmarksDisplayStyle.equals("horizontal") %>' />
-			</aui:select>
-
-			<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--">
-				<aui:option label="top" selected='<%= socialBookmarksDisplayPosition.equals("top") %>' />
-				<aui:option label="bottom" selected='<%= socialBookmarksDisplayPosition.equals("bottom") %>' />
-			</aui:select>
-
-			<aui:field-wrapper label="social-bookmarks">
-
-				<%
-				for (String type : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES)) {
-				%>
-
-					<aui:field-wrapper inlineLabel="right" label="<%= type %>">
-						<aui:input checked="<%= ArrayUtil.contains(socialBookmarksTypesArray, type) %>" name="preferences--socialBookmarksTypes--" type="checkbox" value="<%= type %>" />
-					</aui:field-wrapper>
-
-				<%
-				}
-				%>
-
-			</aui:field-wrapper>
-		</div>
-	</aui:fieldset>
+	<liferay-ui:social-bookmarks-settings displayPosition="<%= socialBookmarksDisplayPosition %>" displayStyle="<%= socialBookmarksDisplayStyle %>" enabled="<%= enableSocialBookmarks %>" types="<%= socialBookmarkTypes %>" />
 </aui:fieldset>

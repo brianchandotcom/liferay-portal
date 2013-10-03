@@ -50,7 +50,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
 
-String[] socialBookmarksTypesArray = StringUtil.split(portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES)));
+String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -321,8 +321,6 @@ String[] socialBookmarksTypesArray = StringUtil.split(portletPreferences.getValu
 		},
 		['liferay-util-list-fields']
 	);
-
-	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
 </aui:script>
 
 <%!

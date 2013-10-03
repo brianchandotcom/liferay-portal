@@ -132,22 +132,7 @@
 
 	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
 
-	<aui:fieldset>
-		<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enableSocialBookmarks %>" />
-
-		<div class="social-boomarks-options" id="<portlet:namespace />socialBookmarksOptions">
-			<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
-				<aui:option label="simple" selected='<%= socialBookmarksDisplayStyle.equals("simple") %>' />
-				<aui:option label="vertical" selected='<%= socialBookmarksDisplayStyle.equals("vertical") %>' />
-				<aui:option label="horizontal" selected='<%= socialBookmarksDisplayStyle.equals("horizontal") %>' />
-			</aui:select>
-
-			<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--">
-				<aui:option label="top" selected='<%= socialBookmarksDisplayPosition.equals("top") %>' />
-				<aui:option label="bottom" selected='<%= socialBookmarksDisplayPosition.equals("bottom") %>' />
-			</aui:select>
-		</div>
-	</aui:fieldset>
+	<liferay-ui:social-bookmarks-settings displayPosition="<%= socialBookmarksDisplayPosition %>" displayStyle="<%= socialBookmarksDisplayStyle %>" enabled="<%= enableSocialBookmarks %>" />
 
 	<c:if test='<%= selectionStyle.equals("manual") %>'>
 		<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= enableTagBasedNavigation %>" />
@@ -249,6 +234,4 @@
 	if (selectDisplayStyle) {
 		selectDisplayStyle.on('change', showHiddenFields);
 	}
-
-	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
 </aui:script>

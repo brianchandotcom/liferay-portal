@@ -31,7 +31,6 @@ import javax.portlet.PortletURL;
 public class TemplateSearch extends SearchContainer<DDMTemplate> {
 
 	static List<String> headerNames = new ArrayList<String>();
-	static Map<String, String> orderableHeaders = new HashMap<String, String>();
 
 	static {
 		headerNames.add("id");

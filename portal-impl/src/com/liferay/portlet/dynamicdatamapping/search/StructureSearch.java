@@ -28,8 +28,6 @@ import javax.portlet.PortletURL;
  */
 public class StructureSearch extends SearchContainer<DDMStructure> {
 
-	static Map<String, String> orderableHeaders = new HashMap<String, String>();
-
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
 	public StructureSearch(

@@ -1482,11 +1482,59 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testMacroVarElement1005() throws Exception {
+	public void testMacroVarElement1004_4() throws Exception {
 		test(
-			"MacroVarElement1005.macro",
+			"MacroVarElement1004_4.macro",
+			"Error 1004: Missing (path) attribute in " + _DIR_NAME +
+				"/MacroVarElement1004_4.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1005_1() throws Exception {
+		test(
+			"MacroVarElement1005_1.macro",
 			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
-				"/MacroVarElement1005.macro:2");
+				"/MacroVarElement1005_1.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1005_2() throws Exception {
+		test(
+			"MacroVarElement1005_2.macro",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/MacroVarElement1005_2.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1005_3() throws Exception {
+		test(
+			"MacroVarElement1005_3.macro",
+			"Error 1005: Invalid path attribute in " + _DIR_NAME +
+				"/MacroVarElement1005_3.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1005_4() throws Exception {
+		test(
+			"MacroVarElement1005_4.macro",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/MacroVarElement1005_4.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1005_5() throws Exception {
+		test(
+			"MacroVarElement1005_5.macro",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/MacroVarElement1005_5.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1005_6() throws Exception {
+		test(
+			"MacroVarElement1005_6.macro",
+			"Error 1005: Invalid value attribute in " + _DIR_NAME +
+				"/MacroVarElement1005_6.macro:2");
 	}
 
 	@Test
@@ -1519,6 +1567,14 @@ public class SeleniumBuilderTest {
 			"MacroVarElement1006_4.macro",
 			"Error 1006: Invalid value attribute value in " + _DIR_NAME +
 				"/MacroVarElement1006_4.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1006_5() throws Exception {
+		test(
+			"MacroVarElement1006_5.macro",
+			"Error 1006: Invalid store-attribute attribute value in " +
+				_DIR_NAME + "/MacroVarElement1006_5.macro:2");
 	}
 
 	@Test

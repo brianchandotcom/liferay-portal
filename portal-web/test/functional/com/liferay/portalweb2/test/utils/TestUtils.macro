@@ -1,0 +1,14 @@
+<definition>
+	<command name="assertEquals">
+		<if>
+			<equals arg1="${expected}" arg2="${actual}" />
+			<then>
+				<echo message="PASSED" />
+			</then>
+			<else>
+				<echo message="FAILED: expected '${expected}', actual was '${actual}'" />
+				<fail message="FAILED: expected '${expected}', actual was '${actual}'" />
+			</else>
+		</if>
+	</command>
+</definition>

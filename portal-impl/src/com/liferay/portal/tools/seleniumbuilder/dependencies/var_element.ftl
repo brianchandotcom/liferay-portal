@@ -18,14 +18,26 @@
 	<#else>
 		<#assign selenium="selenium" />
 	</#if>
+<#elseif varElement.attributeValue("locator")??>
+	<#assign locatorValue = varElement.attributeValue("locator")>
+</#if>
 
-	<#if locatorValue?contains("/input")>
-		<#assign seleniumMethod = "getValue" />
+<#if (varElement.attributeValue("locator-key")?? && varElement.attributeValue("path")??) ||
+	varElement.attributeValue("locator")??>
+
+	<#if varElement.attributeValue("store-attribute")??>
+		<#assign attributeName = varElement.attributeValue("store-attribute")>
+
+		${context}.put("${varName}", ${selenium}.getAttribute(RuntimeVariables.evaluateLocator("${locatorValue}", ${context}) + "@" + RuntimeVariables.evaluateVariable("${attributeName}", ${context})));
 	<#else>
-		<#assign seleniumMethod = "getText" />
-	</#if>
+		<#if locatorValue?contains("/input")>
+			<#assign seleniumMethod = "getValue" />
+		<#else>
+			<#assign seleniumMethod = "getText" />
+		</#if>
 
-	${context}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}(RuntimeVariables.evaluateVariable("${locatorValue}", ${context})), ${context}));
+		${context}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}(RuntimeVariables.evaluateVariable("${locatorValue}", ${context})), ${context}));
+	</#if>
 <#else>
 	${context}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${context}));
 </#if>

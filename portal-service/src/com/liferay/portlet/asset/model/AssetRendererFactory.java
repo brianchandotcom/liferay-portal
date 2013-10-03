@@ -27,6 +27,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 /**
  * @author Jorge Ferrer
@@ -80,6 +81,11 @@ public interface AssetRendererFactory {
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException, SystemException;
+
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
 		throws PortalException, SystemException;
 
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)

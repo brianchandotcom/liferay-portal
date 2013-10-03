@@ -42,6 +42,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 /**
  * @author Jorge Ferrer
@@ -130,6 +131,16 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	public PortletURL getURLAdd(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
 		throws PortalException, SystemException {
 
 		return null;

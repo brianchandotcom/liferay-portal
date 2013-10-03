@@ -147,6 +147,9 @@ public interface LayoutTypePortlet extends LayoutType {
 	public boolean hasPortletId(String portletId)
 		throws PortalException, SystemException;
 
+	public boolean hasPortletId(String portletId, boolean strict)
+		throws PortalException, SystemException;
+
 	public boolean hasStateMax();
 
 	public boolean hasStateMaxPortletId(String portletId);

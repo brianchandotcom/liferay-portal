@@ -7030,7 +7030,7 @@ public class PortalImpl implements Portal {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			if (layoutTypePortlet.hasPortletId(portletId)) {
+			if (layoutTypePortlet.hasPortletId(portletId, true)) {
 				if (getScopeGroupId(layout, portletId) == scopeGroupId) {
 					plid = layout.getPlid();
 

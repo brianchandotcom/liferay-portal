@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -51,6 +52,8 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
@@ -221,6 +224,24 @@ public class JournalArticleAssetRendererFactory
 		portletURL.setParameter("struts_action", "/journal/edit_article");
 
 		return portletURL;
+	}
+
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws PortalException, SystemException {
+
+		LiferayPortletURL liferayPortletURL =
+			liferayPortletResponse.createLiferayPortletURL(
+				PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+
+		try {
+			liferayPortletURL.setWindowState(windowState);
+		}
+		catch (WindowStateException wse) {
+		}
+
+		return liferayPortletURL;
 	}
 
 	@Override

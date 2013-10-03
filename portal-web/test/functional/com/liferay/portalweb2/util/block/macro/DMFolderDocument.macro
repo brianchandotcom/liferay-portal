@@ -41,7 +41,7 @@
 
 		<execute action="PGMediagalleryMedia#click" locator-key1="MOVE_TO_THE_RECYCLE_BIN" />
 
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="The Document ${mgDocumentTitle} was moved to Recycle Bin. Undo" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="The Document ${mgDocumentTitle} was moved to the Recycle Bin. Undo" />
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
 	</command>
 

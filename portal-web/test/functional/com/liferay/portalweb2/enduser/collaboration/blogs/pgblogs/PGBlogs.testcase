@@ -219,10 +219,10 @@
 	</command>
 
 	<command name="EditBlogsEntry">
-		<var name="entryComment" value="Blogs Entry Comment" />
-		<var name="entryCommentEdit" value="Blogs Entry Comment Edit" />
 		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

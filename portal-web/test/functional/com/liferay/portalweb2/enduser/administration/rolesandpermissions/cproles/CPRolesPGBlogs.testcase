@@ -2132,7 +2132,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
-		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Add Entry" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />

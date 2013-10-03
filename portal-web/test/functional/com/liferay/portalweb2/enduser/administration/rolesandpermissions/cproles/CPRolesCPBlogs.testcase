@@ -24,7 +24,7 @@
 	<command name="ViewBlogsEntryGuestInline">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="inlinePermissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW" />
+		<var name="inlinePermissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />

@@ -44,7 +44,16 @@
 	<command name="viewListHierarchyPG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE" value1="${siteName}" />
+		<if>
+			<condition action="PGSitesdirectory#isTextEqual" locator1="//h1[@class='site-title']//span[@class='site-name']" value1="${siteName}" />
+			<then>
+				<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE_CURRENT" value1="${siteName}" />
+			</then>
+
+			<else>
+				<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE" value1="${siteName}" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="childSiteName" />

@@ -97,10 +97,10 @@ public class XugglerImpl implements Xuggler {
 			_nativeLibraryInstalled = true;
 		}
 		catch (NoClassDefFoundError ncdfe) {
-			informAdministrator();
+			informAdministrator(ncdfe.getMessage());
 		}
 		catch (UnsatisfiedLinkError ule) {
-			informAdministrator();
+			informAdministrator(ule.getMessage());
 		}
 		finally {
 			Log4JUtil.setLevel(
@@ -111,21 +111,22 @@ public class XugglerImpl implements Xuggler {
 		return _nativeLibraryInstalled;
 	}
 
-	protected void informAdministrator() {
+	protected void informAdministrator(String errorMessage) {
 		if (!_informAdministrator) {
 			return;
 		}
 
 		_informAdministrator = false;
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("Liferay does not have the Xuggler native libraries ");
 		sb.append("installed. In order to generate video and audio previews, ");
 		sb.append("please follow the instructions for Xuggler in the Server ");
 		sb.append("Administration section of the Control Panel at: ");
 		sb.append("http://<server>/group/control_panel/manage/-/server/");
-		sb.append("external-services");
+		sb.append("external-services. Error message is: ");
+		sb.append(errorMessage);
 
 		_log.error(sb.toString());
 	}

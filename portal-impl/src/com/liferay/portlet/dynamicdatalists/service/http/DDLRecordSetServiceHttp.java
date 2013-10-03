@@ -165,6 +165,142 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+		HttpPrincipal httpPrincipal, long companyId, long groupId,
+		java.lang.String keywords, int scope, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
+					"search", _searchParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupId, keywords, scope, start, end,
+					orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+		HttpPrincipal httpPrincipal, long companyId, long groupId,
+		java.lang.String name, java.lang.String description, int scope,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
+					"search", _searchParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupId, name, description, scope, andOperator,
+					start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
+		long groupId, java.lang.String keywords, int scope)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
+					"searchCount", _searchCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupId, keywords, scope);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int searchCount(HttpPrincipal httpPrincipal, long companyId,
+		long groupId, java.lang.String name, java.lang.String description,
+		int scope, boolean andOperator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
+					"searchCount", _searchCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, groupId, name, description, scope, andOperator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateMinDisplayRows(
 		HttpPrincipal httpPrincipal, long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -172,7 +308,7 @@ public class DDLRecordSetServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
-					"updateMinDisplayRows", _updateMinDisplayRowsParameterTypes3);
+					"updateMinDisplayRows", _updateMinDisplayRowsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					recordSetId, minDisplayRows, serviceContext);
@@ -213,7 +349,7 @@ public class DDLRecordSetServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
-					"updateRecordSet", _updateRecordSetParameterTypes4);
+					"updateRecordSet", _updateRecordSetParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					recordSetId, ddmStructureId, nameMap, descriptionMap,
@@ -256,7 +392,7 @@ public class DDLRecordSetServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
-					"updateRecordSet", _updateRecordSetParameterTypes5);
+					"updateRecordSet", _updateRecordSetParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					ddmStructureId, recordSetKey, nameMap, descriptionMap,
@@ -300,15 +436,31 @@ public class DDLRecordSetServiceHttp {
 	private static final Class<?>[] _getRecordSetParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateMinDisplayRowsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes3 = new Class[] {
+			long.class, long.class, java.lang.String.class, int.class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _searchParameterTypes4 = new Class[] {
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class, int.class, boolean.class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _searchCountParameterTypes5 = new Class[] {
+			long.class, long.class, java.lang.String.class, int.class
+		};
+	private static final Class<?>[] _searchCountParameterTypes6 = new Class[] {
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class, int.class, boolean.class
+		};
+	private static final Class<?>[] _updateMinDisplayRowsParameterTypes7 = new Class[] {
 			long.class, int.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateRecordSetParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateRecordSetParameterTypes8 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			int.class, com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateRecordSetParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateRecordSetParameterTypes9 = new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, int.class,
 			com.liferay.portal.service.ServiceContext.class

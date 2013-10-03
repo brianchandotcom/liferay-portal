@@ -43,6 +43,7 @@ import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordModelImpl;
+import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordPersistence;
 
 import java.io.Serializable;
 

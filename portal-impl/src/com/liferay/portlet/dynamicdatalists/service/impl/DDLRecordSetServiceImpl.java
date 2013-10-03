@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatalists.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -23,6 +24,7 @@ import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordSetServiceBase
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission;
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,6 +70,47 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			getPermissionChecker(), recordSetId, ActionKeys.VIEW);
 
 		return ddlRecordSetLocalService.getRecordSet(recordSetId);
+	}
+
+	@Override
+	public List<DDLRecordSet> search(
+			long companyId, long groupId, String keywords, int scope, int start,
+			int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddlRecordSetFinder.filterFindByKeywords(
+			companyId, groupId, keywords, scope, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<DDLRecordSet> search(
+			long companyId, long groupId, String name, String description,
+			int scope, boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddlRecordSetFinder.filterFindByC_G_N_D_S(
+			companyId, groupId, name, description, scope, andOperator, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(
+			long companyId, long groupId, String keywords, int scope)
+		throws SystemException {
+
+		return ddlRecordSetFinder.filterCountByKeywords(
+			companyId, groupId, keywords, scope);
+	}
+
+	@Override
+	public int searchCount(
+			long companyId, long groupId, String name, String description,
+			int scope, boolean andOperator)
+		throws SystemException {
+
+		return ddlRecordSetFinder.filterCountByC_G_N_D_S(
+			companyId, groupId, name, description, scope, andOperator);
 	}
 
 	@Override

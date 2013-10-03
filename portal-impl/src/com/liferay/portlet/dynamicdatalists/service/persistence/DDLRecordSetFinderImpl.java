@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
@@ -51,20 +52,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 			long companyId, long groupId, String keywords, int scope)
 		throws SystemException {
 
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return doCountByC_G_N_D_S(
-			companyId, groupId, names, descriptions, scope, andOperator);
+		return doCountByKeywords(companyId, groupId, keywords, scope, false);
 	}
 
 	@Override
@@ -77,7 +65,78 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
 		return doCountByC_G_N_D_S(
-			companyId, groupId, names, descriptions, scope, andOperator);
+			companyId, groupId, names, descriptions, scope, andOperator, false);
+	}
+
+	@Override
+	public int filterCountByKeywords(
+			long companyId, long groupId, String keywords, int scope)
+		throws SystemException {
+
+		return doCountByKeywords(companyId, groupId, keywords, scope, true);
+	}
+
+	@Override
+	public int filterCountByC_G_N_D_S(
+			long companyId, long groupId, String name, String description,
+			int scope, boolean andOperator)
+		throws SystemException {
+
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description, false);
+
+		return doCountByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator, true);
+	}
+
+	@Override
+	public List<DDLRecordSet> filterFindByKeywords(
+			long companyId, long groupId, String keywords, int scope, int start,
+			int end, OrderByComparator orderByComparator)
+		throws SystemException {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return filterFindByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public List<DDLRecordSet> filterFindByC_G_N_D_S(
+			long companyId, long groupId, String name, String description,
+			int scope, boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		String[] names = CustomSQLUtil.keywords(name);
+		String[] descriptions = CustomSQLUtil.keywords(description, false);
+
+		return filterFindByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public List<DDLRecordSet> filterFindByC_G_N_D_S(
+			long companyId, long groupId, String[] names, String[] descriptions,
+			int scope, boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return doFindByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator, start,
+			end, orderByComparator, true);
 	}
 
 	@Override
@@ -127,12 +186,12 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 		return doFindByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator, start,
-			end, orderByComparator);
+			end, orderByComparator, false);
 	}
 
 	protected int doCountByC_G_N_D_S(
 			long companyId, long groupId, String[] names, String[] descriptions,
-			int scope, boolean andOperator)
+			int scope, boolean andOperator, boolean inlineSQLHelper)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
@@ -145,20 +204,27 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 			String sql = CustomSQLUtil.get(COUNT_BY_C_G_N_D_S);
 
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DDLRecordSet.class.getName(),
+					"DDLRecordSet.recordSetId", groupId);
+			}
+
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+					sql, "(DDLRecordSet.groupId = ?) AND", StringPool.BLANK);
 			}
 
 			if (scope == DDLRecordSetConstants.SCOPE_ANY) {
 				sql = StringUtil.replace(
-					sql, "(scope = ?) AND", StringPool.BLANK);
+					sql, "(DDLRecordSet.scope = ?) AND", StringPool.BLANK);
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DDLRecordSet.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, true, descriptions);
+				sql, "DDLRecordSet.description", StringPool.LIKE, true,
+				descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -200,10 +266,32 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 		}
 	}
 
+	protected int doCountByKeywords(
+			long companyId, long groupId, String keywords, int scope,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator,
+			inlineSQLHelper);
+	}
+
 	protected List<DDLRecordSet> doFindByC_G_N_D_S(
 			long companyId, long groupId, String[] names, String[] descriptions,
 			int scope, boolean andOperator, int start, int end,
-			OrderByComparator orderByComparator)
+			OrderByComparator orderByComparator, boolean inlineSQLHelper)
 		throws SystemException {
 
 		names = CustomSQLUtil.keywords(names);
@@ -216,20 +304,27 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_G_N_D_S);
 
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DDLRecordSet.class.getName(),
+					"DDLRecordSet.recordSetId", groupId);
+			}
+
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+					sql, "(DDLRecordSet.groupId = ?) AND", StringPool.BLANK);
 			}
 
 			if (scope == DDLRecordSetConstants.SCOPE_ANY) {
 				sql = StringUtil.replace(
-					sql, "(scope = ?) AND", StringPool.BLANK);
+					sql, "(DDLRecordSet.scope = ?) AND", StringPool.BLANK);
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DDLRecordSet.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, true, descriptions);
+				sql, "DDLRecordSet.description", StringPool.LIKE, true,
+				descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 

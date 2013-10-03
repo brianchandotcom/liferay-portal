@@ -298,7 +298,7 @@
 					}
 				}
 
-				.dropdown-menu , .site-administration-menu {
+				.dropdown-menu, .site-administration-menu {
 					background: #009AE5;
 					border-width: 0;
 					left: 0;
@@ -330,6 +330,10 @@
 				}
 
 				.dropdown-menu {
+					max-height: 300px;
+					overflow-x: hidden;
+					overflow-y: auto;
+
 					&:after, &:before {
 						border-width: 0;
 					}

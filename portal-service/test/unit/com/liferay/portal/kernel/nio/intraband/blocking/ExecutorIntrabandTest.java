@@ -510,8 +510,6 @@ public class ExecutorIntrabandTest {
 
 		while (logRecords.isEmpty());
 
-		Assert.assertEquals(1, logRecords.size());
-
 		IntrabandTestUtil.assertMessageStartWith(
 			logRecords.get(0), "Removed timeout response waiting datagram");
 

@@ -61,8 +61,10 @@ public class StartupHelperUtil {
 		getStartupHelper().upgradeProcess(buildNumber);
 	}
 
-	public static void verifyProcess(boolean verified) throws VerifyException {
-		getStartupHelper().verifyProcess(verified);
+	public static void verifyProcess(boolean verified,
+		boolean versionChanged) throws VerifyException {
+
+		getStartupHelper().verifyProcess(verified, versionChanged);
 	}
 
 	public void setStartupHelper(StartupHelper startupHelper) {

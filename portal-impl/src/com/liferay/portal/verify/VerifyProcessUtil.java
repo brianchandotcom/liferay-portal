@@ -33,7 +33,7 @@ import com.liferay.portal.util.PropsValues;
 public class VerifyProcessUtil {
 
 	public static boolean verifyProcess(
-			boolean ranUpgradeProcess, boolean verified)
+			boolean ranUpgradeProcess, boolean verified, boolean versionChanged)
 		throws VerifyException {
 
 		int verifyFrequency = GetterUtil.getInteger(
@@ -41,7 +41,7 @@ public class VerifyProcessUtil {
 
 		if ((verifyFrequency == VerifyProcess.ALWAYS) ||
 			((verifyFrequency == VerifyProcess.ONCE) && !verified) ||
-			ranUpgradeProcess) {
+			ranUpgradeProcess || versionChanged) {
 
 			return _verifyProcess(ranUpgradeProcess);
 		}

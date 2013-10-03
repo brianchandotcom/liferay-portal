@@ -88,8 +88,6 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -215,19 +213,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		Set<DDMStructure> ddmStructuresSet = new TreeSet<DDMStructure>();
-
-		long[] groupIds = searchContext.getGroupIds();
-
-		if (ArrayUtil.isNotEmpty(groupIds)) {
-			List<DLFileEntryType> dlFileEntryTypes =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(groupIds);
-
-			for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-				ddmStructuresSet.addAll(dlFileEntryType.getDDMStructures());
-			}
-		}
-
 		Group group = GroupLocalServiceUtil.getCompanyGroup(
 			searchContext.getCompanyId());
 
@@ -238,11 +223,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				"TikaRawMetadata");
 
 		if (tikaRawMetadataStructure != null) {
-			ddmStructuresSet.add(tikaRawMetadataStructure);
-		}
-
-		for (DDMStructure ddmStructure : ddmStructuresSet) {
-			addSearchDDMStruture(searchQuery, searchContext, ddmStructure);
+			addSearchDDMStruture(
+				searchQuery, searchContext, tikaRawMetadataStructure);
 		}
 
 		String keywords = searchContext.getKeywords();

@@ -107,7 +107,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -118,7 +124,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -247,7 +259,13 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
 			boolean includeMountFolders)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -255,11 +273,18 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
+
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
@@ -269,7 +294,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersCount(long groupId, long parentFolderId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		return getFoldersCount(
 			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, true);
@@ -279,7 +304,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public int getFoldersCount(
 			long groupId, long parentFolderId, int status,
 			boolean includeMountfolders)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, parentFolderId,
+				ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		if (includeMountfolders) {
 			return dlFolderPersistence.filterCountByG_P_H_S(
@@ -310,7 +342,14 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public int getMountFoldersCount(long groupId, long parentFolderId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (!DLFolderPermission.contains(
+				getPermissionChecker(), groupId, parentFolderId,
+				ActionKeys.VIEW)) {
+
+			return 0;
+		}
 
 		return dlFolderPersistence.filterCountByG_M_P_H(
 			groupId, true, parentFolderId, false);

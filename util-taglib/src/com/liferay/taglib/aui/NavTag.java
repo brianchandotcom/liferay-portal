@@ -35,38 +35,47 @@ public class NavTag extends BaseNavTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		if (getCollapsible()) {
-			NavBarTag navBarTag = (NavBarTag)findAncestorWithClass(
-				this, NavBarTag.class);
+		NavBarTag navBarTag = (NavBarTag)findAncestorWithClass(
+			this, NavBarTag.class);
 
-			if (navBarTag != null) {
-				StringBundler sb = navBarTag.getResponsiveButtonsSB();
+		if ((navBarTag != null) &&
+			(!_collapsibleSetterInvoked || getCollapsible())) {
 
-				sb.append("<a class=\"btn btn-navbar\" id=\"");
-				sb.append(_getNamespacedId());
-				sb.append("NavbarBtn\" ");
-				sb.append("data-navId=\"");
-				sb.append(_getNamespacedId());
-				sb.append("\">");
+			setCollapsible(true);
 
-				String icon = getIcon();
+			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
-				if (Validator.isNull(icon)) {
-					sb.append("<span class=\"icon-bar\"></span>");
-					sb.append("<span class=\"icon-bar\"></span>");
-					sb.append("<span class=\"icon-bar\"></span>");
-				}
-				else {
-					sb.append("<i class=\"icon-");
-					sb.append(icon);
-					sb.append("\"></i>");
-				}
+			sb.append("<a class=\"btn btn-navbar\" id=\"");
+			sb.append(_getNamespacedId());
+			sb.append("NavbarBtn\" ");
+			sb.append("data-navId=\"");
+			sb.append(_getNamespacedId());
+			sb.append("\">");
 
-				sb.append("</a>");
+			String icon = getIcon();
+
+			if (Validator.isNull(icon)) {
+				sb.append("<span class=\"icon-bar\"></span>");
+				sb.append("<span class=\"icon-bar\"></span>");
+				sb.append("<span class=\"icon-bar\"></span>");
 			}
+			else {
+				sb.append("<i class=\"icon-");
+				sb.append(icon);
+				sb.append("\"></i>");
+			}
+
+			sb.append("</a>");
 		}
 
 		return super.doStartTag();
+	}
+
+	@Override
+	public void setCollapsible(boolean collapsible) {
+		super.setCollapsible(collapsible);
+
+		_collapsibleSetterInvoked = true;
 	}
 
 	@Override
@@ -107,6 +116,7 @@ public class NavTag extends BaseNavTag {
 		return _namespacedId;
 	}
 
+	private boolean _collapsibleSetterInvoked = false;
 	private String _namespacedId;
 
 }

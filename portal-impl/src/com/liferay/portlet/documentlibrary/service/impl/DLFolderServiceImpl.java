@@ -224,24 +224,6 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	@Override
-	public int getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders)
-		throws PortalException, SystemException {
-
-		if (!DLFolderPermission.contains(
-				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
-
-			return 0;
-		}
-
-		QueryDefinition queryDefinition = new QueryDefinition(status);
-
-		return dlFolderFinder.filterCountF_FE_FS_ByG_F_M_M(
-			groupId, folderId, mimeTypes, includeMountFolders, queryDefinition);
-	}
-
-	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,

@@ -178,7 +178,7 @@ AUI.add(
 								failure: function() {
 									var layoutRevisionDetails = A.byIdNS(instance._namespace, 'layoutRevisionDetails');
 
-									layoutRevisionDetails.addClass('alert alert-error')
+									layoutRevisionDetails.addClass('alert alert-error');
 
 									layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'));
 								},

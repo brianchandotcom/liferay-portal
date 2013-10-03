@@ -580,7 +580,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				li.dropdown.active {
 					> .staging-link.dropdown-toggle {
-						@include background-image(linear-gradient(#55B8EC, #55B8EC));
+						background-color: #55B8EC;
+						background-image: none;
 					}
 				}
 			}

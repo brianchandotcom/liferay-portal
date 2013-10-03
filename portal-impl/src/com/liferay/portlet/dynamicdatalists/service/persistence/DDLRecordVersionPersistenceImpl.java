@@ -41,6 +41,7 @@ import com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionImpl;
 import com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionModelImpl;
+import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordVersionPersistence;
 
 import java.io.Serializable;
 

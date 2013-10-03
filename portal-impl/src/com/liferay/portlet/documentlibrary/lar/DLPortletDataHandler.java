@@ -95,11 +95,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				},
 				FileEntry.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "repositories", true, false, null,
-				Repository.class.getName()),
-			new PortletDataHandlerBoolean(
 				NAMESPACE, "shortcuts", true, false, null,
-				DLFileShortcut.class.getName()));
+				DLFileShortcut.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "repositories", false, false, null,
+				Repository.class.getName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 

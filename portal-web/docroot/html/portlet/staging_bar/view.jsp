@@ -46,31 +46,35 @@ if (layout != null) {
 	String liveFriendlyURL = null;
 
 	if (liveGroup != null) {
-		try {
-			liveLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
+		liveLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 
+		if (liveLayout != null) {
 			liveFriendlyURL = PortalUtil.getLayoutFriendlyURL(liveLayout, themeDisplay);
 		}
-		catch (Exception e) {
+		else if ((layout.isPrivateLayout() && (liveGroup.getPrivateLayoutsPageCount() > 0)) || ((layout.isPublicLayout() && (liveGroup.getPublicLayoutsPageCount() > 0)))) {
 			liveFriendlyURL = PortalUtil.getGroupFriendlyURL(liveGroup, layout.isPrivateLayout(), themeDisplay);
 		}
 
-		liveFriendlyURL = PortalUtil.addPreservedParameters(themeDisplay, liveFriendlyURL);
+		if (Validator.isNotNull(liveFriendlyURL)) {
+			liveFriendlyURL = PortalUtil.addPreservedParameters(themeDisplay, liveFriendlyURL);
+		}
 	}
 
 	String stagingFriendlyURL = null;
 
 	if (stagingGroup != null) {
-		try {
-			Layout stagingLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), stagingGroup.getGroupId(), layout.isPrivateLayout());
+		Layout stagingLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layout.getUuid(), stagingGroup.getGroupId(), layout.isPrivateLayout());
 
+		if (stagingLayout != null) {
 			stagingFriendlyURL = PortalUtil.getLayoutFriendlyURL(stagingLayout, themeDisplay);
 		}
-		catch (Exception e) {
+		else {
 			stagingFriendlyURL = PortalUtil.getGroupFriendlyURL(stagingGroup, layout.isPrivateLayout(), themeDisplay);
 		}
 
-		stagingFriendlyURL = PortalUtil.addPreservedParameters(themeDisplay, stagingFriendlyURL);
+		if (Validator.isNotNull(stagingFriendlyURL)) {
+			stagingFriendlyURL = PortalUtil.addPreservedParameters(themeDisplay, stagingFriendlyURL);
+		}
 	}
 
 	List<LayoutSetBranch> layoutSetBranches = null;
@@ -78,12 +82,10 @@ if (layout != null) {
 	if (group.isStagingGroup() || group.isStagedRemotely()) {
 		layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), layout.isPrivateLayout());
 	}
-
-	PortletURL portletURL = renderResponse.createRenderURL();
 	%>
 
 	<aui:nav collapsible="<%= false %>" cssClass="staging-bar" id="stagingBar">
-		<c:if test="<%= (liveGroup != null) && layout.isPrivateLayout() ? (liveGroup.getPrivateLayoutsPageCount() > 0) : (liveGroup.getPublicLayoutsPageCount() > 0) %>">
+		<c:if test="<%= (liveGroup != null) %>">
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
@@ -170,7 +172,9 @@ if (layout != null) {
 					<aui:nav-item cssClass="remote-live-link" href="<%= remoteURL %>" iconClass="icon-external-link-sign" label="go-to-remote-live" />
 				</c:when>
 				<c:when test="<%= group.isStagingGroup() %>">
-					<aui:nav-item cssClass='<%= (!group.isStagingGroup() ? "active" : StringPool.BLANK) + " live-link staging-toggle" %>' href="<%= !group.isStagingGroup() ? null : liveFriendlyURL %>" label="live" />
+					<c:if test="<%= Validator.isNotNull(liveFriendlyURL) %>">
+						<aui:nav-item cssClass=" live-link staging-toggle" href="<%= liveFriendlyURL %>" label="live" />
+					</c:if>
 				</c:when>
 				<c:otherwise>
 					<aui:nav-item anchorCssClass="staging-link" cssClass="active live-link staging-toggle" dropdown="<%= true %>" id="liveLink" label="live" toggle="<%= true %>">

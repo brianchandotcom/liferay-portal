@@ -274,11 +274,17 @@ public class SecurePluginContextListener
 					_servletContextListeners) {
 
 				try {
-					servletContextListener.contextDestroyed(servletContextEvent);
+					servletContextListener.contextDestroyed(
+						servletContextEvent);
 				}
-				catch(Throwable t) {
+				catch (Throwable t) {
 					if (_log.isErrorEnabled()) {
-						_log.error(t, t);
+						_log.error(
+							"Unexpected error in listener " +
+								servletContextListener.getClass().getName() +
+									" undeploying context " +
+										servletContext.getServletContextName(),
+							t);
 					}
 				}
 			}

@@ -1292,8 +1292,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if (checkedOut != hasLock) {
 			dlAppHelperLocalService.registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
-				fileEntryId);
+				DLSyncConstants.EVENT_UPDATE,
+				new LiferayFileEntry(dlFileEntry));
 		}
 
 		return hasLock;

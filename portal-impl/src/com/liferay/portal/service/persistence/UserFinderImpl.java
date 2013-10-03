@@ -270,21 +270,28 @@ public class UserFinderImpl
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-				if ((group != null) && group.isOrganization()) {
+				if (group == null) {
+					continue;
+				}
+
+				if (group.isOrganization()) {
 					organizationIds.add(group.getOrganizationId());
 				}
-
-				List<Organization> organizations = GroupUtil.getOrganizations(
-					groupId);
-
-				for (Organization organization : organizations) {
-					organizationIds.add(organization.getOrganizationId());
+				else if (group.isUserGroup()) {
+					userGroupIds.add(group.getClassPK());
 				}
+				else {
+					for (Organization organization :
+							GroupUtil.getOrganizations(groupId)) {
 
-				List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
+						organizationIds.add(organization.getOrganizationId());
+					}
 
-				for (UserGroup userGroup : userGroups) {
-					userGroupIds.add(userGroup.getUserGroupId());
+					for (UserGroup userGroup :
+							GroupUtil.getUserGroups(groupId)) {
+
+						userGroupIds.add(userGroup.getUserGroupId());
+					}
 				}
 			}
 
@@ -326,6 +333,20 @@ public class UserFinderImpl
 					}
 					else {
 						roleGroupIds.add(group.getGroupId());
+
+						for (Organization organization :
+								GroupUtil.getOrganizations(
+									group.getGroupId())) {
+
+							organizationIds.add(
+								organization.getOrganizationId());
+						}
+
+						for (UserGroup userGroup :
+								GroupUtil.getUserGroups(group.getGroupId())) {
+
+							userGroupIds.add(userGroup.getUserGroupId());
+						}
 					}
 				}
 			}
@@ -592,21 +613,28 @@ public class UserFinderImpl
 			for (long groupId : groupIds) {
 				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-				if ((group != null) && group.isOrganization()) {
+				if (group == null) {
+					continue;
+				}
+
+				if (group.isOrganization()) {
 					organizationIds.add(group.getOrganizationId());
 				}
-
-				List<Organization> organizations = GroupUtil.getOrganizations(
-					groupId);
-
-				for (Organization organization : organizations) {
-					organizationIds.add(organization.getOrganizationId());
+				else if (group.isUserGroup()) {
+					userGroupIds.add(group.getClassPK());
 				}
+				else {
+					for (Organization organization :
+							GroupUtil.getOrganizations(groupId)) {
 
-				List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
+						organizationIds.add(organization.getOrganizationId());
+					}
 
-				for (UserGroup userGroup : userGroups) {
-					userGroupIds.add(userGroup.getUserGroupId());
+					for (UserGroup userGroup :
+							GroupUtil.getUserGroups(groupId)) {
+
+						userGroupIds.add(userGroup.getUserGroupId());
+					}
 				}
 			}
 
@@ -648,6 +676,20 @@ public class UserFinderImpl
 					}
 					else {
 						roleGroupIds.add(group.getGroupId());
+
+						for (Organization organization :
+								GroupUtil.getOrganizations(
+									group.getGroupId())) {
+
+							organizationIds.add(
+								organization.getOrganizationId());
+						}
+
+						for (UserGroup userGroup :
+								GroupUtil.getUserGroups(group.getGroupId())) {
+
+							userGroupIds.add(userGroup.getUserGroupId());
+						}
 					}
 				}
 			}

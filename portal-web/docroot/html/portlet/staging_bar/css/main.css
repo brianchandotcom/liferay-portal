@@ -27,10 +27,22 @@
 	.row-fluid .layout-revision-info {
 		float: right;
 		line-height: 16px;
+		padding-left: 5px;
 
 		&.incomplete {
 			float: none;
-			padding: 0 15px;
+			padding: 0 5px;
+
+			.label.label-submit {
+				float: right;
+				margin-top: 10px;
+			}
+
+			&.loading {
+				.label.label-submit {
+					background-color: transparent;
+				}
+			}
 		}
 
 		.layout-revision-version {
@@ -38,7 +50,7 @@
 			font-size: 0.8em;
 
 			label {
-				color: #CCC;
+				color: #B6DDF5;
 				display: inline;
 				font-size: 0.9em;
 			}
@@ -48,34 +60,85 @@
 			margin-left: 1em;
 		}
 
-		.workflow-status {
+		.workflow-status, .taglib-workflow-status {
 			margin: 0;
 			padding: 0;
+		}
+
+		a.taglib-icon:hover .taglib-text {
+			text-decoration: none;
+		}
+
+		.label-submit {
+			background-color: #469DE3;
 		}
 	}
 
 	.layout-branch-selector, .layout-set-branch-selector {
 		font-size: inherit;
+
+		.icon-caret-down {
+			background-color: #469DE3;
+			float: right;
+			margin-right: 5px;
+			margin-top: 5px;
+		}
+	}
+
+	.layout-revision-actions {
+		font-size: 17px;
+
+		[class^="icon-"] {
+			margin-left: 10px;
+		}
+	}
+
+	.layout-revision-details.alert-error {
+		float: right;
+		margin: 10px 5px 0;
+		padding: 0 5px;
 	}
 
 	.page-variation-label, .site-pages-variation-label {
 		font-weight: 300;
 	}
 
-	.page-variations-options {
-		padding: 0 15px 0 0;
+	.page-variations-options, .site-pages-variation-options, .staging-details {
+		padding: 0 5px;
 	}
 
-	.site-pages-variation-options, .staging-details {
-		padding: 0 15px;
+	.page-variations-options, .site-pages-variation-options {
+		position: relative;
+
+		.lfr-icon-menu {
+			background-color: #50AFE9;
+			display: block;
+			margin: 0 15px 0 0;
+
+			.icon-globe, .icon-file {
+				background-color: #469DE3;
+				padding: 7px;
+			}
+
+			.dropdown-toggle {
+				display: block;
+			}
+		}
+
+		.page-variations {
+			font-size: 17px;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
 	}
 
 	.publish-link-container {
-		padding: 15px 0 5px;
-		text-align: center;
+		bottom: 5px;
+		position: absolute;
 
 		.publish-link {
-			margin: 0;
+			margin: 0 5px;
 		}
 	}
 

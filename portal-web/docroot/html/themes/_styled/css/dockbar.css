@@ -218,20 +218,18 @@ $editLayoutPanelWidth: 460px;
 						}
 
 						&.staging-toggle {
-							background-color: #0ECD27;
-
 							> a {
-								&, &:hover {
-									background-color: transparent;
+								background-color: #2496E5;
+								padding-bottom: 0;
+								padding-top: 0;
+
+								&:hover {
+									background-color: #2FA4F5;
 								}
 							}
 
 							span.nav-item-label {
 								padding: 5px 10px;
-							}
-
-							&.active span.nav-item-label {
-								background-color: #080;
 							}
 						}
 					}
@@ -373,12 +371,14 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.staging-controls {
+			margin-right: 50px;
+
 			select {
 				width: 100%;
 			}
 
 			.staging-bar {
-				margin-right: 0;
+				margin: 6px 0 ;
 
 				.dropdown-menu {
 					font-size: 13px;

@@ -589,12 +589,6 @@ public class CharPipeTest {
 
 			Assert.assertTrue(timestampAfterSkip1 >= timestampBeforeWrite);
 			Assert.assertTrue(timestampAfterSkip2 >= timestampAfterSkip1);
-
-			if (System.getenv("JENKINS_URL") == null) {
-				Assert.assertTrue(
-					(timestampAfterSkip1 - timestampBeforeWrite) >=
-						(timestampAfterSkip2 - timestampAfterSkip1));
-			}
 		}
 
 		charPipe.close();

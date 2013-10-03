@@ -61,9 +61,9 @@ public class RandomUtilTest {
 
 	@Test
 	public void testShuffle() {
-		RandomUtil.random = new Random();
+		RandomUtil.random = new PredictableRandom(_NUMBERS);
 
-		String inputString = "abcdefghijklmn";
+		String inputString = "abcdefghij";
 
 		String shutffledString = RandomUtil.shuffle(inputString);
 

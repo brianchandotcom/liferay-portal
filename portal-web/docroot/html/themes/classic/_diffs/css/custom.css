@@ -127,6 +127,19 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.dockbar-split .dockbar .navbar-inner {
+		.info-button {
+			top: 9px;
+
+			a {
+				margin-left: -4px;
+				margin-top: -1px;
+
+				&:hover {
+					color: #FFF;
+				}
+			}
+		}
+
 		.nav {
 			background-color: $dockbarGradientEnd;
 
@@ -177,6 +190,18 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 			}
+		}
+
+		.page-customization-bar {
+			background-color: #6DA4E4;
+
+			@include background-image(linear-gradient(#70B2EF, #6DA4E4));
+
+			line-height: 20px;
+		}
+
+		.page-customization-bar-text {
+			height: 43px;
 		}
 	}
 

@@ -1025,6 +1025,7 @@
 		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/document_library_display/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-document-library-display</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>113</portlet-name>

@@ -161,10 +161,11 @@ public class DLFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = getAssetRendererFactory().getURLView(
+			liferayPortletResponse, windowState);
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"struts_action", "/document_library_display/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);

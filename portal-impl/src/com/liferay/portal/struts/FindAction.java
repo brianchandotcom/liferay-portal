@@ -203,7 +203,7 @@ public abstract class FindAction extends Action {
 					(LayoutTypePortlet)layout.getLayoutType();
 
 				for (String portletId : portletIds) {
-					if (!layoutTypePortlet.hasPortletId(portletId) ||
+					if (!layoutTypePortlet.hasPortletId(portletId, false) ||
 						!LayoutPermissionUtil.contains(
 							themeDisplay.getPermissionChecker(), layout,
 							ActionKeys.VIEW)) {

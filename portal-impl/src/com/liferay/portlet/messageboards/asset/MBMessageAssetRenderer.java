@@ -140,8 +140,8 @@ public class MBMessageAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = getAssetRendererFactory().getURLView(
+			liferayPortletResponse, windowState);
 
 		portletURL.setParameter(
 			"struts_action", "/message_boards/view_message");

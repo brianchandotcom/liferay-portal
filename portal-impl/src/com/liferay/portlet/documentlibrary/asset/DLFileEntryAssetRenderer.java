@@ -49,6 +49,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Julio Camarero
@@ -232,6 +233,25 @@ public class DLFileEntryAssetRenderer
 
 		return DLUtil.getImagePreviewURL(
 			_fileEntry, _fileVersion, themeDisplay);
+	}
+
+	@Override
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
+		PortletURL portletURL = getAssetRendererFactory().getURLView(
+			liferayPortletResponse, windowState);
+
+		portletURL.setParameter(
+			"struts_action", "/document_library_display/view_file_entry");
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		portletURL.setWindowState(windowState);
+
+		return portletURL;
 	}
 
 	@Override

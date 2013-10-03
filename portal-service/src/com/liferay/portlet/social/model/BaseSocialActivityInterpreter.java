@@ -21,9 +21,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,6 +38,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivitySetLocalServiceUtil;
 import com.liferay.portlet.social.service.persistence.SocialActivityUtil;
@@ -44,6 +49,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.List;
 
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 /**
  * @author Brian Wing Shun Chan
@@ -115,6 +121,22 @@ public abstract class BaseSocialActivityInterpreter
 		else {
 			SocialActivitySetLocalServiceUtil.addActivitySet(activityId);
 		}
+	}
+
+	protected String addNoSuchEntryRedirect(
+			String url, String className, long classPK,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		PortletURL urlView = getViewEntryPortletURL(
+			className, classPK, serviceContext);
+
+		if (urlView == null) {
+			return url;
+		}
+
+		return HttpUtil.setParameter(
+			url, "noSuchEntryRedirect", urlView.toString());
 	}
 
 	protected String buildLink(String link, String text) {
@@ -491,6 +513,41 @@ public abstract class BaseSocialActivityInterpreter
 	 */
 	protected String getValue(String json, String key, String defaultValue) {
 		return getJSONValue(json, key, defaultValue);
+	}
+
+	protected PortletURL getViewEntryPortletURL(
+			String className, long classPK, ServiceContext serviceContext)
+		throws Exception {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		LiferayPortletResponse liferayPortletResponse =
+			serviceContext.getLiferayPortletResponse();
+
+		if (liferayPortletResponse == null) {
+			return null;
+		}
+
+		if (classPK == 0) {
+			return assetRendererFactory.getURLView(
+				liferayPortletResponse, WindowState.MAXIMIZED);
+		}
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		return assetRenderer.getURLView(
+			liferayPortletResponse, WindowState.MAXIMIZED);
 	}
 
 	protected boolean hasPermissions(

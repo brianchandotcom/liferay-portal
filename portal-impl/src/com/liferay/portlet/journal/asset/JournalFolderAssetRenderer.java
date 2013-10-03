@@ -158,8 +158,8 @@ public class JournalFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = getAssetRendererFactory().getURLView(
+			liferayPortletResponse, windowState);
 
 		portletURL.setParameter("struts_action", "/journal/view");
 		portletURL.setParameter(

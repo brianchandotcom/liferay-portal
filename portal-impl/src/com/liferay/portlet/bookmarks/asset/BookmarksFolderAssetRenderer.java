@@ -159,8 +159,8 @@ public class BookmarksFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			PortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = getAssetRendererFactory().getURLView(
+			liferayPortletResponse, windowState);
 
 		portletURL.setParameter("struts_action", "/bookmarks/view");
 		portletURL.setParameter(

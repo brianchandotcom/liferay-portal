@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -34,6 +35,8 @@ import com.liferay.portlet.bookmarks.service.permission.BookmarksPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
@@ -99,6 +102,24 @@ public class BookmarksEntryAssetRendererFactory
 					liferayPortletRequest, getClassName())));
 
 		return portletURL;
+	}
+
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws PortalException, SystemException {
+
+		LiferayPortletURL liferayPortletURL =
+			liferayPortletResponse.createLiferayPortletURL(
+				PortletKeys.BOOKMARKS, PortletRequest.RENDER_PHASE);
+
+		try {
+			liferayPortletURL.setWindowState(windowState);
+		}
+		catch (WindowStateException wse) {
+		}
+
+		return liferayPortletURL;
 	}
 
 	@Override

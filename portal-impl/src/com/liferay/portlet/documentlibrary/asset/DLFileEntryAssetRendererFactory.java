@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -51,6 +52,8 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
@@ -206,6 +209,25 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 					liferayPortletRequest, getClassName())));
 
 		return portletURL;
+	}
+
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws PortalException, SystemException {
+
+		LiferayPortletURL liferayPortletURL =
+			liferayPortletResponse.createLiferayPortletURL(
+				PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+				PortletRequest.RENDER_PHASE);
+
+		try {
+			liferayPortletURL.setWindowState(windowState);
+		}
+		catch (WindowStateException wse) {
+		}
+
+		return liferayPortletURL;
 	}
 
 	@Override

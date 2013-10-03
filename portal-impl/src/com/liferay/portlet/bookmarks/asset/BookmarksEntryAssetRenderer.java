@@ -35,6 +35,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 /**
  * @author Julio Camarero
@@ -120,6 +121,22 @@ public class BookmarksEntryAssetRenderer
 		portletURL.setParameter(
 			"folderId", String.valueOf(_entry.getFolderId()));
 		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
+
+		return portletURL;
+	}
+
+	@Override
+	public PortletURL getURLView(
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws Exception {
+
+		PortletURL portletURL = getAssetRendererFactory().getURLView(
+			liferayPortletResponse, windowState);
+
+		portletURL.setParameter("struts_action", "/bookmarks/view_entry");
+		portletURL.setParameter("entryId", String.valueOf(_entry.getEntryId()));
+		portletURL.setWindowState(windowState);
 
 		return portletURL;
 	}

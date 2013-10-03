@@ -36,9 +36,14 @@ public class JournalFolderActivityInterpreter
 
 	@Override
 	protected String getPath(
-		SocialActivity activity, ServiceContext serviceContext) {
+			SocialActivity activity, ServiceContext serviceContext)
+		throws Exception {
 
-		return "/journal/find_folder?folderId=" + activity.getClassPK();
+		long folderId = activity.getClassPK();
+
+		return addNoSuchEntryRedirect(
+			"/journal/find_folder?folderId=" + folderId,
+			activity.getClassName(), folderId, serviceContext);
 	}
 
 	@Override

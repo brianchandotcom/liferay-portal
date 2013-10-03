@@ -1,4 +1,10 @@
 <definition>
+	<command name="assertClick">
+		<case comparator="startsWith" locator-key1="TOOLBAR_">
+			<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" />

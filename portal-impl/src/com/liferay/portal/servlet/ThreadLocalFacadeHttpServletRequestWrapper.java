@@ -29,7 +29,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Shuyang Zhou
@@ -96,22 +95,6 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 			_nextHttpServletRequestThreadLocal.get();
 
 		return httpServletRequest.getRequestDispatcher(uri);
-	}
-
-	@Override
-	public HttpSession getSession() {
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)getRequest();
-
-		return httpServletRequest.getSession();
-	}
-
-	@Override
-	public HttpSession getSession(boolean create) {
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)getRequest();
-
-		return httpServletRequest.getSession(create);
 	}
 
 	@Override

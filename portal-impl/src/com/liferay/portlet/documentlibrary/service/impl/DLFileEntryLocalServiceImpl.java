@@ -284,17 +284,6 @@ public class DLFileEntryLocalServiceImpl
 
 		removeFileVersion(dlFileEntry, dlFileVersion);
 
-		if (dlFileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-				dlFileEntry.getFolderId());
-
-			dlFolder.setLastPostDate(new Date());
-
-			dlFolderPersistence.update(dlFolder);
-		}
-
 		return dlFileVersion;
 	}
 
@@ -401,19 +390,19 @@ public class DLFileEntryLocalServiceImpl
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
-		}
 
-		// Folder
+			// Folder
 
-		if (dlFileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (dlFileEntry.getFolderId() !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-				dlFileEntry.getFolderId());
+				DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
+					dlFileEntry.getFolderId());
 
-			dlFolder.setLastPostDate(dlFileEntry.getModifiedDate());
+				dlFolder.setLastPostDate(latestDLFileVersion.getModifiedDate());
 
-			dlFolderPersistence.update(dlFolder);
+				dlFolderPersistence.update(dlFolder);
+			}
 		}
 
 		// Workflow
@@ -582,13 +571,13 @@ public class DLFileEntryLocalServiceImpl
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					existingDLFileVersion.getSize(),
 					WorkflowConstants.STATUS_DRAFT,
-					serviceContext.getModifiedDate(), serviceContext);
+					serviceContext.getModifiedDate(null), serviceContext);
 			}
 			else {
 				long oldDLFileVersionId = dlFileVersion.getFileVersionId();
 
 				dlFileVersion = addFileVersion(
-					user, dlFileEntry, serviceContext.getModifiedDate(),
+					user, dlFileEntry, serviceContext.getModifiedDate(null),
 					dlFileVersion.getExtension(), dlFileVersion.getMimeType(),
 					dlFileVersion.getTitle(), dlFileVersion.getDescription(),
 					dlFileVersion.getChangeLog(),
@@ -621,17 +610,6 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
 				fileEntryId, dlFileVersionId, dlFileVersion.getFileVersionId(),
 				serviceContext);
-		}
-
-		if (dlFileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
-				dlFileEntry.getFolderId());
-
-			dlFolder.setLastPostDate(dlFileVersion.getModifiedDate());
-
-			dlFolderPersistence.update(dlFolder);
 		}
 
 		return dlFileEntry;
@@ -2426,8 +2404,9 @@ public class DLFileEntryLocalServiceImpl
 
 			// Folder
 
-			if (dlFileEntry.getFolderId() !=
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (!checkedOut &&
+				(dlFileEntry.getFolderId() !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
 				DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(
 					dlFileEntry.getFolderId());

@@ -71,13 +71,13 @@ public class JournalFeedLocalServiceImpl
 		feedId = StringUtil.toUpperCase(feedId.trim());
 		Date now = new Date();
 
-		validate(
-			user.getCompanyId(), groupId, feedId, autoFeedId, name, structureId,
-			targetLayoutFriendlyUrl, contentField);
-
 		if (autoFeedId) {
 			feedId = String.valueOf(counterLocalService.increment());
 		}
+
+		validate(
+			user.getCompanyId(), groupId, feedId, autoFeedId, name, structureId,
+			targetLayoutFriendlyUrl, contentField);
 
 		long id = counterLocalService.increment();
 

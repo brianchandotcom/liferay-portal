@@ -740,18 +740,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			emailAddress = emailAddressGenerator.generate(companyId, userId);
 		}
 
-		validate(
-			companyId, userId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, openId, firstName,
-			middleName, lastName, organizationIds);
-
-		if (!autoPassword) {
-			if (Validator.isNull(password1) || Validator.isNull(password2)) {
-				throw new UserPasswordException(
-					UserPasswordException.PASSWORD_INVALID);
-			}
-		}
-
 		if (autoScreenName) {
 			ScreenNameGenerator screenNameGenerator =
 				ScreenNameGeneratorFactory.getInstance();
@@ -764,6 +752,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				throw new SystemException(e);
 			}
 		}
+
+		validate(
+			companyId, userId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, openId, firstName,
+			middleName, lastName, organizationIds);
 
 		User defaultUser = getDefaultUser(companyId);
 
@@ -4075,19 +4068,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				autoScreenName = true;
 			}
 
-			validate(
-				companyId, user.getUserId(), autoPassword, password1, password2,
-				autoScreenName, screenName, emailAddress, openId, firstName,
-				middleName, lastName, null);
-
-			if (!autoPassword) {
-				if (Validator.isNull(password1) ||
-					Validator.isNull(password2)) {
-						throw new UserPasswordException(
-							UserPasswordException.PASSWORD_INVALID);
-				}
-			}
-
 			if (autoScreenName) {
 				ScreenNameGenerator screenNameGenerator =
 					ScreenNameGeneratorFactory.getInstance();
@@ -4100,6 +4080,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					throw new SystemException(e);
 				}
 			}
+
+			validate(
+				companyId, user.getUserId(), autoPassword, password1, password2,
+				autoScreenName, screenName, emailAddress, openId, firstName,
+				middleName, lastName, null);
 
 			FullNameGenerator fullNameGenerator =
 				FullNameGeneratorFactory.getInstance();
@@ -5858,6 +5843,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (!autoPassword) {
+			if (Validator.isNull(password1) || Validator.isNull(password2)) {
+				throw new UserPasswordException(
+					UserPasswordException.PASSWORD_INVALID);
+			}
+
 			PasswordPolicy passwordPolicy =
 				passwordPolicyLocalService.getDefaultPasswordPolicy(companyId);
 

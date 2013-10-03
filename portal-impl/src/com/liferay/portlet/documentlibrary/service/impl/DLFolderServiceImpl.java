@@ -91,7 +91,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status, int start, int end)
 		throws PortalException, SystemException {
 
-		if (DLFolderPermission.contains(
+		if (!DLFolderPermission.contains(
 				getPermissionChecker(), groupId, folderId, ActionKeys.VIEW)) {
 
 			return Collections.emptyList();

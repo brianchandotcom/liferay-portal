@@ -17,6 +17,6 @@
 	<command name="viewNoPermissionCP">
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Message Boards"/>
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category. " />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 </definition>

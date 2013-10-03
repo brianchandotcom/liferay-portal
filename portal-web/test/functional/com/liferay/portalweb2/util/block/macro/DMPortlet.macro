@@ -6,6 +6,6 @@
 
 	<command name="viewNoPermissionCP">
 		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Documents and Media"/>
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder. " />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 </definition>

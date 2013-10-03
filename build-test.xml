@@ -2837,6 +2837,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				<if>
 					<and>
 						<or>
+							<contains string="${hook.plugins.includes}" substring="so-hook" />
 							<contains string="${simple.server.dir}" substring="glassfish" />
 							<contains string="${simple.server.dir}" substring="jonas" />
 						</or>

@@ -868,6 +868,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(4px);
 	}
 
+	.alert {
+		margin: 20px 0;
+	}
+
 	/* ---------- Extras dockbar ---------- */
 
 	.dockbar {

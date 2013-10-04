@@ -117,8 +117,6 @@ userGroupRoles.addAll(siteRoles);
 	</aui:script>
 </c:if>
 
-<br /><br />
-
 <h3><liferay-ui:message key="inherited-roles" /></h3>
 
 <liferay-ui:search-container
@@ -168,8 +166,6 @@ userGroupRoles.addAll(siteRoles);
 
 	<liferay-ui:search-iterator paginate="<%= false %>" />
 </liferay-ui:search-container>
-
-<br /><br />
 
 <h3><liferay-ui:message key="organization-roles" /></h3>
 
@@ -284,8 +280,6 @@ userGroupRoles.addAll(siteRoles);
 		);
 	</aui:script>
 </c:if>
-
-<br /><br />
 
 <h3><liferay-ui:message key="site-roles" /></h3>
 

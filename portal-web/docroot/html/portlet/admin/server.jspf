@@ -101,8 +101,6 @@ serverURL.setParameter("tabs3", tabs3);
 							<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-categories") %>' />
 						</div>
 
-						<br /><br />
-
 						<%
 						List<String> headerNames = new ArrayList<String>();
 
@@ -198,8 +196,6 @@ serverURL.setParameter("tabs3", tabs3);
 
 						<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 
-						<br />
-
 						<aui:button-row>
 
 							<%
@@ -221,8 +217,6 @@ serverURL.setParameter("tabs3", tabs3);
 				<div class="form-search">
 					<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 				</div>
-
-				<br /><br />
 
 				<%
 				List<String> headerNames = new ArrayList<String>();
@@ -785,8 +779,6 @@ serverURL.setParameter("tabs3", tabs3);
 					<b><liferay-ui:message key="output" /></b>
 
 					<pre><%= scriptOutput %></pre>
-
-					<br /><br />
 				</c:if>
 
 				<aui:button-row>

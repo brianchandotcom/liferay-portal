@@ -90,7 +90,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assi
 
 	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-	<br /><br />
-
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>

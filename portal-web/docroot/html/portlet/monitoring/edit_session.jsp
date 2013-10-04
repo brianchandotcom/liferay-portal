@@ -46,8 +46,6 @@ userTracker = userTracker.toEscapedModel();
 		<c:when test="<%= userTracker == null %>">
 			<liferay-ui:message key="session-id-not-found" />
 
-			<br /><br />
-
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</c:when>
 		<c:otherwise>

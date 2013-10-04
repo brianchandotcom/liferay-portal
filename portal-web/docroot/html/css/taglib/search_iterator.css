@@ -2,6 +2,7 @@
 @import "mixins";
 
 .lfr-search-container {
+	margin-top: 1.5em;
 	overflow: auto;
 }
 

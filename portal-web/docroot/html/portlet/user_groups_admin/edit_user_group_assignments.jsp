@@ -114,8 +114,6 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 
 		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-		<br /><br />
-
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>

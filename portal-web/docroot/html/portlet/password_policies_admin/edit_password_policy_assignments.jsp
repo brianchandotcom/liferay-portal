@@ -129,8 +129,6 @@ portletURL.setParameter("tabs3", tabs3);
 
 				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-				<br /><br />
-
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>
 		</c:when>
@@ -231,8 +229,6 @@ portletURL.setParameter("tabs3", tabs3);
 				%>
 
 				<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-				<br /><br />
 
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>

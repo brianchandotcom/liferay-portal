@@ -103,7 +103,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 
 	<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="update-associations" />
 
-	<br /><br />
-
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>

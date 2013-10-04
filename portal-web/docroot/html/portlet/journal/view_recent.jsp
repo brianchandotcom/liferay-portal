@@ -18,8 +18,6 @@
 
 <%= LanguageUtil.format(pageContext, "this-page-displays-the-last-x-web-content,-structures,-and-templates-that-you-accessed", String.valueOf(JournalUtil.MAX_STACK_SIZE), false) %>
 
-<br /><br />
-
 <table class="lfr-table" width="100%">
 <tr>
 	<td class="lfr-top" width="33%">

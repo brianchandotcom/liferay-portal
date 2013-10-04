@@ -90,8 +90,6 @@ String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupGroupRole
 
 <aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-<br /><br />
-
 <%
 List resultRows = searchContainer.getResultRows();
 

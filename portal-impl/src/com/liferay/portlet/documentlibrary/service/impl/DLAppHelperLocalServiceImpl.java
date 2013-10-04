@@ -1545,7 +1545,8 @@ public class DLAppHelperLocalServiceImpl
 					return null;
 				}
 
-			});
+			}
+		);
 	}
 
 	protected long getFileEntryTypeId(FileEntry fileEntry) {

@@ -752,7 +752,7 @@ AUI.add(
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'icon-align-justify',
+					iconClass: 'icon-edit-sign',
 					label: Liferay.Language.get('html'),
 					type: 'ddm-text-html'
 				},

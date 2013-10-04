@@ -1266,7 +1266,12 @@ public class SeleniumBuilderFileUtil {
 			String attributeName = attribute.getName();
 			String attributeValue = attribute.getValue();
 
-			if (Validator.isNull(attributeValue)) {
+			List<String> acceptedNullAttributes = ListUtil.fromArray(
+				new String[] {"value", "message", "arg1", "arg2"});
+
+			if (!acceptedNullAttributes.contains(attributeName) &&
+				Validator.isNull(attributeValue)) {
+
 				throwValidationException(
 					1006, fileName, element, attributeName);
 			}
@@ -1430,9 +1435,9 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 
-		String varText = element.getText();
+		boolean elementHasInnerText = element.hasContent();
 
-		if (Validator.isNull(varText) &&
+		if (!elementHasInnerText &&
 			!attributeMap.containsKey("locator-key") &&
 			!attributeMap.containsKey("path") &&
 			!attributeMap.containsKey("value")) {
@@ -1462,8 +1467,8 @@ public class SeleniumBuilderFileUtil {
 		else {
 			String varValue = attributeMap.get("value");
 
-			if (Validator.isNotNull(varText)) {
-				varValue = varText;
+			if (elementHasInnerText) {
+				varValue = element.getText();
 			}
 
 			Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");

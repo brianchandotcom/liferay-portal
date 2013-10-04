@@ -84,7 +84,7 @@ public class DoPrivilegedHandler
 
 			return _bean.equals(object);
 		}
-		else if (!SecurityManagerUtil.isActive() || _isNotPrivileged(method)) {
+		else if (_isNotPrivileged(method)) {
 			return method.invoke(_bean, arguments);
 		}
 

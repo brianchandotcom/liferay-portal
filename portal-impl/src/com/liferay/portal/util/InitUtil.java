@@ -118,7 +118,7 @@ public class InitUtil {
 
 		SecurityManagerUtil.init();
 
-		if (!SecurityManagerUtil.isPACLDisabled()) {
+		if (SecurityManagerUtil.ENABLED) {
 			com.liferay.portal.kernel.util.PropsUtil.setProps(
 				DoPrivilegedUtil.wrap(
 					com.liferay.portal.kernel.util.PropsUtil.getProps()));

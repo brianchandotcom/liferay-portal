@@ -35,11 +35,6 @@ portletURL.setParameter("eventName", eventName);
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<liferay-util:include page="/html/portlet/asset_browser/toolbar.jsp">
-	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />
-</liferay-util:include>
-
 <div class="asset-search">
 	<aui:form action="<%= portletURL %>" method="post" name="selectAssetFm">
 		<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
@@ -47,9 +42,20 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<liferay-ui:search-container
 			searchContainer="<%= new AssetSearch(renderRequest, portletURL) %>"
 		>
-			<liferay-ui:search-form
-				page="/html/portlet/asset_publisher/asset_search.jsp"
-			/>
+			<aui:nav-bar>
+				<aui:nav>
+					<liferay-util:include page="/html/portlet/asset_browser/toolbar.jsp">
+						<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<liferay-util:param name="typeSelection" value="<%= typeSelection %>" />
+					</liferay-util:include>
+				</aui:nav>
+
+				<aui:nav-bar-search cssClass="pull-right">
+					<liferay-ui:search-form
+						page="/html/portlet/asset_publisher/asset_search.jsp"
+					/>
+				</aui:nav-bar-search>
+			</aui:nav-bar>
 
 			<%
 			AssetSearchTerms searchTerms = (AssetSearchTerms)searchContainer.getSearchTerms();

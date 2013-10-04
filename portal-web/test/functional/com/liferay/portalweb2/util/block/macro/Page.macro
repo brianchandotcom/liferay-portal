@@ -78,7 +78,7 @@
 		</if>
 
 		<if>
-			<condition action="Home#isElementPresent" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+			<isset var="portletName" />
 			<then>
 				<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
 			</then>

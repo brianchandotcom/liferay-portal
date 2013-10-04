@@ -24,6 +24,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
@@ -96,6 +97,8 @@ public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

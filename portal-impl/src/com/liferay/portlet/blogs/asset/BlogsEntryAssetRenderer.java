@@ -26,6 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
@@ -89,6 +90,8 @@ public class BlogsEntryAssetRenderer
 
 	@Override
 	public String getPortletId() {
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
 		return assetRendererFactory.getPortletId();
 	}
 
@@ -151,6 +154,8 @@ public class BlogsEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

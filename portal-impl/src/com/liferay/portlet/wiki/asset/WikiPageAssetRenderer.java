@@ -24,6 +24,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -177,6 +178,8 @@ public class WikiPageAssetRenderer
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

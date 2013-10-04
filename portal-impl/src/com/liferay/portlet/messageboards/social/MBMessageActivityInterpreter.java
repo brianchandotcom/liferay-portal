@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -43,8 +44,9 @@ public class MBMessageActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
-			activity.getClassPK());
+		long classPK = activity.getClassPK();
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 
 		if (message.getCategoryId() <= 0) {
 			return StringPool.BLANK;
@@ -58,6 +60,10 @@ public class MBMessageActivityInterpreter
 		sb.append(message.getCategoryId());
 
 		String categoryLink = sb.toString();
+
+		categoryLink = addNoSuchEntryRedirect(
+			categoryLink, MBCategory.class.getName(), message.getCategoryId(),
+			serviceContext);
 
 		return wrapLink(categoryLink, "go-to-category", serviceContext);
 	}

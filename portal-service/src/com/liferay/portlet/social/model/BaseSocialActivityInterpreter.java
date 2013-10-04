@@ -354,17 +354,18 @@ public abstract class BaseSocialActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			activity.getClassName());
-
+		String className = activity.getClassName();
 		long classPK = activity.getClassPK();
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			className);
 
 		if ((trashHandler != null) &&
 			(trashHandler.isInTrash(classPK) ||
 			 trashHandler.isInTrashContainer(classPK))) {
 
 			PortletURL portletURL = TrashUtil.getViewContentURL(
-				serviceContext.getRequest(), activity.getClassName(), classPK);
+				serviceContext.getRequest(), className, classPK);
 
 			if (portletURL == null) {
 				return null;
@@ -378,6 +379,8 @@ public abstract class BaseSocialActivityInterpreter
 		if (Validator.isNull(path)) {
 			return null;
 		}
+
+		path = addNoSuchEntryRedirect(path, className, classPK, serviceContext);
 
 		if (!path.startsWith(StringPool.SLASH)) {
 			return path;

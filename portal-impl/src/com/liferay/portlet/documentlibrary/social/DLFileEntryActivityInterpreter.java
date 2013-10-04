@@ -24,6 +24,7 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
@@ -74,6 +75,10 @@ public class DLFileEntryActivityInterpreter
 		sb.append(StringPool.SPACE);
 
 		String folderLink = getFolderLink(fileEntry, serviceContext);
+
+		folderLink = addNoSuchEntryRedirect(
+			folderLink, DLFolder.class.getName(), fileEntry.getFolderId(),
+			serviceContext);
 
 		sb.append(wrapLink(folderLink, "go-to-folder", serviceContext));
 

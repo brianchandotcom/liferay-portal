@@ -136,6 +136,8 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public String getPortletId() {
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
 		return assetRendererFactory.getPortletId();
 	}
 
@@ -238,6 +240,8 @@ public class DLFileEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)
 		throws Exception {
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

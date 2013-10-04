@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 
 import java.net.URL;
 
+import java.security.AccessControlException;
 import java.security.AccessController;
 import java.security.CodeSource;
 import java.security.Permission;
@@ -136,46 +137,29 @@ public class PortalPolicy extends Policy {
 		try {
 			_started.set(true);
 
+			PermissionCollection permissionCollection = null;
+
 			if (!(permission instanceof PACLUtil.Permission) &&
-				((protectionDomain.getClassLoader() == null) ||
-				 !_paclPolicy.isCheckablePermission(permission))) {
+				!_paclPolicy.isCheckablePermission(permission)) {
 
 				return _checkWithParentPolicy(protectionDomain, permission);
 			}
 
-			Object key = _getKey(protectionDomain);
+			if (permissionCollection instanceof
+					PortalPermissionCollection) {
 
-			PermissionCollection permissionCollection = getPermissions(
-				protectionDomain);
-
-			if (permissionCollection != null) {
-				if (permissionCollection.implies(permission)) {
-					return _checkWithParentPolicy(protectionDomain, permission);
-				}
-				else if (_checkWithPACLPolicyPolicy(
-							protectionDomain,
-							permission, permissionCollection)) {
-
-					return _checkWithParentPolicy(protectionDomain, permission);
-				}
-
-				return false;
-			}
-
-			permissionCollection = getPermissions(protectionDomain);
-
-			_permissionCollections.putIfAbsent(key, permissionCollection);
-
-			if (permissionCollection.implies(permission)) {
-				return _checkWithParentPolicy(protectionDomain, permission);
-			}
-			else if (_checkWithPACLPolicyPolicy(
+				if (permissionCollection.implies(permission) ||
+					_checkWithPACLPolicyPolicy(
 						protectionDomain, permission, permissionCollection)) {
 
-				return _checkWithParentPolicy(protectionDomain, permission);
+					return true;
+				}
+
+				throw new AccessControlException(
+					"access denied " + permission, permission);
 			}
 
-			return false;
+			return _checkWithParentPolicy(protectionDomain, permission);
 		}
 		finally {
 			_started.set(false);
@@ -197,10 +181,6 @@ public class PortalPolicy extends Policy {
 	private boolean _checkWithPACLPolicyPolicy(
 		ProtectionDomain protectionDomain, Permission permission,
 		PermissionCollection permissionCollection) {
-
-		if (!(permissionCollection instanceof PortalPermissionCollection)) {
-			return false;
-		}
 
 		PortalPermissionCollection portalPermissionCollection =
 			(PortalPermissionCollection)permissionCollection;

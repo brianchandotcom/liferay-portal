@@ -14,6 +14,7 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="${pageTypeSite}" />
+			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<var name="key_entryTitle" value="${entryTitle}" />

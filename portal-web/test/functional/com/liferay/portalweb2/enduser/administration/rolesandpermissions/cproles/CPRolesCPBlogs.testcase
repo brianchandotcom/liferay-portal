@@ -21,7 +21,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewBlogsEntryGuestInline">
+	<command name="ViewBlogsEntryRegRoleInline">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="inlinePermissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
@@ -30,7 +30,7 @@
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 		<var name="permissionNavigationValue" value="Blogs" />
-		<var name="portletName" value="Blogs" />
+		<var name="portletName1" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -38,7 +38,7 @@
 		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="${portletName1}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -71,6 +71,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
+			<var name="portletName" value="${portletName1}" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -83,9 +84,7 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		<execute macro="Page#gotoContentCP" />
 
 		<execute macro="BlogsEntry#viewDefaultCP">
 			<var name="entryTitle" value="${entryTitle}" />
@@ -97,13 +96,14 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="${portletName1}" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsEntryCP">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
+			<var name="portletName" value="${portletName1}" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -116,9 +116,7 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
+		<execute macro="Page#gotoContentCP" />
 
 		<execute macro="BlogsEntry#viewCP">
 			<var name="entryContent" value="${entryContent}" />
@@ -131,7 +129,7 @@
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 		<var name="permissionNavigationValue" value="Blogs" />
-		<var name="portletName" value="Blogs" />
+		<var name="portletName1" value="Blogs" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -139,7 +137,7 @@
 		<var name="userScreenName" value="usersn" />
 
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="${portletName1}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -163,9 +161,7 @@
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="${portletName}" />
-		</execute>
+		<execute macro="Page#gotoContentCP" />
 
 		<execute macro="BlogsPortlet#viewNoPermissionCP" />
 
@@ -200,7 +196,7 @@
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 		<var name="permissionNavigationValue" value="Blogs" />
-		<var name="portletName" value="Blogs" />
+		<var name="portletName1" value="Blogs" />
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
 		<var name="siteName" value="Site Name" />
@@ -212,7 +208,7 @@
 
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="${portletName1}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
 			<var name="siteName" value="${siteName}" />
@@ -244,7 +240,6 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="pageType" value="Site" />
-			<var name="portletName" value="${portletName}" />
 		</execute>
 
 		<execute macro="BlogsPortlet#viewNoPermissionCP" />

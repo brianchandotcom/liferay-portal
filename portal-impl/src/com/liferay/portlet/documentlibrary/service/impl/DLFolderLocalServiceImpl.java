@@ -639,6 +639,22 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getFoldersCount(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders)
+		throws SystemException {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.countByG_P_H_S(
+				groupId, parentFolderId, false, status);
+		}
+		else {
+			return dlFolderPersistence.countByG_M_P_H_S(
+				groupId, false, parentFolderId, false, status);
+		}
+	}
+
+	@Override
 	public DLFolder getMountFolder(long repositoryId)
 		throws PortalException, SystemException {
 

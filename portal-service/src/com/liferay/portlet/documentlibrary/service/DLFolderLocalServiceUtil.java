@@ -746,6 +746,14 @@ public class DLFolderLocalServiceUtil {
 				   .getFoldersCount(groupId, parentFolderId, includeMountfolders);
 	}
 
+	public static int getFoldersCount(long groupId, long parentFolderId,
+		int status, boolean includeMountfolders)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersCount(groupId, parentFolderId, status,
+			includeMountfolders);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFolder getMountFolder(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

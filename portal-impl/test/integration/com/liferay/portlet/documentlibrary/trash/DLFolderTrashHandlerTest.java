@@ -30,7 +30,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -162,7 +161,7 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
 
-		return DLFolderServiceUtil.getFoldersCount(
+		return DLFolderLocalServiceUtil.getFoldersCount(
 			parentDLFolder.getGroupId(), parentDLFolder.getFolderId(),
 			WorkflowConstants.STATUS_APPROVED, false);
 	}

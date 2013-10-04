@@ -602,7 +602,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				sb.replace(beginPos, endPos, "[$dl-reference=" + path + "$]");
 
-				_deleteTimestampFromUrlParams(sb, beginPos);
+				deleteTimestampFromUrlParams(sb, beginPos);
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
@@ -1511,6 +1511,31 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 	}
 
+	protected void deleteTimestampFromUrlParams(
+		StringBuilder sb, int beginPos) {
+
+		beginPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
+
+		if ((beginPos == -1) || (beginPos == (sb.length() - 1)) ||
+			(sb.charAt(beginPos + 1) != CharPool.QUESTION)) {
+
+			return;
+		}
+
+		int endPos = StringUtil.indexOfAny(
+			sb.toString(), _DL_REFERENCE_LEGACY_STOP_CHARS, beginPos + 2);
+
+		if (endPos == -1) {
+			return;
+		}
+
+		String urlParams = sb.substring(beginPos + 1, endPos);
+
+		urlParams = HttpUtil.removeParameter(urlParams, "t");
+
+		sb.replace(beginPos + 1, endPos, urlParams);
+	}
+
 	protected Map<String, String[]> getDLReferenceParameters(
 		PortletDataContext portletDataContext, String content, int beginPos,
 		int endPos) {
@@ -1769,31 +1794,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return null;
-	}
-
-	private void _deleteTimestampFromUrlParams(StringBuilder sb, int beginPos) {
-		int closeBracketPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
-
-		if ((closeBracketPos == -1) || (closeBracketPos == (sb.length() - 1)) ||
-			(sb.charAt(closeBracketPos + 1) != CharPool.QUESTION)) {
-
-			return;
-		}
-
-		int questionPos = closeBracketPos + 1;
-
-		int endPosParams = StringUtil.indexOfAny(
-			sb.toString(), _DL_REFERENCE_LEGACY_STOP_CHARS, questionPos + 1);
-
-		if (endPosParams == -1) {
-			return;
-		}
-
-		String urlParams = sb.substring(questionPos, endPosParams);
-
-		urlParams = HttpUtil.removeParameter(urlParams, "t");
-
-		sb.replace(questionPos, endPosParams, urlParams);
 	}
 
 	private static final char[] _DL_REFERENCE_LEGACY_STOP_CHARS = {

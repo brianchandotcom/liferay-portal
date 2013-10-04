@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-auto-fields',
 	function(A) {
 		var AArray = A.Array;
+		var AObject = A.Object;
 		var Lang = A.Lang;
 
 		var CSS_AUTOROW_CONTROLS = 'lfr-autorow-controls';
@@ -198,8 +199,45 @@ AUI.add(
 						if (deleteRow) {
 							node.hide();
 
+							var rules;
+
+							var deletedRules = {};
+
+							var formValidator = instance._getFormValidator(node);
+
+							if (formValidator) {
+								var errors = formValidator.errors;
+
+								rules = formValidator.get('rules');
+
+								node.all('input, select, textarea').each(
+									function(item, index, collection) {
+										var name = item.attr('name') || item.attr('id');
+
+										if (rules && rules[name]) {
+											deletedRules[name] = rules[name];
+
+											delete rules[name];
+										}
+
+										if (errors && errors[name]) {
+											delete errors[name];
+										}
+									}
+								);
+							}
+
 							instance._undoManager.add(
 								function(stateData) {
+									if (rules) {
+										AObject.each(
+											deletedRules,
+											function(item, index, collection) {
+												rules[index] = item;
+											}
+										);
+									}
+
 									node.show();
 								}
 							);
@@ -211,6 +249,8 @@ AUI.add(
 									guid: instance._guid
 								}
 							);
+
+							formValidator.validate();
 						}
 					},
 
@@ -335,29 +375,25 @@ AUI.add(
 						var clone = currentRow.clone();
 						var guid = (++instance._guid);
 
-						var formId = currentRow.ancestor('form').attr('id');
-
-						var clonedRow;
+						var formValidator = instance._getFormValidator(node);
 
 						if (instance.url) {
 							clonedRow = instance._createCloneFromURL(clone, guid);
 						}
 						else {
-							clonedRow = instance._createCloneFromMarkup(clone, guid, formId);
+							clonedRow = instance._createCloneFromMarkup(clone, guid, formValidator);
 						}
 
 						return clonedRow;
 					},
 
-					_createCloneFromMarkup: function(node, guid, formId) {
+					_createCloneFromMarkup: function(node, guid, formValidator) {
 						var instance = this;
-
-						var form = Liferay.Form.get(formId);
 
 						var rules;
 
-						if (form && form.formValidator) {
-							rules = form.formValidator.get('rules');
+						if (formValidator) {
+							rules = formValidator.get('rules');
 						}
 
 						node.all('input, select, textarea, span').each(
@@ -430,6 +466,22 @@ AUI.add(
 						);
 
 						return node;
+					},
+
+					_getFormValidator: function(node) {
+						var instance = this;
+
+						var formValidator;
+
+						var form = node.ancestor('form');
+
+						if (form) {
+							var formId = form.attr('id');
+
+							formValidator = Liferay.Form.get(formId).formValidator;
+						}
+
+						return formValidator
 					},
 
 					_isHiddenRow: function(row) {

@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,8 +47,10 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -87,6 +91,13 @@ public class ComboServlet extends HttpServlet {
 		Set<String> modulePathsSet = new LinkedHashSet<String>();
 
 		Enumeration<String> enu = request.getParameterNames();
+
+		if (ServerDetector.isWebSphere()) {
+			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+				request.getQueryString());
+
+			enu =  Collections.enumeration(parameterMap.keySet());
+		}
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();

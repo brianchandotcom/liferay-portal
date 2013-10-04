@@ -26,8 +26,10 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import java.security.AccessController;
+import java.security.CodeSource;
 import java.security.Policy;
 import java.security.PrivilegedAction;
+import java.security.ProtectionDomain;
 
 import java.util.List;
 import java.util.Map;
@@ -69,8 +71,30 @@ public class PACLPolicyManager {
 	}
 
 	public static PACLPolicy getPACLPolicy(ClassLoader classLoader) {
+		if (classLoader == null) {
+			return null;
+		}
+
 		return AccessController.doPrivileged(
 			new PACLPolicyPrivilegedAction(classLoader));
+	}
+
+	public static PACLPolicy getPACLPolicy(ProtectionDomain protectionDomain) {
+		if (protectionDomain == null) {
+			return null;
+		}
+
+		return AccessController.doPrivileged(
+			new PACLPolicyPrivilegedAction(protectionDomain));
+	}
+
+	public static PACLPolicy getPACLPolicy(URL location) {
+		if (location == null) {
+			return null;
+		}
+
+		return AccessController.doPrivileged(
+			new PACLPolicyPrivilegedAction(location));
 	}
 
 	public static void register(
@@ -165,8 +189,40 @@ public class PACLPolicyManager {
 			_classLoader = classLoader;
 		}
 
+		public PACLPolicyPrivilegedAction(ProtectionDomain protectionDomain) {
+			_classLoader = protectionDomain.getClassLoader();
+
+			CodeSource codeSource = protectionDomain.getCodeSource();
+
+			if (codeSource == null) {
+				return;
+			}
+
+			_location = codeSource.getLocation();
+		}
+
+		public PACLPolicyPrivilegedAction(URL location) {
+			_location = location;
+		}
+
 		@Override
 		public PACLPolicy run() {
+			PACLPolicy paclPolicy = getFromClassLoader();
+
+			if ((paclPolicy != null) || (_classLoader != null) ||
+				(_location == null)) {
+
+				return paclPolicy;
+			}
+
+			return _urlPACLPolicies.get(new URLWrapper(_location));
+		}
+
+		private PACLPolicy getFromClassLoader() {
+			if (_classLoader == null) {
+				return null;
+			}
+
 			PACLPolicy paclPolicy = _classLoaderPACLPolicies.get(_classLoader);
 
 			while ((paclPolicy == null) && (_classLoader.getParent() != null)) {
@@ -179,6 +235,7 @@ public class PACLPolicyManager {
 		}
 
 		private ClassLoader _classLoader;
+		private URL _location;
 
 	}
 

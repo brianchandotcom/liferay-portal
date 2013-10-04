@@ -176,6 +176,7 @@
 	position: absolute;
 	right: 0;
 	top: 0;
+	z-index: 500;
 }
 
 .lfr-has-device-preview {

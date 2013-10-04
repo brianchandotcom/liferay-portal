@@ -29,7 +29,6 @@ import java.security.Policy;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
-import java.security.Provider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,17 +58,6 @@ public class PortalPolicy extends Policy {
 						" as well as get the protection domains of classes",
 				pae.getException());
 		}
-	}
-
-	@Override
-	public Parameters getParameters() {
-		Parameters parameters = null;
-
-		if (_policy != null) {
-			parameters = _policy.getParameters();
-		}
-
-		return parameters;
 	}
 
 	@Override
@@ -128,28 +116,6 @@ public class PortalPolicy extends Policy {
 		permissionCollection.add(_allPermission);
 
 		return permissionCollection;
-	}
-
-	@Override
-	public Provider getProvider() {
-		Provider provider = null;
-
-		if (_policy != null) {
-			provider = _policy.getProvider();
-		}
-
-		return provider;
-	}
-
-	@Override
-	public String getType() {
-		String type = null;
-
-		if (_policy != null) {
-			type = _policy.getType();
-		}
-
-		return type;
 	}
 
 	@Override

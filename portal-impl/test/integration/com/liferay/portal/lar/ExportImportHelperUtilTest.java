@@ -503,7 +503,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	protected List<String> getURLs(String content) {
 		Pattern pattern = Pattern.compile(
-			"(?:href=|\\{|\\[)(.*?)(?:>|\\}|\\]|Link\\]\\])");
+			"(?:href=|\\{|\\[[^$])(.*?)(?:>|\\}|[^$]\\]|Link\\]\\])");
 
 		Matcher matcher = pattern.matcher(content);
 

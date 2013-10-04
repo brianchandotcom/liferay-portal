@@ -14,15 +14,27 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.lang.PortalSecurityManager;
+import com.liferay.portal.security.lang.SecurityManagerUtil;
+import com.liferay.portal.util.PropsValues;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.security.AccessController;
+import java.security.Policy;
 import java.security.PrivilegedAction;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -64,22 +76,87 @@ public class PACLPolicyManager {
 	public static void register(
 		ClassLoader classLoader, PACLPolicy paclPolicy) {
 
-		_paclPolicies.put(classLoader, paclPolicy);
+		List<URL> urLs = paclPolicy.getURLs();
+
+		if (classLoader instanceof URLClassLoader) {
+			URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
+
+			for (URL url : urlClassLoader.getURLs()) {
+				String path = url.getPath();
+
+				if (path.startsWith(PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR)) {
+					continue;
+				}
+
+				urLs.add(url);
+
+				_urlPACLPolicies.put(new URLWrapper(url), paclPolicy);
+			}
+		}
+
+		ServletContext servletContext = ServletContextPool.get(
+			paclPolicy.getServletContextName());
+
+		String realPath = servletContext.getRealPath(StringPool.SLASH);
+
+		if (realPath.endsWith(StringPool.SLASH)) {
+			realPath = realPath.substring(0, realPath.length() - 1);
+		}
+
+		try {
+			URL url = new URL("file", "", -1, realPath);
+
+			urLs.add(url);
+
+			_urlPACLPolicies.put(new URLWrapper(url), paclPolicy);
+
+			url = new URL("file", "", -1, realPath + StringPool.SLASH);
+
+			urLs.add(url);
+
+			_urlPACLPolicies.put(new URLWrapper(url), paclPolicy);
+
+			url = new URL("file", "", -1, realPath + "/WEB-INF/classes/*");
+
+			urLs.add(url);
+
+			_urlPACLPolicies.put(new URLWrapper(url), paclPolicy);
+		}
+		catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+
+		_classLoaderPACLPolicies.put(classLoader, paclPolicy);
+
+		refresh();
 	}
 
 	public static void unregister(ClassLoader classLoader) {
-		PACLPolicy paclPolicy = _paclPolicies.remove(classLoader);
+		PACLPolicy paclPolicy = _classLoaderPACLPolicies.remove(classLoader);
 
-		if ((paclPolicy == null) || !paclPolicy.isActive()) {
-			return;
+		for (URL url : paclPolicy.getURLs()) {
+			_urlPACLPolicies.remove(url);
 		}
+
+		refresh();
 	}
 
+	private static void refresh() {
+		PortalSecurityManager portalSecurityManager =
+			SecurityManagerUtil.getPortalSecurityManager();
+
+		Policy policy = portalSecurityManager.getPolicy();
+
+		policy.refresh();
+	}
+
+	private static Map<ClassLoader, PACLPolicy> _classLoaderPACLPolicies =
+		new ConcurrentHashMap<ClassLoader, PACLPolicy>();
 	private static PACLPolicy _defaultPACLPolicy = new InactivePACLPolicy(
 		StringPool.BLANK, PACLPolicyManager.class.getClassLoader(),
 		new Properties());
-	private static Map<ClassLoader, PACLPolicy> _paclPolicies =
-		new HashMap<ClassLoader, PACLPolicy>();
+	private static Map<URLWrapper, PACLPolicy> _urlPACLPolicies =
+		new ConcurrentHashMap<URLWrapper, PACLPolicy>();
 
 	private static class PACLPolicyPrivilegedAction
 		implements PrivilegedAction<PACLPolicy> {
@@ -90,12 +167,12 @@ public class PACLPolicyManager {
 
 		@Override
 		public PACLPolicy run() {
-			PACLPolicy paclPolicy = _paclPolicies.get(_classLoader);
+			PACLPolicy paclPolicy = _classLoaderPACLPolicies.get(_classLoader);
 
 			while ((paclPolicy == null) && (_classLoader.getParent() != null)) {
 				_classLoader = _classLoader.getParent();
 
-				paclPolicy = _paclPolicies.get(_classLoader);
+				paclPolicy = _classLoaderPACLPolicies.get(_classLoader);
 			}
 
 			return paclPolicy;

@@ -342,8 +342,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			"true"
 		},
 		new String[] {
-			"MBThreadFlag", "threadFlagId", "threadId", "MBThread", "threadId",
-			"true"
+			"MBThreadFlag", "threadFlagId", "userId", "User_", "userId", "true",
 		},
 		new String[] {
 			"Organization_", "organizationId", null, null, null, "true"

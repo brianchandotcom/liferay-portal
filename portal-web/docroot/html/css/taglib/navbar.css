@@ -42,7 +42,8 @@
 				padding: 5px;
 
 				.btn, .btn-link {
-					display: none;
+					clip: rect(0, 0, 0, 0);
+					position: absolute;
 				}
 
 				.form-search {

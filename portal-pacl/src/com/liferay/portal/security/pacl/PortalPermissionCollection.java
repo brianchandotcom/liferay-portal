@@ -21,29 +21,16 @@ import java.security.PermissionCollection;
 import java.security.Policy;
 import java.security.ProtectionDomain;
 
-import java.util.Collections;
-import java.util.Enumeration;
-
 /**
  * @author Raymond Augé
  */
-public class PortalPermissionCollection extends PermissionCollection {
+public class PortalPermissionCollection extends LenientPermissionCollection {
 
 	public PortalPermissionCollection(
 		PACLPolicy paclPolicy, PermissionCollection permissionCollection) {
 
 		_paclPolicy = paclPolicy;
 		_permissionCollection = permissionCollection;
-	}
-
-	@Override
-	public void add(Permission permission) {
-		throw new SecurityException();
-	}
-
-	@Override
-	public Enumeration<Permission> elements() {
-		return Collections.enumeration(Collections.<Permission>emptyList());
 	}
 
 	public ClassLoader getClassLoader() {

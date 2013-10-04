@@ -122,8 +122,7 @@ public class PortalPolicy extends Policy {
 			protectionDomain.getClassLoader());
 
 		if (paclPolicy != null) {
-			return new PortalPermissionCollection(
-				paclPolicy, permissionCollection);
+			return new PortalPermissionCollection(paclPolicy);
 		}
 
 		permissionCollection.add(_allPermission);

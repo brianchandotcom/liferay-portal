@@ -200,20 +200,20 @@ public class CompanyImpl extends CompanyBaseImpl {
 			return _virtualHostname;
 		}
 
-		try {
-			VirtualHost virtualHost =
-				VirtualHostLocalServiceUtil.fetchVirtualHost(getCompanyId(), 0);
+		VirtualHost virtualHost = null;
 
-			if (virtualHost == null) {
-				_virtualHostname = StringPool.BLANK;
-			}
-			else {
-				_virtualHostname = virtualHost.getHostname();
-			}
+		try {
+			virtualHost = VirtualHostLocalServiceUtil.fetchVirtualHost(
+				getCompanyId(), 0);
 		}
 		catch (Exception e) {
-			_virtualHostname = StringPool.BLANK;
 		}
+
+		if (virtualHost == null) {
+			return StringPool.BLANK;
+		}
+
+		_virtualHostname = virtualHost.getHostname();
 
 		return _virtualHostname;
 	}

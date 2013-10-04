@@ -592,8 +592,10 @@ $diamondSize: 12px;
 
 	/* ---------- Customization bar ---------- */
 
-	.controls-hidden .page-customization-bar {
-		display: none;
+	.controls-hidden {
+		.info-button, .page-customization-bar {
+			display: none;
+		}
 	}
 
 	.info-button {

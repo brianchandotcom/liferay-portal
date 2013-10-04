@@ -43,6 +43,12 @@
 		<execute selenium="clickAtAndWait" />
 	</command>
 
+	<command name="pauseClickAt">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute function="Click#clickAt" />
+	</command>
+
 	<command name="pauseMakeVisibleClickAt">
 		<execute selenium="pause" argument1="1000" />
 

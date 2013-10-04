@@ -619,6 +619,11 @@ public interface DLFolderLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(long groupId, long parentFolderId, int status,
+		boolean includeMountfolders)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFolder getMountFolder(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

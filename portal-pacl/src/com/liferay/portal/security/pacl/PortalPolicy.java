@@ -14,6 +14,12 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.security.pacl.permission.CheckMemberAccessPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 
 import java.lang.reflect.Field;
@@ -201,7 +207,14 @@ public class PortalPolicy extends Policy {
 	private boolean _checkWithParentPolicy(
 		ProtectionDomain protectionDomain, Permission permission) {
 
-		if (_policy != null) {
+		if ((_policy != null) &&
+			!(permission instanceof CheckMemberAccessPermission) &&
+			!(permission instanceof PortalHookPermission) &&
+			!(permission instanceof PortalMessageBusPermission) &&
+			!(permission instanceof PortalRuntimePermission) &&
+			!(permission instanceof PortalServicePermission) &&
+			!(permission instanceof PACLUtil.Permission)) {
+
 			return _policy.implies(protectionDomain, permission);
 		}
 

@@ -677,7 +677,7 @@ AUI.add(
 			}
 		);
 
-		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'form-builder-field-icon form-builder-field-icon-default';
+		LiferayFormBuilder.DEFAULT_ICON_CLASS = 'icon-fb-custom-field';
 
 		var AVAILABLE_FIELDS = {
 			DEFAULT: [
@@ -803,19 +803,19 @@ AUI.add(
 			DDM_TEMPLATE: [
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-paragraph',
+					iconClass: 'icon-fb-paragraph',
 					label: Liferay.Language.get('paragraph'),
 					type: 'ddm-paragraph'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-separator',
+					iconClass: 'icon-fb-separator',
 					label: Liferay.Language.get('separator'),
 					type: 'ddm-separator'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-fieldset',
+					iconClass: 'icon-fb-fieldset',
 					label: Liferay.Language.get('fieldset'),
 					type: 'fieldset'
 				}

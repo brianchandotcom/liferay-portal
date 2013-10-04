@@ -127,13 +127,15 @@ public abstract class BasePortletDataHandlerTestCase extends PowerMockito {
 			LongWrapper expectedModelAdditionCounter =
 				expectedModelAdditionCounters.get(manifestSummaryKey);
 
-			if (expectedModelAdditionCounter.getValue() == 0) {
+			LongWrapper modelAdditionCounter = modelAdditionCounters.get(
+				manifestSummaryKey);
+
+			if ((expectedModelAdditionCounter.getValue() == 0) &&
+				(modelAdditionCounter == null)) {
+
 				expectedModelAdditionCountersSize--;
 			}
 			else {
-				LongWrapper modelAdditionCounter = modelAdditionCounters.get(
-					manifestSummaryKey);
-
 				Assert.assertEquals(
 					expectedModelAdditionCounter.getValue(),
 					modelAdditionCounter.getValue());

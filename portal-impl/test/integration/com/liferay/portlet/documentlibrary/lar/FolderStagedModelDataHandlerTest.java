@@ -21,17 +21,14 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -83,43 +80,6 @@ public class FolderStagedModelDataHandlerTest
 			portletDataContext, exportedStagedModel);
 
 		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
-	}
-
-	@Test
-	@Transactional
-	public void testRepository() throws Exception {
-		initExport();
-
-		Map<String, List<StagedModel>> dependentStagedModelMap =
-			new HashMap<String, List<StagedModel>>();
-
-		Repository repository = DLAppTestUtil.addRepository(
-			stagingGroup.getGroupId());
-
-		addDependentStagedModel(
-			dependentStagedModelMap, Repository.class, repository);
-
-		Folder folder = DLAppLocalServiceUtil.getMountFolder(
-			repository.getRepositoryId());
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, folder);
-
-		validateExport(portletDataContext, folder, dependentStagedModelMap);
-
-		initImport();
-
-		Folder exportedFolder = (Folder)readExportedStagedModel(folder);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedFolder);
-
-		Repository importedRepository =
-			RepositoryLocalServiceUtil.getRepositoryByUuidAndGroupId(
-				repository.getUuid(), liveGroup.getGroupId());
-
-		DLAppLocalServiceUtil.getMountFolder(
-			importedRepository.getRepositoryId());
 	}
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()

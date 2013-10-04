@@ -180,15 +180,15 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 				repositoryPersistence.remove(repository);
 
 				repositoryEntryPersistence.removeByRepositoryId(repositoryId);
-
-				systemEventLocalService.addSystemEvent(
-					0, repository.getGroupId(), Repository.class.getName(),
-					repositoryId, repository.getUuid(), null,
-					SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 			}
 			finally {
 				SystemEventHierarchyEntryThreadLocal.pop(Repository.class);
 			}
+
+			systemEventLocalService.addSystemEvent(
+				0, repository.getGroupId(), Repository.class.getName(),
+				repositoryId, repository.getUuid(), null,
+				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 
 		return repository;

@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util;
 
+import com.liferay.portal.kernel.util.OSDetector;
+
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -44,6 +46,21 @@ public class BrowserCommands {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void killBrowser() {
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			if (OSDetector.isWindows()) {
+				runtime.exec(new String[] {"tskill", "firefox"});
+			}
+			else {
+				runtime.exec(new String[] {"killall", "firefox"});
+			}
+		}
+		catch (Exception e) {
 		}
 	}
 

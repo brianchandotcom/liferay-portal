@@ -14,8 +14,8 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portalweb.portal.util.BrowserCommands;
 import com.liferay.portalweb.portal.util.LiferaySeleneseTestCase;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -48,7 +48,7 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 			selenium.startLogger();
 		}
 		catch (Exception e) {
-			killBrowser();
+			BrowserCommands.killBrowser();
 
 			throw e;
 		}
@@ -65,36 +65,11 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 		if (!primaryTestSuiteName.endsWith("TestSuite") &&
 			(testCaseCount < 1)) {
 
-			try {
-				SeleniumUtil.stopSelenium();
-			}
-			catch (Exception e) {
-				killBrowser();
-
-				throw e;
-			}
+			SeleniumUtil.stopSelenium();
 		}
 
 		if (TestPropsValues.TESTING_CLASS_METHOD) {
-			try {
-				SeleniumUtil.stopSelenium();
-			}
-			catch (Exception e) {
-				killBrowser();
-
-				throw e;
-			}
-		}
-	}
-
-	protected void killBrowser() throws Exception {
-		Runtime runtime = Runtime.getRuntime();
-
-		if (OSDetector.isWindows()) {
-			runtime.exec(new String[] {"tskill", "firefox"});
-		}
-		else {
-			runtime.exec(new String[] {"killall", "firefox"});
+			SeleniumUtil.stopSelenium();
 		}
 	}
 

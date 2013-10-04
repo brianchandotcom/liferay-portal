@@ -3,6 +3,7 @@ package ${seleniumBuilderContext.getTestCasePackageName(testCaseName)};
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.BrowserCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -54,7 +55,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			selenium.startLogger();
 		}
 		catch (Exception e) {
-			killBrowser();
+			BrowserCommands.killBrowser();
 
 			throw e;
 		}

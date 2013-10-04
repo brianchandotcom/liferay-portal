@@ -24,14 +24,7 @@ public class StopSeleniumTest extends BaseTestCase {
 
 	@Override
 	public void tearDown() throws Exception {
-		try {
-			SeleniumUtil.stopSelenium();
-		}
-		catch (Exception e) {
-			killBrowser();
-
-			throw e;
-		}
+		SeleniumUtil.stopSelenium();
 	}
 
 	public void testStop() throws Exception {

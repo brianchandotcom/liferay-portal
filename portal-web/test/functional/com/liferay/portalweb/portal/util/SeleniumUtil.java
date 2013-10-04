@@ -154,9 +154,14 @@ public class SeleniumUtil extends TestPropsValues {
 
 	private void _stopSelenium() {
 		if (_selenium != null) {
-			_selenium.stop();
+			try {
+				_selenium.stop();
 
-			_selenium.stopLogger();
+				_selenium.stopLogger();
+			}
+			catch (Exception e) {
+				BrowserCommands.killBrowser();
+			}
 		}
 
 		_selenium = null;

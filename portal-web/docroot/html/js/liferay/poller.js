@@ -36,6 +36,7 @@ AUI.add(
 
 		var _portlets = {};
 		var _requestDelay = _delays[0];
+		var _overriddenDelay = null;
 		var _sendQueue = [];
 		var _suspended = false;
 		var _timerId = null;
@@ -231,8 +232,14 @@ AUI.add(
 				}
 			},
 
+			cancelOverriddenDelay: function() {
+				_overriddenDelay = null;
+			},
+
 			getDelay: function() {
-				if (_delayIndex <= _maxDelay) {
+				if (_overriddenDelay !== null) {
+					_requestDelay = _overriddenDelay;
+				} else if (_delayIndex <= _maxDelay) {
 					_requestDelay = _delays[_delayIndex];
 					_delayAccessCount++;
 
@@ -284,6 +291,14 @@ AUI.add(
 
 			setSupportsComet: function(supportsComet) {
 				_supportsComet = supportsComet;
+			},
+
+			setOverriddenDelay: function(delay) {
+				if (delay === null) {
+					_overriddenDelay = delay;
+				} else {
+					_overriddenDelay = delay / 1000;
+				}
 			},
 
 			setUrl: function(url) {

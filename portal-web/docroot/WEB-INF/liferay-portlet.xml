@@ -1262,6 +1262,7 @@
 		<icon>/html/icons/plugins_admin.png</icon>
 		<struts-path>plugins_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<staged-model-data-handler-class>com.liferay.portlet.pluginsadmin.lar.ThemeStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>apps</control-panel-entry-category>
 		<control-panel-entry-weight>5.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

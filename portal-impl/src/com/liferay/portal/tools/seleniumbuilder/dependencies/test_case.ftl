@@ -3,7 +3,6 @@ package ${seleniumBuilderContext.getTestCasePackageName(testCaseName)};
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.BrowserCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -45,20 +44,13 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 	@Override
 	public void setUp() throws Exception {
-		try {
-			selenium = SeleniumUtil.getSelenium();
+		selenium = SeleniumUtil.getSelenium();
 
-			if (Validator.isNull(selenium.getPrimaryTestSuiteName())) {
-				selenium.setPrimaryTestSuiteName("${seleniumBuilderContext.getTestCaseClassName(testCaseName)}");
-			}
-
-			selenium.startLogger();
+		if (Validator.isNull(selenium.getPrimaryTestSuiteName())) {
+			selenium.setPrimaryTestSuiteName("${seleniumBuilderContext.getTestCaseClassName(testCaseName)}");
 		}
-		catch (Exception e) {
-			BrowserCommands.killBrowser();
 
-			throw e;
-		}
+		selenium.startLogger();
 	}
 
 	<#assign commandElements = rootElement.elements("command")>

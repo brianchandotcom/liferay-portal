@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openqa.selenium.os.ProcessUtils.ProcessStillAliveException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -33,25 +35,30 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 	}
 
 	@Override
-	public void setUp() throws Exception {
+	public void runBare() throws Throwable {
 		try {
-			Class<?> clazz = getClass();
-
-			String className = clazz.getName();
-
-			if (className.contains("evaluatelog")) {
-				return;
-			}
-
-			selenium = SeleniumUtil.getSelenium();
-
-			selenium.startLogger();
+			super.runBare();
 		}
-		catch (Exception e) {
+		catch (ProcessStillAliveException psae) {
 			BrowserCommands.killBrowser();
 
-			throw e;
+			throw psae;
 		}
+	}
+
+	@Override
+	public void setUp() throws Exception {
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		if (className.contains("evaluatelog")) {
+			return;
+		}
+
+		selenium = SeleniumUtil.getSelenium();
+
+		selenium.startLogger();
 	}
 
 	@Override

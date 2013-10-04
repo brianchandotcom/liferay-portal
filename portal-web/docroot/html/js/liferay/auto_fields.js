@@ -1,11 +1,19 @@
 AUI.add(
 	'liferay-auto-fields',
 	function(A) {
+		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var CSS_AUTOROW_CONTROLS = 'lfr-autorow-controls';
 
 		var CSS_ICON_LOADING = 'loading-animation';
+
+		var CSS_VALIDATION_HELPER_CLASSES = [
+			'error',
+			'error-field',
+			'success',
+			'success-field'
+		];
 
 		var TPL_INPUT_HIDDEN = '<input name="{name}" type="hidden" />';
 
@@ -299,6 +307,17 @@ AUI.add(
 								}
 							}
 						);
+
+						AArray.each(
+							CSS_VALIDATION_HELPER_CLASSES,
+							function(validationClass, index, collection) {
+								node.all('.' + validationClass).each(
+									function(item) {
+										item.removeClass(validationClass);
+									}
+								);
+							}
+						);
 					},
 
 					_clearHiddenRows: function(item, index, collection) {
@@ -316,20 +335,30 @@ AUI.add(
 						var clone = currentRow.clone();
 						var guid = (++instance._guid);
 
+						var formId = currentRow.ancestor('form').attr('id');
+
 						var clonedRow;
 
 						if (instance.url) {
 							clonedRow = instance._createCloneFromURL(clone, guid);
 						}
 						else {
-							clonedRow = instance._createCloneFromMarkup(clone, guid);
+							clonedRow = instance._createCloneFromMarkup(clone, guid, formId);
 						}
 
 						return clonedRow;
 					},
 
-					_createCloneFromMarkup: function(node, guid) {
+					_createCloneFromMarkup: function(node, guid, formId) {
 						var instance = this;
+
+						var form = Liferay.Form.get(formId);
+
+						var rules;
+
+						if (form && form.formValidator) {
+							rules = form.formValidator.get('rules');
+						}
 
 						node.all('input, select, textarea, span').each(
 							function(item, index, collection) {
@@ -356,9 +385,15 @@ AUI.add(
 									item.attr('id', newName);
 								}
 
+								if (rules && rules[oldName]) {
+									rules[newName] = rules[oldName];
+								}
+
 								node.all('label[for=' + oldName + ']').attr('for', newName);
 							}
 						);
+
+						node.all('.help-inline').remove();
 
 						instance._clearForm(node);
 

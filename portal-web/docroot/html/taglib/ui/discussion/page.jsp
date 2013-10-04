@@ -83,7 +83,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	<div class="taglib-discussion">
 		<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
-			<aui:input name='<%= "comments" + Constants.CMD %>' type="hidden" />
+			<aui:input id='<%= "comments" + Constants.CMD %>' name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="contentURL" type="hidden" value="<%= PortalUtil.getCanonicalURL(redirect, themeDisplay, layout) %>" />
 			<aui:input name="assetEntryVisible" type="hidden" value="<%= assetEntryVisible %>" />

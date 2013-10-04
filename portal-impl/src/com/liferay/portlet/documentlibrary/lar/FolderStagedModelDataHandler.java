@@ -104,6 +104,21 @@ public class FolderStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, Folder folder)
+		throws Exception {
+
+		Folder existingFolder = FolderUtil.fetchByUUID_R(
+			folder.getUuid(), portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> folderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Folder.class);
+
+		folderIds.put(folder.getFolderId(), existingFolder.getFolderId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Folder folder)
 		throws Exception {

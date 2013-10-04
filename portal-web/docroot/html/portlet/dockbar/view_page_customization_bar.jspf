@@ -15,19 +15,19 @@
 --%>
 
 <%
-	String cssInfoItems = "info-items";
+String cssInfoItems = "info-items";
 
-	Boolean customizablePage = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
+Boolean customizablePage = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
 
-	Boolean infoItemsHidden = GetterUtil.getBoolean(SessionClicks.get(request, "infoItemsHidden", "false"));
+Boolean infoItemsHidden = GetterUtil.getBoolean(SessionClicks.get(request, "infoItemsHidden", "false"));
 
-	Boolean pageIsLinked = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
+Boolean pageIsLinked = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
 
-	Boolean siteTemplateChanged = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
+Boolean siteTemplateChanged = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
 
-	if (infoItemsHidden) {
-		cssInfoItems = cssInfoItems + " hide";
-	}
+if (infoItemsHidden) {
+	cssInfoItems = cssInfoItems + " hide";
+}
 %>
 
 <c:if test="<%= siteTemplateChanged || pageIsLinked || customizablePage %>">
@@ -170,7 +170,10 @@
 
 		<aui:nav-item cssClass="info-link-container">
 			<div class="info-button">
-				<a class="info-link" href="#1"><i class="icon-info"></i></a>
+				<a class="info-link" href="javascript:;">
+					<i class="icon-info"></i>
+				</a>
+
 				<div class="diamond"></div>
 			</div>
 		</aui:nav-item>
@@ -179,18 +182,15 @@
 			A.one('.info-link-container').on(
 				'click',
 				function(event) {
-					var currentTarget = event.currentTarget;
-
-					var infoItems = currentTarget.ancestor('.nav-account-controls').one('.info-items');
-
 					event.preventDefault();
 
-					currentTarget.ancestor('ul').one('.info-items').toggleClass('hide');
+					var navAccountControls = event.currentTarget.ancestor('.nav-account-controls');
 
-					Liferay.Store(
-						'infoItemsHidden',
-						infoItems.hasClass('hide')
-					);
+					var infoItems = navAccountControls.one('.info-items');
+
+					navAccountControls.one('.info-items').toggleClass('hide');
+
+					Liferay.Store('infoItemsHidden', infoItems.hasClass('hide'));
 				}
 			);
 		</aui:script>

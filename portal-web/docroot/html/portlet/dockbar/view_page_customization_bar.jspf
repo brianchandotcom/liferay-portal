@@ -19,13 +19,13 @@ String cssInfoItems = "info-items";
 
 boolean customizablePage = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
 
-boolean infoItemsHidden = GetterUtil.getBoolean(SessionClicks.get(request, "infoItemsHidden", "false"));
+boolean dockbarMessagesHidden = GetterUtil.getBoolean(SessionClicks.get(request, "dockbarMessagesHidden", "false"));
 
 boolean pageIsLinked = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
 
 boolean siteTemplateChanged = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
 
-if (infoItemsHidden) {
+if (dockbarMessagesHidden) {
 	cssInfoItems = cssInfoItems + " hide";
 }
 %>
@@ -190,7 +190,7 @@ if (infoItemsHidden) {
 
 					navAccountControls.one('.info-items').toggleClass('hide');
 
-					Liferay.Store('infoItemsHidden', infoItems.hasClass('hide'));
+					Liferay.Store('dockbarMessagesHidden', infoItems.hasClass('hide'));
 				}
 			);
 		</aui:script>

@@ -58,26 +58,16 @@ public class PACLUtil {
 	public static PACLPolicy getPACLPolicy() {
 		SecurityManager securityManager = System.getSecurityManager();
 
-		if (securityManager == null) {
-			return null;
-		}
-
 		try {
-			java.security.Permission permission = new PACLUtil.Permission();
+			securityManager.checkPermission(_PERMISSION);
 
-			securityManager.checkPermission(permission);
+			PACLPolicy paclPolicy = PACLPolicyThreadLocal.get();
+
+			return paclPolicy;
 		}
-		catch (SecurityException se) {
-			if (!(se instanceof PACLUtil.Exception)) {
-				throw se;
-			}
-
-			PACLUtil.Exception paclUtilException = (PACLUtil.Exception)se;
-
-			return paclUtilException.getPaclPolicy();
+		finally {
+			PACLPolicyThreadLocal.set(null);
 		}
-
-		return null;
 	}
 
 	public static String getServiceInterfaceName(String serviceClassName) {
@@ -131,20 +121,6 @@ public class PACLUtil {
 			new ProtectionDomainPrivilegedAction(callerClass));
 
 		return _isTrustedCaller(protectionDomain, permission, paclPolicy);
-	}
-
-	public static class Exception extends SecurityException {
-
-		public Exception(PACLPolicy paclPolicy) {
-			_paclPolicy = paclPolicy;
-		}
-
-		public PACLPolicy getPaclPolicy() {
-			return _paclPolicy;
-		}
-
-		private PACLPolicy _paclPolicy;
-
 	}
 
 	public static class Permission extends BasicPermission {
@@ -204,6 +180,8 @@ public class PACLUtil {
 
 		return false;
 	}
+
+	private static final Permission _PERMISSION = new PACLUtil.Permission();
 
 	private static class ProtectionDomainPrivilegedAction
 		implements PrivilegedAction<ProtectionDomain> {

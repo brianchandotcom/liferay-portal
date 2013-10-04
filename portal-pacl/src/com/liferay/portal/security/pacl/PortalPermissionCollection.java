@@ -47,7 +47,9 @@ public class PortalPermissionCollection extends LenientPermissionCollection {
 		}
 
 		if (permission instanceof PACLUtil.Permission) {
-			throw new PACLUtil.Exception(_paclPolicy);
+			PACLPolicyThreadLocal.set(_paclPolicy);
+
+			return true;
 		}
 
 		if (_paclPolicy.implies(permission)) {

@@ -15,7 +15,6 @@
 package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
-import com.liferay.portal.util.Portal;
 
 import java.lang.reflect.Field;
 
@@ -30,34 +29,25 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import javax.servlet.Servlet;
 
 /**
  * @author Raymond Augé
  */
 public class PortalPolicy extends Policy {
 
-	public PortalPolicy(Policy policy) {
+	public PortalPolicy(Policy policy) throws PrivilegedActionException {
+		if (policy instanceof PortalPolicy) {
+			throw new IllegalArgumentException(
+				"Liferay's PortalPolicy class can not wrap itself");
+		}
+
 		_policy = policy;
 
-		try {
-			_init();
-		}
-		catch (PrivilegedActionException pae) {
-			throw new IllegalStateException(
-				"Liferay needs to be able to change the accessibility of the " +
-					"'key' field in " + ProtectionDomain.class.getName() +
-						" as well as get the protection domains of classes",
-				pae.getException());
-		}
+		_field = AccessController.doPrivileged(
+			new FieldPrivilegedExceptionAction());
 	}
 
 	@Override
@@ -254,30 +244,6 @@ public class PortalPolicy extends Policy {
 		return permissionCollection;
 	}
 
-	private void _init() throws PrivilegedActionException {
-		_field = AccessController.doPrivileged(
-			new FieldPrivilegedExceptionAction());
-
-		List<ProtectionDomain> protectionDomains =
-			AccessController.doPrivileged(
-				new ProtectionDomainsPrivilegedExceptionAction());
-
-		PermissionCollection permissionCollection = new Permissions();
-
-		permissionCollection.add(_allPermission);
-
-		_rootPermissionCollections =
-			new ConcurrentHashMap<Object, PermissionCollection>();
-
-		for (ProtectionDomain protectionDomain : protectionDomains) {
-			_rootPermissionCollections.put(
-				_getKey(protectionDomain), permissionCollection);
-		}
-
-		_rootPermissionCollections = Collections.unmodifiableMap(
-			_rootPermissionCollections);
-	}
-
 	private static AllPermission _allPermission = new AllPermission();
 
 	private Field _field;
@@ -297,26 +263,6 @@ public class PortalPolicy extends Policy {
 			field.setAccessible(true);
 
 			return field;
-		}
-
-	}
-
-	private class ProtectionDomainsPrivilegedExceptionAction
-		implements PrivilegedExceptionAction<List<ProtectionDomain>> {
-
-		@Override
-		public List<ProtectionDomain> run() throws Exception {
-			List<ProtectionDomain> protectionDomains =
-				new ArrayList<ProtectionDomain>();
-
-			Class<?> clazz = getClass();
-
-			protectionDomains.add(clazz.getProtectionDomain());
-			protectionDomains.add(Object.class.getProtectionDomain());
-			protectionDomains.add(Portal.class.getProtectionDomain());
-			protectionDomains.add(Servlet.class.getProtectionDomain());
-
-			return protectionDomains;
 		}
 
 	}

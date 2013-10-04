@@ -3,8 +3,8 @@
 
 $addContentPanelWidth: 350px;
 $devicePreviewPanelWidth: 220px;
-$editLayoutPanelWidth: 460px;
 $diamondSize: 12px;
+$editLayoutPanelWidth: 460px;
 
 .aui {
 	.dockbar {

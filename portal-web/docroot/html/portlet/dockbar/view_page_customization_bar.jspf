@@ -17,13 +17,13 @@
 <%
 String cssInfoItems = "info-items";
 
-Boolean customizablePage = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
+boolean customizablePage = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
 
-Boolean infoItemsHidden = GetterUtil.getBoolean(SessionClicks.get(request, "infoItemsHidden", "false"));
+boolean infoItemsHidden = GetterUtil.getBoolean(SessionClicks.get(request, "infoItemsHidden", "false"));
 
-Boolean pageIsLinked = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
+boolean pageIsLinked = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
 
-Boolean siteTemplateChanged = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
+boolean siteTemplateChanged = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
 
 if (infoItemsHidden) {
 	cssInfoItems = cssInfoItems + " hide";
@@ -53,7 +53,7 @@ if (infoItemsHidden) {
 							<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
 							<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
-							<aui:button cssClass="btn-link" name="submit" type="submit" value="Reset Changes" />
+							<aui:button cssClass="btn-link" name="submit" type="submit" value="reset-changes" />
 						</aui:form>
 					</div>
 				</div>

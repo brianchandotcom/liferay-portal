@@ -171,51 +171,30 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		String content = replaceParameters(
 			getContent("dl_references_timestamp.txt"), _fileEntry);
 
-		String[] urls = content.split("\n");
+		List<String> urls = replaceTimestampParameters(content);
 
-		List<String> urlsWithTimestamp = replaceTimestampParameters(urls);
-
-		Assert.assertEquals(
-			"Testmethod replaceTimestampParameters is bad", 3 * urls.length,
-			urlsWithTimestamp.size());
-
-		content = StringUtil.merge(urlsWithTimestamp,"\n");
+		content = StringUtil.merge(urls,"\n");
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
 			_portletDataContextExport, _referrerStagedModel,
 			rootElement.element("entry"), content, true);
 
-		String[] urlsExported = content.split("\n");
+		String[] exportedUrls = content.split("\n");
 
-		Assert.assertEquals(urlsExported.length, urlsWithTimestamp.size());
+		Assert.assertEquals(urls.size(), exportedUrls.length);
 
-		Pattern p = Pattern.compile("[?&]t=");
-		Matcher m = p.matcher("");
+		for (int i = 0; i < urls.size(); i++) {
+			String exportedUrl = exportedUrls[i];
+			String url = urls.get(i);
 
-		for (int i = 0; i < urlsWithTimestamp.size(); i++) {
-			String urlExported = urlsExported[i];
-			String urlWithTimestamp = urlsWithTimestamp.get(i);
+			Assert.assertFalse(exportedUrl.matches("[?&]t="));
 
-			Assert.assertFalse(
-				"timestamp not deleted:" + urlExported,
-				m.reset(urlExported).find());
-
-			if (urlWithTimestamp.contains("/documents/") &&
-				urlWithTimestamp.contains("?")) {
-
-				Assert.assertTrue(
-					"other parameters deleted:" + urlExported + ", " +
-						urlWithTimestamp,
-					urlExported.contains("width=100&height=100"));
+			if (url.contains("/documents/") && url.contains("?")) {
+				Assert.assertTrue(exportedUrl.contains("width=100&height=100"));
 			}
 
-			if (urlWithTimestamp.contains("/documents/") &&
-				urlWithTimestamp.contains("mustkeep")) {
-
-				Assert.assertTrue(
-					"other parameters deleted:" + urlExported + ", " +
-						urlWithTimestamp,
-					urlExported.contains("mustkeep"));
+			if (url.contains("/documents/") && url.contains("mustkeep")) {
+				Assert.assertTrue(exportedUrl.contains("mustkeep"));
 			}
 		}
 	}
@@ -539,35 +518,40 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			});
 	}
 
-	protected List<String> replaceTimestampParameters(String[] urls)
+	protected List<String> replaceTimestampParameters(String content)
 		throws Exception {
 
-		String time = "t=" + ServiceTestUtil.randomLong();
-		String width = "width=100";
-		String height = "height=100";
+		List<String> urls = new ArrayList<String>();
 
-		String[] params = {
-			time + "&" + width + "&" + height,
-			width + "&" + time + "&" + height, width + "&" + height + "&" + time
-		};
+		for (String line : content.split("\n")) {
+			if (line.contains("TIMESTAMP$]")) {
+				urls.add(line);
+			}
+		}
+
+		String timeStampParam = "t=" + ServiceTestUtil.randomLong();
+
+		String params1 = timeStampParam + "&width=100&height=100";
+		String params2 = "width=100&" + timeStampParam + "&height=100";
+		String params3 = "width=100&height=100" + timeStampParam;
 
 		List<String> outUrls = new ArrayList<String>();
 
 		for (String url : urls) {
-			for (String param : params) {
-				String urlWithTimestamp = url.replace(
-					"[$TIMESTAMP$]", "&" + param);
+			outUrls.add(
+				StringUtil.replace(
+					url, new String[] {"[$TIMESTAMP$]", "[$ONLYTIMESTAMP$]"},
+					new String[] {"&" + params1, "?" + params1}));
 
-				String urlWithTimestampOnly = url.replace(
-					"[$ONLYTIMESTAMP$]", "?" + param);
+			outUrls.add(
+				StringUtil.replace(
+					url, new String[] {"[$TIMESTAMP$]", "[$ONLYTIMESTAMP$]"},
+					new String[] {"&" + params2, "?" + params2}));
 
-				if (!urlWithTimestamp.equals(url)) {
-					outUrls.add(urlWithTimestamp);
-				}
-				else {
-					outUrls.add(urlWithTimestampOnly);
-				}
-			}
+			outUrls.add(
+				StringUtil.replace(
+					url, new String[] {"[$TIMESTAMP$]", "[$ONLYTIMESTAMP$]"},
+					new String[] {"&" + params3, "?" + params3}));
 		}
 
 		return outUrls;

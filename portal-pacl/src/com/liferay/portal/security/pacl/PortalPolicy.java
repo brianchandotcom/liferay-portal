@@ -226,9 +226,7 @@ public class PortalPolicy extends Policy {
 			return _field.get(protectionDomain);
 		}
 		catch (Exception e) {
-			String string = protectionDomain.toString();
-
-			return string.hashCode();
+			return null;
 		}
 	}
 

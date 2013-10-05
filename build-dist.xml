@@ -1595,7 +1595,7 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-resin">
-		<delete dir="${app.server.parent.dir}/resin-${app.server.resin.version}" />
+		<delete dir="${app.server.resin.dir}" />
 
 		<if>
 			<not>
@@ -1621,12 +1621,20 @@ release was successful.</echo>
 			/>
 		</unzip>
 
-		<mkdir dir="${app.server.parent.dir}/resin-${app.server.resin.version}/webapps" />
+		<mkdir dir="${app.server.resin.dir}/webapps" />
 
 		<replace file="${app.server.resin.dir}/conf/resin.properties">
 			<replacetoken><![CDATA[# jvm_args  : -Xmx2048m -XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m]]></replacevalue>
+			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 @java.security.manager.option@ -Dcaucho.environment.class.loader=com.liferay.support.resin.EnvironmentClassLoader -Djava.security.policy==@app.server.resin.dir@/conf/server.policy -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m]]></replacevalue>
+			<replacefilter token="@app.server.resin.dir@" value="${app.server.resin.dir}" />
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 		</replace>
+
+		<echo file="${app.server.resin.dir}/conf/server.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
 
 		<replace file="${app.server.resin.dir}/conf/resin.xml">
 			<replacetoken><![CDATA[xmlns:resin="urn:java:com.caucho.resin">]]></replacetoken>

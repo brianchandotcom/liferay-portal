@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxException;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
@@ -38,11 +37,8 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
-import com.liferay.portal.util.WebKeys;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -265,24 +261,7 @@ public class SPIAgentSerializableTest {
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			SPIAgentSerializable.class.getName(), Level.OFF);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		final String portletId = "portletId";
-
-		Portlet portlet = new PortletImpl() {
-
-			@Override
-			public String getPortletId() {
-				return portletId;
-			}
-
-		};
-
-		mockHttpServletRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
-
-		MockHttpSession mockHttpSession =
-			(MockHttpSession)mockHttpServletRequest.getSession();
+		MockHttpSession mockHttpSession = new MockHttpSession();
 
 		String serializeableAttribute = "serializeableAttribute";
 
@@ -302,29 +281,14 @@ public class SPIAgentSerializableTest {
 
 			});
 
-		String autoRemoveAttribute =
-			LiferayPortletSession.PORTLET_SCOPE_NAMESPACE.concat(
-				"some-other-id").concat(LiferayPortletSession.LAYOUT_SEPARATOR);
-
-		mockHttpSession.setAttribute(autoRemoveAttribute, autoRemoveAttribute);
-
-		String matchAttribute =
-			LiferayPortletSession.PORTLET_SCOPE_NAMESPACE.concat(
-				portletId).concat(LiferayPortletSession.LAYOUT_SEPARATOR);
-
-		mockHttpSession.setAttribute(matchAttribute, matchAttribute);
-
 		Map<String, Serializable> sessionAttributes =
-			SPIAgentSerializable.extractSessionAttributes(
-				mockHttpServletRequest);
+			SPIAgentSerializable.extractSessionAttributes(mockHttpSession);
 
 		Assert.assertTrue(logRecords.isEmpty());
-		Assert.assertEquals(2, sessionAttributes.size());
+		Assert.assertEquals(1, sessionAttributes.size());
 		Assert.assertEquals(
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
-		Assert.assertEquals(
-			matchAttribute, sessionAttributes.get(matchAttribute));
 
 		// With log
 
@@ -332,7 +296,7 @@ public class SPIAgentSerializableTest {
 			SPIAgentSerializable.class.getName(), Level.WARNING);
 
 		sessionAttributes = SPIAgentSerializable.extractSessionAttributes(
-			mockHttpServletRequest);
+			mockHttpSession);
 
 		Assert.assertEquals(1, logRecords.size());
 
@@ -343,12 +307,10 @@ public class SPIAgentSerializableTest {
 				nonserializableAttribute + " with value " +
 					nonserializableAttribute, logRecord.getMessage());
 
-		Assert.assertEquals(2, sessionAttributes.size());
+		Assert.assertEquals(1, sessionAttributes.size());
 		Assert.assertEquals(
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
-		Assert.assertEquals(
-			matchAttribute, sessionAttributes.get(matchAttribute));
 	}
 
 	@AdviseWith(

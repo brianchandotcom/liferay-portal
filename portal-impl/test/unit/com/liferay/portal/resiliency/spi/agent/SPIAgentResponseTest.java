@@ -92,11 +92,6 @@ public class SPIAgentResponseTest {
 		Portlet portlet = new PortletImpl() {
 
 			@Override
-			public String getPortletId() {
-				return "portletId";
-			}
-
-			@Override
 			public String getContextName() {
 				return _SERVLET_CONTEXT_NAME;
 			}
@@ -111,9 +106,6 @@ public class SPIAgentResponseTest {
 		session.setAttribute(_SESSION_ATTRIBUTE_2, _SESSION_ATTRIBUTE_2);
 
 		_mockHttpServletRequest = new MockHttpServletRequest();
-
-		_mockHttpServletRequest.setAttribute(
-			WebKeys.SPI_AGENT_PORTLET, portlet);
 
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_REQUEST, new SPIAgentRequest(originalRequest));

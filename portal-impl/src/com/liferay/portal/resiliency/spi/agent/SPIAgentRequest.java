@@ -138,7 +138,9 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 				new String[] {StringPool.FALSE});
 		}
 
-		originalSessionAttributes = extractSessionAttributes(request);
+		HttpSession session = request.getSession();
+
+		originalSessionAttributes = extractSessionAttributes(session);
 
 		captureThreadLocals();
 	}

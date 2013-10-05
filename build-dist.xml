@@ -3,6 +3,16 @@
 <project name="portal-dist" basedir="." default="dist" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build.xml" />
 
+	<if>
+		<isset property="java.security" />
+		<then>
+			<property name="java.security.manager.option" value="-Djava.security.manager" />
+		</then>
+		<else>
+			<property name="java.security.manager.option" value="" />
+		</else>
+	</if>
+
 	<macrodef name="update-plugins-includes-plugin">
 		<attribute name="plugins.includes.plugin.bundle" />
 		<attribute name="plugins.includes.plugin.dependent-apps" />

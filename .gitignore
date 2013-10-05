@@ -205,6 +205,12 @@ cobertura.ser
 !/sql/update-*.sql
 /sql/velocity.log*
 
+/support-resin/*.iml
+/support-resin/*.ipr
+/support-resin/*.iws
+/support-resin/classes
+/support-resin/support-resin*.jar
+
 /support-tomcat/*.iml
 /support-tomcat/*.ipr
 /support-tomcat/*.iws

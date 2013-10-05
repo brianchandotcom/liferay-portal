@@ -1377,15 +1377,20 @@ release was successful.</echo>
 			/>
 		</unzip>
 
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/bin" />
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/contexts" />
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/temp" />
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/webapps" />
+		<mkdir dir="${app.server.jetty.dir}/bin" />
+		<mkdir dir="${app.server.jetty.dir}/contexts" />
+		<mkdir dir="${app.server.jetty.dir}/temp" />
+		<mkdir dir="${app.server.jetty.dir}/webapps" />
 
 		<copy
 			file="tools/servers/jetty/bin/run.bat"
 			tofile="${app.server.jetty.bin.dir}/run.bat"
-		/>
+		>
+			<filterset>
+				<filter token="app.server.jetty.dir" value="${app.server.jetty.dir}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<replace file="${app.server.jetty.bin.dir}/run.bat">
 			<replacetoken>set "JAVA_OPTS=-D</replacetoken>
@@ -1403,7 +1408,12 @@ release was successful.</echo>
 		<copy
 			file="tools/servers/jetty/bin/run.sh"
 			tofile="${app.server.jetty.bin.dir}/run.sh"
-		/>
+		>
+			<filterset>
+				<filter token="app.server.jetty.dir" value="${app.server.jetty.dir}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<replace file="${app.server.jetty.bin.dir}/run.sh">
 			<replacetoken>export JAVA_OPTS="-D</replacetoken>
@@ -1422,6 +1432,12 @@ release was successful.</echo>
 			file="tools/servers/jetty/bin/start.ini"
 			tofile="${app.server.jetty.bin.dir}/start.ini"
 		/>
+
+		<echo file="${app.server.jetty.dir}/lib/policy/server.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.jetty.bin.dir}">

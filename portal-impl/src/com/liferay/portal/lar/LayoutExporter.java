@@ -513,6 +513,13 @@ public class LayoutExporter {
 				layout.setCompanyId(companyId);
 			}
 
+			if (_log.isDebugEnabled()) {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					portletDataContext.getCompanyId(), portletId);
+
+				_log.debug("Starting export for " + portlet.getDisplayName());
+			}
+
 			portletDataContext.setPlid(plid);
 			portletDataContext.setOldPlid(plid);
 			portletDataContext.setScopeGroupId(scopeGroupId);

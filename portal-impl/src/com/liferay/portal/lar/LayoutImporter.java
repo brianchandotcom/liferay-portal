@@ -565,6 +565,10 @@ public class LayoutImporter {
 				plid = layout.getPlid();
 			}
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Starting import for " + portlet.getDisplayName());
+			}
+
 			portletDataContext.setPlid(plid);
 			portletDataContext.setOldPlid(oldPlid);
 
@@ -595,6 +599,10 @@ public class LayoutImporter {
 
 				// Portlet preferences
 
+				if (_log.isDebugEnabled()) {
+					_log.debug("Importing portlet preferences");
+				}
+
 				_portletImporter.importPortletPreferences(
 					portletDataContext, layoutSet.getCompanyId(),
 					portletPreferencesGroupId, layout, null, portletElement,
@@ -617,12 +625,20 @@ public class LayoutImporter {
 			// Portlet permissions
 
 			if (importPermissions) {
+				if (_log.isDebugEnabled()) {
+					 _log.debug("Importing portlet permissions");
+				}
+
 				_permissionImporter.importPortletPermissions(
 					layoutCache, companyId, groupId, userId, layout,
 					portletElement, portletId);
 			}
 
 			// Archived setups
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Importing portlet archived setups");
+			}
 
 			_portletImporter.importPortletPreferences(
 				portletDataContext, layoutSet.getCompanyId(), groupId, null,

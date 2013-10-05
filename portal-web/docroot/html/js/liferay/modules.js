@@ -233,6 +233,13 @@
 							'liferay-widget-size-animation-plugin'
 						]
 					},
+					'liferay-dockbar-keyboard-interaction': {
+						path: 'dockbar_keyboard_interaction.js',
+						requires: [
+							'node-focusmanager',
+							'plugin'
+						]
+					},
 					'liferay-dockbar-underlay': {
 						path: 'dockbar_underlay.js',
 						requires: [

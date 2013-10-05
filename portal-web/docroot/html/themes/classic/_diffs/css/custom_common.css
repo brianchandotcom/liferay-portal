@@ -312,7 +312,7 @@
 						font-size: 0.9em;
 						font-weight: 300;
 
-						&:hover {
+						&:focus, &:hover {
 							background: #2FA4F5;
 							@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
 						}

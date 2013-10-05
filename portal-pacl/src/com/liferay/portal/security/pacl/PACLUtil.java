@@ -141,7 +141,7 @@ public class PACLUtil {
 		}
 		else {
 			callerPACLPolicy = PACLPolicyManager.getPACLPolicy(
-				protectionDomain.getClassLoader());
+				protectionDomain);
 		}
 
 		if (paclPolicy == callerPACLPolicy) {

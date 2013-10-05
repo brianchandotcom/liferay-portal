@@ -104,6 +104,9 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.ccpp.Profile;
 
@@ -199,6 +202,10 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				_log.warn(e, e);
 			}
 		}
+
+		if (ServerDetector.isWebLogic()) {
+			doWebLogicHook();
+		}
 	}
 
 	@Override
@@ -290,6 +297,33 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	@Override
 	public Policy getPolicy() {
 		return _policy;
+	}
+
+	protected void doWebLogicHook() {
+		final SecurityManager securityManager = this;
+
+		try {
+			ScheduledExecutorService scheduledExecutor =
+				Executors.newSingleThreadScheduledExecutor();
+
+			Runnable runnable = new Runnable() {
+
+				public void run() {
+					SecurityManager current = System.getSecurityManager();
+
+					if (current != securityManager) {
+						System.setSecurityManager(securityManager);
+					}
+				}
+
+			};
+
+			scheduledExecutor.scheduleAtFixedRate(
+				runnable, 100, 100, TimeUnit.MILLISECONDS);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	protected void initClass(Class<?> clazz) {

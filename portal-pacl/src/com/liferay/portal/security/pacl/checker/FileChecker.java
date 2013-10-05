@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.pacl.Reflection;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -114,6 +113,7 @@ public class FileChecker extends BaseChecker {
 			"${user.name}",
 			"${weblogic.domain.dir}",
 			"${websphere.profile.dir}",
+			"${websphere.cell}",
 			StringPool.DOUBLE_SLASH
 		};
 
@@ -144,7 +144,8 @@ public class FileChecker extends BaseChecker {
 			ReleaseInfo.getVersion(), System.getProperty("resin.home"),
 			System.getProperty("user.dir"), System.getProperty("user.home"),
 			System.getProperty("user.name"), System.getenv("DOMAIN_HOME"),
-			System.getenv("USER_INSTALL_ROOT"), StringPool.SLASH
+			System.getProperty("server.root"), System.getenv("WAS_CELL"),
+			StringPool.SLASH
 		};
 
 		if (_log.isDebugEnabled()) {
@@ -205,24 +206,6 @@ public class FileChecker extends BaseChecker {
 	public boolean implies(Permission permission) {
 		if (_permissions.implies(permission)) {
 			return true;
-		}
-
-		int stackIndex = Reflection.getStackIndex(10, 9);
-
-		Class<?> callerClass1 = Reflection.getCallerClass(stackIndex);
-		Class<?> callerClass2 = Reflection.getCallerClass(stackIndex + 1);
-
-		Package callerClass1Package = callerClass1.getPackage();
-
-		if (callerClass1Package != null) {
-			String callerClass1PackageName = callerClass1Package.getName();
-
-			if (callerClass1PackageName.startsWith("java.") &&
-				!callerClass1.equals(ProcessBuilder.class) &&
-				isTrustedCaller(callerClass2, permission)) {
-
-				return true;
-			}
 		}
 
 		logSecurityException(

@@ -12,15 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.security.lang;
-
-import java.security.Policy;
+package com.liferay.portal.security.pacl;
 
 /**
  * @author Raymond Augé
  */
-public interface PortalSecurityManager {
+public class PACLPolicyThreadLocal {
 
-	public Policy getPolicy();
+	public static PACLPolicy get() {
+		return _paclPolicy.get();
+	}
+
+	public static void set(PACLPolicy paclPolicy) {
+		_paclPolicy.set(paclPolicy);
+	}
+
+	private static ThreadLocal<PACLPolicy> _paclPolicy =
+		new ThreadLocal<PACLPolicy>();
 
 }

@@ -120,7 +120,23 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 
 		Context context = initialContextFactory.getInitialContext(environment);
 
-		if (context instanceof LdapContext) {
+		// In Websphere the javax.naming.ldap.LdapContext interface on the
+		// instance comes from a different class loader, and so the instanceof
+		// check fails so we'll check by name.
+
+		Class<? extends Context> clazz = context.getClass();
+
+		Class<?>[] interfaces = clazz.getInterfaces();
+
+		boolean isLdapContext = false;
+
+		for (Class<?> interfaceClass : interfaces) {
+			if (interfaceClass.getName().equals(LdapContext.class.getName())) {
+				isLdapContext = true;
+			}
+		}
+
+		if ((context instanceof LdapContext) && !isLdapContext) {
 			return context;
 		}
 

@@ -17,33 +17,15 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.security.Permission;
-import java.security.PermissionCollection;
 import java.security.Policy;
-import java.security.ProtectionDomain;
-
-import java.util.Collections;
-import java.util.Enumeration;
 
 /**
  * @author Raymond Augé
  */
-public class PortalPermissionCollection extends PermissionCollection {
+public class PortalPermissionCollection extends LenientPermissionCollection {
 
-	public PortalPermissionCollection(
-		PACLPolicy paclPolicy, PermissionCollection permissionCollection) {
-
+	public PortalPermissionCollection(PACLPolicy paclPolicy) {
 		_paclPolicy = paclPolicy;
-		_permissionCollection = permissionCollection;
-	}
-
-	@Override
-	public void add(Permission permission) {
-		throw new SecurityException();
-	}
-
-	@Override
-	public Enumeration<Permission> elements() {
-		return Collections.enumeration(Collections.<Permission>emptyList());
 	}
 
 	public ClassLoader getClassLoader() {
@@ -60,21 +42,17 @@ public class PortalPermissionCollection extends PermissionCollection {
 
 	@Override
 	public boolean implies(Permission permission) {
-		if (Reflection.getCallerClass(1) == ProtectionDomain.class) {
-			return false;
-		}
-
 		if (!_paclPolicy.isActive()) {
 			return true;
 		}
 
 		if (permission instanceof PACLUtil.Permission) {
-			throw new PACLUtil.Exception(_paclPolicy);
+			PACLPolicyThreadLocal.set(_paclPolicy);
+
+			return true;
 		}
 
-		if (_permissionCollection.implies(permission) ||
-			_paclPolicy.implies(permission)) {
-
+		if (_paclPolicy.implies(permission)) {
 			return true;
 		}
 
@@ -92,6 +70,5 @@ public class PortalPermissionCollection extends PermissionCollection {
 	}
 
 	private PACLPolicy _paclPolicy;
-	private PermissionCollection _permissionCollection;
 
 }

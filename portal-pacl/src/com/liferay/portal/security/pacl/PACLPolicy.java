@@ -14,9 +14,12 @@
 
 package com.liferay.portal.security.pacl;
 
+import java.net.URL;
+
 import java.security.Permission;
 import java.security.Policy;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -40,6 +43,8 @@ public interface PACLPolicy {
 	public Set<String> getPropertySet(String key);
 
 	public String getServletContextName();
+
+	public List<URL> getURLs();
 
 	public boolean hasJNDI(String name);
 

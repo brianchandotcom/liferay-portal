@@ -3,6 +3,16 @@
 <project name="portal-dist" basedir="." default="dist" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build.xml" />
 
+	<if>
+		<isset property="java.security" />
+		<then>
+			<property name="java.security.manager.option" value="-Djava.security.manager" />
+		</then>
+		<else>
+			<property name="java.security.manager.option" value="" />
+		</else>
+	</if>
+
 	<macrodef name="update-plugins-includes-plugin">
 		<attribute name="plugins.includes.plugin.bundle" />
 		<attribute name="plugins.includes.plugin.dependent-apps" />
@@ -902,12 +912,28 @@ release was successful.</echo>
 		<copy
 			file="tools/servers/geronimo/bin/setenv.bat"
 			tofile="${app.server.geronimo.bin.dir}/setenv.bat"
-		/>
+		>
+			<filterset>
+				<filter token="app.server.geronimo.dir" value="${app.server.geronimo.dir}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<copy
 			file="tools/servers/geronimo/bin/setenv.sh"
 			tofile="${app.server.geronimo.bin.dir}/setenv.sh"
-		/>
+		>
+			<filterset>
+				<filter token="app.server.geronimo.dir" value="${app.server.geronimo.dir}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
+
+		<echo file="${app.server.geronimo.dir}/etc/server.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.geronimo.bin.dir}">
@@ -939,12 +965,12 @@ release was successful.</echo>
 			 src="${app.server.parent.dir}/${app.server.glassfish.zip.name}"
 		>
 			<patternset
-				includes="glassfish3/glassfish/**"
+				includes="glassfish3/glassfish/**,glassfishv3/glassfish/**"
 			/>
 			<mapper
-				type="glob"
-				from="glassfish3/glassfish/*"
-				to="${app.server.glassfish.dir}/*"
+				type="regexp"
+				from="glassfishv?3/glassfish/(.*)"
+				to="${app.server.glassfish.dir}/\1"
 			/>
 		</unzip>
 
@@ -966,6 +992,7 @@ release was successful.</echo>
 			<replacetoken><![CDATA[<jvm-options>-Xmx512m</jvm-options>]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
+					<jvm-options>@java.security.manager.option@</jvm-options>
 					<jvm-options>-Dfile.encoding=UTF8</jvm-options>
 					<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
 					<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
@@ -973,6 +1000,7 @@ release was successful.</echo>
 					<jvm-options>-Xmx1024m</jvm-options>
 				]]>
 			</replacevalue>
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}"/>
 		</replace>
 
 		<replace file="${app.server.glassfish.instance.dir}/config/domain.xml">
@@ -980,10 +1008,9 @@ release was successful.</echo>
 			<replacevalue><![CDATA[<jvm-options>-XX:MaxPermSize=512m</jvm-options>]]></replacevalue>
 		</replace>
 
-		<echo file="${app.server.glassfish.instance.dir}/config/server.policy" append="true">
+		<echo file="${app.server.glassfish.instance.dir}/config/server.policy">
 			grant {
-				permission java.lang.reflect.ReflectPermission  "suppressAccessChecks";
-				permission javax.security.auth.AuthPermission "doAsPrivileged";
+				permission java.security.AllPermission;
 			};
 		</echo>
 
@@ -1150,7 +1177,9 @@ release was successful.</echo>
 				</replace>
 
 				<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
-					JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					<![CDATA[
+						JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 ${java.security.manager.option} -Djava.security.policy==${app.server.jboss.dir}/bin/server.policy -Djboss.home.dir=${app.server.jboss.dir} -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					]]>
 				</echo>
 
 				<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
@@ -1162,12 +1191,20 @@ release was successful.</echo>
 					<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 					<replacevalue>
 						<![CDATA[
-							set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+							set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 @java.security.manager.option@ -Djava.security.policy==@app.server.jboss.dir@/bin/server.policy -Djboss.home.dir=@app.server.jboss.dir@ -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 
 							:JAVA_OPTS_SET
 						]]>
 					</replacevalue>
+					<replacefilter token="@app.server.jboss.dir@" value="${app.server.jboss.dir}" />
+					<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 				</replace>
+
+				<echo file="${app.server.jboss.bin.dir}/server.policy">
+					grant {
+						permission java.security.AllPermission;
+					};
+				</echo>
 
 				<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
 					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>
@@ -1340,15 +1377,20 @@ release was successful.</echo>
 			/>
 		</unzip>
 
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/bin" />
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/contexts" />
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/temp" />
-		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/webapps" />
+		<mkdir dir="${app.server.jetty.dir}/bin" />
+		<mkdir dir="${app.server.jetty.dir}/contexts" />
+		<mkdir dir="${app.server.jetty.dir}/temp" />
+		<mkdir dir="${app.server.jetty.dir}/webapps" />
 
 		<copy
 			file="tools/servers/jetty/bin/run.bat"
 			tofile="${app.server.jetty.bin.dir}/run.bat"
-		/>
+		>
+			<filterset>
+				<filter token="app.server.jetty.dir" value="${app.server.jetty.dir}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<replace file="${app.server.jetty.bin.dir}/run.bat">
 			<replacetoken>set "JAVA_OPTS=-D</replacetoken>
@@ -1366,7 +1408,12 @@ release was successful.</echo>
 		<copy
 			file="tools/servers/jetty/bin/run.sh"
 			tofile="${app.server.jetty.bin.dir}/run.sh"
-		/>
+		>
+			<filterset>
+				<filter token="app.server.jetty.dir" value="${app.server.jetty.dir}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<replace file="${app.server.jetty.bin.dir}/run.sh">
 			<replacetoken>export JAVA_OPTS="-D</replacetoken>
@@ -1385,6 +1432,12 @@ release was successful.</echo>
 			file="tools/servers/jetty/bin/start.ini"
 			tofile="${app.server.jetty.bin.dir}/start.ini"
 		/>
+
+		<echo file="${app.server.jetty.dir}/lib/policy/server.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.jetty.bin.dir}">
@@ -1507,18 +1560,19 @@ release was successful.</echo>
 
 		<replace file="${app.server.jonas.dir}/conf/osgi/defaults.properties">
 			<replacetoken><![CDATA[javase-packages ${javase-${javase.version}}]]></replacetoken>
-			<replacevalue><![CDATA[javase-packages ${javase-${javase.version}}, com.sun.jmx.mbeanserver, com.sun.crypto.provider, org.apache.felix.framework]]></replacevalue>
+			<replacevalue><![CDATA[javase-packages ${javase-${javase.version}}, com.sun.jmx.interceptor, com.sun.jmx.mbeanserver, com.sun.crypto.provider, org.apache.felix.framework]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.jonas.bin.dir}/setenv">
 			<replacetoken><![CDATA[export JAVA_OPTS]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					JAVA_OPTS="-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					JAVA_OPTS="-Dfile.encoding=UTF8 @java.security.manager.option@ -Djava.security.policy==$JONAS_ROOT/conf/java.policy -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 
 					export JAVA_OPTS
 				]]>
 			</replacevalue>
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 		</replace>
 
 		<replace file="${app.server.jonas.bin.dir}/setenv.bat">
@@ -1527,9 +1581,10 @@ release was successful.</echo>
 				<![CDATA[
 					set JONAS_CLASSPATH=%JONAS_BASE%\conf;%JONAS_CLASSPATH%
 
-					set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file="%JONAS_ROOT%/conf/felix-config.properties" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m
+					set "JAVA_OPTS=-Dfile.encoding=UTF8 @java.security.manager.option@ -Djava.security.policy==%JONAS_ROOT%/conf/java.policy -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=%JONAS_ROOT%/conf/felix-config.properties -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 				]]>
 			</replacevalue>
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 		</replace>
 
 		<chmod perm="a+x">
@@ -1540,7 +1595,7 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-resin">
-		<delete dir="${app.server.parent.dir}/resin-${app.server.resin.version}" />
+		<delete dir="${app.server.resin.dir}" />
 
 		<if>
 			<not>
@@ -1566,12 +1621,20 @@ release was successful.</echo>
 			/>
 		</unzip>
 
-		<mkdir dir="${app.server.parent.dir}/resin-${app.server.resin.version}/webapps" />
+		<mkdir dir="${app.server.resin.dir}/webapps" />
 
 		<replace file="${app.server.resin.dir}/conf/resin.properties">
 			<replacetoken><![CDATA[# jvm_args  : -Xmx2048m -XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m]]></replacevalue>
+			<replacevalue><![CDATA[jvm_args  : -Dfile.encoding=UTF-8 @java.security.manager.option@ -Dcaucho.environment.class.loader=com.liferay.support.resin.EnvironmentClassLoader -Djava.security.policy==@app.server.resin.dir@/conf/server.policy -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m]]></replacevalue>
+			<replacefilter token="@app.server.resin.dir@" value="${app.server.resin.dir}" />
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 		</replace>
+
+		<echo file="${app.server.resin.dir}/conf/server.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
 
 		<replace file="${app.server.resin.dir}/conf/resin.xml">
 			<replacetoken><![CDATA[xmlns:resin="urn:java:com.caucho.resin">]]></replacetoken>
@@ -1656,6 +1719,12 @@ release was successful.</echo>
 			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacevalue>
 		</replace>-->
 
+		<echo file="${app.server.tomcat.dir}/conf/catalina.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
+
 		<if>
 			<available file="${jdk.windows.home}/jre/bin/java.exe" />
 			<then>
@@ -1671,13 +1740,18 @@ release was successful.</echo>
 		>
 			<filterset>
 				<filter token="java.version" value="${jdk.windows.version}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
 			</filterset>
 		</copy>
 
 		<copy
 			file="tools/servers/tomcat/bin/setenv.sh"
 			tofile="${app.server.tomcat.bin.dir}/setenv.sh"
-		/>
+		>
+			<filterset>
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.tomcat.bin.dir}">
@@ -1766,9 +1840,13 @@ rerun this task.
 				</move>
 
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/wls" />
+
+				<property name="app.server.weblogic.configure.silent" value="-silent" />
 			</then>
 			<else>
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/domains" />
+
+				<property name="app.server.weblogic.configure.silent" value="" />
 			</else>
 		</if>
 
@@ -1804,6 +1882,7 @@ closeTemplate()
 					<env key="MW_HOME" value="${app.server.weblogic.dir.windows}" />
 					<arg value="/c" />
 					<arg value="configure.cmd" />
+					<arg value="${app.server.weblogic.configure.silent}" />
 				</exec>
 
 				<echo file="${tstamp.value}/create-weblogic-domain.bat">
@@ -1837,9 +1916,11 @@ closeTemplate()
 
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
 
-							set "JAVA_OPTIONS=-da:org.apache.lucene... -da:org.aspectj..."
+							set JAVA_OPTIONS=%JAVA_OPTIONS% @java.security.manager.option@ -da:org.apache.lucene... -da:org.aspectj...
 						]]>
 					</replacevalue>
+					<replacefilter token="@app.server.weblogic.instance.dir@" value="${app.server.weblogic.instance.dir}" />
+					<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 				</replace>
 
 				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.cmd">
@@ -1880,6 +1961,7 @@ closeTemplate()
 					<then>
 						<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
 							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+							<arg value="${app.server.weblogic.configure.silent}" />
 						</exec>
 					</then>
 					<else>
@@ -1925,9 +2007,11 @@ closeTemplate()
 
 							export MW_HOME="${app.server.weblogic.dir}"
 
-							export JAVA_OPTIONS="${JAVA_OPTIONS} -da:org.apache.lucene... -da:org.aspectj..."
+							export JAVA_OPTIONS="${JAVA_OPTIONS} @java.security.manager.option@ -da:org.apache.lucene... -da:org.aspectj..."
 						]]>
 					</replacevalue>
+					<replacefilter token="@app.server.weblogic.instance.dir@" value="${app.server.weblogic.instance.dir}" />
+					<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 				</replace>
 
 				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.sh">
@@ -1950,6 +2034,12 @@ closeTemplate()
 				/>
 			</else>
 		</if>
+
+		<echo file="${app.server.weblogic.dir}/wlserver/server/lib/weblogic.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
 
 		<delete dir="${tstamp.value}" />
 	</target>

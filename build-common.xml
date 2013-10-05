@@ -6,6 +6,7 @@
 >
 	<dirname file="${ant.file.build-common}" property="project.dir" />
 
+	<property name="security.policy" value="com/liferay/portal/security/pacl/security.policy" />
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 
 	<property environment="env" />
@@ -482,7 +483,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 				<copy todir="test-classes/${test.type}">
 					<fileset dir="test" includes="*.properties,META-INF/*.dtd,META-INF/*.xml" />
-					<fileset dir="test/${test.type}" includes="**/*.properties,**/dependencies/**,META-INF/*.xml" />
+					<fileset dir="test/${test.type}" includes="**/*.policy,**/*.properties,**/dependencies/**,META-INF/*.xml" />
 				</copy>
 
 				<javac
@@ -833,6 +834,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<property name="test.type" value="${test.type}" />
 		</ant>
 
+		<if>
+			<equals arg1="${test.type}" arg2="integration" />
+			<then>
+				<ant target="test-cmd-security">
+					<property name="junit.forkmode" value="once" />
+					<property name="test.type" value="${test.type}" />
+				</ant>
+			</then>
+		</if>
+
 		<antcall target="report-test-coverage">
 			<param name="" value="${test.type}" />
 		</antcall>
@@ -876,8 +887,53 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							<exclude name="**/DLAppServiceSoapTest.class" />
 							<exclude name="**/UserServiceHttpTest.class" />
 							<exclude name="**/UserServiceSoapTest.class" />
+							<exclude name="**/pacl/test/*Test.class" />
 							<exclude name="${test.excludes}" />
 							<filename regex="${junit.test.excludes}" negate="true" />
+						</fileset>
+					</batchtest>
+				</junit>
+			</then>
+		</if>
+	</target>
+
+	<target name="test-cmd-security">
+		<if>
+			<not>
+				<isset property="test.dir" />
+			</not>
+			<then>
+				<var name="test.dir" value="${test.type}" />
+			</then>
+		</if>
+
+		<if>
+			<available file="test/${test.type}" type="dir" />
+			<then>
+				<junit dir="${project.dir}" fork="on" forkmode="${junit.forkmode}" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
+					<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
+					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
+					<sysproperty key="junit.debug" value="${junit.debug}" />
+					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/${test.type}/cobertura.ser" />
+					<jvmarg line="${junit.cobertura.agent}" />
+					<jvmarg line="${junit.debug.jpda}" />
+					<jvmarg value="-Xmx${junit.java.mx}" />
+					<jvmarg value="-XX:MaxPermSize=${junit.java.maxpermsize}" />
+					<jvmarg value="-Djava.security.manager" />
+					<jvmarg value="-Djava.security.policy==${basedir}/test-classes/${test.type}/${security.policy}" />
+					<jvmarg value="-Dexternal-properties=${test.properties}" />
+					<jvmarg value="-Dfile.encoding=UTF-8" />
+					<jvmarg value="-Djava.net.preferIPv4Stack=true" />
+					<jvmarg value="-Duser.timezone=GMT" />
+					<classpath location="test-coverage" />
+					<classpath refid="test.classpath" />
+					<formatter type="brief" usefile="false" />
+					<formatter type="xml" />
+					<batchtest todir="test-results/${test.type}">
+						<fileset dir="test-classes/${test.dir}" includes="**/${test.class}.class">
+							<exclude name="${test.excludes}" />
+							<filename regex=".*/pacl/test/[\w]+Test.class" negate="false" />
 						</fileset>
 					</batchtest>
 				</junit>
@@ -899,6 +955,11 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<ant target="test-cmd">
 			<property name="junit.forkmode" value="once" />
 			<property name="test.type" value="integration" />
+		</ant>
+
+		<ant target="test-cmd-security">
+			<property name="junit.forkmode" value="once" />
+			<property name="test.type" value="${test.type}" />
 		</ant>
 
 		<antcall target="report-test-coverage">

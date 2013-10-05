@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<project name="support-websphere" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../build-common-java.xml" />
+
+	<property name="deploy.dir" value="${app.server.lib.global.dir}" />
+	<property name="jar.file" value="${ant.project.name}" />
+
+	<target name="clean">
+		<antcall target="build-common-java.clean" />
+
+		<delete file="${deploy.dir}/${jar.file}.jar" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="classes" />
+
+		<path id="web-lib.classpath">
+			<fileset dir="${project.dir}/osgi/lib/common/core" includes="*.jar" />
+			<fileset dir="${app.server.websphere.dir}/plugins" includes="com.ibm.ws.runtime.jar" />
+		</path>
+
+		<javac
+			classpathref="web.classpath"
+			compiler="${javac.compiler}"
+			debug="${javac.debug}"
+			deprecation="${javac.deprecation}"
+			destdir="classes"
+			encoding="${javac.encoding}"
+			includeAntRuntime="false"
+			nowarn="${javac.nowarn}"
+			srcdir="src"
+		/>
+	</target>
+
+	<target name="deploy" depends="jar">
+		<delete file="${deploy.dir}/${ant.project.name}.jar" />
+
+		<antcall target="build-common-java.deploy" />
+	</target>
+</project>

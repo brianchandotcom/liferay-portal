@@ -979,9 +979,7 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXML" class="com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl">
 		<property name="XMLSchema">
 			<bean class="com.liferay.portal.xml.XMLSchemaImpl">
-				<property name="schemaLanguage">
-					<util:constant static-field="javax.xml.XMLConstants.XML_NS_URI" />
-				</property>
+				<property name="schemaLanguage" value="http://www.w3.org/2001/XMLSchema" />
 				<property name="systemId" value="http://www.liferay.com/dtd/liferay-ddm-structure_6_2_0.xsd" />
 			</bean>
 		</property>

@@ -525,6 +525,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Constants.FRAMEWORK_STORAGE,
 			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
 
+		properties.put("java.security.manager", null);
+		properties.put("eclipse.security", null);
+		properties.put("org.osgi.framework.security", null);
+
 		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
 
 		CodeSource codeSource = protectionDomain.getCodeSource();

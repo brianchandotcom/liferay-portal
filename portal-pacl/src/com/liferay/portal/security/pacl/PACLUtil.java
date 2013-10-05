@@ -56,32 +56,18 @@ public class PACLUtil {
 	}
 
 	public static PACLPolicy getPACLPolicy() {
-		if (!PACLPolicyManager.isActive()) {
-			return null;
-		}
-
 		SecurityManager securityManager = System.getSecurityManager();
 
-		if (securityManager == null) {
-			return null;
-		}
-
 		try {
-			java.security.Permission permission = new PACLUtil.Permission();
+			securityManager.checkPermission(_PERMISSION);
 
-			securityManager.checkPermission(permission);
+			PACLPolicy paclPolicy = PACLPolicyThreadLocal.get();
+
+			return paclPolicy;
 		}
-		catch (SecurityException se) {
-			if (!(se instanceof PACLUtil.Exception)) {
-				throw se;
-			}
-
-			PACLUtil.Exception paclUtilException = (PACLUtil.Exception)se;
-
-			return paclUtilException.getPaclPolicy();
+		finally {
+			PACLPolicyThreadLocal.set(null);
 		}
-
-		return null;
 	}
 
 	public static String getServiceInterfaceName(String serviceClassName) {
@@ -111,10 +97,6 @@ public class PACLUtil {
 		ProtectionDomain protectionDomain = AccessController.doPrivileged(
 			new ProtectionDomainPrivilegedAction(callerClass));
 
-		if (protectionDomain.getClassLoader() == null) {
-			return true;
-		}
-
 		PortalSecurityManager portalSecurityManager =
 			SecurityManagerUtil.getPortalSecurityManager();
 
@@ -135,20 +117,6 @@ public class PACLUtil {
 			new ProtectionDomainPrivilegedAction(callerClass));
 
 		return _isTrustedCaller(protectionDomain, permission, paclPolicy);
-	}
-
-	public static class Exception extends SecurityException {
-
-		public Exception(PACLPolicy paclPolicy) {
-			_paclPolicy = paclPolicy;
-		}
-
-		public PACLPolicy getPaclPolicy() {
-			return _paclPolicy;
-		}
-
-		private PACLPolicy _paclPolicy;
-
 	}
 
 	public static class Permission extends BasicPermission {
@@ -173,7 +141,7 @@ public class PACLUtil {
 		}
 		else {
 			callerPACLPolicy = PACLPolicyManager.getPACLPolicy(
-				protectionDomain.getClassLoader());
+				protectionDomain);
 		}
 
 		if (paclPolicy == callerPACLPolicy) {
@@ -186,10 +154,6 @@ public class PACLUtil {
 	private static boolean _isTrustedCaller(
 		ProtectionDomain protectionDomain, java.security.Permission permission,
 		PACLPolicy paclPolicy) {
-
-		if (protectionDomain.getClassLoader() == null) {
-			return true;
-		}
 
 		PortalSecurityManager portalSecurityManager =
 			SecurityManagerUtil.getPortalSecurityManager();
@@ -208,6 +172,8 @@ public class PACLUtil {
 
 		return false;
 	}
+
+	private static final Permission _PERMISSION = new PACLUtil.Permission();
 
 	private static class ProtectionDomainPrivilegedAction
 		implements PrivilegedAction<ProtectionDomain> {

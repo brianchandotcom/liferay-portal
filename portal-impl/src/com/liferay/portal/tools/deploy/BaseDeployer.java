@@ -547,7 +547,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 	public void copyTomcatContextXml(File targetDir) throws Exception {
 		if (!appServerType.equals(ServerDetector.TOMCAT_ID) ||
-			!SecurityManagerUtil.isPACLDisabled()) {
+			SecurityManagerUtil.ENABLED) {
 
 			return;
 		}

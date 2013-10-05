@@ -97,10 +97,6 @@ public class PACLUtil {
 		ProtectionDomain protectionDomain = AccessController.doPrivileged(
 			new ProtectionDomainPrivilegedAction(callerClass));
 
-		if (protectionDomain.getClassLoader() == null) {
-			return true;
-		}
-
 		PortalSecurityManager portalSecurityManager =
 			SecurityManagerUtil.getPortalSecurityManager();
 
@@ -158,10 +154,6 @@ public class PACLUtil {
 	private static boolean _isTrustedCaller(
 		ProtectionDomain protectionDomain, java.security.Permission permission,
 		PACLPolicy paclPolicy) {
-
-		if (protectionDomain.getClassLoader() == null) {
-			return true;
-		}
 
 		PortalSecurityManager portalSecurityManager =
 			SecurityManagerUtil.getPortalSecurityManager();

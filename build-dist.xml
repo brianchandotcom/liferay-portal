@@ -1719,6 +1719,12 @@ release was successful.</echo>
 			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacevalue>
 		</replace>-->
 
+		<echo file="${app.server.tomcat.dir}/conf/catalina.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
+
 		<if>
 			<available file="${jdk.windows.home}/jre/bin/java.exe" />
 			<then>
@@ -1734,13 +1740,18 @@ release was successful.</echo>
 		>
 			<filterset>
 				<filter token="java.version" value="${jdk.windows.version}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
 			</filterset>
 		</copy>
 
 		<copy
 			file="tools/servers/tomcat/bin/setenv.sh"
 			tofile="${app.server.tomcat.bin.dir}/setenv.sh"
-		/>
+		>
+			<filterset>
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.tomcat.bin.dir}">

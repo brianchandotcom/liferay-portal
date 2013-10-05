@@ -1,1 +1,1 @@
-CATALINA_OPTS="$CATALINA_OPTS -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+CATALINA_OPTS="$CATALINA_OPTS -Dfile.encoding=UTF8 @java.security.manager.option@ -Djava.security.policy==$CATALINA_BASE/conf/catalina.policy -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"

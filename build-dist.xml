@@ -1840,9 +1840,13 @@ rerun this task.
 				</move>
 
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/wls" />
+
+				<property name="app.server.weblogic.configure.silent" value="-silent" />
 			</then>
 			<else>
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/domains" />
+
+				<property name="app.server.weblogic.configure.silent" value="" />
 			</else>
 		</if>
 
@@ -1878,6 +1882,7 @@ closeTemplate()
 					<env key="MW_HOME" value="${app.server.weblogic.dir.windows}" />
 					<arg value="/c" />
 					<arg value="configure.cmd" />
+					<arg value="${app.server.weblogic.configure.silent}" />
 				</exec>
 
 				<echo file="${tstamp.value}/create-weblogic-domain.bat">
@@ -1911,9 +1916,11 @@ closeTemplate()
 
 							set "MW_HOME=${app.server.weblogic.dir.windows}"
 
-							set "JAVA_OPTIONS=-da:org.apache.lucene... -da:org.aspectj..."
+							set JAVA_OPTIONS=%JAVA_OPTIONS% @java.security.manager.option@ -da:org.apache.lucene... -da:org.aspectj...
 						]]>
 					</replacevalue>
+					<replacefilter token="@app.server.weblogic.instance.dir@" value="${app.server.weblogic.instance.dir}" />
+					<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 				</replace>
 
 				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.cmd">
@@ -1954,6 +1961,7 @@ closeTemplate()
 					<then>
 						<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
 							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+							<arg value="${app.server.weblogic.configure.silent}" />
 						</exec>
 					</then>
 					<else>
@@ -1999,9 +2007,11 @@ closeTemplate()
 
 							export MW_HOME="${app.server.weblogic.dir}"
 
-							export JAVA_OPTIONS="${JAVA_OPTIONS} -da:org.apache.lucene... -da:org.aspectj..."
+							export JAVA_OPTIONS="${JAVA_OPTIONS} @java.security.manager.option@ -da:org.apache.lucene... -da:org.aspectj..."
 						]]>
 					</replacevalue>
+					<replacefilter token="@app.server.weblogic.instance.dir@" value="${app.server.weblogic.instance.dir}" />
+					<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 				</replace>
 
 				<replace file="${app.server.weblogic.instance.dir}/startWebLogic.sh">
@@ -2024,6 +2034,12 @@ closeTemplate()
 				/>
 			</else>
 		</if>
+
+		<echo file="${app.server.weblogic.dir}/wlserver/server/lib/weblogic.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
 
 		<delete dir="${tstamp.value}" />
 	</target>

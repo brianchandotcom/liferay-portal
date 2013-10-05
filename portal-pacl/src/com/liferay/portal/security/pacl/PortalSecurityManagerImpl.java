@@ -1146,7 +1146,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
 				classLoader);
 
-			if (paclPolicy == PACLUtil.getPACLPolicy()) {
+			if ((paclPolicy != null) &&
+				(paclPolicy == PACLUtil.getPACLPolicy())) {
+
 				return;
 			}
 

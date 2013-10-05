@@ -416,8 +416,13 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public HttpSession getSession(boolean create) {
-		HttpSession session = new PortletServletSession(
-			_request.getSession(create), _portletRequestImpl);
+		HttpSession session = _request.getSession(create);
+
+		if (session == null) {
+			return null;
+		}
+
+		session = new PortletServletSession(session, _portletRequestImpl);
 
 		if (ServerDetector.isJetty()) {
 			try {

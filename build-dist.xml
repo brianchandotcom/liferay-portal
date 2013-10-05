@@ -1560,18 +1560,19 @@ release was successful.</echo>
 
 		<replace file="${app.server.jonas.dir}/conf/osgi/defaults.properties">
 			<replacetoken><![CDATA[javase-packages ${javase-${javase.version}}]]></replacetoken>
-			<replacevalue><![CDATA[javase-packages ${javase-${javase.version}}, com.sun.jmx.mbeanserver, com.sun.crypto.provider, org.apache.felix.framework]]></replacevalue>
+			<replacevalue><![CDATA[javase-packages ${javase-${javase.version}}, com.sun.jmx.interceptor, com.sun.jmx.mbeanserver, com.sun.crypto.provider, org.apache.felix.framework]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.jonas.bin.dir}/setenv">
 			<replacetoken><![CDATA[export JAVA_OPTS]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					JAVA_OPTS="-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					JAVA_OPTS="-Dfile.encoding=UTF8 @java.security.manager.option@ -Djava.security.policy==$JONAS_ROOT/conf/java.policy -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 
 					export JAVA_OPTS
 				]]>
 			</replacevalue>
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 		</replace>
 
 		<replace file="${app.server.jonas.bin.dir}/setenv.bat">
@@ -1580,9 +1581,10 @@ release was successful.</echo>
 				<![CDATA[
 					set JONAS_CLASSPATH=%JONAS_BASE%\conf;%JONAS_CLASSPATH%
 
-					set JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file="%JONAS_ROOT%/conf/felix-config.properties" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m
+					set "JAVA_OPTS=-Dfile.encoding=UTF8 @java.security.manager.option@ -Djava.security.policy==%JONAS_ROOT%/conf/java.policy -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=%JONAS_ROOT%/conf/felix-config.properties -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 				]]>
 			</replacevalue>
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 		</replace>
 
 		<chmod perm="a+x">

@@ -28,6 +28,7 @@ import java.net.URL;
 
 import java.security.AccessControlException;
 import java.security.AccessController;
+import java.security.AllPermission;
 import java.security.CodeSource;
 import java.security.Permission;
 import java.security.PermissionCollection;
@@ -36,6 +37,7 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
 
+import java.util.Enumeration;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -122,7 +124,12 @@ public class PortalPolicy extends Policy {
 			permissionCollection = new PortalPermissionCollection(paclPolicy);
 		}
 		else {
-			permissionCollection = new LenientPermissionCollection();
+			if (_IBM_JVM) {
+				permissionCollection = _policy.getPermissions(protectionDomain);
+			}
+			else {
+				permissionCollection = new LenientPermissionCollection();
+			}
 		}
 
 		if (key != null) {
@@ -145,10 +152,34 @@ public class PortalPolicy extends Policy {
 
 			PermissionCollection permissionCollection = null;
 
+			if (_IBM_JVM) {
+				permissionCollection = getPermissions(protectionDomain);
+
+				if ((permissionCollection != null) &&
+					(!(permissionCollection instanceof
+						PortalPermissionCollection))) {
+
+					Enumeration<Permission> elements =
+						permissionCollection.elements();
+
+					while (elements.hasMoreElements()) {
+						Permission curPermission = elements.nextElement();
+
+						if (curPermission instanceof AllPermission) {
+							return true;
+						}
+					}
+				}
+			}
+
 			if (!(permission instanceof PACLUtil.Permission) &&
 				!_paclPolicy.isCheckablePermission(permission)) {
 
 				return _checkWithParentPolicy(protectionDomain, permission);
+			}
+
+			if (!_IBM_JVM) {
+				permissionCollection = getPermissions(protectionDomain);
 			}
 
 			if (permissionCollection instanceof
@@ -238,6 +269,8 @@ public class PortalPolicy extends Policy {
 		}
 
 	};
+
+	private final boolean _IBM_JVM = JavaDetector.isIBM();
 
 	private Field _field;
 	private PACLPolicy _paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();

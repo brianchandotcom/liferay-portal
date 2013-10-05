@@ -217,6 +217,12 @@ cobertura.ser
 /support-tomcat/classes
 /support-tomcat/support-tomcat*.jar
 
+/support-websphere/*.iml
+/support-websphere/*.ipr
+/support-websphere/*.iws
+/support-websphere/classes
+/support-websphere/support-websphere*.jar
+
 /test-coverage
 /test-results
 

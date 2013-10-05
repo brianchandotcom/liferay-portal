@@ -80,6 +80,13 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
+				<ant dir="support-websphere" target="clean" inheritAll="false" />
+			</then>
+		</if>
+
 		<delete failonerror="false">
 			<fileset
 				dir="${app.server.classes.portal.dir}"
@@ -476,6 +483,8 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 				<tstamp>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 				</tstamp>
+
+				<ant dir="support-websphere" target="deploy" inheritAll="false" />
 
 				<jar
 					basedir="${app.server.portal.dir}"

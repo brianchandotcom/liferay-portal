@@ -206,6 +206,10 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		if (ServerDetector.isWebLogic()) {
 			doWebLogicHook();
 		}
+
+		if (ServerDetector.isWebSphere()) {
+			doWebSphereHook();
+		}
 	}
 
 	@Override
@@ -320,6 +324,16 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 			scheduledExecutor.scheduleAtFixedRate(
 				runnable, 100, 100, TimeUnit.MILLISECONDS);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	protected void doWebSphereHook() {
+		try {
+			Class.forName(
+				"com.liferay.support.websphere.DynamicPolicyHelper");
 		}
 		catch (Exception e) {
 			_log.error(e, e);

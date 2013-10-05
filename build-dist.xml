@@ -1177,7 +1177,9 @@ release was successful.</echo>
 				</replace>
 
 				<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
-					JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					<![CDATA[
+						JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 ${java.security.manager.option} -Djava.security.policy==${app.server.jboss.dir}/bin/server.policy -Djboss.home.dir=${app.server.jboss.dir} -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					]]>
 				</echo>
 
 				<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
@@ -1189,12 +1191,20 @@ release was successful.</echo>
 					<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 					<replacevalue>
 						<![CDATA[
-							set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+							set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 @java.security.manager.option@ -Djava.security.policy==@app.server.jboss.dir@/bin/server.policy -Djboss.home.dir=@app.server.jboss.dir@ -Djava.net.preferIPv4Stack=true -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 
 							:JAVA_OPTS_SET
 						]]>
 					</replacevalue>
+					<replacefilter token="@app.server.jboss.dir@" value="${app.server.jboss.dir}" />
+					<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}" />
 				</replace>
+
+				<echo file="${app.server.jboss.bin.dir}/server.policy">
+					grant {
+						permission java.security.AllPermission;
+					};
+				</echo>
 
 				<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
 					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>

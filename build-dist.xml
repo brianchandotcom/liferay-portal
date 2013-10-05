@@ -949,12 +949,12 @@ release was successful.</echo>
 			 src="${app.server.parent.dir}/${app.server.glassfish.zip.name}"
 		>
 			<patternset
-				includes="glassfish3/glassfish/**"
+				includes="glassfish3/glassfish/**,glassfishv3/glassfish/**"
 			/>
 			<mapper
-				type="glob"
-				from="glassfish3/glassfish/*"
-				to="${app.server.glassfish.dir}/*"
+				type="regexp"
+				from="glassfishv?3/glassfish/(.*)"
+				to="${app.server.glassfish.dir}/\1"
 			/>
 		</unzip>
 
@@ -976,6 +976,7 @@ release was successful.</echo>
 			<replacetoken><![CDATA[<jvm-options>-Xmx512m</jvm-options>]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
+					<jvm-options>@java.security.manager.option@</jvm-options>
 					<jvm-options>-Dfile.encoding=UTF8</jvm-options>
 					<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
 					<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
@@ -983,6 +984,7 @@ release was successful.</echo>
 					<jvm-options>-Xmx1024m</jvm-options>
 				]]>
 			</replacevalue>
+			<replacefilter token="@java.security.manager.option@" value="${java.security.manager.option}"/>
 		</replace>
 
 		<replace file="${app.server.glassfish.instance.dir}/config/domain.xml">
@@ -990,10 +992,9 @@ release was successful.</echo>
 			<replacevalue><![CDATA[<jvm-options>-XX:MaxPermSize=512m</jvm-options>]]></replacevalue>
 		</replace>
 
-		<echo file="${app.server.glassfish.instance.dir}/config/server.policy" append="true">
+		<echo file="${app.server.glassfish.instance.dir}/config/server.policy">
 			grant {
-				permission java.lang.reflect.ReflectPermission  "suppressAccessChecks";
-				permission javax.security.auth.AuthPermission "doAsPrivileged";
+				permission java.security.AllPermission;
 			};
 		</echo>
 

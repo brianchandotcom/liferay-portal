@@ -57,20 +57,20 @@ Locale userLocale = user.getLocale();
 	<aui:a href="<%= displayPreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %></aui:a>
 
 	<aui:a href="<%= changePreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "set-x-as-your-preferred-language", locale.getDisplayName(userLocale)) %></aui:a>
+
+	<aui:script use="aui-base,liferay-store">
+		var ignoreUserLocaleOptionsNode = A.one('#ignoreUserLocaleOptions');
+
+		ignoreUserLocaleOptionsNode.on(
+			'click',
+			function() {
+				Liferay.Store(
+					{
+						ignoreUserLocaleOptions: true,
+						useHttpSession: true
+					}
+				);
+			}
+		);
+	</aui:script>
 </c:if>
-
-<aui:script use="aui-base,liferay-store">
-	var ignoreUserLocaleOptionsNode = A.one('#ignoreUserLocaleOptions');
-
-	ignoreUserLocaleOptionsNode.on(
-		'click',
-		function() {
-			Liferay.Store(
-				{
-					ignoreUserLocaleOptions: true,
-					useHttpSession: true
-				}
-			);
-		}
-	);
-</aui:script>

@@ -139,6 +139,11 @@
 
 		.publish-link {
 			margin: 0 5px;
+
+			&.btn.btn-success:hover {
+				background-color: #0ABA1D;
+				text-decoration: none;
+			}
 		}
 	}
 

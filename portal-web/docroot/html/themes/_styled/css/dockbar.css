@@ -371,7 +371,8 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.staging-controls {
-			margin-right: 50px;
+			padding-left: 5px;
+			padding-right: 50px;
 
 			select {
 				width: 100%;

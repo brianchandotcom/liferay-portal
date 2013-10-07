@@ -50,8 +50,6 @@ public class EditConfigurationAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		actionRequest = ActionUtil.getWrappedActionRequest(actionRequest, null);
-
 		Portlet portlet = null;
 
 		try {
@@ -65,6 +63,8 @@ public class EditConfigurationAction extends PortletAction {
 
 			return;
 		}
+
+		actionRequest = ActionUtil.getWrappedActionRequest(actionRequest, null);
 
 		ConfigurationAction configurationAction = getConfigurationAction(
 			portlet);
@@ -84,8 +84,6 @@ public class EditConfigurationAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
-
 		Portlet portlet = null;
 
 		try {
@@ -98,6 +96,8 @@ public class EditConfigurationAction extends PortletAction {
 			return actionMapping.findForward(
 				"portlet.portlet_configuration.error");
 		}
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
 
 		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
@@ -134,9 +134,6 @@ public class EditConfigurationAction extends PortletAction {
 			ResourceResponse resourceResponse)
 		throws Exception {
 
-		resourceRequest = ActionUtil.getWrappedResourceRequest(
-			resourceRequest, null);
-
 		Portlet portlet = null;
 
 		try {
@@ -145,6 +142,9 @@ public class EditConfigurationAction extends PortletAction {
 		catch (PrincipalException pe) {
 			return;
 		}
+
+		resourceRequest = ActionUtil.getWrappedResourceRequest(
+			resourceRequest, null);
 
 		ResourceServingConfigurationAction resourceServingConfigurationAction =
 			(ResourceServingConfigurationAction)getConfigurationAction(portlet);

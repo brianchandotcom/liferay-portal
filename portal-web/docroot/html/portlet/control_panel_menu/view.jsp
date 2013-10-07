@@ -19,8 +19,10 @@
 <div class="portal-add-content">
 	<div class="control-panel-tools">
 		<div class="search-panels">
+			<i class="icon-search"></i>
+
 			<div class="search-panels-bar">
-				<i class="icon-reorder search-panel-icon"></i>
+				<i class="search-panel-icon"></i>
 
 				<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" />
 			</div>
@@ -43,10 +45,25 @@
 		Map<String, List<Portlet>> siteAdministrationCategoriesMap = PortalUtil.getSiteAdministrationCategoriesMap(request);
 
 		for (String siteAdministrationCategory : siteAdministrationCategoriesMap.keySet()) {
+			String iconClass = "icon-file";
+
 			String panelPageCategoryId = "panel-manage-" + siteAdministrationCategory;
+
+			if (siteAdministrationCategory == PortletCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION) {
+				iconClass = "icon-hdd";
+			}
+			else if (siteAdministrationCategory == PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) {
+				iconClass = "icon-file-text";
+			}
+			else if (siteAdministrationCategory == PortletCategoryKeys.SITE_ADMINISTRATION_PAGES) {
+				iconClass = "icon-sitemap";
+			}
+			else if (siteAdministrationCategory == PortletCategoryKeys.SITE_ADMINISTRATION_USERS) {
+				iconClass = "icon-group";
+			}
 		%>
 
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(pageContext, "category." + siteAdministrationCategory) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" iconClass="<%= iconClass %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(pageContext, "category." + siteAdministrationCategory) %>'>
 				<c:if test="<%= siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 					<%

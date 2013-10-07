@@ -224,17 +224,14 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException {
 
-		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
-			return;
-		}
-
 		Map<String, String> initParams = portlet.getInitParams();
 
 		boolean checkAuthToken = GetterUtil.getBoolean(
 			initParams.get("check-auth-token"), true);
 
 		if (checkAuthToken) {
-			AuthTokenUtil.check(request);
+			AuthTokenUtil.checkCSRFToken(
+				request, SecurityPortletContainerWrapper.class.getName());
 		}
 	}
 

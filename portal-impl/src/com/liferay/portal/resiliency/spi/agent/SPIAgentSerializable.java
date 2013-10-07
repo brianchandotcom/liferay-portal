@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.kernel.util.ThreadLocalDistributorRegistry;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.WebKeys;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -138,15 +140,30 @@ public class SPIAgentSerializable implements Serializable {
 	}
 
 	public static Map<String, Serializable> extractSessionAttributes(
-		HttpSession session) {
+		HttpServletRequest request) {
+
+		Portlet portlet = (Portlet)request.getAttribute(
+			WebKeys.SPI_AGENT_PORTLET);
+
+		String portletSessionAttributesKey =
+			WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(portlet.getContextName());
 
 		Map<String, Serializable> sessionAttributes =
 			new HashMap<String, Serializable>();
+
+		HttpSession session = request.getSession();
 
 		Enumeration<String> enumeration = session.getAttributeNames();
 
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
+
+			if (name.startsWith(WebKeys.PORTLET_SESSION_ATTRIBUTES) &&
+				!name.equals(portletSessionAttributesKey)) {
+
+				continue;
+			}
+
 			Object value = session.getAttribute(name);
 
 			if (value instanceof Serializable) {
@@ -156,6 +173,37 @@ public class SPIAgentSerializable implements Serializable {
 				_log.warn(
 					"Nonserializable session attribute name " + name +
 						" with value " + value);
+			}
+		}
+
+		HttpSession portletSession = (HttpSession)request.getAttribute(
+			WebKeys.PORTLET_SESSION);
+
+		if (portletSession != null) {
+			request.removeAttribute(WebKeys.PORTLET_SESSION);
+
+			HashMap<String, Serializable> portletSessionAttributes =
+				new HashMap<String, Serializable>();
+
+			enumeration = portletSession.getAttributeNames();
+
+			while (enumeration.hasMoreElements()) {
+				String name = enumeration.nextElement();
+				Object value = portletSession.getAttribute(name);
+
+				if (value instanceof Serializable) {
+					portletSessionAttributes.put(name, (Serializable)value);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Nonserializable session attribute name " + name +
+							" with value " + value);
+				}
+			}
+
+			if (!portletSessionAttributes.isEmpty()) {
+				sessionAttributes.put(
+					portletSessionAttributesKey, portletSessionAttributes);
 			}
 		}
 
@@ -201,7 +249,11 @@ public class SPIAgentSerializable implements Serializable {
 
 			ClassLoaderUtil.setContextClassLoader(classLoader);
 
-			return deserializer.readObject();
+			T t = deserializer.readObject();
+
+			t.servletContextName = servletContextName;
+
+			return t;
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new IOException(cnfe);
@@ -263,7 +315,7 @@ public class SPIAgentSerializable implements Serializable {
 		}
 	}
 
-	protected transient final String servletContextName;
+	protected transient String servletContextName;
 	protected ThreadLocalDistributor[] threadLocalDistributors;
 
 	private static Log _log = LogFactoryUtil.getLog(SPIAgentSerializable.class);

@@ -15,6 +15,7 @@
 package com.liferay.portal.resiliency.spi.agent;
 
 import com.liferay.portal.kernel.io.AutoDeleteFileInputStream;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
@@ -55,6 +56,43 @@ import javax.servlet.http.HttpSession;
  * @author Shuyang Zhou
  */
 public class SPIAgentRequest extends SPIAgentSerializable {
+
+	public static void populatePortletSessionAttributes(
+		HttpServletRequest request, HttpSession session) {
+
+		if (!SPIUtil.isSPI()) {
+			return;
+		}
+
+		if (request.getAttribute(WebKeys.PORTLET_SESSION) != null) {
+			return;
+		}
+
+		SPIAgentRequest spiAgentRequest = (SPIAgentRequest)request.getAttribute(
+			WebKeys.SPI_AGENT_REQUEST);
+
+		if (spiAgentRequest == null) {
+			return;
+		}
+
+		request.setAttribute(WebKeys.PORTLET_SESSION, session);
+
+		Map<String, Serializable> originalSessionAttributes =
+			spiAgentRequest.originalSessionAttributes;
+
+		Map<String, Serializable> portletSessionAttributes =
+			(Map<String, Serializable>)originalSessionAttributes.remove(
+				WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(
+					spiAgentRequest.servletContextName));
+
+		if (portletSessionAttributes != null) {
+			for (Map.Entry<String, Serializable> entry :
+					portletSessionAttributes.entrySet()) {
+
+				session.setAttribute(entry.getKey(), entry.getValue());
+			}
+		}
+	}
 
 	public SPIAgentRequest(HttpServletRequest request) throws IOException {
 		super(
@@ -138,9 +176,7 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 				new String[] {StringPool.FALSE});
 		}
 
-		HttpSession session = request.getSession();
-
-		originalSessionAttributes = extractSessionAttributes(session);
+		originalSessionAttributes = extractSessionAttributes(request);
 
 		captureThreadLocals();
 	}
@@ -168,11 +204,11 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 		return request;
 	}
 
-	public void populateSessionAttributes(HttpSession httpSession) {
+	public void populateSessionAttributes(HttpSession session) {
 		for (Map.Entry<String, Serializable> entry :
 				originalSessionAttributes.entrySet()) {
 
-			httpSession.setAttribute(entry.getKey(), entry.getValue());
+			session.setAttribute(entry.getKey(), entry.getValue());
 		}
 	}
 

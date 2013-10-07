@@ -61,7 +61,7 @@ public class SPIAgentResponse extends SPIAgentSerializable {
 			spiAgentRequest.getOriginalSessionAttributes();
 
 		Map<String, Serializable> newSessionAttributes =
-			extractSessionAttributes(request.getSession());
+			extractSessionAttributes(request);
 
 		Set<String> removedSessionAttributeNames =
 			originalSessionAttributes.keySet();

@@ -131,6 +131,10 @@ public interface WebKeys {
 
 	public static final String PORTLET_RESOURCE_STATIC_URLS = "PORTLET_RESOURCE_STATIC_URLS";
 
+	public static final String PORTLET_SESSION = "PORTLET_SESSION";
+
+	public static final String PORTLET_SESSION_ATTRIBUTES = "PORTLET_SESSION_ATTRIBUTES_";
+
 	public static final String REDIRECT = "REDIRECT";
 
 	public static final String REFERER = "referer";

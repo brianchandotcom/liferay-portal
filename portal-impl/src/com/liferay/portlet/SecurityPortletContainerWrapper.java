@@ -183,14 +183,14 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			return;
 		}
 
-		if (portlet.isUndeployedPortlet()) {
-			return;
-		}
-
 		if (!isValidPortletId(portlet.getPortletId())) {
 			_log.warn("Invalid portlet id " + portlet.getPortletId());
 
 			throw new PrincipalException();
+		}
+
+		if (portlet.isUndeployedPortlet()) {
+			return;
 		}
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);

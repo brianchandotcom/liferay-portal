@@ -44,6 +44,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
@@ -541,6 +542,25 @@ public class EditArticleAction extends PortletAction {
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
+		String portletResource = ParamUtil.getString(
+			uploadPortletRequest, "portletResource");
+
+		PortletPreferences portletPreferences = null;
+
+		if (Validator.isNotNull(portletResource)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)uploadPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+					themeDisplay.getLayout(), portletResource);
+
+			if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+				throw new PrincipalException();
+			}
+		}
+
 		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
@@ -855,14 +875,7 @@ public class EditArticleAction extends PortletAction {
 
 		// Journal content
 
-		String portletResource = ParamUtil.getString(
-			uploadPortletRequest, "portletResource");
-
-		if (Validator.isNotNull(portletResource)) {
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					uploadPortletRequest, portletResource);
-
+		if (portletPreferences != null) {
 			portletPreferences.setValue(
 				"groupId", String.valueOf(article.getGroupId()));
 			portletPreferences.setValue("articleId", article.getArticleId());

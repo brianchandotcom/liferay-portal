@@ -329,6 +329,8 @@ if (Validator.isNotNull(historyKey)) {
 					formNode.delegate('change', updateSectionStatus, 'input, select, textarea');
 
 					formNode.on('blur', updateSectionError, 'input, select, textarea');
+
+					formNode.on('autofields:update', updateSectionError);
 				}
 			</aui:script>
 		</c:otherwise>

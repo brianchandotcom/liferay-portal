@@ -197,7 +197,22 @@ AUI.add(
 						}
 
 						if (deleteRow) {
+							var form = node.ancestor('form');
+
 							node.hide();
+
+							AArray.each(
+								CSS_VALIDATION_HELPER_CLASSES,
+								function(validationClass, index, collection) {
+									var validationDisabledClass = validationClass + '-disabled';
+
+									node.all('.' + validationClass).each(
+										function(item) {
+											item.replaceClass(validationClass, validationDisabledClass);
+										}
+									);
+								}
+							);
 
 							var rules;
 
@@ -238,7 +253,24 @@ AUI.add(
 										);
 									}
 
+									AArray.each(
+										CSS_VALIDATION_HELPER_CLASSES,
+										function(validationClass, index, collection) {
+											var validationDisabledClass = validationClass + '-disabled';
+
+											node.all('.' + validationDisabledClass).each(
+												function(item) {
+													item.replaceClass(validationDisabledClass, validationClass);
+												}
+											);
+										}
+									);
+
 									node.show();
+
+									if (form) {
+										form.fire('autofields:update');
+									}
 								}
 							);
 
@@ -250,7 +282,9 @@ AUI.add(
 								}
 							);
 
-							formValidator.validate();
+							if (form) {
+								form.fire('autofields:update');
+							}
 						}
 					},
 

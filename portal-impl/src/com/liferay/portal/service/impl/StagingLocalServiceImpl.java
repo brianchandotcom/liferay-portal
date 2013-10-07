@@ -167,6 +167,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				stagingGroup.getGroupId(), false, true);
 
 			groupLocalService.deleteGroup(stagingGroup.getGroupId());
+
+			liveGroup.clearStagingGroup();
 		}
 		else {
 			layoutSetBranchLocalService.deleteLayoutSetBranches(

@@ -88,8 +88,6 @@ public interface Http {
 
 	public String getIpAddress(String url);
 
-	public String getNonstandardPort(String url);
-
 	public String getParameter(String url, String name);
 
 	public String getParameter(String url, String name, boolean escaped);

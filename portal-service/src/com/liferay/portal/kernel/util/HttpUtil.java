@@ -118,10 +118,6 @@ public class HttpUtil {
 		return getHttp().getIpAddress(url);
 	}
 
-	public static String getNonstandardPort(String url) {
-		return getHttp().getNonstandardPort(url);
-	}
-
 	public static String getParameter(String url, String name) {
 		return getHttp().getParameter(url, name);
 	}

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Company;
@@ -64,6 +63,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+
+import java.net.URL;
 
 import java.security.Key;
 import java.security.PrivilegedAction;
@@ -850,40 +851,19 @@ public class PortletURLImpl
 					_layoutFriendlyURL = GetterUtil.getString(
 						PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));
 
-					boolean isSecureURL = HttpUtil.isSecure(_layoutFriendlyURL);
+					if (_secure) {
+						URL url = new URL(_layoutFriendlyURL);
 
-					if (isSecureURL != _secure) {
-						_layoutFriendlyURL = HttpUtil.protocolize(
-							_layoutFriendlyURL, _secure);
+						int port = Http.HTTPS_PORT;
 
-						String port = HttpUtil.getNonstandardPort(
-							_layoutFriendlyURL);
-
-						if (!port.equals(StringPool.BLANK)) {
-							int httpPort = PropsValues.WEB_SERVER_HTTP_PORT;
-							int httpsPort = PropsValues.WEB_SERVER_HTTPS_PORT;
-
-							if ((httpPort == -1) || (httpsPort == -1)) {
-								throw new SystemException(
-									"Cannot redirect to nonstandard port: " +
-									"Please configure web.server.http.port " +
-									"and web.server.https.port in " +
-									"portal-ext.properties.");
-							}
-
-							if (_secure) {
-								_layoutFriendlyURL =
-									StringUtil.replaceFirst(
-										_layoutFriendlyURL, port,
-										String.valueOf(httpsPort));
-							}
-							else {
-								_layoutFriendlyURL =
-									StringUtil.replaceFirst(
-										_layoutFriendlyURL, port,
-										String.valueOf(httpPort));
-							}
+						if (PropsValues.WEB_SERVER_HTTPS_PORT != -1) {
+							port = PropsValues.WEB_SERVER_HTTPS_PORT;
 						}
+
+						url = new URL(
+							Http.HTTPS, url.getHost(), port, url.getFile());
+
+						_layoutFriendlyURL = url.toString();
 					}
 				}
 			}

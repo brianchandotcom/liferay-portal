@@ -849,11 +849,11 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</if>
 
 		<if>
-			<available file="test/${test.type}" type="dir" />
+			<available file="test/${test.dir}" type="dir" />
 			<then>
 				<resourcecount property="test.with.security.count">
 					<fileset
-						dir="test-classes/${test.type}"
+						dir="test-classes/${test.dir}"
 						includes="**/${test.class}.class"
 					>
 						<filename regex=".*/pacl/test/[\w]+Test.class" negate="false" />
@@ -903,7 +903,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 				<resourcecount property="test.without.security.count">
 					<fileset
-						dir="test-classes/${test.type}"
+						dir="test-classes/${test.dir}"
 						includes="**/${test.class}.class"
 					>
 						<filename regex=".*/pacl/test/[\w]+Test.class" negate="true" />

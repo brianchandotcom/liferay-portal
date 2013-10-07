@@ -37,6 +37,9 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 
@@ -256,10 +259,13 @@ public class SPIAgentSerializableTest {
 	@Test
 	public void testExtractSessionAttributes() {
 
-		// Without log
+		// Without log, no portlet session
 
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			SPIAgentSerializable.class.getName(), Level.OFF);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		MockHttpSession mockHttpSession = new MockHttpSession();
 
@@ -267,6 +273,22 @@ public class SPIAgentSerializableTest {
 
 		mockHttpSession.setAttribute(
 			serializeableAttribute, serializeableAttribute);
+
+		final String servletContextName1 = "servletContextName1";
+
+		String portletSessionAttributesName1 =
+			WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(servletContextName1);
+
+		mockHttpSession.setAttribute(
+			portletSessionAttributesName1, portletSessionAttributesName1);
+
+		String servletContextName2 = "servletContextName2";
+
+		String portletSessionAttributesName2 =
+			WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(servletContextName2);
+
+		mockHttpSession.setAttribute(
+			portletSessionAttributesName2, portletSessionAttributesName2);
 
 		final String nonserializableAttribute = "nonserializableAttribute";
 
@@ -281,22 +303,100 @@ public class SPIAgentSerializableTest {
 
 			});
 
+		mockHttpServletRequest.setSession(mockHttpSession);
+
+		Portlet portlet = new PortletImpl() {
+
+			@Override
+			public String getContextName() {
+				return servletContextName1;
+			}
+
+		};
+
+		mockHttpServletRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
+
 		Map<String, Serializable> sessionAttributes =
-			SPIAgentSerializable.extractSessionAttributes(mockHttpSession);
+			SPIAgentSerializable.extractSessionAttributes(
+				mockHttpServletRequest);
 
 		Assert.assertTrue(logRecords.isEmpty());
-		Assert.assertEquals(1, sessionAttributes.size());
+		Assert.assertEquals(2, sessionAttributes.size());
+		Assert.assertEquals(
+			serializeableAttribute,
+			sessionAttributes.get(serializeableAttribute));
+		Assert.assertEquals(
+			portletSessionAttributesName1,
+			sessionAttributes.get(portletSessionAttributesName1));
+
+		// Without log, with empty portlet session
+
+		MockHttpSession portletMockHttpSession = new MockHttpSession();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.PORTLET_SESSION, portletMockHttpSession);
+
+		sessionAttributes = SPIAgentSerializable.extractSessionAttributes(
+			mockHttpServletRequest);
+
+		Assert.assertNull(
+			mockHttpServletRequest.getAttribute(WebKeys.PORTLET_SESSION));
+		Assert.assertTrue(logRecords.isEmpty());
+		Assert.assertEquals(2, sessionAttributes.size());
+		Assert.assertEquals(
+			serializeableAttribute,
+			sessionAttributes.get(serializeableAttribute));
+		Assert.assertEquals(
+			portletSessionAttributesName1,
+			sessionAttributes.get(portletSessionAttributesName1));
+
+		// Without log, with non-empty portlet session
+
+		portletMockHttpSession.setAttribute(
+			serializeableAttribute, serializeableAttribute);
+
+		portletMockHttpSession.setAttribute(
+			nonserializableAttribute,
+			new Object() {
+
+				@Override
+				public String toString() {
+					return nonserializableAttribute;
+				}
+
+			});
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.PORTLET_SESSION, portletMockHttpSession);
+
+		sessionAttributes = SPIAgentSerializable.extractSessionAttributes(
+			mockHttpServletRequest);
+
+		Assert.assertNull(
+			mockHttpServletRequest.getAttribute(WebKeys.PORTLET_SESSION));
+		Assert.assertTrue(logRecords.isEmpty());
+		Assert.assertEquals(2, sessionAttributes.size());
 		Assert.assertEquals(
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
 
-		// With log
+		Map<String, Serializable> portletSessionAttributes =
+			(Map<String, Serializable>)sessionAttributes.get(
+				portletSessionAttributesName1);
+
+		Assert.assertNotNull(portletSessionAttributes);
+		Assert.assertEquals(1, portletSessionAttributes.size());
+		Assert.assertEquals(
+			serializeableAttribute,
+			portletSessionAttributes.get(serializeableAttribute));
+
+		// With log, no portlet session
 
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			SPIAgentSerializable.class.getName(), Level.WARNING);
 
 		sessionAttributes = SPIAgentSerializable.extractSessionAttributes(
-			mockHttpSession);
+			mockHttpServletRequest);
 
 		Assert.assertEquals(1, logRecords.size());
 
@@ -307,10 +407,57 @@ public class SPIAgentSerializableTest {
 				nonserializableAttribute + " with value " +
 					nonserializableAttribute, logRecord.getMessage());
 
-		Assert.assertEquals(1, sessionAttributes.size());
+		Assert.assertEquals(2, sessionAttributes.size());
 		Assert.assertEquals(
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
+		Assert.assertEquals(
+			portletSessionAttributesName1,
+			sessionAttributes.get(portletSessionAttributesName1));
+
+		// With log, with non-empty portlet session
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			SPIAgentSerializable.class.getName(), Level.WARNING);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.PORTLET_SESSION, portletMockHttpSession);
+
+		sessionAttributes = SPIAgentSerializable.extractSessionAttributes(
+			mockHttpServletRequest);
+
+		Assert.assertNull(
+			mockHttpServletRequest.getAttribute(WebKeys.PORTLET_SESSION));
+		Assert.assertEquals(2, logRecords.size());
+
+		logRecord = logRecords.get(0);
+
+		Assert.assertEquals(
+			"Nonserializable session attribute name " +
+				nonserializableAttribute + " with value " +
+					nonserializableAttribute, logRecord.getMessage());
+
+		logRecord = logRecords.get(1);
+
+		Assert.assertEquals(
+			"Nonserializable session attribute name " +
+				nonserializableAttribute + " with value " +
+					nonserializableAttribute, logRecord.getMessage());
+
+		Assert.assertEquals(2, sessionAttributes.size());
+		Assert.assertEquals(
+			serializeableAttribute,
+			sessionAttributes.get(serializeableAttribute));
+
+		portletSessionAttributes =
+			(Map<String, Serializable>)sessionAttributes.get(
+				portletSessionAttributesName1);
+
+		Assert.assertNotNull(portletSessionAttributes);
+		Assert.assertEquals(1, portletSessionAttributes.size());
+		Assert.assertEquals(
+			serializeableAttribute,
+			portletSessionAttributes.get(serializeableAttribute));
 	}
 
 	@AdviseWith(

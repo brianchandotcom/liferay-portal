@@ -108,6 +108,8 @@ public class SPIAgentResponseTest {
 		_mockHttpServletRequest = new MockHttpServletRequest();
 
 		_mockHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_PORTLET, portlet);
+		_mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_REQUEST, new SPIAgentRequest(originalRequest));
 
 		RequestAttributes.setRequestAttributes(_mockHttpServletRequest);

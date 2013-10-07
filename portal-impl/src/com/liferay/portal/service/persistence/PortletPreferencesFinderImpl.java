@@ -327,7 +327,7 @@ public class PortletPreferencesFinderImpl
 	private static final String _OWNER_ID_SQL =
 		"(PortletPreferences.ownerId = ?) AND";
 
-	private static final String _PLID_SQL = "(PortletPreferences.plid = ?) AND";
+	private static final String _PLID_SQL = "AND (PortletPreferences.plid = ?)";
 
 	private static final String _PORTLET_ID_INSTANCE_SQL =
 		"OR (PortletPreferences.portletId LIKE ?)";

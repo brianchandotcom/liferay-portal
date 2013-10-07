@@ -59,6 +59,9 @@
 	<bean id="destination.message_boards_mailing_list" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/message_boards_mailing_list" />
 	</bean>
+	<bean id="destination.subscription_clean_up" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+		<property name="name" value="liferay/subscription_clean_up" />
+	</bean>
 	<bean id="destination.subscription_sender" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/subscription_sender" />
 	</bean>
@@ -109,6 +112,7 @@
 			<bean class="com.liferay.portlet.messageboards.messaging.MailingListMessageListener" />
 		</property>
 	</bean>
+	<bean id="messageListener.subscription_clean_up" class="com.liferay.portal.subscription.CleanUpSubscriptionMessageListener" />
 	<bean id="messageListener.subscription_sender" class="com.liferay.portal.messaging.SubscriptionSenderMessageListener" />
 
 	<!-- Configurator -->
@@ -132,6 +136,7 @@
 				<ref bean="destination.live_users" />
 				<ref bean="destination.marketplace" />
 				<ref bean="destination.message_boards_mailing_list" />
+				<ref bean="destination.subscription_clean_up" />
 				<ref bean="destination.subscription_sender" />
 			</list>
 		</property>
@@ -214,6 +219,11 @@
 				<entry key="liferay/message_boards_mailing_list">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.message_boards_mailing_list" />
+					</list>
+				</entry>
+				<entry key="liferay/subscription_clean_up">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.subscription_clean_up" />
 					</list>
 				</entry>
 				<entry key="liferay/subscription_sender">

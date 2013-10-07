@@ -51,6 +51,9 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -3596,8 +3599,30 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void unsetGroupUsers(
-			long groupId, long[] userIds, ServiceContext serviceContext)
+			final long groupId, final long[] userIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		// Subscriptions
+
+		Callable<Void> callable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				Message message = new Message();
+
+				message.put("groupId", groupId);
+				message.put("userIds", userIds);
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, RoleConstants.TYPE_SITE);
@@ -3622,13 +3647,35 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void unsetOrganizationUsers(long organizationId, long[] userIds)
+	public void unsetOrganizationUsers(
+			long organizationId, final long[] userIds)
 		throws PortalException, SystemException {
 
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
 
-		Group group = organization.getGroup();
+		final Group group = organization.getGroup();
+
+		// Subscriptions
+
+		Callable<Void> callable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				Message message = new Message();
+
+				message.put("groupId", group.getGroupId());
+				message.put("userIds", userIds);
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, group.getGroupId(), RoleConstants.TYPE_ORGANIZATION);

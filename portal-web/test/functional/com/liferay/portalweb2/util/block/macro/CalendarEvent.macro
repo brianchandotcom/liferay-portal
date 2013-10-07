@@ -81,7 +81,7 @@
 					<execute action="PGCalendarAddevent#assertSelectedLabel" locator-key1="REPEAT_REPEATS_DROPDOWN" value1="Daily"/>
 					<execute action="PGCalendarAddevent#assertSelectedLabel" locator-key1="REPEAT_REPEAT_EVERY_DROPDOWN" value1="1"/>
 					<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_ENDS_AFTER_CHECKBOX" />
-					<execute action="PGCalendarAddevent#type" locator-key1="REPEAT_ENDS_AFTER_FIELD" />
+					<execute action="PGCalendarAddevent#type" locator-key1="REPEAT_ENDS_AFTER_FIELD" value1="1" />
 					<execute action="PGCalendarAddevent#click" locator-key1="REPEAT_SUMMARY_2" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_2" value1="Daily, 1 Times" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_DONE_BUTTON" value1="Done" />
@@ -208,7 +208,7 @@
 		<execute action="PGCalendarEditevent#click" locator-key1="START_DATE_TIME" />
 		<execute action="PGCalendarEditevent#type" locator-key1="END_DATE_TIME" value1="${endDateTime}" />
 		<execute action="PGCalendarEditevent#click" locator-key1="END_DATE_TIME" />
-	    <execute action="PGCalendarEditevent#pause" locator1="1000" />
+		<execute action="PGCalendarEditevent#pause" locator1="1000" />
 		<execute action="PGCalendarEditevent#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="PGCalendarEditevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -235,23 +235,28 @@
 		<while>
 			<condition action="PGCalendarAgendaView#isElementPresent" locator-key1="SCHEDULER_EVENT_GENERIC" />
 			<then>
-				<execute action="PGCalendarAgendaView#click" locator-key1="SCHEDULER_EVENT_GENERIC" />
-				<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_POPOVER_DELETE_BUTTON" value1="Delete" />
-
 				<if>
-					<condition action="PGCalendarDeleteRecurringEvent#isElementNotPresent" locator-key1="DELETE_RECURRING_EVENT_HEADER" />
+					<condition action="PGCalendarAgendaView#isElementNotPresent" locator-key1="SCHEDULER_EVENT_REPEATING" />
 					<then>
-							<execute action="PGCalendarDeleteRecurringEvent#assertClick" locator-key1="ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series" />
-					</then>
-					<else>
+						<execute action="PGCalendarAgendaView#click" locator-key1="SCHEDULER_EVENT_GENERIC" />
+						<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_POPOVER_DELETE_BUTTON" value1="Delete" />
 						<execute action="PGCalendarAgendaView#confirm" locator-key1="CONFIRMATION" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-					</else>
+					</then>
+					<elseif>
+						<condition action="PGCalendarAgendaView#isElementPresent" locator-key1="SCHEDULER_EVENT_REPEATING" />
+						<then>
+							<execute action="PGCalendarAgendaView#click" locator-key1="SCHEDULER_EVENT_REPEATING" />
+							<execute action="PGCalendarAgendaView#assertClick" locator-key1="SCHEDULER_EVENT_POPOVER_DELETE_BUTTON" value1="Delete" />
+							<execute action="PGCalendarDeleteRecurringEvent#assertClick" locator-key1="ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series" />
+						</then>
+					</elseif>
 				</if>
 			</then>
 		</while>
 
 		<execute action="PGCalendarAgendaView#assertTextEquals" locator-key1="EMPTY_MESSAGE" value1="No events." />
 		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_GENERIC" />
+		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator-key1="SCHEDULER_EVENT_REPEATING" />
 
 		<execute macro="CalendarEvent#changeViewPG">
 				<var name="viewType" value="Week" />

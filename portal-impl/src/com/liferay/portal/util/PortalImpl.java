@@ -5105,56 +5105,52 @@ public class PortalImpl implements Portal {
 	public UploadServletRequest getUploadServletRequest(
 		HttpServletRequest request) {
 
-		HttpServletRequestWrapper requestWrapper = null;
+		List<PersistentHttpServletRequestWrapper>
+			persistentHttpServletRequestWrappers =
+				new ArrayList<PersistentHttpServletRequestWrapper>();
 
-		if (request instanceof HttpServletRequestWrapper) {
-			requestWrapper = (HttpServletRequestWrapper)request;
+		HttpServletRequest currentRequest = request;
+
+		while (currentRequest instanceof HttpServletRequestWrapper) {
+			if (currentRequest instanceof UploadServletRequest) {
+				return (UploadServletRequest)currentRequest;
+			}
+
+			if (currentRequest instanceof
+					PersistentHttpServletRequestWrapper) {
+
+				PersistentHttpServletRequestWrapper
+					persistentHttpServletRequestWrapper =
+						(PersistentHttpServletRequestWrapper)currentRequest;
+
+				persistentHttpServletRequestWrappers.add(
+					persistentHttpServletRequestWrapper.clone());
+			}
+
+			HttpServletRequestWrapper httpServletRequestWrapper =
+				(HttpServletRequestWrapper)currentRequest;
+
+			currentRequest =
+				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
-		UploadServletRequest uploadServletRequest = null;
-
-		while (uploadServletRequest == null) {
-
-			// Find the underlying UploadServletRequest wrapper. For example,
-			// WebSphere wraps all requests with ProtectedServletRequest.
-
-			if (requestWrapper instanceof UploadServletRequest) {
-				uploadServletRequest = (UploadServletRequest)requestWrapper;
-			}
-			else {
-				HttpServletRequest parentRequest =
-					(HttpServletRequest)requestWrapper.getRequest();
-
-				if (!(parentRequest instanceof HttpServletRequestWrapper)) {
-
-					// This block should never be reached unless this method is
-					// called from a hot deployable portlet. See LayoutAction.
-
-					if (ServerDetector.isWebLogic()) {
-						if (requestWrapper instanceof
-								NonSerializableObjectRequestWrapper) {
-
-							parentRequest = requestWrapper;
-						}
-						else {
-							parentRequest =
-								new NonSerializableObjectRequestWrapper(
-									parentRequest);
-						}
-					}
-
-					uploadServletRequest = new UploadServletRequestImpl(
-						parentRequest);
-
-					break;
-				}
-				else {
-					requestWrapper = (HttpServletRequestWrapper)parentRequest;
-				}
-			}
+		if (ServerDetector.isWebLogic()) {
+			currentRequest = new NonSerializableObjectRequestWrapper(
+				currentRequest);
 		}
 
-		return uploadServletRequest;
+		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
+				i--) {
+
+			HttpServletRequestWrapper httpServletRequestWrapper =
+				persistentHttpServletRequestWrappers.get(i);
+
+			httpServletRequestWrapper.setRequest(currentRequest);
+
+			currentRequest = httpServletRequestWrapper;
+		}
+
+		return new UploadServletRequestImpl(currentRequest);
 	}
 
 	@Override

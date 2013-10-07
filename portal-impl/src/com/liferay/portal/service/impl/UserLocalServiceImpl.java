@@ -5690,15 +5690,27 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		final long companyId, final long workflowUserId, final long userId,
 		final User user, final ServiceContext workflowServiceContext) {
 
+		final boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
 		Callable<Void> callable = new ShardCallable<Void>(companyId) {
 
 			@Override
 			protected Void doCall() throws Exception {
-				WorkflowHandlerRegistryUtil.startWorkflowInstance(
-					companyId, workflowUserId, User.class.getName(), userId,
-					user, workflowServiceContext);
+				boolean originalWorkflowEnabled =
+					WorkflowThreadLocal.isEnabled();
 
-				return null;
+				try {
+					WorkflowThreadLocal.setEnabled(workflowEnabled);
+
+					WorkflowHandlerRegistryUtil.startWorkflowInstance(
+						companyId, workflowUserId, User.class.getName(), userId,
+						user, workflowServiceContext);
+
+					return null;
+				}
+				finally {
+					WorkflowThreadLocal.setEnabled(originalWorkflowEnabled);
+				}
 			}
 
 		};

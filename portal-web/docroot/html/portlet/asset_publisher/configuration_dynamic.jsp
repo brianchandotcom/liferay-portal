@@ -573,7 +573,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			<%
 			for (Tuple classTypeFieldName : classTypeFieldNames) {
-				String value = DDMIndexerUtil.encodeName(subtypeId, (String)classTypeFieldName.getObject(1));
+				String value = DDMIndexerUtil.encodeName((Long)classTypeFieldName.getObject(3), (String)classTypeFieldName.getObject(1));
 				String selectedOrderByColumn1 = StringPool.BLANK;
 				String selectedOrderByColumn2 = StringPool.BLANK;
 

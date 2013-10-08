@@ -16,6 +16,9 @@ package com.liferay.portlet.documentlibrary.model;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,14 +29,34 @@ import java.util.regex.Pattern;
 public class DLConstants {
 
 	public static boolean isValidName(String fileName) {
-		Matcher matcher = DL_VALID_NAME_REGEXP.matcher(fileName);
 
-		return fileName == null || matcher.matches();
+		if (Validator.isNull(fileName)) {
+			return false;
+		}
+
+		for (String word : DL_NAME_BLACKLIST) {
+			String fileNameWithoutExtension = fileName;
+
+			if (fileName.contains(StringPool.PERIOD)) {
+				int lastPeriodPos = fileName.lastIndexOf(StringPool.PERIOD);
+				fileNameWithoutExtension = fileName.substring(0, lastPeriodPos);
+			}
+
+			if (StringUtil.equalsIgnoreCase(fileNameWithoutExtension, word)) {
+				return false;
+			}
+		}
+
+		Matcher matcher = DL_CHAR_BLACKLIST_REGEXP.matcher(fileName);
+
+		return matcher.matches();
 	}
 
-	private static final Pattern DL_VALID_NAME_REGEXP =
-		Pattern.compile(
-			PropsUtil.get(PropsKeys.DL_VALID_NAME_REGEXP),
-			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+	private static final String[] DL_NAME_BLACKLIST = PropsUtil.get(
+			PropsKeys.DL_NAME_BLACKLIST).split(",");
 
+	private static final Pattern DL_CHAR_BLACKLIST_REGEXP =
+		Pattern.compile(
+			PropsUtil.get(PropsKeys.DL_CHAR_BLACKLIST_REGEXP),
+			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 }

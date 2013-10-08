@@ -88,8 +88,6 @@ public interface Http {
 
 	public String getIpAddress(String url);
 
-	public String getNonstandardPort(String url);
-
 	public String getParameter(String url, String name);
 
 	public String getParameter(String url, String name, boolean escaped);
@@ -136,6 +134,8 @@ public interface Http {
 	public String protocolize(String url, boolean secure);
 
 	public String protocolize(String url, HttpServletRequest request);
+
+	public String protocolize(String url, int port, boolean secure);
 
 	public String protocolize(String url, RenderRequest renderRequest);
 

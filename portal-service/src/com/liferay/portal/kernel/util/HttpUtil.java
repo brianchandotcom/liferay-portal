@@ -118,10 +118,6 @@ public class HttpUtil {
 		return getHttp().getIpAddress(url);
 	}
 
-	public static String getNonstandardPort(String url) {
-		return getHttp().getNonstandardPort(url);
-	}
-
 	public static String getParameter(String url, String name) {
 		return getHttp().getParameter(url, name);
 	}
@@ -220,6 +216,10 @@ public class HttpUtil {
 
 	public static String protocolize(String url, HttpServletRequest request) {
 		return getHttp().protocolize(url, request);
+	}
+
+	public static String protocolize(String url, int port, boolean secure) {
+		return getHttp().protocolize(url, port, secure);
 	}
 
 	public static String protocolize(String url, RenderRequest renderRequest) {

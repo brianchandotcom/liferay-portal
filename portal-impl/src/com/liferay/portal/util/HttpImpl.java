@@ -517,22 +517,6 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	public String getNonstandardPort(String url) {
-		if (Validator.isNull(url)) {
-			return StringPool.BLANK;
-		}
-
-		String domain = getDomain(url);
-
-		int pos = domain.indexOf(CharPool.COLON);
-
-		if (pos == -1) {
-			return StringPool.BLANK;
-		}
-
-		return domain.substring(pos + 1, domain.length());
-	}
-
 	@Override
 	public String getParameter(String url, String name) {
 		return getParameter(url, name, true);
@@ -823,29 +807,37 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String protocolize(String url, boolean secure) {
-		if (Validator.isNull(url)) {
-			return url;
-		}
-
-		if (secure) {
-			if (url.startsWith(Http.HTTP_WITH_SLASH)) {
-				return StringUtil.replace(
-					url, Http.HTTP_WITH_SLASH, Http.HTTPS_WITH_SLASH);
-			}
-		}
-		else {
-			if (url.startsWith(Http.HTTPS_WITH_SLASH)) {
-				return StringUtil.replace(
-					url, Http.HTTPS_WITH_SLASH, Http.HTTP_WITH_SLASH);
-			}
-		}
-
-		return url;
+		return protocolize(url, -1, secure);
 	}
 
 	@Override
 	public String protocolize(String url, HttpServletRequest request) {
 		return protocolize(url, request.isSecure());
+	}
+
+	@Override
+	public String protocolize(String url, int port, boolean secure) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
+		try {
+			URL urlObj = new URL(url);
+
+			String protocol = Http.HTTP;
+
+			if (secure) {
+				protocol = Http.HTTPS;
+			}
+
+			urlObj = new URL(
+				protocol, urlObj.getHost(), port, urlObj.getFile());
+
+			return urlObj.toString();
+		}
+		catch (Exception e) {
+			return url;
+		}
 	}
 
 	@Override

@@ -210,6 +210,14 @@ AUI.add(
 						panelVisible = true;
 					}
 
+					Liferay.fire('dockbaraddpage:previewPageTitle',
+						{
+							data: {
+								hidden: true
+							}
+						}
+					);
+
 					Liferay.fire(
 						panelDisplayEvent,
 						{

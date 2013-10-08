@@ -128,7 +128,7 @@ AUI.add(
 									contentBox.append(formRow);
 								}
 
-								if (index == 0) {
+								if (index === 0) {
 									instance._rowTemplate = formRow.clone();
 									instance._clearForm(instance._rowTemplate);
 								}
@@ -203,14 +203,10 @@ AUI.add(
 
 							AArray.each(
 								CSS_VALIDATION_HELPER_CLASSES,
-								function(validationClass, index, collection) {
-									var validationDisabledClass = validationClass + '-disabled';
+								function(item, index, collection) {
+									var disabledClass = item + '-disabled';
 
-									node.all('.' + validationClass).each(
-										function(item) {
-											item.replaceClass(validationClass, validationDisabledClass);
-										}
-									);
+									node.all('.' + item).replaceClass(item, disabledClass);
 								}
 							);
 
@@ -255,14 +251,10 @@ AUI.add(
 
 									AArray.each(
 										CSS_VALIDATION_HELPER_CLASSES,
-										function(validationClass, index, collection) {
-											var validationDisabledClass = validationClass + '-disabled';
+										function(item, index, collection) {
+											var disabledClass = item + '-disabled';
 
-											node.all('.' + validationDisabledClass).each(
-												function(item) {
-													item.replaceClass(validationDisabledClass, validationClass);
-												}
-											);
+											node.all('.' + disabledClass).replaceClass(disabledClass, item);
 										}
 									);
 
@@ -384,12 +376,8 @@ AUI.add(
 
 						AArray.each(
 							CSS_VALIDATION_HELPER_CLASSES,
-							function(validationClass, index, collection) {
-								node.all('.' + validationClass).each(
-									function(item) {
-										item.removeClass(validationClass);
-									}
-								);
+							function(item, index, collection) {
+								node.all('.' + item).removeClass(item);
 							}
 						);
 					},
@@ -515,7 +503,7 @@ AUI.add(
 							formValidator = Liferay.Form.get(formId).formValidator;
 						}
 
-						return formValidator
+						return formValidator;
 					},
 
 					_isHiddenRow: function(row) {

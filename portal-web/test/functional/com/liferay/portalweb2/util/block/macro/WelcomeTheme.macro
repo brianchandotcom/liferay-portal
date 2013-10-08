@@ -1,0 +1,46 @@
+<definition>
+	<command name="viewPG">
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_TITLE" value1="Welcome To Liferay Portal" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_START" value1="Start" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_START_CONTENT" value1="Review our Quick Start Guide for an overview of Liferay's features." />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_QUICK_START_GUIDE" value1="Quick Start Guide" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_LEARN" value1="Learn" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_LEARN_CONTENT" value1="Read the official Liferay User Guide for detailed information about setting up and configuring Liferay." />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_LIFERAY_USER_GUIDE" value1="Liferay User Guide" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_ENGAGE" value1="Engage" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_ENGAGE_CONTENT" value1="Visit the Liferay Community to post questions, find answers, and contribute." />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_LIFERAY_COMMUNITY" value1="Liferay Community" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_DEVELOP" value1="Develop" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_DEVELOP_CONTENT" value1="Explore our Developer Resources to develop apps and more for Liferay Portal." />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_DEVELOPER_RESOURCES" value1="Developer Resources" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_EVALUATE" value1="Evaluate" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_EVALUATE_CONTENT" value1="Learn more about partners, support, training and other enterprise level options available for Liferay." />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_CONTENT_ENTERPRISE_LEVEL_OPTIONS" value1="enterprise level options" />
+
+		<execute action="Home#open" locator1="http://www.liferay.com/welcome-start?v1.0" />
+
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_QUICK_START_GUIDE_HEADER" value1="Quick Start" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_QUICK_START_GUIDE_SUBHEADER" value1="Get up and running quickly with this step-by-step guide for Liferay Portal." />
+
+		<execute action="Home#open" locator1="http://www.liferay.com/welcome-learn?v1.0" />
+
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_LIFERAY_USER_GUIDE_HEADER" value1="Documentation" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_LIFERAY_USER_GUIDE_SUBHEADER" value1="Liferay provides a rich store of resources and knowledge to help our community better use and work with our technology." />
+
+		<execute action="Home#open" locator1="http://www.liferay.com/welcome-engage?v1.0" />
+
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_LIFERAY_COMMUNITY_HEADER" value1="Community" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_LIFERAY_COMMUNITY_SUBHEADER" value1="Welcome to Liferay's Community! This space is where Liferay's open source community comes together to share knowledge, brainstorm new features, and build working relationships." />
+
+		<execute action="Home#open" locator1="http://www.liferay.com/welcome-develop?v1.0" />
+
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_DEVELOPER_RESOURCES_HEADER" value1="Documentation" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_DEVELOPER_RESOURCES_SUBHEADER" value1="Liferay provides a rich store of resources and knowledge to help our community better use and work with our technology." />
+
+		<execute action="Home#open" locator1="http://www.liferay.com/welcome-evaluate?v1.0" />
+
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_ENTERPRISE_LEVEL_OPTIONS_HEADER" value1="Services" />
+		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_ENTERPRISE_LEVEL_OPTIONS_SUBHEADER" value1="Access our team and network of experts anywhere around the world." />
+
+	</command>
+</definition>

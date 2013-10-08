@@ -1,0 +1,221 @@
+<html>
+<head>
+<title>PGWelcome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWelcome</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWelcome</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_THEME_URL</td>
+	<td>/web/guest/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN</td>
+	<td>//a[@id='sign-in']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_LIFERAY</td>
+	<td>//a[@title='go-to Liferay']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION</td>
+	<td>//nav[@id='navigation']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_TITLE</td>
+	<td>//h2[@class='welcome-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--Note: Current reason for using href attributes for links is because currently there is no way to store an href attribute. This means that the link values are hardcoded. This way there a way to verify in case the links change.-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WELCOME_CONTENT-->
+<tr>
+	<td>WELCOME_CONTENT_START</td>
+	<td>xPath=(//h4[@class='subtitle'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_START_CONTENT</td>
+	<td>xPath=(//p[@class='welcome-text'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_QUICK_START_GUIDE</td>
+	<td>//a[@href='http://www.liferay.com/welcome-start?v1.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_LEARN</td>
+	<td>xPath=(//h4[@class='subtitle'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_LEARN_CONTENT</td>
+	<td>xPath=(//p[@class='welcome-text'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_LIFERAY_USER_GUIDE</td>
+	<td>//a[@href='http://www.liferay.com/welcome-learn?v1.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_ENGAGE</td>
+	<td>xPath=(//h4[@class='subtitle'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_ENGAGE_CONTENT</td>
+	<td>xPath=(//p[@class='welcome-text'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_LIFERAY_COMMUNITY</td>
+	<td>//a[@href='http://www.liferay.com/welcome-engage?v1.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_DEVELOP</td>
+	<td>xPath=(//h4[@class='subtitle'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_DEVELOP_CONTENT</td>
+	<td>xPath=(//p[@class='welcome-text'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_DEVELOPER_RESOURCES</td>
+	<td>//a[@href='http://www.liferay.com/welcome-develop?v1.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_EVALUATE</td>
+	<td>xPath=(//h4[@class='subtitle'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_EVALUATE_CONTENT</td>
+	<td>xPath=(//p[@class='welcome-text'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_ENTERPRISE_LEVEL_OPTIONS</td>
+	<td>//a[@href='http://www.liferay.com/welcome-evaluate?v1.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CONTENT_DOWNLOAD_AS_PDF</td>
+	<td>//a[@class='pdf']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WELCOME_QUICK_START_GUIDE-->
+<tr>
+	<td>WELCOME_QUICK_START_GUIDE_HEADER</td>
+	<td>//div[@class='page-heading']/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_QUICK_START_GUIDE_SUBHEADER</td>
+	<td>//div[@class='page-heading']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WELCOME_LIFERAY_USER_GUIDE-->
+<tr>
+	<td>WELCOME_LIFERAY_USER_GUIDE_HEADER</td>
+	<td>//div[@class='page-heading']/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_LIFERAY_USER_GUIDE_SUBHEADER</td>
+	<td>//div[@class='page-heading']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WELCOME_LIFERAY_COMMUNITY-->
+<tr>
+	<td>WELCOME_LIFERAY_COMMUNITY_HEADER</td>
+	<td>//div[@class='page-heading']/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_LIFERAY_COMMUNITY_SUBHEADER</td>
+	<td>//div[@class='page-heading']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WELCOME_DEVELOPER_RESOURCES-->
+<tr>
+	<td>WELCOME_DEVELOPER_RESOURCES_HEADER</td>
+	<td>//div[@class='page-heading']/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_DEVELOPER_RESOURCES_SUBHEADER</td>
+	<td>//div[@class='page-heading']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WELCOME_ENTERPRISE_LEVEL_OPTIONS-->
+<tr>
+	<td>WELCOME_ENTERPRISE_LEVEL_OPTIONS_HEADER</td>
+	<td>//div[@class='page-heading']/h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_ENTERPRISE_LEVEL_OPTIONS_SUBHEADER</td>
+	<td>//div[@class='page-heading']/p</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

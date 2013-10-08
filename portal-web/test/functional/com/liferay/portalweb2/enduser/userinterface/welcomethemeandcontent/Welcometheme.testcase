@@ -1,76 +1,13 @@
 <definition>
-	<set-up>
-		<var name="administratorEmail" value="test@liferay.com" />
-		<var name="administratorFirstName" value="Test" />
-		<var name="administratorLastName" value="Test" />
-		<var name="pageName" value="Blogs Page" />
-		<var name="portletName" value="Blogs" />
-
-		<execute macro="Page#openURL" />
-
-		<execute action="Setupwizard#assertTextEquals" locator-key1="PORTAL_PORTAL_NAME_FIELD" value1="Liferay" />
-		<execute action="Setupwizard#assertSelectedLabel" locator-key1="PORTAL_DEFAULT_LANGUAGE_SELECT" value1="English (United States)" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_FIRST_NAME_FIELD" value1="${administratorFirstName}" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_LAST_NAME_FIELD" value1="${administratorLastName}" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="ADMINISTRATOR_USER_EMAIL_FIELD" value1="${administratorEmail}" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL" />
-		<execute action="Setupwizard#click" locator-key1="DATABASE_CHANGE_LINK" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_DATABASE_TYPE_LABEL" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_JDBC_URL_LABEL" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_LABEL" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_USER_NAME_LABEL" />
-		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_PASSWORD_LABEL" />
-		<execute action="Setupwizard#click" locator-key1="FINISH_CONFIGURATION_BUTTON" />
-
-		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
-		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
-		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
-		<execute action="SetupwizardFinishconfiguration#assertClick" locator-key1="GO_TO_MY_PORTAL_BUTTON" value1="Go to My Portal" />
-
-		<execute action="PGLoginTermsofservice#click" locator-key1="I_AGREE_BUTTON" />
-
-		<execute action="PGLoginNewpassword#type" locator-key1="PASSWORD_FIELD" value1="test1" />
-		<execute action="PGLoginNewpassword#type" locator-key1="ENTER_AGAIN_FIELD" value1="test1" />
-		<execute action="PGLoginNewpassword#click" locator-key1="SAVE_BUTTON" />
-
-		<execute action="PGLoginPasswordreminder#type" locator-key1="ANSWER_FIELD" value1="test" />
-		<execute action="PGLoginPasswordreminder#click" locator-key1="SAVE_BUTTON" />
-	</set-up>
-
 	<tear-down>
 		<execute macro="User#logoutPG" />
 	</tear-down>
 
 	<command name="WelcomeThemeView">
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_1" value1="What We Do" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_2" value1="Who Is Using Liferay" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_3" value1="Liferay Benefits" />
-		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="MENU_TAGLINE" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_1" value1="A Foundation for Apps" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_2" value1="Dynamic Websites" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_3" value1="Centralized Document Management" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_4" value1="Intuitive Team Collaboration" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_5" value1="Tools for Business" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="MENU_PAGE_6" value1="Desktop &amp; Mobile Access" />
-		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="MENU_PAGE_7" />
-		<execute action="PGWelcomePage1#assertElementPresent" locator-key1="INFO_LINK" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="SOCIAL_OFFICE" value1="Want Easy Social Collaboration?" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="GETTING_STARTED" value1="Need Help Getting Started?" />
-		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="DEVELOP_FASTER" value1="Develop Faster." />
+		<execute macro="WelcomeTheme#viewPG" />
 
-		<execute action="PGWelcomePage1#assertClick" locator-key1="PAGE_2" value1="Who Is Using Liferay" />
+		<execute macro="User#firstLoginPG" />
 
-		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="CUSTOMERS_1" />
-		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="CUSTOMERS_2" />
-		<execute action="PGWelcomePage2#assertElementPresent" locator-key1="HEADER" />
-
-		<execute action="PGWelcomePage1#assertClick" locator-key1="PAGE_3" value1="Liferay Benefits" />
-
-		<execute action="PGWelcomePage3#assertElementPresent" locator-key1="HEADER" />
-		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_1" value1="Open Source: A Better Way" />
-		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_2" value1="Ready to Go" />
-		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_3" value1="Ready to Grow" />
-		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_4" value1="Approved by IT" />
-		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_5" value1="Open for Business" />
+		<execute macro="WelcomeTheme#viewPG" />
 	</command>
 </definition>

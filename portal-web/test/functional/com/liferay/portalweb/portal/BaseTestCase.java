@@ -23,6 +23,8 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openqa.selenium.os.ProcessUtils.ProcessStillAliveException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -40,10 +42,10 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 		try {
 			super.runBare();
 		}
-		catch (Throwable t) {
+		catch (ProcessStillAliveException psae) {
 			BrowserCommands.killBrowser();
 
-			throw t;
+			throw psae;
 		}
 	}
 

@@ -244,6 +244,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String content = fileUtil.read(file);
 
+			Matcher matcher = _jspImportIncludeFilePattern.matcher(content);
+
+			if (matcher.find()) {
+				content = matcher.replaceAll("@ include file");
+
+				fileUtil.write(file,content);
+			}
+
 			_jspContents.put(fileName, content);
 		}
 
@@ -1159,6 +1167,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Map<String, String> _jspContents = new HashMap<String, String>();
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
+	private Pattern _jspImportIncludeFilePattern = Pattern.compile(
+		"(\\s{0,}@\\s{0,}include\\s{0,}file)");
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _stripJSPImports = true;
 	private Pattern _taglibLanguageKeyPattern = Pattern.compile(

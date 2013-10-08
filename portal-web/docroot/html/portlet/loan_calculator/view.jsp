@@ -17,7 +17,12 @@
 <%@ include file="/html/portlet/loan_calculator/init.jsp" %>
 
 <%
-int loanAmount = ParamUtil.get(request, "loanAmount", 200000);
+NumberFormat integerFormat = NumberFormat.getNumberInstance(locale);
+
+integerFormat.setMaximumFractionDigits(0);
+integerFormat.setMinimumFractionDigits(0);
+
+int loanAmount = integerFormat.parse(ParamUtil.get(request, "loanAmount", "200000")).intValue();
 double interest = ParamUtil.get(request, "interest", 7.00);
 int years = ParamUtil.get(request, "years", 30);
 int paymentsPerYear = ParamUtil.get(request, "paymentsPerYear", 12);
@@ -32,10 +37,6 @@ NumberFormat doubleFormat = NumberFormat.getNumberInstance(locale);
 doubleFormat.setMaximumFractionDigits(2);
 doubleFormat.setMinimumFractionDigits(2);
 
-NumberFormat integerFormat = NumberFormat.getNumberInstance(locale);
-
-integerFormat.setMaximumFractionDigits(0);
-integerFormat.setMinimumFractionDigits(0);
 %>
 
 <form action="<liferay-portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/loan_calculator/view" /></liferay-portlet:renderURL>" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">

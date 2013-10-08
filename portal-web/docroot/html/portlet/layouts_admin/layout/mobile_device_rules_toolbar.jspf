@@ -97,7 +97,7 @@
 <aui:script use="aui-base">
 	var config = {
 		dialog: {
-			width: 820
+			width: 1024
 		}
 	};
 

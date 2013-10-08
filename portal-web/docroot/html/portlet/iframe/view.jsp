@@ -102,6 +102,12 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 
 			var hash = document.location.hash.replace('#', '');
 
+			// LPS-33951
+
+			if (!A.UA.firefox) {
+				hash = A.QueryString.unescape(hash);
+			}
+
 			var hashObj = A.QueryString.parse(hash);
 
 			hash = hashObj['<portlet:namespace />'];
@@ -159,7 +165,9 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 				restore.attr('href', href + '#' + hash);
 			}
 
-			location.hash = hash;
+			// LPS-33951
+
+			location.hash = A.QueryString.escape(hash);
 		},
 		['aui-base', 'querystring']
 	);

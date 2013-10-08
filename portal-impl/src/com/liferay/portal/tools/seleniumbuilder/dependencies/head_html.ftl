@@ -57,11 +57,25 @@
 			width: 100%;
 		}
 
+
 		#log {
 			border: 1px solid #CCC;
 			height: 25%;
 			overflow: auto;
-			width: 100%;
+			width: 50%;
+		}
+
+		#log2 {
+			position:fixed;
+			top:50px;
+			left:990px;
+		}
+
+		#log2 {
+			border: 1px solid #CCC;
+			height: 25%;
+			overflow: auto;
+			width: 45%;
 		}
 
 		#title {

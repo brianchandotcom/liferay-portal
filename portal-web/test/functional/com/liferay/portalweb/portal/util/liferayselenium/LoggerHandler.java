@@ -48,6 +48,9 @@ public class LoggerHandler implements InvocationHandler {
 			else if (methodName.equals("stopLogger")) {
 				_logger.stop();
 			}
+			else if (methodName.equals("sendActionLogger")) {
+				_logger.logActionCommand(method, arguments);
+			}
 			else {
 				_logger.logCommand(method, arguments);
 			}

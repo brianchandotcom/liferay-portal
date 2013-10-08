@@ -56,6 +56,37 @@ public class Logger {
 		_javascriptExecutor.executeScript("window.name = 'Log Window';");
 	}
 
+	public void logActionCommand(Method method, Object[] arguments) {
+		StringBundler sb = new StringBundler();
+
+		String name = (String)arguments[0];
+		String command = (String)arguments[1];
+		String locator = (String)arguments[2];
+		String value = (String)arguments[3];
+
+		if (method.getName().equals("sendActionLogger")) {
+			sb.append("Running <b>");
+			sb.append(name);
+			sb.append("#");
+			sb.append(command);
+			sb.append("</b>");
+
+			if (!locator.equals("")) {
+				sb.append(" with locator-key <b>");
+				sb.append(locator);
+				sb.append("</b>");
+			}
+
+			if (!value.equals("")) {
+				sb.append(" value <b>");
+				sb.append(value);
+				sb.append("</b>");
+			}
+
+			logAction(sb.toString());
+		}
+	}
+
 	public void logCommand(Method method, Object[] arguments) {
 		StringBundler sb = new StringBundler();
 
@@ -78,7 +109,7 @@ public class Logger {
 			}
 		}
 
-		log(sb.toString());
+		logSelenium(sb.toString());
 	}
 
 	public void logError(
@@ -130,7 +161,7 @@ public class Logger {
 		sb.append(": ");
 		sb.append(thowableMessage);
 
-		log(sb.toString());
+		logSelenium(sb.toString());
 
 		sb = new StringBundler();
 
@@ -369,7 +400,26 @@ public class Logger {
 		}
 	}
 
-	protected void log(String message) {
+	protected void logAction(String message) {
+		StringBundler sb = new StringBundler();
+
+		String formattedMessage = StringEscapeUtils.escapeJava(message);
+
+		formattedMessage = formattedMessage.replace("'", "\\'");
+
+		sb.append("logger = window.document.getElementById('log2');");
+		sb.append("var newLine = window.document.createElement('div');");
+		sb.append("newLine.setAttribute('class', 'line');");
+		sb.append("newLine.innerHTML = '");
+		sb.append(formattedMessage);
+		sb.append("';");
+		sb.append("logger.appendChild(newLine);");
+		sb.append("logger.scrollTop = logger.scrollHeight;");
+
+		_javascriptExecutor.executeScript(sb.toString());
+	}
+
+	protected void logSelenium(String message) {
 		StringBundler sb = new StringBundler();
 
 		String formattedMessage = StringEscapeUtils.escapeJava(message);

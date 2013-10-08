@@ -83,11 +83,13 @@ public class UserFinderTest {
 		GroupLocalServiceUtil.deleteGroup(_group);
 		UserLocalServiceUtil.deleteUser(_groupUser);
 
-		OrganizationLocalServiceUtil.deleteOrganization(_organization);
 		UserLocalServiceUtil.deleteUser(_organizationUser);
 
-		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
+		OrganizationLocalServiceUtil.deleteOrganization(_organization);
+
 		UserLocalServiceUtil.deleteUser(_userGroupUser);
+
+		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
 	}
 
 	@Test

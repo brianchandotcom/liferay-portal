@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -46,7 +51,12 @@
 </tr>
 <tr>
 	<td>SCHEDULER_EVENT_GENERIC</td>
-	<td>//div[contains(@class,'scheduler-view-agenda-event-content')]</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_REPEATING</td>
+	<td>//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]/div[contains(.,'Repeating')]</td>
 	<td></td>
 </tr>
 </tbody>

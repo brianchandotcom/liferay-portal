@@ -1,7 +1,7 @@
 <definition>
-	<execute test-case-command="PGCalendar#AddCalendarEvent" />
+	<execute test-case-command="PGCalendar#AddCalendarEventRegular" />
 	<execute test-case-command="PGCalendar#AddCalendarMyCalendars" />
+	<execute test-case-command="PGCalendar#DeleteCalendarEventRegular" />
 	<execute test-case-command="PGCalendar#DeleteCalendarMyCalendars" />
-	<execute test-case-command="PGCalendar#DeleteCalendarEvent" />
-	<execute test-case-command="PGCalendar#EditCalendarEvent" />
+	<execute test-case-command="PGCalendar#EditCalendarEventRegular" />
 </definition>

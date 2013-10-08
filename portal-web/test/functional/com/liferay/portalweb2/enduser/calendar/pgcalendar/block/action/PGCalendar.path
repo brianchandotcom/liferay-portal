@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_EVENT_BUTTON</td>
-	<td>//div[@class='button-holder calendar-create-event-btn-row']/button</td>
+	<td>//button[@class='btn btn-primary calendar-add-event-btn']</td>
 	<td></td>
 </tr>
 <tr>

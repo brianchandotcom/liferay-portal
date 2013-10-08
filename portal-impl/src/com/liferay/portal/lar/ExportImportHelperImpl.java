@@ -573,8 +573,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					portletDataContext, content,
 					beginPos + contextPath.length(), endPos);
 
-			FileEntry fileEntry = getFileEntry(
-				portletDataContext, dlReferenceParameters);
+			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
 			if (fileEntry == null) {
 				endPos = beginPos - 1;
@@ -1608,9 +1607,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return map;
 	}
 
-	protected FileEntry getFileEntry(
-		PortletDataContext portletDataContext, Map<String, String[]> map) {
-
+	protected FileEntry getFileEntry(Map<String, String[]> map) {
 		if (map == null) {
 			return null;
 		}

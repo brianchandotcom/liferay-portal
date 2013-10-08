@@ -1,0 +1,25 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="ContainsConditionalUsingTwoEmptyStringVariables">
+		<execute macro="NullValues#containsConditionalUsingTwoEmptyStringVariables" />
+	</command>
+
+	<command name="EchoEmptyStringAndEmptyStringVariable">
+		<execute macro="NullValues#echoEmptyStringAndEmptyStringVariable" />
+	</command>
+
+	<command name="EqualsConditionalComparingEmptyStringVariableWithEmptyString">
+		<execute macro="NullValues#equalsConditionalComparingEmptyStringVariableWithEmptyString" />
+	</command>
+
+	<command name="EqualsConditionalUsingTwoEmptyStringVariables">
+		<execute macro="NullValues#equalsConditionalUsingTwoEmptyStringVariables" />
+	</command>
+
+	<command name="TypeEmptyString">
+		<execute macro="NullValues#typeEmptyString" />
+	</command>
+</definition>

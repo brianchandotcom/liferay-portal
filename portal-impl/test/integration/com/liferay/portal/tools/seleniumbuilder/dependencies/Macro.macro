@@ -7,6 +7,8 @@
 
 		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />
 
+		<execute action="BaseLiferay#click" locator1="locator1" value1="" />
+
 		<execute macro="BlogsEntry#addPG" />
 
 		<execute macro="BlogsEntry#addPG">
@@ -16,7 +18,7 @@
 		<if>
 			<and>
 				<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_${name}E" />
-				<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_${name}E" />
+				<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_${name}E" value1="" />
 			</and>
 			<then>
 				<var name="name" value="value" />
@@ -47,7 +49,19 @@
 				<execute action="BaseLiferay#click" />
 			</then>
 			<elseif>
+				<contains string="" substring="" />
+				<then>
+					<execute action="BaseLiferay#click" />
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="arg1" arg2="arg2" />
+				<then>
+					<execute action="BaseLiferay#click" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="" arg2="" />
 				<then>
 					<execute action="BaseLiferay#click" />
 				</then>
@@ -65,6 +79,10 @@
 
 		<echo message="message" />
 
+		<echo message="" />
+
 		<fail message="message" />
+
+		<fail message="" />
 	</command>
 </definition>

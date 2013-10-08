@@ -1266,10 +1266,7 @@ public class SeleniumBuilderFileUtil {
 			String attributeName = attribute.getName();
 			String attributeValue = attribute.getValue();
 
-			List<String> acceptedNullAttributes = ListUtil.fromArray(
-				new String[] {"value", "message", "arg1", "arg2"});
-
-			if (!acceptedNullAttributes.contains(attributeName) &&
+			if (!_allowedNullAttributes.contains(attributeName) &&
 				Validator.isNull(attributeValue)) {
 
 				throwValidationException(
@@ -1435,9 +1432,7 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 
-		boolean elementHasInnerText = element.hasContent();
-
-		if (!elementHasInnerText &&
+		if (!element.hasContent() &&
 			!attributeMap.containsKey("locator-key") &&
 			!attributeMap.containsKey("path") &&
 			!attributeMap.containsKey("value")) {
@@ -1467,7 +1462,7 @@ public class SeleniumBuilderFileUtil {
 		else {
 			String varValue = attributeMap.get("value");
 
-			if (elementHasInnerText) {
+			if (element.hasContent()) {
 				varValue = element.getText();
 			}
 
@@ -1564,6 +1559,10 @@ public class SeleniumBuilderFileUtil {
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
+	private static List<String> _allowedNullAttributes = ListUtil.fromArray(
+		new String[] {
+			"arg1", "arg2", "message", "string", "substring", "value"
+		});
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {"line-number", "locator-key", "name", "path", "value"});
 	private static List<String> _methodNames = ListUtil.fromArray(

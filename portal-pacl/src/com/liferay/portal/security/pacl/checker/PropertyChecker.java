@@ -38,7 +38,7 @@ public class PropertyChecker extends BaseChecker {
 		Object... arguments) {
 
 		if ((arguments != null) && (arguments.length == 1) &&
-			(arguments[0] instanceof Permission)) {
+			!(arguments[0] instanceof Permission)) {
 
 			return null;
 		}

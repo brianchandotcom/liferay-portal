@@ -310,6 +310,15 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
+	public String getSortField(String orderByCol, int sortType) {
+		if (sortType == Sort.STRING_TYPE) {
+			return getSortField(orderByCol);
+		}
+
+		return DocumentImpl.getSortableFieldName(orderByCol);
+	}
+
+	@Override
 	public Summary getSummary(
 			Document document, Locale locale, String snippet,
 			PortletURL portletURL)

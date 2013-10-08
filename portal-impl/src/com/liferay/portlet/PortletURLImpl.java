@@ -64,6 +64,8 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
+import java.net.URL;
+
 import java.security.Key;
 import java.security.PrivilegedAction;
 
@@ -850,8 +852,13 @@ public class PortletURLImpl
 						PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));
 
 					if (_secure) {
-						_layoutFriendlyURL = HttpUtil.protocolize(
-							_layoutFriendlyURL, true);
+						URL url = new URL(_layoutFriendlyURL);
+
+						url = new URL(
+							Http.HTTPS, url.getHost(),
+							PropsValues.WEB_SERVER_HTTPS_PORT, url.getFile());
+
+						_layoutFriendlyURL = url.toString();
 					}
 				}
 			}

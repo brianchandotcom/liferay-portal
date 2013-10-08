@@ -17,7 +17,11 @@ package com.liferay.portal.resiliency.spi.agent;
 import com.liferay.portal.cache.MultiVMPoolImpl;
 import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.process.ProcessExecutor;
+import com.liferay.portal.kernel.resiliency.spi.MockSPI;
+import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.NewClassLoaderJUnitTestRunner;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieUtil;
@@ -51,6 +55,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
@@ -60,9 +65,9 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
@@ -70,14 +75,15 @@ import org.springframework.mock.web.MockHttpSession;
 /**
  * @author Shuyang Zhou
  */
+@RunWith(NewClassLoaderJUnitTestRunner.class)
 public class SPIAgentRequestTest {
 
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(
@@ -124,10 +130,7 @@ public class SPIAgentRequestTest {
 					SPIAgentRequestTest.class.getName(), "_threadLocal")));
 
 		threadLocalDistributor.afterPropertiesSet();
-	}
 
-	@Before
-	public void setUp() {
 		_mockHttpServletRequest = new MockHttpServletRequest() {
 
 			@Override
@@ -673,6 +676,251 @@ public class SPIAgentRequestTest {
 		sb.append("}");
 
 		Assert.assertEquals(sb.toString(), spiAgentRequest.toString());
+	}
+
+	@Test
+	public void testPopulatePortletSessionAttributes1() {
+
+		// Not a SPI
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockHttpSession mockHttpSession = new MockHttpSession();
+
+		SPIAgentRequest.populatePortletSessionAttributes(
+			mockHttpServletRequest, mockHttpSession);
+
+		Enumeration<String> enumeration =
+			mockHttpServletRequest.getAttributeNames();
+
+		Assert.assertFalse(enumeration.hasMoreElements());
+
+		enumeration = mockHttpSession.getAttributeNames();
+
+		Assert.assertFalse(enumeration.hasMoreElements());
+	}
+
+	@Test
+	public void testPopulatePortletSessionAttributes2() {
+
+		// Is a SPI, already populated
+
+		ConcurrentMap<String, Object> attributes =
+			ProcessExecutor.ProcessContext.getAttributes();
+
+		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
+
+		final List<String> names = new ArrayList<String>();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest() {
+
+				@Override
+				public Object getAttribute(String name) {
+					names.add(name);
+
+					return super.getAttribute(name);
+				}
+
+			};
+
+		MockHttpSession mockHttpSession = new MockHttpSession();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.PORTLET_SESSION, mockHttpSession);
+
+		SPIAgentRequest.populatePortletSessionAttributes(
+			mockHttpServletRequest, mockHttpSession);
+
+		Assert.assertEquals(1, names.size());
+
+		Assert.assertEquals(WebKeys.PORTLET_SESSION, names.get(0));
+
+		Enumeration<String> enumeration =
+			mockHttpServletRequest.getAttributeNames();
+
+		Assert.assertTrue(enumeration.hasMoreElements());
+
+		Assert.assertEquals(WebKeys.PORTLET_SESSION, enumeration.nextElement());
+
+		Assert.assertFalse(enumeration.hasMoreElements());
+
+		enumeration = mockHttpSession.getAttributeNames();
+
+		Assert.assertFalse(enumeration.hasMoreElements());
+	}
+
+	@Test
+	public void testPopulatePortletSessionAttributes3() {
+
+		// Is a SPI, not populated, no SPIAgentRequest
+
+		ConcurrentMap<String, Object> attributes =
+			ProcessExecutor.ProcessContext.getAttributes();
+
+		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
+
+		final List<String> names = new ArrayList<String>();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest() {
+
+				@Override
+				public Object getAttribute(String name) {
+					names.add(name);
+
+					return super.getAttribute(name);
+				}
+
+			};
+
+		MockHttpSession mockHttpSession = new MockHttpSession();
+
+		SPIAgentRequest.populatePortletSessionAttributes(
+			mockHttpServletRequest, mockHttpSession);
+
+		Assert.assertEquals(2, names.size());
+
+		Assert.assertEquals(WebKeys.PORTLET_SESSION, names.get(0));
+		Assert.assertEquals(WebKeys.SPI_AGENT_REQUEST, names.get(1));
+
+		Enumeration<String> enumeration =
+			mockHttpServletRequest.getAttributeNames();
+
+		Assert.assertFalse(enumeration.hasMoreElements());
+
+		enumeration = mockHttpSession.getAttributeNames();
+
+		Assert.assertFalse(enumeration.hasMoreElements());
+	}
+
+	@Test
+	public void testPopulatePortletSessionAttributes4() throws IOException {
+
+		// Is a SPI, not populated, with SPIAgentRequest, no
+		// portletSessionAttributes
+
+		ConcurrentMap<String, Object> attributes =
+			ProcessExecutor.ProcessContext.getAttributes();
+
+		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockHttpServletRequest originalHttpServletRequest =
+			new MockHttpServletRequest();
+
+		final String servletContextName = "servletContextName";
+
+		Portlet portlet = new PortletImpl() {
+
+			@Override
+			public String getContextName() {
+				return servletContextName;
+			}
+
+		};
+
+		originalHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_PORTLET, portlet);
+
+		SPIAgentRequest spiAgentRequest = new SPIAgentRequest(
+			originalHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_REQUEST, spiAgentRequest);
+
+		MockHttpSession mockHttpSession = new MockHttpSession();
+
+		SPIAgentRequest.populatePortletSessionAttributes(
+			mockHttpServletRequest, mockHttpSession);
+
+		Assert.assertSame(
+			mockHttpSession,
+			mockHttpServletRequest.getAttribute(WebKeys.PORTLET_SESSION));
+
+		Enumeration<String> enumeration = mockHttpSession.getAttributeNames();
+
+		Assert.assertFalse(enumeration.hasMoreElements());
+	}
+
+	@Test
+	public void testPopulatePortletSessionAttributes5() throws IOException {
+
+		// Is a SPI, not populated, with SPIAgentRequest, with
+		// portletSessionAttributes
+
+		ConcurrentMap<String, Object> attributes =
+			ProcessExecutor.ProcessContext.getAttributes();
+
+		attributes.put(SPI.SPI_INSTANCE_PUBLICATION_KEY, new MockSPI());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockHttpServletRequest originalHttpServletRequest =
+			new MockHttpServletRequest();
+
+		final String servletContextName = "servletContextName";
+
+		Portlet portlet = new PortletImpl() {
+
+			@Override
+			public String getContextName() {
+				return servletContextName;
+			}
+
+		};
+
+		originalHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_PORTLET, portlet);
+
+		MockHttpSession originalHttpSession = new MockHttpSession();
+
+		Map<String, Serializable> portletSessionAttributes =
+			new HashMap<String, Serializable>();
+
+		portletSessionAttributes.put("key1", "value1");
+		portletSessionAttributes.put("key2", "value2");
+		portletSessionAttributes.put("key3", "value3");
+
+		originalHttpSession.setAttribute(
+			WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(servletContextName),
+			portletSessionAttributes);
+
+		originalHttpServletRequest.setSession(originalHttpSession);
+
+		SPIAgentRequest spiAgentRequest = new SPIAgentRequest(
+			originalHttpServletRequest);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_REQUEST, spiAgentRequest);
+
+		MockHttpSession mockHttpSession = new MockHttpSession();
+
+		SPIAgentRequest.populatePortletSessionAttributes(
+			mockHttpServletRequest, mockHttpSession);
+
+		Assert.assertSame(
+			mockHttpSession,
+			mockHttpServletRequest.getAttribute(WebKeys.PORTLET_SESSION));
+
+		Assert.assertEquals("value1", mockHttpSession.getAttribute("key1"));
+		Assert.assertEquals("value2", mockHttpSession.getAttribute("key2"));
+		Assert.assertEquals("value3", mockHttpSession.getAttribute("key3"));
+
+		Enumeration<String> enumeration = mockHttpSession.getAttributeNames();
+
+		Assert.assertTrue(enumeration.hasMoreElements());
+		Assert.assertNotNull(enumeration.nextElement());
+		Assert.assertTrue(enumeration.hasMoreElements());
+		Assert.assertNotNull(enumeration.nextElement());
+		Assert.assertTrue(enumeration.hasMoreElements());
+		Assert.assertNotNull(enumeration.nextElement());
+
+		Assert.assertFalse(enumeration.hasMoreElements());
 	}
 
 	@Test

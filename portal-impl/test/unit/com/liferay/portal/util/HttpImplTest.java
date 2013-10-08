@@ -133,6 +133,33 @@ public class HttpImplTest extends PowerMockito {
 		Assert.assertEquals("1", parameterMap.get("a")[0]);
 	}
 
+	@Test
+	public void testProtocolizeMalformedURL() {
+		Assert.assertEquals(
+			"foo.com", _httpImpl.protocolize("foo.com", 8080, true));
+	}
+
+	@Test
+	public void testProtocolizeNonsecure() {
+		Assert.assertEquals(
+			"http://foo.com:8080",
+			_httpImpl.protocolize("https://foo.com", 8080, false));
+	}
+
+	@Test
+	public void testProtocolizeSecure() {
+		Assert.assertEquals(
+			"https://foo.com:8443",
+			_httpImpl.protocolize("http://foo.com", 8443, true));
+	}
+
+	@Test
+	public void testProtocolizeWithoutPort() {
+		Assert.assertEquals(
+			"http://foo.com/web/guest",
+			_httpImpl.protocolize("https://foo.com:8443/web/guest", -1, false));
+	}
+
 	private void _addParameter(
 		String url, String parameterName, String parameterValue) {
 

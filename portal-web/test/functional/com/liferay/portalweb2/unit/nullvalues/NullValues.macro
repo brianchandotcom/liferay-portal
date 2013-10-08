@@ -1,0 +1,75 @@
+<definition>
+	<var name="commitMessage" value="LPS-40838" />
+	<var name="ticketSummary" value="LIFERAYQA-5706: Allow null strings for all element values" />
+	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5706" />
+
+	<command name="containsConditionalUsingTwoEmptyStringVariables">
+		<echo message="Test null values: 'contains' if clause comparing two empty string variables" />
+
+		<var name="emptyString1" value="" />
+		<var name="emptyString2" value="" />
+
+		<if>
+			<contains string="${emptyString1}" substring="${emptyString2}" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+	</command>
+
+	<command name="echoEmptyStringAndEmptyStringVariable">
+		<echo message="Test null values: echo the empty string and empty var" />
+
+		<var name="emptyString" value="" />
+
+		<echo message="${emptyString}" />
+		<echo message="" />
+		<echo message="PASSED if two new lines were outputted\n" />
+	</command>
+
+	<command name="equalsConditionalComparingEmptyStringVariableWithEmptyString">
+		<echo message="Test null values: 'equals' if clause comparing one empty string var against the empty string" />
+
+		<var name="emptyString" value="" />
+
+		<if>
+			<equals arg1="${emptyString}" arg2="" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+	</command>
+
+	<command name="equalsConditionalUsingTwoEmptyStringVariables">
+		<echo message="Test null values: 'equals' if clause comparing two empty string variables" />
+
+		<var name="emptyString1" value="" />
+		<var name="emptyString2" value="" />
+
+		<if>
+			<equals arg1="${emptyString1}" arg2="${emptyString2}" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail" />
+			</else>
+		</if>
+	</command>
+
+	<command name="typeEmptyString">
+		<echo message="Test null values: typing the empty string into a field" />
+
+		<execute macro="TestUtils#typeIntoField">
+			<var name="text" value="" />
+		</execute>
+
+		<execute macro="TestUtils#pass" />
+	</command>
+</definition>

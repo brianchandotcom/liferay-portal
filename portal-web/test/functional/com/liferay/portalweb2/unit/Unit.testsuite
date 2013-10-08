@@ -1,0 +1,7 @@
+<definition>
+	<execute test-case-command="NullValues#ContainsConditionalUsingTwoEmptyStringVariables" />
+	<execute test-case-command="NullValues#EchoEmptyStringAndEmptyStringVariable" />
+	<execute test-case-command="NullValues#EqualsConditionalComparingEmptyStringVariableWithEmptyString" />
+	<execute test-case-command="NullValues#EqualsConditionalUsingTwoEmptyStringVariables" />
+	<execute test-case-command="NullValues#TypeEmptyString" />
+</definition>

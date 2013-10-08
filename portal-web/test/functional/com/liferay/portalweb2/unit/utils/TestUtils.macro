@@ -1,0 +1,56 @@
+<definition>
+	<command name="assertEqual">
+		<echo message="${expected}" />
+		<echo message="${actual}" />
+
+		<if>
+			<equals arg1="${expected}" arg2="${actual}" />
+			<then>
+				<echo message="PASSED" />
+			</then>
+			<else>
+				<execute macro="TestUtils#fail">
+					<var name="message" value="FAILED: expected '${expected}', actual was '${actual}'" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="fail">
+		<if>
+			<not>
+				<isset var="message" />
+			</not>
+			<then>
+				<var name="message" value="FAIL" />
+			</then>
+		</if>
+
+		<echo message="${message}\n" />
+
+		<fail message="${message}" />
+	</command>
+
+	<command name="pass">
+		<if>
+			<not>
+				<isset var="message" />
+			</not>
+			<then>
+				<var name="message" value="PASS" />
+			</then>
+		</if>
+
+		<echo message="${message}\n" />
+	</command>
+
+	<command name="typeIntoField">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${text}" />
+
+		<execute action="Dockbar#assertTextEquals" locator-key1="ADD_PAGE_NAME_FIELD" value1="${text}" />
+	</command>
+</definition>

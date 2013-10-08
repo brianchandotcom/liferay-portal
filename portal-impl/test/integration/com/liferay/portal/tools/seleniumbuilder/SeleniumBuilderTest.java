@@ -994,22 +994,6 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testMacroContainsElement1006_1() throws Exception {
-		test(
-			"MacroContainsElement1006_1.macro",
-			"Error 1006: Invalid string attribute value in " + _DIR_NAME +
-				"/MacroContainsElement1006_1.macro:4");
-	}
-
-	@Test
-	public void testMacroContainsElement1006_2() throws Exception {
-		test(
-			"MacroContainsElement1006_2.macro",
-			"Error 1006: Invalid substring attribute value in " + _DIR_NAME +
-				"/MacroContainsElement1006_2.macro:4");
-	}
-
-	@Test
 	public void testMacroDefinitionElement1000() throws Exception {
 		test(
 			"MacroDefinitionElement1000.macro",
@@ -1047,14 +1031,6 @@ public class SeleniumBuilderTest {
 			"MacroEchoElement1005.macro",
 			"Error 1005: Invalid message-fail attribute in " + _DIR_NAME +
 				"/MacroEchoElement1005.macro:3");
-	}
-
-	@Test
-	public void testMacroEchoElement1006() throws Exception {
-		test(
-			"MacroEchoElement1006.macro",
-			"Error 1006: Invalid message attribute value in " + _DIR_NAME +
-				"/MacroEchoElement1006.macro:3");
 	}
 
 	@Test
@@ -1153,22 +1129,6 @@ public class SeleniumBuilderTest {
 			"MacroEqualsElement1005.macro",
 			"Error 1005: Invalid fail attribute in " + _DIR_NAME +
 				"/MacroEqualsElement1005.macro:4");
-	}
-
-	@Test
-	public void testMacroEqualsElement1006_1() throws Exception {
-		test(
-			"MacroEqualsElement1006_1.macro",
-			"Error 1006: Invalid arg1 attribute value in " + _DIR_NAME +
-				"/MacroEqualsElement1006_1.macro:4");
-	}
-
-	@Test
-	public void testMacroEqualsElement1006_2() throws Exception {
-		test(
-			"MacroEqualsElement1006_2.macro",
-			"Error 1006: Invalid arg2 attribute value in " + _DIR_NAME +
-				"/MacroEqualsElement1006_2.macro:4");
 	}
 
 	@Test
@@ -1281,14 +1241,6 @@ public class SeleniumBuilderTest {
 			"MacroFailElement1005.macro",
 			"Error 1005: Invalid message-fail attribute in " + _DIR_NAME +
 				"/MacroFailElement1005.macro:3");
-	}
-
-	@Test
-	public void testMacroFailElement1006() throws Exception {
-		test(
-			"MacroFailElement1006.macro",
-			"Error 1006: Invalid message attribute value in " + _DIR_NAME +
-				"/MacroFailElement1006.macro:3");
 	}
 
 	@Test

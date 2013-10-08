@@ -1266,7 +1266,9 @@ public class SeleniumBuilderFileUtil {
 			String attributeName = attribute.getName();
 			String attributeValue = attribute.getValue();
 
-			if (Validator.isNull(attributeValue)) {
+			if (!_allowedNullAttributes.contains(attributeName) &&
+				Validator.isNull(attributeValue)) {
+
 				throwValidationException(
 					1006, fileName, element, attributeName);
 			}
@@ -1430,9 +1432,7 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 
-		String varText = element.getText();
-
-		if (Validator.isNull(varText) &&
+		if (!element.hasContent() &&
 			!attributeMap.containsKey("locator-key") &&
 			!attributeMap.containsKey("path") &&
 			!attributeMap.containsKey("value")) {
@@ -1462,8 +1462,8 @@ public class SeleniumBuilderFileUtil {
 		else {
 			String varValue = attributeMap.get("value");
 
-			if (Validator.isNotNull(varText)) {
-				varValue = varText;
+			if (element.hasContent()) {
+				varValue = element.getText();
 			}
 
 			Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
@@ -1559,6 +1559,10 @@ public class SeleniumBuilderFileUtil {
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
+	private static List<String> _allowedNullAttributes = ListUtil.fromArray(
+		new String[] {
+			"arg1", "arg2", "message", "string", "substring", "value"
+		});
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {"line-number", "locator-key", "name", "path", "value"});
 	private static List<String> _methodNames = ListUtil.fromArray(

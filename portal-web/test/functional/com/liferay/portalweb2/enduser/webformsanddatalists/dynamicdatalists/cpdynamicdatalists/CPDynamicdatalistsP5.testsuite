@@ -10,4 +10,9 @@
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionRadioCP" />
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionSelectCP" />
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionTextBoxCP" />
+	<execute test-case-command="CPDynamicdatalists#EditDataDefinitionBooleanNameCP" />
+	<execute test-case-command="CPDynamicdatalists#EditDataDefinitionBooleanFieldLabelCP" />
+	<execute test-case-command="CPDynamicdatalists#EditDataDefinitionBooleanShowLabelCP" />
+	<execute test-case-command="CPDynamicdatalists#EditDataDefinitionBooleanPredefinedValueCP" />
+	<execute test-case-command="CPDynamicdatalists#EditDataDefinitionBooleanTipCP" />
 </definition>

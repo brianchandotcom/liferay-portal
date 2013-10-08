@@ -529,11 +529,11 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			}
 		}
 
-		String timeStampParam = "t=" + ServiceTestUtil.randomLong();
+		String timestampParameter = "t=" + ServiceTestUtil.randomLong();
 
-		String params1 = timeStampParam + "&width=100&height=100";
-		String params2 = "width=100&" + timeStampParam + "&height=100";
-		String params3 = "width=100&height=100" + timeStampParam;
+		String parameters1 = timestampParameter + "&width=100&height=100";
+		String parameters2 = "width=100&" + timestampParameter + "&height=100";
+		String parameters3 = "width=100&height=100" + timestampParameter;
 
 		List<String> outUrls = new ArrayList<String>();
 
@@ -541,17 +541,17 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			outUrls.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$ONLYTIMESTAMP$]"},
-					new String[] {"&" + params1, "?" + params1}));
+					new String[] {"&" + parameters1, "?" + parameters1}));
 
 			outUrls.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$ONLYTIMESTAMP$]"},
-					new String[] {"&" + params2, "?" + params2}));
+					new String[] {"&" + parameters2, "?" + parameters2}));
 
 			outUrls.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$ONLYTIMESTAMP$]"},
-					new String[] {"&" + params3, "?" + params3}));
+					new String[] {"&" + parameters3, "?" + parameters3}));
 		}
 
 		return outUrls;

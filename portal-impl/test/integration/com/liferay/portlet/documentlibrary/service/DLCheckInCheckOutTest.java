@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -43,6 +44,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.io.InputStream;
+
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -96,6 +99,10 @@ public class DLCheckInCheckOutTest {
 		DLAppServiceUtil.checkOutFileEntry(
 			_fileEntry.getFileEntryId(), _serviceContext);
 
+		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Date lastPostDate = folder.getLastPostDate();
+
 		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 			_fileEntry.getFileEntryId());
 
@@ -107,6 +114,11 @@ public class DLCheckInCheckOutTest {
 
 		DLAppServiceUtil.cancelCheckOut(_fileEntry.getFileEntryId());
 
+		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Assert.assertTrue(
+			DateUtil.equals(lastPostDate, folder.getLastPostDate()));
+
 		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
 		Assert.assertEquals("1.0", fileEntry.getVersion());
@@ -117,6 +129,10 @@ public class DLCheckInCheckOutTest {
 		for (int i = 0; i < 2; i++) {
 			DLAppServiceUtil.checkOutFileEntry(
 				_fileEntry.getFileEntryId(), _serviceContext);
+
+			Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+			Date lastPostDate = folder.getLastPostDate();
 
 			FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
@@ -132,6 +148,17 @@ public class DLCheckInCheckOutTest {
 				_fileEntry.getFileEntryId(), false, StringPool.BLANK,
 				_serviceContext);
 
+			folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+			if (i == 1) {
+				Assert.assertTrue(
+					lastPostDate.before(folder.getLastPostDate()));
+			}
+			else {
+				Assert.assertTrue(
+					DateUtil.equals(lastPostDate, folder.getLastPostDate()));
+			}
+
 			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 				_fileEntry.getFileEntryId());
 
@@ -145,8 +172,17 @@ public class DLCheckInCheckOutTest {
 
 	@Test
 	public void testCheckOut() throws Exception {
+		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Date lastPostDate = folder.getLastPostDate();
+
 		DLAppServiceUtil.checkOutFileEntry(
 			_fileEntry.getFileEntryId(), _serviceContext);
+
+		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Assert.assertTrue(
+			DateUtil.equals(lastPostDate, folder.getLastPostDate()));
 
 		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
@@ -157,7 +193,15 @@ public class DLCheckInCheckOutTest {
 
 	@Test
 	public void testUpdateFileEntry() throws Exception {
+		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Date lastPostDate = folder.getLastPostDate();
+
 		FileEntry fileEntry = updateFileEntry(_fileEntry.getFileEntryId());
+
+		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Assert.assertTrue(lastPostDate.before(folder.getLastPostDate()));
 
 		Assert.assertEquals("1.1", fileEntry.getVersion());
 
@@ -168,6 +212,10 @@ public class DLCheckInCheckOutTest {
 	public void testUpdateFileEntry2() throws Exception {
 		DLAppServiceUtil.checkOutFileEntry(
 			_fileEntry.getFileEntryId(), _serviceContext);
+
+		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Date lastPostDate = folder.getLastPostDate();
 
 		FileEntry fileEntry = updateFileEntry(_fileEntry.getFileEntryId());
 
@@ -180,6 +228,10 @@ public class DLCheckInCheckOutTest {
 		DLAppServiceUtil.checkInFileEntry(
 			_fileEntry.getFileEntryId(), false, StringPool.BLANK,
 			_serviceContext);
+
+		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+		Assert.assertTrue(lastPostDate.before(folder.getLastPostDate()));
 
 		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
@@ -273,6 +325,10 @@ public class DLCheckInCheckOutTest {
 		ServiceTestUtil.setUser(authorUser);
 
 		try {
+			Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+			Date lastPostDate = folder.getLastPostDate();
+
 			String fileName = "OverrideCheckoutTest.txt";
 
 			FileEntry fileEntry = createFileEntry(fileName);
@@ -314,6 +370,11 @@ public class DLCheckInCheckOutTest {
 				if (!expectOverride) {
 					Assert.fail("Should not have succeeded check in");
 				}
+
+				folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
+
+				Assert.assertTrue(
+					lastPostDate.before(folder.getLastPostDate()));
 
 				fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 

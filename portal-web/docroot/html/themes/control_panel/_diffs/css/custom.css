@@ -748,6 +748,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Control panel general ---------- */
 
+	li.publish-link-container a:before {
+		content: "";
+		padding-left: 19px;
+	}
+
 	.control-panel-site-selector .caret {
 		border-width: 6px;
 		margin-top: 5px;
@@ -755,6 +760,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.lfr-ctrl-panel {
+		li.publish-link-container a:before {
+			content: "";
+			padding-left: 0;
+		}
+
 		.lfr-meta-actions {
 			margin-right: 0;
 		}

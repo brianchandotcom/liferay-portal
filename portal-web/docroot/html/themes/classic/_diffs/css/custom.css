@@ -119,6 +119,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.staging-bar {
+			.publish-link-container {
+				.btn:hover {
+					background-color: #0ABA1D;
+					text-decoration: none;
+				}
+			}
+
 			.staging-toggle {
 				color: #FFF;
 
@@ -132,6 +139,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 					color: #FFF;
 					font-size: 12px;
 				}
+			}
+
+			.staging-details {
+				color: #FFF;
 			}
 		}
 

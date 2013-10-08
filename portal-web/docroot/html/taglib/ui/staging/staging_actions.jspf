@@ -16,9 +16,9 @@
 
 <c:choose>
 	<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
-		<div class="publish-link-container">
+		<li class="publish-link-container">
 			<aui:a href="<%= publishRenderURL.toString() %>" id='<%= groupId + "publishGlobalLink" %>' label="<%= publishDialogTitle %>" />
-		</div>
+		</li>
 
 		<aui:script use="aui-base">
 			var publishGlobalLink = A.one('#<portlet:namespace /><%= groupId + "publishGlobalLink" %>');
@@ -43,6 +43,10 @@
 		</aui:script>
 	</c:when>
 	<c:otherwise>
+		<%
+		Group groupType = layout.getGroup();
+		%>
+
 		<c:if test="<%= (liveGroup != null) && (stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING)) %>">
 
 			<%
@@ -77,9 +81,18 @@
 				</c:otherwise>
 			</c:choose>
 
-			<div class="publish-link-container">
-				<aui:a cssClass="btn btn-success publish-link" href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
-			</div>
+			<c:choose>
+				<c:when test="<%= groupType.isControlPanel() %>">
+					<li class="publish-link-container">
+						<aui:a cssClass="publish-link" href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+					</li>
+				</c:when>
+				<c:otherwise>
+					<div class="publish-link-container">
+						<aui:a cssClass="btn btn-success publish-link" href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+					</div>
+				</c:otherwise>
+			</c:choose>
 
 			<aui:script use="aui-base">
 				var publishLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishLink" %>');
@@ -112,9 +125,18 @@
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 			</portlet:renderURL>
 
-			<div class="publish-link-container">
-				<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
-			</div>
+			<c:choose>
+				<c:when test="<%= groupType.isControlPanel() %>">
+					<li class="publish-link-container">
+						<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
+					</li>
+				</c:when>
+				<c:otherwise>
+					<div class="publish-link-container">
+						<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
+					</div>
+				</c:otherwise>
+			</c:choose>
 
 			<aui:script use="aui-base">
 				var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');

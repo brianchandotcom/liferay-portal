@@ -58,97 +58,99 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <h3><liferay-ui:message key="details" /></h3>
 
-<aui:fieldset cssClass="span6">
-	<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
-	<liferay-ui:error exception="<%= OrganizationNameException.class %>" message="please-enter-a-valid-name" />
+<div class="row-fluid">
+	<aui:fieldset cssClass="span6">
+		<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
+		<liferay-ui:error exception="<%= OrganizationNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-	<c:choose>
-		<c:when test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_ORGANIZATION_STATUS %>">
-			<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_STATUS %>" message="please-select-a-type" />
+		<c:choose>
+			<c:when test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_ORGANIZATION_STATUS %>">
+				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_STATUS %>" message="please-select-a-type" />
 
-			<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusId" name="statusId" showEmptyOption="<%= true %>" />
-		</c:when>
-		<c:otherwise>
-			<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusId() : ListTypeConstants.ORGANIZATION_STATUS_DEFAULT %>" />
-		</c:otherwise>
-	</c:choose>
+				<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusId" name="statusId" showEmptyOption="<%= true %>" />
+			</c:when>
+			<c:otherwise>
+				<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusId() : ListTypeConstants.ORGANIZATION_STATUS_DEFAULT %>" />
+			</c:otherwise>
+		</c:choose>
 
-	<c:choose>
-		<c:when test="<%= organization == null %>">
-			<aui:select name="type">
+		<c:choose>
+			<c:when test="<%= organization == null %>">
+				<aui:select name="type">
+
+					<%
+					for (String curType : PropsValues.ORGANIZATIONS_TYPES) {
+					%>
+
+						<aui:option label="<%= curType %>" selected="<%= type.equals(curType) %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</c:when>
+			<c:otherwise>
+				<aui:field-wrapper label="type">
+					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, organization.getType()) %>" />
+				</aui:field-wrapper>
+
+				<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
+			</c:otherwise>
+		</c:choose>
+
+		<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
+
+		<div class='<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_COUNTRY_ENABLED, new Filter(String.valueOf(type)))) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />countryDiv">
+			<aui:select label="country" name="countryId" />
+
+			<aui:select label="region" name="regionId" />
+		</div>
+
+		<c:if test="<%= organization != null %>">
+			<aui:field-wrapper label="site-id">
+				<liferay-ui:input-resource url="<%= String.valueOf(groupId) %>" />
+			</aui:field-wrapper>
+		</c:if>
+	</aui:fieldset>
+
+	<aui:fieldset cssClass="span6">
+		<div>
+			<c:if test="<%= organization != null %>">
 
 				<%
-				for (String curType : PropsValues.ORGANIZATIONS_TYPES) {
-				%>
+				long logoId = 0;
 
-					<aui:option label="<%= curType %>" selected="<%= type.equals(curType) %>" />
+				LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, false);
+				LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, true);
 
-				<%
+				if (publicLayoutSet.getLogoId() > 0) {
+					logoId = publicLayoutSet.getLogoId();
+				}
+				else if (privateLayoutSet.getLogoId() > 0) {
+					logoId = privateLayoutSet.getLogoId();
 				}
 				%>
 
-			</aui:select>
-		</c:when>
-		<c:otherwise>
-			<aui:field-wrapper label="type">
-				<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, organization.getType()) %>" />
-			</aui:field-wrapper>
+				<portlet:renderURL var="editOrganizationLogoURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/users_admin/edit_organization_logo" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="publicLayoutSetId" value="<%= String.valueOf(publicLayoutSet.getLayoutSetId()) %>" />
+				</portlet:renderURL>
 
-			<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
-		</c:otherwise>
-	</c:choose>
-
-	<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
-
-	<div class='<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_COUNTRY_ENABLED, new Filter(String.valueOf(type)))) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />countryDiv">
-		<aui:select label="country" name="countryId" />
-
-		<aui:select label="region" name="regionId" />
-	</div>
-
-	<c:if test="<%= organization != null %>">
-		<aui:field-wrapper label="site-id">
-			<liferay-ui:input-resource url="<%= String.valueOf(groupId) %>" />
-		</aui:field-wrapper>
-	</c:if>
-</aui:fieldset>
-
-<aui:fieldset cssClass="span6">
-	<div>
-		<c:if test="<%= organization != null %>">
-
-			<%
-			long logoId = 0;
-
-			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, false);
-			LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, true);
-
-			if (publicLayoutSet.getLogoId() > 0) {
-				logoId = publicLayoutSet.getLogoId();
-			}
-			else if (privateLayoutSet.getLogoId() > 0) {
-				logoId = privateLayoutSet.getLogoId();
-			}
-			%>
-
-			<portlet:renderURL var="editOrganizationLogoURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/users_admin/edit_organization_logo" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="publicLayoutSetId" value="<%= String.valueOf(publicLayoutSet.getLayoutSetId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:logo-selector
-				defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-				editLogoURL="<%= editOrganizationLogoURL %>"
-				imageId="<%= logoId %>"
-				logoDisplaySelector=".organization-logo"
-			/>
-		</c:if>
-	</div>
-</aui:fieldset>
+				<liferay-ui:logo-selector
+					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
+					editLogoURL="<%= editOrganizationLogoURL %>"
+					imageId="<%= logoId %>"
+					logoDisplaySelector=".organization-logo"
+				/>
+			</c:if>
+		</div>
+	</aui:fieldset>
+</div>
 
 <%
 Organization parentOrganization = null;

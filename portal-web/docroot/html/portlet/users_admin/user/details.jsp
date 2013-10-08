@@ -37,148 +37,150 @@ if (selContact != null) {
 
 <h3><liferay-ui:message key="details" /></h3>
 
-<aui:fieldset cssClass="span6">
-	<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
+<div class="row-fluid">
+	<aui:fieldset cssClass="span6">
+		<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
-	<liferay-ui:error exception="<%= DuplicateUserScreenNameException.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
+		<liferay-ui:error exception="<%= DuplicateUserScreenNameException.class %>" focusField="screenName" message="the-screen-name-you-requested-is-already-taken" />
 
-	<liferay-ui:error exception="<%= GroupFriendlyURLException.class %>" focusField="screenName">
-
-		<%
-		GroupFriendlyURLException gfurle = (GroupFriendlyURLException)errorException;
-		%>
-
-		<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.DUPLICATE %>">
-			<liferay-ui:message key="the-screen-name-you-requested-is-associated-with-an-existing-friendly-url" />
-		</c:if>
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= ReservedUserScreenNameException.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved" />
-
-	<liferay-ui:error exception="<%= UserFieldException.class %>">
-
-		<%
-		UserFieldException ufe = (UserFieldException)errorException;
-
-		StringBundler sb = new StringBundler();
-
-		List<String> fields = ufe.getFields();
-
-		for (int i = 0; i < fields.size(); i++) {
-			String field = fields.get(i);
-
-			sb.append(LanguageUtil.get(pageContext, TextFormatter.format(field, TextFormatter.K)));
-
-			if ((i + 1) < fields.size()) {
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-		}
-		%>
-
-		<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" />
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= UserScreenNameException.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
-
-	<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">
-		<c:choose>
-			<c:when test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || !UsersAdminUtil.hasUpdateFieldPermission(selUser, "screenName") %>'>
-				<aui:input disabled="<%= true %>" name="screenName" />
-			</c:when>
-			<c:otherwise>
-				<aui:input name="screenName" />
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-
-	<liferay-ui:error exception="<%= DuplicateUserEmailAddressException.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-already-taken" />
-	<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-reserved" />
-	<liferay-ui:error exception="<%= UserEmailAddressException.class %>" focusField="emailAddress" message="please-enter-a-valid-email-address" />
-
-	<c:choose>
-		<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "emailAddress") %>'>
-			<aui:input disabled="<%= true %>" name="emailAddress" />
-		</c:when>
-		<c:otherwise>
+		<liferay-ui:error exception="<%= GroupFriendlyURLException.class %>" focusField="screenName">
 
 			<%
-			User displayEmailAddressUser = null;
+			GroupFriendlyURLException gfurle = (GroupFriendlyURLException)errorException;
+			%>
 
-			if (selUser != null) {
-				displayEmailAddressUser = (User)selUser.clone();
+			<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.DUPLICATE %>">
+				<liferay-ui:message key="the-screen-name-you-requested-is-associated-with-an-existing-friendly-url" />
+			</c:if>
+		</liferay-ui:error>
 
-				displayEmailAddressUser.setEmailAddress(displayEmailAddressUser.getDisplayEmailAddress());
+		<liferay-ui:error exception="<%= ReservedUserScreenNameException.class %>" focusField="screenName" message="the-screen-name-you-requested-is-reserved" />
+
+		<liferay-ui:error exception="<%= UserFieldException.class %>">
+
+			<%
+			UserFieldException ufe = (UserFieldException)errorException;
+
+			StringBundler sb = new StringBundler();
+
+			List<String> fields = ufe.getFields();
+
+			for (int i = 0; i < fields.size(); i++) {
+				String field = fields.get(i);
+
+				sb.append(LanguageUtil.get(pageContext, TextFormatter.format(field, TextFormatter.K)));
+
+				if ((i + 1) < fields.size()) {
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
 			}
 			%>
 
-			<aui:input bean="<%= displayEmailAddressUser %>" model="<%= User.class %>" name="emailAddress">
-				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
-					<aui:validator name="required" />
-				</c:if>
-			</aui:input>
-		</c:otherwise>
-	</c:choose>
+			<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" />
+		</liferay-ui:error>
 
-	<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
-</aui:fieldset>
+		<liferay-ui:error exception="<%= UserScreenNameException.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />
 
-<aui:fieldset cssClass="span5">
-	<div>
-		<c:if test="<%= selUser != null %>">
+		<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">
 			<c:choose>
-				<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'>
-					<portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
-						<portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:logo-selector
-						defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-						editLogoURL="<%= editUserPortraitURL %>"
-						imageId="<%= selUser.getPortraitId() %>"
-						logoDisplaySelector=".user-logo"
-					/>
+				<c:when test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || !UsersAdminUtil.hasUpdateFieldPermission(selUser, "screenName") %>'>
+					<aui:input disabled="<%= true %>" name="screenName" />
 				</c:when>
 				<c:otherwise>
-					<img src="<%= selUser.getPortraitURL(themeDisplay) %>" />
+					<aui:input name="screenName" />
 				</c:otherwise>
 			</c:choose>
 		</c:if>
-	</div>
 
-	<c:if test="<%= selUser != null %>">
-		<liferay-ui:error exception="<%= DuplicateUserIdException.class %>" message="the-user-id-you-requested-is-already-taken" />
-		<liferay-ui:error exception="<%= ReservedUserIdException.class %>" message="the-user-id-you-requested-is-reserved" />
-		<liferay-ui:error exception="<%= UserIdException.class %>" message="please-enter-a-valid-user-id" />
+		<liferay-ui:error exception="<%= DuplicateUserEmailAddressException.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-already-taken" />
+		<liferay-ui:error exception="<%= ReservedUserEmailAddressException.class %>" focusField="emailAddress" message="the-email-address-you-requested-is-reserved" />
+		<liferay-ui:error exception="<%= UserEmailAddressException.class %>" focusField="emailAddress" message="please-enter-a-valid-email-address" />
 
-		<aui:field-wrapper name="userId">
-			<liferay-ui:input-resource url="<%= String.valueOf(selUser.getUserId()) %>" />
+		<c:choose>
+			<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "emailAddress") %>'>
+				<aui:input disabled="<%= true %>" name="emailAddress" />
+			</c:when>
+			<c:otherwise>
 
-			<aui:input name="userId" type="hidden" value="<%= selUser.getUserId() %>" />
-		</aui:field-wrapper>
-	</c:if>
+				<%
+				User displayEmailAddressUser = null;
 
-	<c:choose>
-		<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY) %>">
-			<liferay-ui:error exception="<%= ContactBirthdayException.class %>" message="please-enter-a-valid-date" />
+				if (selUser != null) {
+					displayEmailAddressUser = (User)selUser.clone();
 
-			<aui:input bean="<%= selContact %>" cssClass="modify-link" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "birthday") %>' model="<%= Contact.class %>" name="birthday" value="<%= birthday %>" />
-		</c:when>
-		<c:otherwise>
-			<aui:input name="birthdayMonth" type="hidden" value="<%= Calendar.JANUARY %>" />
-			<aui:input name="birthdayDay" type="hidden" value="1" />
-			<aui:input name="birthdayYear" type="hidden" value="1970" />
-		</c:otherwise>
-	</c:choose>
+					displayEmailAddressUser.setEmailAddress(displayEmailAddressUser.getDisplayEmailAddress());
+				}
+				%>
 
-	<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE) %>">
-		<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "gender") %>' label="gender" model="<%= Contact.class %>" name="male">
-			<aui:option label="male" value="true" />
-			<aui:option label="female" value="false" />
-		</aui:select>
-	</c:if>
+				<aui:input bean="<%= displayEmailAddressUser %>" model="<%= User.class %>" name="emailAddress">
+					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
+						<aui:validator name="required" />
+					</c:if>
+				</aui:input>
+			</c:otherwise>
+		</c:choose>
 
-	<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "jobTitle") %>' name="jobTitle" />
-</aui:fieldset>
+		<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>
+	</aui:fieldset>
+
+	<aui:fieldset cssClass="span5">
+		<div>
+			<c:if test="<%= selUser != null %>">
+				<c:choose>
+					<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'>
+						<portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+							<portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
+						</portlet:renderURL>
+
+						<liferay-ui:logo-selector
+							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
+							editLogoURL="<%= editUserPortraitURL %>"
+							imageId="<%= selUser.getPortraitId() %>"
+							logoDisplaySelector=".user-logo"
+						/>
+					</c:when>
+					<c:otherwise>
+						<img src="<%= selUser.getPortraitURL(themeDisplay) %>" />
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+		</div>
+
+		<c:if test="<%= selUser != null %>">
+			<liferay-ui:error exception="<%= DuplicateUserIdException.class %>" message="the-user-id-you-requested-is-already-taken" />
+			<liferay-ui:error exception="<%= ReservedUserIdException.class %>" message="the-user-id-you-requested-is-reserved" />
+			<liferay-ui:error exception="<%= UserIdException.class %>" message="please-enter-a-valid-user-id" />
+
+			<aui:field-wrapper name="userId">
+				<liferay-ui:input-resource url="<%= String.valueOf(selUser.getUserId()) %>" />
+
+				<aui:input name="userId" type="hidden" value="<%= selUser.getUserId() %>" />
+			</aui:field-wrapper>
+		</c:if>
+
+		<c:choose>
+			<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY) %>">
+				<liferay-ui:error exception="<%= ContactBirthdayException.class %>" message="please-enter-a-valid-date" />
+
+				<aui:input bean="<%= selContact %>" cssClass="modify-link" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "birthday") %>' model="<%= Contact.class %>" name="birthday" value="<%= birthday %>" />
+			</c:when>
+			<c:otherwise>
+				<aui:input name="birthdayMonth" type="hidden" value="<%= Calendar.JANUARY %>" />
+				<aui:input name="birthdayDay" type="hidden" value="1" />
+				<aui:input name="birthdayYear" type="hidden" value="1970" />
+			</c:otherwise>
+		</c:choose>
+
+		<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE) %>">
+			<aui:select bean="<%= selContact %>" disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "gender") %>' label="gender" model="<%= Contact.class %>" name="male">
+				<aui:option label="male" value="true" />
+				<aui:option label="female" value="false" />
+			</aui:select>
+		</c:if>
+
+		<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "jobTitle") %>' name="jobTitle" />
+	</aui:fieldset>
+</div>

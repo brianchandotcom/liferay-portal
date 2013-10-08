@@ -41,6 +41,8 @@
 				<#assign actionNextElement = element>
 			</#if>
 
+			<#include "action_log_element.ftl">
+
 			<#include "action_element.ftl">
 
 			<#if action?contains("#is")>

@@ -162,6 +162,9 @@ public interface LiferaySelenium extends Selenium {
 
 	public void selectAndWait(String selectLocator, String optionLocator);
 
+	public boolean sendActionLogger(
+		String name, String command, String locator, String value);
+
 	public void sendEmail(String to, String subject, String content)
 		throws Exception;
 

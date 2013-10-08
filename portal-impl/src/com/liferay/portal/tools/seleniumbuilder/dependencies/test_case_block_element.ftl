@@ -11,6 +11,8 @@
 
 			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
 
+			<#include "action_log_element.ftl">
+
 			<#include "action_element.ftl">
 
 			<#assign lineNumber = element.attributeValue("line-number")>

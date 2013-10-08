@@ -8,6 +8,8 @@
 
 		<div id="log">
 		</div>
+		<div id="log2">
+		</div>
 
 		<div id="code">
 			<ul onclick="toggle(event);">

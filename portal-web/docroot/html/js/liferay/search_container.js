@@ -322,6 +322,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'event-mouseenter']
+		requires: ['aui-base', 'aui-component', 'event-mouseenter']
 	}
 );

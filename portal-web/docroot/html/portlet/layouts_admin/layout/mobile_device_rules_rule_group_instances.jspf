@@ -62,7 +62,7 @@
 			config,
 			{
 				dialog: {
-					width: 820
+					width: 1024
 				},
 				title: Liferay.Language.get('javax.portlet.title.178')
 			}

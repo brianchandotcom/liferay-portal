@@ -101,7 +101,7 @@ public class NavTag extends BaseNavTag {
 		_namespacedId = getId();
 
 		if (Validator.isNull(_namespacedId)) {
-			_namespacedId = PwdGenerator.getPassword(4);
+			_namespacedId = PwdGenerator.getPassword(4, PwdGenerator.KEY3);
 		}
 
 		HttpServletRequest request =

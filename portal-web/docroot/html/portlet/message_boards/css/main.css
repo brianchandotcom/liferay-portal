@@ -216,6 +216,7 @@
 
 	.toggle_id_message_boards_view_message_thread {
 		border: 1px solid #CCC;
+		clear: both;
 		margin: 5px 0 0 0;
 		width: 100%;
 	}

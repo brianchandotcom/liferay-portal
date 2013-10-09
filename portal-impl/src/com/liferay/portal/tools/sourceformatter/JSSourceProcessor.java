@@ -66,10 +66,9 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 				"= [];", "= {};"
 			});
 
-		Pattern pattern = Pattern.compile("\t+var \\w+\\, ");
-
 		while (true) {
-			Matcher matcher = pattern.matcher(newContent);
+			Matcher matcher = _multipleVarsOnSingleLinePattern.matcher(
+				newContent);
 
 			if (!matcher.find()) {
 				break;
@@ -105,5 +104,8 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 		return newContent;
 	}
+
+	private Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
+		"\t+var \\w+\\, ");
 
 }

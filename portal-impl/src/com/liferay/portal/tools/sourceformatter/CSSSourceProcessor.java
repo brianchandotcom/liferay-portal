@@ -30,9 +30,7 @@ import java.util.regex.Pattern;
 public class CSSSourceProcessor extends BaseSourceProcessor {
 
 	protected String fixComments(String content) {
-		Pattern pattern = Pattern.compile("/\\* -+(.+)-+ \\*/");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _commentPattern.matcher(content);
 
 		while (matcher.find()) {
 			String[] words = StringUtil.split(matcher.group(1), CharPool.SPACE);
@@ -100,5 +98,7 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 
 		return newContent;
 	}
+
+	private Pattern _commentPattern = Pattern.compile("/\\* -+(.+)-+ \\*/");
 
 }

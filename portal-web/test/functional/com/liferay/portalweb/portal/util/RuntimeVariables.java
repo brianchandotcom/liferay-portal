@@ -43,11 +43,11 @@ public class RuntimeVariables {
 
 		Matcher matcher = pattern.matcher(varValue);
 
+		Pattern statementPattern = Pattern.compile(
+			"(.*)\\?(.*)\\(([^\\)]*?)\\)");
+
 		while (matcher.find()) {
 			String statement = matcher.group(1);
-
-			Pattern statementPattern = Pattern.compile(
-				"(.*)\\?(.*)\\(([^\\)]*?)\\)");
 
 			Matcher statementMatcher = statementPattern.matcher(statement);
 

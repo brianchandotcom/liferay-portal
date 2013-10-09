@@ -68,12 +68,12 @@ public class SeleniumBuilderContext {
 			liferaySeleniumDir + "SeleniumWrapper.java"
 		};
 
+		Pattern pattern = Pattern.compile(
+			"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
+
 		for (String seleniumFileName : seleniumFileNames) {
 			String content = _seleniumBuilderFileUtil.getNormalizedContent(
 				seleniumFileName);
-
-			Pattern pattern = Pattern.compile(
-				"public [a-z]* [A-Za-z0-9_]*\\(.*?\\)");
 
 			Matcher matcher = pattern.matcher(content);
 

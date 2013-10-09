@@ -105,15 +105,13 @@ public abstract class VerifyProcess extends BaseDBProcess {
 			return _portalTableNames;
 		}
 
-		Pattern pattern = Pattern.compile("create table (\\S*) \\(");
-
 		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
 
 		String sql = StringUtil.read(
 			classLoader,
 			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 
-		Matcher matcher = pattern.matcher(sql);
+		Matcher matcher = _createTablePattern.matcher(sql);
 
 		Set<String> tableNames = new HashSet<String>();
 
@@ -136,6 +134,8 @@ public abstract class VerifyProcess extends BaseDBProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyProcess.class);
 
+	private Pattern _createTablePattern = Pattern.compile(
+		"create table (\\S*) \\(");
 	private Set<String> _portalTableNames;
 
 }

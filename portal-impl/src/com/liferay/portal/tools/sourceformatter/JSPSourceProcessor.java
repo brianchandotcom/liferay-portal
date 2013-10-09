@@ -251,7 +251,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if (matcher.find()) {
 				newContent = matcher.replaceAll("@ include file");
 
-				if (!content.equals(newContent)) {
+				if (isAutoFix() && !content.equals(newContent)) {
 					fileUtil.write(file, newContent);
 				}
 			}

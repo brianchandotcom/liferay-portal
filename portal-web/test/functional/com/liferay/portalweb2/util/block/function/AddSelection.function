@@ -1,0 +1,7 @@
+<definition>
+	<command name="addSelection">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="addSelection" />
+	</command>
+</definition>

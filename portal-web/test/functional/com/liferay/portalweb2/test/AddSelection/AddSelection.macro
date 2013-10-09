@@ -1,0 +1,19 @@
+<definition>
+	<command name="addSelection">
+		<echo message="Test addSelection: select multiple items" />
+		
+		<execute action="Home#open" locator1="http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_select_multiple" />
+
+		<execute action="Home#selectFrame" locator1="//iframe[@id='iframeResult']" />
+
+		<execute action="Home#assertElementPresent" locator1="//select" />
+
+		<execute action="Home#addSelection" locator1="//select" value1="Volvo" />
+		<execute action="Home#addSelection" locator1="//select" value1="Saab" />
+		<execute action="Home#addSelection" locator1="//select" value1="Audi" />		
+
+		<execute action="Home#assertSelectedLabel" locator1="//select" value1="Volvo" />
+		<execute action="Home#assertSelectedLabel" locator1="//select" value1="Saab" />
+		<execute action="Home#assertSelectedLabel" locator1="//select" value1="Audi" />
+	</command>
+</definition>

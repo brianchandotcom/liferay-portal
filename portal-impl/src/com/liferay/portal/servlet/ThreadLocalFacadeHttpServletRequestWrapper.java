@@ -100,10 +100,7 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 
 	@Override
 	public HttpSession getSession() {
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)getRequest();
-
-		return httpServletRequest.getSession();
+		return getSession(true);
 	}
 
 	@Override

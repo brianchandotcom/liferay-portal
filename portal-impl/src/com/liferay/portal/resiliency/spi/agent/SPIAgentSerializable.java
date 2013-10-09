@@ -201,10 +201,8 @@ public class SPIAgentSerializable implements Serializable {
 				}
 			}
 
-			if (!portletSessionAttributes.isEmpty()) {
-				sessionAttributes.put(
-					portletSessionAttributesKey, portletSessionAttributes);
-			}
+			sessionAttributes.put(
+				portletSessionAttributesKey, portletSessionAttributes);
 		}
 
 		return sessionAttributes;

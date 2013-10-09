@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +46,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
@@ -85,12 +87,21 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 				WebKeys.PORTLET_SESSION_ATTRIBUTES.concat(
 					spiAgentRequest.servletContextName));
 
+		Set<String> sessionAttributeNames = SetUtil.fromEnumeration(
+			session.getAttributeNames());
+
 		if (portletSessionAttributes != null) {
 			for (Map.Entry<String, Serializable> entry :
 					portletSessionAttributes.entrySet()) {
 
 				session.setAttribute(entry.getKey(), entry.getValue());
 			}
+
+			sessionAttributeNames.removeAll(portletSessionAttributes.keySet());
+		}
+
+		for (String sessionAttributeName : sessionAttributeNames) {
+			session.removeAttribute(sessionAttributeName);
 		}
 	}
 

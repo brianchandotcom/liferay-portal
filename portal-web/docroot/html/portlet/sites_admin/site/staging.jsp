@@ -155,7 +155,7 @@ if (stagedLocally) {
 			</aui:fieldset>
 		</div>
 
-		<div class="<%= (liveGroup.isStaged() ? StringPool.BLANK : "hide") %> staging-section" id="<portlet:namespace />stagedPortlets">
+		<div class="<%= ((liveGroup.isStaged() || (stagingType != StagingConstants.TYPE_NOT_STAGED)) ? StringPool.BLANK : "hide") %> staging-section" id="<portlet:namespace />stagedPortlets">
 			<br />
 
 			<c:if test="<%= !liveGroup.isCompany() %>">

@@ -246,13 +246,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			Matcher matcher = _jspImportIncludeFilePattern.matcher(content);
 
-			if (matcher.find()) {
-				content = matcher.replaceAll("@ include file");
+			String newContent = content;
 
-				fileUtil.write(file,content);
+			if (matcher.find()) {
+				newContent = matcher.replaceAll("@ include file");
+
+				if (!content.equals(newContent)) {
+					fileUtil.write(file, newContent);
+				}
 			}
 
-			_jspContents.put(fileName, content);
+			_jspContents.put(fileName, newContent);
 		}
 
 		for (String fileName : fileNames) {

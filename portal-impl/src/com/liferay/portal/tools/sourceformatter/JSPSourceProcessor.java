@@ -236,8 +236,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		List<String> fileNames = getFileNames(excludes, includes);
 
-		Pattern jspImportIncludeFilePattern = Pattern.compile(
-			"(\\s*@\\s*include\\s*file)");
+		Pattern pattern = Pattern.compile("(\\s*@\\s*include\\s*file)");
 
 		for (String fileName : fileNames) {
 			File file = new File(BASEDIR + fileName);
@@ -247,7 +246,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String content = fileUtil.read(file);
 
-			Matcher matcher = jspImportIncludeFilePattern.matcher(content);
+			Matcher matcher = pattern.matcher(content);
 
 			String newContent = content;
 

@@ -789,10 +789,7 @@ public class JavadocFormatter {
 
 		// Trim whitespace inside paragraph tags or in the first paragraph
 
-		Pattern pattern = Pattern.compile(
-			"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
-
-		Matcher matcher = pattern.matcher(cdata);
+		Matcher matcher = _paragraphTagPattern.matcher(cdata);
 
 		StringBuffer sb = new StringBuffer();
 
@@ -1964,6 +1961,8 @@ public class JavadocFormatter {
 	private Properties _languageProperties;
 	private File _languagePropertiesFile;
 	private String _outputFilePrefix;
+	private Pattern _paragraphTagPattern = Pattern.compile(
+		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
 	private boolean _updateJavadocs;
 
 }

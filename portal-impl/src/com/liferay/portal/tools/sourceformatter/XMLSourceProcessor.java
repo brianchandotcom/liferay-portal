@@ -48,11 +48,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	public static String formatXML(String content) {
 		String newContent = StringUtil.replace(content, "\"/>\n", "\" />\n");
 
-		Pattern pattern1 = Pattern.compile(">\n\t+<!--[\n ]");
-		Pattern pattern2 = Pattern.compile("[\t ]-->\n[\t<]");
-
 		while (true) {
-			Matcher matcher = pattern1.matcher(newContent);
+			Matcher matcher = _commentPattern1.matcher(newContent);
 
 			if (matcher.find()) {
 				newContent = StringUtil.replaceFirst(
@@ -61,7 +58,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			matcher = pattern2.matcher(newContent);
+			matcher = _commentPattern2.matcher(newContent);
 
 			if (!matcher.find()) {
 				break;
@@ -665,5 +662,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent.substring(0, x) + sb.toString() +
 			newContent.substring(y);
 	}
+
+	private static Pattern _commentPattern1 = Pattern.compile(
+		">\n\t+<!--[\n ]");
+	private static Pattern _commentPattern2 = Pattern.compile(
+		"[\t ]-->\n[\t<]");
 
 }

@@ -126,10 +126,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String content, String packageDir, String className)
 		throws IOException {
 
-		Pattern pattern = Pattern.compile(
-			"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _importsPattern.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -432,11 +429,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		List<String> importedExceptionClassNames = null;
 		JavaDocBuilder javaDocBuilder = null;
 
-		Pattern catchExceptionPattern = Pattern.compile(
-			"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
-
 		for (int lineCount = 1;;) {
-			Matcher catchExceptionMatcher = catchExceptionPattern.matcher(
+			Matcher catchExceptionMatcher = _catchExceptionPattern.matcher(
 				content);
 
 			if (!catchExceptionMatcher.find()) {
@@ -607,9 +601,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		Pattern pattern = Pattern.compile("\n\n(\t+)}\n");
-
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher = _incorrectCloseCurlyBracePattern.matcher(content);
 
 		while (matcher.find()) {
 			String tabs = matcher.group(1);
@@ -891,11 +883,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"while (", "List<", ") {\n", "] {\n"
 			});
 
-		Pattern pattern = Pattern.compile(
-			"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
-
 		while (true) {
-			Matcher matcher = pattern.matcher(newContent);
+			Matcher matcher = _incorrectLineBreakPattern.matcher(newContent);
 
 			if (!matcher.find()) {
 				break;
@@ -906,10 +895,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				matcher.start());
 		}
 
-		pattern = Pattern.compile(
-			"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
-
-		Matcher matcher = pattern.matcher(newContent);
+		Matcher matcher = _logPattern.matcher(newContent);
 
 		if (matcher.find()) {
 			String logClassName = matcher.group(1);
@@ -2663,9 +2649,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	private static Pattern _importsPattern = Pattern.compile(
+		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
+
+	private Pattern _catchExceptionPattern = Pattern.compile(
+		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
+	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
+		"\n\n(\t+)}\n");
+	private Pattern _incorrectLineBreakPattern = Pattern.compile(
+		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private Properties _javaTermSortExclusions;
 	private Properties _lineLengthExclusions;
+	private Pattern _logPattern = Pattern.compile(
+		"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
 	private Properties _staticLogVariableExclusions;
 	private Properties _upgradeServiceUtilExclusions;
 

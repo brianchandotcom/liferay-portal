@@ -253,6 +253,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				if (isAutoFix() && !content.equals(newContent)) {
 					fileUtil.write(file, newContent);
+
+					sourceFormatterHelper.printError(fileName, file);
 				}
 			}
 

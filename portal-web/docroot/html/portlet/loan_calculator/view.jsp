@@ -17,15 +17,13 @@
 <%@ include file="/html/portlet/loan_calculator/init.jsp" %>
 
 <%
-int loanAmount = ParamUtil.get(request, "loanAmount", 200000);
-double interest = ParamUtil.get(request, "interest", 7.00);
+String loanAmountString = ParamUtil.get(request, "loanAmount", "200000");
+String interestString = ParamUtil.get(request, "interest", "7.00");
 int years = ParamUtil.get(request, "years", 30);
 int paymentsPerYear = ParamUtil.get(request, "paymentsPerYear", 12);
 
-double tempValue = Math.pow((1 + (interest / 100 / paymentsPerYear)), (years * paymentsPerYear));
-double amountPerPayment = (loanAmount * tempValue * (interest / 100 / paymentsPerYear)) / (tempValue - 1);
-double totalPaid = amountPerPayment * years * paymentsPerYear;
-double interestPaid = totalPaid - loanAmount;
+int loanAmount = 0;
+double interest = 0.0;
 
 NumberFormat doubleFormat = NumberFormat.getNumberInstance(locale);
 
@@ -36,6 +34,18 @@ NumberFormat integerFormat = NumberFormat.getNumberInstance(locale);
 
 integerFormat.setMaximumFractionDigits(0);
 integerFormat.setMinimumFractionDigits(0);
+
+try {
+	loanAmount = GetterUtil.getInteger(integerFormat.parse(loanAmountString));
+	interest = GetterUtil.getDouble(doubleFormat.parse(interestString));
+}
+catch (Exception e) {
+}
+
+double tempValue = Math.pow((1 + (interest / 100 / paymentsPerYear)), (years * paymentsPerYear));
+double amountPerPayment = (loanAmount * tempValue * (interest / 100 / paymentsPerYear)) / (tempValue - 1);
+double totalPaid = amountPerPayment * years * paymentsPerYear;
+double interestPaid = totalPaid - loanAmount;
 %>
 
 <form action="<liferay-portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/loan_calculator/view" /></liferay-portlet:renderURL>" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">

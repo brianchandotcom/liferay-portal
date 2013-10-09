@@ -16,6 +16,7 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
@@ -60,6 +61,8 @@ public class TransactionalExecutionTestListener
 			!transactionContext._transactionStatus.isCompleted()) {
 
 			rollbackTransaction(transactionContext);
+
+			CacheRegistryUtil.clear();
 		}
 	}
 

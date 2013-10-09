@@ -236,6 +236,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		List<String> fileNames = getFileNames(excludes, includes);
 
+		Pattern jspImportIncludeFilePattern = Pattern.compile(
+			"(\\s*@\\s*include\\s*file)");
+
 		for (String fileName : fileNames) {
 			File file = new File(BASEDIR + fileName);
 
@@ -244,7 +247,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String content = fileUtil.read(file);
 
-			Matcher matcher = _jspImportIncludeFilePattern.matcher(content);
+			Matcher matcher = jspImportIncludeFilePattern.matcher(content);
 
 			String newContent = content;
 
@@ -1173,8 +1176,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Map<String, String> _jspContents = new HashMap<String, String>();
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
-	private Pattern _jspImportIncludeFilePattern = Pattern.compile(
-		"(\\s*@\\s*include\\s*file)");
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _stripJSPImports = true;
 	private Pattern _taglibLanguageKeyPattern = Pattern.compile(

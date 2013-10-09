@@ -874,10 +874,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (Validator.isNull(mx) && !PropsValues.MAIL_MX_UPDATE) {
-			mx = company.getMx();
-		}
-
 		validate(company.getWebId(), virtualHostname, mx);
 
 		if (PropsValues.MAIL_MX_UPDATE) {
@@ -936,10 +932,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
-
-		if (Validator.isNull(mx) && !PropsValues.MAIL_MX_UPDATE) {
-			mx = company.getMx();
-		}
 
 		validate(company.getWebId(), virtualHostname, mx);
 		validate(companyId, name);

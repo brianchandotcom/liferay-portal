@@ -1500,13 +1500,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 		}
 
-		if (validateMx) {
-			if (Validator.isNull(mx)) {
-				throw new CompanyMxException();
-			}
-			else if (!Validator.isDomain(mx)) {
-				throw new CompanyMxException();
-			}
+		if (validateMx && (Validator.isNull(mx) || !Validator.isDomain(mx))) {
+			throw new CompanyMxException();
 		}
 	}
 

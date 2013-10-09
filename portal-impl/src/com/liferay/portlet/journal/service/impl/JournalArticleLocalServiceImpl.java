@@ -6436,7 +6436,6 @@ public class JournalArticleLocalServiceImpl
 
 			assetEntry.setModifiedDate(
 				previousApprovedArticle.getModifiedDate());
-
 			assetEntry.setTitle(previousApprovedArticle.getTitle());
 
 			assetEntryPersistence.update(assetEntry);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.apache.bridges.struts;
 
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -139,6 +140,11 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 			if (pos != -1) {
 				pathNoQueryString = _path.substring(0, pos);
 				queryString = _path.substring(pos + 1);
+
+				HttpServletRequest request = (HttpServletRequest)servletRequest;
+
+				servletRequest = DynamicServletRequest.addQueryString(
+					request, queryString);
 			}
 
 			Set<String> servletURLPatterns = getServletURLPatterns(

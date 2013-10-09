@@ -14,8 +14,6 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
-import com.liferay.portalweb.portal.util.BrowserCommands;
-
 import java.util.List;
 import java.util.Set;
 
@@ -93,22 +91,7 @@ public class WebDriverWrapper implements WebDriver {
 
 	@Override
 	public void quit() {
-		try {
-			System.out.println("### WebDriverWrapper 1");
-
-			_webDriver.quit();
-
-			System.out.println("### WebDriverWrapper 2");
-		}
-		catch (RuntimeException re) {
-			System.out.println("### WebDriverWrapper 3");
-
-			BrowserCommands.killBrowser();
-
-			System.out.println("### WebDriverWrapper 4");
-
-			throw re;
-		}
+		_webDriver.quit();
 	}
 
 	@Override

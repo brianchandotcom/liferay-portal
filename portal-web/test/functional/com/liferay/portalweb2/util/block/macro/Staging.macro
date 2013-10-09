@@ -42,10 +42,11 @@
 	</command>
 
 	<command name="deactivateStagingCP">
+		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
+
 		<if>
-			<condition action="CPSitesEdit#isTextEqual" locator-key1="SITE_TITLE" value1="${siteName} (Staging)" />
+			<condition action="CPSitesEdit#isElementPresent" locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
 			<then>
-				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 				<execute action="CPSitesEdit#check" locator-key1="STAGING_NONE" />
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate staging for ${siteName}?" />
@@ -53,7 +54,7 @@
 			</then>
 		</if>
 
-		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
+		<execute action="CPSitesEdit#assertElementNotPresent" locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
 	</command>
 
 	<command name="publishToLiveNowPG">

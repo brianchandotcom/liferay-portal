@@ -1345,7 +1345,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Create stub page at the old location
 
 		double version = WikiPageConstants.VERSION_DEFAULT;
-		String summary = WikiPageConstants.MOVED + " to " + title;
+		String summary = WikiPageConstants.MOVED + " to " + newTitle;
 		String format = page.getFormat();
 		boolean head = true;
 		String parentTitle = page.getParentTitle();

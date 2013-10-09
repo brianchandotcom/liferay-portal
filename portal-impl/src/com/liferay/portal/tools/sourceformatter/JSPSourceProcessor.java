@@ -1168,7 +1168,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspImportIncludeFilePattern = Pattern.compile(
-		"(\\s{0,}@\\s{0,}include\\s{0,}file)");
+		"(\\s*@\\s*include\\s*file)");
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
 	private boolean _stripJSPImports = true;
 	private Pattern _taglibLanguageKeyPattern = Pattern.compile(

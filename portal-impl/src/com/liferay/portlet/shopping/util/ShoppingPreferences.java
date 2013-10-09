@@ -151,7 +151,7 @@ public class ShoppingPreferences {
 	}
 
 	public String getEmailFromName(long companyId) throws SystemException {
-		return PortalUtil.getEmailFromAddress(
+		return PortalUtil.getEmailFromName(
 			_portletPreferences, companyId,
 			PropsValues.SHOPPING_EMAIL_FROM_NAME);
 	}

@@ -95,24 +95,19 @@
 </aui:script>
 
 <aui:script use="aui-base">
-	var config = {
-		dialog: {
-			width: 1024
-		}
-	};
-
 	var saveInstance = A.one('#<portlet:namespace />saveInstance');
 
 	if (saveInstance) {
 		saveInstance.on(
 			'click',
 			function(event) {
-				config.title = '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>';
-
-				config.id = '<portlet:namespace />ruleGroups';
-				config.uri = '<%= selectRuleGroupURL %>';
-
-				Liferay.Util.openWindow(config);
+				Liferay.Util.openWindow(
+					{
+						id = '<portlet:namespace />ruleGroups',
+						title = '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>',
+						uri = '<%= selectRuleGroupURL %>'
+					}
+				);
 			}
 		);
 	}
@@ -123,12 +118,13 @@
 		managePriorities.on(
 			'click',
 			function(event) {
-				config.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-priorities") %>';
-
-				config.id = '<portlet:namespace />ruleGroupsPriorities';
-				config.uri = '<%= managePrioritiesURL %>';
-
-				Liferay.Util.openWindow(config);
+				Liferay.Util.openWindow(
+					{
+						id = '<portlet:namespace />ruleGroupsPriorities',
+						title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-priorities") %>',
+						uri = '<%= managePrioritiesURL %>'
+					}
+				);
 			}
 		);
 	}

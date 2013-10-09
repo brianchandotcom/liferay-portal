@@ -22,7 +22,6 @@ import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.os.ProcessUtils.ProcessStillAliveException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,14 +100,14 @@ public class WebDriverWrapper implements WebDriver {
 
 			System.out.println("### WebDriverWrapper 2");
 		}
-		catch (ProcessStillAliveException psae) {
+		catch (RuntimeException re) {
 			System.out.println("### WebDriverWrapper 3");
 
 			BrowserCommands.killBrowser();
 
 			System.out.println("### WebDriverWrapper 4");
 
-			throw psae;
+			throw re;
 		}
 	}
 

@@ -896,6 +896,10 @@ public class SPIAgentRequestTest {
 
 		MockHttpSession mockHttpSession = new MockHttpSession();
 
+		mockHttpSession.setAttribute("key4", "value4");
+		mockHttpSession.setAttribute("key5", "value5");
+		mockHttpSession.setAttribute("key6", "value6");
+
 		SPIAgentRequest.populatePortletSessionAttributes(
 			mockHttpServletRequest, mockHttpSession);
 

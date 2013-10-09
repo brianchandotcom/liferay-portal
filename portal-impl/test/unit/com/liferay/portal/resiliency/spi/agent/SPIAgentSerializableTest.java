@@ -346,9 +346,13 @@ public class SPIAgentSerializableTest {
 		Assert.assertEquals(
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
-		Assert.assertEquals(
-			portletSessionAttributesName1,
-			sessionAttributes.get(portletSessionAttributesName1));
+
+		Map<String, Serializable> portletSessionAttributes =
+			(Map<String, Serializable>)sessionAttributes.get(
+				portletSessionAttributesName1);
+
+		Assert.assertNotNull(portletSessionAttributes);
+		Assert.assertTrue(portletSessionAttributes.isEmpty());
 
 		// Without log, with nonempty portlet session
 
@@ -380,7 +384,7 @@ public class SPIAgentSerializableTest {
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
 
-		Map<String, Serializable> portletSessionAttributes =
+		portletSessionAttributes =
 			(Map<String, Serializable>)sessionAttributes.get(
 				portletSessionAttributesName1);
 

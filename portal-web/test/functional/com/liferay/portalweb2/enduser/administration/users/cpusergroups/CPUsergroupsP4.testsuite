@@ -1,0 +1,10 @@
+<definition>
+	<execute test-case-command="CPUsergroups#AddUserGroupNameAsterisk" />
+	<execute test-case-command="CPUsergroups#AddUserGroupNameComma" />
+	<execute test-case-command="CPUsergroups#AddUserGroupNameDuplicate" />
+	<execute test-case-command="CPUsergroups#AddUserGroupNameNull" />
+	<execute test-case-command="CPUsergroups#AddUserGroupNameNumber" />
+	<execute test-case-command="CPUsergroups#DeleteUserGroupUser" />
+	<execute test-case-command="CPUsergroups#RemoveMember" />
+	<execute test-case-command="CPUsergroups#SearchUserGroup" />
+</definition>

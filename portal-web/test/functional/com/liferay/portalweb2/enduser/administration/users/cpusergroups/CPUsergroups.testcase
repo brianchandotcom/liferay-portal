@@ -78,6 +78,115 @@
 		</execute>
 	</command>
 
+	<command name="AddUserGroupNameAsterisk">
+		<var name="userGroupName" value="UG UserGroup Name*" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupNameVariation" value="Asterik" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupNameVariation" value="Asterik" />
+		</execute>
+	</command>
+
+	<command name="AddUserGroupNameComma">
+		<var name="userGroupName" value="UG UserGroup Name," />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupNameVariation" value="Comma" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupNameVariation" value="Comma" />
+		</execute>
+	</command>
+
+	<command name="AddUserGroupNameDuplicate">
+		<var name="userGroupName" value="UG UserGroup Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupNameVariation" value="Duplicate" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+	</command>
+
+	<command name="AddUserGroupNameNull">
+		<var name="userGroupName" value=" " />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupNameVariation" value="Null" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupNameVariation" value="Null" />
+		</execute>
+	</command>
+
+	<command name="AddUserGroupNameNumber">
+		<var name="userGroupName" value="1" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userGroupNameVariation" value="Number" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupNameVariation" value="Number" />
+		</execute>
+	</command>
+
 	<command name="AddUserGroups">
 		<var name="userGroupName1" value="UG UserGroup1 Name" />
 		<var name="userGroupName2" value="UG UserGroup2 Name" />
@@ -130,6 +239,62 @@
 		<execute macro="UserGroup#deleteCP" />
 	</command>
 
+	<command name="DeleteUserGroupUser">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userGroupName" value="UG UserGroup Name" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#deleteUserCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+	</command>
+
 	<command name="EditUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userGroupNameEdit" value="UG UserGroup Name Edit" />
@@ -144,6 +309,77 @@
 
 		<execute macro="UserGroup#editCP">
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
+		</execute>
+	</command>
+
+	<command name="RemoveMember">
+		<var name="userGroupName" value="UG UserGroup Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#removeMemberCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewRemoveMemberCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+		</execute>
+	</command>
+
+	<command name="SearchUserGroup">
+		<var name="userGroupName" value="UG UserGroup Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="UserGroup#searchCP">
+			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 	</command>
 </definition>

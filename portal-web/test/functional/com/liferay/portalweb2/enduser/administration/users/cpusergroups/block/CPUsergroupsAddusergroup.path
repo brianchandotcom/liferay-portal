@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD_ALERT</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[@id='_127_description']</td>
 	<td></td>

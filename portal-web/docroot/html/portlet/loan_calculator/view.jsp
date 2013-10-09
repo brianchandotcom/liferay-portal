@@ -38,93 +38,61 @@ integerFormat.setMaximumFractionDigits(0);
 integerFormat.setMinimumFractionDigits(0);
 %>
 
-<form action="<liferay-portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/loan_calculator/view" /></liferay-portlet:renderURL>" id="<portlet:namespace />fm" method="post" name="<portlet:namespace />fm">
+<portlet:actionURL var="portletURL" />
 
-<table class="lfr-table">
-<tr>
-	<td>
-		<liferay-ui:message key="loan-amount" />
-	</td>
-	<td>
-		<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<portlet:namespace />loanAmount" size="5" type="text" value="<%= integerFormat.format(loanAmount) %>" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="interest-rate" />
-	</td>
-	<td>
-		<input name="<portlet:namespace />interest" size="5" type="text" value="<%= doubleFormat.format(interest) %>" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="years" />
-	</td>
-	<td>
-		<input name="<portlet:namespace />years" size="5" type="text" value="<%= years %>" />
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="monthly-payment" />
-	</td>
-	<td>
-		<strong><%= integerFormat.format(amountPerPayment) %></strong>
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="interest-paid" />
-	</td>
-	<td>
-		<strong><%= integerFormat.format(interestPaid) %></strong>
-	</td>
-</tr>
-<tr>
-	<td>
-		<liferay-ui:message key="total-paid" />
-	</td>
-	<td>
-		<strong><%= integerFormat.format(totalPaid) %></strong>
-	</td>
-</tr>
-</table>
+<aui:form action="<%= portletURL %>" method="post" name="fm">
+	<table class="lfr-table">
+	<tr>
+		<td>
+			<liferay-ui:message key="loan-amount" />
+		</td>
+		<td>
+			<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<portlet:namespace />loanAmount" size="5" type="text" value="<%= integerFormat.format(loanAmount) %>" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<liferay-ui:message key="interest-rate" />
+		</td>
+		<td>
+			<input name="<portlet:namespace />interest" size="5" type="text" value="<%= doubleFormat.format(interest) %>" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<liferay-ui:message key="years" />
+		</td>
+		<td>
+			<input name="<portlet:namespace />years" size="5" type="text" value="<%= years %>" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<liferay-ui:message key="monthly-payment" />
+		</td>
+		<td>
+			<strong><%= integerFormat.format(amountPerPayment) %></strong>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<liferay-ui:message key="interest-paid" />
+		</td>
+		<td>
+			<strong><%= integerFormat.format(interestPaid) %></strong>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<liferay-ui:message key="total-paid" />
+		</td>
+		<td>
+			<strong><%= integerFormat.format(totalPaid) %></strong>
+		</td>
+	</tr>
+	</table>
 
-<br />
+	<br />
 
-<input type="submit" value="<liferay-ui:message key="calculate" />" />
-
-</form>
-
-<aui:script use="aui-io-request,aui-parse-content">
-	var form = A.one('#<portlet:namespace />fm');
-	var parentNode = form.get('parentNode');
-
-	parentNode.plug(A.Plugin.ParseContent);
-
-	form.on(
-		'submit',
-		function(event) {
-			var uri = form.getAttribute('action');
-
-			A.io.request(
-				uri,
-				{
-					form: {
-						id: form
-					},
-					on: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
-
-							parentNode.setContent(responseData);
-						}
-					}
-				}
-			);
-
-			event.halt();
-		}
-	);
-</aui:script>
+	<input type="submit" value="<liferay-ui:message key="calculate" />" />
+</aui:form>

@@ -522,7 +522,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 				<aui:button href="<%= importPagesURL %>" name="back1" value="back" />
 
-				<aui:button cssClass="btn-primary" name="continue" value="continue" />
+				<aui:button name="continue" primary="<%= true %>" value="continue" />
 			</aui:button-row>
 		</div>
 

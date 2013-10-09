@@ -38,7 +38,7 @@
 									<liferay-ui:message key="do-you-want-to-manage-the-installed-apps" />
 								</p>
 
-								<aui:button cssClass="btn-primary" href="<%= appManagerURL %>" id="controlPanelHomeActionManageApps" value="manage-apps" />
+								<aui:button href="<%= appManagerURL %>" id="controlPanelHomeActionManageApps" primary="<%= true %>" value="manage-apps" />
 							</c:when>
 							<c:otherwise>
 								<liferay-portlet:renderURL portletName="<%= PortletKeys.PLUGINS_ADMIN %>" var="pluginsAdminURL">
@@ -49,7 +49,7 @@
 									<liferay-ui:message key="do-you-want-to-manage-the-installed-apps" />
 								</p>
 
-								<aui:button cssClass="btn-primary" href="<%= pluginsAdminURL %>" id="controlPanelHomeActionManageApps" value="manage-apps" />
+								<aui:button href="<%= pluginsAdminURL %>" id="controlPanelHomeActionManageApps" primary="<%= true %>" value="manage-apps" />
 							</c:otherwise>
 						</c:choose>
 					</c:when>
@@ -62,7 +62,7 @@
 							<liferay-ui:message key="do-you-want-to-modify-any-settings-of-your-portal" />
 						</p>
 
-						<aui:button cssClass="btn-primary" href="<%= editPortalSettingsURL %>" id="controlPanelHomeActionPortalSettings" value="edit-portal-settings" />
+						<aui:button primary="<%= true %>"" href="<%= editPortalSettingsURL %>" id="controlPanelHomeActionPortalSettings" value="edit-portal-settings" />
 					</c:when>
 					<c:when test="<%= category.equals(PortletCategoryKeys.SITES) %>">
 
@@ -87,7 +87,7 @@
 										<liferay-ui:message key="you-can-manage-the-site-you-are-coming-from" />
 									</p>
 
-									<aui:button cssClass="btn-primary" href="<%= siteAdministrationURL.toString() %>" id="controlPanelHomeActionManageSite" value="<%= buttonLabel %>" />
+									<aui:button href="<%= siteAdministrationURL.toString() %>" id="controlPanelHomeActionManageSite" primary="<%= true %>" value="<%= buttonLabel %>" />
 								</c:if>
 
 						<%
@@ -107,7 +107,7 @@
 								<liferay-ui:message key="do-you-want-to-create-a-user" />
 							</p>
 
-							<aui:button cssClass="btn-primary" href="<%= addUserURL %>" id="controlPanelHomeActionAddUser" value="add-user" />
+							<aui:button href="<%= addUserURL %>" id="controlPanelHomeActionAddUser" primary="<%= true %>" value="add-user" />
 						</c:if>
 					</c:when>
 				</c:choose>

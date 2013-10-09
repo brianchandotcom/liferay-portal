@@ -144,7 +144,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			throw new CompanyWebIdException();
 		}
 
-		validate(webId, virtualHostname, mx);
+		validate(webId, virtualHostname, mx, true);
 
 		Company company = checkCompany(webId, mx, shardName);
 
@@ -874,7 +874,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		validate(company.getWebId(), virtualHostname, mx);
+		validate(
+			company.getWebId(), virtualHostname, mx,
+			PropsValues.MAIL_MX_UPDATE);
 
 		if (PropsValues.MAIL_MX_UPDATE) {
 			company.setMx(mx);
@@ -933,7 +935,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		validate(company.getWebId(), virtualHostname, mx);
+		validate(
+			company.getWebId(), virtualHostname, mx,
+			PropsValues.MAIL_MX_UPDATE);
 		validate(companyId, name);
 
 		if (PropsValues.MAIL_MX_UPDATE) {
@@ -1463,7 +1467,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(String webId, String virtualHostname, String mx)
+	protected void validate(
+			String webId, String virtualHostname, String mx, boolean validateMx)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(virtualHostname)) {
@@ -1495,11 +1500,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			}
 		}
 
-		if (Validator.isNull(mx)) {
-			throw new CompanyMxException();
-		}
-		else if (!Validator.isDomain(mx)) {
-			throw new CompanyMxException();
+		if (validateMx) {
+			if (Validator.isNull(mx)) {
+				throw new CompanyMxException();
+			}
+			else if (!Validator.isDomain(mx)) {
+				throw new CompanyMxException();
+			}
 		}
 	}
 

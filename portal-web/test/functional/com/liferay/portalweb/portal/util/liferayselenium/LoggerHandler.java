@@ -55,11 +55,13 @@ public class LoggerHandler implements InvocationHandler {
 			return method.invoke(_liferaySelenium, arguments);
 		}
 		catch (InvocationTargetException ite) {
-			System.out.println(ite);
+			Throwable throwable = ite.getCause();
 
-			ite.printStackTrace();
+			if (methodName.equals("stop")) {
+				System.out.println("Unable to stop " + throwable.getMessage());
 
-			Throwable throwable = ite.getTargetException();
+				return null;
+			}
 
 			_logger.logError(method, arguments, throwable);
 

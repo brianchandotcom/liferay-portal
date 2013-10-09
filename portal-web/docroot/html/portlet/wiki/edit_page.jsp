@@ -439,7 +439,7 @@ if (Validator.isNull(redirect)) {
 
 					<aui:button name="previewButton" onClick='<%= renderResponse.getNamespace() + "previewPage();" %>' value="preview" />
 
-					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="<%= publishButtonLabel %>" />
+					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
 
 					<c:if test="<%= !newPage && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 						<c:choose>

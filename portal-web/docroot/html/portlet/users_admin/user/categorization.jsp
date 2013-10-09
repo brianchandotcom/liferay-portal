@@ -33,3 +33,14 @@ User selUser = (User)request.getAttribute("user.selUser");
 <aui:fieldset>
 	<aui:input name="tags" type="assetTags" />
 </aui:fieldset>
+
+<aui:script>
+	function <portlet:namespace />getSuggestionsContent() {
+		var content = '';
+
+		content += document.<portlet:namespace />fm.<portlet:namespace />comments.value + ' ';
+		content += document.<portlet:namespace />fm.<portlet:namespace />jobTitle.value + ' ';
+
+		return content;
+	}
+</aui:script>

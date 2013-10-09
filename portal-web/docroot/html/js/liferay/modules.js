@@ -657,6 +657,17 @@
 				root: PATH_JAVASCRIPT + '/liferay/'
 			},
 
+			editor: {
+				base: PATH_JAVASCRIPT + '/editor/',
+				combine: COMBINE,
+				modules: {
+					'inline-editor-ckeditor': {
+						path: 'ckeditor/main.js'
+					}
+				},
+				root: PATH_JAVASCRIPT + '/editor/'
+			},
+
 			misc: {
 				base: PATH_JAVASCRIPT + '/misc/',
 				combine: COMBINE,

@@ -145,7 +145,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		validateVirtualHost(webId, virtualHostname);
-		validateMX(mx);
+		validateMx(mx);
 
 		Company company = checkCompany(webId, mx, shardName);
 
@@ -878,7 +878,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		validateVirtualHost(company.getWebId(), virtualHostname);
 
 		if (PropsValues.MAIL_MX_UPDATE) {
-			validateMX(mx);
+			validateMx(mx);
 
 			company.setMx(mx);
 		}
@@ -939,7 +939,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		validateVirtualHost(company.getWebId(), virtualHostname);
 
 		if (PropsValues.MAIL_MX_UPDATE) {
-			validateMX(mx);
+			validateMx(mx);
 		}
 
 		validateName(companyId, name);
@@ -1482,7 +1482,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateMX(String mx) throws PortalException {
+	protected void validateMx(String mx) throws PortalException {
 		if (Validator.isNull(mx) || !Validator.isDomain(mx)) {
 			throw new CompanyMxException();
 		}

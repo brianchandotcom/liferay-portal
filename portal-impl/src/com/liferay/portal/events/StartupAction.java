@@ -53,6 +53,8 @@ import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 
+import org.apache.struts.taglib.tiles.ComponentConstants;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -81,6 +83,9 @@ public class StartupAction extends SimpleAction {
 
 		// Portal resiliency
 
+		DistributedRegistry.registerDistributed(
+			ComponentConstants.COMPONENT_CONTEXT, Direction.DUPLEX,
+			MatchType.POSTFIX);
 		DistributedRegistry.registerDistributed(
 			MimeResponse.MARKUP_HEAD_ELEMENT, Direction.DUPLEX,
 			MatchType.EXACT);

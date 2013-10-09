@@ -14,8 +14,6 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
-import com.liferay.portalweb.portal.util.BrowserCommands;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -61,8 +59,6 @@ public class LoggerHandler implements InvocationHandler {
 
 			if (methodName.equals("stop") || methodName.equals("stopLogger")) {
 				System.out.println("Unable to stop " + throwable.getMessage());
-
-				BrowserCommands.killBrowser();
 
 				return null;
 			}

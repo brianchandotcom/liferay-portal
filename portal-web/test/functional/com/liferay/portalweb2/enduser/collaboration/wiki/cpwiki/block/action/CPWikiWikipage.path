@@ -46,7 +46,7 @@
 <!--WIKI_PAGE-->
 <tr>
 	<td>WIKI_PAGE_TITLE_HEADER</td>
-	<td>xpath=(//h3[@class='header-title']/span)[2]</td>
+	<td>//div[@class='taglib-header ']/h3[contains(.,'${key_wikiPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

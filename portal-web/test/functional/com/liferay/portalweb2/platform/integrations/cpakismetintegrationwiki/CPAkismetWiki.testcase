@@ -11,6 +11,7 @@
 
 	<command name="AkismetWikiIntegration">
 		<var name="wikiNodeName" value="Main" />
+		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Akismet this" />
 
 		<execute macro="Page#gotoCP">
@@ -29,6 +30,7 @@
 
 		<execute macro="WikiPage#addPageCP">
 			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
@@ -38,8 +40,7 @@
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute action="CPWikiPageHistory#assertClick" locator-key1="WIKI_PAGE_HISTORY_ACTIVITY" value1="${wikiPageTitle}" />
-
+		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="WIKI_PAGE_TITLE_HEADER" value1="${wikiPageTitle}" />
 		<execute action="CPWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_MARK_AS_SPAM" value1="Mark as Spam" />
 		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Version 1.0 was marked as spam." />
 

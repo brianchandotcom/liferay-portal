@@ -66,7 +66,7 @@
 		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 		<execute action="CPWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 		<execute action="CPWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
-		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="CPWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 
 		<execute action="CPWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 

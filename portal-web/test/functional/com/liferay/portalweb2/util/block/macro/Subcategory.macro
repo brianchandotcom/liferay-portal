@@ -6,9 +6,9 @@
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_DETAILS_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
-		<execute action="CPCategories#type" locator-key1="ADD_SUBCATEGORY_NAME_FIELD" value1="${subcategoryName}" />
-		<execute action="CPCategories#assertClick" locator-key1="ADD_SUBCATEGORY_SAVE_BUTTON" value1="Save" />
-		<!--<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />-->
+		<execute action="CPCategoriesAddSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryName}" />
+		<execute action="CPCategoriesAddSubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 
 		<if>
 			<condition action="CPCategories#isElementPresent" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
@@ -42,7 +42,7 @@
 		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
 		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected categories?" />
-		<!--<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />-->
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute action="CPCategories#assertTextNotPresent" value1="${subcategoryName}" />
 	</command>
 
@@ -62,9 +62,9 @@
 
 		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" />
 		<execute action="CPCategories#assertClick" locator-key1="SUBCATEGORY_DETAILS_EDIT_BUTTON" value1="Edit" />
-		<execute action="CPCategories#type" locator-key1="EDIT_SUBCATEGORY_NAME_FIELD" value1="${subcategoryNameEdit}" />
-		<execute action="CPCategories#assertClick" locator-key1="EDIT_SUBCATEGORY_SAVE_BUTTON" value1="Save" />
-		<!--<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />-->
+		<execute action="CPCategoriesEditSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryNameEdit}" />
+		<execute action="CPCategoriesEditSubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute action="CPCategories#click" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
 		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" />
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUBCATEGORY_DETAILS_HEADER" value1="${subcategoryNameEdit}" />

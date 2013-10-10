@@ -118,6 +118,13 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
+	public long getGroupId() throws PortalException, SystemException {
+		Group group = getGroup();
+
+		return group.getGroupId();
+	}
+
+	@Override
 	public Key getKeyObj() {
 		if (_keyObj == null) {
 			String key = getKey();

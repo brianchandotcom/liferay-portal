@@ -1017,37 +1017,36 @@ public class PortletImporter {
 
 	protected void importPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long groupId,
-			Layout layout, String originalPortletId, Element parentElement,
+			Layout layout, String portletId, Element parentElement,
 			boolean importPortletSetup, boolean importPortletArchivedSetups,
 			boolean importPortletUserPreferences, boolean preserveScopeLayoutId,
 			boolean importPortletData)
 		throws Exception {
 
-		if (originalPortletId == null) {
-			originalPortletId = parentElement.attributeValue("portlet-id");
+		if (portletId == null) {
+			portletId = parentElement.attributeValue("portlet-id");
 		}
 
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getMostRelevantLocale());
 
-		long originalPlid = LayoutConstants.DEFAULT_PLID;
+		long plid = LayoutConstants.DEFAULT_PLID;
 		String portletSetupTitle = StringPool.BLANK;
 		String scopeType = StringPool.BLANK;
 		String scopeLayoutUuid = StringPool.BLANK;
 
 		if (layout != null) {
-			originalPlid = layout.getPlid();
+			plid = layout.getPlid();
 
-			if (preserveScopeLayoutId && (originalPortletId != null)) {
+			if (preserveScopeLayoutId && (portletId != null)) {
 				javax.portlet.PortletPreferences jxPortletPreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						layout, originalPortletId);
+						layout, portletId);
 
 				portletSetupTitle = GetterUtil.getString(
 					jxPortletPreferences.getValue(
 						"portletSetupTitle_" + languageId,
-						PortalUtil.getPortletTitle(
-							originalPortletId, languageId)));
+						PortalUtil.getPortletTitle(portletId, languageId)));
 
 				scopeType = GetterUtil.getString(
 					jxPortletPreferences.getValue("lfrScopeType", null));
@@ -1064,9 +1063,6 @@ public class PortletImporter {
 
 		for (Element portletPreferencesElement : portletPreferencesElements) {
 			String path = portletPreferencesElement.attributeValue("path");
-
-			long plid = originalPlid;
-			String portletId = originalPortletId;
 
 			if (portletDataContext.isPathNotProcessed(path)) {
 				String xml = null;
@@ -1108,27 +1104,30 @@ public class PortletImporter {
 					continue;
 				}
 
+				long curPlid = plid;
+				String curPortletId = portletId;
+
 				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
-					plid = PortletKeys.PREFS_PLID_SHARED;
+					curPlid = PortletKeys.PREFS_PLID_SHARED;
+					curPortletId = PortletConstants.getRootPortletId(portletId);
 					ownerId = portletDataContext.getScopeGroupId();
-					portletId = PortletConstants.getRootPortletId(portletId);
 				}
 
 				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-					portletId = PortletConstants.getRootPortletId(portletId);
-
 					String userUuid = element.attributeValue(
 						"archive-user-uuid");
+					long userId = portletDataContext.getUserId(userUuid);
+
 					String name = element.attributeValue("archive-name");
 
-					long userId = portletDataContext.getUserId(userUuid);
+					curPortletId = PortletConstants.getRootPortletId(portletId);
 
 					PortletItem portletItem =
 						PortletItemLocalServiceUtil.updatePortletItem(
-							userId, groupId, name, portletId,
+							userId, groupId, name, curPortletId,
 							PortletPreferences.class.getName());
 
-					plid = LayoutConstants.DEFAULT_PLID;
+					curPlid = LayoutConstants.DEFAULT_PLID;
 					ownerId = portletItem.getPortletItemId();
 				}
 
@@ -1147,7 +1146,8 @@ public class PortletImporter {
 
 				javax.portlet.PortletPreferences jxPortletPreferences =
 					PortletPreferencesFactoryUtil.fromXML(
-						companyId, ownerId, ownerType, plid, portletId, xml);
+						companyId, ownerId, ownerType, curPlid, curPortletId,
+						xml);
 
 				Element importDataRootElement =
 					portletDataContext.getImportDataRootElement();
@@ -1162,14 +1162,14 @@ public class PortletImporter {
 					}
 
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(
-						portletDataContext.getCompanyId(), portletId);
+						portletDataContext.getCompanyId(), curPortletId);
 
 					PortletDataHandler portletDataHandler =
 						portlet.getPortletDataHandlerInstance();
 
 					jxPortletPreferences =
 						portletDataHandler.processImportPortletPreferences(
-							portletDataContext, portletId,
+							portletDataContext, curPortletId,
 							jxPortletPreferences);
 				}
 				finally {
@@ -1178,7 +1178,8 @@ public class PortletImporter {
 				}
 
 				updatePortletPreferences(
-					portletDataContext, ownerId, ownerType, plid, portletId,
+					portletDataContext, ownerId, ownerType, curPlid,
+					curPortletId,
 					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences),
 					importPortletData);
 			}
@@ -1187,7 +1188,7 @@ public class PortletImporter {
 		if (preserveScopeLayoutId && (layout != null)) {
 			javax.portlet.PortletPreferences jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, originalPortletId);
+					layout, portletId);
 
 			try {
 				jxPortletPreferences.setValue(

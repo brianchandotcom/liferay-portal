@@ -46,13 +46,16 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			_started = true;
 		}
 
+		if (_deferredEhcaches.isEmpty()) {
+			return;
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Loading deferred caches");
 		}
 
 		try {
 			EhcacheStreamBootstrapHelpUtil.loadCachesFromCluster(
-				true,
 				_deferredEhcaches.toArray(
 					new Ehcache[_deferredEhcaches.size()]));
 		}
@@ -94,8 +97,7 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 		}
 
 		try {
-			EhcacheStreamBootstrapHelpUtil.loadCachesFromCluster(
-				false, ehcache);
+			EhcacheStreamBootstrapHelpUtil.loadCachesFromCluster(ehcache);
 		}
 		catch (Exception e) {
 			throw new CacheException(e);

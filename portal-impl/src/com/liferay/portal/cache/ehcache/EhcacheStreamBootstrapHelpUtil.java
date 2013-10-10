@@ -46,7 +46,6 @@ import java.net.SocketTimeoutException;
 import java.nio.channels.ServerSocketChannel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -62,7 +61,7 @@ import net.sf.ehcache.Element;
 public class EhcacheStreamBootstrapHelpUtil {
 
 	public static SocketAddress createServerSocketFromCluster(
-			List<String> allCacheNames, List<String> newCacheNames)
+			List<String> cacheNames)
 		throws Exception {
 
 		ServerSocketChannel serverSocketChannel =
@@ -80,23 +79,16 @@ public class EhcacheStreamBootstrapHelpUtil {
 		CacheManager cacheManager =
 			ehcachePortalCacheManager.getEhcacheManager();
 
-		if (allCacheNames != null) {
-			newCacheNames.addAll(Arrays.asList(cacheManager.getCacheNames()));
-
-			newCacheNames.removeAll(allCacheNames);
-		}
-
 		EhcacheStreamServerThread ehcacheStreamServerThread =
 			new EhcacheStreamServerThread(
-				serverSocket, cacheManager, newCacheNames);
+				serverSocket, cacheManager, cacheNames);
 
 		ehcacheStreamServerThread.start();
 
 		return serverSocket.getLocalSocketAddress();
 	}
 
-	protected static void loadCachesFromCluster(
-			boolean synchronizeCaches, Ehcache... newEhcaches)
+	protected static void loadCachesFromCluster(Ehcache... ehcaches)
 		throws Exception {
 
 		List<Address> clusterNodeAddresses =
@@ -123,22 +115,15 @@ public class EhcacheStreamBootstrapHelpUtil {
 		CacheManager cacheManager =
 			ehcachePortalCacheManager.getEhcacheManager();
 
-		List<String> allCacheNames = null;
+		List<String> cacheNames = new ArrayList<String>();
 
-		if (synchronizeCaches) {
-			allCacheNames = Arrays.asList(cacheManager.getCacheNames());
-		}
-
-		List<String> newCacheNames = new ArrayList<String>();
-
-		for (Ehcache ehcache : newEhcaches) {
-			newCacheNames.add(ehcache.getName());
+		for (Ehcache ehcache : ehcaches) {
+			cacheNames.add(ehcache.getName());
 		}
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			new MethodHandler(
-				_createServerSocketFromClusterMethodKey, allCacheNames,
-				newCacheNames),
+				_createServerSocketFromClusterMethodKey, cacheNames),
 			true);
 
 		FutureClusterResponses futureClusterResponses =
@@ -247,7 +232,7 @@ public class EhcacheStreamBootstrapHelpUtil {
 	private static MethodKey _createServerSocketFromClusterMethodKey =
 		new MethodKey(
 			EhcacheStreamBootstrapHelpUtil.class,
-			"createServerSocketFromCluster", List.class, List.class);
+			"createServerSocketFromCluster", List.class);
 	private static ServerSocketConfigurator _serverSocketConfigurator =
 		new SocketCacheServerSocketConfiguration();
 

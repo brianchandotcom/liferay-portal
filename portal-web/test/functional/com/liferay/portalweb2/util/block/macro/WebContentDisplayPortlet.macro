@@ -203,7 +203,7 @@
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 
 		<execute action="PGWebcontentdisplayConfigurationScope#click" locator-key1="SCOPE_MENULIST" />
-		<execute action="PGWebcontentdisplayConfigurationScope#click" locator-key1="SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
+		<execute action="PGWebcontentdisplayConfigurationScope#assertClick" locator-key1="SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
 
 		<execute action="PGWebcontentdisplayConfigurationScope#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGWebcontentdisplayConfigurationScope#assertTextEquals" locator-key1="SCOPE_MENULIST" value1="${scopeSelection}" />

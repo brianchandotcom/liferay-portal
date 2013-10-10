@@ -318,6 +318,8 @@
 		<execute macro="Staging#deactivateStagingCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>
+
+		<execute action="BaseLiferay#pause" locator1="5000" />
 	</command>
 
 	<command name="StagingPublishPortlet">

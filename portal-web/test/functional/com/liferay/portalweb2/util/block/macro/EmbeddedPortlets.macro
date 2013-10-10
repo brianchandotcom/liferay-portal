@@ -1,6 +1,6 @@
 <definition>
 	<command name="removeReferencePG">
-		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="Dockbar#assertClick" locator-key1="EDIT" value1="Edit" />
 
 		<execute macro="Dockbar#showEditField">
 			<var name="fieldKey" value="${fieldKey}" />
@@ -13,13 +13,13 @@
 	</command>
 
 	<command name="viewDisabledPG">
-		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="Dockbar#assertClick" locator-key1="EDIT" value1="Edit" />
 
 		<execute action="Dockbar#assertTextNotPresent" locator-key1="EDIT_EMBEDDED_PORTLETS" value1="Embedded Portlets" />
 	</command>
 
 	<command name="viewPG">
-		<execute action="Dockbar#click" locator-key1="EDIT" value1="Edit" />
+		<execute action="Dockbar#assertClick" locator-key1="EDIT" value1="Edit" />
 
 		<execute macro="Dockbar#showEditField">
 			<var name="fieldKey" value="${fieldKey}" />

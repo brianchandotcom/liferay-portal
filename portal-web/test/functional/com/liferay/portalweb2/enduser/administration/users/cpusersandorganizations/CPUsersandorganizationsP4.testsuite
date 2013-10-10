@@ -1,0 +1,7 @@
+<definition>
+	<execute test-case-command="CPUsersandorganizations#AddUserEmailAddressAt" />
+	<execute test-case-command="CPUsersandorganizations#AddUserEmailAddressEqual" />
+	<execute test-case-command="CPUsersandorganizations#AddUserEmailAddressPeriod" />
+	<execute test-case-command="CPUsersandorganizations#AddUserEmailAddressUnderline" />
+	<execute test-case-command="CPUsersandorganizations#AddUserScreenNameInvalid" />
+</definition>

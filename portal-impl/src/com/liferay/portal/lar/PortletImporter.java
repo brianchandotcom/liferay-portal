@@ -1104,27 +1104,30 @@ public class PortletImporter {
 					continue;
 				}
 
+				long curPlid = plid;
+				String curPortletId = portletId;
+
 				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
-					plid = PortletKeys.PREFS_PLID_SHARED;
+					curPlid = PortletKeys.PREFS_PLID_SHARED;
+					curPortletId = PortletConstants.getRootPortletId(portletId);
 					ownerId = portletDataContext.getScopeGroupId();
-					portletId = PortletConstants.getRootPortletId(portletId);
 				}
 
 				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-					portletId = PortletConstants.getRootPortletId(portletId);
-
 					String userUuid = element.attributeValue(
 						"archive-user-uuid");
+					long userId = portletDataContext.getUserId(userUuid);
+
 					String name = element.attributeValue("archive-name");
 
-					long userId = portletDataContext.getUserId(userUuid);
+					curPortletId = PortletConstants.getRootPortletId(portletId);
 
 					PortletItem portletItem =
 						PortletItemLocalServiceUtil.updatePortletItem(
-							userId, groupId, name, portletId,
+							userId, groupId, name, curPortletId,
 							PortletPreferences.class.getName());
 
-					plid = LayoutConstants.DEFAULT_PLID;
+					curPlid = LayoutConstants.DEFAULT_PLID;
 					ownerId = portletItem.getPortletItemId();
 				}
 
@@ -1143,7 +1146,8 @@ public class PortletImporter {
 
 				javax.portlet.PortletPreferences jxPortletPreferences =
 					PortletPreferencesFactoryUtil.fromXML(
-						companyId, ownerId, ownerType, plid, portletId, xml);
+						companyId, ownerId, ownerType, curPlid, curPortletId,
+						xml);
 
 				Element importDataRootElement =
 					portletDataContext.getImportDataRootElement();
@@ -1158,14 +1162,14 @@ public class PortletImporter {
 					}
 
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(
-						portletDataContext.getCompanyId(), portletId);
+						portletDataContext.getCompanyId(), curPortletId);
 
 					PortletDataHandler portletDataHandler =
 						portlet.getPortletDataHandlerInstance();
 
 					jxPortletPreferences =
 						portletDataHandler.processImportPortletPreferences(
-							portletDataContext, portletId,
+							portletDataContext, curPortletId,
 							jxPortletPreferences);
 				}
 				finally {
@@ -1174,7 +1178,8 @@ public class PortletImporter {
 				}
 
 				updatePortletPreferences(
-					portletDataContext, ownerId, ownerType, plid, portletId,
+					portletDataContext, ownerId, ownerType, curPlid,
+					curPortletId,
 					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences),
 					importPortletData);
 			}

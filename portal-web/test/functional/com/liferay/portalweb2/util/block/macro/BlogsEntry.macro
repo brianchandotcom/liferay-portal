@@ -387,7 +387,17 @@
 
 		<execute action="CPBlogs#assertElementPresent" locator-key1="ENTRY_TABLE_CHECKBOX" />
 		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_AUTHOR" value1="Test Test" />
+
+		<if>
+			<isset var="entryAuthor" />
+			<then>
+				<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_AUTHOR" value1="${entryAuthor}" />
+			</then>
+			<else>
+				<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_AUTHOR" value1="Test Test" />
+			</else>
+		</if>
+
 		<execute action="CPBlogs#assertElementPresent" locator-key1="ENTRY_TABLE_CREATE_DATE" />
 		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_STATUS" value1="Approved" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />

@@ -1,0 +1,10 @@
+<definition>
+	<execute test-case-command="WorkflowadminMyworkflowtasks#AddCommentToTaskAssignedToMe" />
+	<execute test-case-command="WorkflowadminMyworkflowtasks#AddCommentToTaskAssignedToMyRoles" />
+	<execute test-case-command="WorkflowadminMyworkflowtasks#AddCommentToTaskCompleted" />
+	<execute test-case-command="WorkflowadminMyworkflowtasks#ApproveResubmitTaskByActions" />
+	<execute test-case-command="WorkflowadminMyworkflowtasks#ResubmitTaskByActions" />
+	<execute test-case-command="WorkflowadminMyworkflowtasks#ResubmitTaskByDetails" />
+	<execute test-case-command="WorkflowadminMyworkflowtasks#ReviewerApproveResubmitTaskByActionsUser" />
+	<execute test-case-command="WorkflowadminMyworkflowtasks#UpdateDueDateTaskByActions" />
+</definition>

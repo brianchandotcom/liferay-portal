@@ -81,6 +81,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--TABLE_GENERIC-->
+<tr>
+	<td>TABLE_GENERIC_ASSET_TITLE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSIGNED_TO_ME_TABLE-->
 <tr>
 	<td>ASSIGNED_TO_ME_TABLE_TASK</td>
@@ -126,6 +137,11 @@
 <tr>
 	<td>ASSIGNED_TO_ME_MENULIST_REJECT</td>
 	<td>//a[@role='menuitem' and contains(.,'Reject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSIGNED_TO_ME_MENULIST_RESUBMIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Resubmit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -191,6 +207,16 @@
 	<td></td>
 </tr>
 <!--PANEL-->
+<tr>
+	<td>PANEL_DUE_DATE</td>
+	<td>//input[@id='_153_dueDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_DUE_DATE_TIME</td>
+	<td>//input[@id='_153_dueDateTime']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>PANEL_COMMENT_FIELD</td>
 	<td>//textarea[@id='_153_comment']</td>

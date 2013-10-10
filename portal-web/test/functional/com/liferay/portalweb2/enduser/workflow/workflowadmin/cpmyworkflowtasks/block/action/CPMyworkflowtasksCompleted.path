@@ -65,6 +65,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--TABLE_GENERIC-->
+<tr>
+	<td>TABLE_GENERIC_ASSET_TITLE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--COMPLETED_TABLE-->
 <tr>
 	<td>COMPLETED_TABLE_TASK</td>

@@ -475,7 +475,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="2" />
+		<property name="build-test-ant-scripts.version" value="3" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -670,6 +670,13 @@
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.kaleo" value="true" />
 			<param name="test.ant.script.suite" value="EndUserWorkflowAcceptanceTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-workflow-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.kaleo" value="true" />
+			<param name="test.ant.script.suite" value="EndUserWorkflowP5TestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

@@ -85,6 +85,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_RESUBMIT</td>
+	<td>//a[@id='_153_resubmittaskChangeStatusLink']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENU_UPDATE_DUE_DATE</td>
 	<td>//a[@id='_153_taskDueDateLink']</td>
 	<td></td>
@@ -191,6 +196,11 @@
 <tr>
 	<td>COMMENTS_REPLY_BUTTON</td>
 	<td>//button[contains(@id,'_postReplyButton0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_COMMENT</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_workflowComment}')]</td>
 	<td></td>
 </tr>
 </tbody>

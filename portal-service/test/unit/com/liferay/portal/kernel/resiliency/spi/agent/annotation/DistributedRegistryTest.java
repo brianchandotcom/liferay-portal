@@ -46,7 +46,7 @@ public class DistributedRegistryTest {
 	}
 
 	@Test
-	public void testClassRegister() {
+	public void testClassRegisterAndUnregister() {
 		DistributedRegistry.registerDistributed(ChildClass.class);
 
 		Assert.assertEquals(3, _exactDirections.size());
@@ -72,6 +72,12 @@ public class DistributedRegistryTest {
 			Direction.DUPLEX, _prefixDirections.get(ChildClass.name8));
 		Assert.assertEquals(
 			Direction.DUPLEX, _prefixDirections.get(ChildClass.name12));
+
+		DistributedRegistry.unregisterDistributed(ChildClass.class);
+
+		Assert.assertTrue(_exactDirections.isEmpty());
+		Assert.assertTrue(_postfixDirections.isEmpty());
+		Assert.assertTrue(_prefixDirections.isEmpty());
 
 		try {
 			DistributedRegistry.registerDistributed(BadInitialization.class);
@@ -187,15 +193,39 @@ public class DistributedRegistryTest {
 	}
 
 	@Test
-	public void testIndividualRegister() {
+	public void testIndividualRegisterAndUnregister() {
+
+		// Exact
+
 		DistributedRegistry.registerDistributed(
 			"name1", Direction.REQUEST, MatchType.EXACT);
 
 		Assert.assertEquals(1, _exactDirections.size());
 		Assert.assertTrue(_postfixDirections.isEmpty());
 		Assert.assertTrue(_prefixDirections.isEmpty());
-		Assert.assertEquals(
-			Direction.REQUEST, _exactDirections.remove("name1"));
+		Assert.assertEquals(Direction.REQUEST, _exactDirections.get("name1"));
+
+		Assert.assertFalse(
+			DistributedRegistry.unregisterDistributed(
+				"Name1", Direction.REQUEST, MatchType.EXACT));
+		Assert.assertTrue(
+			DistributedRegistry.unregisterDistributed(
+				"name1", Direction.REQUEST, MatchType.EXACT));
+
+		Assert.assertTrue(_exactDirections.isEmpty());
+
+		DistributedRegistry.registerDistributed(
+			"name1", Direction.REQUEST, MatchType.EXACT);
+
+		Assert.assertTrue(
+			DistributedRegistry.unregisterDistributed(
+				"name1", null, MatchType.EXACT));
+
+		Assert.assertFalse(
+			DistributedRegistry.unregisterDistributed(
+				"name1", null, MatchType.EXACT));
+
+		// Postfix
 
 		DistributedRegistry.registerDistributed(
 			"name2", Direction.RESPONSE, MatchType.POSTFIX);
@@ -204,7 +234,29 @@ public class DistributedRegistryTest {
 		Assert.assertTrue(_exactDirections.isEmpty());
 		Assert.assertTrue(_prefixDirections.isEmpty());
 		Assert.assertEquals(
-			Direction.RESPONSE, _postfixDirections.remove("name2"));
+			Direction.RESPONSE, _postfixDirections.get("name2"));
+
+		Assert.assertFalse(
+			DistributedRegistry.unregisterDistributed(
+				"Name2", Direction.RESPONSE, MatchType.POSTFIX));
+		Assert.assertTrue(
+			DistributedRegistry.unregisterDistributed(
+				"name2", Direction.RESPONSE, MatchType.POSTFIX));
+
+		Assert.assertTrue(_postfixDirections.isEmpty());
+
+		DistributedRegistry.registerDistributed(
+			"name2", Direction.RESPONSE, MatchType.POSTFIX);
+
+		Assert.assertTrue(
+			DistributedRegistry.unregisterDistributed(
+				"name2", null, MatchType.POSTFIX));
+
+		Assert.assertFalse(
+			DistributedRegistry.unregisterDistributed(
+				"name2", null, MatchType.POSTFIX));
+
+		// Prefix
 
 		DistributedRegistry.registerDistributed(
 			"name3", Direction.DUPLEX, MatchType.PREFIX);
@@ -212,8 +264,27 @@ public class DistributedRegistryTest {
 		Assert.assertEquals(1, _prefixDirections.size());
 		Assert.assertTrue(_exactDirections.isEmpty());
 		Assert.assertTrue(_postfixDirections.isEmpty());
-		Assert.assertEquals(
-			Direction.DUPLEX, _prefixDirections.remove("name3"));
+		Assert.assertEquals(Direction.DUPLEX, _prefixDirections.get("name3"));
+
+		Assert.assertFalse(
+			DistributedRegistry.unregisterDistributed(
+				"Name3", Direction.DUPLEX, MatchType.PREFIX));
+		Assert.assertTrue(
+			DistributedRegistry.unregisterDistributed(
+				"name3", Direction.DUPLEX, MatchType.PREFIX));
+
+		Assert.assertTrue(_prefixDirections.isEmpty());
+
+		DistributedRegistry.registerDistributed(
+			"name3", Direction.DUPLEX, MatchType.PREFIX);
+
+		Assert.assertTrue(
+			DistributedRegistry.unregisterDistributed(
+				"name3", null, MatchType.PREFIX));
+
+		Assert.assertFalse(
+			DistributedRegistry.unregisterDistributed(
+				"name3", null, MatchType.PREFIX));
 	}
 
 	private static Map<String, Direction> _getExactDirections()

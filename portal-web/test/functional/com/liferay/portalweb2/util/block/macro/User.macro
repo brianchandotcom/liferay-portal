@@ -19,6 +19,34 @@
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 	</command>
 
+	<command name="addReservedEmailAddressCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_USER" value1="User" />
+
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute action="CPUsersandorganizationsAdduser#assertClick" locator-key1="SAVE" value1="Save" />
+
+		<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="The email address you requested is reserved." />
+	</command>
+
+	<command name="addReservedScreenNameCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_USER" value1="User" />
+
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute action="CPUsersandorganizationsAdduser#type" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute action="CPUsersandorganizationsAdduser#assertClick" locator-key1="SAVE" value1="Save" />
+
+		<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="The screen name you requested is reserved." />
+	</command>
+
 	<command name="addScreenNameNumberSiteIdCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_USER" value1="User" />

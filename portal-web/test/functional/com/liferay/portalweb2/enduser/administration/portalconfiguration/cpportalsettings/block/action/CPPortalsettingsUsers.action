@@ -15,5 +15,11 @@
 		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+		<case locator-key1="RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 </definition>

@@ -47,6 +47,30 @@
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 	</command>
 
+	<command name="enterReservedEmailAddressCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
+
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />
+		<execute action="CPPortalsettingsUsers#type" locator-key1="RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
+	</command>
+
+	<command name="enterReservedScreenNameCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
+
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
+		<execute action="CPPortalsettingsUsers#type" locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
@@ -59,6 +83,9 @@
 		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
 		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
 		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
+		<execute action="CPPortalsettingsUsers#type" locator-key1="RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
+		<execute action="CPPortalsettingsUsers#type" locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

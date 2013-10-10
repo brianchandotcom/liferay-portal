@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>LIVE_BUTTON</td>
-	<td>//div[@class='staging-bar']/ul/li/a[contains(.,'Live')]</td>
+	<td>//li[@class='live-link staging-toggle ']/a/span</td>
 	<td></td>
 </tr>
 <tr>

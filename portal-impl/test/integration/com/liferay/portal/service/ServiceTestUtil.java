@@ -189,24 +189,10 @@ public class ServiceTestUtil {
 	public static void initServices() {
 		InitUtil.initWithSpring();
 
-		_deleteDLDirectories();
-
 		// JCR
 
 		try {
 			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// Lucene
-
-		try {
-			FileUtil.mkdirs(
-				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
-
-			LuceneHelperUtil.startup(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -311,6 +297,20 @@ public class ServiceTestUtil {
 		try {
 			CompanyLocalServiceUtil.checkCompany(
 				TestPropsValues.COMPANY_WEB_ID);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		_deleteDLDirectories();
+
+		// Lucene
+
+		try {
+			FileUtil.mkdirs(
+				PropsValues.LUCENE_DIR + TestPropsValues.getCompanyId());
+
+			LuceneHelperUtil.startup(TestPropsValues.getCompanyId());
 		}
 		catch (Exception e) {
 			e.printStackTrace();

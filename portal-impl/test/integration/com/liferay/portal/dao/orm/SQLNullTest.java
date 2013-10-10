@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
+import com.liferay.portal.test.MainServletExecutionTestListener;
 
 import java.util.List;
 
@@ -436,7 +437,11 @@ import org.junit.runner.RunWith;
  *
  * @author Shuyang Zhou
  */
-@ExecutionTestListeners(listeners = {PersistenceExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		MainServletExecutionTestListener.class,
+		PersistenceExecutionTestListener.class
+	})
 @RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
 public class SQLNullTest {
 

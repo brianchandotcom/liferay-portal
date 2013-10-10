@@ -72,7 +72,13 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 		</c:if>
 
 		<%
+		RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();
 		RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)searchContainer.getSearchTerms();
+
+		if (displayTerms.getGroupId() == 0) {
+			displayTerms.setGroupId(groupId);
+			searchTerms.setGroupId(groupId);
+		}
 		%>
 
 		<liferay-ui:search-container-results>

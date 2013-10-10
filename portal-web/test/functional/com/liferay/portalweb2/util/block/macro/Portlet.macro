@@ -80,7 +80,7 @@
 	</command>
 
 	<command name="gotoPortletOptions">
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
 
 		<if>
 			<equals arg1="${portletOption}" arg2="Look and Feel" />

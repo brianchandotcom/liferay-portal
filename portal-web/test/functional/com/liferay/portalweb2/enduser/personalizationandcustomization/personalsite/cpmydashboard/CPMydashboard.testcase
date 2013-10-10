@@ -4,6 +4,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#tearDownCP" />
+
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
@@ -66,8 +68,6 @@
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
-
-		<execute macro="User#tearDownCP" />
 	</command>
 
 	<command name="JoinSitePrivateNo">
@@ -132,8 +132,6 @@
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
-
-		<execute macro="User#tearDownCP" />
 	</command>
 
 	<command name="JoinSiteRestricted">
@@ -231,8 +229,6 @@
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
-
-		<execute macro="User#tearDownCP" />
 	</command>
 
 	<command name="LeaveSite">
@@ -300,7 +296,5 @@
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
-
-		<execute macro="User#tearDownCP" />
 	</command>
 </definition>

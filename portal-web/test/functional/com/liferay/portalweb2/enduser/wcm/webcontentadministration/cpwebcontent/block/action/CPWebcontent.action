@@ -49,6 +49,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementPresent">
+		<case locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL">
+			<execute function="AssertElementPresent#pauseAssertVisible" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="ENTRY_DESCRIPTIVE_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />

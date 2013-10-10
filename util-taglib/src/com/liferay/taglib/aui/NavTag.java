@@ -16,9 +16,9 @@ package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseNavTag;
-import com.liferay.util.PwdGenerator;
 
 import javax.portlet.PortletResponse;
 
@@ -101,7 +101,7 @@ public class NavTag extends BaseNavTag {
 		_namespacedId = getId();
 
 		if (Validator.isNull(_namespacedId)) {
-			_namespacedId = PwdGenerator.getPassword(4, PwdGenerator.KEY3);
+			_namespacedId = StringUtil.randomId();
 		}
 
 		HttpServletRequest request =

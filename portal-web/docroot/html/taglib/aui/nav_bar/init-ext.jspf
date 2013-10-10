@@ -30,7 +30,7 @@ if ((portletResponse != null) && Validator.isNotNull(id)) {
 }
 
 if (Validator.isNull(id)) {
-	id = PwdGenerator.getPassword(4);
+	id = StringUtil.randomId();
 }
 
 String responsiveButtons = (String)request.getAttribute("aui:nav-bar:responsiveButtons");

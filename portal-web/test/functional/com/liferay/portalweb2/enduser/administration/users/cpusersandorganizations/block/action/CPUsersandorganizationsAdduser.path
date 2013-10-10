@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL_ADDRESS_FIELD_ALERT</td>
+	<td>//div[@role='alert']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_MESSAGE_1</td>
 	<td>xpath=(//div[@class='alert alert-error'])[1]</td>
 	<td></td>

@@ -1,4 +1,8 @@
 <definition>
+	<execute test-case-command="CPCategories#AddCategoryProperty" />
+	<execute test-case-command="CPCategories#AddCategoryPropertyMultiple" />
+	<execute test-case-command="CPCategories#AddCategoryToVocabulary" />
+	<execute test-case-command="CPCategories#AddCategoryViewableByAnyone" />
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeAllAssetTypes" />
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeBlogsEntry" />
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeBookmarksEntry" />
@@ -7,5 +11,8 @@
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeWebContent" />
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeWikiPage" />
 	<execute test-case-command="CPCategories#AddVocabularyViewableByGuest" />
+	<execute test-case-command="CPCategories#DeleteCategoryByDetails" />
+	<execute test-case-command="CPCategories#EditVocabularyDraganddrop" />
+
 	<execute test-case-command="CPCategories#ValidateClickingCloseButtonDoesNotSaveVocabulary" />
 </definition>

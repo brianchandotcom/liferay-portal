@@ -10,6 +10,19 @@
 		padding: 10px;
 		position: fixed;
 		width: 330px;
+
+		@include respond-to(phone, tablet) {
+			margin-left: 0;
+			padding: 0;
+			position: relative;
+			width: 100%;
+
+			@include respond-to(phone) {
+				.pull-right {
+					float: none;
+				}
+			}
+		}
 	}
 
 	.lfr-page-template-description {
@@ -302,7 +315,6 @@
 		.lfr-add-page-toolbar {
 			background-color: #FFF;
 		}
-
 
 		lfr-content-item {
 			color: #3EA9DB;

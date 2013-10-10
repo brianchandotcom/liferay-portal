@@ -505,6 +505,13 @@ $editLayoutPanelWidth: 460px;
 		position: fixed;
 		top: 0;
 		z-index: 1100;
+
+		@include respond-to(phone) {
+			height: 100%;
+			padding-top: 0;
+			padding-bottom: 0;
+			position: absolute;
+		}
 	}
 
 	.lfr-has-add-content {

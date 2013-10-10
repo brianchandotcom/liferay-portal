@@ -83,7 +83,7 @@ public class TCKAction extends Action {
 			}
 
 			long userId = user.getUserId();
-			long groupId = user.getGroup().getGroupId();
+			long groupId = user.getGroupId();
 
 			ServiceContext serviceContext = new ServiceContext();
 

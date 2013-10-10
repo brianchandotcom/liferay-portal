@@ -40,7 +40,7 @@ long organizationId = organization.getOrganizationId();
 
 Group organizationGroup = organization.getGroup();
 
-long organizationGroupId = organizationGroup.getGroupId();
+long organizationGroupId = organization.getGroupId();
 
 String cssClass = StringPool.BLANK;
 

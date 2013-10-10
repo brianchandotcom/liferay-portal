@@ -64,9 +64,7 @@ public class ActionUtil {
 					OrganizationLocalServiceUtil.getOrganization(
 						organizationId);
 
-				Group organizationGroup = organization.getGroup();
-
-				long organizationGroupId = organizationGroup.getGroupId();
+				long organizationGroupId = organization.getGroupId();
 
 				if (GroupPermissionUtil.contains(
 						permissionChecker, organizationGroupId,

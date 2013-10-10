@@ -256,13 +256,6 @@ public class PortletPermissionImpl implements PortletPermission {
 				groupId, name, primKey, actionId);
 		}
 
-		Group group = layout.getGroup();
-
-		groupId = group.getGroupId();
-
-		name = PortletConstants.getRootPortletId(portletId);
-		primKey = getPrimaryKey(layout.getPlid(), portletId);
-
 		if (!actionId.equals(ActionKeys.VIEW) &&
 			(layout instanceof VirtualLayout)) {
 
@@ -270,12 +263,18 @@ public class PortletPermissionImpl implements PortletPermission {
 				permissionChecker, layout, portletId, actionId);
 		}
 
+		Group group = layout.getGroup();
+
 		if (!group.isLayoutSetPrototype() &&
 			!SitesUtil.isLayoutUpdateable(layout) &&
 			actionId.equals(ActionKeys.CONFIGURATION)) {
 
 			return false;
 		}
+
+		groupId = layout.getGroupId();
+
+		name = PortletConstants.getRootPortletId(portletId);
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, groupId, name, groupId, name, actionId);
@@ -287,6 +286,8 @@ public class PortletPermissionImpl implements PortletPermission {
 		if (group.isControlPanel() && actionId.equals(ActionKeys.VIEW)) {
 			return true;
 		}
+
+		primKey = getPrimaryKey(layout.getPlid(), portletId);
 
 		if (strict) {
 			return permissionChecker.hasPermission(

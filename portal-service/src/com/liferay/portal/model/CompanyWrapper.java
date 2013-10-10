@@ -511,6 +511,13 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
+	public long getGroupId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _company.getGroupId();
+	}
+
+	@Override
 	public java.security.Key getKeyObj() {
 		return _company.getKeyObj();
 	}

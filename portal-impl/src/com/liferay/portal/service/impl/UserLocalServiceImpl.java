@@ -5838,9 +5838,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Organization organization =
 				organizationPersistence.findByPrimaryKey(organizationId);
 
-			Group organizationGroup = organization.getGroup();
-
-			organizationGroupIds[i] = organizationGroup.getGroupId();
+			organizationGroupIds[i] = organization.getGroupId();
 		}
 
 		validGroupIds = ArrayUtil.append(validGroupIds, organizationGroupIds);

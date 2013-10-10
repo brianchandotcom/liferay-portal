@@ -859,7 +859,7 @@ public class ThemeDisplay
 		throws PortalException, SystemException {
 
 		_company = company;
-		_companyGroupId = company.getGroup().getGroupId();
+		_companyGroupId = company.getGroupId();
 
 		setAccount(company.getAccount());
 	}

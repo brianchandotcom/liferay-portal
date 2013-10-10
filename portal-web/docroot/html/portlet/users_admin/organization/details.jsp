@@ -38,9 +38,7 @@ long countryId = BeanParamUtil.getLong(organization, request, "countryId");
 long groupId = 0;
 
 if (organization != null) {
-	Group group = organization.getGroup();
-
-	groupId = group.getGroupId();
+	groupId = organization.getGroupId();
 }
 
 User selUser = (User)request.getAttribute("user.selUser");

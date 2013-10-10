@@ -50,6 +50,10 @@ public interface Company extends CompanyModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public long getGroupId()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.security.Key getKeyObj();
 
 	public java.util.Locale getLocale()

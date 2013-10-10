@@ -122,7 +122,7 @@ public class EditOrganizationAssignmentsAction extends PortletAction {
 		Organization organization =
 			OrganizationLocalServiceUtil.getOrganization(organizationId);
 
-		long groupId = organization.getGroup().getGroupId();
+		long groupId = organization.getGroupId();
 
 		long[] addUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);

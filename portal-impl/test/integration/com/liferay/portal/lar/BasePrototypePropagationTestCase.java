@@ -63,7 +63,7 @@ public abstract class BasePrototypePropagationTestCase extends PowerMockito {
 
 		Company company = CompanyUtil.fetchByPrimaryKey(group.getCompanyId());
 
-		globalGroupId = company.getGroup().getGroupId();
+		globalGroupId = company.getGroupId();
 
 		globalJournalArticle = JournalTestUtil.addArticle(
 			globalGroupId, "Global Article", "Global Content");

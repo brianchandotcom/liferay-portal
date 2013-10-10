@@ -59,9 +59,7 @@ public class LayoutCache {
 				if (userGroups.size() > 0) {
 					UserGroup userGroup = userGroups.get(0);
 
-					Group group = userGroup.getGroup();
-
-					entityGroupId = group.getGroupId();
+					entityGroupId = userGroup.getGroupId();
 				}
 			}
 			else if (entityName.equals("organization")) {
@@ -74,9 +72,7 @@ public class LayoutCache {
 				if (organizations.size() > 0) {
 					Organization organization = organizations.get(0);
 
-					Group group = organization.getGroup();
-
-					entityGroupId = group.getGroupId();
+					entityGroupId = organization.getGroupId();
 				}
 			}
 

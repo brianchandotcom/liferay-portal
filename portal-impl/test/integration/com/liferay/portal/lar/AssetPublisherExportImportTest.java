@@ -659,9 +659,7 @@ public class AssetPublisherExportImportTest
 			Company company = CompanyLocalServiceUtil.getCompany(
 				layout.getCompanyId());
 
-			Group companyGroup = company.getGroup();
-
-			groupId = companyGroup.getGroupId();
+			groupId = company.getGroupId();
 		}
 
 		AssetVocabulary assetVocabulary =

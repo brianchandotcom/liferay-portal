@@ -905,7 +905,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		long groupId = user.getGroup().getGroupId();
+		long groupId = user.getGroupId();
 
 		if (privateLayoutsFile != null) {
 			layoutLocalService.importLayouts(

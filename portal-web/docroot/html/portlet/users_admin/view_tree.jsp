@@ -32,9 +32,7 @@ String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-v
 String keywords = ParamUtil.getString(request, "keywords");
 
 if (organization != null) {
-	Group organizationGroup = organization.getGroup();
-
-	organizationGroupId = organizationGroup.getGroupId();
+	organizationGroupId = organization.getGroupId();
 }
 
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();

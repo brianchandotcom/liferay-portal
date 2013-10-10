@@ -48,9 +48,7 @@ public class AnnouncementsEntryImpl extends AnnouncementsEntryBaseImpl {
 				Organization organization =
 					OrganizationLocalServiceUtil.getOrganization(classPK);
 
-				Group group = organization.getGroup();
-
-				groupId = group.getGroupId();
+				groupId = organization.getGroupId();
 			}
 		}
 

@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELDS_NAME</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_fieldName}']/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -165,6 +170,11 @@
 <tr>
 	<td>FORM_FIELDSET_FIELD_1</td>
 	<td>xpath=(//fieldset[contains(@class,'form-builder-fieldset-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELDSET_FIELD_2</td>
+	<td>xpath=(//fieldset[contains(@class,'form-builder-fieldset-field-content')])[2]</td>
 	<td></td>
 </tr>
 <tr>

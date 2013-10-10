@@ -53,6 +53,10 @@
 		<case locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL">
 			<execute function="AssertElementPresent#pauseAssertVisible" />
 		</case>
+
+		<case locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC">
+			<execute function="AssertElementPresent#pauseAssertVisible" />
+		</case>
 	</command>
 
 	<command name="assertTextEquals">
@@ -66,6 +70,16 @@
 
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+
+		<case locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
 		</case>
 	</command>
 </definition>

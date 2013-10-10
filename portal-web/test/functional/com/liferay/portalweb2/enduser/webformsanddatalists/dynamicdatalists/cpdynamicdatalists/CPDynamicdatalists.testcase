@@ -1220,12 +1220,10 @@
 	</command>
 
 	<command name="EditFormTemplateCP">
-			<var name="dataDefinitionDescription" value="Data Definition Description" />
-			<var name="dataDefinitionFormTemplateName" value="Data Definition FreeMarker Form Template Name" />
-			<var name="dataDefinitionFormTemplateNameEdit" value="Data Definition FreeMarker Form Template Name Edit" />
-			<var name="dataDefinitionName" value="Data Definition" />
-			<var name="fieldName" value="Text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionFormTemplateName" value="Data Definition FreeMarker Form Template Name" />
+		<var name="dataDefinitionFormTemplateNameEdit" value="Data Definition FreeMarker Form Template Name Edit" />
+		<var name="dataDefinitionName" value="Data Definition" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -1234,8 +1232,8 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="fieldName" value="Text" />
+			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1246,8 +1244,8 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="fieldName" value="Fieldset" />
+			<var name="formFieldKey" value="FORM_FIELDSET_FIELD_1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -1259,8 +1257,8 @@
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
 			<var name="dataDefinitionFormTemplateNameEdit" value="${dataDefinitionFormTemplateNameEdit}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="fieldName" value="Fieldset" />
+			<var name="formFieldKey" value="FORM_FIELDSET_FIELD_2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

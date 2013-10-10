@@ -16,6 +16,10 @@
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
 
+		<case locator-key1="ADMIN">
+			<execute function="AssertClick#assertTextClickAtClickDockbar" />
+		</case>
+
 		<case locator-key1="USER_MY_DASHBOARD">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
@@ -46,14 +50,6 @@
 
 		<case locator-key1="ADMIN">
 			<execute function="Click#textClickAtClickDockbar" value1="Admin" />
-		</case>
-
-		<case locator-key1="ADMIN_CONTROL_PANEL">
-			<execute function="Click#textClickAtAndWait" value1="Control Panel" />
-		</case>
-
-		<case locator-key1="ADMIN_SITE_ADMINISTRATION">
-			<execute function="Click#textClickAtAndWait" value1="Site Administration" />
 		</case>
 
 		<case locator-key1="EDIT">

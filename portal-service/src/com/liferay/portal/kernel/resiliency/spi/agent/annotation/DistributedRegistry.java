@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Shuyang Zhou
@@ -76,6 +77,60 @@ public class DistributedRegistry {
 	}
 
 	public static void registerDistributed(Class<?> clazz) {
+		processDistributed(clazz, true);
+	}
+
+	public static void registerDistributed(
+		String name, Direction direction, MatchType matchType) {
+
+		if (matchType.equals(MatchType.POSTFIX)) {
+			_postfixDirections.put(name, direction);
+		}
+		else if (matchType.equals(MatchType.PREFIX)) {
+			_prefixDirections.put(name, direction);
+		}
+		else {
+			_exactDirections.put(name, direction);
+		}
+	}
+
+	public static void unregisterDistributed(Class<?> clazz) {
+		processDistributed(clazz, false);
+	}
+
+	public static boolean unregisterDistributed(
+		String name, Direction direction, MatchType matchType) {
+
+		if (matchType.equals(MatchType.POSTFIX)) {
+			if (direction == null) {
+				direction = _postfixDirections.remove(name);
+
+				return direction != null;
+			}
+
+			return _postfixDirections.remove(name, direction);
+		}
+		else if (matchType.equals(MatchType.PREFIX)) {
+			if (direction == null) {
+				direction = _prefixDirections.remove(name);
+
+				return direction != null;
+			}
+
+			return _prefixDirections.remove(name, direction);
+		}
+		else {
+			if (direction == null) {
+				direction = _exactDirections.remove(name);
+
+				return direction != null;
+			}
+
+			return _exactDirections.remove(name, direction);
+		}
+	}
+
+	protected static void processDistributed(Class<?> clazz, boolean register) {
 		Queue<Class<?>> queue = new LinkedList<Class<?>>();
 
 		queue.offer(clazz);
@@ -106,8 +161,16 @@ public class DistributedRegistry {
 				try {
 					String name = (String)field.get(null);
 
-					registerDistributed(
-						name, distributed.direction(), distributed.matchType());
+					if (register) {
+						registerDistributed(
+							name, distributed.direction(),
+							distributed.matchType());
+					}
+					else {
+						unregisterDistributed(
+							name, distributed.direction(),
+							distributed.matchType());
+					}
 				}
 				catch (Throwable t) {
 					throw new RuntimeException(t);
@@ -130,25 +193,11 @@ public class DistributedRegistry {
 		}
 	}
 
-	public static void registerDistributed(
-		String name, Direction direction, MatchType matchType) {
-
-		if (matchType.equals(MatchType.POSTFIX)) {
-			_postfixDirections.put(name, direction);
-		}
-		else if (matchType.equals(MatchType.PREFIX)) {
-			_prefixDirections.put(name, direction);
-		}
-		else {
-			_exactDirections.put(name, direction);
-		}
-	}
-
-	private static Map<String, Direction> _exactDirections =
+	private static ConcurrentMap<String, Direction> _exactDirections =
 		new ConcurrentHashMap<String, Direction>();
-	private static Map<String, Direction> _postfixDirections =
+	private static ConcurrentMap<String, Direction> _postfixDirections =
 		new ConcurrentHashMap<String, Direction>();
-	private static Map<String, Direction> _prefixDirections =
+	private static ConcurrentMap<String, Direction> _prefixDirections =
 		new ConcurrentHashMap<String, Direction>();
 
 }

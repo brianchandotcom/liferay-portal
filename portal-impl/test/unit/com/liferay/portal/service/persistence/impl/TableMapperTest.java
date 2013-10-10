@@ -644,7 +644,7 @@ public class TableMapperTest {
 
 		// Success, without model listener
 
-		_mappingStore.put(leftPrimaryKey, new long[]{rightPrimaryKey});
+		_mappingStore.put(leftPrimaryKey, new long[] {rightPrimaryKey});
 
 		Assert.assertTrue(
 			_tableMapperImpl.deleteTableMapping(
@@ -662,7 +662,7 @@ public class TableMapperTest {
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
-		_mappingStore.put(leftPrimaryKey, new long[]{rightPrimaryKey});
+		_mappingStore.put(leftPrimaryKey, new long[] {rightPrimaryKey});
 
 		Assert.assertTrue(
 			_tableMapperImpl.deleteTableMapping(
@@ -694,7 +694,7 @@ public class TableMapperTest {
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
-		_mappingStore.put(leftPrimaryKey, new long[]{rightPrimaryKey});
+		_mappingStore.put(leftPrimaryKey, new long[] {rightPrimaryKey});
 
 		MockDeleteMappingSqlUpdate mockDeleteSqlUpdate =
 			(MockDeleteMappingSqlUpdate)
@@ -749,7 +749,8 @@ public class TableMapperTest {
 		PortalCache<Long, long[]> leftToRightPortalCache =
 			_tableMapperImpl.leftToRightPortalCache;
 
-		leftToRightPortalCache.put(leftPrimaryKey, new long[]{rightPrimaryKey});
+		leftToRightPortalCache.put(
+			leftPrimaryKey, new long[] {rightPrimaryKey});
 
 		Assert.assertFalse(
 			_tableMapperImpl.deleteTableMapping(

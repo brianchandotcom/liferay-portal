@@ -250,7 +250,7 @@ public class MembershipPolicyTestUtil {
 				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
 				null, new ServiceContext());
 
-			serviceContext.setAssetTagNames(new String[]{tag.getName()});
+			serviceContext.setAssetTagNames(new String[] {tag.getName()});
 
 			AssetVocabulary vocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(
@@ -262,7 +262,7 @@ public class MembershipPolicyTestUtil {
 				vocabulary.getVocabularyId(), serviceContext);
 
 			serviceContext.setAssetCategoryIds(
-				new long[]{category.getCategoryId()});
+				new long[] {category.getCategoryId()});
 		}
 
 		serviceContext.setExpandoBridgeAttributes(addExpandoMap(clazz));

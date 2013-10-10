@@ -247,7 +247,7 @@ public class SPIAgentResponseTest {
 		Assert.assertTrue(spiAgentResponse.portalResiliencyResponse);
 		Assert.assertNotNull(spiAgentResponse.metaData);
 		Assert.assertArrayEquals(
-			new byte[]{(byte)2, (byte)3}, spiAgentResponse.byteData);
+			new byte[] {(byte)2, (byte)3}, spiAgentResponse.byteData);
 		Assert.assertNull(spiAgentResponse.stringData);
 
 		// Portal resiliency action, char model output, empty

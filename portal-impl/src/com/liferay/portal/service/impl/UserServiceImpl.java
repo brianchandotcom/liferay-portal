@@ -541,7 +541,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			userGroupIds);
 
 		propagateMembership(
-			new long[]{user.getUserId()}, groupIds, organizationIds, roleIds,
+			new long[] {user.getUserId()}, groupIds, organizationIds, roleIds,
 			userGroupIds);
 
 		return user;

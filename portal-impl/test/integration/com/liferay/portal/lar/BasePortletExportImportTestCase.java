@@ -118,7 +118,7 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 
 		exportParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
-			new String[]{ String.valueOf(true)});
+			new String[] { String.valueOf(true)});
 
 		exportImportPortlet(
 			getPortletId(), exportParameterMap, getImportParameterMap());
@@ -133,7 +133,7 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 
 		importParameterMap.put(
 			PortletDataHandlerKeys.DELETIONS,
-			new String[]{ String.valueOf(true)});
+			new String[] { String.valueOf(true)});
 
 		exportImportPortlet(
 			getPortletId(), exportParameterMap, importParameterMap);

@@ -243,7 +243,7 @@ public class ReflectionUtil {
 		}
 
 		return (T)newInstanceMethod.invoke(
-			constructorAccessor, new Object[]{parameters});
+			constructorAccessor, new Object[] {parameters});
 	}
 
 	public static <T extends Enum<T>> T newEnumElement(

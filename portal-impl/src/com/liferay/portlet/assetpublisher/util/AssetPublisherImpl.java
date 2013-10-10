@@ -65,6 +65,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -143,9 +144,12 @@ public class AssetPublisherImpl implements AssetPublisher {
 			themeDisplay.getRefererPlid());
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				themeDisplay.getScopeGroupId(), layout,
-				referringPortletResource, null);
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, referringPortletResource);
+
+		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+			throw new PrincipalException();
+		}
 
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle", "dynamic");

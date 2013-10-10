@@ -47,29 +47,29 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= ruleGroupSearch %>"
 	>
-		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-			<portlet:renderURL var="viewRulesURL">
-				<portlet:param name="struts_action" value="/mobile_device_rules/view" />
-				<portlet:param name="className" value="<%= className %>" />
-				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-				<portlet:param name="chooseCallback" value="<%= chooseCallback %>" />
-			</portlet:renderURL>
+		<aui:nav-bar>
+			<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+				<portlet:renderURL var="viewRulesURL">
+					<portlet:param name="struts_action" value="/mobile_device_rules/view" />
+					<portlet:param name="className" value="<%= className %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+					<portlet:param name="chooseCallback" value="<%= chooseCallback %>" />
+				</portlet:renderURL>
 
-			<liferay-portlet:renderURL var="addRuleGroupURL">
-				<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
-				<portlet:param name="redirect" value="<%= viewRulesURL %>" />
-				<portlet:param name="backURL" value="<%= viewRulesURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-portlet:renderURL>
+				<liferay-portlet:renderURL var="addRuleGroupURL">
+					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+					<portlet:param name="redirect" value="<%= viewRulesURL %>" />
+					<portlet:param name="backURL" value="<%= viewRulesURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				</liferay-portlet:renderURL>
 
-			<aui:nav-bar>
 				<aui:nav>
 					<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
 				</aui:nav>
+			</c:if>
 
-				<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
-			</aui:nav-bar>
-		</c:if>
+			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />
+		</aui:nav-bar>
 
 		<%
 		RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();

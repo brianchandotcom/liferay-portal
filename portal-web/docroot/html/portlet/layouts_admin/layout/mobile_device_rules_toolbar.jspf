@@ -103,9 +103,9 @@
 			function(event) {
 				Liferay.Util.openWindow(
 					{
-						id = '<portlet:namespace />ruleGroups',
-						title = '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>',
-						uri = '<%= selectRuleGroupURL %>'
+						id: '<portlet:namespace />ruleGroups',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>',
+						uri: '<%= selectRuleGroupURL %>'
 					}
 				);
 			}
@@ -120,9 +120,9 @@
 			function(event) {
 				Liferay.Util.openWindow(
 					{
-						id = '<portlet:namespace />ruleGroupsPriorities',
-						title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-priorities") %>',
-						uri = '<%= managePrioritiesURL %>'
+						id: '<portlet:namespace />ruleGroupsPriorities',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "rule-priorities") %>',
+						uri: '<%= managePrioritiesURL %>'
 					}
 				);
 			}

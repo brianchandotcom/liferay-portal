@@ -593,9 +593,7 @@ public class OrganizationLocalServiceImpl
 		while (iterator.hasNext()) {
 			Organization organization = iterator.next();
 
-			if ((organization.getCompanyId() != user.getCompanyId()) ||
-				(organization.getParentOrganization() == null)) {
-
+			if ((organization.getCompanyId() != user.getCompanyId())) {
 				iterator.remove();
 			}
 		}

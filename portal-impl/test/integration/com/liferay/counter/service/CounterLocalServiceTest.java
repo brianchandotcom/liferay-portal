@@ -124,6 +124,7 @@ public class CounterLocalServiceTest {
 		@Override
 		public Long[] call() throws ProcessException {
 			System.setProperty("catalina.base", ".");
+			System.setProperty("external-properties", "portal-test.properties");
 
 			PropsUtil.set(PropsValues.COUNTER_INCREMENT + _COUNTER_NAME, "1");
 

@@ -58,7 +58,7 @@
 
 		<execute selenium="clickAt" argument1="//div[@id='_145_dockbar']" argument2="" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-editable-deprecated/aui-editable-deprecated-min.js')]" />
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
@@ -66,7 +66,7 @@
 	<command name="assertTextClickAtClickSidebar">
 		<execute selenium="clickAt" argument1="//ul[@class='nav nav-add-controls']" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-editable-deprecated/aui-editable-deprecated-min.js')]" />
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/node.js')]" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>

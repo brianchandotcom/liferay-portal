@@ -652,8 +652,7 @@
 			[$JOIN$]
 			WHERE
 				[$WHERE$]
-				(Organization_.companyId = ?) AND
-				(Organization_.parentOrganizationId != -1)
+				(Organization_.companyId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.findByGroupId">

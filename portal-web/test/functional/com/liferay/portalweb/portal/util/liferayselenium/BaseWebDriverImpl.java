@@ -580,7 +580,13 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void uploadTempFile(String location, String value) {
-		uploadFile(location, TestPropsValues.OUTPUT_DIR + value);
+		String slash = "/";
+
+		if (OSDetector.isWindows()) {
+			slash = StringUtil.replace(slash, "/", "\\");
+		}
+
+		uploadFile(location, TestPropsValues.OUTPUT_DIR + slash + value);
 	}
 
 	@Override

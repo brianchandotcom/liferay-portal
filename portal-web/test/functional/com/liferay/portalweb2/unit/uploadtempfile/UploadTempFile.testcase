@@ -1,0 +1,24 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="DMDocument#tearDownCP" />
+
+		<execute macro="User#logoutPG" />
+	</tear-down>
+
+	<command name="AddDocument">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.txt" />
+		<var name="dmDocumentSize" value="0k" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+		
+		<execute macro="UploadTempFile#addCP" />
+	</command>
+</definition>

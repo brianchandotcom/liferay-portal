@@ -526,7 +526,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="parentOrganizationId" type="long" />
 		<field name="treePath" type="String">
-			<hint name="max-length">4000</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="name" type="String">
 			<hint name="display-width">150</hint>

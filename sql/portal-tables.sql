@@ -1349,7 +1349,7 @@ create table Organization_ (
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentOrganizationId LONG,
-	treePath STRING null,
+	treePath VARCHAR(255) null,
 	name VARCHAR(100) null,
 	type_ VARCHAR(75) null,
 	recursable BOOLEAN,

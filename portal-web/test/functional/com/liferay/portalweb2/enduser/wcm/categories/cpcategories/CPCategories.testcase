@@ -8,8 +8,8 @@
 	</tear-down>
 
 	<command name="AddCategory">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -26,8 +26,8 @@
 	</command>
 
 	<command name="AddCategoryProperty">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -49,8 +49,8 @@
 	</command>
 
 	<command name="AddCategoryPropertyMultiple">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -65,8 +65,8 @@
 		</execute>
 
 		<execute macro="Category#addCategoryPropertyMultipleCP">
-			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -74,14 +74,14 @@
 		</execute>
 
 		<execute macro="Category#viewCategoryPropertyMultipleCP">
-			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddCategoryToVocabulary">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -107,8 +107,9 @@
 	</command>
 
 	<command name="AddCategoryViewableByAnyone">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+		<var name="viewableBy" value="Anyone (Guest Role)" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -120,20 +121,21 @@
 
 		<execute macro="Category#addCategoryViewableByCP">
 			<var name="categoryName" value="${categoryName}" />
+			<var name="viewableBy" value="${viewableBy}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Category#viewCategoryViewableByCP">
-			<var name="viewableBy" value="Anyone (Guest Role)" />
 			<var name="categoryName" value="${categoryName}" />
+			<var name="viewableBy" value="${viewableBy}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddSubcategory">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -168,6 +170,7 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeAllAssetTypes">
+		<var name="vocabularyAssociatedAssetType" value="All Asset Types" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -175,17 +178,18 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="All Asset Types" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="All Asset Types" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddVocabularyAssetTypeBlogsEntry">
+		<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -193,17 +197,18 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddVocabularyAssetTypeBookmarksEntry">
+		<var name="vocabularyAssociatedAssetType" value="Bookmarks Entry" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -211,17 +216,18 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Bookmarks Entry" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Bookmarks Entry" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddVocabularyAssetTypeDocument">
+		<var name="vocabularyAssociatedAssetType" value="Document" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -229,17 +235,18 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Document" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Document" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddVocabularyAssetTypeUser">
+		<var name="vocabularyAssociatedAssetType" value="User" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -247,17 +254,18 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="User" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="User" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddVocabularyAssetTypeWebContent">
+		<var name="vocabularyAssociatedAssetType" value="Web Content Article" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -265,17 +273,18 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Web Content Article" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Web Content Article" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddVocabularyAssetTypeWikiPage">
+		<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
 		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -283,19 +292,19 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
+			<var name="vocabularyAssociatedAssetType" value="${vocabularyAssociatedAssetType}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
 	<command name="AddVocabularyViewableByGuest">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="viewableBy" value="Anyone (Guest Role)" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -316,8 +325,8 @@
 	</command>
 
 	<command name="DeleteCategory">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -339,8 +348,8 @@
 	</command>
 
 	<command name="DeleteCategoryByDetails">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -362,9 +371,9 @@
 	</command>
 
 	<command name="DeleteSubcategory">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -413,9 +422,9 @@
 	</command>
 
 	<command name="EditCategory">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 		<var name="categoryNameEdit" value="Category Name Edit" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -438,10 +447,10 @@
 	</command>
 
 	<command name="EditSubcategory">
-		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
 		<var name="subcategoryNameEdit" value="Subcategory Name Edit" />
+		<var name="vocabularyName" value="Vocabulary Name" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />

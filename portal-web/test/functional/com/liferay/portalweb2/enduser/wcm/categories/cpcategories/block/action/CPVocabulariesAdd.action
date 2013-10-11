@@ -1,6 +1,6 @@
 <definition>
 	<command name="isElementNotPresent">
-		<case locator-key1="ADD_VOCABULARY_CHOOSE_ASSET_TYPE_SELECT">
+		<case locator-key1="CHOOSE_ASSET_TYPE_SELECT">
 			<execute function="IsElementNotPresent#isNotVisible" />
 		</case>
 	</command>

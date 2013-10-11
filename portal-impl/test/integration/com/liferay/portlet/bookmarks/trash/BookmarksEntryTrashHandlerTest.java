@@ -153,7 +153,7 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected int getMineBaseModelsCount(long groupId, long userId)
-			throws Exception {
+		throws Exception {
 
 		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, userId);
 	}

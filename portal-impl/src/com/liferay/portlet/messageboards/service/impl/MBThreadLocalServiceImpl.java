@@ -448,7 +448,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	 */
 	@Override
 	public int getGroupThreadsCount(long groupId, int status)
-			throws SystemException {
+		throws SystemException {
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 

@@ -61,7 +61,7 @@ public interface LiferaySelenium extends Selenium {
 		throws Exception;
 
 	public void assertSelectedLabel(String selectLocator, String pattern)
-			throws Exception;
+		throws Exception;
 
 	public void assertText(String locator, String pattern) throws Exception;
 

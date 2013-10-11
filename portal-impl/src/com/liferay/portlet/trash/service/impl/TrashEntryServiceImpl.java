@@ -361,7 +361,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 	@Override
 	public TrashEntry restoreEntry(long entryId)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		return restoreEntry(entryId, 0, null);
 	}

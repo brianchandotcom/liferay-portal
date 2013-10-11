@@ -786,51 +786,12 @@ public class GroupServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		HttpPrincipal httpPrincipal, long userId,
-		java.lang.String[] classNames, java.lang.String name, boolean active,
-		boolean includeControlPanel, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserPlaces", _getUserPlacesParameterTypes20);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					classNames, name, active, includeControlPanel, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.portal.model.Group>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		HttpPrincipal httpPrincipal, java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserPlaces", _getUserPlacesParameterTypes21);
+					"getUserPlaces", _getUserPlacesParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					classNames, max);
@@ -866,7 +827,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserPlacesCount", _getUserPlacesCountParameterTypes22);
+					"getUserPlacesCount", _getUserPlacesCountParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -902,7 +863,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserSites", _getUserSitesParameterTypes23);
+					"getUserSites", _getUserSitesParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -938,9 +899,47 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserSitesGroups", _getUserSitesGroupsParameterTypes24);
+					"getUserSitesGroups", _getUserSitesGroupsParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portal.model.Group>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
+		HttpPrincipal httpPrincipal, long userId,
+		java.lang.String[] classNames, int max)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
+					"getUserSitesGroups", _getUserSitesGroupsParameterTypes24);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					classNames, max);
 
 			Object returnObj = null;
 
@@ -1007,89 +1006,12 @@ public class GroupServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		HttpPrincipal httpPrincipal, long userId,
-		java.lang.String[] classNames, int max)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserSitesGroups", _getUserSitesGroupsParameterTypes26);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					classNames, max);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.portal.model.Group>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		HttpPrincipal httpPrincipal, long userId,
-		java.lang.String[] classNames, java.lang.String name, boolean active,
-		boolean includeControlPanel, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserSitesGroups", _getUserSitesGroupsParameterTypes27);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					classNames, name, active, includeControlPanel, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.portal.model.Group>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		HttpPrincipal httpPrincipal, java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"getUserSitesGroups", _getUserSitesGroupsParameterTypes28);
+					"getUserSitesGroups", _getUserSitesGroupsParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					classNames, max);
@@ -1126,7 +1048,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"getUserSitesGroupsCount",
-					_getUserSitesGroupsCountParameterTypes29);
+					_getUserSitesGroupsCountParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -1162,7 +1084,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"hasUserGroup", _hasUserGroupParameterTypes30);
+					"hasUserGroup", _hasUserGroupParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					groupId);
@@ -1201,7 +1123,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"search", _searchParameterTypes31);
+					"search", _searchParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, name, description, params, start, end);
@@ -1238,7 +1160,7 @@ public class GroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"searchCount", _searchCountParameterTypes32);
+					"searchCount", _searchCountParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, name, description, params);
@@ -1271,7 +1193,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"setRoleGroups", _setRoleGroupsParameterTypes33);
+					"setRoleGroups", _setRoleGroupsParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
 					groupIds);
@@ -1304,7 +1226,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"unsetRoleGroups", _unsetRoleGroupsParameterTypes34);
+					"unsetRoleGroups", _unsetRoleGroupsParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
 					groupIds);
@@ -1337,7 +1259,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"updateFriendlyURL", _updateFriendlyURLParameterTypes35);
+					"updateFriendlyURL", _updateFriendlyURLParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					friendlyURL);
@@ -1378,7 +1300,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"updateGroup", _updateGroupParameterTypes36);
+					"updateGroup", _updateGroupParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentGroupId, name, description, type, manualMembership,
@@ -1416,7 +1338,7 @@ public class GroupServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
-					"updateGroup", _updateGroupParameterTypes37);
+					"updateGroup", _updateGroupParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					typeSettings);
@@ -1455,7 +1377,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(GroupServiceUtil.class,
 					"updateStagedPortlets",
-					_updateStagedPortletsParameterTypes38);
+					_updateStagedPortletsParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					stagedPortletIds);
@@ -1551,65 +1473,57 @@ public class GroupServiceHttp {
 			long.class, java.lang.String[].class, int.class
 		};
 	private static final Class<?>[] _getUserPlacesParameterTypes20 = new Class[] {
-			long.class, java.lang.String[].class, java.lang.String.class,
-			boolean.class, boolean.class, int.class, int.class
-		};
-	private static final Class<?>[] _getUserPlacesParameterTypes21 = new Class[] {
 			java.lang.String[].class, int.class
 		};
-	private static final Class<?>[] _getUserPlacesCountParameterTypes22 = new Class[] {
+	private static final Class<?>[] _getUserPlacesCountParameterTypes21 = new Class[] {
 			
 		};
-	private static final Class<?>[] _getUserSitesParameterTypes23 = new Class[] {  };
-	private static final Class<?>[] _getUserSitesGroupsParameterTypes24 = new Class[] {
+	private static final Class<?>[] _getUserSitesParameterTypes22 = new Class[] {  };
+	private static final Class<?>[] _getUserSitesGroupsParameterTypes23 = new Class[] {
 			
+		};
+	private static final Class<?>[] _getUserSitesGroupsParameterTypes24 = new Class[] {
+			long.class, java.lang.String[].class, int.class
 		};
 	private static final Class<?>[] _getUserSitesGroupsParameterTypes25 = new Class[] {
 			long.class, java.lang.String[].class, boolean.class, int.class
 		};
 	private static final Class<?>[] _getUserSitesGroupsParameterTypes26 = new Class[] {
-			long.class, java.lang.String[].class, int.class
-		};
-	private static final Class<?>[] _getUserSitesGroupsParameterTypes27 = new Class[] {
-			long.class, java.lang.String[].class, java.lang.String.class,
-			boolean.class, boolean.class, int.class, int.class
-		};
-	private static final Class<?>[] _getUserSitesGroupsParameterTypes28 = new Class[] {
 			java.lang.String[].class, int.class
 		};
-	private static final Class<?>[] _getUserSitesGroupsCountParameterTypes29 = new Class[] {
+	private static final Class<?>[] _getUserSitesGroupsCountParameterTypes27 = new Class[] {
 			
 		};
-	private static final Class<?>[] _hasUserGroupParameterTypes30 = new Class[] {
+	private static final Class<?>[] _hasUserGroupParameterTypes28 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _searchParameterTypes31 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes29 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String[].class, int.class, int.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes32 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes30 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String[].class
 		};
-	private static final Class<?>[] _setRoleGroupsParameterTypes33 = new Class[] {
+	private static final Class<?>[] _setRoleGroupsParameterTypes31 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _unsetRoleGroupsParameterTypes34 = new Class[] {
+	private static final Class<?>[] _unsetRoleGroupsParameterTypes32 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _updateFriendlyURLParameterTypes35 = new Class[] {
+	private static final Class<?>[] _updateFriendlyURLParameterTypes33 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateGroupParameterTypes36 = new Class[] {
+	private static final Class<?>[] _updateGroupParameterTypes34 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, int.class, boolean.class, int.class,
 			java.lang.String.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateGroupParameterTypes37 = new Class[] {
+	private static final Class<?>[] _updateGroupParameterTypes35 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateStagedPortletsParameterTypes38 = new Class[] {
+	private static final Class<?>[] _updateStagedPortletsParameterTypes36 = new Class[] {
 			long.class, java.util.Map.class
 		};
 }

@@ -454,20 +454,6 @@ public class GroupServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
-	String[], String, boolean, boolean, int, int)}
-	*/
-	public static java.util.List<com.liferay.portal.model.Group> getUserPlaces(
-		long userId, java.lang.String[] classNames, java.lang.String name,
-		boolean active, boolean includeControlPanel, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getUserPlaces(userId, classNames, name, active,
-			includeControlPanel, start, end);
-	}
-
-	/**
 	* Returns the guest or current user's groups &quot;sites&quot; associated
 	* with the group entity class names, including the Control Panel group if
 	* the user is permitted to view the Control Panel.
@@ -548,16 +534,6 @@ public class GroupServiceUtil {
 		return getService().getUserSitesGroups();
 	}
 
-	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId, java.lang.String[] classNames,
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getUserSitesGroups(userId, classNames, includeControlPanel,
-			max);
-	}
-
 	/**
 	* Returns the user's groups &quot;sites&quot; associated with the group
 	* entity class names, including the Control Panel group if the user is
@@ -600,13 +576,13 @@ public class GroupServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
-		long userId, java.lang.String[] classNames, java.lang.String name,
-		boolean active, boolean includeControlPanel, int start, int end)
+		long userId, java.lang.String[] classNames,
+		boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getUserSitesGroups(userId, classNames, name, active,
-			includeControlPanel, start, end);
+				   .getUserSitesGroups(userId, classNames, includeControlPanel,
+			max);
 	}
 
 	/**

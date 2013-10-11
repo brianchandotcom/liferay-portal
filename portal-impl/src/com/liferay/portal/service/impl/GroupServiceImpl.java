@@ -577,20 +577,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
-	 *             String[], String, boolean, boolean, int, int)}
-	 */
-	@Override
-	public List<Group> getUserPlaces(
-			long userId, String[] classNames, String name, boolean active,
-			boolean includeControlPanel, int start, int end)
-		throws PortalException, SystemException {
-
-		return getUserSitesGroups(
-			userId, classNames, name, active, includeControlPanel, start, end);
-	}
-
-	/**
 	 * Returns the guest or current user's groups &quot;sites&quot; associated
 	 * with the group entity class names, including the Control Panel group if
 	 * the user is permitted to view the Control Panel.
@@ -676,59 +662,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			int max)
 		throws PortalException, SystemException {
 
-		return getUserSitesGroups(
-			userId, classNames, null, true, includeControlPanel,
-			QueryUtil.ALL_POS, max);
-	}
-
-	/**
-	 * Returns the user's groups &quot;sites&quot; associated with the group
-	 * entity class names, including the Control Panel group if the user is
-	 * permitted to view the Control Panel.
-	 *
-	 * <ul>
-	 * <li>
-	 * Class name &quot;User&quot; includes the user's layout set
-	 * group.
-	 * </li>
-	 * <li>
-	 * Class name &quot;Organization&quot; includes the user's
-	 * immediate organization groups and inherited organization groups.
-	 * </li>
-	 * <li>
-	 * Class name &quot;Group&quot; includes the user's immediate
-	 * organization groups and site groups.
-	 * </li>
-	 * <li>
-	 * A <code>classNames</code>
-	 * value of <code>null</code> includes the user's layout set group,
-	 * organization groups, inherited organization groups, and site groups.
-	 * </li>
-	 * </ul>
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  classNames the group entity class names (optionally
-	 *         <code>null</code>). For more information see {@link
-	 *         #getUserSitesGroups(long, String[], boolean, int)}
-	 * @param  max the maximum number of groups to return
-	 * @return the user's groups &quot;sites&quot;
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<Group> getUserSitesGroups(
-			long userId, String[] classNames, int max)
-		throws PortalException, SystemException {
-
-		return getUserSitesGroups(userId, classNames, false, max);
-	}
-
-	@Override
-	public List<Group> getUserSitesGroups(
-			long userId, String[] classNames, String name, boolean active,
-			boolean includeControlPanel, int start, int end)
-		throws PortalException, SystemException {
-
 		User user = userPersistence.fetchByPrimaryKey(userId);
 
 		if (user.isDefaultUser()) {
@@ -737,18 +670,26 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		List<Group> userSiteGroups = new UniqueList<Group>();
 
+		int start = QueryUtil.ALL_POS;
+		int end = QueryUtil.ALL_POS;
+
+		if (max != QueryUtil.ALL_POS) {
+			start = 0;
+			end = max;
+		}
+
 		if ((classNames == null) ||
 			ArrayUtil.contains(classNames, Group.class.getName())) {
 
 			LinkedHashMap<String, Object> groupParams =
 				new LinkedHashMap<String, Object>();
 
-			groupParams.put("active", active);
-			groupParams.put("usersGroups", new Long(userId));
+			groupParams.put("active", true);
+			groupParams.put("usersGroups", userId);
 
 			userSiteGroups.addAll(
 				groupLocalService.search(
-					user.getCompanyId(), name, groupParams, start, end));
+					user.getCompanyId(), groupParams, start, end));
 		}
 
 		if ((classNames == null) ||
@@ -819,6 +760,48 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		return Collections.unmodifiableList(
 			ListUtil.subList(userSiteGroups, start, end));
+	}
+
+	/**
+	 * Returns the user's groups &quot;sites&quot; associated with the group
+	 * entity class names, including the Control Panel group if the user is
+	 * permitted to view the Control Panel.
+	 *
+	 * <ul>
+	 * <li>
+	 * Class name &quot;User&quot; includes the user's layout set
+	 * group.
+	 * </li>
+	 * <li>
+	 * Class name &quot;Organization&quot; includes the user's
+	 * immediate organization groups and inherited organization groups.
+	 * </li>
+	 * <li>
+	 * Class name &quot;Group&quot; includes the user's immediate
+	 * organization groups and site groups.
+	 * </li>
+	 * <li>
+	 * A <code>classNames</code>
+	 * value of <code>null</code> includes the user's layout set group,
+	 * organization groups, inherited organization groups, and site groups.
+	 * </li>
+	 * </ul>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  classNames the group entity class names (optionally
+	 *         <code>null</code>). For more information see {@link
+	 *         #getUserSitesGroups(long, String[], boolean, int)}
+	 * @param  max the maximum number of groups to return
+	 * @return the user's groups &quot;sites&quot;
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Group> getUserSitesGroups(
+			long userId, String[] classNames, int max)
+		throws PortalException, SystemException {
+
+		return getUserSitesGroups(userId, classNames, false, max);
 	}
 
 	/**

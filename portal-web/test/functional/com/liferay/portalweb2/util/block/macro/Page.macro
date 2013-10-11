@@ -57,9 +57,17 @@
 			</then>
 		</if>
 
-		<var name="key_portletName" value="${portletName}" />
 
-		<execute action="Home#assertClick" locator-key1="CONTROL_PANEL_NAVIGATION" value1="${portletName}" />
+		<if>
+			<not>
+				<contains string="${portletName}" substring="{portletName}" />
+			</not>
+			<then>
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute action="Home#assertClick" locator-key1="CONTROL_PANEL_NAVIGATION" value1="${portletName}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="gotoConfigurationCP">

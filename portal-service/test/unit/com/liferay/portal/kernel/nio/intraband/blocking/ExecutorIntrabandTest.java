@@ -416,7 +416,8 @@ public class ExecutorIntrabandTest {
 		randomAccessFile.close();
 
 		FileInputStream fileInputStream = new FileInputStream(tempFile);
-		FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
+		FileOutputStream fileOutputStream = new FileOutputStream(
+			tempFile, true);
 
 		FileChannel readFileChannel = fileInputStream.getChannel();
 		FileChannel writeFileChannel = fileOutputStream.getChannel();

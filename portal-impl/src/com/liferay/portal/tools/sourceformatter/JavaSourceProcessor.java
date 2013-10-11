@@ -399,6 +399,47 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
+	protected void checkPwdGenerator(
+		String line, String fileName, int lineCount) {
+
+		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
+			return;
+		}
+
+		if (!line.contains("PwdGenerator.getPassword(")) {
+			return;
+		}
+
+		if (_pwdGeneratorExclusions != null) {
+			String excluded = _pwdGeneratorExclusions.getProperty(
+				fileName + StringPool.AT + lineCount);
+
+			if (excluded == null) {
+				excluded = _pwdGeneratorExclusions.getProperty(fileName);
+			}
+
+			if (excluded != null) {
+				return;
+			}
+		}
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("PwdGenerator.getPassword: ");
+		sb.append(fileName);
+		sb.append(" ");
+		sb.append(lineCount);
+		sb.append("\n");
+		sb.append("LPS-41130:");
+		sb.append("\n");
+		sb.append("Please check if this a correct use of PwdGenerator.");
+		sb.append("\n");
+		sb.append("If it is, add the line to ");
+		sb.append("source_formatter_pwd_generator_exclusions.properties");
+
+		processErrorMessage(fileName, sb.toString());
+	}
+
 	protected void checkTestAnnotations(JavaTerm javaTerm, String fileName) {
 		int methodType = javaTerm.getType();
 
@@ -772,6 +813,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"source_formatter_javaterm_sort_exclusions.properties");
 		_lineLengthExclusions = getExclusionsProperties(
 			"source_formatter_line_length_exclusions.properties");
+		_pwdGeneratorExclusions = getExclusionsProperties(
+			"source_formatter_pwd_generator_exclusions.properties");
 		_staticLogVariableExclusions = getExclusionsProperties(
 			"source_formatter_static_log_exclusions.properties");
 		_upgradeServiceUtilExclusions = getExclusionsProperties(
@@ -1186,6 +1229,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			checkInefficientStringMethods(line, fileName, lineCount);
+
+			checkPwdGenerator(line, fileName, lineCount);
 
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {
 				processErrorMessage(
@@ -2663,6 +2708,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Properties _lineLengthExclusions;
 	private Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
+	private Properties _pwdGeneratorExclusions;
 	private Properties _staticLogVariableExclusions;
 	private Properties _upgradeServiceUtilExclusions;
 

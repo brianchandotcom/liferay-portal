@@ -476,7 +476,7 @@ public class JournalTemplateLocalServiceImpl
 
 	@Override
 	public JournalTemplate updateJournalTemplate(JournalTemplate template)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		return updateTemplate(template);
 	}

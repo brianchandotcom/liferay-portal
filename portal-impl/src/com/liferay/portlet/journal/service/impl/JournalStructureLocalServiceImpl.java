@@ -384,7 +384,7 @@ public class JournalStructureLocalServiceImpl
 
 	@Override
 	public JournalStructure updateJournalStructure(JournalStructure structure)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		return updateStructure(structure);
 	}

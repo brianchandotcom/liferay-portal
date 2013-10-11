@@ -1637,12 +1637,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							}
 						}
 
-						if (trimmedLine.startsWith("throws ") &&
-							(lineLeadingTabCount ==
-								previousLineLeadingTabCount)) {
+						if (trimmedLine.startsWith("throws ")) {
+							int diff =
+								lineLeadingTabCount -
+									previousLineLeadingTabCount;
 
-							processErrorMessage(
-								fileName, "tab: " + fileName + " " + lineCount);
+							if ((diff == 0) || (diff > 1)) {
+								processErrorMessage(
+									fileName,
+									"tab: " + fileName + " " + lineCount);
+							}
 						}
 
 						if ((previousLine.contains(" class " ) ||

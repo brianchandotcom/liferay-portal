@@ -4189,7 +4189,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected boolean isParentGroup(long parentGroupId, long groupId)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		// Return true if parentGroupId is among the parent groups of groupId
 

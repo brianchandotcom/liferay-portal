@@ -87,7 +87,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
 	public List<Long> getFolderIds(long groupId, long folderId)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		JournalFolderPermission.check(
 			getPermissionChecker(), groupId, folderId, ActionKeys.VIEW);
@@ -301,7 +301,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Override
 	public void restoreFolderFromTrash(long folderId)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
 

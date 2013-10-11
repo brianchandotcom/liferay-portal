@@ -248,7 +248,7 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected void moveParentBaseModelToTrash(long primaryKey)
-			throws Exception {
+		throws Exception {
 
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
 	}

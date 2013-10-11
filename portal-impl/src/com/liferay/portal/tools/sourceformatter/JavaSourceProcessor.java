@@ -402,6 +402,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkPwdGenerator(
 		String line, String fileName, int lineCount) {
 
+		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
+			return;
+		}
+
 		if (!line.contains("PwdGenerator.getPassword(")) {
 			return;
 		}

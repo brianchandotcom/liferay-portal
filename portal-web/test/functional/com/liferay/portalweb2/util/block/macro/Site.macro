@@ -243,7 +243,7 @@
 					<execute action="PGMysitesAvailablesitesRequestmembership#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your request was sent. You will receive a reply by email." />
-					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_REQUEST_MEMBERSHIP" value1="Membership Requested" />
+					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERSHIP_REQUESTED" value1="Membership Requested" />
 				</then>
 			</elseif>
 			<else>

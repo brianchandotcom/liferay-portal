@@ -119,3 +119,11 @@
 		}
 	}
 }
+
+.ios.mobile .lfr-search-container {
+	-webkit-overflow-scrolling: touch;
+
+	.searchcontainer-content .table {
+		max-width: none;
+	}
+}

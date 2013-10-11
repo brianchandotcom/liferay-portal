@@ -66,7 +66,7 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 		Ehcache ehcache = _portalCacheManager.getEhcache(cacheName);
 
-		if (ehcache == null) {
+		if ((ehcache == null) && (_hibernateCacheManager != null)) {
 			ehcache = _hibernateCacheManager.getEhcache(cacheName);
 		}
 

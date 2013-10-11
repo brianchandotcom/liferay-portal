@@ -61,9 +61,6 @@ public class OrganizationFinderImpl
 	public static final String FIND_BY_NO_ASSETS =
 	OrganizationFinder.class.getName() + ".findByNoAssets";
 
-	public static final String FIND_BY_COMPANY_ID =
-		OrganizationFinder.class.getName() + ".findByCompanyId";
-
 	public static final String FIND_BY_GROUP_ID =
 		OrganizationFinder.class.getName() + ".findByGroupId";
 
@@ -343,72 +340,6 @@ public class OrganizationFinderImpl
 			q.addEntity("Organization_", OrganizationImpl.class);
 
 			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<Organization> findByCompanyId(
-			long companyId, LinkedHashMap<String, Object> params, int start,
-			int end, OrderByComparator obc)
-		throws SystemException {
-
-		if (params == null) {
-			params = new LinkedHashMap<String, Object>();
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		String sql = CustomSQLUtil.get(FIND_BY_COMPANY_ID);
-
-		sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
-		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
-
-		sb.append(sql);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		sql = sb.toString();
-
-		sql = CustomSQLUtil.replaceAndOperator(sql, true);
-		sql = CustomSQLUtil.replaceOrderBy(sql, obc);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar("orgId", Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			setJoin(qPos, params);
-
-			qPos.add(companyId);
-
-			List<Organization> organizations = new ArrayList<Organization>();
-
-			Iterator<Long> itr = (Iterator<Long>)QueryUtil.iterate(
-				q, getDialect(), start, end);
-
-			while (itr.hasNext()) {
-				Long organizationId = itr.next();
-
-				Organization organization = OrganizationUtil.findByPrimaryKey(
-					organizationId.longValue());
-
-				organizations.add(organization);
-			}
-
-			return organizations;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

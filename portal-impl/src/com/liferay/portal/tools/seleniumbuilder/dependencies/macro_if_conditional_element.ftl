@@ -22,7 +22,7 @@
 	<#if ifConditionalElement.attributeValue("action")??>
 		<#assign actionElement = ifConditionalElement>
 
-		<#include "action_element.ftl">
+		(<#include "action_log_element.ftl">) && (<#include "action_element.ftl">)
 	<#elseif ifConditionalElement.attributeValue("macro")??>
 		<#assign macroElement = ifConditionalElement>
 

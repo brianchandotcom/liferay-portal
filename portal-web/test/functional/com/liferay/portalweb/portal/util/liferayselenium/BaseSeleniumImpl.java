@@ -464,6 +464,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public boolean sendActionLogger(String command, String[] params) {
+		return true;
+	}
+
+	@Override
 	public void sendEmail(String to, String subject, String content)
 		throws Exception {
 

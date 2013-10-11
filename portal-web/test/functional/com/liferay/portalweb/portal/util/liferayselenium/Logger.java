@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 
 import java.io.File;
@@ -56,29 +57,45 @@ public class Logger {
 		_javascriptExecutor.executeScript("window.name = 'Log Window';");
 	}
 
-	public void logCommand(Method method, Object[] arguments) {
+	public void logActionCommand(Object[] arguments) {
 		StringBundler sb = new StringBundler();
 
+		String command = (String)arguments[0];
+		String[] params = (String[])arguments[1];
+
 		sb.append("Running <b>");
-		sb.append(method.getName());
+		sb.append(command);
 		sb.append("</b>");
 
-		if (arguments != null) {
-			if (arguments.length == 1) {
-				sb.append(" with parameter ");
-			}
-			else if (arguments.length > 1) {
-				sb.append(" with parameters ");
+		int paramsLength = params.length / 3;
+
+		for (int i = 0; i < paramsLength; i++) {
+			String locator = params[i];
+
+			if (Validator.isNotNull(locator)) {
+				sb.append(" with locator <b>");
+				sb.append(locator);
+				sb.append("</b>");
 			}
 
-			for (Object argument : arguments) {
-				sb.append("<b>");
-				sb.append(String.valueOf(argument));
-				sb.append("</b> ");
+			String locatorKey = params[i + 1];
+
+			if (Validator.isNotNull(locatorKey)) {
+				sb.append(" with locator-key <b>");
+				sb.append(locatorKey);
+				sb.append("</b>");
+			}
+
+			String value = params[i + 2];
+
+			if (Validator.isNotNull(value)) {
+				sb.append(" value <b>");
+				sb.append(value);
+				sb.append("</b>");
 			}
 		}
 
-		log(sb.toString());
+		log("actionCommandLog", sb.toString());
 	}
 
 	public void logError(
@@ -130,7 +147,7 @@ public class Logger {
 		sb.append(": ");
 		sb.append(thowableMessage);
 
-		log(sb.toString());
+		log("seleniumCommandLog", sb.toString());
 
 		sb = new StringBundler();
 
@@ -157,6 +174,31 @@ public class Logger {
 		sb.append(thowableMessage);
 
 		BaseTestCase.fail(sb.toString());
+	}
+
+	public void logSeleniumCommand(Method method, Object[] arguments) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("Running <b>");
+		sb.append(method.getName());
+		sb.append("</b>");
+
+		if (arguments != null) {
+			if (arguments.length == 1) {
+				sb.append(" with parameter ");
+			}
+			else if (arguments.length > 1) {
+				sb.append(" with parameters ");
+			}
+
+			for (Object argument : arguments) {
+				sb.append("<b>");
+				sb.append(String.valueOf(argument));
+				sb.append("</b> ");
+			}
+		}
+
+		log("seleniumCommandLog", sb.toString());
 	}
 
 	public void send(Object[] arguments) {
@@ -369,14 +411,16 @@ public class Logger {
 		}
 	}
 
-	protected void log(String message) {
+	protected void log(String log, String message) {
 		StringBundler sb = new StringBundler();
 
 		String formattedMessage = StringEscapeUtils.escapeJava(message);
 
 		formattedMessage = formattedMessage.replace("'", "\\'");
 
-		sb.append("logger = window.document.getElementById('log');");
+		sb.append("logger = window.document.getElementById('");
+		sb.append(log);
+		sb.append("');");
 		sb.append("var newLine = window.document.createElement('div');");
 		sb.append("newLine.setAttribute('class', 'line');");
 		sb.append("newLine.innerHTML = '");

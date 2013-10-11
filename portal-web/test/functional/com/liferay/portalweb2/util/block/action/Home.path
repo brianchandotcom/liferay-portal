@@ -244,6 +244,27 @@
 	<td>xpath=(//section)[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTROL_PANEL-->
+<tr>
+	<td>CONTROL_PANEL_CATEGORY_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div[contains(.,'${key_portletCategoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_CATEGORY_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded')]/div[contains(.,'${key_portletCategoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_NAVIGATION</td>
+	<td>//ul[@class='category-portlets']/li[contains(.,'${key_portletName}')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

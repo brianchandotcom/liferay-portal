@@ -17,6 +17,12 @@
 		<execute selenium="clickAtAndWait" />
 	</command>
 
+	<command name="clickAtAndWaitCPNavigation">
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
+
+		<execute function="Click#clickAtAndWait" />
+	</command>
+
 	<command name="clickAtSidebarClickAt">
 		<execute selenium="pause" argument1="1000" />
 

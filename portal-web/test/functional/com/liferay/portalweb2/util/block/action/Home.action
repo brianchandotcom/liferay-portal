@@ -1,4 +1,10 @@
 <definition>
+	<command name="assertClick">
+		<case comparator="startsWith" locator-key1="CONTROL_PANEL_">
+			<execute function="AssertClick#assertPartialTextClickAtCPNavigation" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="PAGE_1_CHILD_PAGE_1">
 			<execute function="Click#textClickAtAndWait" />
@@ -51,6 +57,10 @@
 	</command>
 
 	<command name="isElementPresent">
+		<case comparator="startsWith" locator-key1="CONTROL_PANEL_">
+			<execute function="IsElementPresent#isElementPresentCPNavigation" />
+		</case>
+
 		<case comparator="startsWith" locator-key1="PAGE_">
 			<execute function="IsElementPresent#isElementPresentClickNavigation" />
 		</case>

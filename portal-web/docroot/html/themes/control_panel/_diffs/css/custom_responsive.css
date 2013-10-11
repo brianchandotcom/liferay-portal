@@ -4,8 +4,11 @@
 @include respond-to(phone, tablet) {
 	.aui {
 		.dockbar .navbar-inner .container {
+			#_145_navSiteNavigationNavbarBtn {
+				float: none;
+			}
 
-			#_145_navAddControlsNavbarBtn, #_145_navSiteNavigationNavbarBtn {
+			#_145_navAddControlsNavbarBtn {
 				display: none;
 			}
 
@@ -16,6 +19,10 @@
 
 			.btn-navbar {
 				float: right;
+			}
+
+			.nav-navigation > li {
+				margin-left: 5px;
 			}
 		}
 	}

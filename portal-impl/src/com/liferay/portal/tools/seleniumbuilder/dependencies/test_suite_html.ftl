@@ -6,10 +6,20 @@
 			<h2>${seleniumBuilderContext.getTestSuiteClassName(testSuiteName)}</h2>
 		</div>
 
-		<div id="log">
+		<div id="actionCommandLog">
 		</div>
 
-		<div id="code">
+		<div id="seleniumCommandLog">
+		</div>
+
+		<div id="errorLog">
+			<p><b id="errorCount">0</b> total error(s).</p>
+
+			<p id="errorList">
+			</p>
+		</div>
+
+		<div id="pageObjectXMLLog">
 			<ul onclick="toggle(event);">
 				<#assign lineFolds = 0>
 
@@ -32,13 +42,6 @@
 						<#include "test_suite_element_html.ftl">
 					</#if>
 				</#list>
-
-				<div id="summary">
-					<hr />
-					<b id="errorCount">0</b> total error(s).
-					<p id="errorList">
-					</p>
-				</div>
 			</ul>
 		</div>
 	</body>

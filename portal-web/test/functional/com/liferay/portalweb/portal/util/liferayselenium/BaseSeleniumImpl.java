@@ -464,9 +464,7 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public boolean sendActionLogger(
-		String name, String command, String locator, String value) {
-
+	public boolean sendActionLogger(String command, String[] params) {
 		return true;
 	}
 

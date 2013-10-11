@@ -514,9 +514,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public boolean sendActionLogger(
-		String name, String command, String locator, String value) {
-
+	public boolean sendActionLogger(String command, String[] params) {
 		return true;
 	}
 

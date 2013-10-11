@@ -9,6 +9,27 @@
 	margin: 20px 0;
 }
 
+.control-group.input-prepend {
+	width: 100%;
+
+	input {
+		display: block;
+		float: left;
+		margin-top: -1px;
+	}
+
+	.add-on {
+		display: block;
+		float: left;
+		margin-top: -1px;
+	}
+
+	.input-localized-content {
+		clear: both;
+		margin-top: 10px;
+	}
+}
+
 .lfr-ddm-container {
 	.control-group label {
 		margin-left: 0;
@@ -94,11 +115,12 @@
 		input[type="week"],
 		select,
 		textarea,
+		.input-prepend .add-on,
 		.navbar-search .search-query,
 		.uneditable-input {
 			font-size: 18px;
 			height: auto;
-			line-height: 20px;
+			line-height: normal;
 		}
 	}
 }

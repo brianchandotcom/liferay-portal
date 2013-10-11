@@ -1822,7 +1822,7 @@ public class OrganizationLocalServiceImpl
 	protected long[] getReindexOrganizationIds(Organization organization)
 		throws PortalException, SystemException {
 
-		List<Organization> organizations =  organizationPersistence.findByC_T(
+		List<Organization> organizations = organizationPersistence.findByC_T(
 			organization.getCompanyId(),
 			CustomSQLUtil.keywords(organization.getTreePath())[0],
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,

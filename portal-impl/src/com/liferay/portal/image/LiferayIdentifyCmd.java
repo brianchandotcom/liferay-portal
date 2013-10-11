@@ -17,11 +17,10 @@ package com.liferay.portal.image;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import jodd.util.StringPool;
 
 import org.im4java.core.IdentifyCmd;
 import org.im4java.process.ProcessTask;

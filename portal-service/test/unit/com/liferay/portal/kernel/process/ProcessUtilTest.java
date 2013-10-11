@@ -361,7 +361,7 @@ public class ProcessUtilTest {
 			ProcessUtil.CONSUMER_OUTPUT_PROCESSOR,
 			_buildArguments(Echo.class, "0"));
 
-		future.get(1, TimeUnit.SECONDS);
+		future.get(1, TimeUnit.MINUTES);
 	}
 
 	@Test

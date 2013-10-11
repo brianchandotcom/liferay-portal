@@ -6,21 +6,13 @@
 
 	.add-content-menu .lfr-add-page-toolbar {
 		bottom: 0;
-		margin-left: -10px;
-		padding: 10px;
-		position: fixed;
-		width: 330px;
+		margin-top: 0;
+		position: relative;
+		width: 100%;
 
-		@include respond-to(phone, tablet) {
-			margin-left: 0;
-			padding: 0;
-			position: relative;
-			width: 100%;
-
-			@include respond-to(phone) {
-				.pull-right {
-					float: none;
-				}
+		@include respond-to(phone) {
+			.pull-right {
+				float: none;
 			}
 		}
 	}

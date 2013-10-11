@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.memory.FinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.ContextPathUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import freemarker.ext.jsp.TaglibFactory;
 
@@ -30,8 +31,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
-
-import jodd.util.StringPool;
 
 /**
  * @author Shuyang Zhou

@@ -961,6 +961,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName, "edu.emory.mathcs.backport.java: " + fileName);
 		}
 
+		if (newContent.contains("import jodd.util.StringPool")) {
+			processErrorMessage(fileName, "jodd.util.StringPool: " + fileName);
+		}
+
 		// LPS-28266
 
 		for (int pos1 = -1;;) {

@@ -17,14 +17,13 @@ package com.liferay.portal.security.pwd;
 import com.liferay.portal.PwdEncryptorException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.DigesterImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jodd.util.StringPool;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -221,7 +220,7 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 			return encryptedPassword.substring(1, index);
 		}
 
-		return StringPool.EMPTY;
+		return StringPool.BLANK;
 	}
 
 	protected void testEncrypt(String algorithm, String encryptedPassword)

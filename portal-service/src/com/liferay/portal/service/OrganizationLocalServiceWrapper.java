@@ -1145,38 +1145,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns a range of all the organizations of the company.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param params the finder parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
-	* @param start the lower bound of the range of organizations to return
-	* @param end the upper bound of the range of organizations to return (not
-	inclusive)
-	* @return the range of all the organizations of the company
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.model.Organization> search(
-		long companyId,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _organizationLocalService.search(companyId, params, start, end);
-	}
-
-	/**
 	* Returns an ordered range of all the organizations that match the
 	* keywords, using the indexer. It is preferable to use this method instead
 	* of the non-indexed version whenever possible for performance reasons.
@@ -1496,6 +1464,34 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.search(companyId,
 			parentOrganizationId, name, type, street, city, zip, region,
 			country, params, andSearch, start, end, sort);
+	}
+
+	/**
+	* Returns a range of all the organizations of the company.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the organization's company
+	* @param treePath the organization's tree path
+	* @param start the lower bound of the range of organizations to return
+	* @param end the upper bound of the range of organizations to return (not
+	inclusive)
+	* @return the matching organizations ordered by name
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> search(
+		long companyId, java.lang.String treePath, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.search(companyId, treePath, start, end);
 	}
 
 	/**

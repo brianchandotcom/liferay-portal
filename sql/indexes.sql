@@ -624,6 +624,7 @@ create index IX_6AF0D434 on OrgLabor (organizationId);
 create index IX_834BCEB6 on Organization_ (companyId);
 create unique index IX_E301BDF5 on Organization_ (companyId, name);
 create index IX_418E4522 on Organization_ (companyId, parentOrganizationId);
+create index IX_876D1E4D on Organization_ (companyId, treePath);
 create index IX_396D6B42 on Organization_ (uuid_);
 create index IX_A9D85BA6 on Organization_ (uuid_, companyId);
 

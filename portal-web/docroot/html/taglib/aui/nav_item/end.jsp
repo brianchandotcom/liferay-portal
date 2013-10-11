@@ -77,8 +77,6 @@ if (bodyContent != null) {
 						currentTarget.once(
 							'gesturemoveend',
 							function(event) {
-								var eventOutside = event._event.type + 'outside';
-
 								container.toggleClass('open');
 
 								var menuOpen = container.hasClass('open');
@@ -87,25 +85,31 @@ if (bodyContent != null) {
 									<c:when test="<%= !toggle %>">
 										var handle = Liferay.Data['<%= id %>Handle'];
 
-											if (menuOpen && !handle) {
-												handle = currentTarget.on(
-													eventOutside,
-													function(event) {
-														if (!event.target.ancestor('#<%= id %>')) {
-															Liferay.Data['<%= id %>Handle'] = null;
+										if (menuOpen && !handle) {
+											var eventOutside = event._event.type + 'outside';
 
-															handle.detach();
+											if (eventOutside === 'MSPointerUpoutside') {
+												eventOutside = 'mouseupoutside';
+											}
 
-															container.removeClass('open');
-														}
+											handle = currentTarget.on(
+												eventOutside,
+												function(event) {
+													if (!event.target.ancestor('#<%= id %>')) {
+														Liferay.Data['<%= id %>Handle'] = null;
+
+														handle.detach();
+
+														container.removeClass('open');
 													}
-												);
-											}
-											else if (handle) {
-												handle.detach();
+												}
+											);
+										}
+										else if (handle) {
+											handle.detach();
 
-												handle = null;
-											}
+											handle = null;
+										}
 
 										Liferay.Data['<%= id %>Handle'] = handle;
 									</c:when>

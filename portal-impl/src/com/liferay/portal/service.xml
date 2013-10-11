@@ -1197,6 +1197,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="parentOrganizationId" />
 		</finder>
+		<finder name="C_T" return-type="Collection" db-index="false">
+			<finder-column name="companyId" />
+			<finder-column name="treePath" comparator="LIKE" />
+		</finder>
 		<finder name="C_N" return-type="Organization" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

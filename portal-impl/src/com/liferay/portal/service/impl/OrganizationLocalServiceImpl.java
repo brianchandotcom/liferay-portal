@@ -57,6 +57,7 @@ import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.OrganizationNameComparator;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
 
@@ -1014,40 +1015,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Returns a range of all the organizations of the company.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  params the finder parameters (optionally <code>null</code>). For
-	 *         more information see {@link
-	 *         com.liferay.portlet.usersadmin.util.OrganizationIndexer}
-	 * @param  start the lower bound of the range of organizations to return
-	 * @param  end the upper bound of the range of organizations to return (not
-	 *         inclusive)
-	 * @return the range of all the organizations of the company
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<Organization> search(
-			long companyId, LinkedHashMap<String, Object> params, int start,
-			int end)
-		throws SystemException {
-
-		return organizationFinder.findByCompanyId(
-			companyId, params, start, end,
-			new OrganizationNameComparator(true));
-	}
-
-	/**
 	 * Returns an ordered range of all the organizations that match the
 	 * keywords, using the indexer. It is preferable to use this method instead
 	 * of the non-indexed version whenever possible for performance reasons.
@@ -1855,18 +1822,11 @@ public class OrganizationLocalServiceImpl
 	protected long[] getReindexOrganizationIds(Organization organization)
 		throws PortalException, SystemException {
 
-		List<Organization> organizationsTree = new ArrayList<Organization>();
-
-		organizationsTree.add(organization);
-
-		LinkedHashMap<String, Object> params =
-			new LinkedHashMap<String, Object>();
-
-		params.put("organizationsTree", organizationsTree);
-
-		List<Organization> organizations = search(
-			organization.getCompanyId(), params, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		List<Organization> organizations =  organizationPersistence.findByC_T(
+			organization.getCompanyId(),
+			CustomSQLUtil.keywords(organization.getTreePath())[0],
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new OrganizationNameComparator(true));
 
 		long[] organizationIds = new long[organizations.size()];
 

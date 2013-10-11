@@ -5,6 +5,12 @@
 		<execute selenium="clickAt" />
 	</command>
 
+	<command name="assertPartialTextClickAtCPNavigation">
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/liferay/message.js')]" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" />
+	</command>
+
 	<command name="assertPartialTextClickAtAndWait">
 		<execute function="AssertTextEquals#assertPartialText" />
 

@@ -49,33 +49,36 @@
 			list-style-type: none;
 		}
 
-		#code {
-			height: 65%;
+		#actionCommandLog {
+			border: 1px solid #CCC;
+			height: 12%;
+			overflow: auto;
+			white-space: nowrap;
+			width: 100%;
+		}
+
+		#errorLog {
+			border: 1px solid #CCC;
+			height: 12%;
+			overflow: auto;
+			white-space: nowrap;
+			width: 100%;
+		}
+
+		#pageObjectXMLLog {
+			height: 64%;
 			margin: 0px;
 			overflow: auto;
 			padding: 0px;
 			width: 100%;
 		}
 
-
-		#log {
+		#seleniumCommandLog {
 			border: 1px solid #CCC;
-			height: 25%;
+			height: 12%;
 			overflow: auto;
-			width: 50%;
-		}
-
-		#log2 {
-			position:fixed;
-			top:50px;
-			left:990px;
-		}
-
-		#log2 {
-			border: 1px solid #CCC;
-			height: 25%;
-			overflow: auto;
-			width: 45%;
+			white-space: nowrap;
+			width: 100%;
 		}
 
 		#title {

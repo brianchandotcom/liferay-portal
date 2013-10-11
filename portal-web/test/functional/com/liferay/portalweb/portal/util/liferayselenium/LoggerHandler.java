@@ -39,6 +39,9 @@ public class LoggerHandler implements InvocationHandler {
 			if (methodName.equals("getPrimaryTestSuiteName") ||
 				methodName.equals("setPrimaryTestSuiteName")) {
 			}
+			else if (methodName.equals("sendActionLogger")) {
+				_logger.logActionCommand(arguments);
+			}
 			else if (methodName.equals("sendLogger")) {
 				_logger.send(arguments);
 			}
@@ -48,11 +51,8 @@ public class LoggerHandler implements InvocationHandler {
 			else if (methodName.equals("stopLogger")) {
 				_logger.stop();
 			}
-			else if (methodName.equals("sendActionLogger")) {
-				_logger.logActionCommand(method, arguments);
-			}
 			else {
-				_logger.logCommand(method, arguments);
+				_logger.logSeleniumCommand(method, arguments);
 			}
 
 			return method.invoke(_liferaySelenium, arguments);

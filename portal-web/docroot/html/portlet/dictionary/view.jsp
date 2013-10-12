@@ -14,49 +14,30 @@
  */
 --%>
 
-<%--<%@ include file="/html/portlet/dictionary/init.jsp" %>
-
-<form name="<portlet:namespace />fm" onSubmit="window.open(document.<portlet:namespace />fm.<portlet:namespace />type[document.<portlet:namespace />fm.<portlet:namespace />type.selectedIndex].value + encodeURIComponent(document.<portlet:namespace />fm.<portlet:namespace />word.value)); return false;">
-
-<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<portlet:namespace />word" size="30" type="text" />
-
-<select name="<portlet:namespace />type">
-	<option value="http://dictionary.reference.com/search?q="><liferay-ui:message key="dictionary" /></option>
-	<option value="http://thesaurus.reference.com/search?q="><liferay-ui:message key="thesaurus" /></option>
-</select>
-
-<input type="submit" value="<liferay-ui:message key="find" />" />
-
-</form>--%>
-
 <%@ include file="/html/portlet/dictionary/init.jsp" %>
 
+<aui:form name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "lookUp();" %>'>
+	<aui:fieldset>
+		<aui:field-wrapper>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="" name="word" />
 
-<aui:form name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "dictionary();" %>'>
+			<aui:select label="" name="type">
+				<option value="http://dictionary.reference.com/browse/" /><liferay-ui:message key="dictionary" /></option>
+				<option value="http://thesaurus.reference.com/browse/" /><liferay-ui:message key="thesaurus" /></option>
+			</aui:select>
 
-<aui:field-wrapper>
-
-<aui:input name="word" autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" />
-
-<aui:select name="type">
-	<option value="http://dictionary.reference.com/browse/" /><liferay-ui:message key="dictionary" /></option>
-	<option value="http://thesaurus.reference.com/browse/" /><liferay-ui:message key="thesaurus" /></option>
-</aui:select>
-
-<aui:button name="submit" type="submit" value="find" />
-
-</aui:field-wrapper>
-
+			<aui:button type="submit" value="find" />
+		</aui:field-wrapper>
+	</aui:fieldset>
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />dictionary',
-		function() {
-			window.open(document.<portlet:namespace />fm.<portlet:namespace />type[document.<portlet:namespace />fm.<portlet:namespace />type.selectedIndex].value + encodeURIComponent(document.<portlet:namespace />fm.<portlet:namespace />word.value));
-			return false;
-		},
-		['liferay-util-list-fields']
-	);
+	function <portlet:namespace />lookUp() {
+		var form = document.<portlet:namespace />fm;
+
+		var type = form.<portlet:namespace />type.selectedIndex;
+		var word = form.<portlet:namespace />word.value;
+
+		window.open(form.<portlet:namespace />type[type].value + encodeURIComponent(word));
+	}
 </aui:script>

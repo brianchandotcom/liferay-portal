@@ -45,8 +45,9 @@
 		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 
 		<if>
-			<condition action="CPSitesEdit#isElementPresent" locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
+		<condition action="CPSitesEdit#isElementPresent" locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
 			<then>
+				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 				<execute action="CPSitesEdit#check" locator-key1="STAGING_NONE" />
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate staging for ${siteName}?" />
@@ -69,6 +70,12 @@
 		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog. " />
 		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="viewStagingLocalLivePG">
+		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_BUTTON" value1="Staging" />
+		<execute action="PGStaging#assertClick" locator-key1="STAGING_BUTTON" value1="Staging" />
+		<execute action="PGStaging#assertTextEquals" locator-key1="LIVE_BUTTON" value1="Live" />
 	</command>
 
 	<command name="viewSitePagesVariationPG">

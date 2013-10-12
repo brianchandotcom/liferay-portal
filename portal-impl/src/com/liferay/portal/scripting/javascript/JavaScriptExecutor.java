@@ -30,6 +30,7 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
+import org.mozilla.javascript.Wrapper;
 
 /**
  * @author Alberto Montero
@@ -84,9 +85,14 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 			Map<String, Object> outputObjects = new HashMap<String, Object>();
 
 			for (String outputName : outputNames) {
-				outputObjects.put(
-					outputName,
-					ScriptableObject.getProperty(scriptable, outputName));
+				Object property = ScriptableObject.getProperty(
+					scriptable, outputName);
+
+				if (property instanceof Wrapper) {
+					property = ((Wrapper)property).unwrap();
+				}
+
+				outputObjects.put(outputName, property);
 			}
 
 			return outputObjects;

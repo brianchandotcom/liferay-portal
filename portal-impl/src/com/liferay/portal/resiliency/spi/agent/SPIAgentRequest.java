@@ -115,6 +115,10 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 			request, Direction.REQUEST);
 		headerMap = extractRequestHeaders(request);
 		parameterMap = request.getParameterMap();
+		remoteAddr = request.getRemoteAddr();
+		remoteHost = request.getRemoteHost();
+		remotePort = request.getRemotePort();
+		remoteUser = request.getRemoteUser();
 		serverName = request.getServerName();
 		serverPort = request.getServerPort();
 
@@ -286,6 +290,10 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 	protected Map<String, Serializable> originalSessionAttributes;
 	protected Map<String, String[]> parameterMap;
 	protected Map<String, List<String>> regularParameterMap;
+	protected String remoteAddr;
+	protected String remoteHost;
+	protected int remotePort;
+	protected String remoteUser;
 	protected File requestBodyFile;
 	protected String serverName;
 	protected int serverPort;
@@ -382,6 +390,26 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 		@Override
 		public String[] getParameterValues(String name) {
 			return parameterMap.get(name);
+		}
+
+		@Override
+		public String getRemoteAddr() {
+			return remoteAddr;
+		}
+
+		@Override
+		public String getRemoteHost() {
+			return remoteHost;
+		}
+
+		@Override
+		public int getRemotePort() {
+			return remotePort;
+		}
+
+		@Override
+		public String getRemoteUser() {
+			return remoteUser;
 		}
 
 		@Override

@@ -142,22 +142,11 @@
 		</execute>
 
 		<execute macro="SitesDirectory#viewListHierarchyPG">
-			<var name="siteName" value="Liferay" />
-		</execute>
-
-		<execute macro="SitesDirectory#viewListHierarchyPG">
-			<var name="siteName" value="${siteName}" />
-			<var name="childSiteName" value="${childSiteName1}" />
-		</execute>
-
-		<execute macro="SitesDirectory#viewListHierarchyPG">
-			<var name="siteName" value="${siteName}" />
-			<var name="childSiteName" value="${childSiteName2}" />
-		</execute>
-
-		<execute macro="SitesDirectory#viewListHierarchyPG">
-			<var name="siteName" value="${siteName}" />
-			<var name="childSiteName" value="${childSiteName3}" />
+			<var name="availableSiteName" value="Liferay" />
+			<var name="currentSiteName" value="${siteName}" />
+			<var name="childSiteName1" value="${childSiteName1}" />
+			<var name="childSiteName2" value="${childSiteName2}" />
+			<var name="childSiteName3" value="${childSiteName3}" />
 		</execute>
 	</command>
 </definition>

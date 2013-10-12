@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <!--LIST_HIERARCHY-->
 <tr>
-	<td>LIST_HIERARCHY_PARENT_SITE</td>
+	<td>LIST_HIERARCHY_PARENT_SITE_AVAILABLE</td>
 	<td>//ul[@class='sites level-1']/li[contains(.,'${key_siteName}')]/a</td>
 	<td></td>
 </tr>

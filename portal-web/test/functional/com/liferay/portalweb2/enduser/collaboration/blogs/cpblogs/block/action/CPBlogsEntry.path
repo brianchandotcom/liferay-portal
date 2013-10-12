@@ -193,7 +193,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_SUCCESS</td>
-	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td>//div[contains(@class,'lfr-message-response alert alert-success')]</td>
 	<td></td>
 </tr>
 <tr>

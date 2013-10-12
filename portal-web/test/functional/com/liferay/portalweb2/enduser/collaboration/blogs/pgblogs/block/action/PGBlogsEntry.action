@@ -1,10 +1,23 @@
 <definition>
-	<command name="click">
-		<case locator-key1="COMMENTS_ADD">
-			<execute function="Click#textClickAt" value1="Be the first." />
+	<command name="assertClick">
+		<case comparator="startsWith" locator-key1="COMMENT">
+			<execute function="AssertClick#assertTextClickWaitForInlineCKEditor" />
 		</case>
-		<case locator-key1="COMMENTS_REPLY_BUTTON">
-			<execute function="Click#textClickAt" value1="Reply" />
+	</command>
+
+	<command name="assertTextEquals">
+		<case comparator="startsWith" locator-key1="COMMENT">
+			<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case comparator="startsWith" locator-key1="COMMENT">
+			<execute function="Click#clickWaitForInlineCKEditor" />
+		</case>
+
+		<case comparator="startsWith" locator-key1="YOUR_RATING_STAR_EMPTY_">
+			<execute function="Click#clickWaitForInlineCKEditor" />
 		</case>
 	</command>
 </definition>

@@ -15,6 +15,18 @@
 		<execute selenium="assertText" />
 	</command>
 
+	<command name="assertTextWaitForCKEditor">
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
+
+		<execute function="AssertTextEquals#assertText" />
+	</command>
+
+	<command name="assertTextWaitForInlineCKEditor">
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" />
+
+		<execute function="AssertTextEquals#assertText" />
+	</command>
+
 	<command name="assertValue">
 		<execute selenium="waitForVisible" />
 

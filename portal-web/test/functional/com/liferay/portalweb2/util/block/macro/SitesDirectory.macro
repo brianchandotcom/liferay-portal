@@ -42,26 +42,27 @@
 	</command>
 
 	<command name="viewListHierarchyPG">
-		<var name="key_siteName" value="${siteName}" />
+		<var name="key_siteName" value="${availableSiteName}" />
 
-		<if>
-			<condition action="PGSitesdirectory#isTextEqual" locator1="//h1[@class='site-title']//span[@class='site-name']" value1="${siteName}" />
-			<then>
-				<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE_CURRENT" value1="${siteName}" />
-			</then>
+		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE_AVAILABLE" value1="${availableSiteName}" />
 
-			<else>
-				<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE" value1="${siteName}" />
-			</else>
-		</if>
+		<var name="key_siteName" value="${currentSiteName}" />
 
-		<if>
-			<isset var="childSiteName" />
-			<then>
-				<var name="key_childSiteName" value="${childSiteName}" />
+		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_PARENT_SITE_CURRENT" value1="${currentSiteName}" />
 
-				<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName}" />
-			</then>
-		</if>
+		<var name="key_childSiteName" value="${childSiteName1}" />
+		<var name="key_siteName" value="${currentSiteName}" />
+
+		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName1}" />
+
+		<var name="key_childSiteName" value="${childSiteName2}" />
+		<var name="key_siteName" value="${currentSiteName}" />
+
+		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName2}" />
+
+		<var name="key_childSiteName" value="${childSiteName3}" />
+		<var name="key_siteName" value="${currentSiteName}" />
+
+		<execute action="PGSitesdirectory#assertTextEquals" locator-key1="LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName3}" />
 	</command>
 </definition>

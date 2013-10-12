@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AVAILABLE_TRANSLATION</td>
+	<td>//a[contains(@class,'journal-article-translation-') and contains(.,'${key_webContentTranslationLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
 	<td></td>

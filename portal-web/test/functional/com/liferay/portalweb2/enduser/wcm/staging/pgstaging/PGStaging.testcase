@@ -261,6 +261,67 @@
 		</execute>
 	</command>
 
+	<command name="AssertEditWebContentStaging">
+		<var name="pageName" value="Staging Test Page" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentTitle" value="Web Content Title" />
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+
+		<execute macro="WebContent#viewEditWCViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="WebContent#viewNoEditWCViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#deactivateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="WebContent#viewEditWCViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+		</execute>
+	</command>
+
 	<command name="DeactivateStaging">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="pageType" value="Site" />

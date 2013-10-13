@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.workflow;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.io.InputStream;
-
 import java.util.List;
 
 /**
@@ -32,11 +30,11 @@ import java.util.List;
 public class WorkflowDefinitionManagerUtil {
 
 	public static WorkflowDefinition deployWorkflowDefinition(
-			long companyId, long userId, String title, InputStream inputStream)
+			long companyId, long userId, String title, byte[] definitionData)
 		throws WorkflowException {
 
 		return getWorkflowDefinitionManager().deployWorkflowDefinition(
-			companyId, userId, title, inputStream);
+			companyId, userId, title, definitionData);
 	}
 
 	public static int getActiveWorkflowDefinitionCount(long companyId)
@@ -152,10 +150,11 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, name, version, title);
 	}
 
-	public static void validateWorkflowDefinition(InputStream inputStream)
+	public static void validateWorkflowDefinition(byte[] definitionData)
 		throws WorkflowException {
 
-		getWorkflowDefinitionManager().validateWorkflowDefinition(inputStream);
+		getWorkflowDefinitionManager().validateWorkflowDefinition(
+			definitionData);
 	}
 
 	public void setWorkflowDefinitionManager(

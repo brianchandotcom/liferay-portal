@@ -1,0 +1,18 @@
+<definition>
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<if>
+			<condition action="CPTags#isElementPresent" locator-key1="TAG_GENERIC" />
+			<then>
+				<execute action="CPTags#check" locator-key1="ALL_TAGS_CHECKBOX" />
+				<execute action="CPTags#assertClick" locator-key1="ACTIONS" value1="Actions" />
+				<execute action="CPTags#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPTags#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected tags?" />
+				<execute action="CPTags#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no tags." />
+			</then>
+		</if>
+	</command>
+</definition>

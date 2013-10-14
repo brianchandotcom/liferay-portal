@@ -205,11 +205,9 @@ else {
 	</aui:fieldset>
 
 	<aui:button-row cssClass="lfr-add-page-toolbar">
-		<div class="pull-right">
-			<aui:button id="addLayoutSubmit" type="submit" value="add-page" />
+		<aui:button id="addLayoutSubmit" type="submit" value="add-page" />
 
-			<aui:button id="addLayoutCancel" name="cancelAddOperation" value="cancel" />
-		</div>
+		<aui:button id="addLayoutCancel" name="cancelAddOperation" value="cancel" />
 	</aui:button-row>
 </aui:form>
 

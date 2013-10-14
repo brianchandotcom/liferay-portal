@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +41,28 @@ public class FooService {
 		List<Long> longs, int[] ints, Map<String, Long> map) {
 
 		return longs.size() + ints.length + map.size();
+	}
+
+	public static String complexWithArrays(
+		List<Long[]> longArrays, Map<String, String[]> mapNames) {
+
+		StringBuilder result = new StringBuilder();
+
+		for (Long[] longArray : longArrays) {
+			result.append(Arrays.toString(longArray));
+			result.append('|');
+		}
+
+		result.append('*');
+
+		for (Map.Entry<String, String[]> entry : mapNames.entrySet()) {
+			result.append(entry.getKey());
+			result.append("=");
+			result.append(Arrays.toString(entry.getValue()));
+			result.append('|');
+		}
+
+		return result.toString();
 	}
 
 	public static FooData getFooData(int id) {

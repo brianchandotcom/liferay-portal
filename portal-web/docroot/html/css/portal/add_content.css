@@ -6,15 +6,12 @@
 
 	.add-content-menu .lfr-add-page-toolbar {
 		bottom: 0;
+		margin-bottom: 0;
 		margin-top: 0;
-		position: relative;
-		width: 100%;
-
-		@include respond-to(phone) {
-			.pull-right {
-				float: none;
-			}
-		}
+		padding: 10px 15px;
+		position: fixed;
+		text-align: right;
+		width: 295px;
 	}
 
 	.lfr-page-template-description {

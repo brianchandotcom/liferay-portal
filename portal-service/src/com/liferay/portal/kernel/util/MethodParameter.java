@@ -160,7 +160,16 @@ public class MethodParameter {
 			else if (c == CharPool.OPEN_BRACKET) {
 				className = className.replace(CharPool.SLASH, CharPool.PERIOD);
 
-				types[i] = contextClassLoader.loadClass(className);
+				try {
+					types[i] = contextClassLoader.loadClass(className);
+				}
+				catch (ClassNotFoundException e) {
+
+					// starting from JDK6, native array classes can be loaded
+					// with Class.forName()
+
+					types[i] = Class.forName(className);
+				}
 			}
 			else {
 				throw new ClassNotFoundException(className);

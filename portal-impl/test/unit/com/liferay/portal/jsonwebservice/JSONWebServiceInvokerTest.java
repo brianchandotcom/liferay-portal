@@ -527,6 +527,36 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 	}
 
 	@Test
+	public void testSerializationComplexObjects4() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/complex-with-arrays", params);
+
+		params.put(
+			"longArrays",
+			new long[][] {new long[] {1, 2, 3}, new long[] {8, 9}});
+
+		HashMap<String, String[]> names = new HashMap<String, String[]>();
+		names.put("p1", new String[] {"one", "two"});
+
+		params.put("mapNames", names);
+
+		String json = toJSON(map, "*.longArrays", "*.mapNames.*");
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		Assert.assertEquals(
+			"\"[1, 2, 3]|[8, 9]|*p1=[one, two]|\"", toJSON(invokerResult));
+	}
+
+	@Test
 	public void testSerializationHack() throws Exception {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 

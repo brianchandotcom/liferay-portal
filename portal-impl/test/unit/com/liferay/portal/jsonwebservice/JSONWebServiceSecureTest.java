@@ -49,7 +49,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 			TestCase.fail();
 		}
-		catch (ClassCastException cce) {
+		catch (Exception e) {
 		}
 	}
 
@@ -92,7 +92,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 			TestCase.fail();
 		}
-		catch (ClassCastException cce) {
+		catch (Exception e) {
 		}
 	}
 

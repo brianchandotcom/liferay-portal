@@ -1,0 +1,96 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="PortalSettings#tearDownCP" />
+	</tear-down>
+
+	<command name="AddUserRegRole">
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER" />
+		<var name="permissionDefinition1Value" value="Add User" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Value" value="Access in Control Panel" />
+		<var name="permissionNavigation1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
+		<var name="permissionNavigation1Value" value="General Permissions" />
+		<var name="permissionNavigation2Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
+		<var name="permissionNavigation2Value" value="Users and Organizations" />
+		<var name="roleName" value="Regrole Name" />
+		<var name="user1EmailAddress" value="user1ea@liferay.com" />
+		<var name="user1FirstName" value="user1fn" />
+		<var name="user1LastName" value="user1ln" />
+		<var name="user1ScreenName" value="user1sn" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpRegRoleLoginUserCP">
+			<var name="portletName" value="${portletName1}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not belong to an organization and are not allowed to view other organizations." />
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${user1EmailAddress}" />
+			<var name="userFirstName" value="${user1FirstName}" />
+			<var name="userLastName" value="${user1LastName}" />
+			<var name="userScreenName" value="${user1ScreenName}" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="INFO_MESSAGE" value1="You do not belong to an organization and are not allowed to view other organizations." />
+	</command>
+</definition>

@@ -575,6 +575,35 @@
 	margin-left: 1em;
 }
 
+.lfr-portlet-title-editable {
+	margin-top: 0;
+	z-index: 9999;
+
+	.lfr-portlet-title-editable-content {
+		padding: 0;
+
+		.combobox-content {
+			.field-content .field-input-text {
+				display: block;
+				margin-bottom: 0;
+			}
+
+			.field-label.textfield-label {
+				display: none;
+			}
+
+			.toolbar-content {
+				margin-top: 0;
+				vertical-align: top;
+
+				.btn-group {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+}
+
 .lfr-page-layouts .lfr-layout-template .layout-template-entry {
 	height: 25px;
 	width: 25px;

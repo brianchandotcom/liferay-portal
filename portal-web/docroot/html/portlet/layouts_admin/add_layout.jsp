@@ -99,7 +99,7 @@ else {
 			<div class="span12">
 				<aui:input id="addLayoutName" name="name" />
 
-				<aui:input id="addLayoutHiddenCheckbox" label="hide-from-navigation-menu" name="hidden" />
+				<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />
 
 				<aui:fieldset cssClass="template-selector" label="type">
 					<aui:nav cssClass="nav-list" id="templateList">

@@ -65,6 +65,8 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 	public SanitizerLogWrapper(Log log) {
 		super(log);
+
+		setLogWrapperClassName(SanitizerLogWrapper.class.getName());
 	}
 
 	@Override

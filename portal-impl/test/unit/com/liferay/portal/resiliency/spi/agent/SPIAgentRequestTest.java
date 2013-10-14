@@ -176,6 +176,10 @@ public class SPIAgentRequestTest {
 		_mockHttpServletRequest.addParameter(
 			_PARAMETER_NAME_2, _PARAMETER_VALUE_4);
 		_mockHttpServletRequest.setCookies(_cookie1, _cookie2);
+		_mockHttpServletRequest.setRemoteAddr(_REMOTE_ADDR);
+		_mockHttpServletRequest.setRemoteHost(_REMOTE_HOST);
+		_mockHttpServletRequest.setRemotePort(_REMOTE_PORT);
+		_mockHttpServletRequest.setRemoteUser(_REMOTE_USER);
 		_mockHttpServletRequest.setServerName(_SERVER_NAME);
 		_mockHttpServletRequest.setServerPort(_SERVER_PORT);
 
@@ -569,6 +573,20 @@ public class SPIAgentRequestTest {
 			_PARAMETER_NAME_3);
 
 		Assert.assertEquals(0, parameter3.length);
+
+		// Remote info
+
+		Assert.assertEquals(
+			_REMOTE_ADDR, populatedHttpServletRequest.getRemoteAddr());
+
+		Assert.assertEquals(
+			_REMOTE_HOST, populatedHttpServletRequest.getRemoteHost());
+
+		Assert.assertEquals(
+			_REMOTE_PORT, populatedHttpServletRequest.getRemotePort());
+
+		Assert.assertEquals(
+			_REMOTE_USER, populatedHttpServletRequest.getRemoteUser());
 
 		// Server name
 
@@ -997,6 +1015,14 @@ public class SPIAgentRequestTest {
 	private static final String _PARAMETER_VALUE_3 = "PARAMETER_VALUE_3";
 
 	private static final String _PARAMETER_VALUE_4 = "PARAMETER_VALUE_4";
+
+	private static final String _REMOTE_ADDR = "192.168.1.10";
+
+	private static final String _REMOTE_HOST = "192.168.1.10";
+
+	private static final int _REMOTE_PORT = 12345;
+
+	private static final String _REMOTE_USER = "testUser";
 
 	private static final String _SERVER_NAME = "SERVER_NAME";
 

@@ -38,8 +38,15 @@ if (JournalArticleLocalServiceUtil.hasArticle(termsOfUseArticleGroupId, termsOfU
 else {
 	if (termsOfUseArticleGroupId != 0 || Validator.isNotNull(termsOfUseArticleId)) {
 		if (_log.isErrorEnabled()) {
-			_log.error("groupId: " + termsOfUseArticleGroupId + ", articleId: " + termsOfUseArticleId);
-			_log.error(LanguageUtil.get(pageContext, "no-such-article-exists"));
+			String sb = new StringBundler(5);
+
+			sb.append("A Terms of Use agreement with Group ID ");
+			sb.append(termsOfUseArticleGroupId);
+			sb.append(" and Article ID ");
+			sb.append(termsOfUseArticleId);
+			sb.append(" does not exist");
+
+			_log.error(sb.toString());
 		}
 	}
 }

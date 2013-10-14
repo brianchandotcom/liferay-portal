@@ -86,11 +86,13 @@ if (bodyContent != null) {
 										var handle = Liferay.Data['<%= id %>Handle'];
 
 										if (menuOpen && !handle) {
-											var eventOutside = event._event.type + 'outside';
+											var eventOutside = event._event.type;
 
-											if (eventOutside === 'MSPointerUpoutside') {
-												eventOutside = 'mouseupoutside';
+											if (eventOutside === 'MSPointerUp') {
+												eventOutside = 'mouseup';
 											}
+
+											eventOutside = eventOutside + 'outside';
 
 											handle = currentTarget.on(
 												eventOutside,

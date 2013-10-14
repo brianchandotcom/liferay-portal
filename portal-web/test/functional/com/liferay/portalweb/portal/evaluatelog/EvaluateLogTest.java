@@ -171,6 +171,39 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			// LPS-41257
+
+			if (line.matches(
+					".*The web application \\[\\] created a ThreadLocal with " +
+						"key of type.*")) {
+
+				if (line.contains(
+						"[de.schlichtherle.io.ReentrantReadWriteLock." +
+							"ReadLock]")) {
+
+					continue;
+				}
+
+				if (line.contains(
+						"[de.schlichtherle.io.ReentrantReadWriteLock." +
+							"WriteLock]")) {
+
+					continue;
+				}
+
+				if (line.contains(
+						"[de.schlichtherle.util.regex.ThreadLocalMatcher]")) {
+
+					continue;
+				}
+
+				if (line.contains(
+						"[de.schlichtherle.util.zip.DateTimeConverter$3]")) {
+
+					continue;
+				}
+			}
+
 			System.out.println("\nException Line:\n\n" + line + "\n");
 
 			return false;

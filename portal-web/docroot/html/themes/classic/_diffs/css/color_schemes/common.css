@@ -85,6 +85,10 @@
 			}
 		}
 
+		.lfr-configurator-visibility .portlet-topper {
+			background: transparent;
+		}
+
 		/* ---------- Portlet hover styles ---------- */
 
 		.portlet-borderless-container {

@@ -339,12 +339,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		color: #FFF;
 		padding: 0;
 
-		.lfr-configurator-visibility & {
-			background-color: #7E7E7E;
-			border-color: #959595;
-			color: #222;
-		}
-
 		.portlet-title {
 			font-size: 1em;
 			font-weight: normal;
@@ -363,6 +357,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 			right: 10px;
 			top: 50%;
 		}
+	}
+
+	.lfr-configurator-visibility .portlet-topper {
+		background-color: #A9A9A9;
 	}
 
 	.portlet-borderless-bar .portlet-options {
@@ -570,10 +568,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-topper {
 		@include border-radius(3px 3px 0 0);
-
-		.lfr-configurator-visibility & {
-			background-image: linear-gradient(#BABABA, #7E7E7E);
-		}
 	}
 
 	.dockbar-split .dockbar {

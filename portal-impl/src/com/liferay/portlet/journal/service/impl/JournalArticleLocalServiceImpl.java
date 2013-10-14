@@ -6307,7 +6307,7 @@ public class JournalArticleLocalServiceImpl
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
 
-		if (emailType.equals("requested") || emailType.equals("review")) {
+		if (emailType.equals("requested")) {
 			String tempToName = fromName;
 			String tempToAddress = fromAddress;
 

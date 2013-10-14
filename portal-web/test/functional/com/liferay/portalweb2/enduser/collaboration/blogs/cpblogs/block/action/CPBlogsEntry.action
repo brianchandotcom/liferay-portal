@@ -13,6 +13,10 @@
 		<case comparator="startsWith" locator-key1="COMMENT">
 			<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" />
 		</case>
+
+		<case locator-key1="ENTRY_VOCABULARY">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 
 	<command name="click">

@@ -196,6 +196,12 @@
 	position: fixed;
 }
 
+.mobile {
+	.lfr-upload-container .upload-target .drop-file-text {
+		display: none;
+	}
+}
+
 .ie6 {
 	.lfr-upload-movie {
 		position: static;

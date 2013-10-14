@@ -87,6 +87,10 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			boolean checkViewableGroup, String actionId)
 		throws PortalException, SystemException {
 
+		if (isAttemptToModifyLockedLayout(layout, actionId)) {
+			return false;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, layout.getGroup(), Layout.class.getName(),
 			layout.getGroupId(), null, actionId);
@@ -143,10 +147,6 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			groupId, privateLayout, layoutId);
-
-		if (isAttemptToModifyLockedLayout(layout, actionId)) {
-			return false;
-		}
 
 		return contains(permissionChecker, layout, actionId);
 	}

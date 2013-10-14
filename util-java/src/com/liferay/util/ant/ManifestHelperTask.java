@@ -89,6 +89,9 @@ public class ManifestHelperTask extends Task {
 		project.setProperty(
 			"release.info.code.name", ReleaseInfo.getCodeName());
 		project.setProperty(
+			"release.info.parent.build.number",
+			String.valueOf(ReleaseInfo.getParentBuildNumber()));
+		project.setProperty(
 			"release.info.release.info", ReleaseInfo.getReleaseInfo());
 		project.setProperty(
 			"release.info.server.info", ReleaseInfo.getServerInfo());

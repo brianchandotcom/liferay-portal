@@ -50,6 +50,11 @@ body.portlet {
 				color: #FFF;
 			}
 		}
+
+		.portlet-options .lfr-icon-menu-text {
+			color: transparent;
+			font-size: 0;
+		}
 	}
 }
 

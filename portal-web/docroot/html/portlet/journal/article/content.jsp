@@ -32,11 +32,11 @@ String articleId = BeanParamUtil.getString(article, request, "articleId");
 String newArticleId = ParamUtil.getString(request, "newArticleId");
 String instanceIdKey = PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3;
 
-String structureId = BeanParamUtil.getString(article, request, "structureId");
-
 long ddmStructureGroupId = groupId;
 String ddmStructureName = LanguageUtil.get(pageContext, "default");
 String ddmStructureDescription = StringPool.BLANK;
+
+String structureId = StringPool.BLANK;
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
@@ -58,31 +58,14 @@ if (ddmStructure != null) {
 	}
 }
 
-String templateId = BeanParamUtil.getString(article, request, "templateId");
+String templateId = StringPool.BLANK;
 
 DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
 
 if (ddmTemplate != null) {
 	templateId = ddmTemplate.getTemplateKey();
 }
-
-if ((ddmStructure == null) && (ddmTemplate == null) && Validator.isNotNull(templateId)) {
-	try {
-		ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId, true);
-	}
-	catch (NoSuchTemplateException nste) {
-	}
-
-	if (ddmTemplate != null) {
-		ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmTemplate.getClassPK());
-
-		ddmStructureName = ddmStructure.getName(locale);
-
-		ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(ddmStructureGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmTemplate.getClassPK());
-	}
-}
-
-if ((ddmTemplate == null) && !ddmTemplates.isEmpty()) {
+else if (!ddmTemplates.isEmpty()) {
 	ddmTemplate = ddmTemplates.get(0);
 
 	templateId = ddmTemplate.getTemplateKey();
@@ -243,9 +226,9 @@ if (Validator.isNotNull(content)) {
 
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 										<liferay-ui:icon
-											cssClass="btn"
 											iconClass="icon-search"
 											label="<%= true %>"
+											linkCssClass="btn"
 											message="select"
 											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 										/>

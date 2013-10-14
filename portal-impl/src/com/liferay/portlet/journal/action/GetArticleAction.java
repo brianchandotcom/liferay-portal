@@ -149,12 +149,11 @@ public class GetArticleAction extends Action {
 			return;
 		}
 
-		DDMTemplate ddmTemplate = null;
-
 		try {
-			ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 				article.getGroupId(),
-				PortalUtil.getClassNameId(DDMStructure.class), templateId);
+				PortalUtil.getClassNameId(DDMStructure.class), templateId,
+				true);
 
 			if (Validator.equals(
 					ddmTemplate.getLanguage(),

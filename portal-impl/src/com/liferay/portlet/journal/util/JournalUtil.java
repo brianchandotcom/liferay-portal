@@ -1052,7 +1052,7 @@ public class JournalUtil {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
 			groupId, PortalUtil.getClassNameId(DDMStructure.class),
-			ddmTemplateKey);
+			ddmTemplateKey, true);
 
 		return getTemplateScript(ddmTemplate, tokens, languageId, transform);
 	}

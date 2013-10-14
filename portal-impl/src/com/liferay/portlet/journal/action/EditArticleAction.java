@@ -599,24 +599,10 @@ public class EditArticleAction extends PortletAction {
 		DDMStructure ddmStructure = null;
 
 		if (Validator.isNotNull(structureId)) {
-			try {
-				ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(
-						PortalUtil.getSiteGroupId(groupId),
-						PortalUtil.getClassNameId(JournalArticle.class),
-						structureId);
-			}
-			catch (NoSuchStructureException nsse) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)uploadPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(
-						themeDisplay.getCompanyGroupId(),
-						PortalUtil.getClassNameId(JournalArticle.class),
-						structureId);
-			}
+			ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+				PortalUtil.getSiteGroupId(groupId),
+				PortalUtil.getClassNameId(JournalArticle.class), structureId,
+				true);
 
 			String languageId = toLanguageId;
 

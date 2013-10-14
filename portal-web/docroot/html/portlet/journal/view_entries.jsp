@@ -87,13 +87,12 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 		DDMStructure ddmStructure = null;
 
 		try {
-			ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
+			ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId(), true);
+
+			ddmStructureName = ddmStructure.getName(locale);
 		}
 		catch (NoSuchStructureException nsse) {
-			ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
 		}
-
-		ddmStructureName = ddmStructure.getName(locale);
 	}
 	%>
 

@@ -204,22 +204,10 @@ public class ActionUtil {
 			try {
 				ddmStructure = DDMStructureServiceUtil.getStructure(
 					groupId, PortalUtil.getClassNameId(JournalArticle.class),
-					structureId);
+					structureId, true);
 			}
 			catch (NoSuchStructureException nsse1) {
-				if (groupId == themeDisplay.getCompanyGroupId()) {
-					return;
-				}
-
-				try {
-					ddmStructure = DDMStructureServiceUtil.getStructure(
-						themeDisplay.getCompanyGroupId(),
-						PortalUtil.getClassNameId(JournalArticle.class),
-						structureId);
-				}
-				catch (NoSuchStructureException nsse2) {
-					return;
-				}
+				return;
 			}
 
 			article = JournalArticleServiceUtil.getArticle(
@@ -425,7 +413,7 @@ public class ActionUtil {
 		if (Validator.isNotNull(templateId)) {
 			ddmTemplate = DDMTemplateServiceUtil.getTemplate(
 				groupId, PortalUtil.getClassNameId(DDMStructure.class),
-				templateId);
+				templateId, true);
 		}
 
 		request.setAttribute(WebKeys.JOURNAL_TEMPLATE, ddmTemplate);

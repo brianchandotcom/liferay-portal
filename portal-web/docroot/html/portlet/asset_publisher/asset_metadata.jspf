@@ -84,14 +84,14 @@ for (int j = 0; j < metadataFields.length; j++) {
 					<liferay-ui:asset-categories-summary
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK () %>"
-						portletURL='<%= selectionStyle.equals("manual") ? null : renderResponse.createRenderURL() %>'
+						portletURL="<%= renderResponse.createRenderURL() %>"
 					/>
 				</c:when>
 				<c:when test='<%= value.equals("tags") %>' >
 					<liferay-ui:asset-tags-summary
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK () %>"
-						portletURL='<%= selectionStyle.equals("manual") ? null : renderResponse.createRenderURL() %>'
+						portletURL="<%= renderResponse.createRenderURL() %>"
 					/>
 				</c:when>
 				<c:otherwise>

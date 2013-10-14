@@ -583,7 +583,7 @@ public abstract class BaseWebDriverImpl
 		String slash = "/";
 
 		if (OSDetector.isWindows()) {
-			slash = StringUtil.replace(slash, "/", "\\");
+			slash = "\\";
 		}
 
 		uploadFile(location, TestPropsValues.OUTPUT_DIR + slash + value);

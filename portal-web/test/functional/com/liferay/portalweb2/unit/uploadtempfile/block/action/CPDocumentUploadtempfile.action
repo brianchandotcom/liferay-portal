@@ -1,7 +1,0 @@
-<definition>
-	<command name="uploadTempFile">
-		<default>
-			<execute function="UploadTempFile#uploadTempFile" />
-		</default>
-	</command>
-</definition>

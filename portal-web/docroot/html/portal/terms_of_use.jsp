@@ -25,31 +25,8 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
 }
 
-long companyId = themeDisplay.getCompanyId();
-
-long termsOfUseArticleGroupId = PrefsPropsUtil.getLong(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
-String termsOfUseArticleId = PrefsPropsUtil.getString(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
-
-boolean doesTermsArticleExist = false;
-
-if (JournalArticleLocalServiceUtil.hasArticle(termsOfUseArticleGroupId, termsOfUseArticleId)) {
-	doesTermsArticleExist = true;
-}
-else {
-	if (termsOfUseArticleGroupId != 0 || Validator.isNotNull(termsOfUseArticleId)) {
-		if (_log.isWarnEnabled()) {
-			String sb = new StringBundler(5);
-
-			sb.append("A Terms of Use agreement with Group ID ");
-			sb.append(termsOfUseArticleGroupId);
-			sb.append(" and Article ID ");
-			sb.append(termsOfUseArticleId);
-			sb.append(" does not exist");
-
-			_log.warn(sb.toString());
-		}
-	}
-}
+long termsOfUseArticleGroupId = PrefsPropsUtil.getLong(themeDisplay.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
+String termsOfUseArticleId = PrefsPropsUtil.getString(themeDisplay.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_terms_of_use" %>' name="fm">
@@ -57,10 +34,27 @@ else {
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 
 	<c:choose>
-		<c:when test="<%= doesTermsArticleExist %>">
+		<c:when test="<%= JournalArticleLocalServiceUtil.hasArticle(termsOfUseArticleGroupId, termsOfUseArticleId) %>">
 			<liferay-ui:journal-article articleId="<%= termsOfUseArticleId %>" groupId="<%= termsOfUseArticleGroupId %>" />
 		</c:when>
 		<c:otherwise>
+
+			<%
+			if ((termsOfUseArticleGroupId > 0) || Validator.isNotNull(termsOfUseArticleId)) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("A Terms of Use Agreement with Group ID ");
+					sb.append(termsOfUseArticleGroupId);
+					sb.append(" and Article ID ");
+					sb.append(termsOfUseArticleId);
+					sb.append(" does not exist");
+
+					_log.warn(sb.toString());
+				}
+			}
+			%>
+
 			Welcome to our site. We maintain this web site as a service to our members. By using our site, you are agreeing to comply with and be bound by the following terms of use. Please review the following terms carefully. If you do not agree to these terms, you should not use this site.
 
 			<br /><br />
@@ -242,5 +236,5 @@ else {
 </aui:form>
 
 <%!
-	private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portal.terms_of-use_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portal.terms_of-use_jsp");
 %>

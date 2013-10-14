@@ -27,18 +27,18 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 
 long companyId = themeDisplay.getCompanyId();
 
-long termsArticleGroupId = PrefsPropsUtil.getLong(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
-String termsArticleId = PrefsPropsUtil.getString(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
+long termsOfUseArticleGroupId = PrefsPropsUtil.getLong(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
+String termsOfUseArticleId = PrefsPropsUtil.getString(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
 
 boolean doesTermsArticleExist = false;
 
-if (JournalArticleLocalServiceUtil.hasArticle(termsArticleGroupId, termsArticleId)) {
+if (JournalArticleLocalServiceUtil.hasArticle(termsOfUseArticleGroupId, termsOfUseArticleId)) {
 	doesTermsArticleExist = true;
 }
 else {
-	if (termsArticleGroupId != 0 || Validator.isNotNull(termsArticleId)) {
+	if (termsOfUseArticleGroupId != 0 || Validator.isNotNull(termsOfUseArticleId)) {
 		if (_log.isErrorEnabled()) {
-			_log.error("groupId: " + termsArticleGroupId + ", articleId: " + termsArticleId);
+			_log.error("groupId: " + termsOfUseArticleGroupId + ", articleId: " + termsOfUseArticleId);
 			_log.error(LanguageUtil.get(pageContext, "no-such-article-exists"));
 		}
 	}
@@ -51,7 +51,7 @@ else {
 
 	<c:choose>
 		<c:when test="<%= doesTermsArticleExist %>">
-			<liferay-ui:journal-article articleId="<%= termsArticleId %>" groupId="<%= termsArticleGroupId %>" />
+			<liferay-ui:journal-article articleId="<%= termsOfUseArticleId %>" groupId="<%= termsOfUseArticleGroupId %>" />
 		</c:when>
 		<c:otherwise>
 			Welcome to our site. We maintain this web site as a service to our members. By using our site, you are agreeing to comply with and be bound by the following terms of use. Please review the following terms carefully. If you do not agree to these terms, you should not use this site.

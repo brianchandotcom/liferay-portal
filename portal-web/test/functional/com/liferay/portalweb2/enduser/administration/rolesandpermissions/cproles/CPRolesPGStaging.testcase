@@ -25,8 +25,10 @@
 
 	<tear-down>
 		<execute macro="Role#tearDownCP" />
-		<execute macro="Site#tearDownCP" />
+
 		<execute macro="User#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
 	<command name="AccessStaging">
@@ -85,8 +87,8 @@
 
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_SITE_VIEW_STAGING" />
-			<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
 			<var name="permissionDefinitionValue" value="View Staging" />
+			<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
 			<var name="permissionNavigationValue" value="Sites" />
 			<var name="roleName" value="Regrole Name" />
 		</execute>

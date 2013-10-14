@@ -2,7 +2,10 @@
 	<var name="siteName" value="Site Name" />
 
 	<set-up>
-		<execute macro="User#firstLoginPG" />
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -274,8 +277,8 @@
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentTitle" value="Web Content Title" />
 			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="WebContent#viewEditWCViaWCD">

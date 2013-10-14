@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 
-import java.io.InputStream;
-
 import java.util.List;
 
 /**
@@ -35,7 +33,7 @@ public class WorkflowDefinitionManagerProxyBean
 
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
-		long companyId, long userId, String title, InputStream inputStream) {
+		long companyId, long userId, String title, byte[] definitionData) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -128,7 +126,7 @@ public class WorkflowDefinitionManagerProxyBean
 	}
 
 	@Override
-	public void validateWorkflowDefinition(InputStream inputStream) {
+	public void validateWorkflowDefinition(byte[] definitionData) {
 		throw new UnsupportedOperationException();
 	}
 

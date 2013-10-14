@@ -21,6 +21,10 @@
 	<tear-down>
 		<execute macro="WebContent#tearDownCP" />
 
+		<execute macro="Vocabulary#tearDownCP" />
+
+		<execute macro="Tag#tearDownCP" />
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
@@ -113,6 +117,181 @@
 			<var name="webContentSearchResultsContent" value="${webContentContent}" />
 			<var name="webContentSearchResultsName" value="${webContentTitle}" />
 			<var name="webContentSearchTerm" value="Content1" />
+		</execute>
+	</command>
+
+	<command name="SearchWebContentCategory">
+		<var name="categoryName" value="Category Name" />
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="portletName" value="Web Content Display" />
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addCategoryPGViaWCD">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${webContentSearchPageName}" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="${categoryName}" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="Category" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="Name" />
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="Category1" />
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="Name1" />
+		</execute>
+	</command>
+
+	<command name="SearchWebContentCategoryQuotes">
+		<var name="categoryName" value="Category Name" />
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="portletName" value="Web Content Display" />
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addCategoryPGViaWCD">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${webContentSearchPageName}" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"Category Name"</var>
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"Category"</var>
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"Name"</var>
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"Category Name1"</var>
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"Category1"</var>
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"Name1"</var>
 		</execute>
 	</command>
 
@@ -237,6 +416,151 @@
 			<var name="webContentSearchResultsContent" value="${webContentContent}" />
 			<var name="webContentSearchResultsName" value="${webContentTitle}" />
 			<var name="webContentSearchTerm">"WC WebContent Content1"</var>
+		</execute>
+	</command>
+
+	<command name="SearchWebContentTag">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="portletName" value="Web Content Display" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="tagName" value="tag name" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addTagPGViaWCD">
+			<var name="tagName" value="${tagName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${webContentSearchPageName}" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="${tagName}" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="tag" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="name" />
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="tag1" />
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="name1" />
+		</execute>
+	</command>
+
+	<command name="SearchWebContentTagQuotes">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="portletName" value="Web Content Display" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="tagName" value="tag name" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addTagPGViaWCD">
+			<var name="tagName" value="${tagName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${webContentSearchPageName}" />
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"tag name"</var>
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"tag"</var>
+		</execute>
+
+		<execute macro="WebContent#searchPGViaWCS">
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"name"</var>
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"tag name1"</var>
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"tag1"</var>
+		</execute>
+
+		<execute macro="WebContent#searchNoPGViaWCS">
+			<var name="webContentSearchNoResults" value="true" />
+			<var name="webContentSearchResultsContent" value="${webContentContent}" />
+			<var name="webContentSearchResultsName" value="${webContentTitle}" />
+			<var name="webContentSearchTerm">"name1"</var>
 		</execute>
 	</command>
 </definition>

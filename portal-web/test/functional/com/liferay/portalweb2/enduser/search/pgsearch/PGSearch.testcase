@@ -29,6 +29,10 @@
 
 		<execute macro="WikiPage#tearDownCP" />
 
+		<execute macro="Vocabulary#tearDownCP" />
+
+		<execute macro="Tag#tearDownCP" />
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
@@ -135,6 +139,174 @@
 			<var name="searchAssetType" value="Blogs Entry" />
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="Title1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryCategory">
+		<var name="categoryName" value="Category Name" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCategoryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="${categoryName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Category" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="Name" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Category1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="Name1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryCategoryQuotes">
+		<var name="categoryName" value="Category Name" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCategoryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Category Name"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Category"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"Name"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Category Name1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Category1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"Name1"</var>
 		</execute>
 	</command>
 
@@ -286,6 +458,144 @@
 			<var name="searchAssetType" value="Blogs Entry" />
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm">"Blogs Entry Content1"</var>
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTag">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="tagName" value="tag name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addTagCP">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="tagName" value="${tagName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="${tagName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="tag" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm" value="name" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="tag1" />
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="name1" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntryTagQuotes">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="tagName" value="tag name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addTagCP">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="tagName" value="${tagName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${searchPageName}" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"tag name"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"tag"</var>
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchTerm">"name"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"tag name1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"tag1"</var>
+		</execute>
+
+		<execute macro="Search#searchNoPG">
+			<var name="searchAssetSummary" value="${entryContent}" />
+			<var name="searchAssetTitle" value="${entryTitle}" />
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchNoResults" value="true" />
+			<var name="searchTerm">"name1"</var>
 		</execute>
 	</command>
 

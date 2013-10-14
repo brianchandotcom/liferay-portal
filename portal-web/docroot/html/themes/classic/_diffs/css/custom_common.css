@@ -158,42 +158,6 @@
 		background: #E4F5FC;
 	}
 
-	.tree-node {
-		.icon-check {
-			padding-right: 2px;
-
-			&:before {
-				content: "\f096";
-			}
-		}
-
-		.tree-node-checked {
-			.icon-check {
-				padding-right: 0;
-
-				&:before {
-					content: "\f046";
-				}
-			}
-		}
-
-		.tree-node-over .tree-label {
-			text-decoration: underline;
-		}
-
-		[class ^="icon-"] {
-			margin-right: 3px;
-		}
-
-		.tree-node-checkbox-container {
-			margin-right: 0;
-		}
-
-		.tree-node-selected .tree-label {
-			background: none;
-		}
-	}
-
 	/* ---------- Main ---------- */
 
 	.previous-level {

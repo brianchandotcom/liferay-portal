@@ -1,5 +1,7 @@
 @import "compass";
 
+@import "aui/alloy-font-awesome/scss/variables";
+
 /* ---------- Dragging/sorting indicators ---------- */
 
 .portlet-layout.dragging {
@@ -386,6 +388,42 @@
 
 /* ---------- Tree view ---------- */
 
+.tree-node {
+	.icon-check {
+		padding-right: 2px;
+
+		&:before {
+			content: $check-empty;
+		}
+	}
+
+	.tree-node-checked {
+		.icon-check {
+			padding-right: 0;
+
+			&:before {
+				content: $check;
+			}
+		}
+	}
+
+	.tree-node-over .tree-label {
+		text-decoration: underline;
+	}
+
+	[class ^="icon-"] {
+		margin-right: 5px;
+	}
+
+	.tree-node-checkbox-container {
+		margin-right: 0;
+	}
+
+	.tree-node-selected .tree-label {
+		background: none;
+	}
+}
+
 .tree-node-content {
 	.tree-hitarea {
 		color: #999;
@@ -394,7 +432,7 @@
 	}
 
 	.tree-label {
-		margin-left: 5px;
+		margin-left: 3px;
 	}
 
 	.tree-node-hidden-hitarea {

@@ -55,6 +55,8 @@ public interface Log {
 
 	public boolean isWarnEnabled();
 
+	public void setLogWrapperClassName(String className);
+
 	public void trace(Object msg);
 
 	public void trace(Object msg, Throwable t);

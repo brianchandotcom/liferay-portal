@@ -45,7 +45,14 @@ if (curTagsParam != null) {
 	<input class="lfr-tag-selector-input" id="<%= id %>assetTagNames" size="15" title="<liferay-ui:message key="add-tags" />" type="text" />
 </div>
 
-<aui:script use="liferay-asset-tags-selector">
+<aui:script use="aui-char-counter,liferay-asset-tags-selector">
+	new A.CharCounter(
+		{
+			input: '#<%= id %>assetTagNames',
+			maxLength: 75
+		}
+	);
+
 	new Liferay.AssetTagsSelector(
 		{
 			allowSuggestions: <%= PropsValues.ASSET_TAG_SUGGESTIONS_ENABLED %>,

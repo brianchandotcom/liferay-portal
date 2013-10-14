@@ -109,6 +109,10 @@
 		}
 	}
 
+	.textboxlistentry-content{
+		word-break: break-all;
+	}
+
 	.textboxlistentry-remove {
 		padding: 0 3px 1px;
 	}

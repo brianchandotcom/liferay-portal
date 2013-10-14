@@ -104,7 +104,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 
 			// LPS-33951
 
-			if (!A.UA.firefox) {
+			if (!A.UA.gecko) {
 				hash = A.QueryString.unescape(hash);
 			}
 

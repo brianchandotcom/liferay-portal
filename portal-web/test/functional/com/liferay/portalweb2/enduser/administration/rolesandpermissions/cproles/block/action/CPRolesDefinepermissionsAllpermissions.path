@@ -50,8 +50,34 @@
 </tr>
 <!--CONTROL_PANEL_GENERAL_PERMISSIONS-->
 <tr>
+	<td>CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE</td>
+	<td>//input[@value='90ADD_COMMUNITY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE_TEMPLATE</td>
+	<td>//input[@value='90ADD_LAYOUT_SET_PROTOTYPE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER</td>
+	<td>//input[@value='90ADD_USER']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL</td>
 	<td>//input[@value='90VIEW_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS-->
+<tr>
+	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL</td>
+	<td>//input[@value='125ACCESS_IN_CONTROL_PANEL']</td>
 	<td></td>
 </tr>
 <tr>

@@ -80,6 +80,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTROL_PANEL_USERS-->
+<tr>
+	<td>CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS</td>
+	<td>//div[contains(.,'Users') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Users and Organizations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONTROL_PANEL_SITES-->
 <tr>
 	<td>CONTROL_PANEL_SITES_SITES</td>

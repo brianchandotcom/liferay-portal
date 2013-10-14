@@ -251,17 +251,33 @@
 </tr>
 <!--CONTROL_PANEL-->
 <tr>
-	<td>CONTROL_PANEL_CATEGORY_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed')]/div[contains(.,'${key_portletCategoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTROL_PANEL_CATEGORY_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded')]/div[contains(.,'${key_portletCategoryName}')]</td>
+	<td>CONTROL_PANEL_INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTROL_PANEL_NAVIGATION</td>
+	<td>//ul[@class='unstyled']/li/span/a[contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMINISTRATION-->
+<tr>
+	<td>SITE_ADMINISTRATION_CATEGORY_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div[contains(.,'${key_portletCategoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMINISTRATION_CATEGORY_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded')]/div[contains(.,'${key_portletCategoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMINISTRATION_NAVIGATION</td>
 	<td>//ul[@class='category-portlets']/li[contains(.,'${key_portletName}')]/a</td>
 	<td></td>
 </tr>

@@ -508,8 +508,8 @@ $editLayoutPanelWidth: 460px;
 
 		@include respond-to(phone) {
 			height: 100%;
-			padding-top: 0;
 			padding-bottom: 0;
+			padding-top: 0;
 			position: absolute;
 		}
 	}

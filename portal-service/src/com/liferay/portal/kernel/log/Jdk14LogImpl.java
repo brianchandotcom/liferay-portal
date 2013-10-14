@@ -121,6 +121,10 @@ public class Jdk14LogImpl implements Log {
 	}
 
 	@Override
+	public void setLogWrapperClassName(String className) {
+	}
+
+	@Override
 	public void trace(Object msg) {
 		_log.log(Level.FINEST, msg.toString());
 	}

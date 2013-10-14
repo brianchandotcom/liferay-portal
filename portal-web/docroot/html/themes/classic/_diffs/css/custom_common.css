@@ -154,7 +154,7 @@
 		}
 	}
 
-	.tree-node-selected .tree-label {
+	.lfr-tree .tree-node .tree-node-selected .tree-label {
 		background: #E4F5FC;
 	}
 

@@ -32,7 +32,7 @@ boolean cdnDynamicResourcesEnabled = PrefsPropsUtil.getBoolean(company.getCompan
 String defaultLandingPagePath = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LANDING_PAGE_PATH, PropsValues.DEFAULT_LANDING_PAGE_PATH);
 String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LOGOUT_PAGE_PATH, PropsValues.DEFAULT_LOGOUT_PAGE_PATH);
 
-String termsOfUseArticleGroupId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, String.valueOf(PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID));
+int termsOfUseArticleGroupId = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
 String termsOfUseArticleId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
 %>
 

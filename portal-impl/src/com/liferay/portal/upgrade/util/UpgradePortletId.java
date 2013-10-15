@@ -262,9 +262,13 @@ public class UpgradePortletId extends UpgradeProcess {
 			sb.append("select plid, typeSettings from Layout where ");
 			sb.append("typeSettings like '%=");
 			sb.append(oldRootPortletId);
+			sb.append(",%' OR typeSettings like '%=");
+			sb.append(oldRootPortletId);
+			sb.append("\n%' OR typeSettings like '%,");
+			sb.append(oldRootPortletId);
 			sb.append(",%' OR typeSettings like '%,");
 			sb.append(oldRootPortletId);
-			sb.append(",%' OR typeSettings like '%=");
+			sb.append("\n%' OR typeSettings like '%=");
 			sb.append(oldRootPortletId);
 			sb.append("_INSTANCE_%' OR typeSettings like '%,");
 			sb.append(oldRootPortletId);

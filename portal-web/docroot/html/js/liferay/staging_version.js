@@ -159,13 +159,17 @@ AUI.add(
 				_onSubmit: function(event) {
 					var instance = this;
 
-					var layoutRevisionInfo = A.byIdNS(instance._namespace, 'layoutRevisionDetails').one('.layout-revision-info');
+					var namespace = instance._namespace;
+
+					var layoutRevisionDetails = A.byIdNS(namespace, 'layoutRevisionDetails');
+
+					var layoutRevisionInfo = layoutRevisionDetails.one('.layout-revision-info');
 
 					if (layoutRevisionInfo) {
 						layoutRevisionInfo.addClass('loading');
 					}
 
-					var submitLink = A.byIdNS(instance._namespace, 'submitLink');
+					var submitLink = A.byIdNS(namespace, 'submitLink');
 
 					if (submitLink) {
 						submitLink.html(Liferay.Language.get('loading') + '...');
@@ -176,8 +180,6 @@ AUI.add(
 						{
 							after: {
 								failure: function() {
-									var layoutRevisionDetails = A.byIdNS(instance._namespace, 'layoutRevisionDetails');
-
 									layoutRevisionDetails.addClass('alert alert-error');
 
 									layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'));

@@ -74,15 +74,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.dockbar {
 		&.navbar {
-			.container .btn {
-				border-color: transparent;
-
-				&:hover, &:focus {
-					background-color: transparent;
-					text-decoration: underline;
-				}
-			}
-
 			.nav {
 				li {
 					&.dropdown {
@@ -141,6 +132,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 					color: #FFF;
 					font-size: 12px;
 				}
+			}
+		}
+
+		.page-customization-bar .btn {
+			border-color: transparent;
+
+			&:hover, &:focus {
+				background: transparent;
+				text-decoration: underline;
 			}
 		}
 	}
@@ -209,10 +209,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background-color: #6DA4E4;
 				background-color: rgba(109, 168, 228, 0.9);
 				line-height: 20px;
-
-				.btn:hover {
-					background: transparent;
-				}
 			}
 
 			.page-customization-bar-text {

@@ -118,7 +118,7 @@ else {
 
 		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' />
 
-		<aui:script position="inline" use="aui-base,event-mouseenter">
+		<aui:script use="aui-base">
 			var taglibWorflowStatus = A.one('.layout-revision-info').one('.taglib-workflow-status');
 
 			if (taglibWorflowStatus) {
@@ -232,7 +232,7 @@ else {
 				}
 				%>
 
-				<aui:script use="aui-base,event-mouseenter">
+				<aui:script use="aui-base">
 					var submitLink = A.one('.submit-link');
 
 					if (submitLink) {

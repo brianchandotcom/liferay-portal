@@ -80,7 +80,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 		</div>
 	</div>
 
-	<aui:script use="aui-base,event-mouseenter">
+	<aui:script use="aui-base">
 		var layoutSetBranchSelector = A.one('.layout-set-branch-selector');
 
 		if (layoutSetBranchSelector) {

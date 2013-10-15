@@ -5,7 +5,16 @@
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
-		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<if>
+			<equals arg1="${uploadTempFile}" arg2="true" />
+			<then>
+				<execute action="CPDocumentsandmediaAdddocument#uploadTempFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+			</then>
+			<else>
+				<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+			</else>
+		</if>
+
 		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
 		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
@@ -48,6 +57,19 @@
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="DOCUMENT_INFO_TITLE" />
+	</command>
+
+	<command name="downloadCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#mouseOver" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_DOWNLOAD" value1="Download (${dmDocumentSize})" />
 	</command>
 
 	<command name="editCP">
@@ -225,6 +247,18 @@
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}"/>
 
 		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+
+		<if>
+			<and>
+				<isset var="dmDocumentSize" />
+				<not>
+					<contains string="${dmDocumentSize}" substring="{dmDocumentSize}" />
+				</not>
+			</and>
+			<then>
+				<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="VERSION_HISTORY_TABLE_SIZE" value1="${dmDocumentSize}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewEditCP">

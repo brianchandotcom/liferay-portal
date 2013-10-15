@@ -136,6 +136,32 @@
 	<td>//div[@class='lfr-message-response alert alert-success']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSION_HISTORY_TABLE-->
+<tr>
+	<td>VERSION_HISTORY_TABLE_VERSION</td>
+	<td>//td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_TABLE_DATE</td>
+	<td>//td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_TABLE_SIZE</td>
+	<td>//td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_TABLE_STATUS</td>
+	<td>//td[4]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

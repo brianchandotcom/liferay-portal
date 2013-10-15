@@ -40,7 +40,9 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 		_firefoxProfile.setPreference(
 			"browser.helperApps.alwaysAsk.force", false);
 		_firefoxProfile.setPreference(
-			"browser.helperApps.neverAsk.saveToDisk", "application/zip");
+			"browser.helperApps.neverAsk.saveToDisk",
+			"application/excel,application/msword,application/pdf," +
+				"application/zip,audio/mpeg3,image/jpeg,image/png,text/plain");
 		_firefoxProfile.setPreference("dom.max_chrome_script_run_time", 300);
 		_firefoxProfile.setPreference("dom.max_script_run_time", 300);
 	}

@@ -101,9 +101,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String referenceFileName = entry.getKey();
 			String content = entry.getValue();
 
-			if (content.contains(("<%@ include file=\"" + fileName)) ||
-					content.contains("<%@ include file=\'" + fileName) &&
-					!includeFileNames.contains(referenceFileName)) {
+			if (content.contains("<%@ include file=\"" + fileName) &&
+				!includeFileNames.contains(referenceFileName)) {
 
 				includeFileNames.add(referenceFileName);
 			}

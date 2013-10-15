@@ -217,10 +217,23 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background-color: #6DA4E4;
 				background-color: rgba(109, 168, 228, 0.9);
 				line-height: 20px;
+				padding: 0 25px 0 15px;
 			}
 
 			.page-customization-bar-text {
 				height: 43px;
+				padding-right: 15px;
+				width: 0;
+			}
+
+			.page-customization-bar-options {
+			display: table-cell;
+			font-size: 0.9em;
+			vertical-align: middle;
+
+				span a {
+					padding: 0 5px;
+				}
 			}
 
 			.staging-bar {

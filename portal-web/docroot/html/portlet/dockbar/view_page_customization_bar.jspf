@@ -38,7 +38,7 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 						<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
 					</div>
 
-					<div class="page-customization-bar-form">
+					<div>
 						<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
 							<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 						</liferay-portlet:actionURL>
@@ -95,35 +95,37 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 							</c:otherwise>
 						</c:choose>
 					</div>
-
-					<%
-					String taglibImage = "search";
-					String taglibMessage = "view-default-page";
-
-					if (!layoutTypePortlet.isCustomizedView()) {
-						taglibMessage = "view-my-customized-page";
-					}
-					else if (layoutTypePortlet.isDefaultUpdated()) {
-						taglibImage = "activate";
-						taglibMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
-					}
-					%>
-
-					<liferay-ui:icon cssClass='<%= layoutTypePortlet.isCustomizedView() ? StringPool.BLANK : "page-customization-bar-form" %>' id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
-
-					<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-						<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetCustomizationViewURL">
-							<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-							<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
-							<portlet:param name="<%= Constants.CMD %>" value="reset_customized_view" />
-						</liferay-portlet:actionURL>
+					<div class="page-customization-bar-options">
 
 						<%
-						String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+						String taglibImage = "search";
+						String taglibMessage = "view-default-page";
+
+						if (!layoutTypePortlet.isCustomizedView()) {
+							taglibMessage = "view-my-customized-page";
+						}
+						else if (layoutTypePortlet.isDefaultUpdated()) {
+							taglibImage = "activate";
+							taglibMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
+						}
 						%>
 
-						<liferay-ui:icon image="../portlet/refresh" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
-					</c:if>
+						<liferay-ui:icon id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
+
+						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
+							<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetCustomizationViewURL">
+								<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+								<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
+								<portlet:param name="<%= Constants.CMD %>" value="reset_customized_view" />
+							</liferay-portlet:actionURL>
+
+							<%
+							String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
+							%>
+
+							<liferay-ui:icon image="../portlet/refresh" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
+						</c:if>
+					</div>
 				</div>
 
 				<aui:script>

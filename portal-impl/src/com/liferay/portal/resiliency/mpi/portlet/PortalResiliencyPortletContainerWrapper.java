@@ -28,8 +28,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PropsValues;
 
-import java.rmi.RemoteException;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -233,21 +231,22 @@ public class PortalResiliencyPortletContainerWrapper
 	protected SPIAgent getSPIAgentForPortlet(Portlet portlet)
 		throws PortletContainerException {
 
-		SPI spi = SPIRegistryUtil.getPortletSPI(portlet.getRootPortletId());
-
-		if (spi == null) {
-			return null;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Portlet " + portlet + " is registered to SPI " + spi);
-		}
-
 		try {
+			SPI spi = SPIRegistryUtil.getPortletSPI(portlet.getRootPortletId());
+
+			if (spi == null) {
+				return null;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Portlet " + portlet + " is registered to SPI " + spi);
+			}
+
 			return spi.getSPIAgent();
 		}
-		catch (RemoteException re) {
-			throw new PortletContainerException(re);
+		catch (Exception e) {
+			throw new PortletContainerException(e);
 		}
 	}
 

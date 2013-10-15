@@ -17,9 +17,11 @@ package com.liferay.portal.resiliency.spi;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistry;
+import com.liferay.portal.kernel.resiliency.spi.SPIRegistryValidator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -51,17 +53,34 @@ public class SPIRegistryImpl implements SPIRegistry {
 	}
 
 	@Override
-	public SPI getPortletSPI(String portletId) {
+	public SPI getPortletSPI(String portletId)
+		throws PortalResiliencyException {
+
 		if (_excludedPortletIds.contains(portletId)) {
 			return null;
 		}
 
-		return _portletSPIs.get(portletId);
+		SPI spi = _portletSPIs.get(portletId);
+
+		if (_spiRegistryValidator != null) {
+			_spiRegistryValidator.validatePortletSPI(portletId, spi);
+		}
+
+		return spi;
 	}
 
 	@Override
-	public SPI getServletContextSPI(String servletContextName) {
-		return _servletContextSPIs.get(servletContextName);
+	public SPI getServletContextSPI(String servletContextName)
+		throws PortalResiliencyException {
+
+		SPI spi = _servletContextSPIs.get(servletContextName);
+
+		if (_spiRegistryValidator != null) {
+			_spiRegistryValidator.validateServletContextSPI(
+				servletContextName, spi);
+		}
+
+		return spi;
 	}
 
 	@Override
@@ -135,6 +154,13 @@ public class SPIRegistryImpl implements SPIRegistry {
 	}
 
 	@Override
+	public void setSPIRegistryValidator(
+		SPIRegistryValidator spiRegistryValidator) {
+
+		_spiRegistryValidator = spiRegistryValidator;
+	}
+
+	@Override
 	public void unregisterSPI(SPI spi) {
 		_lock.lock();
 
@@ -172,5 +198,6 @@ public class SPIRegistryImpl implements SPIRegistry {
 		new ConcurrentHashMap<SPI, String[]>();
 	private Map<String, SPI> _servletContextSPIs =
 		new ConcurrentHashMap<String, SPI>();
+	private SPIRegistryValidator _spiRegistryValidator;
 
 }

@@ -1,4 +1,6 @@
 <definition>
+	<execute test-case-command="AddSelection#AddSelection" />
+
 	<execute test-case-command="NullValues#ContainsConditionalUsingTwoEmptyStringVariables" />
 	<execute test-case-command="NullValues#EchoEmptyStringAndEmptyStringVariable" />
 	<execute test-case-command="NullValues#EqualsConditionalComparingEmptyStringVariableWithEmptyString" />

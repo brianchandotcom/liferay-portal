@@ -228,6 +228,7 @@
 	<classpathentry kind="lib" path="lib/portal/lucene-queries.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-queryparser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/lucene-spellchecker.jar"/>
+	<classpathentry kind="lib" path="lib/portal/mchange-commons-java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/memcached.jar"/>
 	<classpathentry kind="lib" path="lib/portal/metadata-extractor.jar"/>
 	<classpathentry kind="lib" path="lib/portal/mime4j-core.jar"/>

@@ -1205,9 +1205,9 @@
 	</library>
 	<library>
 		<file-name>lib/portal/c3p0.jar</file-name>
-		<version>0.9.1.2</version>
+		<version>0.9.2.1</version>
 		<project-name>C3P0</project-name>
-		<project-url>http://sourceforge.net/projects/c3p0</project-url>
+		<project-url>https://github.com/swaldman/c3p0</project-url>
 		<licenses>
 			<license>
 				<license-name>LGPL 2.1</license-name>
@@ -2686,6 +2686,18 @@
 			<license>
 				<license-name>Apache License 2.0</license-name>
 				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>lib/portal/mchange-commons-java.jar</file-name>
+		<version>0.2.3.4</version>
+		<project-name>mchange-commons-java</project-name>
+		<project-url>https://github.com/swaldman/mchange-commons-java</project-url>
+		<licenses>
+			<license>
+				<license-name>LGPL 2.1</license-name>
+				<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</license-url>
 			</license>
 		</licenses>
 	</library>

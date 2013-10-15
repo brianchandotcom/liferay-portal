@@ -332,6 +332,12 @@ public class MBMessageStagedModelDataHandler
 			}
 
 			if (inputStream == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Attachment cannot be imported for file " +
+							fileEntry.getFileEntryId());
+				}
+
 				continue;
 			}
 

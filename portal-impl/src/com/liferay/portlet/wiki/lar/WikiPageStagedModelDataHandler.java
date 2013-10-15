@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -198,6 +200,16 @@ public class WikiPageStagedModelDataHandler
 								binPath);
 					}
 
+					if (inputStream == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Attachment cannot be imported for file " +
+									fileEntry.getFileEntryId());
+						}
+
+						continue;
+					}
+
 					mimeType = MimeTypesUtil.getContentType(
 						inputStream, fileEntry.getTitle());
 
@@ -237,5 +249,8 @@ public class WikiPageStagedModelDataHandler
 				userId, existingPage.getResourcePrimKey());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		WikiPageStagedModelDataHandler.class);
 
 }

@@ -25,7 +25,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.action.Action;
@@ -51,8 +50,7 @@ public class RenderStructureFieldAction extends Action {
 			JspFactory jspFactory = JspFactory.getDefaultFactory();
 
 			PageContext pageContext = jspFactory.getPageContext(
-				getServlet(), request, response, null, true,
-				JspWriter.DEFAULT_BUFFER, true);
+				getServlet(), request, response, null, true, 0, true);
 
 			long classNameId = ParamUtil.getLong(request, "classNameId");
 			long classPK = ParamUtil.getLong(request, "classPK");

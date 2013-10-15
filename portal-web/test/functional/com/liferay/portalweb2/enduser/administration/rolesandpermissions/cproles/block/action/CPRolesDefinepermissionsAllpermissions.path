@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_SITES_SITES_SITE_VIEW_STAGING</td>
+	<td>//input[@value='com.liferay.portal.model.GroupVIEW_STAGING']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

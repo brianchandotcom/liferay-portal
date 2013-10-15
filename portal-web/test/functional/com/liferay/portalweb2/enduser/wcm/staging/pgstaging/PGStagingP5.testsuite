@@ -3,5 +3,6 @@
 	<execute test-case-command="PGStaging#AddDMDocumentStagingLocalLive" />
 	<execute test-case-command="PGStaging#AddPageVariation" />
 	<execute test-case-command="PGStaging#AddSitePagesVariation" />
+	<execute test-case-command="PGStaging#AssertEditWebContentStaging" />
 	<execute test-case-command="PGStaging#LayoutScope" />
 </definition>

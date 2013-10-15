@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>LIVE_BUTTON</td>
-	<td>//li[@class='live-link staging-toggle ']/a/span</td>
+	<td>//li[contains(@class,'live-link staging-toggle')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>STAGING_BUTTON</td>
-	<td>//li[@class='staging-toggle ']/a/span</td>
+	<td>//li[contains(@class,'staging-toggle')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

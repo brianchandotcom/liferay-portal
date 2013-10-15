@@ -17,6 +17,8 @@
 
 	<execute test-suite="CPRolesPGPageP5" />
 
+	<execute test-suite="CPRolesPGStagingP5" />
+
 	<execute test-suite="CPUsergroupsP5" />
 
 	<execute test-suite="CPUsersandorganizationsP5" />

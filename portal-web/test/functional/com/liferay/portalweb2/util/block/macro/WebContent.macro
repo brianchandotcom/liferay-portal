@@ -381,6 +381,16 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Select existing web content or add some web content to be displayed in this portlet." />
 	</command>
 
+	<command name="viewEditWCViaWCD">
+		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="EDIT_WEB_CONTENT" />
+	</command>
+
+	<command name="viewNoEditWCViaWCD">
+		<execute action="PGWebcontentdisplay#assertElementPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<execute action="PGWebcontentdisplay#assertElementNotPresent" locator-key1="EDIT_WEB_CONTENT" />
+	</command>
+
 	<command name="viewPGViaAP">
 		<var name="key_assetTitle" value="${webContentTitle}" />
 

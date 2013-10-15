@@ -49,11 +49,11 @@
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<if>
-			<condition action="Home#isElementPresent" locator-key1="CONTROL_PANEL_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+			<condition action="Home#isElementPresent" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 			<then>
-				<execute action="Home#assertClick" locator-key1="CONTROL_PANEL_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
+				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
 
-				<execute action="Home#assertTextEquals" locator-key1="CONTROL_PANEL_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
+				<execute action="Home#assertTextEquals" locator-key1="SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
 			</then>
 		</if>
 
@@ -65,7 +65,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute action="Home#assertClick" locator-key1="CONTROL_PANEL_NAVIGATION" value1="${portletName}" />
+				<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 			</then>
 		</if>
 	</command>
@@ -92,7 +92,14 @@
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
 		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
-		<execute action="Home#click" locator1="//ul[@class='unstyled']/li/span/a[contains(.,'${portletName}')]" />
+		<if>
+			<isset var="portletName" />
+			<then>
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+			</then>
+		</if>
 	</command>
 
 	<command name="gotoMyDashboard">

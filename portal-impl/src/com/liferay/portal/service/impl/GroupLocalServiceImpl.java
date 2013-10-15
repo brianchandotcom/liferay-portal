@@ -25,6 +25,11 @@ import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -55,6 +60,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -2067,13 +2073,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		StringBundler path = new StringBundler(20);
 
-		for (Group group : groups) {
-			group.setTreePath(group.buildTreePath());
+		path.append(StringPool.SLASH);
 
-			groupPersistence.update(group);
-		}
+		buildTreePath(companyId, 0, path);
 	}
 
 	/**
@@ -3646,6 +3650,56 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		layoutLocalService.importLayouts(
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
+	}
+
+	protected void buildTreePath(
+			long companyId, long parentGroupId, StringBundler path)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Group.class);
+
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property("groupId"));
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		Property parentGroupIdProperty = PropertyFactoryUtil.forName(
+			"parentGroupId");
+
+		dynamicQuery.add(parentGroupIdProperty.eq(parentGroupId));
+
+		int start = 0;
+
+		while (true) {
+			int end = start + PropsValues.BULK_OPERATIONS_CHUNK_SIZE;
+
+			dynamicQuery.setLimit(start, end);
+
+			List<Long> groupIds = (List<Long>)dynamicQuery(dynamicQuery);
+
+			if (groupIds.isEmpty()) {
+				break;
+			}
+
+			for (Long groupId : groupIds) {
+				path.append(groupId);
+				path.append(StringPool.SLASH);
+
+				buildTreePath(companyId, groupId, path);
+
+				Group group = groupPersistence.findByPrimaryKey(groupId);
+
+				group.setTreePath(path.toString());
+
+				groupPersistence.update(group);
+
+				path.setIndex(path.index() - 2);
+			}
+
+			start = end;
+		}
 	}
 
 	protected void deletePortletData(Group group)

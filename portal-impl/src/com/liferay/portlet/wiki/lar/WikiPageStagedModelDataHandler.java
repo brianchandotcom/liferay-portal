@@ -26,8 +26,11 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -179,19 +182,24 @@ public class WikiPageStagedModelDataHandler
 				String mimeType = null;
 
 				try {
-					inputStream = portletDataContext.getZipEntryAsInputStream(
-						binPath);
+					if (Validator.isNull(binPath) &&
+						portletDataContext.isPerformDirectBinaryImport()) {
+
+						try {
+							inputStream = FileEntryUtil.getContentStream(
+								fileEntry);
+						}
+						catch (NoSuchFileException nsfe) {
+						}
+					}
+					else {
+						inputStream =
+							portletDataContext.getZipEntryAsInputStream(
+								binPath);
+					}
 
 					mimeType = MimeTypesUtil.getContentType(
 						inputStream, fileEntry.getTitle());
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-				}
-
-				try {
-					inputStream = portletDataContext.getZipEntryAsInputStream(
-						binPath);
 
 					WikiPageLocalServiceUtil.addPageAttachment(
 						userId, importedPage.getNodeId(),

@@ -25,11 +25,6 @@ import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -60,7 +55,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -119,10 +113,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -2073,11 +2069,50 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		StringBundler path = new StringBundler(20);
+		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		path.append(StringPool.SLASH);
+		traces.push(new Object[] {0L, StringPool.SLASH, 0L});
 
-		buildTreePath(companyId, 0, path);
+		Object[] trace = null;
+
+		while ((trace = traces.poll()) != null) {
+			Long parentGroupId = (Long)trace[0];
+			String parentPath = (String)trace[1];
+			Long previousGroupId = (Long)trace[2];
+
+			List<Long> childrenGroupIds = groupFinder.findByC_P(
+				companyId, parentGroupId, previousGroupId,
+					PropsValues.BULK_OPERATIONS_CHUNK_SIZE);
+
+			if (childrenGroupIds.isEmpty()) {
+				continue;
+			}
+
+			// There could be more children, save current trace
+
+			if (childrenGroupIds.size() ==
+					PropsValues.BULK_OPERATIONS_CHUNK_SIZE) {
+
+				trace[2] = childrenGroupIds.get(childrenGroupIds.size() - 1);
+
+				traces.push(trace);
+			}
+
+			// Process children
+
+			for (long childGroupId : childrenGroupIds) {
+				String path = parentPath.concat(
+					String.valueOf(childGroupId)).concat(StringPool.SLASH);
+
+				Group group = groupPersistence.findByPrimaryKey(childGroupId);
+
+				group.setTreePath(path);
+
+				groupPersistence.update(group);
+
+				traces.push(new Object[] {childGroupId, path, 0L});
+			}
+		}
 	}
 
 	/**
@@ -3650,56 +3685,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		layoutLocalService.importLayouts(
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
-	}
-
-	protected void buildTreePath(
-			long companyId, long parentGroupId, StringBundler path)
-		throws PortalException, SystemException {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Group.class);
-
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("groupId"));
-
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		Property parentGroupIdProperty = PropertyFactoryUtil.forName(
-			"parentGroupId");
-
-		dynamicQuery.add(parentGroupIdProperty.eq(parentGroupId));
-
-		int start = 0;
-
-		while (true) {
-			int end = start + PropsValues.BULK_OPERATIONS_CHUNK_SIZE;
-
-			dynamicQuery.setLimit(start, end);
-
-			List<Long> groupIds = (List<Long>)dynamicQuery(dynamicQuery);
-
-			if (groupIds.isEmpty()) {
-				break;
-			}
-
-			for (Long groupId : groupIds) {
-				path.append(groupId);
-				path.append(StringPool.SLASH);
-
-				buildTreePath(companyId, groupId, path);
-
-				Group group = groupPersistence.findByPrimaryKey(groupId);
-
-				group.setTreePath(path.toString());
-
-				groupPersistence.update(group);
-
-				path.setIndex(path.index() - 2);
-			}
-
-			start = end;
-		}
 	}
 
 	protected void deletePortletData(Group group)

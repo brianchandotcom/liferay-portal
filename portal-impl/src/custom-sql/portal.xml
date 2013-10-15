@@ -288,6 +288,20 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_P">
+		<![CDATA[
+			SELECT
+				groupId
+			FROM
+				Group_
+			WHERE
+				(groupId > ?) AND
+				(companyId = ?) AND
+				(parentGroupId = ?)
+			ORDER BY
+				groupId ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C_PG_N_D">
 		<![CDATA[
 			SELECT

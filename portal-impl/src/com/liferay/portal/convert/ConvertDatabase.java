@@ -268,12 +268,19 @@ public class ConvertDatabase extends ConvertProcess {
 
 		Table table = new Table(tableName, columns);
 
-		String tempFileName = table.generateTempFile();
+		try {
+			String tempFileName = table.generateTempFile();
 
-		db.runSQL(connection, sqlCreate);
+			db.runSQL(connection, sqlCreate);
 
-		if (tempFileName != null) {
-			table.populateTable(tempFileName, connection);
+			if (tempFileName != null) {
+				table.populateTable(tempFileName, connection);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			MaintenanceUtil.appendStatus(e.getMessage());
 		}
 	}
 

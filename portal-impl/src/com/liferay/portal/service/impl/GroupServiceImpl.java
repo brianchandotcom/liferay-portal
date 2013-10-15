@@ -689,7 +689,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			userSiteGroups.addAll(
 				groupLocalService.search(
-					user.getCompanyId(), groupParams, start, end));
+					user.getCompanyId(), null, groupParams, start, end));
 		}
 
 		if ((classNames == null) ||

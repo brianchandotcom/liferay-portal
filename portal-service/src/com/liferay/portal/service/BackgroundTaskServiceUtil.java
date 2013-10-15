@@ -56,6 +56,14 @@ public class BackgroundTaskServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName, java.lang.String completed)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getBackgroundTasksCount(groupId, taskExecutorClassName,
+			completed);
+	}
+
 	public static java.lang.String getBackgroundTaskStatusJSON(
 		long backgroundTaskId) {
 		return getService().getBackgroundTaskStatusJSON(backgroundTaskId);

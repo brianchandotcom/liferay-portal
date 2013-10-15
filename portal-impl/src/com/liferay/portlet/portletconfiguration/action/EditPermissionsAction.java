@@ -35,6 +35,9 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
+import com.liferay.portlet.portletconfiguration.util.ConfigurationActionRequest;
+import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,10 +70,8 @@ public class EditPermissionsAction extends PortletAction {
 		throws Exception {
 
 		try {
-			ActionUtil.checkPortletConfigurationPermission(actionRequest);
-
-			actionRequest = ActionUtil.getWrappedActionRequest(
-				actionRequest, null);
+			actionRequest = new ConfigurationActionRequest(
+				actionRequest, new StrictPortletPreferencesImpl());
 
 			updateRolePermissions(actionRequest);
 
@@ -96,18 +97,8 @@ public class EditPermissionsAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		try {
-			ActionUtil.checkPortletConfigurationPermission(renderRequest);
-		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(
-				renderRequest, PrincipalException.class.getName());
-
-			return actionMapping.findForward(
-				"portlet.portlet_configuration.error");
-		}
-
-		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
+		renderRequest = new ConfigurationRenderRequest(
+			renderRequest, new StrictPortletPreferencesImpl());
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

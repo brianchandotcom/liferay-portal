@@ -141,9 +141,9 @@ public class SystemEventLocalServiceImpl
 			}
 		}
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
-
 		if (!CompanyThreadLocal.isDeleteInProcess()) {
+			Company company = companyPersistence.findByPrimaryKey(companyId);
+
 			Group companyGroup = company.getGroup();
 
 			if (companyGroup.getGroupId() == groupId) {

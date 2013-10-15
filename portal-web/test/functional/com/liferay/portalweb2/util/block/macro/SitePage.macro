@@ -102,7 +102,7 @@
 		</execute>
 
 		<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
-		<execute action="Home#click" locator-key1="PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
+		<execute action="Home#assertClick" locator-key1="PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${siteChildPageName}" />

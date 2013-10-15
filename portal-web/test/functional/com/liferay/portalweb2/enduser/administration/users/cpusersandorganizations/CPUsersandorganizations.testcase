@@ -367,6 +367,79 @@
 		</execute>
 	</command>
 
+	<command name="AddUsers">
+		<var name="userEmailAddress1" value="userea1@liferay.com" />
+		<var name="userEmailAddress2" value="userea2@liferay.com" />
+		<var name="userEmailAddress3" value="userea3@liferay.com" />
+		<var name="userFirstName1" value="userfn1" />
+		<var name="userFirstName2" value="userfn2" />
+		<var name="userFirstName3" value="userfn3" />
+		<var name="userLastName1" value="userln1" />
+		<var name="userLastName2" value="userln2" />
+		<var name="userLastName3" value="userln3" />
+		<var name="userScreenName1" value="usersn1" />
+		<var name="userScreenName2" value="usersn2" />
+		<var name="userScreenName3" value="usersn3" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+	</command>
+
 	<command name="AddUserScreenNameNumber">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -468,6 +541,91 @@
 			<var name="suborgName" value="${suborgName}" />
 			<var name="suborgSearchName" value="${suborgSearchName}" />
 			<var name="suborgType" value="${suborgType}" />
+		</execute>
+	</command>
+
+	<command name="AdvancedSearchUser">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userMiddleName" value="usermn" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editUserMiddleNameCP">
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#advancedSearchCP">
+			<var name="userAdvancedSearch" value="First Name" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#advancedSearchCP">
+			<var name="userAdvancedSearch" value="Middle Name" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#advancedSearchCP">
+			<var name="userAdvancedSearch" value="Last Name" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#advancedSearchCP">
+			<var name="userAdvancedSearch" value="Screen Name" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#advancedSearchCP">
+			<var name="userAdvancedSearch" value="Email Address" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 	</command>
 
@@ -715,6 +873,125 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
 		</execute>
+	</command>
+
+	<command name="SearchUser">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#basicSearchCP">
+			<var name="userBasicSearch" value="Basic" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
+	<command name="SearchUserFullName">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#basicSearchCP">
+			<var name="userBasicSearch" value="Full Name" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
+	<command name="SearchUserQuotes">
+		<var name="userEmailAddress1" value="userea1@liferay.com" />
+		<var name="userEmailAddress2" value="userea2@liferay.com" />
+		<var name="userFirstName1" value="userfn1" />
+		<var name="userFirstName2" value="userfn2" />
+		<var name="userLastName1" value="userln1" />
+		<var name="userLastName2" value="userln2" />
+		<var name="userScreenName1" value="usersn1" />
+		<var name="userScreenName2" value="usersn2" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<var name="key_userScreenName" value="${userScreenName1}" />
+
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName1}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName1}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName1}" />
+
+		<var name="key_userScreenName" value="${userScreenName2}" />
+
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName2}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName2}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
+
+		<execute macro="User#basicSearchCP">
+			<var name="userBasicSearch" value="Quotes" />
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<var name="key_userScreenName" value="${userScreenName2}" />
+
+		<execute action="CPUsersandorganizations#assertTextNotPresent" locator-key1="USER_TABLE_FIRST_NAME" value1="${userFirstName2}" />
+		<execute action="CPUsersandorganizations#assertTextNotPresent" locator-key1="USER_TABLE_LAST_NAME" value1="${userLastName2}" />
+		<execute action="CPUsersandorganizations#assertTextNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
 	</command>
 
 	<command name="ViewBack">

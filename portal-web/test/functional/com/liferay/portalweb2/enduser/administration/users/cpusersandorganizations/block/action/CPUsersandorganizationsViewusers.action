@@ -9,8 +9,5 @@
 		<case locator-key1="DELETE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-		<case comparator="startsWith" locator-key1="USER_TABLE_FIRST_NAME_">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
 	</command>
 </definition>

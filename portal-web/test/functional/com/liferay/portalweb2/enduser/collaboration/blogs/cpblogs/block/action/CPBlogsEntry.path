@@ -54,6 +54,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_VOCABULARY</td>
+	<td>//span[@class='taglib-asset-categories-summary' and contains(.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CATEGORY</td>
+	<td>//span[@class='entry-categories']/span/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TAG</td>
+	<td>//span[@class='entry-tags']/span/a[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRMATION</td>
 	<td></td>
 	<td></td>

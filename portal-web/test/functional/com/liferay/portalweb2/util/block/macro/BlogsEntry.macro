@@ -1,4 +1,38 @@
 <definition>
+	<command name="addCategoryCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPBlogsEdit#assertElementPresent" locator-key1="CONTENT_FIELD" />
+
+		<if>
+			<condition action="CPBlogsEdit#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<then>
+				<execute action="CPBlogsEdit#assertClick" locator-key1="CATEGORIZATION_TOGGLE" value1="Categorization" />
+				<execute action="CPBlogsEdit#assertElementPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			</then>
+		</if>
+
+		<execute action="CPBlogsEdit#assertClick" locator-key1="CATEGORIZATION_SELECT_BUTTON" value1="Select" />
+		<execute action="CPBlogsEdit#assertClick" locator-key1="CATEGORIES_CATEGORY_UNSELECTED" value1="${categoryName}" />
+		<execute action="CPBlogsEdit#assertElementPresent" locator-key1="CATEGORIES_CATEGORY_SELECTED" value1="${categoryName}" />
+		<execute action="CPBlogsEdit#click" locator-key1="CATEGORIES_CLOSE_BUTTON" />
+		<execute action="CPBlogsEdit#assertTextEquals" locator-key1="CATEGORIZATION_CATEGORY" value1="${categoryName}" />
+		<execute action="CPBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_VOCABULARY" value1="${vocabularyName}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CATEGORY" value1="${categoryName}" />
+	</command>
+
 	<command name="addCP">
 		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
 
@@ -140,6 +174,36 @@
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY_1" value1="${entryContent}" />
+	</command>
+
+	<command name="addTagCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPBlogsEdit#assertElementPresent" locator-key1="CONTENT_FIELD" />
+
+		<if>
+			<condition action="CPBlogsEdit#isElementNotPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			<then>
+				<execute action="CPBlogsEdit#assertClick" locator-key1="CATEGORIZATION_TOGGLE" value1="Categorization" />
+				<execute action="CPBlogsEdit#assertElementPresent" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" />
+			</then>
+		</if>
+
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute action="CPBlogsEdit#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+		<execute action="CPBlogsEdit#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+		<execute action="CPBlogsEdit#assertTextEquals" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+		<execute action="CPBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TAG" value1="${tagName}" />
 	</command>
 
 	<command name="addWithWorkflowCP">

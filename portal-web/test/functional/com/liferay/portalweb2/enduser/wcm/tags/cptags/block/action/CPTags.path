@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>CPTags</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPTags</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPTags</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS</td>
+	<td>//li[@id='_99_tagsActionsButton']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_TAGS_CHECKBOX</td>
+	<td>//input[@id='_99_checkAllTagsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info lfr-message-response']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_GENERIC</td>
+	<td>//div[contains(@class,'tags-admin-list')]/ul/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//li[@id='_99_deleteSelectedTags']/a/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

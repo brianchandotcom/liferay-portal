@@ -1,4 +1,21 @@
 <definition>
+	<command name="addCategoryPGViaWCD">
+		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" value1="Edit" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#assertElementPresent" locator-key1="CONTENT_FIELD" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="MENU_CATEGORIZATION" value1="Categorization" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertClick" locator-key1="CATEGORIZATION_SELECT_BUTTON" value1="Select" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertClick" locator-key1="CATEGORIES_CATEGORY_UNSELECTED" value1="${categoryName}" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertElementPresent" locator-key1="CATEGORIES_CATEGORY_SELECTED" value1="${categoryName}" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#click" locator-key1="CATEGORIES_CLOSE_BUTTON" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertTextEquals" locator-key1="CATEGORIZATION_CATEGORY" value1="${categoryName}" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+	</command>
+
 	<command name="addCP">
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
@@ -91,6 +108,20 @@
 		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
 
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
+	<command name="addTagPGViaWCD">
+		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" value1="Edit" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#assertElementPresent" locator-key1="CONTENT_FIELD" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="MENU_CATEGORIZATION" value1="Categorization" />
+
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertClick" locator-key1="CATEGORIZATION_TAGS_ADD_BUTTON" value1="Add" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertTextEquals" locator-key1="CATEGORIZATION_TAG" value1="${tagName}" />
+		<execute action="PGWebcontentdisplayEditwebcontentCategorization#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
 	<command name="addTranslationPGViaWCD">

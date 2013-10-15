@@ -60,7 +60,7 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			String methodName = method.getName();
 
 			if (methodName.equals("getPortletPreferences") &&
-				(arguments.length == 4)) {
+				((arguments.length == 3) || (arguments.length == 4))) {
 
 				return getPortletPreferences(methodInvocation);
 			}
@@ -95,7 +95,13 @@ public class PortletPreferencesLocalServiceStagingAdvice
 		Method method = methodInvocation.getMethod();
 		Object[] arguments = methodInvocation.getArguments();
 
-		long plid = (Long)arguments[2];
+		long plid = 0;
+
+		if (((arguments.length == 3) || (arguments.length == 4)) &&
+			(arguments[2] instanceof Long)) {
+
+			plid = (Long)arguments[2];
+		}
 
 		if (plid <= 0) {
 			return methodInvocation.proceed();

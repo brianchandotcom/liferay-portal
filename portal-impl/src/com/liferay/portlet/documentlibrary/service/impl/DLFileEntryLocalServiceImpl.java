@@ -117,7 +117,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Provides the local service for accessing, adding, checking in/out, deleting,
@@ -1934,12 +1933,6 @@ public class DLFileEntryLocalServiceImpl
 			return false;
 		}
 
-		if (lastDLFileVersion.getFolderId() !=
-				latestDLFileVersion.getFolderId()) {
-
-			return false;
-		}
-
 		if (!Validator.equals(
 				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle())) {
 
@@ -1994,67 +1987,24 @@ public class DLFileEntryLocalServiceImpl
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			Set<String> lastFieldNames = lastFields.getNames();
-			Set<String> latestFieldNames = latestFields.getNames();
-
-			if (lastFieldNames.size() != latestFieldNames.size()) {
+			if (!Validator.equals(lastFields, latestFields)) {
 				return false;
-			}
-
-			for (String fieldName : lastFieldNames) {
-				com.liferay.portlet.dynamicdatamapping.storage.Field
-					lastField = lastFields.get(fieldName);
-				com.liferay.portlet.dynamicdatamapping.storage.Field
-					latestField = latestFields.get(fieldName);
-
-				if ((latestFieldNames == null) ||
-					(!lastField.equals(latestField) &&
-					 !lastField.isPrivate())) {
-
-					return false;
-				}
 			}
 		}
 
 		// Expando
 
-		ExpandoTable expandoTable = null;
+		ExpandoBridge lastExpandoBridge = lastDLFileVersion.getExpandoBridge();
+		ExpandoBridge latestExpandoBridge =
+			latestDLFileVersion.getExpandoBridge();
 
-		try {
-			expandoTable = expandoTableLocalService.getDefaultTable(
-				lastDLFileVersion.getCompanyId(), DLFileEntry.class.getName());
-		}
-		catch (NoSuchTableException nste) {
-		}
+		Map<String, Serializable> lastAttributes =
+			lastExpandoBridge.getAttributes();
+		Map<String, Serializable> latestAttributes =
+			latestExpandoBridge.getAttributes();
 
-		if (expandoTable != null) {
-			Date lastModifiedDate = null;
-
-			try {
-				ExpandoRow lastExpandoRow = expandoRowLocalService.getRow(
-					expandoTable.getTableId(),
-					lastDLFileVersion.getPrimaryKey());
-
-				lastModifiedDate = lastExpandoRow.getModifiedDate();
-			}
-			catch (NoSuchRowException nsre) {
-			}
-
-			Date latestModifiedDate = null;
-
-			try {
-				ExpandoRow latestExpandoRow = expandoRowLocalService.getRow(
-					expandoTable.getTableId(),
-					latestDLFileVersion.getPrimaryKey());
-
-				latestModifiedDate = latestExpandoRow.getModifiedDate();
-			}
-			catch (NoSuchRowException nsre) {
-			}
-
-			if (!Validator.equals(lastModifiedDate, latestModifiedDate)) {
-				return false;
-			}
+		if (!Validator.equals(lastAttributes, latestAttributes)) {
+			return false;
 		}
 
 		// Size

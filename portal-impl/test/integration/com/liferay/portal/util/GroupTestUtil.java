@@ -104,7 +104,7 @@ public class GroupTestUtil {
 
 		return addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				parentGroupId, name, description);
+			parentGroupId, name, description);
 	}
 
 	public static Group addGroup(String name) throws Exception {

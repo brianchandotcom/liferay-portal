@@ -20,6 +20,11 @@ import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.OrganizationTypeException;
 import com.liferay.portal.RequiredOrganizationException;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -34,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1004,14 +1010,11 @@ public class OrganizationLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Organization> organizations =
-			organizationPersistence.findByCompanyId(companyId);
+		StringBundler path = new StringBundler(20);
 
-		for (Organization organization : organizations) {
-			organization.setTreePath(organization.buildTreePath());
+		path.append(StringPool.SLASH);
 
-			organizationPersistence.update(organization);
-		}
+		buildTreePath(companyId, 0, path);
 	}
 
 	/**
@@ -1792,6 +1795,58 @@ public class OrganizationLocalServiceImpl
 
 				addSuborganizations(allSuborganizations, suborganizations);
 			}
+		}
+	}
+
+	protected void buildTreePath(
+			long companyId, long parentOrganizationId, StringBundler path)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Organization.class);
+
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("organizationId"));
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		Property parentOrganizationIdProperty = PropertyFactoryUtil.forName(
+			"parentOrganizationId");
+
+		dynamicQuery.add(parentOrganizationIdProperty.eq(parentOrganizationId));
+
+		int start = 0;
+
+		while (true) {
+			int end = start + PropsValues.BULK_OPERATIONS_CHUNK_SIZE;
+
+			dynamicQuery.setLimit(start, end);
+
+			List<Long> organizationIds = (List<Long>)dynamicQuery(dynamicQuery);
+
+			if (organizationIds.isEmpty()) {
+				break;
+			}
+
+			for (Long organizationId : organizationIds) {
+				path.append(organizationId);
+				path.append(StringPool.SLASH);
+
+				buildTreePath(companyId, organizationId, path);
+
+				Organization organization =
+					organizationPersistence.findByPrimaryKey(organizationId);
+
+				organization.setTreePath(path.toString());
+
+				organizationPersistence.update(organization);
+
+				path.setIndex(path.index() - 2);
+			}
+
+			start = end;
 		}
 	}
 

@@ -1,4 +1,10 @@
 <definition>
+	<command name="addSelection">
+		<default>
+			<execute function="AddSelection#addSelection" />
+		</default>
+	</command>
+
 	<command name="assertChecked">
 		<default>
 			<execute function="AssertChecked#assertChecked" />

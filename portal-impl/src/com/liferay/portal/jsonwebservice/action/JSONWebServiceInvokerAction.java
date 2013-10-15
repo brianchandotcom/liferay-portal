@@ -36,6 +36,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -348,7 +349,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Class<?> clazz = object.getClass();
 
-		HashMap<Object, Object> destinationMap = new HashMap<Object, Object>();
+		HashMap<Object, Object> destinationMap =
+			new LinkedHashMap<Object, Object>();
 
 		BeanCopy beanCopy = BeanCopy.beans(object, destinationMap);
 
@@ -459,7 +461,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Map<String, Object> map = _convertObjectToMap(statement, result, null);
 
-		Map<String, Object> whitelistMap = new HashMap<String, Object>(
+		Map<String, Object> whitelistMap = new LinkedHashMap<String, Object>(
 			whitelist.length);
 
 		for (String key : whitelist) {
@@ -509,8 +511,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			statement.setMethod(assignment.substring(x + 1).trim());
 		}
 
-		HashMap<String, Object> parameterMap = new HashMap<String, Object>(
-			statementBody.size());
+		HashMap<String, Object> parameterMap =
+			new LinkedHashMap<String, Object>(statementBody.size());
 
 		statement.setParameterMap(parameterMap);
 

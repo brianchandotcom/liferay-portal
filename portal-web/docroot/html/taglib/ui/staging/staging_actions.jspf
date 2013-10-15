@@ -16,9 +16,11 @@
 
 <c:choose>
 	<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
-		<li class="publish-link-container">
-			<aui:a href="<%= publishRenderURL.toString() %>" id='<%= groupId + "publishGlobalLink" %>' label="<%= publishDialogTitle %>" />
-		</li>
+		<liferay-ui:icon
+			id='<%= groupId + "publishGlobalLink" %>'
+			message="<%= publishDialogTitle %>"
+			url="<%= publishRenderURL.toString() %>"
+		/>
 
 		<aui:script use="aui-base">
 			var publishGlobalLink = A.one('#<portlet:namespace /><%= groupId + "publishGlobalLink" %>');
@@ -81,15 +83,27 @@
 				</c:otherwise>
 			</c:choose>
 
+			<liferay-util:buffer var="publishLink">
+				<%
+				String linkCssClass = StringPool.BLANK;
+
+				if (!groupType.isControlPanel()) {
+					linkCssClass = "btn btn-success";
+				}
+				%>
+
+				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+			</liferay-util:buffer>
+
 			<c:choose>
-				<c:when test="<%= groupType.isControlPanel() %>">
+				<c:when test="<%= !onlyActions %>">
 					<li class="publish-link-container">
-						<aui:a cssClass="publish-link" href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+						<%= publishLink %>
 					</li>
 				</c:when>
 				<c:otherwise>
 					<div class="publish-link-container">
-						<aui:a cssClass="btn btn-success publish-link" href="<%= publishRenderURL.toString() %>" id='<%= layoutSetBranchId + "publishLink" %>' label="<%= publishMessage %>" />
+						<%= publishLink %>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -125,15 +139,19 @@
 				<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 			</portlet:renderURL>
 
+			<liferay-util:buffer var="manageSitePagesVariationsLink">
+				<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
+			</liferay-util:buffer>
+
 			<c:choose>
 				<c:when test="<%= groupType.isControlPanel() %>">
 					<li class="publish-link-container">
-						<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
+						<%= manageSitePagesVariationsLink %>
 					</li>
 				</c:when>
 				<c:otherwise>
 					<div class="publish-link-container">
-						<aui:a cssClass="manage-layout-set-branches" href="<%= layoutSetBranchesURL %>" id="manageLayoutSetBranches" label="manage-site-pages-variations" />
+						<%= manageSitePagesVariationsLink %>
 					</div>
 				</c:otherwise>
 			</c:choose>

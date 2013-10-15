@@ -27,6 +27,8 @@ AUI.add(
 
 		var STR_EDIT_LAYOUT_PANEL = 'editLayoutPanel';
 
+		var STR_OPEN = 'open';
+
 		var STR_PREVIEW_PANEL = 'previewPanel';
 
 		var TPL_ADD_CONTENT = '<div class="lfr-add-panel lfr-admin-panel" id="{0}" />';
@@ -303,12 +305,19 @@ AUI.add(
 				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
 
 				if (btnNavigation && navigation) {
-					btnNavigation.on(
+					dockBar.delegate(
 						EVENT_CLICK,
 						function(event) {
-							btnNavigation.toggleClass('open');
-							navigation.toggleClass('open');
-						}
+							var currentTarget = event.currentTarget;
+
+							var open = navigation.hasClass(STR_OPEN);
+
+							if (open || (currentTarget === btnNavigation)) {
+								btnNavigation.toggleClass('active');
+								navigation.toggleClass(STR_OPEN);
+							}
+						},
+						'.btn-navbar'
 					);
 				}
 

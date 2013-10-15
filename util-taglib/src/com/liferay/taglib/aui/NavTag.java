@@ -49,9 +49,19 @@ public class NavTag extends BaseNavTag {
 			ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
 				"themeDisplay");
 
+			String cssClass = getCssClass();
+
 			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
-			sb.append("<a class=\"btn btn-navbar\" id=\"");
+			sb.append("<a class=\"btn btn-navbar");
+
+			if (cssClass != null) {
+				sb.append(" ");
+				sb.append(cssClass);
+				sb.append("-btn");
+			}
+
+			sb.append("\" id=\"");
 			sb.append(_getNamespacedId());
 			sb.append("NavbarBtn\" ");
 			sb.append("data-navId=\"");

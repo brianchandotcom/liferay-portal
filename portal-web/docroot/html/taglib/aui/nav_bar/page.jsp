@@ -50,12 +50,14 @@
 
 											handle.detach();
 
+											btnNavbar.removeClass('open');
 											navbarCollapse.removeClass('open');
 										}
 									}
 								);
 							}
 
+							btnNavbar.toggleClass('open');
 							navbarCollapse.toggleClass('open');
 
 							Liferay.Data['<%= id %>Handle'] = handle;

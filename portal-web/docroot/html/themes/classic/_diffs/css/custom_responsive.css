@@ -53,11 +53,11 @@
 						border-width: 0;
 						font-size: 24px;
 
-						&:hover {
+						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
 							background-color: #5BBAE8;
 						}
 
-						&.open {
+						&.nav-navigation-btn.active {
 							background-color: #F5AF45;
 						}
 					}

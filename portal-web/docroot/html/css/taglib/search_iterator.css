@@ -5,7 +5,7 @@
 	margin-top: 1.5em;
 	overflow: auto;
 
-	@include respond-to(phone) {
+	@include respond-to(phone, tablet) {
 		overflow-scrolling: touch;
 		-webkit-overflow-scrolling: touch;
 

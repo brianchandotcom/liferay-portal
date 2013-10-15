@@ -17,6 +17,7 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
@@ -29,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,162 +42,6 @@ import org.testng.Assert;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class GroupLocalServiceTest {
 
-	@Before
-	public void setUp() throws Exception {
-
-		/**
-		 * Tree 1
-		 *
-		 * /1--->/1--->/1
-		 *  |     |--->/2
-		 *  |     |--->/3
-		 *  |     |--->/4
-		 *  |
-		 *  |--->/2--->/1
-		 *  |     |--->/2
-		 *  |     |--->/3
-		 *  |
-		 *  |--->/3--->/1
-		 *        |--->/2
-		 */
-		Group p1Group = GroupTestUtil.addGroup(0, "p1");
-
-		_groups.add(p1Group);
-
-		Group p1P1Group = GroupTestUtil.addGroup(p1Group.getGroupId(), "p1p1");
-
-		_groups.add(p1P1Group);
-
-		Group p1P1P1Group = GroupTestUtil.addGroup(
-			p1P1Group.getGroupId(), "p1p1p1");
-
-		_groups.add(p1P1P1Group);
-
-		Group p1P1P2Group = GroupTestUtil.addGroup(
-			p1P1Group.getGroupId(), "p1p1p2");
-
-		_groups.add(p1P1P2Group);
-
-		Group p1P1P3Group = GroupTestUtil.addGroup(
-			p1P1Group.getGroupId(), "p1p1p3");
-
-		_groups.add(p1P1P3Group);
-
-		Group p1P1P4Group = GroupTestUtil.addGroup(
-			p1P1Group.getGroupId(), "p1p1p4");
-
-		_groups.add(p1P1P4Group);
-
-		Group p1P2Group = GroupTestUtil.addGroup(p1Group.getGroupId(), "p1p2");
-
-		_groups.add(p1P2Group);
-
-		Group p1P2P1Group = GroupTestUtil.addGroup(
-			p1P2Group.getGroupId(), "p1p2p1");
-
-		_groups.add(p1P2P1Group);
-
-		Group p1P2P2Group = GroupTestUtil.addGroup(
-			p1P2Group.getGroupId(), "p1p2p2");
-
-		_groups.add(p1P2P2Group);
-
-		Group p1P2P3Group = GroupTestUtil.addGroup(
-			p1P2Group.getGroupId(), "p1p2p3");
-
-		_groups.add(p1P2P3Group);
-
-		Group p1P3Group = GroupTestUtil.addGroup(p1Group.getGroupId(), "p1p3");
-
-		_groups.add(p1P3Group);
-
-		Group p1P3P1Group = GroupTestUtil.addGroup(
-			p1P3Group.getGroupId(), "p1p3p1");
-
-		_groups.add(p1P3P1Group);
-
-		Group p1P3P2Group = GroupTestUtil.addGroup(
-			p1P3Group.getGroupId(), "p1p3p2");
-
-		_groups.add(p1P3P2Group);
-
-		/**
-		 * Tree 2
-		 *
-		 * /2--->/1--->/1
-		 *  |     |--->/2
-		 *  |
-		 *  |--->/2--->/1
-		 *  |     |--->/2
-		 *  |     |--->/3
-		 *  |
-		 *  |--->/3--->/1
-		 *        |--->/2
-		 *        |--->/3
-		 *        |--->/4
-		 */
-		Group p2Group = GroupTestUtil.addGroup(0, "p2");
-
-		_groups.add(p2Group);
-
-		Group p2P1Group = GroupTestUtil.addGroup(p2Group.getGroupId(), "p2p1");
-
-		_groups.add(p2P1Group);
-
-		Group p2P1P1Group = GroupTestUtil.addGroup(
-			p2P1Group.getGroupId(), "p2p1p1");
-
-		_groups.add(p2P1P1Group);
-
-		Group p2P1P2Group = GroupTestUtil.addGroup(
-			p2P1Group.getGroupId(), "p2p1p2");
-
-		_groups.add(p2P1P2Group);
-
-		Group p2P2Group = GroupTestUtil.addGroup(p2Group.getGroupId(), "p2p2");
-
-		_groups.add(p2P2Group);
-
-		Group p2P2P1Group = GroupTestUtil.addGroup(
-			p2P2Group.getGroupId(), "p2p2p1");
-
-		_groups.add(p2P2P1Group);
-
-		Group p2P2P2Group = GroupTestUtil.addGroup(
-			p2P2Group.getGroupId(), "p2p2p2");
-
-		_groups.add(p2P2P2Group);
-
-		Group p2P2P3Group = GroupTestUtil.addGroup(
-			p2P2Group.getGroupId(), "p2p2p3");
-
-		_groups.add(p2P2P3Group);
-
-		Group p2P3Group = GroupTestUtil.addGroup(p2Group.getGroupId(), "p2p3");
-
-		_groups.add(p2P3Group);
-
-		Group p2P3P1Group = GroupTestUtil.addGroup(
-			p2P3Group.getGroupId(), "p2p3p1");
-
-		_groups.add(p2P3P1Group);
-
-		Group p2P3P2Group = GroupTestUtil.addGroup(
-			p2P3Group.getGroupId(), "p2p3p2");
-
-		_groups.add(p2P3P2Group);
-
-		Group p2P3P3Group = GroupTestUtil.addGroup(
-			p2P3Group.getGroupId(), "p2p3p3");
-
-		_groups.add(p2P3P3Group);
-
-		Group p2P3P4Group = GroupTestUtil.addGroup(
-			p2P3Group.getGroupId(), "p2p3p4");
-
-		_groups.add(p2P3P4Group);
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		for (int i = _groups.size() - 1; i >= 0; i--) {
@@ -207,6 +51,8 @@ public class GroupLocalServiceTest {
 
 	@Test
 	public void testRebuildTree() throws Exception {
+		createGroupTree();
+
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "BULK_OPERATIONS_CHUNK_SIZE");
 
@@ -224,6 +70,165 @@ public class GroupLocalServiceTest {
 		finally {
 			field.setInt(null, oldSize);
 		}
+	}
+
+	protected void createGroupTree() throws Exception {
+
+		/**
+		 * Tree 1
+		 *
+		 * /A--->/A--->/A
+		 *  |     |--->/B
+		 *  |     |--->/C
+		 *  |     |--->/D
+		 *  |
+		 *  |--->/B--->/A
+		 *  |     |--->/B
+		 *  |     |--->/C
+		 *  |
+		 *  |--->/C--->/A
+		 *        |--->/B
+		 */
+
+		Group groupA = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, "Group A");
+
+		_groups.add(groupA);
+
+		Group groupAA = GroupTestUtil.addGroup(groupA.getGroupId(), "Group AA");
+
+		_groups.add(groupAA);
+
+		Group groupAAA = GroupTestUtil.addGroup(
+			groupAA.getGroupId(), "Group AAA");
+
+		_groups.add(groupAAA);
+
+		Group groupAAB = GroupTestUtil.addGroup(
+			groupAA.getGroupId(), "Group AAB");
+
+		_groups.add(groupAAB);
+
+		Group groupAAC = GroupTestUtil.addGroup(
+				groupAA.getGroupId(), "Group AAC");
+
+		_groups.add(groupAAC);
+
+		Group groupAAD = GroupTestUtil.addGroup(
+				groupAA.getGroupId(), "Group AAD");
+
+		_groups.add(groupAAD);
+
+		Group groupAB = GroupTestUtil.addGroup(groupA.getGroupId(), "Group AB");
+
+		_groups.add(groupAB);
+
+		Group groupABA = GroupTestUtil.addGroup(
+			groupAB.getGroupId(), "Group ABA");
+
+		_groups.add(groupABA);
+
+		Group groupABB = GroupTestUtil.addGroup(
+			groupAB.getGroupId(), "Group ABB");
+
+		_groups.add(groupABB);
+
+		Group groupABC = GroupTestUtil.addGroup(
+			groupAB.getGroupId(), "Group ABC");
+
+		_groups.add(groupABC);
+
+		Group groupAC = GroupTestUtil.addGroup(groupA.getGroupId(), "Group AC");
+
+		_groups.add(groupAC);
+
+		Group groupACA = GroupTestUtil.addGroup(
+			groupAC.getGroupId(), "Group ACA");
+
+		_groups.add(groupACA);
+
+		Group groupACB = GroupTestUtil.addGroup(
+			groupAC.getGroupId(), "Group ACB");
+
+		_groups.add(groupACB);
+
+		/**
+		 * Tree 2
+		 *
+		 * /B--->/A--->/A
+		 *  |     |--->/B
+		 *  |
+		 *  |--->/B--->/A
+		 *  |     |--->/B
+		 *  |     |--->/C
+		 *  |
+		 *  |--->/C--->/A
+		 *        |--->/B
+		 *        |--->/C
+		 *        |--->/D
+		 */
+
+		Group groupB = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, "Group B");
+
+		_groups.add(groupB);
+
+		Group groupBA = GroupTestUtil.addGroup(groupB.getGroupId(), "Group BA");
+
+		_groups.add(groupBA);
+
+		Group groupBAA = GroupTestUtil.addGroup(
+			groupBA.getGroupId(), "Group BAA");
+
+		_groups.add(groupBAA);
+
+		Group groupBAB = GroupTestUtil.addGroup(
+			groupBA.getGroupId(), "Group BAB");
+
+		_groups.add(groupBAB);
+
+		Group groupBB = GroupTestUtil.addGroup(groupB.getGroupId(), "Group BB");
+
+		_groups.add(groupBB);
+
+		Group groupBBA = GroupTestUtil.addGroup(
+			groupBB.getGroupId(), "Group BBA");
+
+		_groups.add(groupBBA);
+
+		Group groupBBB = GroupTestUtil.addGroup(
+			groupBB.getGroupId(), "Group BBB");
+
+		_groups.add(groupBBB);
+
+		Group groupBBC = GroupTestUtil.addGroup(
+			groupBB.getGroupId(), "Group BBC");
+
+		_groups.add(groupBBC);
+
+		Group groupBC = GroupTestUtil.addGroup(groupB.getGroupId(), "Group BC");
+
+		_groups.add(groupBC);
+
+		Group groupBCA = GroupTestUtil.addGroup(
+			groupBC.getGroupId(), "Group BCA");
+
+		_groups.add(groupBCA);
+
+		Group groupBCB = GroupTestUtil.addGroup(
+			groupBC.getGroupId(), "Group BCB");
+
+		_groups.add(groupBCB);
+
+		Group groupBCC = GroupTestUtil.addGroup(
+			groupBC.getGroupId(), "Group BCC");
+
+		_groups.add(groupBCC);
+
+		Group groupBCD = GroupTestUtil.addGroup(
+			groupBC.getGroupId(), "Group BCD");
+
+		_groups.add(groupBCD);
 	}
 
 	private List<Group> _groups = new ArrayList<Group>();

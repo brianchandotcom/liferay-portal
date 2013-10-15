@@ -275,19 +275,6 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_N">
-		<![CDATA[
-			SELECT
-				{Group_.*}
-			FROM
-				Group_
-			WHERE
-				(Group_.companyId = ?) AND
-				(Group_.liveGroupId = 0) AND
-				(lower(Group_.name) = ?) AND
-				(Group_.type_ != 4)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_P">
 		<![CDATA[
 			SELECT
@@ -300,6 +287,19 @@
 				(parentGroupId = ?)
 			ORDER BY
 				groupId ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_N">
+		<![CDATA[
+			SELECT
+				{Group_.*}
+			FROM
+				Group_
+			WHERE
+				(Group_.companyId = ?) AND
+				(Group_.liveGroupId = 0) AND
+				(lower(Group_.name) = ?) AND
+				(Group_.type_ != 4)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C_PG_N_D">

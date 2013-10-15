@@ -2071,7 +2071,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		traces.push(new Object[] {0L, StringPool.SLASH, 0L});
+		traces.push(
+			new Object[] {
+				GroupConstants.DEFAULT_PARENT_GROUP_ID, StringPool.SLASH, 0L
+			});
 
 		Object[] trace = null;
 
@@ -2080,27 +2083,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String parentPath = (String)trace[1];
 			Long previousGroupId = (Long)trace[2];
 
-			List<Long> childrenGroupIds = groupFinder.findByC_P(
+			List<Long> childGroupIds = groupFinder.findByC_P(
 				companyId, parentGroupId, previousGroupId,
-					PropsValues.BULK_OPERATIONS_CHUNK_SIZE);
+				PropsValues.BULK_OPERATIONS_CHUNK_SIZE);
 
-			if (childrenGroupIds.isEmpty()) {
+			if (childGroupIds.isEmpty()) {
 				continue;
 			}
 
-			// There could be more children, save current trace
-
-			if (childrenGroupIds.size() ==
+			if (childGroupIds.size() ==
 					PropsValues.BULK_OPERATIONS_CHUNK_SIZE) {
 
-				trace[2] = childrenGroupIds.get(childrenGroupIds.size() - 1);
+				trace[2] = childGroupIds.get(childGroupIds.size() - 1);
 
 				traces.push(trace);
 			}
 
-			// Process children
-
-			for (long childGroupId : childrenGroupIds) {
+			for (long childGroupId : childGroupIds) {
 				String path = parentPath.concat(
 					String.valueOf(childGroupId)).concat(StringPool.SLASH);
 

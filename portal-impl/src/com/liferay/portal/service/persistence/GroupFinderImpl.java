@@ -656,7 +656,7 @@ public class GroupFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_P);
 
-			if (previousGroupId == 0) {
+			if (previousGroupId <= 0) {
 				sql = StringUtil.replace(
 					sql, "(groupId > ?) AND", StringPool.BLANK);
 			}
@@ -667,7 +667,7 @@ public class GroupFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (previousGroupId != 0) {
+			if (previousGroupId > 0) {
 				qPos.add(previousGroupId);
 			}
 

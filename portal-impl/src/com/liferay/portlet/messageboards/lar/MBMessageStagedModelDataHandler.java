@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -111,18 +113,9 @@ public class MBMessageStagedModelDataHandler
 
 		if (hasAttachmentsFileEntries) {
 			for (FileEntry fileEntry : message.getAttachmentsFileEntries()) {
-				String name = fileEntry.getTitle();
-				String binPath = ExportImportPathUtil.getModelPath(
-					message, name);
-
-				Element attachmentElement = messageElement.addElement(
-					"attachment");
-
-				attachmentElement.addAttribute("name", name);
-				attachmentElement.addAttribute("bin-path", binPath);
-
-				portletDataContext.addZipEntry(
-					binPath, fileEntry.getContentStream());
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, message, MBMessage.class, fileEntry,
+					FileEntry.class, PortletDataContext.REFERENCE_TYPE_WEAK);
 			}
 
 			long folderId = message.getAttachmentsFolderId();
@@ -310,22 +303,41 @@ public class MBMessageStagedModelDataHandler
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			new ArrayList<ObjectValuePair<String, InputStream>>();
 
-		List<Element> attachmentElements = messageElement.elements(
-			"attachment");
+		List<Element> attachmentElements =
+			portletDataContext.getReferenceDataElements(
+				messageElement, FileEntry.class,
+				PortletDataContext.REFERENCE_TYPE_WEAK);
 
 		for (Element attachmentElement : attachmentElements) {
-			String name = attachmentElement.attributeValue("name");
+			String path = attachmentElement.attributeValue("path");
 			String binPath = attachmentElement.attributeValue("bin-path");
 
-			InputStream inputStream =
-				portletDataContext.getZipEntryAsInputStream(binPath);
+			FileEntry fileEntry =
+				(FileEntry)portletDataContext.getZipEntryAsObject(path);
+
+			InputStream inputStream = null;
+
+			if (Validator.isNull(binPath) &&
+				portletDataContext.isPerformDirectBinaryImport()) {
+
+				try {
+					inputStream = FileEntryUtil.getContentStream(fileEntry);
+				}
+				catch (Exception e) {
+				}
+			}
+			else {
+				inputStream = portletDataContext.getZipEntryAsInputStream(
+					binPath);
+			}
 
 			if (inputStream == null) {
 				continue;
 			}
 
 			ObjectValuePair<String, InputStream> inputStreamOVP =
-				new ObjectValuePair<String, InputStream>(name, inputStream);
+				new ObjectValuePair<String, InputStream>(
+					fileEntry.getTitle(), inputStream);
 
 			inputStreamOVPs.add(inputStreamOVP);
 		}

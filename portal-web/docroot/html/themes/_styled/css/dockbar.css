@@ -550,6 +550,12 @@ $editLayoutPanelWidth: 460px;
 		background-position-x: -25px;
 	}
 
+	&.ie6, &.ie7, &.ie8 {
+		.page-preview-controls {
+			display: none;
+		}
+	}
+
 	.ie7 {
 		.dockbar {
 			zoom: 1;

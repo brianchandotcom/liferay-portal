@@ -96,7 +96,7 @@ app.server.jboss.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 				<resource-root path="mysql.jar" />]]></replacevalue>
 		</replace>
 
-		<delete dir="${user.home}/liferay" />
+		<delete dir="${test.liferay.home}" />
 
 		<if>
 			<or>
@@ -107,7 +107,7 @@ app.server.jboss.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 			<then>
 				<copy
 					file="${hudson.license.dependencies.dir}/${lp.version}/license"
-					todir="${user.home}/liferay/ee"
+					todir="${test.liferay.home}/ee"
 				/>
 			</then>
 			<elseif>
@@ -120,7 +120,7 @@ app.server.jboss.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 					<equals arg1="${lp.version}" arg2="6.1.20" />
 				</or>
 				<then>
-					<copy todir="${user.home}/liferay/deploy">
+					<copy todir="${test.liferay.home}/deploy">
 						<fileset
 							dir="${hudson.license.dependencies.dir}/${lp.version}"
 							includes="license-portal-*.xml"

@@ -448,20 +448,21 @@ public abstract class BaseDB implements DB {
 							if (failOnError) {
 								throw sqle;
 							}
-							else if (_log.isWarnEnabled()) {
-								String message = GetterUtil.getString(
-									sqle.getMessage());
 
-								if (!message.startsWith("Duplicate key name")) {
-									_log.warn(message + ": " + buildSQL(sql));
-								}
+							String message = GetterUtil.getString(
+								sqle.getMessage());
 
-								if (message.startsWith("Duplicate entry") ||
-									message.startsWith(
-										"Specified key was too long")) {
+							if (!message.startsWith("Duplicate key name") &&
+								_log.isWarnEnabled()) {
 
-									_log.error(line);
-								}
+								_log.warn(message + ": " + buildSQL(sql));
+							}
+
+							if (message.startsWith("Duplicate entry") ||
+								message.startsWith(
+									"Specified key was too long")) {
+
+								_log.error(line);
 							}
 						}
 					}

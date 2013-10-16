@@ -33,6 +33,10 @@ OrderDisplayTerms displayTerms = (OrderDisplayTerms)searchContainer.getDisplayTe
 	</aui:col>
 
 	<aui:col width="<%= 33 %>">
+		<%@ include file="/html/portlet/shopping/order_search_user_name.jspf" %>
+	</aui:col>
+
+	<aui:col width="<%= 33 %>">
 		<aui:select name="<%= displayTerms.STATUS %>" showEmptyOption="<%= true %>">
 
 			<%
@@ -46,12 +50,6 @@ OrderDisplayTerms displayTerms = (OrderDisplayTerms)searchContainer.getDisplayTe
 			%>
 
 		</aui:select>
-
-		<aui:input name="<%= displayTerms.FIRST_NAME %>" size="20" type="text" value="<%= displayTerms.getFirstName() %>" />
-	</aui:col>
-
-	<aui:col width="<%= 33 %>">
-		<aui:input name="<%= displayTerms.LAST_NAME %>" size="20" type="text" value="<%= displayTerms.getLastName() %>" />
 
 		<aui:input name="<%= displayTerms.EMAIL_ADDRESS %>" size="20" type="text" value="<%= displayTerms.getEmailAddress() %>" />
 	</aui:col>

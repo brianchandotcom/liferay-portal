@@ -172,7 +172,9 @@ public class ExpandoColumnConstants {
 				return dateFormat.parse(value);
 			}
 			catch (Exception e) {
-				_log.warn("Unable to parse date " + value, e);
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to parse date " + value, e);
+				}
 			}
 		}
 		else if (type == DATE_ARRAY) {

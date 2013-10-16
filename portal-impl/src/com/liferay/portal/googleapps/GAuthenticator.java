@@ -110,13 +110,13 @@ public class GAuthenticator {
 
 		_error = properties.getProperty("Error");
 
-		if (_error != null) {
+		if ((_error != null) && _log.isInfoEnabled()) {
 			_log.info("Unable to initialize authentication token: " + _error);
 		}
 
 		_authenticationToken = properties.getProperty("Auth");
 
-		if (_authenticationToken != null) {
+		if ((_authenticationToken != null) && _log.isInfoEnabled()) {
 			_log.info("Authentication token " + _authenticationToken);
 		}
 

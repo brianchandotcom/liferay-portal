@@ -68,7 +68,7 @@ public class PersistedModelLocalServiceRegistryImpl
 			_persistedModelLocalServices.put(
 				className, persistedModelLocalService);
 
-		if (oldPersistedModelLocalService != null) {
+		if ((oldPersistedModelLocalService != null) && _log.isWarnEnabled()) {
 			_log.warn("Duplicate class name " + className);
 		}
 	}

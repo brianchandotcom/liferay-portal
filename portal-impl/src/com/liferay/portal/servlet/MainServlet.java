@@ -1312,7 +1312,9 @@ public class MainServlet extends ActionServlet {
 				remoteUserId = JAASHelper.getJaasUserId(companyId, remoteUser);
 			}
 			catch (Exception e) {
-				_log.warn(e);
+				if (_log.isWarnEnabled()) {
+					_log.warn(e);
+				}
 			}
 
 			if (remoteUserId > 0) {

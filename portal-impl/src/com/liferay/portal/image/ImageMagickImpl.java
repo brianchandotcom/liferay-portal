@@ -162,10 +162,12 @@ public class ImageMagickImpl implements ImageMagick {
 			enabled = PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED);
 		}
 		catch (Exception e) {
-			_log.warn(e, e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 
-		if (!enabled && !_warned) {
+		if (!enabled && !_warned && _log.isWarnEnabled()) {
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("Liferay is not configured to use ImageMagick and ");

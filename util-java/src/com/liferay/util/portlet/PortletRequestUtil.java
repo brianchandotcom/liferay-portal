@@ -65,11 +65,13 @@ public class PortletRequestUtil {
 		boolean multiPartContent = PortletFileUpload.isMultipartContent(
 			actionRequest);
 
-		if (multiPartContent) {
-			_log.info("The given request is a multipart request");
-		}
-		else {
-			_log.info("The given request is NOT a multipart request");
+		if (_log.isInfoEnabled()) {
+			if (multiPartContent) {
+				_log.info("The given request is a multipart request");
+			}
+			else {
+				_log.info("The given request is NOT a multipart request");
+			}
 		}
 
 		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();

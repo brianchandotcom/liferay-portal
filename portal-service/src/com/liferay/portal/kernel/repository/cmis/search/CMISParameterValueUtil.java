@@ -65,8 +65,11 @@ public class CMISParameterValueUtil {
 				value = cmisSimpleDateFormat.format(date);
 			}
 			catch (ParseException pe) {
-				_log.warn(
-					"Unable to parse date " + value + " for field " + field);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to parse date " + value + " for field " +
+							field);
+				}
 			}
 		}
 		else {

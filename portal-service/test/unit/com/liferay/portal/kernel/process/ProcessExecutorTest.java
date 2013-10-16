@@ -245,7 +245,9 @@ public class ProcessExecutorTest {
 
 			ServerThread.exit(parentSocket);
 
-			_log.info("Waiting subprocess to exit...");
+			if (_log.isInfoEnabled()) {
+				_log.info("Waiting subprocess to exit...");
+			}
 
 			long startTime = System.currentTimeMillis();
 
@@ -253,9 +255,12 @@ public class ProcessExecutorTest {
 				Thread.sleep(10);
 
 				if (!ServerThread.isAlive(childSocket)) {
-					_log.info(
-						"Subprocess exited. Waited " +
-							(System.currentTimeMillis() - startTime) + " ms");
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Subprocess exited. Waited " +
+								(System.currentTimeMillis() - startTime) +
+									" ms");
+					}
 
 					return;
 				}

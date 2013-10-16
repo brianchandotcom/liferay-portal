@@ -670,6 +670,20 @@
 				(Group_.groupId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.findByC_P">
+		<![CDATA[
+			SELECT
+				organizationId
+			FROM
+				Organization_
+			WHERE
+				(organizationId > ?) AND
+				(companyId = ?) AND
+				(parentOrganizationId = ?)
+			ORDER BY
+				organizationId ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.findByC_PO_N_L_S_C_Z_R_C">
 		<![CDATA[
 			SELECT

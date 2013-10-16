@@ -60,7 +60,9 @@ public class MSNConnector {
 				Thread.sleep(100);
 			}
 			catch (InterruptedException ie) {
-				_log.warn(ie);
+				if (_log.isWarnEnabled()) {
+					_log.warn(ie);
+				}
 
 				break;
 			}
@@ -78,7 +80,11 @@ public class MSNConnector {
 			}
 		}
 		catch (Exception e) {
-			_log.warn(e);
+			if (_log.isWarnEnabled()) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e);
+				}
+			}
 		}
 	}
 
@@ -93,7 +99,9 @@ public class MSNConnector {
 			_msn.doCallWait(to);
 		}
 		catch (Exception e) {
-			_log.warn(e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e);
+			}
 		}
 	}
 

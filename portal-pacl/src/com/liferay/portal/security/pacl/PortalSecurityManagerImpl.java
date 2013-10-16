@@ -338,9 +338,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	}
 
 	protected void initClass(Class<?> clazz) {
-		_log.debug(
-			"Loading " + clazz.getName() + " and " +
-				clazz.getDeclaredClasses().length + " inner classes");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Loading " + clazz.getName() + " and " +
+					clazz.getDeclaredClasses().length + " inner classes");
+		}
 	}
 
 	@SuppressWarnings("deprecation")

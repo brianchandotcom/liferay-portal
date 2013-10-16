@@ -6046,7 +6046,10 @@ public class PortalImpl implements Portal {
 				themeDisplay.getScopeGroupId(), portletId);
 		}
 		catch (PortalException pe) {
-			_log.warn("Unable to check control panel access permission", pe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to check control panel access permission", pe);
+			}
 		}
 
 		return false;

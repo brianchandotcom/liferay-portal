@@ -43,7 +43,9 @@ public class MSNMessageAdapter extends MsnAdapter {
 			}
 		}
 		catch (Exception e) {
-			_log.warn(e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e);
+			}
 		}
 
 		_msn.removeMsnListener(this);

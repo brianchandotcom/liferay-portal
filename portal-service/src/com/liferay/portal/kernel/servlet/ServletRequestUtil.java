@@ -29,7 +29,9 @@ public class ServletRequestUtil {
 		HttpServletRequest tempRequest = request;
 
 		while (true) {
-			_log.info("Request class " + tempRequest.getClass().getName());
+			if (_log.isInfoEnabled()) {
+				_log.info("Request class " + tempRequest.getClass().getName());
+			}
 
 			if (tempRequest instanceof HttpServletRequestWrapper) {
 				HttpServletRequestWrapper requestWrapper =

@@ -215,10 +215,12 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 				}
 			}
 			catch (TemplateException te) {
-				_log.warn(
-					"Unable to parse template " + templateId + " with parser " +
-						templateResourceParser,
-					te);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to parse template " + templateId +
+							" with parser " + templateResourceParser,
+						te);
+				}
 			}
 		}
 

@@ -385,7 +385,9 @@ public class JournalConverterImpl implements JournalConverter {
 			return jsonObject.toString();
 		}
 		catch (Exception e) {
-			_log.warn("Error retrieving file entry", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error retrieving file entry", e);
+			}
 		}
 
 		return null;

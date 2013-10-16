@@ -513,7 +513,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 				_fileEntryIds[_index] = fileEntry.getFileEntryId();
 
-				_log.debug("Added file " + _index);
+				if (_log.isDebugEnabled()) {
+					_log.debug("Added file " + _index);
+				}
 
 				_success = true;
 			}
@@ -551,7 +553,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				String content = StringUtil.read(is);
 
 				if (CONTENT.equals(content)) {
-					_log.debug("Retrieved file " + _index);
+					if (_log.isDebugEnabled()) {
+						_log.debug("Retrieved file " + _index);
+					}
 
 					_success = true;
 				}

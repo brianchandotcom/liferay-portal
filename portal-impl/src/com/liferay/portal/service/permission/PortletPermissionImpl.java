@@ -508,7 +508,9 @@ public class PortletPermissionImpl implements PortletPermission {
 				permissionChecker, group, portlet);
 		}
 		catch (Exception e) {
-			_log.warn("Cannot process control panel access permission", e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Cannot process control panel access permission", e);
+			}
 
 			return false;
 		}

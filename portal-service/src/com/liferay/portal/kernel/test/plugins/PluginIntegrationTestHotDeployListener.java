@@ -85,7 +85,9 @@ public class PluginIntegrationTestHotDeployListener
 	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
 		throws Exception {
 
-		_log.debug("Undeploying tests for " + hotDeployEvent);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Undeploying tests for " + hotDeployEvent);
+		}
 	}
 
 	protected List<Class<?>> getAllClassesInIntegrationJar(

@@ -220,7 +220,9 @@ public class FIFOUtilTest {
 
 	private static boolean _shouldTest() {
 		if (OSDetector.isWindows()) {
-			_log.warn("This test only runs on nonwindows OS");
+			if (_log.isWarnEnabled()) {
+				_log.warn("This test only runs on nonwindows OS");
+			}
 
 			return false;
 		}

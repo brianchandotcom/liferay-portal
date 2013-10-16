@@ -279,9 +279,11 @@ public class PortletBagFactory {
 				}
 			}
 			catch (Exception e) {
-				_log.warn(
-					"Portlet with the name " + portlet.getPortletId() +
-						" does not have valid default preferences");
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Portlet with the name " + portlet.getPortletId() +
+							" does not have valid default preferences");
+				}
 			}
 		}
 
@@ -501,7 +503,9 @@ public class PortletBagFactory {
 			}
 		}
 		catch (Exception e) {
-			_log.warn(e.getMessage());
+			if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
+			}
 		}
 	}
 

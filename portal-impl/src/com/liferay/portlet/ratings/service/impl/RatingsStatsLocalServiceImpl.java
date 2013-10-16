@@ -76,7 +76,9 @@ public class RatingsStatsLocalServiceImpl
 			ratingsStatsPersistence.removeByC_C(classNameId, classPK);
 		}
 		catch (NoSuchStatsException nsse) {
-			_log.warn(nsse);
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsse);
+			}
 		}
 
 		ratingsEntryPersistence.removeByC_C(classNameId, classPK);

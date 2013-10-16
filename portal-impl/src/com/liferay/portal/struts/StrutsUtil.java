@@ -78,7 +78,9 @@ public class StrutsUtil {
 				requestDispatcher.forward(request, response);
 			}
 			catch (IOException ioe1) {
-				_log.warn(ioe1, ioe1);
+				if (_log.isWarnEnabled()) {
+					_log.warn(ioe1, ioe1);
+				}
 			}
 			catch (ServletException se1) {
 				request.setAttribute(PageContext.EXCEPTION, se1.getRootCause());
@@ -96,14 +98,16 @@ public class StrutsUtil {
 					requestDispatcher.forward(request, response);
 				}
 				catch (IOException ioe2) {
-					_log.warn(ioe2, ioe2);
+					if (_log.isWarnEnabled()) {
+						_log.warn(ioe2, ioe2);
+					}
 				}
 				catch (ServletException se2) {
 					throw se2;
 				}
 			}
 		}
-		else {
+		else if (_log.isWarnEnabled()) {
 			_log.warn(uri + " is already committed");
 		}
 	}
@@ -134,7 +138,9 @@ public class StrutsUtil {
 			requestDispatcher.include(request, response);
 		}
 		catch (IOException ioe) {
-			_log.warn(ioe, ioe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 	}
 

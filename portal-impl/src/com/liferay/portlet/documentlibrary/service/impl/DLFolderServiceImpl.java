@@ -369,7 +369,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, false, WorkflowConstants.STATUS_APPROVED);
 
 		for (DLFolder dlFolder : dlFolders) {
-			if (dlFolder.isInHiddenFolder() || dlFolder.isInTrashContainer()) {
+			if (dlFolder.isInHiddenFolder() || dlFolder.isInTrash()) {
 				continue;
 			}
 

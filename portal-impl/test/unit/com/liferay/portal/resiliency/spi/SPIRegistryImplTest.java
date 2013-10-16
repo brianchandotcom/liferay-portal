@@ -14,6 +14,7 @@
 
 package com.liferay.portal.resiliency.spi;
 
+import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
@@ -68,7 +69,7 @@ public class SPIRegistryImplTest {
 	}
 
 	@Test
-	public void testExcludedPortletIds() {
+	public void testExcludedPortletIds() throws PortalResiliencyException {
 		Assert.assertSame(
 			_excludedPortletIds, _spiRegistryImpl.getExcludedPortletIds());
 
@@ -87,6 +88,14 @@ public class SPIRegistryImplTest {
 
 		Assert.assertNull(_spiRegistryImpl.getPortletSPI(portlet1));
 		Assert.assertSame(spi, _spiRegistryImpl.getPortletSPI(portlet2));
+
+		_spiRegistryImpl.setSPIRegistryValidator(
+			new MockSPIRegistryValidator());
+
+		Assert.assertNull(_spiRegistryImpl.getPortletSPI(portlet1));
+		Assert.assertSame(spi, _spiRegistryImpl.getPortletSPI(portlet2));
+
+		_spiRegistryImpl.setSPIRegistryValidator(null);
 
 		_spiRegistryImpl.removeExcludedPortletId(portlet1);
 
@@ -137,6 +146,17 @@ public class SPIRegistryImplTest {
 		Assert.assertSame(
 			mockSPI, _spiRegistryImpl.getServletContextSPI("portletApp2"));
 		Assert.assertNull(_spiRegistryImpl.getServletContextSPI("portletApp3"));
+
+		_spiRegistryImpl.setSPIRegistryValidator(
+			new MockSPIRegistryValidator());
+
+		Assert.assertSame(
+			mockSPI, _spiRegistryImpl.getServletContextSPI("portletApp1"));
+		Assert.assertSame(
+			mockSPI, _spiRegistryImpl.getServletContextSPI("portletApp2"));
+		Assert.assertNull(_spiRegistryImpl.getServletContextSPI("portletApp3"));
+
+		_spiRegistryImpl.setSPIRegistryValidator(null);
 
 		List<String> portletIds = Arrays.asList(_portletIds.remove(mockSPI));
 

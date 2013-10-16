@@ -61,6 +61,10 @@ public interface OrganizationFinder {
 	public java.util.List<com.liferay.portal.model.Organization> findByNoAssets()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<java.lang.Long> findByC_P(long companyId,
+		long parentOrganizationId, long previousOrganizationId, int size)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portal.model.Organization> findByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		java.lang.String parentOrganizationIdComparator, java.lang.String name,

@@ -6,8 +6,7 @@
 	overflow: auto;
 
 	@include respond-to(phone, tablet) {
-		overflow-scrolling: touch;
-		-webkit-overflow-scrolling: touch;
+		@include experimental(overflow-scrolling, touch);
 
 		.searchcontainer-content .table {
 			max-width: none;

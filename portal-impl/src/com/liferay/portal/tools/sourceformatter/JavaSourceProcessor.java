@@ -399,6 +399,51 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
+	protected void checkLogLevel(
+		String content, String fileName, String logLevel) {
+
+		if (fileName.contains("Log")) {
+			return;
+		}
+
+		Pattern pattern = Pattern.compile("\n(\t+)_log." + logLevel + "\\(");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			int pos = matcher.start();
+
+			while (true) {
+				pos = content.lastIndexOf(
+					StringPool.NEW_LINE + StringPool.TAB, pos - 1);
+
+				char c = content.charAt(pos + 2);
+
+				if (c != CharPool.TAB) {
+					break;
+				}
+			}
+
+			String codeBlock = content.substring(pos, matcher.start());
+			String s =
+				"_log.is" + StringUtil.upperCaseFirstLetter(logLevel) +
+					"Enabled()";
+
+			if (!codeBlock.contains(s)) {
+				int lineCount = StringUtil.count(
+					content.substring(0, matcher.start(1)),
+					StringPool.NEW_LINE);
+
+				lineCount += 1;
+
+				processErrorMessage(
+					fileName, "Use " + s + ": " + fileName + " " + lineCount);
+			}
+		}
+
+		return;
+	}
+
 	protected void checkTestAnnotations(JavaTerm javaTerm, String fileName) {
 		int methodType = javaTerm.getType();
 
@@ -1028,6 +1073,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"Use SecureRandomUtil instead of java.security.SecureRandom: " +
 					fileName);
 		}
+
+		// LPS-41315
+
+		checkLogLevel(newContent, fileName, "debug");
+		checkLogLevel(newContent, fileName, "info");
+		checkLogLevel(newContent, fileName, "trace");
+		checkLogLevel(newContent, fileName, "warn");
 
 		String oldContent = newContent;
 

@@ -74,15 +74,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.dockbar {
 		&.navbar {
-			.container .btn {
-				border-color: transparent;
-
-				&:hover, &:focus {
-					background-color: transparent;
-					text-decoration: underline;
-				}
-			}
-
 			.nav {
 				li {
 					&.dropdown {
@@ -94,21 +85,18 @@ $dockbarOpenGradientStart: #0EA6F9;
 									color: #FFF;
 								}
 							}
-
-							&:hover {
-								background-color: #2FA4F5;
-							}
 						}
 
-						&.site-variations .dropdown-menu {
-							background-color: #026ED2;
+						&.staging-toggle .dropdown-menu {
+							background-color: #55B8EC;
 						}
 					}
 				}
 
 				> li {
 					> a {
-						padding: 6px 15px;
+						margin: 0 5px 0 0;
+						padding: 6px 10px;
 
 						&:hover {
 							background-color: #2FA4F5;
@@ -131,18 +119,28 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.staging-bar {
-			.site-variations {
+			.staging-toggle {
 				color: #FFF;
 
 				li a {
 					color: #FFF;
-					font-weight: 400;
+					font-weight: 300;
+					text-decoration: none;
 				}
 
 				.btn-link {
 					color: #FFF;
 					font-size: 12px;
 				}
+			}
+		}
+
+		.page-customization-bar .btn {
+			border-color: transparent;
+
+			&:hover, &:focus {
+				background: transparent;
+				text-decoration: underline;
 			}
 		}
 	}
@@ -211,10 +209,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background-color: #6DA4E4;
 				background-color: rgba(109, 168, 228, 0.9);
 				line-height: 20px;
-
-				.btn:hover {
-					background: transparent;
-				}
 			}
 
 			.page-customization-bar-text {
@@ -587,9 +581,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 						@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
 						@include box-shadow(none);
 					}
+				}
 
+				li.dropdown.active {
 					> .staging-link.dropdown-toggle {
-						@include background-image(linear-gradient(#0279E1, #0264CC));
+						background-color: #55B8EC;
+						background-image: none;
 					}
 				}
 			}

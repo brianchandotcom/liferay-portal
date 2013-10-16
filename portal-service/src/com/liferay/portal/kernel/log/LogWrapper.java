@@ -182,6 +182,11 @@ public class LogWrapper implements Log {
 	}
 
 	@Override
+	public void setLogWrapperClassName(String className) {
+		_log.setLogWrapperClassName(className);
+	}
+
+	@Override
 	public void trace(Object msg) {
 		try {
 			_log.trace(msg);

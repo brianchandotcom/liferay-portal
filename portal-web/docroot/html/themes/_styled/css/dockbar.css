@@ -551,7 +551,7 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	&.ie6, &.ie7, &.ie8 {
-		.dockbar-split .dockbar .navbar-inner .nav-add-controls > li.page-preview-controls {
+		.dockbar-split .dockbar .navbar-inner .nav-add-controls li.page-preview-controls {
 			display: none;
 		}
 	}

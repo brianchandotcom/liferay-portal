@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.struts.JSONAction;
@@ -121,7 +122,18 @@ public class JSONServiceAction extends JSONAction {
 						" with args " + Arrays.toString(args));
 			}
 
-			Object returnObj = method.invoke(clazz, args);
+			Object returnObj = null;
+
+			boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
+
+			try {
+				AccessControlThreadLocal.setRemoteAccess(true);
+
+				returnObj = method.invoke(clazz, args);
+			}
+			finally {
+				AccessControlThreadLocal.setRemoteAccess(remoteAccess);
+			}
 
 			if (returnObj != null) {
 				return getReturnValue(returnObj);

@@ -532,6 +532,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			> .active > a {
+				background-color: $dockbarGradientStart;
+
 				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 				@include box-shadow(none);
 				@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
@@ -611,6 +613,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 			@include text-shadow(none);
 
 			@include respond-to(phone, tablet) {
+				background-color: $dockbarGradientStart;
+
 				@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
 			}
 

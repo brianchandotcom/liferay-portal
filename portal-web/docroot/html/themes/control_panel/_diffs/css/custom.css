@@ -825,6 +825,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.panel-page-menu .portlet-borderless-container {
 		&:after {
+				background-color: #D1D1D1;
+
 				@include background-image(linear-gradient(#FFF, #D1D1D1));
 
 				content: '';
@@ -868,11 +870,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.dockbar {
 		.navbar-inner {
+			background-color: $dockbarGradientStart;
+
 			@include background-image(linear-gradient(top, $dockbarGradientStart, $dockbarGradientEnd));
 			@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
 
 			ul.nav-account-controls {
 				li.open > .dropdown-toggle {
+					background-color: $dockbarGradientStart;
+
 					@include background-image(linear-gradient(top, $dockbarOpenGradientStart, $dockbarOpenGradientEnd));
 					@include box-shadow(none);
 					@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);

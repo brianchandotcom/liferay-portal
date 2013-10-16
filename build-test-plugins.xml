@@ -9,8 +9,8 @@
 				<equals arg1="${plugins.deployed}" arg2="true" />
 			</not>
 			<then>
-				<delete dir="${test.liferay.home}/data" />
-				<delete dir="${test.liferay.home}/deploy" />
+				<delete dir="${liferay.home}/data" />
+				<delete dir="${liferay.home}/deploy" />
 			</then>
 		</if>
 
@@ -23,7 +23,7 @@ app.server.deploy.dir=${app.server.dir}/profiles/liferay/wsadmin-deploy
 app.server.lib.global.dir=${app.server.dir}/lib/ext
 app.server.portal.dir=${app.server.dir}/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war
 
-auto.deploy.dir=${test.liferay.home}/deploy
+auto.deploy.dir=${liferay.home}/deploy
 
 plugins.includes=${plugins.includes}</echo>
 			</then>
@@ -32,7 +32,7 @@ plugins.includes=${plugins.includes}</echo>
 app.server.lib.global.dir=${simple.server.lib.global.dir}
 app.server.portal.dir=${simple.server.portal.dir}
 
-auto.deploy.dir=${test.liferay.home}/deploy
+auto.deploy.dir=${liferay.home}/deploy
 
 plugins.includes=${plugins.includes}</echo>
 			</else>
@@ -74,7 +74,7 @@ plugins.includes=${plugins.includes}</echo>
 			</else>
 		</if>
 
-		<copy todir="${test.liferay.home}/deploy">
+		<copy todir="${liferay.home}/deploy">
 			<fileset
 				dir="${hudson.plugin.dependencies.dir}/${file.dir}"
 				includes="${plugins.includes}"

@@ -90,7 +90,8 @@ app.server.glassfish.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 
 		<ant dir="portal-impl" target="deploy-properties" inheritAll="false" />
 
-		<delete dir="${test.liferay.home}" />
+		<delete dir="${liferay.home}/data" />
+		<delete dir="${liferay.home}/deploy" />
 
 		<if>
 			<or>
@@ -101,7 +102,7 @@ app.server.glassfish.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 			<then>
 				<copy
 					file="${hudson.license.dependencies.dir}/${lp.version}/license"
-					todir="${test.liferay.home}/ee"
+					todir="${liferay.home}/ee"
 				/>
 			</then>
 			<elseif>
@@ -114,7 +115,7 @@ app.server.glassfish.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 					<equals arg1="${lp.version}" arg2="6.1.20" />
 				</or>
 				<then>
-					<copy todir="${test.liferay.home}/deploy">
+					<copy todir="${liferay.home}/deploy">
 						<fileset
 							dir="${hudson.license.dependencies.dir}/${lp.version}"
 							includes="license-portal-*.xml"

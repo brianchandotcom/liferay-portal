@@ -11,7 +11,7 @@
 
 		<copy
 			file="${hudson.portal.dependencies.dir}${lp.version}/lpe2005-ee5207-hook-5.2.7.1.war"
-			todir="${test.liferay.home}/deploy"
+			todir="${liferay.home}/deploy"
 		/>
 	</target>
 
@@ -193,7 +193,8 @@ web.server.display.node=true</echo>
 
 		<antcall target="deploy-properties" inheritAll="false" />
 
-		<delete dir="${test.liferay.home}" />
+		<delete dir="${liferay.home}/data" />
+		<delete dir="${liferay.home}/deploy" />
 
 		<if>
 			<or>
@@ -204,7 +205,7 @@ web.server.display.node=true</echo>
 			<then>
 				<copy
 					file="${hudson.license.dependencies.dir}/${lp.version}/license"
-					todir="${test.liferay.home}/ee"
+					todir="${liferay.home}/ee"
 				/>
 			</then>
 			<elseif>
@@ -217,7 +218,7 @@ web.server.display.node=true</echo>
 					<equals arg1="${lp.version}" arg2="6.1.20" />
 				</or>
 				<then>
-					<copy todir="${test.liferay.home}/deploy">
+					<copy todir="${liferay.home}/deploy">
 						<fileset
 							dir="${hudson.license.dependencies.dir}/${lp.version}"
 							includes="license-portal-*.xml"

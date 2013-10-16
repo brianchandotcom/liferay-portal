@@ -124,7 +124,7 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 			replace="/"
 		/>
 
-		<copy todir="${test.liferay.home}/deploy" flatten="true">
+		<copy todir="${liferay.home}/deploy" flatten="true">
 			<fileset
 				dir="tools/tck/dist/${test.directory}"
 				includes="**/*.war"

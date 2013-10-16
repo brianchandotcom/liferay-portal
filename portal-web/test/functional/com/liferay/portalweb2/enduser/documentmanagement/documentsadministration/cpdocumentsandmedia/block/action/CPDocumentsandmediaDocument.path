@@ -143,23 +143,28 @@
 </tr>
 <!--VERSION_HISTORY_TABLE-->
 <tr>
+	<td>VERSION_HISTORY_TABLE_CHECKBOX</td>
+	<td>//td/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERSION_HISTORY_TABLE_VERSION</td>
-	<td>//td[1]</td>
+	<td>//td[contains(.,'.')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_TABLE_DATE</td>
-	<td>//td[2]</td>
+	<td>//td[contains(.,'ago')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_TABLE_SIZE</td>
-	<td>//td[3]</td>
+	<td>//td[contains(.,'k')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_TABLE_STATUS</td>
-	<td>//td[4]</td>
+	<td>//td//span[@class='workflow-status']</td>
 	<td></td>
 </tr>
 </tbody>

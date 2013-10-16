@@ -75,7 +75,7 @@ else {
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
 				href="<%= rowURL %>"
-				name="category"
+				name="category[message-board]"
 			>
 
 				<%

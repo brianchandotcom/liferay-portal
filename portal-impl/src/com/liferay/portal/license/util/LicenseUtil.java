@@ -45,15 +45,12 @@ import com.liferay.util.Encryptor;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
-import java.net.Proxy;
+import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.security.Key;
 import java.security.KeyFactory;
@@ -79,6 +76,18 @@ import javax.crypto.KeyGenerator;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpParams;
 
 /**
  * @author Amos Fong
@@ -417,8 +426,7 @@ public class LicenseUtil {
 	}
 
 	public static String sendRequest(String request) throws Exception {
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
+		DefaultHttpClient httpClient = new DefaultHttpClient();
 
 		try {
 			String serverURL = LICENSE_SERVER_URL;
@@ -429,9 +437,9 @@ public class LicenseUtil {
 
 			serverURL += "osb-portlet/license";
 
-			URL url = new URL(serverURL);
+			URI uri = new URI(serverURL);
 
-			URLConnection connection = null;
+			HttpPost httpPost = new HttpPost(uri);
 
 			if (Validator.isNotNull(_PROXY_URL)) {
 				if (_log.isInfoEnabled()) {
@@ -440,34 +448,37 @@ public class LicenseUtil {
 							_PROXY_PORT);
 				}
 
-				Proxy proxy = new Proxy(
-					Proxy.Type.HTTP,
-					new InetSocketAddress(_PROXY_URL, _PROXY_PORT));
+				HttpHost proxyHost = new HttpHost(_PROXY_URL, _PROXY_PORT);
 
-				connection = url.openConnection(proxy);
+				HttpParams httpParams = httpClient.getParams();
+
+				httpParams.setParameter(
+					ConnRoutePNames.DEFAULT_PROXY, proxyHost);
 
 				if (Validator.isNotNull(_PROXY_USER_NAME)) {
-					String login =
-						_PROXY_USER_NAME + StringPool.COLON + _PROXY_PASSWORD;
+					CredentialsProvider credentialsProvider =
+						httpClient.getCredentialsProvider();
 
-					String encodedLogin = Base64.encode(login.getBytes());
-
-					connection.setRequestProperty(
-						"Proxy-Authorization", "Basic " + encodedLogin);
+					credentialsProvider.setCredentials(
+						new AuthScope(_PROXY_URL, _PROXY_PORT),
+						new UsernamePasswordCredentials(
+							_PROXY_USER_NAME, _PROXY_PASSWORD));
 				}
 			}
-			else {
-				connection = url.openConnection();
-			}
 
-			connection.setDoOutput(true);
+			ByteArrayEntity requestEntity = new ByteArrayEntity(
+				_encryptRequest(serverURL, request));
 
-			outputStream = connection.getOutputStream();
+			requestEntity.setContentType("application/json");
 
-			outputStream.write(_encryptRequest(serverURL, request));
+			httpPost.setEntity(requestEntity);
+
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+
+			HttpEntity responseEntity = httpResponse.getEntity();
 
 			String response = _decryptResponse(
-				serverURL, connection.getInputStream());
+				serverURL, responseEntity.getContent());
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Server response: " + response);
@@ -480,21 +491,10 @@ public class LicenseUtil {
 			return response;
 		}
 		finally {
-			try {
-				if (inputStream != null) {
-					inputStream.close();
-				}
-			}
-			catch (Exception e) {
-			}
+			ClientConnectionManager connectionManager =
+				httpClient.getConnectionManager();
 
-			try {
-				if (outputStream != null) {
-					outputStream.close();
-				}
-			}
-			catch (Exception e) {
-			}
+			connectionManager.shutdown();
 		}
 	}
 

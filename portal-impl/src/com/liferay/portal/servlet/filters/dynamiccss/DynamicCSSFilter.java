@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
@@ -28,6 +26,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
+import com.liferay.portal.servlet.filters.cache.CacheFileHelper;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
@@ -66,22 +65,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		DynamicCSSUtil.init();
 	}
 
-	protected String getCacheFileName(HttpServletRequest request) {
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				DynamicCSSFilter.class.getName());
-
-		cacheKeyGenerator.append(request.getRequestURI());
-
-		String queryString = request.getQueryString();
-
-		if (queryString != null) {
-			cacheKeyGenerator.append(sterilizeQueryString(queryString));
-		}
-
-		return String.valueOf(cacheKeyGenerator.finish());
-	}
-
 	protected Object getDynamicContent(
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
@@ -105,21 +88,15 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		URLConnection urlConnection = resourceURL.openConnection();
 
-		String cacheCommonFileName = getCacheFileName(request);
+		String cacheCommonFileName = _cacheFileHelper.getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
 			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
-		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >= urlConnection.getLastModified())) {
-
-			if (cacheContentTypeFile.exists()) {
-				String contentType = FileUtil.read(cacheContentTypeFile);
-
-				response.setContentType(contentType);
-			}
+		if (_cacheFileHelper.cacheDataFileExists(
+				response, cacheDataFile, urlConnection, cacheContentTypeFile)) {
 
 			return cacheDataFile;
 		}
@@ -215,12 +192,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		}
 	}
 
-	protected String sterilizeQueryString(String queryString) {
-		return StringUtil.replace(
-			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
-			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
-	}
-
 	private static final String _CSS_EXTENSION = ".css";
 
 	private static final String _JSP_EXTENSION = ".jsp";
@@ -229,6 +200,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSFilter.class);
 
+	private CacheFileHelper _cacheFileHelper = new CacheFileHelper();
 	private ServletContext _servletContext;
 	private File _tempDir;
 

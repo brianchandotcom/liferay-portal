@@ -447,6 +447,7 @@
 				<classpath mode="compile">lib/portal/lucene-queries.jar</classpath>
 				<classpath mode="compile">lib/portal/lucene-queryparser.jar</classpath>
 				<classpath mode="compile">lib/portal/lucene-spellchecker.jar</classpath>
+				<classpath mode="compile">lib/portal/mchange-commons-java.jar</classpath>
 				<classpath mode="compile">lib/portal/memcached.jar</classpath>
 				<classpath mode="compile">lib/portal/metadata-extractor.jar</classpath>
 				<classpath mode="compile">lib/portal/mime4j-core.jar</classpath>

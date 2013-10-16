@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.util.PortletKeys;
-
 import java.util.Locale;
 
 /**
@@ -44,24 +41,12 @@ public class QueryIndexingHitsProcessor implements HitsProcessor {
 		return true;
 	}
 
-	public void setDocument(Document document) {
-		_document = document;
-	}
-
 	protected void addDocument(long companyId, String keywords, Locale locale)
 		throws SearchException {
 
-		Document document = (Document)_document.clone();
-
-		document.addKeyword(Field.COMPANY_ID, companyId);
-		document.addKeyword(Field.KEYWORD_SEARCH, keywords);
-		document.addKeyword(Field.LANGUAGE_ID, LocaleUtil.toLanguageId(locale));
-		document.addKeyword(Field.PORTLET_ID, PortletKeys.SEARCH);
-
-		SearchEngineUtil.addDocument(
-			SearchEngineUtil.getDefaultSearchEngineId(), companyId, document);
+		SearchEngineUtil.indexKeyword(
+			companyId, keywords, 0, SuggestionConstants.TYPE_QUERY_SUGGESTION,
+			locale);
 	}
-
-	private Document _document;
 
 }

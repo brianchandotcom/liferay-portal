@@ -54,7 +54,7 @@ else {
 	<c:if test="<%= !layoutRevision.isIncomplete() %>">
 
 		<%
-		String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "viewHistory', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'});";
+		String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "viewHistory', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'}); void(0);";
 		%>
 
 		<liferay-ui:icon
@@ -70,7 +70,7 @@ else {
 		<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
 
 			<%
-			String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "undo', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'});";
+			String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "undo', {layoutRevisionId: '" + layoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + layoutRevision.getLayoutSetBranchId() + "'}); void(0);";
 			%>
 
 			<liferay-ui:icon
@@ -92,7 +92,7 @@ else {
 			%>
 
 				<%
-				String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "redo', {layoutRevisionId: '" + firstChildLayoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + firstChildLayoutRevision.getLayoutSetBranchId() + "'});";
+				String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "redo', {layoutRevisionId: '" + firstChildLayoutRevision.getLayoutRevisionId() + "', layoutSetBranchId: '" + firstChildLayoutRevision.getLayoutSetBranchId() + "'}); void(0);";
 				%>
 
 				<liferay-ui:icon
@@ -194,7 +194,7 @@ else {
 			String taglibURL = null;
 
 			if (!workflowEnabled || pendingLayoutRevisions.isEmpty()) {
-				taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'});";
+				taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'}); void(0);";
 			}
 			%>
 
@@ -226,7 +226,7 @@ else {
 						submitLink.on(
 							'mouseenter',
 							function(event) {
-								Liferay.Portal.ToolTip.show(submitLink, '<liferay-ui:message key="<%= submitMessage %>" />')
+								Liferay.Portal.ToolTip.show(submitLink, '<liferay-ui:message key="<%= submitMessage %>" />');
 							}
 						);
 					}

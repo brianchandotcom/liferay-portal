@@ -803,7 +803,7 @@ public class DLAppHelperLocalServiceImpl
 						WorkflowConstants.STATUS_IN_TRASH);
 
 				for (DLFileVersion dlFileVersion : dlFileVersions) {
-				
+
 					// File version
 
 					TrashVersion trashVersion =

@@ -155,14 +155,14 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 				if (startDate != null) {
 					actionResponse.setRenderParameter(
-						"startDate", String.valueOf(startDate.getTime()));
+						"selStartTime", String.valueOf(startDate.getTime()));
 				}
 
 				Date endDate = dateRange.getEndDate();
 
 				if (endDate != null) {
 					actionResponse.setRenderParameter(
-						"endDate", String.valueOf(endDate.getTime()));
+						"selEndTime", String.valueOf(endDate.getTime()));
 				}
 			}
 		}

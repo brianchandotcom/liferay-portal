@@ -95,12 +95,12 @@ public class ExportLayoutsAction extends PortletAction {
 			else {
 				if (startDate != null) {
 					actionResponse.setRenderParameter(
-						"startDate", String.valueOf(startDate.getTime()));
+						"selStartTime", String.valueOf(startDate.getTime()));
 				}
 
 				if (endDate != null) {
 					actionResponse.setRenderParameter(
-						"endDate", String.valueOf(endDate.getTime()));
+						"selEndTime", String.valueOf(endDate.getTime()));
 				}
 			}
 		}

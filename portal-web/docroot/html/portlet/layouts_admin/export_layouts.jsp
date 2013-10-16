@@ -42,18 +42,18 @@ String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
 Date startDate = null;
 
-long startDateTime = ParamUtil.getLong(request, "startDate");
+long selStartTime = ParamUtil.getLong(request, "selStartTime");
 
-if (startDateTime > 0) {
-	startDate = new Date(startDateTime);
+if (selStartTime > 0) {
+	startDate = new Date(selStartTime);
 }
 
 Date endDate = null;
 
-long endDateTime = ParamUtil.getLong(request, "endDate");
+long selEndTime = ParamUtil.getLong(request, "selEndTime");
 
-if (endDateTime > 0) {
-	endDate = new Date(endDateTime);
+if (selEndTime > 0) {
+	endDate = new Date(selEndTime);
 }
 
 String treeId = "layoutsExportTree" + liveGroupId + privateLayout;
@@ -270,11 +270,20 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 															<aui:input helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 
 															<%
-															Calendar today = CalendarFactoryUtil.getCalendar(timeZone, locale);
+															Calendar endCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-															Calendar yesterday = CalendarFactoryUtil.getCalendar(timeZone, locale);
+															if (endDate != null) {
+																endCalendar.setTime(endDate);
+															}
 
-															yesterday.add(Calendar.DATE, -1);
+															Calendar startCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+															if (startDate != null) {
+																startCalendar.setTime(startDate);
+															}
+															else {
+																startCalendar.add(Calendar.DATE, -1);
+															}
 															%>
 
 															<ul class="date-range-options hide unstyled" id="<portlet:namespace />startEndDate">
@@ -282,28 +291,28 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																	<aui:fieldset label="start-date">
 																		<liferay-ui:input-date
 																			dayParam="startDateDay"
-																			dayValue="<%= yesterday.get(Calendar.DATE) %>"
+																			dayValue="<%= startCalendar.get(Calendar.DATE) %>"
 																			disabled="<%= false %>"
-																			firstDayOfWeek="<%= yesterday.getFirstDayOfWeek() - 1 %>"
+																			firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
 																			monthParam="startDateMonth"
-																			monthValue="<%= yesterday.get(Calendar.MONTH) %>"
+																			monthValue="<%= startCalendar.get(Calendar.MONTH) %>"
 																			name="startDate"
 																			yearParam="startDateYear"
-																			yearValue="<%= yesterday.get(Calendar.YEAR) %>"
+																			yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
 																		/>
 
 																		&nbsp;
 
 																		<liferay-ui:input-time
 																			amPmParam='<%= "startDateAmPm" %>'
-																			amPmValue="<%= yesterday.get(Calendar.AM_PM) %>"
+																			amPmValue="<%= startCalendar.get(Calendar.AM_PM) %>"
 																			dateParam="startDateTime"
-																			dateValue="<%= yesterday.getTime() %>"
+																			dateValue="<%= startCalendar.getTime() %>"
 																			disabled="<%= false %>"
 																			hourParam='<%= "startDateHour" %>'
-																			hourValue="<%= yesterday.get(Calendar.HOUR) %>"
+																			hourValue="<%= startCalendar.get(Calendar.HOUR) %>"
 																			minuteParam='<%= "startDateMinute" %>'
-																			minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
+																			minuteValue="<%= startCalendar.get(Calendar.MINUTE) %>"
 																			name="startTime"
 																		/>
 																	</aui:fieldset>
@@ -313,28 +322,28 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																	<aui:fieldset label="end-date">
 																		<liferay-ui:input-date
 																			dayParam="endDateDay"
-																			dayValue="<%= today.get(Calendar.DATE) %>"
+																			dayValue="<%= endCalendar.get(Calendar.DATE) %>"
 																			disabled="<%= false %>"
-																			firstDayOfWeek="<%= today.getFirstDayOfWeek() - 1 %>"
+																			firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
 																			monthParam="endDateMonth"
-																			monthValue="<%= today.get(Calendar.MONTH) %>"
+																			monthValue="<%= endCalendar.get(Calendar.MONTH) %>"
 																			name="endDate"
 																			yearParam="endDateYear"
-																			yearValue="<%= today.get(Calendar.YEAR) %>"
+																			yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
 																		/>
 
 																		&nbsp;
 
 																		<liferay-ui:input-time
 																			amPmParam='<%= "endDateAmPm" %>'
-																			amPmValue="<%= today.get(Calendar.AM_PM) %>"
+																			amPmValue="<%= endCalendar.get(Calendar.AM_PM) %>"
 																			dateParam="startDateTime"
-																			dateValue="<%= today.getTime() %>"
+																			dateValue="<%= endCalendar.getTime() %>"
 																			disabled="<%= false %>"
 																			hourParam='<%= "endDateHour" %>'
-																			hourValue="<%= today.get(Calendar.HOUR) %>"
+																			hourValue="<%= endCalendar.get(Calendar.HOUR) %>"
 																			minuteParam='<%= "endDateMinute" %>'
-																			minuteValue="<%= today.get(Calendar.MINUTE) %>"
+																			minuteValue="<%= endCalendar.get(Calendar.MINUTE) %>"
 																			name="endTime"
 																		/>
 																	</aui:fieldset>

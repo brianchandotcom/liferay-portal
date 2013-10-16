@@ -666,7 +666,7 @@ AUI.add(
 					A.each(
 						str,
 						function(item, index, collection) {
-							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N')) {
+							if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item,'Pd')) {
 								str = str.replace(item, STR_SPACE);
 							}
 						}

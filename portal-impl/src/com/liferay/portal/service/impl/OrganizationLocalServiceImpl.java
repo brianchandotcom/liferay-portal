@@ -20,11 +20,6 @@ import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.OrganizationTypeException;
 import com.liferay.portal.RequiredOrganizationException;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -39,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,10 +64,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1010,11 +1006,55 @@ public class OrganizationLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		StringBundler path = new StringBundler(20);
+		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		path.append(StringPool.SLASH);
+		traces.push(
+			new Object[] {
+				GetterUtil.getLong(
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
+				StringPool.SLASH, 0L
+			});
 
-		buildTreePath(companyId, 0, path);
+		Object[] trace = null;
+
+		while ((trace = traces.poll()) != null) {
+			Long parentOrganizationId = (Long)trace[0];
+			String parentPath = (String)trace[1];
+			Long previousOrganizationId = (Long)trace[2];
+
+			List<Long> childOrganizationIds = organizationFinder.findByC_P(
+				companyId, parentOrganizationId, previousOrganizationId,
+				PropsValues.BULK_OPERATIONS_CHUNK_SIZE);
+
+			if (childOrganizationIds.isEmpty()) {
+				continue;
+			}
+
+			if (childOrganizationIds.size() ==
+					PropsValues.BULK_OPERATIONS_CHUNK_SIZE) {
+
+				trace[2] = childOrganizationIds.get(
+					childOrganizationIds.size() - 1);
+
+				traces.push(trace);
+			}
+
+			for (long childOrganizationId : childOrganizationIds) {
+				String path = parentPath.concat(
+					String.valueOf(childOrganizationId)).concat(
+						StringPool.SLASH);
+
+				Organization organization =
+					organizationPersistence.findByPrimaryKey(
+						childOrganizationId);
+
+				organization.setTreePath(path);
+
+				organizationPersistence.update(organization);
+
+				traces.push(new Object[] {childOrganizationId, path, 0L});
+			}
+		}
 	}
 
 	/**
@@ -1795,58 +1835,6 @@ public class OrganizationLocalServiceImpl
 
 				addSuborganizations(allSuborganizations, suborganizations);
 			}
-		}
-	}
-
-	protected void buildTreePath(
-			long companyId, long parentOrganizationId, StringBundler path)
-		throws PortalException, SystemException {
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Organization.class);
-
-		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("organizationId"));
-
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		Property parentOrganizationIdProperty = PropertyFactoryUtil.forName(
-			"parentOrganizationId");
-
-		dynamicQuery.add(parentOrganizationIdProperty.eq(parentOrganizationId));
-
-		int start = 0;
-
-		while (true) {
-			int end = start + PropsValues.BULK_OPERATIONS_CHUNK_SIZE;
-
-			dynamicQuery.setLimit(start, end);
-
-			List<Long> organizationIds = (List<Long>)dynamicQuery(dynamicQuery);
-
-			if (organizationIds.isEmpty()) {
-				break;
-			}
-
-			for (Long organizationId : organizationIds) {
-				path.append(organizationId);
-				path.append(StringPool.SLASH);
-
-				buildTreePath(companyId, organizationId, path);
-
-				Organization organization =
-					organizationPersistence.findByPrimaryKey(organizationId);
-
-				organization.setTreePath(path.toString());
-
-				organizationPersistence.update(organization);
-
-				path.setIndex(path.index() - 2);
-			}
-
-			start = end;
 		}
 	}
 

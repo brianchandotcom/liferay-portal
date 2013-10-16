@@ -16,6 +16,8 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.json.JSONIncludesManagerImpl;
+import com.liferay.portal.json.transformer.SortedHashMapJSONTransformer;
+import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONIncludesManagerUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
@@ -33,6 +35,8 @@ import com.liferay.portal.util.MethodParametersResolverImpl;
 import com.liferay.portal.util.PropsImpl;
 
 import java.lang.reflect.Method;
+
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -137,6 +141,30 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 	}
 
 	protected String toJSON(Object object) {
+		if (object instanceof JSONWebServiceInvokerAction.InvokerResult) {
+			final JSONWebServiceInvokerAction.InvokerResult invokerResult =
+				(JSONWebServiceInvokerAction.InvokerResult)object;
+
+			JSONWebServiceInvokerAction invokerAction =
+				invokerResult.getInvokerAction();
+
+			JSONWebServiceInvokerAction.InvokerResult newInvokerResult =
+				invokerAction.new InvokerResult(invokerResult.getResult()) {
+					@Override
+					protected JSONSerializer createJsonSerializer() {
+						JSONSerializer jsonSerializer =
+							super.createJsonSerializer();
+
+						jsonSerializer.transform(
+							new SortedHashMapJSONTransformer(), HashMap.class);
+
+						return jsonSerializer;
+					}
+				};
+
+			object = newInvokerResult;
+		}
+
 		if (object instanceof JSONSerializable) {
 			return ((JSONSerializable)object).toJSONString();
 		}

@@ -29,6 +29,8 @@ QueryConfig queryConfig = new QueryConfig();
 queryConfig.setCollatedSpellCheckResultEnabled(collatedSpellCheckResultEnabled);
 queryConfig.setCollatedSpellCheckResultScoresThreshold(collatedSpellCheckResultDisplayThreshold);
 queryConfig.setHighlightEnabled(true);
+queryConfig.setQueryIndexingEnabled(queryIndexingEnabled);
+queryConfig.setQueryIndexingThreshold(queryIndexingThreshold);
 queryConfig.setQuerySuggestionEnabled(querySuggestionsEnabled);
 queryConfig.setQuerySuggestionScoresThreshold(querySuggestionsDisplayThreshold);
 queryConfig.setQuerySuggestionsMax(querySuggestionsMax);

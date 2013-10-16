@@ -57,11 +57,7 @@
 				<property name="hitsProcessors">
 					<util:list>
 						<bean class="com.liferay.portal.kernel.search.CollatedSpellCheckHitsProcessor" />
-						<bean class="com.liferay.portal.kernel.search.QueryIndexingHitsProcessor">
-							<property name="document">
-								<bean class="com.liferay.portal.kernel.search.DocumentImpl" />
-							</property>
-						</bean>
+						<bean class="com.liferay.portal.kernel.search.QueryIndexingHitsProcessor" />
 						<bean class="com.liferay.portal.kernel.search.QuerySuggestionHitsProcessor" />
 					</util:list>
 				</property>

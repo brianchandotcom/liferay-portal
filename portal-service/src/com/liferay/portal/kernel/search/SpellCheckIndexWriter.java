@@ -26,6 +26,10 @@ public interface SpellCheckIndexWriter {
 	public void clearSpellCheckerDictionaryIndexes(SearchContext searchContext)
 		throws SearchException;
 
+	public void indexKeyword(
+			SearchContext searchContext, float weight, String keywordType)
+		throws SearchException;
+
 	public void indexQuerySuggestionDictionaries(SearchContext searchContext)
 		throws SearchException;
 

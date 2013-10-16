@@ -53,6 +53,20 @@ public abstract class BaseIndexWriter
 	}
 
 	@Override
+	public void indexKeyword(
+			SearchContext searchContext, float weight, String keywordType)
+		throws SearchException {
+
+		if (_spellCheckIndexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No spell check index writer configured");
+			}
+		}
+
+		_spellCheckIndexWriter.indexKeyword(searchContext, weight, keywordType);
+	}
+
+	@Override
 	public void indexQuerySuggestionDictionaries(SearchContext searchContext)
 		throws SearchException {
 

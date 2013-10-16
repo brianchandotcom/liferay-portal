@@ -49,6 +49,50 @@ public abstract class BaseSpellCheckIndexWriter
 	implements SpellCheckIndexWriter {
 
 	@Override
+	public void indexKeyword(
+			SearchContext searchContext, float weight, String keywordType)
+		throws SearchException {
+
+		if (!keywordType.equals(SuggestionConstants.TYPE_QUERY_SUGGESTION) &&
+			!keywordType.equals(SuggestionConstants.TYPE_SPELL_CHECKER)) {
+
+			throw new IllegalArgumentException(
+				"Invalid keyword type: " + keywordType +
+					". Valid values are: " +
+					SuggestionConstants.TYPE_QUERY_SUGGESTION + " or " +
+					SuggestionConstants.TYPE_SPELL_CHECKER);
+		}
+
+		long groupId = 0;
+
+		long[] groupIds = searchContext.getGroupIds();
+
+		if ((groupIds != null) && (groupIds.length > 0)) {
+			groupId = groupIds[1];
+		}
+
+		String keywordFieldName = Field.KEYWORD_SEARCH;
+		String typeFieldValue = SuggestionConstants.TYPE_QUERY_SUGGESTION;
+		int maxNGramLength = _querySuggestionsMaxNGramLength;
+
+		if (keywordType.equals(SuggestionConstants.TYPE_SPELL_CHECKER)) {
+			keywordFieldName = Field.SPELL_CHECK_WORD;
+			typeFieldValue = SuggestionConstants.TYPE_SPELL_CHECKER;
+			maxNGramLength = 0;
+		}
+
+		try {
+			indexKeyword(
+				searchContext.getCompanyId(), groupId,
+				searchContext.getLanguageId(), searchContext.getKeywords(),
+				weight, keywordFieldName, typeFieldValue, maxNGramLength);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
+	@Override
 	public void indexQuerySuggestionDictionaries(SearchContext searchContext)
 		throws SearchException {
 
@@ -58,7 +102,8 @@ public abstract class BaseSpellCheckIndexWriter
 					searchContext.getCompanyId(), languageId,
 					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_DICTIONARY,
 					Field.KEYWORD_SEARCH,
-					SuggestionConstants.TYPE_QUERY_SUGGESTION, 0);
+					SuggestionConstants.TYPE_QUERY_SUGGESTION,
+					_querySuggestionsMaxNGramLength);
 			}
 		}
 		catch (Exception e) {
@@ -75,7 +120,7 @@ public abstract class BaseSpellCheckIndexWriter
 				searchContext.getCompanyId(), searchContext.getLanguageId(),
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_DICTIONARY,
 				Field.KEYWORD_SEARCH, SuggestionConstants.TYPE_QUERY_SUGGESTION,
-				0);
+				_querySuggestionsMaxNGramLength);
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -114,6 +159,12 @@ public abstract class BaseSpellCheckIndexWriter
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
+	}
+
+	public void setQuerySuggestionsMaxNGramLength(
+		int querySuggestionsMaxNGramLength) {
+
+		_querySuggestionsMaxNGramLength = querySuggestionsMaxNGramLength;
 	}
 
 	protected URL getResource(String name) {
@@ -181,6 +232,12 @@ public abstract class BaseSpellCheckIndexWriter
 
 		return uidSB.toString();
 	}
+
+	protected abstract void indexKeyword(
+			long companyId, long groupId, String languageId, String keyword,
+			float weight, String keywordFieldName, String typeFieldValue,
+			int maxNGramLength)
+		throws Exception;
 
 	protected abstract void indexKeywords(
 			long companyId, long groupId, String languageId,
@@ -254,7 +311,7 @@ public abstract class BaseSpellCheckIndexWriter
 
 		for (Group group : groups) {
 			String[] groupDictionaryFileNames = PropsUtil.getArray(
-				PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
+				propsKey,
 				new Filter(languageId, String.valueOf(group.getGroupId())));
 
 			if (ArrayUtil.isEmpty(groupDictionaryFileNames)) {
@@ -262,8 +319,9 @@ public abstract class BaseSpellCheckIndexWriter
 			}
 
 			indexKeywords(
-				companyId, group.getGroupId(), languageId, dictionaryFileNames,
-				keywordFieldName, typeFieldValue, maxNGramLength);
+				companyId, group.getGroupId(), languageId,
+				groupDictionaryFileNames, keywordFieldName, typeFieldValue,
+				maxNGramLength);
 		}
 	}
 
@@ -274,5 +332,7 @@ public abstract class BaseSpellCheckIndexWriter
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseSpellCheckIndexWriter.class);
+
+	private int _querySuggestionsMaxNGramLength = 50;
 
 }

@@ -302,6 +302,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.portlet.RestrictPortletServletRequest">
 		<priority value="ERROR" />
 	</category>

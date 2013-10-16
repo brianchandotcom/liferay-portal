@@ -14,12 +14,14 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
+
 <%
 boolean hasDistributionScope = false;
 %>
 
 <aui:select changesContext="<%= submitOnChange %>" name="distributionScope" onChange='<%= submitOnChange ? renderResponse.getNamespace() + "selectDistributionScope(this.value);" : "" %>' showEmptyOption="<%= true %>">
-	<c:if test="<%= permissionChecker.isOmniadmin() %>">
+	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS) %>">
 
 		<%
 		hasDistributionScope = true;

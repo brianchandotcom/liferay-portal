@@ -61,6 +61,9 @@ public class ActionKeys {
 
 	public static final String ADD_FRAMEWORK_VERSION = "ADD_FRAMEWORK_VERSION";
 
+	public static final String ADD_GENERAL_ANNOUNCEMENTS =
+		"ADD_GENERAL_ANNOUNCEMENTS";
+
 	public static final String ADD_IMAGE = "ADD_IMAGE";
 
 	public static final String ADD_INSTANCE = "ADD_INSTANCE";

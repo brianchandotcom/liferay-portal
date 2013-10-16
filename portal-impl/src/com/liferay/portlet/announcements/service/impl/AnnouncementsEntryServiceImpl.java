@@ -26,6 +26,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -65,7 +66,9 @@ public class AnnouncementsEntryServiceImpl
 		}
 
 		if (classNameId == 0) {
-			if (!permissionChecker.isOmniadmin()) {
+			if (!PortalPermissionUtil.contains(
+					permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS)) {
+
 				throw new PrincipalException();
 			}
 		}

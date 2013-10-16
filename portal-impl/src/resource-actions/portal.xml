@@ -39,6 +39,7 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMUNITY</action-key>
+				<action-key>ADD_GENERAL_ANNOUNCEMENTS</action-key>
 				<action-key>ADD_LAYOUT_PROTOTYPE</action-key>
 				<action-key>ADD_LAYOUT_SET_PROTOTYPE</action-key>
 				<action-key>ADD_LICENSE</action-key>

@@ -9,24 +9,21 @@
 	margin: 20px 0;
 }
 
-.control-group.input-prepend {
+.control-group.input-prepend.input-append {
 	width: 100%;
 
 	input {
-		display: block;
 		float: left;
 		margin-top: -1px;
 	}
 
 	.add-on {
-		display: block;
 		float: left;
 		margin-top: -1px;
 	}
 
 	.input-localized-content {
 		clear: both;
-		margin-top: 10px;
 	}
 }
 

@@ -16,7 +16,7 @@
 
 <liferay-ui:search-container-column-text
 	buffer="buffer"
-	name="category"
+	name="category[message-board]"
 >
 
 	<%
@@ -78,7 +78,7 @@
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
-	name="categories"
+	name="categories[message-board]"
 	value="<%= String.valueOf(categoryDisplay.getSubcategoriesCount(curCategory)) %>"
 />
 

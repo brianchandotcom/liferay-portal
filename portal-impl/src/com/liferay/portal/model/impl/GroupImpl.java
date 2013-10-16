@@ -98,9 +98,25 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException, SystemException {
-		StringBundler sb = new StringBundler();
+		List<Group> groups = new ArrayList<Group>();
 
-		buildTreePath(sb, this);
+		Group group = this;
+
+		do {
+			groups.add(group);
+		}
+		while ((group = group.getParentGroup()) != null);
+
+		StringBundler sb = new StringBundler(groups.size() * 2 + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = groups.size() - 1; i >= 0; i--) {
+			group = groups.get(i);
+
+			sb.append(group.getGroupId());
+			sb.append(StringPool.SLASH);
+		}
 
 		return sb.toString();
 	}
@@ -893,20 +909,6 @@ public class GroupImpl extends GroupBaseImpl {
 		_typeSettingsProperties = typeSettingsProperties;
 
 		super.setTypeSettings(_typeSettingsProperties.toString());
-	}
-
-	protected void buildTreePath(StringBundler sb, Group group)
-		throws PortalException, SystemException {
-
-		if (group == null) {
-			sb.append(StringPool.SLASH);
-		}
-		else {
-			buildTreePath(sb, group.getParentGroup());
-
-			sb.append(group.getGroupId());
-			sb.append(StringPool.SLASH);
-		}
 	}
 
 	protected long getDefaultPlid(boolean privateLayout) {

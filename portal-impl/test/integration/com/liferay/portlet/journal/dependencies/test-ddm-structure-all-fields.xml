@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
 
-<root
-	available-locales="en_US"
-	default-locale="en_US"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-ddm-structure_6.2.0 http://www.liferay.com/dtd/liferay-ddm-structure_6_2_0.xsd"
->
+<root available-locales="en_US" default-locale="en_US">
 	<dynamic-element dataType="boolean" name="boolean" repeatable="false" required="false" showLabel="true" type="checkbox" indexType="">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[Boolean Field]]></entry>

@@ -616,9 +616,9 @@ public class JournalConverterImpl implements JournalConverter {
 			dynamicElementElement.attributeValue("indexType"));
 
 		removeAttribute(dynamicElementElement, "indexType");
-
+		
 		dynamicElementElement.addAttribute("index-type", indexType);
-
+		
 		// Type
 
 		String type = dynamicElementElement.attributeValue("type");

@@ -35,13 +35,13 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 			<%
-			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
+			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'}); void(0);";
 			%>
 
 			<aui:nav-item href="<%= taglibURL %>" label="expire" />
 
 			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
 			%>
 
 			<aui:nav-item href="<%= taglibURL %>" label="move" />

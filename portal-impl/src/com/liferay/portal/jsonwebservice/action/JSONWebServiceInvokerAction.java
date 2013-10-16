@@ -137,16 +137,26 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 	public class InvokerResult implements JSONSerializable {
 
+		protected JSONSerializer createJsonSerializer() {
+			JSONSerializer jsonSerializer =
+				JSONFactoryUtil.createJSONSerializer();
+
+			jsonSerializer.exclude("*.class");
+
+			return jsonSerializer;
+		}
+
+		public JSONWebServiceInvokerAction getInvokerAction() {
+			return JSONWebServiceInvokerAction.this;
+		}
+
 		@Override
 		public String toJSONString() {
 			if (_result == null) {
 				return JSONFactoryUtil.getNullJSON();
 			}
 
-			JSONSerializer jsonSerializer =
-				JSONFactoryUtil.createJSONSerializer();
-
-			jsonSerializer.exclude("*.class");
+			JSONSerializer jsonSerializer = createJsonSerializer();
 
 			for (Statement statement : _statements) {
 				if (_includes != null) {
@@ -175,7 +185,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return _result;
 		}
 
-		private InvokerResult(Object result) {
+		public InvokerResult(Object result) {
 			_result = result;
 		}
 

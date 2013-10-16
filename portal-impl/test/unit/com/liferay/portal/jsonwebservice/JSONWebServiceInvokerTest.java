@@ -290,11 +290,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("{\"id\":173,\"height\":177,\"name\":\"John Doe\",");
-		sb.append("\"value\":\"foo!\",\"spy\":{\"id\":7,\"height\":173,");
-		sb.append("\"name\":\"James Bond\",\"value\":\"licensed\",\"thief\":");
-		sb.append("{\"id\":-13,\"height\":59,\"name\":\"Dr. Evil\",\"value\":");
-		sb.append("\"fun\",\"world\":\"Welcome -13 to Jupiter\"}}}");
+		sb.append("{\"id\":173,\"height\":177,\"spy\":{\"id\":7,\"height\":");
+		sb.append("173,\"name\":\"James Bond\",\"value\":\"licensed\",");
+		sb.append("\"thief\":{\"id\":-13,\"height\":59,\"name\":\"Dr. Evil\",");
+		sb.append("\"value\":\"fun\",\"world\":\"Welcome -13 to Jupiter\"}},");
+		sb.append("\"name\":\"John Doe\",\"value\":\"foo!\"}");
 
 		Assert.assertEquals(sb.toString(), toJSON(invokerResult));
 	}

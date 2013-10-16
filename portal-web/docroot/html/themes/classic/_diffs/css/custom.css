@@ -143,6 +143,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 				text-decoration: underline;
 			}
 		}
+
+		.navbar-inner {
+			background-color: $dockbarOpenGradientStart;
+
+			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+
+			.nav {
+				> li {
+					background-color: $dockbarOpenGradientStart;
+
+					@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+				}
+			}
+		}
 	}
 
 	.dockbar-split .dockbar {
@@ -151,14 +165,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.navbar-inner {
-			.nav {
-				> li {
-					background-color: $dockbarGradientStart;
-
-					@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
-				}
-			}
-
 			.nav-account-controls {
 				border-top: 1px solid #00AEFF;
 
@@ -426,6 +432,36 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		li.dropdown {
 			position: static;
+		}
+	}
+
+	.portlet-staging-bar {
+		.row-fluid .layout-revision-info {
+			.layout-revision-version {
+				label {
+					color: #B6DDF5;
+				}
+			}
+		}
+
+		.label-submit {
+			background-color: #469DE3;
+		}
+
+		.layout-branch-selector, .layout-set-branch-selector {
+			.icon-caret-down {
+				background-color: #469DE3;
+			}
+		}
+
+		.page-variations-options, .site-pages-variation-options {
+			.lfr-icon-menu {
+				background-color: #50AFE9;
+
+				.icon-globe, .icon-file {
+					background-color: #469DE3;
+				}
+			}
 		}
 	}
 

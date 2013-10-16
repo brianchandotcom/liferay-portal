@@ -12,6 +12,16 @@ $editLayoutPanelWidth: 460px;
 		right: 0;
 		top: 0;
 
+		.staging-controls {
+			.staging-bar {
+				li.dropdown .dropdown-menu {
+					left: auto;
+					margin-left: 10px;
+					width: auto;
+				}
+			}
+		}
+
 		&.navbar-static-top {
 			position: relative;
 
@@ -146,6 +156,16 @@ $editLayoutPanelWidth: 460px;
 		.dockbar {
 			height: 0;
 			position: absolute;
+
+			.staging-controls {
+				.staging-bar {
+					li.dropdown .dropdown-menu {
+						left: 0;
+						margin-left: 0;
+						width: 100%;
+					}
+				}
+			}
 
 			&.navbar-static-top {
 				.collapse {
@@ -370,40 +390,8 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.staging-controls {
-			padding-left: 5px;
-			padding-right: 50px;
-
-			select {
-				width: 100%;
-			}
-
-			.staging-bar {
-				margin: 6px 0 ;
-
-				.dropdown-menu {
-					font-size: 13px;
-					width: 100%;
-
-					.btn-link {
-						float: left;
-						font-size: 11px;
-						margin: 0 5px 0 0;
-						padding: 0;
-						text-decoration: underline;
-
-						@include text-shadow(none);
-
-						&:hover {
-							text-decoration: none;
-						}
-
-						&.history {
-							float: right;
-						}
-					}
-				}
-			}
+		.staging-bar {
+			margin: 6px 0 ;
 		}
 
 		&.controls-hidden .dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
@@ -493,6 +481,41 @@ $editLayoutPanelWidth: 460px;
 
 	.layout-revision-container-root {
 		margin: 0;
+	}
+
+	.staging-controls {
+		padding-left: 5px;
+		padding-right: 50px;
+
+		select {
+			width: 100%;
+		}
+
+		.staging-bar {
+			.dropdown-menu {
+				font-size: 13px;
+				min-width: 520px;
+				width: 100%;
+
+				.btn-link {
+					float: left;
+					font-size: 11px;
+					margin: 0 5px 0 0;
+					padding: 0;
+					text-decoration: underline;
+
+					@include text-shadow(none);
+
+					&:hover {
+						text-decoration: none;
+					}
+
+					&.history {
+						float: right;
+					}
+				}
+			}
+		}
 	}
 
 	/* ---------- Add content ---------- */

@@ -50,7 +50,6 @@
 			font-size: 0.8em;
 
 			label {
-				color: #B6DDF5;
 				display: inline;
 				font-size: 0.9em;
 			}
@@ -68,20 +67,15 @@
 		a.taglib-icon:hover .taglib-text {
 			text-decoration: none;
 		}
-
-		.label-submit {
-			background-color: #469DE3;
-		}
 	}
 
 	.layout-branch-selector, .layout-set-branch-selector {
 		font-size: inherit;
 
 		.icon-caret-down {
-			background-color: #469DE3;
-			float: right;
-			margin-right: 5px;
-			margin-top: 5px;
+			position: absolute;
+			right: 5px;
+			top: 5px;
 		}
 	}
 
@@ -111,12 +105,10 @@
 		position: relative;
 
 		.lfr-icon-menu {
-			background-color: #50AFE9;
 			display: block;
-			margin: 0 15px 0 0;
+			margin: 0 15px 0 0 !important;
 
 			.icon-globe, .icon-file {
-				background-color: #469DE3;
 				padding: 7px;
 			}
 

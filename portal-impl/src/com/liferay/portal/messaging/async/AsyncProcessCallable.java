@@ -15,36 +15,32 @@
 package com.liferay.portal.messaging.async;
 
 import com.liferay.portal.bean.IdentifiableBeanInvokerUtil;
+import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.util.MethodHandler;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.Serializable;
 
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
  */
-public class AsyncRunnable implements Externalizable, Runnable {
+public class AsyncProcessCallable
+	implements Externalizable, ProcessCallable<Serializable> {
 
-	public AsyncRunnable() {
+	public AsyncProcessCallable() {
 	}
 
-	public AsyncRunnable(MethodInvocation methodInvocation) {
+	public AsyncProcessCallable(MethodInvocation methodInvocation) {
 		_methodInvocation = methodInvocation;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
-		_methodHandler = (MethodHandler)objectInput.readObject();
-	}
-
-	@Override
-	public void run() {
+	public Serializable call() {
 		try {
 			if (_methodInvocation != null) {
 				_methodInvocation.proceed();
@@ -63,6 +59,15 @@ public class AsyncRunnable implements Externalizable, Runnable {
 		catch (Throwable t) {
 			throw new RuntimeException(t);
 		}
+
+		return null;
+	}
+
+	@Override
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
+		_methodHandler = (MethodHandler)objectInput.readObject();
 	}
 
 	@Override

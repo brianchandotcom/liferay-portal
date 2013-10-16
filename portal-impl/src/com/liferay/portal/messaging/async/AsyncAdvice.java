@@ -72,7 +72,7 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		}
 
 		MessageBusUtil.sendMessage(
-			destinationName, new AsyncRunnable(methodInvocation));
+			destinationName, new AsyncProcessCallable(methodInvocation));
 
 		return nullResult;
 	}

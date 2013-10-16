@@ -16,6 +16,7 @@ package com.liferay.portal.messaging.async;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.process.ProcessCallable;
 
 /**
  * @author Shuyang Zhou
@@ -25,9 +26,10 @@ public class AsyncMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		AsyncRunnable asyncRunnable = (AsyncRunnable)message.getPayload();
+		ProcessCallable<?> processCallable =
+			(ProcessCallable<?>)message.getPayload();
 
-		asyncRunnable.run();
+		processCallable.call();
 	}
 
 }

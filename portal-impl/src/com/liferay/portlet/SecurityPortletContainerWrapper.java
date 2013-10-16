@@ -184,7 +184,9 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		}
 
 		if (!isValidPortletId(portlet.getPortletId())) {
-			_log.warn("Invalid portlet id " + portlet.getPortletId());
+			if (_log.isWarnEnabled()) {
+				_log.warn("Invalid portlet id " + portlet.getPortletId());
+			}
 
 			throw new PrincipalException();
 		}
@@ -617,9 +619,11 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 		String url = getOriginalURL(request);
 
-		_log.warn(
-			"Reject process action for " + url + " on " +
-				portlet.getPortletId());
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Reject process action for " + url + " on " +
+					portlet.getPortletId());
+		}
 
 		return ActionResult.EMPTY_ACTION_RESULT;
 	}
@@ -664,9 +668,11 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-		_log.warn(
-			"Reject serveResource for " + url + " on " +
-				portlet.getPortletId());
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Reject serveResource for " + url + " on " +
+					portlet.getPortletId());
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -17,6 +17,12 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
+		var SELECTOR_PAGE_EDIT_CONTROLS_FIRST_LINK = A.one('.page-edit-controls > a');
+
+		var SELECTOR_PAGE_PREVIEW_CONTROLS_FIRST_LINK = A.one('.page-preview-controls > a');
+
+		var SELECTOR_SITE_ADD_CONTROLS_FIRST_LINK = A.one('.site-add-controls > a');
+
 		var STR_ADD_PANEL = 'addPanel';
 
 		var STR_EDIT_LAYOUT_PANEL = 'editLayoutPanel';
@@ -184,6 +190,8 @@ AUI.add(
 
 							if (item.node) {
 								item.node.hide();
+
+								BODY.detach('layoutControlsEsc|key');
 							}
 						}
 					}
@@ -208,6 +216,34 @@ AUI.add(
 
 						panelDisplayEvent = 'dockbarShowPanel';
 						panelVisible = true;
+
+						BODY.on(
+							'layoutControlsEsc|key',
+							function(event) {
+								if (panelId !== STR_PREVIEW_PANEL) {
+									instance._togglePanel(panelId);
+								}
+
+								switch (panelId) {
+									case STR_ADD_PANEL:
+										if (SELECTOR_SITE_ADD_CONTROLS_FIRST_LINK) {
+											SELECTOR_SITE_ADD_CONTROLS_FIRST_LINK.focus();
+										}
+										break;
+									case STR_PREVIEW_PANEL:
+										if (SELECTOR_PAGE_PREVIEW_CONTROLS_FIRST_LINK) {
+											SELECTOR_PAGE_PREVIEW_CONTROLS_FIRST_LINK.focus();
+										}
+										break;
+									case STR_EDIT_LAYOUT_PANEL:
+										if (SELECTOR_PAGE_EDIT_CONTROLS_FIRST_LINK) {
+											SELECTOR_PAGE_EDIT_CONTROLS_FIRST_LINK.focus();
+										}
+										break;
+								}
+							},
+							'down:27'
+						);
 					}
 
 					Liferay.fire(
@@ -225,6 +261,10 @@ AUI.add(
 							id: panelId
 						}
 					);
+
+					if (!panelVisible) {
+						BODY.detach('layoutControlsEsc|key');
+					}
 
 					panelNode.toggle(panelVisible);
 				}

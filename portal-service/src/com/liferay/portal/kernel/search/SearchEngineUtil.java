@@ -319,6 +319,37 @@ public class SearchEngineUtil {
 			searchEngineId);
 	}
 
+	public static void indexKeyword(
+			long companyId, String querySuggestion, float weight,
+			String keywordType, Locale locale)
+		throws SearchException {
+
+		String searchEngineId = getDefaultSearchEngineId();
+
+		indexKeyword(
+			searchEngineId, companyId, querySuggestion, weight, keywordType,
+			locale);
+	}
+
+	public static void indexKeyword(
+			String searchEngineId, long companyId, String querySuggestion,
+			float weight, String keywordType, Locale locale)
+		throws SearchException {
+
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
+
+		IndexWriter indexWriter = searchEngine.getIndexWriter();
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setKeywords(querySuggestion);
+		searchContext.setLocale(locale);
+
+		indexWriter.indexKeyword(searchContext, weight, keywordType);
+	}
+
 	public static void indexQuerySuggestionDictionaries(long companyId)
 		throws SearchException {
 
@@ -349,11 +380,9 @@ public class SearchEngineUtil {
 			long companyId, Locale locale)
 		throws SearchException {
 
-		Set<String> searchEngineIds = getSearchEngineIds();
+		String searchEngineId = getDefaultSearchEngineId();
 
-		for (String searchEngineId : searchEngineIds) {
-			indexQuerySuggestionDictionary(searchEngineId, companyId, locale);
-		}
+		indexQuerySuggestionDictionary(searchEngineId, companyId, locale);
 	}
 
 	public static void indexQuerySuggestionDictionary(
@@ -376,11 +405,9 @@ public class SearchEngineUtil {
 	public static void indexSpellCheckerDictionaries(long companyId)
 		throws SearchException {
 
-		Set<String> searchEngineIds = getSearchEngineIds();
+		String searchEngineId = getDefaultSearchEngineId();
 
-		for (String searchEngineId : searchEngineIds) {
-			indexSpellCheckerDictionaries(searchEngineId, companyId);
-		}
+		indexSpellCheckerDictionaries(searchEngineId, companyId);
 	}
 
 	public static void indexSpellCheckerDictionaries(
@@ -403,11 +430,9 @@ public class SearchEngineUtil {
 			long companyId, Locale locale)
 		throws SearchException {
 
-		Set<String> searchEngineIds = getSearchEngineIds();
+		String searchEngineId = getDefaultSearchEngineId();
 
-		for (String searchEngineId : searchEngineIds) {
-			indexSpellCheckerDictionary(searchEngineId, companyId, locale);
-		}
+		indexSpellCheckerDictionary(searchEngineId, companyId, locale);
 	}
 
 	public static void indexSpellCheckerDictionary(

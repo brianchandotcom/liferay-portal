@@ -285,7 +285,7 @@
 <!--COMMENT_EDIT_COMMENT-->
 <tr>
 	<td>COMMENT_EDIT_SUCCESS</td>
-	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td>//div[contains(@id,'_discussion-status-messages')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.resiliency.spi.agent;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -32,8 +34,7 @@ import javax.servlet.http.HttpSession;
  */
 public class AcceptorServlet extends HttpServlet {
 
-	@Override
-	protected void service(
+	protected void doService(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
@@ -73,5 +74,22 @@ public class AcceptorServlet extends HttpServlet {
 
 		session.invalidate();
 	}
+
+	@Override
+	protected void service(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		try {
+			doService(request, response);
+		}
+		catch (RuntimeException re) {
+			_log.error(re, re);
+
+			throw re;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AcceptorServlet.class);
 
 }

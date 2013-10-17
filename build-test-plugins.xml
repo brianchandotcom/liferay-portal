@@ -11,6 +11,7 @@
 			<then>
 				<delete dir="${liferay.home}/data" />
 				<delete dir="${liferay.home}/deploy" />
+				<delete dir="${liferay.home}/logs" />
 			</then>
 		</if>
 

@@ -726,6 +726,7 @@ app.server.jboss.zip.name=jboss-eap-$${app.server.jboss.version}.zip</echo>
 
 		<delete dir="${liferay.home}/data" />
 		<delete dir="${liferay.home}/deploy" />
+		<delete dir="${liferay.home}/logs" />
 
 		<antcall target="doc" />
 

@@ -92,3 +92,10 @@ body.html-editor {
 	font-weight: bold;
 	margin: 0 1px;
 }
+
+/* ---------- Misc. ---------- */
+
+#skip-to-content {
+	clip: rect(0 0 0 0);
+	position: absolute;
+}

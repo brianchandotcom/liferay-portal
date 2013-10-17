@@ -62,7 +62,7 @@
 							<liferay-ui:message key="do-you-want-to-modify-any-settings-of-your-portal" />
 						</p>
 
-						<aui:button primary="<%= true %>"" href="<%= editPortalSettingsURL %>" id="controlPanelHomeActionPortalSettings" value="edit-portal-settings" />
+						<aui:button primary="<%= true %>" href="<%= editPortalSettingsURL %>" id="controlPanelHomeActionPortalSettings" value="edit-portal-settings" />
 					</c:when>
 					<c:when test="<%= category.equals(PortletCategoryKeys.SITES) %>">
 

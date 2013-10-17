@@ -20,7 +20,6 @@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.search.FacetedSearcher" %><%@
 page import="com.liferay.portal.kernel.search.FolderSearcher" %><%@
-page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.search.HitsOpenSearchImpl" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@

@@ -59,7 +59,14 @@
 	</command>
 
 	<command name="publishToLiveNowPG">
-		<execute action="PGStaging#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
+				<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			</then>
+		</if>
+
 		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" value1="Publish to Live" />
 
 		<execute action="PGStagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />

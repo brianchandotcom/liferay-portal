@@ -475,7 +475,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 				</c:if>
 
 				<aui:button-row>
-					<aui:button cssClass="btn-primary" name="lfr-lookfeel-save" value="save" />
+					<aui:button name="lfr-lookfeel-save" primary="<%= true %>" value="save" />
 
 					<aui:button name="lfr-lookfeel-reset" value="reset" />
 				</aui:button-row>

@@ -316,7 +316,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 			<aui:button href="<%= importPortletURL %>" name="back1" value="back" />
 
-			<aui:button cssClass="btn-primary" name="continue" value="continue" />
+			<aui:button name="continue" primary="<%= true %>" value="continue" />
 		</div>
 
 		<div class="hide" id="<portlet:namespace />importStrategy">

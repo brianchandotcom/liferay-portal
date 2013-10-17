@@ -160,7 +160,7 @@ if (Validator.isNotNull(historyKey)) {
 
 					<c:if test="<%= showButtons %>">
 						<aui:button-row>
-							<aui:button cssClass="btn-primary" type="submit" />
+							<aui:button primary="<%= true %>" type="submit" />
 
 							<aui:button href="<%= backURL %>" type="cancel" />
 						</aui:button-row>

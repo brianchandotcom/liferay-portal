@@ -1675,6 +1675,8 @@ public interface PropsKeys {
 
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
+	public static final String MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE = "model.tree.rebuild.query.results.batch.size";
+
 	public static final String MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS = "module.framework.auto.deploy.dirs";
 
 	public static final String MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL = "module.framework.auto.deploy.interval";

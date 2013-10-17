@@ -64,10 +64,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1004,13 +1006,54 @@ public class OrganizationLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Organization> organizations =
-			organizationPersistence.findByCompanyId(companyId);
+		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		for (Organization organization : organizations) {
-			organization.setTreePath(organization.buildTreePath());
+		traces.push(
+			new Object[] {
+				GetterUtil.getLong(
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
+				StringPool.SLASH, 0L
+			});
 
-			organizationPersistence.update(organization);
+		Object[] trace = null;
+
+		while ((trace = traces.poll()) != null) {
+			Long parentOrganizationId = (Long)trace[0];
+			String parentPath = (String)trace[1];
+			Long previousOrganizationId = (Long)trace[2];
+
+			List<Long> childOrganizationIds = organizationFinder.findByC_P(
+				companyId, parentOrganizationId, previousOrganizationId,
+				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
+
+			if (childOrganizationIds.isEmpty()) {
+				continue;
+			}
+
+			if (childOrganizationIds.size() ==
+					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
+
+				trace[2] = childOrganizationIds.get(
+					childOrganizationIds.size() - 1);
+
+				traces.push(trace);
+			}
+
+			for (long childOrganizationId : childOrganizationIds) {
+				String path = parentPath.concat(
+					String.valueOf(childOrganizationId)).concat(
+						StringPool.SLASH);
+
+				Organization organization =
+					organizationPersistence.findByPrimaryKey(
+						childOrganizationId);
+
+				organization.setTreePath(path);
+
+				organizationPersistence.update(organization);
+
+				traces.push(new Object[] {childOrganizationId, path, 0L});
+			}
 		}
 	}
 

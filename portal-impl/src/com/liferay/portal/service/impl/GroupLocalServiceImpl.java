@@ -113,10 +113,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -2067,12 +2069,48 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		for (Group group : groups) {
-			group.setTreePath(group.buildTreePath());
+		traces.push(
+			new Object[] {
+				GroupConstants.DEFAULT_PARENT_GROUP_ID, StringPool.SLASH, 0L
+			});
 
-			groupPersistence.update(group);
+		Object[] trace = null;
+
+		while ((trace = traces.poll()) != null) {
+			Long parentGroupId = (Long)trace[0];
+			String parentPath = (String)trace[1];
+			Long previousGroupId = (Long)trace[2];
+
+			List<Long> childGroupIds = groupFinder.findByC_P(
+				companyId, parentGroupId, previousGroupId,
+				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
+
+			if (childGroupIds.isEmpty()) {
+				continue;
+			}
+
+			if (childGroupIds.size() ==
+					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
+
+				trace[2] = childGroupIds.get(childGroupIds.size() - 1);
+
+				traces.push(trace);
+			}
+
+			for (long childGroupId : childGroupIds) {
+				String path = parentPath.concat(
+					String.valueOf(childGroupId)).concat(StringPool.SLASH);
+
+				Group group = groupPersistence.findByPrimaryKey(childGroupId);
+
+				group.setTreePath(path);
+
+				groupPersistence.update(group);
+
+				traces.push(new Object[] {childGroupId, path, 0L});
+			}
 		}
 	}
 

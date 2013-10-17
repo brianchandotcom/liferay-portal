@@ -503,7 +503,8 @@ public class EditServerAction extends PortletAction {
 			SessionMessages.add(actionRequest, "language", language);
 			SessionMessages.add(actionRequest, "script", script);
 
-			ScriptingUtil.exec(null, portletObjects, language, script);
+			ScriptingUtil.exec(
+				null, portletObjects, language, script, StringPool.EMPTY_ARRAY);
 
 			unsyncPrintWriter.flush();
 

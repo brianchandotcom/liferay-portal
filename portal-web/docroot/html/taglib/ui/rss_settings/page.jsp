@@ -16,8 +16,6 @@
 
 <%@ include file="/html/taglib/ui/rss_settings/init.jsp" %>
 
-<%@ page import="com.liferay.util.RSSUtil" %>
-
 <%
 int delta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:rss-settings:delta"));
 String displayStyle = (String)request.getAttribute("liferay-ui:rss-settings:displayStyle");

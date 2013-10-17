@@ -15,3 +15,6 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
+
+<%@ page import="com.liferay.portlet.asset.AssetCategoryException" %><%@
+page import="com.liferay.portlet.asset.model.AssetVocabulary" %>

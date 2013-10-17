@@ -23,9 +23,6 @@ ServiceContext#deriveDefaultPermissions(long, String).
 
 <%@ include file="/html/taglib/ui/input_permissions/init.jsp" %>
 
-<%@ page import="com.liferay.portal.service.permission.RolePermissionUtil" %>
-<%@ page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>
-
 <%
 String uniqueNamespace = namespace + PortalUtil.getUniqueElementId(request, namespace, StringPool.BLANK);
 

@@ -16,8 +16,6 @@
 
 <%@ include file="/html/taglib/ui/asset_tags_error/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.AssetTagException" %>
-
 <liferay-ui:error exception="<%= AssetTagException.class %>">
 
 	<%

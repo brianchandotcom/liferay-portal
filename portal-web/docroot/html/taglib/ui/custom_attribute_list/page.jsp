@@ -16,9 +16,6 @@
 
 <%@ include file="/html/taglib/ui/custom_attribute_list/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.expando.model.ExpandoBridge" %>
-<%@ page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>
-
 <%
 String className = (String)request.getAttribute("liferay-ui:custom-attribute-list:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:custom-attribute-list:classPK"));

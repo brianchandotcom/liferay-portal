@@ -16,12 +16,6 @@
 
 <%@ include file="/html/taglib/ui/custom_attribute/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.expando.model.ExpandoBridge" %>
-<%@ page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %>
-<%@ page import="com.liferay.portlet.expando.model.ExpandoTableConstants" %>
-<%@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %>
-<%@ page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>
-
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_custom_attribute_page") + StringPool.UNDERLINE;
 

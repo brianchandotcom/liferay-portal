@@ -16,11 +16,6 @@
 
 <%@ include file="/html/taglib/ui/asset_categories_summary/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %>
-
 <%
 String className = (String)request.getAttribute("liferay-ui:asset-categories-summary:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-summary:classPK"));

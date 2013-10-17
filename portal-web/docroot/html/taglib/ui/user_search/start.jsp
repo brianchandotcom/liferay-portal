@@ -16,11 +16,6 @@
 
 <%@ include file="/html/taglib/ui/user_search/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.usersadmin.search.UserSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
-
-<portlet:defineObjects />
-
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:user-search:portletURL");
 RowChecker rowChecker = (RowChecker)request.getAttribute("liferay-ui:user-search:rowChecker");

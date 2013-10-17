@@ -16,11 +16,6 @@
 
 <%@ include file="/html/taglib/ui/ratings/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.ratings.model.RatingsEntry" %>
-<%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
-<%@ page import="com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
-
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page") + StringPool.UNDERLINE;
 

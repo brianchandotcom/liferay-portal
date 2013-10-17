@@ -16,9 +16,6 @@
 
 <%@ include file="/html/taglib/ui/asset_tags_summary/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %>
-
 <%
 String[] assetTagNames = StringUtil.split((String)request.getAttribute("liferay-ui:asset-tags-summary:assetTagNames"));
 String className = (String)request.getAttribute("liferay-ui:asset-tags-summary:className");

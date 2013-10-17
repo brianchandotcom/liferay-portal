@@ -15,3 +15,6 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
+
+<%@ page import="com.liferay.portal.kernel.util.Diff" %><%@
+page import="com.liferay.portal.kernel.util.DiffResult" %>

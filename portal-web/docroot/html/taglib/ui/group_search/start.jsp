@@ -16,11 +16,6 @@
 
 <%@ include file="/html/taglib/ui/group_search/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
-<%@ page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
-
-<portlet:defineObjects />
-
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:group-search:portletURL");
 RowChecker rowChecker = (RowChecker)request.getAttribute("liferay-ui:group-search:rowChecker");

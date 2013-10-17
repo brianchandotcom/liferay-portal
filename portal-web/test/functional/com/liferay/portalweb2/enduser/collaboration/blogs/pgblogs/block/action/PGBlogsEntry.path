@@ -188,7 +188,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_SUCCESS</td>
-	<td>//div[contains(@class,'lfr-message-response alert alert-success')]</td>
+	<td>//div[contains(@id,'_discussion-status-messages')]</td>
 	<td></td>
 </tr>
 <tr>

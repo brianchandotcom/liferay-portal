@@ -31,6 +31,10 @@ public class ScriptingUtil {
 		getScripting().clearCache(language);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #eval(java.util.Set,
+	 *             java.util.Map, java.util.Set, String, String, String...)}
+	 */
 	public static Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String language, String script,
@@ -42,6 +46,21 @@ public class ScriptingUtil {
 			_getServletContextNames(classLoaders));
 	}
 
+	public static Map<String, Object> eval(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			Set<String> outputNames, String language, String script,
+			String... servletContextNames)
+		throws ScriptingException {
+
+		return getScripting().eval(
+			allowedClasses, inputObjects, outputNames, language, script,
+			servletContextNames);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #exec(java.util.Set,
+	 *             java.util.Map, String, String, String...)}
+	 */
 	public static void exec(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			String language, String script, ClassLoader... classLoaders)
@@ -50,6 +69,16 @@ public class ScriptingUtil {
 		getScripting().exec(
 			allowedClasses, inputObjects, language, script,
 			_getServletContextNames(classLoaders));
+	}
+
+	public static void exec(
+			Set<String> allowedClasses, Map<String, Object> inputObjects,
+			String language, String script, String... servletContextNames)
+		throws ScriptingException {
+
+		getScripting().exec(
+			allowedClasses, inputObjects, language, script,
+			servletContextNames);
 	}
 
 	public static Scripting getScripting() {

@@ -38,7 +38,7 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 						<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
 					</div>
 
-					<div>
+					<div class="page-customization-bar-form">
 						<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
 							<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 						</liferay-portlet:actionURL>
@@ -95,8 +95,8 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 							</c:otherwise>
 						</c:choose>
 					</div>
-					<div class="page-customization-bar-options">
 
+					<div class="page-customization-bar-form">
 						<%
 						String taglibImage = "search";
 						String taglibMessage = "view-default-page";
@@ -123,7 +123,7 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 							String taglibURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-reset-your-customizations-to-default") + "')){submitForm(document.hrefFm, '" + HttpUtil.encodeURL(resetCustomizationViewURL) + "');}";
 							%>
 
-							<liferay-ui:icon image="../portlet/refresh" label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
+							<liferay-ui:icon label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
 						</c:if>
 					</div>
 				</div>

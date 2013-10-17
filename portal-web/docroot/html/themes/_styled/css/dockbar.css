@@ -188,7 +188,6 @@ $editLayoutPanelWidth: 460px;
 			.info-items {
 				left: auto;
 				position: static;
-				width: auto;
 			}
 
 			.navbar-inner {
@@ -689,6 +688,20 @@ $editLayoutPanelWidth: 460px;
 			text-align: center;
 			vertical-align: middle;
 			width: 25%;
+
+			a {
+				color: #FFF;
+
+				&:focus, &:hover {
+					color: #FFF;
+					text-decoration: none;
+				}
+			}
+
+			span {
+				display: block;
+				line-height: 20px;
+			}
 		}
 
 		.page-customization-bar-text {

@@ -36,6 +36,7 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
@@ -50,7 +51,6 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
 		_displayTerms = null;
 		_emptyResultsMessage = null;
-		_hasResults = false;
 		_headerNames = null;
 		_hover = false;
 		_id = null;
@@ -228,8 +228,11 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		return _deltaConfigurable;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41307
+	 */
 	public boolean isHasResults() {
-		return _hasResults;
+		return true;
 	}
 
 	public boolean isHover() {
@@ -260,8 +263,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_emptyResultsMessage = emptyResultsMessage;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41307
+	 */
 	public void setHasResults(boolean hasResults) {
-		_hasResults = hasResults;
 	}
 
 	public void setHeaderNames(String headerNames) {
@@ -331,7 +336,6 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 	private String _deltaParam = SearchContainer.DEFAULT_DELTA_PARAM;
 	private DisplayTerms _displayTerms;
 	private String _emptyResultsMessage;
-	private boolean _hasResults;
 	private List<String> _headerNames;
 	private boolean _hover = true;
 	private String _id;

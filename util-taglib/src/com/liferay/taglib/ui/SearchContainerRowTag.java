@@ -128,10 +128,6 @@ public class SearchContainerRowTag<R>
 		if (searchContainerTag == null) {
 			throw new JspException("Requires liferay-ui:search-container");
 		}
-		else if (!searchContainerTag.isHasResults()) {
-			throw new JspException(
-				"Requires liferay-ui:search-container-results");
-		}
 
 		_searchContainer = searchContainerTag.getSearchContainer();
 

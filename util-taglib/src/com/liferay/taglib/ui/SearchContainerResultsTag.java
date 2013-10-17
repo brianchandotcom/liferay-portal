@@ -99,8 +99,6 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 				searchContainer.setTotal(_deprecatedTotal);
 			}
 
-			searchContainerTag.setHasResults(true);
-
 			pageContext.setAttribute(_resultsVar, _results);
 
 			return EVAL_PAGE;

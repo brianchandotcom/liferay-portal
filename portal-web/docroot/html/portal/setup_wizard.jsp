@@ -16,8 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<%@ page import="com.liferay.portal.setup.SetupWizardUtil" %>
-
 <style>
 	<%@ include file="/html/portal/setup_wizard_css.jspf" %>
 </style>

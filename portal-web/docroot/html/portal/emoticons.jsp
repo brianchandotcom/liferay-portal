@@ -16,8 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %>
-
 <%
 String[][] emoticons = BBCodeTranslatorUtil.getEmoticons();
 

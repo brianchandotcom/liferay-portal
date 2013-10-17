@@ -16,11 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" %>
-<%@ page import="com.liferay.portal.kernel.cluster.ClusterNode" %>
-<%@ page import="com.liferay.portal.license.util.LicenseManagerUtil" %>
-<%@ page import="com.liferay.portal.license.util.LicenseUtil" %>
-
 <style type="text/css">
 	.build-info {
 		color: #555;

@@ -19,14 +19,18 @@ import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -145,7 +149,35 @@ public class AcceptorServletTest {
 		Assert.assertNull(_recordSPIAgent._exception);
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 
+		// Fail on prepare request
+
+		_recordSPIAgent.setFailOnPrepareRequest(true);
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			AcceptorServlet.class.getName(), Level.SEVERE);
+
+		try {
+			acceptorServlet.service(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			Assert.fail();
+		}
+		catch (RuntimeException re) {
+			Assert.assertEquals("Fail on prepare request", re.getMessage());
+		}
+
+		Assert.assertEquals(1, logRecords.size());
+
+		LogRecord logRecord = logRecords.get(0);
+
+		Throwable throwable = logRecord.getThrown();
+
+		Assert.assertSame(RuntimeException.class, throwable.getClass());
+		Assert.assertEquals("Fail on prepare request", throwable.getMessage());
+
 		// Unable to forward
+
+		_recordSPIAgent.setFailOnPrepareRequest(false);
 
 		failOnForward.set(true);
 
@@ -174,6 +206,10 @@ public class AcceptorServletTest {
 
 		@Override
 		public HttpServletRequest prepareRequest(HttpServletRequest request) {
+			if (_failOnPrepareRequest) {
+				throw new RuntimeException("Fail on prepare request");
+			}
+
 			_originalRequest1 = request;
 
 			_preparedRequest = new MockHttpServletRequest();
@@ -195,6 +231,10 @@ public class AcceptorServletTest {
 			return _preparedResponse;
 		}
 
+		public void setFailOnPrepareRequest(boolean failOnPrepareRequest) {
+			_failOnPrepareRequest = failOnPrepareRequest;
+		}
+
 		@Override
 		public void transferResponse(
 			HttpServletRequest request, HttpServletResponse response,
@@ -207,6 +247,7 @@ public class AcceptorServletTest {
 		}
 
 		private Exception _exception;
+		private boolean _failOnPrepareRequest;
 		private HttpServletRequest _originalRequest1;
 		private HttpServletRequest _originalRequest2;
 		private HttpServletResponse _originalResponse;

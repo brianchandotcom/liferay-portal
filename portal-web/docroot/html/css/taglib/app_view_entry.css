@@ -1,3 +1,6 @@
+@import "compass";
+@import "mixins";
+
 .app-view-entry-taglib.entry-display-style {
 	&.display-icon {
 		display: inline-block;
@@ -8,6 +11,10 @@
 		vertical-align: top;
 		width: 200px;
 		height: 160px;
+
+		@include respond-to(phone, tablet) {
+			height: 210px;
+		}
 
 		.entry-title {
 			clear: both;
@@ -22,9 +29,18 @@
 		}
 
 		.folder-action, .entry-action {
-			height: auto;
-			right: 5px;
-			top: auto;
+			top: 14px;
+
+			@include respond-to(phone, tablet) {
+				bottom: 8px;
+				right: 31px;
+				top: auto;
+
+				a {
+					padding: 10px 0;
+					width: 136px;
+				}
+			}
 		}
 
 		.entry-selector {
@@ -55,6 +71,33 @@
 
 		.entry-title {
 			word-wrap: normal;
+		}
+
+		@include respond-to(phone, tablet) {
+			.folder-action, .entry-action {
+				a {
+					padding: 10px 12px;
+				}
+			}
+		}
+	}
+
+	@include respond-to(phone, tablet) {
+		&.display-icon, &.display-descriptive {
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			margin: 5px;
+
+			.entry-selector, .folder-action, .entry-action {
+				&.overlay {
+					clip: rect(auto, auto, auto, auto);
+				}
+			}
+
+			.img-polaroid {
+				border-width: 0;
+
+				@include box-shadow(none);
+			}
 		}
 	}
 

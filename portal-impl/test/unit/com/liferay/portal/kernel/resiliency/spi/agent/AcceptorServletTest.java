@@ -149,9 +149,9 @@ public class AcceptorServletTest {
 		Assert.assertNull(_recordSPIAgent._exception);
 		Assert.assertTrue(_mockHttpSession.isInvalid());
 
-		// Fail on prepare request
+		// IOException on prepare request
 
-		_recordSPIAgent.setFailOnPrepareRequest(true);
+		_recordSPIAgent.setIOExceptionOnPrepareRequest(true);
 
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			AcceptorServlet.class.getName(), Level.SEVERE);
@@ -162,8 +162,9 @@ public class AcceptorServletTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Assert.assertEquals("Fail on prepare request", re.getMessage());
+		catch (IOException ioe) {
+			Assert.assertEquals(
+				"IOException on prepare request", ioe.getMessage());
 		}
 
 		Assert.assertEquals(1, logRecords.size());
@@ -172,12 +173,42 @@ public class AcceptorServletTest {
 
 		Throwable throwable = logRecord.getThrown();
 
+		Assert.assertSame(IOException.class, throwable.getClass());
+		Assert.assertEquals(
+			"IOException on prepare request", throwable.getMessage());
+
+		// RuntimeException on prepare request
+
+		_recordSPIAgent.setIOExceptionOnPrepareRequest(false);
+		_recordSPIAgent.setRuntimeExceptionOnPrepareRequest(true);
+
+		logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			AcceptorServlet.class.getName(), Level.SEVERE);
+
+		try {
+			acceptorServlet.service(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			Assert.fail();
+		}
+		catch (RuntimeException re) {
+			Assert.assertEquals(
+				"RuntimeException on prepare request", re.getMessage());
+		}
+
+		Assert.assertEquals(1, logRecords.size());
+
+		logRecord = logRecords.get(0);
+
+		throwable = logRecord.getThrown();
+
 		Assert.assertSame(RuntimeException.class, throwable.getClass());
-		Assert.assertEquals("Fail on prepare request", throwable.getMessage());
+		Assert.assertEquals(
+			"RuntimeException on prepare request", throwable.getMessage());
 
 		// Unable to forward
 
-		_recordSPIAgent.setFailOnPrepareRequest(false);
+		_recordSPIAgent.setRuntimeExceptionOnPrepareRequest(false);
 
 		failOnForward.set(true);
 
@@ -205,9 +236,16 @@ public class AcceptorServletTest {
 		}
 
 		@Override
-		public HttpServletRequest prepareRequest(HttpServletRequest request) {
-			if (_failOnPrepareRequest) {
-				throw new RuntimeException("Fail on prepare request");
+		public HttpServletRequest prepareRequest(HttpServletRequest request)
+			throws IOException {
+
+			if (_ioExceptionOnPrepareRequest) {
+				throw new IOException("IOException on prepare request");
+			}
+
+			if (_runtimeExceptionOnPrepareRequest) {
+				throw new RuntimeException(
+					"RuntimeException on prepare request");
 			}
 
 			_originalRequest1 = request;
@@ -231,8 +269,17 @@ public class AcceptorServletTest {
 			return _preparedResponse;
 		}
 
-		public void setFailOnPrepareRequest(boolean failOnPrepareRequest) {
-			_failOnPrepareRequest = failOnPrepareRequest;
+		public void setIOExceptionOnPrepareRequest(
+			boolean ioExceptionOnPrepareRequest) {
+
+			_ioExceptionOnPrepareRequest = ioExceptionOnPrepareRequest;
+		}
+
+		public void setRuntimeExceptionOnPrepareRequest(
+			boolean runtimeExceptionOnPrepareRequest) {
+
+			_runtimeExceptionOnPrepareRequest =
+				runtimeExceptionOnPrepareRequest;
 		}
 
 		@Override
@@ -247,12 +294,13 @@ public class AcceptorServletTest {
 		}
 
 		private Exception _exception;
-		private boolean _failOnPrepareRequest;
+		private boolean _ioExceptionOnPrepareRequest;
 		private HttpServletRequest _originalRequest1;
 		private HttpServletRequest _originalRequest2;
 		private HttpServletResponse _originalResponse;
 		private MockHttpServletRequest _preparedRequest;
 		private MockHttpServletResponse _preparedResponse;
+		private boolean _runtimeExceptionOnPrepareRequest;
 
 	}
 

@@ -81,28 +81,28 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		cacheName = cacheName.concat(StringPool.PERIOD).concat(name);
 
-		_portalCache = MultiVMPoolUtil.getCache(cacheName);
+		_multiVMPortalCache = MultiVMPoolUtil.getCache(cacheName);
 
 		CacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourceCacheListener(name);
 
-		_portalCache.registerCacheListener(
+		_multiVMPortalCache.registerCacheListener(
 			cacheListener, CacheListenerScope.ALL);
 	}
 
 	@Override
 	public void clearCache() {
-		_portalCache.removeAll();
+		_multiVMPortalCache.removeAll();
 	}
 
 	@Override
 	public void clearCache(String templateId) {
-		_portalCache.remove(templateId);
+		_multiVMPortalCache.remove(templateId);
 	}
 
 	@Override
 	public void destroy() {
-		_portalCache.destroy();
+		_multiVMPortalCache.destroy();
 
 		_templateResourceParsers.clear();
 	}
@@ -147,14 +147,14 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	}
 
 	private TemplateResource _loadFromCache(String templateId) {
-		Object object = _portalCache.get(templateId);
+		Object object = _multiVMPortalCache.get(templateId);
 
 		if (object == null) {
 			return null;
 		}
 
 		if (!(object instanceof TemplateResource)) {
-			_portalCache.remove(templateId);
+			_multiVMPortalCache.remove(templateId);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -172,7 +172,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 				templateResource.getLastModified() + _modificationCheckInterval;
 
 			if (System.currentTimeMillis() > expireTime) {
-				_portalCache.remove(templateId);
+				_multiVMPortalCache.remove(templateId);
 
 				templateResource = null;
 
@@ -227,15 +227,15 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			templateResource = new NullHolderTemplateResource();
 		}
 
-		_portalCache.put(templateId, templateResource);
+		_multiVMPortalCache.put(templateId, templateResource);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DefaultTemplateResourceLoader.class);
 
 	private long _modificationCheckInterval;
+	private PortalCache<String, TemplateResource> _multiVMPortalCache;
 	private String _name;
-	private PortalCache<String, TemplateResource> _portalCache;
 	private Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
 

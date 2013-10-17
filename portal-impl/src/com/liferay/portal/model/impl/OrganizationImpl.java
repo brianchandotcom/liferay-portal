@@ -97,9 +97,25 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException, SystemException {
-		StringBundler sb = new StringBundler();
+		List<Organization> organizations = new ArrayList<Organization>();
 
-		buildTreePath(sb, this);
+		Organization organization = this;
+
+		do {
+			organizations.add(organization);
+		}
+		while ((organization = organization.getParentOrganization()) != null);
+
+		StringBundler sb = new StringBundler(organizations.size() * 2 + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = organizations.size() - 1; i >= 0; i--) {
+			organization = organizations.get(i);
+
+			sb.append(organization.getOrganizationId());
+			sb.append(StringPool.SLASH);
+		}
 
 		return sb.toString();
 	}
@@ -367,20 +383,6 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		}
 
 		return false;
-	}
-
-	protected void buildTreePath(StringBundler sb, Organization organization)
-		throws PortalException, SystemException {
-
-		if (organization == null) {
-			sb.append(StringPool.SLASH);
-		}
-		else {
-			buildTreePath(sb, organization.getParentOrganization());
-
-			sb.append(organization.getOrganizationId());
-			sb.append(StringPool.SLASH);
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(OrganizationImpl.class);

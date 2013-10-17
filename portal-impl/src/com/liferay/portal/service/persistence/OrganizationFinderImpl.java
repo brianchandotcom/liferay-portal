@@ -64,6 +64,9 @@ public class OrganizationFinderImpl
 	public static final String FIND_BY_GROUP_ID =
 		OrganizationFinder.class.getName() + ".findByGroupId";
 
+	public static final String FIND_BY_C_P =
+		OrganizationFinder.class.getName() + ".findByC_P";
+
 	public static final String FIND_BY_C_PO_N_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_S_C_Z_R_C";
 
@@ -340,6 +343,47 @@ public class OrganizationFinderImpl
 			q.addEntity("Organization_", OrganizationImpl.class);
 
 			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Long> findByC_P(
+			long companyId, long parentOrganizationId,
+			long previousOrganizationId, int size)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_P);
+
+			if (previousOrganizationId == 0) {
+				sql = StringUtil.replace(
+					sql, "(organizationId > ?) AND", StringPool.BLANK);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("organizationId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (previousOrganizationId > 0) {
+				qPos.add(previousOrganizationId);
+			}
+
+			qPos.add(companyId);
+			qPos.add(parentOrganizationId);
+
+			return (List<Long>)QueryUtil.list(q, getDialect(), 0, size);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

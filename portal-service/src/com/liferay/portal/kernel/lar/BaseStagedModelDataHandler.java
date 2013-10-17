@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -71,8 +72,18 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					stagedModel.getStagedModelType());
 			}
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			PortletDataException pde = new PortletDataException(e);
+
+			if (e instanceof NoSuchModelException) {
+				pde.setStagedModel(stagedModel);
+				pde.setType(PortletDataException.MISSING_DEPENDENCY);
+			}
+
+			throw pde;
 		}
 	}
 

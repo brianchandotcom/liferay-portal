@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
+String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
+
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 String type = BeanParamUtil.getString(article, request, "type");
@@ -79,3 +81,9 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 	<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
 </aui:fieldset>
+
+<aui:script>
+	function <portlet:namespace />getSuggestionsContent() {
+		return document.<portlet:namespace />fm1.<portlet:namespace />title_<%= defaultLanguageId %>.value;
+	}
+</aui:script>

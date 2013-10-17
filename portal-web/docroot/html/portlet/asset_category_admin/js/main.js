@@ -721,7 +721,6 @@ AUI.add(
 									dialog: {
 										align: instance._dialogAlignConfig,
 										cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
-										width: 600
 									},
 									title: Liferay.Language.get('edit-permissions'),
 									uri: 'about:blank'

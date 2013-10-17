@@ -115,6 +115,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		try {
 			doImportCompanyStagedModel(portletDataContext, uuid, classPK);
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
@@ -147,6 +150,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			manifestSummary.incrementModelAdditionCount(
 				stagedModel.getStagedModelType());
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
@@ -159,6 +165,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		try {
 			doRestoreStagedModel(portletDataContext, stagedModel);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);

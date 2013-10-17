@@ -84,7 +84,7 @@ if (layout != null) {
 	}
 	%>
 
-	<aui:nav collapsible="<%= false %>" cssClass="nav-pills staging-bar" id="stagingBar">
+	<aui:nav collapsible="<%= false %>" cssClass="staging-bar" id="stagingBar">
 		<c:if test="<%= (liveGroup != null) %>">
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">

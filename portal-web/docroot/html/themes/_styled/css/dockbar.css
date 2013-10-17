@@ -391,7 +391,7 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.staging-bar {
-			margin: 6px 0 ;
+			margin: 10px 0;
 		}
 
 		&.controls-hidden .dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {

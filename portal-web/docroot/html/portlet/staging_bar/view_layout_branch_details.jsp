@@ -37,10 +37,10 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 			<c:choose>
 				<c:when test="<%= layoutRevisions.size() == 1 %>">
-					<span class="layout-branch-selector lfr-icon-menu"><i class="icon-file"></i> <%= taglibMessage %></span>
+					<span class="layout-branch-selector staging-variation-selector"><i class="icon-file"></i> <%= taglibMessage %></span>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:icon-menu cssClass="layout-branch-selector" direction="down" extended="<%= false %>" icon="../aui/file" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+					<liferay-ui:icon-menu cssClass="layout-branch-selector staging-variation-selector" direction="down" extended="<%= false %>" icon="../aui/file" message="<%= taglibMessage %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 						<%
 						for (LayoutRevision rootLayoutRevision : layoutRevisions) {

@@ -101,12 +101,12 @@
 		padding: 0 5px;
 	}
 
-	.page-variations-options, .site-pages-variation-options {
+	.staging-toggle .variations-options {
 		position: relative;
 
-		.lfr-icon-menu {
+		.staging-variation-selector {
 			display: block;
-			margin: 0 15px 0 0 !important;
+			margin: 0 15px 0 0;
 
 			.icon-globe, .icon-file {
 				padding: 7px;
@@ -120,7 +120,7 @@
 		.page-variations {
 			font-size: 17px;
 			position: absolute;
-			right: 0;
+			right: -5px;
 			top: 0;
 		}
 	}

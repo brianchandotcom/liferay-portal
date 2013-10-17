@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.monitoring.statistics.portal.PortalRequestDataSample" %>
-
 <%
 PortalRequestDataSample portalRequestDataSample = new PortalRequestDataSample(company.getCompanyId(), request.getRemoteUser(), request.getRequestURI(), request.getRequestURL().toString() + ".jsp_display");
 

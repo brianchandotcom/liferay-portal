@@ -14,9 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.portal.security.membershippolicy.MembershipPolicyException" %>
+<%@ include file="/html/taglib/ui/membership_policy_error/init.jsp" %>
 
 <liferay-ui:error exception="<%= MembershipPolicyException.class %>">
 

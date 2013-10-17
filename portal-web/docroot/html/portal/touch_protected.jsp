@@ -14,9 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
-
-<%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
+<%@ include file="/html/portal/init.jsp" %>
 
 <%
 String redirect = themeDisplay.getPathMain() + "/portal/protected";

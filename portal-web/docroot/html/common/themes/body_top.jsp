@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
+<%@ include file="/html/common/themes/init.jsp" %>
 
 <%-- Raw Text --%>
 

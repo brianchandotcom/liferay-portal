@@ -14,10 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.portal.kernel.util.Diff" %>
-<%@ page import="com.liferay.portal.kernel.util.DiffResult" %>
+<%@ include file="/html/taglib/ui/diff/init.jsp" %>
 
 <%
 String sourceName = (String)request.getAttribute("liferay-ui:diff:sourceName");

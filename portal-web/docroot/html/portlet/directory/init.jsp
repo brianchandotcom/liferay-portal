@@ -26,7 +26,8 @@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
+page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");

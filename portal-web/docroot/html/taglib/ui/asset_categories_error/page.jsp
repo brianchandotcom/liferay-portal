@@ -14,10 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.portlet.asset.AssetCategoryException" %>
-<%@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %>
+<%@ include file="/html/taglib/ui/asset_categories_error/init.jsp" %>
 
 <liferay-ui:error exception="<%= AssetCategoryException.class %>">
 

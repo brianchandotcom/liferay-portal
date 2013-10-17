@@ -14,11 +14,6 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.monitoring.RequestStatus" %>
-<%@ page import="com.liferay.portal.kernel.monitoring.statistics.DataSample" %>
-<%@ page import="com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal" %>
-<%@ page import="com.liferay.portal.monitoring.statistics.portal.PortalRequestDataSample" %>
-
 <%
 PortalRequestDataSample portalRequestDataSample = (PortalRequestDataSample)request.getAttribute(WebKeys.PORTAL_REQUEST_DATA_SAMPLE);
 

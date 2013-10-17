@@ -83,6 +83,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			if ((includeFileName.endsWith("jsp") ||
 				 includeFileName.endsWith("jspf")) &&
+				!includeFileName.endsWith("html/common/init.jsp") &&
 				!includeFileName.endsWith("html/portlet/init.jsp") &&
 				!includeFileName.endsWith("html/taglib/init.jsp") &&
 				!includeFileNames.contains(includeFileName)) {
@@ -316,6 +317,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			catch (RuntimeException re) {
 				_stripJSPImports = false;
 			}
+		}
+
+		if (portalSource && content.contains("page import=") &&
+			!fileName.contains("init.jsp") &&
+			!fileName.contains("init-ext.jsp") &&
+			!fileName.contains("/taglib/aui/") &&
+			!fileName.endsWith("touch.jsp") &&
+			(fileName.endsWith(".jspf") || content.contains("include file="))) {
+
+			processErrorMessage(
+				fileName, "move imports to init.jsp: " + fileName);
 		}
 
 		newContent = fixCopyright(

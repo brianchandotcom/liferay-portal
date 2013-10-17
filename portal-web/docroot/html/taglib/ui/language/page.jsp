@@ -14,9 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.taglib.ui.LanguageTag" %>
+<%@ include file="/html/taglib/ui/language/init.jsp" %>
 
 <%
 String formName = (String)request.getAttribute("liferay-ui:language:formName");

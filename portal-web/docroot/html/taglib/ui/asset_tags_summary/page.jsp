@@ -14,10 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
-<%@ page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %>
+<%@ include file="/html/taglib/ui/asset_tags_summary/init.jsp" %>
 
 <%
 String[] assetTagNames = StringUtil.split((String)request.getAttribute("liferay-ui:asset-tags-summary:assetTagNames"));

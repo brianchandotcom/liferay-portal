@@ -9,8 +9,28 @@
 	margin: 20px 0;
 }
 
-.control-group.input-prepend.input-append {
+.input-fit-container {
 	width: 100%;
+
+	&.input-append {
+		input[type="text"] {
+			margin-bottom: 0;
+			margin-left: -1px;
+		}
+	}
+
+	&.input-prepend {
+		input[type="text"] {
+			margin-bottom: 0;
+		}
+
+		.add-on {
+			height: auto;
+			text-align: left;
+			white-space: normal;
+			word-break: break-all;
+		}
+	}
 
 	input {
 		float: left;
@@ -24,6 +44,7 @@
 
 	.input-localized-content {
 		clear: both;
+		padding-top: 10px;
 	}
 }
 

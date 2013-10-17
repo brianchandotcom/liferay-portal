@@ -405,7 +405,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.panel-page-menu {
 		position: relative;
 
-		.accordion-toggle i[class^="icon-"] {
+		.accordion-toggle [class^="icon-"] {
 			display: none;
 		}
 
@@ -494,6 +494,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			.search-panels-bar {
+				position: relative;
+
+				&:after {
+					background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
+					color: #D4D4D4;
+					content: '';
+					display: block;
+					font-size: 0;
+					height: 18px;
+					margin-left: 8px;
+					margin-top: 6px;
+					position: absolute;
+					top: 0;
+					width: 27px;
+				}
+
 				.control-group {
 					margin: 0;
 
@@ -505,17 +521,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 							border-color: rgba(0, 172, 255, 0.8);
 						}
 					}
-				}
-
-				.search-panel-icon {
-					background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
-					color: #D4D4D4;
-					font-size: 0;
-					height: 18px;
-					margin-left: 8px;
-					margin-top: 6px;
-					position: absolute;
-					width: 27px;
 				}
 
 				input {
@@ -562,7 +567,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				position: relative;
 				text-align: center;
 
-				i[class^="icon-"] {
+				[class^="icon-"] {
 					display: inline;
 				}
 
@@ -620,7 +625,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 
 					.toggler-header {
-						padding: 12px 10px 8px;
+						padding: 14px 10px 10px;
 					}
 				}
 			}

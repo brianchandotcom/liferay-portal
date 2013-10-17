@@ -22,8 +22,6 @@
 			<i class="icon-search"></i>
 
 			<div class="search-panels-bar">
-				<i class="search-panel-icon"></i>
-
 				<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" />
 			</div>
 		</div>

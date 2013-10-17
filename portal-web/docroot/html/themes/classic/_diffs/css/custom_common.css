@@ -528,7 +528,7 @@
 
 	/* ---------- Hidden accessible ---------- */
 
-	#banner h2, #banner h3, .site-breadcrumbs h1, #skip-to-content {
+	#banner h2, #banner h3, .site-breadcrumbs h1 {
 		clip: rect(0 0 0 0);
 		position: absolute;
 	}

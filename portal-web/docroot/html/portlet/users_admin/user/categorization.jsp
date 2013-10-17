@@ -36,11 +36,6 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <aui:script>
 	function <portlet:namespace />getSuggestionsContent() {
-		var content = '';
-
-		content += document.<portlet:namespace />fm.<portlet:namespace />comments.value + ' ';
-		content += document.<portlet:namespace />fm.<portlet:namespace />jobTitle.value + ' ';
-
-		return content;
+		return document.<portlet:namespace />fm.<portlet:namespace />comments.value + ' ' + document.<portlet:namespace />fm.<portlet:namespace />jobTitle.value;
 	}
 </aui:script>

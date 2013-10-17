@@ -533,12 +533,7 @@ editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants
 	}
 
 	function <portlet:namespace />getSuggestionsContent() {
-		var content = '';
-
-		content += document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ';
-		content += document.<portlet:namespace />fm.<portlet:namespace />description.value + ' ';
-
-		return content;
+		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + document.<portlet:namespace />fm.<portlet:namespace />description.value;
 	}
 
 	function <portlet:namespace />saveFileEntry(draft) {

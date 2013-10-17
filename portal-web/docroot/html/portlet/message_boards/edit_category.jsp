@@ -125,7 +125,7 @@ else {
 			</c:if>
 		</c:if>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(WindowState.NORMAL)) %>" name="name" />
 
 		<aui:input name="description" />
 

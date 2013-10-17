@@ -123,7 +123,7 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 		distributedRequestAttributes = extractDistributedRequestAttributes(
 			request, Direction.REQUEST);
 		headerMap = extractRequestHeaders(request);
-		parameterMap = request.getParameterMap();
+		parameterMap = new HashMap<String, String[]>(request.getParameterMap());
 		remoteAddr = request.getRemoteAddr();
 		remoteHost = request.getRemoteHost();
 		remotePort = request.getRemotePort();

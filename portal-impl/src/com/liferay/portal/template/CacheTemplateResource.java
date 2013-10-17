@@ -65,6 +65,10 @@ public class CacheTemplateResource implements TemplateResource {
 		return false;
 	}
 
+	public TemplateResource getInnerTemplateResource() {
+		return _templateResource;
+	}
+
 	@Override
 	public long getLastModified() {
 		return _lastModified;

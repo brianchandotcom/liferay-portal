@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -81,7 +83,11 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		cacheName = cacheName.concat(StringPool.PERIOD).concat(name);
 
-		_multiVMPortalCache = MultiVMPoolUtil.getCache(cacheName);
+		_singleVMPortalCache = SingleVMPoolUtil.getCache(
+			cacheName.concat(StringPool.PERIOD).concat("singleVM"));
+
+		_multiVMPortalCache = MultiVMPoolUtil.getCache(
+			cacheName.concat(StringPool.PERIOD).concat("multiVM"));
 
 		CacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourceCacheListener(name);
@@ -93,16 +99,19 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	@Override
 	public void clearCache() {
 		_multiVMPortalCache.removeAll();
+		_singleVMPortalCache.removeAll();
 	}
 
 	@Override
 	public void clearCache(String templateId) {
 		_multiVMPortalCache.remove(templateId);
+		_singleVMPortalCache.remove(templateId);
 	}
 
 	@Override
 	public void destroy() {
 		_multiVMPortalCache.destroy();
+		_singleVMPortalCache.destroy();
 
 		_templateResourceParsers.clear();
 	}
@@ -146,15 +155,17 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		return false;
 	}
 
-	private TemplateResource _loadFromCache(String templateId) {
-		Object object = _multiVMPortalCache.get(templateId);
+	private TemplateResource _loadFromCache(
+		PortalCache<String, TemplateResource> portalCache, String templateId) {
+
+		Object object = portalCache.get(templateId);
 
 		if (object == null) {
 			return null;
 		}
 
 		if (!(object instanceof TemplateResource)) {
-			_multiVMPortalCache.remove(templateId);
+			portalCache.remove(templateId);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -172,15 +183,38 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 				templateResource.getLastModified() + _modificationCheckInterval;
 
 			if (System.currentTimeMillis() > expireTime) {
-				_multiVMPortalCache.remove(templateId);
+				portalCache.remove(templateId);
 
-				templateResource = null;
+				templateResource = _expiredHolderTemplateResource;
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Remove expired template resource " + templateId);
 				}
 			}
+		}
+
+		return templateResource;
+	}
+
+	private TemplateResource _loadFromCache(String templateId) {
+		TemplateResource templateResource = _loadFromCache(
+			_singleVMPortalCache, templateId);
+
+		if (templateResource != null) {
+			if (templateResource == _expiredHolderTemplateResource) {
+				return null;
+			}
+
+			return templateResource;
+		}
+
+		templateResource = _loadFromCache(_multiVMPortalCache, templateId);
+
+		if ((templateResource == null) ||
+			(templateResource == _expiredHolderTemplateResource)) {
+
+			return null;
 		}
 
 		return templateResource;
@@ -224,7 +258,22 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		String templateId, TemplateResource templateResource) {
 
 		if (templateResource == null) {
-			templateResource = new NullHolderTemplateResource();
+			_singleVMPortalCache.put(
+				templateId, new NullHolderTemplateResource());
+
+			return;
+		}
+
+		CacheTemplateResource cacheTemplateResource =
+			(CacheTemplateResource)templateResource;
+
+		TemplateResource innerTemplateResource =
+			cacheTemplateResource.getInnerTemplateResource();
+
+		if (innerTemplateResource instanceof URLTemplateResource) {
+			_singleVMPortalCache.put(templateId, templateResource);
+
+			return;
 		}
 
 		_multiVMPortalCache.put(templateId, templateResource);
@@ -233,9 +282,13 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	private static Log _log = LogFactoryUtil.getLog(
 		DefaultTemplateResourceLoader.class);
 
+	private static NullHolderTemplateResource _expiredHolderTemplateResource =
+		new NullHolderTemplateResource();
+
 	private long _modificationCheckInterval;
 	private PortalCache<String, TemplateResource> _multiVMPortalCache;
 	private String _name;
+	private PortalCache<String, TemplateResource> _singleVMPortalCache;
 	private Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
 

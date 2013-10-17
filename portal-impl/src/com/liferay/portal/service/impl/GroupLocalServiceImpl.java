@@ -2085,14 +2085,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			List<Long> childGroupIds = groupFinder.findByC_P(
 				companyId, parentGroupId, previousGroupId,
-				PropsValues.BULK_OPERATIONS_CHUNK_SIZE);
+				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
 
 			if (childGroupIds.isEmpty()) {
 				continue;
 			}
 
 			if (childGroupIds.size() ==
-					PropsValues.BULK_OPERATIONS_CHUNK_SIZE) {
+					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
 
 				trace[2] = childGroupIds.get(childGroupIds.size() - 1);
 

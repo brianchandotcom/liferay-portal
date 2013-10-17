@@ -296,7 +296,7 @@ public class OrganizationLocalServiceTest {
 		createOrganizationTree();
 
 		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "BULK_OPERATIONS_CHUNK_SIZE");
+			PropsValues.class, "MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE");
 
 		int oldSize = field.getInt(null);
 

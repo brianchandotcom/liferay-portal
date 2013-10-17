@@ -1024,14 +1024,14 @@ public class OrganizationLocalServiceImpl
 
 			List<Long> childOrganizationIds = organizationFinder.findByC_P(
 				companyId, parentOrganizationId, previousOrganizationId,
-				PropsValues.BULK_OPERATIONS_CHUNK_SIZE);
+				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
 
 			if (childOrganizationIds.isEmpty()) {
 				continue;
 			}
 
 			if (childOrganizationIds.size() ==
-					PropsValues.BULK_OPERATIONS_CHUNK_SIZE) {
+					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
 
 				trace[2] = childOrganizationIds.get(
 					childOrganizationIds.size() - 1);

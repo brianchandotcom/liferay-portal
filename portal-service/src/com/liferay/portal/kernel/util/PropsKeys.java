@@ -337,8 +337,6 @@ public interface PropsKeys {
 
 	public static final String BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE = "buffered.increment.threadpool.max.size";
 
-	public static final String BULK_OPERATIONS_CHUNK_SIZE = "bulk.operations.chunk.size";
-
 	public static final String CACHE_CONTENT_THRESHOLD_SIZE = "cache.content.threshold.size";
 
 	public static final String CALENDAR_EMAIL_EVENT_REMINDER_BODY = "calendar.email.event.reminder.body";
@@ -1676,6 +1674,8 @@ public interface PropsKeys {
 	public static final String MOBILE_DEVICE_STYLING_WAP_ENABLED = "mobile.device.styling.wap.enabled";
 
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
+
+	public static final String MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE = "model.tree.rebuild.query.results.batch.size";
 
 	public static final String MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS = "module.framework.auto.deploy.dirs";
 

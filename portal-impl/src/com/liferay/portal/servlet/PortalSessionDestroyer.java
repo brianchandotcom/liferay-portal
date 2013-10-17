@@ -126,15 +126,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 		}
 
 		try {
-			PortletSessionTracker portletSessionTracker =
-				(PortletSessionTracker)session.getAttribute(
-					WebKeys.PORTLET_SESSION_TRACKER);
-
-			if (portletSessionTracker != null) {
-				PortletSessionTracker.invalidate(session);
-
-				session.removeAttribute(WebKeys.PORTLET_SESSION_TRACKER);
-			}
+			PortletSessionTracker.invalidate(session.getId());
 		}
 		catch (IllegalStateException ise) {
 			if (_log.isWarnEnabled()) {

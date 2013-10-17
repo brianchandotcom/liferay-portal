@@ -17,17 +17,11 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 
-import java.io.Serializable;
-
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionBindingListener;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
 
 /**
  * <p>
@@ -37,50 +31,9 @@ import javax.servlet.http.HttpSessionListener;
  * @author Rudy Hilado
  * @author Shuyang Zhou
  */
-public class PortletSessionTracker
-	implements HttpSessionListener, HttpSessionBindingListener, Serializable {
+public class PortletSessionTracker {
 
 	public static void add(HttpSession session) {
-		_instance._add(session);
-	}
-
-	public static HttpSessionBindingListener getInstance() {
-		return _instance;
-	}
-
-	public static void invalidate(HttpSession session) {
-		_instance._invalidate(session.getId());
-	}
-
-	public static void invalidate(String sessionId) {
-		_instance._invalidate(sessionId);
-	}
-
-	@Override
-	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-	}
-
-	@Override
-	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-		_invalidate(httpSessionEvent.getSession().getId());
-	}
-
-	@Override
-	public void valueBound(HttpSessionBindingEvent event) {
-	}
-
-	@Override
-	public void valueUnbound(HttpSessionBindingEvent event) {
-		invalidate(event.getSession().getId());
-	}
-
-	private PortletSessionTracker() {
-		_sessions = new ConcurrentHashMap<String, Set<HttpSession>>();
-
-		PortletSessionListenerManager.addHttpSessionListener(this);
-	}
-
-	private void _add(HttpSession session) {
 		String sessionId = session.getId();
 
 		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
@@ -103,7 +56,7 @@ public class PortletSessionTracker
 		sessions.add(session);
 	}
 
-	private void _invalidate(String sessionId) {
+	public static void invalidate(String sessionId) {
 		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
 			sessionId = CompoundSessionIdSplitterUtil.parseSessionId(sessionId);
 		}
@@ -123,9 +76,7 @@ public class PortletSessionTracker
 		}
 	}
 
-	private static PortletSessionTracker _instance =
-		new PortletSessionTracker();
-
-	private transient ConcurrentMap<String, Set<HttpSession>> _sessions;
+	private static ConcurrentMap<String, Set<HttpSession>> _sessions =
+		new ConcurrentHashMap<String, Set<HttpSession>>();
 
 }

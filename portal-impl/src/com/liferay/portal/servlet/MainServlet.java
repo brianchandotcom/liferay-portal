@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
-import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -427,7 +426,6 @@ public class MainServlet extends ActionServlet {
 		}
 
 		checkServletContext(request);
-		checkPortletSessionTracker(request);
 		checkPortletRequestProcessor(request);
 		checkTilesDefinitionsFactory();
 
@@ -567,18 +565,6 @@ public class MainServlet extends ActionServlet {
 			servletContext.setAttribute(
 				WebKeys.PORTLET_STRUTS_PROCESSOR, portletReqProcessor);
 		}
-	}
-
-	protected void checkPortletSessionTracker(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-
-		if (session.getAttribute(WebKeys.PORTLET_SESSION_TRACKER) != null) {
-			return;
-		}
-
-		session.setAttribute(
-			WebKeys.PORTLET_SESSION_TRACKER,
-			PortletSessionTracker.getInstance());
 	}
 
 	protected void checkServletContext(HttpServletRequest request) {

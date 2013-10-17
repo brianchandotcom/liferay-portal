@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -43,7 +42,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -210,69 +208,28 @@ public class JournalFeedStagedModelDataHandler
 			autoFeedId = true;
 		}
 
-		List<Element> ddmStructureElements =
-			portletDataContext.getReferenceDataElements(
-				feed, DDMStructure.class);
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, feed, DDMStructure.class);
 
-		String parentDDMStructureKey = StringPool.BLANK;
+		Map<String, String> ddmStructureKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class + ".ddmStructureKey");
 
-		if (!ddmStructureElements.isEmpty()) {
-			Element ddmStructureElement = ddmStructureElements.get(0);
+		String parentDDMStructureKey = MapUtil.getString(
+			ddmStructureKeys, feed.getStructureId(), feed.getStructureId());
 
-			String ddmStructurePath = ddmStructureElement.attributeValue(
-				"path");
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, feed, DDMTemplate.class);
 
-			DDMStructure ddmStructure =
-				(DDMStructure)portletDataContext.getZipEntryAsObject(
-					ddmStructurePath);
+		Map<String, String> ddmTemplateKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class + ".ddmTemplateKey");
 
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, ddmStructure);
-
-			Map<String, String> ddmStructureKeys =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					DDMStructure.class + ".ddmStructureKey");
-
-			parentDDMStructureKey = MapUtil.getString(
-				ddmStructureKeys, ddmStructure.getStructureKey(),
-				ddmStructure.getStructureKey());
-		}
-
-		List<Element> ddmTemplateElements =
-			portletDataContext.getReferenceDataElements(
-				feed, DDMTemplate.class);
-
-		String parentDDMTemplateKey = StringPool.BLANK;
-		String parentRendererDDMTemplateKey = StringPool.BLANK;
-
-		for (Element ddmTemplateElement : ddmTemplateElements) {
-			String ddmTemplatePath = ddmTemplateElement.attributeValue("path");
-
-			DDMTemplate ddmTemplate =
-				(DDMTemplate)portletDataContext.getZipEntryAsObject(
-					ddmTemplatePath);
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, ddmTemplate);
-
-			Map<String, String> ddmTemplateKeys =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					DDMTemplate.class + ".ddmTemplateKey");
-
-			boolean rendererDDMTemplate = GetterUtil.getBoolean(
-				ddmTemplateElement.attributeValue("rendererDDMTemplate"));
-
-			String ddmTemplateKey = MapUtil.getString(
-				ddmTemplateKeys, ddmTemplate.getTemplateKey(),
-				ddmTemplate.getTemplateKey());
-
-			if (rendererDDMTemplate) {
-				parentDDMTemplateKey = ddmTemplateKey;
-			}
-			else {
-				parentRendererDDMTemplateKey = ddmTemplateKey;
-			}
-		}
+		String parentDDMTemplateKey = MapUtil.getString(
+			ddmTemplateKeys, feed.getTemplateId(), feed.getTemplateId());
+		String parentRendererDDMTemplateKey = MapUtil.getString(
+			ddmTemplateKeys, feed.getRendererTemplateId(),
+			feed.getRendererTemplateId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			feed);

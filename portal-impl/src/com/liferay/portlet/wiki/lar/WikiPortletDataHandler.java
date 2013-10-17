@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -152,7 +150,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		List<Element> nodeElements = nodesElement.elements();
 
 		for (Element nodeElement : nodeElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, nodeElement);
 		}
 
@@ -162,7 +160,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		List<Element> pageElements = pagesElement.elements();
 
 		for (Element pageElement : pageElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
+			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, pageElement);
 		}
 
@@ -200,9 +198,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDataContext.getCompanyId(), portletId);
-
 		String hiddenNodeNames = portletPreferences.getValue(
 			"hiddenNodes", null);
 
@@ -211,12 +206,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				WikiNodeLocalServiceUtil.getNode(
 					portletDataContext.getScopeGroupId(), hiddenNodeName);
 
-			portletDataContext.addReferenceElement(
-				portlet, portletDataContext.getExportDataRootElement(),
-				wikiNode, WikiNode.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					NAMESPACE, "wiki-pages"));
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, wikiNode);
 		}
 
 		String visibleNodeNames = portletPreferences.getValue(
@@ -227,13 +218,21 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				WikiNodeLocalServiceUtil.getNode(
 					portletDataContext.getScopeGroupId(), visibleNodeName);
 
-			portletDataContext.addReferenceElement(
-				portlet, portletDataContext.getExportDataRootElement(),
-				wikiNode, WikiNode.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					NAMESPACE, "wiki-pages"));
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, wikiNode);
 		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	protected PortletPreferences doProcessImportPortletPreferences(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, WikiNode.class);
 
 		return portletPreferences;
 	}

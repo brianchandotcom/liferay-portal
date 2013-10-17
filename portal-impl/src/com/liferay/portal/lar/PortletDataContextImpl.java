@@ -70,7 +70,6 @@ import com.liferay.portal.model.impl.LockImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -432,31 +431,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void addLocks(String className, String key, Lock lock) {
 		_locksMap.put(getPrimaryKeyString(className, key), lock);
-	}
-
-	@Override
-	public Element addMissingReferenceElement(
-		String referrerPortletId, ClassedModel classedModel) {
-
-		Portlet referrerPortlet = PortletLocalServiceUtil.getPortletById(
-			referrerPortletId);
-
-		if (referrerPortlet == null) {
-			return null;
-		}
-
-		String referenceKey = getReferenceKey(classedModel);
-
-		if (_missingReferences.contains(referenceKey)) {
-			return getMissingReferenceElement(classedModel);
-		}
-
-		_missingReferences.add(referenceKey);
-
-		return doAddReferenceElement(
-			referrerPortlet, null, classedModel,
-			classedModel.getModelClassName(), null, REFERENCE_TYPE_EMBEDDED,
-			true);
 	}
 
 	@Override
@@ -1030,9 +1004,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element getImportDataStagedModelElement(StagedModel stagedModel) {
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
-		Class<?> clazz = stagedModel.getModelClass();
+		StagedModelType stagedModelType = stagedModel.getStagedModelType();
 
-		return getImportDataElement(clazz.getSimpleName(), "path", path);
+		return getImportDataElement(
+			stagedModelType.getClassSimpleName(), "path", path);
 	}
 
 	@Override
@@ -1197,16 +1172,30 @@ public class PortletDataContextImpl implements PortletDataContext {
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType) {
 
 		List<Element> referenceElements = getReferenceElements(
-			parentStagedModel, clazz, referenceType);
+			parentStagedModel, clazz, 0, referenceType);
 
 		return getReferenceDataElements(referenceElements, clazz);
+	}
+
+	@Override
+	public Element getReferenceElement(
+		StagedModel parentStagedModel, Class<?> clazz, long classPk) {
+
+		List<Element> referenceElements = getReferenceElements(
+			parentStagedModel, clazz, classPk, null);
+
+		if (!referenceElements.isEmpty()) {
+			return referenceElements.get(0);
+		}
+
+		return null;
 	}
 
 	@Override
 	public List<Element> getReferenceElements(
 		StagedModel parentStagedModel, Class<?> clazz) {
 
-		return getReferenceElements(parentStagedModel, clazz, null);
+		return getReferenceElements(parentStagedModel, clazz, 0, null);
 	}
 
 	@Override
@@ -2421,13 +2410,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected List<Element> getReferenceElements(
-		StagedModel parentStagedModel, Class<?> clazz, String referenceType) {
+		StagedModel parentStagedModel, Class<?> clazz, long classPk,
+		String referenceType) {
 
 		Element stagedModelElement = getImportDataStagedModelElement(
 			parentStagedModel);
 
 		return getReferenceElements(
-			stagedModelElement, clazz, 0, null, 0, referenceType);
+			stagedModelElement, clazz, 0, null, classPk, referenceType);
 	}
 
 	protected String getReferenceKey(ClassedModel classedModel) {

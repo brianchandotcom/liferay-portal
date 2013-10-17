@@ -145,9 +145,6 @@ public interface PortletDataContext extends Serializable {
 
 	public void addLocks(String className, String key, Lock lock);
 
-	public Element addMissingReferenceElement(
-		String portletId, ClassedModel classedModel);
-
 	public void addPermissions(Class<?> clazz, long classPK)
 		throws PortalException, SystemException;
 
@@ -354,6 +351,9 @@ public interface PortletDataContext extends Serializable {
 
 	public List<Element> getReferenceDataElements(
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
+
+	public Element getReferenceElement(
+		StagedModel parentStagedModel, Class<?> clazz, long classPk);
 
 	public List<Element> getReferenceElements(
 		StagedModel parentStagedModel, Class<?> clazz);

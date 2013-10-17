@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 
+import java.util.Map;
+
 /**
  * @author Mate Thurzo
  * @author Daniel Kocsis
@@ -40,8 +42,15 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 
 	public int[] getExportableStatuses();
 
+	public Map<String, String> getReferenceAttributes(
+		PortletDataContext portletDataContext, T stagedModel);
+
 	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
+			PortletDataContext portletDataContext, Element element)
+		throws PortletDataException;
+
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long classPk)
 		throws PortletDataException;
 
 	public void importStagedModel(

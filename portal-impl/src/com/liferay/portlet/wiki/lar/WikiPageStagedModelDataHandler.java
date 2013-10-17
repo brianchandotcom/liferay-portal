@@ -107,14 +107,8 @@ public class WikiPageStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(page.getUserUuid());
 
-		String nodePath = ExportImportPathUtil.getModelPath(
-			portletDataContext, WikiNode.class.getName(), page.getNodeId());
-
-		WikiNode node = (WikiNode)portletDataContext.getZipEntryAsObject(
-			nodePath);
-
 		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, node);
+			portletDataContext, page, WikiNode.class, page.getNodeId());
 
 		Element pageElement =
 			portletDataContext.getImportDataStagedModelElement(page);

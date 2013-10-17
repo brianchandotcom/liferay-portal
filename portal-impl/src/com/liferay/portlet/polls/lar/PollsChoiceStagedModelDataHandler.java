@@ -30,6 +30,7 @@ import java.util.Map;
 
 /**
  * @author Shinn Lok
+ * @author Mate Thurzo
  */
 public class PollsChoiceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PollsChoice> {
@@ -72,21 +73,31 @@ public class PollsChoiceStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long choiceId)
+		throws Exception {
+
+		PollsChoice existingChoice =
+			PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> choiceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				PollsChoice.class);
+
+		choiceIds.put(choiceId, existingChoice.getChoiceId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, PollsChoice choice)
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(choice.getUserUuid());
 
-		String questionPath = ExportImportPathUtil.getModelPath(
-			portletDataContext, PollsQuestion.class.getName(),
-			choice.getQuestionId());
-
-		PollsQuestion question =
-			(PollsQuestion)portletDataContext.getZipEntryAsObject(questionPath);
-
 		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, question);
+			portletDataContext, choice, PollsQuestion.class,
+			choice.getQuestionId());
 
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -125,6 +136,22 @@ public class PollsChoiceStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(choice, importedChoice);
+	}
+
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		PollsChoice choice =
+			PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
+				uuid, groupId);
+
+		if (choice == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

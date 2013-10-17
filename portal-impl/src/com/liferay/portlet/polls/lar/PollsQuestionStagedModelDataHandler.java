@@ -27,9 +27,11 @@ import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Shinn Lok
+ * @author Mate Thurzo
  */
 public class PollsQuestionStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PollsQuestion> {
@@ -71,6 +73,22 @@ public class PollsQuestionStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			questionElement, ExportImportPathUtil.getModelPath(question),
 			question);
+	}
+
+	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long questionId)
+		throws Exception {
+
+		PollsQuestion existingQuestion =
+			PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> questionIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				PollsQuestion.class);
+
+		questionIds.put(questionId, existingQuestion.getQuestionId());
 	}
 
 	@Override
@@ -144,6 +162,22 @@ public class PollsQuestionStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(question, importedQuestion);
+	}
+
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		PollsQuestion question =
+			PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+				uuid, groupId);
+
+		if (question == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

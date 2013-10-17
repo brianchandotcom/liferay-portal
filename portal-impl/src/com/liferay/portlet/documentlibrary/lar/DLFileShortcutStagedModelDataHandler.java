@@ -76,7 +76,8 @@ public class DLFileShortcutStagedModelDataHandler
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, fileShortcut, fileShortcut.getFolder(),
+				portletDataContext, fileShortcut, DLFileShortcut.class,
+				fileShortcut.getFolder(), Folder.class,
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
@@ -108,15 +109,9 @@ public class DLFileShortcutStagedModelDataHandler
 		if (fileShortcut.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			String folderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, Folder.class.getName(),
-				fileShortcut.getFolderId());
-
-			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
-				folderPath);
-
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, folder);
+				portletDataContext, fileShortcut, Folder.class,
+				fileShortcut.getFolderId());
 		}
 
 		Map<Long, Long> folderIds =
@@ -134,15 +129,9 @@ public class DLFileShortcutStagedModelDataHandler
 			groupId = folder.getRepositoryId();
 		}
 
-		String fileEntryPath = ExportImportPathUtil.getModelPath(
-			portletDataContext, FileEntry.class.getName(),
-			fileShortcut.getToFileEntryId());
-
-		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
-			fileEntryPath);
-
 		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, fileEntry);
+			portletDataContext, fileShortcut, FileEntry.class,
+			fileShortcut.getToFileEntryId());
 
 		Element fileShortcutElement =
 			portletDataContext.getImportDataStagedModelElement(fileShortcut);

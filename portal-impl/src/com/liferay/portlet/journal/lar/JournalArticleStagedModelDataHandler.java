@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -119,6 +121,83 @@ public class JournalArticleStagedModelDataHandler
 			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED,
 			WorkflowConstants.STATUS_SCHEDULED
 		};
+	}
+
+	@Override
+	public Map<String, String> getReferenceAttributes(
+		PortletDataContext portletDataContext, JournalArticle article) {
+
+		Map<String, String> referenceAttributes = new HashMap<String, String>();
+
+		String articleResourceUuid = StringPool.BLANK;
+
+		try {
+			articleResourceUuid = article.getArticleResourceUuid();
+		}
+		catch (Exception e) {
+		}
+
+		referenceAttributes.put("article-resource-uuid", articleResourceUuid);
+
+		return referenceAttributes;
+	}
+
+	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, Element element)
+		throws PortletDataException {
+
+		String articleResourceUuid = element.attributeValue(
+			"article-resource-uuid");
+
+		JournalArticleResource existingArticleResource = null;
+
+		try {
+			existingArticleResource =
+				JournalArticleResourceLocalServiceUtil.
+					fetchJournalArticleResourceByUuidAndGroupId(
+						articleResourceUuid,
+						portletDataContext.getCompanyGroupId());
+		}
+		catch (SystemException se) {
+			throw new PortletDataException(se);
+		}
+
+		if (existingArticleResource == null) {
+			return;
+		}
+
+		JournalArticle existingArticle = null;
+
+		try {
+			existingArticle =
+				JournalArticleLocalServiceUtil.getLatestArticle(
+					existingArticleResource.getResourcePrimKey(),
+					WorkflowConstants.STATUS_ANY, false);
+		}
+		catch (Exception e) {
+			if (e instanceof SystemException) {
+				throw new PortletDataException(e);
+			}
+
+			return;
+		}
+
+		Map<Long, Long> articleIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class);
+
+		long articleId = GetterUtil.getLong(element.attributeValue("class-pk"));
+
+		articleIds.put(articleId, existingArticle.getId());
+
+		Map<String, String> articleArticleIds =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class + ".articleId");
+
+		String articleArticleId = element.attributeValue("article-id");
+
+		articleArticleIds.put(articleArticleId, existingArticle.getArticleId());
 	}
 
 	@Override
@@ -222,36 +301,6 @@ public class JournalArticleStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			articleElement, ExportImportPathUtil.getModelPath(article),
 			article);
-	}
-
-	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, JournalArticle article)
-		throws Exception {
-
-		JournalArticleResource existingArticleResource =
-			JournalArticleResourceLocalServiceUtil.
-				fetchJournalArticleResourceByUuidAndGroupId(
-					article.getArticleResourceUuid(),
-					portletDataContext.getCompanyGroupId());
-
-		JournalArticle existingArticle =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				existingArticleResource.getResourcePrimKey(),
-				WorkflowConstants.STATUS_ANY, false);
-
-		Map<String, String> articleArticleIds =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				JournalArticle.class + ".articleId");
-
-		articleArticleIds.put(
-			article.getArticleId(), existingArticle.getArticleId());
-
-		Map<Long, Long> articleIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				JournalArticle.class);
-
-		articleIds.put(article.getId(), existingArticle.getId());
 	}
 
 	@Override
@@ -415,61 +464,36 @@ public class JournalArticleStagedModelDataHandler
 			}
 		}
 
-		String parentDDMStructureKey = StringPool.BLANK;
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, article, DDMStructure.class);
+
+		Map<String, String> ddmStructureKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class + ".ddmStructureKey");
+
+		String parentDDMStructureKey = MapUtil.getString(
+			ddmStructureKeys, article.getStructureId(),
+			article.getStructureId());
+
+		Map<String, Long> ddmStructureIds =
+			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
 
 		long ddmStructureId = 0;
 
-		List<Element> structureElements =
-			portletDataContext.getReferenceDataElements(
-				article, DDMStructure.class);
-
-		if (!structureElements.isEmpty()) {
-			Element structureElement = structureElements.get(0);
-
-			String structurePath = structureElement.attributeValue("path");
-
-			DDMStructure ddmStructure =
-				(DDMStructure)portletDataContext.getZipEntryAsObject(
-					structurePath);
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, ddmStructure);
-
-			Map<String, String> ddmStructureKeys =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					DDMStructure.class + ".ddmStructureKey");
-
-			parentDDMStructureKey = MapUtil.getString(
-				ddmStructureKeys, ddmStructure.getStructureKey(),
-				ddmStructure.getStructureKey());
+		if (article.getClassNameId() != 0) {
+			ddmStructureId = ddmStructureIds.get(article.getClassPK());
 		}
 
-		String parentDDMTemplateKey = StringPool.BLANK;
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, article, DDMTemplate.class);
 
-		List<Element> ddmTemplateElements =
-			portletDataContext.getReferenceDataElements(
-				article, DDMTemplate.class);
+		Map<String, String> ddmTemplateKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class + ".ddmTemplateKey");
 
-		if (!ddmTemplateElements.isEmpty()) {
-			Element templateElement = ddmTemplateElements.get(0);
-
-			String ddmTemplatePath = templateElement.attributeValue("path");
-
-			DDMTemplate ddmTemplate =
-				(DDMTemplate)portletDataContext.getZipEntryAsObject(
-					ddmTemplatePath);
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, ddmTemplate);
-
-			Map<String, String> ddmTemplateKeys =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					DDMTemplate.class + ".ddmTemplateKey");
-
-			parentDDMTemplateKey = MapUtil.getString(
-				ddmTemplateKeys, ddmTemplate.getTemplateKey(),
-				ddmTemplate.getTemplateKey());
-		}
+		String parentDDMTemplateKey = MapUtil.getString(
+			ddmTemplateKeys, article.getTemplateId(), article.getTemplateId());
 
 		File smallFile = null;
 

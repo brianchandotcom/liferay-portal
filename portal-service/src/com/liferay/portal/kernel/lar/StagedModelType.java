@@ -83,6 +83,10 @@ public class StagedModelType {
 		return _classNameId;
 	}
 
+	public String getClassSimpleName() {
+		return _classSimpleName;
+	}
+
 	public String getReferrerClassName() {
 		return _referrerClassName;
 	}
@@ -103,6 +107,7 @@ public class StagedModelType {
 
 	public void setClassName(String className) {
 		_className = className;
+		_classSimpleName = getSimpleName(_className);
 
 		if (Validator.isNotNull(className)) {
 			_classNameId = PortalUtil.getClassNameId(className);
@@ -115,12 +120,18 @@ public class StagedModelType {
 	public void setClassNameId(long classNameId) {
 		if (classNameId > 0) {
 			_className = PortalUtil.getClassName(classNameId);
+			_classSimpleName = getSimpleName(_className);
 		}
 		else {
 			_className = null;
+			_classSimpleName = null;
 		}
 
 		_classNameId = classNameId;
+	}
+
+	public void setClassSimpleName(String classSimpleName) {
+		_classSimpleName = classSimpleName;
 	}
 
 	public void setReferrerClassName(String referrerClassName) {
@@ -154,8 +165,15 @@ public class StagedModelType {
 		return _className.concat(StringPool.POUND).concat(_referrerClassName);
 	}
 
+	private String getSimpleName(String className) {
+		int pos = className.lastIndexOf(StringPool.PERIOD) + 1;
+
+		return className.substring(pos);
+	}
+
 	private String _className;
 	private long _classNameId;
+	private String _classSimpleName;
 	private String _referrerClassName;
 	private long _referrerClassNameId;
 

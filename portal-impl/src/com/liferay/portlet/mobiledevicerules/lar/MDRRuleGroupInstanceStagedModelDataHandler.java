@@ -107,15 +107,9 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		long userId = portletDataContext.getUserId(
 			ruleGroupInstance.getUserUuid());
 
-		String ruleGroupPath = ExportImportPathUtil.getModelPath(
-			portletDataContext, MDRRuleGroup.class.getName(),
-			ruleGroupInstance.getRuleGroupId());
-
-		MDRRuleGroup ruleGroup =
-			(MDRRuleGroup)portletDataContext.getZipEntryAsObject(ruleGroupPath);
-
 		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, ruleGroup);
+			portletDataContext, ruleGroupInstance, MDRRuleGroup.class,
+			ruleGroupInstance.getRuleGroupId());
 
 		Map<Long, Long> ruleGroupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

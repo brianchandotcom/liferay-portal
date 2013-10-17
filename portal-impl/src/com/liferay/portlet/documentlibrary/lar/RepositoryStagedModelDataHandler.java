@@ -189,14 +189,8 @@ public class RepositoryStagedModelDataHandler
 
 		portletDataContext.importClassedModel(repository, importedRepository);
 
-		List<Element> repositoryEntryElements =
-			portletDataContext.getReferenceDataElements(
-				repository, RepositoryEntry.class);
-
-		for (Element repositoryEntryElement : repositoryEntryElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, repositoryEntryElement);
-		}
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, repository, RepositoryEntry.class);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

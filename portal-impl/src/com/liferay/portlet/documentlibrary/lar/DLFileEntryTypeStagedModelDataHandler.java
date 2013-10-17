@@ -92,23 +92,21 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 	@Override
 	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext,
-			DLFileEntryType fileEntryType)
+			PortletDataContext portletDataContext, String uuid,
+			long fileEntryTypeId)
 		throws Exception {
 
 		DLFileEntryType existingFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.
 				fetchDLFileEntryTypeByUuidAndGroupId(
-					fileEntryType.getUuid(),
-					portletDataContext.getCompanyGroupId());
+					uuid, portletDataContext.getCompanyGroupId());
 
 		Map<Long, Long> fileEntryTypeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DLFileEntryType.class);
 
 		fileEntryTypeIds.put(
-			fileEntryType.getFileEntryTypeId(),
-			existingFileEntryType.getFileEntryTypeId());
+			fileEntryTypeId, existingFileEntryType.getFileEntryTypeId());
 	}
 
 	@Override
@@ -119,14 +117,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntryType.getUserUuid());
 
-		List<Element> ddmStructureElements =
-			portletDataContext.getReferenceDataElements(
-				fileEntryType, DDMStructure.class);
-
-		for (Element ddmStructureElement : ddmStructureElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, ddmStructureElement);
-		}
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, fileEntryType, DDMStructure.class);
 
 		List<Element> ddmStructureReferenceElements =
 			portletDataContext.getReferenceElements(

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -128,9 +127,11 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		portletDataContext.importPortletPermissions(
 			WikiPermission.RESOURCE_NAME);
 
-		super.importData(
-			portletDataContext, portletId, portletPreferences,
-			PortletPreferencesFactoryUtil.toXML(portletPreferences));
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, WikiNode.class);
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, WikiPage.class);
 
 		long nodeId = GetterUtil.getLong(
 			portletPreferences.getValue("nodeId", StringPool.BLANK));

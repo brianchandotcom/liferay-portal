@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.polls.NoSuchQuestionException;
 import com.liferay.portlet.polls.model.PollsChoice;
@@ -32,7 +31,6 @@ import com.liferay.portlet.polls.model.PollsVote;
 import com.liferay.portlet.polls.service.permission.PollsPermission;
 import com.liferay.portlet.polls.service.persistence.PollsQuestionUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -127,35 +125,14 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		portletDataContext.importPortletPermissions(
 			PollsPermission.RESOURCE_NAME);
 
-		Element questionsElement = portletDataContext.getImportDataGroupElement(
-			PollsQuestion.class);
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, PollsQuestion.class);
 
-		List<Element> questionElements = questionsElement.elements();
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, PollsChoice.class);
 
-		for (Element questionElement : questionElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, questionElement);
-		}
-
-		Element choicesElement = portletDataContext.getImportDataGroupElement(
-			PollsChoice.class);
-
-		List<Element> choiceElements = choicesElement.elements();
-
-		for (Element choiceElement : choiceElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, choiceElement);
-		}
-
-		Element votesElement = portletDataContext.getImportDataGroupElement(
-			PollsVote.class);
-
-		List<Element> voteElements = votesElement.elements();
-
-		for (Element voteElement : voteElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, voteElement);
-		}
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, PollsVote.class);
 
 		long questionId = GetterUtil.getLong(
 			portletPreferences.getValue("questionId", StringPool.BLANK));

@@ -66,19 +66,28 @@ public class PollsVoteStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long voteId)
+		throws Exception {
+
+		PollsVote existingVote =
+			PollsVoteLocalServiceUtil.fetchPollsVoteByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> voteIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				PollsVote.class);
+
+		voteIds.put(voteId, existingVote.getVoteId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, PollsVote vote)
 		throws Exception {
 
-		String choicePath = ExportImportPathUtil.getModelPath(
-			portletDataContext, PollsChoice.class.getName(),
-			vote.getChoiceId());
-
-		PollsChoice choice =
-			(PollsChoice)portletDataContext.getZipEntryAsObject(choicePath);
-
 		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, choice);
+			portletDataContext, vote, PollsChoice.class, vote.getChoiceId());
 
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -115,6 +124,22 @@ public class PollsVoteStagedModelDataHandler
 		}
 		catch (DuplicateVoteException dve) {
 		}
+	}
+
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		PollsVote vote =
+			PollsVoteLocalServiceUtil.fetchPollsVoteByUuidAndGroupId(
+				uuid, groupId);
+
+		if (vote == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

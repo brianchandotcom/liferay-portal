@@ -91,15 +91,9 @@ public class JournalFolderStagedModelDataHandler
 		if (folder.getParentFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			String path = ExportImportPathUtil.getModelPath(
-				portletDataContext, JournalFolder.class.getName(),
-				folder.getParentFolderId());
-
-			JournalFolder parentFolder =
-				(JournalFolder)portletDataContext.getZipEntryAsObject(path);
-
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, parentFolder);
+				portletDataContext, folder, JournalFolder.class,
+				folder.getParentFolderId());
 		}
 
 		Map<Long, Long> folderIds =

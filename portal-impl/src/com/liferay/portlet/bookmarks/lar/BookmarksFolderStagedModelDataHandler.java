@@ -93,16 +93,9 @@ public class BookmarksFolderStagedModelDataHandler
 		if (folder.getParentFolderId() !=
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			String parentFolderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, BookmarksFolder.class.getName(),
-				folder.getParentFolderId());
-
-			BookmarksFolder parentFolder =
-				(BookmarksFolder)portletDataContext.getZipEntryAsObject(
-					parentFolderPath);
-
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, parentFolder);
+				portletDataContext, folder, BookmarksFolder.class,
+				folder.getParentFolderId());
 		}
 
 		Map<Long, Long> folderIds =

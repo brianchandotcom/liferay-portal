@@ -250,6 +250,12 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 		portletDataContext.setImportDataRootElement(rootElement);
 		portletDataContext.setSourceGroupId(stagingGroup.getGroupId());
 
+		Group sourceCompanyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			stagingGroup.getCompanyId());
+
+		portletDataContext.setSourceCompanyGroupId(
+			sourceCompanyGroup.getGroupId());
+
 		PortletImporter portletImporter = new PortletImporter();
 
 		portletImporter.readAssetCategories(portletDataContext);

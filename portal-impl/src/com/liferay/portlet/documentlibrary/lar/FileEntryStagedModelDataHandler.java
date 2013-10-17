@@ -580,31 +580,17 @@ public class FileEntryStagedModelDataHandler
 
 		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
 
-		Element fileEntryTypeElement =
-			portletDataContext.getReferenceDataElement(
-				fileEntryElement, DLFileEntryType.class,
-				dlFileEntry.getFileEntryTypeId());
-
-		if (fileEntryTypeElement == null) {
-			return;
-		}
-
-		String fileEntryTypePath = fileEntryTypeElement.attributeValue("path");
-
-		DLFileEntryType dlFileEntryType =
-			(DLFileEntryType)portletDataContext.getZipEntryAsObject(
-				fileEntryTypePath);
-
 		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, dlFileEntryType);
+			portletDataContext, fileEntry, DLFileEntryType.class,
+			dlFileEntry.getFileEntryTypeId());
 
 		Map<Long, Long> dlFileEntryTypeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DLFileEntryType.class);
 
 		long dlFileEntryTypeId = MapUtil.getLong(
-			dlFileEntryTypeIds, dlFileEntryType.getFileEntryTypeId(),
-			dlFileEntryType.getFileEntryTypeId());
+			dlFileEntryTypeIds, dlFileEntry.getFileEntryTypeId(),
+			dlFileEntry.getFileEntryTypeId());
 
 		DLFileEntryType existingDLFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(

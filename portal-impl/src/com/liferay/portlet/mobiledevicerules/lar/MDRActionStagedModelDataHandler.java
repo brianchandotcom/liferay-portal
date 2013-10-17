@@ -118,16 +118,9 @@ public class MDRActionStagedModelDataHandler
 			PortletDataContext portletDataContext, MDRAction action)
 		throws Exception {
 
-		String ruleGroupInstancePath = ExportImportPathUtil.getModelPath(
-			portletDataContext, MDRRuleGroupInstance.class.getName(),
-			action.getRuleGroupInstanceId());
-
-		MDRRuleGroupInstance ruleGroupInstance =
-			(MDRRuleGroupInstance)portletDataContext.getZipEntryAsObject(
-				ruleGroupInstancePath);
-
 		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, ruleGroupInstance);
+			portletDataContext, action, MDRRuleGroupInstance.class,
+			action.getRuleGroupInstanceId());
 
 		Map<Long, Long> ruleGroupInstanceIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

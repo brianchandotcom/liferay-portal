@@ -176,14 +176,8 @@ public class LayoutPrototypeStagedModelDataHandler
 			portletDataContext.setPrivateLayout(true);
 			portletDataContext.setScopeGroupId(importedGroupId);
 
-			List<Element> layoutElements =
-				portletDataContext.getReferenceDataElements(
-					layoutPrototype, Layout.class);
-
-			for (Element layoutElement : layoutElements) {
-				StagedModelDataHandlerUtil.importReferenceStagedModel(
-					portletDataContext, layoutElement);
-			}
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, layoutPrototype, Layout.class);
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);

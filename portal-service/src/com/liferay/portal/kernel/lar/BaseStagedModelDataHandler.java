@@ -21,11 +21,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Mate Thurzo
@@ -82,12 +86,30 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
+	public Map<String, String> getReferenceAttributes(
+		PortletDataContext portletDataContext, T stagedModel) {
+
+		return new HashMap<String, String>();
+	}
+
+	@Override
 	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
+			PortletDataContext portletDataContext, Element element)
+		throws PortletDataException {
+
+		String uuid = element.attributeValue("uuid");
+		long classPk = GetterUtil.getLong(element.attributeValue("class-pk"));
+
+		importCompanyStagedModel(portletDataContext, uuid, classPk);
+	}
+
+	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long classPk)
 		throws PortletDataException {
 
 		try {
-			doImportCompanyStagedModel(portletDataContext, stagedModel);
+			doImportCompanyStagedModel(portletDataContext, uuid, classPk);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -181,7 +203,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throws Exception;
 
 	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
+			PortletDataContext portletDataContext, String uuid, long classPk)
 		throws Exception {
 
 		throw new UnsupportedOperationException();

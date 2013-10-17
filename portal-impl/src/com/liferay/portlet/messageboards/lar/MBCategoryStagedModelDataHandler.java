@@ -129,16 +129,9 @@ public class MBCategoryStagedModelDataHandler
 			(parentCategoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
 			(parentCategoryId == category.getParentCategoryId())) {
 
-			String parentCategoryPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, MBCategory.class.getName(),
-				parentCategoryId);
-
-			MBCategory parentCategory =
-				(MBCategory)portletDataContext.getZipEntryAsObject(
-					parentCategoryPath);
-
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, parentCategory);
+				portletDataContext, category, MBCategory.class,
+				parentCategoryId);
 
 			parentCategoryId = MapUtil.getLong(
 				categoryIds, category.getParentCategoryId(),

@@ -17,7 +17,6 @@ package com.liferay.portlet.rss.lar;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
@@ -180,7 +178,8 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		importReferenceArticle(portletDataContext);
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, JournalArticle.class);
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			portletDataContext.getPlid());
@@ -235,24 +234,6 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return portletPreferences;
-	}
-
-	protected void importReferenceArticle(PortletDataContext portletDataContext)
-		throws PortletDataException {
-
-		Element articlesElement = portletDataContext.getImportDataGroupElement(
-			JournalArticle.class);
-
-		if (articlesElement == null) {
-			return;
-		}
-
-		List<Element> articleElements = articlesElement.elements();
-
-		for (Element articleElement : articleElements) {
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, articleElement);
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

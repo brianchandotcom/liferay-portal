@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -374,6 +377,32 @@ public class FolderStagedModelDataHandler
 		}
 	}
 
+	protected void validateExport(
+			PortletDataContext portletDataContext, Folder folder)
+		throws PortletDataException {
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			DLFolder.class.getName());
+
+		if (trashHandler != null) {
+			try {
+				if (trashHandler.isInTrash(folder.getFolderId()) ||
+					trashHandler.isInTrashContainer(folder.getFolderId())) {
+
+					throw new PortletDataException(
+						PortletDataException.STATUS_IN_TRASH);
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to check trash status for " +
+							DLFolder.class.getName());
+				}
+			}
+		}
+	}
+
 	@Override
 	protected boolean validateMissingReference(
 			String uuid, long companyId, long groupId)
@@ -389,5 +418,8 @@ public class FolderStagedModelDataHandler
 
 		return true;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		FolderStagedModelDataHandler.class);
 
 }

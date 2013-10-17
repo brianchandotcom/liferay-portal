@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -625,6 +626,59 @@ public class FileEntryStagedModelDataHandler
 
 			serviceContext.setAttribute(
 				Fields.class.getName() + ddmStructure.getStructureId(), fields);
+		}
+	}
+
+	protected void validateExport(
+			PortletDataContext portletDataContext, FileEntry fileEntry)
+		throws PortletDataException {
+
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			if (!ArrayUtil.contains(
+					getExportableStatuses(), fileVersion.getStatus())) {
+
+				throw new PortletDataException(
+					PortletDataException.STATUS_UNAVAILABLE);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof PortletDataException) {
+				throw (PortletDataException)e;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to check workflow status for " +
+						DLFileEntry.class.getName());
+			}
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			DLFileEntry.class.getName());
+
+		if (trashHandler != null) {
+			try {
+				if (trashHandler.isInTrash(fileEntry.getFileEntryId()) ||
+					trashHandler.isInTrashContainer(
+						fileEntry.getFileEntryId())) {
+
+					throw new PortletDataException(
+						PortletDataException.STATUS_IN_TRASH);
+				}
+			}
+			catch (Exception e) {
+				if (e instanceof PortletDataException) {
+					throw (PortletDataException)e;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to check trash status for " +
+							DLFileEntry.class.getName());
+				}
+			}
 		}
 	}
 

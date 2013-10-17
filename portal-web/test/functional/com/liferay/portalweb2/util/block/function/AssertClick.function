@@ -126,9 +126,7 @@
 	<command name="waitForDMHomeAssertTextEqualsClick">
 		<execute selenium="waitForElementPresent" argument1="//a[@class='browse-folder yui3-dd-drop']" />
 
-		<execute selenium="clickAt" argument1="//div[@id='_20_folderContainer']/ul" />
-
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/aui-form-combobox-deprecated/aui-form-combobox-deprecated-min.js')]" />
+		<execute selenium="pause" argument1="1500" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>

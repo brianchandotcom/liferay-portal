@@ -598,6 +598,17 @@
 	</command>
 
 	<command name="viewViewCountCP">
+		<var name="key_portletName" value="Blogs" />
+
+		<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="entryViewCount" path="CPBlogsEntry" locator-key="ENTRY_STATS_VIEW_COUNT" />
+		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
+
 		<if>
 			<equals arg1="${entryViewCount}" arg2="1" />
 			<then>
@@ -607,9 +618,30 @@
 				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
 			</else>
 		</if>
+
+		<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="entryViewCount" value="${entryViewCount?increment()}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
 	</command>
 
 	<command name="viewViewCountPG">
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<var name="entryViewCount" path="PGBlogsEntry" locator-key="ENTRY_STATS_VIEW_COUNT" />
+		<var name="entryViewCount" value="${entryViewCount?getFirstNumber()}" />
+
 		<if>
 			<equals arg1="${entryViewCount}" arg2="1" />
 			<then>
@@ -619,6 +651,14 @@
 				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
 			</else>
 		</if>
+
+		<execute action="Home#click" locator1="link=${pageName}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<var name="entryViewCount" value="${entryViewCount?increment()}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
 	</command>
 
 	<command name="viewWithWorkflowCP">

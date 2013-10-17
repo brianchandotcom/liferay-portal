@@ -734,35 +734,14 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent}" />
+		<execute macro="BlogsEntry#viewViewCountPG">
 			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
 		<execute macro="BlogsEntry#viewViewCountPG">
-			<var name="entryViewCount" value="1" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewViewCountPG">
-			<var name="entryViewCount" value="2" />
 		</execute>
 	</command>
 </definition>

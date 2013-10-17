@@ -72,8 +72,10 @@ public class BlogsPortletDisplayTemplateHandler
 			"blog-entries", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"blog-entry", BlogsEntry.class, "curBlogEntry", "title");
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup blogServicesTemplateVariableGroup =
-			new TemplateVariableGroup("blog-services");
+			new TemplateVariableGroup("blog-services", restrictedVariables);
 
 		blogServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

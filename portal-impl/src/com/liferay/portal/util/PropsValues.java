@@ -748,6 +748,8 @@ public class PropsValues {
 
 	public static final String[] FREEMARKER_ENGINE_RESTRICTED_PACKAGES = PropsUtil.getArray(PropsKeys.FREEMARKER_ENGINE_RESTRICTED_PACKAGES);
 
+	public static final String[] FREEMARKER_ENGINE_RESTRICTED_VARIABLES = PropsUtil.getArray(PropsKeys.FREEMARKER_ENGINE_RESTRICTED_VARIABLES);
+
 	public static final String FREEMARKER_ENGINE_TEMPLATE_EXCEPTION_HANDLER = PropsUtil.get(PropsKeys.FREEMARKER_ENGINE_TEMPLATE_EXCEPTION_HANDLER);
 
 	public static final String[] FREEMARKER_ENGINE_TEMPLATE_PARSERS = PropsUtil.getArray(PropsKeys.FREEMARKER_ENGINE_TEMPLATE_PARSERS);
@@ -913,10 +915,6 @@ public class PropsValues {
 	public static final boolean JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_TO_LIVE_BY_DEFAULT));
 
 	public static final boolean JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_PUBLISH_VERSION_HISTORY_BY_DEFAULT));
-
-	public static final String[] JOURNAL_TEMPLATE_FREEMARKER_RESTRICTED_VARIABLES = PropsUtil.getArray(PropsKeys.JOURNAL_TEMPLATE_FREEMARKER_RESTRICTED_VARIABLES);
-
-	public static final String[] JOURNAL_TEMPLATE_VELOCITY_RESTRICTED_VARIABLES = PropsUtil.getArray(PropsKeys.JOURNAL_TEMPLATE_VELOCITY_RESTRICTED_VARIABLES);
 
 	public static final String[] JPA_CONFIGS = PropsUtil.getArray(PropsKeys.JPA_CONFIGS);
 
@@ -1941,6 +1939,8 @@ public class PropsValues {
 	public static final String[] VELOCITY_ENGINE_RESTRICTED_CLASSES = PropsUtil.getArray(PropsKeys.VELOCITY_ENGINE_RESTRICTED_CLASSES);
 
 	public static final String[] VELOCITY_ENGINE_RESTRICTED_PACKAGES = PropsUtil.getArray(PropsKeys.VELOCITY_ENGINE_RESTRICTED_PACKAGES);
+
+	public static final String[] VELOCITY_ENGINE_RESTRICTED_VARIABLES = PropsUtil.getArray(PropsKeys.VELOCITY_ENGINE_RESTRICTED_VARIABLES);
 
 	public static final boolean VERIFY_DATABASE_TRANSACTIONS_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VERIFY_DATABASE_TRANSACTIONS_DISABLED));
 

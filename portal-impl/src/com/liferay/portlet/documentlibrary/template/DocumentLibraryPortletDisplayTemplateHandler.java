@@ -74,8 +74,10 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"document", FileEntry.class, "curFileEntry", "title");
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup documentServicesTemplateVariableGroup =
-			new TemplateVariableGroup("document-services");
+			new TemplateVariableGroup("document-services", restrictedVariables);
 
 		documentServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

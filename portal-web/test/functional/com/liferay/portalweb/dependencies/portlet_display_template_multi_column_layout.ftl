@@ -32,11 +32,13 @@
 
 					<a href="${categoryURL}">${category.getName()}</a>
 
-					<#assign assetCategoryService = serviceLocator.findService("com.liferay.portlet.asset.service.AssetCategoryService")>
+					<#if serviceLocator??>
+						<#assign assetCategoryService = serviceLocator.findService("com.liferay.portlet.asset.service.AssetCategoryService")>
 
-					<#assign childCategories = assetCategoryService.getChildCategories(category.getCategoryId())>
+						<#assign childCategories = assetCategoryService.getChildCategories(category.getCategoryId())>
 
-					<@displayCategories categories=childCategories />
+						<@displayCategories categories=childCategories />
+					</#if>
 				</li>
 			</#list>
 		</ul>

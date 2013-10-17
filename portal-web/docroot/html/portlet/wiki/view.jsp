@@ -116,8 +116,10 @@ if (Validator.isNotNull(ParamUtil.getString(request, "title"))) {
 	AssetUtil.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(WikiPage.class.getName(), wikiPage.getResourcePrimKey()));
 }
 
+AssetEntry layoutAssetEntry = null;
+
 if (wikiPage != null) {
-	AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
+	layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
 
 	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 }
@@ -171,6 +173,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 		Map<String, Object> contextObjects = new HashMap<String, Object>();
 
+		contextObjects.put("assetEntry", layoutAssetEntry);
 		contextObjects.put("formattedContent", formattedContent);
 		%>
 

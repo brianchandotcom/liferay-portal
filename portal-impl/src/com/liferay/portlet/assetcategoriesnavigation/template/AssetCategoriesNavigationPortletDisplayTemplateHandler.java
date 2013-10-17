@@ -75,8 +75,10 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 			"vocabularies", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"vocabulary", AssetVocabulary.class, "curVocabulary", "name");
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
-			new TemplateVariableGroup("category-services");
+			new TemplateVariableGroup("category-services", restrictedVariables);
 
 		categoriesServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

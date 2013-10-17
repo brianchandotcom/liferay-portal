@@ -90,8 +90,11 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 		addTemplateVariableGroup(
 			templateVariableGroups, getUtilTemplateVariableGroup());
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup ddlServicesTemplateVariableGroup =
-			new TemplateVariableGroup("data-list-services");
+			new TemplateVariableGroup(
+				"data-list-services", restrictedVariables);
 
 		ddlServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

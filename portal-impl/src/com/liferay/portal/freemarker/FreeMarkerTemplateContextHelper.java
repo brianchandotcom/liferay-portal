@@ -43,7 +43,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	@Override
 	public Set<String> getRestrictedVariables() {
 		return SetUtil.fromArray(
-			PropsValues.JOURNAL_TEMPLATE_FREEMARKER_RESTRICTED_VARIABLES);
+			PropsValues.FREEMARKER_ENGINE_RESTRICTED_VARIABLES);
 	}
 
 	@Override

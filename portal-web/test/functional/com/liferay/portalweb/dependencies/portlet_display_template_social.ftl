@@ -1,10 +1,6 @@
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 
-<#assign assetEntryLocalService = serviceLocator.findService("com.liferay.portlet.asset.service.AssetEntryLocalService") />
-
 <#assign wikiPageClassName = "com.liferay.portlet.wiki.model.WikiPage" />
-
-<#assign assetEntry = assetEntryLocalService.getEntry(wikiPageClassName, entry.getResourcePrimKey()) />
 
 <#assign assetRenderer = assetEntry.getAssetRenderer() />
 
@@ -100,9 +96,6 @@
 				<th>
 					<@liferay.language key="ratings" />
 				</th>
-				<th>
-					<@liferay.language key="views" />
-				</th>
 			</tr>
 
 			<#list childPages as childPage>
@@ -124,9 +117,6 @@
 					</td>
 					<td>
 						<@getRatings cssClass="child-ratings" entry=childPage />
-					</td>
-					<td>
-						<span class="stats">${assetEntryLocalService.getEntry(wikiPageClassName, childPage.getResourcePrimKey()).getViewCount()}</span>
 					</td>
 				</tr>
 			</#list>

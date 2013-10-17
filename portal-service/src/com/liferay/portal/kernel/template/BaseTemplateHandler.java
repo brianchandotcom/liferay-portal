@@ -53,7 +53,21 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 
 	@Override
 	public String[] getRestrictedVariables(String language) {
-		return new String[0];
+		String[] restrictedVariables;
+
+		if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
+			restrictedVariables = PropsUtil.getArray(
+				PropsKeys.FREEMARKER_ENGINE_RESTRICTED_VARIABLES);
+		}
+		else if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
+			restrictedVariables = PropsUtil.getArray(
+				PropsKeys.VELOCITY_ENGINE_RESTRICTED_VARIABLES);
+		}
+		else {
+			restrictedVariables = new String[0];
+		}
+
+		return restrictedVariables;
 	}
 
 	@Override

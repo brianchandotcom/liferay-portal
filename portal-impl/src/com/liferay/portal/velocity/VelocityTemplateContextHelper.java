@@ -51,7 +51,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 	@Override
 	public Set<String> getRestrictedVariables() {
 		return SetUtil.fromArray(
-			PropsValues.JOURNAL_TEMPLATE_VELOCITY_RESTRICTED_VARIABLES);
+			PropsValues.VELOCITY_ENGINE_RESTRICTED_VARIABLES);
 	}
 
 	@Override

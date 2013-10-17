@@ -73,8 +73,10 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 			"tags", List.class, PortletDisplayTemplateConstants.ENTRIES, "tag",
 			AssetTag.class, "curTag", "name");
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup assetServicesTemplateVariableGroup =
-			new TemplateVariableGroup("tag-services");
+			new TemplateVariableGroup("tag-services", restrictedVariables);
 
 		assetServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

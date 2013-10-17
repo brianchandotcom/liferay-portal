@@ -1,4 +1,6 @@
 <definition>
+	<execute test-suite="CPBookmarksP5" />
+
 	<execute test-suite="CPCategoriesP5" />
 
 	<execute test-suite="CPSitemembershipsP5" />

@@ -1,0 +1,135 @@
+<definition>
+	<command name="addCP">
+		<execute action="CPBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+
+		<execute action="CPBookmarksAddbookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
+		<execute action="CPBookmarksAddbookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURL}" />
+
+		<if>
+			<isset var="bookmarkDescription" />
+			<then>
+				<execute action="CPBookmarksAddbookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
+			</then>
+		</if>
+
+		<execute action="CPBookmarksAddbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
+	</command>
+
+	<command name="addToSubfolderCP">
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="CPBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+
+		<var name="key_folderName" value="${subfolderName}" />
+
+		<execute action="CPBookmarksFolder#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${subfolderName}" />
+		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="FOLDER_NAME" value1="${subfolderName}" />
+		<execute action="CPBookmarksFolder#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+
+		<execute action="CPBookmarksAddbookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
+		<execute action="CPBookmarksAddbookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURL}" />
+		<execute action="CPBookmarksAddbookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
+		<execute action="CPBookmarksAddbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
+	</command>
+
+	<command name="moveToHomeCP">
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="CPBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+
+		<if>
+			<isset var="subfolderName" />
+			<then>
+				<var name="key_folderName" value="${subfolderName}" />
+
+				<execute action="CPBookmarksFolder#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${subfolderName}" />
+				<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="FOLDER_NAME" value1="${subfolderName}" />
+			</then>
+		</if>
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="CPBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
+
+		<if>
+			<isset var="subfolderName" />
+			<then>
+				<execute action="CPBookmarksEditbookmark#assertTextEquals" locator-key1="FOLDER_NAME" value1="${subfolderName}" />
+			</then>
+
+			<else>
+				<execute action="CPBookmarksEditbookmark#assertTextEquals" locator-key1="FOLDER_NAME" value1="${folderName}" />
+			</else>
+		</if>
+
+		<execute action="CPBookmarksEditbookmark#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
+
+		<execute action="CPBookmarksEditbookmarkSelectfolder#selectFrame" locator-key1="SELECT_FOLDER_IFRAME" />
+		<execute action="CPBookmarksEditbookmarkSelectfolder#assertClick" locator-key1="CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
+
+		<execute action="CPBookmarksEditbookmark#selectFrame" value1="relative=top" />
+		<execute action="CPBookmarksEditbookmark#assertTextEquals" locator-key1="FOLDER_NAME" value1="Home" />
+		<execute action="CPBookmarksEditbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPBookmarksFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no bookmarks in this folder." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
+
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
+	</command>
+
+	<command name="searchCP">
+		<execute action="CPBookmarks#type" locator-key1="SEARCH_FIELD" value1="${bookmarkName}" />
+		<execute action="CPBookmarks#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="CPBookmarksSearch#assertTextEquals" locator-key1="ENTRY_TABLE_BOOKMARK_ENTRY" value1="${bookmarkName}" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
+
+		<while>
+			<condition action="CPBookmarks#isElementPresent" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC" />
+			<then>
+				<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC" value1="Actions" />
+				<execute action="CPBookmarks#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute action="CPBookmarks#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+			</then>
+		</while>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="viewCP">
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
+		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
+	</command>
+</definition>

@@ -1,0 +1,237 @@
+<html>
+<head>
+<title>CPBookmarks</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPBookmarks</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPBookmarks</td>
+</tr>
+<!---->
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ']//div[@class='container']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
+	<td>//div[@class='alert alert-success taglib-trash-undo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_28_keywords1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Export / Import')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_HOME</td>
+	<td>//div[@class='navbar-inner']//li/a[contains(@href,'home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_RECENT</td>
+	<td>//div[@class='navbar-inner']//li/a[contains(@href,'recent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MINE</td>
+	<td>//div[@class='navbar-inner']//li/a[contains(@href,'mine')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDERS_TABLE-->
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_NAME</td>
+	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_DESCRIPTION</td>
+	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON</td>
+	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON_GENERIC</td>
+	<td>//div[@id='_28_bookmarksFoldersSearchContainer']//tr/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARKS_TABLE-->
+<tr>
+	<td>BOOKMARKS_TABLE_NAME</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_TABLE_URL</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_TABLE_ACTIONS_BUTTON</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr[contains(.,'${key_bookmarkName}')]/td[5]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_TABLE_ACTIONS_BUTTON_GENERIC</td>
+	<td>//div[@id='bookmarksEntriesListingPanelContent']//tr/td[5]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_ACTION_MENULIST-->
+<tr>
+	<td>FOLDER_ACTION_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_ACTION_MENULIST_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_ACTION_MENULIST_SUBSCRIBE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_ACTION_MENULIST_ADD_SUBFOLDER</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Add Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_ACTION_MENULIST_ADD_BOOKMARK</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Add Bookmark')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARK_ACTION_MENULIST-->
+<tr>
+	<td>BOOKMARK_ACTION_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK_ACTION_MENULIST_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK_ACTION_MENULIST_SUBSCRIBE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_MENU-->
+<tr>
+	<td>FOLDER_MENU_PERMISSIONS</td>
+	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_SUBSCRIBE</td>
+	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_ADD_FOLDER</td>
+	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_ADD_BOOKMARK</td>
+	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Add Bookmark')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

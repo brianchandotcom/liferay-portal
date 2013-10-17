@@ -257,7 +257,7 @@
 </tr>
 <tr>
 	<td>CONTROL_PANEL_NAVIGATION</td>
-	<td>//div[@id='controlPanelMenuAddContentPanelContainer']//ul/li//a[contains(.,'${key_portletName}')]</td>
+	<td>//a[contains(.,'${key_portletName}') and contains(@id,'_190_controlPanelPortletLink')]</td>
 	<td></td>
 </tr>
 <tr>

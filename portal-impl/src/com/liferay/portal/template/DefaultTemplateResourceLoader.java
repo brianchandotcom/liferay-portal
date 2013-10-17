@@ -114,6 +114,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public TemplateResource getTemplateResource(String templateId) {
+		if (_modificationCheckInterval == 0) {
+			return _loadFromParser(templateId);
+		}
+
 		TemplateResource templateResource = _loadFromCache(templateId);
 
 		if (templateResource != null) {
@@ -126,14 +130,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		templateResource = _loadFromParser(templateId);
 
-		if (_modificationCheckInterval != 0) {
-			if (templateResource == null) {
-				_portalCache.put(templateId, new NullHolderTemplateResource());
-			}
-			else {
-				_portalCache.put(templateId, templateResource);
-			}
-		}
+		_updateCache(templateId, templateResource);
 
 		return templateResource;
 	}
@@ -150,10 +147,6 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	}
 
 	private TemplateResource _loadFromCache(String templateId) {
-		if (_modificationCheckInterval == 0) {
-			return null;
-		}
-
 		Object object = _portalCache.get(templateId);
 
 		if (object == null) {
@@ -225,6 +218,16 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		}
 
 		return null;
+	}
+
+	private void _updateCache(
+		String templateId, TemplateResource templateResource) {
+
+		if (templateResource == null) {
+			templateResource = new NullHolderTemplateResource();
+		}
+
+		_portalCache.put(templateId, templateResource);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

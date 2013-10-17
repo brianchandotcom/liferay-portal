@@ -83,11 +83,9 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		cacheName = cacheName.concat(StringPool.PERIOD).concat(name);
 
-		_singleVMPortalCache = SingleVMPoolUtil.getCache(
-			cacheName.concat(StringPool.PERIOD).concat("singleVM"));
+		_singleVMPortalCache = SingleVMPoolUtil.getCache(cacheName);
 
-		_multiVMPortalCache = MultiVMPoolUtil.getCache(
-			cacheName.concat(StringPool.PERIOD).concat("multiVM"));
+		_multiVMPortalCache = MultiVMPoolUtil.getCache(cacheName);
 
 		CacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourceCacheListener(name);

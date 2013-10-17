@@ -14,13 +14,14 @@
 
 package com.liferay.osgi.bootstrap;
 
-import aQute.lib.osgi.Analyzer;
-import aQute.lib.osgi.Builder;
-import aQute.lib.osgi.Jar;
-import aQute.lib.osgi.Verifier;
-
-import aQute.libg.header.OSGiHeader;
-import aQute.libg.version.Version;
+import aQute.bnd.header.Attrs;
+import aQute.bnd.header.OSGiHeader;
+import aQute.bnd.header.Parameters;
+import aQute.bnd.osgi.Analyzer;
+import aQute.bnd.osgi.Builder;
+import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Verifier;
+import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -177,8 +178,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			String bundleSymbolicNameAttributeValue = attributes.getValue(
 				Constants.BUNDLE_SYMBOLICNAME);
 
-			Map<String, Map<String, String>> bundleSymbolicNameMap =
-				OSGiHeader.parseHeader(bundleSymbolicNameAttributeValue);
+			Parameters bundleSymbolicNameMap = OSGiHeader.parseHeader(
+				bundleSymbolicNameAttributeValue);
 
 			Set<String> bundleSymbolicNameSet = bundleSymbolicNameMap.keySet();
 
@@ -783,8 +784,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			return false;
 		}
 
-		Map<String, Map<String, String>> activationPolicyMap =
-			OSGiHeader.parseHeader(activationPolicy);
+		Parameters activationPolicyMap = OSGiHeader.parseHeader(
+			activationPolicy);
 
 		if (activationPolicyMap.containsKey(Constants.ACTIVATION_LAZY)) {
 			return true;
@@ -940,12 +941,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		String exportPackage = GetterUtil.getString(
 			attributes.getValue(Constants.EXPORT_PACKAGE));
 
-		Map<String, Map<String, String>> exportPackageMap =
-			OSGiHeader.parseHeader(exportPackage);
+		Parameters exportPackageMap = OSGiHeader.parseHeader(exportPackage);
 
-		for (Map.Entry<String, Map<String, String>> entry :
-				exportPackageMap.entrySet()) {
-
+		for (Map.Entry<String,Attrs> entry : exportPackageMap.entrySet()) {
 			String key = entry.getKey();
 
 			List<URL> urls = _extraPackageMap.get(key);
@@ -960,7 +958,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			sb.append(key);
 
-			Map<String, String> value = entry.getValue();
+			Attrs value = entry.getValue();
 
 			if (value.containsKey("version")) {
 				sb.append(";version=\"");

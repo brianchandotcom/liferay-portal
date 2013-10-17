@@ -14,8 +14,8 @@
 
 package com.liferay.util.ant;
 
-import aQute.lib.osgi.Analyzer;
-import aQute.lib.osgi.Constants;
+import aQute.bnd.osgi.Analyzer;
+import aQute.bnd.osgi.Constants;
 
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.ReleaseInfo;

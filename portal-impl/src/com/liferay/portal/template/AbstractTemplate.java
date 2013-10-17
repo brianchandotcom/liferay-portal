@@ -17,6 +17,7 @@ package com.liferay.portal.template;
 import com.liferay.portal.deploy.sandbox.SandboxHandler;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -185,8 +187,8 @@ public abstract class AbstractTemplate implements Template {
 		cacheName = cacheName.concat(StringPool.PERIOD).concat(
 			templateManagerName);
 
-		PortalCache<String, Serializable> portalCache =
-			MultiVMPoolUtil.getCache(cacheName);
+		PortalCache<String, Serializable> portalCache = _getPortalCache(
+			templateResource, cacheName);
 
 		Object object = portalCache.get(templateResource.getTemplateId());
 
@@ -213,12 +215,34 @@ public abstract class AbstractTemplate implements Template {
 				errorTemplateResource);
 		}
 
+		portalCache = _getPortalCache(errorTemplateResource, cacheName);
+
 		object = portalCache.get(errorTemplateResource.getTemplateId());
 
 		if ((object == null) || !errorTemplateResource.equals(object)) {
 			portalCache.put(
 				errorTemplateResource.getTemplateId(), errorTemplateResource);
 		}
+	}
+
+	private PortalCache<String, Serializable> _getPortalCache(
+		TemplateResource templateResource, String cacheName) {
+
+		if (!(templateResource instanceof CacheTemplateResource)) {
+			return MultiVMPoolUtil.getCache(cacheName);
+		}
+
+		CacheTemplateResource cacheTemplateResource =
+			(CacheTemplateResource)templateResource;
+
+		TemplateResource innerTemplateResource =
+			cacheTemplateResource.getInnerTemplateResource();
+
+		if (innerTemplateResource instanceof URLTemplateResource) {
+			return SingleVMPoolUtil.getCache(cacheName);
+		}
+
+		return MultiVMPoolUtil.getCache(cacheName);
 	}
 
 	private TemplateContextHelper _templateContextHelper;

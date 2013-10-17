@@ -16,9 +16,13 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +31,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author Michael Young
  * @author Shuyang Zhou
  */
-public class Header implements Serializable {
+public class Header implements Externalizable {
+
+	/**
+	 * The empty constructor is required by {@link java.io.Externalizable}. Do
+	 * not use this for any other purpose.
+	 */
+	public Header() {
+	}
 
 	public Header(Cookie cookie) {
 		if (cookie == null) {
@@ -131,6 +142,30 @@ public class Header implements Serializable {
 		}
 	}
 
+	@Override
+	public void readExternal(ObjectInput objectInput) throws IOException {
+		if (objectInput.readBoolean()) {
+			int size = objectInput.readInt();
+
+			byte[] data = new byte[size];
+
+			objectInput.readFully(data);
+
+			_cookieValue = CookieUtil.deserialize(data);
+		}
+
+		_dateValue = objectInput.readLong();
+		_intValue = objectInput.readInt();
+
+		String stringValue = objectInput.readUTF();
+
+		if (!stringValue.isEmpty()) {
+			_stringValue = stringValue;
+		}
+
+		_type = Type.values()[objectInput.readInt()];
+	}
+
 	public void setToResponse(String key, HttpServletResponse response) {
 		if (_type == Type.COOKIE) {
 			response.addCookie(_cookieValue);
@@ -166,6 +201,33 @@ public class Header implements Serializable {
 		else {
 			throw new IllegalStateException("Invalid type " + _type);
 		}
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		if (_cookieValue == null) {
+			objectOutput.writeBoolean(false);
+		}
+		else {
+			objectOutput.writeBoolean(true);
+
+			byte[] data = CookieUtil.serialize(_cookieValue);
+
+			objectOutput.writeInt(data.length);
+			objectOutput.write(data);
+		}
+
+		objectOutput.writeLong(_dateValue);
+		objectOutput.writeInt(_intValue);
+
+		if (_stringValue == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(_stringValue);
+		}
+
+		objectOutput.writeInt(_type.ordinal());
 	}
 
 	private boolean _equals(Cookie cookie1, Cookie cookie2) {

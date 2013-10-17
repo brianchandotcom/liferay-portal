@@ -175,7 +175,6 @@ public class SPIAgentRequestTest {
 			_PARAMETER_NAME_2, _PARAMETER_VALUE_3);
 		_mockHttpServletRequest.addParameter(
 			_PARAMETER_NAME_2, _PARAMETER_VALUE_4);
-		_mockHttpServletRequest.setCookies(_cookie1, _cookie2);
 		_mockHttpServletRequest.setRemoteAddr(_REMOTE_ADDR);
 		_mockHttpServletRequest.setRemoteHost(_REMOTE_HOST);
 		_mockHttpServletRequest.setRemotePort(_REMOTE_PORT);
@@ -460,11 +459,20 @@ public class SPIAgentRequestTest {
 		HttpServletRequest populatedHttpServletRequest =
 			spiAgentRequest.populateRequest(new MockHttpServletRequest());
 
+		Assert.assertNull(populatedHttpServletRequest.getCookies());
+
+		_mockHttpServletRequest.setCookies(_cookie1, _cookie2);
+
+		spiAgentRequest = new SPIAgentRequest(_mockHttpServletRequest);
+
+		populatedHttpServletRequest = spiAgentRequest.populateRequest(
+			new MockHttpServletRequest());
+
 		Cookie[] cookies = populatedHttpServletRequest.getCookies();
 
 		Assert.assertEquals(2, cookies.length);
-		Assert.assertSame(_cookie1, cookies[0]);
-		Assert.assertSame(_cookie2, cookies[1]);
+		Assert.assertTrue(CookieUtil.equals(_cookie1, cookies[0]));
+		Assert.assertTrue(CookieUtil.equals(_cookie2, cookies[1]));
 
 		// Headers
 

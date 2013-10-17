@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/ddm_template_selector/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %>

@@ -21,7 +21,7 @@ ServiceContext#deriveDefaultPermissions(long, String).
 
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/input_permissions/init.jsp" %>
 
 <%@ page import="com.liferay.portal.service.permission.RolePermissionUtil" %>
 <%@ page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>

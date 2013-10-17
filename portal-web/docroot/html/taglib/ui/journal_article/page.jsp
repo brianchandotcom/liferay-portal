@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/journal_article/init.jsp" %>
 
 <%@ page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %>
 <%@ page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %>

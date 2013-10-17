@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/asset_tags_error/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.asset.AssetTagException" %>
 

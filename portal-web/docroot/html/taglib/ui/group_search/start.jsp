@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/group_search/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
 <%@ page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>

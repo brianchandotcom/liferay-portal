@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/rss_settings/init.jsp" %>
 
 <%@ page import="com.liferay.util.RSSUtil" %>
 

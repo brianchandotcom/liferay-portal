@@ -1,0 +1,9 @@
+<definition>
+	<execute test-case-command="CPBookmarks#AddBookmark" />
+	<execute test-case-command="CPBookmarks#AddBookmarks" />
+	<execute test-case-command="CPBookmarks#AddFolder" />
+	<execute test-case-command="CPBookmarks#AddSubfolder" />
+	<execute test-case-command="CPBookmarks#MoveSubfolderBookmarkToHome" />
+	<execute test-case-command="CPBookmarks#SearchBookmark" />
+	<execute test-case-command="CPBookmarks#SearchBookmarks" />
+</definition>

@@ -49,9 +49,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!isExportable(portletDataContext, stagedModel)) {
+		String path = ExportImportPathUtil.getModelPath(stagedModel);
+
+		if (portletDataContext.isPathExportedInScope(path)) {
 			return;
 		}
+
+		validateExport(portletDataContext, stagedModel);
 
 		try {
 			ManifestSummary manifestSummary =
@@ -220,14 +224,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throw new UnsupportedOperationException();
 	}
 
-	protected boolean isExportable(
-		PortletDataContext portletDataContext, T stagedModel) {
-
-		String path = ExportImportPathUtil.getModelPath(stagedModel);
-
-		if (portletDataContext.isPathExportedInScope(path)) {
-			return false;
-		}
+	protected void validateExport(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
 
 		if (stagedModel instanceof WorkflowedModel) {
 			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
@@ -235,12 +234,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			if (!ArrayUtil.contains(
 					getExportableStatuses(), workflowedModel.getStatus())) {
 
-				return false;
+				throw new PortletDataException(
+					PortletDataException.STATUS_UNAVAILABLE);
 			}
 		}
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			stagedModel.getModelClassName());
+			stagedModel.getStagedModelType().getClassName());
 
 		if (trashHandler != null) {
 			try {
@@ -249,10 +249,15 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				if (trashHandler.isInTrash(classPK) ||
 					trashHandler.isInTrashContainer(classPK)) {
 
-					return false;
+					throw new PortletDataException(
+						PortletDataException.STATUS_IN_TRASH);
 				}
 			}
 			catch (Exception e) {
+				if (e instanceof PortletDataException) {
+					throw (PortletDataException)e;
+				}
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to check trash status for " +
@@ -260,8 +265,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				}
 			}
 		}
-
-		return true;
 	}
 
 	protected boolean validateMissingReference(

@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -199,9 +197,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			portletDataContext.getCompanyId(), portletId);
 
 		String hiddenNodeNames = portletPreferences.getValue(
 			"hiddenNodes", null);

@@ -80,7 +80,7 @@ public class StagedModelDataHandlerUtil {
 					stagedModel.getModelClass(),
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
-				addReferenceAttributes(
+				_addReferenceAttributes(
 					portletDataContext, stagedModel, referenceElement);
 
 				return referenceElement;
@@ -94,7 +94,7 @@ public class StagedModelDataHandlerUtil {
 			stagedModel, stagedModel.getModelClass(),
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 
-		addReferenceAttributes(
+		_addReferenceAttributes(
 			portletDataContext, stagedModel, referenceElement);
 
 		return referenceElement;
@@ -137,7 +137,7 @@ public class StagedModelDataHandlerUtil {
 					stagedModel, stagedModelClass,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
-				addReferenceAttributes(
+				_addReferenceAttributes(
 					portletDataContext, stagedModel, referenceElement);
 
 				return referenceElement;
@@ -150,7 +150,7 @@ public class StagedModelDataHandlerUtil {
 			referrerStagedModel, referrerStagedModelElement, stagedModel,
 			stagedModelClass, referenceType, false);
 
-		addReferenceAttributes(
+		_addReferenceAttributes(
 			portletDataContext, stagedModel, referenceElement);
 
 		return referenceElement;
@@ -320,6 +320,25 @@ public class StagedModelDataHandlerUtil {
 			portletDataContext, stagedModel);
 	}
 
+	private static void _addReferenceAttributes(
+		PortletDataContext portletDataContext, StagedModel stagedModel,
+		Element referenceElement) {
+
+		StagedModelDataHandler stagedModelDataHandler =
+			_getStagedModelDataHandler(stagedModel);
+
+		Map<String, String> referenceAttributes =
+			stagedModelDataHandler.getReferenceAttributes(
+				portletDataContext, stagedModel);
+
+		for (Map.Entry<String, String> referenceAttribute :
+				referenceAttributes.entrySet()) {
+
+			referenceElement.addAttribute(
+				referenceAttribute.getKey(), referenceAttribute.getValue());
+		}
+	}
+
 	private static StagedModel _getStagedModel(
 		PortletDataContext portletDataContext, Element element) {
 
@@ -358,25 +377,6 @@ public class StagedModelDataHandlerUtil {
 					classedModel.getModelClassName());
 
 		return stagedModelDataHandler;
-	}
-
-	private static void addReferenceAttributes(
-		PortletDataContext portletDataContext, StagedModel stagedModel,
-		Element referenceElement) {
-
-		StagedModelDataHandler stagedModelDataHandler =
-			_getStagedModelDataHandler(stagedModel);
-
-		Map<String, String> referenceAttributes =
-			stagedModelDataHandler.getReferenceAttributes(
-				portletDataContext, stagedModel);
-
-		for (Map.Entry<String, String> referenceAttribute :
-				referenceAttributes.entrySet()) {
-
-			referenceElement.addAttribute(
-				referenceAttribute.getKey(), referenceAttribute.getValue());
-		}
 	}
 
 }

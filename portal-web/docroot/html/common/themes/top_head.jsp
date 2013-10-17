@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
+<%@ include file="/html/common/themes/init.jsp" %>
 
 <c:if test="<%= PropsValues.MONITORING_PORTAL_REQUEST %>">
 	<%@ include file="/html/common/themes/top_monitoring.jspf" %>

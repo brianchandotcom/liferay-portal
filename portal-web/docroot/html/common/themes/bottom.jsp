@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
+<%@ include file="/html/common/themes/init.jsp" %>
 
 <%@ page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %>
 <%@ page import="com.liferay.taglib.aui.ScriptTag" %>

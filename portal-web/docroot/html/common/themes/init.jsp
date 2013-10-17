@@ -14,22 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/common/themes/init.jsp" %>
-
-<%-- Raw Text --%>
-
-<%
-StringBundler bodyTopSB = OutputTag.getData(request, WebKeys.PAGE_BODY_TOP);
-%>
-
-<c:if test="<%= bodyTopSB != null %>">
-
-	<%
-	bodyTopSB.writeTo(out);
-	%>
-
-</c:if>
-
-<%@ include file="/html/common/themes/top_messages.jsp" %>
-
-<liferay-util:include page="/html/common/themes/body_top-ext.jsp" />
+<%@ include file="/html/common/init.jsp" %>

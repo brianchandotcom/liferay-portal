@@ -559,9 +559,9 @@ public class SPIAgentRequestTest {
 			populatedHttpServletRequest.getParameterNames());
 
 		Assert.assertEquals(3, parameterNames.size());
-		Assert.assertEquals(_PARAMETER_NAME_1, parameterNames.get(0));
-		Assert.assertEquals(_PARAMETER_NAME_2, parameterNames.get(1));
-		Assert.assertEquals(_PARAMETER_NAME_3, parameterNames.get(2));
+		Assert.assertTrue(parameterNames.contains(_PARAMETER_NAME_1));
+		Assert.assertTrue(parameterNames.contains(_PARAMETER_NAME_2));
+		Assert.assertTrue(parameterNames.contains(_PARAMETER_NAME_3));
 
 		parameter1 = populatedHttpServletRequest.getParameterValues(
 			_PARAMETER_NAME_1);

@@ -98,6 +98,7 @@ app.server.jboss.dir=${app.server.parent.dir}/${bundled.dir.name}</echo>
 
 		<delete dir="${liferay.home}/data" />
 		<delete dir="${liferay.home}/deploy" />
+		<delete dir="${liferay.home}/logs" />
 
 		<if>
 			<or>

@@ -32,10 +32,10 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Layout;
@@ -55,6 +55,7 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -341,9 +342,21 @@ public class PortletContainerImpl implements PortletContainer {
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				request, portlet.getPortletId());
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.getPreferences(
-				portletPreferencesIds);
+		PortletPreferences portletPreferences = null;
+
+		boolean useStrictPreferences = GetterUtil.getBoolean(
+			request.getAttribute(WebKeys.STRICT_PREFERENCES));
+
+		if (useStrictPreferences) {
+			portletPreferences =
+				PortletPreferencesLocalServiceUtil.getStrictPreferences(
+					portletPreferencesIds);
+		}
+		else {
+			portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					portletPreferencesIds);
+		}
 
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);
@@ -724,9 +737,21 @@ public class PortletContainerImpl implements PortletContainer {
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				request, portlet.getPortletId());
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.getPreferences(
-				portletPreferencesIds);
+		PortletPreferences portletPreferences = null;
+
+		boolean useStrictPreferences = GetterUtil.getBoolean(
+			request.getAttribute(WebKeys.STRICT_PREFERENCES));
+
+		if (useStrictPreferences) {
+			portletPreferences =
+				PortletPreferencesLocalServiceUtil.getStrictPreferences(
+					portletPreferencesIds);
+		}
+		else {
+			portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					portletPreferencesIds);
+		}
 
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);

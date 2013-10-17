@@ -241,7 +241,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Assert.assertTrue(result instanceof Map);
 		Assert.assertEquals(
-			"{\"id\":173,\"height\":177,\"name\":\"John Doe\",\"value\":" +
+			"{\"height\":177,\"id\":173,\"name\":\"John Doe\",\"value\":" +
 				"\"foo!\",\"world\":\"Welcome 173 to Jupiter\"}",
 			toJSON(invokerResult));
 	}
@@ -290,11 +290,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("{\"id\":173,\"height\":177,\"spy\":{\"id\":7,\"height\":");
-		sb.append("173,\"name\":\"James Bond\",\"value\":\"licensed\",");
-		sb.append("\"thief\":{\"id\":-13,\"height\":59,\"name\":\"Dr. Evil\",");
-		sb.append("\"value\":\"fun\",\"world\":\"Welcome -13 to Jupiter\"}},");
-		sb.append("\"name\":\"John Doe\",\"value\":\"foo!\"}");
+		sb.append("{\"height\":177,\"id\":173,\"name\":\"John Doe\",");
+		sb.append("\"spy\":{\"height\":173,\"id\":7,\"name\":\"James Bond\",");
+		sb.append("\"thief\":{\"height\":59,\"id\":-13,\"name\":\"Dr. Evil\",");
+		sb.append("\"value\":\"fun\",\"world\":\"Welcome -13 to Jupiter\"},");
+		sb.append("\"value\":\"licensed\"},\"value\":\"foo!\"}");
 
 		Assert.assertEquals(sb.toString(), toJSON(invokerResult));
 	}

@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>CPBookmarksEditfolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPBookmarksEditfolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPBookmarksEditfolder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPBookmarksAddfolder</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_FOLDER_SELECT_BUTTON</td>
+	<td>//button[@id='_28_selectFolderButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_FOLDER_REMOVE_BUTTON</td>
+	<td>//button[@id='_28_removeFolderButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE_WITH_PARENT_FOLDER_CHECKBOX</td>
+	<td>//input[@id='_28_mergeWithParentFolderCheckbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

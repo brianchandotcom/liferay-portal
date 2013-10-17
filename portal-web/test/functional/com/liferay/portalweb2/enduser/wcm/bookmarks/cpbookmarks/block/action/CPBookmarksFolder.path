@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>CPBookmarksFolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPBookmarksFolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPBookmarksFolder</td>
+</tr>
+<!---->
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPBookmarks</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_NAME</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_folderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ']//div[@class='container']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
+	<td>//div[@class='alert alert-success taglib-trash-undo']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_28_keywords1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_MENU-->
+<tr>
+	<td>FOLDER_MENU_EDIT</td>
+	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_MENU_ADD_SUBFOLDER</td>
+	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Add Subfolder')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

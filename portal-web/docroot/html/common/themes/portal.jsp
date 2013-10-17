@@ -16,9 +16,6 @@
 
 <%@ include file="/html/common/themes/init.jsp" %>
 
-<%@ page import="org.apache.struts.taglib.tiles.ComponentConstants" %>
-<%@ page import="org.apache.struts.tiles.ComponentContext" %>
-
 <%
 StringBundler sb = (StringBundler)request.getAttribute(WebKeys.LAYOUT_CONTENT);
 

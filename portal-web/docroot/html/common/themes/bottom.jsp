@@ -16,9 +16,6 @@
 
 <%@ include file="/html/common/themes/init.jsp" %>
 
-<%@ page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %>
-<%@ page import="com.liferay.taglib.aui.ScriptTag" %>
-
 <%
 List<Portlet> portlets = (List<Portlet>)request.getAttribute(WebKeys.LAYOUT_PORTLETS);
 %>

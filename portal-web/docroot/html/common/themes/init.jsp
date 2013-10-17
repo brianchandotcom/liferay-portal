@@ -15,3 +15,13 @@
 --%>
 
 <%@ include file="/html/common/init.jsp" %>
+
+<%@ page import="com.liferay.portal.kernel.monitoring.RequestStatus" %><%@
+page import="com.liferay.portal.kernel.monitoring.statistics.DataSample" %><%@
+page import="com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal" %><%@
+page import="com.liferay.portal.monitoring.statistics.portal.PortalRequestDataSample" %><%@
+page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
+page import="com.liferay.taglib.aui.ScriptTag" %>
+
+<%@ page import="org.apache.struts.taglib.tiles.ComponentConstants" %><%@
+page import="org.apache.struts.tiles.ComponentContext" %>

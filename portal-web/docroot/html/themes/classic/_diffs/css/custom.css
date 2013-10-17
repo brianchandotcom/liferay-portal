@@ -143,15 +143,17 @@ $dockbarOpenGradientStart: #0EA6F9;
 				text-decoration: underline;
 			}
 		}
+	}
 
+	.dockbar, .dockbar-split .dockbar {
 		.navbar-inner {
-			background-color: $dockbarOpenGradientStart;
+			background-color: $dockbarGradientStart;
 
 			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 
 			.nav {
 				> li {
-					background-color: $dockbarOpenGradientStart;
+					background-color: $dockbarGradientStart;
 
 					@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 				}
@@ -219,6 +221,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.page-customization-bar-text {
 				height: 43px;
+			}
+
+			.staging-bar {
+				margin: 6px 0;
+
+				> li {
+					background: transparent;
+				}
 			}
 		}
 	}
@@ -589,6 +599,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-topper {
 		@include border-radius(3px 3px 0 0);
+	}
+
+	.dockbar .staging-bar .staging-toggle > a {
+		@include border-radius(3px);
 	}
 
 	.dockbar-split .dockbar {

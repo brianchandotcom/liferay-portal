@@ -62,15 +62,6 @@ public class CookieUtilTest {
 
 		cookie2.setDomain("domain");
 
-		// HTTP only
-
-		cookie1.setHttpOnly(true);
-		cookie2.setHttpOnly(false);
-
-		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
-
-		cookie2.setHttpOnly(true);
-
 		// Max age
 
 		cookie1.setMaxAge(1);
@@ -125,6 +116,15 @@ public class CookieUtilTest {
 		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
 
 		cookie2.setVersion(1);
+
+		// HTTP only
+
+		cookie1.setHttpOnly(true);
+		cookie2.setHttpOnly(false);
+
+		Assert.assertFalse(CookieUtil.equals(cookie1, cookie2));
+
+		cookie2.setHttpOnly(true);
 
 		// Equals
 

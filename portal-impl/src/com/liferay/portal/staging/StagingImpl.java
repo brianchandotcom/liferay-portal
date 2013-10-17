@@ -38,7 +38,10 @@ import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,6 +87,7 @@ import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.security.auth.HttpPrincipal;
@@ -919,6 +923,54 @@ public class StagingImpl implements Staging {
 			warningMessagesJSONArray = getWarningMessagesJSONArray(
 				locale, missingReferences.getWeakMissingReferences(),
 				contextMap);
+		}
+		else if (e instanceof PortletDataException) {
+			PortletDataException pde = (PortletDataException)e;
+			StagedModel stagedModel = pde.getStagedModel();
+			StagedModelType stagedModelType = stagedModel.getStagedModelType();
+
+			String referrerClassName = stagedModelType.getClassName();
+			String referrerDisplayName =
+				StagedModelDataHandlerUtil.getDisplayName(stagedModel);
+
+			if (pde.getType() == PortletDataException.MISSING_DEPENDENCY) {
+				errorMessage = LanguageUtil.format(
+					locale,
+					"the-x-x-has-missing-references-could-not-be-found-" +
+						"during-the-export",
+					new String[] {
+						ResourceActionsUtil.getModelResource(
+							locale, referrerClassName),
+						referrerDisplayName
+					}
+				);
+			}
+			else if (pde.getType() == PortletDataException.STATUS_UNAVAILABLE) {
+				errorMessage = LanguageUtil.format(
+					locale,
+					"the-x-x-has-references-could-not-be-exported-because-" +
+						"their-workflow-status-is-not-exportable",
+					new String[] {
+						ResourceActionsUtil.getModelResource(
+							locale, referrerClassName),
+						referrerDisplayName
+					}
+				);
+			}
+			else if (pde.getType() == PortletDataException.STATUS_IN_TRASH) {
+				errorMessage = LanguageUtil.format(
+					locale,
+					"the-x-x-has-references-could-not-be-exported-because-" +
+						"these-are-in-the-recycle-bin",
+					new String[] {
+						ResourceActionsUtil.getModelResource(
+							locale, referrerClassName),
+						referrerDisplayName
+					}
+				);
+			}
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (e instanceof PortletIdException) {
 			errorMessage = LanguageUtil.get(

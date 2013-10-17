@@ -1403,7 +1403,7 @@ public class SeleniumBuilderFileUtil {
 		}
 
 		if (attributeMap.containsKey("locator")) {
-			String[] disallowedAttributes = {"value", "locator-key", "path"};
+			String[] disallowedAttributes = {"locator-key", "path", "value"};
 
 			for (String disallowedAttribute : disallowedAttributes) {
 				if (attributeMap.containsKey(disallowedAttribute)) {
@@ -1428,18 +1428,16 @@ public class SeleniumBuilderFileUtil {
 				1004, fileName, element, new String [] {"locator-key"});
 		}
 
+		String varText = element.getText();
+
 		if (attributeMap.containsKey("locator") ||
 			attributeMap.containsKey("locator-key") ||
 			attributeMap.containsKey("path")) {
-
-			String varText = element.getText();
 
 			if (!Validator.isNull(varText)) {
 				throwValidationException(1005, fileName, element, "value");
 			}
 		}
-
-		String varText = element.getText();
 
 		if (!attributeMap.containsKey("value") && Validator.isNull(varText)) {
 			if (!attributeMap.containsKey("locator") &&
@@ -1457,7 +1455,40 @@ public class SeleniumBuilderFileUtil {
 				varValue = varText;
 			}
 
-			validateVarValue(element, fileName, varValue);
+			Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
+
+			Matcher matcher = pattern.matcher(varValue);
+
+			while (matcher.find()) {
+				String statement = matcher.group(1);
+
+				Pattern statementPattern = Pattern.compile(
+					"(.*)\\?(.*)\\(([^\\)]*?)\\)");
+
+				Matcher statementMatcher = statementPattern.matcher(statement);
+
+				if (statementMatcher.find()) {
+					String operand = statementMatcher.group(1);
+
+					String method = statementMatcher.group(2);
+
+					if (operand.equals("") || method.equals("")) {
+						throwValidationException(
+							1006, fileName, element, "value");
+					}
+
+					if (!_methodNames.contains(method)) {
+						throwValidationException(
+							1013, fileName, element, method);
+					}
+				}
+				else {
+					if (statement.matches(".*[\\?\\(\\)\\}\\{].*")) {
+						throwValidationException(
+							1006, fileName, element, "value");
+					}
+				}
+			}
 		}
 
 		List<Element> childElements = element.elements();
@@ -1472,42 +1503,6 @@ public class SeleniumBuilderFileUtil {
 		}
 	}
 
-	protected void validateVarValue(
-		Element element, String fileName, String value) {
-
-		Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
-
-		Matcher matcher = pattern.matcher(value);
-
-		while (matcher.find()) {
-			String statement = matcher.group(1);
-
-			Pattern statementPattern = Pattern.compile(
-				"(.*)\\?(.*)\\(([^\\)]*?)\\)");
-
-			Matcher statementMatcher = statementPattern.matcher(statement);
-
-			if (statementMatcher.find()) {
-				String operand = statementMatcher.group(1);
-
-				String method = statementMatcher.group(2);
-
-				if (operand.equals("") || method.equals("")) {
-					throwValidationException(1006, fileName, element, "value");
-				}
-
-				if (!_methodNames.contains(method)) {
-					throwValidationException(1013, fileName, element, method);
-				}
-			}
-			else {
-				if (statement.matches(".*[\\?\\(\\)\\}\\{].*")) {
-					throwValidationException(1006, fileName, element, "value");
-				}
-			}
-		}
-	}
-
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
@@ -1517,8 +1512,8 @@ public class SeleniumBuilderFileUtil {
 		});
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {
-			"line-number", "locator", "locator-key", "name", "path", "value",
-			"store-attribute"
+			"attribute", "line-number", "locator", "locator-key", "name",
+			"path", "value"
 		});
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {

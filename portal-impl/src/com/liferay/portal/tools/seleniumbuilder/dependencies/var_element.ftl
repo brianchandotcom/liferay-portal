@@ -23,10 +23,10 @@
 </#if>
 
 <#if (varElement.attributeValue("locator-key")?? && varElement.attributeValue("path")??) ||
-	varElement.attributeValue("locator")??>
+	  varElement.attributeValue("locator")??>
 
-	<#if varElement.attributeValue("store-attribute")??>
-		<#assign attributeName = varElement.attributeValue("store-attribute")>
+	<#if varElement.attributeValue("attribute")??>
+		<#assign attributeName = varElement.attributeValue("attribute")>
 
 		${context}.put("${varName}", ${selenium}.getAttribute(RuntimeVariables.evaluateLocator("${locatorValue}", ${context}) + "@" + RuntimeVariables.evaluateVariable("${attributeName}", ${context})));
 	<#else>

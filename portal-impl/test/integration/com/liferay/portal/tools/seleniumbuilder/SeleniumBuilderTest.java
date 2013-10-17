@@ -1573,8 +1573,8 @@ public class SeleniumBuilderTest {
 	public void testMacroVarElement1006_5() throws Exception {
 		test(
 			"MacroVarElement1006_5.macro",
-			"Error 1006: Invalid store-attribute attribute value in " +
-				_DIR_NAME + "/MacroVarElement1006_5.macro:2");
+			"Error 1006: Invalid attribute attribute value in " + _DIR_NAME +
+				"/MacroVarElement1006_5.macro:2");
 	}
 
 	@Test

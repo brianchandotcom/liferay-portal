@@ -1,5 +1,5 @@
 <definition>
-	<command name="assertEqual">
+	<command name="assertEquals">
 		<echo message="${expected}" />
 		<echo message="${actual}" />
 

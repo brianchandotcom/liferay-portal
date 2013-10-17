@@ -1,0 +1,25 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="storeAttributeWithoutVariablesInLocator" priority="5">
+		<execute macro="StoreAttribute#storeAttributeWithoutVariablesInLocator" />
+	</command>
+
+	<command name="storeAttributeWithoutVariablesInLocatorKey" priority="5">
+		<execute macro="StoreAttribute#storeAttributeWithoutVariablesInLocatorKey" />
+	</command>
+
+	<command name="storeAttributeWithVariablesInAttributeName" priority="5">
+		<execute macro="StoreAttribute#storeAttributeWithVariablesInAttributeName" />
+	</command>
+
+	<command name="storeAttributeWithVariablesInLocator" priority="5">
+		<execute macro="StoreAttribute#storeAttributeWithVariablesInLocator" />
+	</command>
+
+	<command name="storeAttributeWithVariablesInLocatorKey" priority="5">
+		<execute macro="StoreAttribute#storeAttributeWithVariablesInLocatorKey" />
+	</command>
+</definition>

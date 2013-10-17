@@ -180,6 +180,11 @@ body.portlet {
 			background-image: url(../images/common/configuration_white.png);
 		}
 	}
+
+	.lfr-url-error {
+		display: inline-block;
+		white-space: normal;
+	}
 }
 
 /* ---------- Borderless portlet ---------- */

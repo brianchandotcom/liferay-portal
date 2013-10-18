@@ -117,15 +117,25 @@ public class MBDiscussionPermission {
 			return false;
 		}
 
-		if ((ownerId > 0) &&
-			permissionChecker.hasOwnerPermission(
-				companyId, className, classPK, ownerId, actionId)) {
+		return _hasPermission(
+			permissionChecker, companyId, groupId, className, classPK, ownerId,
+			actionId);
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, long companyId, long groupId,
+		String className, long classPK, long ownerId, String actionId) {
+
+		if (((ownerId > 0) &&
+			 permissionChecker.hasOwnerPermission(
+				companyId, className, classPK, ownerId, actionId)) ||
+			permissionChecker.hasPermission(
+				groupId, className, classPK, actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			groupId, className, classPK, actionId);
+		return false;
 	}
 
 }

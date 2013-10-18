@@ -70,16 +70,7 @@ public class BlogsEntryPermission {
 			}
 		}
 
-		if (permissionChecker.hasOwnerPermission(
-				entry.getCompanyId(), BlogsEntry.class.getName(),
-				entry.getEntryId(), entry.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			entry.getGroupId(), BlogsEntry.class.getName(), entry.getEntryId(),
-			actionId);
+		return _hasPermission(permissionChecker, entry, actionId);
 	}
 
 	public static boolean contains(
@@ -89,6 +80,23 @@ public class BlogsEntryPermission {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
 
 		return contains(permissionChecker, entry, actionId);
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, BlogsEntry entry,
+		String actionId) {
+
+		if (permissionChecker.hasOwnerPermission(
+				entry.getCompanyId(), BlogsEntry.class.getName(),
+				entry.getEntryId(), entry.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				entry.getGroupId(), BlogsEntry.class.getName(),
+				entry.getEntryId(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

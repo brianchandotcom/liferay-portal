@@ -122,17 +122,7 @@ public class DLFileEntryPermission {
 			}
 		}
 
-		if (permissionChecker.hasOwnerPermission(
-				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
-				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			dlFileEntry.getGroupId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), actionId);
+		return _hasPermission(permissionChecker, dlFileEntry, actionId);
 	}
 
 	public static boolean contains(
@@ -151,6 +141,24 @@ public class DLFileEntryPermission {
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 
 		return fileEntry.containsPermission(permissionChecker, actionId);
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, DLFileEntry dlFileEntry,
+		String actionId) {
+
+		if (permissionChecker.hasOwnerPermission(
+				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
+				actionId) ||
+			permissionChecker.hasPermission(
+				dlFileEntry.getGroupId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

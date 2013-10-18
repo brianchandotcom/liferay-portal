@@ -145,16 +145,7 @@ public class JournalArticlePermission {
 			}
 		}
 
-		if (permissionChecker.hasOwnerPermission(
-				article.getCompanyId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey(), article.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			article.getGroupId(), JournalArticle.class.getName(),
-			article.getResourcePrimKey(), actionId);
+		return _hasPermission(permissionChecker, article, actionId);
 	}
 
 	public static boolean contains(
@@ -200,6 +191,23 @@ public class JournalArticlePermission {
 			groupId, articleId);
 
 		return contains(permissionChecker, article, actionId);
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, JournalArticle article,
+		String actionId) {
+
+		if (permissionChecker.hasOwnerPermission(
+				article.getCompanyId(), JournalArticle.class.getName(),
+				article.getResourcePrimKey(), article.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				article.getGroupId(), JournalArticle.class.getName(),
+				article.getResourcePrimKey(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

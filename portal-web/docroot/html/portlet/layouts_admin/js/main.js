@@ -607,11 +607,11 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															var startDatePicker = Liferay.component(instance.ns('startDateDatePicker'));
-															var startTimePicker = Liferay.component(instance.ns('startTimeTimePicker'));
+															var startDatePicker = Liferay.component(instance.ns('startDateInputDatePicker'));
+															var startTimePicker = Liferay.component(instance.ns('startTimeInputTimePicker'));
 
-															var endDatePicker = Liferay.component(instance.ns('endDateDatePicker'));
-															var endTimePicker = Liferay.component(instance.ns('endTimeTimePicker'));
+															var endDatePicker = Liferay.component(instance.ns('endDateInputDatePicker'));
+															var endTimePicker = Liferay.component(instance.ns('endTimeInputTimePicker'));
 
 															var startDate = startDatePicker.getDate();
 															var startTime = startTimePicker.getTime();

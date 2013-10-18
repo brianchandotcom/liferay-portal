@@ -600,7 +600,7 @@
 	<command name="viewViewCountCP">
 		<var name="key_portletName" value="Blogs" />
 
-		<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+		<execute action="Home#click" locator-key1="SITE_ADMINISTRATION_NAVIGATION" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -619,7 +619,7 @@
 			</else>
 		</if>
 
-		<execute action="Home#click" locator-key1="CONTROL_PANEL_NAVIGATION" />
+		<execute action="Home#click" locator-key1="SITE_ADMINISTRATION_NAVIGATION" />
 
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 

@@ -1137,7 +1137,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/bnd.jar</file-name>
-		<version>2.1.0</version>
+		<version>2.2.0</version>
 		<project-name>Bnd</project-name>
 		<project-url>http://www.aqute.biz/Bnd</project-url>
 		<licenses>
@@ -1146,6 +1146,9 @@
 				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 			</license>
 		</licenses>
+		<comments>
+			Applied https://github.com/bndtools/bnd/pull/417 until new release.
+		</comments>
 	</library>
 	<library>
 		<file-name>lib/portal/bobo-browse.jar</file-name>

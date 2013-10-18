@@ -54,11 +54,14 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -244,7 +247,16 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (model instanceof Folder) {
 				Folder folder = (Folder)model;
 
-				DLAppServiceUtil.deleteFolder(folder.getFolderId());
+				long folderId = folder.getFolderId();
+
+				if ((folder.getModel() instanceof DLFolder) &&
+					TrashUtil.isTrashEnabled(folder.getGroupId())) {
+
+					DLAppServiceUtil.moveFolderToTrash(folderId);
+				}
+				else {
+					DLAppServiceUtil.deleteFolder(folderId);
+				}
 			}
 			else {
 				FileEntry fileEntry = (FileEntry)model;
@@ -255,7 +267,16 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					return WebDAVUtil.SC_LOCKED;
 				}
 
-				DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+				long fileEntryId = fileEntry.getFileEntryId();
+
+				if ((fileEntry.getModel() instanceof DLFileEntry) &&
+					TrashUtil.isTrashEnabled(fileEntry.getGroupId())) {
+
+					DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+				}
+				else {
+					DLAppServiceUtil.deleteFileEntry(fileEntryId);
+				}
 			}
 
 			return HttpServletResponse.SC_NO_CONTENT;

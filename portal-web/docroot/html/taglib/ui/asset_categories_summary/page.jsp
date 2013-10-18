@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_categories_summary/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
 String className = (String)request.getAttribute("liferay-ui:asset-categories-summary:className");

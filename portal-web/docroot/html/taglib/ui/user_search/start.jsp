@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/user_search/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
+
+<portlet:defineObjects />
 
 <%
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:user-search:portletURL");

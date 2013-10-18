@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/app_view_search_entry/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-search-entry:actionJsp");

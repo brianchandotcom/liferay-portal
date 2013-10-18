@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_tags_selector/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
+
+<portlet:defineObjects />
 
 <%
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-selector:autoFocus"));

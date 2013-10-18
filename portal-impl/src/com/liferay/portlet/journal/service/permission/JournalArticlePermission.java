@@ -114,6 +114,12 @@ public class JournalArticlePermission {
 				return hasPermission.booleanValue();
 			}
 		}
+		else if (article.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+				 !_hasPermission(
+					permissionChecker, article, ActionKeys.UPDATE)) {
+
+			return false;
+		}
 
 		if ((article.getFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&

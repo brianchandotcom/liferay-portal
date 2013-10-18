@@ -171,11 +171,18 @@ public class WikiPagePermission {
 				return true;
 			}
 		}
+		else if (page.isDraft()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!_hasPermission(permissionChecker, page, ActionKeys.UPDATE)) {
 
-		if (page.isDraft() && actionId.equals(ActionKeys.DELETE) &&
-			(page.getStatusByUserId() == permissionChecker.getUserId())) {
+				return false;
+			}
+			else if (actionId.equals(ActionKeys.DELETE) &&
+					 (page.getStatusByUserId() ==
+						permissionChecker.getUserId())) {
 
-			return true;
+				return true;
+			}
 		}
 
 		return _hasPermission(permissionChecker, page, actionId);

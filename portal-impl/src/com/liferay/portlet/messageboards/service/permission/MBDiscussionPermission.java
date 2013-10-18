@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -84,6 +85,13 @@ public class MBDiscussionPermission {
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
 			}
+		}
+		else if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+				 !_hasPermission(
+					permissionChecker, companyId, groupId, className, classPK,
+					ownerId, ActionKeys.UPDATE)) {
+
+			return false;
 		}
 
 		return contains(

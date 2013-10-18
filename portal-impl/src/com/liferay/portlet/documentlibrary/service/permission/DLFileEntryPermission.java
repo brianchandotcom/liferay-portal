@@ -95,6 +95,13 @@ public class DLFileEntryPermission {
 				return hasPermission.booleanValue();
 			}
 		}
+		else if (latestDLFileVersion.isDraft() &&
+				 actionId.equals(ActionKeys.VIEW) &&
+				 !_hasPermission(
+					permissionChecker, dlFileEntry, ActionKeys.UPDATE)) {
+
+			return false;
+		}
 
 		if (actionId.equals(ActionKeys.VIEW) &&
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {

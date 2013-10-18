@@ -16,11 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.model.AssetTag" %><%@
-page import="com.liferay.portlet.asset.model.AssetTagProperty" %><%@
+<%@ page import="com.liferay.portlet.asset.model.AssetTagProperty" %><%@
 page import="com.liferay.portlet.asset.model.impl.AssetTagPropertyImpl" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagPropertyServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetPermission" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetTagPermission" %>
 

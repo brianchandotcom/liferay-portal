@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %><%@
-page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.UserGroupPermissionUtil" %><%@
 page import="com.liferay.portlet.announcements.EntryContentException" %><%@
 page import="com.liferay.portlet.announcements.EntryDisplayDateException" %><%@

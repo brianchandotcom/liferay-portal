@@ -22,7 +22,6 @@ page import="com.liferay.portlet.expando.DuplicateColumnNameException" %><%@
 page import="com.liferay.portlet.expando.NoSuchColumnException" %><%@
 page import="com.liferay.portlet.expando.ValueDataException" %><%@
 page import="com.liferay.portlet.expando.model.CustomAttributesDisplay" %><%@
-page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoColumn" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %><%@
 page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %><%@

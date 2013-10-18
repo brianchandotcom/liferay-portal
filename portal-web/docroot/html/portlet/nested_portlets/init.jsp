@@ -16,7 +16,4 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
-page import="com.liferay.portal.plugin.PluginUtil" %>
-
 <%@ include file="/html/portlet/nested_portlets/init-ext.jsp" %>

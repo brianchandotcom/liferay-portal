@@ -26,12 +26,8 @@ page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUti
 page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission" %><%@
 page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission" %><%@
 page import="com.liferay.portlet.dynamicdatalists.util.DDLUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %>
 

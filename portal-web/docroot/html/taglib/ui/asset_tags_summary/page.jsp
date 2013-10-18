@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_tags_summary/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
 String[] assetTagNames = StringUtil.split((String)request.getAttribute("liferay-ui:asset-tags-summary:assetTagNames"));

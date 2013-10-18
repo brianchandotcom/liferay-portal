@@ -16,14 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.search.Indexer" %><%@
-page import="com.liferay.portal.kernel.search.SearchContext" %><%@
-page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
-page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
-page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %><%@
-page import="com.liferay.portlet.bookmarks.EntryURLException" %><%@
+<%@ page import="com.liferay.portlet.bookmarks.EntryURLException" %><%@
 page import="com.liferay.portlet.bookmarks.FolderNameException" %><%@
 page import="com.liferay.portlet.bookmarks.NoSuchEntryException" %><%@
 page import="com.liferay.portlet.bookmarks.NoSuchFolderException" %><%@
@@ -36,8 +29,7 @@ page import="com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil" %
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission" %><%@
 page import="com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission" %><%@
 page import="com.liferay.portlet.bookmarks.util.BookmarksSearcher" %><%@
-page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %>
+page import="com.liferay.portlet.bookmarks.util.BookmarksUtil" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);

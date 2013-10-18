@@ -21,6 +21,8 @@ import java.security.Policy;
  */
 public interface PortalSecurityManager {
 
+	public void destroy();
+
 	public Policy getPolicy();
 
 }

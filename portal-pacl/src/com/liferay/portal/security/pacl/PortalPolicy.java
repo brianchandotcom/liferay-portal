@@ -54,6 +54,10 @@ public class PortalPolicy extends Policy {
 			new FieldPrivilegedExceptionAction());
 	}
 
+	public Policy getOriginalPolicy() {
+		return _policy;
+	}
+
 	@Override
 	public PermissionCollection getPermissions(CodeSource codeSource) {
 		if ((codeSource == null) || (codeSource.getLocation() == null)) {

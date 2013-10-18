@@ -248,7 +248,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 					background-color: $dockbarOpenGradientEnd;
 				}
 			}
-			.nav-add-controls {
+
+			.nav-navigation {
 				letter-spacing: 1px;
 
 				> li {
@@ -887,7 +888,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
-			ul.nav-add-controls {
+			ul.nav-navigation {
 				> li a:hover {
 					@include border-radius(4px);
 				}

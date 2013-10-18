@@ -4,18 +4,25 @@
 @include respond-to(phone, tablet) {
 	.aui {
 		.dockbar .navbar-inner .container {
+			#_145_navSiteNavigationNavbarBtn {
+				float: none;
+			}
 
-			#_145_navAddControlsNavbarBtn, #_145_navSiteNavigationNavbarBtn {
+			#_145_navAddControlsNavbarBtn {
 				display: none;
 			}
 
 			.brand {
 				font-size: 16px;
-				padding: 18px 0 0 0;
+				padding: 22px 0 0 0;
 			}
 
 			.btn-navbar {
 				float: right;
+			}
+
+			.nav-navigation > li {
+				margin-left: 5px;
 			}
 		}
 	}

@@ -298,6 +298,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 				</c:if>
 			},
 			delay: 5000,
+			infoTemplate: '<%= LanguageUtil.format(pageContext, "image-x-of-x", new String[] {"{current}", "{total}"}) %>',
 			links: '#<portlet:namespace />imageGalleryAssetInfo .image-link.preview',
 			maxHeight: maxHeight,
 			maxWidth: maxWidth,

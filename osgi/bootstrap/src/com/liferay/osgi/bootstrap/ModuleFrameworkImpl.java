@@ -434,6 +434,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		_framework.stop();
+
+		FrameworkEvent result = _framework.waitForStop(5000);
+
+		_log.info(result);
 	}
 
 	@Override

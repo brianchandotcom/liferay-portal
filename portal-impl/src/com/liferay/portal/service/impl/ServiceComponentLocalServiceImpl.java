@@ -45,10 +45,7 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
-import java.security.AccessControlContext;
-import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
-import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,28 +192,10 @@ public class ServiceComponentLocalServiceImpl
 			final String indexesSQL)
 		throws Exception {
 
-		ProtectionDomain protectionDomain = new ProtectionDomain(
-			null, null, classLoader, null);
-
-		AccessControlContext accessControlContext = new AccessControlContext(
-			new ProtectionDomain[] {protectionDomain});
-
-		AccessController.doPrivileged(
-			new PrivilegedExceptionAction<Void>() {
-
-				@Override
-				public Void run() throws Exception {
-					doUpgradeDB(
-						classLoader, buildNamespace, buildNumber,
-						buildAutoUpgrade, previousServiceComponent, tablesSQL,
-						sequencesSQL, indexesSQL);
-
-					return null;
-				}
-
-			},
-			accessControlContext
-		);
+		_pacl.doUpgradeDB(
+			new DoUpgradeDBPrivilegedExceptionAction(
+				classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
+				previousServiceComponent, tablesSQL, sequencesSQL, indexesSQL));
 	}
 
 	@Override
@@ -239,6 +218,58 @@ public class ServiceComponentLocalServiceImpl
 				_log.error(e, e);
 			}
 		}
+	}
+
+	public static interface PACL {
+
+		public void doUpgradeDB(
+				DoUpgradeDBPrivilegedExceptionAction
+					doUpgradeDBPrivilegedExceptionAction)
+			throws Exception;
+
+	}
+
+	public class DoUpgradeDBPrivilegedExceptionAction
+		implements PrivilegedExceptionAction<Void> {
+
+		public DoUpgradeDBPrivilegedExceptionAction(
+			ClassLoader classLoader, String buildNamespace, long buildNumber,
+			boolean buildAutoUpgrade, ServiceComponent previousServiceComponent,
+			String tablesSQL, String sequencesSQL, String indexesSQL) {
+
+			_classLoader = classLoader;
+			_buildNamespace = buildNamespace;
+			_buildNumber = buildNumber;
+			_buildAutoUpgrade = buildAutoUpgrade;
+			_previousServiceComponent = previousServiceComponent;
+			_tablesSQL = tablesSQL;
+			_sequencesSQL = sequencesSQL;
+			_indexesSQL = indexesSQL;
+		}
+
+		public ClassLoader getClassLoader() {
+			return _classLoader;
+		}
+
+		@Override
+		public Void run() throws Exception {
+			doUpgradeDB(
+				_classLoader, _buildNamespace, _buildNumber, _buildAutoUpgrade,
+				_previousServiceComponent, _tablesSQL, _sequencesSQL,
+				_indexesSQL);
+
+			return null;
+		}
+
+		private ClassLoader _classLoader;
+		private String _buildNamespace;
+		private long _buildNumber;
+		private boolean _buildAutoUpgrade;
+		private String _indexesSQL;
+		private ServiceComponent _previousServiceComponent;
+		private String _tablesSQL;
+		private String _sequencesSQL;
+
 	}
 
 	protected void clearCacheRegistry(ServletContext servletContext)
@@ -480,5 +511,19 @@ public class ServiceComponentLocalServiceImpl
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ServiceComponentLocalServiceImpl.class);
+
+	private static PACL _pacl = new NoPACL();
+
+	private static class NoPACL implements PACL {
+
+		public void doUpgradeDB(
+				DoUpgradeDBPrivilegedExceptionAction
+					doUpgradeDBPrivilegedExceptionAction)
+			throws Exception {
+
+			doUpgradeDBPrivilegedExceptionAction.run();
+		}
+
+	}
 
 }

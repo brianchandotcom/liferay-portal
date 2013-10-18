@@ -406,6 +406,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.panel-page-menu {
 		position: relative;
 
+		.accordion-toggle [class^="icon-"] {
+			display: none;
+		}
+
 		.minimize-panels a {
 			background: url(../images/custom/panel_close.png) no-repeat;
 			display: none;
@@ -469,7 +473,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.search-panels {
-			padding: 0 10px 13px;
+			padding: 0 10px 14px;
 			position: relative;
 
 			.cancel-search {
@@ -486,7 +490,27 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
+			.icon-search {
+				display: none;
+			}
+
 			.search-panels-bar {
+				position: relative;
+
+				&:after {
+					background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
+					color: #D4D4D4;
+					content: '';
+					display: block;
+					font-size: 0;
+					height: 18px;
+					margin-left: 8px;
+					margin-top: 6px;
+					position: absolute;
+					top: 0;
+					width: 27px;
+				}
+
 				.control-group {
 					margin: 0;
 
@@ -498,17 +522,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 							border-color: rgba(0, 172, 255, 0.8);
 						}
 					}
-				}
-
-				.search-panel-icon {
-					background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
-					color: #D4D4D4;
-					font-size: 0;
-					height: 18px;
-					margin-left: 8px;
-					margin-top: 6px;
-					position: absolute;
-					width: 27px;
 				}
 
 				input {
@@ -553,7 +566,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.accordion-toggle {
 				position: relative;
-				text-indent: -9999px;
+				text-align: center;
+
+				[class^="icon-"] {
+					display: inline;
+				}
+
+				.title-text {
+					display: none;
+				}
 			}
 
 			.control-panel-tools {
@@ -575,26 +596,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				.accordion {
 					.toggler-header .accordion-toggle {
 						background: none no-repeat right;
-					}
-
-					#panel-manage-site_administration\.configuration .toggler-header .accordion-toggle {
-						background-image: url(../images/custom/panel_icons_white_server_bg.png);
-						right: 8px;
-					}
-
-					#panel-manage-site_administration\.content .toggler-header .accordion-toggle {
-						background-image: url(../images/custom/panel_icons_white_portal_bg.png);
-						right: 4px;
-					}
-
-					#panel-manage-site_administration\.pages .toggler-header .accordion-toggle {
-						background-image: url(../images/custom/panel_icons_white_marketplace_bg.png);
-						right: 4px;
-					}
-
-					#panel-manage-site_administration\.users .toggler-header .accordion-toggle {
-						background-image: url(../images/custom/panel_icons_white_marketplace_bg.png);
-						right: 4px;
 					}
 
 					.accordion-group {
@@ -625,16 +626,17 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 
 					.toggler-header {
-						padding: 12px 10px;
+						padding: 14px 10px 10px;
 					}
 				}
 			}
 
 			.search-panels {
-				background: url(../images/custom/search_navigation_min_icon.png) no-repeat right;
-				padding: 14px 10px 14px;
-				right: 10px;
-				top: -7px;
+				text-align: center;
+
+				.icon-search {
+					display: block;
+				}
 			}
 
 			.search-panels-bar {

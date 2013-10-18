@@ -179,11 +179,11 @@ if (layout != null) {
 				<c:otherwise>
 					<aui:nav-item anchorCssClass="staging-link" cssClass="active live-link staging-toggle" dropdown="<%= true %>" id="liveLink" label="live" toggle="<%= true %>">
 						<aui:nav-item cssClass="row-fluid">
-							<span class="alert alert-warning warning-content hide" id="<portlet:namespace />warningMessage">
-								<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
-							</span>
 
 							<div class="staging-details">
+								<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
+									<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
+								</div>
 
 								<%
 								request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
@@ -211,42 +211,32 @@ if (layout != null) {
 
 	<aui:script use="aui-base">
 		var stagingLink = A.one('#<portlet:namespace />stagingLink');
+		var warningMessage = A.one('#<portlet:namespace />warningMessage');
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />checkBackgroundTasks',
-			function() {
-				Liferay.Service(
-					'/backgroundtask/get-background-tasks-count',
-					{
-						groupId: '<%= liveGroup.getGroupId() %>',
-						taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>',
-						completed: false
-					},
-					function(obj) {
-						var warningMessage = A.one('#<portlet:namespace />warningMessage');
+		var checkBackgroundTasks = function() {
+			Liferay.Service(
+				'/backgroundtask/get-background-tasks-count',
+				{
+					groupId: '<%= liveGroup.getGroupId() %>',
+					taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>',
+					completed: false
+				},
+				function(obj) {
+					var incomplete = obj > 0;
 
-						if (obj > 0) {
-							stagingLink.hide();
+					stagingLink.toggle(!incomplete);
 
-							if (warningMessage) {
-								warningMessage.show();
-							}
-
-							setTimeout(<portlet:namespace />checkBackgroundTasks, 5000);
-						}
-						else {
-							stagingLink.show();
-
-							if (warningMessage){
-								warningMessage.hide();
-							}
-						}
+					if (warningMessage) {
+						warningMessage.toggle(incomplete);
 					}
-				);
-			}
-		);
 
-		<portlet:namespace />checkBackgroundTasks();
+					if (incomplete) {
+						setTimeout(checkBackgroundTasks, 5000);
+					}
+				}
+			);
+		};
+
+		checkBackgroundTasks();
 	</aui:script>
 </c:if>

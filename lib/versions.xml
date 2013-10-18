@@ -1731,7 +1731,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/flexjson.jar</file-name>
-		<version>2.1</version>
+		<version>3.1</version>
 		<project-name>Flexjson</project-name>
 		<project-url>http://flexjson.sourceforge.net</project-url>
 		<licenses>

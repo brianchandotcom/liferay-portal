@@ -1435,6 +1435,26 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	@Override
+	public void importPortletInfo(long userId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.importPortletInfo(userId, portletId, parameterMap,
+			file);
+	}
+
+	@Override
+	public void importPortletInfo(long userId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.importPortletInfo(userId, portletId, parameterMap,
+			is);
+	}
+
+	@Override
 	public long importPortletInfoInBackground(long userId,
 		java.lang.String taskName, long plid, long groupId,
 		java.lang.String portletId,
@@ -1456,6 +1476,28 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutLocalService.importPortletInfoInBackground(userId,
 			taskName, plid, groupId, portletId, parameterMap, is);
+	}
+
+	@Override
+	public long importPortletInfoInBackground(long userId,
+		java.lang.String taskName, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.importPortletInfoInBackground(userId,
+			taskName, portletId, parameterMap, file);
+	}
+
+	@Override
+	public long importPortletInfoInBackground(long userId,
+		java.lang.String taskName, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.importPortletInfoInBackground(userId,
+			taskName, portletId, parameterMap, is);
 	}
 
 	/**

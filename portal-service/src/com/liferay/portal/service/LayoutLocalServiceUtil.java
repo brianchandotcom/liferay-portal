@@ -1383,6 +1383,24 @@ public class LayoutLocalServiceUtil {
 			is);
 	}
 
+	public static void importPortletInfo(long userId,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().importPortletInfo(userId, portletId, parameterMap, file);
+	}
+
+	public static void importPortletInfo(long userId,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().importPortletInfo(userId, portletId, parameterMap, is);
+	}
+
 	public static long importPortletInfoInBackground(long userId,
 		java.lang.String taskName, long plid, long groupId,
 		java.lang.String portletId,
@@ -1405,6 +1423,28 @@ public class LayoutLocalServiceUtil {
 		return getService()
 				   .importPortletInfoInBackground(userId, taskName, plid,
 			groupId, portletId, parameterMap, is);
+	}
+
+	public static long importPortletInfoInBackground(long userId,
+		java.lang.String taskName, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .importPortletInfoInBackground(userId, taskName, portletId,
+			parameterMap, file);
+	}
+
+	public static long importPortletInfoInBackground(long userId,
+		java.lang.String taskName, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .importPortletInfoInBackground(userId, taskName, portletId,
+			parameterMap, is);
 	}
 
 	/**

@@ -461,26 +461,13 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	@Override
-	public java.io.File exportPortletInfoAsFile(long companyId,
-		java.lang.String portletId,
+	public java.io.File exportPortletInfoAsFile(java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _layoutService.exportPortletInfoAsFile(companyId, portletId,
-			parameterMap, startDate, endDate);
-	}
-
-	@Override
-	public long exportPortletInfoAsFileInBackground(long userId,
-		java.lang.String taskName, java.lang.String portletId,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _layoutService.exportPortletInfoAsFileInBackground(userId,
-			taskName, portletId, parameterMap, startDate, endDate, fileName);
+		return _layoutService.exportPortletInfoAsFile(portletId, parameterMap,
+			startDate, endDate);
 	}
 
 	@Override
@@ -493,6 +480,18 @@ public class LayoutServiceWrapper implements LayoutService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutService.exportPortletInfoAsFileInBackground(taskName,
 			plid, groupId, portletId, parameterMap, startDate, endDate, fileName);
+	}
+
+	@Override
+	public long exportPortletInfoAsFileInBackground(java.lang.String taskName,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.exportPortletInfoAsFileInBackground(taskName,
+			portletId, parameterMap, startDate, endDate, fileName);
 	}
 
 	/**
@@ -791,6 +790,24 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	@Override
+	public void importPortletInfo(java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutService.importPortletInfo(portletId, parameterMap, file);
+	}
+
+	@Override
+	public void importPortletInfo(java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutService.importPortletInfo(portletId, parameterMap, is);
+	}
+
+	@Override
 	public long importPortletInfoInBackground(java.lang.String taskName,
 		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
@@ -810,6 +827,28 @@ public class LayoutServiceWrapper implements LayoutService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutService.importPortletInfoInBackground(taskName, plid,
 			groupId, portletId, parameterMap, is);
+	}
+
+	@Override
+	public void importPortletInfoInBackground(java.lang.String taskName,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutService.importPortletInfoInBackground(taskName, portletId,
+			parameterMap, file);
+	}
+
+	@Override
+	public void importPortletInfoInBackground(java.lang.String taskName,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutService.importPortletInfoInBackground(taskName, portletId,
+			parameterMap, is);
 	}
 
 	/**

@@ -92,6 +92,10 @@ public class PortletSessionListenerManager
 	public void attributeAdded(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 
+		if (_httpSessionAttributeListeners.isEmpty()) {
+			return;
+		}
+
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);
 
@@ -106,6 +110,10 @@ public class PortletSessionListenerManager
 	@Override
 	public void attributeRemoved(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
+
+		if (_httpSessionAttributeListeners.isEmpty()) {
+			return;
+		}
 
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);
@@ -122,6 +130,10 @@ public class PortletSessionListenerManager
 	public void attributeReplaced(
 		HttpSessionBindingEvent httpSessionBindingEvent) {
 
+		if (_httpSessionAttributeListeners.isEmpty()) {
+			return;
+		}
+
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);
 
@@ -135,6 +147,10 @@ public class PortletSessionListenerManager
 
 	@Override
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+		if (_httpSessionListeners.isEmpty()) {
+			return;
+		}
+
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
 		Thread currentThread = Thread.currentThread();
@@ -163,6 +179,8 @@ public class PortletSessionListenerManager
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
+		PortletSessionTracker.invalidate(httpSessionEvent.getSession().getId());
+
 		for (HttpSessionListener httpSessionListener : _httpSessionListeners) {
 			httpSessionListener.sessionDestroyed(httpSessionEvent);
 		}
@@ -170,6 +188,10 @@ public class PortletSessionListenerManager
 
 	@Override
 	public void sessionDidActivate(HttpSessionEvent httpSessionEvent) {
+		if (_httpSessionActivationListeners.isEmpty()) {
+			return;
+		}
+
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
 		for (HttpSessionActivationListener httpSessionActivationListener :
@@ -181,6 +203,10 @@ public class PortletSessionListenerManager
 
 	@Override
 	public void sessionWillPassivate(HttpSessionEvent httpSessionEvent) {
+		if (_httpSessionActivationListeners.isEmpty()) {
+			return;
+		}
+
 		httpSessionEvent = getHttpSessionEvent(httpSessionEvent);
 
 		for (HttpSessionActivationListener httpSessionActivationListener :
@@ -193,6 +219,10 @@ public class PortletSessionListenerManager
 
 	@Override
 	public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent) {
+		if (_httpSessionBindingListeners.isEmpty()) {
+			return;
+		}
+
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);
 
@@ -207,6 +237,9 @@ public class PortletSessionListenerManager
 	public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent) {
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);
+
+		PortletSessionTracker.invalidate(
+			httpSessionBindingEvent.getSession().getId());
 
 		for (HttpSessionBindingListener httpSessionBindingListener :
 				_httpSessionBindingListeners) {

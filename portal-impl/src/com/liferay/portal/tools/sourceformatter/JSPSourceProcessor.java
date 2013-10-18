@@ -39,6 +39,36 @@ import java.util.regex.Pattern;
  */
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
+	protected void addImportCounts(String content) {
+		Pattern pattern = Pattern.compile("page import=\"(.+)\"");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String importName = matcher.group(1);
+
+			int count = 0;
+
+			if (_importCountMap.containsKey(importName)) {
+				count = _importCountMap.get(importName);
+			}
+			else {
+				int pos = importName.lastIndexOf(StringPool.PERIOD);
+
+				String importClassName = importName.substring(pos + 1);
+
+				if (_importClassNames.contains(importClassName)) {
+					_duplicateImportClassNames.add(importClassName);
+				}
+				else {
+					_importClassNames.add(importClassName);
+				}
+			}
+
+			_importCountMap.put(importName, count + 1);
+		}
+	}
+
 	protected void addJSPIncludeFileNames(
 		String fileName, Set<String> includeFileNames) {
 
@@ -265,7 +295,21 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				sourceFormatterHelper.printError(fileName, file);
 			}
 
+			if (portalSource &&
+				!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) &&
+				fileName.endsWith("/init.jsp") &&
+				!fileName.endsWith("/common/init.jsp")) {
+
+				addImportCounts(content);
+			}
+
 			_jspContents.put(fileName, newContent);
+		}
+
+		if (portalSource &&
+			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
+
+			moveFrequentlyUsedImportsToCommonInit(4);
 		}
 
 		for (String fileName : fileNames) {
@@ -979,6 +1023,55 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return isJSPDuplicateImport(includeFileName, importLine, true);
 	}
 
+	protected void moveFrequentlyUsedImportsToCommonInit(int minCount)
+		throws IOException {
+
+		String commonInitFileName = "portal-web/docroot/html/common/init.jsp";
+
+		File commonInitFile = null;
+		String commonInitFileContent = null;
+
+		int x = -1;
+
+		for (Map.Entry<String, Integer> importCount :
+				_importCountMap.entrySet()) {
+
+			Integer count = importCount.getValue();
+
+			if (count < minCount) {
+				continue;
+			}
+
+			String importName = importCount.getKey();
+
+			int y = importName.lastIndexOf(StringPool.PERIOD);
+
+			String importClassName = importName.substring(y + 1);
+
+			if (_duplicateImportClassNames.contains(importClassName)) {
+				continue;
+			}
+
+			if (commonInitFileContent == null) {
+				commonInitFile = new File(commonInitFileName);
+
+				commonInitFileContent = fileUtil.read(commonInitFile);
+
+				x = commonInitFileContent.indexOf("<%@ page import");
+			}
+
+			commonInitFileContent = StringUtil.insert(
+				commonInitFileContent,
+				"<%@ page import=\"" + importName + "\" %>\n", x);
+		}
+
+		if (commonInitFileContent != null) {
+			fileUtil.write(commonInitFile, commonInitFileContent);
+
+			_jspContents.put(commonInitFileName, commonInitFileContent);
+		}
+	}
+
 	protected String sortJSPAttributes(
 		String fileName, String line, int lineCount) {
 
@@ -1188,6 +1281,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"tiles"
 	};
 
+	private List<String> _duplicateImportClassNames = new ArrayList<String>();
+	private List<String> _importClassNames = new ArrayList<String>();
+	private Map<String, Integer> _importCountMap =
+		new HashMap<String, Integer>();
 	private Pattern _jspAttributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	private Map<String, String> _jspContents = new HashMap<String, String>();

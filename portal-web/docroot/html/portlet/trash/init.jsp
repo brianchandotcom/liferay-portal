@@ -20,18 +20,12 @@
 page import="com.liferay.portal.kernel.trash.TrashHandler" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.trash.TrashRenderer" %><%@
-page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
-page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
-page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.trash.DuplicateEntryException" %><%@
-page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntryList" %><%@
 page import="com.liferay.portlet.trash.model.impl.TrashEntryImpl" %><%@
 page import="com.liferay.portlet.trash.search.EntrySearch" %><%@
 page import="com.liferay.portlet.trash.search.EntrySearchTerms" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.trash.service.TrashEntryServiceUtil" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %>
+page import="com.liferay.portlet.trash.service.TrashEntryServiceUtil" %>
 
 <%@ include file="/html/portlet/trash/init-ext.jsp" %>

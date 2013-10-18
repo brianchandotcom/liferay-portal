@@ -16,9 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.model.AssetTag" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
-page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
+<%@ page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@

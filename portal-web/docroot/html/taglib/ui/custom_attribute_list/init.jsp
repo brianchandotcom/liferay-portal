@@ -16,5 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.expando.model.ExpandoBridge" %><%@
-page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>
+<%@ page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %>

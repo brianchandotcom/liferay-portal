@@ -23,10 +23,6 @@ page import="com.liferay.portal.service.permission.PasswordPolicyPermissionUtil"
 page import="com.liferay.portlet.passwordpoliciesadmin.search.OrganizationPasswordPolicyChecker" %><%@
 page import="com.liferay.portlet.passwordpoliciesadmin.search.PasswordPolicyDisplayTerms" %><%@
 page import="com.liferay.portlet.passwordpoliciesadmin.search.PasswordPolicySearch" %><%@
-page import="com.liferay.portlet.passwordpoliciesadmin.search.UserPasswordPolicyChecker" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %>
+page import="com.liferay.portlet.passwordpoliciesadmin.search.UserPasswordPolicyChecker" %>
 
 <%@ include file="/html/portlet/password_policies_admin/init-ext.jsp" %>

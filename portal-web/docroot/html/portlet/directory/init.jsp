@@ -19,15 +19,8 @@
 <%@ page import="com.liferay.portal.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.NoSuchUserGroupException" %><%@
 page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@
-page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
-page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
+page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "users");

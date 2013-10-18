@@ -102,17 +102,17 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON</td>
-	<td>//span[@class='submit-link']/a/span[contains(.,'Mark as Ready for Publication')]</td>
+	<td>//a[@id='_170_submitLink']/span[contains(.,'Mark as Ready for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_SUBMIT_FOR_PUBLICATION</td>
-	<td>//span[@class='submit-link']/a/span[contains(.,'Submit for Publication')]</td>
+	<td>//a[@id='_170_submitLink']/span[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_SUBMIT_FOR_PUBLICATION_DISABLED</td>
-	<td>//span[@class='submit-link']/span[contains(.,'Submit for Publication')]</td>
+	<td>//span[@class='label label-submit']/span[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

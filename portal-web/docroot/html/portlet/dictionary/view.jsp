@@ -17,18 +17,14 @@
 <%@ include file="/html/portlet/dictionary/init.jsp" %>
 
 <aui:form name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "lookUp();" %>'>
-	<aui:fieldset>
-		<aui:field-wrapper>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="" name="word" />
+	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="word" />
 
-			<aui:select label="" name="type">
-				<option value="http://dictionary.reference.com/browse/" /><liferay-ui:message key="dictionary" /></option>
-				<option value="http://thesaurus.reference.com/browse/" /><liferay-ui:message key="thesaurus" /></option>
-			</aui:select>
+	<aui:select inlineField="<%= true %>" label="" name="type">
+		<aui:option label="dictionary" value="http://dictionary.reference.com/browse/" />
+		<aui:option label="thesaurus" value="http://thesaurus.reference.com/browse/" />
+	</aui:select>
 
-			<aui:button type="submit" value="find" />
-		</aui:field-wrapper>
-	</aui:fieldset>
+	<aui:button type="submit" value="find" />
 </aui:form>
 
 <aui:script>

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -50,11 +51,13 @@ public interface Staging {
 		String remoteAddress, int remotePort, String remotePathContext,
 		boolean secureConnection, long remoteGroupId, boolean privateLayout);
 
+	public String buildRemoteURL(UnicodeProperties typeSettingsProperties);
+
 	public void checkDefaultLayoutSetBranches(
 			long userId, Group liveGroup, boolean branchingPublic,
 			boolean branchingPrivate, boolean remote,
 			ServiceContext serviceContext)
-		throws Exception;
+		throws PortalException, SystemException;
 
 	public void copyFromLive(PortletRequest PortletRequest) throws Exception;
 
@@ -76,7 +79,7 @@ public interface Staging {
 		throws Exception;
 
 	public void deleteLastImportSettings(Group liveGroup, boolean privateLayout)
-		throws Exception;
+		throws PortalException, SystemException;
 
 	public void deleteRecentLayoutRevisionId(
 			HttpServletRequest request, long layoutSetBranchId, long plid)
@@ -210,19 +213,19 @@ public interface Staging {
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, long[] layoutIds,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws Exception;
+		throws PortalException, SystemException;
 
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<Long, Boolean> layoutIdMap,
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws Exception;
+		throws PortalException, SystemException;
 
 	public void publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
 			boolean privateLayout, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate)
-		throws Exception;
+		throws PortalException, SystemException;
 
 	public void publishToLive(PortletRequest PortletRequest) throws Exception;
 
@@ -292,5 +295,10 @@ public interface Staging {
 
 	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)
 		throws Exception;
+
+	public void validateRemote(
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId)
+		throws PortalException;
 
 }

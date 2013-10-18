@@ -934,6 +934,8 @@ public class PropsValues {
 
 	public static final String[] JSON_SERVICE_INVALID_CLASS_NAMES = PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_CLASS_NAMES);
 
+	public static final String[] JSON_SERVICE_INVALID_METHOD_NAMES = PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_METHOD_NAMES);
+
 	public static final boolean JSON_WEB_SERVICE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JSON_WEB_SERVICE_ENABLED));
 
 	public static final String[] JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS = PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS);

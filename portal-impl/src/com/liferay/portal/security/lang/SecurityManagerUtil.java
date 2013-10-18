@@ -30,6 +30,16 @@ public class SecurityManagerUtil {
 
 	public static final boolean ENABLED = (System.getSecurityManager() != null);
 
+	public static void destroy() {
+		if (_portalSecurityManager == null) {
+			return;
+		}
+
+		_portalSecurityManager.destroy();
+
+		_portalSecurityManager = null;
+	}
+
 	public static PortalSecurityManager getPortalSecurityManager() {
 		return _portalSecurityManager;
 	}

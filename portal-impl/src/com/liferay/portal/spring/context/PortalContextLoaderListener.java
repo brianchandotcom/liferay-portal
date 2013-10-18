@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -180,6 +181,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		_portalServlerContextName = servletContext.getServletContextName();
 
 		if (_portalServlerContextName == null) {
+			_portalServlerContextName = StringPool.BLANK;
+		}
+
+		if (ServerDetector.isJetty() &&
+			_portalServlerContextName.equals(StringPool.SLASH)) {
+
 			_portalServlerContextName = StringPool.BLANK;
 		}
 

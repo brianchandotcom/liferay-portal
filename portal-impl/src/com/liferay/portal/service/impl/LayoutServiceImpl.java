@@ -558,28 +558,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public File exportPortletInfoAsFile(
-			long companyId, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			String portletId, Map<String, String[]> parameterMap,
+			Date startDate, Date endDate)
 		throws PortalException, SystemException {
 
-		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), companyGroup.getGroupId(),
-			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
-
-		return layoutLocalService.exportPortletInfoAsFile(
-			companyId, portletId, parameterMap, startDate, endDate);
-	}
-
-	@Override
-	public long exportPortletInfoAsFileInBackground(
-			long userId, String taskName, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate,
-			String fileName)
-		throws PortalException, SystemException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userPersistence.findByPrimaryKey(getUserId());
 
 		Group companyGroup = groupLocalService.getCompanyGroup(
 			user.getCompanyId());
@@ -588,9 +571,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), companyGroup.getGroupId(),
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		return layoutLocalService.exportPortletInfoAsFileInBackground(
-			userId, taskName, portletId, parameterMap, startDate, endDate,
-			fileName);
+		return layoutLocalService.exportPortletInfoAsFile(
+			user.getCompanyId(), portletId, parameterMap, startDate, endDate);
 	}
 
 	@Override
@@ -609,6 +591,27 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.exportPortletInfoAsFileInBackground(
 			getUserId(), taskName, plid, groupId, portletId, parameterMap,
 			startDate, endDate, fileName);
+	}
+
+	@Override
+	public long exportPortletInfoAsFileInBackground(
+			String taskName, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate,
+			String fileName)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(getUserId());
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			user.getCompanyId());
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), companyGroup.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.exportPortletInfoAsFileInBackground(
+			getUserId(), taskName, portletId, parameterMap, startDate, endDate,
+			fileName);
 	}
 
 	/**

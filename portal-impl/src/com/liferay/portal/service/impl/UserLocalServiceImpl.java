@@ -2194,6 +2194,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return searchCount(group.getCompanyId(), null, status, params);
 	}
 
+	@Override
+	public List<User> getInheritedRoleUsers(
+			long roleId, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		Role role = rolePersistence.findByPrimaryKey(roleId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("inherit", Boolean.TRUE);
+		params.put("usersRoles", roleId);
+
+		return search(
+			role.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+			params, start, end, obc);
+	}
+
 	/**
 	 * Returns all the users who have not had any announcements of the type
 	 * delivered, excluding the default user.

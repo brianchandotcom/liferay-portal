@@ -1766,6 +1766,14 @@ public class UserLocalServiceUtil {
 		return getService().getGroupUsersCount(groupId, status);
 	}
 
+	public static java.util.List<com.liferay.portal.model.User> getInheritedRoleUsers(
+		long roleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getInheritedRoleUsers(roleId, start, end, obc);
+	}
+
 	/**
 	* Returns all the users who have not had any announcements of the type
 	* delivered, excluding the default user.

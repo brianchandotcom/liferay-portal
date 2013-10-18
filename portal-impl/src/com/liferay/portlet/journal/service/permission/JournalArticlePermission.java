@@ -205,15 +205,14 @@ public class JournalArticlePermission {
 
 		if (permissionChecker.hasOwnerPermission(
 				article.getCompanyId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey(), article.getUserId(), actionId) ||
-			permissionChecker.hasPermission(
-				article.getGroupId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey(), actionId)) {
+				article.getResourcePrimKey(), article.getUserId(), actionId)) {
 
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			article.getGroupId(), JournalArticle.class.getName(),
+			article.getResourcePrimKey(), actionId);
 	}
 
 }

@@ -95,15 +95,14 @@ public class BlogsEntryPermission {
 
 		if (permissionChecker.hasOwnerPermission(
 				entry.getCompanyId(), BlogsEntry.class.getName(),
-				entry.getEntryId(), entry.getUserId(), actionId) ||
-			permissionChecker.hasPermission(
-				entry.getGroupId(), BlogsEntry.class.getName(),
-				entry.getEntryId(), actionId)) {
+				entry.getEntryId(), entry.getUserId(), actionId)) {
 
 			return true;
 		}
 
-		return false;
+		return permissionChecker.hasPermission(
+			entry.getGroupId(), BlogsEntry.class.getName(), entry.getEntryId(),
+			actionId);
 	}
 
 }

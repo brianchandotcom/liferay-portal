@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.announcements.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -49,10 +49,10 @@ import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 import com.liferay.portlet.announcements.service.base.AnnouncementsEntryLocalServiceBaseImpl;
 import com.liferay.util.ContentUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -397,13 +397,6 @@ public class AnnouncementsEntryLocalServiceImpl
 		String className = entry.getClassName();
 		long classPK = entry.getClassPK();
 
-		String fromName = PrefsPropsUtil.getStringFromNames(
-			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_NAME,
-			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		String fromAddress = PrefsPropsUtil.getStringFromNames(
-			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS,
-			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-
 		String toName = PropsValues.ANNOUNCEMENTS_EMAIL_TO_NAME;
 		String toAddress = PropsValues.ANNOUNCEMENTS_EMAIL_TO_ADDRESS;
 
@@ -455,26 +448,45 @@ public class AnnouncementsEntryLocalServiceImpl
 			}
 		}
 
-		List<User> users = null;
-
 		if (className.equals(User.class.getName())) {
 			User user = userPersistence.findByPrimaryKey(classPK);
 
-			toName = user.getFullName();
-			toAddress = user.getEmailAddress();
-
-			users = new ArrayList<User>();
-
-			if (Validator.isNotNull(toAddress)) {
-				users.add(user);
+			if (Validator.isNull(user.getEmailAddress())) {
+				return;
 			}
+
+			notifyUsers(
+				ListUtil.fromArray(new User[]{user}), entry,
+				company.getLocale(), user.getEmailAddress(),
+				user.getFullName());
 		}
 		else {
-			users = userLocalService.search(
+			int count = userLocalService.searchCount(
 				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-				params, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				(OrderByComparator)null);
+				params);
+
+			int pages = count / Indexer.DEFAULT_INTERVAL;
+
+			for (int i = 0; i <= pages; i++) {
+				int start = (i * Indexer.DEFAULT_INTERVAL);
+
+				int end = start + Indexer.DEFAULT_INTERVAL;
+
+				List<User> users = userLocalService.search(
+					company.getCompanyId(), null,
+					WorkflowConstants.STATUS_APPROVED, params, start, end,
+					(OrderByComparator)null);
+
+				notifyUsers(
+					users, entry, company.getLocale(), toAddress, toName);
+			}
 		}
+	}
+
+	protected void notifyUsers(
+			List<User> users, AnnouncementsEntry entry, Locale locale,
+			String toAddress, String toName)
+		throws PortalException, SystemException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Notifying " + users.size() + " users");
@@ -510,9 +522,15 @@ public class AnnouncementsEntryLocalServiceImpl
 			return;
 		}
 
+		String body = ContentUtil.get(PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
+		String fromAddress = PrefsPropsUtil.getStringFromNames(
+			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS,
+			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		String fromName = PrefsPropsUtil.getStringFromNames(
+			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_NAME,
+			PropsKeys.ADMIN_EMAIL_FROM_NAME);
 		String subject = ContentUtil.get(
 			PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
-		String body = ContentUtil.get(PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(entry.getCompanyId());
@@ -520,12 +538,10 @@ public class AnnouncementsEntryLocalServiceImpl
 			"[$ENTRY_CONTENT$]", entry.getContent(), false);
 		subscriptionSender.setContextAttributes(
 			"[$ENTRY_ID$]", entry.getEntryId(), "[$ENTRY_TITLE$]",
-			entry.getTitle(), "[$ENTRY_TYPE$]",
-			LanguageUtil.get(company.getLocale(), entry.getType()),
-			"[$ENTRY_URL$]", entry.getUrl(), "[$PORTLET_NAME$]",
+			entry.getTitle(), "[$ENTRY_TYPE$]", "[$ENTRY_URL$]", entry.getUrl(),
+			"[$PORTLET_NAME$]",
 			LanguageUtil.get(
-				company.getLocale(),
-				(entry.isAlert() ? "alert" : "announcement")));
+				locale, (entry.isAlert() ? "alert" : "announcement")));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("announcements_entry", entry.getEntryId());

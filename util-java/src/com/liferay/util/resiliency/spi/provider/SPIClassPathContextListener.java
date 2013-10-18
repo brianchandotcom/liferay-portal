@@ -131,11 +131,7 @@ public class SPIClassPathContextListener implements ServletContextListener {
 				PortalClassLoaderUtil.getClassLoader(),
 				PropsUtil.get(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME));
 
-			int pos = jdbcDriverJarDirName.lastIndexOf(".jar!");
-
-			if (pos == -1) {
-				pos = jdbcDriverJarDirName.lastIndexOf(".jar/");
-			}
+			int pos = jdbcDriverJarDirName.lastIndexOf(".jar");
 
 			pos = jdbcDriverJarDirName.lastIndexOf(CharPool.SLASH, pos);
 

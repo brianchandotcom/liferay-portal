@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.RandomAccessInputStream;
@@ -683,6 +684,10 @@ public class ServletResponseUtil {
 					mimeTypesContentDispositionInline, extension)) {
 
 				contentDispositionType = HttpHeaders.CONTENT_DISPOSITION_INLINE;
+
+				contentType = MimeTypesUtil.getContentType(fileName);
+
+				response.setContentType(contentType);
 			}
 			else {
 				contentDispositionType =

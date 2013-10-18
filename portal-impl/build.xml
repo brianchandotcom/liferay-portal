@@ -1561,14 +1561,23 @@ public class Creole10Parser]]></replacevalue>
 				</and>
 			</not>
 			<then>
-				<antcall target="manifest" />
+				<manifest-helper />
 
-				<jar
-					basedir="classes"
-					excludes="log4j.properties,logging.properties,portal-*.properties,system-*.properties"
-					jarfile="${jar.file}.jar"
-					manifest="classes/META-INF/MANIFEST.MF"
-				/>
+				<bndexpand propertyfile="${project.dir}/common.bnd" />
+
+				<bnd
+					eclipse="false"
+					exceptions="true"
+					failok="false"
+					inherit="true"
+					output="${jar.file}.jar"
+					sourcepath="."
+				>
+					<bndfiles path="bnd.bnd" />
+					<classpath>
+						<pathelement location="classes" />
+					</classpath>
+				</bnd>
 			</then>
 		</if>
 	</target>

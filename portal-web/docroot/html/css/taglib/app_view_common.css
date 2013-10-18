@@ -1,3 +1,5 @@
+@import "mixins";
+
 .app-view-entry {
 	.entry-thumbnail {
 		margin: 0;
@@ -45,6 +47,10 @@
 
 	.entry-metadata {
 		margin: 10px 0 20px;
+
+		@include respond-to(phone, tablet) {
+			width: 85%;
+		}
 
 		.entry-title {
 			padding-bottom: 3px;

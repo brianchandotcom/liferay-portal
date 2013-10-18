@@ -96,8 +96,17 @@ public class LayoutStagingBackgroundTaskExecutor
 				parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 			if (updateLastPublishDate) {
-				StagingUtil.updateLastPublishDate(
-					sourceGroupId, privateLayout, lastPublishDate);
+				Group sourceGroup = GroupLocalServiceUtil.getGroup(
+					sourceGroupId);
+
+				if (!sourceGroup.hasStagingGroup()) {
+					StagingUtil.updateLastPublishDate(
+						sourceGroupId, privateLayout, lastPublishDate);
+				}
+				else {
+					StagingUtil.updateLastPublishDate(
+						targetGroupId, privateLayout, lastPublishDate);
+				}
 			}
 		}
 		finally {

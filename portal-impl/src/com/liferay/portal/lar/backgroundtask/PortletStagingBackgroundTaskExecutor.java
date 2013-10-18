@@ -62,7 +62,7 @@ public class PortletStagingBackgroundTaskExecutor
 		try {
 			missingReferences =
 				LayoutLocalServiceUtil.validateImportPortletInfo(
-					userId, targetGroupId, targetPlid, portletId, parameterMap,
+					userId, targetPlid, targetGroupId, portletId, parameterMap,
 					larFile);
 
 			backgroundTask = markBackgroundTask(backgroundTask, "validated");

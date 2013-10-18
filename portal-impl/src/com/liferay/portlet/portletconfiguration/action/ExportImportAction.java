@@ -42,8 +42,6 @@ import com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction;
 
 import java.io.InputStream;
 
-import java.util.Date;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -143,26 +141,6 @@ public class ExportImportAction extends ImportLayoutsAction {
 					StagingUtil.publishToLive(actionRequest, portlet);
 
 					sendRedirect(actionRequest, actionResponse);
-				}
-			}
-			else {
-				long plid = ParamUtil.getLong(actionRequest, "plid");
-
-				DateRange dateRange = ExportImportHelperUtil.getDateRange(
-					actionRequest, 0, false, plid, portlet.getPortletId());
-
-				Date startDate = dateRange.getStartDate();
-
-				if (startDate != null) {
-					actionResponse.setRenderParameter(
-						"selStartTime", String.valueOf(startDate.getTime()));
-				}
-
-				Date endDate = dateRange.getEndDate();
-
-				if (endDate != null) {
-					actionResponse.setRenderParameter(
-						"selEndTime", String.valueOf(endDate.getTime()));
 				}
 			}
 		}
@@ -280,7 +258,8 @@ public class ExportImportAction extends ImportLayoutsAction {
 				actionRequest, "exportFileName");
 
 			DateRange dateRange = ExportImportHelperUtil.getDateRange(
-				actionRequest, groupId, false, plid, portlet.getPortletId());
+				actionRequest, groupId, false, plid, portlet.getPortletId(),
+				"all");
 
 			LayoutServiceUtil.exportPortletInfoAsFileInBackground(
 				portlet.getPortletId(), plid, groupId, portlet.getPortletId(),

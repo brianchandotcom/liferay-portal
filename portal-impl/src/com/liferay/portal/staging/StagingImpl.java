@@ -292,7 +292,8 @@ public class StagingImpl implements Staging {
 			portletRequest);
 
 		DateRange dateRange = ExportImportHelperUtil.getDateRange(
-			portletRequest, sourceGroupId, false, sourcePlid, portletId);
+			portletRequest, sourceGroupId, false, sourcePlid, portletId,
+			"fromLastPublishDate");
 
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
@@ -2266,7 +2267,8 @@ public class StagingImpl implements Staging {
 		}
 
 		DateRange dateRange = ExportImportHelperUtil.getDateRange(
-			portletRequest, sourceGroupId, privateLayout, 0, null);
+			portletRequest, sourceGroupId, privateLayout, 0, null,
+			"fromLastPublishDate");
 
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
@@ -2418,7 +2420,8 @@ public class StagingImpl implements Staging {
 			remoteGroupId);
 
 		DateRange dateRange = ExportImportHelperUtil.getDateRange(
-			portletRequest, groupId, privateLayout, 0, null);
+			portletRequest, groupId, privateLayout, 0, null,
+			"fromLastPublishDate");
 
 		if (schedule) {
 			String groupName = getSchedulerGroupName(

@@ -32,7 +32,6 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.sites.action.ActionUtil;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -76,32 +75,18 @@ public class ExportLayoutsAction extends PortletAction {
 				actionRequest, "privateLayout");
 			long[] layoutIds = getLayoutIds(actionRequest);
 			DateRange dateRange = ExportImportHelperUtil.getDateRange(
-				actionRequest, groupId, privateLayout, 0, null);
-
-			Date startDate = dateRange.getStartDate();
-			Date endDate = dateRange.getEndDate();
+				actionRequest, groupId, privateLayout, 0, null, "all");
 
 			if (Validator.isNotNull(cmd)) {
 				LayoutServiceUtil.exportLayoutsAsFileInBackground(
 					fileName, groupId, privateLayout, layoutIds,
-					actionRequest.getParameterMap(), startDate, endDate,
-					fileName);
+					actionRequest.getParameterMap(), dateRange.getStartDate(),
+					dateRange.getEndDate(), fileName);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else {
-				if (startDate != null) {
-					actionResponse.setRenderParameter(
-						"selStartTime", String.valueOf(startDate.getTime()));
-				}
-
-				if (endDate != null) {
-					actionResponse.setRenderParameter(
-						"selEndTime", String.valueOf(endDate.getTime()));
-				}
 			}
 		}
 		catch (Exception e) {

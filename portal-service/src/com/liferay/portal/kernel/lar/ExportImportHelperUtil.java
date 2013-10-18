@@ -50,11 +50,12 @@ public class ExportImportHelperUtil {
 
 	public static DateRange getDateRange(
 			PortletRequest portletRequest, long groupId, boolean privateLayout,
-			long plid, String portletId)
+			long plid, String portletId, String defaultRange)
 		throws Exception {
 
 		return getExportImportHelper().getDateRange(
-			portletRequest, groupId, privateLayout, plid, portletId);
+			portletRequest, groupId, privateLayout, plid, portletId,
+			defaultRange);
 	}
 
 	public static Layout getExportableLayout(ThemeDisplay themeDisplay)

@@ -20,11 +20,9 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,8 +30,6 @@ import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.RemoteAuthException;
 import com.liferay.portlet.sites.action.ActionUtil;
-
-import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -113,29 +109,6 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 				sendRedirect(
 					portletConfig, actionRequest, actionResponse, redirect,
 					closeRedirect);
-			}
-			else {
-				long groupId = ParamUtil.getLong(
-					actionRequest, "stagingGroupId");
-				boolean privateLayout = ParamUtil.getBoolean(
-					actionRequest, "privateLayout");
-
-				DateRange dateRange = ExportImportHelperUtil.getDateRange(
-					actionRequest, groupId, privateLayout, 0, null);
-
-				Date startDate = dateRange.getStartDate();
-
-				if (startDate != null) {
-					actionResponse.setRenderParameter(
-						"selStartTime", String.valueOf(startDate.getTime()));
-				}
-
-				Date endDate = dateRange.getEndDate();
-
-				if (endDate != null) {
-					actionResponse.setRenderParameter(
-						"selEndTime", String.valueOf(endDate.getTime()));
-				}
 			}
 		}
 		catch (Exception e) {

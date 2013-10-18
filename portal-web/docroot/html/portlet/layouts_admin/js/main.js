@@ -607,29 +607,33 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															var startDatePicker = Liferay.component(instance.ns('startDateDatePicker'));
-															var startTimePicker = Liferay.component(instance.ns('startTimeTimePicker'));
+															var endsLater = true;
 
-															var endDatePicker = Liferay.component(instance.ns('endDateDatePicker'));
-															var endTimePicker = Liferay.component(instance.ns('endTimeTimePicker'));
+															if (instance._isChecked('rangeDateRangeNode')) {
+																var startDatePicker = Liferay.component(instance.ns('startDateDatePicker'));
+																var startTimePicker = Liferay.component(instance.ns('startTimeTimePicker'));
 
-															var startDate = startDatePicker.getDate();
-															var startTime = startTimePicker.getTime();
+																var endDatePicker = Liferay.component(instance.ns('endDateDatePicker'));
+																var endTimePicker = Liferay.component(instance.ns('endTimeTimePicker'));
 
-															startDate.setHours(startTime.getHours());
-															startDate.setMinutes(startTime.getMinutes());
-															startDate.setSeconds(0);
-															startDate.setMilliseconds(0);
+																var startDate = startDatePicker.getDate();
+																var startTime = startTimePicker.getTime();
 
-															var endDate = endDatePicker.getDate();
-															var endTime = endTimePicker.getTime();
+																startDate.setHours(startTime.getHours());
+																startDate.setMinutes(startTime.getMinutes());
+																startDate.setSeconds(0);
+																startDate.setMilliseconds(0);
 
-															endDate.setHours(endTime.getHours());
-															endDate.setMinutes(endTime.getMinutes());
-															endDate.setSeconds(0);
-															endDate.setMilliseconds(0);
+																var endDate = endDatePicker.getDate();
+																var endTime = endTimePicker.getTime();
 
-															var endsLater = A.Date.isGreater(endDate, startDate);
+																endDate.setHours(endTime.getHours());
+																endDate.setMinutes(endTime.getMinutes());
+																endDate.setSeconds(0);
+																endDate.setMilliseconds(0);
+
+																endsLater = A.Date.isGreater(endDate, startDate);
+															}
 
 															if (endsLater) {
 																instance._reloadForm();

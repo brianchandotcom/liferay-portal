@@ -200,13 +200,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Override
 	public DateRange getDateRange(
 			PortletRequest portletRequest, long groupId, boolean privateLayout,
-			long plid, String portletId)
+			long plid, String portletId, String defaultRange)
 		throws Exception {
 
 		Date startDate = null;
 		Date endDate = null;
 
-		String range = ParamUtil.getString(portletRequest, "range");
+		String range = ParamUtil.getString(
+			portletRequest, "range", defaultRange);
 
 		if (range.equals("dateRange")) {
 			Calendar startCalendar = getCalendar(
@@ -219,6 +220,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			endDate = endCalendar.getTime();
 		}
 		else if (range.equals("fromLastPublishDate")) {
+			long lastPublishDate = 0;
+
 			if (Validator.isNotNull(portletId) && (plid > 0)) {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
@@ -226,28 +229,22 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					PortletPreferencesFactoryUtil.getPortletSetup(
 						layout, portletId, StringPool.BLANK);
 
-				long lastPublishDate = GetterUtil.getLong(
+				lastPublishDate = GetterUtil.getLong(
 					preferences.getValue(
 						"last-publish-date", StringPool.BLANK));
-
-				if (lastPublishDate > 0) {
-					endDate = new Date();
-
-					startDate = new Date(lastPublishDate);
-				}
 			}
 			else {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 
-				long lastPublishDate = GetterUtil.getLong(
+				lastPublishDate = GetterUtil.getLong(
 					layoutSet.getSettingsProperty("last-publish-date"));
+			}
 
-				if (lastPublishDate > 0) {
-					endDate = new Date();
+			if (lastPublishDate > 0) {
+				endDate = new Date();
 
-					startDate = new Date(lastPublishDate);
-				}
+				startDate = new Date(lastPublishDate);
 			}
 		}
 		else if (range.equals("last")) {

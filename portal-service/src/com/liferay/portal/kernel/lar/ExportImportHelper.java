@@ -81,7 +81,7 @@ public interface ExportImportHelper {
 
 	public DateRange getDateRange(
 			PortletRequest portletRequest, long groupId, boolean privateLayout,
-			long plid, String portletId)
+			long plid, String portletId, String defaultRange)
 		throws Exception;
 
 	public Layout getExportableLayout(ThemeDisplay themeDisplay)

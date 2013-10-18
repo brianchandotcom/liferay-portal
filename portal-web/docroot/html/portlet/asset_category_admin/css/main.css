@@ -324,16 +324,6 @@
 			}
 		}
 	}
-
-	.yui3-widget-bd .field.vocabulary-checkbox {
-		input {
-			width: auto;
-		}
-
-		label {
-			display:inline-block;
-		}
-	}
 }
 
 .ie6, .ie7 {

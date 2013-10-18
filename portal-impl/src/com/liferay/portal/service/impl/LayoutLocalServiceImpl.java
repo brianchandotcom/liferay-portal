@@ -1965,6 +1965,53 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void importPortletInfo(
+			long userId, String portletId, Map<String, String[]> parameterMap,
+			File file)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		long companyId = user.getCompanyId();
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+
+		Group controlPanelGroup = groupPersistence.findByC_F(
+			companyId, GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+
+		Layout controlPanelLayout = layoutPersistence.findByG_P_T_First(
+			controlPanelGroup.getGroupId(), true,
+			LayoutConstants.TYPE_CONTROL_PANEL, null);
+
+		importPortletInfo(
+			userId, controlPanelLayout.getPlid(), companyGroup.getGroupId(),
+			portletId, parameterMap, file);
+	}
+
+	@Override
+	public void importPortletInfo(
+		long userId, String portletId, Map<String, String[]> parameterMap,
+		InputStream is)
+	throws PortalException, SystemException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, is);
+
+			importPortletInfo(userId, portletId, parameterMap, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	@Override
 	public long importPortletInfoInBackground(
 			long userId, String taskName, long plid, long groupId,
 			String portletId, Map<String, String[]> parameterMap, File file)
@@ -2003,6 +2050,54 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			return importPortletInfoInBackground(
 				userId, taskName, plid, groupId, portletId, parameterMap, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	@Override
+	public long importPortletInfoInBackground(
+			long userId, String taskName, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		long companyId = user.getCompanyId();
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+
+		Group controlPanelGroup = groupPersistence.findByC_F(
+			companyId, GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+
+		Layout controlPanelLayout = layoutPersistence.findByG_P_T_First(
+			controlPanelGroup.getGroupId(), true,
+			LayoutConstants.TYPE_CONTROL_PANEL, null);
+
+		return importPortletInfoInBackground(
+			userId, taskName, controlPanelLayout.getPlid(),
+			companyGroup.getGroupId(), portletId, parameterMap, file);
+	}
+
+	@Override
+	public long importPortletInfoInBackground(
+			long userId, String taskName, String portletId,
+			Map<String, String[]> parameterMap, InputStream is)
+		throws PortalException, SystemException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, is);
+
+			return importPortletInfoInBackground(
+				userId, taskName, portletId, parameterMap, file);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);

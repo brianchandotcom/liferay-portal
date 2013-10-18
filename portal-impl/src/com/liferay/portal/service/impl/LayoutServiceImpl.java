@@ -1044,6 +1044,43 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public void importPortletInfo(
+			String portletId, Map<String, String[]> parameterMap, File file)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(getUserId());
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			user.getCompanyId());
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), companyGroup.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		layoutLocalService.importPortletInfo(
+			getUserId(), portletId, parameterMap, file);
+	}
+
+	@Override
+	public void importPortletInfo(
+			String portletId, Map<String, String[]> parameterMap,
+			InputStream is)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(getUserId());
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			user.getCompanyId());
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), companyGroup.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		layoutLocalService.importPortletInfo(
+			getUserId(), portletId, parameterMap, is);
+	}
+
+	@Override
 	public long importPortletInfoInBackground(
 			String taskName, long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
@@ -1070,6 +1107,44 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.importPortletInfoInBackground(
 			getUserId(), taskName, plid, groupId, portletId, parameterMap, is);
+	}
+
+	@Override
+	public void importPortletInfoInBackground(
+			String taskName, String portletId,
+			Map<String, String[]> parameterMap, File file)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(getUserId());
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			user.getCompanyId());
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), companyGroup.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		layoutLocalService.importPortletInfoInBackground(
+			getUserId(), taskName, portletId, parameterMap, file);
+	}
+
+	@Override
+	public void importPortletInfoInBackground(
+			String taskName, String portletId,
+			Map<String, String[]> parameterMap, InputStream is)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(getUserId());
+
+		Group companyGroup = groupLocalService.getCompanyGroup(
+			user.getCompanyId());
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), companyGroup.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		layoutLocalService.importPortletInfoInBackground(
+			getUserId(), taskName, portletId, parameterMap, is);
 	}
 
 	/**

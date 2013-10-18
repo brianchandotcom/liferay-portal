@@ -113,53 +113,51 @@ if (layout != null) {
 	</c:if>
 
 	<aui:script use="liferay-navigation">
-		if (!A.UA.touch) {
-			Liferay.once(
-				'initNavigation',
-				function() {
-					new Liferay.Navigation(
-						{
-							hasAddLayoutPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>,
-							layoutIds: [
+		Liferay.once(
+			'initNavigation',
+			function() {
+				new Liferay.Navigation(
+					{
+						hasAddLayoutPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>,
+						layoutIds: [
 
-								<%
-								for (int i = 0; (layouts != null) && (i < layouts.size()); i++) {
-									Layout curLayout = (Layout)layouts.get(i);
-								%>
+							<%
+							for (int i = 0; (layouts != null) && (i < layouts.size()); i++) {
+								Layout curLayout = (Layout)layouts.get(i);
+							%>
 
-									{
-										deletable: <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE) %>,
-										id: <%= curLayout.getLayoutId() %>,
-										sortable: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
-										updateable: <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>
-									},
+								{
+									deletable: !A.UA.touch && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE) %>,
+									id: <%= curLayout.getLayoutId() %>,
+									sortable: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSortable(curLayout) %>,
+									updateable: <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.UPDATE) %>
+								},
 
-								<%
-								}
-								%>
+							<%
+							}
+							%>
 
-								],
+							],
 
-							<c:if test="<%= layoutRevision != null %>">
-								layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',
-							</c:if>
+						<c:if test="<%= layoutRevision != null %>">
+							layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>',
+						</c:if>
 
-							navBlock: navBlock
-						}
-					);
-				}
-			);
-
-			var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
-
-			if (navBlock) {
-				navBlock.once(
-					'mousemove',
-					function() {
-						Liferay.fire('initNavigation');
+						navBlock: navBlock
 					}
 				);
 			}
+		);
+
+		var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
+
+		if (navBlock) {
+			navBlock.once(
+				'mousemove',
+				function() {
+					Liferay.fire('initNavigation');
+				}
+			);
 		}
 	</aui:script>
 </c:if>

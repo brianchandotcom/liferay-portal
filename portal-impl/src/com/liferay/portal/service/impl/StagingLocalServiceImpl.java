@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -23,14 +25,27 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.RemoteAuthException;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.StagingLocalServiceBaseImpl;
+import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -41,8 +56,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Michael C. Han
@@ -81,6 +100,219 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			serviceContext);
 
 		return folder.getFolderId();
+	}
+
+	@Override
+	public void disableStaging(Group liveGroup, ServiceContext serviceContext)
+		throws Exception {
+
+		disableStaging((PortletRequest)null, liveGroup, serviceContext);
+	}
+
+	@Override
+	public void disableStaging(
+			PortletRequest portletRequest, Group liveGroup,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		boolean stagedRemotely = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("stagedRemotely"));
+
+		if (stagedRemotely) {
+			String remoteURL = buildRemoteURL(typeSettingsProperties);
+
+			long remoteGroupId = GetterUtil.getLong(
+				typeSettingsProperties.getProperty("remoteGroupId"));
+
+			disableRemoteStaging(remoteURL, remoteGroupId);
+		}
+
+		typeSettingsProperties.remove("branchingPrivate");
+		typeSettingsProperties.remove("branchingPublic");
+		typeSettingsProperties.remove("remoteAddress");
+		typeSettingsProperties.remove("remoteGroupId");
+		typeSettingsProperties.remove("remotePathContext");
+		typeSettingsProperties.remove("remotePort");
+		typeSettingsProperties.remove("secureConnection");
+		typeSettingsProperties.remove("staged");
+		typeSettingsProperties.remove("stagedRemotely");
+
+		Set<String> keys = new HashSet<String>();
+
+		for (String key : typeSettingsProperties.keySet()) {
+			if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
+				keys.add(key);
+			}
+		}
+
+		for (String key : keys) {
+			typeSettingsProperties.remove(key);
+		}
+
+		deleteLastImportSettings(liveGroup, true);
+		deleteLastImportSettings(liveGroup, false);
+
+		if (liveGroup.hasStagingGroup()) {
+			Group stagingGroup = liveGroup.getStagingGroup();
+
+			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
+				stagingGroup.getGroupId(), true, true);
+			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
+				stagingGroup.getGroupId(), false, true);
+
+			GroupLocalServiceUtil.deleteGroup(stagingGroup.getGroupId());
+		}
+		else {
+			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
+				liveGroup.getGroupId(), true, true);
+			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
+				liveGroup.getGroupId(), false, true);
+		}
+
+		GroupLocalServiceUtil.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
+	}
+
+	@Override
+	public void enableLocalStaging(
+			long userId, Group scopeGroup, Group liveGroup,
+			boolean branchingPublic, boolean branchingPrivate,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (liveGroup.isStagedRemotely()) {
+			disableStaging(liveGroup, serviceContext);
+		}
+
+		UnicodeProperties typeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"branchingPrivate", String.valueOf(branchingPrivate));
+		typeSettingsProperties.setProperty(
+			"branchingPublic", String.valueOf(branchingPublic));
+		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
+		typeSettingsProperties.setProperty(
+			"stagedRemotely", String.valueOf(false));
+
+		setCommonStagingOptions(
+			liveGroup, typeSettingsProperties, serviceContext);
+
+		GroupLocalServiceUtil.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
+
+		if (!liveGroup.hasStagingGroup()) {
+			serviceContext.setAttribute("staging", String.valueOf(true));
+
+			Group stagingGroup = GroupLocalServiceUtil.addGroup(
+				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				liveGroup.getClassName(), liveGroup.getClassPK(),
+				liveGroup.getGroupId(), liveGroup.getDescriptiveName(),
+				liveGroup.getDescription(), liveGroup.getType(),
+				liveGroup.isManualMembership(),
+				liveGroup.getMembershipRestriction(),
+				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),
+				serviceContext);
+
+			Map<String, String[]> parameterMap = getStagingParameters();
+
+			if (liveGroup.hasPrivateLayouts()) {
+				publishLayouts(
+					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
+					true, parameterMap, null, null);
+			}
+
+			if (liveGroup.hasPublicLayouts() ||
+				!liveGroup.hasPrivateLayouts()) {
+
+				publishLayouts(
+					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
+					false, parameterMap, null, null);
+			}
+		}
+
+		checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, false,
+			serviceContext);
+	}
+
+	@Override
+	public void enableRemoteStaging(
+			long userId, Group scopeGroup, Group liveGroup,
+			boolean branchingPublic, boolean branchingPrivate,
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		validate(
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId);
+
+		if (liveGroup.hasStagingGroup()) {
+			disableStaging(liveGroup, serviceContext);
+		}
+
+		String remoteURL = buildRemoteURL(
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
+
+		UnicodeProperties typeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		boolean stagedRemotely = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("stagedRemotely"));
+
+		if (stagedRemotely) {
+			long oldRemoteGroupId = GetterUtil.getLong(
+				typeSettingsProperties.getProperty("remoteGroupId"));
+
+			String oldRemoteURL = buildRemoteURL(typeSettingsProperties);
+
+			if (!remoteURL.equals(oldRemoteURL) ||
+				(remoteGroupId != oldRemoteGroupId)) {
+
+				disableRemoteStaging(oldRemoteURL, oldRemoteGroupId);
+
+				stagedRemotely = false;
+			}
+		}
+
+		if (!stagedRemotely) {
+			enableRemoteStaging(remoteURL, remoteGroupId);
+		}
+
+		typeSettingsProperties.setProperty(
+			"branchingPrivate", String.valueOf(branchingPrivate));
+		typeSettingsProperties.setProperty(
+			"branchingPublic", String.valueOf(branchingPublic));
+		typeSettingsProperties.setProperty("remoteAddress", remoteAddress);
+		typeSettingsProperties.setProperty(
+			"remoteGroupId", String.valueOf(remoteGroupId));
+		typeSettingsProperties.setProperty(
+			"remotePathContext", remotePathContext);
+		typeSettingsProperties.setProperty(
+			"remotePort", String.valueOf(remotePort));
+		typeSettingsProperties.setProperty(
+			"secureConnection", String.valueOf(secureConnection));
+		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
+		typeSettingsProperties.setProperty(
+			"stagedRemotely", Boolean.TRUE.toString());
+
+		setCommonStagingOptions(
+			liveGroup, typeSettingsProperties, serviceContext);
+
+		GroupLocalServiceUtil.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
+
+		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
+
+		checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, true,
+			serviceContext);
 	}
 
 	@Override
@@ -146,6 +378,98 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutValidationInProcess(false);
+		}
+	}
+
+	protected void disableRemoteStaging(String remoteURL, long remoteGroupId)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			remoteURL, user.getScreenName(), user.getPassword(),
+			user.getPasswordEncrypted());
+
+		try {
+			GroupServiceHttp.disableStaging(httpPrincipal, remoteGroupId);
+		}
+		catch (NoSuchGroupException nsge) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_GROUP);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (PrincipalException pe) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_PERMISSIONS);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(remoteURL);
+
+			throw rae;
+		}
+		catch (SystemException se) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.BAD_CONNECTION);
+
+			ree.setURL(remoteURL);
+
+			throw ree;
+		}
+	}
+
+	protected void enableRemoteStaging(String remoteURL, long remoteGroupId)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			remoteURL, user.getScreenName(), user.getPassword(),
+			user.getPasswordEncrypted());
+
+		try {
+			GroupServiceHttp.enableStaging(httpPrincipal, remoteGroupId);
+		}
+		catch (NoSuchGroupException nsge) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_GROUP);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (PrincipalException pe) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.NO_PERMISSIONS);
+
+			ree.setGroupId(remoteGroupId);
+
+			throw ree;
+		}
+		catch (RemoteAuthException rae) {
+			rae.setURL(remoteURL);
+
+			throw rae;
+		}
+		catch (SystemException se) {
+			RemoteExportException ree = new RemoteExportException(
+				RemoteExportException.BAD_CONNECTION);
+
+			ree.setURL(remoteURL);
+
+			throw ree;
 		}
 	}
 

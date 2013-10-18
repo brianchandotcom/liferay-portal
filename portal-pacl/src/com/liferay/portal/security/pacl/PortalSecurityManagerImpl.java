@@ -64,6 +64,8 @@ import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactory;
 import com.liferay.portal.security.pacl.jndi.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.security.pacl.jndi.SchemeAwareContextWrapper;
 import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
+import com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl;
+import com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl.DoUpgradeDBPrivilegedExceptionAction;
 import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
@@ -503,6 +505,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(ReferenceRegistry.class, new DoReferenceRegistryPACL());
 		initPACLImpl(
 			ServiceBeanAopProxy.class, new DoServiceBeanAopProxyPACL());
+		initPACLImpl(
+			ServiceComponentLocalServiceImpl.class,
+			new DoServiceComponentLocalServiceImplPACL());
 		initPACLImpl(
 			TemplateContextHelper.class, new DoTemplateContextHelperPACL());
 	}
@@ -1337,6 +1342,28 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			AdvisedSupport advisedSupport) {
 
 			return new PACLInvocationHandler(invocationHandler, advisedSupport);
+		}
+
+	}
+
+	private static class DoServiceComponentLocalServiceImplPACL
+		implements ServiceComponentLocalServiceImpl.PACL {
+
+		public void doUpgradeDB(
+				DoUpgradeDBPrivilegedExceptionAction
+					doUpgradeDBPrivilegedExceptionAction)
+			throws Exception {
+
+			ProtectionDomain protectionDomain = new ProtectionDomain(
+				null, null,
+				doUpgradeDBPrivilegedExceptionAction.getClassLoader(), null);
+
+			AccessControlContext accessControlContext =
+				new AccessControlContext(
+					new ProtectionDomain[] {protectionDomain});
+
+			AccessController.doPrivileged(
+				doUpgradeDBPrivilegedExceptionAction, accessControlContext);
 		}
 
 	}

@@ -66,6 +66,211 @@
 		</execute>
 	</command>
 
+	<command name="AddOrganization">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+	</command>
+
+	<command name="AddOrganizations">
+		<var name="orgName1" value="Organization Name 1" />
+		<var name="orgName2" value="Organization Name 2" />
+		<var name="orgName3" value="Organization Name 3" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName1}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="${orgName1}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName2}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="${orgName2}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName3}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="${orgName3}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+	</command>
+
+	<command name="AddOrganizationSite">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="siteMember" value="Organization" />
+		<var name="siteName" value="Organization Name" />
+		<var name="siteType" value="Private" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteMember" value="${siteMember}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+	</command>
+
+	<command name="AddOrganizationTeam">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="siteName" value="${orgName}" />
+		<var name="siteScopeName" value="Organization Name" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="teamDescription" value="Site Team Description" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="Organization Name" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Organization#allowMembershipManagementCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Organization Name" />
+			<var name="portletName" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescription}" />
+		</execute>
+	</command>
+
+	<command name="AddSuborganization">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="suborgName" value="Suborganization Name" />
+		<var name="suborgSearchName" value="Suborganization" />
+		<var name="suborgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Suborganization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+			<var name="suborgName" value="${suborgName}" />
+			<var name="suborgType" value="${suborgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Suborganization#viewCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+			<var name="suborgName" value="${suborgName}" />
+			<var name="suborgSearchName" value="${suborgSearchName}" />
+			<var name="suborgType" value="${suborgType}" />
+		</execute>
+	</command>
+
 	<command name="AddUser">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -209,164 +414,6 @@
 		</execute>
 	</command>
 
-	<command name="AddUserScreenNameInvalid">
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="!@#$" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="Invalid" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#viewCP">
-			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="Invalid" />
-		</execute>
-	</command>
-
-	<command name="AddOrganization">
-		<var name="orgName" value="Organization Name" />
-		<var name="orgType" value="Regular Organization" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-	</command>
-
-	<command name="AddOrganizations">
-		<var name="orgName1" value="Organization Name 1" />
-		<var name="orgName2" value="Organization Name 2" />
-		<var name="orgName3" value="Organization Name 3" />
-		<var name="orgType" value="Regular Organization" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName1}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="${orgName1}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName2}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="${orgName2}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName3}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="${orgName3}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-	</command>
-
-	<command name="AddOrganizationTeam">
-		<var name="orgName" value="Organization Name" />
-		<var name="orgType" value="Regular Organization" />
-		<var name="siteName" value="${orgName}" />
-		<var name="siteScopeName" value="Organization Name" />
-		<var name="teamName" value="Site Team Name" />
-		<var name="teamDescription" value="Site Team Description" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteScopeName" value="Organization Name" />
-			<var name="portletName" value="Site Settings" />
-		</execute>
-
-		<execute macro="Organization#allowMembershipManagementCP">
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<execute macro="Page#gotoUsersCP">
-			<var name="siteScopeName" value="Organization Name" />
-			<var name="portletName" value="Site Teams" />
-		</execute>
-
-		<execute macro="Team#addCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="teamName" value="${teamName}" />
-			<var name="teamDescription" value="${teamDescription}" />
-		</execute>
-	</command>
-
 	<command name="AddUsers">
 		<var name="userEmailAddress1" value="userea1@liferay.com" />
 		<var name="userEmailAddress2" value="userea2@liferay.com" />
@@ -440,6 +487,34 @@
 		</execute>
 	</command>
 
+	<command name="AddUserScreenNameInvalid">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="!@#$" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenNameVariation" value="Invalid" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenNameVariation" value="Invalid" />
+		</execute>
+	</command>
+
 	<command name="AddUserScreenNameNumber">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -466,81 +541,6 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-	</command>
-
-	<command name="AddSite">
-		<var name="orgName" value="Organization Name" />
-		<var name="orgType" value="Regular Organization" />
-		<var name="siteMember" value="Organization" />
-		<var name="siteName" value="Organization Name" />
-		<var name="siteType" value="Private" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addSiteCP">
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#viewCP">
-			<var name="siteMember" value="${siteMember}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteType" value="${siteType}" />
-		</execute>
-	</command>
-
-	<command name="AddSuborganization">
-		<var name="orgName" value="Organization Name" />
-		<var name="orgType" value="Regular Organization" />
-		<var name="suborgName" value="Suborganization Name" />
-		<var name="suborgSearchName" value="Suborganization" />
-		<var name="suborgType" value="Regular Organization" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Suborganization#addCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-			<var name="suborgName" value="${suborgName}" />
-			<var name="suborgType" value="${suborgType}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Suborganization#viewCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
-			<var name="suborgName" value="${suborgName}" />
-			<var name="suborgSearchName" value="${suborgSearchName}" />
-			<var name="suborgType" value="${suborgType}" />
 		</execute>
 	</command>
 
@@ -682,6 +682,49 @@
 
 		<execute macro="Organization#deleteCP">
 			<var name="orgName" value="${orgName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteOrganizationSite">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="siteMember" value="Organization" />
+		<var name="siteName" value="Organization Name" />
+		<var name="siteType" value="Private" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteMember" value="${siteMember}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#deleteCP">
+			<var name="siteName" value="${siteName}" />
 		</execute>
 	</command>
 

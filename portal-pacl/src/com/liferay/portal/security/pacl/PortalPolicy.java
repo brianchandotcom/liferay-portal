@@ -195,7 +195,7 @@ public class PortalPolicy extends Policy {
 			return _checkWithParentPolicy(protectionDomain, permission);
 		}
 		finally {
-			_started.set(false);
+			_started.remove();
 		}
 	}
 

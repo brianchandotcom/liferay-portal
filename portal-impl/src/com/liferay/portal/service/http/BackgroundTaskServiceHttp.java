@@ -50,13 +50,47 @@ import com.liferay.portal.service.BackgroundTaskServiceUtil;
  * @generated
  */
 public class BackgroundTaskServiceHttp {
+	public static int getBackgroundTasksCount(HttpPrincipal httpPrincipal,
+		long groupId, java.lang.String taskExecutorClassName,
+		java.lang.String completed)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
+					"getBackgroundTasksCount",
+					_getBackgroundTasksCountParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					taskExecutorClassName, completed);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.lang.String getBackgroundTaskStatusJSON(
 		HttpPrincipal httpPrincipal, long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
 					"getBackgroundTaskStatusJSON",
-					_getBackgroundTaskStatusJSONParameterTypes0);
+					_getBackgroundTaskStatusJSONParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					backgroundTaskId);
@@ -80,7 +114,10 @@ public class BackgroundTaskServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BackgroundTaskServiceHttp.class);
-	private static final Class<?>[] _getBackgroundTaskStatusJSONParameterTypes0 = new Class[] {
+	private static final Class<?>[] _getBackgroundTasksCountParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getBackgroundTaskStatusJSONParameterTypes1 = new Class[] {
 			long.class
 		};
 }

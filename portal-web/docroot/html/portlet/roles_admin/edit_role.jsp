@@ -46,14 +46,9 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
 
-<portlet:renderURL var="editRoleRenderURL">
-	<portlet:param name="struts_action" value="/roles_admin/edit_role" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
-</portlet:renderURL>
-
 <aui:form action="<%= editRoleActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (role == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= (role == null) ? editRoleRenderURL : redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />

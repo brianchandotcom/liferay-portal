@@ -43,6 +43,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import scala.actors.threadpool.Arrays;
+
 /**
  * @author Shuyang Zhou
  */
@@ -79,7 +81,11 @@ public class SPIClassPathContextListener implements ServletContextListener {
 
 		Set<File> jarFiles = new LinkedHashSet<File>();
 
-		for (File file : spiEmbeddedLibDir.listFiles()) {
+		File[] files = spiEmbeddedLibDir.listFiles();
+
+		Arrays.sort(files);
+
+		for (File file : files) {
 			String fileName = file.getName();
 
 			if (fileName.endsWith(".jar")) {
@@ -100,7 +106,11 @@ public class SPIClassPathContextListener implements ServletContextListener {
 				return;
 			}
 
-			for (File file : spiEmbeddedLibExtDir.listFiles()) {
+			files = spiEmbeddedLibExtDir.listFiles();
+
+			Arrays.sort(files);
+
+			for (File file : files) {
 				String fileName = file.getName();
 
 				if (fileName.endsWith(".jar")) {
@@ -140,7 +150,11 @@ public class SPIClassPathContextListener implements ServletContextListener {
 
 			File jdbcDriverJarDir = new File(jdbcDriverJarDirName);
 
-			for (File file : jdbcDriverJarDir.listFiles()) {
+			files = jdbcDriverJarDir.listFiles();
+
+			Arrays.sort(files);
+
+			for (File file : files) {
 				String fileName = file.getName();
 
 				if (fileName.endsWith(".jar")) {

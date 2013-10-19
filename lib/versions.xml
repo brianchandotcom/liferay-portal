@@ -1151,6 +1151,17 @@
 		</comments>
 	</library>
 	<library>
+		<file-name>lib/portal/bnd-repository.jar</file-name>
+		<version>2.1.0</version>
+		<project-name>Bndtools</project-name>
+		<project-url>http://bndtools.org/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/portal/bobo-browse.jar</file-name>
 		<version>3.2.0</version>
 		<project-name>Bob Browse</project-name>

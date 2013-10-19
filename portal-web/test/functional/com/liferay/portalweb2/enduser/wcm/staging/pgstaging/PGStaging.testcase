@@ -204,7 +204,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_MANAGE_PAGE_VARIATION" value1="Manage Page Variations" />
+		<execute action="PGStaging#click" locator-key1="STAGING_MENU_MANAGE_PAGE_VARIATION" />
 
 		<execute action="PGStagingManagepagevariations#selectFrame" locator-key1="MANAGE_PAGE_VARIATIONS_IFRAME" />
 		<execute action="PGStagingManagepagevariations#assertClick" locator-key1="ADD_PAGE_VARIATION_BUTTON" value1="Add Page Variation" />

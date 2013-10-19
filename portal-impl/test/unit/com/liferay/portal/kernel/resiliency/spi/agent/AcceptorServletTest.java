@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 
@@ -63,7 +64,14 @@ public class AcceptorServletTest {
 	public void setUp() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		portalUtil.setPortal(new PortalImpl());
+		portalUtil.setPortal(new PortalImpl() {
+
+			@Override
+			public String getPathContext() {
+				return _pathContext;
+			}
+
+		});
 
 		ConcurrentMap<String, Object> attributes =
 			ProcessExecutor.ProcessContext.getAttributes();
@@ -135,6 +143,23 @@ public class AcceptorServletTest {
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
+
+		acceptorServlet.service(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals("/c/portal/resiliency", forwardPathReference.get());
+		Assert.assertSame(
+			mockHttpServletRequest, _recordSPIAgent._originalRequest1);
+		Assert.assertSame(
+			mockHttpServletRequest, _recordSPIAgent._originalRequest2);
+		Assert.assertSame(
+			mockHttpServletResponse, _recordSPIAgent._originalResponse);
+		Assert.assertNull(_recordSPIAgent._exception);
+		Assert.assertTrue(_mockHttpSession.isInvalid());
+
+		_pathContext = "/liferay-portal";
+
+		mockServletContext.registerContext(_pathContext, mockServletContext);
 
 		acceptorServlet.service(
 			mockHttpServletRequest, mockHttpServletResponse);
@@ -227,6 +252,7 @@ public class AcceptorServletTest {
 	}
 
 	private MockHttpSession _mockHttpSession = new MockHttpSession();
+	private String _pathContext = StringPool.BLANK;
 	private RecordSPIAgent _recordSPIAgent = new RecordSPIAgent();
 
 	private class RecordSPIAgent extends MockSPIAgent {

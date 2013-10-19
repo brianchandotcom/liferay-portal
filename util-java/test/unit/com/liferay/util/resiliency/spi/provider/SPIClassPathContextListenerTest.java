@@ -16,8 +16,10 @@ package com.liferay.util.resiliency.spi.provider;
 
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
+import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPIProvider;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -277,9 +279,9 @@ public class SPIClassPathContextListenerTest {
 		sb.append(File.pathSeparator);
 		sb.append(_extJarFile.getAbsolutePath());
 		sb.append(File.pathSeparator);
-		sb.append(_portalServiceJarFile.getAbsolutePath());
-		sb.append(File.pathSeparator);
 		sb.append(_jdbcDriverJarFile.getAbsolutePath());
+		sb.append(File.pathSeparator);
+		sb.append(_portalServiceJarFile.getAbsolutePath());
 		sb.append(File.pathSeparator);
 		sb.append(_CONTEXT_PATH);
 		sb.append("/WEB-INF/classes");
@@ -505,8 +507,17 @@ public class SPIClassPathContextListenerTest {
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			SPIClassPathContextListener.class.getName(), Level.OFF);
 
-		spiClassPathContextListener.contextInitialized(
-			new ServletContextEvent(_mockServletContext));
+		Field field = ReflectionUtil.getDeclaredField(SPIUtil.class, "_spi");
+
+		field.set(null, new MockSPI());
+
+		try {
+			spiClassPathContextListener.contextInitialized(
+				new ServletContextEvent(_mockServletContext));
+		}
+		finally {
+			field.set(null, null);
+		}
 
 		Assert.assertEquals(
 			spiClassPath, SPIClassPathContextListener.SPI_CLASS_PATH);

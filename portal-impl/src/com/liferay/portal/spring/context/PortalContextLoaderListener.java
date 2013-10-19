@@ -195,6 +195,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		_portalServletContextPath = servletContext.getContextPath();
 
+		if (ServerDetector.isWebSphere() &&
+			_portalServletContextPath.isEmpty()) {
+
+			_portalServlerContextName = StringPool.BLANK;
+		}
+
 		ClassPathUtil.initializeClassPaths(servletContext);
 
 		CacheRegistryUtil.clear();

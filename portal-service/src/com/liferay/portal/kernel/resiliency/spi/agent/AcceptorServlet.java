@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -42,7 +43,14 @@ public class AcceptorServlet extends HttpServlet {
 
 		ServletContext servletContext = getServletContext();
 
-		ServletContext portalServletContext = servletContext.getContext("/");
+		String uriPath = PortalUtil.getPathContext();
+
+		if (uriPath.isEmpty()) {
+			uriPath = StringPool.SLASH;
+		}
+
+		ServletContext portalServletContext = servletContext.getContext(
+			uriPath);
 
 		RequestDispatcher requestDispatcher =
 			portalServletContext.getRequestDispatcher("/c/portal/resiliency");

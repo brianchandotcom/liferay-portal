@@ -367,7 +367,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
 			document.addText(
 				Field.CONTENT,
-				extractDDMContent(dlFileVersion, LocaleUtil.getDefault()));
+				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());

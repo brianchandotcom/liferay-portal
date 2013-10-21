@@ -541,6 +541,11 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
+	public boolean isTrashEntry(java.lang.String className, long classPK) {
+		return _trashEntry.isTrashEntry(className, classPK);
+	}
+
+	@Override
 	public boolean isTrashEntry(
 		com.liferay.portal.model.TrashedModel trashedModel) {
 		return _trashEntry.isTrashEntry(trashedModel);

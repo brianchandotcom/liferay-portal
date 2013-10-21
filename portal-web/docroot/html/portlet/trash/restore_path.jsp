@@ -101,6 +101,7 @@
 						modal: true,
 						width: 680
 					},
+					eventName: '<portlet:namespace />selectFolder',
 					id: '<portlet:namespace />selectFolder',
 					title: '<liferay-ui:message key="warning" />',
 					uri: uri

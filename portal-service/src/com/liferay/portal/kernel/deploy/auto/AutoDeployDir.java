@@ -123,7 +123,9 @@ public class AutoDeployDir {
 			}
 		}
 
-		if (_interval > 0) {
+		if (_interval > 0 &&
+			((_autoDeployScanner == null) || !_autoDeployScanner.isAlive())) {
+
 			try {
 				Thread currentThread = Thread.currentThread();
 
@@ -277,8 +279,9 @@ public class AutoDeployDir {
 
 	private static Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 
+	private static AutoDeployScanner _autoDeployScanner;
+
 	private List<AutoDeployListener> _autoDeployListeners;
-	private AutoDeployScanner _autoDeployScanner;
 	private Map<String, Long> _blacklistFileTimestamps;
 	private File _deployDir;
 	private File _destDir;

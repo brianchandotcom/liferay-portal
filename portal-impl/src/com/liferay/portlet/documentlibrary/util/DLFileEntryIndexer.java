@@ -60,6 +60,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -367,7 +368,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
 			document.addText(
 				Field.CONTENT,
-				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
+				extractContent(dlFileVersion, LocaleUtil.getSiteDefault()));
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
@@ -520,6 +521,18 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		}
 	}
 
+	protected String extractContent(DLFileVersion dlFileVersion, Locale locale)
+		throws Exception {
+
+		if (dlFileVersion.getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			return StringPool.BLANK;
+		}
+
+		return extractDDMContent(dlFileVersion, locale);
+	}
+
 	protected String extractDDMContent(
 			DLFileVersion dlFileVersion, Locale locale)
 		throws Exception {
@@ -533,18 +546,23 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		StringBundler sb = new StringBundler(ddmStructures.size());
 
 		for (DDMStructure ddmStructure : ddmStructures) {
+			DLFileEntryMetadata fileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
+					ddmStructure.getStructureId(),
+					dlFileVersion.getFileVersionId());
+
+			if (fileEntryMetadata == null) {
+				continue;
+			}
+
 			Fields fields = null;
 
 			try {
-				DLFileEntryMetadata fileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-						ddmStructure.getStructureId(),
-						dlFileVersion.getFileVersionId());
-
 				fields = StorageEngineUtil.getFields(
 					fileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
+				continue;
 			}
 
 			if (fields != null) {

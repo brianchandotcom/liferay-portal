@@ -29,7 +29,13 @@
 	</command>
 
 	<command name="addSitePagesVariationPG">
-		<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+			</then>
+		</if>
+
 		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENULIST_MANAGE_SITE_PAGES_VARIATIONS" value1="Manage Site Pages Variations" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />

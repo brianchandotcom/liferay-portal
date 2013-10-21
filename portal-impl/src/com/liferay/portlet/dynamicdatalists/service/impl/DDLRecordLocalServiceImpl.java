@@ -44,6 +44,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
@@ -52,6 +53,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -518,6 +520,20 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				recordVersion.getStatus(), serviceContext);
 		}
 
+		boolean keepRecordVersion = false;
+
+		if (!majorVersion) {
+			keepRecordVersion = isKeepRecordVersionLabel(
+				record.getRecordVersion(), recordVersion,
+				serviceContext.getWorkflowAction());
+		}
+
+		if (keepRecordVersion) {
+			ddlRecordVersionPersistence.remove(recordVersion);
+
+			return record;
+		}
+
 		// Workflow
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
@@ -682,6 +698,52 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected boolean isKeepRecordVersionLabel(
+			DDLRecordVersion lastRecordVersion,
+			DDLRecordVersion latestRecordVersion, int workflowContext)
+		throws PortalException, SystemException {
+
+		if (workflowContext == WorkflowConstants.ACTION_SAVE_DRAFT) {
+			return false;
+		}
+
+		Fields lastFields = StorageEngineUtil.getFields(
+			lastRecordVersion.getDDMStorageId());
+		Fields latestFields = StorageEngineUtil.getFields(
+			latestRecordVersion.getDDMStorageId());
+
+		Set<String> lastFieldsNames = lastFields.getNames();
+		Set<String> latestFieldNames = latestFields.getNames();
+
+		if (!lastFieldsNames.equals(latestFieldNames)) {
+			return false;
+		}
+
+		for (String fieldName : lastFieldsNames) {
+			Field lastField = lastFields.get(fieldName);
+			Field latestField = latestFields.get(fieldName);
+
+			if (!lastField.isPrivate() && !lastField.equals(latestField)) {
+				return false;
+			}
+		}
+
+		ExpandoBridge lastExpandoBridge = lastRecordVersion.getExpandoBridge();
+		ExpandoBridge latestExpandoBridge =
+			latestRecordVersion.getExpandoBridge();
+
+		Map<String, Serializable> lastAttributes =
+			lastExpandoBridge.getAttributes();
+		Map<String, Serializable> latestAttributes =
+			latestExpandoBridge.getAttributes();
+
+		if (!Validator.equals(lastAttributes, latestAttributes)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected Fields toFields(

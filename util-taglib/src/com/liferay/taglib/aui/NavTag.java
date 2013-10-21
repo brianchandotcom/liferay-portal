@@ -14,10 +14,13 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.model.User;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseNavTag;
 
 import javax.portlet.PortletResponse;
@@ -43,6 +46,10 @@ public class NavTag extends BaseNavTag {
 
 			setCollapsible(true);
 
+			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+
+			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+
 			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
 			sb.append("<a class=\"btn btn-navbar\" id=\"");
@@ -58,6 +65,22 @@ public class NavTag extends BaseNavTag {
 				sb.append("<span class=\"icon-bar\"></span>");
 				sb.append("<span class=\"icon-bar\"></span>");
 				sb.append("<span class=\"icon-bar\"></span>");
+			}
+			else if (icon == "user" && themeDisplay.isSignedIn()) {
+				User user = themeDisplay.getUser();
+
+				String src = "";
+
+				try {
+					src = user.getPortraitURL(themeDisplay);
+				}
+				catch (Exception e) {
+					throw new JspException(e);
+				}
+
+				sb.append("<img alt=\"My Account\"");
+				sb.append("class=\"user-avatar-image\"");
+				sb.append("src=\"" + src + "\">");
 			}
 			else {
 				sb.append("<i class=\"icon-");

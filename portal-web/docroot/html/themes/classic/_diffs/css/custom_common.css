@@ -250,6 +250,11 @@
 
 			.container .btn-navbar {
 				color: #FFF;
+
+				img {
+					margin-top: 4px;
+					width: 27px;
+				}
 			}
 		}
 
@@ -887,6 +892,10 @@
 
 	.dockbar .container .btn {
 		@include box-shadow(none);
+
+		img {
+			@include border-radius(50%);
+		}
 	}
 
 	body.yui3-skin-sam .yui3-widget-mask {

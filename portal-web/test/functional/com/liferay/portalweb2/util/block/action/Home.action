@@ -7,6 +7,10 @@
 		<case comparator="startsWith" locator-key1="SITE_ADMINISTRATION_">
 			<execute function="AssertClick#assertPartialTextClickAtCPNavigation" />
 		</case>
+
+		<case comparator="startsWith" locator1="link" >
+			<execute function="AssertClick#assertTextClickAtNavigation" />
+		</case>
 	</command>
 
 	<command name="click">
@@ -19,7 +23,7 @@
 		</case>
 
 		<case comparator="startsWith" locator1="link" >
-			<execute function="Click#clickAtAndWait" />
+			<execute function="Click#clickAtNavigation" />
 		</case>
 	</command>
 

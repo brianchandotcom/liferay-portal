@@ -98,7 +98,7 @@ public class DLFileEntryPermission {
 		else if (latestDLFileVersion.isDraft() &&
 				 actionId.equals(ActionKeys.VIEW) &&
 				 !_hasPermission(
-					permissionChecker, dlFileEntry, ActionKeys.UPDATE)) {
+					 permissionChecker, dlFileEntry, ActionKeys.UPDATE)) {
 
 			return false;
 		}

@@ -116,7 +116,7 @@ public class JournalArticlePermission {
 		}
 		else if (article.isDraft() && actionId.equals(ActionKeys.VIEW) &&
 				 !_hasPermission(
-					permissionChecker, article, ActionKeys.UPDATE)) {
+					 permissionChecker, article, ActionKeys.UPDATE)) {
 
 			return false;
 		}

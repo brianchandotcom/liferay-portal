@@ -88,8 +88,8 @@ public class MBDiscussionPermission {
 		}
 		else if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
 				 !_hasPermission(
-					permissionChecker, companyId, groupId, className, classPK,
-					ownerId, ActionKeys.UPDATE)) {
+					 permissionChecker, companyId, groupId, className, classPK,
+					 ownerId, ActionKeys.UPDATE)) {
 
 			return false;
 		}

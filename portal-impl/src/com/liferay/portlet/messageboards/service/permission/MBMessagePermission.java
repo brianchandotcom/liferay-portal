@@ -91,7 +91,7 @@ public class MBMessagePermission {
 		}
 		else if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
 				 !_hasPermission(
-					permissionChecker, message, ActionKeys.UPDATE)) {
+					 permissionChecker, message, ActionKeys.UPDATE)) {
 
 			return false;
 		}

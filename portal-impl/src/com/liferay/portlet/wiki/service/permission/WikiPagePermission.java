@@ -151,7 +151,7 @@ public class WikiPagePermission {
 			}
 			else if (actionId.equals(ActionKeys.DELETE) &&
 					 (permissionChecker.getUserId() ==
-						page.getStatusByUserId())) {
+						 page.getStatusByUserId())) {
 
 				return true;
 			}

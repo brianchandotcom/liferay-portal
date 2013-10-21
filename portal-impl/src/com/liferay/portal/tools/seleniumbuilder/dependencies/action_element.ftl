@@ -83,6 +83,14 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 			</#if>
 
 			.saveScreenshot(commandScopeVariables.get("testCaseName"));
+
+			<#if testCaseName??>
+				selenium
+			<#else>
+				liferaySelenium
+			</#if>
+
+			.assertJavaScriptErrors();
 		</#if>
 	</#if>
 </#if>

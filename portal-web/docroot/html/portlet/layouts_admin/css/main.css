@@ -417,6 +417,10 @@
 			}
 		}
 
+		.last-selector {
+			width: 165px;
+		}
+
 		legend {
 			display: none;
 		}

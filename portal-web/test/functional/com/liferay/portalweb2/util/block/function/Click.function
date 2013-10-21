@@ -23,6 +23,18 @@
 		<execute function="Click#clickAtAndWait" />
 	</command>
 
+	<command name="clickAtNavigation">
+		<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="waitForElementPresent" argument1="//li[contains(@class,'lfr-nav-hover')]" />
+
+		<execute function="Click#clickAt" />
+	</command>
+
 	<command name="clickAtSidebarClickAt">
 		<execute selenium="pause" argument1="1000" />
 

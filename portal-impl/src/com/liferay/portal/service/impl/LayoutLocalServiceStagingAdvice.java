@@ -161,6 +161,10 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 					(Boolean)arguments[1], (Long)arguments[2],
 					(ServiceContext)arguments[3]);
 			}
+			else {
+				return wrapReturnValue(
+					methodInvocation.proceed(), showIncomplete);
+			}
 		}
 		else if (methodName.equals("getLayouts")) {
 			if (arguments.length == 6) {

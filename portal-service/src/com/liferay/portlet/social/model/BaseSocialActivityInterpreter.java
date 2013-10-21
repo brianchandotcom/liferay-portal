@@ -360,10 +360,7 @@ public abstract class BaseSocialActivityInterpreter
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
-		if ((trashHandler != null) &&
-			(trashHandler.isInTrash(classPK) ||
-			 trashHandler.isInTrashContainer(classPK))) {
-
+		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
 			PortletURL portletURL = TrashUtil.getViewContentURL(
 				serviceContext.getRequest(), className, classPK);
 

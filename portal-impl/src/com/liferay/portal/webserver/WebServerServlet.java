@@ -312,7 +312,7 @@ public class WebServerServlet extends HttpServlet {
 			request, "status", WorkflowConstants.STATUS_APPROVED);
 
 		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
-			(dlFileEntry.isInTrash() || dlFileEntry.isInTrashContainer())) {
+			dlFileEntry.isInTrash()) {
 
 			return null;
 		}
@@ -836,9 +836,7 @@ public class WebServerServlet extends HttpServlet {
 		if (fileEntry.getModel() instanceof DLFileEntry) {
 			LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
 
-			if (liferayFileEntry.isInTrash() ||
-				liferayFileEntry.isInTrashContainer()) {
-
+			if (liferayFileEntry.isInTrash()) {
 				int status = ParamUtil.getInteger(
 					request, "status", WorkflowConstants.STATUS_APPROVED);
 

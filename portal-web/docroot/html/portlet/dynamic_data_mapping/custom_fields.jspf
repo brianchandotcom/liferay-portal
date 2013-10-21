@@ -254,12 +254,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 						fieldNamespace: {
 							value: 'ddm'
-						},
-
-						name: {
-							valueFn: function() {
-								return A.FormBuilderField.buildFieldName('documents-and-media');
-							}
 						}
 					},
 

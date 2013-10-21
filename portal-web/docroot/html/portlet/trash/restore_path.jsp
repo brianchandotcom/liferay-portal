@@ -99,7 +99,7 @@
 					dialog: {
 						constrain: true,
 						modal: true,
-						width: 680
+						width: 1024
 					},
 					eventName: '<portlet:namespace />selectFolder',
 					id: '<portlet:namespace />selectFolder',

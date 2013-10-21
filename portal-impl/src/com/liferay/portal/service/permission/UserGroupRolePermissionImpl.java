@@ -62,13 +62,12 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 		if (!permissionChecker.isCompanyAdmin() &&
 			!permissionChecker.isGroupOwner(groupId)) {
 
-			String groupRoleName = role.getName();
+			String roleName = role.getName();
 
-			if (groupRoleName.equals(
-					RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
-				groupRoleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
-				groupRoleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
-				groupRoleName.equals(RoleConstants.SITE_OWNER)) {
+			if (roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
+				roleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
+				roleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
+				roleName.equals(RoleConstants.SITE_OWNER)) {
 
 				return false;
 			}

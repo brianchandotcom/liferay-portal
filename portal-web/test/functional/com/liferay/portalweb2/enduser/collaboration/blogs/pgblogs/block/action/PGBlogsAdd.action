@@ -3,6 +3,9 @@
 		<case locator-key1="PUBLISH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
+		<case locator-key1="TAGS_SELECT_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="assertTextEquals">

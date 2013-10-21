@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGBlogsEditSelectTag</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBlogsEditSelectTag</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGBlogsEditSelectTag</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//span/input[contains(@class,'field-input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_CHECKBOX</td>
+	<td>//input[@type='checkbox' and contains(@value,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//div/button[contains(@class,'btn close')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

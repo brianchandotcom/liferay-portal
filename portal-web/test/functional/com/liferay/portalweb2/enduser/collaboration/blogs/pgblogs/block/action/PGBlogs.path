@@ -54,6 +54,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_RESULT_BLOG_ENTRY_TITLE</td>
+	<td>//div[contains(@class,'entry-display-style search')]/a/div/span[@class='entry-title' and contains(.,'${key_blogsEntryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULT_BLOG_ENTRY_CONTENT</td>
+	<td>//div[contains(@class,'entry-display-style search')]/a/div/span[@class='entry-description' and contains(.,'${key_blogsEntryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE_LINK</td>
 	<td>//div[@class='subscribe']/span/a[contains(.,'Subscribe')]/span</td>
 	<td></td>
@@ -76,6 +86,11 @@
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
 	<td>//form[@id='_33_undoForm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG</td>
+	<td>//span/a[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -20,12 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='lfr-message-response alert alert-success']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIONS</td>
-	<td>//li[@id='_99_tagsActionsButton']/a/span</td>
+	<td>//div[@id='portletMessages']</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,13 +29,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info lfr-message-response']</td>
+	<td>TOOLBAR_ACTIONS</td>
+	<td>//li[@id='_99_tagsActionsButton']/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAG_GENERIC</td>
-	<td>//div[contains(@class,'tags-admin-list')]/ul/li/a</td>
+	<td>TOOLBAR_ADD</td>
+	<td>//li[@id='_99_addTagButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_99_tagsAdminSearchInput']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info lfr-message-response']</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,7 +61,75 @@
 <!--ACTIONS_MENULIST-->
 <tr>
 	<td>ACTIONS_MENULIST_DELETE</td>
-	<td>//li[@id='_99_deleteSelectedTags']/a/span</td>
+	<td>//li[@id='_99_tagsActionsButton']/ul/li[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_MERGE</td>
+	<td>//li[@id='_99_tagsActionsButton']/ul/li[contains(.,'Merge')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TAG_DETAILS-->
+<tr>
+	<td>TAG_DETAILS_HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_DETAILS_EDIT_BUTTON</td>
+	<td>//button[@id='editTagButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_DETAILS_DELETE_BUTTON</td>
+	<td>//button[@id='deleteTagButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_DETAILS_COUNT</td>
+	<td>//div[@class='view-tag']/div[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--TAG_ENTRY-->
+<tr>
+	<td>TAG_ENTRY_NAME</td>
+	<td>//li[contains(.,'${key_tagName}')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_CHECKBOX</td>
+	<td>//li[contains(.,'${key_tagName}')]/a/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_ENTRY_EDIT_ICON</td>
+	<td>//span[@class='tag-item-actions-trigger']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECTED_TAG-->
+<tr>
+	<td>SELECTED_TAG_NAME</td>
+	<td>//span[@class='lfr-token']/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_TAG_NAME_REMOVE</td>
+	<td>//a[@class='icon icon-remove lfr-token-close']</td>
 	<td></td>
 </tr>
 </tbody>

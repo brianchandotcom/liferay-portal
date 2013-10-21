@@ -62,6 +62,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_PAGE_TAG</td>
+	<td>//div[@class='page-tags']/span/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WIKI_PAGE_CHILD_PAGE_1</td>
 	<td>//div[@class='child-pages']/ul/li[1]/a</td>
 	<td></td>

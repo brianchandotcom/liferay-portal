@@ -1515,6 +1515,8 @@ public interface PropsKeys {
 
 	public static final String LUCENE_MERGE_POLICY = "lucene.merge.policy";
 
+	public static final String LUCENE_MERGE_SCHEDULER = "lucene.merge.scheduler";
+
 	public static final String LUCENE_REPLICATE_WRITE = "lucene.replicate.write";
 
 	public static final String LUCENE_STORE_TYPE = "lucene.store.type";

@@ -111,6 +111,33 @@ public class ManifestSummary implements Serializable {
 		_manifestSummaryKeys.add(manifestSummaryKey);
 	}
 
+	@Override
+	public Object clone() {
+		ManifestSummary manifestSummary = new ManifestSummary();
+
+		manifestSummary._configurationPortletOptions =
+			new HashMap<String, String[]> (
+				manifestSummary._configurationPortletOptions);
+		manifestSummary._configurationPortlets = new ArrayList<Portlet>(
+			_configurationPortlets);
+		manifestSummary._dataPortlets = new ArrayList<Portlet>(_dataPortlets);
+		manifestSummary._dataRootPortletIds = new HashSet<String>(
+			_dataRootPortletIds);
+
+		if (_exportDate != null) {
+			manifestSummary.setExportDate(new Date(_exportDate.getTime()));
+		}
+
+		manifestSummary._manifestSummaryKeys = new HashSet<String>(
+			_manifestSummaryKeys);
+		manifestSummary._modelAdditionCounters =
+			new HashMap<String, LongWrapper>(_modelAdditionCounters);
+		manifestSummary._modelDeletionCounters =
+			new HashMap<String, LongWrapper>(_modelDeletionCounters);
+
+		return manifestSummary;
+	}
+
 	public String[] getConfigurationPortletOptions(String rootPortletId) {
 		return _configurationPortletOptions.get(rootPortletId);
 	}

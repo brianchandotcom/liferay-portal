@@ -530,6 +530,8 @@ public interface PortletDataContext extends Serializable {
 
 	public void setImportDataRootElement(Element importDataRootElement);
 
+	public void setManifestSummary(ManifestSummary manifestSummary);
+
 	public void setMissingReferencesElement(Element missingReferencesElement);
 
 	public void setNewLayouts(List<Layout> newLayouts);

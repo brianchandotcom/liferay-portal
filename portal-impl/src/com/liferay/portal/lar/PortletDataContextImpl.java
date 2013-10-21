@@ -1891,6 +1891,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void setManifestSummary(ManifestSummary manifestSummary) {
+		_manifestSummary = manifestSummary;
+	}
+
+	@Override
 	public void setMissingReferencesElement(Element missingReferencesElement) {
 		_missingReferencesElement = missingReferencesElement;
 	}

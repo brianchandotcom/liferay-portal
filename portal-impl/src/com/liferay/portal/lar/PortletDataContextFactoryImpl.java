@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactory;
 import com.liferay.portal.kernel.lar.PortletDataException;
@@ -52,6 +53,13 @@ public class PortletDataContextFactoryImpl
 			portletDataContext.getDataStrategy());
 		clonePortletDataContext.setEndDate(portletDataContext.getEndDate());
 		clonePortletDataContext.setGroupId(portletDataContext.getGroupId());
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		clonePortletDataContext.setManifestSummary(
+			(ManifestSummary)manifestSummary.clone());
+
 		clonePortletDataContext.setNewLayouts(
 			portletDataContext.getNewLayouts());
 		clonePortletDataContext.setParameterMap(

@@ -15,6 +15,7 @@
 package com.liferay.portal.resiliency.spi;
 
 import com.liferay.portal.kernel.resiliency.spi.SPI;
+import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryValidator;
 
 /**
@@ -23,11 +24,21 @@ import com.liferay.portal.kernel.resiliency.spi.SPIRegistryValidator;
 public class MockSPIRegistryValidator implements SPIRegistryValidator {
 
 	@Override
-	public void validatePortletSPI(String portletId, SPI spi) {
+	public SPI validatePortletSPI(String portletId, SPI spi) {
+		if (spi != null) {
+			spi = SPIRegistryUtil.getErrorSPI();
+		}
+
+		return spi;
 	}
 
 	@Override
-	public void validateServletContextSPI(String servletContextName, SPI spi) {
+	public SPI validateServletContextSPI(String servletContextName, SPI spi) {
+		if (spi != null) {
+			spi = SPIRegistryUtil.getErrorSPI();
+		}
+
+		return spi;
 	}
 
 }

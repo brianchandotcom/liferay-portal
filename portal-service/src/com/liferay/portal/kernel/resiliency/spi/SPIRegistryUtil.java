@@ -30,6 +30,10 @@ public class SPIRegistryUtil {
 		getSPIRegistry().addExcludedPortletId(portletId);
 	}
 
+	public static SPI getErrorSPI() {
+		return getSPIRegistry().getErrorSPI();
+	}
+
 	public static Set<String> getExcludedPortletIds() {
 		return getSPIRegistry().getExcludedPortletIds();
 	}

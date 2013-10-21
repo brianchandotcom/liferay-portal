@@ -27,6 +27,8 @@ public interface SPIRegistry {
 
 	public void addExcludedPortletId(String portletId);
 
+	public SPI getErrorSPI();
+
 	public Set<String> getExcludedPortletIds();
 
 	public SPI getPortletSPI(String portletId) throws PortalResiliencyException;

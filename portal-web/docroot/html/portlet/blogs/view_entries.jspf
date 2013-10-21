@@ -23,29 +23,31 @@ showSearch = showSearch && !results.isEmpty();
 
 <c:if test="<%= showAddEntryButton || showPermissionsButton || showSearch %>">
 	<aui:nav-bar>
-		<aui:nav>
-			<c:if test="<%= showAddEntryButton %>">
-				<portlet:renderURL var="editEntryURL">
-					<portlet:param name="struts_action" value="/blogs/edit_entry" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-				</portlet:renderURL>
+		<c:if test="<%= showAddEntryButton || showPermissionsButton %>">
+			<aui:nav>
+				<c:if test="<%= showAddEntryButton %>">
+					<portlet:renderURL var="editEntryURL">
+						<portlet:param name="struts_action" value="/blogs/edit_entry" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+					</portlet:renderURL>
 
-				<aui:nav-item href="<%= editEntryURL %>" label="add-blog-entry" name="addEntryButton" />
-			</c:if>
+					<aui:nav-item href="<%= editEntryURL %>" label="add-blog-entry" name="addEntryButton" />
+				</c:if>
 
-			<c:if test="<%= showPermissionsButton %>">
-				<liferay-security:permissionsURL
-					modelResource="com.liferay.portlet.blogs"
-					modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-					resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
+				<c:if test="<%= showPermissionsButton %>">
+					<liferay-security:permissionsURL
+						modelResource="com.liferay.portlet.blogs"
+						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+						var="permissionsURL"
+						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+					/>
 
-				<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
-			</c:if>
-		</aui:nav>
+					<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
+				</c:if>
+			</aui:nav>
+		</c:if>
 
 		<c:if test="<%= showSearch %>">
 			<aui:nav-bar-search cssClass="pull-right">

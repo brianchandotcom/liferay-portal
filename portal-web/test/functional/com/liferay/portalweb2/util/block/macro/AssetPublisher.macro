@@ -21,6 +21,59 @@
 		<execute action="PGAssetpublisherConfiguration#assertChecked" locator-key1="FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
 	</command>
 
+	<command name="configureSelectedSitePG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_SELECT" value1="Select" />
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SOURCE_SCOPE_MENULIST_OTHER_SITE" value1="Other Site..." />
+
+		<execute action="PGAssetpublisherConfigurationSites#selectFrame" value1="relative=top" />
+		<execute action="PGAssetpublisherConfigurationSites#selectFrame" locator-key1="SITES_IFRAME" />
+
+		<if>
+			<equals arg1="${scopeSiteType}" arg2="Child Site" />
+			<then>
+				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
+				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="Child Site" />
+
+				<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+			</then>
+			<elseif>
+				<equals arg1="${scopeSiteType}" arg2="Parent Site" />
+				<then>
+					<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
+					<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="Parent Site" />
+
+					<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="${siteName}" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_TYPE" value1="${scopeSiteType}" />
+		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="SOURCE_SCOPE_DELETE" />
+	</command>
+
+	<command name="viewAPSiteContentsharing">
+		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
+		
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN_SITE_NAME" value1="Add New in Site Name" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN_CHILD_SITENAME" value1="Add New in Child SiteName" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY_1" value1="${assetContent}" />
+	</command>
+
 	<command name="viewSelectedPG">
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN" value1="Add ${selectedAsset}" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />

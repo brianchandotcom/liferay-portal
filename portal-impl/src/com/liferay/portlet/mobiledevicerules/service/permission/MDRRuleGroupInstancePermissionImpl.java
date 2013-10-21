@@ -16,8 +16,10 @@ package com.liferay.portlet.mobiledevicerules.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 
@@ -66,6 +68,16 @@ public class MDRRuleGroupInstancePermissionImpl
 	public boolean contains(
 		PermissionChecker permissionChecker,
 		MDRRuleGroupInstance ruleGroupInstance, String actionId) {
+
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, ruleGroupInstance.getGroupId(),
+			MDRRuleGroupInstance.class.getName(),
+			ruleGroupInstance.getRuleGroupInstanceId(),
+			PortletKeys.MOBILE_DEVICE_SITE_ADMIN, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
 
 		return permissionChecker.hasPermission(
 			ruleGroupInstance.getGroupId(),

@@ -22,12 +22,6 @@ String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 RuleGroupSearch searchContainer = (RuleGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
 
 RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();
-RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)searchContainer.getSearchTerms();
-
-if (displayTerms.getGroupId() == 0) {
-	displayTerms.setGroupId(groupId);
-	searchTerms.setGroupId(groupId);
-}
 %>
 
 <liferay-ui:search-toggle

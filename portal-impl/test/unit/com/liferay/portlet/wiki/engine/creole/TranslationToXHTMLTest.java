@@ -640,6 +640,22 @@ public class TranslationToXHTMLTest extends PowerMockito {
 	}
 
 	@Test
+	public void testParseTableImagesNested() {
+		Assert.assertEquals(
+			"<table><tr><th>H1</th></tr><tr><td><img " +
+				"src=\"image.png\" alt=\"Image\"/></td></tr></table>",
+			translate("table-4.creole"));
+	}
+
+	@Test
+	public void testParseTableLinksNested() {
+		Assert.assertEquals(
+			"<table><tr><th>H1</th></tr><tr><td><a href=" +
+				"\"http://www.liferay.com \"> Liferay</a></td></tr></table>",
+			translate("table-3.creole"));
+	}
+
+	@Test
 	public void testParseTableMultipleRowsAndColumns() {
 		Assert.assertEquals(
 			"<table><tr><th>H1</th><th>H2</th><th>H3</th><th>H4</th></tr>" +

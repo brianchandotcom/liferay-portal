@@ -377,6 +377,7 @@ public class FolderStagedModelDataHandler
 		}
 	}
 
+	@Override
 	protected void validateExport(
 			PortletDataContext portletDataContext, Folder folder)
 		throws PortletDataException {

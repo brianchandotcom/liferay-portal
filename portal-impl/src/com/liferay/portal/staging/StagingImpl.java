@@ -926,6 +926,7 @@ public class StagingImpl implements Staging {
 		}
 		else if (e instanceof PortletDataException) {
 			PortletDataException pde = (PortletDataException)e;
+
 			StagedModel stagedModel = pde.getStagedModel();
 			StagedModelType stagedModelType = stagedModel.getStagedModelType();
 

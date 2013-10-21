@@ -629,6 +629,7 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
+	@Override
 	protected void validateExport(
 			PortletDataContext portletDataContext, FileEntry fileEntry)
 		throws PortletDataException {

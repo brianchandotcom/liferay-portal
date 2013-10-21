@@ -18,25 +18,18 @@
 
 <%
 String actionJsp = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:actionJsp");
-boolean browseUp = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:browseUp"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-navigation-entry:cssClass"));
-Map<String, Object> dataExpand = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataExpand");
 Map<String, Object> dataView = (Map<String, Object>)request.getAttribute("liferay-ui:app-view-navigation-entry:dataView");
 String entryTitle = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:entryTitle");
-String expandURL = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:expandURL");
 String iconImage = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:iconImage");
 boolean selected = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:selected"));
-boolean showExpand = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-navigation-entry:showExpand"));
 String viewURL = (String)request.getAttribute("liferay-ui:app-view-navigation-entry:viewURL");
 
 Map<String, Object> data = new HashMap<String, Object>();
 
 data.putAll(dataView);
 
-if (browseUp) {
-	data.put("direction-right", Boolean.TRUE);
-}
-else if (!data.containsKey("view-folders")) {
+if (!data.containsKey("view-folders")) {
 	data.put("view-folders", Boolean.FALSE);
 }
 %>
@@ -49,13 +42,5 @@ else if (!data.containsKey("view-folders")) {
 
 	<c:if test="<%= Validator.isNotNull(actionJsp) %>">
 		<liferay-util:include page="<%= actionJsp %>" />
-	</c:if>
-
-	<c:if test="<%= showExpand %>">
-		<span class="expand-folder-container">
-			<a class="<%= "expand-" + cssClass %>" data-view-entries="<%= Boolean.FALSE.toString() %>" <%= AUIUtil.buildData(dataExpand) %> href="<%= expandURL.toString() %>">
-				<liferay-ui:icon cssClass='<%= "expand-" + cssClass + "-arrow" %>' image='<%= browseUp ? "../aui/carat-1-l" : "../aui/carat-1-r" %>' message="expand" />
-			</a>
-		</span>
 	</c:if>
 </aui:nav-item>

@@ -22,8 +22,6 @@ AUI.add(
 
 		var DATA_VIEW_FOLDERS = 'data-view-folders';
 
-		var EXPAND_FOLDER = 'expandFolder';
-
 		var MESSAGE_TYPE_ERROR = 'error';
 
 		var PARAM_DISPLAY_STYLE = 'displayStyle';
@@ -322,7 +320,6 @@ AUI.add(
 						var entryConfig = instance.get('entry');
 
 						var dataBrowseBy = item.attr('data-browse-by');
-						var dataExpandFolder = item.attr('data-expand-folder');
 						var dataStructureId = item.attr(entryConfig.typeId);
 						var dataFolderId = item.attr(DATA_FOLDER_ID);
 						var dataNavigation = item.attr('data-navigation');
@@ -343,10 +340,6 @@ AUI.add(
 
 						if (dataBrowseBy) {
 							requestParams[instance.ns(BROWSE_BY)] = dataBrowseBy;
-						}
-
-						if (dataExpandFolder) {
-							requestParams[instance.ns(EXPAND_FOLDER)] = dataExpandFolder;
 						}
 
 						if (dataFolderId) {
@@ -411,7 +404,6 @@ AUI.add(
 						requestParams[instance.ns(PARAM_STRUTS_ACTION)] = instance.get(STR_STRUTS_ACTION);
 						requestParams[instance.ns('action')] = 'browseFolder';
 						requestParams[instance._folderId] = event.currentTarget.attr(DATA_FOLDER_ID);
-						requestParams[instance.ns(EXPAND_FOLDER)] = false;
 
 						var viewEntries = event.currentTarget.attr(DATA_VIEW_ENTRIES);
 
@@ -659,7 +651,7 @@ AUI.add(
 							boundingBox: formatSelectorNS(instance.NS, '#listViewContainer'),
 							contentBox: folderContainer,
 							cssClass: 'folder-display-style lfr-list-view-content',
-							itemSelector: '.folder a.browse-folder, .folder a.expand-folder',
+							itemSelector: '.folder a.browse-folder',
 							srcNode: folderContainer
 						};
 					}

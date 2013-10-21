@@ -113,11 +113,6 @@ else {
 
 			<c:choose>
 				<c:when test='<%= (((folderId == rootFolderId) && !expandFolder) || ((folder != null) && (folder.isRoot() && !folder.isDefaultRepository() && !expandFolder))) && !browseBy.equals("file-entry-type") %>'>
-
-					<%
-					int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId);
-					%>
-
 					<liferay-portlet:renderURL varImpl="viewDocumentsHomeURL">
 						<portlet:param name="struts_action" value="/document_library/view" />
 						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
@@ -128,20 +123,11 @@ else {
 					</liferay-portlet:renderURL>
 
 					<%
-					PortletURL expandViewDocumentsHomeURL = PortletURLUtil.clone(viewDocumentsHomeURL, liferayPortletResponse);
-
-					expandViewDocumentsHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
-
 					String navigation = ParamUtil.getString(request, "navigation", "home");
 
 					request.setAttribute("view_entries.jsp-folder", folder);
 					request.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
 					request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(repositoryId));
-
-					Map<String, Object> dataExpand = new HashMap<String, Object>();
-
-					dataExpand.put("expand-folder", Boolean.TRUE);
-					dataExpand.put("folder-id", rootFolderId);
 
 					Map<String, Object> dataView = new HashMap<String, Object>();
 
@@ -153,13 +139,10 @@ else {
 
 					<liferay-ui:app-view-navigation-entry
 						actionJsp="/html/portlet/document_library/folder_action.jsp"
-						dataExpand="<%= dataExpand %>"
 						dataView="<%= dataView %>"
 						entryTitle='<%= LanguageUtil.get(pageContext, "home") %>'
-						expandURL="<%= expandViewDocumentsHomeURL.toString() %>"
 						iconImage="icon-home"
 						selected='<%= (navigation.equals("home") && (folderId == rootFolderId) && (fileEntryTypeId == -1)) %>'
-						showExpand="<%= foldersCount > 0 %>"
 						viewURL="<%= viewDocumentsHomeURL.toString() %>"
 					/>
 
@@ -253,7 +236,6 @@ else {
 						request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 
 						try {
-							int mountFoldersCount = DLAppServiceUtil.getFoldersCount(mountFolder.getRepositoryId(), mountFolder.getFolderId());
 					%>
 
 							<liferay-portlet:renderURL varImpl="viewURL">
@@ -266,15 +248,6 @@ else {
 							</liferay-portlet:renderURL>
 
 							<%
-							expandViewDocumentsHomeURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
-
-							expandViewDocumentsHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
-
-							dataExpand = new HashMap<String, Object>();
-
-							dataExpand.put("expand-folder", Boolean.TRUE);
-							dataExpand.put("folder-id", mountFolder.getFolderId());
-
 							dataView = new HashMap<String, Object>();
 
 							dataView.put("folder", true);
@@ -285,13 +258,10 @@ else {
 
 							<liferay-ui:app-view-navigation-entry
 								actionJsp="/html/portlet/document_library/folder_action.jsp"
-								dataExpand="<%= dataExpand %>"
 								dataView="<%= dataView %>"
 								entryTitle="<%= mountFolder.getName() %>"
-								expandURL="<%= expandViewDocumentsHomeURL.toString() %>"
 								iconImage="icon-hdd"
 								selected="<%= (mountFolder.getFolderId() == folderId) %>"
-								showExpand="<%= mountFoldersCount > 0 %>"
 								viewURL="<%= viewURL.toString() %>"
 							/>
 
@@ -344,29 +314,17 @@ else {
 					</liferay-portlet:renderURL>
 
 					<%
-					PortletURL expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
-
-					expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
-
-					Map<String, Object> dataExpand = new HashMap<String, Object>();
-
-					dataExpand.put("direction-right", Boolean.TRUE);
-					dataExpand.put("folder-id", parentFolderId);
-
 					Map<String, Object> dataView = new HashMap<String, Object>();
 
 					dataView.put("folder-id", parentFolderId);
 					dataView.put("repository-id", repositoryId);
+					dataView.put("view-folders", Boolean.TRUE);
 					%>
 
 					<liferay-ui:app-view-navigation-entry
-						browseUp="<%= true %>"
-						dataExpand="<%= dataExpand %>"
 						dataView="<%= dataView %>"
 						entryTitle='<%= LanguageUtil.get(pageContext, "up") %>'
-						expandURL="<%= expandViewURL.toString() %>"
 						iconImage="icon-level-up"
-						showExpand="<%= true %>"
 						viewURL="<%= viewURL.toString() %>"
 					/>
 
@@ -451,29 +409,17 @@ else {
 					</liferay-portlet:renderURL>
 
 					<%
-					PortletURL expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
-
-					expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
-
-					Map<String, Object> dataExpand = new HashMap<String, Object>();
-
-					dataExpand.put("folder-id", parentFolderId);
-					dataExpand.put("direction-right", Boolean.TRUE);
-
 					Map<String, Object> dataView = new HashMap<String, Object>();
 
 					dataView.put("folder-id", parentFolderId);
 					dataView.put("repository-id", repositoryId);
+					dataView.put("view-folders", Boolean.TRUE);
 					%>
 
 					<liferay-ui:app-view-navigation-entry
-						browseUp="<%= true %>"
-						dataExpand="<%= dataExpand %>"
 						dataView="<%= dataView %>"
 						entryTitle='<%= LanguageUtil.get(pageContext, "up") %>'
-						expandURL="<%= expandViewURL.toString() %>"
 						iconImage="icon-level-up"
-						showExpand="<%= true %>"
 						viewURL="<%= viewURL.toString() %>"
 					/>
 
@@ -497,15 +443,6 @@ else {
 						</liferay-portlet:renderURL>
 
 						<%
-						expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
-
-						expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
-
-						dataExpand = new HashMap<String, Object>();
-
-						dataExpand.put("expand-folder", Boolean.TRUE);
-						dataExpand.put("folder-id", curFolder.getFolderId());
-
 						dataView = new HashMap<String, Object>();
 
 						dataView.put("folder-id", curFolder.getFolderId());
@@ -516,13 +453,10 @@ else {
 
 						<liferay-ui:app-view-navigation-entry
 							actionJsp="/html/portlet/document_library/folder_action.jsp"
-							dataExpand="<%= dataExpand %>"
 							dataView="<%= dataView %>"
 							entryTitle="<%= curFolder.getName() %>"
-							expandURL="<%= expandViewURL.toString() %>"
 							iconImage='<%= (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0) ? "icon-folder-open" : "icon-folder-close" %>'
 							selected="<%= (curFolder.getFolderId() == folderId) %>"
-							showExpand="<%= DLAppServiceUtil.getFoldersCount(repositoryId, curFolder.getFolderId()) > 0 %>"
 							viewURL="<%= viewURL.toString() %>"
 						/>
 

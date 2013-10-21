@@ -135,12 +135,6 @@
 		background-color: #FDD;
 	}
 
-	.expand-folder-container {
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
-
 	.folder-search {
 		float: right;
 		margin: 0 0 0.5em 0.5em;

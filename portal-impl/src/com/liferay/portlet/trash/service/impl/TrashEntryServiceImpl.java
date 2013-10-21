@@ -338,25 +338,20 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				TrashPermissionException.RESTORE);
 		}
 
-		if (trashHandler.isInTrash(classPK)) {
-			TrashEntry entry = trashEntryLocalService.getEntry(
-				className, classPK);
+		TrashEntry trashEntry = trashHandler.getTrashEntry(classPK);
 
+		if (trashEntry.isTrashEntry(className, classPK)) {
 			trashHandler.checkDuplicateTrashEntry(
-				entry, destinationContainerModelId, StringPool.BLANK);
-
-			trashHandler.moveTrashEntry(
-				getUserId(), classPK, destinationContainerModelId,
-				serviceContext);
+				trashEntry, destinationContainerModelId, StringPool.BLANK);
 		}
 		else {
 			trashHandler.checkDuplicateEntry(
 				classPK, destinationContainerModelId, StringPool.BLANK);
-
-			trashHandler.moveEntry(
-				getUserId(), classPK, destinationContainerModelId,
-				serviceContext);
 		}
+
+		trashHandler.moveTrashEntry(
+			getUserId(), classPK, destinationContainerModelId,
+			serviceContext);
 	}
 
 	@Override

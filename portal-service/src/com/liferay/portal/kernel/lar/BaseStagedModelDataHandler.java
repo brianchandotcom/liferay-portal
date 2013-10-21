@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -49,9 +50,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!isExportable(portletDataContext, stagedModel)) {
+		String path = ExportImportPathUtil.getModelPath(stagedModel);
+
+		if (portletDataContext.isPathExportedInScope(path)) {
 			return;
 		}
+
+		validateExport(portletDataContext, stagedModel);
 
 		try {
 			ManifestSummary manifestSummary =
@@ -67,8 +72,18 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					stagedModel.getStagedModelType());
 			}
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
-			throw new PortletDataException(e);
+			PortletDataException pde = new PortletDataException(e);
+
+			if (e instanceof NoSuchModelException) {
+				pde.setStagedModel(stagedModel);
+				pde.setType(PortletDataException.MISSING_DEPENDENCY);
+			}
+
+			throw pde;
 		}
 	}
 
@@ -111,6 +126,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		try {
 			doImportCompanyStagedModel(portletDataContext, uuid, classPK);
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
@@ -143,6 +161,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			manifestSummary.incrementModelAdditionCount(
 				stagedModel.getStagedModelType());
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
@@ -155,6 +176,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		try {
 			doRestoreStagedModel(portletDataContext, stagedModel);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -220,14 +244,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throw new UnsupportedOperationException();
 	}
 
-	protected boolean isExportable(
-		PortletDataContext portletDataContext, T stagedModel) {
-
-		String path = ExportImportPathUtil.getModelPath(stagedModel);
-
-		if (portletDataContext.isPathExportedInScope(path)) {
-			return false;
-		}
+	protected void validateExport(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
 
 		if (stagedModel instanceof WorkflowedModel) {
 			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
@@ -235,12 +254,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			if (!ArrayUtil.contains(
 					getExportableStatuses(), workflowedModel.getStatus())) {
 
-				return false;
+				throw new PortletDataException(
+					PortletDataException.STATUS_UNAVAILABLE);
 			}
 		}
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			stagedModel.getModelClassName());
+			stagedModel.getStagedModelType().getClassName());
 
 		if (trashHandler != null) {
 			try {
@@ -249,8 +269,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				if (trashHandler.isInTrash(classPK) ||
 					trashHandler.isInTrashContainer(classPK)) {
 
-					return false;
+					throw new PortletDataException(
+						PortletDataException.STATUS_IN_TRASH);
 				}
+			}
+			catch (PortletDataException pde) {
+				throw pde;
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -260,8 +284,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				}
 			}
 		}
-
-		return true;
 	}
 
 	protected boolean validateMissingReference(

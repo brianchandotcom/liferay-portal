@@ -64,6 +64,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			return doDeleteData(
 				portletDataContext, portletId, portletPreferences);
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
@@ -116,6 +119,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 			return doExportData(
 				portletDataContext, portletId, portletPreferences);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -324,6 +330,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			return doImportData(
 				portletDataContext, portletId, portletPreferences, data);
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
@@ -395,6 +404,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		try {
 			doPrepareManifestSummary(portletDataContext, portletPreferences);
 		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
@@ -437,6 +449,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		try {
 			return doProcessExportPortletPreferences(
 				portletDataContext, portletId, portletPreferences);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -519,6 +534,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 			return doProcessImportPortletPreferences(
 				portletDataContext, portletId, portletPreferences);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);

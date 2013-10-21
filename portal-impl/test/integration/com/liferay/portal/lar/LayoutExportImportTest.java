@@ -17,7 +17,6 @@ package com.liferay.portal.lar;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingConstants;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
@@ -27,6 +26,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -210,9 +210,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		StagingUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), group, group, false, false,
-			serviceContext);
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, false, false, serviceContext);
 
 		Group stagingGroup = group.getStagingGroup();
 

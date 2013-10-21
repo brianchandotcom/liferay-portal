@@ -24,6 +24,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -164,9 +165,8 @@ public class StagingImplTest {
 
 		// Enable staging
 
-		StagingUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), _group, _group, false, false,
-			serviceContext);
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false, serviceContext);
 
 		Group stagingGroup = _group.getStagingGroup();
 

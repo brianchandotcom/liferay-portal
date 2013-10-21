@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
+
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -96,6 +98,26 @@ public abstract class BaseWebDriverImpl
 		throws Exception {
 
 		LiferaySeleniumHelper.assertEmailSubject(this, index, subject);
+	}
+
+	@Override
+	public void assertJavaScriptErrors() throws Exception {
+		WebElement webElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(
+			webDriver);
+
+		if (!javaScriptErrors.isEmpty()) {
+			for (JavaScriptError javaScriptError : javaScriptErrors) {
+				System.out.println("JS_ERROR:" + javaScriptError.toString());
+			}
+
+			throw new Exception(javaScriptErrors.toString());
+		}
 	}
 
 	@Override

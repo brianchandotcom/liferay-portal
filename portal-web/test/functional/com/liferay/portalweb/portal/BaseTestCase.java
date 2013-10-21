@@ -50,6 +50,8 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 	public void tearDown() throws Exception {
 		String primaryTestSuiteName = selenium.getPrimaryTestSuiteName();
 
+		selenium.assertJavaScriptErrors();
+
 		if (!primaryTestSuiteName.endsWith("TestSuite")) {
 			testCaseCount--;
 		}

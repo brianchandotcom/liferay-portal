@@ -273,11 +273,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 						PortletDataException.STATUS_IN_TRASH);
 				}
 			}
+			catch (PortletDataException pde) {
+				throw pde;
+			}
 			catch (Exception e) {
-				if (e instanceof PortletDataException) {
-					throw (PortletDataException)e;
-				}
-
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to check trash status for " +

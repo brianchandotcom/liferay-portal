@@ -393,6 +393,9 @@ public class FolderStagedModelDataHandler
 						PortletDataException.STATUS_IN_TRASH);
 				}
 			}
+			catch (PortletDataException pde) {
+				throw pde;
+			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(

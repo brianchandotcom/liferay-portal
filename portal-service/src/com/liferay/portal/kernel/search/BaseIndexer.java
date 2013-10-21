@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -85,7 +84,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -1085,73 +1083,6 @@ public abstract class BaseIndexer implements Indexer {
 				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
 
 			contextQuery.add(statusQuery, BooleanClauseOccur.MUST_NOT);
-		}
-	}
-
-	protected void addTrashFields(
-			Document document, String className, long classPK, Date removedDate,
-			String removedByUserName, String type)
-		throws SystemException {
-
-		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
-			className, classPK);
-
-		if (removedDate == null) {
-			if (trashEntry != null) {
-				removedDate = trashEntry.getCreateDate();
-			}
-			else {
-				removedDate = new Date();
-			}
-		}
-
-		document.addDate(Field.REMOVED_DATE, removedDate);
-
-		if (removedByUserName == null) {
-			if (trashEntry != null) {
-				removedByUserName = trashEntry.getUserName();
-			}
-			else {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				if (serviceContext != null) {
-					try {
-						User user = UserLocalServiceUtil.getUser(
-							serviceContext.getUserId());
-
-						removedByUserName = user.getFullName();
-					}
-					catch (PortalException pe) {
-					}
-				}
-			}
-		}
-
-		if (Validator.isNotNull(removedByUserName)) {
-			document.addKeyword(
-				Field.REMOVED_BY_USER_NAME, removedByUserName, true);
-		}
-
-		if (type == null) {
-			if (trashEntry != null) {
-				TrashHandler trashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						trashEntry.getClassName());
-
-				try {
-					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-						trashEntry.getClassPK());
-
-					type = trashRenderer.getType();
-				}
-				catch (PortalException pe) {
-				}
-			}
-		}
-
-		if (Validator.isNotNull(type)) {
-			document.addKeyword(Field.TYPE, type, true);
 		}
 	}
 

@@ -385,9 +385,6 @@ public interface TrashHandler {
 			long classPK, int start, int end)
 		throws PortalException, SystemException;
 
-	public ContainerModel getTrashContainer(long classPK)
-		throws PortalException, SystemException;
-
 	/**
 	 * Returns the name of the container model.
 	 *

@@ -36,6 +36,7 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -396,12 +397,13 @@ public abstract class BaseTrashHandlerTestCase {
 	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
-		Class<?> clazz = classedModel.getModelClass();
+		if (classedModel instanceof TrashedModel) {
+			TrashedModel trashedModel = (TrashedModel)classedModel;
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			clazz.getName());
+			return trashedModel.isInTrashContainer();
+		}
 
-		return trashHandler.isInTrashContainer(getAssetClassPK(baseModel));
+		return false;
 	}
 
 	protected BaseModel<?> moveBaseModelFromTrash(

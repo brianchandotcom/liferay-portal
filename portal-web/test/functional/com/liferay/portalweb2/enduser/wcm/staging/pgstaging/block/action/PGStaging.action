@@ -8,4 +8,16 @@
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
 	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="SITE_PAGES_VARIATION">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="isElementNotPresent">
+		<case locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW">
+			<execute function="IsElementNotPresent#isNotVisible" />
+		</case>
+	</command>
 </definition>

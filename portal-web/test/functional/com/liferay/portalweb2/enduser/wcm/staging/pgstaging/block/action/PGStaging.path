@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION</td>
-	<td>//ul[@class='nav nav-tabs site-variations-nav-tabs']/li/a[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td>//div[@class='variations-options']/div/a/span[contains(.,'${key_sitePagesVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>

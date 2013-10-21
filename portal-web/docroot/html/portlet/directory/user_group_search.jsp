@@ -22,6 +22,15 @@ UserGroupSearch searchContainer = (UserGroupSearch)request.getAttribute("liferay
 UserGroupDisplayTerms displayTerms = (UserGroupDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<div class="form-search">
-	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.KEYWORDS %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
-</div>
+<liferay-ui:search-toggle
+	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+	buttonLabel="search"
+	displayTerms="<%= displayTerms %>"
+	id="toggle_id_directory_group_search"
+>
+	<aui:fieldset>
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+
+		<aui:input name="<%= displayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
+	</aui:fieldset>
+</liferay-ui:search-toggle>

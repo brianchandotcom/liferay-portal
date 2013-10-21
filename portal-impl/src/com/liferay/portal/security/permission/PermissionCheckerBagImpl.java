@@ -152,9 +152,9 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		throws Exception {
 
 		for (Role role : _roles) {
-			String name = role.getName();
+			String roleName = role.getName();
 
-			if (name.equals(RoleConstants.SITE_MEMBER)) {
+			if (roleName.equals(RoleConstants.SITE_MEMBER)) {
 				return true;
 			}
 		}

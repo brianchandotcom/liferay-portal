@@ -14,7 +14,11 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
+
+import java.io.File;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -31,6 +35,29 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 	private static FirefoxProfile _firefoxProfile = new FirefoxProfile();
 
 	static {
+		try {
+			File file = new File(StringPool.PERIOD);
+
+			String absolutePath = file.getAbsolutePath();
+
+			if (absolutePath.endsWith(StringPool.PERIOD)) {
+				absolutePath = absolutePath.substring(
+					0, absolutePath.length() - 1);
+
+				absolutePath = StringUtil.replace(
+					absolutePath, StringPool.BACK_SLASH,
+					StringPool.FORWARD_SLASH);
+			}
+
+			_firefoxProfile.addExtension(
+				new File(
+					absolutePath +
+						"lib/development/jserrorcollector/" +
+							"jserrorcollector.xpi"));
+		}
+		catch (Exception e) {
+		}
+
 		_firefoxProfile.setPreference(
 			"browser.download.dir", TestPropsValues.OUTPUT_DIR);
 		_firefoxProfile.setPreference("browser.download.folderList", 2);

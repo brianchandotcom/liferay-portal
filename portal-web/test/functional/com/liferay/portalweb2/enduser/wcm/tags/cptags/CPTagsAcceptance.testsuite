@@ -1,0 +1,6 @@
+<definition>
+	<execute test-case-command="CPTags#AddTag" />
+	<execute test-case-command="CPTags#AddTags" />
+	<execute test-case-command="CPTags#DeleteTag" />
+	<execute test-case-command="CPTags#EditTag" />
+</definition>

@@ -7,6 +7,8 @@
 
 	<execute test-suite="CPSitesP5" />
 
+	<execute test-suite="CPTagsP5" />
+
 	<execute test-suite="CPWebcontentP5" />
 
 	<execute test-suite="PGAssetpublisherP5" />
@@ -16,6 +18,8 @@
 	<execute test-suite="PGSitesdirectoryP5" />
 
 	<execute test-suite="PGStagingP5" />
+
+	<execute test-suite="PGTagsP5" />
 
 	<execute test-suite="PGWebcontentdisplayP5" />
 </definition>

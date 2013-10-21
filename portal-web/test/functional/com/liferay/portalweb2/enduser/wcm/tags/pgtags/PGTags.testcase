@@ -1,0 +1,493 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="AddAutoAssertionTagViaBlogs">
+		<var name="pageName" value="Page Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="tagName1" value="tag name 1" />
+		<var name="tagName2" value="tag name 2" />
+		<var name="tagName3" value="tag name 3" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addTagsCP">
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName2" value="${tagName2}" />
+			<var name="tagName3" value="${tagName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addAutoAssertionTagViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName3" value="${tagName3}" />
+		</execute>
+	</command>
+
+	<command name="AddFrontPageTag">
+		<var name="siteName" value="Site Name" />
+		<var name="pageName" value="Page Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Tag#addFrontPageTagPG">
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiTagName" value="wiki tag name" />
+		</execute>
+
+		<execute macro="Tag#viewFrontPageTagPG">
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiTagName" value="wiki tag name" />
+		</execute>
+	</command>
+
+	<command name="AddMultipleTagsViaBlogs">
+		<var name="pageName" value="Page Name" />
+		<var name="siteName" value="Site Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Tag#addMultipleViaBlogsPG">
+			<var name="tagName1" value="tag name 1" />
+			<var name="tagName2" value="tag name 2" />
+			<var name="tagName3" value="tag name 3" />
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+	</command>
+
+	<command name="AddSelectTagViaBlogs">
+		<var name="pageName" value="Page Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="tagName1" value="tag name 1" />
+		<var name="tagName2" value="tag name 2" />
+		<var name="tagName3" value="tag name 3" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addTagsCP">
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName2" value="${tagName2}" />
+			<var name="tagName3" value="${tagName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addSelectTagViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName3" value="${tagName3}" />
+		</execute>
+	</command>
+
+	<command name="AddTagViaBlogs">
+		<var name="siteName" value="Site Name" />
+		<var name="pageName" value="Page Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Tag#addViaBlogsPg">
+			<var name="tagName" value="tag name" />
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+	</command>
+
+	<command name="AddUTFTagViaBlogs">
+		<var name="siteName" value="Site Name" />
+		<var name="pageName" value="Page Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Tag#addViaBlogsPg">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName" value="硒1 liferay1" />
+		</execute>
+	</command>
+
+	<command name="RemoveTagViaBlogs">
+		<var name="pageName" value="Page Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="tagName1" value="tag name 1" />
+		<var name="tagName2" value="tag name 2" />
+		<var name="tagName3" value="tag name 3" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Tag#addMultipleViaBlogsPG">
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName2" value="${tagName2}" />
+			<var name="tagName3" value="${tagName3}" />
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#removeTagViaBlogsPG">
+			<var name="entryTitle" value="Entry Title" />
+			<var name="pageName" value="${pageName}" />
+			<var name="tagName1" value="${tagName1}" />
+		</execute>
+	</command>
+
+	<command name="RemoveSelectTagViaBlogs">
+		<var name="pageName" value="Page Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="tagName1" value="tag name 1" />
+		<var name="tagName2" value="tag name 2" />
+		<var name="tagName3" value="tag name 3" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Tag#addMultipleViaBlogsPG">
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName2" value="${tagName2}" />
+			<var name="tagName3" value="${tagName3}" />
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+
+		<execute macro="Tag#removeSelectTagViaBlogsPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName3" value="${tagName3}" />
+			<var name="entryTitle" value="Entry Title" />
+		</execute>
+	</command>
+
+	<command name="SearchMultipleTagsViaBlogs">
+		<var name="entryContent1" value="Entry Content 1" />
+		<var name="entryContent2" value="Entry Content 2" />
+		<var name="entryContent3" value="Entry Content 3" />
+		<var name="entryTitle1" value="Entry Title 1" />
+		<var name="entryTitle2" value="Entry Title 2" />
+		<var name="entryTitle3" value="Entry Title 3" />
+		<var name="pageName" value="Page Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="tagName1" value="blue" />
+		<var name="tagName2" value="blue green" />
+		<var name="tagName3" value="yellow" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addTagsCP">
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName2" value="${tagName2}" />
+			<var name="tagName3" value="${tagName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addViaBlogsPg">
+			<var name="entryContent" value="${entryContent1}" />
+			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="tagName" value="${tagName1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addViaBlogsPg">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="tagName" value="${tagName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#addViaBlogsPg">
+			<var name="entryContent" value="${entryContent3}" />
+			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="tagName" value="${tagName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Tag#searchMultipleTagsViaBlogsPG">
+			<var name="entryContent1" value="${entryContent1}" />
+			<var name="entryContent2" value="${entryContent2}" />
+			<var name="entryContent3" value="${entryContent3}" />
+			<var name="entryTitle1" value="${entryTitle1}" />
+			<var name="entryTitle2" value="${entryTitle2}" />
+			<var name="entryTitle3" value="${entryTitle3}" />
+			<var name="tagName1" value="${tagName1}" />
+			<var name="tagName3" value="${tagName3}" />
+		</execute>
+	</command>
+</definition>

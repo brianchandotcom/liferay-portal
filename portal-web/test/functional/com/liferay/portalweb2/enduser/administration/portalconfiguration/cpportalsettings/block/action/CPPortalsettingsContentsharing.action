@@ -1,0 +1,7 @@
+<definition>
+	<command name="uncheck">
+		<case locator-key1="CONTENT_SHARING_CHECKBOX">
+			<execute function="Uncheck#clickAt" />
+		</case>
+	</command>
+</definition>

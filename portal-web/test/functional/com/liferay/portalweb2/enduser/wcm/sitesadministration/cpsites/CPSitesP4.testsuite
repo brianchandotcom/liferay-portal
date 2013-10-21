@@ -1,0 +1,3 @@
+<definition>
+	<execute test-case-command="CPSites#Contentsharing" />
+</definition>

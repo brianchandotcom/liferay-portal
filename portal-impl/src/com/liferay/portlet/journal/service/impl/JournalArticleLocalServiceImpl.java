@@ -2284,6 +2284,15 @@ public class JournalArticleLocalServiceImpl
 			groupId, folderId, start, end);
 	}
 
+	@Override
+	public List<JournalArticle> getArticles(
+			long groupId, long folderId, int status, int start, int end)
+		throws SystemException {
+
+		return journalArticlePersistence.findByG_F_ST(
+			groupId, folderId, status, start, end);
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group and folder.
@@ -2382,6 +2391,14 @@ public class JournalArticleLocalServiceImpl
 		throws SystemException {
 
 		return journalArticlePersistence.countByG_F(groupId, folderId);
+	}
+
+	@Override
+	public int getArticlesCount(long groupId, long folderId, int status)
+		throws SystemException {
+
+		return journalArticlePersistence.countByG_F_ST(
+			groupId, folderId, status);
 	}
 
 	/**

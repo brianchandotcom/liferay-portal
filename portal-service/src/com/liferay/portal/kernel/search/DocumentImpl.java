@@ -483,7 +483,7 @@ public class DocumentImpl implements Document {
 
 			_fields.put(sortableFieldName, field);
 
-			addKeyword(name, value, true);
+			addKeyword(name, value);
 		}
 	}
 

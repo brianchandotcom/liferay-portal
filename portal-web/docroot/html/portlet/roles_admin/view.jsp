@@ -76,10 +76,7 @@ String portletURLString = portletURL.toString();
 			</c:if>
 		</aui:nav>
 
-		<liferay-ui:search-form
-			page="/html/portlet/roles_admin/role_search.jsp"
-			searchContainer="<%= searchContainer %>"
-		/>
+		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/roles_admin/role_search.jsp" searchContainer="<%= searchContainer %>" />
 	</aui:nav-bar>
 
 	<%
@@ -97,8 +94,6 @@ String portletURLString = portletURL.toString();
 	%>
 
 	<aui:input name="rolesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-
-	<div class="separator"><!-- --></div>
 
 	<%
 	List resultRows = searchContainer.getResultRows();

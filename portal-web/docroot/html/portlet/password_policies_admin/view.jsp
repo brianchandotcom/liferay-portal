@@ -62,10 +62,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</aui:nav>
 
 		<c:if test="<%= !passwordPolicyEnabled %>">
-			<liferay-ui:search-form
-				page="/html/portlet/password_policies_admin/password_policy_search.jsp"
-				searchContainer="<%= searchContainer %>"
-			/>
+			<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/password_policies_admin/password_policy_search.jsp" searchContainer="<%= searchContainer %>" />
 		</c:if>
 	</aui:nav-bar>
 
@@ -88,8 +85,6 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		%>
 
 		<aui:input name="passwordPoliciesRedirect" type="hidden" value="<%= passwordPoliciesRedirectURL.toString() %>" />
-
-		<div class="separator"><!-- --></div>
 
 		<%
 		List resultRows = searchContainer.getResultRows();

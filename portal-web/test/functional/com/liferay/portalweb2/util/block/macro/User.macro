@@ -500,7 +500,15 @@
 		</if>
 	</command>
 
-	<command name="loginUserDeactivatePG">
+	<command name="loginUserPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
+	</command>
+
+	<command name="loginUserInvalidPG">
 		<execute macro="Page#openURL" />
 
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -509,14 +517,6 @@
 
 		<execute action="PGLogin#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
 		<execute action="PGLogin#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Authentication failed. Please try again." />
-	</command>
-
-	<command name="loginUserPG">
-		<execute macro="Page#openURL" />
-
-		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
-		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
 	</command>
 
 	<command name="logoutUserPG">

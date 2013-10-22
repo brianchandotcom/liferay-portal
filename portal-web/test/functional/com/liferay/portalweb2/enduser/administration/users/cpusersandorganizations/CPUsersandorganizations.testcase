@@ -749,7 +749,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="User#loginUserDeactivatePG">
+		<execute macro="User#loginUserInvalidPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="test" />
 		</execute>
@@ -797,7 +797,7 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="User#loginUserDeactivatePG">
+		<execute macro="User#loginUserInvalidPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="test" />
 		</execute>

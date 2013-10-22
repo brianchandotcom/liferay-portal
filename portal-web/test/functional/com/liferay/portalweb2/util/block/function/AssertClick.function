@@ -2,6 +2,8 @@
 	<command name="assertPartialTextClickAt">
 		<execute function="AssertTextEquals#assertPartialText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAt" />
 	</command>
 
@@ -14,17 +16,23 @@
 	<command name="assertPartialTextClickAtAndWait">
 		<execute function="AssertTextEquals#assertPartialText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAtAndWait" />
 	</command>
 
 	<command name="assertTextClick">
 		<execute function="AssertTextEquals#assertText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="click" />
 	</command>
 
 	<command name="assertTextClickAndWait">
 		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAndWait" />
 	</command>
@@ -38,11 +46,15 @@
 	<command name="assertTextClickAt">
 		<execute function="AssertTextEquals#assertText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAt" />
 	</command>
 
 	<command name="assertTextClickAtAndWait">
 		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>
@@ -107,11 +119,15 @@
 	<command name="assertValueClickAt">
 		<execute function="AssertTextEquals#assertValue" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAt" />
 	</command>
 
 	<command name="assertValueClickAtAndWait">
 		<execute function="AssertTextEquals#assertValue" />
+
+		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>

@@ -2,11 +2,15 @@
 	<command name="textCopy">
 		<execute selenium="waitForVisible" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="copyText" />
 	</command>
 
 	<command name="valueCopy">
 		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
 
 		<execute selenium="copyValue" />
 	</command>

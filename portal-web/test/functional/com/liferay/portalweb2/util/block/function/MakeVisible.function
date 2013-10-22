@@ -1,5 +1,7 @@
 <definition>
 	<command name="makeVisible">
+		<execute selenium="mouseOver" />
+
 		<execute selenium="makeVisible" />
 	</command>
 </definition>

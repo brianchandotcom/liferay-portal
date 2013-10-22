@@ -2,6 +2,8 @@
 	<command name="select">
 		<execute selenium="waitForVisible" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="select" />
 	</command>
 
@@ -13,6 +15,8 @@
 
 	<command name="selectAndWait">
 		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
 
 		<execute selenium="selectAndWait" />
 	</command>

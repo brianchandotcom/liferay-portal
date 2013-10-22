@@ -42,7 +42,7 @@ Group siteGroup = themeDisplay.getSiteGroup();
 String switchGroupURL = HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "switchGroup", "1");
 %>
 
-<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="<%= HtmlUtil.escape(siteGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="<%= HtmlUtil.escape(siteGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 	<%
 	for (Group manageableSiteGroup : manageableSiteGroups) {

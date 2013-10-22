@@ -677,38 +677,43 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
+			.control-panel-site-selector {
+				font-size: inherit;
+
+				a {
+					&:focus, &:hover {
+						.icon-caret-down {
+							color: #8CD3FC;
+						}
+					}
+				}
+
+				[class^="icon-"], [class*="icon-"] {
+					font-size: 21px;
+					padding: 0 10px 0 0;
+					vertical-align: top;
+				}
+
+				&.open {
+					.dropdown-toggle {
+						@include box-shadow(none);
+
+						[class^="icon-"], [class*="icon-"] {
+							color: #009AE5;
+						}
+					}
+				}
+			}
+
 			.site-title {
 				display: inline-block;
 				font-size: 25px;
 				font-weight: 300;
 				line-height: 20px;
 				margin: 0;
-				padding: 0 28px 0 5px;
+				padding: 0 28px 0 0;
+				text-transform: capitalize;
 				vertical-align: middle;
-
-				.control-panel-site-selector {
-					font-size: inherit;
-
-					.dropdown-toggle {
-						i.caret {
-							background: url(../images/arrows/13_down.png) no-repeat 0 0;
-							border-width: 0;
-							height: 20px;
-							margin: 0;
-							width: 20px;
-						}
-					}
-
-					&.open {
-						.dropdown-toggle {
-							@include box-shadow(none);
-
-							i.caret {
-								background-position: 0 -20px;
-							}
-						}
-					}
-				}
 			}
 
 			.visit-links {
@@ -716,17 +721,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 				font-size: 12px;
 				list-style: none;
 				margin: 0;
-				padding: 0 0 0 25px;
+				padding: 0 0 0 29px;
 
 				li {
 					display: inline-block;
 					margin-left: 0;
 					margin-right: 5px;
-
-					&.divider:before {
-						content: '|';
-						margin: 0 5px;
-					}
 				}
 			}
 		}

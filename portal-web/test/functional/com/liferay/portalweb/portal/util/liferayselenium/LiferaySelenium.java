@@ -37,6 +37,8 @@ public interface LiferaySelenium extends Selenium {
 	public void assertEmailSubject(String index, String subject)
 		throws Exception;
 
+	public void assertJavaScriptErrors() throws Exception;
+
 	public void assertLocation(String pattern);
 
 	public void assertNotAlert(String pattern);

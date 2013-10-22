@@ -37,10 +37,6 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</div>
 	</c:if>
 
-	<%
-	String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-	%>
-
 	<aui:nav-bar>
 		<aui:nav>
 			<portlet:renderURL var="viewPasswordPoliciesURL">
@@ -53,7 +49,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 					<portlet:param name="redirect" value="<%= viewPasswordPoliciesURL %>" />
 				</portlet:renderURL>
 
-				<aui:nav-item href="<%= addPasswordPolicyURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+				<aui:nav-item href="<%= addPasswordPolicyURL %>" iconCssClass="icon-plus" label="add" />
 			</c:if>
 		</aui:nav>
 	</aui:nav-bar>

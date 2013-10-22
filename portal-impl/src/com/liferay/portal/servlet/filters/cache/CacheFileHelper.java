@@ -79,13 +79,8 @@ public class CacheFileHelper {
 
 	public String sterilizeQueryString(String queryString) {
 		return StringUtil.replace(
-			queryString,
-			new String[] {
-				StringPool.SLASH, StringPool.BACK_SLASH
-			},
-			new String[] {
-				StringPool.UNDERLINE, StringPool.UNDERLINE
-			});
+			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
+			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
 	}
 
 }

@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>PGAssetpublisherConfigurationDisplaysettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAssetpublisherConfigurationDisplaysettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAssetpublisherConfigurationDisplaysettings</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGAssetpublisherConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_ADD_CONTENT_BUTTON_CHECKBOX</td>
+	<td>//input[@id='_86_showAddContentButtonCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[@id='_86_displayStyle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ABSTRACT_LENGTH_SELECT</td>
+	<td>//select[@id='_86_abstractLength']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_LINK_BEHAVIOR_SELECT</td>
+	<td>//select[@id='_86_assetLinkBehavior']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_OF_ITEMS_TO_DISPLAY_SELECT</td>
+	<td>//select[@id='_86_delta']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_OF_ITEMS_TO_DISPLAY_SELECT</td>
+	<td>//select[@id='_86_paginationType']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE_CHECKBOX</td>
+	<td>//input[@id='_86_defaultAssetPublisherCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_AVAILABLE_LOCALES_CHECKBOX</td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PRINT_CHECKBOX</td>
+	<td>//input[@id='_86_enablePrintCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_FLAGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableFlagsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RELATED_ASSETS_CHECKBOX</td>
+	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_COMMENTS_CHECKBOX</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_COMMENT_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_SOCIAL_BOOKMARKS_CHECKBOX</td>
+	<td>//input[@id='_86_enableSocialBookmarksCheckbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

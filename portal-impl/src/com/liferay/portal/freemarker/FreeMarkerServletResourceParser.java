@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.util.ContextPathUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.URLResourceParser;
 import com.liferay.portal.util.PortalUtil;
 
@@ -37,66 +34,50 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 
 	@Override
 	public URL getURL(String name) throws IOException {
-		URL url = null;
-
 		int pos = name.indexOf(TemplateConstants.SERVLET_SEPARATOR);
 
 		if (pos == -1) {
-			return url;
+			return null;
 		}
 
 		String servletContextName = name.substring(0, pos);
 
-		String servletContextPath = ContextPathUtil.getContextPath(
-			StringPool.SLASH + servletContextName);
-
-		String contextPath = PortalUtil.getPathContext();
-
-		String proxyPath = PortalUtil.getPathProxy();
-
-		if (Validator.isNotNull(proxyPath)) {
-			contextPath = contextPath.substring(proxyPath.length());
-		}
-
-		if (Validator.isNull(servletContextName) ||
-			servletContextPath.equals(contextPath)) {
-
-			servletContextName = contextPath;
+		if (servletContextName.equals(PortalUtil.getPathContext())) {
+			servletContextName = PortalUtil.getServletContextName();
 		}
 
 		ServletContext servletContext = ServletContextPool.get(
 			servletContextName);
 
-		if (servletContext != null) {
-			String templateName = name.substring(
-				pos + TemplateConstants.SERVLET_SEPARATOR.length());
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					name + " is associated with the servlet context " +
-						servletContextName + " " + servletContext);
-			}
-
-			url = servletContext.getResource(templateName);
-
-			if ((url == null) && templateName.endsWith("/init_custom.ftl")) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("The template " + name + " should be created");
-				}
-
-				String portalServletContextName = PortalUtil.getPathContext();
-
-				ServletContext portalServletContext = ServletContextPool.get(
-					portalServletContextName);
-
-				url = portalServletContext.getResource(
-					"/html/themes/_unstyled/template/init_custom.ftl");
-			}
-		}
-		else {
+		if (servletContext == null) {
 			_log.error(
 				name + " is not valid because " + servletContextName +
 					" does not map to a servlet context");
+
+			return null;
+		}
+
+		String templateName = name.substring(
+			pos + TemplateConstants.SERVLET_SEPARATOR.length());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				name + " is associated with the servlet context " +
+					servletContextName + " " + servletContext);
+		}
+
+		URL url = servletContext.getResource(templateName);
+
+		if ((url == null) && templateName.endsWith("/init_custom.ftl")) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("The template " + name + " should be created");
+			}
+
+			ServletContext portalServletContext = ServletContextPool.get(
+				PortalUtil.getServletContextName());
+
+			url = portalServletContext.getResource(
+				"/html/themes/_unstyled/template/init_custom.ftl");
 		}
 
 		return url;

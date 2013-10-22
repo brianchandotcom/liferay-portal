@@ -3543,7 +3543,7 @@ public class HookHotDeployListener
 
 		public InvokerFilterHelper getInvokerFilterHelper() {
 			ServletContext portalServletContext = ServletContextPool.get(
-				PortalUtil.getPathContext());
+				PortalUtil.getServletContextName());
 
 			InvokerFilterHelper invokerFilterHelper =
 				(InvokerFilterHelper)portalServletContext.getAttribute(

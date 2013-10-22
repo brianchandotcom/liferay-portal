@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -197,13 +196,6 @@ public class MainServlet extends ActionServlet {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize servlet context pool");
-		}
-
-		try {
-			initServletContextPool();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -924,14 +916,6 @@ public class MainServlet extends ActionServlet {
 
 	protected void initServerDetector() throws Exception {
 		ServerCapabilitiesUtil.determineServerCapabilities(getServletContext());
-	}
-
-	protected void initServletContextPool() throws Exception {
-		ServletContext servletContext = getServletContext();
-
-		String contextPath = PortalUtil.getPathContext();
-
-		ServletContextPool.put(contextPath, servletContext);
 	}
 
 	protected void initSocial(PluginPackage pluginPackage) throws Exception {

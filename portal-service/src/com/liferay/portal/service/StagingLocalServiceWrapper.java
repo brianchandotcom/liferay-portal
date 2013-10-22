@@ -64,6 +64,49 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	@Override
+	public void disableStaging(com.liferay.portal.model.Group liveGroup,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_stagingLocalService.disableStaging(liveGroup, serviceContext);
+	}
+
+	@Override
+	public void disableStaging(javax.portlet.PortletRequest portletRequest,
+		com.liferay.portal.model.Group liveGroup,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_stagingLocalService.disableStaging(portletRequest, liveGroup,
+			serviceContext);
+	}
+
+	@Override
+	public void enableLocalStaging(long userId,
+		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
+		boolean branchingPrivate,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_stagingLocalService.enableLocalStaging(userId, liveGroup,
+			branchingPublic, branchingPrivate, serviceContext);
+	}
+
+	@Override
+	public void enableRemoteStaging(long userId,
+		com.liferay.portal.model.Group liveGroup, boolean branchingPublic,
+		boolean branchingPrivate, java.lang.String remoteAddress,
+		int remotePort, java.lang.String remotePathContext,
+		boolean secureConnection, long remoteGroupId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_stagingLocalService.enableRemoteStaging(userId, liveGroup,
+			branchingPublic, branchingPrivate, remoteAddress, remotePort,
+			remotePathContext, secureConnection, remoteGroupId, serviceContext);
+	}
+
+	@Override
 	public void publishStagingRequest(long userId, long stagingRequestId,
 		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)

@@ -80,13 +80,20 @@
 	</command>
 
 	<command name="assertTextClickAtNavigation">
-		<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
+		<execute selenium="pause" argument1="1000" />
 
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" />
+		<if>
+			<condition selenium="isElementPresent" argument1="//a[@id='_145_addPanel']" />
+			<then>
+				<execute selenium="clickAt" argument1="//nav[@id='navigation']" />
 
-		<execute selenium="mouseOver" />
+				<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/sortable/sortable-min.js')]" />
 
-		<execute selenium="waitForElementPresent" argument1="//li[contains(@class,'lfr-nav-hover')]" />
+				<execute selenium="mouseOver" />
+
+				<execute selenium="waitForElementPresent" argument1="//li[contains(@class,'lfr-nav-hover')]" />
+			</then>
+		</if>
 
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>

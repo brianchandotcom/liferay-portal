@@ -199,10 +199,10 @@ public class UsersAdminImpl implements UsersAdmin {
 		while (itr.hasNext()) {
 			Role groupRole = itr.next();
 
-			String name = groupRole.getName();
+			String roleName = groupRole.getName();
 
-			if (name.equals(RoleConstants.ORGANIZATION_USER) ||
-				name.equals(RoleConstants.SITE_MEMBER)) {
+			if (roleName.equals(RoleConstants.ORGANIZATION_USER) ||
+				roleName.equals(RoleConstants.SITE_MEMBER)) {
 
 				itr.remove();
 			}
@@ -219,13 +219,13 @@ public class UsersAdminImpl implements UsersAdmin {
 		while (itr.hasNext()) {
 			Role groupRole = itr.next();
 
-			String groupRoleName = groupRole.getName();
+			String roleName = groupRole.getName();
 
-			if (groupRoleName.equals(
+			if (roleName.equals(
 					RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
-				groupRoleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
-				groupRoleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
-				groupRoleName.equals(RoleConstants.SITE_OWNER)) {
+				roleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
+				roleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
+				roleName.equals(RoleConstants.SITE_OWNER)) {
 
 				itr.remove();
 			}
@@ -324,13 +324,13 @@ public class UsersAdminImpl implements UsersAdmin {
 		while (itr.hasNext()) {
 			Role role = itr.next();
 
-			String name = role.getName();
+			String roleName = role.getName();
 
-			if (name.equals(RoleConstants.GUEST) ||
-				name.equals(RoleConstants.ORGANIZATION_USER) ||
-				name.equals(RoleConstants.OWNER) ||
-				name.equals(RoleConstants.SITE_MEMBER) ||
-				name.equals(RoleConstants.USER)) {
+			if (roleName.equals(RoleConstants.GUEST) ||
+				roleName.equals(RoleConstants.ORGANIZATION_USER) ||
+				roleName.equals(RoleConstants.OWNER) ||
+				roleName.equals(RoleConstants.SITE_MEMBER) ||
+				roleName.equals(RoleConstants.USER)) {
 
 				itr.remove();
 			}
@@ -409,10 +409,10 @@ public class UsersAdminImpl implements UsersAdmin {
 
 			Role role = userGroupRole.getRole();
 
-			String name = role.getName();
+			String roleName = role.getName();
 
-			if (name.equals(RoleConstants.ORGANIZATION_USER) ||
-				name.equals(RoleConstants.SITE_MEMBER)) {
+			if (roleName.equals(RoleConstants.ORGANIZATION_USER) ||
+				roleName.equals(RoleConstants.SITE_MEMBER)) {
 
 				itr.remove();
 			}

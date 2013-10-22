@@ -780,8 +780,9 @@
 
 	.lfr-add-panel, .lfr-device-preview-panel, .lfr-edit-layout-panel {
 		&.lfr-admin-panel h1 {
-			color: #3EA9DB;
+			color: #009AE5;
 			font-size: 26px;
+			font-weight: normal;
 			line-height: 26px;
 		}
 	}

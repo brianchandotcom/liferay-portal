@@ -4,10 +4,6 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
-		</execute>
-
 		<execute macro="Tag#tearDownCP" />
 
 		<execute macro="Site#tearDownCP" />

@@ -4,10 +4,6 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
-		</execute>
-
 		<execute macro="Tag#tearDownCP" />
 
 		<execute macro="Site#tearDownCP" />
@@ -241,7 +237,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPg">
+		<execute macro="Tag#addViaBlogsPG">
 			<var name="tagName" value="tag name" />
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
@@ -279,7 +275,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPg">
+		<execute macro="Tag#addViaBlogsPG">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="硒1 liferay1" />
@@ -446,7 +442,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPg">
+		<execute macro="Tag#addViaBlogsPG">
 			<var name="entryContent" value="${entryContent1}" />
 			<var name="entryTitle" value="${entryTitle1}" />
 			<var name="tagName" value="${tagName1}" />
@@ -457,7 +453,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPg">
+		<execute macro="Tag#addViaBlogsPG">
 			<var name="entryContent" value="${entryContent2}" />
 			<var name="entryTitle" value="${entryTitle2}" />
 			<var name="tagName" value="${tagName2}" />
@@ -468,7 +464,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Tag#addViaBlogsPg">
+		<execute macro="Tag#addViaBlogsPG">
 			<var name="entryContent" value="${entryContent3}" />
 			<var name="entryTitle" value="${entryTitle3}" />
 			<var name="tagName" value="${tagName3}" />

@@ -168,7 +168,7 @@
 		</execute>
 	</command>
 
-	<command name="addViaBlogsPg">
+	<command name="addViaBlogsPG">
 		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
@@ -226,24 +226,6 @@
 		<execute action="CPTags#assertTextEquals" locator-key1="TAG_ENTRY_NAME" value1="${tagName}" />
 	</command>
 
-	<command name="removeTagViaBlogsPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_EDIT" value1="Edit" />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute action="PGBlogsEdit#click" locator-key1="TAG_ENTRY_REMOVE" />
-
-		<execute action="PGBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute action="PGBlogs#assertTextNotPresent" locator-key1="TAG" value1="${tagName1}" />
-	</command>
-
 	<command name="removeSelectTagViaBlogsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -278,6 +260,23 @@
 		<var name="key_tagName" value="${tagName3}" />
 
 		<execute action="PGBlogs#assertTextNotPresent" locator-key1="TAG" value1="${tagName3}" />
+	</command>
+
+	<command name="removeTagViaBlogsPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_EDIT" value1="Edit" />
+
+		<var name="key_tagName" value="${tagName1}" />
+
+		<execute action="PGBlogsEdit#click" locator-key1="TAG_ENTRY_REMOVE" />
+		<execute action="PGBlogsEdit#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_tagName" value="${tagName1}" />
+
+		<execute action="PGBlogs#assertTextNotPresent" locator-key1="TAG" value1="${tagName1}" />
 	</command>
 
 	<command name="searchTagCP">
@@ -335,6 +334,10 @@
 	</command>
 
 	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
 		<if>
 			<condition action="CPTags#isElementNotPresent" locator-key1="INFO_MESSAGE" />
 			<then>

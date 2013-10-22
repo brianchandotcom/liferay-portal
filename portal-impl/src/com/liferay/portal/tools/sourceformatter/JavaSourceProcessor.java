@@ -636,6 +636,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
 		}
 
+		newLine = StringUtil.replaceLast(
+			newLine, StringPool.FOUR_SPACES, StringPool.TAB);
+
 		return StringUtil.replace(ifClause, line, newLine);
 	}
 
@@ -1288,7 +1291,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					String newIfClause = checkIfClause(
 						ifClause, fileName, lineCount);
 
-					if (!ifClause.equals(newIfClause)) {
+					if (!ifClause.equals(newIfClause) &&
+						content.contains(ifClause)) {
+
 						return StringUtil.replace(
 							content, ifClause, newIfClause);
 					}

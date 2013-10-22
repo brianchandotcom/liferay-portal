@@ -263,29 +263,6 @@ public class JournalConverterImpl implements JournalConverter {
 		entryElement.addCDATA(value);
 	}
 
-	protected void getJournalMetadataElement(Element metadataElement) {
-		removeAttribute(metadataElement, "locale");
-
-		Element dynamicElementElement = metadataElement.getParent();
-
-		// Required
-
-		boolean required = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("required"));
-
-		addMetadataEntry(metadataElement, "required", String.valueOf(required));
-
-		// Tooltip
-
-		Element tipElement = fetchMetadataEntry(metadataElement, "name", "tip");
-
-		if (tipElement != null) {
-			tipElement.addAttribute("name", "instructions");
-
-			addMetadataEntry(metadataElement, "displayAsTooltip", "true");
-		}
-	}
-
 	protected int countFieldRepetition(
 			Fields ddmFields, String fieldName, String parentFieldName,
 			int parentOffset)
@@ -483,6 +460,29 @@ public class JournalConverterImpl implements JournalConverter {
 		return serializable;
 	}
 
+	protected void getJournalMetadataElement(Element metadataElement) {
+		removeAttribute(metadataElement, "locale");
+
+		Element dynamicElementElement = metadataElement.getParent();
+
+		// Required
+
+		boolean required = GetterUtil.getBoolean(
+			dynamicElementElement.attributeValue("required"));
+
+		addMetadataEntry(metadataElement, "required", String.valueOf(required));
+
+		// Tooltip
+
+		Element tipElement = fetchMetadataEntry(metadataElement, "name", "tip");
+
+		if (tipElement != null) {
+			tipElement.addAttribute("name", "instructions");
+
+			addMetadataEntry(metadataElement, "displayAsTooltip", "true");
+		}
+	}
+
 	protected void removeAttribute(Element element, String attributeName) {
 		Attribute attribute = element.attribute(attributeName);
 
@@ -591,8 +591,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 		String parentType = parentElement.attributeValue("type");
 
-		if (Validator.equals(parentType, "list") || 
-				Validator.equals(parentType, "multi-list")) {
+		if (Validator.equals(parentType, "list") ||
+			Validator.equals(parentType, "multi-list")) {
 
 			String repeatable = parentElement.attributeValue("repeatable");
 

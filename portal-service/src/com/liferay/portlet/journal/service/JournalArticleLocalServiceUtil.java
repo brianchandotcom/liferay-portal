@@ -2314,6 +2314,19 @@ public class JournalArticleLocalServiceUtil {
 		return getService().restoreArticleFromTrash(userId, article);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
+		long groupId, java.util.List<java.lang.Long> folderIds, int status,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupId, folderIds, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> search(
+		long groupId, long folderId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupId, folderId, status, start, end);
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* parameters without using the indexer, including a keywords parameter for
@@ -2702,6 +2715,17 @@ public class JournalArticleLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .search(groupId, userId, creatorUserId, status, start, end);
+	}
+
+	public static int searchCount(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().searchCount(groupId, folderIds, status);
+	}
+
+	public static int searchCount(long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().searchCount(groupId, folderId, status);
 	}
 
 	/**

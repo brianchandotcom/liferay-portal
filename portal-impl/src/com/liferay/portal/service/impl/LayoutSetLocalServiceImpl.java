@@ -165,6 +165,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		if (!group.isStagingGroup() && group.isOrganization() &&
 			group.isSite()) {
 
+			layoutSetPersistence.flush();
+
 			LayoutSet newLayoutSet = addLayoutSet(
 				group.getGroupId(), privateLayout);
 

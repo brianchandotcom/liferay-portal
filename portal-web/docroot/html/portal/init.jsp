@@ -17,9 +17,7 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <%@ page import="com.liferay.portal.DuplicateUserEmailAddressException" %><%@
-page import="com.liferay.portal.LayoutFriendlyURLException" %><%@
 page import="com.liferay.portal.LayoutPermissionException" %><%@
-page import="com.liferay.portal.NoSuchResourceException" %><%@
 page import="com.liferay.portal.PortletActiveException" %><%@
 page import="com.liferay.portal.RequiredLayoutException" %><%@
 page import="com.liferay.portal.RequiredRoleException" %><%@
@@ -37,18 +35,12 @@ page import="com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil" %
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
 page import="com.liferay.portal.kernel.templateparser.TransformException" %><%@
 page import="com.liferay.portal.kernel.util.ProgressTracker" %><%@
-page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.license.util.LicenseManagerUtil" %><%@
 page import="com.liferay.portal.license.util.LicenseUtil" %><%@
-page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %><%@
 page import="com.liferay.portal.setup.SetupWizardUtil" %><%@
 page import="com.liferay.portal.struts.PortletRequestProcessor" %><%@
-page import="com.liferay.portal.util.LayoutLister" %><%@
-page import="com.liferay.portal.util.LayoutView" %><%@
 page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
-page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
-page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
+page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %>
 
 <%@ page import="org.apache.struts.action.ActionMapping" %><%@
 page import="org.apache.struts.taglib.tiles.ComponentConstants" %><%@

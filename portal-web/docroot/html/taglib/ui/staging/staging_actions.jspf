@@ -152,7 +152,7 @@
 					</li>
 				</c:when>
 				<c:otherwise>
-					<div class="publish-link-container">
+					<div class="<%= cssClass %> publish-link-container">
 						<%= manageSitePagesVariationsLink %>
 					</div>
 				</c:otherwise>

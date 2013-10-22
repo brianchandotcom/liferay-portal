@@ -101,6 +101,10 @@
 		padding: 0 5px;
 	}
 
+	.staging-details {
+		line-height: 20px;
+	}
+
 	.staging-toggle .variations-options {
 		position: relative;
 
@@ -135,9 +139,12 @@
 	}
 
 	.dropdown-menu .publish-link-container {
-		bottom: 5px;
 		margin-left: 5px;
-		position: absolute;
+
+		&.branching-enabled {
+			bottom: 5px;
+			position: absolute;
+		}
 
 		.publish-link {
 			overflow: hidden;

@@ -123,14 +123,37 @@
 			right: -5px;
 			top: 0;
 		}
+
+		.lfr-icon-menu-text {
+			display: inline-block;
+			max-width: 75%;
+			overflow: hidden;
+			padding-left: 5px;
+			text-overflow: ellipsis;
+			vertical-align: bottom;
+		}
 	}
 
-	.publish-link-container {
+	.dropdown-menu .publish-link-container {
 		bottom: 5px;
+		margin-left: 5px;
 		position: absolute;
 
 		.publish-link {
-			margin: 0 5px;
+			overflow: hidden;
+			padding: 5px;
+			text-overflow: ellipsis;
+			max-width: 95%;
+			white-space: nowrap;
+
+			em {
+				display: inline-block;
+				max-width: 100px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				vertical-align: bottom;
+				white-space: nowrap;
+			}
 
 			&.btn.btn-success:hover {
 				background-color: #0ABA1D;

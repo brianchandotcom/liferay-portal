@@ -27,4 +27,8 @@ $FontAwesomePath: "aui/alloy-font-awesome/font" !default;
 	font-size: $baseFontSize;
 	line-height: $baseLineHeight;
 	margin: 0;
+
+	.navbar .nav li > a {
+		word-break: break-all;
+	}
 }

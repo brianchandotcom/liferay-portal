@@ -19,7 +19,7 @@
 <aui:nav-bar>
 	<aui:nav-bar-search cssClass="pull-right">
 		<div class="form-search">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 		</div>
 	</aui:nav-bar-search>
 </aui:nav-bar>

@@ -30,6 +30,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 
@@ -61,8 +62,7 @@ public class LayoutStagingBackgroundTaskExecutor
 		StagingUtil.lockGroup(userId, targetGroupId);
 
 		long sourceGroupId = MapUtil.getLong(taskContextMap, "sourceGroupId");
-		boolean initialImport = MapUtil.getBoolean(
-			taskContextMap, "initialImport");
+
 		ServiceContext serviceContext = (ServiceContext)taskContextMap.get(
 			"serviceContext");
 
@@ -84,7 +84,10 @@ public class LayoutStagingBackgroundTaskExecutor
 					_transactionAttribute, layoutStagingCallable);
 		}
 		catch (Throwable t) {
-			failed = true;
+			if (sourceGroup.hasStagingGroup()) {
+				StagingLocalServiceUtil.disableStaging(
+					sourceGroup, serviceContext);
+			}
 
 			if (t instanceof Exception) {
 				throw (Exception)t;
@@ -95,10 +98,6 @@ public class LayoutStagingBackgroundTaskExecutor
 		}
 		finally {
 			StagingUtil.unlockGroup(targetGroupId);
-
-			if (failed && initialImport) {
-				StagingUtil.disableStaging(sourceGroup, serviceContext);
-			}
 		}
 
 		return processMissingReferences(backgroundTask, missingReferences);

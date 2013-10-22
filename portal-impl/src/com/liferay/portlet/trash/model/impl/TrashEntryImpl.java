@@ -71,8 +71,11 @@ public class TrashEntryImpl extends TrashEntryBaseImpl {
 			return false;
 		}
 
-		String className = clazz.getName();
+		return isTrashEntry(clazz.getName(), classPK);
+	}
 
+	@Override
+	public boolean isTrashEntry(String className, long classPK) {
 		if (className.equals(getClassName()) && (classPK == getClassPK())) {
 			return true;
 		}

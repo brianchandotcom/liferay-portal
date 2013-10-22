@@ -375,13 +375,7 @@ public class TrashImpl implements Trash {
 			return false;
 		}
 
-		if (trashHandler.isInTrash(classPK) ||
-			trashHandler.isInTrashContainer(classPK)) {
-
-			return true;
-		}
-
-		return false;
+		return trashHandler.isInTrash(classPK);
 	}
 
 	@Override
@@ -432,8 +426,6 @@ public class TrashImpl implements Trash {
 					containerModel.getModelClassName());
 
 			if (!containerModelTrashHandler.isInTrash(
-					containerModel.getContainerModelId()) &&
-				!containerModelTrashHandler.isInTrashContainer(
 					containerModel.getContainerModelId())) {
 
 				continue;

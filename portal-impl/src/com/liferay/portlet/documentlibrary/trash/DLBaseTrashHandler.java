@@ -138,7 +138,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 		Repository repository = getRepository(classPK);
 
 		return repository.getFileEntriesAndFileShortcutsCount(
-			classPK, WorkflowConstants.STATUS_ANY);
+			classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		List<Object> fileEntriesAndFileShortcuts =
 			repository.getFileEntriesAndFileShortcuts(
-				classPK, WorkflowConstants.STATUS_ANY, start, end);
+				classPK, WorkflowConstants.STATUS_IN_TRASH, start, end);
 
 		for (Object fileEntryOrFileShortcut : fileEntriesAndFileShortcuts) {
 			String curClassName = StringPool.BLANK;
@@ -198,7 +198,8 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		return repository.getFoldersCount(classPK, false);
+		return repository.getFoldersCount(
+			classPK, WorkflowConstants.STATUS_IN_TRASH, false);
 	}
 
 	@Override
@@ -211,7 +212,8 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 		Repository repository = getRepository(classPK);
 
 		List<Folder> folders = repository.getFolders(
-			classPK, false, start, end, null);
+			classPK, WorkflowConstants.STATUS_IN_TRASH, false, start, end,
+			null);
 
 		for (Folder folder : folders) {
 			TrashHandler trashHandler =

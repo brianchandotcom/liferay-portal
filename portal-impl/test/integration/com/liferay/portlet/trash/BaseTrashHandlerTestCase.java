@@ -36,6 +36,7 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -396,12 +397,13 @@ public abstract class BaseTrashHandlerTestCase {
 	protected boolean isInTrashContainer(ClassedModel classedModel)
 		throws Exception {
 
-		Class<?> clazz = classedModel.getModelClass();
+		if (classedModel instanceof TrashedModel) {
+			TrashedModel trashedModel = (TrashedModel)classedModel;
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			clazz.getName());
+			return trashedModel.isInTrashContainer();
+		}
 
-		return trashHandler.isInTrashContainer(getAssetClassPK(baseModel));
+		return false;
 	}
 
 	protected BaseModel<?> moveBaseModelFromTrash(
@@ -858,6 +860,20 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertTrue(isInTrashContainer(baseModel));
 
+		TrashHandler parentTrashHandler =
+			TrashHandlerRegistryUtil.getTrashHandler(
+				getParentBaseModelClassName());
+
+		Assert.assertEquals(
+			1,
+			parentTrashHandler.getTrashContainerModelsCount(
+				(Long)parentBaseModel.getPrimaryKeyObj()));
+
+		Assert.assertEquals(
+			1,
+			parentTrashHandler.getTrashContainedModelsCount(
+				(Long)parentBaseModel.getPrimaryKeyObj()));
+
 		if (isAssetableModel()) {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
@@ -869,10 +885,6 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 		else if (isBaseModelMoveableFromTrash()) {
 			if (delete) {
-				TrashHandler parentTrashHandler =
-					TrashHandlerRegistryUtil.getTrashHandler(
-						getParentBaseModelClassName());
-
 				parentTrashHandler.deleteTrashEntry(
 					(Long)parentBaseModel.getPrimaryKeyObj());
 

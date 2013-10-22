@@ -1507,6 +1507,12 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticles(groupId, folderId, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticles(
+		long groupId, long folderId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticles(groupId, folderId, status, start, end);
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* group and folder.
@@ -1597,6 +1603,11 @@ public class JournalArticleLocalServiceUtil {
 	public static int getArticlesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getArticlesCount(groupId, folderId);
+	}
+
+	public static int getArticlesCount(long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticlesCount(groupId, folderId, status);
 	}
 
 	/**

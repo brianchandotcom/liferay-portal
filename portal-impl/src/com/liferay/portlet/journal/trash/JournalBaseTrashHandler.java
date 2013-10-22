@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -124,7 +125,7 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
 		return JournalArticleLocalServiceUtil.getArticlesCount(
-			folder.getGroupId(), classPK);
+			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
@@ -138,7 +139,8 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 
 		List<JournalArticle> articles =
 			JournalArticleLocalServiceUtil.getArticles(
-				folder.getGroupId(), classPK, start, end);
+				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
+				start, end);
 
 		for (JournalArticle article : articles) {
 			TrashHandler trashHandler =
@@ -166,7 +168,7 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
 		return JournalFolderLocalServiceUtil.getFoldersCount(
-			folder.getGroupId(), classPK);
+			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
@@ -180,7 +182,8 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 
 		List<JournalFolder> folders =
 			JournalFolderLocalServiceUtil.getFolders(
-					folder.getGroupId(), classPK, start, end);
+				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
+				start, end);
 
 		for (JournalFolder curFolder : folders) {
 			TrashHandler trashHandler =

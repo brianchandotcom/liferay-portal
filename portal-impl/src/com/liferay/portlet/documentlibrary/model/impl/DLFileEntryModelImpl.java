@@ -943,7 +943,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public TrashEntry getTrashEntry() throws PortalException, SystemException {
-		if (!isInTrash() && !isInTrashContainer()) {
+		if (!isInTrash()) {
 			return null;
 		}
 

@@ -741,7 +741,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		@Override
 		public TrashEntry getTrashEntry() throws PortalException, SystemException {
-			if (!isInTrash() && !isInTrashContainer()) {
+			if (!isInTrash()) {
 				return null;
 			}
 

@@ -268,9 +268,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			try {
 				long classPK = (Long)stagedModel.getPrimaryKeyObj();
 
-				if (trashHandler.isInTrash(classPK) ||
-					trashHandler.isInTrashContainer(classPK)) {
-
+				if (trashHandler.isInTrash(classPK)) {
 					throw new PortletDataException(
 						PortletDataException.STATUS_IN_TRASH);
 				}

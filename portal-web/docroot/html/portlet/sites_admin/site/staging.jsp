@@ -34,7 +34,32 @@ if (stagedLocally) {
 	stagingGroup = liveGroup.getStagingGroup();
 	stagingGroupId = stagingGroup.getGroupId();
 }
+
+BackgroundTask lastCompletedInitialPublication = BackgroundTaskLocalServiceUtil.fetchFirstBackgroundTask(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), true, new BackgroundTaskCreateDateComparator(false));
 %>
+
+<c:if test="<%= (lastCompletedInitialPublication != null) && (lastCompletedInitialPublication.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
+	<div class="alert alert-error">
+		<liferay-ui:message key="an-inital-staging-publication-has-failed" />
+
+		<liferay-portlet:actionURL portletName="<%= PortletKeys.GROUP_PAGES %>" var="deleteBackgroundTaskURL">
+			<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublication.getBackgroundTaskId()) %>" />
+		</liferay-portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-remove-the-initial-staging-publication"
+			label="true"
+			message="clear"
+			url="<%= deleteBackgroundTaskURL %>"
+		/>
+	</div>
+
+	<liferay-util:include page="/html/portlet/layouts_admin/publish_process_message_task_details.jsp">
+		<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublication.getBackgroundTaskId()) %>" />
+	</liferay-util:include>
+</c:if>
 
 <c:if test="<%= stagedLocally && (BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), false) > 0) %>">
 	<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

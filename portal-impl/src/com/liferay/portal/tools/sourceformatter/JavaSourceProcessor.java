@@ -636,6 +636,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
 		}
 
+		newLine = StringUtil.replaceLast(
+			newLine, StringPool.FOUR_SPACES, StringPool.TAB);
+
 		return StringUtil.replace(ifClause, line, newLine);
 	}
 

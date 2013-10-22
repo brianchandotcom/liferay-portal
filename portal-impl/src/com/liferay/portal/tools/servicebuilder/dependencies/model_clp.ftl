@@ -480,7 +480,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 		@Override
 		public TrashEntry getTrashEntry() throws PortalException, SystemException {
-			if (!isInTrash() && !isInTrashContainer()) {
+			if (!isInTrash()) {
 				return null;
 			}
 

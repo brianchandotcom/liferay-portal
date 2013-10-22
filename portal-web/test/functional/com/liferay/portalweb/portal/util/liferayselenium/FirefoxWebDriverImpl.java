@@ -52,8 +52,7 @@ public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 			_firefoxProfile.addExtension(
 				new File(
 					absolutePath +
-						"lib/development/jserrorcollector/" +
-							"jserrorcollector.xpi"));
+						"tools/selenium/addons/jserrorcollector.xpi"));
 		}
 		catch (Exception e) {
 		}

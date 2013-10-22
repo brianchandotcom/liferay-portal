@@ -109,6 +109,10 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _ignoreRequestValue;
 	}
 
+	public boolean getIncludeHiddenField() {
+		return _includeHiddenField;
+	}
+
 	public boolean getInlineField() {
 		return _inlineField;
 	}
@@ -315,6 +319,12 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("ignoreRequestValue", ignoreRequestValue);
 	}
 
+	public void setIncludeHiddenField(boolean includeHiddenField) {
+		_includeHiddenField = includeHiddenField;
+
+		setScopedAttribute("includeHiddenField", includeHiddenField);
+	}
+
 	public void setInlineField(boolean inlineField) {
 		_inlineField = inlineField;
 
@@ -474,6 +484,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_helpTextCssClass = "add-on";
 		_id = null;
 		_ignoreRequestValue = false;
+		_includeHiddenField = true;
 		_inlineField = false;
 		_inlineLabel = null;
 		_label = null;
@@ -525,6 +536,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "helpTextCssClass", _helpTextCssClass);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
+		setNamespacedAttribute(request, "includeHiddenField", _includeHiddenField);
 		setNamespacedAttribute(request, "inlineField", _inlineField);
 		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
 		setNamespacedAttribute(request, "label", _label);
@@ -574,6 +586,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _helpTextCssClass = "add-on";
 	private java.lang.String _id = null;
 	private boolean _ignoreRequestValue = false;
+	private boolean _includeHiddenField = true;
 	private boolean _inlineField = false;
 	private java.lang.String _inlineLabel = null;
 	private java.lang.String _label = null;

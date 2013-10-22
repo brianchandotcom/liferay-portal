@@ -51,6 +51,7 @@ java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.ge
 java.lang.String helpTextCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:helpTextCssClass"), "add-on");
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:ignoreRequestValue")));
+boolean includeHiddenField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:includeHiddenField")), true);
 boolean inlineField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:inlineField")));
 java.lang.String inlineLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:inlineLabel"));
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:label"));
@@ -94,6 +95,7 @@ _updateOptions(_options, "helpMessage", helpMessage);
 _updateOptions(_options, "helpTextCssClass", helpTextCssClass);
 _updateOptions(_options, "id", id);
 _updateOptions(_options, "ignoreRequestValue", ignoreRequestValue);
+_updateOptions(_options, "includeHiddenField", includeHiddenField);
 _updateOptions(_options, "inlineField", inlineField);
 _updateOptions(_options, "inlineLabel", inlineLabel);
 _updateOptions(_options, "label", label);

@@ -559,6 +559,12 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<name>includeHiddenField</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<name>inlineField</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

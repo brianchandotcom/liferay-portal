@@ -37,7 +37,26 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</div>
 	</c:if>
 
-	<liferay-util:include page="/html/portlet/password_policies_admin/toolbar.jsp" />
+	<%
+	String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+	%>
+
+	<aui:nav-bar>
+		<aui:nav>
+			<portlet:renderURL var="viewPasswordPoliciesURL">
+				<portlet:param name="struts_action" value="/password_policies_admin/view" />
+			</portlet:renderURL>
+
+			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_PASSWORD_POLICY) %>">
+				<portlet:renderURL var="addPasswordPolicyURL">
+					<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy" />
+					<portlet:param name="redirect" value="<%= viewPasswordPoliciesURL %>" />
+				</portlet:renderURL>
+
+				<aui:nav-item href="<%= addPasswordPolicyURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+			</c:if>
+		</aui:nav>
+	</aui:nav-bar>
 
 	<%
 	PasswordPolicySearch searchContainer = new PasswordPolicySearch(renderRequest, portletURL);

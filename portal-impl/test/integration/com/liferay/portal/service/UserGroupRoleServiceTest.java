@@ -66,12 +66,18 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addGroupAdminUser(group);
 		User objectUser = UserTestUtil.addGroupAdminUser(group);
 
-		deleteUserGroupRolesByRole(
-			group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
+		try {
+			deleteUserGroupRolesByRole(
+				group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), group.getGroupId(), role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), group.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -84,12 +90,18 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addGroupAdminUser(group);
 		User objectUser = UserTestUtil.addGroupAdminUser(group);
 
-		deleteUserGroupRolesByUser(
-			group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
+		try {
+			deleteUserGroupRolesByUser(
+				group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), group.getGroupId(), role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), group.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -102,12 +114,18 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addGroupAdminUser(group);
 		User objectUser = UserTestUtil.addGroupOwnerUser(group);
 
-		deleteUserGroupRolesByRole(
-			group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
+		try {
+			deleteUserGroupRolesByRole(
+				group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), group.getGroupId(), role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), group.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -120,12 +138,18 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addGroupAdminUser(group);
 		User objectUser = UserTestUtil.addGroupOwnerUser(group);
 
-		deleteUserGroupRolesByUser(
-			group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
+		try {
+			deleteUserGroupRolesByUser(
+				group.getGroupId(), role.getRoleId(), subjectUser, objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), group.getGroupId(), role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), group.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -441,14 +465,19 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
 		User objectUser = UserTestUtil.addOrganizationAdminUser(organization);
 
-		deleteUserGroupRolesByRole(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByRole(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -464,14 +493,19 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
 		User objectUser = UserTestUtil.addOrganizationAdminUser(organization);
 
-		deleteUserGroupRolesByUser(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByUser(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -486,14 +520,19 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
 		User objectUser = UserTestUtil.addOrganizationOwnerUser(organization);
 
-		deleteUserGroupRolesByRole(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByRole(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -508,14 +547,19 @@ public class UserGroupRoleServiceTest {
 		User subjectUser = UserTestUtil.addOrganizationAdminUser(organization);
 		User objectUser = UserTestUtil.addOrganizationOwnerUser(organization);
 
-		deleteUserGroupRolesByUser(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByUser(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -531,14 +575,19 @@ public class UserGroupRoleServiceTest {
 		User objectUser = UserTestUtil.addGroupAdminUser(
 			organization.getGroup());
 
-		deleteUserGroupRolesByRole(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByRole(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -554,14 +603,19 @@ public class UserGroupRoleServiceTest {
 		User objectUser = UserTestUtil.addGroupAdminUser(
 			organization.getGroup());
 
-		deleteUserGroupRolesByUser(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByUser(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -577,14 +631,19 @@ public class UserGroupRoleServiceTest {
 		User objectUser = UserTestUtil.addGroupOwnerUser(
 			organization.getGroup());
 
-		deleteUserGroupRolesByRole(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByRole(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test
@@ -600,14 +659,19 @@ public class UserGroupRoleServiceTest {
 		User objectUser = UserTestUtil.addGroupOwnerUser(
 			organization.getGroup());
 
-		deleteUserGroupRolesByUser(
-			organization.getGroupId(), role.getRoleId(), subjectUser,
-			objectUser);
+		try {
+			deleteUserGroupRolesByUser(
+				organization.getGroupId(), role.getRoleId(), subjectUser,
+				objectUser);
 
-		Assert.assertTrue(
-			UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				objectUser.getUserId(), organization.getGroupId(),
-				role.getRoleId()));
+			Assert.fail();
+		}
+		catch (PrincipalException pe) {
+			Assert.assertTrue(
+				UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+					objectUser.getUserId(), organization.getGroupId(),
+					role.getRoleId()));
+		}
 	}
 
 	@Test

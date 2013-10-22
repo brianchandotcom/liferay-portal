@@ -9,7 +9,11 @@
 
 	<execute test-suite="CPRolesCPMessageboardsP5" />
 
+	<execute test-suite="CPRolesCPRolesP5" />
+
 	<execute test-suite="CPRolesCPSitesP5" />
+
+	<execute test-suite="CPRolesCPUsergroupsP5" />
 
 	<execute test-suite="CPRolesCPUsersandorganizationsP5" />
 

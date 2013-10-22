@@ -315,6 +315,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		cacheKeyGenerator.append(request.getRequestURI());
 
+		cacheKeyGenerator.append(String.valueOf(request.isSecure()));
+
 		String queryString = request.getQueryString();
 
 		if (queryString != null) {

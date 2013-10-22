@@ -81,9 +81,9 @@ public class PermissionExporter {
 		Map<Long, Role> roleIdsToRoles = new HashMap<Long, Role>();
 
 		for (Role role : roles) {
-			String name = role.getName();
+			String roleName = role.getName();
 
-			if (name.equals(RoleConstants.ADMINISTRATOR)) {
+			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
 				continue;
 			}
 

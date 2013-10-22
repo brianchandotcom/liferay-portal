@@ -458,18 +458,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 		Map<Long, String> roleIdsToNames = new HashMap<Long, String>();
 
 		for (Role role : roles) {
-			String name = role.getName();
+			String roleName = role.getName();
 
 			int type = role.getType();
 
 			if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
 				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
 
-				name = PermissionExporter.ROLE_TEAM_PREFIX + team.getName();
+				roleName = PermissionExporter.ROLE_TEAM_PREFIX + team.getName();
 			}
 
 			roleIds.add(role.getRoleId());
-			roleIdsToNames.put(role.getRoleId(), name);
+			roleIdsToNames.put(role.getRoleId(), roleName);
 		}
 
 		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(

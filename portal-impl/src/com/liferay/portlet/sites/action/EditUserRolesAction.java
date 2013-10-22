@@ -88,10 +88,10 @@ public class EditUserRolesAction extends PortletAction {
 			Role role = (Role)renderRequest.getAttribute(WebKeys.ROLE);
 
 			if (role != null) {
-				String name = role.getName();
+				String roleName = role.getName();
 
-				if (name.equals(RoleConstants.ORGANIZATION_USER) ||
-					name.equals(RoleConstants.SITE_MEMBER)) {
+				if (roleName.equals(RoleConstants.ORGANIZATION_USER) ||
+					roleName.equals(RoleConstants.SITE_MEMBER)) {
 
 					throw new NoSuchRoleException();
 				}

@@ -40,7 +40,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
@@ -176,24 +175,6 @@ public class AudioProcessorImpl
 		super.trigger(sourceFileVersion, destinationFileVersion);
 
 		_queueGeneration(sourceFileVersion, destinationFileVersion);
-	}
-
-	@Override
-	protected void deletePreviews(
-		long companyId, long groupId, long fileEntryId, long fileVersionId) {
-
-		String pathSegment = getPathSegment(
-			groupId, fileEntryId, fileVersionId, true);
-
-		for (String previewType : _PREVIEW_TYPES) {
-			String path = pathSegment + StringPool.PERIOD + previewType;
-
-			try {
-				DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, path);
-			}
-			catch (Exception e) {
-			}
-		}
 	}
 
 	@Override

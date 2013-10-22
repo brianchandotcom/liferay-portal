@@ -61,7 +61,7 @@ import org.springframework.mock.web.MockServletContext;
 		MainServletExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class CompanyServiceTest {
+public class CompanyLocalServiceTest {
 
 	@Before
 	public void setUp() {

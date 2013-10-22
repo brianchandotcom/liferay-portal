@@ -360,7 +360,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				groupId, fileEntryId, fileVersionId, type);
 
 			try {
-				DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, path);
+				DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, path);
 			}
 			catch (Exception e) {
 			}
@@ -702,7 +702,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		return getPreviewFilePath(
 			fileVersion.getGroupId(), fileVersion.getFileEntryId(),
-			fileVersion.getFileVersionId(), index, getPreviewType());
+			fileVersion.getFileVersionId(), index, type);
 	}
 
 	protected String getPreviewFilePath(FileVersion fileVersion, String type) {

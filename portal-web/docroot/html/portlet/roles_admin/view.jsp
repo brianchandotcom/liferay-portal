@@ -33,6 +33,12 @@ String portletURLString = portletURL.toString();
 
 	<%
 	String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+
+	RoleSearch searchContainer = new RoleSearch(renderRequest, portletURL);
+
+	List headerNames = searchContainer.getHeaderNames();
+
+	headerNames.add(StringPool.BLANK);
 	%>
 
 	<aui:nav-bar>
@@ -69,20 +75,12 @@ String portletURLString = portletURL.toString();
 				</aui:nav-item>
 			</c:if>
 		</aui:nav>
+
+		<liferay-ui:search-form
+			page="/html/portlet/roles_admin/role_search.jsp"
+			searchContainer="<%= searchContainer %>"
+		/>
 	</aui:nav-bar>
-
-	<%
-	RoleSearch searchContainer = new RoleSearch(renderRequest, portletURL);
-
-	List headerNames = searchContainer.getHeaderNames();
-
-	headerNames.add(StringPool.BLANK);
-	%>
-
-	<liferay-ui:search-form
-		page="/html/portlet/roles_admin/role_search.jsp"
-		searchContainer="<%= searchContainer %>"
-	/>
 
 	<%
 	RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();

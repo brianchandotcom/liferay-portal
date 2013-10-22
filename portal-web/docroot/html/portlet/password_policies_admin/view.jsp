@@ -37,6 +37,14 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</div>
 	</c:if>
 
+	<%
+	PasswordPolicySearch searchContainer = new PasswordPolicySearch(renderRequest, portletURL);
+
+	List headerNames = searchContainer.getHeaderNames();
+
+	headerNames.add(StringPool.BLANK);
+	%>
+
 	<aui:nav-bar>
 		<aui:nav>
 			<portlet:renderURL var="viewPasswordPoliciesURL">
@@ -52,22 +60,14 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 				<aui:nav-item href="<%= addPasswordPolicyURL %>" iconCssClass="icon-plus" label="add" />
 			</c:if>
 		</aui:nav>
+
+		<c:if test="<%= !passwordPolicyEnabled %>">
+			<liferay-ui:search-form
+				page="/html/portlet/password_policies_admin/password_policy_search.jsp"
+				searchContainer="<%= searchContainer %>"
+			/>
+		</c:if>
 	</aui:nav-bar>
-
-	<%
-	PasswordPolicySearch searchContainer = new PasswordPolicySearch(renderRequest, portletURL);
-
-	List headerNames = searchContainer.getHeaderNames();
-
-	headerNames.add(StringPool.BLANK);
-	%>
-
-	<c:if test="<%= !passwordPolicyEnabled %>">
-		<liferay-ui:search-form
-			page="/html/portlet/password_policies_admin/password_policy_search.jsp"
-			searchContainer="<%= searchContainer %>"
-		/>
-	</c:if>
 
 	<c:if test="<%= !passwordPolicyEnabled && windowState.equals(WindowState.MAXIMIZED) %>">
 

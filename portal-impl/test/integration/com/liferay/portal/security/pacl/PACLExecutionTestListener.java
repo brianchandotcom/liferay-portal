@@ -77,7 +77,7 @@ public class PACLExecutionTestListener
 	@Override
 	public void runBeforeClass(TestContext testContext) {
 		ServletContext servletContext = ServletContextPool.get(
-			PortalUtil.getPathContext());
+			PortalUtil.getServletContextName());
 
 		if (servletContext == null) {
 			servletContext = new AutoDeployMockServletContext(

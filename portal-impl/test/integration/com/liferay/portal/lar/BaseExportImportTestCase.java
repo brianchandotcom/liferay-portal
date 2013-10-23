@@ -65,7 +65,9 @@ public class BaseExportImportTestCase extends PowerMockito {
 	@After
 	public void tearDown() throws Exception {
 		try {
-			GroupLocalServiceUtil.deleteGroup(group);
+			if (group != null) {
+				GroupLocalServiceUtil.deleteGroup(group);
+			}
 
 			if (importedGroup != null) {
 				GroupLocalServiceUtil.deleteGroup(importedGroup);
@@ -74,8 +76,13 @@ public class BaseExportImportTestCase extends PowerMockito {
 		catch (RequiredGroupException rge) {
 		}
 
-		LayoutLocalServiceUtil.deleteLayout(layout);
-		LayoutLocalServiceUtil.deleteLayout(importedLayout);
+		if (layout != null) {
+			LayoutLocalServiceUtil.deleteLayout(layout);
+		}
+
+		if (importedLayout != null) {
+			LayoutLocalServiceUtil.deleteLayout(importedLayout);
+		}
 
 		if ((larFile != null) && larFile.exists()) {
 			FileUtil.delete(larFile);

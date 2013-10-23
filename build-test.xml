@@ -639,12 +639,6 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="end-user-wcm-p4" />
-			<param name="test.ant.script.database.minimal" value="true" />
-			<param name="test.ant.script.suite" value="EndUserWCMP4TestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-web-forms-and-data-lists-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.plugin.portlets" value="web-form-portlet" />

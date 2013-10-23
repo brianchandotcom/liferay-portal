@@ -283,4 +283,162 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 	</command>
+
+	<command name="ViewContentSharingDisabledAcrossSitesViaAP">
+		<var name="childSiteName" value="Child SiteName" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName1" value="AP Test Page" />
+		<var name="pageName2" value="WC Test Page" />
+		<var name="parentSite" value="Site Name" />
+		<var name="portletName1" value="Asset Publisher" />
+		<var name="portletName2" value="Web Content Display" />
+		<var name="siteScopeName" value="Child SiteName" />
+		<var name="sitePageType" value="Public" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">
+			<var name="enableAcrossSite" value="false" />
+		</execute>
+
+		<execute macro="PortalSettings#configureContentSharingSubSitesCP">
+			<var name="subSites" value="enabledByDefault" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${parentSite}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="${parentSite}" />
+			<var name="siteName" value="${childSiteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${parentSite}" />
+			<var name="sitePageName" value="${pageName1}" />
+			<var name="sitePageType" value="${sitePageType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName1}" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="childSiteName" value="${siteScopeName}" />
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteScopeSelected" value="true" />
+			<var name="sitePageName" value="${pageName2}" />
+			<var name="sitePageType" value="${sitePageType}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Child" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
+			<var name="siteScopeType" value="Child Site" />
+			<var name="siteName" value="${childSiteName}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
+			<var name="contentSharingAcrossSitesEnabled" value="false" />
+			<var name="globalSiteName" value="Global" />
+			<var name="globalSiteType" value="Global" />
+			<var name="liferaySiteName" value="Liferay" />
+			<var name="liferaySiteType" value="Site" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="AssetPublisher#viewContentSharingPG">
+			<var name="assetContent" value="${webContentContent}" />
+			<var name="assetTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPGViaAP">
+			<var name="scopeSiteType" value="Add New in Site Name" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Child" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName1}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSiteScopePG">
+			<var name="siteScopeType" value="Parent Site" />
+			<var name="siteName" value="${parentSite}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
+			<var name="contentSharingAcrossSitesEnabled" value="false" />
+			<var name="globalSiteName" value="Global" />
+			<var name="globalSiteType" value="Global" />
+			<var name="liferaySiteName" value="Liferay" />
+			<var name="liferaySiteType" value="Site" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Child" />
+		</execute>
+
+		<execute macro="AssetPublisher#viewContentSharingPG">
+			<var name="assetContent" value="${entryContent}" />
+			<var name="assetTitle" value="${entryTitle}" />
+		</execute>
+	</command>
 </definition>

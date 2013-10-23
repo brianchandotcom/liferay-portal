@@ -162,8 +162,6 @@
 	</command>
 
 	<command name="addPGViaAP">
-		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
-
 		<if>
 			<isset var="scopeSiteType" />
 			<then>
@@ -177,16 +175,13 @@
 		</if>
 
 		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" locator-key1="BLOGS_ENTRY_IFRAME" />
-
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="PGAssetpublisherAddnewblogsentry#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
-
+		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" value1="relative=top" />
 		<execute action="PGAssetpublisherAddnewblogsentry#selectFrame" locator-key1="BLOGS_ENTRY_IFRAME" />
-
 		<execute action="PGAssetpublisherAddnewblogsentry#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
 		<execute action="PGAssetpublisher#selectFrame" value1="relative=top" />
-		
+
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY_1" value1="${entryContent}" />
 	</command>

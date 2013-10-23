@@ -102,7 +102,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertJavaScriptErrors() throws Exception {
-		if (!TestPropsValues.TEST_JAVASCRIPT_ERRORS) {
+		if (!TestPropsValues.TEST_ASSSERT_JAVASCRIPT_ERRORS) {
 			return;
 		}
 

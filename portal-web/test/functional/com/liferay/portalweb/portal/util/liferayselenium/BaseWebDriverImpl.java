@@ -102,6 +102,10 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertJavaScriptErrors() throws Exception {
+		if (!TestPropsValues.TEST_JAVASCRIPT_ERRORS) {
+			return;
+		}
+
 		WebElement webElement = getWebElement("//body");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;

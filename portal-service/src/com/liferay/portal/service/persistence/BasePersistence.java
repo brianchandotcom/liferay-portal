@@ -95,22 +95,15 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	public long count(DynamicQuery dynamicQuery) throws SystemException;
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param  dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #count(
+	 *             DynamicQuery)}
 	 */
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
 		throws SystemException;
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param  dynamicQuery the dynamic query
-	 * @param  projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #count(
+	 *             DynamicQuery)}
 	 */
 	public long countWithDynamicQuery(
 			DynamicQuery dynamicQuery, Projection projection)
@@ -209,38 +202,16 @@ public interface BasePersistence<T extends BaseModel<T>> {
 		throws SystemException;
 
 	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param  dynamicQuery the dynamic query
-	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *             DynamicQuery)}
 	 */
 	@SuppressWarnings("rawtypes")
 	public List findWithDynamicQuery(DynamicQuery dynamicQuery)
 		throws SystemException;
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the
-	 * matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  dynamicQuery the dynamic query
-	 * @param  start the lower bound of the range of matching rows
-	 * @param  end the upper bound of the range of matching rows (not inclusive)
-	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.kernel.dao.orm.QueryUtil#list(
-	 *         com.liferay.portal.kernel.dao.orm.Query,
-	 *         com.liferay.portal.kernel.dao.orm.Dialect, int, int)
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *             DynamicQuery, int, int)}
 	 */
 	@SuppressWarnings("rawtypes")
 	public List findWithDynamicQuery(
@@ -248,26 +219,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 		throws SystemException;
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of
-	 * the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  dynamicQuery the dynamic query
-	 * @param  start the lower bound of the range of matching rows
-	 * @param  end the upper bound of the range of matching rows (not inclusive)
-	 * @param  orderByComparator the comparator to order the results by
-	 *         (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *              DynamicQuery, int, int, OrderByComparator)}
 	 */
 	@SuppressWarnings("rawtypes")
 	public List findWithDynamicQuery(

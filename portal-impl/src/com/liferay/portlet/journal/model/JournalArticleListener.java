@@ -36,6 +36,9 @@ public class JournalArticleListener extends BaseModelListener<JournalArticle> {
 	}
 
 	protected void clearCache(JournalArticle article) {
+		if (article == null) {
+			return;
+		}
 
 		// Journal content
 

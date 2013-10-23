@@ -67,6 +67,10 @@ public class LayoutListener extends BaseModelListener<Layout> {
 	}
 
 	protected void clearCache(Layout layout) {
+		if (layout == null) {
+			return;
+		}
+
 		if (!layout.isPrivateLayout()) {
 			CacheUtil.clearCache(layout.getCompanyId());
 		}

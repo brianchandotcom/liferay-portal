@@ -4,8 +4,6 @@
 
 @include portal-data-counter.sql
 
-@include portal-data-sample.vm
-
 @include portal-data-cms-content.sql
 
 @include portal-data-cms-layout.sql

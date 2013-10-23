@@ -2886,7 +2886,7 @@ AUI.add(
 							}
 						}
 						else {
-							dropNode.append(dragNode);
+							dropNode.appendChild(dragNode);
 						}
 					},
 

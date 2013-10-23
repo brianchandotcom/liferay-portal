@@ -782,7 +782,7 @@ public abstract class BaseIndexer implements Indexer {
 					assetCategoryTitles.put(locale, titles);
 				}
 
-				titles.add(title);
+				titles.add(StringUtil.toLowerCase(title));
 			}
 		}
 

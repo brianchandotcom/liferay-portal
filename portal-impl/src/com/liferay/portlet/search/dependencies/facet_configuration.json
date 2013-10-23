@@ -61,8 +61,8 @@
 				maxTerms: 10,
 				showAssetCount: true
 			},
-			displayStyle: 'asset_tags',
-			fieldName: 'assetCategoryTitles',
+			displayStyle: 'asset_categories',
+			fieldName: 'assetCategoryIds',
 			label: 'category',
 			order: 'OrderHitsDesc',
 			static: false,

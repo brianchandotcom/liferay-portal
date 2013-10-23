@@ -1,6 +1,10 @@
 <#include "../init.ftl">
 
-<#assign parentFieldRawValue = parentFieldStructure.predefinedValue!"[]">
+<#if parentFieldStructure.predefinedValue?has_content>
+	<#assign parentFieldRawValue = parentFieldStructure.predefinedValue>
+<#else>
+	<#assign parentFieldRawValue = "[]">
+</#if>
 
 <#if fields?? && fields.get(parentName)??>
 	<#assign parentValueIndex = getterUtil.getInteger(parentFieldStructure.valueIndex)>

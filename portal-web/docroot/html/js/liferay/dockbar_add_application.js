@@ -45,7 +45,7 @@ AUI.add(
 
 						if (togglerDelegate) {
 							togglerDelegate.plug(
-								Liferay.TogglerKeyAccess,
+								Liferay.TogglerInteraction,
 								{
 									children: '.lfr-content-item',
 									parents: '.lfr-content-category'
@@ -109,6 +109,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['key-event', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search', 'liferay-toggler-key-access']
+		requires: ['key-event', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search', 'liferay-toggler-interaction']
 	}
 );

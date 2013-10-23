@@ -1,6 +1,8 @@
 AUI.add(
-	'liferay-toggler-key-access',
+	'liferay-toggler-interaction',
 	function(A) {
+		var Lang = A.Lang;
+
 		var STR_CHILDREN = 'children';
 
 		var STR_CONTAINER = 'container';
@@ -15,9 +17,9 @@ AUI.add(
 
 		var STR_TOGGLER = 'toggler';
 
-		var NAME = 'togglerKeyAccess';
+		var NAME = 'togglerinteraction';
 
-		var TogglerKeyAccess = A.Component.create(
+		var TogglerInteraction = A.Component.create(
 			{
 				EXTENDS: Liferay.TogglerKeyFilter,
 
@@ -26,12 +28,8 @@ AUI.add(
 				NS: NAME,
 
 				ATTRS: {
-					parents: {
-						validator: A.Lang.isString
-					},
-
 					children: {
-						validator: A.Lang.isString
+						validator: Lang.isString
 					},
 
 					descendants: {
@@ -40,17 +38,27 @@ AUI.add(
 
 							var children = instance.get(STR_CHILDREN);
 
-							return instance.get(STR_HOST).get(STR_HEADER) + (children ? (', ' + children + ':visible') : '');
+							var result = instance.get(STR_HOST).get(STR_HEADER);
+
+							if (children) {
+								result += ', ' + children + ':visible';
+							}
+
+							return result;
 						}
 					},
 
 					keys: {
-						validator: A.Lang.isObject,
+						validator: Lang.isObject,
 						value: {
 							collapse: 'down:37',
 							next: 'down:40',
 							previous: 'down:38'
 						}
+					},
+
+					parents: {
+						validator: Lang.isString
 					}
 				},
 
@@ -104,13 +112,13 @@ AUI.add(
 
 						instance._focusManager.refresh();
 
-						return TogglerKeyAccess.superclass._headerEventHandler.call(instance, event);
+						return TogglerInteraction.superclass._headerEventHandler.call(instance, event);
 					}
 				}
 			}
 		);
 
-		Liferay.TogglerKeyAccess = TogglerKeyAccess;
+		Liferay.TogglerInteraction = TogglerInteraction;
 	},
 	'',
 	{

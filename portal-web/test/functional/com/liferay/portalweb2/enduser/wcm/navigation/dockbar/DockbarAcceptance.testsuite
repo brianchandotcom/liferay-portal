@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="Dockbar#GotoAdministration" />
-	<execute test-case-command="Dockbar#GotoConfiguration" />
-	<execute test-case-command="Dockbar#GotoContent" />
-</definition>

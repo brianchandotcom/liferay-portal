@@ -1,5 +1,0 @@
-<definition>
-	<execute test-suite="ApisAxisServicesAcceptance" />
-
-	<execute test-suite="ApisJsonWebServicesAcceptance" />
-</definition>

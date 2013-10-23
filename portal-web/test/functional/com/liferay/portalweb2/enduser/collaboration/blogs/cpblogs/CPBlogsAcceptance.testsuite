@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="CPBlogs#AddBlogsEntry" />
-	<execute test-case-command="CPBlogs#EditBlogsEntryContent" />
-	<execute test-case-command="CPBlogs#EditBlogsEntryTitle" />
-</definition>

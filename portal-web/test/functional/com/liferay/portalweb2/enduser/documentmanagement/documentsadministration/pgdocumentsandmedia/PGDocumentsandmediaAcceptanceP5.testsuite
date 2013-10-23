@@ -1,6 +1,0 @@
-<definition>
-	<execute test-case-command="PGDocumentsandmedia#SearchContentDocument" />
-	<execute test-case-command="PGDocumentsandmedia#SearchDocument" />
-	<execute test-case-command="PGDocumentsandmedia#SearchFolderDocument" />
-	<execute test-case-command="PGDocumentsandmedia#SearchSubFolderDocument" />
-</definition>

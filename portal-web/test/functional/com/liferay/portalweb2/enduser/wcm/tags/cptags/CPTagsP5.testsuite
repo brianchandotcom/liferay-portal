@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="CPTags#AddTagsAdmin" />
-	<execute test-case-command="CPTags#EditTagCancel" />
-	<execute test-case-command="CPTags#SearchTag" />
-</definition>

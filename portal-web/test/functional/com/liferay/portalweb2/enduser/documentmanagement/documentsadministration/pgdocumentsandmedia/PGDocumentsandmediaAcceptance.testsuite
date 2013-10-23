@@ -1,9 +1,0 @@
-<definition>
-	<execute test-case-command="PGDocumentsandmedia#AddDocument" />
-	<execute test-case-command="PGDocumentsandmedia#AddDocuments" />
-	<execute test-case-command="PGDocumentsandmedia#AddFolder" />
-	<execute test-case-command="PGDocumentsandmedia#DeleteFolder" />
-	<execute test-case-command="PGDocumentsandmedia#EditDocument" />
-	<execute test-case-command="PGDocumentsandmedia#EditFolder" />
-	<execute test-case-command="PGDocumentsandmedia#MoveFolderDocumentToFolder" />
-</definition>

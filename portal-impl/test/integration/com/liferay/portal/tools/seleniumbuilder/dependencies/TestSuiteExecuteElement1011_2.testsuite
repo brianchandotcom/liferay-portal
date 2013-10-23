@@ -1,3 +1,0 @@
-<definition>
-	<execute test-suite="test-suite-fail" />
-</definition>

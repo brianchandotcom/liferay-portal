@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="CPPortalSettings#EnterReservedEmailAddress" />
-	<execute test-case-command="CPPortalSettings#EnterReservedScreenName" />
-</definition>

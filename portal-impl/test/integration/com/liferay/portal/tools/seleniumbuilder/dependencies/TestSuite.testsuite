@@ -1,7 +1,0 @@
-<definition>
-	<execute test-case="CPBlogsAcceptance" />
-
-	<execute test-suite="EndUserCollaborationAcceptance" />
-
-	<execute test-class="com.liferay.portalweb.portal.SmokeTestSuite" />
-</definition>

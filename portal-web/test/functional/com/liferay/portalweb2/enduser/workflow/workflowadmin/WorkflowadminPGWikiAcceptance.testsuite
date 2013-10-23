@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminPGWiki#ApproveWikiPageCP" />
-	<execute test-case-command="WorkflowadminPGWiki#RejectWikiPageCP" />
-</definition>

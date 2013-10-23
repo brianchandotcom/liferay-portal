@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="CPSites#AddSite" />
-	<execute test-case-command="CPSites#DeleteSite" />
-</definition>

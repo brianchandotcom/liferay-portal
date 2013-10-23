@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminPGPagerevision#ApprovePageRevisionPG" />
-	<execute test-case-command="WorkflowadminPGPagerevision#RejectPageRevisionPG" />
-</definition>

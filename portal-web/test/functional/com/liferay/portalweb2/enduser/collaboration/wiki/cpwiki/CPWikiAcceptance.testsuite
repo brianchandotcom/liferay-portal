@@ -1,7 +1,0 @@
-<definition>
-	<execute test-case-command="CPWiki#AddWikiFrontPage" />
-	<execute test-case-command="CPWiki#AddWikiNode" />
-	<execute test-case-command="CPWiki#DeleteWikiNode" />
-	<execute test-case-command="CPWiki#EditWikiNode" />
-	<execute test-case-command="CPWiki#MoveToRecycleBinFrontPage" />
-</definition>

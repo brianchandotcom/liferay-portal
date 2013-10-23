@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="RecyclebinWebcontent#DeleteWebcontent" />
-	<execute test-case-command="RecyclebinWebcontent#RestoreWebcontent" />
-</definition>

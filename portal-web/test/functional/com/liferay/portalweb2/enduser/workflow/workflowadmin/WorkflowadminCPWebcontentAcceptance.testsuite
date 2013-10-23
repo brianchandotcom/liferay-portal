@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminCPWebcontent#ApproveWebContentCP" />
-	<execute test-case-command="WorkflowadminCPWebcontent#RejectWebContentCP" />
-</definition>

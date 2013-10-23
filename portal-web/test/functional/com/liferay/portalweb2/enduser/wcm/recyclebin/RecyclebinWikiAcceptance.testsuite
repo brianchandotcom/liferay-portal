@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="RecyclebinWiki#DeleteDeleteWikiFrontpage" />
-	<execute test-case-command="RecyclebinWiki#RestoreDeleteWikiFrontpage" />
-</definition>

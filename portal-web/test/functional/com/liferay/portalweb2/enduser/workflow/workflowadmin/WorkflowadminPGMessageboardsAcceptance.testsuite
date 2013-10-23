@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminPGMessageboards#ApproveMessageBoardsThreadPG" />
-	<execute test-case-command="WorkflowadminPGMessageboards#RejectMessageBoardsThreadPG" />
-</definition>

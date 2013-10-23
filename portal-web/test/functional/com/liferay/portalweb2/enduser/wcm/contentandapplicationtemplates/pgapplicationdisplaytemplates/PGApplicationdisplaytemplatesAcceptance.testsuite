@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="PGApplicationdisplaytemplates#addPG" />
-	<execute test-case-command="PGApplicationdisplaytemplates#addPGviaBlogs" />
-</definition>

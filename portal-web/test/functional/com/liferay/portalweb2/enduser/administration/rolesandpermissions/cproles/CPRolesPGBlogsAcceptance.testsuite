@@ -1,8 +1,0 @@
-<definition>
-	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntryOrgRole" />
-	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntryRegRole" />
-	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntrySiteRole" />
-	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntryOrgRole" />
-	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntryRegRole" />
-	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntrySiteRole" />
-</definition>

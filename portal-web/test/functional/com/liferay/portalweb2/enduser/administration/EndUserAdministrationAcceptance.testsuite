@@ -1,9 +1,0 @@
-<definition>
-	<execute test-suite="CPRolesAcceptance" />
-
-	<execute test-suite="CPRolesPGBlogsAcceptance" />
-
-	<execute test-suite="CPUsergroupsAcceptance" />
-
-	<execute test-suite="CPUsersandorganizationsAcceptance" />
-</definition>

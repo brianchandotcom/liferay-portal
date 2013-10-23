@@ -1,5 +1,0 @@
-<definition>
-	<command name="name">
-		<execute test-case="test-case" />
-	</command>
-</definition>

@@ -1,8 +1,0 @@
-<definition>
-	<execute test-case-command="CPWebcontent#AddFolder" />
-	<execute test-case-command="CPWebcontent#AddStructure" />
-	<execute test-case-command="CPWebcontent#AddTemplate" />
-	<execute test-case-command="CPWebcontent#AddTemplateWithStructure" />
-	<execute test-case-command="CPWebcontent#AddWebContent" />
-	<execute test-case-command="CPWebcontent#AddWebContentWithStructure" />
-</definition>

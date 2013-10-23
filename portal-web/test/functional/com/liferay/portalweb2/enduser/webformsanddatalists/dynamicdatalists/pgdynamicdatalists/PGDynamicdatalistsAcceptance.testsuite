@@ -1,9 +1,0 @@
-<definition>
-	<execute test-case-command="PGDynamicdatalists#AddList" />
-	<execute test-case-command="PGDynamicdatalists#AddRecord" />
-	<execute test-case-command="PGDynamicdatalists#DeleteList" />
-	<execute test-case-command="PGDynamicdatalists#DeleteRecord" />
-	<execute test-case-command="PGDynamicdatalists#EditList" />
-	<execute test-case-command="PGDynamicdatalists#EditRecord" />
-	<execute test-case-command="PGDynamicdatalists#SelectList" />
-</definition>

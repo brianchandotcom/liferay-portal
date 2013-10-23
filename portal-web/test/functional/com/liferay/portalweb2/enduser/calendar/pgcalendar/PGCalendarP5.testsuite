@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="PGCalendar#AddCalendarEventAllDay" />
-	<execute test-case-command="PGCalendar#AddCalendarEventRepeating" />
-</definition>

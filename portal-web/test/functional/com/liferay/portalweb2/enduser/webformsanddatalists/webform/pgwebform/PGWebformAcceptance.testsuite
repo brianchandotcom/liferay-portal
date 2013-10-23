@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="PGWebform#EditWebForm" />
-	<execute test-case-command="PGWebform#SendWebForm" />
-</definition>

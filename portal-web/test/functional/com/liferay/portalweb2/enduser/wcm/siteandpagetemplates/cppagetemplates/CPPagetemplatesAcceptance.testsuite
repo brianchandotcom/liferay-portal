@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="CPPagetemplates#AddPageTemplate" />
-	<execute test-case-command="CPPagetemplates#EditPageTemplate" />
-</definition>

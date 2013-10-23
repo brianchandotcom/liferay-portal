@@ -1,7 +1,0 @@
-<definition>
-	<execute test-suite="CPPortalSettingsP4" />
-
-	<execute test-suite="CPUsergroupsP4" />
-
-	<execute test-suite="CPUsersandorganizationsP4" />
-</definition>

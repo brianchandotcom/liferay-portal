@@ -1,5 +1,0 @@
-<definition>
-	<execute test-suite="PGSearchP5" />
-
-	<execute test-suite="PGWebcontentsearchP5" />
-</definition>

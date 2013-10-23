@@ -1,9 +1,0 @@
-<definition>
-	<execute test-case-command="PGMessageboards#AddMBCategory" />
-	<execute test-case-command="PGMessageboards#AddMBThread" />
-	<execute test-case-command="PGMessageboards#DeleteMBCategory" />
-	<execute test-case-command="PGMessageboards#DeleteMBThread" />
-	<execute test-case-command="PGMessageboards#EditMBCategory" />
-	<execute test-case-command="PGMessageboards#EditMBThreadBody" />
-	<execute test-case-command="PGMessageboards#ReplyMBThread" />
-</definition>

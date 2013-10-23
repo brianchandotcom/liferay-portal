@@ -1,7 +1,0 @@
-<definition>
-	<execute test-case-command="PGMediagallery#AddFolder" />
-	<execute test-case-command="PGMediagallery#AddFolderDocument" />
-	<execute test-case-command="PGMediagallery#DeleteFolderDocument" />
-	<execute test-case-command="PGMediagallery#EditDMFolder" />
-	<execute test-case-command="PGMediagallery#EditFolderDocument" />
-</definition>

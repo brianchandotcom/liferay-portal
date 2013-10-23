@@ -1,8 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminMysubmissions#WithdrawTaskAssignedToMeByActions" />
-	<execute test-case-command="WorkflowadminMysubmissions#WithdrawTaskAssignedToMeByDetails" />
-	<execute test-case-command="WorkflowadminMysubmissions#WithdrawTaskAssignedToMyRolesByActions" />
-	<execute test-case-command="WorkflowadminMysubmissions#WithdrawTaskAssignedToMyRolesByDetails" />
-	<execute test-case-command="WorkflowadminMysubmissions#WithdrawTaskCompletedNoByActions" />
-	<execute test-case-command="WorkflowadminMysubmissions#WithdrawTaskCompletedNoByDetails" />
-</definition>

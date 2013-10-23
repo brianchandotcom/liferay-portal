@@ -1,6 +1,0 @@
-<definition>
-	<execute test-case-command="PGSearch#SearchBlogsEntryCategory" />
-	<execute test-case-command="PGSearch#SearchBlogsEntryCategoryQuotes" />
-	<execute test-case-command="PGSearch#SearchBlogsEntryTag" />
-	<execute test-case-command="PGSearch#SearchBlogsEntryTagQuotes" />
-</definition>

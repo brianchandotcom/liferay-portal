@@ -1,6 +1,0 @@
-<definition>
-	<execute test-case-command="CPSitememberships#AddMember" />
-	<execute test-case-command="CPSitememberships#AddSiteTeam" />
-	<execute test-case-command="CPSitememberships#AssignMembersSiteTeamUser" />
-	<execute test-case-command="CPSitememberships#RemoveMember" />
-</definition>

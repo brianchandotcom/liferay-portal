@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="Myaccount#ViewMyAccount" />
-	<execute test-case-command="Myaccount#ViewMyAccountViaSignInPortlet" />
-	<execute test-case-command="Myaccount#ViewMyAccountUser" />
-</definition>

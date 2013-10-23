@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminMyworkflowtasks#ApproveTaskByDetails" />
-	<execute test-case-command="WorkflowadminMyworkflowtasks#AssignToMeTaskByDetails" />
-	<execute test-case-command="WorkflowadminMyworkflowtasks#RejectTaskByDetails" />
-</definition>

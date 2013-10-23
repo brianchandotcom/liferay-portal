@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case="test-case">
-		<var name="name" value="value" />
-	</execute>
-</definition>

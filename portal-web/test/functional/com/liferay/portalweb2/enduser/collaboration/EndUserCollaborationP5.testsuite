@@ -1,7 +1,0 @@
-<definition>
-	<execute test-suite="CPBlogsP5" />
-
-	<execute test-suite="CPWikiP5" />
-
-	<execute test-suite="PGBlogsP5" />
-</definition>

@@ -1,6 +1,0 @@
-<definition>
-	<execute test-case-command="PGBlogs#AddBlogsEntry" />
-	<execute test-case-command="PGBlogs#AddBlogsEntryComment" />
-	<execute test-case-command="PGBlogs#EditBlogsEntry" />
-	<execute test-case-command="PGBlogs#MoveToRecycleBinBlogsEntry" />
-</definition>

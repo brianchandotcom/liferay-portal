@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="CPRoles#AddOrganizationRole" />
-	<execute test-case-command="CPRoles#AddRegularRole" />
-	<execute test-case-command="CPRoles#AddSiteRole" />
-</definition>

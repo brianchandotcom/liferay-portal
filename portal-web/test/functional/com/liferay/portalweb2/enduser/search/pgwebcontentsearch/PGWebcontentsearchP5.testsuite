@@ -1,6 +1,0 @@
-<definition>
-	<execute test-case-command="PGWebcontentsearch#SearchWebContentCategory" />
-	<execute test-case-command="PGWebcontentsearch#SearchWebContentCategoryQuotes" />
-	<execute test-case-command="PGWebcontentsearch#SearchWebContentTag" />
-	<execute test-case-command="PGWebcontentsearch#SearchWebContentTagQuotes" />
-</definition>

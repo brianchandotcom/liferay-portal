@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="CPSitetemplates#AddSiteTemplate" />
-	<execute test-case-command="CPSitetemplates#EditSiteTemplate" />
-</definition>

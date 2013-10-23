@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminPGAssetpublisher#ApproveWebContentPG" />
-	<execute test-case-command="WorkflowadminPGAssetpublisher#RejectWebContentPG" />
-</definition>

@@ -1,6 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminPGAssetpublisher#ApproveBlogsEntryPG" />
-	<execute test-case-command="WorkflowadminPGAssetpublisher#ApproveMessageBoardsThreadPG" />
-	<execute test-case-command="WorkflowadminPGAssetpublisher#RejectBlogsEntryPG" />
-	<execute test-case-command="WorkflowadminPGAssetpublisher#RejectMessageBoardsThreadPG" />
-</definition>

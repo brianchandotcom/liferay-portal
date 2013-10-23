@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="PGWebcontentdisplay#AddWebContent" />
-	<execute test-case-command="PGWebcontentdisplay#EditWebContent" />
-</definition>

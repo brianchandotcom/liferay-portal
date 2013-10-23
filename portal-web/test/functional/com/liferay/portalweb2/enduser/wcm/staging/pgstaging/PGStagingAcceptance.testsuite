@@ -1,6 +1,0 @@
-<definition>
-	<execute test-case-command="PGStaging#ActivateStaging" />
-	<execute test-case-command="PGStaging#DeactivateStaging" />
-	<execute test-case-command="PGStaging#StagingPublishPortlet" />
-</definition>
-

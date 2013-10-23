@@ -1,5 +1,0 @@
-<definition>
-	<execute test-suite="WorkflowadminMyworkflowtasksP5" />
-
-	<execute test-suite="WorkflowadminPGAssetpublisherP5" />
-</definition>

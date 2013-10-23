@@ -1,9 +1,0 @@
-<definition>
-	<execute test-case-command="CPSites#AddChildChildSite" />
-	<execute test-case-command="CPSites#AddChildSite" />
-	<execute test-case-command="CPSites#AddSitesMultiple" />
-	<execute test-case-command="CPSites#EditSite" />
-	<execute test-case-command="CPSites#SearchSite" />
-	<execute test-case-command="CPSites#ViewDisplayParentSiteViaSitesDirectory" />
-	<execute test-case-command="CPSites#ViewSiteHierarchiesViaSitesDirectory" />
-</definition>

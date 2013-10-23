@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminCPBlogs#ApproveBlogsEntryCP" />
-	<execute test-case-command="WorkflowadminCPBlogs#RejectBlogsEntryCP" />
-</definition>

@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="WorkflowadminPGWebcontentdisplay#ApproveWebContentViaWebContentDisplayPG" />
-	<execute test-case-command="WorkflowadminPGWebcontentdisplay#RejectWebContentViaWebContentDisplayPG" />
-</definition>

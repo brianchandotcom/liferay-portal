@@ -1,4 +1,0 @@
-<definition>
-	<execute test-case-command="RecyclebinBlogs#DeleteBlogsEntry" />
-	<execute test-case-command="RecyclebinBlogs#RestoreBlogsEntry" />
-</definition>

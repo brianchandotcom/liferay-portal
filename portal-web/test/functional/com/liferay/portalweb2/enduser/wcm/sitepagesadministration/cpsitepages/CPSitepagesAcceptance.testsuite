@@ -1,8 +1,0 @@
-<definition>
-	<execute test-case-command="CPSitepages#AddSitePrivateChildPage" />
-	<execute test-case-command="CPSitepages#AddSitePrivatePage" />
-	<execute test-case-command="CPSitepages#AddSitePrivatePagePortlet" />
-	<execute test-case-command="CPSitepages#AddSitePublicChildPage" />
-	<execute test-case-command="CPSitepages#AddSitePublicPage" />
-	<execute test-case-command="CPSitepages#AddSitePublicPagePortlet" />
-</definition>

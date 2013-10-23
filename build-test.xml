@@ -1946,6 +1946,17 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		/>
 
 		<if>
+			<equals arg1="${test.javascript.errors}" arg2="false" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="test.javascript.errors=true"
+					value="test.javascript.errors=false"
+				/>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />
 			<then>
 				<replace

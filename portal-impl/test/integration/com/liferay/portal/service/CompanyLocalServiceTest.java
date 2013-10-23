@@ -195,137 +195,6 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testMailMxUpdatePropertyIsFalseAndMxIsInvalid()
-		throws Exception {
-
-		Company company = addCompany();
-
-		String originalMx = company.getMx();
-
-		String invalidMx = StringPool.BLANK;
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "MAIL_MX_UPDATE");
-
-		Object value = field.get(null);
-
-		try {
-			field.set(null, Boolean.FALSE);
-
-			CompanyLocalServiceUtil.updateCompany(
-				company.getCompanyId(), company.getVirtualHostname(), invalidMx,
-				company.getMaxUsers(), company.getActive());
-
-			company = CompanyLocalServiceUtil.getCompany(
-				company.getCompanyId());
-
-			String updatedMx = company.getMx();
-
-			Assert.assertEquals(originalMx, updatedMx);
-		}
-		finally {
-			CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
-
-			field.set(null, value);
-		}
-	}
-
-	@Test
-	public void testMailMxUpdatePropertyIsFalseAndMxIsValid() throws Exception {
-		Company company = addCompany();
-
-		String originalMx = company.getMx();
-
-		String validMx = "abc.com";
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "MAIL_MX_UPDATE");
-
-		Object value = field.get(null);
-
-		try {
-			field.set(null, Boolean.FALSE);
-
-			CompanyLocalServiceUtil.updateCompany(
-				company.getCompanyId(), company.getVirtualHostname(), validMx,
-				company.getMaxUsers(), company.getActive());
-
-			company = CompanyLocalServiceUtil.getCompany(
-				company.getCompanyId());
-
-			String updatedMx = company.getMx();
-
-			Assert.assertEquals(originalMx, updatedMx);
-		}
-		finally {
-			CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
-
-			field.set(null, value);
-		}
-	}
-
-	@Test(expected = CompanyMxException.class)
-	public void testMailMxUpdatePropertyIsTrueAndMxIsInvalid()
-		throws Exception {
-
-		Company company = addCompany();
-
-		String invalidMx = StringPool.BLANK;
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "MAIL_MX_UPDATE");
-
-		Object value = field.get(null);
-
-		try {
-			field.set(null, Boolean.TRUE);
-
-			company = CompanyLocalServiceUtil.updateCompany(
-				company.getCompanyId(), company.getVirtualHostname(), invalidMx,
-				company.getMaxUsers(), company.getActive());
-		}
-		finally {
-			CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
-
-			field.set(null, value);
-		}
-	}
-
-	@Test
-	public void testMailMxUpdatePropertyIsTrueAndMxIsValid() throws Exception {
-		Company company = addCompany();
-
-		String originalMx = company.getMx();
-
-		String validMx = "abc.com";
-
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "MAIL_MX_UPDATE");
-
-		Object value = field.get(null);
-
-		try {
-			field.set(null, Boolean.TRUE);
-
-			CompanyLocalServiceUtil.updateCompany(
-				company.getCompanyId(), company.getVirtualHostname(), validMx,
-				company.getMaxUsers(), company.getActive());
-
-			company = CompanyLocalServiceUtil.getCompany(
-				company.getCompanyId());
-
-			String updatedMx = company.getMx();
-
-			Assert.assertNotEquals(originalMx, updatedMx);
-		}
-		finally {
-			CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
-
-			field.set(null, value);
-		}
-	}
-
-	@Test
 	public void testUpdateInvalidAccountNames() throws Exception {
 		Company company = addCompany();
 
@@ -353,6 +222,14 @@ public class CompanyLocalServiceTest {
 		};
 
 		testUpdateVirtualHostNames(invalidVirtualHostNames, true);
+	}
+
+	@Test
+	public void testUpdateMx() throws Exception {
+		testUpdateMx("abc.com", true, true);
+		testUpdateMx("abc.com", true, false);
+		testUpdateMx(StringPool.BLANK, false, true);
+		testUpdateMx(StringPool.BLANK, false, false);
 	}
 
 	@Test
@@ -444,6 +321,54 @@ public class CompanyLocalServiceTest {
 					Assert.fail();
 				}
 			}
+		}
+	}
+
+	protected void testUpdateMx(String mx, boolean valid, boolean mailMxUpdate)
+		throws Exception {
+
+		Company company = addCompany();
+
+		String originalMx = company.getMx();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, "MAIL_MX_UPDATE");
+
+		Object value = field.get(null);
+
+		try {
+			if (mailMxUpdate) {
+				field.set(null, Boolean.TRUE);
+			}
+			else {
+				field.set(null, Boolean.FALSE);
+			}
+
+			CompanyLocalServiceUtil.updateCompany(
+				company.getCompanyId(), company.getVirtualHostname(), mx,
+				company.getMaxUsers(), company.getActive());
+
+			company = CompanyLocalServiceUtil.getCompany(
+				company.getCompanyId());
+
+			String updatedMx = company.getMx();
+
+			if (valid && mailMxUpdate) {
+				Assert.assertNotEquals(originalMx, updatedMx);
+			}
+			else {
+				Assert.assertEquals(originalMx, updatedMx);
+			}
+		}
+		catch (CompanyMxException cme) {
+			if (valid || !mailMxUpdate) {
+				Assert.fail();
+			}
+		}
+		finally {
+			CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+
+			field.set(null, value);
 		}
 	}
 

@@ -87,6 +87,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTROL_PANEL_USERS_USER_GROUPS</td>
+	<td>//div[contains(.,'Users') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//span[contains(@class,'permission-navigation-item')]/a[contains(.,'User Groups')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL_USERS_ROLES</td>
+	<td>//div[contains(.,'Users') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Roles')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

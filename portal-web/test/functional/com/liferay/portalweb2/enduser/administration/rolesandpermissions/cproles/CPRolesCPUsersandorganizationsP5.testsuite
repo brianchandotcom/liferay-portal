@@ -1,3 +1,4 @@
 <definition>
+	<execute test-case-command="CPRolesCPUsersandorganizations#AddOrganizationRegRole" />
 	<execute test-case-command="CPRolesCPUsersandorganizations#AddUserRegRole" />
 </definition>

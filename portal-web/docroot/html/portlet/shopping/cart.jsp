@@ -61,7 +61,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	function <portlet:namespace />updateCart() {
 		var itemIds = "";
 		var count = 0;
-		var invalidSKUlist = "";
+		var invalidSKUs = "";
 
 		<%
 		int itemsCount= 0;
@@ -76,8 +76,8 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 			count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= itemsCount %>_count.value;
 
-			if ((count == "") || isNaN(count) || (count < 0) || ((count > <%= maxPossibleQuantity %>) && (<%= maxPossibleQuantity %> != 0))) {
-				invalidSKUlist += "\n<%= item.getSku() %>";
+			if ((count == "") || isNaN(count) || (count < 0) || ((count > <%= maxPossibleQuantity %>) && (<%= maxPossibleQuantity %> > 0))) {
+				invalidSKUs += "\n<%= item.getSku() %>";
 			}
 
 			for (var i = 0; i < count; i++) {
@@ -93,11 +93,11 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 		document.<portlet:namespace />fm.<portlet:namespace />itemIds.value = itemIds;
 
-		if (invalidSKUlist == "") {
+		if (invalidSKUs == "") {
 			submitForm(document.<portlet:namespace />fm);
 		}
 		else {
-			alert("<%= UnicodeLanguageUtil.get(pageContext, "please-enter-valid-quantities-for-the-following-skus") %>" + invalidSKUlist);
+			alert("<%= UnicodeLanguageUtil.get(pageContext, "please-enter-valid-quantities-for-the-following-skus") %>" + invalidSKUs);
 		}
 	}
 </aui:script>
@@ -359,7 +359,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 			sb.append("<option value=\"0\">0</option>");
 
-			for (int j = 1; j <= maxPossibleQuantity / item.getMinQuantity(); j++) {
+			for (int j = 1; j <= (maxPossibleQuantity / item.getMinQuantity()); j++) {
 				int curQuantity = item.getMinQuantity() * j;
 
 				sb.append("<option ");
@@ -539,13 +539,12 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 private static int getMaxPossibleQuantity(ShoppingItemPrice[] itemPrices) {
 	int maxPossibleQuantity = 0;
 
-	for (int i = 0; i < itemPrices.length; i++) {
-		ShoppingItemPrice itemPrice = itemPrices[i];
-
+	for (ShoppingItemPrice itemPrice : itemPrices)
 		if (itemPrice.getMaxQuantity() == 0) {
 			return 0;
 		}
-		else if (maxPossibleQuantity < itemPrice.getMaxQuantity()) {
+
+		if (maxPossibleQuantity < itemPrice.getMaxQuantity()) {
 			maxPossibleQuantity = itemPrice.getMaxQuantity();
 		}
 	}

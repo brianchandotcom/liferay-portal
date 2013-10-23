@@ -29,7 +29,6 @@ page import="com.liferay.portal.security.permission.PermissionConverterUtil" %><
 page import="com.liferay.portal.security.permission.comparator.ActionComparator" %><%@
 page import="com.liferay.portal.security.permission.comparator.ModelResourceWeightComparator" %><%@
 page import="com.liferay.portlet.rolesadmin.search.ResourceActionRowChecker" %><%@
-page import="com.liferay.portlet.rolesadmin.search.RoleDisplayTerms" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %>
 

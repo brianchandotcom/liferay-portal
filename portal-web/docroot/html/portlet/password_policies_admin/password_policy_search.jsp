@@ -23,5 +23,5 @@ PasswordPolicyDisplayTerms displayTerms = (PasswordPolicyDisplayTerms)searchCont
 %>
 
 <div class="form-search">
-	<liferay-ui:input-search id="<%= displayTerms.NAME %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+	<liferay-ui:input-search name="<%= displayTerms.NAME %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 </div>

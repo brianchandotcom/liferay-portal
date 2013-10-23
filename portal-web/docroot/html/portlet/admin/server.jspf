@@ -98,7 +98,7 @@ serverURL.setParameter("tabs3", tabs3);
 					</c:when>
 					<c:otherwise>
 						<div class="form-search">
-							<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-categories") %>' />
+							<liferay-ui:input-search placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-categories") %>' />
 						</div>
 
 						<%
@@ -215,7 +215,7 @@ serverURL.setParameter("tabs3", tabs3);
 				/>
 
 				<div class="form-search">
-					<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+					<liferay-ui:input-search placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 				</div>
 
 				<%

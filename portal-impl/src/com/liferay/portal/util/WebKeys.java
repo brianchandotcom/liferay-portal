@@ -26,7 +26,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String ADDRESS = "ADDRESS";
 
-	public static final String ANNOUNCEMENTS_ENTRY = "ANNOUNCEMENTS_ENTRY";
+	@Distributed
+	public static final String ANNOUNCEMENTS_ENTRY = "LIFERAY_SHARED_ANNOUNCEMENTS_ENTRY";
 
 	public static final String ASSET_CATEGORY = "ASSET_CATEGORY";
 

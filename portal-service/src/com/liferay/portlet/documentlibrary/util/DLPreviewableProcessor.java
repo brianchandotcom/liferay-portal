@@ -710,8 +710,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected String getPreviewFilePath(
-			long groupId, long fileEntryId, long fileVersionId, int index,
-			String type) {
+		long groupId, long fileEntryId, long fileVersionId, int index,
+		String type) {
 
 		StringBundler sb = null;
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -127,7 +128,7 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 			classPK);
 
 		return BookmarksEntryLocalServiceUtil.getEntriesCount(
-			folder.getGroupId(), classPK);
+			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
@@ -142,7 +143,8 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 
 		List<BookmarksEntry> entries =
 			BookmarksEntryLocalServiceUtil.getEntries(
-				folder.getGroupId(), classPK, start, end);
+				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
+				start, end);
 
 		for (BookmarksEntry entry : entries) {
 			TrashHandler trashHandler =
@@ -171,7 +173,7 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 			classPK);
 
 		return BookmarksFolderLocalServiceUtil.getFoldersCount(
-			folder.getGroupId(), classPK);
+			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	@Override
@@ -186,7 +188,8 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 
 		List<BookmarksFolder> folders =
 			BookmarksFolderLocalServiceUtil.getFolders(
-					folder.getGroupId(), classPK, start, end);
+				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
+				start, end);
 
 		for (BookmarksFolder curFolder : folders) {
 			TrashHandler trashHandler =

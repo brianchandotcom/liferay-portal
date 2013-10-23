@@ -864,10 +864,26 @@ public abstract class BaseTrashHandlerTestCase {
 			TrashHandlerRegistryUtil.getTrashHandler(
 				getParentBaseModelClassName());
 
-		Assert.assertEquals(
-			1,
-			parentTrashHandler.getTrashContainerModelsCount(
-				(Long)parentBaseModel.getPrimaryKeyObj()));
+		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
+			Assert.assertEquals(
+				0,
+				parentTrashHandler.getTrashContainedModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+			Assert.assertEquals(
+				1,
+				parentTrashHandler.getTrashContainerModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+		}
+		else {
+			Assert.assertEquals(
+				1,
+				parentTrashHandler.getTrashContainedModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+			Assert.assertEquals(
+				0,
+				parentTrashHandler.getTrashContainerModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+		}
 
 		if (isAssetableModel()) {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
@@ -1124,6 +1140,8 @@ public abstract class BaseTrashHandlerTestCase {
 		if (isBaseModelMoveableFromTrash()) {
 			BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
 				baseModel, group, serviceContext);
+
+			baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
 			Assert.assertEquals(
 				initialBaseModelsCount + 1,

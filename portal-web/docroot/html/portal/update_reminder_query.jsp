@@ -51,7 +51,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 			</div>
 		</c:if>
 
-		<aui:input cssClass="reminder-query-answer" label="answer" name="reminderQueryAnswer" size="50" type="text" value="<%= user.getReminderQueryAnswer() %>" />
+		<aui:input cssClass="reminder-query-answer" label="answer" maxlength="75" name="reminderQueryAnswer" size="50" type="text" value="<%= user.getReminderQueryAnswer() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

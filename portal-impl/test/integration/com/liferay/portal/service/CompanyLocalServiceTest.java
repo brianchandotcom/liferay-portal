@@ -270,7 +270,7 @@ public class CompanyLocalServiceTest {
 
 		String originalMx = company.getMx();
 
-		String validMx = originalMx + ServiceTestUtil.randomString(3);
+		String validMx = "abc.com";
 
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "MAIL_MX_UPDATE");
@@ -331,7 +331,7 @@ public class CompanyLocalServiceTest {
 
 		String originalMx = company.getMx();
 
-		String validMx = originalMx + ServiceTestUtil.randomString(3);
+		String validMx = "abc.com";
 
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "MAIL_MX_UPDATE");
@@ -363,7 +363,7 @@ public class CompanyLocalServiceTest {
 	public void testValidAccountName() throws Exception {
 		Company company = addCompany();
 
-		String[] validAccountName = {ServiceTestUtil.randomString(3)};
+		String[] validAccountName = {ServiceTestUtil.randomString()};
 
 		testAccountName(company, validAccountName, false);
 
@@ -374,7 +374,7 @@ public class CompanyLocalServiceTest {
 	public void testValidVirtualHost() throws Exception {
 		Company company = addCompany();
 
-		String[] validVirtualHostNames = {ServiceTestUtil.randomString(3)};
+		String[] validVirtualHostNames = {"abc.com"};
 
 		testVirtualHost(company, validVirtualHostNames, false);
 

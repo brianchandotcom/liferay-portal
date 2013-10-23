@@ -134,4 +134,355 @@
 			<var name="userLoginFullName" value="test test" />
 		</execute>
 	</command>
+
+	<command name="StagingBlogsRolesWorkflow">
+		<var name="pageName" value="Blogs Test Page" />
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="usereapu@liferay.com" />
+			<var name="userFirstName" value="userfnpu" />
+			<var name="userLastName" value="userlnpu" />
+			<var name="userScreenName" value="usersnpu" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userScreenName" value="usersnpu" />
+			<var name="userEmailAddress" value="usereapu@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Power User Name" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_MANAGE_PAGES" />
+			<var name="permissionDefinitionValue" value="Manage Pages" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Power User Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="roleName" value="Power User Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="userfnpu" />
+			<var name="userLastName" value="userlnpu" />
+			<var name="userScreenName" value="usersnpu" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="Power User Name" />
+			<var name="userFirstName" value="userfnpu" />
+			<var name="userLastName" value="userlnpu" />
+			<var name="userScreenName" value="usersnpu" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="usereacr@liferay.com" />
+			<var name="userFirstName" value="userfncr" />
+			<var name="userLastName" value="userlncr" />
+			<var name="userScreenName" value="usersncr" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userScreenName" value="usersncr" />
+			<var name="userEmailAddress" value="usereacr@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="userScreenName" value="usersncr" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="userfncr" />
+			<var name="userLastName" value="userlncr" />
+			<var name="userScreenName" value="usersncr" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="usereaa@liferay.com" />
+			<var name="userFirstName" value="userfna" />
+			<var name="userLastName" value="userlna" />
+			<var name="userScreenName" value="usersna" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userScreenName" value="usersna" />
+			<var name="userEmailAddress" value="usereaa@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersna" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="userfna" />
+			<var name="userLastName" value="userlna" />
+			<var name="userScreenName" value="usersna" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="password" value="test" />
+			<var name="userLoginEmailAddress" value="usereapu@liferay.com" />
+			<var name="userLoginFullName" value="userfnpu userlnpu" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="PageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+			<var name="pageStaging" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute action="Home#assertElementNotPresent" locator-key1="PAGE_2_GUEST_VIEW"/>
+
+		<execute macro="User#loginUserPG">
+			<var name="userEmailAddress" value="usereaa@liferay.com" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG"/>
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="Page#openURL">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute action="Home#assertElementPresent" locator-key1="PAGE_2_GUEST_VIEW" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="usereapu@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="BlogsEntry#addWithWorkflowPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryContent" value="Blogs Entry Content" />
+		</execute>
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute action="Home#assertClick" locator-key1="PAGE_2_GUEST_VIEW" value1="${pageName}" />
+
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_TITLE"/>
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="usereacr@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowTask" value="Review" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowTask" value="Review" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute action="Home#assertClick" locator-key1="PAGE_2_GUEST_VIEW" value1="${pageName}" />
+
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_TITLE"/>
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="usereaa@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG"/>
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute action="Home#click" locator-key1="PAGE_2_GUEST_VIEW" />
+
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="Blogs Entry Title" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
 </definition>

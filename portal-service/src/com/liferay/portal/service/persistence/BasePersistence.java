@@ -88,6 +88,17 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * Returns the number of rows that match the dynamic query.
 	 *
 	 * @param  dynamicQuery the dynamic query
+	 * @param  projection the projection to apply to the query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	public long count(DynamicQuery dynamicQuery, Projection projection)
+		throws SystemException;
+
+	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param  dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -131,6 +142,72 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 */
 	public T findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchModelException, SystemException;
+
+	/**
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param  dynamicQuery the dynamic query
+	 * @return the matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List find(DynamicQuery dynamicQuery)
+		throws SystemException;
+
+	/**
+	 * Performs a dynamic query on the database and returns a range of the
+	 * matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  dynamicQuery the dynamic query
+	 * @param  start the lower bound of the range of matching rows
+	 * @param  end the upper bound of the range of matching rows (not inclusive)
+	 * @return the range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portal.kernel.dao.orm.QueryUtil#list(
+	 *         com.liferay.portal.kernel.dao.orm.Query,
+	 *         com.liferay.portal.kernel.dao.orm.Dialect, int, int)
+	 */
+	@SuppressWarnings("rawtypes")
+	public List find(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException;
+
+	/**
+	 * Performs a dynamic query on the database and returns an ordered range of
+	 * the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  dynamicQuery the dynamic query
+	 * @param  start the lower bound of the range of matching rows
+	 * @param  end the upper bound of the range of matching rows (not inclusive)
+	 * @param  orderByComparator the comparator to order the results by
+	 *         (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List find(
+			DynamicQuery dynamicQuery, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException;
 
 	/**
 	 * Performs a dynamic query on the database and returns the matching rows.

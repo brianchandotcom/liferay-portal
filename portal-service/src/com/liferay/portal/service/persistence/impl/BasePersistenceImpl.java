@@ -84,6 +84,26 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
+	public long count(DynamicQuery dynamicQuery, Projection projection)
+		throws SystemException {
+
+		if (projection == null) {
+			projection = ProjectionFactoryUtil.rowCount();
+		}
+
+		dynamicQuery.setProjection(projection);
+
+		List<Long> results = findWithDynamicQuery(dynamicQuery);
+
+		if (results.isEmpty()) {
+			return 0;
+		}
+		else {
+			return (results.get(0)).longValue();
+		}
+	}
+
+	@Override
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
 		throws SystemException {
 
@@ -124,6 +144,62 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throws NoSuchModelException, SystemException {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List find(DynamicQuery dynamicQuery) throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			dynamicQuery.compile(session);
+
+			return dynamicQuery.list();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List find(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			dynamicQuery.setLimit(start, end);
+
+			dynamicQuery.compile(session);
+
+			return dynamicQuery.list();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List find(
+			DynamicQuery dynamicQuery, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		OrderFactoryUtil.addOrderByComparator(dynamicQuery, orderByComparator);
+
+		return findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
 	@Override

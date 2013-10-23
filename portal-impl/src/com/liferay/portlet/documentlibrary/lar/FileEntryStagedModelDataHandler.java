@@ -554,7 +554,7 @@ public class FileEntryStagedModelDataHandler
 					ddmStructure.getStructureId(),
 					fileVersion.getFileVersionId());
 
-			if (Validator.isNull(dlFileEntryMetadata)) {
+			if (dlFileEntryMetadata == null) {
 				continue;
 			}
 

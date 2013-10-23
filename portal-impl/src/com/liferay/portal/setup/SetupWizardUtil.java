@@ -225,6 +225,11 @@ public class SetupWizardUtil {
 
 		_initPlugins();
 
+		if (ParamUtil.getBoolean(request, "addSampleData")) {
+			SetupWizardSampleDataUtil.addSampleData(
+				PortalInstances.getDefaultCompanyId());
+		}
+
 		HttpSession session = request.getSession();
 
 		session.setAttribute(

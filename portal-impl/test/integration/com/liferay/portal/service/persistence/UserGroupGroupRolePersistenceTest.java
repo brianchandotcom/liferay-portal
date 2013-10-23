@@ -199,7 +199,7 @@ public class UserGroupGroupRolePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
 				newUserGroupGroupRole.getRoleId()));
 
-		List<UserGroupGroupRole> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserGroupGroupRole> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -220,7 +220,7 @@ public class UserGroupGroupRolePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.roleId",
 				ServiceTestUtil.nextLong()));
 
-		List<UserGroupGroupRole> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserGroupGroupRole> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -241,7 +241,7 @@ public class UserGroupGroupRolePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id.userGroupId",
 				new Object[] { newUserGroupId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -261,7 +261,7 @@ public class UserGroupGroupRolePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("id.userGroupId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

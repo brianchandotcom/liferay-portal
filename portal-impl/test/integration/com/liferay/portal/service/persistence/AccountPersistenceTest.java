@@ -268,7 +268,7 @@ public class AccountPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("accountId",
 				newAccount.getAccountId()));
 
-		List<Account> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Account> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -285,7 +285,7 @@ public class AccountPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("accountId",
 				ServiceTestUtil.nextLong()));
 
-		List<Account> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Account> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -305,7 +305,7 @@ public class AccountPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("accountId",
 				new Object[] { newAccountId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -324,7 +324,7 @@ public class AccountPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("accountId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

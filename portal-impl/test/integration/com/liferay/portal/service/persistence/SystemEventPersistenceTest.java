@@ -264,7 +264,7 @@ public class SystemEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("systemEventId",
 				newSystemEvent.getSystemEventId()));
 
-		List<SystemEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SystemEvent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -281,7 +281,7 @@ public class SystemEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("systemEventId",
 				ServiceTestUtil.nextLong()));
 
-		List<SystemEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SystemEvent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -302,7 +302,7 @@ public class SystemEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("systemEventId",
 				new Object[] { newSystemEventId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -322,7 +322,7 @@ public class SystemEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("systemEventId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

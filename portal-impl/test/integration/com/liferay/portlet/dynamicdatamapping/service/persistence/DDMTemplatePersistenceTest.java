@@ -308,7 +308,7 @@ public class DDMTemplatePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateId",
 				newDDMTemplate.getTemplateId()));
 
-		List<DDMTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMTemplate> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -325,7 +325,7 @@ public class DDMTemplatePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("templateId",
 				ServiceTestUtil.nextLong()));
 
-		List<DDMTemplate> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMTemplate> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -345,7 +345,7 @@ public class DDMTemplatePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("templateId",
 				new Object[] { newTemplateId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -364,7 +364,7 @@ public class DDMTemplatePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("templateId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

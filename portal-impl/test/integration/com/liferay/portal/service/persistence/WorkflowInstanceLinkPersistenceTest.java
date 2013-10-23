@@ -250,7 +250,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("workflowInstanceLinkId",
 				newWorkflowInstanceLink.getWorkflowInstanceLinkId()));
 
-		List<WorkflowInstanceLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WorkflowInstanceLink> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -268,7 +268,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("workflowInstanceLinkId",
 				ServiceTestUtil.nextLong()));
 
-		List<WorkflowInstanceLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WorkflowInstanceLink> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -289,7 +289,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("workflowInstanceLinkId",
 				new Object[] { newWorkflowInstanceLinkId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -310,7 +310,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("workflowInstanceLinkId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

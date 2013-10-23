@@ -221,7 +221,7 @@ public class PasswordPolicyRelPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyRelId",
 				newPasswordPolicyRel.getPasswordPolicyRelId()));
 
-		List<PasswordPolicyRel> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordPolicyRel> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -238,7 +238,7 @@ public class PasswordPolicyRelPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordPolicyRelId",
 				ServiceTestUtil.nextLong()));
 
-		List<PasswordPolicyRel> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordPolicyRel> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -259,7 +259,7 @@ public class PasswordPolicyRelPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordPolicyRelId",
 				new Object[] { newPasswordPolicyRelId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -279,7 +279,7 @@ public class PasswordPolicyRelPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordPolicyRelId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

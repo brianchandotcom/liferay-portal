@@ -247,7 +247,7 @@ public class MBThreadFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadFlagId",
 				newMBThreadFlag.getThreadFlagId()));
 
-		List<MBThreadFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBThreadFlag> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -264,7 +264,7 @@ public class MBThreadFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("threadFlagId",
 				ServiceTestUtil.nextLong()));
 
-		List<MBThreadFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBThreadFlag> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -285,7 +285,7 @@ public class MBThreadFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("threadFlagId",
 				new Object[] { newThreadFlagId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -305,7 +305,7 @@ public class MBThreadFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("threadFlagId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

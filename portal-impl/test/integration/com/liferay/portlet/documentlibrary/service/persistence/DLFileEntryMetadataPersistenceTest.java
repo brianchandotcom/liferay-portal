@@ -235,7 +235,7 @@ public class DLFileEntryMetadataPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryMetadataId",
 				newDLFileEntryMetadata.getFileEntryMetadataId()));
 
-		List<DLFileEntryMetadata> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileEntryMetadata> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -252,7 +252,7 @@ public class DLFileEntryMetadataPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileEntryMetadataId",
 				ServiceTestUtil.nextLong()));
 
-		List<DLFileEntryMetadata> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileEntryMetadata> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -273,7 +273,7 @@ public class DLFileEntryMetadataPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileEntryMetadataId",
 				new Object[] { newFileEntryMetadataId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -293,7 +293,7 @@ public class DLFileEntryMetadataPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileEntryMetadataId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

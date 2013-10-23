@@ -273,7 +273,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleGroupInstanceId",
 				newMDRRuleGroupInstance.getRuleGroupInstanceId()));
 
-		List<MDRRuleGroupInstance> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MDRRuleGroupInstance> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -291,7 +291,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("ruleGroupInstanceId",
 				ServiceTestUtil.nextLong()));
 
-		List<MDRRuleGroupInstance> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MDRRuleGroupInstance> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -312,7 +312,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("ruleGroupInstanceId",
 				new Object[] { newRuleGroupInstanceId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -332,7 +332,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("ruleGroupInstanceId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

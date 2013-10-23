@@ -238,7 +238,7 @@ public class UserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerId",
 				newUserTracker.getUserTrackerId()));
 
-		List<UserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserTracker> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -255,7 +255,7 @@ public class UserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerId",
 				ServiceTestUtil.nextLong()));
 
-		List<UserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserTracker> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -276,7 +276,7 @@ public class UserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerId",
 				new Object[] { newUserTrackerId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -296,7 +296,7 @@ public class UserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

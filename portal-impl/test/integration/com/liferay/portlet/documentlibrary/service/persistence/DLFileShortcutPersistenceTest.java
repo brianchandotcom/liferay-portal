@@ -283,7 +283,7 @@ public class DLFileShortcutPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileShortcutId",
 				newDLFileShortcut.getFileShortcutId()));
 
-		List<DLFileShortcut> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileShortcut> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -300,7 +300,7 @@ public class DLFileShortcutPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("fileShortcutId",
 				ServiceTestUtil.nextLong()));
 
-		List<DLFileShortcut> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLFileShortcut> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -321,7 +321,7 @@ public class DLFileShortcutPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileShortcutId",
 				new Object[] { newFileShortcutId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -341,7 +341,7 @@ public class DLFileShortcutPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("fileShortcutId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

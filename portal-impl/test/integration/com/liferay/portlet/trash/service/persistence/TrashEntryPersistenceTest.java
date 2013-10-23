@@ -253,7 +253,7 @@ public class TrashEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newTrashEntry.getEntryId()));
 
-		List<TrashEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<TrashEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -270,7 +270,7 @@ public class TrashEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				ServiceTestUtil.nextLong()));
 
-		List<TrashEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<TrashEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -290,7 +290,7 @@ public class TrashEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { newEntryId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -309,7 +309,7 @@ public class TrashEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

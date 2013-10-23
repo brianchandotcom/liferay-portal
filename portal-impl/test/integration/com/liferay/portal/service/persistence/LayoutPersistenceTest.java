@@ -339,7 +339,7 @@ public class LayoutPersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("plid", newLayout.getPlid()));
 
-		List<Layout> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Layout> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -356,7 +356,7 @@ public class LayoutPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("plid",
 				ServiceTestUtil.nextLong()));
 
-		List<Layout> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Layout> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -376,7 +376,7 @@ public class LayoutPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("plid",
 				new Object[] { newPlid }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -395,7 +395,7 @@ public class LayoutPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("plid",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

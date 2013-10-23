@@ -252,7 +252,7 @@ public class DLContentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId",
 				newDLContent.getContentId()));
 
-		List<DLContent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLContent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -269,7 +269,7 @@ public class DLContentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentId",
 				ServiceTestUtil.nextLong()));
 
-		List<DLContent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLContent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -289,7 +289,7 @@ public class DLContentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentId",
 				new Object[] { newContentId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -308,7 +308,7 @@ public class DLContentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

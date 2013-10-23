@@ -273,7 +273,7 @@ public class OrgLaborPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orgLaborId",
 				newOrgLabor.getOrgLaborId()));
 
-		List<OrgLabor> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<OrgLabor> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -290,7 +290,7 @@ public class OrgLaborPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("orgLaborId",
 				ServiceTestUtil.nextLong()));
 
-		List<OrgLabor> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<OrgLabor> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -310,7 +310,7 @@ public class OrgLaborPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("orgLaborId",
 				new Object[] { newOrgLaborId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -329,7 +329,7 @@ public class OrgLaborPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("orgLaborId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

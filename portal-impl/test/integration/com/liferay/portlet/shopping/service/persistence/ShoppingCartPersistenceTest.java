@@ -254,7 +254,7 @@ public class ShoppingCartPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("cartId",
 				newShoppingCart.getCartId()));
 
-		List<ShoppingCart> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ShoppingCart> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -271,7 +271,7 @@ public class ShoppingCartPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("cartId",
 				ServiceTestUtil.nextLong()));
 
-		List<ShoppingCart> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ShoppingCart> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -291,7 +291,7 @@ public class ShoppingCartPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("cartId",
 				new Object[] { newCartId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -310,7 +310,7 @@ public class ShoppingCartPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("cartId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

@@ -326,7 +326,7 @@ public class MBMessagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId",
 				newMBMessage.getMessageId()));
 
-		List<MBMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBMessage> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -343,7 +343,7 @@ public class MBMessagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("messageId",
 				ServiceTestUtil.nextLong()));
 
-		List<MBMessage> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBMessage> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -363,7 +363,7 @@ public class MBMessagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("messageId",
 				new Object[] { newMessageId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -382,7 +382,7 @@ public class MBMessagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("messageId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

@@ -319,7 +319,7 @@ public class BlogsEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newBlogsEntry.getEntryId()));
 
-		List<BlogsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BlogsEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -336,7 +336,7 @@ public class BlogsEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				ServiceTestUtil.nextLong()));
 
-		List<BlogsEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BlogsEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -356,7 +356,7 @@ public class BlogsEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { newEntryId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -375,7 +375,7 @@ public class BlogsEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

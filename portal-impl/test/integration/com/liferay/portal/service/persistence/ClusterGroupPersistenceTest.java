@@ -219,7 +219,7 @@ public class ClusterGroupPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("clusterGroupId",
 				newClusterGroup.getClusterGroupId()));
 
-		List<ClusterGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ClusterGroup> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -236,7 +236,7 @@ public class ClusterGroupPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("clusterGroupId",
 				ServiceTestUtil.nextLong()));
 
-		List<ClusterGroup> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ClusterGroup> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -257,7 +257,7 @@ public class ClusterGroupPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("clusterGroupId",
 				new Object[] { newClusterGroupId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -277,7 +277,7 @@ public class ClusterGroupPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("clusterGroupId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

@@ -235,7 +235,7 @@ public class SCProductScreenshotPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("productScreenshotId",
 				newSCProductScreenshot.getProductScreenshotId()));
 
-		List<SCProductScreenshot> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCProductScreenshot> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -252,7 +252,7 @@ public class SCProductScreenshotPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("productScreenshotId",
 				ServiceTestUtil.nextLong()));
 
-		List<SCProductScreenshot> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCProductScreenshot> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -273,7 +273,7 @@ public class SCProductScreenshotPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productScreenshotId",
 				new Object[] { newProductScreenshotId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -293,7 +293,7 @@ public class SCProductScreenshotPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productScreenshotId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

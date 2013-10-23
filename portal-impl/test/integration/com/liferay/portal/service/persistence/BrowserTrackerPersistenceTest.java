@@ -216,7 +216,7 @@ public class BrowserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
 				newBrowserTracker.getBrowserTrackerId()));
 
-		List<BrowserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BrowserTracker> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -233,7 +233,7 @@ public class BrowserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("browserTrackerId",
 				ServiceTestUtil.nextLong()));
 
-		List<BrowserTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BrowserTracker> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -254,7 +254,7 @@ public class BrowserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("browserTrackerId",
 				new Object[] { newBrowserTrackerId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -274,7 +274,7 @@ public class BrowserTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("browserTrackerId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

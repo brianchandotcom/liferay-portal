@@ -223,7 +223,7 @@ public class ImagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
 				newImage.getImageId()));
 
-		List<Image> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Image> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -240,7 +240,7 @@ public class ImagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("imageId",
 				ServiceTestUtil.nextLong()));
 
-		List<Image> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Image> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -260,7 +260,7 @@ public class ImagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("imageId",
 				new Object[] { newImageId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -279,7 +279,7 @@ public class ImagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("imageId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

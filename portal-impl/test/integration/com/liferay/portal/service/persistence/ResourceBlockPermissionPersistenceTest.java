@@ -224,7 +224,7 @@ public class ResourceBlockPermissionPersistenceTest {
 				"resourceBlockPermissionId",
 				newResourceBlockPermission.getResourceBlockPermissionId()));
 
-		List<ResourceBlockPermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceBlockPermission> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -242,7 +242,7 @@ public class ResourceBlockPermissionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"resourceBlockPermissionId", ServiceTestUtil.nextLong()));
 
-		List<ResourceBlockPermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceBlockPermission> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -264,7 +264,7 @@ public class ResourceBlockPermissionPersistenceTest {
 				"resourceBlockPermissionId",
 				new Object[] { newResourceBlockPermissionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -286,7 +286,7 @@ public class ResourceBlockPermissionPersistenceTest {
 				"resourceBlockPermissionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

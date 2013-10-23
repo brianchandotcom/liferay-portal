@@ -251,7 +251,7 @@ public class DDLRecordVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordVersionId",
 				newDDLRecordVersion.getRecordVersionId()));
 
-		List<DDLRecordVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDLRecordVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -268,7 +268,7 @@ public class DDLRecordVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("recordVersionId",
 				ServiceTestUtil.nextLong()));
 
-		List<DDLRecordVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDLRecordVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -289,7 +289,7 @@ public class DDLRecordVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("recordVersionId",
 				new Object[] { newRecordVersionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -309,7 +309,7 @@ public class DDLRecordVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("recordVersionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

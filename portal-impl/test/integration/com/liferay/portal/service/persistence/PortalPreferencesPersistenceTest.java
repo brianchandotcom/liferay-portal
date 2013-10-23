@@ -221,7 +221,7 @@ public class PortalPreferencesPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portalPreferencesId",
 				newPortalPreferences.getPortalPreferencesId()));
 
-		List<PortalPreferences> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortalPreferences> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -238,7 +238,7 @@ public class PortalPreferencesPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portalPreferencesId",
 				ServiceTestUtil.nextLong()));
 
-		List<PortalPreferences> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortalPreferences> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -259,7 +259,7 @@ public class PortalPreferencesPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("portalPreferencesId",
 				new Object[] { newPortalPreferencesId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -279,7 +279,7 @@ public class PortalPreferencesPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("portalPreferencesId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

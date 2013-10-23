@@ -323,7 +323,7 @@ public class AssetEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newAssetEntry.getEntryId()));
 
-		List<AssetEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -340,7 +340,7 @@ public class AssetEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				ServiceTestUtil.nextLong()));
 
-		List<AssetEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -360,7 +360,7 @@ public class AssetEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { newEntryId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -379,7 +379,7 @@ public class AssetEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

@@ -264,7 +264,7 @@ public class SCFrameworkVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("frameworkVersionId",
 				newSCFrameworkVersion.getFrameworkVersionId()));
 
-		List<SCFrameworkVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCFrameworkVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -281,7 +281,7 @@ public class SCFrameworkVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("frameworkVersionId",
 				ServiceTestUtil.nextLong()));
 
-		List<SCFrameworkVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCFrameworkVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -302,7 +302,7 @@ public class SCFrameworkVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("frameworkVersionId",
 				new Object[] { newFrameworkVersionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -322,7 +322,7 @@ public class SCFrameworkVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("frameworkVersionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

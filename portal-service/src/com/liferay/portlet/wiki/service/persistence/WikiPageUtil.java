@@ -59,39 +59,35 @@ public class WikiPageUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#count(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
+	public static long count(DynamicQuery dynamicQuery)
 		throws SystemException {
-		return getPersistence().countWithDynamicQuery(dynamicQuery);
+		return getPersistence().count(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#find(DynamicQuery)
 	 */
-	public static List<WikiPage> findWithDynamicQuery(DynamicQuery dynamicQuery)
+	public static List<WikiPage> find(DynamicQuery dynamicQuery)
 		throws SystemException {
-		return getPersistence().findWithDynamicQuery(dynamicQuery);
+		return getPersistence().find(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#find(DynamicQuery, int, int)
 	 */
-	public static List<WikiPage> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
-		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
+	public static List<WikiPage> find(DynamicQuery dynamicQuery, int start,
+		int end) throws SystemException {
+		return getPersistence().find(dynamicQuery, start, end);
 	}
 
 	/**
-	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see com.liferay.portal.service.persistence.BasePersistence#find(DynamicQuery, int, int, OrderByComparator)
 	 */
-	public static List<WikiPage> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		return getPersistence()
-				   .findWithDynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+	public static List<WikiPage> find(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		return getPersistence().find(dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**

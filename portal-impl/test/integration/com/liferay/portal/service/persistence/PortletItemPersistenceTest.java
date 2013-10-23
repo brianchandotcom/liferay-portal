@@ -251,7 +251,7 @@ public class PortletItemPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletItemId",
 				newPortletItem.getPortletItemId()));
 
-		List<PortletItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortletItem> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -268,7 +268,7 @@ public class PortletItemPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("portletItemId",
 				ServiceTestUtil.nextLong()));
 
-		List<PortletItem> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PortletItem> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -289,7 +289,7 @@ public class PortletItemPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("portletItemId",
 				new Object[] { newPortletItemId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -309,7 +309,7 @@ public class PortletItemPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("portletItemId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

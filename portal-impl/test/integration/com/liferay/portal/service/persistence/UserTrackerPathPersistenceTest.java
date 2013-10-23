@@ -221,7 +221,7 @@ public class UserTrackerPathPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerPathId",
 				newUserTrackerPath.getUserTrackerPathId()));
 
-		List<UserTrackerPath> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserTrackerPath> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -238,7 +238,7 @@ public class UserTrackerPathPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userTrackerPathId",
 				ServiceTestUtil.nextLong()));
 
-		List<UserTrackerPath> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserTrackerPath> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -259,7 +259,7 @@ public class UserTrackerPathPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerPathId",
 				new Object[] { newUserTrackerPathId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -279,7 +279,7 @@ public class UserTrackerPathPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userTrackerPathId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

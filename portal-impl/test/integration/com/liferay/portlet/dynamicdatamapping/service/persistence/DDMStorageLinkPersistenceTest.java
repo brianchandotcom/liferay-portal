@@ -226,7 +226,7 @@ public class DDMStorageLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("storageLinkId",
 				newDDMStorageLink.getStorageLinkId()));
 
-		List<DDMStorageLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMStorageLink> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -243,7 +243,7 @@ public class DDMStorageLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("storageLinkId",
 				ServiceTestUtil.nextLong()));
 
-		List<DDMStorageLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMStorageLink> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -264,7 +264,7 @@ public class DDMStorageLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("storageLinkId",
 				new Object[] { newStorageLinkId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -284,7 +284,7 @@ public class DDMStorageLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("storageLinkId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

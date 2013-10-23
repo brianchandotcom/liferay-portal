@@ -226,7 +226,7 @@ public class ServiceComponentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
 				newServiceComponent.getServiceComponentId()));
 
-		List<ServiceComponent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ServiceComponent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -243,7 +243,7 @@ public class ServiceComponentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("serviceComponentId",
 				ServiceTestUtil.nextLong()));
 
-		List<ServiceComponent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ServiceComponent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -264,7 +264,7 @@ public class ServiceComponentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("serviceComponentId",
 				new Object[] { newServiceComponentId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -284,7 +284,7 @@ public class ServiceComponentPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("serviceComponentId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

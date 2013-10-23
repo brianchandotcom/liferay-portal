@@ -302,7 +302,7 @@ public class MBCategoryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
 				newMBCategory.getCategoryId()));
 
-		List<MBCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBCategory> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -319,7 +319,7 @@ public class MBCategoryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("categoryId",
 				ServiceTestUtil.nextLong()));
 
-		List<MBCategory> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBCategory> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -339,7 +339,7 @@ public class MBCategoryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
 				new Object[] { newCategoryId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -358,7 +358,7 @@ public class MBCategoryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("categoryId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

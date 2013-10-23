@@ -294,7 +294,7 @@ public class BookmarksEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				newBookmarksEntry.getEntryId()));
 
-		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BookmarksEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -311,7 +311,7 @@ public class BookmarksEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("entryId",
 				ServiceTestUtil.nextLong()));
 
-		List<BookmarksEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BookmarksEntry> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -331,7 +331,7 @@ public class BookmarksEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { newEntryId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -350,7 +350,7 @@ public class BookmarksEntryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("entryId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

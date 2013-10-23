@@ -200,7 +200,7 @@ public class RegionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId",
 				newRegion.getRegionId()));
 
-		List<Region> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Region> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -217,7 +217,7 @@ public class RegionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("regionId",
 				ServiceTestUtil.nextLong()));
 
-		List<Region> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Region> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -237,7 +237,7 @@ public class RegionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("regionId",
 				new Object[] { newRegionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -256,7 +256,7 @@ public class RegionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("regionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

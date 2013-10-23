@@ -222,7 +222,7 @@ public class VirtualHostPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
 				newVirtualHost.getVirtualHostId()));
 
-		List<VirtualHost> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<VirtualHost> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -239,7 +239,7 @@ public class VirtualHostPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("virtualHostId",
 				ServiceTestUtil.nextLong()));
 
-		List<VirtualHost> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<VirtualHost> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -260,7 +260,7 @@ public class VirtualHostPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("virtualHostId",
 				new Object[] { newVirtualHostId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -280,7 +280,7 @@ public class VirtualHostPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("virtualHostId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

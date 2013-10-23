@@ -305,7 +305,7 @@ public class WikiPagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
 				newWikiPage.getPageId()));
 
-		List<WikiPage> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WikiPage> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -322,7 +322,7 @@ public class WikiPagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("pageId",
 				ServiceTestUtil.nextLong()));
 
-		List<WikiPage> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WikiPage> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -342,7 +342,7 @@ public class WikiPagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("pageId",
 				new Object[] { newPageId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -361,7 +361,7 @@ public class WikiPagePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("pageId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

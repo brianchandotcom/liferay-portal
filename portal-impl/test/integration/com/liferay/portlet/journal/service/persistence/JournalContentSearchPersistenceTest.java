@@ -238,7 +238,7 @@ public class JournalContentSearchPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentSearchId",
 				newJournalContentSearch.getContentSearchId()));
 
-		List<JournalContentSearch> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<JournalContentSearch> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -256,7 +256,7 @@ public class JournalContentSearchPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("contentSearchId",
 				ServiceTestUtil.nextLong()));
 
-		List<JournalContentSearch> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<JournalContentSearch> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -277,7 +277,7 @@ public class JournalContentSearchPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentSearchId",
 				new Object[] { newContentSearchId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -297,7 +297,7 @@ public class JournalContentSearchPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("contentSearchId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

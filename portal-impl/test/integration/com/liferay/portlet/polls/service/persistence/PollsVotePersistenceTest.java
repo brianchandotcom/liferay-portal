@@ -254,7 +254,7 @@ public class PollsVotePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("voteId",
 				newPollsVote.getVoteId()));
 
-		List<PollsVote> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PollsVote> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -271,7 +271,7 @@ public class PollsVotePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("voteId",
 				ServiceTestUtil.nextLong()));
 
-		List<PollsVote> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PollsVote> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -291,7 +291,7 @@ public class PollsVotePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("voteId",
 				new Object[] { newVoteId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -310,7 +310,7 @@ public class PollsVotePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("voteId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

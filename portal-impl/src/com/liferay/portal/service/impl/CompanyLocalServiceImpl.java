@@ -1073,7 +1073,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try {
 			String newLanguageIds = properties.getProperty(PropsKeys.LOCALES);
 
-			if (newLanguageIds != null) {
+			if (Validator.isNotNull(newLanguageIds)) {
 				String oldLanguageIds = portletPreferences.getValue(
 					PropsKeys.LOCALES, StringPool.BLANK);
 

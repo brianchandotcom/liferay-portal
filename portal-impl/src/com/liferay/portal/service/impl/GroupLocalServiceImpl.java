@@ -3485,7 +3485,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String newLanguageIds = typeSettingsProperties.getProperty(
 			PropsKeys.LOCALES);
 
-		if (newLanguageIds != null) {
+		if (Validator.isNotNull(newLanguageIds)) {
 			String oldLanguageIds = oldTypeSettingsProperties.getProperty(
 				PropsKeys.LOCALES, StringPool.BLANK);
 

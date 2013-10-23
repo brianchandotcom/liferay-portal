@@ -225,15 +225,15 @@ public class SetupWizardUtil {
 
 		_initPlugins();
 
-		boolean propertiesFileCreated = _writePropertiesFile(unicodeProperties);
-
 		HttpSession session = request.getSession();
 
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES_FILE_CREATED,
-			propertiesFileCreated);
+			_writePropertiesFile(unicodeProperties));
+
+		setSetupFinished(true);
 	}
 
 	private static String _getParameter(

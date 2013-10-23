@@ -178,6 +178,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.events.AddSamplePortalDataAction">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.events.ChannelHubAppShutdownAction">
 		<priority value="INFO" />
 	</category>

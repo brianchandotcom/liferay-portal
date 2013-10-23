@@ -105,7 +105,12 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, trashHandler.getContainerM
 						TrashRenderer containerTrashRenderer = containerTrashHandler.getTrashRenderer(curContainerModel.getContainerModelId());
 						%>
 
-						<liferay-ui:icon label="<%= true %>" message="<%= curContainerModel.getContainerModelName() %>" method="get" src="<%= containerTrashRenderer.getIconPath(renderRequest) %>" url="<%= containerURL.toString() %>" />
+						<liferay-ui:icon
+							label="<%= true %>"
+							message="<%= curContainerModel.getContainerModelName() %>"
+							method="get" src="<%= containerTrashRenderer.getIconPath(renderRequest) %>"
+							url="<%= containerURL.toString() %>"
+						/>
 					</c:when>
 					<c:otherwise>
 						<%= curContainerModel.getContainerModelName() %>

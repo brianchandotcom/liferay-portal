@@ -172,7 +172,12 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:search-container-column-text
 			name="name"
 		>
-			<liferay-ui:icon label="<%= true %>" message="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>" method="get" src="<%= trashRenderer.getIconPath(renderRequest) %>" url="<%= viewContentURLString %>" />
+			<liferay-ui:icon
+				label="<%= true %>"
+				message="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>"
+				method="get" src="<%= trashRenderer.getIconPath(renderRequest) %>"
+				url="<%= viewContentURLString %>"
+			/>
 
 			<c:if test="<%= entry.getRootEntry() != null %>">
 

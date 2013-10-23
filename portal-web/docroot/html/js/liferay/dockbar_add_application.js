@@ -12,9 +12,15 @@ AUI.add(
 
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
 
+		var SELECTOR_CONTENT_ITEM = '.lfr-content-item';
+
 		var STR_ACTION = 'action';
 
 		var STR_CLICK = 'click';
+
+		var STR_ENTER_DOWN = 'down:ENTER';
+
+		var STR_KEY = 'key';
 
 		var STR_RESPONSE_DATA = 'responseData';
 
@@ -35,6 +41,18 @@ AUI.add(
 						instance._addApplicationForm = instance.byId('addApplicationForm');
 						instance._entriesPanel = instance.byId('applicationList');
 
+						var togglerDelegate = Liferay.component(instance.ns('addApplicationPanelContainer'));
+
+						if (togglerDelegate) {
+							togglerDelegate.plug(
+								Liferay.TogglerKeyAccess,
+								{
+									children: '.lfr-content-item',
+									parents: '.lfr-content-category'
+								}
+							);
+						}
+
 						instance._bindUI();
 					},
 
@@ -43,6 +61,10 @@ AUI.add(
 
 						var portlet = event.currentTarget;
 
+						if (event.type === STR_KEY) {
+							portlet = event.currentTarget.one(SELECTOR_ADD_CONTENT_ITEM);
+						}
+
 						instance.addPortlet(portlet);
 					},
 
@@ -50,6 +72,8 @@ AUI.add(
 						var instance = this;
 
 						instance._entriesPanel.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance);
+
+						instance._entriesPanel.delegate(STR_KEY, instance._addApplication, STR_ENTER_DOWN, SELECTOR_CONTENT_ITEM, instance);
 
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
@@ -85,6 +109,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search']
+		requires: ['key-event', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search', 'liferay-toggler-key-access']
 	}
 );

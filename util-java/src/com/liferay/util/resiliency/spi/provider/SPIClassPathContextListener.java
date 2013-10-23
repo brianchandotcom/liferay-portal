@@ -14,9 +14,9 @@
 
 package com.liferay.util.resiliency.spi.provider;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.resiliency.spi.provider.SPIProvider;
@@ -26,10 +26,8 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.File;
 
@@ -68,99 +66,29 @@ public class SPIClassPathContextListener implements ServletContextListener {
 		String spiEmbeddedLibDirName = servletContext.getInitParameter(
 			"spiEmbeddedLibDir");
 
-		File spiEmbeddedLibDir = new File(contextPath, spiEmbeddedLibDirName);
-
-		if (!spiEmbeddedLibDir.exists() || !spiEmbeddedLibDir.isDirectory()) {
-			_log.error(
-				"Unable to find SPI embedded lib directory " +
-					spiEmbeddedLibDir.getAbsolutePath());
-
-			return;
-		}
-
 		Set<File> jarFiles = new LinkedHashSet<File>();
 
-		File[] files = spiEmbeddedLibDir.listFiles();
+		// Load embedded tomcat
 
-		Arrays.sort(files);
+		File spiEmbeddedLibDir = new File(contextPath, spiEmbeddedLibDirName);
 
-		for (File file : files) {
-			String fileName = file.getName();
+		addJarFiles(jarFiles, spiEmbeddedLibDir);
 
-			if (fileName.endsWith(".jar")) {
-				jarFiles.add(file);
-			}
-		}
+		// Load portal-service.jar from MPI
 
-		if (!ServerDetector.isTomcat()) {
-			File spiEmbeddedLibExtDir = new File(spiEmbeddedLibDir, "ext");
+		addJarFiles(
+			jarFiles, PortalClassLoaderUtil.getClassLoader(),
+			PortalException.class.getName());
 
-			if (!spiEmbeddedLibExtDir.exists() ||
-				!spiEmbeddedLibExtDir.isDirectory()) {
+		// Load JDBC driver jars from MPI
 
-				_log.error(
-					"Unable to find SPI embedded lib ext directory " +
-						spiEmbeddedLibExtDir.getAbsolutePath());
+		addJarFiles(
+			jarFiles, PortalClassLoaderUtil.getClassLoader(),
+			PropsUtil.get(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME));
 
-				return;
-			}
+		// Load ext jars
 
-			files = spiEmbeddedLibExtDir.listFiles();
-
-			Arrays.sort(files);
-
-			for (File file : files) {
-				String fileName = file.getName();
-
-				if (fileName.endsWith(".jar")) {
-					jarFiles.add(file);
-				}
-			}
-
-			// Load portal-service.jar from MPI
-
-			String liferayLibGlobalDir = SystemProperties.get(
-				PropsKeys.LIFERAY_LIB_GLOBAL_DIR);
-
-			File portalServiceJarFile = new File(
-				liferayLibGlobalDir, "portal-service.jar");
-
-			if (!portalServiceJarFile.exists()) {
-				_log.error(
-					"Unable to find portal-service.jar file " +
-						portalServiceJarFile.getAbsolutePath());
-
-				return;
-			}
-
-			jarFiles.add(portalServiceJarFile);
-
-			// Load JDBC driver jars from MPI
-
-			String jdbcDriverJarDirName = ClassUtil.getParentPath(
-				PortalClassLoaderUtil.getClassLoader(),
-				PropsUtil.get(PropsKeys.JDBC_DEFAULT_DRIVER_CLASS_NAME));
-
-			int pos = jdbcDriverJarDirName.lastIndexOf(".jar");
-
-			pos = jdbcDriverJarDirName.lastIndexOf(CharPool.SLASH, pos);
-
-			jdbcDriverJarDirName = jdbcDriverJarDirName.substring(0, pos + 1);
-
-			File jdbcDriverJarDir = new File(jdbcDriverJarDirName);
-
-			files = jdbcDriverJarDir.listFiles();
-
-			Arrays.sort(files);
-
-			for (File file : files) {
-				String fileName = file.getName();
-
-				if (fileName.endsWith(".jar")) {
-					jarFiles.add(file);
-				}
-			}
-		}
+		addJarFiles(jarFiles, new File(spiEmbeddedLibDir, "ext"));
 
 		StringBundler sb = new StringBundler(jarFiles.size() * 2 + 4);
 
@@ -169,17 +97,8 @@ public class SPIClassPathContextListener implements ServletContextListener {
 			sb.append(File.pathSeparator);
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("SPI embedded lib class path " + sb.toString());
-		}
-
 		sb.append(contextPath);
 		sb.append("/WEB-INF/classes");
-
-		if (ServerDetector.isTomcat()) {
-			sb.append(File.pathSeparator);
-			sb.append(ClassPathUtil.getGlobalClassPath());
-		}
 
 		SPI_CLASS_PATH = sb.toString();
 
@@ -255,6 +174,39 @@ public class SPIClassPathContextListener implements ServletContextListener {
 			resolveClassMethod.invoke(classLoader, clazz);
 
 			return clazz;
+		}
+	}
+
+	protected void addJarFiles(
+		Set<File> jarFiles, ClassLoader classLoader, String className) {
+
+		String path = ClassUtil.getParentPath(classLoader, className);
+
+		int pos = path.lastIndexOf(".jar");
+
+		pos = path.lastIndexOf(CharPool.SLASH, pos);
+
+		path = path.substring(0, pos);
+
+		addJarFiles(jarFiles, new File(path));
+	}
+
+	protected void addJarFiles(Set<File> jarFiles, File dir) {
+		if (!dir.exists() || !dir.isDirectory()) {
+			throw new RuntimeException(
+				"Unable to find directory " + dir.getAbsolutePath());
+		}
+
+		File[] files = dir.listFiles();
+
+		Arrays.sort(files);
+
+		for (File file : files) {
+			String fileName = file.getName();
+
+			if (fileName.endsWith(".jar")) {
+				jarFiles.add(file);
+			}
 		}
 	}
 

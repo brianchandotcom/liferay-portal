@@ -92,7 +92,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 		/>
 
 		<c:if test="<%= localPublishing %>">
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text name="type">
 				<c:if test="<%= backgroundTask.getGroupId() == liveGroupId %>">
 					<strong class="label label-info">
 						<liferay-ui:message key="initial-publication" />

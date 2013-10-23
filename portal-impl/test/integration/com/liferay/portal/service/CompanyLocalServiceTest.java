@@ -14,10 +14,15 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.AccountNameException;
+import com.liferay.portal.CompanyMxException;
+import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -33,6 +38,8 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 
+import java.lang.reflect.Field;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -47,13 +54,14 @@ import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Mika Koivisto
+ * @author Dale Shan
  */
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class CompanyServiceTest {
+public class CompanyLocalServiceTest {
 
 	@Before
 	public void setUp() {
@@ -186,6 +194,59 @@ public class CompanyServiceTest {
 		CompanyLocalServiceUtil.deleteCompany(companyId);
 	}
 
+	@Test
+	public void testUpdateInvalidAccountNames() throws Exception {
+		Company company = addCompany();
+
+		Group group = GroupTestUtil.addGroup();
+
+		group.setCompanyId(company.getCompanyId());
+
+		GroupLocalServiceUtil.updateGroup(group);
+
+		String[] invalidAccountNames = new String[] {
+			StringPool.BLANK, group.getName()
+		};
+
+		testUpdateAccountNames(company, invalidAccountNames, true);
+
+		GroupLocalServiceUtil.deleteGroup(group);
+
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+	}
+
+	@Test
+	public void testUpdateInvalidVirtualHostNames() throws Exception {
+		String[] invalidVirtualHostNames = new String[] {
+			StringPool.BLANK, "localhost", ".abc",
+		};
+
+		testUpdateVirtualHostNames(invalidVirtualHostNames, true);
+	}
+
+	@Test
+	public void testUpdateMx() throws Exception {
+		testUpdateMx("abc.com", true, true);
+		testUpdateMx("abc.com", true, false);
+		testUpdateMx(StringPool.BLANK, false, true);
+		testUpdateMx(StringPool.BLANK, false, false);
+	}
+
+	@Test
+	public void testUpdateValidAccountNames() throws Exception {
+		Company company = addCompany();
+
+		testUpdateAccountNames(
+			company, new String[] {ServiceTestUtil.randomString()}, false);
+
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+	}
+
+	@Test
+	public void testUpdateValidVirtualHostNames() throws Exception {
+		testUpdateVirtualHostNames(new String[] {"abc.com"}, false);
+	}
+
 	protected Company addCompany() throws Exception {
 		Company company = CompanyLocalServiceUtil.addCompany(
 			"test.com", "test.com", "test.com", PropsValues.SHARD_DEFAULT_NAME,
@@ -232,6 +293,109 @@ public class CompanyServiceTest {
 		serviceContext.setCompanyId(companyId);
 
 		return serviceContext;
+	}
+
+	protected void testUpdateAccountNames(
+			Company company, String[] accountNames, boolean fail)
+		throws Exception {
+
+		Account account = AccountLocalServiceUtil.getAccount(
+			company.getAccountId());
+
+		for (String accountName : accountNames) {
+			try {
+				company = CompanyLocalServiceUtil.updateCompany(
+					company.getCompanyId(), company.getVirtualHostname(),
+					company.getMx(), company.getHomeURL(), accountName,
+					account.getLegalName(), account.getLegalId(),
+					account.getLegalType(), account.getSicCode(),
+					account.getTickerSymbol(), account.getIndustry(),
+					account.getType(), account.getSize());
+
+				if (fail) {
+					Assert.fail();
+				}
+			}
+			catch (AccountNameException ane) {
+				if (!fail) {
+					Assert.fail();
+				}
+			}
+		}
+	}
+
+	protected void testUpdateMx(String mx, boolean valid, boolean mailMxUpdate)
+		throws Exception {
+
+		Company company = addCompany();
+
+		String originalMx = company.getMx();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, "MAIL_MX_UPDATE");
+
+		Object value = field.get(null);
+
+		try {
+			if (mailMxUpdate) {
+				field.set(null, Boolean.TRUE);
+			}
+			else {
+				field.set(null, Boolean.FALSE);
+			}
+
+			CompanyLocalServiceUtil.updateCompany(
+				company.getCompanyId(), company.getVirtualHostname(), mx,
+				company.getMaxUsers(), company.getActive());
+
+			company = CompanyLocalServiceUtil.getCompany(
+				company.getCompanyId());
+
+			String updatedMx = company.getMx();
+
+			if (valid && mailMxUpdate) {
+				Assert.assertNotEquals(originalMx, updatedMx);
+			}
+			else {
+				Assert.assertEquals(originalMx, updatedMx);
+			}
+		}
+		catch (CompanyMxException cme) {
+			if (valid || !mailMxUpdate) {
+				Assert.fail();
+			}
+		}
+		finally {
+			CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+
+			field.set(null, value);
+		}
+	}
+
+	protected void testUpdateVirtualHostNames(
+			String[] virtualHostNames, boolean fail)
+		throws Exception {
+
+		Company company = addCompany();
+
+		for (String virtualHostName : virtualHostNames) {
+			try {
+				CompanyLocalServiceUtil.updateCompany(
+					company.getCompanyId(), virtualHostName, company.getMx(),
+					company.getMaxUsers(), company.getActive());
+
+				if (fail) {
+					Assert.fail();
+				}
+			}
+			catch (CompanyVirtualHostException cvhe) {
+				if (!fail) {
+					Assert.fail();
+				}
+			}
+		}
+
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
 
 	private MockServletContext _mockServletContext;

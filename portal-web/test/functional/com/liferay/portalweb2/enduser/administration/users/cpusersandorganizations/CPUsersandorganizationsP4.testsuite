@@ -6,6 +6,11 @@
 	<execute test-case-command="CPUsersandorganizations#AddUsers" />
 	<execute test-case-command="CPUsersandorganizations#AddUserScreenNameInvalid" />
 	<execute test-case-command="CPUsersandorganizations#AdvancedSearchUser" />
+	<execute test-case-command="CPUsersandorganizations#ChangeUserPassword" />
+	<execute test-case-command="CPUsersandorganizations#ChangeUserPasswordInvalid" />
+	<execute test-case-command="CPUsersandorganizations#DeactivateUserActions" />
+	<execute test-case-command="CPUsersandorganizations#DeactivateUserDeactivateButton" />
+	<execute test-case-command="CPUsersandorganizations#EditUserSite" />
 	<execute test-case-command="CPUsersandorganizations#SearchUser" />
 	<execute test-case-command="CPUsersandorganizations#SearchUserFullName" />
 	<execute test-case-command="CPUsersandorganizations#SearchUserQuotes" />

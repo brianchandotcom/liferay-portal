@@ -199,6 +199,37 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITES_SELECT-->
+<tr>
+	<td>SITES_SELECT_IFRAME</td>
+	<td>//iframe[@id='_125_selectGroup_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_SELECT_SEARCH_FIELD</td>
+	<td>//input[@name='_125_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_SELECT_SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_SELECT_CHOOSE_BUTTON</td>
+	<td>//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_SELECT_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_GROUPS-->
 <tr>
 	<td>USER_GROUPS_TABLE_NAME</td>

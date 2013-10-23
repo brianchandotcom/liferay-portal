@@ -146,6 +146,47 @@
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_MENULIST-->
+<tr>
+	<td>USER_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MENULIST_MANAGE_PAGES</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MENULIST_IMPERSONATE_USER</td>
+	<td>//a[@role='menuitem' and contains(.,'Impersonate User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MENULIST_DEACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Deactivate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MENULIST_ACTIVATE</td>
+	<td>//a[@role='menuitem' and contains(.,'Activate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

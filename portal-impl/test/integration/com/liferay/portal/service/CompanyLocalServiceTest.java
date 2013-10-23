@@ -195,7 +195,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testInValidAccountName() throws Exception {
+	public void testUpdateInvalidAccountNames() throws Exception {
 		Company company = addCompany();
 
 		Group group = GroupTestUtil.addGroup();
@@ -204,11 +204,11 @@ public class CompanyLocalServiceTest {
 
 		GroupLocalServiceUtil.updateGroup(group);
 
-		String[] InvalidAccountNames = {
+		String[] invalidAccountNames = new String[] {
 			StringPool.BLANK, group.getName()
 		};
 
-		testAccountName(company, InvalidAccountNames, true);
+		testUpdateAccountNames(company, invalidAccountNames, true);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
@@ -216,16 +216,12 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testInValidVirtualHost() throws Exception {
-		Company company = addCompany();
-
-		String[] inValidVirtualHostNames = {
+	public void testUpdateInvalidVirtualHostNames() throws Exception {
+		String[] invalidVirtualHostNames = new String[] {
 			StringPool.BLANK, "localhost", ".abc",
 		};
 
-		testVirtualHost(company, inValidVirtualHostNames, true);
-
-		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+		testUpdateVirtualHostNames(invalidVirtualHostNames, true);
 	}
 
 	@Test
@@ -360,25 +356,18 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testValidAccountName() throws Exception {
+	public void testUpdateValidAccountNames() throws Exception {
 		Company company = addCompany();
 
-		String[] validAccountName = {ServiceTestUtil.randomString()};
-
-		testAccountName(company, validAccountName, false);
+		testUpdateAccountNames(
+			company, new String[] {ServiceTestUtil.randomString()}, false);
 
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
 
 	@Test
-	public void testValidVirtualHost() throws Exception {
-		Company company = addCompany();
-
-		String[] validVirtualHostNames = {"abc.com"};
-
-		testVirtualHost(company, validVirtualHostNames, false);
-
-		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+	public void testUpdateValidVirtualHostNames() throws Exception {
+		testUpdateVirtualHostNames(new String[] {"abc.com"}, false);
 	}
 
 	protected Company addCompany() throws Exception {
@@ -429,7 +418,7 @@ public class CompanyLocalServiceTest {
 		return serviceContext;
 	}
 
-	protected void testAccountName(
+	protected void testUpdateAccountNames(
 			Company company, String[] accountNames, boolean fail)
 		throws Exception {
 
@@ -458,9 +447,11 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	protected void testVirtualHost(
-			Company company, String[] virtualHostNames, boolean fail)
+	protected void testUpdateVirtualHostNames(
+			String[] virtualHostNames, boolean fail)
 		throws Exception {
+
+		Company company = addCompany();
 
 		for (String virtualHostName : virtualHostNames) {
 			try {
@@ -478,6 +469,8 @@ public class CompanyLocalServiceTest {
 				}
 			}
 		}
+
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 	}
 
 	private MockServletContext _mockServletContext;

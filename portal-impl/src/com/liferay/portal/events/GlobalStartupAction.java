@@ -170,6 +170,22 @@ public class GlobalStartupAction extends SimpleAction {
 		// Auto deploy
 
 		try {
+			File deployDir = new File(
+				PrefsPropsUtil.getString(
+					PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
+					PropsValues.AUTO_DEPLOY_DEPLOY_DIR));
+			File destDir = new File(DeployUtil.getAutoDeployDestDir());
+			long interval = PrefsPropsUtil.getLong(
+				PropsKeys.AUTO_DEPLOY_INTERVAL,
+				PropsValues.AUTO_DEPLOY_INTERVAL);
+
+			List<AutoDeployListener> autoDeployListeners =
+				getAutoDeployListeners(false);
+
+			AutoDeployDir autoDeployDir = new AutoDeployDir(
+				AutoDeployDir.DEFAULT_NAME, deployDir, destDir, interval,
+				autoDeployListeners);
+
 			if (PrefsPropsUtil.getBoolean(
 					PropsKeys.AUTO_DEPLOY_ENABLED,
 					PropsValues.AUTO_DEPLOY_ENABLED)) {
@@ -177,22 +193,6 @@ public class GlobalStartupAction extends SimpleAction {
 				if (_log.isInfoEnabled()) {
 					_log.info("Registering auto deploy directories");
 				}
-
-				File deployDir = new File(
-					PrefsPropsUtil.getString(
-						PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
-						PropsValues.AUTO_DEPLOY_DEPLOY_DIR));
-				File destDir = new File(DeployUtil.getAutoDeployDestDir());
-				long interval = PrefsPropsUtil.getLong(
-					PropsKeys.AUTO_DEPLOY_INTERVAL,
-					PropsValues.AUTO_DEPLOY_INTERVAL);
-
-				List<AutoDeployListener> autoDeployListeners =
-					getAutoDeployListeners(false);
-
-				AutoDeployDir autoDeployDir = new AutoDeployDir(
-					AutoDeployDir.DEFAULT_NAME, deployDir, destDir, interval,
-					autoDeployListeners);
 
 				AutoDeployUtil.registerDir(autoDeployDir);
 			}

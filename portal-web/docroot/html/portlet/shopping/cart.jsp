@@ -77,7 +77,11 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			count = document.<portlet:namespace />fm.<portlet:namespace />item_<%= item.getItemId() %>_<%= itemsCount %>_count.value;
 
 			if ((count == "") || isNaN(count) || (count < 0) || ((count > <%= maxPossibleQuantity %>) && (<%= maxPossibleQuantity %> > 0))) {
-				invalidSKUs += "\n<%= item.getSku() %>";
+				if (invalidSKUs != "") {
+					invalidSKUs += ", ";
+				}
+
+				invalidSKUs += "<%= item.getSku() %>";
 			}
 
 			for (var i = 0; i < count; i++) {

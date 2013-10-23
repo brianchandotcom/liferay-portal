@@ -84,15 +84,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public long count(DynamicQuery dynamicQuery, Projection projection)
-		throws SystemException {
-
-		if (projection == null) {
-			projection = ProjectionFactoryUtil.rowCount();
-		}
-
-		dynamicQuery.setProjection(projection);
-
+	public long count(DynamicQuery dynamicQuery) throws SystemException {
 		List<Long> results = findWithDynamicQuery(dynamicQuery);
 
 		if (results.isEmpty()) {

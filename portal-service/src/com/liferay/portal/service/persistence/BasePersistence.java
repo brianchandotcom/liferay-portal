@@ -92,8 +92,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @return the number of rows that match the dynamic query
 	 * @throws SystemException if a system exception occurred
 	 */
-	public long count(DynamicQuery dynamicQuery, Projection projection)
-		throws SystemException;
+	public long count(DynamicQuery dynamicQuery) throws SystemException;
 
 	/**
 	 * Returns the number of rows that match the dynamic query.

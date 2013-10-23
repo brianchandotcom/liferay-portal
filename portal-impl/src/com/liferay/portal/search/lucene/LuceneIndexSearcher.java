@@ -457,6 +457,22 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 					"Unable to clean up BoboIndexReader#_runtimeFacetDataMap",
 					e);
 			}
+
+			try {
+				ThreadLocal<?> threadLocal =
+					(ThreadLocal<?>)_runtimeFacetHandlerMapField.get(
+						boboIndexReader);
+
+				threadLocal.remove();
+
+				_runtimeFacetHandlerMapField.set(boboIndexReader, null);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to clean up BoboIndexReader#" +
+						"_runtimeFacetHandlerMap",
+					e);
+			}
 		}
 	}
 
@@ -673,11 +689,14 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 	private static Log _log = LogFactoryUtil.getLog(LuceneIndexSearcher.class);
 
 	private static java.lang.reflect.Field _runtimeFacetDataMapField;
+	private static java.lang.reflect.Field _runtimeFacetHandlerMapField;
 
 	static {
 		try {
 			_runtimeFacetDataMapField = ReflectionUtil.getDeclaredField(
 				BoboIndexReader.class, "_runtimeFacetDataMap");
+			_runtimeFacetHandlerMapField = ReflectionUtil.getDeclaredField(
+				BoboIndexReader.class, "_runtimeFacetHandlerMap");
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

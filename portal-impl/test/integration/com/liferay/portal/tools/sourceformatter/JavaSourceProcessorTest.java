@@ -41,6 +41,31 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectClose() throws Exception {
+		test("IncorrectClose.testjava", "}:");
+	}
+
+	@Test
+	public void testIncorrectImports1() throws Exception {
+		test("IncorrectImports1.testjava");
+	}
+
+	@Test
+	public void testIncorrectImports2() throws Exception {
+		test(
+			"IncorrectImports2.testjava",
+			new String[] {
+				"Proxy:", "edu.emory.mathcs.backport.java:",
+				"jodd.util.StringPool:"
+			});
+	}
+
+	@Test
+	public void testIncorrectWhitespace() throws Exception {
+		test("IncorrectWhitespace.testjava");
+	}
+
+	@Test
 	public void testJavaTermDividers() throws Exception {
 		test("JavaTermDividers.testjava");
 	}
@@ -58,6 +83,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testSortJavaTerms3() throws Exception {
 		test("SortJavaTerms3.testjava");
+	}
+
+	@Test
+	public void testStaticFinalLog() throws Exception {
+		test("StaticFinalLog.testjava");
 	}
 
 	@Test

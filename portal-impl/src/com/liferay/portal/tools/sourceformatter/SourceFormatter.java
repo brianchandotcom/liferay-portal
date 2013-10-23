@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UniqueList;
 
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class SourceFormatter {
 		}
 	}
 
-	public String[] format(String fileName) throws Exception {
+	public Tuple format(String fileName) throws Exception {
 		SourceProcessor sourceProcessor = null;
 
 		if (fileName.endsWith(".testjava")) {
@@ -134,14 +135,7 @@ public class SourceFormatter {
 		String newContent = sourceProcessor.format(
 			fileName, _useProperties, _printErrors, _autoFix);
 
-		List<String> errorMessages = sourceProcessor.getErrorMessages();
-
-		if (errorMessages.isEmpty()) {
-			return new String[] {newContent, null};
-		}
-		else {
-			return new String[] {newContent, errorMessages.get(0)};
-		}
+		return new Tuple(newContent, sourceProcessor.getErrorMessages());
 	}
 
 	private static boolean _autoFix;

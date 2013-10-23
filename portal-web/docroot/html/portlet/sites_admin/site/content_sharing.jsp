@@ -32,6 +32,8 @@ int companyContentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(company
 int groupContentSharingWithChildrenEnabled = PropertiesParamUtil.getInteger(groupTypeSettings, request, "contentSharingWithChildrenEnabled", Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE);
 %>
 
+<h3><liferay-ui:message key="content-sharing" /></h3>
+
 <aui:fieldset>
 	<aui:select label="allow-subsites-to-display-content-from-this-site" name="contentSharingWithChildrenEnabled">
 		<aui:option label='<%= (companyContentSharingWithChildrenEnabled == Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT) ? "default-value-enabled" : "default-value-disabled" %>' selected="<%= groupContentSharingWithChildrenEnabled == Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE %>" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE %>" />

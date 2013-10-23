@@ -53,6 +53,8 @@ for (long defaultTeamId : defaultTeamIds) {
 }
 %>
 
+<h3><liferay-ui:message key="default-user-associations" /></h3>
+
 <liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
 		image="unlink"

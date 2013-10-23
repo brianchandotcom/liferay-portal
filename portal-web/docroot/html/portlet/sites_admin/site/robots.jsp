@@ -44,6 +44,8 @@ String privateRobots = ParamUtil.getString(request, "robots", defaultPrivateRobo
 
 <liferay-ui:error-marker key="errorSection" value="robots" />
 
+<h3><liferay-ui:message key="robots" /></h3>
+
 <aui:fieldset label="public-pages">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(publicVirtualHostName) %>">

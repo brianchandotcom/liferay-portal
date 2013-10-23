@@ -78,6 +78,8 @@ else if (group != null) {
 
 <liferay-ui:error-marker key="errorSection" value="details" />
 
+<h3><liferay-ui:message key="details" /></h3>
+
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />

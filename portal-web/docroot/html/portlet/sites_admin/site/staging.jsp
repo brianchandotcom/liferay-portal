@@ -38,6 +38,8 @@ if (stagedLocally) {
 BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLocalServiceUtil.fetchFirstBackgroundTask(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), true, new BackgroundTaskCreateDateComparator(false));
 %>
 
+<h3><liferay-ui:message key="staging" /></h3>
+
 <c:if test="<%= (lastCompletedInitialPublicationBackgroundTask != null) && (lastCompletedInitialPublicationBackgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
 	<div class="alert alert-error">
 		<liferay-ui:message key="an-unexpected-error-occurred--with-the-initial-staging-publication" />

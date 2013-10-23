@@ -31,6 +31,8 @@ else {
 
 <liferay-ui:error-marker key="errorSection" value="analytics" />
 
+<h3><liferay-ui:message key="analytics" /></h3>
+
 <%
 String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
 

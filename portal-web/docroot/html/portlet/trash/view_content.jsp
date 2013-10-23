@@ -134,6 +134,7 @@
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
+										method="get"
 										src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
 										url="<%= rowURL.toString() %>"
 									/>
@@ -192,6 +193,7 @@
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="<%= HtmlUtil.escape(curTrashRenderer.getTitle(locale)) %>"
+										method="get"
 										src="<%= curTrashRenderer.getIconPath(renderRequest) %>"
 										url="<%= rowURL.toString() %>"
 									/>

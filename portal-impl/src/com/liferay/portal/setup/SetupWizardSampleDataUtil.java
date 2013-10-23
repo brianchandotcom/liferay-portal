@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.portal.setup;
 
-import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,121 +36,18 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Calendar;
-import java.util.List;
 
 import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Shinn Lok
  */
-public class AddSampleDataAction extends SimpleAction {
+public class SetupWizardSampleDataUtil {
 
-	@Override
-	public void run(String[] ids) throws ActionException {
-		try {
-			long companyId = GetterUtil.getLong(ids[0]);
-
-			doRun(companyId);
-		}
-		catch (Exception e) {
-			throw new ActionException(e);
-		}
-	}
-
-	protected void addOrganizations(
-			User defaultUser, Organization parentOrganization)
-		throws Exception {
-
-		for (Object[] organizationArray : _ORGANIZATION_ARRAYS) {
-			String name = "Liferay " + organizationArray[0];
-			long regionId = (Long)organizationArray[1];
-			long countryId = (Long)organizationArray[2];
-			String type = (String)organizationArray[3];
-
-			Organization organization =
-				OrganizationLocalServiceUtil.addOrganization(
-					defaultUser.getUserId(),
-					parentOrganization.getOrganizationId(), name, type,
-					regionId, countryId,
-					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-					StringPool.BLANK, true, null);
-
-			GroupLocalServiceUtil.updateFriendlyURL(
-				organization.getGroupId(),
-				FriendlyURLNormalizerUtil.normalize(
-					StringPool.SLASH + organizationArray[0]));
-
-			if (organizationArray.length <= 4) {
-				continue;
-			}
-
-			String organizationPrefix = (String)organizationArray[4];
-
-			long[] groupIds = {organization.getGroupId()};
-			long[] organizationIds = {
-				parentOrganization.getOrganizationId(),
-				organization.getOrganizationId()
-			};
-
-			for (int i = 1; i <= 10; i++) {
-				String screenName = organizationPrefix + i;
-
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("test.");
-				sb.append(organizationPrefix);
-				sb.append(StringPool.PERIOD);
-				sb.append(i);
-				sb.append("@liferay.com");
-
-				String emailAddress = sb.toString();
-
-				String lastName = organizationPrefix + StringPool.SPACE + i;
-
-				User user = UserLocalServiceUtil.addUser(
-					0, defaultUser.getCompanyId(), false, "test", "test", false,
-					screenName, emailAddress, 0, null, LocaleUtil.getDefault(),
-					"Test", null, lastName, 0, 0, true, Calendar.JANUARY, 1,
-					1970, null, groupIds, organizationIds, null, null, false,
-					new ServiceContext());
-
-				user.setPasswordReset(false);
-				user.setAgreedToTermsOfUse(true);
-
-				UserLocalServiceUtil.updateUser(user);
-			}
-		}
-	}
-
-	protected void doRun(long companyId) throws Exception {
-		if (PropsValues.SCHEMA_RUN_MINIMAL ||
-			!SetupWizardUtil.isSetupFinished()) {
-
-			return;
-		}
-
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-		String webId = company.getWebId();
-
-		if (!webId.equals(company.getDefaultWebId())) {
-			return;
-		}
-
-		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getOrganizations(
-				company.getCompanyId(),
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
-
-		if (!organizations.isEmpty()) {
-			return;
-		}
-
+	public static void addSampleData(long companyId) throws Exception {
 		StopWatch stopWatch = null;
 
 		if (_log.isInfoEnabled()) {
@@ -163,6 +57,8 @@ public class AddSampleDataAction extends SimpleAction {
 
 			_log.info("Adding sample data");
 		}
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
 		Account account = company.getAccount();
 
@@ -247,7 +143,73 @@ public class AddSampleDataAction extends SimpleAction {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AddSampleDataAction.class);
+	protected static void addOrganizations(
+			User defaultUser, Organization parentOrganization)
+		throws Exception {
+
+		for (Object[] organizationArray : _ORGANIZATION_ARRAYS) {
+			String name = "Liferay " + organizationArray[0];
+			long regionId = (Long)organizationArray[1];
+			long countryId = (Long)organizationArray[2];
+			String type = (String)organizationArray[3];
+
+			Organization organization =
+				OrganizationLocalServiceUtil.addOrganization(
+					defaultUser.getUserId(),
+					parentOrganization.getOrganizationId(), name, type,
+					regionId, countryId,
+					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+					StringPool.BLANK, true, null);
+
+			GroupLocalServiceUtil.updateFriendlyURL(
+				organization.getGroupId(),
+				FriendlyURLNormalizerUtil.normalize(
+					StringPool.SLASH + organizationArray[0]));
+
+			if (organizationArray.length <= 4) {
+				continue;
+			}
+
+			String organizationPrefix = (String)organizationArray[4];
+
+			long[] groupIds = {organization.getGroupId()};
+			long[] organizationIds = {
+				parentOrganization.getOrganizationId(),
+				organization.getOrganizationId()
+			};
+
+			for (int i = 1; i <= 10; i++) {
+				String screenName = organizationPrefix + i;
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("test.");
+				sb.append(organizationPrefix);
+				sb.append(StringPool.PERIOD);
+				sb.append(i);
+				sb.append("@liferay.com");
+
+				String emailAddress = sb.toString();
+
+				String lastName = organizationPrefix + StringPool.SPACE + i;
+
+				User user = UserLocalServiceUtil.addUser(
+					0, defaultUser.getCompanyId(), false, "test", "test", false,
+					screenName, emailAddress, 0, null, LocaleUtil.getDefault(),
+					"Test", null, lastName, 0, 0, true, Calendar.JANUARY, 1,
+					1970, null, groupIds, organizationIds, null, null, false,
+					new ServiceContext());
+
+				user.setPasswordReset(false);
+				user.setAgreedToTermsOfUse(true);
+
+				UserLocalServiceUtil.updateUser(user);
+			}
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SetupWizardSampleDataUtil.class);
 
 	private static Object[][] _ORGANIZATION_ARRAYS = {
 		{

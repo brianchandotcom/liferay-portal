@@ -14,8 +14,6 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.portal.events.AddSampleDataAction;
-import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -79,11 +77,6 @@ public class SetupWizardAction extends Action {
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				SetupWizardUtil.updateSetup(request, response);
-
-				EventsProcessorUtil.process(
-					AddSampleDataAction.class.getName(),
-					new String[] {AddSampleDataAction.class.getName()},
-					new String[] {String.valueOf(themeDisplay.getCompanyId())});
 			}
 
 			response.sendRedirect(

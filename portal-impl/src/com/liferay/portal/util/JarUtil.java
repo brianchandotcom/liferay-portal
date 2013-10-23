@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ProgressStatusConstants;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.spring.context.PortalContextLoaderLifecycleThreadLocal;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.io.File;
@@ -60,7 +61,9 @@ public class JarUtil {
 
 		setProgressStatus(progressTracker, ProgressStatusConstants.COPYING);
 
-		if (PropsValues.CLUSTER_LINK_ENABLED) {
+		if (!PortalContextLoaderLifecycleThreadLocal.isInitializing() &&
+				PropsValues.CLUSTER_LINK_ENABLED) {
+
 			try {
 				DLStoreUtil.deleteFile(
 					_REPOSITORY, _REPOSITORY, _FILE_PATH + name);

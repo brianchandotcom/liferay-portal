@@ -80,7 +80,7 @@
 		${redirectURL.setParameter("struts_action", "/asset_publisher/add_asset_redirect")}
 		${redirectURL.setWindowState("pop_up")}
 
-		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL) />
+		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
 
 		<#if validator.isNotNull(editPortletURL)>
 			<#assign title = languageUtil.format(locale, "edit-x", entryTitle) />

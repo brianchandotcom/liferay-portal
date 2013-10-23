@@ -195,36 +195,6 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateInvalidAccountNames() throws Exception {
-		Company company = addCompany();
-
-		Group group = GroupTestUtil.addGroup();
-
-		group.setCompanyId(company.getCompanyId());
-
-		GroupLocalServiceUtil.updateGroup(group);
-
-		String[] invalidAccountNames = new String[] {
-			StringPool.BLANK, group.getName()
-		};
-
-		testUpdateAccountNames(company, invalidAccountNames, true);
-
-		GroupLocalServiceUtil.deleteGroup(group);
-
-		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
-	}
-
-	@Test
-	public void testUpdateInvalidVirtualHostNames() throws Exception {
-		String[] invalidVirtualHostNames = new String[] {
-			StringPool.BLANK, "localhost", ".abc",
-		};
-
-		testUpdateVirtualHostNames(invalidVirtualHostNames, true);
-	}
-
-	@Test
 	public void testMailMxUpdatePropertyIsFalseAndMxIsInvalid()
 		throws Exception {
 
@@ -353,6 +323,36 @@ public class CompanyLocalServiceTest {
 
 			field.set(null, value);
 		}
+	}
+
+	@Test
+	public void testUpdateInvalidAccountNames() throws Exception {
+		Company company = addCompany();
+
+		Group group = GroupTestUtil.addGroup();
+
+		group.setCompanyId(company.getCompanyId());
+
+		GroupLocalServiceUtil.updateGroup(group);
+
+		String[] invalidAccountNames = new String[] {
+			StringPool.BLANK, group.getName()
+		};
+
+		testUpdateAccountNames(company, invalidAccountNames, true);
+
+		GroupLocalServiceUtil.deleteGroup(group);
+
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+	}
+
+	@Test
+	public void testUpdateInvalidVirtualHostNames() throws Exception {
+		String[] invalidVirtualHostNames = new String[] {
+			StringPool.BLANK, "localhost", ".abc",
+		};
+
+		testUpdateVirtualHostNames(invalidVirtualHostNames, true);
 	}
 
 	@Test

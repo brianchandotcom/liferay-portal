@@ -11,6 +11,8 @@
 
 	<execute test-suite="CPSitetemplatesAcceptance" />
 
+	<execute test-suite="CPTagsAcceptance" />
+
 	<execute test-suite="CPWebcontentAcceptance" />
 
 	<execute test-suite="DockbarAcceptance" />

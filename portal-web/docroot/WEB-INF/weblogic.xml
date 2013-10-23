@@ -15,6 +15,7 @@
 		<prefer-application-packages>
 			<package-name>antlr.*</package-name>
 			<package-name>com.ctc.wstx.*</package-name>
+			<package-name>org.antlr.*</package-name>
 			<package-name>org.apache.commons.lang.*</package-name>
 			<package-name>org.mozilla.*</package-name>
 		</prefer-application-packages>

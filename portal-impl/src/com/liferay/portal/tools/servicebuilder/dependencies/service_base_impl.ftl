@@ -204,7 +204,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Override
 		@SuppressWarnings("rawtypes")
 		public List dynamicQuery(DynamicQuery dynamicQuery) throws SystemException {
-			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery);
+			return ${entity.varName}Persistence.find(dynamicQuery);
 		}
 
 		/**
@@ -223,7 +223,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Override
 		@SuppressWarnings("rawtypes")
 		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) throws SystemException {
-			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end);
+			return ${entity.varName}Persistence.find(dynamicQuery, start, end);
 		}
 
 		/**
@@ -243,7 +243,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		@Override
 		@SuppressWarnings("rawtypes")
 		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end, OrderByComparator orderByComparator) throws SystemException {
-			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end, orderByComparator);
+			return ${entity.varName}Persistence.find(dynamicQuery, start, end, orderByComparator);
 		}
 
 		/**
@@ -255,20 +255,15 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Override
 		public long dynamicQueryCount(DynamicQuery dynamicQuery) throws SystemException {
-			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery);
+			return ${entity.varName}Persistence.count(dynamicQuery);
 		}
 
 		/**
-		 * Returns the number of rows that match the dynamic query.
-		 *
-		 * @param dynamicQuery the dynamic query
-		 * @param projection the projection to apply to the query
-		 * @return the number of rows that match the dynamic query
-		 * @throws SystemException if a system exception occurred
-		 */
+		* @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #count(DynamicQuery)}
+		*/
 		@Override
 		public long dynamicQueryCount(DynamicQuery dynamicQuery, Projection projection) throws SystemException {
-			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery, projection);
+			return ${entity.varName}Persistence.count(dynamicQuery);
 		}
 
 		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "fetch" + entity.name, [entity.PKClassName], ["SystemException"])>

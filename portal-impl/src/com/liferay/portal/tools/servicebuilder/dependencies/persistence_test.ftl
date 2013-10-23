@@ -428,7 +428,7 @@ public class ${entity.name}PersistenceTest {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("${column.name}", new${entity.name}.get${column.methodName}()));
 		</#if>
 
-		List<${entity.name}> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<${entity.name}> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -471,7 +471,7 @@ public class ${entity.name}PersistenceTest {
 			));
 		</#if>
 
-		List<${entity.name}> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<${entity.name}> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -496,7 +496,7 @@ public class ${entity.name}PersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("${propertyName}", new Object[] {new${column.methodName}}));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -531,7 +531,7 @@ public class ${entity.name}PersistenceTest {
 
 		}));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

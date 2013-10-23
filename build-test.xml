@@ -1895,6 +1895,17 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		</if>
 
 		<if>
+			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="test.assert.javascript.errors=true"
+					value="test.assert.javascript.errors=false"
+				/>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.browser" />
 			<then>
 				<replace
@@ -1944,17 +1955,6 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 			token="#browser.commands.dir="
 			value="browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/${test.selenium.implementation}/${os.type}/${browser.type}/${browser.version}/"
 		/>
-
-		<if>
-			<equals arg1="${test.javascript.errors}" arg2="false" />
-			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="test.javascript.errors=true"
-					value="test.javascript.errors=false"
-				/>
-			</then>
-		</if>
 
 		<if>
 			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />

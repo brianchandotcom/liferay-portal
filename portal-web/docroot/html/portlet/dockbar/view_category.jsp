@@ -146,7 +146,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 							<aui:nav-item cssClass="lfr-content-item" href="">
 								<span <%= AUIUtil.buildData(data) %> class="<%= cssClass %>">
-									<icon class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></icon>
+									<i class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></i>
 
 									<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" />
 								</span>

@@ -828,7 +828,7 @@
 			classname="com.liferay.portal.tools.seleniumbuilder.SeleniumBuilder"
 			classpathref="project.classpath"
 			fork="true"
-			maxmemory="1024m"
+			maxmemory="2048m"
 			newenvironment="true"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />

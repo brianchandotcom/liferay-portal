@@ -1242,7 +1242,9 @@ public class PortletExporter {
 		Element portletPreferencesElement = parentElement.addElement(
 			"portlet-preferences");
 
-		if (portlet != null) {
+		if ((portlet != null) &&
+			(portlet.getPortletDataHandlerInstance() != null)) {
+
 			Element exportDataRootElement =
 				portletDataContext.getExportDataRootElement();
 

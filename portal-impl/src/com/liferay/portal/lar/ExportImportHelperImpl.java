@@ -1843,6 +1843,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				PortletDataHandler portletDataHandler =
 					portlet.getPortletDataHandlerInstance();
 
+				if (portletDataHandler == null) {
+					return;
+				}
+
 				String[] configurationPortletOptions = StringUtil.split(
 					element.attributeValue("portlet-configuration"));
 

@@ -237,8 +237,6 @@ public class SetupWizardUtil {
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES_FILE_CREATED,
 			_writePropertiesFile(unicodeProperties));
-
-		setSetupFinished(true);
 	}
 
 	private static String _getParameter(

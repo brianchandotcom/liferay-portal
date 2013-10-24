@@ -359,6 +359,8 @@
 				<c:otherwise>
 
 					<%
+					SetupWizardUtil.setSetupFinished(true);
+
 					boolean propertiesFileCreated = GetterUtil.getBoolean((Boolean)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES_FILE_CREATED));
 					%>
 

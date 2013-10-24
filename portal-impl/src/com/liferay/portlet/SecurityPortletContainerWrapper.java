@@ -192,8 +192,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		}
 
 		if (portlet.isUndeployedPortlet()) {
-			request.setAttribute(WebKeys.STRICT_PREFERENCES, Boolean.TRUE);
-
 			return;
 		}
 
@@ -385,8 +383,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		}
 
 		if (isAccessGrantedByPortletAuthenticationToken(request, portlet)) {
-			request.setAttribute(WebKeys.STRICT_PREFERENCES, Boolean.TRUE);
-
 			return true;
 		}
 

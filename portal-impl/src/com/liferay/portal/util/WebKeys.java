@@ -419,8 +419,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String STARTUP_FINISHED = "STARTUP_FINISHED";
 
-	public static final String STRICT_PREFERENCES = "STRICT_PREFERENCES";
-
 	public static final String STRUTS_BRIDGES_ATTRIBUTES = "STRUTS_BRIDGES_ATTRIBUTES";
 
 	public static final String SUBJECT = "SUBJECT";

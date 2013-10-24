@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -47,17 +46,9 @@ boolean modeHelp = layoutTypePortlet.hasModeHelpPortletId(portletId);
 boolean modePreview = layoutTypePortlet.hasModePreviewPortletId(portletId);
 boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
 
-boolean useStrictPreferences = GetterUtil.getBoolean(request.getAttribute(WebKeys.STRICT_PREFERENCES), false);
-
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
 
-PortletPreferences portletPreferences = null;
-if (useStrictPreferences) {
-	portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
-}
-else {
-	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
-}
+PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
@@ -85,12 +76,7 @@ if (Validator.isNotNull(scopeLayoutUuid)) {
 	if (scopeLayout != null) {
 		portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);
 
-		if (useStrictPreferences) {
-			portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
-		}
-		else {
-			portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
-		}
+		portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
 	}
 }
 

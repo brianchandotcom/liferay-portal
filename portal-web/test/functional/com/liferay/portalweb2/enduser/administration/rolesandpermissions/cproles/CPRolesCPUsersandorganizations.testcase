@@ -18,7 +18,7 @@
 		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
-	<command name="AddOrganizationRegRole">
+	<command name="AddOrganizationRegRole" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ORGANIZATION" />
@@ -92,7 +92,7 @@
 		<execute action="CPUsersandorganizations#assertElementNotPresent" locator-key1="ADD" />
 	</command>
 
-	<command name="AddUserRegRole">
+	<command name="AddUserRegRole" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER" />
 		<var name="permissionDefinition1Value" value="Add User" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL" />

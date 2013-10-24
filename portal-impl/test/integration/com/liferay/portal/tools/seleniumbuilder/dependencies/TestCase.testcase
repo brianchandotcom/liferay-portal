@@ -17,7 +17,7 @@
 		</execute>
 	</set-up>
 
-	<command name="name">
+	<command name="name" priority="5">
 		<var name="name" value="value" />
 
 		<execute action="BaseLiferay#click" locator1="locator1" value1="value1" />

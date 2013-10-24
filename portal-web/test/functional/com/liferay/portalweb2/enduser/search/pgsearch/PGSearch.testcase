@@ -36,7 +36,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SearchBlogsEntry">
+	<command name="SearchBlogsEntry" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -142,7 +142,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryCategory">
+	<command name="SearchBlogsEntryCategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -222,7 +222,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryCategoryQuotes">
+	<command name="SearchBlogsEntryCategoryQuotes" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -310,7 +310,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryQuotes">
+	<command name="SearchBlogsEntryQuotes" priority="5">
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -461,7 +461,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryTag">
+	<command name="SearchBlogsEntryTag" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="tagName" value="tag name" />
@@ -526,7 +526,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryTagQuotes">
+	<command name="SearchBlogsEntryTagQuotes" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="tagName" value="tag name" />
@@ -599,7 +599,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocumentsAndMediaDocument">
+	<command name="SearchDocumentsAndMediaDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
 		<var name="dmDocumentSize" value="0k" />
@@ -690,7 +690,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchMessageBoardsThread">
+	<command name="SearchMessageBoardsThread" priority="5">
 		<var name="pageName" value="Message Boards Page" />
 		<var name="portletName" value="Message Boards" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -811,7 +811,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchUser">
+	<command name="SearchUser" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -877,7 +877,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchUserWildcard">
+	<command name="SearchUserWildcard" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -911,7 +911,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContent">
+	<command name="SearchWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -1002,7 +1002,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWikiPage">
+	<command name="SearchWikiPage" priority="5">
 		<var name="pageName" value="Wiki Test Page" />
 		<var name="portletName" value="Wiki" />
 		<var name="wikiPageContent" value="Wiki Page Content" />

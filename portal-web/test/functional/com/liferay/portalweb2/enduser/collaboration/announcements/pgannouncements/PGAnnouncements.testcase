@@ -20,7 +20,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddAnnouncementsEntry">
+	<command name="AddAnnouncementsEntry" priority="5">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -49,7 +49,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteAnnoucementsEntry">
+	<command name="DeleteAnnoucementsEntry" priority="5">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -82,7 +82,7 @@
 		</execute>
 	</command>
 
-	<command name="EditAnnouncementsEntry">
+	<command name="EditAnnouncementsEntry" priority="5">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />

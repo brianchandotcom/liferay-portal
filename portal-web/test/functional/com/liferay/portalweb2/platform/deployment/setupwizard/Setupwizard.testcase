@@ -1,5 +1,5 @@
 <definition>
-	<command name="SetupWizardDefaultConfiguration">
+	<command name="SetupWizardDefaultConfiguration" priority="5">
 		<var name="administratorFirstName" value="Test" />
 		<var name="administratorLastName" value="Test" />
 		<var name="pageName" value="Blogs Page" />

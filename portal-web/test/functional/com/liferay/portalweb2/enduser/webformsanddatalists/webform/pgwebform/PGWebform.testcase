@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="EditWebForm">
+	<command name="EditWebForm" priority="5">
 		<var name="formDropdownTitleDefault" value="Rating" />
 		<var name="formDropdownTitleEdit" value="Rate Us!" />
 		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />
@@ -72,7 +72,7 @@
 		</execute>
 	</command>
 
-	<command name="SendWebForm">
+	<command name="SendWebForm" priority="5">
 		<var name="formDropdownTitleDefault" value="Rating" />
 		<var name="formDropdownValue" value="Excellent" />
 		<var name="formInformationDescriptionDefault" value="Your input is valuable to us. Please send us your suggestions." />

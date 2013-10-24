@@ -40,7 +40,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveMessageBoardsThreadPG">
+	<command name="ApproveMessageBoardsThreadPG" priority="5">
 		<var name="threadBody" value="MB Thread Body" />
 		<var name="threadSubject" value="MB Thread Subject" />
 
@@ -105,7 +105,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectMessageBoardsThreadPG">
+	<command name="RejectMessageBoardsThreadPG" priority="5">
 		<var name="threadBody" value="MB Thread Body" />
 		<var name="threadSubject" value="MB Thread Subject" />
 

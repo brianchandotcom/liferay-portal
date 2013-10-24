@@ -40,7 +40,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveWikiPageCP">
+	<command name="ApproveWikiPageCP" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 		<var name="wikiPageUsername" value="Test Test" />
@@ -107,7 +107,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectWikiPageCP">
+	<command name="RejectWikiPageCP" priority="5">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 		<var name="wikiPageUsername" value="Test Test" />

@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddList">
+	<command name="AddList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="fieldName" value="Text" />
@@ -66,7 +66,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRecord">
+	<command name="AddRecord" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="fieldName" value="Text" />
@@ -111,7 +111,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteList">
+	<command name="DeleteList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="fieldName" value="Text" />
@@ -146,7 +146,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteRecord">
+	<command name="DeleteRecord" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="fieldName" value="Text" />
@@ -190,7 +190,7 @@
 		</execute>
 	</command>
 
-	<command name="EditList">
+	<command name="EditList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="fieldName" value="Text" />
@@ -243,7 +243,7 @@
 		</execute>
 	</command>
 
-	<command name="EditRecord">
+	<command name="EditRecord" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="fieldName" value="Text" />
@@ -294,7 +294,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectList">
+	<command name="SelectList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
 		<var name="fieldName" value="Text" />

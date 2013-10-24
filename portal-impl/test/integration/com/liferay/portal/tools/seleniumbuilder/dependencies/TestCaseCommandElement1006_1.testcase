@@ -1,5 +1,5 @@
 <definition>
-	<command priority="5">
+	<command name="" priority="5">
 		<execute macro="macro" />
 	</command>
 </definition>

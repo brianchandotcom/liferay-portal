@@ -9,7 +9,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddTag">
+	<command name="AddTag" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -21,7 +21,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTags">
+	<command name="AddTags" priority="5">
 		<var name="tagName1" value="tag name 1" />
 		<var name="tagName2" value="tag name 2" />
 		<var name="tagName3" value="tag name 3" />
@@ -47,7 +47,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTagsAdmin">
+	<command name="AddTagsAdmin" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -278,7 +278,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTag">
+	<command name="DeleteTag" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -298,7 +298,7 @@
 		</execute>
 	</command>
 
-	<command name="EditTag">
+	<command name="EditTag" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -314,7 +314,7 @@
 		</execute>
 	</command>
 
-	<command name="EditTagCancel">
+	<command name="EditTagCancel" priority="5">
 		<var name="tagName" value="tag name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -330,7 +330,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchTag">
+	<command name="SearchTag" priority="5">
 		<var name="tagName1" value="tag name 1" />
 		<var name="tagName2" value="tag name 2" />
 		<var name="tagName3" value="tag name 3" />

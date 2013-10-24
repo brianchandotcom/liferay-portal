@@ -47,7 +47,7 @@
 		</execute>
 	</set-up>
 
-	<command name="ApprovePageRevisionPG">
+	<command name="ApprovePageRevisionPG" priority="5">
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#addWithWorkflowPG">
@@ -129,7 +129,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectPageRevisionPG">
+	<command name="RejectPageRevisionPG" priority="5">
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#addWithWorkflowPG">

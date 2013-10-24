@@ -11,7 +11,7 @@
 		<execute macro="User#logoutPG" />
 	</tear-down>
 
-	<command name="AddDocument">
+	<command name="AddDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
 		<var name="dmDocumentSize" value="0k" />
@@ -33,7 +33,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder">
+	<command name="AddFolder" priority="5">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
@@ -51,7 +51,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDocument">
+	<command name="EditDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
@@ -90,7 +90,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolder">
+	<command name="EditFolder" priority="5">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderDescriptionEdit" value="DM Folder Description Edit" />
 		<var name="dmFolderName" value="DM Folder Name" />
@@ -125,7 +125,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveDocumentToFolder">
+	<command name="MoveDocumentToFolder" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
 		<var name="dmDocumentSize" value="0k" />
@@ -171,7 +171,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveFolderToFolder">
+	<command name="MoveFolderToFolder" priority="5">
 		<var name="dmFolderDescription1" value="DM Folder1 Description" />
 		<var name="dmFolderDescription2" value="DM Folder2 Description" />
 		<var name="dmFolderName1" value="DM Folder1 Name" />
@@ -198,7 +198,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinDocument">
+	<command name="MoveToRecycleBinDocument" priority="5">
 		<var name="assetName" value="${dmDocumentTitle}" />
 		<var name="assetType" value="Document" />
 		<var name="dmDocumentDescription" value="DM Document Description1" />
@@ -223,7 +223,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinFolder">
+	<command name="MoveToRecycleBinFolder" priority="5">
 		<var name="assetName" value="${dmFolderName}" />
 		<var name="assetType" value="Documents Folder" />
 		<var name="dmFolderDescription" value="DM Folder Description" />

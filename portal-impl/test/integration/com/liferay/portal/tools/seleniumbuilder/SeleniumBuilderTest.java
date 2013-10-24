@@ -1708,11 +1708,35 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testTestCaseCommandElement1006() throws Exception {
+	public void testTestCaseCommandElement1003_3() throws Exception {
 		test(
-			"TestCaseCommandElement1006.testcase",
+			"TestCaseCommandElement1003_3.testcase",
+			"Error 1003: Missing priority attribute in " + _DIR_NAME +
+				"/TestCaseCommandElement1003_3.testcase:2");
+	}
+
+	@Test
+	public void testTestCaseCommandElement1006_1() throws Exception {
+		test(
+			"TestCaseCommandElement1006_1.testcase",
 			"Error 1006: Invalid name attribute value in " + _DIR_NAME +
-				"/TestCaseCommandElement1006.testcase:2");
+				"/TestCaseCommandElement1006_1.testcase:2");
+	}
+
+	@Test
+	public void testTestCaseCommandElement1006_2() throws Exception {
+		test(
+			"TestCaseCommandElement1006_2.testcase",
+			"Error 1006: Invalid priority attribute value in " + _DIR_NAME +
+				"/TestCaseCommandElement1006_2.testcase:2");
+	}
+
+	@Test
+	public void testTestCaseCommandElement1006_3() throws Exception {
+		test(
+			"TestCaseCommandElement1006_3.testcase",
+			"Error 1006: Invalid priority attribute value in " + _DIR_NAME +
+				"/TestCaseCommandElement1006_3.testcase:2");
 	}
 
 	@Test

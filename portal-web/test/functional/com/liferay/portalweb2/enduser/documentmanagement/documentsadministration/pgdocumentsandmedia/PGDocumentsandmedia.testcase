@@ -30,7 +30,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddDocument">
+	<command name="AddDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -136,7 +136,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDocuments">
+	<command name="AddDocuments" priority="5">
 		<var name="dmDocumentDescription1" value="DM Document1 Description" />
 		<var name="dmDocumentDescription2" value="DM Document2 Description" />
 		<var name="dmDocumentDescription3" value="DM Document3 Description" />
@@ -179,7 +179,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder">
+	<command name="AddFolder" priority="5">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
@@ -197,7 +197,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDocument">
+	<command name="DeleteDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -220,7 +220,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolder">
+	<command name="DeleteFolder" priority="5">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
@@ -238,7 +238,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDocument">
+	<command name="EditDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -262,7 +262,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolder">
+	<command name="EditFolder" priority="5">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
@@ -282,7 +282,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveFolderDocumentToFolder">
+	<command name="MoveFolderDocumentToFolder" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -322,7 +322,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchContentDocument">
+	<command name="SearchContentDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -341,7 +341,7 @@
 		<execute action="PGDocumentsandmediaSearch#assertClick" locator-key1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
-	<command name="SearchDocument">
+	<command name="SearchDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -367,7 +367,7 @@
 		<execute action="PGDocumentsandmediaSearch#assertClick" locator-key1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
-	<command name="SearchFolderDocument">
+	<command name="SearchFolderDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -397,7 +397,7 @@
 		<execute action="PGDocumentsandmediaSearch#assertClick" locator-key1="SEARCH_RESULTS_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
-	<command name="SearchSubFolderDocument">
+	<command name="SearchSubFolderDocument" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />

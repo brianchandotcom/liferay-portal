@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWikiFrontPage">
+	<command name="AddWikiFrontPage" priority="5">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
 		<execute macro="Page#gotoPG">
@@ -39,7 +39,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiFrontPageChildPage">
+	<command name="AddWikiFrontPageChildPage" priority="5">
 		<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title" />
 		<var name="wikiPageContent" value="Wiki Front Page Content" />
@@ -63,7 +63,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWikiFrontPage">
+	<command name="DeleteWikiFrontPage" priority="5">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
 		<execute macro="Page#gotoPG">

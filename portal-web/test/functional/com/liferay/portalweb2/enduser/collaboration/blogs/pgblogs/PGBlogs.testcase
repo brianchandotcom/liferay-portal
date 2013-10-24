@@ -24,7 +24,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddBlogsEntries">
+	<command name="AddBlogsEntries" priority="5">
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryContent3" value="Blogs Entry3 Content" />
@@ -75,7 +75,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntry">
+	<command name="AddBlogsEntry" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -94,7 +94,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryComment">
+	<command name="AddBlogsEntryComment" priority="5">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -114,7 +114,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryContentNull">
+	<command name="AddBlogsEntryContentNull" priority="5">
 		<var name="entryContent" value="" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -137,7 +137,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryTitleEscapeCharacters">
+	<command name="AddBlogsEntryTitleEscapeCharacters" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="&lt;!--Html Escape Character Test--&gt;" />
 
@@ -156,7 +156,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryTitleNull">
+	<command name="AddBlogsEntryTitleNull" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="" />
 
@@ -179,7 +179,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsPortletDuplicate">
+	<command name="AddBlogsPortletDuplicate" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -189,7 +189,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryComment">
+	<command name="DeleteBlogsEntryComment" priority="5">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -218,7 +218,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntry">
+	<command name="EditBlogsEntry" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -241,7 +241,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryComment">
+	<command name="EditBlogsEntryComment" priority="5">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryCommentEdit" value="Blogs Entry Comment Edit" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -272,7 +272,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryComments">
+	<command name="EditBlogsEntryComments" priority="5">
 		<var name="entryComment1" value="Blogs Entry Comment1" />
 		<var name="entryComment2" value="Blogs Entry Comment2" />
 		<var name="entryComment3" value="Blogs Entry Comment3" />
@@ -349,7 +349,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveToRecycleBinBlogsEntry">
+	<command name="MoveToRecycleBinBlogsEntry" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -369,7 +369,7 @@
 		</execute>
 	</command>
 
-	<command name="PreviewBlogsEntry">
+	<command name="PreviewBlogsEntry" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -383,7 +383,7 @@
 		</execute>
 	</command>
 
-	<command name="RateBlogsEntry4Stars">
+	<command name="RateBlogsEntry4Stars" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -403,7 +403,7 @@
 		<execute macro="BlogsEntry#viewRate4StarsPG" />
 	</command>
 
-	<command name="SaveBlogsEntryDraft">
+	<command name="SaveBlogsEntryDraft" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -426,7 +426,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveBlogsEntryDraftAuto">
+	<command name="SaveBlogsEntryDraftAuto" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -449,7 +449,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryContent">
+	<command name="SearchBlogsEntryContent" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -509,7 +509,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryContentQuotes">
+	<command name="SearchBlogsEntryContentQuotes" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -575,7 +575,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryTitle">
+	<command name="SearchBlogsEntryTitle" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -635,7 +635,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryTitleQuotes">
+	<command name="SearchBlogsEntryTitleQuotes" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -701,7 +701,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryRSS">
+	<command name="ViewBlogsEntryRSS" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
@@ -721,7 +721,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryViewCount">
+	<command name="ViewBlogsEntryViewCount" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

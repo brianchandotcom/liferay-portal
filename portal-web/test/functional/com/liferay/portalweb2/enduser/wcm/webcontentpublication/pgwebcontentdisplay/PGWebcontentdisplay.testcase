@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddNewWebContentViaAddContentPanel">
+	<command name="AddNewWebContentViaAddContentPanel" priority="5">
 		<var name="assetType" value="Web Content Article" />
 		<var name="pageName" value="Web Content Page" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -54,7 +54,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPortletWCDSite">
+	<command name="AddPortletWCDSite" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Site Page" />
 
@@ -86,7 +86,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContent">
+	<command name="AddWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -101,7 +101,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentViaAddContentPanel">
+	<command name="AddWebContentViaAddContentPanel" priority="5">
 		<var name="pageName" value="Web Content Page" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
@@ -134,7 +134,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentPortalScopeCurrentPage">
+	<command name="AddWebContentPortalScopeCurrentPage" priority="5">
 		<var name="pageName1" value="Web Content Display Page1" />
 		<var name="pageName2" value="Web Content Display Page2" />
 		<var name="pageName3" value="Web Content Display Page3" />
@@ -256,7 +256,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContent">
+	<command name="EditWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
 		<var name="webContentTitle" value="WC WebContent Title" />
@@ -279,7 +279,7 @@
 		</execute>
 	</command>
 
-	<command name="LocalizeWebContent">
+	<command name="LocalizeWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="webContentTranslationContent" value="世界您好 Content" />
@@ -325,7 +325,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContent">
+	<command name="SearchWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="webContentTitle2" value="WC2 WebContent2 Title2" />
@@ -374,7 +374,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectWebContent">
+	<command name="SelectWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -400,7 +400,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectWebContentScopeGlobal">
+	<command name="SelectWebContentScopeGlobal" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -447,7 +447,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPortletWCDShowAvailableLocales">
+	<command name="ViewPortletWCDShowAvailableLocales" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="webContentTranslationContent" value="世界您好 Content" />

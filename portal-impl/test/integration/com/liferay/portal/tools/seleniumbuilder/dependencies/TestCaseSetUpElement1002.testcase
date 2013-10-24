@@ -3,7 +3,7 @@
 		<fail />
 	</set-up>
 
-	<command name="name">
+	<command name="name" priority="5">
 		<execute macro="macro" />
 	</command>
 </definition>

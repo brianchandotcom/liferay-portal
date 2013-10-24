@@ -22,7 +22,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveWebContentCP">
+	<command name="ApproveWebContentCP" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -79,7 +79,7 @@
 		</execute>
 	</command>
 
-<command name="RejectWebContentCP">
+<command name="RejectWebContentCP" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

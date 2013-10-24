@@ -23,7 +23,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="addCP">
+	<command name="addCP" priority="5">
 		<var name="adtType" value="Blogs" />
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="key_adtTitle" value="Blogs" />
@@ -55,7 +55,7 @@
 		</execute>
 	</command>
 
-	<command name="addCPviaBlogs">
+	<command name="addCPviaBlogs" priority="5">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
 		<var name="entryTitle" value="Blogs Entry Title" />

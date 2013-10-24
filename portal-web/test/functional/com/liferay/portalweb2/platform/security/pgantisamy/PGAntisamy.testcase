@@ -24,7 +24,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWikiFrontPageContentJavascript">
+	<command name="AddWikiFrontPageContentJavascript" priority="5">
 		<var name="wikiPageContent">
 			<![CDATA[
 				<p id='demo'>PASS</p>

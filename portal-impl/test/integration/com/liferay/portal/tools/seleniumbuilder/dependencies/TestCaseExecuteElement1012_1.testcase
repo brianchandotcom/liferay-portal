@@ -1,5 +1,5 @@
 <definition>
-	<command name="name">
+	<command name="name" priority="5">
 		<execute action="BaseLiferay#clicks" />
 	</command>
 </definition>

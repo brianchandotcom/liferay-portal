@@ -3,7 +3,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="SetUpSamladminSP">
+	<command name="SetUpSamladminSP" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="SAML Admin" />
 		</execute>
@@ -14,7 +14,7 @@
 		</execute>
 	</command>
 
-	<command name="SetUpSamladminIdP">
+	<command name="SetUpSamladminIdP" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="SAML Admin" />
 		</execute>

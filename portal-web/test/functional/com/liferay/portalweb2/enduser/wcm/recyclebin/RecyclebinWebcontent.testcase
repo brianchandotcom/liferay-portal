@@ -7,7 +7,7 @@
 		<execute macro="WebContent#tearDownCP" />
 	</tear-down>
 
-	<command name="DeleteWebcontent">
+	<command name="DeleteWebcontent" priority="5">
 		<var name="assetName" value="${webContentTitle}" />
 		<var name="assetType" value="Web Content Article" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -57,7 +57,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreWebcontent">
+	<command name="RestoreWebcontent" priority="5">
 		<var name="assetName" value="${webContentTitle}" />
 		<var name="assetRestoreLocation" value="Home" />
 		<var name="assetType" value="Web Content Article" />

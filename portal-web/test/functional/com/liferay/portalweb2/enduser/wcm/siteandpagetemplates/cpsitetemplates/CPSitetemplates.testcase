@@ -13,7 +13,7 @@
 		<execute macro="SiteTemplates#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSiteTemplate">
+	<command name="AddSiteTemplate" priority="5">
 		<var name="siteTemplateActive" value="Yes" />
 
 		<execute macro="Page#gotoCP">
@@ -34,7 +34,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTemplate">
+	<command name="EditSiteTemplate" priority="5">
 		<var name="siteTemplateActive" value="Yes" />
 		<var name="siteTemplateActiveEdit" value="No" />
 

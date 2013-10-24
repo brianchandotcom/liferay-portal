@@ -25,7 +25,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="addPG">
+	<command name="addPG" priority="5">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
 		<var name="portletName" value="Blogs" />
@@ -64,7 +64,7 @@
 		</execute>
 	</command>
 
-	<command name="addPGviaBlogs">
+	<command name="addPGviaBlogs" priority="5">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
 		<var name="portletName" value="Blogs" />

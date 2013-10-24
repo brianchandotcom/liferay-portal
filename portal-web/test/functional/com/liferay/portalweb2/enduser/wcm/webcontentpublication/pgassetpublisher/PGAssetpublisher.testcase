@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ConfigureAPPortletSelectedWebContent">
+	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
 		<var name="selectedAsset" value="Web Content Article" />
 
 		<execute macro="AssetPublisher#configureSelectedPG">
@@ -38,7 +38,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureAPPortletDisplayPage">
+	<command name="ConfigureAPPortletDisplayPage" priority="5">
 		<execute macro="AssetPublisher#configureDisplayPagePG" />
 	</command>
 </definition>

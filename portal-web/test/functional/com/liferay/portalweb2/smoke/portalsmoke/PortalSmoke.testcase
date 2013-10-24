@@ -3,7 +3,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="Smoke">
+	<command name="Smoke" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page1" />
 		</execute>

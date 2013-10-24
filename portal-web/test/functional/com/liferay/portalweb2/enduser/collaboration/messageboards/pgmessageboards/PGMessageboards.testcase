@@ -26,7 +26,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddMBCategory">
+	<command name="AddMBCategory" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoPG">
@@ -42,7 +42,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThread">
+	<command name="AddMBThread" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -65,7 +65,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMBCategory">
+	<command name="DeleteMBCategory" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoPG">
@@ -81,7 +81,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMBThread">
+	<command name="DeleteMBThread" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBCategory">
+	<command name="EditMBCategory" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="categoryNameEdit" value="MB Category Name Edit" />
 
@@ -121,7 +121,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadBody">
+	<command name="EditMBThreadBody" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -146,7 +146,7 @@
 		</execute>
 	</command>
 
-	<command name="ReplyMBThread">
+	<command name="ReplyMBThread" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />

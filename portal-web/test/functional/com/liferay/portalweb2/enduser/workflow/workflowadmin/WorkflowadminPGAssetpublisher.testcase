@@ -51,7 +51,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveBlogsEntryPG">
+	<command name="ApproveBlogsEntryPG" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowAssetType" value="Blogs Entry" />
@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveMessageBoardsThreadPG">
+	<command name="ApproveMessageBoardsThreadPG" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
@@ -155,7 +155,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveWebContentPG">
+	<command name="ApproveWebContentPG" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />
@@ -207,7 +207,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectBlogsEntryPG">
+	<command name="RejectBlogsEntryPG" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowAssetType" value="Blogs Entry" />
@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectMessageBoardsThreadPG">
+	<command name="RejectMessageBoardsThreadPG" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
@@ -327,7 +327,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectWebContentPG">
+	<command name="RejectWebContentPG" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />

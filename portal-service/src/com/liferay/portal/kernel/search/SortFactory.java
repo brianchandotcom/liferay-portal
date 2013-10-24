@@ -28,6 +28,9 @@ public interface SortFactory {
 
 	public Sort[] getDefaultSorts();
 
+	public Sort getSort(
+		Class<?> clazz, int type, String orderByCol, String orderByType);
+
 	public Sort getSort(Class<?> clazz, String orderByCol, String orderByType);
 
 	public Sort[] toArray(List<Sort> sorts);

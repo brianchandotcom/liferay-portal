@@ -66,8 +66,7 @@ public class DocumentImpl implements Document {
 	}
 
 	public static String getSortableFieldName(String name) {
-		return name.concat(StringPool.UNDERLINE).concat(
-			_SORTABLE_TEXT_FIELD_SUFFIX);
+		return name.concat(StringPool.UNDERLINE).concat(_SORTABLE_FIELD_SUFFIX);
 	}
 
 	public static boolean isSortableTextField(String name) {
@@ -474,14 +473,11 @@ public class DocumentImpl implements Document {
 	public void addNumber(
 		String name, String value, Class<? extends Number> clazz) {
 
-		if (Validator.isNotNull(value)) {
-			Field field = new Field(name, value);
-
-			field.setNumeric(true);
-			field.setNumericClass(clazz);
-
-			_fields.put(name, field);
+		if (Validator.isNull(value)) {
+			return;
 		}
+
+		addNumber(name, new String[] {value}, clazz);
 	}
 
 	@Override
@@ -496,12 +492,16 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		Field field = new Field(name, values);
+		String sortableFieldName = getSortableFieldName(name);
+
+		Field field = new Field(sortableFieldName, values);
 
 		field.setNumeric(true);
 		field.setNumericClass(clazz);
 
-		_fields.put(name, field);
+		_fields.put(sortableFieldName, field);
+
+		addKeyword(name, values);
 	}
 
 	@Override
@@ -786,7 +786,7 @@ public class DocumentImpl implements Document {
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
-	private static final String _SORTABLE_TEXT_FIELD_SUFFIX = "sortable";
+	private static final String _SORTABLE_FIELD_SUFFIX = "sortable";
 
 	private static final int _SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH =
 		GetterUtil.getInteger(

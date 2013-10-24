@@ -17,12 +17,6 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
-		var SELECTOR_PAGE_EDIT_CONTROLS_FIRST_LINK = A.one('.page-edit-controls > a');
-
-		var SELECTOR_PAGE_PREVIEW_CONTROLS_FIRST_LINK = A.one('.page-preview-controls > a');
-
-		var SELECTOR_SITE_ADD_CONTROLS_FIRST_LINK = A.one('.site-add-controls > a');
-
 		var STR_ADD_PANEL = 'addPanel';
 
 		var STR_EDIT_LAYOUT_PANEL = 'editLayoutPanel';
@@ -224,22 +218,20 @@ AUI.add(
 									instance._togglePanel(panelId);
 								}
 
-								switch (panelId) {
-									case STR_ADD_PANEL:
-										if (SELECTOR_SITE_ADD_CONTROLS_FIRST_LINK) {
-											SELECTOR_SITE_ADD_CONTROLS_FIRST_LINK.focus();
-										}
-										break;
-									case STR_PREVIEW_PANEL:
-										if (SELECTOR_PAGE_PREVIEW_CONTROLS_FIRST_LINK) {
-											SELECTOR_PAGE_PREVIEW_CONTROLS_FIRST_LINK.focus();
-										}
-										break;
-									case STR_EDIT_LAYOUT_PANEL:
-										if (SELECTOR_PAGE_EDIT_CONTROLS_FIRST_LINK) {
-											SELECTOR_PAGE_EDIT_CONTROLS_FIRST_LINK.focus();
-										}
-										break;
+								var addControlsLink = A.one('.site-add-controls > a');
+								var editControlsLink = A.one('.page-edit-controls > a');
+								var previewControlsLink = A.one('.page-preview-controls > a');
+
+								if (addControlsLink && panelId == addControlsLink) {
+									addControlsLink.focus();
+								}
+
+								if (editControlsLink && panelId == editControlsLink) {
+									editControlsLink.focus();
+								}
+
+								if (previewControlsLink && panelId == previewControlsLink) {
+									previewControlsLink.focus();
 								}
 							},
 							'down:27'

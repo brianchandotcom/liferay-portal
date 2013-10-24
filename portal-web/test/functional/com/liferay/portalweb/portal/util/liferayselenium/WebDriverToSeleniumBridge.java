@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1274,15 +1275,25 @@ public class WebDriverToSeleniumBridge
 		WebDriver.TargetLocator targetLocator = switchTo();
 
 		if (locator.equals("relative=parent")) {
-			throw new UnsupportedOperationException();
+			targetLocator.window(_defaultWindowHandle);
+
+			if (!_frameWebElementStack.isEmpty()) {
+				_frameWebElementStack.pop();
+
+				if (!_frameWebElementStack.isEmpty()) {
+					targetLocator.frame(_frameWebElementStack.peek());
+				}
+			}
 		}
 		else if (locator.equals("relative=top")) {
+			_frameWebElementStack = new Stack<WebElement>();
+
 			targetLocator.window(_defaultWindowHandle);
 		}
 		else {
-			WebElement webElement = getWebElement(locator);
+			_frameWebElementStack.push(getWebElement(locator));
 
-			targetLocator.frame(webElement);
+			targetLocator.frame(_frameWebElementStack.peek());
 		}
 	}
 
@@ -1872,6 +1883,7 @@ public class WebDriverToSeleniumBridge
 		WebDriverToSeleniumBridge.class);
 
 	private String _defaultWindowHandle;
+	private Stack<WebElement> _frameWebElementStack = new Stack<WebElement>();
 	private Keys[] _keysArray = new Keys[128];
 	private Map<String, String> _keysSpecialChars =
 		new HashMap<String, String>();

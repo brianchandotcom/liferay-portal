@@ -82,7 +82,13 @@ long classPK = ParamUtil.getLong(request, "classPK");
 					templateHandlers.add(TemplateHandlerRegistryUtil.getTemplateHandler(classNameId));
 				}
 				else {
-					templateHandlers.addAll(getPortletDisplayTemplateHandlers(permissionChecker, scopeGroupId));
+					templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+
+					for (TemplateHandler templateHandler : templateHandlers) {
+						if (!DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+							templateHandlers.remove(templateHandler);
+						}
+					}
 				}
 
 				if (!templateHandlers.isEmpty()) {
@@ -124,19 +130,3 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 	<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/dynamic_data_mapping/template_search.jsp" />
 </aui:nav-bar>
-
-<%!
-public List<TemplateHandler> getPortletDisplayTemplateHandlers(PermissionChecker permissionChecker, long scopeGroupId) {
-	List<TemplateHandler> templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
-
-	List<TemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<TemplateHandler>();
-
-	for (TemplateHandler templateHandler : templateHandlers) {
-		if (DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
-			allowedPortletDisplayTemplateHandlers.add(templateHandler);
-		}
-	}
-
-	return allowedPortletDisplayTemplateHandlers;
-}
-%>

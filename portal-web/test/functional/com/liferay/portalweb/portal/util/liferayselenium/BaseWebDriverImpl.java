@@ -106,6 +106,15 @@ public abstract class BaseWebDriverImpl
 			return;
 		}
 
+		String pageSource = getPageSource();
+
+		if (pageSource.contains(
+				"html id=\"feedHandler\" xmlns=" +
+					"\"http://www.w3.org/1999/xhtml\"")) {
+
+			return;
+		}
+
 		WebElement webElement = getWebElement("//body");
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;

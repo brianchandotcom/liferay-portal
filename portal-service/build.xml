@@ -11,7 +11,7 @@
 	<target name="compile">
 		<mkdir dir="classes" />
 
-		<copy todir="classes">
+		<copy todir="classes" preservelastmodified="true">
 			<fileset dir="src" excludes="**/*.java" />
 		</copy>
 

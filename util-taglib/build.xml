@@ -36,14 +36,14 @@
 				</uptodate>
 			</not>
 			<then>
-				<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" />
+				<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" preservelastmodified="true" />
 
 				<replace file="src/META-INF/liferay-aui.tld">
 					<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/aui</uri>]]></replacetoken>
 					<replacevalue><![CDATA[<uri>http://liferay.com/tld/aui</uri>]]></replacevalue>
 				</replace>
 
-				<copy file="src/META-INF/liferay-portlet.tld" tofile="src/META-INF/liferay-portlet_2_0.tld" />
+				<copy file="src/META-INF/liferay-portlet.tld" tofile="src/META-INF/liferay-portlet_2_0.tld" preservelastmodified="true" />
 
 				<replace file="src/META-INF/liferay-portlet_2_0.tld">
 					<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
@@ -65,9 +65,9 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
-				<copy file="${jar.file}.jar" todir="${app.server.portal.dir}/WEB-INF/lib" />
+				<copy file="${jar.file}.jar" todir="${app.server.portal.dir}/WEB-INF/lib" preservelastmodified="true" />
 
-				<copy todir="${app.server.portal.dir}/WEB-INF/tld">
+				<copy todir="${app.server.portal.dir}/WEB-INF/tld" preservelastmodified="true">
 					<fileset dir="classes/META-INF" includes="*.tld" />
 				</copy>
 			</then>
@@ -77,15 +77,15 @@
 	<target name="jar">
 		<antcall target="build-common-java.jar" />
 
-		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
 
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
+		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">
 			<fileset dir="classes/META-INF" />
 		</copy>
 
-		<copy file="${jar.file}.jar" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" />
+		<copy file="${jar.file}.jar" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" preservelastmodified="true" />
 
-		<copy overwrite="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
+		<copy overwrite="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld" preservelastmodified="true">
 			<fileset dir="classes/META-INF" includes="*.tld" />
 		</copy>
 	</target>

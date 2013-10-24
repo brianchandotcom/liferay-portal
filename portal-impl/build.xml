@@ -32,7 +32,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<ant dir="${alloy.taglibs.dir}" target="clean" inheritAll="false" />
 		<ant dir="${alloy.taglibs.dir}" target="start" inheritAll="false" />
 
-		<copy todir="${project.dir}/lib/portal">
+		<copy todir="${project.dir}/lib/portal" preservelastmodified="true">
 			<fileset file="${alloy.taglibs.dir}/alloy-taglib/alloy-taglib.jar" />
 		</copy>
 	</target>
@@ -1317,11 +1317,11 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="compile-dependencies">
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/definitions">
+		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/definitions" preservelastmodified="true">
 			<fileset dir="${project.dir}/definitions" />
 		</copy>
 
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
+		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">
 			<fileset
 				dir="${project.dir}/classes"
 				includes="*.properties"
@@ -1332,15 +1332,15 @@ public class Creole10Parser]]></replacevalue>
 			/>
 		</copy>
 
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies">
+		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies" preservelastmodified="true">
 			<fileset
 				dir="${project.dir}/sql"
 				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,quartz-tables.sql,sequences.sql,update-*.sql"
 			/>
 		</copy>
 
-		<copy file="${project.dir}/classes/log4j.properties" todir="${portal-impl.classes.dir}" />
-		<copy file="${project.dir}/classes/logging.properties" todir="${portal-impl.classes.dir}" />
+		<copy file="${project.dir}/classes/log4j.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
+		<copy file="${project.dir}/classes/logging.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
 
 		<if>
 			<not>
@@ -1380,7 +1380,7 @@ public class Creole10Parser]]></replacevalue>
 			</then>
 		</if>
 
-		<copy todir="${portal-impl.classes.dir}">
+		<copy todir="${portal-impl.classes.dir}" preservelastmodified="true">
 			<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
 		</copy>
 	</target>
@@ -1442,11 +1442,11 @@ public class Creole10Parser]]></replacevalue>
 			<then>
 				<delete file="${app.server.lib.portal.dir}/portal-impl.jar" />
 
-				<copy todir="${app.server.classes.portal.dir}/com/liferay/portal/definitions">
+				<copy todir="${app.server.classes.portal.dir}/com/liferay/portal/definitions" preservelastmodified="true">
 					<fileset dir="${project.dir}/definitions" />
 				</copy>
 
-				<copy todir="${app.server.classes.portal.dir}">
+				<copy todir="${app.server.classes.portal.dir}" preservelastmodified="true">
 					<fileset dir="src" includes="**/dependencies/**,**/service.xml" />
 				</copy>
 
@@ -1455,8 +1455,8 @@ public class Creole10Parser]]></replacevalue>
 			<else>
 				<antcall target="build-common-java.deploy" />
 
-				<copy file="classes/log4j.properties" todir="${app.server.classes.portal.dir}" />
-				<copy file="classes/logging.properties" todir="${app.server.classes.portal.dir}" />
+				<copy file="classes/log4j.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
+				<copy file="classes/logging.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
 			</else>
 		</if>
 	</target>
@@ -1466,7 +1466,7 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="format-source">
-		<copy todir="classes" overwrite="true">
+		<copy todir="classes" overwrite="true" preservelastmodified="true">
 			<fileset dir="src" includes="com/liferay/portal/tools/dependencies/*.properties" />
 		</copy>
 
@@ -1505,7 +1505,7 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../util-java" target="jar" inheritAll="false" />
 		<ant dir="../util-taglib" target="jar" inheritAll="false" />
 
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/core">
+		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/core" preservelastmodified="true">
 			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/core" includes="*.jar" />
 		</copy>
 
@@ -1519,7 +1519,7 @@ public class Creole10Parser]]></replacevalue>
 
 		<echo file="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/core/jars.txt">${osgi.core.jars.list}</echo>
 
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/portal">
+		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/portal" preservelastmodified="true">
 			<fileset dir="${project.dir}/osgi/lib/common/portal" includes="*.jar" />
 			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/portal" includes="*.jar" />
 		</copy>

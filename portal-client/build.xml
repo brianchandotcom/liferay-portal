@@ -55,7 +55,7 @@
 			<fileset dir="src" />
 		</jar>
 
-		<copy file="portal-client.jar" todir="${project.dir}/lib/portal" />
+		<copy file="portal-client.jar" todir="${project.dir}/lib/portal" preservelastmodified="true" />
 	</target>
 
 	<target name="jar-sources">

@@ -491,7 +491,9 @@ if (Validator.isNotNull(content)) {
 		</div>
 	</div>
 
-	<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+	<c:if test="<%= Validator.isNotNull(toLanguageId) %>">
+		<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+	</c:if>
 </div>
 
 <aui:script>

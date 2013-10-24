@@ -1,4 +1,4 @@
 <definition>
-	<command name="name">
+	<command name="name" priority="5">
 	</command>
 </definition>

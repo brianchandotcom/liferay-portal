@@ -1,5 +1,5 @@
 <definition>
-	<command-fail name="name">
+	<command-fail name="name" priority="5">
 		<execute macro="macro" />
 	</command-fail>
 </definition>

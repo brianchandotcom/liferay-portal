@@ -1,5 +1,5 @@
 <definition>
-	<command name="name">
+	<command name="name" priority="5">
 		<if>
 			<condition action="isAction" />
 			<then>

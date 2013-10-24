@@ -108,10 +108,10 @@ public abstract class BaseWebDriverImpl
 
 		String pageSource = getPageSource();
 
-		String rssToken =
-			"html id=\"feedHandler\" xmlns=\"http://www.w3.org/1999/xhtml\"";
+		if (pageSource.contains(
+				"html id=\"feedHandler\" xmlns=" +
+					"\"http://www.w3.org/1999/xhtml\"")) {
 
-		if (pageSource.contains(rssToken)) {
 			return;
 		}
 

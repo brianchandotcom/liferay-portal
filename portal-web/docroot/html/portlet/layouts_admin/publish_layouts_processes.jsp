@@ -92,23 +92,23 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 		/>
 
 		<c:if test="<%= localPublishing %>">
-			<liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text name="type">
 				<c:if test="<%= backgroundTask.getGroupId() == liveGroupId %>">
 					<strong class="label label-info">
 						<liferay-ui:message key="initial-publication" />
 					</strong>
-
-					<strong class="label label-default">
-						<c:choose>
-							<c:when test='<%= MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "privateLayout") %>'>
-								<liferay-ui:message key="private-pages" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="public-pages" />
-							</c:otherwise>
-						</c:choose>
-					</strong>
 				</c:if>
+
+				<strong class="label label-default">
+					<c:choose>
+						<c:when test='<%= MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "privateLayout") %>'>
+							<liferay-ui:message key="private-pages" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="public-pages" />
+						</c:otherwise>
+					</c:choose>
+				</strong>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 

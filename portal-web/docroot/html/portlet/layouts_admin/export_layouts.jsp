@@ -339,7 +339,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																</li>
 															</ul>
 
-															<aui:input id="rangeLast" label="last" name="range" type="radio" value="last" />
+															<aui:input id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="last" />
 
 															<ul class="hide unstyled" id="<portlet:namespace />rangeLastInputs">
 																<li>

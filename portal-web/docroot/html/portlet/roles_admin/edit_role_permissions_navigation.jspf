@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="lfr-permission-navigation-container pull-left" id="<portlet:namespace />permissionNavigationContainer">
+<div class="lfr-permission-navigation-container" id="<portlet:namespace />permissionNavigationContainer">
 	<div class="search" id="<portlet:namespace />permissionNavigationSearchContainer">
 		<input class="field search-query span10" id="<portlet:namespace />permissionNavigationSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
 	</div>

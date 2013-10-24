@@ -45,6 +45,8 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 						<%
 						for (LayoutRevision rootLayoutRevision : layoutRevisions) {
 							LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
+
+							boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
 						%>
 
 							<portlet:actionURL var="layoutBranchURL">
@@ -57,9 +59,9 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 							</portlet:actionURL>
 
 							<liferay-ui:icon
-								cssClass='<%= (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId()) ? "disabled" : null %>'
+								cssClass='<%= selected ? "disabled" : null %>'
 								message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
-								url="<%= layoutBranchURL %>"
+								url='<%= selected ? "javascript:;" : layoutBranchURL %>'
 							/>
 
 						<%

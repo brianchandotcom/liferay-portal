@@ -4,6 +4,15 @@
 	background: #363636;
 	color: #E3E3E3;
 
+	&.portal-popup {
+		background-color: transparent;
+		color: #555;
+
+		legend {
+			color: #555;
+		}
+	}
+
 	&.yui3-skin-sam .yui3-widget-mask {
 		background-color: #111;
 	}
@@ -62,18 +71,5 @@
 
 	.portlet-title {
 		color: #00CAFF;
-	}
-
-	/* ---------- Iframe popup ---------- */
-
-	.dialog-iframe-root-node {
-		body.dark {
-			background: transparent;
-			color: #555;
-
-			legend {
-				color: #555;
-			}
-		}
 	}
 }

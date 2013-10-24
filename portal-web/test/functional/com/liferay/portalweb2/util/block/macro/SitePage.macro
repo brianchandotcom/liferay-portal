@@ -39,6 +39,7 @@
 	</command>
 
 	<command name="addCP">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 		<var name="key_siteName" value="${siteName}" />
 
 		<if>
@@ -71,6 +72,15 @@
 
 		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_PAGE" />
 		<execute action="CPSitepages#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+
+		<if>
+			<isset var="pageTemplateName" />
+			<then>
+				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_TEMPLATE" />
+				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES" />
+			</then>
+		</if>
+		
 		<execute action="CPSitepages#click" locator-key1="ADD_PAGE_BUTTON" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 

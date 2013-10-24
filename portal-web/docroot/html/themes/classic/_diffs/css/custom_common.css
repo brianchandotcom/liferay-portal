@@ -251,9 +251,10 @@
 			.container .btn-navbar {
 				color: #FFF;
 
-				img {
-					margin-top: 4px;
-					width: 27px;
+				.user-avatar-image {
+					position: relative;
+					top: 2px;
+					width: 28px;
 				}
 			}
 		}
@@ -858,16 +859,16 @@
 			}
 
 			li.dropdown {
-				&.user-avatar {
-					.user-avatar-image {
-						@include border-radius(50%);
-						@include box-shadow(0 0 0 2px #5594E0);
-					}
-				}
-
 				.dropdown-menu {
 					@include border-radius(0);
 				}
+			}
+		}
+
+		.container .btn, .nav li.dropdown.user-avatar {
+			.user-avatar-image {
+				@include border-radius(50%);
+				@include box-shadow(0 0 0 2px #5594E0);
 			}
 		}
 	}
@@ -892,10 +893,6 @@
 
 	.dockbar .container .btn {
 		@include box-shadow(none);
-
-		img {
-			@include border-radius(50%);
-		}
 	}
 
 	body.yui3-skin-sam .yui3-widget-mask {

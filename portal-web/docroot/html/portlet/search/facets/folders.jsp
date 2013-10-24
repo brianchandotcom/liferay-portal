@@ -34,7 +34,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="folders unstyled">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/folder.png" %>' /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 		</li>
 
@@ -82,7 +82,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 			}
 			%>
 
-			<li class="facet-value <%= (folderId == curFolderId) ? "current-term" : StringPool.BLANK %>">
+			<li class="facet-value <%= (folderId == curFolderId) ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= curFolderId %>" href="javascript:;"><%= HtmlUtil.escape(title.getValue()) %></a><c:if test="<%= showAssetCount %>"> <span class="frequency">(<%= termCollector.getFrequency() %>)</span></c:if>
 			</li>
 

@@ -35,7 +35,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="scopes unstyled">
-		<li class="facet-value default <%= fieldParam.equals("0") ? "current-term" : StringPool.BLANK %>">
+		<li class="facet-value default <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
 			<a data-value="0" href="javascript:;"><img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/site_icon.png" %>' /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 		</li>
 
@@ -71,7 +71,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 			%>
 
-			<li class="facet-value <%= groupId == curGroupId ? "current-term" : StringPool.BLANK %>">
+			<li class="facet-value <%= groupId == curGroupId ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= curGroupId %>" href="javascript:;"><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></a>
 
 				<c:if test="<%= showAssetCount %>">

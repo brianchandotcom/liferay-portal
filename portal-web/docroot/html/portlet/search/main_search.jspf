@@ -109,12 +109,12 @@ boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTyp
 							var facetValue = term.ancestor('.facet-value');
 
 							if (facetValue) {
-								var currentTerm = facetValue.hasClass('current-term');
+								var currentTerm = facetValue.hasClass('active');
 
-								facetValue.radioClass('current-term');
+								facetValue.radioClass('active');
 
 								if (!currentTerm) {
-									facetValue.radioClass('current-term');
+									facetValue.radioClass('active');
 
 									var searchFacet = facetValue.ancestor('.search-facet');
 

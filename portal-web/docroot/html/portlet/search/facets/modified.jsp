@@ -42,7 +42,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 	<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= facet.getFieldId() %>">
 		<ul class="modified unstyled">
-			<li class="facet-value default<%= (fieldParamSelection.equals("0") ? " current-term" : StringPool.BLANK) %>">
+			<li class="facet-value default<%= (fieldParamSelection.equals("0") ? " active" : StringPool.BLANK) %>">
 				<aui:a href="javascript:;" onClick='<%= renderResponse.getNamespace() + facet.getFieldId() + "clearFacet(0);" %>'>
 					<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/time.png" %>' /><liferay-ui:message key="any-time" />
 				</aui:a>
@@ -62,7 +62,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				}
 			%>
 
-				<li class="facet-value<%= fieldParamSelection.equals(String.valueOf(index)) ? " current-term" : StringPool.BLANK %>">
+				<li class="facet-value<%= fieldParamSelection.equals(String.valueOf(index)) ? " active" : StringPool.BLANK %>">
 
 					<%
 					String taglibSetRange = renderResponse.getNamespace() + facet.getFieldId() + "setRange(" + index + ", '" + range + "');";
@@ -85,7 +85,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			}
 			%>
 
-			<li class="facet-value<%= fieldParamSelection.equals(String.valueOf(index + 1)) ? " current-term" : StringPool.BLANK %>">
+			<li class="facet-value<%= fieldParamSelection.equals(String.valueOf(index + 1)) ? " active" : StringPool.BLANK %>">
 
 				<%
 				TermCollector termCollector = null;

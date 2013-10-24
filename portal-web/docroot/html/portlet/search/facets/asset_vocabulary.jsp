@@ -94,7 +94,7 @@ private void _buildCategoriesNavigation(String[] assetCategoryIdsOrNames, boolea
 		sb.append("<li class=\"facet-value");
 
 		if (ArrayUtil.contains(assetCategoryIdsOrNames, term)) {
-			sb.append(" current-term");
+			sb.append(" active");
 
 			ScriptTag.doTag(null, "liferay-token-list", "Liferay.Search.tokenList.add({clearFields: '" + clearFields + "', text: '" + HtmlUtil.escapeJS(assetCategoryName) + "'});", null, pageContext);
 		}

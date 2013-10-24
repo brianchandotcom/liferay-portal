@@ -29,7 +29,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="range unstyled">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><liferay-ui:message key="any-range" /></a>
 		</li>
 
@@ -66,7 +66,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 			}
 		%>
 
-			<li class="facet-value <%= fieldParam.equals(range) ? "current-term" : StringPool.BLANK %>">
+			<li class="facet-value <%= fieldParam.equals(range) ? "active" : StringPool.BLANK %>">
 				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;"><liferay-ui:message key="<%= label %>" /></a> <span class="frequency">(<%= frequency %>)</span>
 			</li>
 

@@ -46,6 +46,10 @@
 		</if>
 
 		<execute function="Click#clickAt" />
+
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" />
 	</command>
 
 	<command name="clickAtSidebarClickAt">
@@ -147,7 +151,7 @@
 	</command>
 
 	<command name="textClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
 
 		<execute function="Click#textClickAtAndWait" />
 	</command>
@@ -177,7 +181,7 @@
 	</command>
 
 	<command name="valueClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
 
 		<execute function="Click#valueClickAtAndWait" />
 	</command>

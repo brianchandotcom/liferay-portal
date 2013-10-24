@@ -58,6 +58,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -1187,6 +1188,27 @@ public class DLImpl implements DL {
 
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId, Folder.class.getName(), folderIdsArray);
+	}
+
+	@Override
+	public boolean isValidVersion(String version) {
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+			return true;
+		}
+
+		String[] versionParts = StringUtil.split(version, StringPool.PERIOD);
+
+		if (versionParts.length != 2) {
+			return false;
+		}
+
+		if (Validator.isNumber(versionParts[0]) &&
+			Validator.isNumber(versionParts[1])) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected long getDefaultFolderId(HttpServletRequest request)

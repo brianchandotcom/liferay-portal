@@ -250,15 +250,9 @@ public class FileEntryStagedModelDataHandler
 		if (fileEntry.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			String folderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, Folder.class.getName(),
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, fileEntry, Folder.class,
 				fileEntry.getFolderId());
-
-			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
-				folderPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folder);
 		}
 
 		Map<Long, Long> folderIds =

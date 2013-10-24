@@ -331,11 +331,9 @@ public class JournalArticleStagedModelDataHandler
 		if (article.getFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			Element folderElement = portletDataContext.getReferenceDataElement(
-				article, JournalFolder.class, article.getFolderId());
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folderElement);
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, article, JournalFolder.class,
+				article.getFolderId());
 		}
 
 		long folderId = MapUtil.getLong(

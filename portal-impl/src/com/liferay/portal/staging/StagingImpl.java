@@ -806,13 +806,31 @@ public class StagingImpl implements Staging {
 
 			StagedModel stagedModel = pde.getStagedModel();
 
-			StagedModelType stagedModelType = stagedModel.getStagedModelType();
+			String referrerClassName = StringPool.BLANK;
+			String referrerDisplayName = StringPool.BLANK;
 
-			String referrerClassName = stagedModelType.getClassName();
-			String referrerDisplayName =
-				StagedModelDataHandlerUtil.getDisplayName(stagedModel);
+			if (stagedModel != null) {
+				StagedModelType stagedModelType =
+					stagedModel.getStagedModelType();
 
-			if (pde.getType() == PortletDataException.MISSING_DEPENDENCY) {
+				referrerClassName = stagedModelType.getClassName();
+				referrerDisplayName = StagedModelDataHandlerUtil.getDisplayName(
+					stagedModel);
+			}
+
+			if (pde.getType() == PortletDataException.INVALID_GROUP) {
+				errorMessage = LanguageUtil.format(
+					locale,
+					"the-x-x-could-not-be-exported-because-it-is-not-in-the-" +
+						"currently-exported-group",
+					new String[] {
+						ResourceActionsUtil.getModelResource(
+							locale, referrerClassName),
+						referrerDisplayName
+					}
+				);
+			}
+			else if (pde.getType() == PortletDataException.MISSING_DEPENDENCY) {
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-has-missing-references-that-could-not-be-found-" +
@@ -827,8 +845,8 @@ public class StagingImpl implements Staging {
 			else if (pde.getType() == PortletDataException.STATUS_IN_TRASH) {
 				errorMessage = LanguageUtil.format(
 					locale,
-					"the-x-x-has-references-that-could-not-be-exported-" +
-						"because-they-are-in-the-recycle-bin",
+					"the-x-x-could-not-be-exported-because-it-is-in-the-" +
+						"recycle-bin",
 					new String[] {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
@@ -839,14 +857,17 @@ public class StagingImpl implements Staging {
 			else if (pde.getType() == PortletDataException.STATUS_UNAVAILABLE) {
 				errorMessage = LanguageUtil.format(
 					locale,
-					"the-x-x-has-references-that-could-not-be-exported-" +
-						"because-their-workflow-status-is-not-exportable",
+					"the-x-x-could-not-be-exported-because-its-workflow-" +
+						"status-is-not-exportable",
 					new String[] {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
 					}
 				);
+			}
+			else {
+				errorMessage = e.getLocalizedMessage();
 			}
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;

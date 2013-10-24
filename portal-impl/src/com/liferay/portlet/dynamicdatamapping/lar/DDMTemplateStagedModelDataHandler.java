@@ -174,14 +174,12 @@ public class DDMTemplateStagedModelDataHandler
 		Element templateElement = portletDataContext.getExportDataElement(
 			template);
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.fetchStructure(
+		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 			template.getClassPK());
 
-		if (structure != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, template, structure,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
-		}
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, template, structure,
+			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		if (template.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(
@@ -237,12 +235,9 @@ public class DDMTemplateStagedModelDataHandler
 
 		long classPK = template.getClassPK();
 
-		Element structureElement = portletDataContext.getReferenceDataElement(
-			template, DDMStructure.class, classPK);
-
-		if (structureElement != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, structureElement);
+		if (classPK > 0) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, template, DDMStructure.class, classPK);
 
 			Map<Long, Long> structureIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

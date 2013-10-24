@@ -980,6 +980,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public Element getImportDataElement(StagedModel stagedModel) {
+		StagedModelType stagedModelType = stagedModel.getStagedModelType();
+
+		return getImportDataElement(
+			stagedModelType.getClassSimpleName(), "uuid",
+			stagedModel.getUuid());
+	}
+
+	@Override
 	public Element getImportDataElement(
 		String name, String attribute, String value) {
 

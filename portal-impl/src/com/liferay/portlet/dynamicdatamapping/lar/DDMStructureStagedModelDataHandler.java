@@ -160,13 +160,9 @@ public class DDMStructureStagedModelDataHandler
 		if (structure.getParentStructureId() !=
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID) {
 
-			Element structureElement =
-				portletDataContext.getReferenceDataElement(
-					structure, DDMStructure.class,
-					structure.getParentStructureId());
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, structureElement);
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, structure, DDMStructure.class,
+				structure.getParentStructureId());
 		}
 
 		Map<Long, Long> structureIds =

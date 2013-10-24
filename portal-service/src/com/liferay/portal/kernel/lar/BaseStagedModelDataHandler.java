@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -248,14 +249,36 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
+		if (stagedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)stagedModel;
+
+			if ((stagedGroupedModel.getGroupId() !=
+					portletDataContext.getGroupId()) &&
+				(stagedGroupedModel.getGroupId() !=
+					portletDataContext.getScopeGroupId())) {
+
+				PortletDataException pde = new PortletDataException(
+					PortletDataException.INVALID_GROUP);
+
+				pde.setStagedModel(stagedModel);
+
+				throw pde;
+			}
+		}
+
 		if (stagedModel instanceof WorkflowedModel) {
 			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
 
 			if (!ArrayUtil.contains(
 					getExportableStatuses(), workflowedModel.getStatus())) {
 
-				throw new PortletDataException(
+				PortletDataException pde = new PortletDataException(
 					PortletDataException.STATUS_UNAVAILABLE);
+
+				pde.setStagedModel(stagedModel);
+
+				throw pde;
 			}
 		}
 
@@ -269,8 +292,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				long classPK = (Long)stagedModel.getPrimaryKeyObj();
 
 				if (trashHandler.isInTrash(classPK)) {
-					throw new PortletDataException(
+					PortletDataException pde = new PortletDataException(
 						PortletDataException.STATUS_IN_TRASH);
+
+					pde.setStagedModel(stagedModel);
+
+					throw pde;
 				}
 			}
 			catch (PortletDataException pde) {

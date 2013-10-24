@@ -378,6 +378,17 @@ public class FolderStagedModelDataHandler
 			PortletDataContext portletDataContext, Folder folder)
 		throws PortletDataException {
 
+		if ((folder.getGroupId() != portletDataContext.getGroupId()) &&
+			(folder.getGroupId() != portletDataContext.getScopeGroupId())) {
+
+			PortletDataException pde = new PortletDataException(
+				PortletDataException.INVALID_GROUP);
+
+			pde.setStagedModel(folder);
+
+			throw pde;
+		}
+
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			DLFolder.class.getName());
 

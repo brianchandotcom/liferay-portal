@@ -623,6 +623,17 @@ public class FileEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, FileEntry fileEntry)
 		throws PortletDataException {
 
+		if ((fileEntry.getGroupId() != portletDataContext.getGroupId()) &&
+			(fileEntry.getGroupId() != portletDataContext.getScopeGroupId())) {
+
+			PortletDataException pde = new PortletDataException(
+				PortletDataException.INVALID_GROUP);
+
+			pde.setStagedModel(fileEntry);
+
+			throw pde;
+		}
+
 		try {
 			FileVersion fileVersion = fileEntry.getFileVersion();
 

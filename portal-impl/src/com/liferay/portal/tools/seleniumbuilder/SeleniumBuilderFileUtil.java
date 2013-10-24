@@ -1305,6 +1305,22 @@ public class SeleniumBuilderFileUtil {
 					throwValidationException(1006, fileName, element, "name");
 				}
 
+				String priorityValue = element.attributeValue("priority");
+
+				if (priorityValue == null) {
+					throwValidationException(
+						1003, fileName, element, "priority");
+				}
+				else if (!(priorityValue.equals("1") ||
+						 priorityValue.equals("2") ||
+						 priorityValue.equals("3") ||
+						 priorityValue.equals("4") ||
+						 priorityValue.equals("5"))) {
+
+					throwValidationException(
+						1006, fileName, element, "priority");
+				}
+
 				validateBlockElement(
 					fileName, element, new String[] {"execute", "var"},
 					new String[] {"action", "macro"}, new String[] {"var"},

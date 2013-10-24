@@ -6970,7 +6970,9 @@ public class PortalImpl implements Portal {
 		if (portletActions) {
 			Group layoutGroup = layout.getGroup();
 
-			if (layout.isPrivateLayout() && !layoutGroup.isLayoutPrototype()) {
+			if (layout.isPrivateLayout() && !layoutGroup.isLayoutPrototype() &&
+				!layoutGroup.isLayoutSetPrototype()) {
+
 				addGuestPermissions = false;
 			}
 		}

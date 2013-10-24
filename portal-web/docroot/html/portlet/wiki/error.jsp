@@ -78,8 +78,13 @@
 						<liferay-ui:message key="this-page-has-an-associated-draft-that-is-not-yet-published" />
 					</div>
 
-					<div>
-						<input onclick="location.href = '<%= editPageURL.toString() %>'" type="button" value="<%= LanguageUtil.get(pageContext, "edit-draft") %>" />
+					<div class="btn-toolbar">
+
+						<%
+						String taglibEditPageURL = "location.href = '" + editPageURL.toString() + "';";
+						%>
+
+						<aui:button onClick="<%= taglibEditPageURL %>" value="edit-draft" />
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -94,10 +99,19 @@
 				<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
 			</div>
 
-			<div>
-				<input onclick="location.href = '<%= searchURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "search-for-x", HtmlUtil.escapeAttribute(title)) %>" />
+			<div class="btn-toolbar">
 
-				<input onclick="location.href = '<%= editPageURL.toString() %>'" type="button" value="<%= LanguageUtil.format(pageContext, "create-page-x", HtmlUtil.escapeAttribute(title)) %>" />
+				<%
+				String taglibSearchURL = "location.href = '" + searchURL.toString() + "';";
+				%>
+
+				<aui:button onClick="<%= taglibSearchURL %>" value='<%= LanguageUtil.format(pageContext, "search-for-x", HtmlUtil.escapeAttribute(title)) %>' />
+
+				<%
+				String taglibEditPageURL = "location.href = '" + editPageURL.toString() + "';";
+				%>
+
+				<aui:button onClick="<%= taglibEditPageURL %>" value='<%= LanguageUtil.format(pageContext, "create-page-x", HtmlUtil.escapeAttribute(title)) %>' />
 			</div>
 		</c:otherwise>
 	</c:choose>

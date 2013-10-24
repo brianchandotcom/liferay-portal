@@ -473,18 +473,11 @@ public class DocumentImpl implements Document {
 	public void addNumber(
 		String name, String value, Class<? extends Number> clazz) {
 
-		if (Validator.isNotNull(value)) {
-			String sortableFieldName = getSortableFieldName(name);
-
-			Field field = new Field(sortableFieldName, value);
-
-			field.setNumeric(true);
-			field.setNumericClass(clazz);
-
-			_fields.put(sortableFieldName, field);
-
-			addKeyword(name, value);
+		if (Validator.isNull(value)) {
+			return;
 		}
+
+		addNumber(name, new String[] {value}, clazz);
 	}
 
 	@Override

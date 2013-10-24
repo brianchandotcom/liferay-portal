@@ -4,6 +4,7 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="Site#tearDownCP" />
 		<execute macro="PageTemplate#tearDownCP" />
 	</tear-down>
 
@@ -19,6 +20,44 @@
 			<var name="pageTemplateActive" value="${pageTemplateActive}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 		</execute>
+	</command>
+
+	<command name="AddSitePageTemplate" priority="4">
+		<var name="pageTemplateName" value="Page Template Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageName" value="Site Page" />
+		
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="PageTemplate#addPageTemplateCP" />
 	</command>
 
 	<command name="EditPageTemplate" priority="5">

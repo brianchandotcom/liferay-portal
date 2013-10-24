@@ -351,10 +351,18 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	}
 
 	protected void initClass(Class<?> clazz) {
+
+		// Do not remove this declaration, we need all the inner classes to be
+		// loaded by the current classloader
+
+		Class<?>[] declaredClasses = clazz.getDeclaredClasses();
+
+		int declaredClassesLength = declaredClasses.length;
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Loading " + clazz.getName() + " and " +
-					clazz.getDeclaredClasses().length + " inner classes");
+				"Loading " + clazz.getName() + " and " + declaredClassesLength +
+					" inner classes");
 		}
 	}
 

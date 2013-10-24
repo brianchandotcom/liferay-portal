@@ -38,6 +38,8 @@ manageableSiteGroups.remove(group);
 
 <%
 Group siteGroup = themeDisplay.getSiteGroup();
+
+String switchGroupURL = HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "switchGroup", "1");
 %>
 
 <liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="<%= HtmlUtil.escape(siteGroup.getDescriptiveName()) %>" showWhenSingleIcon="<%= true %>">
@@ -49,7 +51,7 @@ Group siteGroup = themeDisplay.getSiteGroup();
 		<liferay-ui:icon
 			message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"
 			src="<%= manageableSiteGroup.getIconURL(themeDisplay) %>"
-			url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", manageableSiteGroup.getGroupId()) %>'
+			url='<%= HttpUtil.setParameter(switchGroupURL, "doAsGroupId", manageableSiteGroup.getGroupId()) %>'
 		/>
 
 	<%

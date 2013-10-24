@@ -24,6 +24,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+
 		<execute macro="Role#tearDownCP" />
 
 		<execute macro="User#tearDownCP" />
@@ -135,7 +137,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingBlogsRolesWorkflow">
+	<command name="StagingBlogsRolesWorkflow" priority="5">
 		<var name="pageName" value="Blogs Test Page" />
 
 		<execute macro="Page#gotoCP">

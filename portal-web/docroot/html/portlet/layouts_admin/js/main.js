@@ -597,7 +597,7 @@ AUI.add(
 									dialog: {
 										bodyContent: rangeNode,
 										centered: true,
-										height: 300,
+										height: 375,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {

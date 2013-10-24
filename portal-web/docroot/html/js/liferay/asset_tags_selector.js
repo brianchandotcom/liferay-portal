@@ -55,11 +55,15 @@ AUI.add(
 		var TPL_TAG = new A.Template(
 			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
 				'<tpl for="tags">',
-					'<label title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
+					'<label class="checkbox" title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
 				'</tpl>',
 				'<div class="lfr-tag-message">{message}</div>',
 			'</fieldset>'
 		);
+
+		var TPL_SEARCH_FORM = '<form class="form-search lfr-tag-selector-search row-fluid">' +
+			'<input class="lfr-tag-selector-input search-query span12" placeholder="{0}" type="text" />' +
+		'</form>';
 
 		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{context}"';
 
@@ -243,16 +247,15 @@ AUI.add(
 
 							bodyNode.html(STR_BLANK);
 
-							var searchField = new A.Textfield(
-								{
-									defaultValue: Liferay.Language.get('search'),
-									labelText: false
-								}
-							).render(bodyNode);
+							var searchForm = A.Node.create(A.Lang.sub(TPL_SEARCH_FORM, [Liferay.Language.get('search')]));
+
+							bodyNode.append(searchForm);
+
+							var searchField = searchForm.one('input');
 
 							var entriesNode = A.Node.create(TPL_TAGS_CONTAINER);
 
-							bodyNode.appendChild(entriesNode);
+							bodyNode.append(entriesNode);
 
 							popup.searchField = searchField;
 							popup.entriesNode = entriesNode;
@@ -362,7 +365,7 @@ AUI.add(
 
 									return value.toLowerCase();
 								},
-								input: popup.searchField.get('node'),
+								input: popup.searchField,
 								nodes: '.' + CSS_TAGS_LIST + ' label'
 							}
 						);
@@ -476,7 +479,7 @@ AUI.add(
 							popup.entriesNode
 						);
 
-						popup.searchField.resetValue();
+						popup.searchField.val('');
 
 						popup.liveSearch.get('nodes').refresh();
 
@@ -604,6 +607,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-form-textfield-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window', 'yql']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window', 'yql']
 	}
 );

@@ -86,7 +86,6 @@
 							'array-extras',
 							'async-queue',
 							'aui-autocomplete-deprecated',
-							'aui-form-textfield-deprecated',
 							'aui-io-plugin-deprecated',
 							'aui-io-request',
 							'aui-live-search-deprecated',

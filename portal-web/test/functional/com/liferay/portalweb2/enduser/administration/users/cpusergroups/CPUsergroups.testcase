@@ -78,7 +78,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameAsterisk" priority="5">
+	<command name="AddUserGroupNameAsterisk" priority="4">
 		<var name="userGroupName" value="UG UserGroup Name*" />
 
 		<execute macro="Page#gotoCP">
@@ -99,7 +99,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameComma" priority="5">
+	<command name="AddUserGroupNameComma" priority="4">
 		<var name="userGroupName" value="UG UserGroup Name," />
 
 		<execute macro="Page#gotoCP">
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameDuplicate" priority="5">
+	<command name="AddUserGroupNameDuplicate" priority="4">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
 		<execute macro="Page#gotoCP">
@@ -145,7 +145,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameNull" priority="5">
+	<command name="AddUserGroupNameNull" priority="4">
 		<var name="userGroupName" value=" " />
 
 		<execute macro="Page#gotoCP">
@@ -166,7 +166,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameNumber" priority="5">
+	<command name="AddUserGroupNameNumber" priority="4">
 		<var name="userGroupName" value="1" />
 
 		<execute macro="Page#gotoCP">
@@ -239,7 +239,7 @@
 		<execute macro="UserGroup#deleteCP" />
 	</command>
 
-	<command name="DeleteUserGroupUser" priority="5">
+	<command name="DeleteUserGroupUser" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userGroupName" value="UG UserGroup Name" />
@@ -312,7 +312,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveMember" priority="5">
+	<command name="RemoveMember" priority="4">
 		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -367,7 +367,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchUserGroup" priority="5">
+	<command name="SearchUserGroup" priority="4">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
 		<execute macro="Page#gotoCP">

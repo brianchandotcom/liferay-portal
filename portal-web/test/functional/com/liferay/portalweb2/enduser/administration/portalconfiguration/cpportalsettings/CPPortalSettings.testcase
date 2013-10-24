@@ -232,7 +232,7 @@
 		</execute>
 	</command>
 
-	<command name="EnterReservedEmailAddress" priority="5">
+	<command name="EnterReservedEmailAddress" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -258,7 +258,7 @@
 		</execute>
 	</command>
 
-	<command name="EnterReservedScreenName" priority="5">
+	<command name="EnterReservedScreenName" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />

@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>PGAssetpublisherConfigurationSites</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAssetpublisherConfigurationSites</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAssetpublisherConfigurationSites</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'selectSite')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITES_TABLE-->
+<tr>
+	<td>SITES_TABLE_NAME</td>
+	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE_TYPE</td>
+	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE_CHOOSE_BUTTON</td>
+	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[3]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

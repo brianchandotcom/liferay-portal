@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[contains(@class,'btn close close-content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -92,17 +97,22 @@
 <!--SOURCE_SCOPE-->
 <tr>
 	<td>SOURCE_SCOPE_NAME</td>
-	<td>//div[@id='_86_groupsSearchContainer']//tbody/tr/td[1]/span/span</td>
+	<td>//div[@id='_86_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[1]/span/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_TYPE</td>
-	<td>//div[@id='_86_groupsSearchContainer']//tbody/tr/td[2]</td>
+	<td>//div[@id='_86_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_DELETE</td>
-	<td>//div[@id='_86_groupsSearchContainer']//tbody/tr/td[3]/span/a</td>
+	<td>//div[@id='_86_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[3]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_SCOPE_SELECT</td>
+	<td>//div[@class='select-asset-selector']/div/a[@title='Select']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,31 +120,19 @@
 	<td>//select[@id='_86_anyAssetType']</td>
 	<td></td>
 </tr>
+<!---->
+<!--SOURCE_SCOPE_MENULIST-->
 <tr>
-	<td>SOURCE_SELECTED_SELECT</td>
-	<td>//select[@id='_86_currentClassNameIds']</td>
+	<td>SOURCE_SCOPE_MENULIST_GLOBAL</td>
+	<td>//a[@role='menuitem' and contains(.,Global')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SOURCE_AVAILABLE_SELECT</td>
-	<td>//select[@id='_86_availableClassNameIds']</td>
+	<td>SOURCE_SCOPE_MENULIST_OTHER_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SOURCE_RIGHT_ARROW</td>
-	<td>//button[@title='Move selected items from Selected to Available.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE_LEFT_ARROW</td>
-	<td>//button[@title='Move selected items from Available to Selected.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
+<!---->
 <!--FILTER-->
 <tr>
 	<td>FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX</td>

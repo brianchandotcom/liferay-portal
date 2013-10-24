@@ -243,7 +243,7 @@
 					<execute action="PGMysitesAvailablesitesRequestmembership#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your request was sent. You will receive a reply by email." />
-					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_MEMBERSHIP_REQUESTED" value1="Membership Requested" />
+					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_REQUEST_MEMBERSHIP" value1="Membership Requested" />
 				</then>
 			</elseif>
 			<else>
@@ -483,5 +483,17 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_LEAVE" value1="Leave" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_DELETE" value1="Delete" />
+	</command>
+
+	<command name="viewSitePG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+		</execute>
+
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${childSiteName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${sitePageName}" />
+		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${childSiteName}" />
+		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
 	</command>
 </definition>

@@ -136,6 +136,23 @@
 		<execute action="Myaccount#assertClick" locator1="//ul[@class='nav control-panel-bar-secondary nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
 	</command>
 
+	<command name="gotoPagesCP">
+        <execute macro="Page#openURL" />
+
+        <execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+        <execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
+
+        <if>
+           <isset var="siteScopeName" />
+           <then>
+              <execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+                  <var name="key_siteScopeName" value="${siteScopeName}" />
+               <execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
+           </then>
+        </if>
+        <execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+     </command>
+
 	<command name="gotoPG">
 		<execute macro="Page#openURL" />
 

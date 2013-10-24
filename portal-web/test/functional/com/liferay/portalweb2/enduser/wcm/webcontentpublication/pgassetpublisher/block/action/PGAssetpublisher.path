@@ -44,6 +44,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_NEW_DROPDOWN_SITE_NAME</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in Site Name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_DROPDOWN_CHILD_SITENAME</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in Child SiteName')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='alert alert-info']</td>
 	<td></td>
@@ -118,6 +128,23 @@
 <tr>
 	<td>ADD_NEW_MENULIST_SALES_PRESENTATION</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Sales Presentation')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--ADD_NEW_IN_SITE_NAME_MENULIST-->
+<tr>
+	<td>ADD_NEW_IN_SITE_NAME_MENULIST_BLOGS_ENTRY</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Blogs Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_IN_CHILD_SITENAME_MENULIST_BLOGS_ENTRY</td>
+	<td>//li[@class='dropdown open' and contains(.,'Add New in Child SiteName')]/ul/li[contains(.,'Blogs Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

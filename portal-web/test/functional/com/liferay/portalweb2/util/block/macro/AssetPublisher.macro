@@ -29,4 +29,11 @@
 		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
 		<execute action="PGAssetpublisherConfiguration#assertSelectedLabel" locator-key1="SOURCE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 	</command>
+
+	<command name="viewContentSharingPG">
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN_SITE_NAME" value1="Add New in Site Name" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ADD_NEW_DROPDOWN_CHILD_SITENAME" value1="Add New in Child SiteName" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY_1" value1="${assetContent}" />
+	</command>
 </definition>

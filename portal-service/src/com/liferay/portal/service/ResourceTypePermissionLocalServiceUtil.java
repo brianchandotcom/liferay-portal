@@ -168,7 +168,9 @@ public class ResourceTypePermissionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows that match the dynamic query. This method
+	* modifies the dynamic query so that reusing it to obtain results that
+	* are not a number could produce unexpected results.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query

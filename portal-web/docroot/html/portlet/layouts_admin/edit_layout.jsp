@@ -123,7 +123,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
 			<aui:nav-item data-value="permissions" iconCssClass="icon-lock" label="permissions" />
 		</c:if>
-		<c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.DELETE) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.DELETE) %>">
 			<aui:nav-item data-value="delete" iconCssClass="icon-remove" label="delete" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">

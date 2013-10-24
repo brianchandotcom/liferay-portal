@@ -141,7 +141,11 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			return methodInvocation.proceed();
 		}
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if (layout == null) {
+			return methodInvocation.proceed();
+		}
 
 		if (!LayoutStagingUtil.isBranchingLayout(layout)) {
 			return methodInvocation.proceed();

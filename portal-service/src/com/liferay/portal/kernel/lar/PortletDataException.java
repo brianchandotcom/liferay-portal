@@ -30,15 +30,17 @@ public class PortletDataException extends PortalException {
 
 	public static final int FUTURE_START_DATE = 3;
 
-	public static final int MISSING_DEPENDENCY = 4;
+	public static final int INVALID_GROUP = 4;
 
-	public static final int START_DATE_AFTER_END_DATE = 5;
+	public static final int MISSING_DEPENDENCY = 5;
 
-	public static final int START_DATE_IS_MISSING_END_DATE = 6;
+	public static final int START_DATE_AFTER_END_DATE = 6;
 
-	public static final int STATUS_IN_TRASH = 7;
+	public static final int START_DATE_IS_MISSING_END_DATE = 7;
 
-	public static final int STATUS_UNAVAILABLE = 8;
+	public static final int STATUS_IN_TRASH = 8;
+
+	public static final int STATUS_UNAVAILABLE = 9;
 
 	public PortletDataException() {
 		super();

@@ -14,16 +14,21 @@
 
 package com.liferay.portlet.portletdisplaytemplate.util;
 
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.GenericServletWrapper;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
@@ -45,6 +50,9 @@ import freemarker.ext.servlet.ServletContextHashModel;
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
+import java.lang.reflect.InvocationHandler;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -169,6 +177,38 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		}
 
 		return portletDisplayDDMTemplateId;
+	}
+
+	@Override
+	public List<TemplateHandler> getPortletDisplayTemplateHandlers() {
+		List<TemplateHandler> templateHandlers =
+			TemplateHandlerRegistryUtil.getTemplateHandlers();
+
+		List<TemplateHandler> portletDisplayTemplateHandlers =
+			new ArrayList<TemplateHandler>();
+
+		for (TemplateHandler templateHandler : templateHandlers) {
+			if (templateHandler instanceof BasePortletDisplayTemplateHandler) {
+				portletDisplayTemplateHandlers.add(templateHandler);
+			}
+			else if (ProxyUtil.isProxyClass(templateHandler.getClass())) {
+				InvocationHandler invocationHandler =
+					ProxyUtil.getInvocationHandler(templateHandler);
+
+				if (invocationHandler instanceof ClassLoaderBeanHandler) {
+					ClassLoaderBeanHandler classLoaderBeanHandler =
+						(ClassLoaderBeanHandler)invocationHandler;
+
+					Object bean = classLoaderBeanHandler.getBean();
+
+					if (bean instanceof BasePortletDisplayTemplateHandler) {
+						portletDisplayTemplateHandlers.add(templateHandler);
+					}
+				}
+			}
+		}
+
+		return portletDisplayTemplateHandlers;
 	}
 
 	@Override

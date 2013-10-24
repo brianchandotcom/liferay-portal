@@ -82,17 +82,24 @@ long classPK = ParamUtil.getLong(request, "classPK");
 					templateHandlers.add(TemplateHandlerRegistryUtil.getTemplateHandler(classNameId));
 				}
 				else {
-					templateHandlers.addAll(getPortletDisplayTemplateHandlers(permissionChecker, scopeGroupId));
+					templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+
+					for (TemplateHandler templateHandler : templateHandlers) {
+						if (!DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+							templateHandlers.remove(templateHandler);
+						}
+					}
 				}
 
 				if (!templateHandlers.isEmpty()) {
+					ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
 				%>
 
 					<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add">
 						<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
 							<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 						</liferay-portlet:renderURL>
 
@@ -124,19 +131,3 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 	<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/dynamic_data_mapping/template_search.jsp" />
 </aui:nav-bar>
-
-<%!
-public List<TemplateHandler> getPortletDisplayTemplateHandlers(PermissionChecker permissionChecker, long scopeGroupId) {
-	List<TemplateHandler> templateHandlers = TemplateHandlerRegistryUtil.getTemplateHandlers();
-
-	List<TemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<TemplateHandler>();
-
-	for (TemplateHandler templateHandler : templateHandlers) {
-		if ((templateHandler instanceof BasePortletDisplayTemplateHandler) && DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
-			allowedPortletDisplayTemplateHandlers.add(templateHandler);
-		}
-	}
-
-	return allowedPortletDisplayTemplateHandlers;
-}
-%>

@@ -61,7 +61,7 @@
 	</target>
 
 	<target name="compile-java">
-		<copy todir="${javac.destdir}">
+		<copy todir="${javac.destdir}" preservelastmodified="true">
 			<fileset dir="${javac.srcdir}" excludes="**/*.java" />
 		</copy>
 
@@ -88,7 +88,7 @@
 				</uptodate>
 			</not>
 			<then>
-				<copy file="${jar.file}.jar" todir="${deploy.dir}" />
+				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 			</then>
 		</if>
 	</target>

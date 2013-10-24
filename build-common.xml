@@ -480,7 +480,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<mkdir dir="test-classes/${test.type}" />
 				<mkdir dir="test-results/${test.type}" />
 
-				<copy todir="test-classes/${test.type}">
+				<copy todir="test-classes/${test.type}" preservelastmodified="true">
 					<fileset dir="test" includes="*.properties,META-INF/*.dtd,META-INF/*.xml" />
 					<fileset dir="test/${test.type}" includes="**/*.policy,**/*.properties,**/dependencies/**,META-INF/*.xml" />
 				</copy>

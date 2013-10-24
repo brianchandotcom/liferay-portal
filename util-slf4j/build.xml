@@ -9,6 +9,6 @@
 	<property name="manifest.bundle.symbolic.name" value="util-slf4j" />
 
 	<target name="jar" depends="build-common-java.jar">
-		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
 	</target>
 </project>

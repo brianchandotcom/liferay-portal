@@ -37,7 +37,7 @@
 
 		<mkdir dir="classes/com/liferay/portal/security/jaas" />
 
-		<copy todir="classes/com/liferay/portal/security/jaas">
+		<copy todir="classes/com/liferay/portal/security/jaas" preservelastmodified="true">
 			<fileset
 				dir="${portal-impl.classes.dir}/com/liferay/portal/security/jaas"
 				includes="PortalPrincipal.class,PortalRole.class"

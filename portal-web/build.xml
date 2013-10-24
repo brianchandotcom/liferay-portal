@@ -112,7 +112,7 @@
 						<if>
 							<available file="docroot/html/js/aui/${dir.name}/assets/skins/sam" />
 							<then>
-								<copy todir="docroot/html/themes/_unstyled/images/aui">
+								<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
 									<fileset dir="docroot/html/js/aui/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
 								</copy>
 							</then>
@@ -158,11 +158,11 @@
 
 				<!-- Images -->
 
-				<copy todir="docroot/html/themes/_unstyled/images/aui">
+				<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
 					<fileset dir="${alloy.build.dir}/aui-css/img" />
 				</copy>
 
-				<copy todir="docroot/html/themes/_unstyled/images/aui">
+				<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
 					<fileset dir="${alloy.build.dir}/aui-skin-deprecated/images" />
 				</copy>
 
@@ -262,7 +262,7 @@
 				<antcall target="build-ckeditor-plugins-wsc" />
 			</then>
 			<else>
-				<copy todir="docroot/html/js/editor/ckeditor">
+				<copy todir="docroot/html/js/editor/ckeditor" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
 				</copy>
 			</else>
@@ -1059,7 +1059,7 @@
 
 				<delete dir="docroot/html/VAADIN" />
 
-				<copy todir="docroot/html/VAADIN/themes">
+				<copy todir="docroot/html/VAADIN/themes" preservelastmodified="true">
 					<fileset dir="docroot/html/VAADIN_ZIP/VAADIN/themes">
 						<include name="default/**" />
 						<include name="base/**" />
@@ -1069,7 +1069,7 @@
 					</fileset>
 				</copy>
 
-				<copy todir="docroot/html/VAADIN/widgetsets">
+				<copy todir="docroot/html/VAADIN/widgetsets" preservelastmodified="true">
 					<fileset dir="docroot/html/VAADIN_ZIP/VAADIN/widgetsets">
 						<include name="com.vaadin.portal.gwt.PortalDefaultWidgetSet/**" />
 					</fileset>

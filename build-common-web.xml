@@ -30,7 +30,7 @@
 
 				<mkdir dir="${compile.file.dest}" />
 
-				<copy todir="${compile.file.dest}">
+				<copy todir="${compile.file.dest}" preservelastmodified="true">
 					<fileset dir="docroot/WEB-INF/src" excludes="**/*.java" />
 				</copy>
 

@@ -100,6 +100,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 				_showExpanded = false;
 				_showWhenSingleIcon = false;
 				_startPage = null;
+				_triggerCssClass = null;
 			}
 		}
 	}
@@ -222,6 +223,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		_startPage = startPage;
 	}
 
+	public void setTriggerCssClass(String triggerCssClass) {
+		_triggerCssClass = triggerCssClass;
+	}
+
 	public void setUseIconCaret(boolean useIconCaret) {
 		_useIconCaret = useIconCaret;
 	}
@@ -307,6 +312,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 					if (_select) {
 						jspWriter.write(" select");
+					}
+
+					if (Validator.isNotNull(_triggerCssClass)) {
+						jspWriter.write(StringPool.SPACE + _triggerCssClass);
 					}
 
 					String message = _message;
@@ -442,6 +451,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private boolean _showExpanded;
 	private boolean _showWhenSingleIcon;
 	private String _startPage;
+	private String _triggerCssClass;
 	private boolean _useIconCaret;
 
 }

@@ -237,25 +237,6 @@ AUI.add(
 							);
 						}
 
-						if (TOUCH) {
-							instance._dragTask = A.debounce(
-								function(entryLink) {
-									if (entryLink) {
-										entryLink.simulate('click');
-									}
-								},
-								A.DD.DDM.get('clickTimeThresh')
-							);
-
-							dd.after(
-								'afterMouseDown',
-								function(event) {
-									instance._dragTask(event.target.get(STR_NODE).one(instance.get('draggableCSSClass')));
-								},
-								instance
-							);
-						}
-
 						instance._initDropTargets();
 
 						instance._ddHandler = ddHandler;
@@ -368,10 +349,6 @@ AUI.add(
 
 					_onDragStart: function(event) {
 						var instance = this;
-
-						if (instance._dragTask) {
-							instance._dragTask.cancel();
-						}
 
 						var target = event.target;
 

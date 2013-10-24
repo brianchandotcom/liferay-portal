@@ -1,3 +1,5 @@
+@import "mixins";
+
 .app-view-entry {
 	.entry-thumbnail {
 		margin: 0;
@@ -34,7 +36,6 @@
 		font-size: 1.15em;
 		font-weight: bold;
 		padding: 5px 0 10px 0;
-		word-wrap: break-word;
 	}
 
 	.entry-link {
@@ -46,6 +47,10 @@
 
 	.entry-metadata {
 		margin: 10px 0 20px;
+
+		@include respond-to(phone, tablet) {
+			width: 85%;
+		}
 
 		.entry-title {
 			padding-bottom: 3px;
@@ -106,15 +111,12 @@
 	}
 
 	.folder-action, .entry-action {
-		height: 20px;
-		overflow: hidden;
 		position: absolute;
 		right: 6px;
 		top: 10px;
-		width: 22px;
 
-		& .direction-down {
-			height: 20px;
+		.btn {
+			padding: 0;
 		}
 	}
 
@@ -148,8 +150,7 @@
 
 	.overlay.folder-action a, .overlay.entry-action a {
 		display: block;
-		float: right;
-		min-height: 15px;
+		width: 20px;
 	}
 
 	&:hover, &.hover {
@@ -173,6 +174,17 @@
 
 		.entry-metadata .entry-title .entry-title-text {
 			text-decoration: underline;
+		}
+	}
+}
+
+.lfr-search-container td .overlay {
+	&.folder-action, &.entry-action {
+		position: static;
+
+		.btn a {
+			display: block;
+			padding: 4px 12px;
 		}
 	}
 }

@@ -262,6 +262,10 @@
 .app-view-drop-active {
 	background-color: #00A2EA;
 	font-weight: bold;
+
+	.category-portlets & {
+		color: #FFF;
+	}
 }
 
 .basecelleditor [class~="form-validator-message"] {

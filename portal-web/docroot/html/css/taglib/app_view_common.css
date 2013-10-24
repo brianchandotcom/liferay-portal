@@ -137,7 +137,9 @@
 	}
 
 	&.selected a {
-		color: #FFF;
+		&, &:focus, &:hover {
+			color: #FFF;
+		}
 	}
 
 	&.active-area, &.active-area.hover, &.active-area td {

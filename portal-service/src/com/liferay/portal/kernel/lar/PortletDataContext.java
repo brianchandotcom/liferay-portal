@@ -280,6 +280,8 @@ public interface PortletDataContext extends Serializable {
 
 	public long getGroupId();
 
+	public Element getImportDataElement(StagedModel stagedModel);
+
 	public Element getImportDataElement(
 		String name, String attribute, String value);
 

@@ -72,7 +72,6 @@
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGAssetpublisher#selectFrame" />
@@ -102,7 +101,6 @@
 		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="NEW_WEB_CONTENT_ARTICLE_IFRAME" />
 		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="NEW_WEB_CONTENT_ARTICLE_IFRAME" />
 		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
@@ -134,7 +132,6 @@
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
 		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_TITLE_FIELD" value1="${webContentTranslationTitle}" />
 		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_CONTENT_FIELD" value1="${webContentTranslationContent}" />
-		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_SAVE_BUTTON" value1="Save" />
 		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertTextEquals" locator-key1="AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />
@@ -167,7 +164,6 @@
 		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="PGAssetpublisherAddnewwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
-		<execute action="PGAssetpublisherAddnewwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
 		<execute action="PGAssetpublisherAddnewwebcontent#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<execute action="PGAssetpublisher#selectFrame" />

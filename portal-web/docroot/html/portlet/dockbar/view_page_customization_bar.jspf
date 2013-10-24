@@ -97,6 +97,7 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 					</div>
 
 					<div class="page-customization-bar-form">
+
 						<%
 						String taglibImage = "search";
 						String taglibMessage = "view-default-page";

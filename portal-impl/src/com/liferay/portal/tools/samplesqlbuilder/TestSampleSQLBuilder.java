@@ -85,8 +85,7 @@ public class TestSampleSQLBuilder {
 				"");
 
 			DBLoader.loadHypersonic(
-				connection,
-				sqlDir + "/portal-minimal/portal-minimal-hypersonic.sql");
+				connection, sqlDir + "/portal/portal-hypersonic.sql");
 			DBLoader.loadHypersonic(
 				connection, sqlDir + "/indexes/indexes-hypersonic.sql");
 			DBLoader.loadHypersonic(

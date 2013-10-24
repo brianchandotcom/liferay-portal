@@ -24,8 +24,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_TITLE</td>
-	<td>//h1[@class='portlet-title']/span[@class='portlet-title-text']</td>
+	<td>//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
 	<td></td>
 </tr>
 <tr>

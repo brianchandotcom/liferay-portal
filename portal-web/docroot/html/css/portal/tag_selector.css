@@ -1,7 +1,3 @@
-.lfr-tag-selector-input {
-	width: 300px;
-}
-
 .lfr-tags-selector-list {
 	border: 0 solid transparent;
 	border-width: 0 1px 1px;
@@ -38,13 +34,12 @@
 		margin-left: 1em;
 	}
 
-	.lfr-tag-message {
-		display: none;
+	.lfr-tag-selector-search, .lfr-tag-selector-input {
+		margin-bottom: 0;
 	}
 
-	.textfield-content {
-		border-bottom: 1px solid transparent;
-		padding: 5px;
+	.lfr-tag-message {
+		display: none;
 	}
 
 	.no-matches {
@@ -58,18 +53,9 @@
 
 /* Skin */
 
-.lfr-tags-selector-list {
-	border-color: #ccc;
-}
-
 .lfr-tag-selector-popup {
 	label {
-		border-bottom-color: #ccc;
-	}
-
-	.textfield-content {
-		background-color: #D3DADD;
-		border-bottom-color: #AEB8BC;
+		border-bottom-color: #EEE;
 	}
 
 	.no-matches {

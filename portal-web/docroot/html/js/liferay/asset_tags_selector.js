@@ -55,13 +55,17 @@ AUI.add(
 		var TPL_TAG = new A.Template(
 			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
 				'<tpl for="tags">',
-					'<label title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
+					'<label class="checkbox" title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
 				'</tpl>',
 				'<div class="lfr-tag-message">{message}</div>',
 			'</fieldset>'
 		);
 
-		var TPL_URL_SUGGESTIONS = 'http://search.yahooapis.com/ContentAnalysisService/V1/termExtraction?appid=YahooDemo&output=json&context={context}';
+		var TPL_SEARCH_FORM = '<form class="form-search lfr-tag-selector-search row-fluid">' +
+			'<input class="lfr-tag-selector-input search-query span12" placeholder="{0}" type="text" />' +
+		'</form>';
+
+		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{context}"';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
 
@@ -243,16 +247,15 @@ AUI.add(
 
 							bodyNode.html(STR_BLANK);
 
-							var searchField = new A.Textfield(
-								{
-									defaultValue: Liferay.Language.get('search'),
-									labelText: false
-								}
-							).render(bodyNode);
+							var searchForm = A.Node.create(A.Lang.sub(TPL_SEARCH_FORM, [Liferay.Language.get('search')]));
+
+							bodyNode.append(searchForm);
+
+							var searchField = searchForm.one('input');
 
 							var entriesNode = A.Node.create(TPL_TAGS_CONTAINER);
 
-							bodyNode.appendChild(entriesNode);
+							bodyNode.append(entriesNode);
 
 							popup.searchField = searchField;
 							popup.entriesNode = entriesNode;
@@ -267,23 +270,6 @@ AUI.add(
 						}
 
 						return instance._popup;
-					},
-
-					_getProxyData: function(context) {
-						var instance = this;
-
-						var suggestionsURL = Lang.sub(
-							TPL_URL_SUGGESTIONS,
-							{
-								context: encodeURIComponent(context)
-							}
-						);
-
-						var proxyData = {
-							url: suggestionsURL
-						};
-
-						return proxyData;
 					},
 
 					_getEntries: function(callback) {
@@ -379,7 +365,7 @@ AUI.add(
 
 									return value.toLowerCase();
 								},
-								input: popup.searchField.get('node'),
+								input: popup.searchField,
 								nodes: '.' + CSS_TAGS_LIST + ' label'
 							}
 						);
@@ -493,7 +479,7 @@ AUI.add(
 							popup.entriesNode
 						);
 
-						popup.searchField.resetValue();
+						popup.searchField.val('');
 
 						popup.liveSearch.get('nodes').refresh();
 
@@ -549,79 +535,33 @@ AUI.add(
 							context = String(context);
 						}
 
-						var length = context.length;
-
-						var urlSizeLimit = 4096;
-
-						var end = urlSizeLimit;
-						var lastSpaceIndex = 0;
-						var start = 0;
-
-						var suggestionsIO = A.io.request(
-							themeDisplay.getPathMain() + '/portal/rest_proxy',
+						var query = Lang.sub(
+							TPL_SUGGESTIONS_QUERY,
 							{
-								autoLoad: false,
-								dataType: 'json',
-								on: {
-									success: function(event, id, obj) {
-										var results = this.get('responseData');
+								context: context
+							}
+						);
 
-										var resultData = results && results.ResultSet && results.ResultSet.Result;
+						A.YQL(
+							query,
+							function(response) {
+								var results = response.query.results;
 
-										if (resultData) {
-											for (var i = 0; i < resultData.length; i++) {
-												data.push(
-													{
-														name: resultData[i]
-													}
-												);
+								if (results) {
+									var resultData = results.Result;
+
+									for (var i = 0; i < resultData.length; i++) {
+										data.push(
+											{
+												name: resultData[i]
 											}
-										}
-
-										queue.run();
+										);
 									}
 								}
-							}
-						);
 
-						var queue = new A.AsyncQueue(
-							{
-								fn: function() {
-									queue.pause();
-
-									var phrase = context.substr(start, end);
-
-									lastSpaceIndex = urlSizeLimit;
-
-									if (end < length) {
-										lastSpaceIndex = phrase.lastIndexOf(' ');
-
-										phrase = phrase.substr(0, lastSpaceIndex);
-
-										end = start + lastSpaceIndex;
-									}
-
-									start += lastSpaceIndex;
-									end = start + urlSizeLimit;
-
-									suggestionsIO.set('data', instance._getProxyData(phrase));
-
-									suggestionsIO.start();
-								},
-								until: function() {
-									return length <= start;
-								}
-							}
-						);
-
-						queue.after(
-							'complete',
-							function(event) {
 								instance._updateSelectList(AArray.unique(data));
 							}
 						);
-
-						queue.run();
 					},
 
 					_updateHiddenInput: function(event) {
@@ -667,6 +607,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-form-textfield-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window', 'yql']
 	}
 );

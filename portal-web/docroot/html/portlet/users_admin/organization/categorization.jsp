@@ -33,3 +33,9 @@ Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZAT
 <aui:fieldset>
 	<aui:input name="tags" type="assetTags" />
 </aui:fieldset>
+
+<aui:script>
+	function <portlet:namespace />getSuggestionsContent() {
+		return document.<portlet:namespace />fm.<portlet:namespace />comments.value;
+	}
+</aui:script>

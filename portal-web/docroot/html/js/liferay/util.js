@@ -2000,7 +2000,7 @@
 				);
 			}
 		},
-		['aui-base']
+		['aui-base', 'aui-event']
 	);
 
 	Liferay.provide(

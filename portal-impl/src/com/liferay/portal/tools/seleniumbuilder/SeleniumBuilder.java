@@ -113,20 +113,6 @@ public class SeleniumBuilder {
 			}
 		}
 
-		if (types.contains("testsuite")) {
-			TestSuiteConverter testSuiteConverter = new TestSuiteConverter(
-				seleniumBuilderContext);
-
-			Set<String> testSuiteNames =
-				seleniumBuilderContext.getTestSuiteNames();
-
-			for (String testSuiteName : testSuiteNames) {
-				seleniumBuilderContext.validateTestSuiteElements(testSuiteName);
-
-				testSuiteConverter.convert(testSuiteName);
-			}
-		}
-
 		SeleniumBuilderFileUtil seleniumBuilderFileUtil =
 			new SeleniumBuilderFileUtil(baseDir);
 

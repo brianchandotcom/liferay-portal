@@ -151,9 +151,6 @@ public class SeleniumBuilderFileUtil {
 		if (classSuffix.equals("Testcase")) {
 			classSuffix = "TestCase";
 		}
-		else if (classSuffix.equals("Testsuite")) {
-			classSuffix = "TestSuite";
-		}
 
 		return classSuffix;
 	}
@@ -538,9 +535,6 @@ public class SeleniumBuilderFileUtil {
 		else if (fileName.endsWith(".testcase")) {
 			validateTestCaseDocument(fileName, rootElement);
 		}
-		else if (fileName.endsWith(".testsuite")) {
-			validateTestSuiteDocument(fileName, rootElement);
-		}
 	}
 
 	protected void validateActionCommandElement(
@@ -776,7 +770,6 @@ public class SeleniumBuilderFileUtil {
 		String testCaseCommand = executeElement.attributeValue(
 			"test-case-command");
 		String testClass = executeElement.attributeValue("test-class");
-		String testSuite = executeElement.attributeValue("test-suite");
 
 		if (action != null) {
 			if (Validator.isNull(action) ||
@@ -946,25 +939,6 @@ public class SeleniumBuilderFileUtil {
 
 				if (!attributeName.equals("line-number") &&
 					!attributeName.equals("test-class")) {
-
-					throwValidationException(
-						1005, fileName, executeElement, attributeName);
-				}
-			}
-		}
-		else if (testSuite != null) {
-			if (Validator.isNull(testSuite) ||
-				!testSuite.matches(allowedExecuteAttributeValuesRegex)) {
-
-				throwValidationException(
-					1006, fileName, executeElement, "test-suite");
-			}
-
-			for (Attribute attribute : attributes) {
-				String attributeName = attribute.getName();
-
-				if (!attributeName.equals("line-number") &&
-					!attributeName.equals("test-suite")) {
 
 					throwValidationException(
 						1005, fileName, executeElement, attributeName);
@@ -1357,38 +1331,6 @@ public class SeleniumBuilderFileUtil {
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
-			}
-			else {
-				throwValidationException(1002, fileName, element, elementName);
-			}
-		}
-	}
-
-	protected void validateTestSuiteDocument(
-		String fileName, Element rootElement) {
-
-		if (!Validator.equals(rootElement.getName(), "definition")) {
-			throwValidationException(1000, fileName, rootElement);
-		}
-
-		List<Element> elements = rootElement.elements();
-
-		if (elements.isEmpty()) {
-			throwValidationException(
-				1001, fileName, rootElement, new String[] {"execute"});
-		}
-
-		for (Element element : elements) {
-			String elementName = element.getName();
-
-			if (elementName.equals("execute")) {
-				validateExecuteElement(
-					fileName, element,
-					new String[] {
-						"test-case", "test-case-command", "test-class",
-						"test-suite"
-					},
-					".+", new String[0]);
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);

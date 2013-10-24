@@ -550,36 +550,6 @@ public class SeleniumBuilderContextTest {
 				_DIR_NAME + "/CPBlogsAcceptance.testcase");
 	}
 
-	@Test
-	public void testTestSuite() throws Exception {
-		test("TestSuite.testsuite");
-	}
-
-	@Test
-	public void testTestSuiteExecuteElement1011_1() throws Exception {
-		test(
-			"TestSuiteExecuteElement1011_1.testsuite",
-			"Error 1011: Invalid test-case name test-case-fail at " +
-				_DIR_NAME + "/TestSuiteExecuteElement1011_1.testsuite:2");
-	}
-
-	@Test
-	public void testTestSuiteExecuteElement1011_2() throws Exception {
-		test(
-			"TestSuiteExecuteElement1011_2.testsuite",
-			"Error 1011: Invalid test-suite name test-suite-fail at " +
-				_DIR_NAME + "/TestSuiteExecuteElement1011_2.testsuite:2");
-	}
-
-	@Test
-	public void testTestSuiteFileName1008() throws Exception {
-		test(
-			"EndUserCollaborationAcceptance.testsuite",
-			"Error 1008: Duplicate file name EndUserCollaborationAcceptance " +
-				"at " + _DIR_NAME +
-				"/EndUserCollaborationAcceptance.testsuite");
-	}
-
 	protected void test(String fileName) throws Exception {
 		test(fileName, null, false);
 	}

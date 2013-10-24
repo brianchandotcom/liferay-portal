@@ -229,22 +229,10 @@ public class FileEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
 
-		String path = ExportImportPathUtil.getModelPath(
-			portletDataContext, FileEntry.class.getName(),
-			fileEntry.getFileEntryId());
-
-		Element fileEntryElement =
-			portletDataContext.getImportDataElement(
-				FileEntry.class.getSimpleName(), "path", path);
-
-		Element referenceDataElement =
-			portletDataContext.getReferenceDataElement(
-				fileEntryElement, Repository.class,
+		if (!fileEntry.isDefaultRepository()) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, fileEntry, Repository.class,
 				fileEntry.getRepositoryId());
-
-		if (referenceDataElement != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, referenceDataElement);
 		}
 
 		if (fileEntry.getFolderId() !=
@@ -273,6 +261,14 @@ public class FileEntryStagedModelDataHandler
 		serviceContext.setAttribute(
 			"sourceFileName", "A." + fileEntry.getExtension());
 		serviceContext.setUserId(userId);
+
+		String path = ExportImportPathUtil.getModelPath(
+			portletDataContext, FileEntry.class.getName(),
+			fileEntry.getFileEntryId());
+
+		Element fileEntryElement =
+			portletDataContext.getImportDataElement(
+				FileEntry.class.getSimpleName(), "path", path);
 
 		String binPath = fileEntryElement.attributeValue("bin-path");
 

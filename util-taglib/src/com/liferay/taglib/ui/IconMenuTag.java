@@ -373,7 +373,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 							caret = "icon-caret-" + _direction;
 						}
 
-						jspWriter.write("<i class=\"");
+						jspWriter.write(" <i class=\"");
 						jspWriter.write(caret);
 						jspWriter.write("\"></i> ");
 					}

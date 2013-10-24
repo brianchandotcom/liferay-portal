@@ -139,7 +139,7 @@ public class SocialBookmarkTag extends IncludeTag {
 					PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(_type));
 
 				if (Validator.isNull(icon)) {
-					icon = "../aui/share";
+					icon = "../aui/share-sign";
 				}
 			}
 

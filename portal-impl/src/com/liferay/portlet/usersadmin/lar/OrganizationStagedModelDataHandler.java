@@ -105,17 +105,12 @@ public class OrganizationStagedModelDataHandler
 					PortletDataContext.REFERENCE_TYPE_PARENT);
 			}
 
-			exportAddresses(
-				portletDataContext, exportedOrganization, organizationElement);
-			exportEmailAddresses(
-				portletDataContext, exportedOrganization, organizationElement);
+			exportAddresses(portletDataContext, exportedOrganization);
+			exportEmailAddresses(portletDataContext, exportedOrganization);
 			exportOrgLabors(portletDataContext, exportedOrganization);
-			exportPasswordPolicyRel(
-				portletDataContext, exportedOrganization, organizationElement);
-			exportPhones(
-				portletDataContext, exportedOrganization, organizationElement);
-			exportWebsites(
-				portletDataContext, exportedOrganization, organizationElement);
+			exportPasswordPolicyRel(portletDataContext, exportedOrganization);
+			exportPhones(portletDataContext, exportedOrganization);
+			exportWebsites(portletDataContext, exportedOrganization);
 
 			Element organizationElement =
 				portletDataContext.getExportDataElement(exportedOrganization);
@@ -204,8 +199,7 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	protected void exportAddresses(
-			PortletDataContext portletDataContext, Organization organization,
-			Element organizationElement)
+			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException, SystemException {
 
 		List<Address> addresses = AddressLocalServiceUtil.getAddresses(
@@ -220,8 +214,7 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	protected void exportEmailAddresses(
-			PortletDataContext portletDataContext, Organization organization,
-			Element organizationElement)
+			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException, SystemException {
 
 		List<EmailAddress> emailAddresses =
@@ -250,8 +243,7 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	protected void exportPasswordPolicyRel(
-			PortletDataContext portletDataContext, Organization organization,
-			Element organizationElement)
+			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException, SystemException {
 
 		PasswordPolicyRel passwordPolicyRel =
@@ -272,8 +264,7 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	protected void exportPhones(
-			PortletDataContext portletDataContext, Organization organization,
-			Element organizationElement)
+			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException, SystemException {
 
 		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
@@ -288,8 +279,7 @@ public class OrganizationStagedModelDataHandler
 	}
 
 	protected void exportWebsites(
-			PortletDataContext portletDataContext, Organization organization,
-			Element organizationElement)
+			PortletDataContext portletDataContext, Organization organization)
 		throws PortalException, SystemException {
 
 		List<Website> websites = WebsiteLocalServiceUtil.getWebsites(

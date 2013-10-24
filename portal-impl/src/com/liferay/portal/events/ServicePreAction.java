@@ -1339,19 +1339,28 @@ public class ServicePreAction extends Action {
 				List<Portlet> portlets = PortalUtil.getControlPanelPortlets(
 					controlPanelCategory, themeDisplay);
 
+				Portlet firstPortlet = null;
+
 				for (Portlet portlet : portlets) {
 					if (PortletPermissionUtil.hasControlPanelAccessPermission(
 							permissionChecker, scopeGroupId, portlet)) {
 
-						String redirect = HttpUtil.setParameter(
-							currentURL, "p_p_id", portlet.getPortletId());
-
-						response.sendRedirect(
-							PortalUtil.getAbsoluteURL(request, redirect));
+						firstPortlet = portlet;
 
 						break;
 					}
 				}
+
+				if (firstPortlet == null) {
+					firstPortlet = PortalUtil.getFirstSiteAdministrationPortlet(
+						themeDisplay);
+				}
+
+				String redirect = HttpUtil.setParameter(
+					currentURL, "p_p_id", firstPortlet.getPortletId());
+
+				response.sendRedirect(
+					PortalUtil.getAbsoluteURL(request, redirect));
 			}
 		}
 

@@ -403,7 +403,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.runScript(
 			"document.body.innerHTML = \"" + value + "\"");
 
-		liferaySelenium.selectFrame("relative=top");
+		liferaySelenium.selectFrame("relative=parent");
 	}
 
 	public static void waitForElementNotPresent(

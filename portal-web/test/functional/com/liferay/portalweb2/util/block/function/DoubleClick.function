@@ -2,6 +2,8 @@
 	<command name="doubleClickAt">
 		<execute selenium="waitForVisible" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="doubleClickAt" />
 	</command>
 </definition>

@@ -2,17 +2,23 @@
 	<command name="click">
 		<execute selenium="waitForVisible" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="click" />
 	</command>
 
 	<command name="clickAt">
 		<execute selenium="waitForVisible" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAt" />
 	</command>
 
 	<command name="clickAtAndWait">
 		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAtAndWait" />
 	</command>
@@ -40,6 +46,10 @@
 		</if>
 
 		<execute function="Click#clickAt" />
+
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/html/js/aui/aui-url/aui-url-min.js')]" />
 	</command>
 
 	<command name="clickAtSidebarClickAt">
@@ -59,6 +69,8 @@
 	</command>
 
 	<command name="makeVisibleClickAt">
+		<execute selenium="mouseOver" />
+
 		<execute selenium="makeVisible" />
 
 		<execute selenium="clickAt" />
@@ -67,17 +79,23 @@
 	<command name="partialTextClickAt">
 		<execute function="AssertTextEquals#assertPartialText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAt" />
 	</command>
 
 	<command name="partialTextClickAtAndWait">
 		<execute function="AssertTextEquals#assertPartialText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAtAndWait" />
 	</command>
 
 	<command name="pauseClickAt">
 		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="mouseOver" />
 
 		<execute function="Click#clickAt" />
 	</command>
@@ -103,11 +121,15 @@
 	<command name="textClick">
 		<execute function="AssertTextEquals#assertText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="click" />
 	</command>
 
 	<command name="textClickAndWait">
 		<execute function="AssertTextEquals#assertText" />
+
+		<execute selenium="mouseOver" />
 
 		<execute selenium="clickAndWait" />
 	</command>
@@ -115,17 +137,21 @@
 	<command name="textClickAt">
 		<execute function="AssertTextEquals#assertText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAt" />
 	</command>
 
 	<command name="textClickAtAndWait">
 		<execute function="AssertTextEquals#assertText" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAtAndWait" />
 	</command>
 
 	<command name="textClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
 
 		<execute function="Click#textClickAtAndWait" />
 	</command>
@@ -141,17 +167,21 @@
 	<command name="valueClickAt">
 		<execute function="AssertTextEquals#assertValue" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAt" />
 	</command>
 
 	<command name="valueClickAtAndWait">
 		<execute function="AssertTextEquals#assertValue" />
 
+		<execute selenium="mouseOver" />
+
 		<execute selenium="clickAtAndWait" />
 	</command>
 
 	<command name="valueClickAtAndWaitCKEditor">
-		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" />
 
 		<execute function="Click#valueClickAtAndWait" />
 	</command>

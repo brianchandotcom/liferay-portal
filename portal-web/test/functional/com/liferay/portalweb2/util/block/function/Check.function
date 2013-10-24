@@ -2,6 +2,8 @@
 	<command name="clickAt">
 		<execute selenium="waitForVisible" />
 
+		<execute selenium="mouseOver" />
+
 		<if>
 			<condition selenium="isNotChecked" />
 			<then>

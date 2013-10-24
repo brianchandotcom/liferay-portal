@@ -603,6 +603,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					Liferay.Util.openWindow(
 						{
+							dialog: {
+								height: 450,
+								width: 770
+							},
 							id: '<%= namespace %>signInDialog',
 							title: '<%= UnicodeLanguageUtil.get(pageContext, "sign-in") %>',
 							uri: '<%= loginURL.toString() %>'

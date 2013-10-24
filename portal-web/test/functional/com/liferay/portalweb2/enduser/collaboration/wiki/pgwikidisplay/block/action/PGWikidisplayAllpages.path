@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGWikiAllpages</title>
+<title>PGWikidisplayAllpages</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGWikiAllpages</td></tr>
+<tr><td rowspan="1" colspan="3">PGWikidisplayAllpages</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGWikiAllpages</td>
+	<td>PGWikidisplayAllpages</td>
 </tr>
 <tr>
 	<td></td>
@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_36_undoForm']</td>
+	<td>//form[contains(@id, 'undoForm')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
-	<td>//button[@id='_36_addPageButton']</td>
+	<td>//button[contains(@id, 'addPageButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,7 +82,7 @@
 <!--WIKI_PAGE_TABLE-->
 <tr>
 	<td>WIKI_PAGE_TABLE_PAGE</td>
-	<td>//div[@id='_36_ocerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,27 +97,27 @@
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_STATUS</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_REVISION</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_USER</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_DATE</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_ACTIONS</td>
-	<td>//div[@id='_36_ocerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a[@title='Actions']</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

@@ -122,7 +122,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			}
 		}
 
-		if (!passwordPolicy.isChangeable()) {
+		if (!passwordPolicy.isChangeable() && (userId != 0)) {
 			throw new UserPasswordException(
 				UserPasswordException.PASSWORD_NOT_CHANGEABLE);
 		}

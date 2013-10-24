@@ -160,6 +160,23 @@ IE 6 var18, , 6.0, mozilla/4.0 (compatible; u; msie 6.0; windows nt 5.1)
 IE 6 var19, , 6.0, mozilla/4.0 (compatible; msie 6.0; windows nt 6.1; trident/4.0; mozilla/4.0 (compatible; msie 6.0; windows nt 5.1; sv1) ; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; infopath.3; tablet pc 2.0)
 IE 6 var20, , 6.0, mozilla/4.0 (compatible; msie 6.0; windows nt 6.1; trident/4.0; gtb6.5; qqdownload 534; mozilla/4.0 (compatible; msie 6.0; windows nt 5.1; sv1) ; slcc2; .net clr 2.0.50727; media center pc 6.0; .net clr 3.5.30729; .net clr 3.0.30729)
 
+## Mobile
+
+mozilla/5.0 (linux; android 4.3; nexus 4 build/jwr66y) applewebkit/537.36 (khtml, like gecko) chrome/30.0.1599.82 mobile safari/537.36
+mozilla/5.0 (linux; android 4.3; nexus 7 build/jwr66y) applewebkit/537.36 (khtml, like gecko) chrome/30.0.1599.82 safari/537.36
+Mozilla/5.0 (linux; u; android 4.2.2; en-us; gt-i9300 build/jdq39e) applewebkit/534.30 (khtml, like gecko) version/4.0 mobile safari/534.30 cyanogenmod/10.1.3/i9300
+Mozilla/5.0 (linux; u; android 4.0.3; ko-kr; lg-l160l build/iml74k) applewebkit/534.30 (khtml, like gecko) version/4.0 mobile safari/534.30
+Mozilla/5.0 (linux; u; android 4.0.3; de-ch; htc sensation build/iml74k) applewebkit/534.30 (khtml, like gecko) version/4.0 mobile safari/534.30
+Mozilla/5.0 (linux; u; android 2.3.5; zh-cn; htc_incredibles_s710e build/grj90) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari/533.1
+Mozilla/5.0 (linux; u; android 2.3.5; en-us; htc vision build/gri40) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari/533.1
+Mozilla/5.0 (linux; u; android 2.3.4; fr-fr; htc desire build/grj22) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari/533.1
+Mozilla/5.0 (linux; u; android 2.3.4; en-us; t-mobile mytouch 3g slide build/gri40) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari/533.1
+Mozilla/5.0 (linux; u; android 2.3.3; zh-tw; htc_pyramid build/gri40) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari/533.1
+Mozilla/5.0 (linux; u; android 2.3.3; zh-tw; htc_pyramid build/gri40) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari
+Mozilla/5.0 (linux; u; android 2.3.3; zh-tw; htc pyramid build/gri40) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari/533.1
+Mozilla/5.0 (linux; u; android 2.3.3; ko-kr; lg-lu3000 build/gri40) applewebkit/533.1 (khtml, like gecko) version/4.0 mobile safari/533.1
+
+
 ## Opera
 
 Opera 12 var1, 12.14, 9.80, opera/9.80 (windows nt 6.0) presto/2.12.388 version/12.14

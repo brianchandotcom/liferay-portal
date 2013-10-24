@@ -57,7 +57,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 							</portlet:actionURL>
 
 							<liferay-ui:icon
-								cssClass='<%= (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId()) ? "selected" : null %>'
+								cssClass='<%= (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId()) ? "disabled" : null %>'
 								message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
 								url="<%= layoutBranchURL %>"
 							/>

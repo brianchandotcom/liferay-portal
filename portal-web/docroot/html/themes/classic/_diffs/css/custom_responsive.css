@@ -51,6 +51,12 @@
 			position: relative;
 			z-index: 400;
 
+			.info-items {
+				height: auto;
+				position: static;
+				width: 300px;
+			}
+
 			.navbar-inner {
 				width: auto;
 

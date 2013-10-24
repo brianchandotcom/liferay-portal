@@ -31,10 +31,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		font-weight: 200;
 	}
 
-	#banner {
-		display: none;
-	}
-
 	#wrapper {
 		padding: 0;
 	}

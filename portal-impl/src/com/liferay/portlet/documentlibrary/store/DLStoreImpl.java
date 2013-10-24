@@ -716,7 +716,7 @@ public class DLStoreImpl implements DLStore {
 		return true;
 	}
 
-	protected void validate(String versionLabel)
+	protected void isValidVersion(String versionLabel)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(versionLabel)) {
@@ -732,9 +732,9 @@ public class DLStoreImpl implements DLStore {
 			String fileName, boolean validateFileExtension, String versionLabel)
 		throws PortalException, SystemException {
 
-		validate(fileName, validateFileExtension);
+		isValidVersion(versionLabel);
 
-		validate(versionLabel);
+		validate(fileName, validateFileExtension);
 	}
 
 	protected void validate(
@@ -742,11 +742,11 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, File file, String versionLabel)
 		throws PortalException, SystemException {
 
+		isValidVersion(versionLabel);
+
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension,
 			file);
-
-		validate(versionLabel);
 	}
 
 	protected void validate(
@@ -754,10 +754,10 @@ public class DLStoreImpl implements DLStore {
 			boolean validateFileExtension, InputStream is, String versionLabel)
 		throws PortalException, SystemException {
 
+		isValidVersion(versionLabel);
+
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension, is);
-
-		validate(versionLabel);
 	}
 
 	protected void validate(

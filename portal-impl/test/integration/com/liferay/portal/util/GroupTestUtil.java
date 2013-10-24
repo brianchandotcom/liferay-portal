@@ -31,6 +31,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.StagingLocalServiceUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -163,9 +164,8 @@ public class GroupTestUtil {
 				parameterName, parameters.get(parameterName)[0]);
 		}
 
-		StagingUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), group, group, false, false,
-			serviceContext);
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, false, false, serviceContext);
 	}
 
 	public static Group updateDisplaySettings(

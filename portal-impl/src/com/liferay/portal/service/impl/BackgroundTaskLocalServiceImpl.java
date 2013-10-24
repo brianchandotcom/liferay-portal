@@ -322,6 +322,16 @@ public class BackgroundTaskLocalServiceImpl
 
 	@Override
 	public BackgroundTask fetchFirstBackgroundTask(
+			long groupId, String taskExecutorClassName, boolean completed,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return backgroundTaskPersistence.fetchByG_T_C_First(
+			groupId, taskExecutorClassName, completed, orderByComparator);
+	}
+
+	@Override
+	public BackgroundTask fetchFirstBackgroundTask(
 			String taskExecutorClassName, int status)
 		throws SystemException {
 

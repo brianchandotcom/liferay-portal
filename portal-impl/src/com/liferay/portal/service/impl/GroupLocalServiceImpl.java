@@ -820,7 +820,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			if (group.hasStagingGroup()) {
 				try {
-					StagingUtil.disableStaging(group, serviceContext);
+					stagingLocalService.disableStaging(group, serviceContext);
 				}
 				catch (Exception e) {
 					_log.error(

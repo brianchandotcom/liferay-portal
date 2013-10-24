@@ -204,25 +204,19 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute action="PGStaging#assertClick" locator-key1="STAGING_BUTTON" value1="Staging" />
-		<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-
-		<execute action="PGStaging#click" locator-key1="STAGING_MENU_MANAGE_PAGE_VARIATION" />
-
-		<execute action="PGStagingManagepagevariations#selectFrame" locator-key1="MANAGE_PAGE_VARIATIONS_IFRAME" />
-		<execute action="PGStagingManagepagevariations#assertClick" locator-key1="ADD_PAGE_VARIATION_BUTTON" value1="Add Page Variation" />
-		<execute action="PGStagingManagepagevariations#type" locator-key1="ADD_PAGE_VARIATION_NAME_FIELD" value1="${pageVariationName}" />
-		<execute action="PGStagingManagepagevariations#assertClick" locator-key1="ADD_PAGE_VARIATION_ADD_BUTTON" value1="Add" />
-		<execute action="PGStagingManagepagevariations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Page variation was added." />
+		<execute macro="Staging#addPageVariationPG">
+			<var name="pageVariationName" value="${pageVariationName}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<var name="key_pageVariationName" value="${pageVariationName}" />
-
-		<execute action="PGStaging#assertTextEquals" locator-key1="PAGE_VARIATION" value1="${pageVariationName}" />
+		<execute macro="Staging#viewPageVariationPG">
+			<var name="pageVariationName" value="${pageVariationName}" />
+		</execute>
 	</command>
 
 	<command name="AddSitePagesVariation" priority="5">

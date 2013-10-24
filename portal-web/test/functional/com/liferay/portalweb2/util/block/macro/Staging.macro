@@ -28,6 +28,23 @@
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
 	</command>
 
+	<command name="addPageVariationPG">
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+			</then>
+		</if>
+
+		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_MANAGE_PAGE_VARIATION" value1="Manage Page Variations" />
+
+		<execute action="PGStagingManagepagevariations#selectFrame" locator-key1="MANAGE_PAGE_VARIATIONS_IFRAME" />
+		<execute action="PGStagingManagepagevariations#assertClick" locator-key1="ADD_PAGE_VARIATION_BUTTON" value1="Add Page Variation" />
+		<execute action="PGStagingManagepagevariations#type" locator-key1="ADD_PAGE_VARIATION_NAME_FIELD" value1="${pageVariationName}" />
+		<execute action="PGStagingManagepagevariations#assertClick" locator-key1="ADD_PAGE_VARIATION_ADD_BUTTON" value1="Add" />
+		<execute action="PGStagingManagepagevariations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Page variation was added." />
+	</command>
+
 	<command name="addSitePagesVariationPG">
 		<if>
 			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
@@ -82,6 +99,12 @@
 		<execute action="PGStagingPublishtolivenow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
 		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="viewPageVariationPG">
+		<var name="key_pageVariationName" value="${pageVariationName}" />
+
+		<execute action="PGStaging#assertTextEquals" locator-key1="PAGE_VARIATION" value1="${pageVariationName}" />
 	</command>
 
 	<command name="viewStagingLocalLivePG">

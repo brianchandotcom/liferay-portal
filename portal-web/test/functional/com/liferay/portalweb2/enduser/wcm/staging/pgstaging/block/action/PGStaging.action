@@ -1,10 +1,14 @@
 <definition>
 	<command name="assertClick">
 		<case locator-key1="STAGING_DROP_DOWN_BUTTON">
-			<execute function="AssertClick#assertTextClickAt" />
+			<execute function="AssertClick#assertTextClickAtClickDockbar" />
 		</case>
 
 		<case locator-key1="STAGING_MENULIST_MANAGE_SITE_PAGES_VARIATIONS">
+			<execute function="AssertClick#assertTextClickAndWait" />
+		</case>
+
+		<case locator-key1="STAGING_MENU_MANAGE_PAGE_VARIATION">
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
 	</command>

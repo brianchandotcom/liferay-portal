@@ -1294,7 +1294,10 @@ public class ServicePreAction extends Action {
 		// Control Panel redirects
 
 		if (group.isControlPanel() && Validator.isNotNull(ppid)) {
-			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+			boolean switchGroup = ParamUtil.getBoolean(request, "switchGroup");
+
+			if (switchGroup &&
+				!PortletPermissionUtil.hasControlPanelAccessPermission(
 					permissionChecker, scopeGroupId, ppid)) {
 
 				String redirect = HttpUtil.removeParameter(

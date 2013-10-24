@@ -470,6 +470,7 @@ public class PortalImpl implements Portal {
 
 		_reservedParams.add("saveLastPath");
 		_reservedParams.add("scroll");
+		_reservedParams.add("switchGroup");
 
 		_servletContextName =
 			PortalContextLoaderListener.getPortalServlerContextName();

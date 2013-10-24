@@ -916,6 +916,16 @@ public class ProcessExecutorTest {
 
 			_waitForSignalFile(signalFile, false);
 
+			Assert.assertTrue(signalFile.createNewFile());
+
+			thread.join();
+
+			Exception e = exceptionAtomicReference.get();
+
+			if (e != null) {
+				throw e;
+			}
+
 			String outByteArrayOutputStreamString =
 				outByteArrayOutputStream.toString();
 
@@ -927,15 +937,6 @@ public class ProcessExecutorTest {
 
 			Assert.assertTrue(
 				errByteArrayOutputStreamString.contains(logMessage));
-			Assert.assertTrue(signalFile.createNewFile());
-
-			thread.join();
-
-			Exception e = exceptionAtomicReference.get();
-
-			if (e != null) {
-				throw e;
-			}
 		}
 		finally {
 			System.setOut(oldOutPrintStream);

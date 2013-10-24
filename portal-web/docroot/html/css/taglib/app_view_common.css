@@ -180,13 +180,9 @@
 	&.folder-action, &.entry-action {
 		position: static;
 
-		.btn {
-			padding: 0;
-
-			a {
-				display: block;
-				padding: 4px 12px;
-			}
+		.btn a {
+			display: block;
+			padding: 4px 12px;
 		}
 	}
 }

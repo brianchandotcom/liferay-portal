@@ -77,6 +77,7 @@
 			.folder-action, .entry-action {
 				a {
 					padding: 10px 12px;
+					width: auto;
 				}
 			}
 		}

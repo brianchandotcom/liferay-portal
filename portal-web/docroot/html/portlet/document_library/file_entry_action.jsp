@@ -113,7 +113,7 @@ if (fileShortcut != null) {
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu cssClass="btn" direction='<%= showMinimalActionButtons ? "down" : "left" %>' extended="<%= showMinimalActionButtons ? false : true %>" icon="<%= showMinimalActionButtons ? StringPool.BLANK : null %>" message='<%= showMinimalActionButtons ? StringPool.BLANK : "actions" %>' showExpanded="<%= false %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
+	<liferay-ui:icon-menu direction='<%= showMinimalActionButtons ? "down" : "left" %>' extended="<%= showMinimalActionButtons ? false : true %>" icon="<%= showMinimalActionButtons ? StringPool.BLANK : null %>" message='<%= showMinimalActionButtons ? StringPool.BLANK : "actions" %>' showExpanded="<%= false %>" showWhenSingleIcon="<%= showWhenSingleIcon %>" triggerCssClass="btn">
 		<%@ include file="/html/portlet/document_library/action/download.jspf" %>
 		<%@ include file="/html/portlet/document_library/action/open_document.jspf" %>
 		<%@ include file="/html/portlet/document_library/action/view_original.jspf" %>

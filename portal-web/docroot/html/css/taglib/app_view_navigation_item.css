@@ -37,12 +37,7 @@
 				background: transparent;
 				border-width: 0;
 				margin: 0;
-				padding: 0;
-
-				a {
-					display: block;
-					padding: 9px 9px 4px;
-				}
+				padding: 9px 9px 4px;
 			}
 		}
 	}

@@ -174,12 +174,14 @@ public class DDMTemplateStagedModelDataHandler
 		Element templateElement = portletDataContext.getExportDataElement(
 			template);
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure structure = DDMStructureLocalServiceUtil.fetchStructure(
 			template.getClassPK());
 
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, template, structure,
-			PortletDataContext.REFERENCE_TYPE_STRONG);
+		if (structure != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, template, structure,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
+		}
 
 		if (template.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(

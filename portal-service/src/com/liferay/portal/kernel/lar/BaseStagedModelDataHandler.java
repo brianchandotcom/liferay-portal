@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -248,24 +247,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected void validateExport(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
-
-		if (stagedModel instanceof StagedGroupedModel) {
-			StagedGroupedModel stagedGroupedModel =
-				(StagedGroupedModel)stagedModel;
-
-			if ((stagedGroupedModel.getGroupId() !=
-					portletDataContext.getGroupId()) &&
-				(stagedGroupedModel.getGroupId() !=
-					portletDataContext.getScopeGroupId())) {
-
-				PortletDataException pde = new PortletDataException(
-					PortletDataException.INVALID_GROUP);
-
-				pde.setStagedModel(stagedModel);
-
-				throw pde;
-			}
-		}
 
 		if (stagedModel instanceof WorkflowedModel) {
 			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;

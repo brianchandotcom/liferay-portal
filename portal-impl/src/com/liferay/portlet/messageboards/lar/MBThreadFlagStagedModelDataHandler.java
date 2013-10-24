@@ -104,8 +104,14 @@ public class MBThreadFlagStagedModelDataHandler
 		long rootMessageId = GetterUtil.getLong(
 			element.attributeValue("root-message-id"));
 
-		StagedModelDataHandlerUtil.importReferenceStagedModel(
-			portletDataContext, threadFlag, MBMessage.class, rootMessageId);
+		String rootMessagePath = ExportImportPathUtil.getModelPath(
+			portletDataContext, MBMessage.class.getName(), rootMessageId);
+
+		MBMessage rootMessage =
+			(MBMessage)portletDataContext.getZipEntryAsObject(rootMessagePath);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, rootMessage);
 
 		Map<Long, Long> threadIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

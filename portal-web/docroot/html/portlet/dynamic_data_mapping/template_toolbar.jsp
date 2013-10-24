@@ -127,12 +127,12 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 <%!
 public List<TemplateHandler> getPortletDisplayTemplateHandlers(PermissionChecker permissionChecker, long scopeGroupId) {
-	List<TemplateHandler> templateHandlers = TemplateHandlerRegistryUtil.getTemplateHandlers();
+	List<TemplateHandler> templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
 
 	List<TemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<TemplateHandler>();
 
 	for (TemplateHandler templateHandler : templateHandlers) {
-		if ((templateHandler instanceof BasePortletDisplayTemplateHandler) && DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+		if (DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 			allowedPortletDisplayTemplateHandlers.add(templateHandler);
 		}
 	}

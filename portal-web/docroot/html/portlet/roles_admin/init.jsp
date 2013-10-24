@@ -21,7 +21,6 @@ page import="com.liferay.portal.RequiredRoleException" %><%@
 page import="com.liferay.portal.RoleAssignmentException" %><%@
 page import="com.liferay.portal.RoleNameException" %><%@
 page import="com.liferay.portal.RolePermissionsException" %><%@
-page import="com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler" %><%@
 page import="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil" %><%@

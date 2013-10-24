@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.editor.EditorUtil" %><%@
-page import="com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
 page import="com.liferay.portal.kernel.template.TemplateVariableDefinition" %><%@
 page import="com.liferay.portal.kernel.template.TemplateVariableGroup" %><%@

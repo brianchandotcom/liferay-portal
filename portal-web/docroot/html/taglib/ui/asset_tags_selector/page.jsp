@@ -36,7 +36,7 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 
 String curTagsParam = request.getParameter(hiddenInput);
 
-if (curTagsParam != null) {
+if (Validator.isNotNull(curTagsParam)) {
 	curTags = curTagsParam;
 }
 %>

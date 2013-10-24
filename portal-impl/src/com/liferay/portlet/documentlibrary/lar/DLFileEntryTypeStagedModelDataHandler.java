@@ -19,18 +19,21 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +67,69 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
+	public Map<String, String> getReferenceAttributes(
+		PortletDataContext portletDataContext, DLFileEntryType fileEntryType) {
+
+		Map<String, String> referenceAttributes = new HashMap<String, String>();
+
+		referenceAttributes.put(
+			"file-entry-type-key", fileEntryType.getFileEntryTypeKey());
+
+		long defaultUserId = 0;
+
+		try {
+			defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				fileEntryType.getCompanyId());
+		}
+		catch (Exception e) {
+			return referenceAttributes;
+		}
+
+		boolean preloaded = false;
+
+		if (defaultUserId == fileEntryType.getUserId()) {
+			preloaded = true;
+		}
+
+		referenceAttributes.put("preloaded", String.valueOf(preloaded));
+
+		return referenceAttributes;
+	}
+
+	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, Element element)
+		throws PortletDataException {
+
+		String uuid = element.attributeValue("uuid");
+		String fileEntryTypeKey = element.attributeValue("file-entry-type-key");
+
+		boolean preloaded = GetterUtil.getBoolean(
+			element.attributeValue("preloaded"));
+
+		DLFileEntryType existingFileEntryType = null;
+
+		try {
+			existingFileEntryType = getExistingFileEntryType(
+				uuid, portletDataContext.getCompanyGroupId(), fileEntryTypeKey,
+				preloaded);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+
+		Map<Long, Long> fileEntryTypeIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFileEntryType.class);
+
+		long fileEntryTypeId = GetterUtil.getLong(
+			element.attributeValue("class-pk"));
+
+		fileEntryTypeIds.put(
+			fileEntryTypeId, existingFileEntryType.getFileEntryTypeId());
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
 			DLFileEntryType fileEntryType)
@@ -85,28 +151,16 @@ public class DLFileEntryTypeStagedModelDataHandler
 				StringUtil.valueOf(ddmStructure.getStructureId()));
 		}
 
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			fileEntryType.getCompanyId());
+
+		if (defaultUserId == fileEntryType.getUserId()) {
+			fileEntryTypeElement.addAttribute("preloaded", "true");
+		}
+
 		portletDataContext.addClassedModel(
 			fileEntryTypeElement,
 			ExportImportPathUtil.getModelPath(fileEntryType), fileEntryType);
-	}
-
-	@Override
-	protected void doImportCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long fileEntryTypeId)
-		throws Exception {
-
-		DLFileEntryType existingFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.
-				fetchDLFileEntryTypeByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> fileEntryTypeIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntryType.class);
-
-		fileEntryTypeIds.put(
-			fileEntryTypeId, existingFileEntryType.getFileEntryTypeId());
 	}
 
 	@Override
@@ -148,11 +202,18 @@ public class DLFileEntryTypeStagedModelDataHandler
 		DLFileEntryType importedDLFileEntryType = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
+			Element element =
+				portletDataContext.getImportDataStagedModelElement(
+					fileEntryType);
+
+			boolean preloaded = GetterUtil.getBoolean(
+				element.attributeValue("preloaded"));
+
 			DLFileEntryType existingDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.
-					fetchDLFileEntryTypeByUuidAndGroupId(
-						fileEntryType.getUuid(),
-						portletDataContext.getScopeGroupId());
+				getExistingFileEntryType(
+					fileEntryType.getUuid(),
+					portletDataContext.getScopeGroupId(),
+					fileEntryType.getFileEntryTypeKey(), preloaded);
 
 			if (existingDLFileEntryType == null) {
 				serviceContext.setUuid(fileEntryType.getUuid());
@@ -215,6 +276,27 @@ public class DLFileEntryTypeStagedModelDataHandler
 			DDMStructureLocalServiceUtil.updateDDMStructure(
 				importedDDMStructure);
 		}
+	}
+
+	protected DLFileEntryType getExistingFileEntryType(
+			String uuid, long groupId, String fileEntryTypeKey,
+			boolean preloaded)
+		throws Exception {
+
+		DLFileEntryType existingDLFileEntryType = null;
+
+		if (!preloaded) {
+			existingDLFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.
+					fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
+		}
+		else {
+			existingDLFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+					groupId, fileEntryTypeKey);
+		}
+
+		return existingDLFileEntryType;
 	}
 
 	@Override

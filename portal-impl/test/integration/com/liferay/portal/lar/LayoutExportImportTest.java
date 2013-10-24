@@ -257,7 +257,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	protected void testAvailableLocales(
 			Locale[] sourceAvailableLocales, Locale[] targetAvailableLocales,
-			boolean fail)
+			boolean expectFailure)
 		throws Exception {
 
 		group = GroupTestUtil.updateDisplaySettings(
@@ -273,12 +273,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		try {
 			exportImportLayouts(layoutIds, getImportParameterMap());
 
-			if (fail) {
+			if (expectFailure) {
 				Assert.fail();
 			}
 		}
 		catch (LocaleException le) {
-			if (!fail) {
+			if (!expectFailure) {
 				Assert.fail();
 			}
 		}

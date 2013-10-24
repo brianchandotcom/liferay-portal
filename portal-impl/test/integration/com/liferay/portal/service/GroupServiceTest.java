@@ -1002,7 +1002,7 @@ public class GroupServiceTest {
 
 	protected void testUpdateDisplaySettings(
 			Locale[] portalAvailableLocales, Locale[] groupAvailableLocales,
-			Locale groupDefaultLocale, boolean fail)
+			Locale groupDefaultLocale, boolean expectFailure)
 		throws Exception {
 
 		UnicodeProperties properties = new UnicodeProperties();
@@ -1022,12 +1022,12 @@ public class GroupServiceTest {
 			GroupTestUtil.updateDisplaySettings(
 				group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
-			if (fail) {
+			if (expectFailure) {
 				Assert.fail();
 			}
 		}
 		catch (LocaleException le) {
-			if (!fail) {
+			if (!expectFailure) {
 				Assert.fail();
 			}
 		}

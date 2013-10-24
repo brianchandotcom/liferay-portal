@@ -210,6 +210,37 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_FOLDER</td>
+	<td>//input[@value='com.liferay.portlet.journalADD_FOLDER']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_STRUCTURE</td>
+	<td>//input[@value='com.liferay.portlet.journalADD_STRUCTURE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_TEMPLATE</td>
+	<td>//input[@value='com.liferay.portlet.journalADD_TEMPLATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_WEB_CONTENT_ADD_WEB_CONTENT</td>
+	<td>//input[@value='com.liferay.portlet.journalADD_ARTICLE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_ALL_CHECKBOX</td>

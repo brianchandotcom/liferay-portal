@@ -133,7 +133,11 @@ if (Validator.isNotNull(portletResource)) {
 
 			List resultRows = searchContainer.getResultRows();
 
-			for (TemplateHandler templateHandler : PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers()) {
+			List <TemplateHandler> templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+
+			ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
+
+			for (TemplateHandler templateHandler : templateHandlers) {
 				String actionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
 				String resource = templateHandler.getResourceName();
 				int scope = ResourceConstants.SCOPE_COMPANY;

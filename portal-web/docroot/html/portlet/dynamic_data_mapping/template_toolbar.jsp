@@ -92,6 +92,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				}
 
 				if (!templateHandlers.isEmpty()) {
+					ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
 				%>
 
 					<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add">

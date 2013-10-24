@@ -7,7 +7,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddChildChildSite">
+	<command name="AddChildChildSite" priority="5">
 		<var name="childChildSiteName" value="Child Child SiteName" />
 		<var name="childSiteName" value="Child SiteName" />
 		<var name="siteName" value="Site Name" />
@@ -53,7 +53,7 @@
 		</execute>
 	</command>
 
-	<command name="AddChildSite">
+	<command name="AddChildSite" priority="5">
 		<var name="childSiteName" value="Child SiteName" />
 		<var name="siteName" value="Site Name" />
 
@@ -84,7 +84,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSite">
+	<command name="AddSite" priority="5">
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoCP">
@@ -104,7 +104,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitesMultiple">
+	<command name="AddSitesMultiple" priority="5">
 		<var name="siteName1" value="Site1 Name" />
 		<var name="siteName2" value="Site2 Name" />
 		<var name="siteName3" value="Site3 Name" />
@@ -158,7 +158,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSite">
+	<command name="DeleteSite" priority="5">
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoCP">
@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSite">
+	<command name="EditSite" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteNameEdit" value="Site Name Edit" />
 		<var name="siteScopeName" value="Site Name" />
@@ -210,7 +210,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSite">
+	<command name="SearchSite" priority="5">
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoCP">
@@ -230,7 +230,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDisplayParentSiteViaSitesDirectory">
+	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
 		<var name="childChildSiteName" value="Child ChildSiteName" />
 		<var name="childSiteName" value="Child SiteName" />
 		<var name="directorySites" value="Parent Level" />
@@ -333,7 +333,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteHierarchiesViaSitesDirectory">
+	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="5">
 	    <var name="childChildSiteName1" value="Child ChildSite1Name" />
 	    <var name="childChildSiteName2" value="Child ChildSite2Name" />
 	    <var name="childSiteName1" value="Child Site1Name" />

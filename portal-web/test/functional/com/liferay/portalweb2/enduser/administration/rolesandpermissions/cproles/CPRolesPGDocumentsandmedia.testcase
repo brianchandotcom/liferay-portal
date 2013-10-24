@@ -21,7 +21,7 @@
 		<execute macro="DMDocument#tearDownCP" />
 	</tear-down>
 
-	<command name="AddDMDocumentRegRole">
+	<command name="AddDMDocumentRegRole" priority="5">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_DOCUMENT" />
@@ -89,7 +89,7 @@
 		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="TOOLBAR_ADD" value1="Add" />
 	</command>
 
-	<command name="AddDMDocumentSiteMemberRoleInline">
+	<command name="AddDMDocumentSiteMemberRoleInline" priority="5">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="pageTypeSite" value="Site" />
@@ -191,7 +191,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDMDocumentSiteRole">
+	<command name="AddDMDocumentSiteRole" priority="5">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
 		<var name="pageTypeSite" value="Site" />
@@ -287,7 +287,7 @@
 		<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 	</command>
 
-	<command name="ViewDMFolderGuestInline">
+	<command name="ViewDMFolderGuestInline" priority="5">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 		<var name="pageName" value="Documents and Media Page" />
@@ -382,7 +382,7 @@
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="BREADCRUMB_FOLDER" value1="${dmFolderName}" />
 	</command>
 
-	<command name="DeleteDMFolderRegRoleInline">
+	<command name="DeleteDMFolderRegRoleInline" priority="5">
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 		<var name="pageName" value="Documents and Media Page" />

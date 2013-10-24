@@ -18,7 +18,7 @@
 		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSiteRegRole">
+	<command name="AddSiteRegRole" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE" />
 		<var name="permissionDefinition1Value" value="Add Site" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE_TEMPLATE" />
@@ -113,7 +113,7 @@
 		<execute action="CPSites#assertElementNotPresent" locator-key1="ADD" />
 	</command>
 
-	<command name="SearchPermissions">
+	<command name="SearchPermissions" priority="5">
 		<var name="childSiteName" value="Child SiteName" />
 		<var name="roleName" value="Roles Regrole Name" />
 		<var name="siteName" value="Parent Site Name" />
@@ -277,7 +277,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteManageChildSiteSiteRole">
+	<command name="ViewSiteManageChildSiteSiteRole" priority="5">
 		<var name="childSiteName1" value="Child SiteName1" />
 		<var name="childSiteName2" value="Child SiteName2" />
 		<var name="pageName" value="Site Page" />
@@ -468,7 +468,7 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 	</command>
 
-	<command name="ViewSiteManagePagesRegRole">
+	<command name="ViewSiteManagePagesRegRole" priority="5">
 		<var name="pageName" value="Site Page" />
 		<var name="permissionDefinitionKey1" value="CONTROL_PANEL_SITES_SITES_ACCESS_IN_CONTROL_PANEL" />
 		<var name="permissionDefinitionKey2" value="CONTROL_PANEL_SITES_SITES_SITE_MANAGE_PAGES" />

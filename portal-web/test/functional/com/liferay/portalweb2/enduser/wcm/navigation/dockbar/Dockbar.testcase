@@ -3,7 +3,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="GotoAdministration">
+	<command name="GotoAdministration" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -21,7 +21,7 @@
 		</execute>
 	</command>
 
-	<command name="GotoConfiguration">
+	<command name="GotoConfiguration" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
@@ -31,7 +31,7 @@
 		</execute>
 	</command>
 
-	<command name="GotoContent">
+	<command name="GotoContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>

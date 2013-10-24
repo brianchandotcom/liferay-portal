@@ -16,7 +16,7 @@
 		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
-	<command name="AddOrganizationRoleRegRole">
+	<command name="AddOrganizationRoleRegRole" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE" />
 		<var name="permissionDefinition1Value" value="Add Role" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_ACCESS_IN_CONTROL_PANEL" />
@@ -111,7 +111,7 @@
 		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
 	</command>
 
-	<command name="AddRegularRoleRegRole">
+	<command name="AddRegularRoleRegRole" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE" />
 		<var name="permissionDefinition1Value" value="Add Role" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_ACCESS_IN_CONTROL_PANEL" />
@@ -204,7 +204,7 @@
 		<execute action="CPRoles#assertElementNotPresent" locator-key1="ADD" />
 	</command>
 
-	<command name="AddSiteRoleRegRole">
+	<command name="AddSiteRoleRegRole" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ROLE" />
 		<var name="permissionDefinition1Value" value="Add Role" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_ROLES_ACCESS_IN_CONTROL_PANEL" />

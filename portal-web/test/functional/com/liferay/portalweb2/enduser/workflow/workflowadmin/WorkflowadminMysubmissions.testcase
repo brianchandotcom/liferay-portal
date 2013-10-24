@@ -22,7 +22,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="WithdrawTaskAssignedToMeByActions">
+	<command name="WithdrawTaskAssignedToMeByActions" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -66,7 +66,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskAssignedToMeByDetails">
+	<command name="WithdrawTaskAssignedToMeByDetails" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -112,7 +112,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskAssignedToMyRolesByActions">
+	<command name="WithdrawTaskAssignedToMyRolesByActions" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -146,7 +146,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskAssignedToMyRolesByDetails">
+	<command name="WithdrawTaskAssignedToMyRolesByDetails" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -181,7 +181,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskCompletedNoByActions">
+	<command name="WithdrawTaskCompletedNoByActions" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -226,7 +226,7 @@
 		</execute>
 	</command>
 
-	<command name="WithdrawTaskCompletedNoByDetails">
+	<command name="WithdrawTaskCompletedNoByDetails" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

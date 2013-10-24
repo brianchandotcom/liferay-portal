@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SearchWebContent">
+	<command name="SearchWebContent" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentCategory">
+	<command name="SearchWebContentCategory" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
@@ -204,7 +204,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentCategoryQuotes">
+	<command name="SearchWebContentCategoryQuotes" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
@@ -295,7 +295,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentQuotes">
+	<command name="SearchWebContentQuotes" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -419,7 +419,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentTag">
+	<command name="SearchWebContentTag" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -488,7 +488,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentTagQuotes">
+	<command name="SearchWebContentTagQuotes" priority="5">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="webContentContent" value="WC WebContent Content" />

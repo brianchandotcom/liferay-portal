@@ -9,7 +9,7 @@
 		<execute macro="BookmarksFolder#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBookmark">
+	<command name="AddBookmark" priority="5">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -34,7 +34,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBookmarks">
+	<command name="AddBookmarks" priority="5">
 		<var name="bookmark1Description" value="This is a test bookmark!" />
 		<var name="bookmark1Name" value="Test Bookmark" />
 		<var name="bookmark1URL" value="http://www.liferay.com" />
@@ -81,7 +81,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolder">
+	<command name="AddFolder" priority="5">
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 
@@ -95,7 +95,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubfolder">
+	<command name="AddSubfolder" priority="5">
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 		<var name="subfolderDescription" value="This is a test bookmarks subfolder!" />
@@ -121,7 +121,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveSubfolderBookmarkToHome">
+	<command name="MoveSubfolderBookmarkToHome" priority="5">
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 		<var name="subfolderDescription" value="This is a test bookmarks subfolder!" />
@@ -167,7 +167,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBookmark">
+	<command name="SearchBookmark" priority="5">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
@@ -203,7 +203,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBookmarks">
+	<command name="SearchBookmarks" priority="5">
 		<var name="bookmark1Description" value="This is a test bookmark!" />
 		<var name="bookmark1Name" value="Test Bookmark" />
 		<var name="bookmark1URL" value="http://www.liferay.com" />

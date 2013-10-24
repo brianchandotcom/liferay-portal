@@ -9,7 +9,7 @@
 		<execute macro="User#logoutPG" />
 	</tear-down>
 
-	<command name="AddDocumentWithUploadTempFile">
+	<command name="AddDocumentWithUploadTempFile" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />

@@ -3,7 +3,7 @@
 	<var name="ticketSummary" value="LIFERAYQA-5866: Enable selecting multiple choices from a dropdown" />
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5866" />
 
-	<command name="AddSelection">
+	<command name="AddSelection" priority="5">
 		<execute macro="AddSelection#addSelection" />
-	</command>	
+	</command>
 </definition>

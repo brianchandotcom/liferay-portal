@@ -3,7 +3,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="Login">
+	<command name="Login" priority="5">
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG" />
 	</command>

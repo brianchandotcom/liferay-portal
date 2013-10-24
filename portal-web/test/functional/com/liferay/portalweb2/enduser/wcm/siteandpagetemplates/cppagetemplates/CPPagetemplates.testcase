@@ -7,7 +7,7 @@
 		<execute macro="PageTemplate#tearDownCP" />
 	</tear-down>
 
-	<command name="AddPageTemplate">
+	<command name="AddPageTemplate" priority="5">
 		<var name="pageTemplateActive" value="Yes" />
 		<var name="pageTemplateName" value="Page Template Name" />
 
@@ -21,7 +21,7 @@
 		</execute>
 	</command>
 
-	<command name="EditPageTemplate">
+	<command name="EditPageTemplate" priority="5">
 		<var name="pageTemplateActive" value="Yes" />
 		<var name="pageTemplateActiveNew" value="No" />
 		<var name="pageTemplateName" value="Page Template Name" />

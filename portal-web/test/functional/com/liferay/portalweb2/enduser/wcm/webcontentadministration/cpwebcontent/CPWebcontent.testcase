@@ -11,7 +11,7 @@
 		<execute macro="WebContentStructures#tearDownCP" />
 	</tear-down>
 
-	<command name="AddFolder">
+	<command name="AddFolder" priority="5">
 		<var name="folderDescription" value="WC Folder Description" />
 		<var name="folderName" value="WC Folder Name" />
 
@@ -25,7 +25,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStructure">
+	<command name="AddStructure" priority="5">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureFieldName" value="Text" />
 		<var name="structureFormFieldKey" value="DIAGRAM_BUILDER_TEXT_FIELD_1" />
@@ -43,7 +43,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplate">
+	<command name="AddTemplate" priority="5">
 		<var name="templateDescription" value="WC Template Description" />
 		<var name="templateName" value="WC Template Name" />
 
@@ -66,7 +66,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplateXSL">
+	<command name="AddTemplateXSL" priority="5">
 		<var name="templateDescription" value="WC Template Description" />
 		<var name="templateFile" value="xsl_template.xsl" />
 		<var name="templateLanguage" value="xsl" />
@@ -97,7 +97,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplateWithStructure">
+	<command name="AddTemplateWithStructure" priority="5">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureFieldName" value="Text" />
 		<var name="structureFormFieldKey" value="DIAGRAM_BUILDER_TEXT_FIELD_1" />
@@ -137,7 +137,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContent">
+	<command name="AddWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -151,7 +151,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentDraft">
+	<command name="AddWebContentDraft" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -174,7 +174,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentTitleEscapeCharacter">
+	<command name="AddWebContentTitleEscapeCharacter" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
 
@@ -197,7 +197,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithStructure">
+	<command name="AddWebContentWithStructure" priority="5">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureFieldName" value="Text" />
 		<var name="structureFormFieldKey" value="DIAGRAM_BUILDER_TEXT_FIELD_1" />
@@ -240,7 +240,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithTemplateXSL">
+	<command name="AddWebContentWithTemplateXSL" priority="5">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureFieldName" value="Text" />
 		<var name="structureFormFieldKey" value="DIAGRAM_BUILDER_TEXT_FIELD_1" />
@@ -292,7 +292,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWebContent">
+	<command name="DeleteWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -314,7 +314,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWebContentTitleEscapeCharacter">
+	<command name="DeleteWebContentTitleEscapeCharacter" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
 
@@ -336,7 +336,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContent">
+	<command name="EditWebContent" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
 		<var name="webContentTitle" value="WC WebContent Title" />

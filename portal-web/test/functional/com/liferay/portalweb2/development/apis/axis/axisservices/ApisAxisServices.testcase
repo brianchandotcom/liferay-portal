@@ -3,7 +3,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ViewAxisServices">
+	<command name="ViewAxisServices" priority="5">
 		<execute macro="Api#apiAxisView" />
 	</command>
 </definition>

@@ -19,7 +19,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewWikiPortletRegRole">
+	<command name="ViewWikiPortletRegRole" priority="5">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WIKI_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WIKI" />
@@ -85,7 +85,7 @@
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
 	</command>
 
-	<command name="ViewWikiPortletSiteRole">
+	<command name="ViewWikiPortletSiteRole" priority="5">
 		<var name="pageName" value="Wiki Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WIKI_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />

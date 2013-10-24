@@ -7,7 +7,7 @@
 		<execute macro="MessageboardsThread#tearDownCP" />
 	</tear-down>
 
-	<command name="DeleteMessageboardsThread">
+	<command name="DeleteMessageboardsThread" priority="5">
 		<var name="assetName" value="${threadSubject}" />
 		<var name="assetType" value="Message Boards Thread" />
 		<var name="threadBody" value="MB Thread Message Body" />
@@ -57,7 +57,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreMessageboardsThread">
+	<command name="RestoreMessageboardsThread" priority="5">
 		<var name="assetName" value="${threadSubject}" />
 		<var name="assetRestoreLocation" value="Home" />
 		<var name="assetType" value="Message Boards Thread" />

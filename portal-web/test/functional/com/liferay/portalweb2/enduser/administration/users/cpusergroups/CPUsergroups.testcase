@@ -9,7 +9,7 @@
 		<execute macro="UserGroup#tearDownCP" />
 	</tear-down>
 
-	<command name="AddMember">
+	<command name="AddMember" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userGroupName" value="UG UserGroup Name" />
@@ -62,7 +62,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroup">
+	<command name="AddUserGroup" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
 		<execute macro="Page#gotoCP">
@@ -78,7 +78,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameAsterisk">
+	<command name="AddUserGroupNameAsterisk" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name*" />
 
 		<execute macro="Page#gotoCP">
@@ -99,7 +99,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameComma">
+	<command name="AddUserGroupNameComma" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name," />
 
 		<execute macro="Page#gotoCP">
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameDuplicate">
+	<command name="AddUserGroupNameDuplicate" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
 		<execute macro="Page#gotoCP">
@@ -145,7 +145,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameNull">
+	<command name="AddUserGroupNameNull" priority="5">
 		<var name="userGroupName" value=" " />
 
 		<execute macro="Page#gotoCP">
@@ -166,7 +166,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameNumber">
+	<command name="AddUserGroupNameNumber" priority="5">
 		<var name="userGroupName" value="1" />
 
 		<execute macro="Page#gotoCP">
@@ -187,7 +187,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroups">
+	<command name="AddUserGroups" priority="5">
 		<var name="userGroupName1" value="UG UserGroup1 Name" />
 		<var name="userGroupName2" value="UG UserGroup2 Name" />
 		<var name="userGroupName3" value="UG UserGroup3 Name" />
@@ -225,7 +225,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteUserGroup">
+	<command name="DeleteUserGroup" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
 		<execute macro="Page#gotoCP">
@@ -239,7 +239,7 @@
 		<execute macro="UserGroup#deleteCP" />
 	</command>
 
-	<command name="DeleteUserGroupUser">
+	<command name="DeleteUserGroupUser" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userGroupName" value="UG UserGroup Name" />
@@ -295,7 +295,7 @@
 		</execute>
 	</command>
 
-	<command name="EditUserGroup">
+	<command name="EditUserGroup" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userGroupNameEdit" value="UG UserGroup Name Edit" />
 
@@ -312,7 +312,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveMember">
+	<command name="RemoveMember" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -367,7 +367,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchUserGroup">
+	<command name="SearchUserGroup" priority="5">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
 		<execute macro="Page#gotoCP">

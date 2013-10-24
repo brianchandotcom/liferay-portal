@@ -17,7 +17,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="EditDefaultUserAssociationsOrganizationSites">
+	<command name="EditDefaultUserAssociationsOrganizationSites" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="Organization Name" />
@@ -79,7 +79,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDefaultUserAssociationsRoles">
+	<command name="EditDefaultUserAssociationsRoles" priority="5">
 		<var name="roleName" value="Roles Regrole Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -130,7 +130,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDefaultUserAssociationsSites">
+	<command name="EditDefaultUserAssociationsSites" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -181,7 +181,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDefaultUserAssociationsUserGroups">
+	<command name="EditDefaultUserAssociationsUserGroups" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userGroupName" value="UG UserGroup Name" />
@@ -232,7 +232,7 @@
 		</execute>
 	</command>
 
-	<command name="EnterReservedEmailAddress">
+	<command name="EnterReservedEmailAddress" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -258,7 +258,7 @@
 		</execute>
 	</command>
 
-	<command name="EnterReservedScreenName">
+	<command name="EnterReservedScreenName" priority="5">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />

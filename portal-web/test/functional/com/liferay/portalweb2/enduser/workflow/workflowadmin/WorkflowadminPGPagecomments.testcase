@@ -38,7 +38,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApprovePageCommentPG">
+	<command name="ApprovePageCommentPG" priority="5">
 		<var name="commentBody" value="Page Comment Comment" />
 		<var name="commentUsername" value="Test Test" />
 
@@ -101,7 +101,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectPageCommentPG">
+	<command name="RejectPageCommentPG" priority="5">
 		<var name="commentBody" value="Page Comment Comment" />
 		<var name="commentUsername" value="Test Test" />
 

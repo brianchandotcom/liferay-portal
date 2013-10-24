@@ -9,7 +9,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddAutoAssertionTagViaBlogs">
+	<command name="AddAutoAssertionTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -66,7 +66,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFrontPageTag">
+	<command name="AddFrontPageTag" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="pageName" value="Page Name" />
 
@@ -108,7 +108,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMultipleTagsViaBlogs">
+	<command name="AddMultipleTagsViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 
@@ -148,7 +148,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSelectTagViaBlogs">
+	<command name="AddSelectTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -206,7 +206,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTagViaBlogs">
+	<command name="AddTagViaBlogs" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="pageName" value="Page Name" />
 
@@ -244,7 +244,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUTFTagViaBlogs">
+	<command name="AddUTFTagViaBlogs" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="pageName" value="Page Name" />
 
@@ -282,7 +282,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveTagViaBlogs">
+	<command name="RemoveTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -336,7 +336,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveSelectTagViaBlogs">
+	<command name="RemoveSelectTagViaBlogs" priority="5">
 		<var name="pageName" value="Page Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="tagName1" value="tag name 1" />
@@ -386,7 +386,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchMultipleTagsViaBlogs">
+	<command name="SearchMultipleTagsViaBlogs" priority="5">
 		<var name="entryContent1" value="Entry Content 1" />
 		<var name="entryContent2" value="Entry Content 2" />
 		<var name="entryContent3" value="Entry Content 3" />

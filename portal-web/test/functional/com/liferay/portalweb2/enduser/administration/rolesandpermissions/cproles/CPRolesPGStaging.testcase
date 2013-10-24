@@ -31,7 +31,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AccessStaging">
+	<command name="AccessStaging" priority="5">
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoConfigurationCP">

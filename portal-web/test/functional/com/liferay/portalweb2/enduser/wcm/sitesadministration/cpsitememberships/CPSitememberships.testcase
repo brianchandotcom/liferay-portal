@@ -11,7 +11,7 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command name="AddMember">
+	<command name="AddMember" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -51,7 +51,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMembersSiteUser">
+	<command name="AddMembersSiteUser" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
@@ -106,7 +106,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteTeam">
+	<command name="AddSiteTeam" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
 		<var name="teamName" value="Site Team Name" />
@@ -136,7 +136,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteTeams">
+	<command name="AddSiteTeams" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
 		<var name="teamDescription1" value="Site Team1 Description" />
@@ -190,7 +190,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignMembersSiteTeamUser">
+	<command name="AssignMembersSiteTeamUser" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
@@ -262,7 +262,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteNoLiferaySite">
+	<command name="DeleteNoLiferaySite" priority="5">
 		<var name="siteName" value="Liferay" />
 
 		<execute macro="Page#gotoCP">
@@ -285,7 +285,7 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="You cannot delete this site because you are currently accessing this site." />
 	</command>
 
-	<command name="DeleteSiteTeam">
+	<command name="DeleteSiteTeam" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
 		<var name="teamName" value="Site Team Name" />
@@ -319,7 +319,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTeam">
+	<command name="EditSiteTeam" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
 		<var name="teamName" value="Site Team Name" />
@@ -356,7 +356,7 @@
 		</execute>
 	</command>
 
-	<command name="LimitMembershipParentSite">
+	<command name="LimitMembershipParentSite" priority="5">
 		<var name="childSiteName" value="Child SiteName" />
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
@@ -484,7 +484,7 @@
 		</execute>
 	</command>
 
-	<command name="OrganizationsView">
+	<command name="OrganizationsView" priority="5">
 		<var name="orgName1" value="Organization Name 1" />
 		<var name="orgName2" value="Organization Name 2" />
 		<var name="orgName3" value="Organization Name 3" />
@@ -620,7 +620,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveMember">
+	<command name="RemoveMember" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -671,7 +671,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoManualMembershipManagement">
+	<command name="ViewNoManualMembershipManagement" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>

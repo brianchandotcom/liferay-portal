@@ -11,7 +11,7 @@
 		<execute macro="DataDefinition#tearDownCP" />
 	</tear-down>
 
-	<command name="AddDataDefinitionBooleanCP">
+	<command name="AddDataDefinitionBooleanCP" priority="5">
 		<var name="fieldName" value="Boolean" />
 		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
 
@@ -37,7 +37,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionDateCP">
+	<command name="AddDataDefinitionDateCP" priority="5">
 		<var name="fieldName" value="Date" />
 		<var name="formFieldKey" value="FORM_DATE_FIELD_1" />
 
@@ -63,7 +63,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionDecimalCP">
+	<command name="AddDataDefinitionDecimalCP" priority="5">
 		<var name="fieldName" value="Decimal" />
 		<var name="formFieldKey" value="FORM_DECIMAL_FIELD_1" />
 
@@ -89,7 +89,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionDocumentsAndMediaCP">
+	<command name="AddDataDefinitionDocumentsAndMediaCP" priority="5">
 		<var name="fieldName" value="Documents and Media" />
 		<var name="formFieldKey" value="FORM_DOCUMENTS_AND_MEDIA_FIELD_1" />
 
@@ -115,7 +115,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionHtmlCP">
+	<command name="AddDataDefinitionHtmlCP" priority="5">
 		<var name="fieldName" value="HTML" />
 		<var name="formFieldKey" value="FORM_HTML_FIELD_1" />
 
@@ -141,7 +141,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionIntegerCP">
+	<command name="AddDataDefinitionIntegerCP" priority="5">
 		<var name="fieldName" value="Integer" />
 		<var name="formFieldKey" value="FORM_INTEGER_FIELD_1" />
 
@@ -167,7 +167,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionLinkToPageCP">
+	<command name="AddDataDefinitionLinkToPageCP" priority="5">
 		<var name="fieldName" value="Link to Page" />
 		<var name="formFieldKey" value="FORM_LINK_TO_PAGE_FIELD_1" />
 
@@ -193,7 +193,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionNumberCP">
+	<command name="AddDataDefinitionNumberCP" priority="5">
 		<var name="fieldName" value="Number" />
 		<var name="formFieldKey" value="FORM_NUMBER_FIELD_1" />
 
@@ -219,7 +219,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionRadioCP">
+	<command name="AddDataDefinitionRadioCP" priority="5">
 		<var name="fieldName" value="Radio" />
 		<var name="formFieldKey" value="FORM_RADIO_FIELD_1" />
 
@@ -245,7 +245,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionSelectCP">
+	<command name="AddDataDefinitionSelectCP" priority="5">
 		<var name="fieldName" value="Select" />
 		<var name="formFieldKey" value="FORM_SELECT_FIELD_1" />
 
@@ -271,7 +271,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionTextCP">
+	<command name="AddDataDefinitionTextCP" priority="5">
 		<var name="fieldName" value="Text" />
 		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 
@@ -297,7 +297,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionTextBoxCP">
+	<command name="AddDataDefinitionTextBoxCP" priority="5">
 		<var name="fieldName" value="Text Box" />
 		<var name="formFieldKey" value="FORM_TEXT_BOX_FIELD_1" />
 
@@ -323,7 +323,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionListCP">
+	<command name="AddDataDefinitionListCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="fieldName" value="Text" />
@@ -362,7 +362,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionListRecordCP">
+	<command name="AddDataDefinitionListRecordCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="fieldName" value="Text" />
@@ -411,7 +411,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionWithDisplayTemplateFreeMarkerCP">
+	<command name="AddDataDefinitionWithDisplayTemplateFreeMarkerCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
@@ -444,7 +444,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionWithDisplayTemplateVelocityCP">
+	<command name="AddDataDefinitionWithDisplayTemplateVelocityCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
@@ -477,7 +477,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDataDefinitionWithFormTemplateCP">
+	<command name="AddDataDefinitionWithFormTemplateCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="dataDefinitionFormTemplateName" value="Data Definition Form Template Name" />
@@ -508,7 +508,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDataDefinitionCP">
+	<command name="DeleteDataDefinitionCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="fieldName" value="Text" />
@@ -534,7 +534,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDataDefinitionListCP">
+	<command name="DeleteDataDefinitionListCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="fieldName" value="Text" />
@@ -572,7 +572,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDataDefinitionListRecordCP">
+	<command name="DeleteDataDefinitionListRecordCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="fieldName" value="Text" />
@@ -620,7 +620,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDisplayTemplateFreeMarkerCP">
+	<command name="DeleteDisplayTemplateFreeMarkerCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
@@ -662,7 +662,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDisplayTemplateVelocityCP">
+	<command name="DeleteDisplayTemplateVelocityCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
@@ -703,7 +703,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFormTemplateCP">
+	<command name="DeleteFormTemplateCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionFormTemplateName" value="Data Definition Velocity Form Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
@@ -741,7 +741,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionCP">
+	<command name="EditDataDefinitionCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDescriptionEdit" value="Data Definition Description Edit" />
 		<var name="dataDefinitionName" value="Data Definition" />
@@ -780,7 +780,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionBooleanFieldLabelCP">
+	<command name="EditDataDefinitionBooleanFieldLabelCP" priority="5">
 		<var name="cellEditorFieldName" value="Boolean Field Label Edited" />
 		<var name="cellEditorTypeKey" value="SETTINGS_CELL_EDITOR_FIELD" />
 		<var name="fieldName" value="Boolean" />
@@ -824,7 +824,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionBooleanNameCP">
+	<command name="EditDataDefinitionBooleanNameCP" priority="5">
 		<var name="cellEditorFieldName" value="booleannameedited" />
 		<var name="cellEditorTypeKey" value="SETTINGS_CELL_EDITOR_FIELD" />
 		<var name="fieldName" value="Boolean" />
@@ -868,7 +868,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionBooleanPredefinedValueCP">
+	<command name="EditDataDefinitionBooleanPredefinedValueCP" priority="5">
 		<var name="fieldName" value="Boolean" />
 		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
 		<var name="isValueSet" value="No" />
@@ -910,7 +910,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionBooleanShowLabelCP">
+	<command name="EditDataDefinitionBooleanShowLabelCP" priority="5">
 		<var name="fieldName" value="Boolean" />
 		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
 		<var name="isValueSet" value="Yes" />
@@ -952,7 +952,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionBooleanTipCP">
+	<command name="EditDataDefinitionBooleanTipCP" priority="5">
 		<var name="cellEditorFieldName" value="Boolean Field Tip Edited" />
 		<var name="cellEditorTypeKey" value="SETTINGS_CELL_EDITOR_TEXT_AREA" />
 		<var name="fieldName" value="Boolean" />
@@ -994,7 +994,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionListCP">
+	<command name="EditDataDefinitionListCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="fieldName" value="Text" />
@@ -1046,7 +1046,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDataDefinitionListRecordCP">
+	<command name="EditDataDefinitionListRecordCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="fieldName" value="Text" />
@@ -1105,7 +1105,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDisplayTemplateFreeMarkerCP">
+	<command name="EditDisplayTemplateFreeMarkerCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
 		<var name="dataDefinitionDisplayTemplateNameEdit" value="Data Definition FreeMarker Display Template Name Edit" />
@@ -1162,7 +1162,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDisplayTemplateVelocityCP">
+	<command name="EditDisplayTemplateVelocityCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="dataDefinitionDisplayTemplateNameEdit" value="Data Definition Velocity Display Template Name Edit" />
@@ -1219,7 +1219,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFormTemplateCP">
+	<command name="EditFormTemplateCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionFormTemplateName" value="Data Definition FreeMarker Form Template Name" />
 		<var name="dataDefinitionFormTemplateNameEdit" value="Data Definition FreeMarker Form Template Name Edit" />

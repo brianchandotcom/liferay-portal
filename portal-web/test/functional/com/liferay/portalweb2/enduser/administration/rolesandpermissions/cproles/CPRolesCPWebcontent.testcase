@@ -19,7 +19,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewWebContentPortletRegRole">
+	<command name="ViewWebContentPortletRegRole" priority="5">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
@@ -85,7 +85,7 @@
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
 	</command>
 
-	<command name="ViewWebContentPortletSiteRole">
+	<command name="ViewWebContentPortletSiteRole" priority="5">
 		<var name="pageName" value="Web Content Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />

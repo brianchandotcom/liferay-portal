@@ -30,7 +30,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="ActivateStaging">
+	<command name="ActivateStaging" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="pageType" value="Site" />
 			<var name="pageTypeURL" value="${siteName}" />
@@ -42,7 +42,7 @@
 		</execute>
 	</command>
 
-	<command name="ActivateDeactivateStagingLocalLiveDM">
+	<command name="ActivateDeactivateStagingLocalLiveDM" priority="5">
 		<var name="dmDocumentFile" value="Document_1.docx" />
 		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		<var name="pageName" value="Documents and Media Test Page" />
@@ -119,7 +119,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDMDocumentStagingLocalLive">
+	<command name="AddDMDocumentStagingLocalLive" priority="5">
 		<var name="dmDocumentFile" value="Document_1.docx" />
 		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		<var name="pageName" value="Documents and Media Test Page" />
@@ -177,7 +177,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPageVariation">
+	<command name="AddPageVariation" priority="5">
 		<var name="pageName" value="Staging Page Variation Test Page" />
 		<var name="pageVariationName" value="Page Variation Name" />
 
@@ -225,7 +225,7 @@
 		<execute action="PGStaging#assertTextEquals" locator-key1="PAGE_VARIATION" value1="${pageVariationName}" />
 	</command>
 
-	<command name="AddSitePagesVariation">
+	<command name="AddSitePagesVariation" priority="5">
 		<var name="pageName" value="Staging Site Pages Variation Test Page" />
 		<var name="sitePagesVariationName" value="Site Pages Variation Name" />
 
@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertEditWebContentStaging">
+	<command name="AssertEditWebContentStaging" priority="5">
 		<var name="pageName" value="Staging Test Page" />
 
 		<execute macro="Page#gotoPG">
@@ -328,7 +328,7 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateStaging">
+	<command name="DeactivateStaging" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="pageType" value="Site" />
 			<var name="pageTypeURL" value="${siteName}" />
@@ -350,7 +350,7 @@
 		</execute>
 	</command>
 
-	<command name="LayoutScope">
+	<command name="LayoutScope" priority="5">
 		<var name="pageName" value="Staging Test Page" />
 		<var name="scopeName" value="${pageName}" />
 
@@ -389,7 +389,7 @@
 		<execute action="BaseLiferay#pause" locator1="5000" />
 	</command>
 
-	<command name="StagingPublishPortlet">
+	<command name="StagingPublishPortlet" priority="5">
 		<var name="pageName" value="Staging Portlet Test Page" />
 
 		<execute macro="Page#gotoConfigurationCP">

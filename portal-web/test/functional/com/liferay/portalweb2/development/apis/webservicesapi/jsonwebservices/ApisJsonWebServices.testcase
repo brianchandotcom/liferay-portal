@@ -3,13 +3,13 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<!--<command name="ViewAxis">
+	<!--<command name="ViewAxis" priority="5">
 		<execute macro="Site#cpAddBlank" />
 
 		<execute macro="Site#cpView" />
 	</command>-->
 
-	<command name="ViewJsonws">
+	<command name="ViewJsonws" priority="5">
 		<execute macro="Api#apiJsonwsView" />
 
 		<execute macro="Api#apiJsonwsAddressView" />

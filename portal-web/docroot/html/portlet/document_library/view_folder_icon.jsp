@@ -33,7 +33,8 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 	rowCheckerName="<%= Folder.class.getSimpleName() %>"
 	showCheckbox="<%= DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>"
 	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-	thumbnailStyle='<%= "height: " + PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) + "px; width: " + PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) + "px;" %>'
+	thumbnailDivStyle="<%= DLUtil.getThumbnailStyle(false, 4) %>"
+	thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
 	title="<%= folder.getName() %>"
 	url="<%= tempRowURL.toString() %>"
 />

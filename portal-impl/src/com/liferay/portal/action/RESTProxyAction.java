@@ -39,7 +39,6 @@ import org.apache.struts.action.ActionMapping;
  * @author David Truong
  * @author Gavin Wan
  * @author Samuel Kong
- * @deprecated As of 6.2.0, with no direct replacement
  */
 public class RESTProxyAction extends Action {
 

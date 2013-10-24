@@ -93,6 +93,11 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public String getSortField(String orderByCol, int sortType) {
+		return _indexer.getSortField(orderByCol, sortType);
+	}
+
+	@Override
 	public Summary getSummary(
 			Document document, Locale locale, String snippet,
 			PortletURL portletURL)

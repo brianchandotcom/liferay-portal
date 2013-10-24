@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
@@ -706,9 +707,8 @@ public class AssetUtil {
 				LocaleUtil.toLanguageId(locale));
 		}
 
-		return new Sort(
-			sortField, sortType,
-			!StringUtil.equalsIgnoreCase(orderByType, "asc"));
+		return SortFactoryUtil.getSort(
+			AssetEntry.class, sortType, sortField, orderByType);
 	}
 
 	protected static Sort[] getSorts(

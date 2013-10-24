@@ -56,6 +56,8 @@ public interface Indexer {
 
 	public String getSortField(String orderByCol);
 
+	public String getSortField(String orderByCol, int sortType);
+
 	public Summary getSummary(
 			Document document, Locale locale, String snippet,
 			PortletURL portletURL)

@@ -475,12 +475,16 @@ public class DocumentImpl implements Document {
 		String name, String value, Class<? extends Number> clazz) {
 
 		if (Validator.isNotNull(value)) {
-			Field field = new Field(name, value);
+			String sortableFieldName = getSortableFieldName(name);
+
+			Field field = new Field(sortableFieldName, value);
 
 			field.setNumeric(true);
 			field.setNumericClass(clazz);
 
-			_fields.put(name, field);
+			_fields.put(sortableFieldName, field);
+
+			addKeyword(name, value, true);
 		}
 	}
 
@@ -496,12 +500,16 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		Field field = new Field(name, values);
+		String sortableFieldName = getSortableFieldName(name);
+
+		Field field = new Field(sortableFieldName, values);
 
 		field.setNumeric(true);
 		field.setNumericClass(clazz);
 
-		_fields.put(name, field);
+		_fields.put(sortableFieldName, field);
+
+		addKeyword(name, values);
 	}
 
 	@Override

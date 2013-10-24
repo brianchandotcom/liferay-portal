@@ -262,13 +262,8 @@ public class FileEntryStagedModelDataHandler
 			"sourceFileName", "A." + fileEntry.getExtension());
 		serviceContext.setUserId(userId);
 
-		String path = ExportImportPathUtil.getModelPath(
-			portletDataContext, FileEntry.class.getName(),
-			fileEntry.getFileEntryId());
-
-		Element fileEntryElement =
-			portletDataContext.getImportDataElement(
-				FileEntry.class.getSimpleName(), "path", path);
+		Element fileEntryElement = portletDataContext.getImportDataElement(
+			fileEntry);
 
 		String binPath = fileEntryElement.attributeValue("bin-path");
 

@@ -96,8 +96,14 @@ public class OrganizationStagedModelDataHandler
 		while (!organizations.isEmpty()) {
 			Organization exportedOrganization = organizations.remove();
 
-			Element organizationElement =
-				portletDataContext.getExportDataElement(exportedOrganization);
+			if (organization.getParentOrganizationId() !=
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, organization,
+					organization.getParentOrganization(),
+					PortletDataContext.REFERENCE_TYPE_PARENT);
+			}
 
 			exportAddresses(
 				portletDataContext, exportedOrganization, organizationElement);
@@ -110,6 +116,9 @@ public class OrganizationStagedModelDataHandler
 				portletDataContext, exportedOrganization, organizationElement);
 			exportWebsites(
 				portletDataContext, exportedOrganization, organizationElement);
+
+			Element organizationElement =
+				portletDataContext.getExportDataElement(exportedOrganization);
 
 			portletDataContext.addClassedModel(
 				organizationElement,
@@ -127,6 +136,14 @@ public class OrganizationStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(organization.getUserUuid());
 
+		if (organization.getParentOrganizationId() !=
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, organization, Organization.class,
+				organization.getParentOrganizationId());
+		}
+
 		Map<Long, Long> organizationIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Organization.class);
@@ -134,26 +151,6 @@ public class OrganizationStagedModelDataHandler
 		long parentOrganizationId = MapUtil.getLong(
 			organizationIds, organization.getParentOrganizationId(),
 			organization.getParentOrganizationId());
-
-		if ((parentOrganizationId !=
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) &&
-			(parentOrganizationId == organization.getParentOrganizationId())) {
-
-			String parentOrganizationPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, Organization.class.getName(),
-				parentOrganizationId);
-
-			Organization parentOrganization =
-				(Organization)portletDataContext.getZipEntryAsObject(
-					parentOrganizationPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, parentOrganization);
-
-			parentOrganizationId = MapUtil.getLong(
-				organizationIds, organization.getParentOrganizationId(),
-				organization.getParentOrganizationId());
-		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			organization);

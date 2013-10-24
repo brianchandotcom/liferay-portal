@@ -70,55 +70,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSet.setModifiedDate(now);
 		layoutSet.setPrivateLayout(privateLayout);
 
-		if (group.isStagingGroup()) {
-			LayoutSet liveLayoutSet = null;
-
-			Group liveGroup = group.getLiveGroup();
-
-			if (privateLayout) {
-				liveLayoutSet = liveGroup.getPrivateLayoutSet();
-			}
-			else {
-				liveLayoutSet = liveGroup.getPublicLayoutSet();
-			}
-
-			layoutSet.setLogo(liveLayoutSet.getLogo());
-			layoutSet.setLogoId(liveLayoutSet.getLogoId());
-
-			if (liveLayoutSet.isLogo()) {
-				Image logoImage = imageLocalService.getImage(
-					liveLayoutSet.getLogoId());
-
-				long logoId = counterLocalService.increment();
-
-				imageLocalService.updateImage(
-					logoId, logoImage.getTextObj(), logoImage.getType(),
-					logoImage.getHeight(), logoImage.getWidth(),
-					logoImage.getSize());
-
-				layoutSet.setLogoId(logoId);
-			}
-
-			layoutSet.setThemeId(liveLayoutSet.getThemeId());
-			layoutSet.setColorSchemeId(liveLayoutSet.getColorSchemeId());
-			layoutSet.setWapThemeId(liveLayoutSet.getWapThemeId());
-			layoutSet.setWapColorSchemeId(liveLayoutSet.getWapColorSchemeId());
-			layoutSet.setCss(liveLayoutSet.getCss());
-			layoutSet.setSettings(liveLayoutSet.getSettings());
-		}
-		else {
-			layoutSet.setThemeId(
-				ThemeFactoryUtil.getDefaultRegularThemeId(
-					group.getCompanyId()));
-			layoutSet.setColorSchemeId(
-				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId());
-			layoutSet.setWapThemeId(
-				ThemeFactoryUtil.getDefaultWapThemeId(group.getCompanyId()));
-			layoutSet.setWapColorSchemeId(
-				ColorSchemeFactoryUtil.getDefaultWapColorSchemeId());
-			layoutSet.setCss(StringPool.BLANK);
-			layoutSet.setSettings(StringPool.BLANK);
-		}
+		layoutSet = _initLayoutSet(layoutSet);
 
 		layoutSetPersistence.update(layoutSet);
 
@@ -160,17 +112,17 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		// Layout set
 
-		layoutSetPersistence.removeByG_P(groupId, privateLayout);
-
 		if (!group.isStagingGroup() && group.isOrganization() &&
 			group.isSite()) {
 
-			LayoutSet newLayoutSet = addLayoutSet(
-				group.getGroupId(), privateLayout);
+			layoutSet = _initLayoutSet(layoutSet);
 
-			newLayoutSet.setLogoId(layoutSet.getLogoId());
+			layoutSet.setLogoId(layoutSet.getLogoId());
 
-			layoutSetPersistence.update(newLayoutSet);
+			layoutSetPersistence.update(layoutSet);
+		}
+		else {
+			layoutSetPersistence.removeByG_P(groupId, privateLayout);
 		}
 
 		// Virtual host
@@ -522,6 +474,66 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			}
 			catch (NoSuchVirtualHostException nsvhe) {
 			}
+		}
+
+		return layoutSet;
+	}
+
+	private LayoutSet _initLayoutSet(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
+		Group group = layoutSet.getGroup();
+
+		boolean privateLayout = layoutSet.isPrivateLayout();
+
+		if (group.isStagingGroup()) {
+			LayoutSet liveLayoutSet = null;
+
+			Group liveGroup = group.getLiveGroup();
+
+			if (privateLayout) {
+				liveLayoutSet = liveGroup.getPrivateLayoutSet();
+			}
+			else {
+				liveLayoutSet = liveGroup.getPublicLayoutSet();
+			}
+
+			layoutSet.setLogo(liveLayoutSet.getLogo());
+			layoutSet.setLogoId(liveLayoutSet.getLogoId());
+
+			if (liveLayoutSet.isLogo()) {
+				Image logoImage = imageLocalService.getImage(
+					liveLayoutSet.getLogoId());
+
+				long logoId = counterLocalService.increment();
+
+				imageLocalService.updateImage(
+					logoId, logoImage.getTextObj(), logoImage.getType(),
+					logoImage.getHeight(), logoImage.getWidth(),
+					logoImage.getSize());
+
+				layoutSet.setLogoId(logoId);
+			}
+
+			layoutSet.setThemeId(liveLayoutSet.getThemeId());
+			layoutSet.setColorSchemeId(liveLayoutSet.getColorSchemeId());
+			layoutSet.setWapThemeId(liveLayoutSet.getWapThemeId());
+			layoutSet.setWapColorSchemeId(liveLayoutSet.getWapColorSchemeId());
+			layoutSet.setCss(liveLayoutSet.getCss());
+			layoutSet.setSettings(liveLayoutSet.getSettings());
+		}
+		else {
+			layoutSet.setThemeId(
+				ThemeFactoryUtil.getDefaultRegularThemeId(
+					group.getCompanyId()));
+			layoutSet.setColorSchemeId(
+				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId());
+			layoutSet.setWapThemeId(
+				ThemeFactoryUtil.getDefaultWapThemeId(group.getCompanyId()));
+			layoutSet.setWapColorSchemeId(
+				ColorSchemeFactoryUtil.getDefaultWapColorSchemeId());
+			layoutSet.setCss(StringPool.BLANK);
+			layoutSet.setSettings(StringPool.BLANK);
 		}
 
 		return layoutSet;

@@ -16,6 +16,10 @@
 
 		<var name="key_tagName" value="${tagName3}" />
 
+		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TAG_AUTOCOMPLETE" value1="${tagName3}" />
+
+		<var name="key_tagName" value="${tagName3}" />
+
 		<execute action="PGBlogsAdd#assertClick" locator-key1="TAG_AUTOCOMPLETE" value1="${tagName3}" />
 
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />

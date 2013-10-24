@@ -60,6 +60,12 @@ LPS-30525.
 >
 ${languageUtil.get(locale, key)}</#macro>
 
+<#macro language_format
+	arguments
+	key
+>
+${languageUtil.format(locale, key, arguments)}</#macro>
+
 <#macro date
 	format
 >

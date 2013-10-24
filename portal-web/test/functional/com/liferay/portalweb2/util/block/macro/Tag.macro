@@ -12,22 +12,16 @@
 			</then>
 		</if>
 
+		<var name="key_tagName" value="${tagName3}" />
+
 		<execute action="PGBlogsAdd#type" locator-key1="TAGS_FIELD" value1="tag" />
-
-		<var name="key_tagName" value="${tagName3}" />
-
 		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TAG_AUTOCOMPLETE" value1="${tagName3}" />
-
-		<var name="key_tagName" value="${tagName3}" />
-
 		<execute action="PGBlogsAdd#assertClick" locator-key1="TAG_AUTOCOMPLETE" value1="${tagName3}" />
-
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
 		<var name="key_tagName" value="${tagName3}" />
 
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName3}" />
 	</command>
 

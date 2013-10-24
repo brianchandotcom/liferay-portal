@@ -99,58 +99,18 @@
 			border: 2px solid transparent;
 
 			menu.portlet-topper-toolbar {
-				background: #00CAFF;
-				height: 20px;
-				line-height: normal;
-				padding: 2px 0 0 0;
-				text-align: center;
-				width: 20px;
-
-				&:after {
-					content: "\2022\2022\2022";
-					font-size: 10px;
-				}
-
-				.portlet-close, .portlet-maximize, .portlet-minimize, .portlet-options {
-					display: none;
-				}
-			}
-
-			&:hover {
-				menu.portlet-topper-toolbar {
-					background: #00CAFF;
-					height: auto;
-					padding: 2px 0 2px 5px;
-					overflow: hidden;
-					width: auto;
-
-					&:after {
-						content: " ";
-					}
-
-					.portlet-close, .portlet-maximize, .portlet-minimize {
-						display: inline;
-					}
-
-					.portlet-close a {
-						background: #FF8400;
-						padding: 3px 1px 5px 3px;
-					}
-
-					.portlet-icon-back {
-						margin-top: -4px;
-					}
-
-					.portlet-options {
-						display: inline-block;
-					}
-				}
+				color: #00CAFF;
+				display: none;
 			}
 		}
 
 		&.signed-in {
 			section.portlet:hover {
 				border-color: #00CAFF;
+
+				menu.portlet-topper-toolbar {
+					display: inline-block;
+				}
 			}
 		}
 
@@ -175,6 +135,10 @@
 		&.controls-hidden {
 			section.portlet:hover {
 				border-color: transparent;
+
+				menu.portlet-topper-toolbar {
+					display: none;
+				}
 			}
 		}
 
@@ -251,16 +215,8 @@
 			section.portlet {
 				@include border-radius(3px);
 
-				menu.portlet-topper-toolbar {
-					@include border-radius(3px);
-				}
-
 				&:hover {
 					@include single-transition(border-color, 0.2s, ease-in);
-
-					menu.portlet-topper-toolbar {
-						@include border-radius(2px);
-					}
 				}
 			}
 		}

@@ -137,9 +137,7 @@
 	}
 
 	&.selected a {
-		color: #FFF;
-
-		&:focus, &:hover {
+		&, &:focus, &:hover {
 			color: #FFF;
 		}
 	}

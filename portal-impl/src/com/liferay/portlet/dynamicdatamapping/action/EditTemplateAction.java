@@ -17,10 +17,12 @@ package com.liferay.portlet.dynamicdatamapping.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -90,6 +92,19 @@ public class EditTemplateAction extends PortletAction {
 			if (Validator.isNotNull(cmd)) {
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
+				String closeRedirect = ParamUtil.getString(
+					actionRequest, "closeRedirect");
+
+				if (Validator.isNotNull(closeRedirect)) {
+					redirect = HttpUtil.setParameter(
+						redirect, "closeRedirect", closeRedirect);
+
+					SessionMessages.add(
+						actionRequest,
+						PortalUtil.getPortletId(actionRequest) +
+							SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT,
+						closeRedirect);
+				}
 
 				if (template != null) {
 					boolean saveAndContinue = ParamUtil.getBoolean(

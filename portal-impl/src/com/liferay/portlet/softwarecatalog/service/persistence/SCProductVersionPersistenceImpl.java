@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,7 +50,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the s c product version service.
@@ -1712,11 +1715,24 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	@Override
 	public void setSCFrameworkVersions(long pk, long[] scFrameworkVersionPKs)
 		throws SystemException {
-		scProductVersionToSCFrameworkVersionTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newSCFrameworkVersionPKSet = SetUtil.fromArray(scFrameworkVersionPKs);
+		Set<Long> oldSCFrameworkVersionPKSet = SetUtil.fromArray(scProductVersionToSCFrameworkVersionTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long scFrameworkVersionPK : scFrameworkVersionPKs) {
+		Set<Long> removeSCFrameworkVersionPKSet = new HashSet<Long>(oldSCFrameworkVersionPKSet);
+
+		removeSCFrameworkVersionPKSet.removeAll(newSCFrameworkVersionPKSet);
+
+		for (long removeSCFrameworkVersionPK : removeSCFrameworkVersionPKSet) {
+			scProductVersionToSCFrameworkVersionTableMapper.deleteTableMapping(pk,
+				removeSCFrameworkVersionPK);
+		}
+
+		newSCFrameworkVersionPKSet.removeAll(oldSCFrameworkVersionPKSet);
+
+		for (long newSCFrameworkVersionPK : newSCFrameworkVersionPKSet) {
 			scProductVersionToSCFrameworkVersionTableMapper.addTableMapping(pk,
-				scFrameworkVersionPK);
+				newSCFrameworkVersionPK);
 		}
 	}
 

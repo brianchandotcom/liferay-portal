@@ -55,6 +55,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -4007,10 +4008,24 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public void setDLFolders(long pk, long[] dlFolderPKs)
 		throws SystemException {
-		dlFileEntryTypeToDLFolderTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newDLFolderPKSet = SetUtil.fromArray(dlFolderPKs);
+		Set<Long> oldDLFolderPKSet = SetUtil.fromArray(dlFileEntryTypeToDLFolderTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long dlFolderPK : dlFolderPKs) {
-			dlFileEntryTypeToDLFolderTableMapper.addTableMapping(pk, dlFolderPK);
+		Set<Long> removeDLFolderPKSet = new HashSet<Long>(oldDLFolderPKSet);
+
+		removeDLFolderPKSet.removeAll(newDLFolderPKSet);
+
+		for (long removeDLFolderPK : removeDLFolderPKSet) {
+			dlFileEntryTypeToDLFolderTableMapper.deleteTableMapping(pk,
+				removeDLFolderPK);
+		}
+
+		newDLFolderPKSet.removeAll(oldDLFolderPKSet);
+
+		for (long newDLFolderPK : newDLFolderPKSet) {
+			dlFileEntryTypeToDLFolderTableMapper.addTableMapping(pk,
+				newDLFolderPK);
 		}
 	}
 
@@ -4289,11 +4304,24 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public void setDDMStructures(long pk, long[] ddmStructurePKs)
 		throws SystemException {
-		dlFileEntryTypeToDDMStructureTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newDDMStructurePKSet = SetUtil.fromArray(ddmStructurePKs);
+		Set<Long> oldDDMStructurePKSet = SetUtil.fromArray(dlFileEntryTypeToDDMStructureTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long ddmStructurePK : ddmStructurePKs) {
+		Set<Long> removeDDMStructurePKSet = new HashSet<Long>(oldDDMStructurePKSet);
+
+		removeDDMStructurePKSet.removeAll(newDDMStructurePKSet);
+
+		for (long removeDDMStructurePK : removeDDMStructurePKSet) {
+			dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
+				removeDDMStructurePK);
+		}
+
+		newDDMStructurePKSet.removeAll(oldDDMStructurePKSet);
+
+		for (long newDDMStructurePK : newDDMStructurePKSet) {
 			dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
-				ddmStructurePK);
+				newDDMStructurePK);
 		}
 	}
 

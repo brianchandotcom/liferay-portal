@@ -52,6 +52,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -7674,10 +7675,22 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		userToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newGroupPKSet = SetUtil.fromArray(groupPKs);
+		Set<Long> oldGroupPKSet = SetUtil.fromArray(userToGroupTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long groupPK : groupPKs) {
-			userToGroupTableMapper.addTableMapping(pk, groupPK);
+		Set<Long> removeGroupPKSet = new HashSet<Long>(oldGroupPKSet);
+
+		removeGroupPKSet.removeAll(newGroupPKSet);
+
+		for (long removeGroupPK : removeGroupPKSet) {
+			userToGroupTableMapper.deleteTableMapping(pk, removeGroupPK);
+		}
+
+		newGroupPKSet.removeAll(oldGroupPKSet);
+
+		for (long newGroupPK : newGroupPKSet) {
+			userToGroupTableMapper.addTableMapping(pk, newGroupPK);
 		}
 	}
 
@@ -7951,10 +7964,23 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setOrganizations(long pk, long[] organizationPKs)
 		throws SystemException {
-		userToOrganizationTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newOrganizationPKSet = SetUtil.fromArray(organizationPKs);
+		Set<Long> oldOrganizationPKSet = SetUtil.fromArray(userToOrganizationTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long organizationPK : organizationPKs) {
-			userToOrganizationTableMapper.addTableMapping(pk, organizationPK);
+		Set<Long> removeOrganizationPKSet = new HashSet<Long>(oldOrganizationPKSet);
+
+		removeOrganizationPKSet.removeAll(newOrganizationPKSet);
+
+		for (long removeOrganizationPK : removeOrganizationPKSet) {
+			userToOrganizationTableMapper.deleteTableMapping(pk,
+				removeOrganizationPK);
+		}
+
+		newOrganizationPKSet.removeAll(oldOrganizationPKSet);
+
+		for (long newOrganizationPK : newOrganizationPKSet) {
+			userToOrganizationTableMapper.addTableMapping(pk, newOrganizationPK);
 		}
 	}
 
@@ -8213,10 +8239,22 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void setRoles(long pk, long[] rolePKs) throws SystemException {
-		userToRoleTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newRolePKSet = SetUtil.fromArray(rolePKs);
+		Set<Long> oldRolePKSet = SetUtil.fromArray(userToRoleTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long rolePK : rolePKs) {
-			userToRoleTableMapper.addTableMapping(pk, rolePK);
+		Set<Long> removeRolePKSet = new HashSet<Long>(oldRolePKSet);
+
+		removeRolePKSet.removeAll(newRolePKSet);
+
+		for (long removeRolePK : removeRolePKSet) {
+			userToRoleTableMapper.deleteTableMapping(pk, removeRolePK);
+		}
+
+		newRolePKSet.removeAll(oldRolePKSet);
+
+		for (long newRolePK : newRolePKSet) {
+			userToRoleTableMapper.addTableMapping(pk, newRolePK);
 		}
 	}
 
@@ -8474,10 +8512,22 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void setTeams(long pk, long[] teamPKs) throws SystemException {
-		userToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newTeamPKSet = SetUtil.fromArray(teamPKs);
+		Set<Long> oldTeamPKSet = SetUtil.fromArray(userToTeamTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long teamPK : teamPKs) {
-			userToTeamTableMapper.addTableMapping(pk, teamPK);
+		Set<Long> removeTeamPKSet = new HashSet<Long>(oldTeamPKSet);
+
+		removeTeamPKSet.removeAll(newTeamPKSet);
+
+		for (long removeTeamPK : removeTeamPKSet) {
+			userToTeamTableMapper.deleteTableMapping(pk, removeTeamPK);
+		}
+
+		newTeamPKSet.removeAll(oldTeamPKSet);
+
+		for (long newTeamPK : newTeamPKSet) {
+			userToTeamTableMapper.addTableMapping(pk, newTeamPK);
 		}
 	}
 
@@ -8747,10 +8797,22 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setUserGroups(long pk, long[] userGroupPKs)
 		throws SystemException {
-		userToUserGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newUserGroupPKSet = SetUtil.fromArray(userGroupPKs);
+		Set<Long> oldUserGroupPKSet = SetUtil.fromArray(userToUserGroupTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long userGroupPK : userGroupPKs) {
-			userToUserGroupTableMapper.addTableMapping(pk, userGroupPK);
+		Set<Long> removeUserGroupPKSet = new HashSet<Long>(oldUserGroupPKSet);
+
+		removeUserGroupPKSet.removeAll(newUserGroupPKSet);
+
+		for (long removeUserGroupPK : removeUserGroupPKSet) {
+			userToUserGroupTableMapper.deleteTableMapping(pk, removeUserGroupPK);
+		}
+
+		newUserGroupPKSet.removeAll(oldUserGroupPKSet);
+
+		for (long newUserGroupPK : newUserGroupPKSet) {
+			userToUserGroupTableMapper.addTableMapping(pk, newUserGroupPK);
 		}
 	}
 

@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -6845,10 +6846,22 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		organizationToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newGroupPKSet = SetUtil.fromArray(groupPKs);
+		Set<Long> oldGroupPKSet = SetUtil.fromArray(organizationToGroupTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long groupPK : groupPKs) {
-			organizationToGroupTableMapper.addTableMapping(pk, groupPK);
+		Set<Long> removeGroupPKSet = new HashSet<Long>(oldGroupPKSet);
+
+		removeGroupPKSet.removeAll(newGroupPKSet);
+
+		for (long removeGroupPK : removeGroupPKSet) {
+			organizationToGroupTableMapper.deleteTableMapping(pk, removeGroupPK);
+		}
+
+		newGroupPKSet.removeAll(oldGroupPKSet);
+
+		for (long newGroupPK : newGroupPKSet) {
+			organizationToGroupTableMapper.addTableMapping(pk, newGroupPK);
 		}
 	}
 
@@ -7109,10 +7122,22 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 */
 	@Override
 	public void setUsers(long pk, long[] userPKs) throws SystemException {
-		organizationToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newUserPKSet = SetUtil.fromArray(userPKs);
+		Set<Long> oldUserPKSet = SetUtil.fromArray(organizationToUserTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long userPK : userPKs) {
-			organizationToUserTableMapper.addTableMapping(pk, userPK);
+		Set<Long> removeUserPKSet = new HashSet<Long>(oldUserPKSet);
+
+		removeUserPKSet.removeAll(newUserPKSet);
+
+		for (long removeUserPK : removeUserPKSet) {
+			organizationToUserTableMapper.deleteTableMapping(pk, removeUserPK);
+		}
+
+		newUserPKSet.removeAll(oldUserPKSet);
+
+		for (long newUserPK : newUserPKSet) {
+			organizationToUserTableMapper.addTableMapping(pk, newUserPK);
 		}
 	}
 

@@ -55,6 +55,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9727,11 +9728,24 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	@Override
 	public void setDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs)
 		throws SystemException {
-		ddmStructureToDLFileEntryTypeTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newDLFileEntryTypePKSet = SetUtil.fromArray(dlFileEntryTypePKs);
+		Set<Long> oldDLFileEntryTypePKSet = SetUtil.fromArray(ddmStructureToDLFileEntryTypeTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long dlFileEntryTypePK : dlFileEntryTypePKs) {
+		Set<Long> removeDLFileEntryTypePKSet = new HashSet<Long>(oldDLFileEntryTypePKSet);
+
+		removeDLFileEntryTypePKSet.removeAll(newDLFileEntryTypePKSet);
+
+		for (long removeDLFileEntryTypePK : removeDLFileEntryTypePKSet) {
+			ddmStructureToDLFileEntryTypeTableMapper.deleteTableMapping(pk,
+				removeDLFileEntryTypePK);
+		}
+
+		newDLFileEntryTypePKSet.removeAll(oldDLFileEntryTypePKSet);
+
+		for (long newDLFileEntryTypePK : newDLFileEntryTypePKSet) {
 			ddmStructureToDLFileEntryTypeTableMapper.addTableMapping(pk,
-				dlFileEntryTypePK);
+				newDLFileEntryTypePK);
 		}
 	}
 

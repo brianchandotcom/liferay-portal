@@ -53,6 +53,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9478,10 +9479,22 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newGroupPKSet = SetUtil.fromArray(groupPKs);
+		Set<Long> oldGroupPKSet = SetUtil.fromArray(roleToGroupTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long groupPK : groupPKs) {
-			roleToGroupTableMapper.addTableMapping(pk, groupPK);
+		Set<Long> removeGroupPKSet = new HashSet<Long>(oldGroupPKSet);
+
+		removeGroupPKSet.removeAll(newGroupPKSet);
+
+		for (long removeGroupPK : removeGroupPKSet) {
+			roleToGroupTableMapper.deleteTableMapping(pk, removeGroupPK);
+		}
+
+		newGroupPKSet.removeAll(oldGroupPKSet);
+
+		for (long newGroupPK : newGroupPKSet) {
+			roleToGroupTableMapper.addTableMapping(pk, newGroupPK);
 		}
 	}
 
@@ -9739,10 +9752,22 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void setUsers(long pk, long[] userPKs) throws SystemException {
-		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newUserPKSet = SetUtil.fromArray(userPKs);
+		Set<Long> oldUserPKSet = SetUtil.fromArray(roleToUserTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long userPK : userPKs) {
-			roleToUserTableMapper.addTableMapping(pk, userPK);
+		Set<Long> removeUserPKSet = new HashSet<Long>(oldUserPKSet);
+
+		removeUserPKSet.removeAll(newUserPKSet);
+
+		for (long removeUserPK : removeUserPKSet) {
+			roleToUserTableMapper.deleteTableMapping(pk, removeUserPK);
+		}
+
+		newUserPKSet.removeAll(oldUserPKSet);
+
+		for (long newUserPK : newUserPKSet) {
+			roleToUserTableMapper.addTableMapping(pk, newUserPK);
 		}
 	}
 

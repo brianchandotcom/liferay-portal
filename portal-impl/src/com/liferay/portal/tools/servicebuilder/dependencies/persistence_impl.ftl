@@ -72,6 +72,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -1188,10 +1189,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void set${tempEntity.names}(${entity.PKClassName} pk, ${tempEntity.PKClassName}[] ${tempEntity.varName}PKs) throws SystemException {
-					${entity.varName}To${tempEntity.name}TableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+					Set<Long> new${tempEntity.name}PKSet = SetUtil.fromArray(${tempEntity.varName}PKs);
+					Set<Long> old${tempEntity.name}PKSet = SetUtil.fromArray(${entity.varName}To${tempEntity.name}TableMapper.getRightPrimaryKeys(pk));
 
-					for (${serviceBuilder.getPrimitiveObj("${tempEntity.PKClassName}")} ${tempEntity.varName}PK : ${tempEntity.varName}PKs) {
-						${entity.varName}To${tempEntity.name}TableMapper.addTableMapping(pk, ${tempEntity.varName}PK);
+					Set<Long> remove${tempEntity.name}PKSet = new HashSet<Long>(old${tempEntity.name}PKSet);
+
+					remove${tempEntity.name}PKSet.removeAll(new${tempEntity.name}PKSet);
+
+					for (long remove${tempEntity.name}PK : remove${tempEntity.name}PKSet) {
+						${entity.varName}To${tempEntity.name}TableMapper.deleteTableMapping(pk, remove${tempEntity.name}PK);
+					}
+
+					new${tempEntity.name}PKSet.removeAll(old${tempEntity.name}PKSet);
+
+					for (long new${tempEntity.name}PK :new${tempEntity.name}PKSet) {
+						${entity.varName}To${tempEntity.name}TableMapper.addTableMapping(pk, new${tempEntity.name}PK);
 					}
 				}
 

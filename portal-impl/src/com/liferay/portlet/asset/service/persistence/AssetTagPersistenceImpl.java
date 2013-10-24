@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +52,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the asset tag service.
@@ -2046,10 +2049,23 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public void setAssetEntries(long pk, long[] assetEntryPKs)
 		throws SystemException {
-		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+		Set<Long> newAssetEntryPKSet = SetUtil.fromArray(assetEntryPKs);
+		Set<Long> oldAssetEntryPKSet = SetUtil.fromArray(assetTagToAssetEntryTableMapper.getRightPrimaryKeys(
+					pk));
 
-		for (Long assetEntryPK : assetEntryPKs) {
-			assetTagToAssetEntryTableMapper.addTableMapping(pk, assetEntryPK);
+		Set<Long> removeAssetEntryPKSet = new HashSet<Long>(oldAssetEntryPKSet);
+
+		removeAssetEntryPKSet.removeAll(newAssetEntryPKSet);
+
+		for (long removeAssetEntryPK : removeAssetEntryPKSet) {
+			assetTagToAssetEntryTableMapper.deleteTableMapping(pk,
+				removeAssetEntryPK);
+		}
+
+		newAssetEntryPKSet.removeAll(oldAssetEntryPKSet);
+
+		for (long newAssetEntryPK : newAssetEntryPKSet) {
+			assetTagToAssetEntryTableMapper.addTableMapping(pk, newAssetEntryPK);
 		}
 	}
 

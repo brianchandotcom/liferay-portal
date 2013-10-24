@@ -222,7 +222,7 @@ public class ResourceActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceActionId",
 				newResourceAction.getResourceActionId()));
 
-		List<ResourceAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceAction> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -239,7 +239,7 @@ public class ResourceActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourceActionId",
 				ServiceTestUtil.nextLong()));
 
-		List<ResourceAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceAction> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -260,7 +260,7 @@ public class ResourceActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceActionId",
 				new Object[] { newResourceActionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -280,7 +280,7 @@ public class ResourceActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourceActionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

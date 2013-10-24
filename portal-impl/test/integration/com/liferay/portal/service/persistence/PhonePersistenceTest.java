@@ -251,7 +251,7 @@ public class PhonePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("phoneId",
 				newPhone.getPhoneId()));
 
-		List<Phone> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Phone> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -268,7 +268,7 @@ public class PhonePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("phoneId",
 				ServiceTestUtil.nextLong()));
 
-		List<Phone> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Phone> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -288,7 +288,7 @@ public class PhonePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("phoneId",
 				new Object[] { newPhoneId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -307,7 +307,7 @@ public class PhonePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("phoneId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

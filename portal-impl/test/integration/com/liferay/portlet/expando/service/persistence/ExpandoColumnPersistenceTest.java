@@ -234,7 +234,7 @@ public class ExpandoColumnPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("columnId",
 				newExpandoColumn.getColumnId()));
 
-		List<ExpandoColumn> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ExpandoColumn> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -251,7 +251,7 @@ public class ExpandoColumnPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("columnId",
 				ServiceTestUtil.nextLong()));
 
-		List<ExpandoColumn> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ExpandoColumn> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -271,7 +271,7 @@ public class ExpandoColumnPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("columnId",
 				new Object[] { newColumnId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -290,7 +290,7 @@ public class ExpandoColumnPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("columnId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

@@ -225,7 +225,7 @@ public class SCLicensePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("licenseId",
 				newSCLicense.getLicenseId()));
 
-		List<SCLicense> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCLicense> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -242,7 +242,7 @@ public class SCLicensePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("licenseId",
 				ServiceTestUtil.nextLong()));
 
-		List<SCLicense> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCLicense> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -262,7 +262,7 @@ public class SCLicensePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("licenseId",
 				new Object[] { newLicenseId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -281,7 +281,7 @@ public class SCLicensePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("licenseId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

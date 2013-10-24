@@ -186,7 +186,7 @@ public class CounterPersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("name", newCounter.getName()));
 
-		List<Counter> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Counter> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -203,7 +203,7 @@ public class CounterPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("name",
 				ServiceTestUtil.randomString()));
 
-		List<Counter> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Counter> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -223,7 +223,7 @@ public class CounterPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("name",
 				new Object[] { newName }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -242,7 +242,7 @@ public class CounterPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("name",
 				new Object[] { ServiceTestUtil.randomString() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

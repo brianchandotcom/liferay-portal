@@ -243,7 +243,7 @@ public class AssetLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("linkId",
 				newAssetLink.getLinkId()));
 
-		List<AssetLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetLink> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -260,7 +260,7 @@ public class AssetLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("linkId",
 				ServiceTestUtil.nextLong()));
 
-		List<AssetLink> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetLink> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -280,7 +280,7 @@ public class AssetLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("linkId",
 				new Object[] { newLinkId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -299,7 +299,7 @@ public class AssetLinkPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("linkId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

@@ -45,6 +45,20 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long count(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.count(dynamicQuery);
+	}
+
+	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
 	*
 	* @param fileRankId the primary key for the new document library file rank
@@ -92,11 +106,8 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery)}
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -104,6 +115,76 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileRankLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int, OrderByComparator)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchDLFileRank(
+		long fileRankId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.fetchDLFileRank(fileRankId);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List find(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileRankLocalService.find(dynamicQuery);
 	}
 
 	/**
@@ -120,11 +201,10 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileRankLocalService.dynamicQuery(dynamicQuery, start, end);
+		return _dlFileRankLocalService.find(dynamicQuery, start, end);
 	}
 
 	/**
@@ -142,52 +222,13 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileRankLocalService.dynamicQuery(dynamicQuery, start, end,
+		return _dlFileRankLocalService.find(dynamicQuery, start, end,
 			orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileRankLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileRankLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileRank fetchDLFileRank(
-		long fileRankId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileRankLocalService.fetchDLFileRank(fileRankId);
 	}
 
 	/**

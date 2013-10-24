@@ -44,6 +44,20 @@ public class UserNotificationDeliveryLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long count(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.count(dynamicQuery);
+	}
+
+	/**
 	* Creates a new user notification delivery with the primary key. Does not add the user notification delivery to the database.
 	*
 	* @param userNotificationDeliveryId the primary key for the new user notification delivery
@@ -91,11 +105,8 @@ public class UserNotificationDeliveryLocalServiceWrapper
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery)}
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -103,6 +114,77 @@ public class UserNotificationDeliveryLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationDeliveryLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.dynamicQuery(dynamicQuery,
+			start, end);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int, OrderByComparator)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.dynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
+		long userNotificationDeliveryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.fetchUserNotificationDelivery(userNotificationDeliveryId);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List find(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.find(dynamicQuery);
 	}
 
 	/**
@@ -119,12 +201,11 @@ public class UserNotificationDeliveryLocalServiceWrapper
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationDeliveryLocalService.dynamicQuery(dynamicQuery,
-			start, end);
+		return _userNotificationDeliveryLocalService.find(dynamicQuery, start,
+			end);
 	}
 
 	/**
@@ -142,52 +223,13 @@ public class UserNotificationDeliveryLocalServiceWrapper
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationDeliveryLocalService.dynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationDeliveryLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationDeliveryLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
-		long userNotificationDeliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationDeliveryLocalService.fetchUserNotificationDelivery(userNotificationDeliveryId);
+		return _userNotificationDeliveryLocalService.find(dynamicQuery, start,
+			end, orderByComparator);
 	}
 
 	/**

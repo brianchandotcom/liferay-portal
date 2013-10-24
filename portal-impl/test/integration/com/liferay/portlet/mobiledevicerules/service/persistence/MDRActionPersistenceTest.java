@@ -269,7 +269,7 @@ public class MDRActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("actionId",
 				newMDRAction.getActionId()));
 
-		List<MDRAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MDRAction> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -286,7 +286,7 @@ public class MDRActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("actionId",
 				ServiceTestUtil.nextLong()));
 
-		List<MDRAction> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MDRAction> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -306,7 +306,7 @@ public class MDRActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("actionId",
 				new Object[] { newActionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -325,7 +325,7 @@ public class MDRActionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("actionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

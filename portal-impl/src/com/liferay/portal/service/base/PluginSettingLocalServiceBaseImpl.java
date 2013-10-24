@@ -155,6 +155,18 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long count(DynamicQuery dynamicQuery) throws SystemException {
+		return pluginSettingPersistence.count(dynamicQuery);
+	}
+
+	/**
 	 * Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
 	 *
 	 * @param pluginSettingId the primary key for the new plugin setting
@@ -203,6 +215,66 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	}
 
 	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int, OrderByComparator)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return pluginSettingPersistence.countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) throws SystemException {
+		return pluginSettingPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public PluginSetting fetchPluginSetting(long pluginSettingId)
+		throws SystemException {
+		return pluginSettingPersistence.fetchByPrimaryKey(pluginSettingId);
+	}
+
+	/**
 	 * Performs a dynamic query on the database and returns the matching rows.
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -211,9 +283,8 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery);
+	public List find(DynamicQuery dynamicQuery) throws SystemException {
+		return pluginSettingPersistence.find(dynamicQuery);
 	}
 
 	/**
@@ -231,10 +302,9 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+	public List find(DynamicQuery dynamicQuery, int start, int end)
 		throws SystemException {
-		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+		return pluginSettingPersistence.find(dynamicQuery, start, end);
 	}
 
 	/**
@@ -253,44 +323,10 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+	public List find(DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		return pluginSettingPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return pluginSettingPersistence.countWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
-		return pluginSettingPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public PluginSetting fetchPluginSetting(long pluginSettingId)
-		throws SystemException {
-		return pluginSettingPersistence.fetchByPrimaryKey(pluginSettingId);
+		return pluginSettingPersistence.find(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**

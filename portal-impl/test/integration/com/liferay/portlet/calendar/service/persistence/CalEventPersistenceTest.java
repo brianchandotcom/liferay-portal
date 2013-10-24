@@ -316,7 +316,7 @@ public class CalEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("eventId",
 				newCalEvent.getEventId()));
 
-		List<CalEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<CalEvent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -333,7 +333,7 @@ public class CalEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("eventId",
 				ServiceTestUtil.nextLong()));
 
-		List<CalEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<CalEvent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -353,7 +353,7 @@ public class CalEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("eventId",
 				new Object[] { newEventId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -372,7 +372,7 @@ public class CalEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("eventId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

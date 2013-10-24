@@ -44,6 +44,20 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long count(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _workflowInstanceLinkLocalService.count(dynamicQuery);
+	}
+
+	/**
 	* Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
 	*
 	* @param workflowInstanceLinkId the primary key for the new workflow instance link
@@ -93,11 +107,8 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery)}
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -105,6 +116,77 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _workflowInstanceLinkLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _workflowInstanceLinkLocalService.dynamicQuery(dynamicQuery,
+			start, end);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int, OrderByComparator)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _workflowInstanceLinkLocalService.dynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _workflowInstanceLinkLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _workflowInstanceLinkLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
+		long workflowInstanceLinkId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(workflowInstanceLinkId);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List find(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _workflowInstanceLinkLocalService.find(dynamicQuery);
 	}
 
 	/**
@@ -121,12 +203,10 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _workflowInstanceLinkLocalService.dynamicQuery(dynamicQuery,
-			start, end);
+		return _workflowInstanceLinkLocalService.find(dynamicQuery, start, end);
 	}
 
 	/**
@@ -144,52 +224,13 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _workflowInstanceLinkLocalService.dynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _workflowInstanceLinkLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _workflowInstanceLinkLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
-		long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(workflowInstanceLinkId);
+		return _workflowInstanceLinkLocalService.find(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**

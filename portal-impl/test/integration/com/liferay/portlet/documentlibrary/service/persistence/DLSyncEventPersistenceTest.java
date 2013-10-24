@@ -225,7 +225,7 @@ public class DLSyncEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("syncEventId",
 				newDLSyncEvent.getSyncEventId()));
 
-		List<DLSyncEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLSyncEvent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -242,7 +242,7 @@ public class DLSyncEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("syncEventId",
 				ServiceTestUtil.nextLong()));
 
-		List<DLSyncEvent> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DLSyncEvent> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -262,7 +262,7 @@ public class DLSyncEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("syncEventId",
 				new Object[] { newSyncEventId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -281,7 +281,7 @@ public class DLSyncEventPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("syncEventId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

@@ -84,13 +84,34 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
+	public long count(DynamicQuery dynamicQuery) throws SystemException {
+		List<Long> results = findWithDynamicQuery(dynamicQuery);
+
+		if (results.isEmpty()) {
+			return 0;
+		}
+		else {
+			return (results.get(0)).longValue();
+		}
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #count(
+	 *             DynamicQuery)}
+	 */
+	@Override
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
 		throws SystemException {
 
-		return countWithDynamicQuery(
-			dynamicQuery, ProjectionFactoryUtil.rowCount());
+		dynamicQuery.setProjection(ProjectionFactoryUtil.rowCount());
+
+		return count(dynamicQuery);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #count(
+	 *             DynamicQuery)}
+	 */
 	@Override
 	public long countWithDynamicQuery(
 			DynamicQuery dynamicQuery, Projection projection)
@@ -102,14 +123,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		dynamicQuery.setProjection(projection);
 
-		List<Long> results = findWithDynamicQuery(dynamicQuery);
-
-		if (results.isEmpty()) {
-			return 0;
-		}
-		else {
-			return (results.get(0)).longValue();
-		}
+		return count(dynamicQuery);
 	}
 
 	@Override
@@ -128,9 +142,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
-
+	public List find(DynamicQuery dynamicQuery) throws SystemException {
 		Session session = null;
 
 		try {
@@ -150,8 +162,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(
-			DynamicQuery dynamicQuery, int start, int end)
+	public List find(DynamicQuery dynamicQuery, int start, int end)
 		throws SystemException {
 
 		Session session = null;
@@ -175,14 +186,53 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(
+	public List find(
 			DynamicQuery dynamicQuery, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		OrderFactoryUtil.addOrderByComparator(dynamicQuery, orderByComparator);
 
-		return findWithDynamicQuery(dynamicQuery, start, end);
+		return find(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *             DynamicQuery)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List findWithDynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+
+		return find(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *             DynamicQuery, int, int)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List findWithDynamicQuery(
+			DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+
+		return find(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *             DynamicQuery, int, int , OrderByComparator)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List findWithDynamicQuery(
+			DynamicQuery dynamicQuery, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return find(dynamicQuery, start, end, orderByComparator);
 	}
 
 	@Override

@@ -221,7 +221,7 @@ public class PasswordTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordTrackerId",
 				newPasswordTracker.getPasswordTrackerId()));
 
-		List<PasswordTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordTracker> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -238,7 +238,7 @@ public class PasswordTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("passwordTrackerId",
 				ServiceTestUtil.nextLong()));
 
-		List<PasswordTracker> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PasswordTracker> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -259,7 +259,7 @@ public class PasswordTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordTrackerId",
 				new Object[] { newPasswordTrackerId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -279,7 +279,7 @@ public class PasswordTrackerPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("passwordTrackerId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

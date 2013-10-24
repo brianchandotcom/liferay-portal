@@ -43,6 +43,20 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	}
 
 	/**
+	* Returns the number of rows that match the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows that match the dynamic query
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public long count(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _virtualHostLocalService.count(dynamicQuery);
+	}
+
+	/**
 	* Creates a new virtual host with the primary key. Does not add the virtual host to the database.
 	*
 	* @param virtualHostId the primary key for the new virtual host
@@ -90,11 +104,8 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery)}
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -102,6 +113,76 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _virtualHostLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _virtualHostLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	DynamicQuery, int, int, OrderByComparator)}
+	*/
+	@Override
+	@SuppressWarnings("rawtypes")
+	public java.util.List dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _virtualHostLocalService.dynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _virtualHostLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _virtualHostLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
+		long virtualHostId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _virtualHostLocalService.fetchVirtualHost(virtualHostId);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List find(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _virtualHostLocalService.find(dynamicQuery);
 	}
 
 	/**
@@ -118,11 +199,10 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _virtualHostLocalService.dynamicQuery(dynamicQuery, start, end);
+		return _virtualHostLocalService.find(dynamicQuery, start, end);
 	}
 
 	/**
@@ -140,52 +220,13 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public java.util.List find(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _virtualHostLocalService.dynamicQuery(dynamicQuery, start, end,
+		return _virtualHostLocalService.find(dynamicQuery, start, end,
 			orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _virtualHostLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _virtualHostLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
-		long virtualHostId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _virtualHostLocalService.fetchVirtualHost(virtualHostId);
 	}
 
 	/**

@@ -244,7 +244,7 @@ public class SocialActivityLimitPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityLimitId",
 				newSocialActivityLimit.getActivityLimitId()));
 
-		List<SocialActivityLimit> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialActivityLimit> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -261,7 +261,7 @@ public class SocialActivityLimitPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityLimitId",
 				ServiceTestUtil.nextLong()));
 
-		List<SocialActivityLimit> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialActivityLimit> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -282,7 +282,7 @@ public class SocialActivityLimitPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityLimitId",
 				new Object[] { newActivityLimitId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -302,7 +302,7 @@ public class SocialActivityLimitPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityLimitId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

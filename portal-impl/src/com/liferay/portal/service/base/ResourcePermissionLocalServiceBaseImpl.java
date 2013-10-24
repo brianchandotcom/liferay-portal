@@ -155,6 +155,18 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long count(DynamicQuery dynamicQuery) throws SystemException {
+		return resourcePermissionPersistence.count(dynamicQuery);
+	}
+
+	/**
 	 * Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	 *
 	 * @param resourcePermissionId the primary key for the new resource permission
@@ -204,6 +216,66 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	}
 
 	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return resourcePermissionPersistence.findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+		return resourcePermissionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int, OrderByComparator)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return resourcePermissionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return resourcePermissionPersistence.countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) throws SystemException {
+		return resourcePermissionPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public ResourcePermission fetchResourcePermission(long resourcePermissionId)
+		throws SystemException {
+		return resourcePermissionPersistence.fetchByPrimaryKey(resourcePermissionId);
+	}
+
+	/**
 	 * Performs a dynamic query on the database and returns the matching rows.
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -212,9 +284,8 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return resourcePermissionPersistence.findWithDynamicQuery(dynamicQuery);
+	public List find(DynamicQuery dynamicQuery) throws SystemException {
+		return resourcePermissionPersistence.find(dynamicQuery);
 	}
 
 	/**
@@ -232,10 +303,9 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+	public List find(DynamicQuery dynamicQuery, int start, int end)
 		throws SystemException {
-		return resourcePermissionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+		return resourcePermissionPersistence.find(dynamicQuery, start, end);
 	}
 
 	/**
@@ -254,44 +324,10 @@ public abstract class ResourcePermissionLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+	public List find(DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		return resourcePermissionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return resourcePermissionPersistence.countWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
-		return resourcePermissionPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public ResourcePermission fetchResourcePermission(long resourcePermissionId)
-		throws SystemException {
-		return resourcePermissionPersistence.fetchByPrimaryKey(resourcePermissionId);
+		return resourcePermissionPersistence.find(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**

@@ -242,7 +242,7 @@ public class UserNotificationDeliveryPersistenceTest {
 				"userNotificationDeliveryId",
 				newUserNotificationDelivery.getUserNotificationDeliveryId()));
 
-		List<UserNotificationDelivery> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserNotificationDelivery> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -260,7 +260,7 @@ public class UserNotificationDeliveryPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"userNotificationDeliveryId", ServiceTestUtil.nextLong()));
 
-		List<UserNotificationDelivery> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserNotificationDelivery> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -282,7 +282,7 @@ public class UserNotificationDeliveryPersistenceTest {
 				"userNotificationDeliveryId",
 				new Object[] { newUserNotificationDeliveryId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -304,7 +304,7 @@ public class UserNotificationDeliveryPersistenceTest {
 				"userNotificationDeliveryId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

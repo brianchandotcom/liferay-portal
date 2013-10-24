@@ -222,7 +222,7 @@ public class WikiPageResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				newWikiPageResource.getResourcePrimKey()));
 
-		List<WikiPageResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WikiPageResource> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -239,7 +239,7 @@ public class WikiPageResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				ServiceTestUtil.nextLong()));
 
-		List<WikiPageResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WikiPageResource> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -260,7 +260,7 @@ public class WikiPageResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourcePrimKey",
 				new Object[] { newResourcePrimKey }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -280,7 +280,7 @@ public class WikiPageResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourcePrimKey",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

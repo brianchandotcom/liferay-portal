@@ -238,7 +238,7 @@ public class SocialActivityAchievementPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityAchievementId",
 				newSocialActivityAchievement.getActivityAchievementId()));
 
-		List<SocialActivityAchievement> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialActivityAchievement> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -256,7 +256,7 @@ public class SocialActivityAchievementPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("activityAchievementId",
 				ServiceTestUtil.nextLong()));
 
-		List<SocialActivityAchievement> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SocialActivityAchievement> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -277,7 +277,7 @@ public class SocialActivityAchievementPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityAchievementId",
 				new Object[] { newActivityAchievementId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -298,7 +298,7 @@ public class SocialActivityAchievementPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("activityAchievementId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

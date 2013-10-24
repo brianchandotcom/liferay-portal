@@ -256,7 +256,7 @@ public class EmailAddressPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("emailAddressId",
 				newEmailAddress.getEmailAddressId()));
 
-		List<EmailAddress> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<EmailAddress> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -273,7 +273,7 @@ public class EmailAddressPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("emailAddressId",
 				ServiceTestUtil.nextLong()));
 
-		List<EmailAddress> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<EmailAddress> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -294,7 +294,7 @@ public class EmailAddressPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("emailAddressId",
 				new Object[] { newEmailAddressId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -314,7 +314,7 @@ public class EmailAddressPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("emailAddressId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

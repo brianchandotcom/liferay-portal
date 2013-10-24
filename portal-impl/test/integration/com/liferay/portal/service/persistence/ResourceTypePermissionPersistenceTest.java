@@ -233,7 +233,7 @@ public class ResourceTypePermissionPersistenceTest {
 				"resourceTypePermissionId",
 				newResourceTypePermission.getResourceTypePermissionId()));
 
-		List<ResourceTypePermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceTypePermission> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -251,7 +251,7 @@ public class ResourceTypePermissionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
 				"resourceTypePermissionId", ServiceTestUtil.nextLong()));
 
-		List<ResourceTypePermission> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ResourceTypePermission> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -273,7 +273,7 @@ public class ResourceTypePermissionPersistenceTest {
 				"resourceTypePermissionId",
 				new Object[] { newResourceTypePermissionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -295,7 +295,7 @@ public class ResourceTypePermissionPersistenceTest {
 				"resourceTypePermissionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

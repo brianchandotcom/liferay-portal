@@ -94,6 +94,18 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long count(DynamicQuery dynamicQuery) throws SystemException {
+		return journalContentSearchPersistence.count(dynamicQuery);
+	}
+
+	/**
 	 * Creates a new journal content search with the primary key. Does not add the journal content search to the database.
 	 *
 	 * @param contentSearchId the primary key for the new journal content search
@@ -142,6 +154,66 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	}
 
 	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return journalContentSearchPersistence.findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+		return journalContentSearchPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int, OrderByComparator)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return journalContentSearchPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return journalContentSearchPersistence.countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) throws SystemException {
+		return journalContentSearchPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public JournalContentSearch fetchJournalContentSearch(long contentSearchId)
+		throws SystemException {
+		return journalContentSearchPersistence.fetchByPrimaryKey(contentSearchId);
+	}
+
+	/**
 	 * Performs a dynamic query on the database and returns the matching rows.
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -150,9 +222,8 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return journalContentSearchPersistence.findWithDynamicQuery(dynamicQuery);
+	public List find(DynamicQuery dynamicQuery) throws SystemException {
+		return journalContentSearchPersistence.find(dynamicQuery);
 	}
 
 	/**
@@ -170,10 +241,9 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+	public List find(DynamicQuery dynamicQuery, int start, int end)
 		throws SystemException {
-		return journalContentSearchPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+		return journalContentSearchPersistence.find(dynamicQuery, start, end);
 	}
 
 	/**
@@ -192,44 +262,10 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+	public List find(DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		return journalContentSearchPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return journalContentSearchPersistence.countWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
-		return journalContentSearchPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public JournalContentSearch fetchJournalContentSearch(long contentSearchId)
-		throws SystemException {
-		return journalContentSearchPersistence.fetchByPrimaryKey(contentSearchId);
+		return journalContentSearchPersistence.find(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**

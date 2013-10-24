@@ -287,7 +287,7 @@ public class DDMStructurePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureId",
 				newDDMStructure.getStructureId()));
 
-		List<DDMStructure> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMStructure> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -304,7 +304,7 @@ public class DDMStructurePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("structureId",
 				ServiceTestUtil.nextLong()));
 
-		List<DDMStructure> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<DDMStructure> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -324,7 +324,7 @@ public class DDMStructurePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("structureId",
 				new Object[] { newStructureId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -343,7 +343,7 @@ public class DDMStructurePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("structureId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

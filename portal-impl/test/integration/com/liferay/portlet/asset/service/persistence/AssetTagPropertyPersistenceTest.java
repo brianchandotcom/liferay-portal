@@ -247,7 +247,7 @@ public class AssetTagPropertyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("tagPropertyId",
 				newAssetTagProperty.getTagPropertyId()));
 
-		List<AssetTagProperty> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetTagProperty> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -264,7 +264,7 @@ public class AssetTagPropertyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("tagPropertyId",
 				ServiceTestUtil.nextLong()));
 
-		List<AssetTagProperty> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetTagProperty> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -285,7 +285,7 @@ public class AssetTagPropertyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("tagPropertyId",
 				new Object[] { newTagPropertyId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -305,7 +305,7 @@ public class AssetTagPropertyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("tagPropertyId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

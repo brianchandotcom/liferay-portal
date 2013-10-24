@@ -84,6 +84,18 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long count(DynamicQuery dynamicQuery) throws SystemException {
+		return scProductVersionPersistence.count(dynamicQuery);
+	}
+
+	/**
 	 * Creates a new s c product version with the primary key. Does not add the s c product version to the database.
 	 *
 	 * @param productVersionId the primary key for the new s c product version
@@ -132,6 +144,66 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	}
 
 	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+	 *             DynamicQuery, int, int, OrderByComparator)}
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return scProductVersionPersistence.countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) throws SystemException {
+		return scProductVersionPersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public SCProductVersion fetchSCProductVersion(long productVersionId)
+		throws SystemException {
+		return scProductVersionPersistence.fetchByPrimaryKey(productVersionId);
+	}
+
+	/**
 	 * Performs a dynamic query on the database and returns the matching rows.
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -140,9 +212,8 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery);
+	public List find(DynamicQuery dynamicQuery) throws SystemException {
+		return scProductVersionPersistence.find(dynamicQuery);
 	}
 
 	/**
@@ -160,10 +231,9 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+	public List find(DynamicQuery dynamicQuery, int start, int end)
 		throws SystemException {
-		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end);
+		return scProductVersionPersistence.find(dynamicQuery, start, end);
 	}
 
 	/**
@@ -182,44 +252,10 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+	public List find(DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		return scProductVersionPersistence.findWithDynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
-		return scProductVersionPersistence.countWithDynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
-		return scProductVersionPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public SCProductVersion fetchSCProductVersion(long productVersionId)
-		throws SystemException {
-		return scProductVersionPersistence.fetchByPrimaryKey(productVersionId);
+		return scProductVersionPersistence.find(dynamicQuery, start, end,
+			orderByComparator);
 	}
 
 	/**

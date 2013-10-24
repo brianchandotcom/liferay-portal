@@ -270,7 +270,7 @@ public class BackgroundTaskPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("backgroundTaskId",
 				newBackgroundTask.getBackgroundTaskId()));
 
-		List<BackgroundTask> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BackgroundTask> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -287,7 +287,7 @@ public class BackgroundTaskPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("backgroundTaskId",
 				ServiceTestUtil.nextLong()));
 
-		List<BackgroundTask> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<BackgroundTask> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -308,7 +308,7 @@ public class BackgroundTaskPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("backgroundTaskId",
 				new Object[] { newBackgroundTaskId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -328,7 +328,7 @@ public class BackgroundTaskPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("backgroundTaskId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

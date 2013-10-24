@@ -225,7 +225,7 @@ public class TrashVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("versionId",
 				newTrashVersion.getVersionId()));
 
-		List<TrashVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<TrashVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -242,7 +242,7 @@ public class TrashVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("versionId",
 				ServiceTestUtil.nextLong()));
 
-		List<TrashVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<TrashVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -262,7 +262,7 @@ public class TrashVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("versionId",
 				new Object[] { newVersionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -281,7 +281,7 @@ public class TrashVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("versionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

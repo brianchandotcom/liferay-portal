@@ -226,7 +226,7 @@ public class UserIdMapperPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userIdMapperId",
 				newUserIdMapper.getUserIdMapperId()));
 
-		List<UserIdMapper> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserIdMapper> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -243,7 +243,7 @@ public class UserIdMapperPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("userIdMapperId",
 				ServiceTestUtil.nextLong()));
 
-		List<UserIdMapper> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<UserIdMapper> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -264,7 +264,7 @@ public class UserIdMapperPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userIdMapperId",
 				new Object[] { newUserIdMapperId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -284,7 +284,7 @@ public class UserIdMapperPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("userIdMapperId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

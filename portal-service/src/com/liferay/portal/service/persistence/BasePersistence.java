@@ -88,19 +88,22 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * Returns the number of rows that match the dynamic query.
 	 *
 	 * @param  dynamicQuery the dynamic query
+	 * @param  projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
 	 * @throws SystemException if a system exception occurred
+	 */
+	public long count(DynamicQuery dynamicQuery) throws SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #count(
+	 *             DynamicQuery)}
 	 */
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery)
 		throws SystemException;
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
-	 *
-	 * @param  dynamicQuery the dynamic query
-	 * @param  projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #count(
+	 *             DynamicQuery)}
 	 */
 	public long countWithDynamicQuery(
 			DynamicQuery dynamicQuery, Projection projection)
@@ -140,7 +143,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(DynamicQuery dynamicQuery)
+	public List find(DynamicQuery dynamicQuery)
 		throws SystemException;
 
 	/**
@@ -167,8 +170,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *         com.liferay.portal.kernel.dao.orm.Dialect, int, int)
 	 */
 	@SuppressWarnings("rawtypes")
-	public List findWithDynamicQuery(
-			DynamicQuery dynamicQuery, int start, int end)
+	public List find(DynamicQuery dynamicQuery, int start, int end)
 		throws SystemException;
 
 	/**
@@ -192,6 +194,33 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *         (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 * @throws SystemException if a system exception occurred
+	 */
+	@SuppressWarnings("rawtypes")
+	public List find(
+			DynamicQuery dynamicQuery, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *             DynamicQuery)}
+	 */
+	@SuppressWarnings("rawtypes")
+	public List findWithDynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *             DynamicQuery, int, int)}
+	 */
+	@SuppressWarnings("rawtypes")
+	public List findWithDynamicQuery(
+			DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0, see LPS-41063, replaced by {@link #find(
+	 *              DynamicQuery, int, int, OrderByComparator)}
 	 */
 	@SuppressWarnings("rawtypes")
 	public List findWithDynamicQuery(

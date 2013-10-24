@@ -230,7 +230,7 @@ public class PluginSettingPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("pluginSettingId",
 				newPluginSetting.getPluginSettingId()));
 
-		List<PluginSetting> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PluginSetting> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -247,7 +247,7 @@ public class PluginSettingPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("pluginSettingId",
 				ServiceTestUtil.nextLong()));
 
-		List<PluginSetting> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<PluginSetting> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -268,7 +268,7 @@ public class PluginSettingPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("pluginSettingId",
 				new Object[] { newPluginSettingId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -288,7 +288,7 @@ public class PluginSettingPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("pluginSettingId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

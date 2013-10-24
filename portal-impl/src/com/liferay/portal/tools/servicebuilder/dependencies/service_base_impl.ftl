@@ -133,6 +133,18 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		}
 
 		/**
+		 * Returns the number of rows that match the dynamic query.
+		 *
+		 * @param dynamicQuery the dynamic query
+		 * @return the number of rows that match the dynamic query
+		 * @throws SystemException if a system exception occurred
+		 */
+		@Override
+		public long count(DynamicQuery dynamicQuery) throws SystemException {
+			return ${entity.varName}Persistence.count(dynamicQuery);
+		}
+
+		/**
 		 * Creates a new ${entity.humanName} with the primary key. Does not add the ${entity.humanName} to the database.
 		 *
 		 * @param ${entity.PKVarName} the primary key for the new ${entity.humanName}
@@ -195,6 +207,59 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		}
 
 		/**
+		 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+		 *             DynamicQuery)}
+		 */
+		@Override
+		@SuppressWarnings("rawtypes")
+		public List dynamicQuery(DynamicQuery dynamicQuery) throws SystemException {
+			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery);
+		}
+
+		/**
+		 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+		 *             DynamicQuery, int, int)}
+		 */
+		@Override
+		@SuppressWarnings("rawtypes")
+		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) throws SystemException {
+			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end);
+		}
+
+		/**
+		 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #find(
+		 *             DynamicQuery, int, int, OrderByComparator)}
+		 */
+		@Override
+		@SuppressWarnings("rawtypes")
+		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end, OrderByComparator orderByComparator) throws SystemException {
+			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end, orderByComparator);
+		}
+
+		/**
+		 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+		 */
+		@Override
+		public long dynamicQueryCount(DynamicQuery dynamicQuery) throws SystemException {
+			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery);
+		}
+
+		/**
+		 * @deprecated As of 6.2.0, see LPS-41495, replaced by {@link #count(DynamicQuery)}
+		 */
+		@Override
+		public long dynamicQueryCount(DynamicQuery dynamicQuery, Projection projection) throws SystemException {
+			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery, projection);
+		}
+
+		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "fetch" + entity.name, [entity.PKClassName], ["SystemException"])>
+
+		@Override
+		public ${entity.name} fetch${entity.name}(${entity.PKClassName} ${entity.PKVarName}) throws ${stringUtil.merge(serviceBaseExceptions)} {
+			return ${entity.varName}Persistence.fetchByPrimaryKey(${entity.PKVarName});
+		}
+
+		/**
 		 * Performs a dynamic query on the database and returns the matching rows.
 		 *
 		 * @param dynamicQuery the dynamic query
@@ -203,8 +268,8 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
-		public List dynamicQuery(DynamicQuery dynamicQuery) throws SystemException {
-			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery);
+		public List find(DynamicQuery dynamicQuery) throws SystemException {
+			return ${entity.varName}Persistence.find(dynamicQuery);
 		}
 
 		/**
@@ -222,8 +287,8 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
-		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) throws SystemException {
-			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end);
+		public List find(DynamicQuery dynamicQuery, int start, int end) throws SystemException {
+			return ${entity.varName}Persistence.find(dynamicQuery, start, end);
 		}
 
 		/**
@@ -242,40 +307,8 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		 */
 		@Override
 		@SuppressWarnings("rawtypes")
-		public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end, OrderByComparator orderByComparator) throws SystemException {
-			return ${entity.varName}Persistence.findWithDynamicQuery(dynamicQuery, start, end, orderByComparator);
-		}
-
-		/**
-		 * Returns the number of rows that match the dynamic query.
-		 *
-		 * @param dynamicQuery the dynamic query
-		 * @return the number of rows that match the dynamic query
-		 * @throws SystemException if a system exception occurred
-		 */
-		@Override
-		public long dynamicQueryCount(DynamicQuery dynamicQuery) throws SystemException {
-			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery);
-		}
-
-		/**
-		 * Returns the number of rows that match the dynamic query.
-		 *
-		 * @param dynamicQuery the dynamic query
-		 * @param projection the projection to apply to the query
-		 * @return the number of rows that match the dynamic query
-		 * @throws SystemException if a system exception occurred
-		 */
-		@Override
-		public long dynamicQueryCount(DynamicQuery dynamicQuery, Projection projection) throws SystemException {
-			return ${entity.varName}Persistence.countWithDynamicQuery(dynamicQuery, projection);
-		}
-
-		<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "fetch" + entity.name, [entity.PKClassName], ["SystemException"])>
-
-		@Override
-		public ${entity.name} fetch${entity.name}(${entity.PKClassName} ${entity.PKVarName}) throws ${stringUtil.merge(serviceBaseExceptions)} {
-			return ${entity.varName}Persistence.fetchByPrimaryKey(${entity.PKVarName});
+		public List find(DynamicQuery dynamicQuery, int start, int end, OrderByComparator orderByComparator) throws SystemException {
+			return ${entity.varName}Persistence.find(dynamicQuery, start, end, orderByComparator);
 		}
 
 		<#if entity.hasUuid() && entity.hasColumn("companyId")>

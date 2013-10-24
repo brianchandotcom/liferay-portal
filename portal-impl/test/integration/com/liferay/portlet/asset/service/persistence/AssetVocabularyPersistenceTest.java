@@ -271,7 +271,7 @@ public class AssetVocabularyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("vocabularyId",
 				newAssetVocabulary.getVocabularyId()));
 
-		List<AssetVocabulary> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetVocabulary> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -288,7 +288,7 @@ public class AssetVocabularyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("vocabularyId",
 				ServiceTestUtil.nextLong()));
 
-		List<AssetVocabulary> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AssetVocabulary> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -309,7 +309,7 @@ public class AssetVocabularyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("vocabularyId",
 				new Object[] { newVocabularyId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -329,7 +329,7 @@ public class AssetVocabularyPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("vocabularyId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

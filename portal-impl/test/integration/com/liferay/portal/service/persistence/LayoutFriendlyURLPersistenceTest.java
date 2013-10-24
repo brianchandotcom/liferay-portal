@@ -259,7 +259,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutFriendlyURLId",
 				newLayoutFriendlyURL.getLayoutFriendlyURLId()));
 
-		List<LayoutFriendlyURL> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutFriendlyURL> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -276,7 +276,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("layoutFriendlyURLId",
 				ServiceTestUtil.nextLong()));
 
-		List<LayoutFriendlyURL> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<LayoutFriendlyURL> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -297,7 +297,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutFriendlyURLId",
 				new Object[] { newLayoutFriendlyURLId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -317,7 +317,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("layoutFriendlyURLId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

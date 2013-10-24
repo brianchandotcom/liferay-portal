@@ -261,7 +261,7 @@ public class SCProductVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("productVersionId",
 				newSCProductVersion.getProductVersionId()));
 
-		List<SCProductVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCProductVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -278,7 +278,7 @@ public class SCProductVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("productVersionId",
 				ServiceTestUtil.nextLong()));
 
-		List<SCProductVersion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<SCProductVersion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -299,7 +299,7 @@ public class SCProductVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productVersionId",
 				new Object[] { newProductVersionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -319,7 +319,7 @@ public class SCProductVersionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("productVersionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

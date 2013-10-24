@@ -217,7 +217,7 @@ public class ShardPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("shardId",
 				newShard.getShardId()));
 
-		List<Shard> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Shard> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -234,7 +234,7 @@ public class ShardPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("shardId",
 				ServiceTestUtil.nextLong()));
 
-		List<Shard> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Shard> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -254,7 +254,7 @@ public class ShardPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("shardId",
 				new Object[] { newShardId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -273,7 +273,7 @@ public class ShardPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("shardId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

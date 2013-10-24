@@ -227,7 +227,7 @@ public class ExpandoRowPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("rowId",
 				newExpandoRow.getRowId()));
 
-		List<ExpandoRow> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ExpandoRow> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -244,7 +244,7 @@ public class ExpandoRowPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("rowId",
 				ServiceTestUtil.nextLong()));
 
-		List<ExpandoRow> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<ExpandoRow> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -264,7 +264,7 @@ public class ExpandoRowPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("rowId",
 				new Object[] { newRowId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -283,7 +283,7 @@ public class ExpandoRowPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("rowId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

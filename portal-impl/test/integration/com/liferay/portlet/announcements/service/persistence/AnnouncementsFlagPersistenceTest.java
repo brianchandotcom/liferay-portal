@@ -227,7 +227,7 @@ public class AnnouncementsFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("flagId",
 				newAnnouncementsFlag.getFlagId()));
 
-		List<AnnouncementsFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AnnouncementsFlag> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -244,7 +244,7 @@ public class AnnouncementsFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("flagId",
 				ServiceTestUtil.nextLong()));
 
-		List<AnnouncementsFlag> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<AnnouncementsFlag> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -264,7 +264,7 @@ public class AnnouncementsFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("flagId",
 				new Object[] { newFlagId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -283,7 +283,7 @@ public class AnnouncementsFlagPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("flagId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

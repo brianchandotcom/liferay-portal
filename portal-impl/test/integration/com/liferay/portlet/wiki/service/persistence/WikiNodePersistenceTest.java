@@ -282,7 +282,7 @@ public class WikiNodePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("nodeId",
 				newWikiNode.getNodeId()));
 
-		List<WikiNode> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WikiNode> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -299,7 +299,7 @@ public class WikiNodePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("nodeId",
 				ServiceTestUtil.nextLong()));
 
-		List<WikiNode> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WikiNode> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -319,7 +319,7 @@ public class WikiNodePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("nodeId",
 				new Object[] { newNodeId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -338,7 +338,7 @@ public class WikiNodePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("nodeId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

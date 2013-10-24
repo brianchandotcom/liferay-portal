@@ -256,7 +256,7 @@ public class MBDiscussionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("discussionId",
 				newMBDiscussion.getDiscussionId()));
 
-		List<MBDiscussion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBDiscussion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -273,7 +273,7 @@ public class MBDiscussionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("discussionId",
 				ServiceTestUtil.nextLong()));
 
-		List<MBDiscussion> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<MBDiscussion> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -294,7 +294,7 @@ public class MBDiscussionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("discussionId",
 				new Object[] { newDiscussionId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -314,7 +314,7 @@ public class MBDiscussionPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("discussionId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

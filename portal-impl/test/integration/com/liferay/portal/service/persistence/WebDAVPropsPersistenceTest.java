@@ -237,7 +237,7 @@ public class WebDAVPropsPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("webDavPropsId",
 				newWebDAVProps.getWebDavPropsId()));
 
-		List<WebDAVProps> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WebDAVProps> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -254,7 +254,7 @@ public class WebDAVPropsPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("webDavPropsId",
 				ServiceTestUtil.nextLong()));
 
-		List<WebDAVProps> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<WebDAVProps> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -275,7 +275,7 @@ public class WebDAVPropsPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("webDavPropsId",
 				new Object[] { newWebDavPropsId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -295,7 +295,7 @@ public class WebDAVPropsPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("webDavPropsId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

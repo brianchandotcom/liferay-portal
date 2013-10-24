@@ -225,7 +225,7 @@ public class JournalArticleResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				newJournalArticleResource.getResourcePrimKey()));
 
-		List<JournalArticleResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<JournalArticleResource> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -243,7 +243,7 @@ public class JournalArticleResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("resourcePrimKey",
 				ServiceTestUtil.nextLong()));
 
-		List<JournalArticleResource> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<JournalArticleResource> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -264,7 +264,7 @@ public class JournalArticleResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourcePrimKey",
 				new Object[] { newResourcePrimKey }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -284,7 +284,7 @@ public class JournalArticleResourcePersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("resourcePrimKey",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

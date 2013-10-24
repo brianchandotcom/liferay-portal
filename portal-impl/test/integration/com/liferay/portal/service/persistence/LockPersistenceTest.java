@@ -244,7 +244,7 @@ public class LockPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
 				newLock.getLockId()));
 
-		List<Lock> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Lock> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -261,7 +261,7 @@ public class LockPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("lockId",
 				ServiceTestUtil.nextLong()));
 
-		List<Lock> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Lock> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}
@@ -281,7 +281,7 @@ public class LockPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("lockId",
 				new Object[] { newLockId }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
@@ -300,7 +300,7 @@ public class LockPersistenceTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.in("lockId",
 				new Object[] { ServiceTestUtil.nextLong() }));
 
-		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+		List<Object> result = _persistence.find(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
 	}

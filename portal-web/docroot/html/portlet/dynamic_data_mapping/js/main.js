@@ -661,8 +661,6 @@ AUI.add(
 				},
 
 				normalizeKey: function(str) {
-					str = A.Text.AccentFold.fold(str);
-
 					A.each(
 						str,
 						function(item, index, collection) {

@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGWikiDraftpages</title>
+<title>PGWikidisplayDraftpages</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGWikiDraftpages</td></tr>
+<tr><td rowspan="1" colspan="3">PGWikidisplayDraftpages</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGWikiDraftpages</td>
+	<td>PGWikidisplayDraftpages</td>
 </tr>
 <tr>
 	<td></td>
@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE_1</td>
-	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-info')])[1]</td>
+	<td>xpath=(//div[@class='alert alert-info'])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE_2</td>
-	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-info')])[3]</td>
+	<td>xpath=(//div[@class='alert alert-info'])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,32 +93,32 @@
 <!--DRAFT_PAGES_TABLE-->
 <tr>
 	<td>DRAFT_PAGES_TABLE_PAGE</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_TABLE_STATUS</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_TABLE_REVISION</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_TABLE_USER</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_TABLE_DATE</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_TABLE_ACTIONS</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a[@title='Actions']</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,32 +129,32 @@
 <!--DRAFT_PAGES_MENULIST-->
 <tr>
 	<td>DRAFT_PAGES_MENULIST_EDIT</td>
-	<td>//div[@id='_36_ircfSearchContainer']//div[contains(@class,'lfr-component') and contains(@class,'lfr-menu-list')]/ul/li/a[contains(.,'Edit')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_MENULIST_PERMISSIONS</td>
-	<td>//div[@id='_36_ircfSearchContainer']//div[contains(@class,'lfr-component') and contains(@class,'lfr-menu-list')]/ul/li/a[contains(.,'Permissions')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_MENULIST_COPY</td>
-	<td>//div[@id='_36_ircfSearchContainer']//div[contains(@class,'lfr-component') and contains(@class,'lfr-menu-list')]/ul/li/a[contains(.,'Copy')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_MENULIST_MOVE</td>
-	<td>//div[@id='_36_ircfSearchContainer']//div[contains(@class,'lfr-component') and contains(@class,'lfr-menu-list')]/ul/li/a[contains(.,'Move')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_MENULIST_SUBSCRIBE</td>
-	<td>//div[@id='_36_ircfSearchContainer']//div[contains(@class,'lfr-component') and contains(@class,'lfr-menu-list')]/ul/li/a[contains(.,'Subscribe')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DRAFT_PAGES_MENULIST_DISCARD_DRAFT</td>
-	<td>//div[@id='_36_ircfSearchContainer']//div[contains(@class,'lfr-component') and contains(@class,'lfr-menu-list')]/ul/li/a[contains(.,'Discard Draft')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Discard Draft')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -176,27 +176,27 @@
 <!--PENDING_APPROVAL_TABLE-->
 <tr>
 	<td>PENDING_APPROVAL_TABLE_PAGE</td>
-	<td>//div[@id='_36_ircfSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'draft')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_APPROVAL_TABLE_STATUS</td>
-	<td>//div[@id='_36_ircfSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_APPROVAL_TABLE_REVISION</td>
-	<td>//div[@id='_36_ircfSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_APPROVAL_TABLE_USER</td>
-	<td>//div[@id='_36_ircfSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_APPROVAL_TABLE_DATE</td>
-	<td>//div[@id='_36_ircfSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
+	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 </tbody>

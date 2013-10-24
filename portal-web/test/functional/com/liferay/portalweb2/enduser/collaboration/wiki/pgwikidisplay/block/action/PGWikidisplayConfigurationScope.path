@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>PGWikidisplayConfigurationScope</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWikidisplayConfigurationScope</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWikidisplayConfigurationScope</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_DISPLAY_CONFIGURATION_IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_SELECT</td>
+	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION_TAB-->
+<tr>
+	<td>NAVIGATION_TAB_SETUP</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_PERMISSIONS</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_SHARING</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_TAB_SCOPE</td>
+	<td>//li[contains(@class,'tab') and contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCOPE_MENULIST-->
+<tr>
+	<td>SCOPE_MENULIST_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

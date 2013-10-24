@@ -33,7 +33,11 @@
 	<td>//div[@class='article-actions']/span[contains(.,'Add Child Page')]/a</td>
 	<td></td>
 </tr>
-<!---->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_ALL_PAGES</td>
@@ -64,6 +68,11 @@
 <tr>
 	<td>WIKI_PAGE_TAG</td>
 	<td>//div[@class='page-tags']/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY_HTML</td>
+	<td>//div[@class='wiki-body']</td>
 	<td></td>
 </tr>
 <tr>

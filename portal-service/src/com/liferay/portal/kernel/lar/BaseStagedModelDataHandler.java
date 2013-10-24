@@ -51,13 +51,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
+		validateExport(portletDataContext, stagedModel);
+
 		String path = ExportImportPathUtil.getModelPath(stagedModel);
 
 		if (portletDataContext.isPathExportedInScope(path)) {
 			return;
 		}
-
-		validateExport(portletDataContext, stagedModel);
 
 		try {
 			ManifestSummary manifestSummary =

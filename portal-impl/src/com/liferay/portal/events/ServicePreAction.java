@@ -1351,16 +1351,21 @@ public class ServicePreAction extends Action {
 					}
 				}
 
-				if (firstPortlet == null) {
+				if ((firstPortlet == null) &&
+					controlPanelCategory.startsWith(
+						PortletCategoryKeys.SITE_ADMINISTRATION)){
+
 					firstPortlet = PortalUtil.getFirstSiteAdministrationPortlet(
 						themeDisplay);
 				}
 
-				String redirect = HttpUtil.setParameter(
-					currentURL, "p_p_id", firstPortlet.getPortletId());
+				if (firstPortlet != null) {
+					String redirect = HttpUtil.setParameter(
+						currentURL, "p_p_id", firstPortlet.getPortletId());
 
-				response.sendRedirect(
-					PortalUtil.getAbsoluteURL(request, redirect));
+					response.sendRedirect(
+						PortalUtil.getAbsoluteURL(request, redirect));
+				}
 			}
 		}
 

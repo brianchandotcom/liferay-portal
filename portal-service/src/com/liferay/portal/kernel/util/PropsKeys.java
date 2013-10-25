@@ -1225,6 +1225,8 @@ public interface PropsKeys {
 
 	public static final String JSON_SERVICE_INVALID_CLASS_NAMES = "json.service.invalid.class.names";
 
+	public static final String JSON_SERVICE_INVALID_METHOD_NAMES = "json.service.invalid.method.names";
+
 	public static final String JSON_WEB_SERVICE_ENABLED = "json.web.service.enabled";
 
 	public static final String JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS = "jsonws.web.service.invalid.http.methods";

@@ -68,9 +68,16 @@ public class JSONServiceAction extends JSONAction {
 		_invalidClassNames = SetUtil.fromArray(
 			PropsValues.JSON_SERVICE_INVALID_CLASS_NAMES);
 
+		_invalidMethodNames = SetUtil.fromArray(
+			PropsValues.JSON_SERVICE_INVALID_METHOD_NAMES);
+
 		if (_log.isDebugEnabled()) {
 			for (String invalidClassName : _invalidClassNames) {
 				_log.debug("Invalid class name " + invalidClassName);
+			}
+
+			for (String invalidMethodName : _invalidMethodNames) {
+				_log.debug("Invalid method name " + invalidMethodName);
 			}
 		}
 	}
@@ -618,11 +625,13 @@ public class JSONServiceAction extends JSONAction {
 
 	protected boolean isValidRequest(HttpServletRequest request) {
 		String className = ParamUtil.getString(request, "serviceClassName");
+		String methodName = ParamUtil.getString(request, "serviceMethodName");
 
 		if (className.contains(".service.") &&
 			className.endsWith("ServiceUtil") &&
 			!className.endsWith("LocalServiceUtil") &&
-			!_invalidClassNames.contains(className)) {
+			!_invalidClassNames.contains(className) &&
+			!_invalidMethodNames.contains(methodName)) {
 
 			return true;
 		}
@@ -639,6 +648,7 @@ public class JSONServiceAction extends JSONAction {
 		"^(.*?)((\\[\\])*)$", Pattern.DOTALL);
 
 	private Set<String> _invalidClassNames;
+	private Set<String> _invalidMethodNames;
 	private Map<String, Object[]> _methodCache =
 		new HashMap<String, Object[]>();
 

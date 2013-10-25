@@ -18,6 +18,7 @@
 
 <%
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
+boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 String[] values = new String[0];
 
@@ -92,7 +93,9 @@ if (dataJSONObject.has("values")) {
 
 					<%= assetRendererFactory.getTypeName(locale, false) %>
 
-					<span class="frequency">(<%= frequency %>)</span>
+					<c:if test="<%= showAssetCount %>">
+						<span class="frequency">(<%= frequency %>)</span>
+					</c:if>
 				</a>
 			</li>
 

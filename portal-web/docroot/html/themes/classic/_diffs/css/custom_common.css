@@ -809,7 +809,9 @@
 	}
 
 	.nav-header {
-		background-image: linear-gradient(#FFF, #F2F2F2);
+		background-color: #FFF;
+
+		@include background-image(linear-gradient(#FFF 0%, #F2F2F2 100%));
 	}
 
 	.portlet-options {

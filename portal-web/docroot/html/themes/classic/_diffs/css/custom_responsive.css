@@ -186,7 +186,7 @@
 								margin: 5px 0;
 								padding: 6px 15px;
 
-								&:hover {
+								&:focus, &:hover {
 									background-color: #5BBAE8;
 								}
 							}

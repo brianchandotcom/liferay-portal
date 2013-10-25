@@ -70,7 +70,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				String portletId = rs.getString("portletId");
 				String typeSettings = rs.getString("typeSettings");
 
-				if (typeSettings.contains(portletId)) {
+				if ((typeSettings != null) &&
+					typeSettings.contains(portletId)) {
+
 					continue;
 				}
 

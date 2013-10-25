@@ -61,6 +61,35 @@ AUI.add(
 						}
 					},
 
+					resize: function() {
+						var instance = this;
+
+						var portraitPreviewImg = instance._portraitPreviewImg;
+
+						if (portraitPreviewImg) {
+							instance._setCropBackgroundSize(portraitPreviewImg.width(), portraitPreviewImg.height());
+						}
+					},
+
+					_getImgNaturalSize: function(img) {
+						var imageHeight = img.get('naturalHeight');
+						var imageWidth = img.get('naturalWidth');
+
+						if (Lang.isUndefined(imageHeight) || Lang.isUndefined(imageWidth)) {
+							var tmp = new Image();
+
+							tmp.src = img.attr('src');
+
+							imageHeight = tmp.height;
+							imageWidth = tmp.width;
+						}
+
+						return {
+							height: imageHeight,
+							width: imageWidth
+						};
+					},
+
 					_getMessageNode: function(message, cssClass) {
 						var instance = this;
 
@@ -149,8 +178,11 @@ AUI.add(
 									}
 								).render();
 
+								instance._imageCrop = A.one('.image-cropper-crop');
 								instance._imageCropper = imageCropper;
 							}
+
+							instance._setCropBackgroundSize(cropWidth, cropHeight);
 
 							Liferay.Util.toggleDisabled(instance._submitButton, false);
 						}
@@ -160,9 +192,24 @@ AUI.add(
 						var instance = this;
 
 						var imageCropper = instance._imageCropper;
+						var portraitPreviewImg = instance._portraitPreviewImg;
 
-						if (imageCropper) {
-							instance._cropRegionNode.val(A.JSON.stringify(imageCropper.get('region')));
+						if (imageCropper && portraitPreviewImg) {
+							var region = imageCropper.get('region');
+
+							var naturalSize = instance._getImgNaturalSize(portraitPreviewImg);
+
+							var scaleX = naturalSize.width / portraitPreviewImg.width();
+							var scaleY = naturalSize.height / portraitPreviewImg.height();
+
+							var cropRegion = {
+								height: region.height * scaleY,
+								x: region.x * scaleX,
+								y: region.y * scaleY,
+								width: region.width * scaleX
+							};
+
+							instance._cropRegionNode.val(A.JSON.stringify(cropRegion));
 						}
 					},
 
@@ -213,6 +260,14 @@ AUI.add(
 						instance._getMessageNode().remove();
 
 						Liferay.Util.toggleDisabled(instance._submitButton, true);
+					},
+
+					_setCropBackgroundSize: function(width, height) {
+						var instance = this;
+
+						if (instance._imageCrop) {
+							instance._imageCrop.setStyle('backgroundSize', width + 'px ' + height + 'px');
+						}
 					}
 				}
 			}

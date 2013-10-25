@@ -57,61 +57,62 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 		</liferay-ui:custom-attributes-available>
 
 	</aui:fieldset>
-	<aui:fieldset helpMessage="user-group-site-help" label="user-group-site">
 
-		<%
-		Group userGroupGroup = null;
+	<%
+	Group userGroupGroup = null;
 
-		if (userGroup != null) {
-			userGroupGroup = userGroup.getGroup();
-		}
+	if (userGroup != null) {
+		userGroupGroup = userGroup.getGroup();
+	}
 
-		LayoutSet privateLayoutSet = null;
-		LayoutSetPrototype privateLayoutSetPrototype = null;
-		boolean privateLayoutSetPrototypeLinkEnabled = true;
+	LayoutSet privateLayoutSet = null;
+	LayoutSetPrototype privateLayoutSetPrototype = null;
+	boolean privateLayoutSetPrototypeLinkEnabled = true;
 
-		LayoutSet publicLayoutSet = null;
-		LayoutSetPrototype publicLayoutSetPrototype = null;
-		boolean publicLayoutSetPrototypeLinkEnabled = true;
+	LayoutSet publicLayoutSet = null;
+	LayoutSetPrototype publicLayoutSetPrototype = null;
+	boolean publicLayoutSetPrototypeLinkEnabled = true;
 
-		if (userGroupGroup != null) {
-			try {
-				LayoutLocalServiceUtil.getLayouts(userGroupGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	if (userGroupGroup != null) {
+		try {
+			LayoutLocalServiceUtil.getLayouts(userGroupGroup.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-				privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(userGroupGroup.getGroupId(), true);
+			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(userGroupGroup.getGroupId(), true);
 
-				privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
+			privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
-				String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
+			String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
 
-				if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-					privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
-				}
-			}
-			catch (Exception e) {
-			}
-
-			try {
-				LayoutLocalServiceUtil.getLayouts(userGroupGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-				publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(userGroupGroup.getGroupId(), false);
-
-				publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
-
-				String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
-
-				if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-					publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
-				}
-			}
-			catch (Exception e) {
+			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+				privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 			}
 		}
+		catch (Exception e) {
+		}
 
-		List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
-		%>
+		try {
+			LayoutLocalServiceUtil.getLayouts(userGroupGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		<c:if test="<%= (userGroupGroup != null) || !layoutSetPrototypes.isEmpty() %>">
+			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(userGroupGroup.getGroupId(), false);
+
+			publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
+
+			String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
+
+			if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+				publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
+			}
+		}
+		catch (Exception e) {
+		}
+	}
+
+	List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+	%>
+
+	<c:if test="<%= (userGroupGroup != null) || !layoutSetPrototypes.isEmpty() %>">
+
+		<aui:fieldset helpMessage="user-group-site-help" label="user-group-site">
 
 			<%
 			boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
@@ -257,8 +258,8 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 					</aui:field-wrapper>
 				</c:otherwise>
 			</c:choose>
-		</c:if>
-	</aui:fieldset>
+		</aui:fieldset>
+	</c:if>
 
 	<aui:button-row>
 		<aui:button type="submit" />

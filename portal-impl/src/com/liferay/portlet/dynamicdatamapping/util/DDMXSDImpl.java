@@ -49,8 +49,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
@@ -539,13 +539,13 @@ public class DDMXSDImpl implements DDMXSD {
 			DDMTemplate.class);
 
 		if (classNameId == ddmStructureClassNameId) {
-			DDMStructure structure = DDMStructureServiceUtil.getStructure(
+			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 				classPK);
 
 			return structure.getCompleteXsd();
 		}
 		else if (classNameId == ddmTemplateClassNameId) {
-			DDMTemplate template = DDMTemplateServiceUtil.getTemplate(classPK);
+			DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(classPK);
 
 			return template.getScript();
 		}

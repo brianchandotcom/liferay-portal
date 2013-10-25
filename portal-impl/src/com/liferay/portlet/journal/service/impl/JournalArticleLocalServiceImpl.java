@@ -4095,8 +4095,10 @@ public class JournalArticleLocalServiceImpl
 	public int searchCount(long groupId, List<Long> folderIds, int status)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
 		return journalArticleFinder.countByG_F(
-			groupId, folderIds, new QueryDefinition(status));
+			groupId, folderIds, queryDefinition);
 	}
 
 	@Override

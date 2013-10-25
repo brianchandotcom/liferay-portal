@@ -607,6 +607,7 @@ if (Validator.isNotNull(content)) {
 			function(event) {
 				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "selecting-a-new-structure-will-change-the-available-input-fields-and-available-templates") %>') && (document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value != event.ddmstructureid)) {
 					document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value = event.ddmstructureid;
+					document.<portlet:namespace />fm1.<portlet:namespace />structureId.value = event.ddmstructurekey;
 					document.<portlet:namespace />fm1.<portlet:namespace />templateId.value = "";
 
 					submitForm(document.<portlet:namespace />fm1, null, false, false);

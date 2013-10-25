@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>USER_GROUP_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>

@@ -347,7 +347,19 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmStructureKey", article.getStructureId());
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
-		document.addKeyword("head", false);
+
+		JournalArticle latestIndexableArticle =
+			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+				article.getResourcePrimKey());
+
+		if ((latestIndexableArticle != null) &&
+			(article.getId() == latestIndexableArticle.getId())) {
+
+			document.addKeyword("head", true);
+		}
+		else {
+			document.addKeyword("head", false);
+		}
 
 		addDDMStructureAttributes(document, article);
 
@@ -538,40 +550,16 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		Collection<Document> documents = new ArrayList<Document>();
 
-		JournalArticle latestIndexableArticle =
-			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
-				article.getResourcePrimKey());
-
 		List<JournalArticle> articles =
 			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
 				article.getResourcePrimKey());
 
 		for (JournalArticle curArticle : articles) {
-			if (!curArticle.isIndexable() ||
-				((latestIndexableArticle != null) &&
-				 (curArticle.getId() == latestIndexableArticle.getId()))) {
-
+			if (!curArticle.isIndexable()) {
 				continue;
 			}
 
 			Document document = getDocument(curArticle);
-
-			document.addKeyword("head", false);
-
-			documents.add(document);
-		}
-
-		if (latestIndexableArticle != null) {
-			Document document = getDocument(latestIndexableArticle);
-
-			document.addKeyword("head", true);
-
-			documents.add(document);
-		}
-		else if (article.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-			Document document = getDocument(article);
-
-			document.addKeyword("head", true);
 
 			documents.add(document);
 		}
@@ -676,7 +664,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 				JournalArticle article = (JournalArticle)object;
 
-				addDocuments(getArticleVersions(article));
+				Document document = getDocument(article);
+
+				addDocument(document);
 			}
 
 		};

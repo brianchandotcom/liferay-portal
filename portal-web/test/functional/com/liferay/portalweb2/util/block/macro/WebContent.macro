@@ -2,7 +2,6 @@
 	<command name="addCategoryPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" value1="Edit" />
 
-		<execute action="PGWebcontentdisplayEditwebcontent#assertElementPresent" locator-key1="CONTENT_FIELD" />
 		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="MENU_CATEGORIZATION" value1="Categorization" />
 
 		<var name="key_categoryName" value="${categoryName}" />

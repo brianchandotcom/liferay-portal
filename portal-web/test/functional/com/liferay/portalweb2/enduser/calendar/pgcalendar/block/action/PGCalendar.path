@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>VIEW_DAY_BUTTON_ACTIVE</td>
-	<td>//button[@class='scheduler-base-view scheduler-base-view-day btn active']</td>
+	<td>//button[contains(@class,'scheduler-base-view-day') and contains(@class,'btn') and contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>VIEW_WEEK_BUTTON_ACTIVE</td>
-	<td>//button[@class='scheduler-base-view scheduler-base-view-week btn active']</td>
+	<td>//button[contains(@class,'scheduler-base-view-week') and contains(@class,'btn') and contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>VIEW_MONTH_BUTTON_ACTIVE</td>
-	<td>//button[@class='scheduler-base-view scheduler-base-view-month btn active']</td>
+	<td>//button[contains(@class,'scheduler-base-view-month') and contains(@class,'btn') and contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>

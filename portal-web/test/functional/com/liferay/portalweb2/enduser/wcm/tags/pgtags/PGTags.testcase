@@ -62,7 +62,7 @@
 		<execute macro="Tag#addAutoAssertionTagViaBlogsPG">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
-			<var name="tagName3" value="${tagName3}" />
+			<var name="tagName" value="${tagName3}" />
 		</execute>
 	</command>
 
@@ -198,11 +198,11 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Tag#addSelectTagViaBlogsPG">
+		<execute macro="Tag#addSelectTagMultipleViaBlogsPG">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName1" value="${tagName1}" />
-			<var name="tagName3" value="${tagName3}" />
+			<var name="tagName2" value="${tagName3}" />
 		</execute>
 	</command>
 

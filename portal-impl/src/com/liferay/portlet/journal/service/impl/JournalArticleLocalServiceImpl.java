@@ -1364,8 +1364,9 @@ public class JournalArticleLocalServiceImpl
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return journalArticlePersistence.fetchByG_A_First(
-				groupId, articleId, orderByComparator);
+			return journalArticlePersistence.fetchByG_A_NotST_First(
+				groupId, articleId, WorkflowConstants.STATUS_IN_TRASH,
+				orderByComparator);
 		}
 
 		return journalArticlePersistence.fetchByG_A_ST_First(

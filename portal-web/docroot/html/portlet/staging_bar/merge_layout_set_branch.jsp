@@ -44,7 +44,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />
 		<aui:input name="mergeLayoutSetBranchId" type="hidden" />
 
-		<liferay-ui:search-container>
+		<liferay-ui:search-container id="layoutSelectBranch">
 			<liferay-ui:search-container-results
 				results="<%= layoutSetBranches %>"
 				total="<%= layoutSetBranches.size() %>"

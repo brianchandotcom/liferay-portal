@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE_THREAD</td>
-	<td>//div[@id='messageBoardsThreadsPanelContent']/div/div[@class='alert alert-info']</td>
+	<td>//div[@id='messageBoardsThreadsPanelContent']/div/div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>

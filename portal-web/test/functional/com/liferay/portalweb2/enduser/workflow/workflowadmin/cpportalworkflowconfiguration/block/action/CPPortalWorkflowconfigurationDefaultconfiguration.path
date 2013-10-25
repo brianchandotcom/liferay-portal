@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,17 +36,17 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_DEFINITIONS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Definitions')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Definitions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DEFAULT_CONFIGURATION</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Default Configuration')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Default Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SUBMISSIONS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Submissions')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Submissions')]</td>
 	<td></td>
 </tr>
 <tr>

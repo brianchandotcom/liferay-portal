@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELDS_TAB</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Fields')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Fields')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESERVED_CREDENTIALS_TAB</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Reserved Credentials')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Reserved Credentials')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_USER_ASSOCIATIONS_TAB</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Default User Associations')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Default User Associations')]</td>
 	<td></td>
 </tr>
 <tr>

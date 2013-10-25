@@ -1,10 +1,14 @@
 <definition>
 	<command name="assertClick">
 		<case locator-key1="PUBLISH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
+			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
 
 		<case comparator="startsWith" locator-key1="ADD_TRANSLATION_MENULIST">
+			<execute function="AssertClick#assertTextClickAtCKEditor" />
+		</case>
+
+		<case comparator="startsWith" locator-key1="MENU_">
 			<execute function="AssertClick#assertTextClickAtCKEditor" />
 		</case>
 	</command>

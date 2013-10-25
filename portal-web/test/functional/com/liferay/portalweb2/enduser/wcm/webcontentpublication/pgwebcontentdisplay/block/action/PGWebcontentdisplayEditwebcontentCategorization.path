@@ -113,7 +113,7 @@
 <!--CATEGORIES-->
 <tr>
 	<td>CATEGORIES_CATEGORY_UNSELECTED</td>
-	<td>//li[contains(@id,'category')]/div[@class='tree-node-content tree-node-leaf']/span[contains(.,'${key_categoryName}')]</td>
+	<td>//li[contains(@id,'category')]/div[contains(@class,'tree-node-content')]/span[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

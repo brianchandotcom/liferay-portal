@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,22 +99,22 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SUMMARY</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Summary')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Summary')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_USERS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Users')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_ORGANIZATIONS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Organizations')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Organizations')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SITE_ROLES</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'User Groups')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[@class='workflow-status workflow-status-icon']/strong</td>
+	<td>//span[contains(@class,'workflow-status') and contains(@class,'workflow-status-icon')]/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_STRUCTURE</td>
-	<td>//fieldset[@class='fieldset article-structure-toolbar']/div/div/span/a/span</td>
+	<td>//fieldset[contains(@class,'fieldset') and contains(@class,'article-structure-toolbar')]/div/div/span/a/span</td>
 	<td></td>
 </tr>
 <tr>

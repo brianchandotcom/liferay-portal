@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='wiki-body']/div[@class='alert alert-info']/a</td>
+	<td>//div[@class='wiki-body']/div[contains(@class,'alert') and contains(@class,'alert-info')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,22 +62,22 @@
 <!--WIKI_PAGE_ACTIONS-->
 <tr>
 	<td>WIKI_PAGE_ACTIONS_MARK_AS_SPAM</td>
-	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Mark as Spam')]</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Mark as Spam')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_ACTIONS_EDIT</td>
-	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_ACTIONS_DETAILS</td>
-	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE_ACTIONS_PRINT</td>
-	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Print')]</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Print')]</td>
 	<td></td>
 </tr>
 <tr>

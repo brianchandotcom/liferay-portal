@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_ACTIONS</td>
-	<td>//span[@class='entry-action overlay']/div/a/i</td>
+	<td>//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i</td>
 	<td>Search Result Actions</td>
 </tr>
 <tr>

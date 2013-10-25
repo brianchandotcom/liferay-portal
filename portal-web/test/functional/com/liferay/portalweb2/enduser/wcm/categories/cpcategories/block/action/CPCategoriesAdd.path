@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>PROPERTIES_BAR_COLLAPSED</td>
-	<td>//div[contains(@class,'portlet-asset-categories-admin-dialog')]//div[@class='accordion-heading toggler-header toggler-header-collapsed']</td>
+	<td>//div[contains(@class,'portlet-asset-categories-admin-dialog')]//div[contains(@class,'accordion-heading') and contains(@class,'toggler-header') and contains(@class,'toggler-header-collapsed')]</td>
 	<td></td>
 </tr>
 <tr>

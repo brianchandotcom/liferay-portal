@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,17 +66,17 @@
 <!--OPTIONS_MENULIST-->
 <tr>
 	<td>OPTIONS_MENULIST_LOOK_AND_FEEL</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Look and Feel')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Look and Feel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Configuration')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Export / Import')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Export / Import')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>ADD_NEW_IN_CHILD_SITENAME_MENULIST_BLOGS_ENTRY</td>
-	<td>//li[@class='dropdown open' and contains(.,'Add New in Child SiteName')]/ul/li[contains(.,'Blogs Entry')]</td>
+	<td>//li[contains(@class,'dropdown') and contains(@class,'open') and contains(.,'Add New in Child SiteName')]/ul/li[contains(.,'Blogs Entry')]</td>
 	<td></td>
 </tr>
 <tr>

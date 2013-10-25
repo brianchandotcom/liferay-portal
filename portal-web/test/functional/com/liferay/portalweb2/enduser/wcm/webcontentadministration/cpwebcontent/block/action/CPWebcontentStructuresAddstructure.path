@@ -67,7 +67,7 @@
 <!--FIELD_MENU-->
 <tr>
 	<td>FIELD_MENU_LINK</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Fields')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Fields')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,7 +83,7 @@
 <!--SETTINGS_MENU-->
 <tr>
 	<td>SETTINGS_MENU_LINK</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Settings')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Settings')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,7 +124,7 @@
 </tr>
 <tr>
 	<td>DIAGRAM_BUILDER_TEXT_FIELD_1</td>
-	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[1]</td>
+	<td>xpath=(//div[contains(@class,'form-builder-field-content') and contains(@class,'form-builder-text-field-content') and contains(@class,'clearfix')])[1]</td>
 	<td></td>
 </tr>
 <tr>

@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_ACTIONS</td>
-	<td>xpath=(//span[@class='entry-action overlay']/div/a/i)[2]</td>
+	<td>xpath=(//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i)[2]</td>
 	<td>Search Result Actions</td>
 </tr>
 <tr>

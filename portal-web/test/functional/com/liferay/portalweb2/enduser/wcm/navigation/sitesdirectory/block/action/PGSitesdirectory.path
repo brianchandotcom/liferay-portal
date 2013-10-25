@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ORG_SITE_ENTRY</td>
-	<td>//div[@class='sites-directory-taglib nav-menu']/div/a/div[2]/span/span[contains(.,'${key_orgName}')]</td>
+	<td>//div[contains(@class,'sites-directory-taglib') and contains(@class,'nav-menu')]/div/a/div[2]/span/span[contains(.,'${key_orgName}')]</td>
 	<td></td>
 </tr>
 <tr>

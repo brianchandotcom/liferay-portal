@@ -231,7 +231,7 @@
 <!--PORTLET-->
 <tr>
 	<td>PORTLET_LOADING_ANIMATION</td>
-	<td>//div[@class='loading-animation portlet-boundary']</td>
+	<td>//div[contains(@class,'loading-animation') and contains(@class,'portlet-boundary')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -257,7 +257,7 @@
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CONTROL_PANEL_INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DRAFT_STATUS</td>
-	<td>//div[@class='entry draft']/div/h3</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft')]/div/h3</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,52 +71,52 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[1]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[2]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[3]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[4]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[5]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[1]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[2]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[3]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[4]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_EMPTY_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[5]</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[5]</td>
 	<td></td>
 </tr>
 <tr>
@@ -132,52 +132,52 @@
 </tr>
 <tr>
 	<td>AVERAGE_STAR_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[1]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[2]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[3]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[4]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[5]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star')])[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[1]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[2]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[3]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[4]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AVERAGE_STAR_EMPTY_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[5]</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[contains(@class,'rating-element') and contains(@class,'icon-star-empty')])[5]</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,7 +198,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_ADD</td>
-	<td>//fieldset[@class='fieldset add-comment']/div/span/a/span</td>
+	<td>//fieldset[contains(@class,'fieldset') and contains(@class,'add-comment')]/div/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -259,7 +259,7 @@
 </tr>
 <tr>
 	<td>COMMENT_EDIT_CANCEL_BUTTON</td>
-	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//..//..//button[@class='btn btn-cancel']</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//..//..//button[contains(@class,'btn') and contains(@class,'btn-cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -1,4 +1,10 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="CATEGORIZATION_SELECT_BUTTON">
+			<execute function="AssertClick#assertTextClickTagSelector" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="CATEGORIES_CATEGORY_UNSELECTED">
 			<execute function="Click#click" />

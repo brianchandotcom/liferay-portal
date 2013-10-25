@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE_THREAD</td>
-	<td>//div[@id='messageBoardsThreadsPanelContent']/div/form/div[@class='alert alert-info']</td>
+	<td>//div[@id='messageBoardsThreadsPanelContent']/div/form/div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>

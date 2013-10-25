@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SITE_ID</td>
-	<td>//div[@class='control-group field-wrapper']/input</td>
+	<td>//div[contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
 	<td></td>
 </tr>
 <tr>

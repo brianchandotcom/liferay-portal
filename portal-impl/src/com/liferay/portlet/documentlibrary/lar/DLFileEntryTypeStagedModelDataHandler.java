@@ -200,14 +200,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		DLFileEntryType importedDLFileEntryType = null;
 
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			fileEntryType);
+
+		boolean preloaded = GetterUtil.getBoolean(
+			element.attributeValue("preloaded"));
+
 		if (portletDataContext.isDataStrategyMirror()) {
-			Element element =
-				portletDataContext.getImportDataStagedModelElement(
-					fileEntryType);
-
-			boolean preloaded = GetterUtil.getBoolean(
-				element.attributeValue("preloaded"));
-
 			DLFileEntryType existingDLFileEntryType =
 				getExistingFileEntryType(
 					fileEntryType.getUuid(),
@@ -249,6 +248,10 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			fileEntryType, importedDLFileEntryType);
+
+		if (preloaded) {
+			return;
+		}
 
 		String importedDLFileEntryDDMStructureKey = DLUtil.getDDMStructureKey(
 			importedDLFileEntryType);

@@ -1566,6 +1566,13 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesByResourcePrimKey(resourcePrimKey);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByResourcePrimKey(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getIndexableArticlesByResourcePrimKey(resourcePrimKey);
+	}
+
 	/**
 	* Returns all the web content articles matching the small image ID.
 	*

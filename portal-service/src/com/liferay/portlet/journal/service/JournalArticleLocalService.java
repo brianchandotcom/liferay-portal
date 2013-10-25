@@ -1405,6 +1405,11 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByResourcePrimKey(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns all the web content articles matching the small image ID.
 	*

@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var ADate = A.Date;
+
 		var FAILURE_TIMEOUT = 10000;
 
 		var REGEX_LAYOUT_ID = /plid_(\d+)/;
@@ -635,10 +637,10 @@ AUI.add(
 																endDate.setMilliseconds(0);
 
 																var today = new Date();
-	
-																endsLater = A.Date.isGreater(endDate, startDate);
-																isStartDateNotInFuture = A.Date.isGreaterOrEqual(today, startDate);
-																isEndDateNotInFuture = A.Date.isGreaterOrEqual(today, endDate);
+
+																endsLater = ADate.isGreater(endDate, startDate);
+																isStartDateNotInFuture = ADate.isGreaterOrEqual(today, startDate);
+																isEndDateNotInFuture = ADate.isGreaterOrEqual(today, endDate);
 															}
 
 															if (endsLater && isStartDateNotInFuture && isEndDateNotInFuture) {
@@ -647,30 +649,28 @@ AUI.add(
 																rangeDialog.hide();
 															}
 															else {
-																instance._notice = null;
+																var message;
 
 																if (!endsLater) {
-																	instance._notice = new Liferay.Notice(
-																		{
-																			closeText: false,
-																			content: Liferay.Language.get('end-date-must-be-greater-than-start-date') + '<button type="button" class="close">&times;</button>',
-																			timeout: 10000,
-																			toggleText: false,
-																			type: 'warning'
-																		}
-																	);
+																	message = Liferay.Language.get('end-date-must-be-greater-than-start-date');																	
 																}
 																else if (!isStartDateNotInFuture || !isEndDateNotInFuture) {
-																	instance._notice = new Liferay.Notice(
-																		{
-																			closeText: false,
-																			content: Liferay.Language.get('selected-dates-can-not-be-in-the-future') + '<button type="button" class="close">&times;</button>',
-																			timeout: 10000,
-																			toggleText: false,
-																			type: 'warning'
-																		}
-																	);
+																	message = Liferay.Language.get('selected-dates-can-not-be-in-the-future');
 																}
+
+																if (instance._notice) {
+																	instance._notice.remove();
+																}
+
+																instance._notice = new Liferay.Notice(
+																	{
+																		closeText: false,
+																		content: message + '<button type="button" class="close">&times;</button>',
+																		timeout: 10000,
+																		toggleText: false,
+																		type: 'warning'
+																	}
+																);
 
 																instance._notice.show();
 															}

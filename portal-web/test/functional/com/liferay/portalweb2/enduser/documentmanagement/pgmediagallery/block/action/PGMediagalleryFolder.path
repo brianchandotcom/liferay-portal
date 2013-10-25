@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success taglib-trash-undo']/form</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]/form</td>
 	<td></td>
 </tr>
 <tr>

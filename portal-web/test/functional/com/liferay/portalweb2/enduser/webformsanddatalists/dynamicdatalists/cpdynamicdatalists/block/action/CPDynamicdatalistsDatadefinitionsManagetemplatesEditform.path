@@ -204,12 +204,12 @@
 </tr>
 <tr>
 	<td>FORM_TEXT_FIELD_1</td>
-	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[1]</td>
+	<td>xpath=(//div[contains(@class,'form-builder-field-content') and contains(@class,'form-builder-text-field-content') and contains(@class,'clearfix')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_TEXT_FIELD_2</td>
-	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[2]</td>
+	<td>xpath=(//div[contains(@class,'form-builder-field-content') and contains(@class,'form-builder-text-field-content') and contains(@class,'clearfix')])[2]</td>
 	<td></td>
 </tr>
 <tr>

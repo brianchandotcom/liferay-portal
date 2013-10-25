@@ -31,12 +31,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//div[@class='alert alert-success taglib-trash-undo']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='entries-empty alert alert-info']</td>
+	<td>//div[contains(@class,'entries-empty') and contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -228,7 +228,7 @@
 </tr>
 <tr>
 	<td>FILTER_SELECTED</td>
-	<td>//li[@class='app-view-navigation-entry folder active']/a</td>
+	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder') and contains(@class,'active')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -373,7 +373,7 @@
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -394,7 +394,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_CURRENT_PAGE</td>
-	<td>//a[@class='aui-paginator-link aui-paginator-page-link aui-paginator-current-page']</td>
+	<td>//a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-page-link') and contains(@class,'aui-paginator-current-page')]</td>
 	<td></td>
 </tr>
 <tr>

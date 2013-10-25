@@ -124,7 +124,7 @@
 </tr>
 <tr>
 	<td>DIAGRAM_BUILDER_TEXT_FIELD_1</td>
-	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[1]</td>
+	<td>xpath=(//div[contains(@class,'form-builder-field-content') and contains(@class,'form-builder-text-field-content') and contains(@class,'clearfix')])[1]</td>
 	<td></td>
 </tr>
 <tr>

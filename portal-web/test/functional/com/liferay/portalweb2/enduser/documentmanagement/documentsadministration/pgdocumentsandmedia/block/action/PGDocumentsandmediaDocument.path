@@ -180,22 +180,22 @@
 <!--VERSION_HISTORY_MENULIST-->
 <tr>
 	<td>VERSION_HISTORY_MENULIST_DOWNLOAD</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Download')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Download')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_MENULIST_VIEW</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'View')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'View')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_MENULIST_REVERT</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Revert')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Revert')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_MENULIST_DELETE_VERSION</td>
-	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Delete Version')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Delete Version')]</td>
 	<td></td>
 </tr>
 <tr>

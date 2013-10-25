@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_EVENT_BUTTON</td>
-	<td>//button[@class='btn btn-primary calendar-add-event-btn']</td>
+	<td>//button[contains(@class,'btn') and contains(@class,'btn-primary') and contains(@class,'calendar-add-event-btn')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>VIEW_AGENDA_BUTTON_ACTIVE</td>
-	<td>//button[@class='scheduler-base-view scheduler-base-view-agendabtn active']</td>
+	<td>//button[contains(@class,'scheduler-base-view') and contains(@class,'scheduler-base-view-agendabtn') and contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>

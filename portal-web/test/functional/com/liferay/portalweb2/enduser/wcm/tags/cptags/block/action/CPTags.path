@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info lfr-message-response']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info') and contains(@class,'lfr-message-response')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,7 +129,7 @@
 </tr>
 <tr>
 	<td>SELECTED_TAG_NAME_REMOVE</td>
-	<td>//a[@class='icon icon-remove lfr-token-close']</td>
+	<td>//a[contains(@class,'icon') and contains(@class,'icon-remove') and contains(@class,'lfr-token-close')]</td>
 	<td></td>
 </tr>
 </tbody>

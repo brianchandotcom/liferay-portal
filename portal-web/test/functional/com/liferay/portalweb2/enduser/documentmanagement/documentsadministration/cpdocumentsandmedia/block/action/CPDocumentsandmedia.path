@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='entries-empty alert alert-info']</td>
+	<td>//div[contains(@class,'entries-empty') and contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,7 +91,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//div[@class='alert alert-success taglib-trash-undo']/form</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]/form</td>
 	<td></td>
 </tr>
 <tr>
@@ -285,7 +285,7 @@
 </tr>
 <tr>
 	<td>FILTER_BASIC_DOCUMENT</td>
-	<td>//li[@class='app-view-navigation-entry folder file-entry-type']/a[contains(.,'Basic Document')]</td>
+	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder') and contains(@class,'file-entry-type')]/a[contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
 <!---->

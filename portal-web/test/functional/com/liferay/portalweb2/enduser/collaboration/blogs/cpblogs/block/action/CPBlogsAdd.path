@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SAVE_STATUS</td>
-	<td>//div[@class='alert alert-success save-status']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'save-status')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -503,7 +503,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	}
 
 	protected String replaceParameters(String content, FileEntry fileEntry) {
-
 		content = StringUtil.replace(
 			content,
 			new String[] {
@@ -533,13 +532,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 	protected String replaceTimestampParameters(String content) {
 		List<String> urls = ListUtil.toList(StringUtil.splitLines(content));
 
-		String timestampParameter = "t=1366811139876";
-		try {
-			timestampParameter = "t=" + ServiceTestUtil.randomLong();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		String timestampParameter = "t=123456789";
 
 		String parameters1 = timestampParameter + "&width=100&height=100";
 		String parameters2 = "width=100&" + timestampParameter + "&height=100";
@@ -551,6 +544,10 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		List<String> outUrls = new ArrayList<String>();
 
 		for (String url : urls) {
+			if (!url.contains("TIMESTAMP$]")) {
+				continue;
+			}
+
 			outUrls.add(
 				StringUtil.replace(
 					url, new String[] {"[$TIMESTAMP$]", "[$ONLYTIMESTAMP$]"},

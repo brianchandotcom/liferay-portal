@@ -60,7 +60,6 @@ refererURL.setParameter("updateLayout", "true");
 
 				<div class="lfr-add-content">
 					<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category lfr-component panel-page-category" extended="<%= true %>" id="<%= panelId %>" persistState="<%= true %>" title='<%= LanguageUtil.get(pageContext, "highlighted") %>'>
-
 						<aui:nav collapsible="<%= false %>" cssClass="nav-list">
 
 							<%
@@ -93,7 +92,7 @@ refererURL.setParameter("updateLayout", "true");
 
 							<aui:nav-item cssClass="lfr-content-item" href="">
 								<span <%= AUIUtil.buildData(data) %> class="<%= cssClass %>">
-									<icon class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></icon>
+									<i class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></i>
 
 									<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" />
 								</span>
@@ -112,7 +111,6 @@ refererURL.setParameter("updateLayout", "true");
 							%>
 
 						</aui:nav>
-
 					</liferay-ui:panel>
 				</div>
 

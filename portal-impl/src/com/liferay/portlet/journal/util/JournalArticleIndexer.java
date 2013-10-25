@@ -676,7 +676,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 				JournalArticle article = (JournalArticle)object;
 
-				addDocuments(getArticleVersions(article));
+				Document document = getDocument(article);
+
+				addDocument(document);
 			}
 
 		};

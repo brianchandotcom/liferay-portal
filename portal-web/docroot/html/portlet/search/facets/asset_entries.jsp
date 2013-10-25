@@ -85,7 +85,15 @@ if (dataJSONObject.has("values")) {
 		%>
 
 			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(assetType) %>" href="javascript:;"><c:if test="<%= assetRendererFactory != null %>"><img alt="" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" /></c:if><%= assetRendererFactory.getTypeName(locale, false) %></a> <span class="frequency">(<%= frequency %>)</span>
+				<a data-value="<%= HtmlUtil.escapeAttribute(assetType) %>" href="javascript:;">
+					<c:if test="<%= assetRendererFactory != null %>">
+						<img alt="" src="<%= assetRendererFactory.getIconPath(renderRequest) %>" />
+					</c:if>
+
+					<%= assetRendererFactory.getTypeName(locale, false) %>
+
+					<span class="frequency">(<%= frequency %>)</span>
+				</a>
 			</li>
 
 		<%

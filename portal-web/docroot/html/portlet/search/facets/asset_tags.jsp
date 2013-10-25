@@ -101,11 +101,13 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 		%>
 
 			<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;"><%= HtmlUtil.escape(termCollector.getTerm()) %></a>
+				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;">
+					<%= HtmlUtil.escape(termCollector.getTerm()) %>
 
-				<c:if test="<%= showAssetCount %>">
-					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-				</c:if>
+					<c:if test="<%= showAssetCount %>">
+						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+					</c:if>
+				</a>
 			</li>
 
 		<%

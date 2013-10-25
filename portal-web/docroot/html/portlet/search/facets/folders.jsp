@@ -83,7 +83,13 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 			%>
 
 			<li class="facet-value <%= (folderId == curFolderId) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curFolderId %>" href="javascript:;"><%= HtmlUtil.escape(title.getValue()) %></a><c:if test="<%= showAssetCount %>"> <span class="frequency">(<%= termCollector.getFrequency() %>)</span></c:if>
+				<a data-value="<%= curFolderId %>" href="javascript:;">
+					<%= HtmlUtil.escape(title.getValue()) %>
+
+					<c:if test="<%= showAssetCount %>">
+						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+					</c:if>
+				</a>
 			</li>
 
 		<%

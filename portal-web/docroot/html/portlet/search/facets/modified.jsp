@@ -70,15 +70,15 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 					<aui:a href="javascript:;" onClick="<%= taglibSetRange %>">
 						<liferay-ui:message key="<%= label %>" />
+
+						<%
+						TermCollector termCollector = facetCollector.getTermCollector(range);
+						%>
+
+						<c:if test="<%= termCollector != null %>">
+							<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+						</c:if>
 					</aui:a>
-
-					<%
-					TermCollector termCollector = facetCollector.getTermCollector(range);
-					%>
-
-					<c:if test="<%= termCollector != null %>">
-						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-					</c:if>
 				</li>
 
 			<%
@@ -99,11 +99,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 				<aui:a cssClass='<%= randomNamespace + "custom-range-toggle" %>' href="javascript:;">
 					<liferay-ui:message key="custom-range" />&hellip;
-				</aui:a>
 
-				<c:if test="<%= termCollector != null %>">
-					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-				</c:if>
+					<c:if test="<%= termCollector != null %>">
+						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+					</c:if>
+				</aui:a>
 			</li>
 
 			<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>custom-range">

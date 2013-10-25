@@ -72,11 +72,13 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			%>
 
 			<li class="facet-value <%= groupId == curGroupId ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curGroupId %>" href="javascript:;"><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></a>
+				<a data-value="<%= curGroupId %>" href="javascript:;">
+					<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 
-				<c:if test="<%= showAssetCount %>">
-					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-				</c:if>
+					<c:if test="<%= showAssetCount %>">
+						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+					</c:if>
+				</a>
 			</li>
 
 		<%

@@ -37,7 +37,7 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 				data.put("displayStyle", dataStyle);
 			%>
 
-				<liferay-ui:icon data="<%= data %>" image='<%= "../aui/" + _getIcon(dataStyle) %>' message="<%= dataStyle %>" onClick='<%= randomNamespace + "onClickDisplayStyle(event);" %>' url="javascript:;" />
+				<liferay-ui:icon data="<%= data %>" image='<%= "../aui/" + _getIcon(dataStyle) %>' message="<%= dataStyle %>" onClick='<%= randomNamespace + "onClickDisplayStyle(this);" %>' url="javascript:;" />
 
 			<%
 			}
@@ -80,8 +80,8 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 		Liferay.provide(
 			window,
 			'<%= randomNamespace %>onClickDisplayStyle',
-			function(event) {
-				var displayStyleItem = A.one(event.currentTarget);
+			function(link) {
+				var displayStyleItem = A.one(link);
 
 				changeDisplayStyle(displayStyleItem.attr('data-displayStyle'));
 			},

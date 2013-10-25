@@ -61,6 +61,16 @@ AUI.add(
 						}
 					},
 
+					resize: function() {
+						var instance = this;
+
+						var portraitPreviewImg = instance._portraitPreviewImg;
+
+						if (portraitPreviewImg) {
+							instance._setCropBackgroundSize(portraitPreviewImg.width(), portraitPreviewImg.height());
+						}
+					},
+
 					_getMessageNode: function(message, cssClass) {
 						var instance = this;
 
@@ -149,8 +159,11 @@ AUI.add(
 									}
 								).render();
 
+								instance._imageCrop = A.one('.image-cropper-crop');
 								instance._imageCropper = imageCropper;
 							}
+
+							instance._setCropBackgroundSize(cropWidth, cropHeight);
 
 							Liferay.Util.toggleDisabled(instance._submitButton, false);
 						}
@@ -160,9 +173,22 @@ AUI.add(
 						var instance = this;
 
 						var imageCropper = instance._imageCropper;
+						var portraitPreviewImg = instance._portraitPreviewImg;
 
-						if (imageCropper) {
-							instance._cropRegionNode.val(A.JSON.stringify(imageCropper.get('region')));
+						if (imageCropper && portraitPreviewImg) {
+							var region = imageCropper.get('region');
+
+							var scaleX = portraitPreviewImg.get('naturalWidth') / portraitPreviewImg.width();
+							var scaleY = portraitPreviewImg.get('naturalHeight') / portraitPreviewImg.height();
+
+							var cropRegion = {
+								height: region.height * scaleY,
+								x: region.x * scaleX,
+								y: region.y * scaleY,
+								width: region.width * scaleX
+							}
+
+							instance._cropRegionNode.val(A.JSON.stringify(cropRegion));
 						}
 					},
 
@@ -213,6 +239,14 @@ AUI.add(
 						instance._getMessageNode().remove();
 
 						Liferay.Util.toggleDisabled(instance._submitButton, true);
+					},
+
+					_setCropBackgroundSize: function(width, height) {
+						var instance = this;
+
+						if (instance._imageCrop) {
+							instance._imageCrop.setStyle('backgroundSize', width + 'px ' + height + 'px');
+						}
 					}
 				}
 			}

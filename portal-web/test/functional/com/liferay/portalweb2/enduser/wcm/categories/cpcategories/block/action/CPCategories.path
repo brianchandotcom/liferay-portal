@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SUBCATEGORY_CHECKBOX</td>
-	<td>xpath=(//i[@class='tree-node-checkbox-container icon-check'])[2]</td>
+	<td>xpath=(//i[contains(@class,'tree-node-checkbox-container') and contains(@class,'icon-check')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_DETAILS_DROPDOWN_TREE</td>
-	<td>//i[@class='tree-hitarea icon-plus']</td>
+	<td>//i[contains(@class,'tree-hitarea') and contains(@class,'icon-plus')]</td>
 	<td></td>
 </tr>
 <tr>

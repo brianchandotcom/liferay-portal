@@ -16,12 +16,12 @@
 <!---->
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,17 +37,17 @@
 <!--SPAM_MODERATION_NAVIGATION-->
 <tr>
 	<td>SPAM_MODERATION_NAVIGATION_MESSAGE_BOARDS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Message Boards')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Message Boards')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPAM_MODERATION_NAVIGATION_DISCUSSIONS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Discussions')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Discussions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPAM_MODERATION_NAVIGATION_WIKIS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Wikis')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Wikis')]</td>
 	<td></td>
 </tr>
 <tr>

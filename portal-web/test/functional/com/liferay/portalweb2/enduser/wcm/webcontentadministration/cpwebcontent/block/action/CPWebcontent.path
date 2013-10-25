@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>ENTRY_ICON_MENULIST_ARROW</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-action overlay']/div/a/i[@class='caret']</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
@@ -306,7 +306,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_MENULIST_ARROW</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-action overlay']/div/a/i[@class='caret']</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
@@ -384,12 +384,12 @@
 <!--PAGINATION-->
 <tr>
 	<td>PAGINATION_FIRST</td>
-	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-first-link']</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-first-link')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGINATION_PREVIOUS</td>
-	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-prev-link']</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-prev-link')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -399,12 +399,12 @@
 </tr>
 <tr>
 	<td>PAGINATION_NEXT</td>
-	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-next-link']</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-next-link')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGINATION_LAST</td>
-	<td>//div[contains(@class, 'article-entries-paginator')]/a[@class='aui-paginator-link aui-paginator-last-link']</td>
+	<td>//div[contains(@class, 'article-entries-paginator')]/a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-last-link')]</td>
 	<td></td>
 </tr>
 <tr>

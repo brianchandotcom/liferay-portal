@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,47 +72,47 @@
 <!--FOLDER_MENU-->
 <tr>
 	<td>FOLDER_MENU_EDIT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Edit')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_MOVE</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Move')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_PERMISSIONS</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_SUBFOLDER</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Subfolder')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Add Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_MULTIPLE_MEDIA</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Multiple Media')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Multiple Media')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_MEDIA</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Media')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Add Media')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_SHORTCUT</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Shortcut')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Add Shortcut')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ACCESS_FROM_DESKTOP</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Access from Desktop')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Access from Desktop')]</td>
 	<td></td>
 </tr>
 </tbody>

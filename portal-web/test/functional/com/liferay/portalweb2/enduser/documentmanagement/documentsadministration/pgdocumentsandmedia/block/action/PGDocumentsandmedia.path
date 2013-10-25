@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>STAGING_MESSAGE</td>
-	<td>//div[@class='alert alert-block']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-block')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>FILTER_HOME_ACTIONS</td>
-	<td>//div[@id='_20_folderContainer']//span[@class='entry-action overlay']/div/a</td>
+	<td>//div[@id='_20_folderContainer']//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -282,12 +282,12 @@
 <!--MANAGE_MENULIST-->
 <tr>
 	<td>MANAGE_MENULIST_DOCUMENT_TYPES</td>
-	<td>//li[@class='dropdown open']/ul/li[1]/a[contains(.,'Document Types')]</td>
+	<td>//li[contains(@class,'dropdown') and contains(@class,'open')]/ul/li[1]/a[contains(.,'Document Types')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGE_MENULIST_METADATA_SETS</td>
-	<td>//li[@class='dropdown open']/ul/li[2]/a[contains(.,'Metadata Sets')]</td>
+	<td>//li[contains(@class,'dropdown') and contains(@class,'open')]/ul/li[2]/a[contains(.,'Metadata Sets')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -350,7 +350,7 @@
 </tr>
 <tr>
 	<td>ENTRIES_DOCUMENT_ACTIONS</td>
-	<td>//div/span[@class='entry-action overlay']/div/a/i</td>
+	<td>//div/span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i</td>
 	<td></td>
 </tr>
 <tr>
@@ -370,7 +370,7 @@
 </tr>
 <tr>
 	<td>ENTRIES_FOLDER_ACTIONS</td>
-	<td>//div/span[@class='entry-action overlay']/div/a/i</td>
+	<td>//div/span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i</td>
 	<td></td>
 </tr>
 <tr>

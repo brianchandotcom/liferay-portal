@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>BE_THE_FIRST_LINK</td>
-	<td>//fieldset[@class='fieldset add-comment']/div/a[contains(.,'Be the first')]</td>
+	<td>//fieldset[contains(@class,'fieldset') and contains(@class,'add-comment')]/div/a[contains(.,'Be the first')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 <!--COMMENT-->
 <tr>
 	<td>COMMENT_WORKFLOW_STATUS</td>
-	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[@class='workflow-status workflow-status-icon']/strong</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[contains(@class,'workflow-status') and contains(@class,'workflow-status-icon')]/strong</td>
 	<td></td>
 </tr>
 <tr>

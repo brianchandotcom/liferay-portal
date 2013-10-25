@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,17 +46,17 @@
 <!--VIEW-->
 <tr>
 	<td>VIEW_TODAY_BUTTON</td>
-	<td>//button[@class='scheduler-base-today btn']</td>
+	<td>//button[contains(@class,'scheduler-base-today') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_PREVIOUS_BUTTON</td>
-	<td>//button[@class='scheduler-base-icon-prev btn']</td>
+	<td>//button[contains(@class,'scheduler-base-icon-prev') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_NEXT_BUTTON</td>
-	<td>//button[@class='scheduler-base-icon-next btn']</td>
+	<td>//button[contains(@class,'scheduler-base-icon-next') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -201,7 +201,7 @@
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_MENULIST_RSS</td>
-	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item calendar-subscribe-link' and @data-id='subscribe']</td>
+	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[contains(@class,'simple-menu-item') and contains(@class,'calendar-subscribe-link') and @data-id='subscribe']</td>
 	<td></td>
 </tr>
 <tr>

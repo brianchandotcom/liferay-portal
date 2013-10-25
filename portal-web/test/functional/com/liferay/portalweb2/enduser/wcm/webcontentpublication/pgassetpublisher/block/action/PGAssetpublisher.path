@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>ADD_NEW_IN_CHILD_SITENAME_MENULIST_BLOGS_ENTRY</td>
-	<td>//li[@class='dropdown open' and contains(.,'Add New in Child SiteName')]/ul/li[contains(.,'Blogs Entry')]</td>
+	<td>//li[contains(@class,'dropdown') and contains(@class,'open') and contains(.,'Add New in Child SiteName')]/ul/li[contains(.,'Blogs Entry')]</td>
 	<td></td>
 </tr>
 <tr>

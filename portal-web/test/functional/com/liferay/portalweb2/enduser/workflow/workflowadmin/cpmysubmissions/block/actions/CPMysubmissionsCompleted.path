@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,12 +36,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PENDING</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Pending')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Pending')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_COMPLETED</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Completed')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Completed')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -206,12 +206,12 @@
 <!--MANAGE_MENULIST-->
 <tr>
 	<td>MANAGE_MENULIST_DOCUMENT_TYPES</td>
-	<td>//li[@class='dropdown open']/ul/li[1]/a[contains(.,'Document Types')]</td>
+	<td>//li[contains(@class,'dropdown') and contains(@class,'open')]/ul/li[1]/a[contains(.,'Document Types')]</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>MANAGE_MENULIST_METADATA_SETS</td>
-	<td>//li[@class='dropdown open']/ul/li[2]/a[contains(.,'Metadata Sets')]</td>
+	<td>//li[contains(@class,'dropdown') and contains(@class,'open')]/ul/li[2]/a[contains(.,'Metadata Sets')]</td>
 	<td>Metadata Sets</td>
 </tr>
 <tr>

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_FORM</td>
-	<td>//fieldset/div/div[@class='alert alert-success']</td>
+	<td>//fieldset/div/div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>

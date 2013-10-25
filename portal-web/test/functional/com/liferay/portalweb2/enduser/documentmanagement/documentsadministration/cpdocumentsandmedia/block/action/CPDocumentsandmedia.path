@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -270,17 +270,17 @@
 </tr>
 <tr>
 	<td>FILTER_HOME_ACTIONS</td>
-	<td>//span[@class='entry-action overlay']/div/a</td>
+	<td>//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_RECENT</td>
-	<td>//li[@class='app-view-navigation-entry folder']/a[contains(.,'Recent')]</td>
+	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder')]/a[contains(.,'Recent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FILTER_MINE</td>
-	<td>//li[@class='app-view-navigation-entry folder']/a[contains(.,'Mine')]</td>
+	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder')]/a[contains(.,'Mine')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -454,7 +454,7 @@
 <!--PAGINATION-->
 <tr>
 	<td>PAGINATION_FIRST</td>
-	<td>//a[@class='aui-paginator-link aui-paginator-first-link']</td>
+	<td>//a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-first-link')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -474,7 +474,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_LAST</td>
-	<td>//a[@class='aui-paginator-link aui-paginator-last-link']</td>
+	<td>//a[contains(@class,'aui-paginator-link') and contains(@class,'aui-paginator-last-link')]</td>
 	<td></td>
 </tr>
 <tr>

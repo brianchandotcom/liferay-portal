@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,12 +55,12 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DELETE_BUTTON</td>
-	<td>//button[@class='btn delete-templates-button']</td>
+	<td>//button[contains(@class,'btn') and contains(@class,'delete-templates-button')]</td>
 	<td></td>
 </tr>
 <tr>

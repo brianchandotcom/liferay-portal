@@ -72,7 +72,7 @@
 <!--FIELDS-->
 <tr>
 	<td>FIELDS_LINK</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Fields')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Fields')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,7 +93,7 @@
 <!--SETTINGS-->
 <tr>
 	<td>SETTINGS_LINK</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Settings')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Settings')]</td>
 	<td></td>
 </tr>
 <tr>

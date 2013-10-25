@@ -21,17 +21,17 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_DEFINITIONS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Definitions')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Definitions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DEFAULT_CONFIGURATION</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Default Configuration')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Default Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SUBMISSIONS</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Submissions')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Submissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,12 +42,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PENDING</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Pending')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Pending')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_COMPLETED</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Completed')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Completed')]</td>
 	<td></td>
 </tr>
 <tr>

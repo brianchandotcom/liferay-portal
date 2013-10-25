@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>API_METHOD</td>
-	<td>//div[@class='lfr-api-method lfr-api-section']/h2</td>
+	<td>//div[contains(@class,'lfr-api-method') and contains(@class,'lfr-api-section')]/h2</td>
 	<td></td>
 </tr>
 <tr>

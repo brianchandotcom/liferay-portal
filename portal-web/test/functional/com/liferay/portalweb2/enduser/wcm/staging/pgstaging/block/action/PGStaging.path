@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>STAGING_DROP_DOWN_BUTTON</td>
-	<td>//a[@class='staging-link dropdown-toggle']/span[contains(.,'Staging')]</td>
+	<td>//a[contains(@class,'staging-link') and contains(@class,'dropdown-toggle')]/span[contains(.,'Staging')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_SUBMIT_FOR_PUBLICATION_DISABLED</td>
-	<td>//span[@class='label label-submit']/span[contains(.,'Submit for Publication')]</td>
+	<td>//span[contains(@class,'label') and contains(@class,'label-submit')]/span[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

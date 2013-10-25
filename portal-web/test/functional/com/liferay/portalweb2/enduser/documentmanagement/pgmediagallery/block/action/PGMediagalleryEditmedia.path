@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@class='field lfr-input-text' and @type='text']</td>
+	<td>//input[contains(@class,'field') and contains(@class,'lfr-input-text') and @type='text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@class='field lfr-textarea']</td>
+	<td>//textarea[contains(@class,'field') and contains(@class,'lfr-textarea')]</td>
 	<td></td>
 </tr>
 <tr>

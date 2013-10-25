@@ -25,17 +25,17 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_INFO_MESSAGE</td>
-	<td>//div[@id='workflowMyTasksPanel']//div[@class='alert alert-info']</td>
+	<td>//div[@id='workflowMyTasksPanel']//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_INFO_MESSAGE</td>
-	<td>//div[@id='workflowMyRolesTasksPanel']//div[@class='alert alert-info']</td>
+	<td>//div[@id='workflowMyRolesTasksPanel']//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,12 +46,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PENDING</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Pending')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Pending')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_COMPLETED</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Completed')]</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Completed')]</td>
 	<td></td>
 </tr>
 <tr>

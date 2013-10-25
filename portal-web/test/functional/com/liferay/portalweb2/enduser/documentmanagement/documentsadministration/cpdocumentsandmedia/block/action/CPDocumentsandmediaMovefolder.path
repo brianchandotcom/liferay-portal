@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>CURRENT_FOLDER</td>
-	<td>//div[contains(.,'Current Folder') and @class='control-group field-wrapper']/input</td>
+	<td>//div[contains(.,'Current Folder') and contains(@class,'control-group') and contains(@class,'field-wrapper')]/input</td>
 	<td></td>
 </tr>
 <tr>

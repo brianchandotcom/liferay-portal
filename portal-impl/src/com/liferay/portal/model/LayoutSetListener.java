@@ -33,6 +33,10 @@ public class LayoutSetListener extends BaseModelListener<LayoutSet> {
 	}
 
 	protected void clearCache(LayoutSet layoutSet) {
+		if (layoutSet == null) {
+			return;
+		}
+
 		if (!layoutSet.isPrivateLayout()) {
 			CacheUtil.clearCache(layoutSet.getCompanyId());
 		}

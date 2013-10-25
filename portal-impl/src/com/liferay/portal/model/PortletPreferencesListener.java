@@ -44,6 +44,10 @@ public class PortletPreferencesListener
 	}
 
 	protected void clearCache(PortletPreferences portletPreferences) {
+		if (portletPreferences == null) {
+			return;
+		}
+
 		try {
 			long companyId = 0;
 

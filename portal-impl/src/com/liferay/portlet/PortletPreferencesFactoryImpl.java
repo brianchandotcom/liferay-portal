@@ -441,11 +441,8 @@ public class PortletPreferencesFactoryImpl
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long scopeGroupId = PortalUtil.getScopeGroupId(
-			request, portletId, true);
-
 		return getPortletSetup(
-			scopeGroupId, themeDisplay.getLayout(), portletId,
+			themeDisplay.getScopeGroupId(), themeDisplay.getLayout(), portletId,
 			defaultPreferences);
 	}
 

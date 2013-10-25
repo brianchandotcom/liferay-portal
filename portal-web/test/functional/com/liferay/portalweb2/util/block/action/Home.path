@@ -230,6 +230,11 @@
 </tr>
 <!--PORTLET-->
 <tr>
+	<td>PORTLET_LOADING_ANIMATION</td>
+	<td>//div[@class='loading-animation portlet-boundary']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_1</td>
 	<td>xpath=(//section)[1]</td>
 	<td></td>

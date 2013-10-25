@@ -197,6 +197,12 @@
 		</default>
 	</command>
 
+	<command name="refresh">
+		<default>
+			<execute function="Refresh#refresh" />
+		</default>
+	</command>
+
 	<command name="select">
 		<default>
 			<execute function="Select#select" />

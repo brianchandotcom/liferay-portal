@@ -1541,24 +1541,27 @@ public class SeleniumBuilderTest {
 	public void testMacroWhileElement1001_1() throws Exception {
 		test(
 			"MacroWhileElement1001_1.macro",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/MacroWhileElement1001_1.macro:3");
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+				"/MacroWhileElement1001_1.macro:3");
 	}
 
 	@Test
 	public void testMacroWhileElement1001_2() throws Exception {
 		test(
 			"MacroWhileElement1001_2.macro",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/MacroWhileElement1001_2.macro:3");
+			"Error 1001: Missing (then)" +
+				" child element in " + _DIR_NAME +
+				"/MacroWhileElement1001_2.macro:3");
 	}
 
 	@Test
 	public void testMacroWhileElement1001_3() throws Exception {
 		test(
 			"MacroWhileElement1001_3.macro",
-			"Error 1001: Missing (condition|then) child element in " +
-				_DIR_NAME + "/MacroWhileElement1001_3.macro:3");
+			"Error 1001: Missing (and|condition|contains|equals|isset|not|or)" +
+				" child element in " + _DIR_NAME +
+				"/MacroWhileElement1001_3.macro:3");
 	}
 
 	@Test

@@ -376,7 +376,9 @@ public class ServicePreAction extends Action {
 				request.setAttribute(WebKeys.REQUESTED_LAYOUT, layout);
 			}
 
-			if (Validator.isNull(controlPanelCategory) &&
+			if ((Validator.isNull(controlPanelCategory) ||
+				 controlPanelCategory.equals(PortletCategoryKeys.MY) ||
+				 controlPanelCategory.equals(PortletCategoryKeys.PORTLET)) &&
 				Validator.isNotNull(ppid) &&
 				(LiferayWindowState.isPopUp(request) ||
 				 LiferayWindowState.isExclusive(request))) {

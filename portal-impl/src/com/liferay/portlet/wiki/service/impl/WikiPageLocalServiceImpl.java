@@ -1045,6 +1045,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public List<WikiPage> getPages(
+			long nodeId, boolean head, int status, int start, int end)
+		throws SystemException {
+
+		return getPages(
+			nodeId, head, status, start, end,
+			new PageCreateDateComparator(false));
+	}
+
+	@Override
+	public List<WikiPage> getPages(
 			long nodeId, boolean head, int status, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {

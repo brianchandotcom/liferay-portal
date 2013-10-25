@@ -124,7 +124,7 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
-		return JournalArticleLocalServiceUtil.getArticlesCount(
+		return JournalArticleLocalServiceUtil.searchCount(
 			folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
@@ -138,7 +138,7 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
 		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getArticles(
+			JournalArticleLocalServiceUtil.search(
 				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
 				start, end);
 

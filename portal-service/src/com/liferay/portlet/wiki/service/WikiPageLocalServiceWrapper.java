@@ -712,6 +712,13 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long nodeId, boolean head, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPageLocalService.getPages(nodeId, head, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long nodeId, boolean head, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -121,7 +120,6 @@ import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -1366,8 +1364,9 @@ public class JournalArticleLocalServiceImpl
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return journalArticlePersistence.fetchByG_A_First(
-				groupId, articleId, orderByComparator);
+			return journalArticlePersistence.fetchByG_A_NotST_First(
+				groupId, articleId, WorkflowConstants.STATUS_IN_TRASH,
+				orderByComparator);
 		}
 
 		return journalArticlePersistence.fetchByG_A_ST_First(
@@ -2772,8 +2771,9 @@ public class JournalArticleLocalServiceImpl
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			articles = journalArticlePersistence.findByG_A(
-				groupId, articleId, 0, 1, orderByComparator);
+			articles = journalArticlePersistence.findByG_A_NotST(
+				groupId, articleId, WorkflowConstants.STATUS_IN_TRASH, 0, 1,
+				orderByComparator);
 		}
 		else {
 			articles = journalArticlePersistence.findByG_A_ST(
@@ -3356,33 +3356,10 @@ public class JournalArticleLocalServiceImpl
 			journalArticleResourceLocalService.getArticleResource(
 				article.getResourcePrimKey());
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("title", article.getArticleId());
-
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+		trashEntryLocalService.addTrashEntry(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
 			article.getResourcePrimKey(), articleResource.getUuid(), null,
-			oldStatus, articleVersionStatusOVPs, typeSettingsProperties);
-
-		String trashArticleId = TrashUtil.getTrashTitle(
-			trashEntry.getEntryId());
-
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
-
-				journalArticlePersistence.update(articleVersion);
-			}
-		}
-
-		articleResource.setArticleId(trashArticleId);
-
-		journalArticleResourcePersistence.update(articleResource);
-
-		article.setArticleId(trashArticleId);
-
-		article = journalArticlePersistence.update(article);
+			oldStatus, articleVersionStatusOVPs, null);
 
 		// Asset
 
@@ -3537,33 +3514,6 @@ public class JournalArticleLocalServiceImpl
 
 		// Article
 
-		String trashArticleId = TrashUtil.getOriginalTitle(
-			article.getArticleId());
-
-		List<JournalArticle> articleVersions =
-			journalArticlePersistence.findByG_A(
-				article.getGroupId(), article.getArticleId());
-
-		if (!articleVersions.isEmpty()) {
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setArticleId(trashArticleId);
-
-				journalArticlePersistence.update(articleVersion);
-			}
-		}
-
-		article.setArticleId(trashArticleId);
-
-		journalArticlePersistence.update(article);
-
-		JournalArticleResource articleResource =
-			journalArticleResourcePersistence.fetchByPrimaryKey(
-				article.getResourcePrimKey());
-
-		articleResource.setArticleId(trashArticleId);
-
-		journalArticleResourcePersistence.update(articleResource);
-
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
@@ -3605,6 +3555,10 @@ public class JournalArticleLocalServiceImpl
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
+		List<JournalArticle> articleVersions =
+			journalArticlePersistence.findByG_A(
+				article.getGroupId(), article.getArticleId());
+
 		if (!articleVersions.isEmpty()) {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				JournalArticle.class);
@@ -3615,6 +3569,30 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return article;
+	}
+
+	@Override
+	public List<JournalArticle> search(
+			long groupId, List<Long> folderIds, int status, int start, int end)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
+
+		return journalArticleFinder.findByG_F(
+			groupId, folderIds, queryDefinition);
+	}
+
+	@Override
+	public List<JournalArticle> search(
+			long groupId, long folderId, int status, int start, int end)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return search(groupId, folderIds, status, start, end);
 	}
 
 	/**
@@ -4113,6 +4091,27 @@ public class JournalArticleLocalServiceImpl
 		searchContext.setUserId(userId);
 
 		return indexer.search(searchContext);
+	}
+
+	@Override
+	public int searchCount(long groupId, List<Long> folderIds, int status)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return journalArticleFinder.countByG_F(
+			groupId, folderIds, queryDefinition);
+	}
+
+	@Override
+	public int searchCount(long groupId, long folderId, int status)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return searchCount(groupId, folderIds, status);
 	}
 
 	/**

@@ -92,6 +92,10 @@
 		}
 	}
 
+	.organization-details {
+		margin-left: 21px;
+	}
+
 	.organization-information {
 		overflow: hidden;
 	}

@@ -2315,7 +2315,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 							<socket server="${database.host}" port="5000" />
 						</waitfor>
 
-						<sleep seconds="10" />
+						<sleep seconds="5" />
 					</sequential>
 				</parallel>
 			</then>

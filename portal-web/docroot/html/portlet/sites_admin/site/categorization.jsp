@@ -22,6 +22,8 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 <liferay-ui:error-marker key="errorSection" value="categorization" />
 
+<h3><liferay-ui:message key="categorization" /></h3>
+
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <liferay-ui:asset-categories-error />

@@ -33,6 +33,8 @@ boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(groupTypeSettings, re
 double trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, request, "trashEntriesMaxAge", PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE)) / 1440.0;
 %>
 
+<h3><liferay-ui:message key="recycle-bin" /></h3>
+
 <aui:fieldset>
 	<aui:input id="trashEnabled" label="enable-recycle-bin" name="trashEnabled" type="checkbox" value="<%= groupTrashEnabled %>" />
 

@@ -2770,8 +2770,9 @@ public class JournalArticleLocalServiceImpl
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			articles = journalArticlePersistence.findByG_A(
-				groupId, articleId, 0, 1, orderByComparator);
+			articles = journalArticlePersistence.findByG_A_NotST(
+				groupId, articleId, WorkflowConstants.STATUS_IN_TRASH, 0, 1,
+				orderByComparator);
 		}
 		else {
 			articles = journalArticlePersistence.findByG_A_ST(

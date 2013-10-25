@@ -22,24 +22,20 @@
 	</command>
 
 	<command name="EditPageTemplate" priority="5">
-		<var name="pageTemplateActive" value="Yes" />
-		<var name="pageTemplateActiveNew" value="No" />
 		<var name="pageTemplateName" value="Page Template Name" />
-		<var name="pageTemplateNameNew" value="Page Template Name Edit" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="${pageTemplateActive}" />
+			<var name="pageTemplateActive" value="Yes" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 		</execute>
 
 		<execute macro="PageTemplate#editCP">
-			<var name="pageTemplateActiveNew" value="${pageTemplateActiveNew}" />
+			<var name="pageTemplateActive" value="No" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTemplateNameNew" value="${pageTemplateNameNew}" />
 		</execute>
 	</command>
 </definition>

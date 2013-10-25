@@ -12,17 +12,17 @@
 			</then>
 		</if>
 
-		<var name="key_tagName" value="${tagName3}" />
+		<var name="key_tagName" value="${tagName}" />
 
 		<execute action="PGBlogsAdd#type" locator-key1="TAGS_FIELD" value1="tag" />
 		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TAG_AUTOCOMPLETE" value1="${tagName3}" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="TAG_AUTOCOMPLETE" value1="${tagName3}" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<var name="key_tagName" value="${tagName3}" />
+		<var name="key_tagName" value="${tagName}" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName3}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName}" />
 	</command>
 
 	<command name="addCP">
@@ -84,6 +84,13 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
+	<!--
+		Ideally we will not need this and we'll be able to call the add macro
+		three times in the test. However, the limitation of the normal add
+		macro is that it does not test adding multiple tags at the same time
+		and can only add one tag at a time.
+	-->
+
 	<command name="addMultipleViaBlogsPG">
 		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 
@@ -115,7 +122,14 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName3}" />
 	</command>
 
-	<command name="addSelectTagViaBlogsPG">
+	<!--
+		This macro has "Multiple" in the name. Right now this macro is not
+		flexible and will only work when there are two tags specified. In the
+		future, we need to have a macro that can account for both single and
+		multiple tags. Ideally this could be done in a for loop.
+	-->
+
+	<command name="addSelectTagMultipleViaBlogsPG">
 		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 
 		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
@@ -134,7 +148,7 @@
 
 		<execute action="PGBlogsAddSelectTag#check" locator-key1="TAG_ENTRY_CHECKBOX" />
 
-		<var name="key_tagName" value="${tagName3}" />
+		<var name="key_tagName" value="${tagName2}" />
 
 		<execute action="PGBlogsAddSelectTag#check" locator-key1="TAG_ENTRY_CHECKBOX" />
 		<execute action="PGBlogsAddSelectTag#click" locator-key1="CLOSE_BUTTON" />
@@ -147,9 +161,9 @@
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName1}" />
 
-		<var name="key_tagName" value="${tagName3}" />
+		<var name="key_tagName" value="${tagName2}" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName3}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="TAG" value1="${tagName2}" />
 	</command>
 
 	<command name="addTagsCP">
@@ -179,7 +193,7 @@
 			</then>
 		</if>
 
-		<execute action="PGBlogsAdd#type" locator-key1="TAGS_FIELD" value1="${tagName}" />
+		<execute action="PGBlogsAdd#type" locator-key1="TAGS_FIELD" value1="${tagName}" />  tag
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

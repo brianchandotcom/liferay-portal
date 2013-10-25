@@ -48,7 +48,7 @@ boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
 
 PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId);
 
-PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
+PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
 
 PortletPreferences portletSetup = PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(layout, portletId);
 
@@ -76,7 +76,7 @@ if (Validator.isNotNull(scopeLayoutUuid)) {
 	if (scopeLayout != null) {
 		portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);
 
-		portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
+		portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
 	}
 }
 

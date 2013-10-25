@@ -40,28 +40,18 @@
 </tr>
 <!--PAGE_TEMPLATE_TABLE-->
 <tr>
-	<td>PAGE_TEMPLATE_TABLE_NAME_1</td>
-	<td>xpath=(//tr/td[1]/a)[1]</td>
+	<td>PAGE_TEMPLATE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_TABLE_ACTIVE_1</td>
-	<td>xpath=(//tr/td[2]/a)[1]</td>
+	<td>PAGE_TEMPLATE_TABLE_ACTIVE</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[3]/div/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_NAME_4</td>
-	<td>xpath=(//tr/td[1]/a)[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_ACTIVE_4</td>
-	<td>xpath=(//tr/td[2]/a)[4]</td>
+	<td>PAGE_TEMPLATE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[3]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

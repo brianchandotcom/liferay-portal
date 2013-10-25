@@ -713,7 +713,7 @@ public class JournalIndexerTest {
 				_group.getGroupId());
 
 			article = JournalArticleLocalServiceUtil.getArticle(
-				_group.getGroupId(), article.getArticleId());
+				article.getId());
 
 			JournalArticleLocalServiceUtil.moveArticleFromTrash(
 				TestPropsValues.getUserId(), _group.getGroupId(), article,

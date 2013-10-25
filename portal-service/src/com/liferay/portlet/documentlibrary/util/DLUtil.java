@@ -399,6 +399,10 @@ public class DLUtil {
 			companyId, groupId, userId, folderId, recursive);
 	}
 
+	public static boolean isValidVersion(String version) {
+		return getDL().isValidVersion(version);
+	}
+
 	public void setDL(DL dl) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

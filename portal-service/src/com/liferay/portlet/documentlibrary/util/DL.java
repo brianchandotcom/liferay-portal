@@ -239,4 +239,6 @@ public interface DL {
 			boolean recursive)
 		throws PortalException, SystemException;
 
+	public boolean isValidVersion(String version);
+
 }

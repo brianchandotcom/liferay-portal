@@ -832,7 +832,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String format(String fileName) throws Exception {
-		if (fileName.endsWith("SourceProcessor.java")) {
+		if (fileName.contains("SourceProcessor")) {
 			return null;
 		}
 

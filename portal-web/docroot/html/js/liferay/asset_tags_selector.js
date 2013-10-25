@@ -527,8 +527,6 @@ AUI.add(
 
 						var context = STR_BLANK;
 
-						var data = [];
-
 						if (contentCallback) {
 							context = contentCallback();
 
@@ -547,16 +545,23 @@ AUI.add(
 							function(response) {
 								var results = response.query.results;
 
+								var data = [];
+
 								if (results) {
 									var resultData = results.Result;
 
-									for (var i = 0; i < resultData.length; i++) {
-										data.push(
-											{
-												name: resultData[i]
-											}
-										);
+									if (!A.Lang.isArray(resultData)) {
+										resultData = [resultData];
 									}
+
+									data = AArray.map(
+										resultData,
+										function(item, index, collection) {
+											return {
+												name: item
+											};
+										}
+									);
 								}
 
 								instance._updateSelectList(AArray.unique(data));

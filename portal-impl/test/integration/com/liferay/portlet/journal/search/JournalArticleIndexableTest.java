@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -46,7 +45,6 @@ import org.junit.runner.RunWith;
  * @author Carlos Sierra
  */
 @ExecutionTestListeners(listeners = {
-	EnvironmentExecutionTestListener.class,
 	MainServletExecutionTestListener.class,
 	SynchronousDestinationExecutionTestListener.class,
 	TransactionalExecutionTestListener.class

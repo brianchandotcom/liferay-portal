@@ -71,6 +71,29 @@ AUI.add(
 						}
 					},
 
+					_getImgNaturalSize: function(img) {
+						var result;
+
+						if (A.UA.ie && A.UA.ie < 9) {
+							var tmp = new Image();
+
+							tmp.src = img.get('src');
+							
+							result = {
+								height: tmp.height,
+								width: tmp.width
+							};
+						}
+						else {
+							result = {
+								height: img.get('naturalHeight'),
+								width: img.get('naturalWidth')
+							};
+						}
+
+						return result;
+					},
+
 					_getMessageNode: function(message, cssClass) {
 						var instance = this;
 
@@ -178,15 +201,17 @@ AUI.add(
 						if (imageCropper && portraitPreviewImg) {
 							var region = imageCropper.get('region');
 
-							var scaleX = portraitPreviewImg.get('naturalWidth') / portraitPreviewImg.width();
-							var scaleY = portraitPreviewImg.get('naturalHeight') / portraitPreviewImg.height();
+							var naturalSize = instance._getImgNaturalSize(portraitPreviewImg);
+
+							var scaleX = naturalSize.width / portraitPreviewImg.width();
+							var scaleY = naturalSize.height / portraitPreviewImg.height();
 
 							var cropRegion = {
 								height: region.height * scaleY,
 								x: region.x * scaleX,
 								y: region.y * scaleY,
 								width: region.width * scaleX
-							}
+							};
 
 							instance._cropRegionNode.val(A.JSON.stringify(cropRegion));
 						}

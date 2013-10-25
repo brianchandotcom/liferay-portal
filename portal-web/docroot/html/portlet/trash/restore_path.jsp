@@ -83,9 +83,9 @@
 	A.getBody().delegate(
 		'click',
 		function(event) {
-			var target = event.target;
+			var link = event.currentTarget.one('a');
 
-			<portlet:namespace />restoreDialog(target.attr('data-uri'));
+			<portlet:namespace />restoreDialog(link.getData('uri'));
 		},
 		'.trash-restore-link'
 	);
@@ -98,6 +98,7 @@
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true,
 						width: 1024
 					},

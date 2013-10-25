@@ -39,7 +39,7 @@ String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
-			<aui:fieldset>
+			<aui:fieldset cssClass="lfr-portrait-editor">
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="" name="fileName" size="50" type="file" />
 
 				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">

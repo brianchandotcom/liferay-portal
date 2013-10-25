@@ -50,7 +50,7 @@ if (publicLayoutSetId != 0) {
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
-			<aui:fieldset>
+			<aui:fieldset cssClass="lfr-portrait-editor">
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="upload-a-logo-for-the-organization-pages-that-will-be-used-instead-of-the-default-enterprise-logo-in-both-public-and-private-pages" name="fileName" size="50" type="file" />
 
 				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">

@@ -76,7 +76,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						%>
 
 						<c:if test="<%= termCollector != null %>">
-							<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+							<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
 						</c:if>
 					</aui:a>
 				</li>
@@ -101,7 +101,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					<liferay-ui:message key="custom-range" />&hellip;
 
 					<c:if test="<%= termCollector != null %>">
-						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
 					</c:if>
 				</aui:a>
 			</li>

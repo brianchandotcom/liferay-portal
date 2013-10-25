@@ -94,7 +94,7 @@ if (dataJSONObject.has("values")) {
 					<%= assetRendererFactory.getTypeName(locale, false) %>
 
 					<c:if test="<%= showAssetCount %>">
-						<span class="frequency">(<%= frequency %>)</span>
+						<span class="badge badge-info frequency"><%= frequency %></span>
 					</c:if>
 				</a>
 			</li>

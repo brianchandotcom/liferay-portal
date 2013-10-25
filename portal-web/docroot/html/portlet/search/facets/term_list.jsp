@@ -59,7 +59,7 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;">
 					<%= HtmlUtil.escape(termCollector.getTerm()) %>
 
-					<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+					<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
 				</a>
 			</li>
 

@@ -70,7 +70,7 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;">
 					<liferay-ui:message key="<%= label %>" />
 
-					<span class="frequency">(<%= frequency %>)</span>
+					<span class="badge badge-info frequency"><%= frequency %></span>
 				</a>
 			</li>
 

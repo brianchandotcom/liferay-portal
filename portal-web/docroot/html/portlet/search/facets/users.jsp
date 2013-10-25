@@ -67,7 +67,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 					<%= HtmlUtil.escape(curUser.getFullName()) %>
 
 					<c:if test="<%= showAssetCount %>">
-						<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
 					</c:if>
 				</a>
 			</li>

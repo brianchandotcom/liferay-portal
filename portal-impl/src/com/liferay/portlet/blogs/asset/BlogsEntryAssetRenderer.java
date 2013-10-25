@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.asset;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -193,19 +194,25 @@ public class BlogsEntryAssetRenderer
 		return _entry.getUuid();
 	}
 
-	public boolean hasDeletePermission(PermissionChecker permissionChecker) {
+	public boolean hasDeletePermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return BlogsEntryPermission.contains(
 			permissionChecker, _entry, ActionKeys.DELETE);
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return BlogsEntryPermission.contains(
 			permissionChecker, _entry, ActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return BlogsEntryPermission.contains(
 			permissionChecker, _entry, ActionKeys.VIEW);
 	}

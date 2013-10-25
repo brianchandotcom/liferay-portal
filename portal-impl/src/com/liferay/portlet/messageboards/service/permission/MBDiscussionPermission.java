@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -85,6 +86,13 @@ public class MBDiscussionPermission {
 				return hasPermission.booleanValue();
 			}
 		}
+		else if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+				 !_hasPermission(
+					 permissionChecker, companyId, groupId, className, classPK,
+					 ownerId, ActionKeys.UPDATE)) {
+
+			return false;
+		}
 
 		return contains(
 			permissionChecker, companyId, groupId, className, classPK, ownerId,
@@ -116,6 +124,15 @@ public class MBDiscussionPermission {
 
 			return false;
 		}
+
+		return _hasPermission(
+			permissionChecker, companyId, groupId, className, classPK, ownerId,
+			actionId);
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, long companyId, long groupId,
+		String className, long classPK, long ownerId, String actionId) {
 
 		if ((ownerId > 0) &&
 			permissionChecker.hasOwnerPermission(

@@ -89,6 +89,12 @@ public class MBMessagePermission {
 				return hasPermission.booleanValue();
 			}
 		}
+		else if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+				 !_hasPermission(
+					 permissionChecker, message, ActionKeys.UPDATE)) {
+
+			return false;
+		}
 
 		if (MBBanLocalServiceUtil.hasBan(
 				message.getGroupId(), permissionChecker.getUserId())) {
@@ -122,6 +128,13 @@ public class MBMessagePermission {
 				}
 			}
 		}
+
+		return _hasPermission(permissionChecker, message, actionId);
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, MBMessage message,
+		String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
 				message.getCompanyId(), MBMessage.class.getName(),

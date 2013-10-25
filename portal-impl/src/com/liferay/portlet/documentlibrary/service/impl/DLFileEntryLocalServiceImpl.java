@@ -2353,8 +2353,15 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			if (autoCheckIn) {
-				dlFileEntryService.checkInFileEntry(
-					fileEntryId, majorVersion, changeLog, serviceContext);
+				if (ExportImportThreadLocal.isImportInProcess()) {
+					checkInFileEntry(
+						userId, fileEntryId, majorVersion, changeLog,
+						serviceContext);
+				}
+				else {
+					dlFileEntryService.checkInFileEntry(
+						fileEntryId, majorVersion, changeLog, serviceContext);
+				}
 			}
 			else if (!checkedOut &&
 					 (serviceContext.getWorkflowAction() ==
@@ -2374,14 +2381,24 @@ public class DLFileEntryLocalServiceImpl
 		}
 		catch (PortalException pe) {
 			if (autoCheckIn) {
-				dlFileEntryService.cancelCheckOut(fileEntryId);
+				if (ExportImportThreadLocal.isImportInProcess()) {
+					cancelCheckOut(userId, fileEntryId);
+				}
+				else {
+					dlFileEntryService.cancelCheckOut(fileEntryId);
+				}
 			}
 
 			throw pe;
 		}
 		catch (SystemException se) {
 			if (autoCheckIn) {
-				dlFileEntryService.cancelCheckOut(fileEntryId);
+				if (ExportImportThreadLocal.isImportInProcess()) {
+					cancelCheckOut(userId, fileEntryId);
+				}
+				else {
+					dlFileEntryService.cancelCheckOut(fileEntryId);
+				}
 			}
 
 			throw se;

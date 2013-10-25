@@ -47,7 +47,7 @@
 	int organizationUserCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, 0, userParams);
 
 	if ((suborganizationsCount > 0) || (organizationUserCount > 0)) {
-		buffer.append("<br /><em>");
+		buffer.append("<br /><em class=\"organization-details\">");
 
 		if (suborganizationsCount > 0) {
 			buffer.append((suborganizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(suborganizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(suborganizationsCount)));

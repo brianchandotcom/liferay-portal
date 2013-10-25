@@ -52,7 +52,9 @@
 				padding-right: 0;
 
 				a {
+					display: inline;
 					text-decoration: none;
+					text-shadow: none;
 
 					img {
 						margin-right: 8px;
@@ -61,12 +63,12 @@
 				}
 
 				&.active {
-					background: #5B677D;
 					font-weight: bold;
 					margin-bottom: 2px;
 
 					a {
 						color: #FFF;
+						display: block;
 
 						img {
 							margin-right: 8px;

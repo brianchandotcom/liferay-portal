@@ -712,7 +712,7 @@ public class SeleniumBuilderFileUtil {
 					fileName, element, allowedExecuteAttributeNames, ".+",
 					allowedExecuteChildElementNames);
 			}
-			else if (elementName.equals("if")) {
+			else if (elementName.equals("if") || elementName.equals("while")) {
 				validateIfElement(
 					fileName, element, allowedBlockChildElementNames,
 					allowedExecuteAttributeNames,
@@ -721,13 +721,6 @@ public class SeleniumBuilderFileUtil {
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
-			}
-			else if (elementName.equals("while")) {
-				validateWhileElement(
-					fileName, element, allowedBlockChildElementNames,
-					allowedExecuteAttributeNames,
-					allowedExecuteChildElementNames,
-					allowedIfConditionElementNames);
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);
@@ -1469,48 +1462,6 @@ public class SeleniumBuilderFileUtil {
 
 			throwValidationException(
 				1002, fileName, childElement, childElementName);
-		}
-	}
-
-	protected void validateWhileElement(
-		String fileName, Element whileElement,
-		String[] allowedBlockChildElementNames,
-		String[] allowedExecuteAttributeNames,
-		String[] allowedExecuteChildElementNames,
-		String[] allowedIfConditionElementNames) {
-
-		List<Element> elements = whileElement.elements();
-
-		Set<String> elementNames = new HashSet<String>();
-
-		for (Element element : elements) {
-			String elementName = element.getName();
-
-			elementNames.add(elementName);
-
-			if (elementName.equals("condition")) {
-				validateExecuteElement(
-					fileName, element, allowedExecuteAttributeNames,
-					".*(is|Is).+", allowedExecuteChildElementNames);
-			}
-			else if (elementName.equals("then")) {
-				validateBlockElement(
-					fileName, element, allowedBlockChildElementNames,
-					allowedExecuteAttributeNames,
-					allowedExecuteChildElementNames,
-					allowedIfConditionElementNames);
-			}
-			else {
-				throwValidationException(1002, fileName, element, elementName);
-			}
-		}
-
-		if (!elementNames.contains("condition") ||
-			!elementNames.contains("then")) {
-
-			throwValidationException(
-				1001, fileName, whileElement,
-				new String[] {"condition", "then"});
 		}
 	}
 

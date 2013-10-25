@@ -2381,11 +2381,16 @@ public class DLFileEntryLocalServiceImpl
 		}
 		catch (PortalException pe) {
 			if (autoCheckIn) {
-				if (ExportImportThreadLocal.isImportInProcess()) {
-					cancelCheckOut(userId, fileEntryId);
+				try {
+					if (ExportImportThreadLocal.isImportInProcess()) {
+						cancelCheckOut(userId, fileEntryId);
+					}
+					else {
+						dlFileEntryService.cancelCheckOut(fileEntryId);
+					}
 				}
-				else {
-					dlFileEntryService.cancelCheckOut(fileEntryId);
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 			}
 
@@ -2393,11 +2398,16 @@ public class DLFileEntryLocalServiceImpl
 		}
 		catch (SystemException se) {
 			if (autoCheckIn) {
-				if (ExportImportThreadLocal.isImportInProcess()) {
-					cancelCheckOut(userId, fileEntryId);
+				try {
+					if (ExportImportThreadLocal.isImportInProcess()) {
+						cancelCheckOut(userId, fileEntryId);
+					}
+					else {
+						dlFileEntryService.cancelCheckOut(fileEntryId);
+					}
 				}
-				else {
-					dlFileEntryService.cancelCheckOut(fileEntryId);
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 			}
 

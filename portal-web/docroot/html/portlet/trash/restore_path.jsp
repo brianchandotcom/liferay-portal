@@ -85,7 +85,7 @@
 		function(event) {
 			var link = event.currentTarget.one('a');
 
-			<portlet:namespace />restoreDialog(link.getData('uri'));
+			<portlet:namespace />restoreDialog(link.attr('data-uri'));
 		},
 		'.trash-restore-link'
 	);

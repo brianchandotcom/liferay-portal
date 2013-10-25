@@ -190,29 +190,27 @@ catch (NoSuchArticleException nsae) {
 	for (int i = 0; i < results.size(); i++) {
 		JournalArticle curArticle = results.get(i);
 
-		curArticle = curArticle.toEscapedModel();
-
-		ResultRow row = new ResultRow(null, curArticle.getArticleId() + EditArticleAction.VERSION_SEPARATOR + curArticle.getVersion(), i);
+		ResultRow row = new ResultRow(null, HtmlUtil.escapeAttribute(curArticle.getArticleId()) + EditArticleAction.VERSION_SEPARATOR + curArticle.getVersion(), i);
 
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectArticle('");
-		sb.append(curArticle.getArticleId());
+		sb.append(HtmlUtil.escapeJS(curArticle.getArticleId()));
 		sb.append("','");
-		sb.append(curArticle.getTitle(locale));
+		sb.append(HtmlUtil.escapeJS(curArticle.getTitle(locale)));
 		sb.append("');");
 
 		String rowHREF = sb.toString();
 
 		// Article id
 
-		row.addText(curArticle.getArticleId(), rowHREF);
+		row.addText(HtmlUtil.escape(curArticle.getArticleId()), rowHREF);
 
 		// Title
 
-		row.addText(curArticle.getTitle(locale), rowHREF);
+		row.addText(HtmlUtil.escape(curArticle.getTitle(locale)), rowHREF);
 
 		// Modified date
 
@@ -224,7 +222,7 @@ catch (NoSuchArticleException nsae) {
 
 		// Author
 
-		row.addText(PortalUtil.getUserName(curArticle), rowHREF);
+		row.addText(HtmlUtil.escape(PortalUtil.getUserName(curArticle)), rowHREF);
 
 		// Add result row
 

@@ -550,14 +550,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		Collection<Document> documents = new ArrayList<Document>();
 
 		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
-				article.getResourcePrimKey());
+			JournalArticleLocalServiceUtil.
+				getIndexableArticlesByResourcePrimKey(
+					article.getResourcePrimKey());
 
 		for (JournalArticle curArticle : articles) {
-			if (!curArticle.isIndexable()) {
-				continue;
-			}
-
 			Document document = getDocument(curArticle);
 
 			documents.add(document);

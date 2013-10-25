@@ -2634,6 +2634,14 @@ public class JournalArticleLocalServiceImpl
 		return articles.get(0);
 	}
 
+	@Override
+	public List<JournalArticle> getIndexableArticlesByResourcePrimKey(
+			long resourcePrimKey)
+		throws SystemException {
+
+		return journalArticlePersistence.findByR_I(resourcePrimKey, true);
+	}
+
 	/**
 	 * Returns the latest web content article matching the resource primary key,
 	 * preferring articles with approved workflow status.

@@ -392,6 +392,7 @@ create index IX_D19C1B9F on JournalArticle (groupId, userId);
 create index IX_43A0F80F on JournalArticle (groupId, userId, classNameId);
 create index IX_3F1EA19E on JournalArticle (layoutUuid);
 create index IX_33F49D16 on JournalArticle (resourcePrimKey);
+create index IX_89FF8B06 on JournalArticle (resourcePrimKey, indexable);
 create index IX_451D63EC on JournalArticle (resourcePrimKey, indexable, status);
 create index IX_3E2765FC on JournalArticle (resourcePrimKey, status);
 create index IX_EF9B7028 on JournalArticle (smallImageId);

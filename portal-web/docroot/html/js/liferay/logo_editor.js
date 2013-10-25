@@ -72,26 +72,22 @@ AUI.add(
 					},
 
 					_getImgNaturalSize: function(img) {
-						var result;
+						var imageHeight = img.get('naturalHeight');
+						var imageWidth = img.get('naturalWidth');
 
-						if (A.UA.ie && A.UA.ie < 9) {
+						if (Lang.isUndefined(imageHeight) || Lang.isUndefined(imageWidth)) {
 							var tmp = new Image();
 
-							tmp.src = img.get('src');
-							
-							result = {
-								height: tmp.height,
-								width: tmp.width
-							};
-						}
-						else {
-							result = {
-								height: img.get('naturalHeight'),
-								width: img.get('naturalWidth')
-							};
+							tmp.src = img.attr('src');
+
+							imageHeight = tmp.height;
+							imageWidth = tmp.width;
 						}
 
-						return result;
+						return {
+							height: imageHeight,
+							width: imageWidth
+						};
 					},
 
 					_getMessageNode: function(message, cssClass) {

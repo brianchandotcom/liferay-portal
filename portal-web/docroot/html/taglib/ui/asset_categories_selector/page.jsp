@@ -72,7 +72,7 @@ if (Validator.isNotNull(className)) {
 
 		String curCategoryIdsParam = request.getParameter(hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId());
 
-		if (curCategoryIdsParam != null) {
+		if (Validator.isNotNull(curCategoryIdsParam)) {
 			curCategoryIds = curCategoryIdsParam;
 			curCategoryNames = StringPool.BLANK;
 		}

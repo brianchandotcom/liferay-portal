@@ -1561,23 +1561,7 @@ public class Creole10Parser]]></replacevalue>
 				</and>
 			</not>
 			<then>
-				<manifest-helper />
-
-				<bndexpand propertyfile="${project.dir}/common.bnd" />
-
-				<bnd
-					eclipse="false"
-					exceptions="true"
-					failok="false"
-					inherit="true"
-					output="${jar.file}.jar"
-					sourcepath="."
-				>
-					<bndfiles path="bnd.bnd" />
-					<classpath>
-						<pathelement location="classes" />
-					</classpath>
-				</bnd>
+				<antcall target="build-common-java.jar" />
 			</then>
 		</if>
 	</target>

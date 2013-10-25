@@ -1812,6 +1812,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 									 StringPool.CLOSE_PARENTHESIS) &&
 								 !trimmedLine.startsWith(
 									 StringPool.DOUBLE_SLASH) &&
+								 !trimmedLine.equals("*/") &&
 								 !trimmedLine.startsWith("catch ") &&
 								 !trimmedLine.startsWith("else ") &&
 								 !trimmedLine.startsWith("finally ") &&

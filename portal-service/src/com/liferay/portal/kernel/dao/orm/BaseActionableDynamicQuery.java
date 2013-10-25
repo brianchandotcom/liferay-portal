@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.BaseLocalService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -153,20 +152,30 @@ public abstract class BaseActionableDynamicQuery
 		}
 	}
 
-	protected void addDocument(Document document) {
+	protected void addDocument(Document document) throws PortalException {
 		if (_documents == null) {
 			_documents = new ArrayList<Document>();
 		}
 
 		_documents.add(document);
+
+		if (_documents.size() >= _interval) {
+			indexInterval();
+		}
 	}
 
-	protected void addDocuments(Collection<Document> documents) {
+	protected void addDocuments(Collection<Document> documents)
+		throws PortalException {
+
 		if (_documents == null) {
 			_documents = new ArrayList<Document>();
 		}
 
 		_documents.addAll(documents);
+
+		if (_documents.size() >= _interval) {
+			indexInterval();
+		}
 	}
 
 	protected long doPerformCount() throws PortalException, SystemException {
@@ -214,9 +223,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	protected void indexInterval() throws PortalException {
-		if (Validator.isNull(_searchEngineId) || (_documents == null) ||
-			_documents.isEmpty()) {
-
+		if ((_documents == null) || _documents.isEmpty()) {
 			return;
 		}
 

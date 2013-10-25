@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_MANAGE_PAGE_VARIATION</td>
-	<td>//a[@id='_170_manageLayoutRevisions']/span</td>
+	<td>//a[@id='_170_manageLayoutRevisions']</td>
 	<td></td>
 </tr>
 <tr>

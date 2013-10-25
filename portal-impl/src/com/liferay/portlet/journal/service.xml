@@ -83,6 +83,10 @@
 		<finder name="SmallImageId" return-type="Collection">
 			<finder-column name="smallImageId" />
 		</finder>
+		<finder name="R_I" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+			<finder-column name="indexable" />
+		</finder>
 		<finder name="R_ST" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="status" />

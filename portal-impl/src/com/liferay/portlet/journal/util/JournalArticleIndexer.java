@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
@@ -551,14 +550,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		Collection<Document> documents = new ArrayList<Document>();
 
 		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
-				article.getResourcePrimKey());
+			JournalArticleLocalServiceUtil.
+				getIndexableArticlesByResourcePrimKey(
+					article.getResourcePrimKey());
 
 		for (JournalArticle curArticle : articles) {
-			if (!curArticle.isIndexable()) {
-				continue;
-			}
-
 			Document document = getDocument(curArticle);
 
 			documents.add(document);

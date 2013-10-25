@@ -270,20 +270,26 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
+		JournalArticleResource journalArticleResource =
+			article.getArticleResource();
+
 		if (Validator.isNotNull(newName)) {
 			originalTitle = newName;
 		}
 
-		JournalArticleResource articleResource =
+		JournalArticleResource originalArticleResource =
 			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
 				article.getGroupId(), originalTitle);
 
-		if (articleResource != null) {
+		if ((originalArticleResource != null) &&
+			(journalArticleResource.getPrimaryKey() !=
+				originalArticleResource.getPrimaryKey())) {
+
 			DuplicateEntryException dee = new DuplicateEntryException();
 
 			JournalArticle duplicateArticle =
 				JournalArticleLocalServiceUtil.getArticle(
-					articleResource.getGroupId(), originalTitle);
+					originalArticleResource.getGroupId(), originalTitle);
 
 			dee.setDuplicateEntryId(duplicateArticle.getResourcePrimKey());
 			dee.setOldName(duplicateArticle.getArticleId());

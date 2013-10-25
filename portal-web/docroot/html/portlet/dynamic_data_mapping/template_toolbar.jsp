@@ -84,9 +84,13 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				else {
 					templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
 
-					for (TemplateHandler templateHandler : templateHandlers) {
+					Iterator<TemplateHandler> itr = templateHandlers.iterator();
+
+					while (itr.hasNext()) {
+						TemplateHandler templateHandler = itr.next();
+
 						if (!DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
-							templateHandlers.remove(templateHandler);
+							itr.remove();
 						}
 					}
 				}

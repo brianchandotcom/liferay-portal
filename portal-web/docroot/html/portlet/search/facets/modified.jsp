@@ -41,7 +41,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 	<aui:input name='<%= facet.getFieldId() + "selection" %>' type="hidden" value="<%= fieldParamSelection %>" />
 
 	<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= facet.getFieldId() %>">
-		<ul class="modified unstyled">
+		<ul class="modified nav nav-list unstyled">
 			<li class="facet-value default<%= (fieldParamSelection.equals("0") ? " active" : StringPool.BLANK) %>">
 				<aui:a href="javascript:;" onClick='<%= renderResponse.getNamespace() + facet.getFieldId() + "clearFacet(0);" %>'>
 					<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/time.png" %>' /><liferay-ui:message key="any-time" />

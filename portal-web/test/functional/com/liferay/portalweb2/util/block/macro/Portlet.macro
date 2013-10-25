@@ -42,7 +42,31 @@
 
 		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
 
-		<execute action="Home#assertElementNotPresent" locator-key1="PORTLET_LOADING_ANIMATION" />
+		<var name="i" value="1" />
+
+		<while>
+			<and>
+				<condition action="Home#isElementPresent" locator-key1="PORTLET_LOADING_ANIMATION" />
+				<not>
+					<equals arg1="${i}" arg2="5" />
+				</not>
+			</and>
+			<then>
+				<execute action="Home#pause" locator1="1000" />
+
+				<echo message="Waiting for ${portletName} portlet to load. Attempt ${i}" />
+
+				<var name="i" value="${i?increment()}" />
+			</then>
+		</while>
+
+		<if>
+			<equals arg1="${i}" arg2="5" />
+			<then>
+				<execute action="Home#refresh" />
+			</then>
+		</if>
+
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>
 

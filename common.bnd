@@ -15,3 +15,5 @@ Liferay-Portal-Parent-Build-Number: ${release.info.parent.build.number}
 Liferay-Portal-Release-Info: ${release.info.release.info}
 Liferay-Portal-Server-Info: ${release.info.server.info}
 Liferay-Portal-Version: ${release.info.version}
+
+-sources: false

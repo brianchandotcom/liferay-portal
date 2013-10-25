@@ -1,6 +1,4 @@
 <definition>
-	<var name="pageTemplateActive" value="Yes" />
-
 	<command name="addCP">
 		<execute action="CPPagetemplates#click" locator-key1="ADD" />
 
@@ -27,10 +25,10 @@
 		<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_TABLE_ACTIONS_4" />
 		<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_MENULIST_EDIT" />
 
-		<execute action="CPPagetemplatesEdit#type" locator-key1="NAME_FIELD" value1="${pageTemplateNameNew}" />
+		<execute action="CPPagetemplatesEdit#type" locator-key1="NAME_FIELD" value1="${pageTemplateName} Edit" />
 
 		<if>
-			<equals arg1="${pageTemplateActiveNew}" arg2="No" />
+			<equals arg1="${pageTemplateActive}" arg2="No" />
 			<then>
 				<execute action="CPPagetemplatesAdd#uncheck" locator-key1="ACTIVE_CHECKBOX" />
 			</then>
@@ -43,8 +41,8 @@
 		<execute action="CPPagetemplatesEdit#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" value1="${pageTemplateNameNew}" />
-		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_ACTIVE_4" value1="${pageTemplateActiveNew}" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" value1="${pageTemplateName} Edit" />
+		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_ACTIVE_4" value1="${pageTemplateActive}" />
 	</command>
 
 	<command name="tearDownCP">

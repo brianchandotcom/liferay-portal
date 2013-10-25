@@ -582,7 +582,7 @@ public abstract class BaseDB implements DB {
 
 		String template = readFile(sqlDir + "/" + fileName + ".sql");
 
-		if (fileName.equals("portal") || fileName.equals("portal-minimal") ||
+		if (fileName.equals("portal") ||
 			fileName.equals("update-5.0.1-5.1.0")) {
 
 			UnsyncBufferedReader unsyncBufferedReader =

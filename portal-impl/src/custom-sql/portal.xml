@@ -133,19 +133,24 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByLayouts">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT Group_.groupId) AS COUNT_VALUE
+				COUNT(Group_.groupId) AS COUNT_VALUE
 			FROM
 				Group_
 			INNER JOIN
-				LayoutSet ON
-					LayoutSet.groupId = Group_.groupId
+				(
+					SELECT
+						DISTINCT groupId
+					FROM
+						LayoutSet
+					WHERE
+						LayoutSet.pageCount > 0
+				)
+				TEMP_TABLE ON
+					TEMP_TABLE.groupId = Group_.groupId
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.parentGroupId = ?) AND
-				(Group_.site = ?) AND
-				(LayoutSet.pageCount > 0)
-			GROUP BY
-				Group_.groupId
+				(Group_.site = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByGroupId">
@@ -184,19 +189,24 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLayouts">
 		<![CDATA[
 			SELECT
-				DISTINCT {Group_.*}
+				{Group_.*}
 			FROM
 				Group_
 			INNER JOIN
-				LayoutSet ON
-					LayoutSet.groupId = Group_.groupId
+				(
+					SELECT
+						DISTINCT groupId
+					FROM
+						LayoutSet
+					WHERE
+						LayoutSet.pageCount > 0
+				)
+				TEMP_TABLE ON
+					TEMP_TABLE.groupId = Group_.groupId
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.parentGroupId = ?) AND
-				(Group_.site = ?) AND
-				(LayoutSet.pageCount > 0)
-			GROUP BY
-				Group_.groupId
+				(Group_.site = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLiveGroups">

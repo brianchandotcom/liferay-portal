@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>DRAFT_STATUS</td>
-	<td>//button[contains(@class,'workflow-status-draft') and contains(@class,'label-info') and contains(@class,'workflow-value')]</td>
+	<td>//strong[contains(@class,'workflow-status-draft') and contains(@class,'label-info') and contains(@class,'workflow-value')]</td>
 	<td></td>
 </tr>
 <tr>

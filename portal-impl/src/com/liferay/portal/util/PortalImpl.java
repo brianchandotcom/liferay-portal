@@ -861,7 +861,15 @@ public class PortalImpl implements Portal {
 			return StringUtil.randomId();
 		}
 		else {
-			return DeterminateKeyGenerator.generate(input);
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(DeterminateKeyGenerator.generate(input));
+			sb.append(StringPool.UNDERLINE);
+			sb.append(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID));
+			sb.append(StringPool.UNDERLINE);
+			sb.append(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS));
+
+			return sb.toString();
 		}
 	}
 

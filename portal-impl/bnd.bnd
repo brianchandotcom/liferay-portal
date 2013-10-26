@@ -1,8 +1,5 @@
-Bundle-SymbolicName: portal-impl
-Export-Package: com.liferay.*
-Import-Package: *;resolution:=optional
+Import-Package: *
 Include-Resource: classes
-Private-Package:\
-	com.liferay.portal.module.framework,\
-	*
+Private-Package: com.liferay.*
+
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)

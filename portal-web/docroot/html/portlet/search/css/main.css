@@ -46,39 +46,8 @@
 				margin: 0 0 1em;
 			}
 
-			.facet-value {
-				font-size: 1.1em;
-				padding: 3px;
-				padding-right: 0;
-
-				a {
-					display: inline;
-					text-decoration: none;
-					text-shadow: none;
-
-					img {
-						margin-right: 8px;
-						vertical-align: middle;
-					}
-				}
-
-				&.active {
-					font-weight: bold;
-					margin-bottom: 2px;
-
-					a {
-						color: #FFF;
-						display: block;
-
-						img {
-							margin-right: 8px;
-						}
-					}
-
-					.frequency {
-						display: none;
-					}
-				}
+			.facet-value.active .frequency {
+				display: none;
 			}
 
 			.date .calendar {

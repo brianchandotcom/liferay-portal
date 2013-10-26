@@ -134,6 +134,12 @@ public class WikiPagePermission {
 			return hasPermission.booleanValue();
 		}
 
+		if (page.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+			!contains(permissionChecker, page, ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
 		if (actionId.equals(ActionKeys.VIEW)) {
 			WikiPage redirectPage = page.getRedirectPage();
 

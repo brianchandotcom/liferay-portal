@@ -115,6 +115,12 @@ public class JournalArticlePermission {
 			}
 		}
 
+		if (article.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+			!contains(permissionChecker, article, ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
 		if (actionId.equals(ActionKeys.VIEW) &&
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 

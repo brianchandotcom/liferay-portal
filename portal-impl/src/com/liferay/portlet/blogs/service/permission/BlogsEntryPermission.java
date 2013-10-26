@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -58,6 +59,12 @@ public class BlogsEntryPermission {
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
+		}
+
+		if (entry.isDraft() && actionId.equals(ActionKeys.VIEW) &&
+			!contains(permissionChecker, entry, ActionKeys.UPDATE)) {
+
+			return false;
 		}
 
 		if (entry.isPending()) {

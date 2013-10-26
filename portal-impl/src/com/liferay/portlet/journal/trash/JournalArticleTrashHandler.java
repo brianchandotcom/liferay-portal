@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -32,6 +33,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
+import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
@@ -44,6 +46,28 @@ import javax.portlet.PortletRequest;
  * @author Zsolt Berentey
  */
 public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
+
+	@Override
+	public void checkDuplicateEntry(
+			long classPK, long containerModelId, String newName)
+		throws PortalException, SystemException {
+
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+		checkDuplicateEntry(
+			classPK, 0, containerModelId, article.getArticleId(), newName);
+	}
+
+	@Override
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
+		throws PortalException, SystemException {
+
+		checkDuplicateEntry(
+			trashEntry.getClassPK(), trashEntry.getEntryId(), containerModelId,
+			trashEntry.getTypeSettingsProperty("title"), newName);
+	}
 
 	@Override
 	public void deleteTrashEntry(long classPK)
@@ -236,6 +260,37 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 		JournalArticleResourceLocalServiceUtil.updateJournalArticleResource(
 			articleResource);
+	}
+
+	protected void checkDuplicateEntry(
+			long classPK, long trashEntryId, long containerModelId,
+			String originalTitle, String newName)
+		throws PortalException, SystemException {
+
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
+
+		JournalArticleResource articleResource =
+			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+				article.getGroupId(), originalTitle);
+
+		if (articleResource != null) {
+			DuplicateEntryException dee = new DuplicateEntryException();
+
+			JournalArticle duplicateArticle =
+				JournalArticleLocalServiceUtil.getArticle(
+					articleResource.getGroupId(), originalTitle);
+
+			dee.setDuplicateEntryId(duplicateArticle.getResourcePrimKey());
+			dee.setOldName(duplicateArticle.getArticleId());
+			dee.setTrashEntryId(trashEntryId);
+
+			throw dee;
+		}
 	}
 
 	@Override

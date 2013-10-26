@@ -28,8 +28,8 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="term-list unstyled">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+	<ul class="nav nav-pills nav-stacked term-list">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><liferay-ui:message key="any-term" /></a>
 		</li>
 
@@ -55,8 +55,12 @@ int maxTerms = dataJSONObject.getInt("maxTerms");
 			}
 		%>
 
-			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;"><%= HtmlUtil.escape(termCollector.getTerm()) %></a> <span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+			<li class="facet-value <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;">
+					<%= HtmlUtil.escape(termCollector.getTerm()) %>
+
+					<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
+				</a>
 			</li>
 
 		<%

@@ -33,9 +33,9 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="folders unstyled">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/folder.png" %>' /><liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
+	<ul class="folders nav nav-pills nav-stacked">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
+			<a data-value="" href="javascript:;"><aui:icon image="folder-open" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= facetConfiguration.getLabel() %>" /></a>
 		</li>
 
 		<%
@@ -82,8 +82,14 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 			}
 			%>
 
-			<li class="facet-value <%= (folderId == curFolderId) ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= curFolderId %>" href="javascript:;"><%= HtmlUtil.escape(title.getValue()) %></a><c:if test="<%= showAssetCount %>"> <span class="frequency">(<%= termCollector.getFrequency() %>)</span></c:if>
+			<li class="facet-value <%= (folderId == curFolderId) ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= curFolderId %>" href="javascript:;">
+					<%= HtmlUtil.escape(title.getValue()) %>
+
+					<c:if test="<%= showAssetCount %>">
+						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
+					</c:if>
+				</a>
 			</li>
 
 		<%

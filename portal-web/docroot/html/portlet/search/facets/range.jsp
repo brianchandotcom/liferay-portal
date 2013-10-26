@@ -28,8 +28,8 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="range unstyled">
-		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
+	<ul class="nav nav-pills nav-stacked range">
+		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
 			<a data-value="" href="javascript:;"><liferay-ui:message key="any-range" /></a>
 		</li>
 
@@ -66,8 +66,12 @@ JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 			}
 		%>
 
-			<li class="facet-value <%= fieldParam.equals(range) ? "current-term" : StringPool.BLANK %>">
-				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;"><liferay-ui:message key="<%= label %>" /></a> <span class="frequency">(<%= frequency %>)</span>
+			<li class="facet-value <%= fieldParam.equals(range) ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= HtmlUtil.escapeAttribute(range) %>" href="javascript:;">
+					<liferay-ui:message key="<%= label %>" />
+
+					<span class="badge badge-info frequency"><%= frequency %></span>
+				</a>
 			</li>
 
 		<%

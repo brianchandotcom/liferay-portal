@@ -1628,13 +1628,6 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getArticlesByResourcePrimKey(resourcePrimKey);
 	}
 
-	@Override
-	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByResourcePrimKey(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticleLocalService.getIndexableArticlesByResourcePrimKey(resourcePrimKey);
-	}
-
 	/**
 	* Returns all the web content articles matching the small image ID.
 	*
@@ -1841,6 +1834,13 @@ public class JournalArticleLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticleLocalService.getDisplayArticleByUrlTitle(groupId,
 			urlTitle);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByResourcePrimKey(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getIndexableArticlesByResourcePrimKey(resourcePrimKey);
 	}
 
 	/**

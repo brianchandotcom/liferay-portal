@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -101,7 +101,8 @@ public class EditTagAction extends PortletAction {
 			String value = ParamUtil.getString(
 				actionRequest, "value" + tagPropertiesIndex);
 
-			tagProperties[i] = key + StringPool.COLON + value;
+			tagProperties[i] =
+				key + AssetTagConstants.TAG_PROPERTY_SEPARATOR + value;
 		}
 
 		return tagProperties;

@@ -162,7 +162,7 @@ public class AssetTagFinderTest {
 		Group siteGroup = scopeGroup.getParentGroup();
 
 		String assetTagName = ServiceTestUtil.randomString();
-		String[] assetTagProperties = new String[] {"key:value"};
+		String[] assetTagProperties = new String[] {"key_TAG_PROPERTY_value"};
 
 		int initialScopeGroupAssetTagsCount =
 			AssetTagFinderUtil.filterCountByG_N_P(
@@ -306,7 +306,7 @@ public class AssetTagFinderTest {
 		Group siteGroup = scopeGroup.getParentGroup();
 
 		String assetTagName = ServiceTestUtil.randomString();
-		String[] assetTagProperties = new String[] {"key:value"};
+		String[] assetTagProperties = new String[] {"key_TAG_PROPERTY_value"};
 
 		List<AssetTag> initialScopeGroupAssetTags =
 			AssetTagFinderUtil.filterFindByG_N_P(

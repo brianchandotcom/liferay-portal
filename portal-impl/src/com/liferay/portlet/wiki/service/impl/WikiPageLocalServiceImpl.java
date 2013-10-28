@@ -969,11 +969,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	public WikiPage getPage(long nodeId, String title)
 		throws PortalException, SystemException {
 
-		List<WikiPage> pages = wikiPagePersistence.findByN_T_H(
-			nodeId, title, true, 0, 1);
+		WikiPage page = fetchPage(nodeId, title);
 
-		if (!pages.isEmpty()) {
-			return pages.get(0);
+		if (page != null) {
+			return page;
 		}
 		else {
 			throw new NoSuchPageException();

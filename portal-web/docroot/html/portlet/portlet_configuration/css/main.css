@@ -28,6 +28,10 @@
 		}
 	}
 
+	.relative-range {
+		width: 165px;
+	}
+
 	.process-list {
 		.background-task-status-column {
 			width: 700px;

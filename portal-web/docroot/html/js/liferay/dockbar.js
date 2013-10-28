@@ -184,6 +184,8 @@ AUI.add(
 
 							if (item.node) {
 								item.node.hide();
+
+								BODY.detach('layoutControlsEsc|key');
 							}
 						}
 					}
@@ -208,6 +210,36 @@ AUI.add(
 
 						panelDisplayEvent = 'dockbarShowPanel';
 						panelVisible = true;
+
+						BODY.on(
+							'layoutControlsEsc|key',
+							function(event) {
+								if (panelId !== STR_PREVIEW_PANEL) {
+									instance._togglePanel(panelId);
+								}
+
+								var navAddControls = A.one('#' + instance._namespace + 'navAddControls');
+
+								if (navAddControls) {
+									var layoutControl;
+
+									if (panelId == STR_ADD_PANEL) {
+										layoutControl = navAddControls.one('.site-add-controls > a');
+									}
+									else if (panelId == STR_EDIT_LAYOUT_PANEL) {
+										layoutControl = navAddControls.one('.page-edit-controls > a');
+									}
+									else if (panelId == STR_PREVIEW_PANEL) {
+										layoutControl = navAddControls.one('.page-preview-controls > a');
+									}
+
+									if (layoutControl) {
+										layoutControl.focus();
+									}
+								}
+							},
+							'down:27'
+						);
 					}
 
 					Liferay.fire(
@@ -225,6 +257,10 @@ AUI.add(
 							id: panelId
 						}
 					);
+
+					if (!panelVisible) {
+						BODY.detach('layoutControlsEsc|key');
+					}
 
 					panelNode.toggle(panelVisible);
 				}

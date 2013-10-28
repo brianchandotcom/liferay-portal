@@ -21,6 +21,9 @@ public class AssetCategoryConstants {
 
 	public static final long ALL_CLASS_NAME_IDS = 0;
 
+	public static final String CATEGORY_PROPERTY_SEPARATOR =
+		"_CATEGORY_PROPERTY_";
+
 	public static final long DEFAULT_PARENT_CATEGORY_ID = 0;
 
 }

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -130,7 +129,8 @@ public class AssetCategoryLocalServiceImpl
 
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i], CharPool.COLON);
+				categoryProperties[i],
+				AssetCategoryConstants.CATEGORY_PROPERTY_SEPARATOR);
 
 			String key = StringPool.BLANK;
 			String value = StringPool.BLANK;
@@ -519,7 +519,8 @@ public class AssetCategoryLocalServiceImpl
 
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i], CharPool.COLON);
+				categoryProperties[i],
+				AssetCategoryConstants.CATEGORY_PROPERTY_SEPARATOR);
 
 			String key = StringPool.BLANK;
 

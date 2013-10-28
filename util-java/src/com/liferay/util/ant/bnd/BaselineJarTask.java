@@ -398,15 +398,6 @@ public class BaselineJarTask extends BaseBndTask {
 
 		_headerPrinted = true;
 
-		try {
-			_logFile.createNewFile();
-
-			_printWriter = new PrintWriter(_logFile);
-		}
-		catch (IOException ioe) {
-			throw new BuildException(ioe);
-		}
-
 		project.log(
 			"[Baseline Report] Mode: " + _reportLevel, Project.MSG_WARN);
 
@@ -504,8 +495,19 @@ public class BaselineJarTask extends BaseBndTask {
 
 		project.log(output, Project.MSG_WARN);
 
-		if (_printWriter != null) {
-			_printWriter.println(output);
+		if (_reportLevelIsPersist) {
+			try {
+				if (_printWriter == null) {
+					_logFile.createNewFile();
+
+					_printWriter = new PrintWriter(_logFile);
+				}
+
+				_printWriter.println(output);
+			}
+			catch (IOException ioe) {
+				throw new BuildException(ioe);
+			}
 		}
 	}
 

@@ -184,7 +184,7 @@ catch (NoSuchArticleException nsae) {
 
 		ResultRow row = new ResultRow(null, HtmlUtil.escapeAttribute(curArticle.getArticleId()) + EditArticleAction.VERSION_SEPARATOR + curArticle.getVersion(), i);
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());

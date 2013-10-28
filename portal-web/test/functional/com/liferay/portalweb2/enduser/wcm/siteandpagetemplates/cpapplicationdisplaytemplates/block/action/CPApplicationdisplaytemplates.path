@@ -76,7 +76,7 @@
 <!--OPTIONS_MENULIST-->
 <tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
-	<td>//div/ul/li/a[@id='_183_kldx_menu_export-import_1']</td>
+	<td>//div/ul/li/a[contains(@id,'_menu_export-import_1')]</td>
 	<td></td>
 </tr>
 <tr>

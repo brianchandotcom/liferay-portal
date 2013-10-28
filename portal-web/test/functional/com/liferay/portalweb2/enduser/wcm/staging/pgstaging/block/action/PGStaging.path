@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>PAGE_VARIATION</td>
-	<td>//div[@class='page-variations-options span5']//a[@id='_170_kldx_menu']/span[contains(.,'${key_pageVariationName}')]</td>
+	<td>//div[@class='page-variations-options span5']//a[contains(@id,'_menu')]/span[contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>

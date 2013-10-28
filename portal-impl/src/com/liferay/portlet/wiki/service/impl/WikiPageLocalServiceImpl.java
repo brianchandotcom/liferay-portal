@@ -1170,7 +1170,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return wikiPagePersistence.countByN_H(nodeId, head);
+			return wikiPagePersistence.countByN_H_NotS(
+				nodeId, head, WorkflowConstants.STATUS_IN_TRASH);
 		}
 		else {
 			return wikiPagePersistence.countByN_H_S(nodeId, head, status);

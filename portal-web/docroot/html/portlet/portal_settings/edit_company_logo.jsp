@@ -55,7 +55,7 @@ String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company
 		</aui:form>
 
 		<aui:script use="liferay-logo-editor">
-			new Liferay.LogoEditor(
+			var logoEditor = new Liferay.LogoEditor(
 				{
 					maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>',
 					namespace: '<portlet:namespace />',
@@ -63,6 +63,16 @@ String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company
 					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_company_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>'
 				}
 			);
+
+			if (Liferay.Util.getTop() !== A.config.win) {
+				var dialog = Liferay.Util.getWindow();
+
+				if (dialog) {
+					dialog.on('resize:end', logoEditor.resize, logoEditor);
+					dialog.on('resize:resize', logoEditor.resize, logoEditor);
+					dialog.on('resize:start', logoEditor.resize, logoEditor);
+				}
+			}
 		</aui:script>
 	</c:otherwise>
 </c:choose>

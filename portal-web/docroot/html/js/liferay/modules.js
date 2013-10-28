@@ -591,6 +591,12 @@
 							'aui-io-request'
 						]
 					},
+					'liferay-toggler-interaction': {
+						path: 'toggler_interaction.js',
+						requires: [
+							'liferay-toggler-key-filter'
+						]
+					},
 					'liferay-toggler-key-filter': {
 						path: 'toggler_key_filter.js',
 						requires: [

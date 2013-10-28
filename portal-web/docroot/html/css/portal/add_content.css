@@ -114,8 +114,10 @@
 				width: 100%;
 			}
 
-			&:hover .add-content-item {
-				display: inline;
+			&:focus, &:hover {
+				.add-content-item {
+					display: inline;
+				}
 			}
 
 			.add-content-item {

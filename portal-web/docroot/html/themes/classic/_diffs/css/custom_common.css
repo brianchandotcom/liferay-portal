@@ -742,7 +742,7 @@
 			.lfr-content-item {
 				color: #009AE5;
 
-				&:hover {
+				&:focus, &:hover {
 					background-color: #E5F5FC;
 				}
 

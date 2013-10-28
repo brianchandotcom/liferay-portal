@@ -317,15 +317,15 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		boolean versionChanged = true;
+		boolean keepFileVersionLabel = false;
 
 		if (!majorVersion) {
-			versionChanged = hasVersionChanged(
+			keepFileVersionLabel = isKeepFileVersionLabel(
 				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
 				serviceContext.getWorkflowAction());
 		}
 
-		if (!versionChanged) {
+		if (keepFileVersionLabel) {
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
 
 				// File entry
@@ -405,7 +405,7 @@ public class DLFileEntryLocalServiceImpl
 		// Workflow
 
 		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) && versionChanged) {
+				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
 
 			startWorkflowInstance(
 				userId, serviceContext, latestDLFileVersion,
@@ -1924,36 +1924,36 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
-	protected boolean hasVersionChanged(
+	protected boolean isKeepFileVersionLabel(
 			DLFileEntry dlFileEntry, DLFileVersion lastDLFileVersion,
 			DLFileVersion latestDLFileVersion, int workflowAction)
 		throws PortalException, SystemException {
 
 		if (PropsValues.DL_FILE_ENTRY_VERSION_POLICY != 1) {
-			return true;
+			return false;
 		}
 
 		if (!Validator.equals(
 				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle())) {
 
-			return true;
+			return false;
 		}
 
 		if (!Validator.equals(
 				lastDLFileVersion.getDescription(),
 				latestDLFileVersion.getDescription())) {
 
-			return true;
+			return false;
 		}
 
 		if (lastDLFileVersion.getFileEntryTypeId() !=
 				latestDLFileVersion.getFileEntryTypeId()) {
 
-			return true;
+			return false;
 		}
 
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
-			return true;
+			return false;
 		}
 
 		// File entry type
@@ -1974,7 +1974,7 @@ public class DLFileEntryLocalServiceImpl
 						lastDLFileVersion.getFileVersionId());
 			}
 			catch (NoSuchFileEntryMetadataException nsfeme) {
-				return true;
+				return false;
 			}
 
 			DLFileEntryMetadata latestFileEntryMetadata =
@@ -1988,7 +1988,7 @@ public class DLFileEntryLocalServiceImpl
 				latestFileEntryMetadata.getDDMStorageId());
 
 			if (!Validator.equals(lastFields, latestFields)) {
-				return true;
+				return false;
 			}
 		}
 
@@ -2004,7 +2004,7 @@ public class DLFileEntryLocalServiceImpl
 			latestExpandoBridge.getAttributes();
 
 		if (!Validator.equals(lastAttributes, latestAttributes)) {
-			return true;
+			return false;
 		}
 
 		// Size
@@ -2013,11 +2013,11 @@ public class DLFileEntryLocalServiceImpl
 		long latestSize = latestDLFileVersion.getSize();
 
 		if ((lastSize == 0) && (latestSize >= 0)) {
-			return false;
+			return true;
 		}
 
 		if (lastSize != latestSize) {
-			return true;
+			return false;
 		}
 
 		// Checksum
@@ -2049,7 +2049,7 @@ public class DLFileEntryLocalServiceImpl
 				latestInputStream);
 
 			if (lastChecksum.equals(latestChecksum)) {
-				return false;
+				return true;
 			}
 
 			latestDLFileVersion.setChecksum(latestChecksum);
@@ -2066,7 +2066,7 @@ public class DLFileEntryLocalServiceImpl
 			StreamUtil.cleanUp(latestInputStream);
 		}
 
-		return true;
+		return false;
 	}
 
 	protected DLFileEntry moveFileEntryImpl(

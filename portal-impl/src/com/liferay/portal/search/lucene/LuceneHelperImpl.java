@@ -261,11 +261,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 					query.setBoost(termQuery.getBoost());
 				}
-				else if (like) {
-					value = value.toLowerCase(queryParser.getLocale());
-
-					query = queryParser.parse(value);
-				}
 			}
 			catch (Exception e) {
 				query = queryParser.parse(KeywordsUtil.escape(value));

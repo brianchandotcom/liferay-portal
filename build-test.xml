@@ -2018,7 +2018,7 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		</if>
 
 		<if>
-			<matches pattern="http" string="${test.build.bundle.zip.url}" />
+			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
@@ -2026,7 +2026,7 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 				</tstamp>
 
-				<get dest="${tstamp.value}.zip" src="${test.build.bundle.zip.url}" />
+				<get dest="${tstamp.value}.zip" src="${test.build.bundle.tomcat.zip.url}" />
 
 				<unzip
 					dest="${app.server.parent.dir}"

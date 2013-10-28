@@ -53,6 +53,7 @@ public class TrashVersionWrapper implements TrashVersion,
 		attributes.put("entryId", getEntryId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -82,6 +83,12 @@ public class TrashVersionWrapper implements TrashVersion,
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -207,6 +214,26 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	/**
+	* Returns the type settings of this trash version.
+	*
+	* @return the type settings of this trash version
+	*/
+	@Override
+	public java.lang.String getTypeSettings() {
+		return _trashVersion.getTypeSettings();
+	}
+
+	/**
+	* Sets the type settings of this trash version.
+	*
+	* @param typeSettings the type settings of this trash version
+	*/
+	@Override
+	public void setTypeSettings(java.lang.String typeSettings) {
+		_trashVersion.setTypeSettings(typeSettings);
+	}
+
+	/**
 	* Returns the status of this trash version.
 	*
 	* @return the status of this trash version
@@ -329,6 +356,28 @@ public class TrashVersionWrapper implements TrashVersion,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_trashVersion.persist();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _trashVersion.getTypeSettingsProperties();
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key) {
+		return _trashVersion.getTypeSettingsProperty(key);
+	}
+
+	@Override
+	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+		java.lang.String defaultValue) {
+		return _trashVersion.getTypeSettingsProperty(key, defaultValue);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		_trashVersion.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	@Override

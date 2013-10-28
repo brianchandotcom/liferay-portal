@@ -2707,6 +2707,7 @@
 		<field name="entryId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="typeSettings" type="String" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portlet.wiki.model.WikiNode">

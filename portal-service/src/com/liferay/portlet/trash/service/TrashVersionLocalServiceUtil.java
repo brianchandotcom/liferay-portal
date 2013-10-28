@@ -269,9 +269,12 @@ public class TrashVersionLocalServiceUtil {
 	}
 
 	public static void addTrashVersion(long trashEntryId,
-		java.lang.String className, long classPK, int status)
+		java.lang.String className, long classPK, int status,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().addTrashVersion(trashEntryId, className, classPK, status);
+		getService()
+			.addTrashVersion(trashEntryId, className, classPK, status,
+			typeSettingsProperties);
 	}
 
 	public static com.liferay.portlet.trash.model.TrashVersion fetchVersion(

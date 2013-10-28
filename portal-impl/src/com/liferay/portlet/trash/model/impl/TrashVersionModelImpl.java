@@ -63,9 +63,10 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 			{ "entryId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
+			{ "typeSettings", Types.VARCHAR },
 			{ "status", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table TrashVersion (versionId LONG not null primary key,entryId LONG,classNameId LONG,classPK LONG,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table TrashVersion (versionId LONG not null primary key,entryId LONG,classNameId LONG,classPK LONG,typeSettings VARCHAR(75) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table TrashVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY trashVersion.versionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY TrashVersion.versionId ASC";
@@ -129,6 +130,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		attributes.put("entryId", getEntryId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -158,6 +160,12 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -264,6 +272,21 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	}
 
 	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+	}
+
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -308,6 +331,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		trashVersionImpl.setEntryId(getEntryId());
 		trashVersionImpl.setClassNameId(getClassNameId());
 		trashVersionImpl.setClassPK(getClassPK());
+		trashVersionImpl.setTypeSettings(getTypeSettings());
 		trashVersionImpl.setStatus(getStatus());
 
 		trashVersionImpl.resetOriginalValues();
@@ -388,6 +412,14 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 		trashVersionCacheModel.classPK = getClassPK();
 
+		trashVersionCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = trashVersionCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			trashVersionCacheModel.typeSettings = null;
+		}
+
 		trashVersionCacheModel.status = getStatus();
 
 		return trashVersionCacheModel;
@@ -395,7 +427,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{versionId=");
 		sb.append(getVersionId());
@@ -405,6 +437,8 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
+		sb.append(", typeSettings=");
+		sb.append(getTypeSettings());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -414,7 +448,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.trash.model.TrashVersion");
@@ -435,6 +469,10 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
 		sb.append(getClassPK());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
+		sb.append(getTypeSettings());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -460,6 +498,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private String _typeSettings;
 	private int _status;
 	private long _columnBitmask;
 	private TrashVersion _escapedModel;

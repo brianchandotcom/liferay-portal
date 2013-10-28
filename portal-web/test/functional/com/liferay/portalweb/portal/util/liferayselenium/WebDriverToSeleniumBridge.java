@@ -987,6 +987,8 @@ public class WebDriverToSeleniumBridge
 	public void mouseDown(String locator) {
 		WebElement webElement = getWebElement(locator);
 
+		scrollWebElementIntoView(webElement);
+
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 		WebDriver webDriver = wrapsDriver.getWrappedDriver();
@@ -1020,6 +1022,8 @@ public class WebDriverToSeleniumBridge
 	public void mouseMove(String locator) {
 		WebElement webElement = getWebElement(locator);
 
+		scrollWebElementIntoView(webElement);
+
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 		WebDriver webDriver = wrapsDriver.getWrappedDriver();
@@ -1037,6 +1041,8 @@ public class WebDriverToSeleniumBridge
 	@Override
 	public void mouseMoveAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
+
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1067,6 +1073,8 @@ public class WebDriverToSeleniumBridge
 	public void mouseOut(String locator) {
 		WebElement webElement = getWebElement(locator);
 
+		scrollWebElementIntoView(webElement);
+
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 		WebDriver webDriver = wrapsDriver.getWrappedDriver();
@@ -1085,6 +1093,8 @@ public class WebDriverToSeleniumBridge
 	public void mouseOver(String locator) {
 		WebElement webElement = getWebElement(locator);
 
+		scrollWebElementIntoView(webElement);
+
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 		WebDriver webDriver = wrapsDriver.getWrappedDriver();
@@ -1101,6 +1111,8 @@ public class WebDriverToSeleniumBridge
 	@Override
 	public void mouseUp(String locator) {
 		WebElement webElement = getWebElement(locator);
+
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 

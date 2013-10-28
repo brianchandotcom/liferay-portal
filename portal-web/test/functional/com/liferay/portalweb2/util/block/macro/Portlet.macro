@@ -52,6 +52,8 @@
 				</not>
 			</and>
 			<then>
+				<execute action="Home#refresh" />
+
 				<execute action="Home#pause" locator1="1000" />
 
 				<echo message="Waiting for ${portletName} portlet to load. Attempt ${i}" />
@@ -59,13 +61,6 @@
 				<var name="i" value="${i?increment()}" />
 			</then>
 		</while>
-
-		<if>
-			<equals arg1="${i}" arg2="5" />
-			<then>
-				<execute action="Home#refresh" />
-			</then>
-		</if>
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>

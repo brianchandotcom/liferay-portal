@@ -213,22 +213,22 @@
 <!--FOLDER_MENU-->
 <tr>
 	<td>FOLDER_MENU_PERMISSIONS</td>
-	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_SUBSCRIBE</td>
-	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Subscribe')]</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_FOLDER</td>
-	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Add Folder')]</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_BOOKMARK</td>
-	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Add Bookmark')]</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Bookmark')]</td>
 	<td></td>
 </tr>
 </tbody>

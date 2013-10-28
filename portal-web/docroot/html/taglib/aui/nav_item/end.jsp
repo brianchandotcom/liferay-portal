@@ -32,14 +32,7 @@ if (bodyContent != null) {
 	<li class="<%= cssClass %><%= selected ? " active " : StringPool.SPACE %><%= state %>" id="<%= id %>" role="presentation" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(iconCssClass) || Validator.isNotNull(label) %>">
 			<c:if test="<%= Validator.isNotNull(href) %>">
-				<c:choose>
-					<c:when test="<%= Validator.isNull(ariaLabel) %>">
-						<a aria-labelledby="<%= id %>" class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
-					</c:when>
-					<c:otherwise>
-						<a aria-label="<%= ariaLabel %>" class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
-					</c:otherwise>
-				</c:choose>
+				<a <%= Validator.isNotNull(ariaLabel) ? "aria-label=\"" + ariaLabel + "\"" : StringPool.BLANK %> class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
 
 				<c:if test="<%= useDialog %>">
 					<aui:script>

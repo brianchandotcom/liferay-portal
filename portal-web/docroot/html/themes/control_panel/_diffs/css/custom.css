@@ -749,7 +749,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Control panel general ---------- */
 
 	li.publish-link-container a:before {
-		content: "";
+		content: '';
 		padding-left: 19px;
 	}
 
@@ -761,7 +761,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.lfr-ctrl-panel {
 		li.publish-link-container a:before {
-			content: "";
 			padding-left: 0;
 		}
 

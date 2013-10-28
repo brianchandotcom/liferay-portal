@@ -45,6 +45,7 @@
 		</aui:script>
 	</c:when>
 	<c:otherwise>
+
 		<%
 		Group groupType = layout.getGroup();
 		%>
@@ -84,6 +85,7 @@
 			</c:choose>
 
 			<liferay-util:buffer var="publishLink">
+
 				<%
 				String linkCssClass = StringPool.BLANK;
 

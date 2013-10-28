@@ -59,7 +59,8 @@ public class ViewAction extends WebContentAction {
 
 		if (articleGroupId <= 0) {
 			articleGroupId = GetterUtil.getLong(
-				portletPreferences.getValue("groupId", null));
+				portletPreferences.getValue(
+					"groupId", String.valueOf(themeDisplay.getScopeGroupId())));
 		}
 
 		String articleId = ParamUtil.getString(renderRequest, "articleId");

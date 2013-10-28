@@ -527,6 +527,12 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage fetchPage(
+		long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchPage(nodeId, title);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage fetchPage(
 		long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchPage(nodeId, title, version);

@@ -104,23 +104,13 @@
 				<if>
 					<available file="bnd.bnd" />
 					<then>
-						<manifest-helper />
-
-						<bndexpand propertyfile="${project.dir}/common.bnd" />
-
-						<bnd
-							eclipse="false"
-							exceptions="true"
-							failok="false"
-							inherit="true"
-							output="${jar.file}.jar"
-							sourcepath="."
-						>
-							<bndfiles path="bnd.bnd" />
-							<classpath>
-								<pathelement location="classes" />
-							</classpath>
-						</bnd>
+						<baseline-jar-macro
+							bndRootFile="${project.dir}/common.bnd"
+							file="bnd.bnd"
+							outputPath="."
+							rootProjectDir="${project.dir}"
+							sourcePath="."
+						/>
 					</then>
 					<else>
 						<antcall target="manifest" />
@@ -228,6 +218,18 @@
 						</manifest>
 					</then>
 				</if>
+			</then>
+		</if>
+	</target>
+
+	<target name="release" depends="jar">
+		<if>
+			<available file="bnd.bnd" />
+			<then>
+				<release-to-repo-macro
+					bndRootFile="${project.dir}/common.bnd"
+					file="${jar.file}.jar"
+				/>
 			</then>
 		</if>
 	</target>

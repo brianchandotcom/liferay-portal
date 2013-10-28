@@ -422,6 +422,51 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</then>
 	</if>
 
+	<macrodef name="baseline-jar-macro">
+		<attribute name="bndRootFile" />
+		<attribute name="file" />
+		<attribute name="outputPath" />
+		<attribute name="rootProjectDir" />
+		<attribute name="sourcePath" />
+
+		<sequential>
+			<trycatch>
+				<try>
+					<taskdef
+						classname="com.liferay.util.ant.bnd.BaselineJarTask"
+						classpathref="project.classpath"
+						name="baseline-jar"
+					/>
+				</try>
+				<catch>
+					<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
+					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
+
+					<taskdef
+						classname="com.liferay.util.ant.bnd.BaselineJarTask"
+						classpathref="project.classpath"
+						name="baseline-jar"
+					/>
+				</catch>
+			</trycatch>
+
+			<manifest-helper />
+
+			<bndexpand propertyfile="@{bndRootFile}" />
+
+			<baseline-jar
+				bndRootFile="@{bndRootFile}"
+				file="@{file}"
+				outputPath="@{outputPath}"
+				sourcePath="@{sourcePath}"
+			>
+				<classpath>
+					<pathelement location="@{sourcePath}/classes" />
+				</classpath>
+			</baseline-jar>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="manifest-helper">
 		<attribute name="analyze" default="false" />
 
@@ -450,6 +495,41 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				analyze="@{analyze}"
 				classpathref="project.classpath"
 				projectDirPropertyName="project.dir"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="release-to-repo-macro">
+		<attribute name="bndRootFile" />
+		<attribute name="file" />
+
+		<sequential>
+			<trycatch>
+				<try>
+					<taskdef
+						classname="com.liferay.util.ant.bnd.ReleaseToRepoTask"
+						classpathref="project.classpath"
+						name="release-to-repo"
+					/>
+				</try>
+				<catch>
+					<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
+					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
+
+					<taskdef
+						classname="com.liferay.util.ant.bnd.ReleaseToRepoTask"
+						classpathref="project.classpath"
+						name="release-to-repo"
+					/>
+				</catch>
+			</trycatch>
+
+			<bndexpand propertyfile="@{bndRootFile}" />
+
+			<release-to-repo
+				bndRootFile="@{bndRootFile}"
+				deployRepo="baselinerepo"
+				file="@{file}"
 			/>
 		</sequential>
 	</macrodef>

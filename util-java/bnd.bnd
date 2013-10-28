@@ -1,5 +1,6 @@
-Export-Package:\
-	com.liferay.util.*
-Import-Package: *;resolution:=optional
+Export-Package: com.liferay.util.*
+Import-Package: \
+	com.liferay.*,\
+	*;resolution:=optional
 Include-Resource: classes
 Private-Package: *

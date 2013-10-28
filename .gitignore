@@ -18,6 +18,7 @@ cobertura.ser
 /*.iws
 /*.patch
 /*.sublime-*
+/.bnd
 /.checkstyle
 /.idea
 /.settings
@@ -27,6 +28,7 @@ cobertura.ser
 /ant.install.log
 /api
 /app.server.*.properties
+/baseline-reports
 /bin
 /build.*.properties
 /dist

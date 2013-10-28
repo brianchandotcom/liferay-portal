@@ -209,6 +209,11 @@
 			<finder-column name="head" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="N_H_NotS" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="G_U_N_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
@@ -232,6 +237,24 @@
 			<finder-column name="head" />
 			<finder-column name="parentTitle" case-sensitive="false" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="N_H_P_NotS" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="parentTitle" case-sensitive="false" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="N_H_R_S" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="redirectTitle" case-sensitive="false" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="N_H_R_NotS" return-type="Collection">
+			<finder-column name="nodeId" />
+			<finder-column name="head" />
+			<finder-column name="redirectTitle" case-sensitive="false" />
+			<finder-column name="status" comparator="!=" />
 		</finder>
 		<finder name="G_N_H_P_S" return-type="Collection">
 			<finder-column name="groupId" />

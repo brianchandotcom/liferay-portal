@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.wiki.service;
+package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -26,16 +26,16 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
+ * @author Zsolt Berentey
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
+public class JournalSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	public long addBaseModel(long containerModelId) throws Exception {
@@ -53,54 +53,48 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
 		serviceContext.setCommand(Constants.ADD);
 
-		WikiPage page = WikiPageLocalServiceUtil.addPage(
-			TestPropsValues.getUserId(), containerModelId,
-			ServiceTestUtil.randomString(), WikiPageConstants.VERSION_DEFAULT,
-			ServiceTestUtil.randomString(50), ServiceTestUtil.randomString(),
-			false, WikiPageConstants.DEFAULT_FORMAT, true, StringPool.BLANK,
-			StringPool.BLANK, serviceContext);
+		JournalArticle article = JournalTestUtil.addArticle(
+			group.getGroupId(), ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), serviceContext);
 
-		return page.getResourcePrimKey();
+		return article.getResourcePrimKey();
 	}
 
 	@Override
 	public long addContainerModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+		JournalFolder folder = JournalTestUtil.addFolder(
+			group.getGroupId(), containerModelId,
+			ServiceTestUtil.randomString());
 
-		WikiNode node = WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
-
-		return node.getNodeId();
+		return folder.getFolderId();
 	}
 
 	@Override
 	public void addSubscriptionBaseModel(long baseModelId) throws Exception {
 		SubscriptionLocalServiceUtil.addSubscription(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			WikiPage.class.getName(), baseModelId);
+			JournalArticle.class.getName(), baseModelId);
 	}
 
 	@Override
 	public void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
+		long classPK = containerModelId;
+
+		if (containerModelId == DEFAULT_PARENT_CONTAINER_MODEL_ID) {
+			classPK = group.getGroupId();
+		}
+
 		SubscriptionLocalServiceUtil.addSubscription(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			WikiNode.class.getName(), containerModelId);
+			JournalFolder.class.getName(), classPK);
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionBaseModelWhenInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenInRootContainerModel() {
+	public void testSubscriptionContainerModelWhenInContainerModel() {
 	}
 
 	@Ignore
@@ -129,21 +123,20 @@ public class WikiSubscriptionTest extends BaseSubscriptionTestCase {
 
 	@Override
 	public long updateEntry(long baseModelId) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(
+				baseModelId, WorkflowConstants.STATUS_APPROVED, true);
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
-		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setCommand(Constants.UPDATE);
 
-		page = WikiPageLocalServiceUtil.updatePage(
-			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),
-			page.getVersion(), ServiceTestUtil.randomString(50),
-			ServiceTestUtil.randomString(), false,
-			WikiPageConstants.DEFAULT_FORMAT, StringPool.BLANK,
-			StringPool.BLANK, serviceContext);
+		article = JournalTestUtil.updateArticle(
+			article, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(), serviceContext);
 
-		return page.getResourcePrimKey();
+		return article.getResourcePrimKey();
 	}
 
 }

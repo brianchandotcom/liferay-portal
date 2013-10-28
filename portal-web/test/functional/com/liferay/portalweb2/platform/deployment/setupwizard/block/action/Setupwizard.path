@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTAL_ADD_SAMPLE_DATA_CHECKBOX</td>
+	<td>//input[@id='addSampleDataCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

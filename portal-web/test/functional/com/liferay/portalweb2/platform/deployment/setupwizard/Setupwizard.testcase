@@ -5,13 +5,45 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 
-		<execute macro="SetupWizard#configureDefaultPG" />
+		<execute macro="SetupWizard#configureDefaultPG">
+			<var name="setupWizardAddSampleData" value="false" />
+		</execute>
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Welcome" />
 
 		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_TITLE" />
 		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT" />
 		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT_USER_NAME" value1="${administratorFirstName} ${administratorLastName}" />
+
+		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_TITLE" />
+		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_CONTENT" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<command name="SetupWizardDefaultConfigurationAddSampleData" priority="5">
+		<var name="administratorFirstName" value="Test" />
+		<var name="administratorLastName" value="Test" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="portletName" value="Blogs" />
+
+		<execute macro="SetupWizard#configureDefaultPG" />
+
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Welcome" />
+
+		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_TITLE" />
+		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT" />
+		<execute action="PGSignin#assertTextEquals" locator-key1="PORTLET_CONTENT_USER_NAME" value1="Joe Bloggs" />
 
 		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_TITLE" />
 		<execute action="PGHelloworld#assertTextEquals" locator-key1="PORTLET_CONTENT" />

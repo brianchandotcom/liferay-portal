@@ -610,8 +610,8 @@ AUI.add(
 															event.domEvent.preventDefault();
 
 															var endsLater = true;
-															var isStartDateNotInFuture = true;
-															var isEndDateNotInFuture = true;
+															var endsInPast = true;
+															var startsInPast = true;
 
 															if (instance._isChecked('rangeDateRangeNode')) {
 																var startDatePicker = Liferay.component(instance.ns('startDateDatePicker'));
@@ -636,14 +636,15 @@ AUI.add(
 																endDate.setSeconds(0);
 																endDate.setMilliseconds(0);
 
+																endsLater = ADate.isGreater(endDate, startDate);
+
 																var today = new Date();
 
-																endsLater = ADate.isGreater(endDate, startDate);
-																isStartDateNotInFuture = ADate.isGreaterOrEqual(today, startDate);
-																isEndDateNotInFuture = ADate.isGreaterOrEqual(today, endDate);
+																endsInPast = ADate.isGreaterOrEqual(today, endDate);
+																startsInPast = ADate.isGreaterOrEqual(today, startDate);
 															}
 
-															if (endsLater && isStartDateNotInFuture && isEndDateNotInFuture) {
+															if (endsLater && endsInPast && startsInPast) {
 																instance._reloadForm();
 
 																rangeDialog.hide();
@@ -652,10 +653,10 @@ AUI.add(
 																var message;
 
 																if (!endsLater) {
-																	message = Liferay.Language.get('end-date-must-be-greater-than-start-date');																	
+																	message = Liferay.Language.get('end-date-must-be-greater-than-start-date');
 																}
-																else if (!isStartDateNotInFuture || !isEndDateNotInFuture) {
-																	message = Liferay.Language.get('selected-dates-can-not-be-in-the-future');
+																else if (!endsInPast || !startsInPast) {
+																	message = Liferay.Language.get('selected-dates-cannot-be-in-the-future');
 																}
 
 																if (instance._notice) {

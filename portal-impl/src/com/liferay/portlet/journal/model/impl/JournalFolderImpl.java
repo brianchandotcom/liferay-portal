@@ -36,9 +36,26 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException, SystemException {
-		StringBundler sb = new StringBundler();
+		List<JournalFolder> folders = new ArrayList<JournalFolder>();
 
-		buildTreePath(sb, this);
+		JournalFolder folder = this;
+
+		while (folder != null) {
+			folders.add(folder);
+
+			folder = folder.getParentFolder();
+		}
+
+		StringBundler sb = new StringBundler(folders.size() * 2 + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = folders.size() - 1; i >= 0; i--) {
+			folder = folders.get(i);
+
+			sb.append(folder.getFolderId());
+			sb.append(StringPool.SLASH);
+		}
 
 		return sb.toString();
 	}
@@ -108,20 +125,6 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 		}
 
 		return false;
-	}
-
-	protected void buildTreePath(StringBundler sb, JournalFolder folder)
-		throws PortalException, SystemException {
-
-		if (folder == null) {
-			sb.append(StringPool.SLASH);
-		}
-		else {
-			buildTreePath(sb, folder.getParentFolder());
-
-			sb.append(folder.getFolderId());
-			sb.append(StringPool.SLASH);
-		}
 	}
 
 }

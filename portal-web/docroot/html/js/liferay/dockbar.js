@@ -218,20 +218,24 @@ AUI.add(
 									instance._togglePanel(panelId);
 								}
 
-								var addControlsLink = A.one('.site-add-controls > a');
-								var editControlsLink = A.one('.page-edit-controls > a');
-								var previewControlsLink = A.one('.page-preview-controls > a');
+								var navAddControls = A.one('#' + instance._namespace + 'navAddControls');
 
-								if (addControlsLink && panelId == addControlsLink) {
-									addControlsLink.focus();
-								}
+								if (navAddControls) {
+									var layoutControl;
 
-								if (editControlsLink && panelId == editControlsLink) {
-									editControlsLink.focus();
-								}
+									if (panelId == STR_ADD_PANEL) {
+										layoutControl = navAddControls.one('.site-add-controls > a');
+									}
+									else if (panelId == STR_EDIT_LAYOUT_PANEL) {
+										layoutControl = navAddControls.one('.page-edit-controls > a');
+									}
+									else if (panelId == STR_PREVIEW_PANEL) {
+										layoutControl = navAddControls.one('.page-preview-controls > a');
+									}
 
-								if (previewControlsLink && panelId == previewControlsLink) {
-									previewControlsLink.focus();
+									if (layoutControl) {
+										layoutControl.focus();
+									}
 								}
 							},
 							'down:27'

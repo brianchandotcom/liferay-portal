@@ -23,8 +23,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 JournalArticle article = null;
 
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
-
 String type = ParamUtil.getString(request, "type");
 
 try {
@@ -144,6 +142,8 @@ catch (NoSuchArticleException nsae) {
 	</c:if>
 
 	<%
+	long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
+
 	DynamicRenderRequest dynamicRenderRequest = new DynamicRenderRequest(renderRequest);
 
 	dynamicRenderRequest.setParameter("type", type);

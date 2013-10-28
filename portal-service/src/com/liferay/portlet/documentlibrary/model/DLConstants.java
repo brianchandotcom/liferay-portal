@@ -28,35 +28,34 @@ import java.util.regex.Pattern;
  */
 public class DLConstants {
 
-	public static boolean isValidName(String fileName) {
-
-		if (Validator.isNull(fileName)) {
+	public static boolean isValidName(String filename) {
+		if (Validator.isNull(filename)) {
 			return false;
 		}
 
-		for (String word : DL_NAME_BLACKLIST) {
-			String fileNameWithoutExtension = fileName;
+		for (String blacklistName : DL_NAME_BLACKLIST) {
+			if (filename.contains(StringPool.PERIOD)) {
+				int pos = filename.lastIndexOf(StringPool.PERIOD);
 
-			if (fileName.contains(StringPool.PERIOD)) {
-				int lastPeriodPos = fileName.lastIndexOf(StringPool.PERIOD);
-				fileNameWithoutExtension = fileName.substring(0, lastPeriodPos);
+				filename = filename.substring(0, pos);
 			}
 
-			if (StringUtil.equalsIgnoreCase(fileNameWithoutExtension, word)) {
+			if (StringUtil.equalsIgnoreCase(filename, blacklistName)) {
 				return false;
 			}
 		}
 
-		Matcher matcher = DL_CHAR_BLACKLIST_REGEXP.matcher(fileName);
+		Matcher matcher = DL_CHAR_BLACKLIST_REGEXP.matcher(filename);
 
 		return matcher.matches();
 	}
-
-	private static final String[] DL_NAME_BLACKLIST = PropsUtil.get(
-			PropsKeys.DL_NAME_BLACKLIST).split(",");
 
 	private static final Pattern DL_CHAR_BLACKLIST_REGEXP =
 		Pattern.compile(
 			PropsUtil.get(PropsKeys.DL_CHAR_BLACKLIST_REGEXP),
 			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+
+	private static final String[] DL_NAME_BLACKLIST = PropsUtil.getArray(
+		PropsKeys.DL_NAME_BLACKLIST);
+
 }

@@ -283,7 +283,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 													<ul class="hide unstyled" id="<portlet:namespace />rangeLastInputs">
 														<li>
-															<aui:select cssClass="last-selector" label="" name="last">
+															<aui:select cssClass="relative-range" label="" name="last">
 																<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12") %>' value="12" />
 																<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24") %>' value="24" />
 																<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48") %>' value="48" />

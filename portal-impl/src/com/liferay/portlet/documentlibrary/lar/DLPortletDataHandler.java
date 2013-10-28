@@ -259,10 +259,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery dlFileEntryTypeActionableDynamicQuery =
+		ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
 			getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
 
-		dlFileEntryTypeActionableDynamicQuery.performCount();
+		fileEntryTypeActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery dlFileShortcutActionableDynamicQuery =
 			getDLFileShortcutActionableDynamicQuery(portletDataContext);

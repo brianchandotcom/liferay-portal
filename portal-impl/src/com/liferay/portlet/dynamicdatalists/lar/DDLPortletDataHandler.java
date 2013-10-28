@@ -50,7 +50,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	public DDLPortletDataHandler() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
-				new StagedModelType(DDLRecordSet.class));
+			new StagedModelType(DDLRecordSet.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "record-sets", true, false, null,
@@ -107,11 +107,11 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
-			ActionableDynamicQuery actionableDynamicQuery =
+			ActionableDynamicQuery recordSetActionableDynamicQuery =
 				new DDLRecordSetExportActionableDynamicQuery(
 					portletDataContext);
 
-			actionableDynamicQuery.performActions();
+			recordSetActionableDynamicQuery.performActions();
 		}
 
 		return getExportDataRootElementString(rootElement);
@@ -174,10 +174,10 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		ActionableDynamicQuery recordSetActionableDynamicQuery =
 			new DDLRecordSetExportActionableDynamicQuery(portletDataContext);
 
-		actionableDynamicQuery.performCount();
+		recordSetActionableDynamicQuery.performCount();
 
 		List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 

@@ -29,7 +29,7 @@ GroupDisplayTerms displayTerms = (GroupDisplayTerms)searchContainer.getDisplayTe
 	id="toggle_id_users_admin_group_search"
 >
 	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NAME %>" size="30" value="<%= displayTerms.getName() %>" />
+		<aui:input name="<%= displayTerms.NAME %>" size="30" value="<%= displayTerms.getName() %>" />
 
 		<aui:input name="<%= displayTerms.DESCRIPTION %>" size="30" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>

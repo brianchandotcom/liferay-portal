@@ -41,7 +41,7 @@ if (displayTerms.getParentOrganizationId() > 0) {
 	id="toggle_id_users_admin_organization_search"
 >
 	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
 		<aui:input name="<%= displayTerms.STREET %>" size="20" value="<%= displayTerms.getStreet() %>" />
 

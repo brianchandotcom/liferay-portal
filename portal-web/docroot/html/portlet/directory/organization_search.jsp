@@ -31,7 +31,7 @@ String type = displayTerms.getType();
 	id="toggle_id_directory_organization_search"
 >
 	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
+		<aui:input name="<%= displayTerms.NAME %>" size="20" type="text" value="<%= displayTerms.getName() %>" />
 
 		<aui:select name="<%= displayTerms.TYPE %>">
 			<aui:option value=""></aui:option>

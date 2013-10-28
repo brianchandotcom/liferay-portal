@@ -61,24 +61,16 @@ catch (NoSuchArticleException nsae) {
 	<c:if test="<%= article != null %>">
 
 		<%
-		String structureId = article.getStructureId();
-
-		DDMStructure ddmStructure = null;
-
-		long ddmStructureGroupId = articleGroupId;
-
-		if (Validator.isNotNull(structureId)) {
-			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(articleGroupId, PortalUtil.getClassNameId(JournalArticle.class), structureId);
+		if (Validator.isNotNull(article.getStructureId())) {
+			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId());
 
 			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
 			if (ddmStructure != null) {
-				ddmStructureGroupId = ddmStructure.getGroupId();
+				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 
-				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructureGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-
-				if (articleGroupId != ddmStructureGroupId) {
-					ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(articleGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+				if (article.getGroupId() != ddmStructure.getGroupId()) {
+					ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 				}
 			}
 

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SCOPE_MENULIST</td>
-	<td>//a[@id='_86_kldx_menu']</td>
+	<td>//a[contains(@id,'_menu')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -463,7 +463,7 @@ public class DLAppHelperLocalServiceImpl
 					if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 						trashVersionLocalService.addTrashVersion(
 							trashEntryId, DLFileVersion.class.getName(),
-							dlFileVersion.getFileVersionId(), status);
+							dlFileVersion.getFileVersionId(), status, null);
 					}
 
 					// Workflow
@@ -512,7 +512,7 @@ public class DLAppHelperLocalServiceImpl
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 					trashVersionLocalService.addTrashVersion(
 						trashEntryId, DLFolder.class.getName(),
-						dlFolder.getFolderId(), oldStatus);
+						dlFolder.getFolderId(), oldStatus, null);
 				}
 
 				// Folders, file entries, and file shortcuts

@@ -618,7 +618,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 					trashVersionLocalService.addTrashVersion(
 						trashEntryId, WikiPage.class.getName(),
-						versionPage.getPageId(), status);
+						versionPage.getPageId(), status, null);
 				}
 			}
 

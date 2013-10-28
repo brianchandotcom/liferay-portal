@@ -701,7 +701,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 				trashVersionLocalService.addTrashVersion(
 					trashEntryId, MBMessage.class.getName(),
-					message.getMessageId(), status);
+					message.getMessageId(), status, null);
 			}
 
 			// Asset

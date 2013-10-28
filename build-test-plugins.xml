@@ -46,10 +46,27 @@ plugins.includes=${plugins.includes}</echo>
 			</then>
 		</if>
 
-		<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
-			<target name="clean" />
-			<target name="deploy" />
-		</ant>
+		<if>
+			<equals arg1="${release.plugin}" arg2="true" />
+			<then>
+				<for list="${plugins.includes}" param="plugin.includes">
+					<sequential>
+						<copy todir="${liferay.home}/deploy">
+							<fileset
+								dir="${release.dir}/${release.plugins.dir}"
+								includes="@{plugin.includes}*.war"
+							/>
+						</copy>
+					</sequential>
+				</for>
+			</then>
+			<else>
+				<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false">
+					<target name="clean" />
+					<target name="deploy" />
+				</ant>
+			</else>
+		</if>
 
 		<delete dir="${lp.plugins.dir}/dist" />
 		<mkdir dir="${lp.plugins.dir}/dist" />

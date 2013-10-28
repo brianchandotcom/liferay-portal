@@ -60,17 +60,17 @@
 				<%
 				}
 				%>
-
-				<c:if test="<%= hasAddLayoutSetPrototypePermission %>">
-					<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>" varImpl="manageSiteTemplateURL">
-						<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
-						<portlet:param name="redirect" value="<%= viewSitesURL %>" />
-						<portlet:param name="backURL" value="<%= viewSitesURL %>" />
-					</liferay-portlet:renderURL>
-
-					<aui:nav-item href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
-				</c:if>
 			</aui:nav-item>
+
+			<c:if test="<%= hasAddLayoutSetPrototypePermission %>">
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUT_SET_PROTOTYPE %>" varImpl="manageSiteTemplateURL">
+					<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
+					<portlet:param name="redirect" value="<%= viewSitesURL %>" />
+					<portlet:param name="backURL" value="<%= viewSitesURL %>" />
+				</liferay-portlet:renderURL>
+
+				<aui:nav-item href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
+			</c:if>
 		</c:otherwise>
 	</c:choose>
 </c:if>

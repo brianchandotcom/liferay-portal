@@ -60,6 +60,7 @@
 				<%
 				}
 				%>
+
 			</aui:nav-item>
 
 			<c:if test="<%= hasAddLayoutSetPrototypePermission %>">

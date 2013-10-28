@@ -95,6 +95,10 @@
 	height: 1%;
 }
 
+.ie8 .lfr-portrait-preview {
+	float: left;
+}
+
 .gecko .lfr-portrait-editor {
 	display: table-column;
 }

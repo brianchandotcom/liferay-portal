@@ -72,9 +72,8 @@ public class ViewAction extends PortletAction {
 				throw new NoSuchNodeException();
 			}
 
-			WikiPage page = null;
-
-			page = WikiPageServiceUtil.fetchPage(nodeId, title, version);
+			WikiPage page = WikiPageServiceUtil.fetchPage(
+				nodeId, title, version);
 
 			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(

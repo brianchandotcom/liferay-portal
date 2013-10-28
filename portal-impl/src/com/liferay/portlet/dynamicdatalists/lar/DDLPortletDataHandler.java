@@ -152,7 +152,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
 			Element recordSetsElement =
 				portletDataContext.getImportDataGroupElement(
 					DDLRecordSet.class);

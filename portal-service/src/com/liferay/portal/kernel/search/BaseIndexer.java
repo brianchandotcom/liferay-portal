@@ -806,10 +806,10 @@ public abstract class BaseIndexer implements Indexer {
 			String[] titlesArray = titles.toArray(new String[0]);
 
 			if (locale.equals(defaultLocale)) {
-				document.addKeyword(field, titlesArray);
+				document.addText(field, titlesArray);
 			}
 
-			document.addKeyword(
+			document.addText(
 				field.concat(StringPool.UNDERLINE).concat(locale.toString()),
 				titlesArray);
 		}

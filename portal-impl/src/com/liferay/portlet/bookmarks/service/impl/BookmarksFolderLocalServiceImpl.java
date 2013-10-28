@@ -739,7 +739,7 @@ public class BookmarksFolderLocalServiceImpl
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 					trashVersionLocalService.addTrashVersion(
 						trashEntryId, BookmarksEntry.class.getName(),
-						entry.getEntryId(), status);
+						entry.getEntryId(), status, null);
 				}
 
 				// Asset
@@ -775,7 +775,7 @@ public class BookmarksFolderLocalServiceImpl
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 					trashVersionLocalService.addTrashVersion(
 						trashEntryId, BookmarksEntry.class.getName(),
-						folder.getFolderId(), oldStatus);
+						folder.getFolderId(), oldStatus, null);
 				}
 
 				// Folders and entries

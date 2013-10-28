@@ -3807,6 +3807,7 @@
 			<basic name="entryId" />
 			<basic name="classNameId" />
 			<basic name="classPK" />
+			<basic name="typeSettings" />
 			<basic name="status" />
 			<transient name="className" />
 			<transient name="modelAttributes" />
@@ -4686,7 +4687,9 @@
 	</entity>
 	<entity class="com.liferay.portlet.trash.model.impl.TrashVersionImpl" name="TrashVersion">
 		<table name="TrashVersion" />
-		<attributes />
+		<attributes>
+			<transient name="typeSettingsProperties" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiNodeImpl" name="WikiNode">
 		<table name="WikiNode" />

@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -35,7 +36,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{versionId=");
 		sb.append(versionId);
@@ -45,6 +46,8 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -60,6 +63,14 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		trashVersionImpl.setEntryId(entryId);
 		trashVersionImpl.setClassNameId(classNameId);
 		trashVersionImpl.setClassPK(classPK);
+
+		if (typeSettings == null) {
+			trashVersionImpl.setTypeSettings(StringPool.BLANK);
+		}
+		else {
+			trashVersionImpl.setTypeSettings(typeSettings);
+		}
+
 		trashVersionImpl.setStatus(status);
 
 		trashVersionImpl.resetOriginalValues();
@@ -73,6 +84,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		entryId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
+		typeSettings = objectInput.readUTF();
 		status = objectInput.readInt();
 	}
 
@@ -83,6 +95,14 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
+
+		if (typeSettings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(typeSettings);
+		}
+
 		objectOutput.writeInt(status);
 	}
 
@@ -90,5 +110,6 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	public long entryId;
 	public long classNameId;
 	public long classPK;
+	public String typeSettings;
 	public int status;
 }

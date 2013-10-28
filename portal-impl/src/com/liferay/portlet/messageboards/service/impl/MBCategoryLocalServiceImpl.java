@@ -913,7 +913,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 					trashVersionLocalService.addTrashVersion(
 						trashEntryId, MBThread.class.getName(),
-						thread.getThreadId(), oldStatus);
+						thread.getThreadId(), oldStatus, null);
 				}
 
 				// Threads
@@ -949,7 +949,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 					trashVersionLocalService.addTrashVersion(
 						trashEntryId, MBCategory.class.getName(),
-						category.getCategoryId(), oldStatus);
+						category.getCategoryId(), oldStatus, null);
 				}
 
 				// Categories and threads

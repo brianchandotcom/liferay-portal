@@ -2254,6 +2254,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		trashVersionImpl.setEntryId(trashVersion.getEntryId());
 		trashVersionImpl.setClassNameId(trashVersion.getClassNameId());
 		trashVersionImpl.setClassPK(trashVersion.getClassPK());
+		trashVersionImpl.setTypeSettings(trashVersion.getTypeSettings());
 		trashVersionImpl.setStatus(trashVersion.getStatus());
 
 		return trashVersionImpl;

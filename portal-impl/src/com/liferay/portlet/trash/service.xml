@@ -71,6 +71,7 @@
 		<column name="entryId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="typeSettings" type="String" />
 		<column name="status" type="int" />
 
 		<!-- Finder methods -->

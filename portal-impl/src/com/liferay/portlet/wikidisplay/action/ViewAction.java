@@ -72,12 +72,10 @@ public class ViewAction extends PortletAction {
 				throw new NoSuchNodeException();
 			}
 
-			WikiPage page = null;
+			WikiPage page = WikiPageServiceUtil.fetchPage(
+				nodeId, title, version);
 
-			try {
-				page = WikiPageServiceUtil.getPage(nodeId, title, version);
-			}
-			catch (NoSuchPageException nspe) {
+			if ((page == null) || page.isInTrash()) {
 				page = WikiPageServiceUtil.getPage(
 					nodeId, WikiPageConstants.FRONT_PAGE);
 			}

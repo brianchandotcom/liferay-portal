@@ -341,6 +341,14 @@ public class UpdateLayoutAction extends JSONAction {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
+		// This operation is actually also an ADD operation and so there can be
+		// no logic which prevents it from executing. Place optional logic later
+		// in the method.
+
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
+
 		String[] portletData = StringUtil.split(
 			ParamUtil.getString(request, "portletData"));
 
@@ -362,10 +370,6 @@ public class UpdateLayoutAction extends JSONAction {
 
 		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 			classPK);
-
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletId);
 
 		assetRenderer.setAddToPagePreferences(
 			portletSetup, portletId, themeDisplay);

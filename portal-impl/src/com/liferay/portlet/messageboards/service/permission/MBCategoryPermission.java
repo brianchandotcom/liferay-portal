@@ -97,6 +97,12 @@ public class MBCategoryPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		if (MBBanLocalServiceUtil.hasBan(
+				category.getGroupId(), permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		if (actionId.equals(ActionKeys.ADD_CATEGORY)) {
 			actionId = ActionKeys.ADD_SUBCATEGORY;
 		}
@@ -108,12 +114,6 @@ public class MBCategoryPermission {
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
-		}
-
-		if (MBBanLocalServiceUtil.hasBan(
-				category.getGroupId(), permissionChecker.getUserId())) {
-
-			return false;
 		}
 
 		if (actionId.equals(ActionKeys.VIEW) &&

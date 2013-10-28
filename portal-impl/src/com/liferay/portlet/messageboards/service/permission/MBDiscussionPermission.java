@@ -96,6 +96,12 @@ public class MBDiscussionPermission {
 			String className, long classPK, long ownerId, String actionId)
 		throws SystemException {
 
+		if (MBBanLocalServiceUtil.hasBan(
+				groupId, permissionChecker.getUserId())) {
+
+			return false;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, groupId, className, classPK,
 			PortletKeys.MESSAGE_BOARDS, actionId);
@@ -109,12 +115,6 @@ public class MBDiscussionPermission {
 
 		if (!resourceActions.contains(actionId)) {
 			return true;
-		}
-
-		if (MBBanLocalServiceUtil.hasBan(
-				groupId, permissionChecker.getUserId())) {
-
-			return false;
 		}
 
 		if ((ownerId > 0) &&

@@ -115,32 +115,29 @@ public class JournalArticlePermission {
 			}
 		}
 
-		if ((article.getFolderId() !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
-			!actionId.equals(ActionKeys.EXPIRE)) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
-			try {
-				JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-					article.getFolderId());
+			long folderId = article.getFolderId();
 
-				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-					!JournalFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.ACCESS) &&
-					!JournalFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.VIEW)) {
+			if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				try {
+					JournalFolder folder =
+						JournalFolderLocalServiceUtil.getFolder(
+							folderId);
 
-					return false;
+					if (!JournalFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.ACCESS) &&
+						!JournalFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.VIEW)) {
+
+						return false;
+					}
 				}
-
-				if (JournalFolderPermission.contains(
-						permissionChecker, folder, actionId)) {
-
-					return true;
-				}
-			}
-			catch (NoSuchFolderException nsfe) {
-				if (!article.isInTrash()) {
-					throw nsfe;
+				catch (NoSuchFolderException nsfe) {
+					if (!article.isInTrash()) {
+						throw nsfe;
+					}
 				}
 			}
 		}

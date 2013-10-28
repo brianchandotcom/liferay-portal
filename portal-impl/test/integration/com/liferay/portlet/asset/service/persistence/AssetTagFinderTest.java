@@ -40,6 +40,7 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
@@ -162,7 +163,8 @@ public class AssetTagFinderTest {
 		Group siteGroup = scopeGroup.getParentGroup();
 
 		String assetTagName = ServiceTestUtil.randomString();
-		String[] assetTagProperties = new String[] {"key_TAG_PROPERTY_value"};
+		String[] assetTagProperties = new String[] {
+			"key" + AssetTagConstants.TAG_PROPERTY_SEPARATOR + "value"};
 
 		int initialScopeGroupAssetTagsCount =
 			AssetTagFinderUtil.filterCountByG_N_P(
@@ -306,7 +308,8 @@ public class AssetTagFinderTest {
 		Group siteGroup = scopeGroup.getParentGroup();
 
 		String assetTagName = ServiceTestUtil.randomString();
-		String[] assetTagProperties = new String[] {"key_TAG_PROPERTY_value"};
+		String[] assetTagProperties = new String[] {
+			"key" + AssetTagConstants.TAG_PROPERTY_SEPARATOR + "value"};
 
 		List<AssetTag> initialScopeGroupAssetTags =
 			AssetTagFinderUtil.filterFindByG_N_P(

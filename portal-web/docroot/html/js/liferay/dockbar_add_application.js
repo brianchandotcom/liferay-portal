@@ -8,9 +8,9 @@ AUI.add(
 
 		var DATA_PORTLET_ID = 'data-portlet-id';
 
-		var SELECTOR_BUTTON = '.btn';
-
 		var SELECTOR_ADD_CONTENT_ITEM = '.add-content-item';
+
+		var SELECTOR_BUTTON = '.btn';
 
 		var SELECTOR_CONTENT_ITEM = '.lfr-content-item';
 
@@ -62,7 +62,7 @@ AUI.add(
 						var portlet = event.currentTarget;
 
 						if (event.type === STR_KEY) {
-							portlet = event.currentTarget.one(SELECTOR_ADD_CONTENT_ITEM);
+							portlet = portlet.one(SELECTOR_ADD_CONTENT_ITEM);
 						}
 
 						instance.addPortlet(portlet);

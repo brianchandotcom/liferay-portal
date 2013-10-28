@@ -33,19 +33,7 @@ AUI.add(
 					},
 
 					descendants: {
-						getter: function() {
-							var instance = this;
-
-							var children = instance.get(STR_CHILDREN);
-
-							var result = instance.get(STR_HOST).get(STR_HEADER);
-
-							if (children) {
-								result += ', ' + children + ':visible';
-							}
-
-							return result;
-						}
+						getter: '_getDescendants'
 					},
 
 					keys: {
@@ -105,6 +93,20 @@ AUI.add(
 						header.focus();
 
 						instance._focusManager.set('activeDescendant', header);
+					},
+
+					_getDescendants: function() {
+						var instance = this;
+
+						var result = instance.get(STR_HOST).get(STR_HEADER);
+
+						var children = instance.get(STR_CHILDREN);
+
+						if (children) {
+							result += ', ' + children + ':visible';
+						}
+
+						return result;
 					},
 
 					_headerEventHandler: function(event) {

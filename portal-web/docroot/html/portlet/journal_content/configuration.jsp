@@ -62,7 +62,7 @@ catch (NoSuchArticleException nsae) {
 
 		<%
 		if (Validator.isNotNull(article.getStructureId())) {
-			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId());
+			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
 
 			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 

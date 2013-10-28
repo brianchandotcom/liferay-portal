@@ -117,14 +117,14 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		</c:if>
 	</c:if>
 
-	<aui:nav collapsible="<%= true %>" cssClass="nav-navigation" icon="reorder" id="navSiteNavigation">
-		<c:if test="<%= group.isControlPanel() %>">
+	<%
+	String controlPanelCategory = themeDisplay.getControlPanelCategory();
+	%>
 
-			<%
-			String controlPanelCategory = themeDisplay.getControlPanelCategory();
-			%>
+	<c:if test="<%= !(group.isControlPanel() && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 
-			<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+		<aui:nav collapsible="<%= true %>" cssClass="nav-navigation" icon="reorder" id="navSiteNavigation">
+			<c:if test="<%= group.isControlPanel() && !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 
 				<%
 				String[] categories = PortletCategoryKeys.ALL;
@@ -162,8 +162,8 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				%>
 
 			</c:if>
-		</c:if>
-	</aui:nav>
+		</aui:nav>
+	</c:if>
 
 	<%
 	boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(request, PortalMessages.KEY_ANIMATION), true);

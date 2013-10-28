@@ -14,10 +14,6 @@
  */
 --%>
 
-<%
-String controlPanelCategory = themeDisplay.getControlPanelCategory();
-%>
-
 <c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || (Validator.isNotNull(controlPanelCategory) && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE))) %>">
 	<aui:nav-item cssClass="admin-links" dropdown="<%= true %>" id="adminLinks" label="admin">
 		<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">

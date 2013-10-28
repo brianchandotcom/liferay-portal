@@ -53,7 +53,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.lucene.KeywordsUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -245,7 +244,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			Query query = queryParser.parse(value);
 
-			try {
 				if (like && (query instanceof TermQuery)) {
 
 					// LUCENE-89
@@ -261,10 +259,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 					query.setBoost(termQuery.getBoost());
 				}
-			}
-			catch (Exception e) {
-				query = queryParser.parse(KeywordsUtil.escape(value));
-			}
 
 			BooleanClause.Occur occur = null;
 

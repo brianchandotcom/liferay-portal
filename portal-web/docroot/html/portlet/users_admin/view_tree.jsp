@@ -95,7 +95,7 @@ if (organization != null) {
 
 		<aui:nav-bar-search cssClass="pull-right">
 			<div class="form-search">
-				<liferay-ui:input-search />
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" />
 			</div>
 		</aui:nav-bar-search>
 	</aui:nav-bar>

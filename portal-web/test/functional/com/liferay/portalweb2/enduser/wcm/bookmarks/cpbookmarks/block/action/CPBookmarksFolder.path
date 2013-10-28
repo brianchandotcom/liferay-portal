@@ -77,17 +77,17 @@
 <!--FOLDER_MENU-->
 <tr>
 	<td>FOLDER_MENU_EDIT</td>
-	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Edit')]</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_SUBFOLDER</td>
-	<td>//ul[@id='_28_kldx_menu']/li/a[contains(.,'Add Subfolder')]</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Subfolder')]</td>
 	<td></td>
 </tr>
 </tbody>

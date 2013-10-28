@@ -42,6 +42,23 @@
 			</elseif>
 			<else>
 				<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+				<var name="i" value="1" />
+
+				<while>
+					<or>
+						<condition action="CPUsergroups#isTextNotEqual" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+						<equals arg1="${i}" arg2="5" />
+					</or>
+					<then>
+						<execute action="CPUsergroups#refresh" />
+
+						<echo message="Waiting for ${userGroupName} to load. Attempt ${i}" />
+
+						<var name="i" value="${i?increment()}" />
+					</then>
+				</while>
+
 				<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 			</else>
 		</if>

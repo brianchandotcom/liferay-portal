@@ -11,19 +11,7 @@ AUI.add(
 
 		var EVENT_KEY = 'key';
 
-		var KEY_PRESS_DOWN_ARROW = 'down:40';
-
-		var KEY_PRESS_LEFT_ARROW = 'down:37';
-
-		var KEY_PRESS_RIGHT_ARROW = 'down:39';
-
-		var KEY_PRESS_TAB = 'down:9';
-
-		var KEY_PRESS_UP_ARROW = 'down:38';
-
 		var NAME = 'liferaydockbarkeyboardinteraction';
-
-		var SELECTOR_A = 'a';
 
 		var SELECTOR_DOCKBAR_ITEM = '.dockbar-item';
 
@@ -46,8 +34,7 @@ AUI.add(
 						instance._host = instance.get('host');
 
 						instance._initHostFocusManager();
-
-						instance._initDockbarMenuItemHandlers();
+						instance._initMenuItemHandlers();
 					},
 
 					_handleDownKeyPress: function(event) {
@@ -55,77 +42,48 @@ AUI.add(
 
 						event.preventDefault();
 
-						var currentTarget = event.currentTarget;
+						instance._host.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
 
-						var host = instance._host;
+						var menuItem = event.currentTarget.ancestor(SELECTOR_DOCKBAR_ITEM);
 
-						var liDockbarMenuItem = currentTarget.ancestor(SELECTOR_DOCKBAR_ITEM);
-
-						host.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
-
-						if (liDockbarMenuItem.hasClass(CSS_DROPDOWN)) {
-							liDockbarMenuItem.addClass(CSS_OPEN);
+						if (menuItem.hasClass(CSS_DROPDOWN)) {
+							menuItem.addClass(CSS_OPEN);
 						}
 					},
 
-					_handleLeftKeyPress: function(event) {
+					_handleLeftRightKeyPress: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
+						var menuItems = instance._host.all(SELECTOR_DOCKBAR_ITEM);
 
-						var currentDockbarMenuItem = currentTarget.ancestor(SELECTOR_DOCKBAR_ITEM);
+						menuItems.removeClass(CSS_OPEN);
 
-						var host = instance._host;
+						var lastItemIndex = menuItems.size() - 1;
 
-						var hostFocusManager = instance.hostFocusManager;
+						var increment = 1;
 
-						var dockbarMenuItems = host.all(SELECTOR_DOCKBAR_ITEM);
-
-						var dockbarMenuItemsPosition = dockbarMenuItems.indexOf(currentDockbarMenuItem);
-
-						host.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
-
-						if (dockbarMenuItemsPosition <= 0) {
-							var lastItemIndex = dockbarMenuItems.size() - 1;
-
-							hostFocusManager.focus(dockbarMenuItems.item(lastItemIndex).one(SELECTOR_A));
+						if (event.isKey('LEFT')) {
+							increment = -1;
 						}
-						else {
-							hostFocusManager.focus(dockbarMenuItems.item(dockbarMenuItemsPosition - 1).one(SELECTOR_A));
+
+						var currentMenuItem = event.currentTarget.ancestor(SELECTOR_DOCKBAR_ITEM);
+
+						var nextMenuItemPos = menuItems.indexOf(currentMenuItem) + increment;
+
+						if (nextMenuItemPos < 0) {
+							nextMenuItemPos = lastItemIndex;
 						}
-					},
-
-					_handleRightKeyPress: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						var currentDockbarMenuItem = currentTarget.ancestor(SELECTOR_DOCKBAR_ITEM);
-
-						var host = instance._host;
-
-						var hostFocusManager = instance.hostFocusManager;
-
-						var dockbarMenuItems = host.all(SELECTOR_DOCKBAR_ITEM);
-
-						var dockbarMenuItemsPosition = dockbarMenuItems.indexOf(currentDockbarMenuItem);
-
-						var lastItemIndex = dockbarMenuItems.size() - 1;
-
-						host.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
-
-						if (dockbarMenuItemsPosition >= lastItemIndex) {
-							hostFocusManager.focus(dockbarMenuItems.item(0).one(SELECTOR_A));
+						else if (nextMenuItemPos > lastItemIndex) {
+							nextMenuItemPos = 0;
 						}
-						else {
-							hostFocusManager.focus(dockbarMenuItems.item(dockbarMenuItemsPosition + 1).one(SELECTOR_A));
-						}
+
+						var focusTarget = menuItems.item(nextMenuItemPos).one('a');
+
+						instance.hostFocusManager.focus(focusTarget);
 					},
 
 					_handleTabKeyPress: function(event) {
-						var currentTarget = event.currentTarget;
-
-						currentTarget.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
+						event.currentTarget.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
 					},
 
 					_handleUpKeyPress: function(event) {
@@ -133,36 +91,42 @@ AUI.add(
 
 						event.preventDefault();
 
-						var host = instance._host;
+						instance._host.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
 
 						var hostFocusManager = instance.hostFocusManager;
 
-						var descendantsMap = hostFocusManager._descendantsMap;
-
 						var focusedCurrent = hostFocusManager.get(ACTIVE_DESCENDANT) - 1;
-
-						host.all(SELECTOR_DOCKBAR_ITEM).removeClass(CSS_OPEN);
 
 						if (focusedCurrent < 0) {
 							focusedCurrent = hostFocusManager._lastNodeIndex;
 						}
 
 						AObject.some(
-							descendantsMap,
+							hostFocusManager._descendantsMap,
 							function(item, index, collection) {
-								var descendant = index;
+								if (item === focusedCurrent) {
+									var menuItem = A.one('#' + index).ancestor(SELECTOR_DOCKBAR_ITEM);
 
-								if (descendantsMap[descendant] === focusedCurrent) {
-									var liDockbarMenuItem = A.one('#' + descendant).ancestor(SELECTOR_DOCKBAR_ITEM);
-
-									if (liDockbarMenuItem.hasClass(CSS_DROPDOWN)) {
-										A.one('#' + descendant).ancestor(SELECTOR_DOCKBAR_ITEM).addClass(CSS_OPEN);
+									if (menuItem.hasClass(CSS_DROPDOWN)) {
+										menuItem.addClass(CSS_OPEN);
 									}
 
 									return true;
 								}
 							}
 						);
+					},
+
+					_handleUpDownKeyPress: function(event) {
+						var instance = this;
+
+						var method = '_handleDownKeyPress';
+
+						if (event.isKey('UP')) {
+							method = '_handleUpKeyPress';
+						}
+
+						instance[method](event);
 					},
 
 					_initHostFocusManager: function() {
@@ -175,8 +139,8 @@ AUI.add(
 							{
 								descendants: SELECTOR_DOCKBAR_ITEM_LINK,
 								keys: {
-									next: KEY_PRESS_DOWN_ARROW,
-									previous: KEY_PRESS_UP_ARROW
+									next: 'down:40',
+									previous: 'down:38'
 								}
 							}
 						);
@@ -195,20 +159,15 @@ AUI.add(
 						instance.hostFocusManager = host.focusManager;
 					},
 
-					_initDockbarMenuItemHandlers: function() {
+					_initMenuItemHandlers: function() {
 						var instance = this;
 
 						var host = instance._host;
 
-						host.delegate(EVENT_KEY, instance._handleDownKeyPress, KEY_PRESS_DOWN_ARROW, SELECTOR_DOCKBAR_ITEM_FIRST_LINK, instance);
+						host.delegate(EVENT_KEY, instance._handleUpDownKeyPress, 'down:38,40', SELECTOR_DOCKBAR_ITEM_FIRST_LINK, instance);
+						host.delegate(EVENT_KEY, instance._handleLeftRightKeyPress, 'down:37,39', SELECTOR_DOCKBAR_ITEM_LINK, instance);
 
-						host.delegate(EVENT_KEY, instance._handleLeftKeyPress, KEY_PRESS_LEFT_ARROW, SELECTOR_DOCKBAR_ITEM_LINK, instance);
-
-						host.delegate(EVENT_KEY, instance._handleRightKeyPress, KEY_PRESS_RIGHT_ARROW, SELECTOR_DOCKBAR_ITEM_LINK, instance);
-
-						host.delegate(EVENT_KEY, instance._handleTabKeyPress, KEY_PRESS_TAB);
-
-						host.delegate(EVENT_KEY, instance._handleUpKeyPress, KEY_PRESS_UP_ARROW, SELECTOR_DOCKBAR_ITEM_FIRST_LINK, instance);
+						host.delegate(EVENT_KEY, instance._handleTabKeyPress, 'down:9');
 					}
 				}
 			}

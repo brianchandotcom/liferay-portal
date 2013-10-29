@@ -324,26 +324,21 @@ AUI.add(
 				var instance = this;
 
 				var dockBar = instance.dockBar;
-				var brand = dockBar.one('.brand');
+
 				var navAccountControls = dockBar.one(SELECTOR_NAV_ACCOUNT_CONTROLS);
 				var navAddControls = dockBar.one(SELECTOR_NAV_ADD_CONTROLS);
-				var stagingBar = navAccountControls.one('.staging-bar');
-
-				var splitMode = BODY.hasClass('dockbar-split');
 
 				if (navAccountControls) {
+					var stagingBar = navAccountControls.one('.staging-bar');
+
 					if (stagingBar) {
 						stagingBar.all('> li').addClass(CSS_DOCKBAR_ITEM);
 					}
 
-					navAccountControls.all('> li > a').each(
-						function(item, index, collection) {
-							item.ancestor().addClass(CSS_DOCKBAR_ITEM);
-						}
-					);
+					navAccountControls.all('> li > a').get('parentNode').addClass(CSS_DOCKBAR_ITEM);
 				}
 
-				if (splitMode) {
+				if (BODY.hasClass('dockbar-split')) {
 					if (navAccountControls) {
 						navAccountControls.plug(Liferay.DockbarKeyboardInteraction);
 					}
@@ -373,35 +368,29 @@ AUI.add(
 						);
 					}
 				}
-				else {
-					if (navAddControls) {
-						if (brand) {
-							brand.all('a').each(
-								function(item, index, collection) {
-									item.ancestor().addClass(CSS_DOCKBAR_ITEM);
-								}
-							);
-						}
+				else if (navAddControls) {
+					var brand = dockBar.one('.brand');
 
-						navAddControls.all('> li').addClass(CSS_DOCKBAR_ITEM);
-
-						dockBar.plug(Liferay.DockbarKeyboardInteraction);
+					if (brand) {
+						brand.all('a').get('parentNode').addClass(CSS_DOCKBAR_ITEM);
 					}
+
+					navAddControls.all('> li').addClass(CSS_DOCKBAR_ITEM);
+
+					dockBar.plug(Liferay.DockbarKeyboardInteraction);
 				}
 
 				if (type === 'focus') {
 					var navAccountControlsAncestor = target.ancestor(SELECTOR_NAV_ACCOUNT_CONTROLS);
 
-					if (navAccountControlsAncestor) {
-						var navLink = navAccountControlsAncestor.one('li a');
+					var navLink = target;
 
-						navLink.blur();
-						navLink.focus();
+					if (navAccountControlsAncestor) {
+						navLink = navAccountControlsAncestor.one('li a');
 					}
-					else {
-						target.blur();
-						target.focus();
-					}
+
+					navLink.blur();
+					navLink.focus();
 				}
 			},
 			['liferay-dockbar-keyboard-interaction', 'node-focusmanager']

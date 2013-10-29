@@ -814,7 +814,7 @@ public class JournalFolderLocalServiceImpl
 
 						trashVersionLocalService.addTrashVersion(
 							trashEntryId, JournalArticle.class.getName(),
-							article.getId(), status, null);
+							curArticle.getId(), status, null);
 					}
 
 					// Workflow
@@ -935,7 +935,7 @@ public class JournalFolderLocalServiceImpl
 					trashVersion =
 						trashVersionLocalService.fetchVersion(
 							trashEntryId, JournalArticle.class.getName(),
-							article.getId());
+							curArticle.getId());
 
 					int curArticleOldStatus = WorkflowConstants.STATUS_APPROVED;
 

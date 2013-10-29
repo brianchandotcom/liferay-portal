@@ -1092,8 +1092,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				continue;
 			}
 
-			if (!expandoMappings.containsKey(name) ||
-				_ldapUserIgnoreAttributes.contains(name)) {
+			if (expandoMappings.containsKey(name) &&
+				!_ldapUserIgnoreAttributes.contains(name)) {
 
 				int type = expandoBridge.getAttributeType(name);
 

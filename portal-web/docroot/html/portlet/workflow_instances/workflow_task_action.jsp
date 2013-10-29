@@ -106,6 +106,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 			{
 				dialog: {
 					bodyContent: form,
+					height: 420,
 					toolbars: {
 						footer: [
 							{
@@ -125,7 +126,8 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 								}
 							}
 						]
-					}
+					},
+					width: 250
 				},
 				title: title
 			}

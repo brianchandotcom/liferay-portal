@@ -134,6 +134,29 @@ public class WikiPagePermission {
 			return hasPermission.booleanValue();
 		}
 
+		if (page.isDraft()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!contains(permissionChecker, page, ActionKeys.UPDATE)) {
+
+				return false;
+			}
+
+			if (actionId.equals(ActionKeys.DELETE) &&
+				(page.getStatusByUserId() == permissionChecker.getUserId())) {
+
+				return true;
+			}
+		}
+		else if (page.isPending()) {
+			hasPermission = WorkflowPermissionUtil.hasPermission(
+				permissionChecker, page.getGroupId(), WikiPage.class.getName(),
+				page.getResourcePrimKey(), actionId);
+
+			if ((hasPermission != null) && hasPermission.booleanValue()) {
+				return true;
+			}
+		}
+
 		if (actionId.equals(ActionKeys.VIEW)) {
 			WikiPage redirectPage = page.getRedirectPage();
 
@@ -160,22 +183,6 @@ public class WikiPagePermission {
 
 				return true;
 			}
-		}
-
-		if (page.isPending()) {
-			hasPermission = WorkflowPermissionUtil.hasPermission(
-				permissionChecker, page.getGroupId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), actionId);
-
-			if ((hasPermission != null) && hasPermission.booleanValue()) {
-				return true;
-			}
-		}
-
-		if (page.isDraft() && actionId.equals(ActionKeys.DELETE) &&
-			(page.getStatusByUserId() == permissionChecker.getUserId())) {
-
-			return true;
 		}
 
 		return _hasPermission(permissionChecker, page, actionId);

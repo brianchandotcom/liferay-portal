@@ -50,7 +50,7 @@
 		Group groupType = layout.getGroup();
 		%>
 
-		<c:if test="<%= (liveGroup != null) && (stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING)) %>">
+		<c:if test="<%= (liveGroup != null) && stagingGroup.isStaged() && GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
 
 			<%
 			if (groupId == 0) {

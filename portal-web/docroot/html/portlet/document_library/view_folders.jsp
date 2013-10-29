@@ -234,6 +234,7 @@ else {
 						request.setAttribute("view_entries.jsp-folder", mountFolder);
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(mountFolder.getFolderId()));
 						request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(mountFolder.getRepositoryId()));
+						request.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == mountFolder.getFolderId()));
 
 						try {
 					%>

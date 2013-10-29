@@ -1402,38 +1402,57 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 
-		if (!element.hasContent() &&
-			!attributeMap.containsKey("locator-key") &&
-			!attributeMap.containsKey("path") &&
-			!attributeMap.containsKey("value")) {
+		if (attributeMap.containsKey("locator")) {
+			String[] disallowedAttributes = {"locator-key", "path", "value"};
 
+			for (String disallowedAttribute : disallowedAttributes) {
+				if (attributeMap.containsKey(disallowedAttribute)) {
+					throwValidationException(
+						1005, fileName, element, disallowedAttribute);
+				}
+			}
+		}
+		else if (attributeMap.containsKey("locator-key") &&
+				 attributeMap.containsKey("path")) {
+
+			if (attributeMap.containsKey("value")) {
+				throwValidationException(1005, fileName, element, "value");
+			}
+		}
+		else if (attributeMap.containsKey("locator-key")) {
 			throwValidationException(
-				1004, fileName, element, new String [] {"value"});
+				1004, fileName, element, new String [] {"path"});
+		}
+		else if (attributeMap.containsKey("path")) {
+			throwValidationException(
+				1004, fileName, element, new String [] {"locator-key"});
 		}
 
-		if (!attributeMap.containsKey("value")) {
-			String locatorKeyValue = attributeMap.get("locator-key");
-			String pathValue = attributeMap.get("path");
+		String varText = element.getText();
 
-			if (Validator.isNull(locatorKeyValue) &&
-				Validator.isNotNull(pathValue)) {
+		if (attributeMap.containsKey("locator") ||
+			attributeMap.containsKey("locator-key") ||
+			attributeMap.containsKey("path")) {
 
-				throwValidationException(
-					1004, fileName, element, new String [] {"locator-key"});
+			if (!Validator.isNull(varText)) {
+				throwValidationException(1005, fileName, element, "value");
 			}
+		}
 
-			if (Validator.isNotNull(locatorKeyValue) &&
-				Validator.isNull(pathValue)) {
+		if (!attributeMap.containsKey("value") && Validator.isNull(varText)) {
+			if (!attributeMap.containsKey("locator") &&
+				!attributeMap.containsKey("locator-key") &&
+				!attributeMap.containsKey("path")) {
 
 				throwValidationException(
-					1004, fileName, element, new String [] {"path"});
+					1004, fileName, element, new String [] {"value"});
 			}
 		}
 		else {
 			String varValue = attributeMap.get("value");
 
-			if (element.hasContent()) {
-				varValue = element.getText();
+			if (Validator.isNull(varValue)) {
+				varValue = varText;
 			}
 
 			Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
@@ -1492,7 +1511,10 @@ public class SeleniumBuilderFileUtil {
 			"arg1", "arg2", "message", "string", "substring", "value"
 		});
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
-		new String[] {"line-number", "locator-key", "name", "path", "value"});
+		new String[] {
+			"attribute", "line-number", "locator", "locator-key", "name",
+			"path", "value"
+		});
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {
 			"getFirstNumber", "increment", "length", "lowercase", "replace"

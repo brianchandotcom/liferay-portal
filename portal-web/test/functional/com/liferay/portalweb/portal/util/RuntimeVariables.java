@@ -34,6 +34,37 @@ import java.util.regex.Pattern;
  */
 public class RuntimeVariables {
 
+	public static String evaluateLocator(
+		String locator, Map<String, String> context)
+	throws Exception {
+
+		String locatorValue = locator;
+
+		if (locatorValue.contains("${") && locatorValue.contains("}")) {
+			String regex = "\\$\\{([^}]*?)\\}";
+
+			Pattern pattern = Pattern.compile(regex);
+
+			Matcher matcher = pattern.matcher(locatorValue);
+
+			while (matcher.find()) {
+				String variableKey = matcher.group(1);
+
+				if (context.containsKey(variableKey)) {
+					locatorValue = locatorValue.replaceFirst(
+						regex, context.get(variableKey));
+				}
+				else {
+					throw new Exception(
+						"Variable \"" + variableKey + "\" found in \"" +
+							locator + "\" is not set");
+				}
+			}
+		}
+
+		return locatorValue;
+	}
+
 	public static String evaluateVariable(
 		String value, Map<String, String> context) {
 

@@ -193,7 +193,7 @@
 			<var name="portletName" value="Tags" />
 		</execute>
 
-		<var name="tagEntryNull"><![CDATA[ ]]></var>
+		<var name="tagEntryNull" value=" " />
 
 		<execute macro="Tag#addCP">
 			<var name="tagEntry" value="${tagEntryNull}" />

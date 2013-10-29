@@ -49,6 +49,7 @@ AUI.add(
 					{
 						dialog: {
 							bodyContent: form,
+							height: 420,
 							toolbars: {
 								footer: [
 									{
@@ -68,7 +69,8 @@ AUI.add(
 										}
 									}
 								]
-							}
+							},
+							width: 350
 						},
 						title: title
 					}

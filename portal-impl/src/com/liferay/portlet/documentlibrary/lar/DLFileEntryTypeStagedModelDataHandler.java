@@ -129,6 +129,39 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
+	public boolean validateReference(
+		PortletDataContext portletDataContext, Element referenceElement) {
+
+		String uuid = referenceElement.attributeValue("uuid");
+		String fileEntryTypeKey = referenceElement.attributeValue(
+			"file-entry-type-key");
+		boolean preloaded = GetterUtil.getBoolean(
+			referenceElement.attributeValue("preloaded"));
+
+		try {
+			DLFileEntryType existingFileEntryType =
+				getExistingFileEntryType(
+					uuid, portletDataContext.getScopeGroupId(),
+					fileEntryTypeKey, preloaded);
+
+			if (existingFileEntryType == null) {
+				existingFileEntryType = getExistingFileEntryType(
+					uuid, portletDataContext.getCompanyGroupId(),
+					fileEntryTypeKey, preloaded);
+			}
+
+			if (existingFileEntryType == null) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
 			DLFileEntryType fileEntryType)
@@ -299,22 +332,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 		}
 
 		return existingDLFileEntryType;
-	}
-
-	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.
-				fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
-
-		if (dlFileEntryType == null) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

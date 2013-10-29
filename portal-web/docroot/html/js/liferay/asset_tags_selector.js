@@ -65,7 +65,7 @@ AUI.add(
 			'<input class="lfr-tag-selector-input search-query span12" placeholder="{0}" type="text" />' +
 		'</form>';
 
-		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{context}"';
+		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{0}"';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
 
@@ -247,7 +247,7 @@ AUI.add(
 
 							bodyNode.html(STR_BLANK);
 
-							var searchForm = A.Node.create(A.Lang.sub(TPL_SEARCH_FORM, [Liferay.Language.get('search')]));
+							var searchForm = A.Node.create(Lang.sub(TPL_SEARCH_FORM, [Liferay.Language.get('search')]));
 
 							bodyNode.append(searchForm);
 
@@ -527,36 +527,33 @@ AUI.add(
 
 						var context = STR_BLANK;
 
-						var data = [];
-
 						if (contentCallback) {
 							context = contentCallback();
 
 							context = String(context);
 						}
 
-						var query = Lang.sub(
-							TPL_SUGGESTIONS_QUERY,
-							{
-								context: context
-							}
-						);
+						context = Lang.String.stripTags(context);
+						context = Liferay.Util.escapeHTML(context);
+
+						var query = Lang.sub(TPL_SUGGESTIONS_QUERY, [context]);
 
 						A.YQL(
 							query,
 							function(response) {
-								var results = response.query.results;
+								var results = response.query && response.query.results;
+
+								var data = [];
 
 								if (results) {
-									var resultData = results.Result;
-
-									for (var i = 0; i < resultData.length; i++) {
-										data.push(
-											{
-												name: resultData[i]
-											}
-										);
-									}
+									data = AArray.map(
+										A.Array(results.Result),
+										function(item, index, collection) {
+											return {
+												name: item
+											};
+										}
+									);
 								}
 
 								instance._updateSelectList(AArray.unique(data));

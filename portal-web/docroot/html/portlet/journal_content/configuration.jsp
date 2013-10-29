@@ -289,7 +289,7 @@ catch (NoSuchArticleException nsae) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectArticle',
-		function(articleGroupId, articleId, articletTitle) {
+		function(articleGroupId, articleId, articleTitle) {
 			var A = AUI();
 
 			document.<portlet:namespace />fm.<portlet:namespace />groupId.value = articleGroupId;
@@ -301,7 +301,7 @@ catch (NoSuchArticleException nsae) {
 
 			var displayArticleId = A.one('.displaying-article-id');
 
-			displayArticleId.set('innerHTML', articletTitle + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
+			displayArticleId.set('innerHTML', articleTitle + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
 			displayArticleId.addClass('modified');
 		},
 		['aui-base']

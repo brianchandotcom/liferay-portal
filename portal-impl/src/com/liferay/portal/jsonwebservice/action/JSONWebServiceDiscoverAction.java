@@ -67,7 +67,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	public Object invoke() throws Exception {
 		Map<String, Object> resultsMap = new LinkedHashMap<String, Object>();
 
-		Map<String, Object> jsonWebServiceActionMappingMaps =
+		List<Map<String, Object>> jsonWebServiceActionMappingMaps =
 			_buildJsonWebServiceActionMappingMaps();
 
 		resultsMap.put("actions", jsonWebServiceActionMappingMaps);
@@ -94,28 +94,26 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			JSONSerializer jsonSerializer =
 				JSONFactoryUtil.createJSONSerializer();
 
-			jsonSerializer.include("*.parameters");
-
-			return jsonSerializer.serialize(_resultsMap);
+			return jsonSerializer.serializeDeep(_resultsMap);
 		}
 
 		private Map<String, Object> _resultsMap;
 
 	}
 
-	private Map<String, Object> _buildJsonWebServiceActionMappingMaps()
+	private List<Map<String, Object>> _buildJsonWebServiceActionMappingMaps()
 		throws PortalException {
 
-		List<JSONWebServiceActionMapping> jsonWebServiceActionMappingMaps =
+		List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceActionMappings(
 				_contextPath);
 
-		Map<String, Object> jsonWebServiceActionMappingsMap =
-			new LinkedHashMap<String, Object>(
-				jsonWebServiceActionMappingMaps.size());
+		List<Map<String, Object>> jsonWebServiceActionMappingMaps =
+			new ArrayList<Map<String, Object>>(
+				jsonWebServiceActionMappings.size());
 
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
-				jsonWebServiceActionMappingMaps) {
+				jsonWebServiceActionMappings) {
 
 			String path = jsonWebServiceActionMapping.getPath();
 
@@ -165,11 +163,10 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			jsonWebServiceActionMappingMap.put(
 				"response", _formatType(actionMethod.getReturnType(), null));
 
-			jsonWebServiceActionMappingsMap.put(
-				path, jsonWebServiceActionMappingMap);
+			jsonWebServiceActionMappingMaps.add(jsonWebServiceActionMappingMap);
 		}
 
-		return jsonWebServiceActionMappingsMap;
+		return jsonWebServiceActionMappingMaps;
 	}
 
 	private String _formatType(Class<?> type, Class<?>[] genericTypes) {

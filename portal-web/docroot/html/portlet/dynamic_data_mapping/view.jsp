@@ -29,14 +29,15 @@ portletURL.setParameter("tabs1", tabs1);
 %>
 
 <liferay-ui:error exception="<%= RequiredStructureException.class %>">
-	<liferay-ui:message key="required-structures-could-not-be-deleted" />
-
 	<%
 	RequiredStructureException rse = (RequiredStructureException)errorException;
 	%>
 
+	<c:if test="<%= rse.getType() != RequiredStructureException.REFERENCED_TEMPLATE %>">
+		<liferay-ui:message key="required-structures-could-not-be-deleted" />
+	</c:if>
 	<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_TEMPLATE %>">
-		<liferay-ui:message key="they-are-referenced-by-templates" />
+		<liferay-ui:message key="required-structures-could-not-be-deleted-they-are-referenced-by-templates" />
 	</c:if>
 </liferay-ui:error>
 

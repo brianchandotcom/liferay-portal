@@ -299,10 +299,6 @@ public class EditScopeAction extends PortletAction {
 
 		Tuple newScopeTuple = getNewScope(actionRequest);
 
-		long newScopeGroupId = (Long)newScopeTuple.getObject(0);
-
-		portletPreferences.setValue("groupId", String.valueOf(newScopeGroupId));
-
 		String newScopeName = (String)newScopeTuple.getObject(1);
 
 		String newPortletTitle = PortalUtil.getNewPortletTitle(

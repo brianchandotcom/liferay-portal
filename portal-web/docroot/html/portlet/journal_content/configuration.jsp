@@ -23,17 +23,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 JournalArticle article = null;
 
-groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
-
 String type = ParamUtil.getString(request, "type");
 
 try {
 	if (Validator.isNotNull(articleId)) {
-		article = JournalArticleLocalServiceUtil.getLatestArticle(groupId, articleId);
+		article = JournalArticleLocalServiceUtil.getLatestArticle(articleGroupId, articleId);
 
 		article = article.toEscapedModel();
 
-		groupId = article.getGroupId();
+		articleGroupId = article.getGroupId();
 		type = article.getType();
 	}
 }
@@ -63,24 +61,16 @@ catch (NoSuchArticleException nsae) {
 	<c:if test="<%= article != null %>">
 
 		<%
-		String structureId = article.getStructureId();
-
-		DDMStructure ddmStructure = null;
-
-		long ddmStructureGroupId = groupId;
-
-		if (Validator.isNotNull(structureId)) {
-			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(groupId, PortalUtil.getClassNameId(JournalArticle.class), structureId);
+		if (Validator.isNotNull(article.getStructureId())) {
+			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(article.getGroupId(), PortalUtil.getClassNameId(JournalArticle.class), article.getStructureId(), true);
 
 			List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
 
 			if (ddmStructure != null) {
-				ddmStructureGroupId = ddmStructure.getGroupId();
+				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructure.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 
-				ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(ddmStructureGroupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
-
-				if (groupId != ddmStructureGroupId) {
-					ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
+				if (article.getGroupId() != ddmStructure.getGroupId()) {
+					ddmTemplates.addAll(DDMTemplateLocalServiceUtil.getTemplates(article.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId()));
 				}
 			}
 
@@ -144,6 +134,8 @@ catch (NoSuchArticleException nsae) {
 	</c:if>
 
 	<%
+	long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
+
 	DynamicRenderRequest dynamicRenderRequest = new DynamicRenderRequest(renderRequest);
 
 	dynamicRenderRequest.setParameter("type", type);
@@ -192,11 +184,13 @@ catch (NoSuchArticleException nsae) {
 
 		ResultRow row = new ResultRow(null, HtmlUtil.escapeAttribute(curArticle.getArticleId()) + EditArticleAction.VERSION_SEPARATOR + curArticle.getVersion(), i);
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectArticle('");
+		sb.append(HtmlUtil.escapeJS(String.valueOf(curArticle.getGroupId())));
+		sb.append("','");
 		sb.append(HtmlUtil.escapeJS(curArticle.getArticleId()));
 		sb.append("','");
 		sb.append(HtmlUtil.escapeJS(curArticle.getTitle(locale)));
@@ -236,7 +230,7 @@ catch (NoSuchArticleException nsae) {
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur" + cur %>' />
-	<aui:input name="preferences--groupId--" type="hidden" value="<%= groupId %>" />
+	<aui:input name="preferences--groupId--" type="hidden" value="<%= articleGroupId %>" />
 	<aui:input name="preferences--articleId--" type="hidden" value="<%= articleId %>" />
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
@@ -295,9 +289,10 @@ catch (NoSuchArticleException nsae) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectArticle',
-		function(articleId, articletTitle) {
+		function(articleGroupId, articleId, articleTitle) {
 			var A = AUI();
 
+			document.<portlet:namespace />fm.<portlet:namespace />groupId.value = articleGroupId;
 			document.<portlet:namespace />fm.<portlet:namespace />articleId.value = articleId;
 			document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value = "";
 
@@ -306,7 +301,7 @@ catch (NoSuchArticleException nsae) {
 
 			var displayArticleId = A.one('.displaying-article-id');
 
-			displayArticleId.set('innerHTML', articletTitle + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
+			displayArticleId.set('innerHTML', articleTitle + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
 			displayArticleId.addClass('modified');
 		},
 		['aui-base']

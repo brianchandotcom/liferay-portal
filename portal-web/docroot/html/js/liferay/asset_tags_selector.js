@@ -65,7 +65,7 @@ AUI.add(
 			'<input class="lfr-tag-selector-input search-query span12" placeholder="{0}" type="text" />' +
 		'</form>';
 
-		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{context}"';
+		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{0}"';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
 
@@ -533,29 +533,21 @@ AUI.add(
 							context = String(context);
 						}
 
-						var query = Lang.sub(
-							TPL_SUGGESTIONS_QUERY,
-							{
-								context: context
-							}
-						);
+						context = Lang.String.stripTags(context);
+						context = Liferay.Util.escapeHTML(context);
+
+						var query = Lang.sub(TPL_SUGGESTIONS_QUERY, [context]);
 
 						A.YQL(
 							query,
 							function(response) {
-								var results = response.query.results;
+								var results = response.query && response.query.results;
 
 								var data = [];
 
 								if (results) {
-									var resultData = results.Result;
-
-									if (!Lang.isArray(resultData)) {
-										resultData = [resultData];
-									}
-
 									data = AArray.map(
-										resultData,
+										A.Array(results.Result),
 										function(item, index, collection) {
 											return {
 												name: item

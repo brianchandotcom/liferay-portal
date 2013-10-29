@@ -96,12 +96,6 @@ public class MBMessagePermission {
 			}
 		}
 
-		if (MBBanLocalServiceUtil.hasBan(
-				message.getGroupId(), permissionChecker.getUserId())) {
-
-			return false;
-		}
-
 		if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
 			!contains(permissionChecker, message, ActionKeys.UPDATE)) {
 

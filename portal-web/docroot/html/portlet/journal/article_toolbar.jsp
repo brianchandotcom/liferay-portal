@@ -56,7 +56,18 @@ if ((article != null) && article.isDraft()) {
 				var unsavedChanges = formChanged;
 
 				if (!unsavedChanges && typeof CKEDITOR !== 'undefined') {
-					unsavedChanges = CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty();
+					A.Object.some(
+						CKEDITOR.instances,
+						function(item, index, collection) {
+							var parentForm = A.one('#' + item.element.getId()).ancestor('form');
+
+							if (parentForm === form) {
+								unsavedChanges = item.checkDirty();
+
+								return unsavedChanges;
+							}
+						}
+					)
 				}
 
 				return unsavedChanges;

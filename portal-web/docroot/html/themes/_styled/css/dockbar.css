@@ -113,7 +113,7 @@ $editLayoutPanelWidth: 460px;
 					display: block;
 					padding: 3px 5px 3px 40px;
 
-					&:hover {
+					&:focus, &:hover {
 						background: #0DB5E7;
 						color: #FFF;
 						text-decoration: none;
@@ -550,6 +550,10 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	/* ---------- Menus ---------- */
+
+	.dropdown-menu > li > a:focus > [class^="icon-"] {
+		background-image: none;
+	}
 
 	.my-sites-menu {
 		.site-type {

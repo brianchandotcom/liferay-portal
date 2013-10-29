@@ -68,9 +68,12 @@
 						<portlet:param name="backURL" value="<%= viewSitesURL %>" />
 					</liferay-portlet:renderURL>
 
+					<aui:nav-item cssClass="divider" />
+
 					<aui:nav-item href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
 				</c:if>
 			</aui:nav-item>
+
 		</c:otherwise>
 	</c:choose>
 </c:if>

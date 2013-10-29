@@ -238,7 +238,8 @@ AUI.add(
 								{
 									dialog: {
 										cssClass: CSS_POPUP,
-										hideClass: 'hide-accessible'
+										hideClass: 'hide-accessible',
+										width: 600
 									}
 								}
 							);

@@ -58,29 +58,31 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class.getName(), user.getUserId(), TicketConstants.TYPE_IMPERSONATE, null, expirationDate, new ServiceContext());
 		%>
 
-		<aui:script use="liferay-upload">
-			new Liferay.Upload(
-				{
-					boundingBox: '#<portlet:namespace />fileUpload',
-					deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />',
-					fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
-					maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> B',
-					metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
-					metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
-					namespace: '<portlet:namespace />',
-					tempFileURL: {
-						method: Liferay.Service.bind('/dlapp/get-temp-file-entry-names'),
-						params: {
-							groupId: <%= scopeGroupId %>,
-							folderId: <%= folderId %>,
-							tempFolderName: 'com.liferay.portlet.documentlibrary.action.EditFileEntryAction'
-						}
-					},
-					tempRandomSuffix: '<%= EditFileEntryAction.TEMP_RANDOM_SUFFIX %>',
-					uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />'
-				}
-			);
-		</aui:script>
+		<c:if test="themeDisplay.isSignedIn()">
+			<aui:script use="liferay-upload">
+				new Liferay.Upload(
+					{
+						boundingBox: '#<portlet:namespace />fileUpload',
+						deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />',
+						fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
+						maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %> B',
+						metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
+						metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
+						namespace: '<portlet:namespace />',
+						tempFileURL: {
+							method: Liferay.Service.bind('/dlapp/get-temp-file-entry-names'),
+							params: {
+								groupId: <%= scopeGroupId %>,
+								folderId: <%= folderId %>,
+								tempFolderName: 'com.liferay.portlet.documentlibrary.action.EditFileEntryAction'
+							}
+						},
+						tempRandomSuffix: '<%= EditFileEntryAction.TEMP_RANDOM_SUFFIX %>',
+						uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/edit_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />'
+					}
+				);
+			</aui:script>
+		</c:if>
 	</aui:col>
 	<aui:col width="<%= 50 %>">
 		<div class="common-file-metadata-container hide selected" id="<portlet:namespace />commonFileMetadataContainer">

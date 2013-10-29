@@ -340,6 +340,21 @@
 				))
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByC_P">
+		<![CDATA[
+			SELECT
+				folderId
+			FROM
+				DLFolder
+			WHERE
+				(folderId > ?) AND
+				(companyId = ?) AND
+				(parentFolderId = ?) AND
+				(status != ?)
+			ORDER BY
+				folderId ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByG_M_F">
 		<![CDATA[
 			SELECT

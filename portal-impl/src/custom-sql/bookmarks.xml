@@ -86,6 +86,20 @@
 				(BookmarksFolder.parentFolderId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findF_ByC_P">
+		<![CDATA[
+			SELECT
+				folderId
+			FROM
+				BookmarksFolder
+			WHERE
+				(folderId > ?) AND
+				(companyId = ?) AND
+				(parentFolderId = ?)
+			ORDER BY
+				folderId ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findE_ByG_F_S">
 		<![CDATA[
 			SELECT

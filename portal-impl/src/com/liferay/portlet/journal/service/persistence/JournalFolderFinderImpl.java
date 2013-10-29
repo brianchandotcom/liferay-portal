@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -57,6 +58,9 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 	public static final String FIND_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".findF_ByG_F";
+
+	public static final String FIND_F_BY_C_P =
+		JournalFolderFinder.class.getName() + ".findF_ByC_P";
 
 	@Override
 	public int countF_A_ByG_F(
@@ -111,6 +115,48 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 		throws SystemException {
 
 		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, false);
+	}
+
+	@Override
+	public List<Long> findF_ByC_P(
+			long companyId, long parentFolderId, long previousFolderId,
+			int size)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_F_BY_C_P);
+
+			if (previousFolderId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(folderId > ?) AND", StringPool.BLANK);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("folderId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (previousFolderId > 0) {
+				qPos.add(previousFolderId);
+			}
+
+			qPos.add(companyId);
+			qPos.add(parentFolderId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			return (List<Long>)QueryUtil.list(q, getDialect(), 0, size);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected int doCountF_A_ByG_F(

@@ -62,6 +62,9 @@ public class BookmarksFolderFinderImpl
 	public static final String FIND_F_BY_G_P =
 		BookmarksFolderFinder.class.getName() + ".findF_ByG_P";
 
+	public static final String FIND_F_BY_C_P =
+		BookmarksFolderFinder.class.getName() + ".findF_ByC_P";
+
 	public static final String FIND_F_BY_G_P_S =
 		BookmarksFolderFinder.class.getName() + ".findF_ByG_P_S";
 
@@ -109,6 +112,47 @@ public class BookmarksFolderFinderImpl
 			q.addEntity("BookmarksFolder", BookmarksFolderImpl.class);
 
 			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Long> findF_ByC_P(
+			long companyId, long parentFolderId, long previousFolderId,
+			int size)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_F_BY_C_P);
+
+			if (previousFolderId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(folderId > ?) AND", StringPool.BLANK);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar("folderId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (previousFolderId > 0) {
+				qPos.add(previousFolderId);
+			}
+
+			qPos.add(companyId);
+			qPos.add(parentFolderId);
+
+			return (List<Long>)QueryUtil.list(q, getDialect(), 0, size);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

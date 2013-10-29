@@ -72,4 +72,10 @@
 	.portlet-title {
 		color: #00CAFF;
 	}
+
+	/* ---------- Tables ---------- */
+
+	.table {
+		color: #555;
+	}
 }

@@ -260,9 +260,19 @@ int sortColumnIndex = -1;
 			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 
 			Map<String, Object> data = row.getData();
+
+			String rowClassName = StringPool.BLANK;
+
+			if (Validator.isNotNull(row.getClassName())) {
+				rowClassName = row.getClassName();
+			}
+
+			if (rowIsChecked) {
+				rowClassName += " info";
+			}
 		%>
 
-			<tr class="<%= rowIsChecked ? "info" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+			<tr class="<%= rowClassName %>" <%= AUIUtil.buildData(data) %>>
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {

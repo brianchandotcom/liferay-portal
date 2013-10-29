@@ -66,6 +66,7 @@ else {
 				url="<%= moveURL %>"
 			/>
 		</c:if>
+
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= JournalArticle.class.getName() %>"
@@ -100,6 +101,21 @@ else {
 				onClick="<%= taglibOnClick %>"
 				url="javascript:;"
 			/>
+
+			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
+				<portlet:renderURL var="viewHistoryURL">
+					<portlet:param name="struts_action" value="/journal/view_article_history" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+					<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+				</portlet:renderURL>
+
+				<liferay-ui:icon
+					image="time"
+					message="view-history"
+					url="<%= viewHistoryURL.toString() %>"
+				/>
+			</c:if>
 
 			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE) %>">
 				<portlet:renderURL var="copyURL">

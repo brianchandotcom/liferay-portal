@@ -207,9 +207,9 @@ public class EditEntryAction extends PortletAction {
 			AnnouncementsEntryServiceUtil.updateEntry(
 				entryId, title, content, url, type, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				priority);
+				displayDateMinute, displayImmediately, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, priority);
 		}
 	}
 

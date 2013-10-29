@@ -183,7 +183,8 @@ public class AnnouncementsEntryServiceImpl
 	public AnnouncementsEntry updateEntry(
 			long entryId, String title, String content, String url, String type,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int displayDateHour, int displayDateMinute,
+			boolean displayImmediately, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException, SystemException {
@@ -194,8 +195,9 @@ public class AnnouncementsEntryServiceImpl
 		return announcementsEntryLocalService.updateEntry(
 			getUserId(), entryId, title, content, url, type, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, priority);
+			displayImmediately, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			priority);
 	}
 
 }

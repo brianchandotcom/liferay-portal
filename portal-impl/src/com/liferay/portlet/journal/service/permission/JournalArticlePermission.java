@@ -104,7 +104,14 @@ public class JournalArticlePermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (article.isPending()) {
+		if (article.isDraft()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!contains(permissionChecker, article, ActionKeys.UPDATE)) {
+
+				return false;
+			}
+		}
+		else if (article.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, article.getGroupId(),
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
@@ -113,12 +120,6 @@ public class JournalArticlePermission {
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
 			}
-		}
-
-		if (article.isDraft() && actionId.equals(ActionKeys.VIEW) &&
-			!contains(permissionChecker, article, ActionKeys.UPDATE)) {
-
-			return false;
 		}
 
 		if (actionId.equals(ActionKeys.VIEW) &&

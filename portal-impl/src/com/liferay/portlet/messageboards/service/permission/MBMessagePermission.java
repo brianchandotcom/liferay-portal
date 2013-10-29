@@ -85,7 +85,14 @@ public class MBMessagePermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (message.isPending()) {
+		if (message.isDraft()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!contains(permissionChecker, message, ActionKeys.UPDATE)) {
+
+				return false;
+			}
+		}
+		else if (message.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, message.getGroupId(),
 				message.getWorkflowClassName(), message.getMessageId(),
@@ -94,12 +101,6 @@ public class MBMessagePermission {
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
 			}
-		}
-
-		if (message.isDraft() && actionId.equals(ActionKeys.VIEW) &&
-			!contains(permissionChecker, message, ActionKeys.UPDATE)) {
-
-			return false;
 		}
 
 		if (actionId.equals(ActionKeys.VIEW) &&

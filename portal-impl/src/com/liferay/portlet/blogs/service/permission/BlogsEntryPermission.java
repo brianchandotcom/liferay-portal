@@ -61,13 +61,14 @@ public class BlogsEntryPermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (entry.isDraft() && actionId.equals(ActionKeys.VIEW) &&
-			!contains(permissionChecker, entry, ActionKeys.UPDATE)) {
+		if (entry.isDraft()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!contains(permissionChecker, entry, ActionKeys.UPDATE)) {
 
-			return false;
+				return false;
+			}
 		}
-
-		if (entry.isPending()) {
+		else if (entry.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, entry.getGroupId(),
 				BlogsEntry.class.getName(), entry.getEntryId(), actionId);

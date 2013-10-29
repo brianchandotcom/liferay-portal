@@ -127,7 +127,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 							}
 						]
 					},
-					width: 250
+					width: 350
 				},
 				title: title
 			}

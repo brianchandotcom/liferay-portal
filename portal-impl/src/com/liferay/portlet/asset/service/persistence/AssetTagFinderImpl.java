@@ -31,6 +31,7 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -534,7 +535,12 @@ public class AssetTagFinderImpl
 	protected void setJoin(QueryPos qPos, String[] tagProperties) {
 		for (String tagProperty : tagProperties) {
 			String[] tagPropertyParts = StringUtil.split(
-				tagProperty, CharPool.COLON);
+				tagProperty, AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
+
+			if (tagPropertyParts.length <= 1) {
+				tagPropertyParts = StringUtil.split(
+					tagProperty, CharPool.COLON);
+			}
 
 			String key = StringPool.BLANK;
 

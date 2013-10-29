@@ -36,6 +36,7 @@ import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetTagConstants;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.AssetUtil;
@@ -118,7 +119,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		for (int i = 0; i < tagProperties.length; i++) {
 			String[] tagProperty = StringUtil.split(
-				tagProperties[i], CharPool.COLON);
+				tagProperties[i],
+				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
+
+			if (tagProperty.length <= 1) {
+				tagProperty = StringUtil.split(
+					tagProperties[i], CharPool.COLON);
+			}
 
 			String key = StringPool.BLANK;
 
@@ -645,7 +652,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		for (int i = 0; i < tagProperties.length; i++) {
 			String[] tagProperty = StringUtil.split(
-				tagProperties[i], CharPool.COLON);
+				tagProperties[i],
+				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
+
+			if (tagProperty.length <= 1) {
+				tagProperty = StringUtil.split(
+					tagProperties[i], CharPool.COLON);
+			}
 
 			String key = StringPool.BLANK;
 

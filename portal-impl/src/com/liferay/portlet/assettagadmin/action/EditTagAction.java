@@ -102,7 +102,7 @@ public class EditTagAction extends PortletAction {
 				actionRequest, "value" + tagPropertiesIndex);
 
 			tagProperties[i] =
-				key + AssetTagConstants.TAG_PROPERTY_SEPARATOR + value;
+				key + AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR + value;
 		}
 
 		return tagProperties;

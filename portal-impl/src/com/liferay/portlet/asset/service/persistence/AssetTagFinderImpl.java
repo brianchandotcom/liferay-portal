@@ -534,7 +534,7 @@ public class AssetTagFinderImpl
 	protected void setJoin(QueryPos qPos, String[] tagProperties) {
 		for (String tagProperty : tagProperties) {
 			String[] tagPropertyParts = StringUtil.split(
-				tagProperty, AssetTagConstants.TAG_PROPERTY_SEPARATOR);
+				tagProperty, AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
 			String key = StringPool.BLANK;
 

@@ -785,7 +785,7 @@ public class PortletImporter {
 			String value = propertyElement.attributeValue("value");
 
 			properties[i] = key.concat(
-				AssetCategoryConstants.CATEGORY_PROPERTY_SEPARATOR).concat(
+				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR).concat(
 					value);
 		}
 
@@ -871,7 +871,7 @@ public class PortletImporter {
 			String value = propertyElement.attributeValue("value");
 
 			properties[i] = key.concat(
-				AssetTagConstants.TAG_PROPERTY_SEPARATOR).concat(value);
+				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR).concat(value);
 		}
 
 		AssetTag existingAssetTag = null;

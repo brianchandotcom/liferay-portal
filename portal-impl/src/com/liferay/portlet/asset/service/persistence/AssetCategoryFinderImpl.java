@@ -333,7 +333,7 @@ public class AssetCategoryFinderImpl
 		for (int i = 0; i < categoryProperties.length; i++) {
 			String[] categoryProperty = StringUtil.split(
 				categoryProperties[i],
-				AssetCategoryConstants.CATEGORY_PROPERTY_SEPARATOR);
+				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
 			String key = StringPool.BLANK;
 

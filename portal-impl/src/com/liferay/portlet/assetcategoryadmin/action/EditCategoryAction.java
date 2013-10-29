@@ -109,7 +109,7 @@ public class EditCategoryAction extends PortletAction {
 				actionRequest, "value" + categoryPropertiesIndex);
 
 			categoryProperties[i] =
-				key + AssetCategoryConstants.CATEGORY_PROPERTY_SEPARATOR +
+				key + AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR +
 					value;
 		}
 

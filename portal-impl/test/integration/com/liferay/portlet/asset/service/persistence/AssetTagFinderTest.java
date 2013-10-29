@@ -164,7 +164,7 @@ public class AssetTagFinderTest {
 
 		String assetTagName = ServiceTestUtil.randomString();
 		String[] assetTagProperties = new String[] {
-			"key" + AssetTagConstants.TAG_PROPERTY_SEPARATOR + "value"};
+			"key" + AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR + "value"};
 
 		int initialScopeGroupAssetTagsCount =
 			AssetTagFinderUtil.filterCountByG_N_P(
@@ -309,7 +309,7 @@ public class AssetTagFinderTest {
 
 		String assetTagName = ServiceTestUtil.randomString();
 		String[] assetTagProperties = new String[] {
-			"key" + AssetTagConstants.TAG_PROPERTY_SEPARATOR + "value"};
+			"key" + AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR + "value"};
 
 		List<AssetTag> initialScopeGroupAssetTags =
 			AssetTagFinderUtil.filterFindByG_N_P(

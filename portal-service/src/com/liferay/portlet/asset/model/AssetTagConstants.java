@@ -19,6 +19,6 @@ package com.liferay.portlet.asset.model;
  */
 public class AssetTagConstants {
 
-	public static final String TAG_PROPERTY_SEPARATOR = "_TAG_PROPERTY_";
+	public static final String PROPERTY_KEY_VALUE_SEPARATOR = "_KEY_VALUE_";
 
 }

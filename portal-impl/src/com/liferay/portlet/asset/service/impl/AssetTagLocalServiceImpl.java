@@ -118,7 +118,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		for (int i = 0; i < tagProperties.length; i++) {
 			String[] tagProperty = StringUtil.split(
-				tagProperties[i], AssetTagConstants.TAG_PROPERTY_SEPARATOR);
+				tagProperties[i],
+				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
 			String key = StringPool.BLANK;
 
@@ -645,7 +646,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		for (int i = 0; i < tagProperties.length; i++) {
 			String[] tagProperty = StringUtil.split(
-				tagProperties[i], AssetTagConstants.TAG_PROPERTY_SEPARATOR);
+				tagProperties[i],
+				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
 			String key = StringPool.BLANK;
 

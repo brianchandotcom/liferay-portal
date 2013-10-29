@@ -421,6 +421,8 @@ AUI.add(
 
 						entry[matchKey] = entryMatchKey;
 
+						entry.value = A.Lang.String.unescapeHTML(entry.value);
+
 						instance.entries.add(entry);
 					},
 

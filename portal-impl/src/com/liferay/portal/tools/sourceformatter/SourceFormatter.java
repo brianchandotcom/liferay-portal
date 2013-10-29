@@ -70,6 +70,8 @@ public class SourceFormatter {
 					sourceProcessors.add(JSSourceProcessor.class.newInstance());
 					sourceProcessors.add(
 						PropertiesSourceProcessor.class.newInstance());
+					sourceProcessors.add(
+						PoshiSourceProcessor.class.newInstance());
 					sourceProcessors.add(SHSourceProcessor.class.newInstance());
 					sourceProcessors.add(
 						SQLSourceProcessor.class.newInstance());

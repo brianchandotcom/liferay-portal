@@ -79,9 +79,7 @@ long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_
 				var dialog = Liferay.Util.getWindow();
 
 				if (dialog) {
-					dialog.on('resize:end', logoEditor.resize, logoEditor);
-					dialog.on('resize:resize', logoEditor.resize, logoEditor);
-					dialog.on('resize:start', logoEditor.resize, logoEditor);
+					dialog.on(['resize:end', 'resize:resize', 'resize:start'], logoEditor.resize, logoEditor);
 				}
 			}
 		</aui:script>

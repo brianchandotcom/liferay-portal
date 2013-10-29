@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -120,6 +121,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 			String[] tagProperty = StringUtil.split(
 				tagProperties[i],
 				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
+
+			if (tagProperty.length <= 1) {
+				tagProperty = StringUtil.split(
+					tagProperties[i], CharPool.COLON);
+			}
 
 			String key = StringPool.BLANK;
 
@@ -648,6 +654,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 			String[] tagProperty = StringUtil.split(
 				tagProperties[i],
 				AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR);
+
+			if (tagProperty.length <= 1) {
+				tagProperty = StringUtil.split(
+					tagProperties[i], CharPool.COLON);
+			}
 
 			String key = StringPool.BLANK;
 

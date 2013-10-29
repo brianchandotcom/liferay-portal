@@ -142,7 +142,10 @@ else {
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon image="expire" url="<%= expireURL %>" />
+			<liferay-ui:icon
+				image="expire"
+				url="<%= expireURL %>"
+			/>
 		</c:if>
 
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
@@ -154,7 +157,10 @@ else {
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon-delete trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
+			<liferay-ui:icon-delete
+				trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+				url="<%= deleteURL %>"
+			/>
 		</c:if>
 	</liferay-ui:icon-menu>
 </span>

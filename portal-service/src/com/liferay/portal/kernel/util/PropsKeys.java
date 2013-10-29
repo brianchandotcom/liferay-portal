@@ -785,8 +785,6 @@ public interface PropsKeys {
 
 	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_FREQUENCY = "dl.store.s3.temp.dir.clean.up.frequency";
 
-	public static final String DL_VALID_NAME_REGEXP = "dl.valid.name.regexp";
-
 	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
 
 	public static final String DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP = "dockbar.administrative.links.show.in.pop.up";

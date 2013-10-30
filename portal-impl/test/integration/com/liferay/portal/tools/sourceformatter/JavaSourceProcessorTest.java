@@ -41,6 +41,24 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIfClauseParentheses() throws Exception {
+		test(
+			"IfClauseParentheses.testjava",
+			new String[] {
+				"missing parentheses:", "missing parentheses:",
+				"missing parentheses:", "missing parentheses:",
+				"missing parentheses:", "redundant parentheses:",
+				"redundant parentheses:", "redundant parentheses:"
+			},
+			new Integer[] {25, 29, 33, 39, 43, 43, 47, 51});
+	}
+
+	@Test
+	public void testIfClauseWhitespace() throws Exception {
+		test("IfClauseWhitespace.testjava");
+	}
+
+	@Test
 	public void testIncorrectClose() throws Exception {
 		test("IncorrectClose.testjava", "}:");
 	}
@@ -107,6 +125,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"SecureRandomNumberGeneration.testjava",
 			"Use SecureRandomUtil instead of java.security.SecureRandom:");
+	}
+
+	@Test
+	public void testSortAnnotations() throws Exception {
+		test("SortAnnotations.testjava");
+	}
+
+	@Test
+	public void testSortExceptions() throws Exception {
+		test("SortExceptions.testjava");
 	}
 
 	@Test

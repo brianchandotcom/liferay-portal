@@ -14,23 +14,21 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+
 /**
  * @author Hugo Huijser
  */
-public class IncorrectWhitespace {
+public class SortAnnotations {
 
-	public void method(String s1, String s2) {
-		String s3 = s1;
-
-		String s4 = s2;
-
-		String s5 = s4;
-
+	public void method() throws SystemException, PortalException {
 		if (true) {
-			String s6 = s5;
+			throw new PortalException();
 		}
-
-		String s7 = s5;
+		else {
+			throw new SystemException();
+		}
 	}
 
 }

@@ -26,6 +26,11 @@ public class IncorrectWhitespace {
 
 
 		String s5 = s4;
+
+		if (true) {
+			String s6 = s5;
+		}
+		String s7 = s5;
 	}
 
 }

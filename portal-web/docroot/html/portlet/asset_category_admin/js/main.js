@@ -1113,6 +1113,13 @@ AUI.add(
 								};
 
 								return {
+									after: {
+										childrenChange: function(event) {
+											var target = event.target;
+
+											target.set('alwaysShowHitArea', event.newVal.length > 0);
+										}
+									},
 									alwaysShowHitArea: item.hasChildren,
 									id: STR_CATEGORY_NODE + item.categoryId,
 									io: {

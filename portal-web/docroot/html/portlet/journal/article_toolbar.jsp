@@ -85,8 +85,8 @@ if ((article != null) && article.isDraft()) {
 								Liferay.fire(
 									'previewArticle',
 									{
-										title: '<%= article.getTitle(locale) %>',
-										uri: '<%= previewArticleContentURL.toString() %>'
+										title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
+										uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
 									}
 								);
 							}

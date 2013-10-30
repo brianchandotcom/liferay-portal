@@ -34,7 +34,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 		</liferay-portlet:renderURL>
 
 		<%
-		String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + article.getTitle(locale) + "', uri: '" + previewArticleContentURL.toString() + "'});";
+		String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(article.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
 		%>
 
 		<liferay-ui:icon

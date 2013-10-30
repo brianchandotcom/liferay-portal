@@ -336,8 +336,8 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 		Liferay.fire(
 			'previewArticle',
 			{
-				title: '<%= article.getTitle(locale) %>',
-				uri: '<%= previewArticleContentURL.toString() %>'
+				title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
+				uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
 			}
 		);
 	</aui:script>

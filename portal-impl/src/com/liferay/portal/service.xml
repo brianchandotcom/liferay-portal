@@ -477,6 +477,11 @@
 			<finder-column name="type" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="G_C_P" return-type="Collection" db-index="false">
+			<finder-column name="groupId" comparator="&gt;" />
+			<finder-column name="companyId" />
+			<finder-column name="parentGroupId" />
+		</finder>
 		<finder name="C_C_C" return-type="Group" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
@@ -1204,6 +1209,11 @@
 		<finder name="C_N" return-type="Organization" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
+		</finder>
+		<finder name="O_C_P" return-type="Collection" db-index="false">
+			<finder-column name="organizationId" comparator="&gt;" />
+			<finder-column name="companyId" />
+			<finder-column name="parentOrganizationId" />
 		</finder>
 
 		<!-- References -->

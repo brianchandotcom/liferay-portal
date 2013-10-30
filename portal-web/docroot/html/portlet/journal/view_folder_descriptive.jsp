@@ -36,7 +36,7 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 	rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 	showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>"
 	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-	thumbnailStyle="width: 128px"
+	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= folder.getName() %>"
 	url="<%= tempRowURL.toString() %>"
 />

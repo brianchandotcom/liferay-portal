@@ -726,38 +726,13 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			// Authenticated users should agree to Terms of Use
 
-			if ((user != null) && !user.isAgreedToTermsOfUse()) {
-				boolean termsOfUseRequired = false;
-
-				try {
-					termsOfUseRequired = PrefsPropsUtil.getBoolean(
-						user.getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED);
-				}
-				catch (SystemException se) {
-					termsOfUseRequired = PropsValues.TERMS_OF_USE_REQUIRED;
-				}
-
-				if (termsOfUseRequired) {
-					return _PATH_PORTAL_TERMS_OF_USE;
-				}
+			if ((user != null) && !user.isTermsOfUseComplete()) {
+				return _PATH_PORTAL_TERMS_OF_USE;
 			}
 
 			// Authenticated users should have a verified email address
 
-			boolean emailAddressVerificationRequired = false;
-
-			try {
-				Company company = PortalUtil.getCompany(request);
-
-				emailAddressVerificationRequired = company.isStrangersVerify();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-
-			if ((user != null) && !user.isEmailAddressVerified() &&
-				emailAddressVerificationRequired) {
-
+			if ((user != null) && !user.isEmailAddressVerificationComplete()) {
 				if (path.equals(_PATH_PORTAL_UPDATE_EMAIL_ADDRESS)) {
 					return _PATH_PORTAL_UPDATE_EMAIL_ADDRESS;
 				}
@@ -778,23 +753,16 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			// Authenticated users must have an email address
 
-			if ((user != null) &&
-				(Validator.isNull(user.getEmailAddress()) ||
-				 (PropsValues.USERS_EMAIL_ADDRESS_REQUIRED &&
-				  Validator.isNull(user.getDisplayEmailAddress())))) {
-
+			if ((user != null) && !user.isEmailAddressComplete()) {
 				return _PATH_PORTAL_UPDATE_EMAIL_ADDRESS;
 			}
 
 			// Authenticated users should have a reminder query
 
 			if ((user != null) && !user.isDefaultUser() &&
-				(Validator.isNull(user.getReminderQueryQuestion()) ||
-				 Validator.isNull(user.getReminderQueryAnswer()))) {
+				!user.isReminderQueryComplete()) {
 
-				if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
 					return _PATH_PORTAL_UPDATE_REMINDER_QUERY;
-				}
 			}
 		}
 

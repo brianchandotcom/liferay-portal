@@ -26,7 +26,7 @@
 			Liferay.on(
 				'submitForm',
 				function(event) {
-					if (event.form === form) {
+					if (event.form.compareTo(form)) {
 						field.val(window.${portletNamespace}${namespacedFieldName}Editor.getHTML());
 					}
 				}

@@ -61,13 +61,13 @@ if ((article != null) && article.isDraft()) {
 						function(item, index, collection) {
 							var parentForm = A.one('#' + item.element.getId()).ancestor('form');
 
-							if (parentForm === form) {
+							if (parentForm.compareTo(form)) {
 								unsavedChanges = item.checkDirty();
 
 								return unsavedChanges;
 							}
 						}
-					)
+					);
 				}
 
 				return unsavedChanges;

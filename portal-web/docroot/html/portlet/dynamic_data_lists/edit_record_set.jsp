@@ -126,6 +126,14 @@ if (ddmStructureId > 0) {
 			</aui:select>
 		</c:if>
 
+		<c:if test="<%= recordSet == null %>">
+			<aui:field-wrapper label="permissions">
+				<liferay-ui:input-permissions
+					modelName="<%= DDLRecordSet.class.getName() %>"
+				/>
+			</aui:field-wrapper>
+		</c:if>
+
 		<aui:button-row>
 			<aui:button name="saveButton" type="submit" value="save" />
 

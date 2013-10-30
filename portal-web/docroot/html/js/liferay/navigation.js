@@ -295,7 +295,7 @@ AUI.add(
 								navItemSelector
 							);
 
-							navBlock.delegate(['mouseenter', 'mouseleave'], instance._hoverNavItem, 'li', instance);
+							navBlock.delegate(['mouseenter', 'mouseleave'], instance._hoverNavItem, 'ul.nav > li', instance);
 
 							instance._deleteButton(navItems);
 						}

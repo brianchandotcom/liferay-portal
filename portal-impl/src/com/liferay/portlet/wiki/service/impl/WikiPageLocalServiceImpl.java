@@ -1499,7 +1499,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiPagePersistence.update(page);
 		}
 
-		List<WikiPage> pageVersions = wikiPagePersistence.findByG_N_H(
+		List<WikiPage> pageVersions = wikiPagePersistence.findByR_N_H(
 			page.getResourcePrimKey(), page.getNodeId(), false);
 
 		pageVersions = ListUtil.sort(pageVersions, new PageVersionComparator());

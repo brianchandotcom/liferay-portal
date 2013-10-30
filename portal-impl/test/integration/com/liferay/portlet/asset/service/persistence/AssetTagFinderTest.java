@@ -309,7 +309,7 @@ public class AssetTagFinderTest {
 		Group siteGroup = scopeGroup.getParentGroup();
 
 		String assetTagName = ServiceTestUtil.randomString();
-		String[] assetTagProperties = new String[] {
+		String[] assetTagProperties = {
 			"key" + AssetTagConstants.PROPERTY_KEY_VALUE_SEPARATOR + "value"
 		};
 

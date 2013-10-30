@@ -81,6 +81,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
@@ -1505,15 +1506,25 @@ public class StagingImpl implements Staging {
 			stagingGroup = sourceLayout.getGroup();
 			liveGroup = stagingGroup.getLiveGroup();
 
-			targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				sourceLayout.getUuid(), liveGroup.getGroupId(),
-				sourceLayout.isPrivateLayout());
+			targetLayout =
+				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					sourceLayout.getUuid(), liveGroup.getGroupId(),
+					sourceLayout.isPrivateLayout());
+		}
+
+		long sourcePlid = sourceLayout.getPlid();
+		long targetPlid = LayoutConstants.DEFAULT_PLID;
+
+		if (targetLayout != null) {
+			targetPlid = targetLayout.getPlid();
+		}
+		else if ((targetLayout == null) && sourceLayout.isTypeControlPanel()) {
+			targetPlid = sourcePlid;
 		}
 
 		copyPortlet(
 			portletRequest, stagingGroup.getGroupId(), liveGroup.getGroupId(),
-			sourceLayout.getPlid(), targetLayout.getPlid(),
-			portlet.getPortletId());
+			sourcePlid, targetPlid, portlet.getPortletId());
 	}
 
 	@Override

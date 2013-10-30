@@ -91,31 +91,23 @@ public class JSONWebServiceNaming {
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		for (Class<?> parameterType : parameterTypes) {
-			if (excludedTypes.contains(parameterType)) {
-				return false;
+			if (parameterType.isArray()) {
+				parameterType = parameterType.getComponentType();
 			}
 
-			if (parameterType.isArray()) {
-				Class<?> componentType = parameterType.getComponentType();
-
-				if (excludedTypes.contains(componentType)) {
-					return false;
-				}
+			if (excludedTypes.contains(parameterType)) {
+				return false;
 			}
 		}
 
 		Class<?> returnType = method.getReturnType();
 
-		if (excludedTypes.contains(returnType)) {
-			return false;
+		if (returnType.isArray()) {
+			returnType = returnType.getComponentType();
 		}
 
-		if (returnType.isArray()) {
-			Class<?> componentType = returnType.getComponentType();
-
-			if (excludedTypes.contains(componentType)) {
-				return false;
-			}
+		if (excludedTypes.contains(returnType)) {
+			return false;
 		}
 
 		return true;

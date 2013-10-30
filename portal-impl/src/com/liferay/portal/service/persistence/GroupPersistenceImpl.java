@@ -4781,6 +4781,398 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	private static final String _FINDER_COLUMN_T_A_TYPE_2 = "group_.type = ? AND ";
 	private static final String _FINDER_COLUMN_T_A_ACTIVE_2 = "group_.active = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @return the matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Group> findByG_C_P(long groupId, long companyId,
+		long parentGroupId) throws SystemException {
+		return findByG_C_P(groupId, companyId, parentGroupId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @return the range of matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Group> findByG_C_P(long groupId, long companyId,
+		long parentGroupId, int start, int end) throws SystemException {
+		return findByG_C_P(groupId, companyId, parentGroupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Group> findByG_C_P(long groupId, long companyId,
+		long parentGroupId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_P;
+		finderArgs = new Object[] {
+				groupId, companyId, parentGroupId,
+				
+				start, end, orderByComparator
+			};
+
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((groupId != group.getGroupId()) ||
+						(companyId != group.getCompanyId()) ||
+						(parentGroupId != group.getParentGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_GROUP__WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_P_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_P_PARENTGROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(GroupModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				qPos.add(parentGroupId);
+
+				if (!pagination) {
+					list = (List<Group>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Group>(list);
+				}
+				else {
+					list = (List<Group>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching group
+	 * @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Group findByG_C_P_First(long groupId, long companyId,
+		long parentGroupId, OrderByComparator orderByComparator)
+		throws NoSuchGroupException, SystemException {
+		Group group = fetchByG_C_P_First(groupId, companyId, parentGroupId,
+				orderByComparator);
+
+		if (group != null) {
+			return group;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(", parentGroupId=");
+		msg.append(parentGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the first group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching group, or <code>null</code> if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Group fetchByG_C_P_First(long groupId, long companyId,
+		long parentGroupId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<Group> list = findByG_C_P(groupId, companyId, parentGroupId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching group
+	 * @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Group findByG_C_P_Last(long groupId, long companyId,
+		long parentGroupId, OrderByComparator orderByComparator)
+		throws NoSuchGroupException, SystemException {
+		Group group = fetchByG_C_P_Last(groupId, companyId, parentGroupId,
+				orderByComparator);
+
+		if (group != null) {
+			return group;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", companyId=");
+		msg.append(companyId);
+
+		msg.append(", parentGroupId=");
+		msg.append(parentGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the last group in the ordered set where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching group, or <code>null</code> if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Group fetchByG_C_P_Last(long groupId, long companyId,
+		long parentGroupId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByG_C_P(groupId, companyId, parentGroupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Group> list = findByG_C_P(groupId, companyId, parentGroupId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByG_C_P(long groupId, long companyId, long parentGroupId)
+		throws SystemException {
+		for (Group group : findByG_C_P(groupId, companyId, parentGroupId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(group);
+		}
+	}
+
+	/**
+	 * Returns the number of groups where groupId &gt; &#63; and companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @return the number of matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByG_C_P(long groupId, long companyId, long parentGroupId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_P;
+
+		Object[] finderArgs = new Object[] { groupId, companyId, parentGroupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_GROUP__WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_P_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_P_PARENTGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(companyId);
+
+				qPos.add(parentGroupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_P_GROUPID_2 = "group_.groupId > ? AND ";
+	private static final String _FINDER_COLUMN_G_C_P_COMPANYID_2 = "group_.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_P_PARENTGROUPID_2 = "group_.parentGroupId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_C_C = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",

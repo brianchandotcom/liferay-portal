@@ -471,6 +471,12 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
 		</finder>
+		<finder name="F_C_P_NotS" return-type="Collection" db-index="false">
+			<finder-column name="folderId" comparator="&gt;" />
+			<finder-column name="companyId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="G_P_N" return-type="JournalFolder" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />

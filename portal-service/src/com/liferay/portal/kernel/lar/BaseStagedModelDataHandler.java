@@ -190,30 +190,24 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		PortletDataContext portletDataContext, Element rootElement,
 		Element referenceElement) {
 
-		String elementName = referenceElement.getName();
+		String uuid = referenceElement.attributeValue("uuid");
 
-		if (elementName.equals("missing-reference")) {
-			String uuid = referenceElement.attributeValue("uuid");
+		try {
+			boolean valid = validateMissingReference(
+				uuid, portletDataContext.getCompanyId(),
+				portletDataContext.getScopeGroupId());
 
-			try {
-				boolean valid = validateMissingReference(
+			if (!valid) {
+				valid = validateMissingReference(
 					uuid, portletDataContext.getCompanyId(),
-					portletDataContext.getScopeGroupId());
-
-				if (!valid) {
-					valid = validateMissingReference(
-						uuid, portletDataContext.getCompanyId(),
-						portletDataContext.getCompanyGroupId());
-				}
-
-				return valid;
+					portletDataContext.getCompanyGroupId());
 			}
-			catch (Exception e) {
-				return false;
-			}
+
+			return valid;
 		}
-
-		return true;
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	protected boolean countStagedModel(

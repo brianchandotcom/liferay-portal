@@ -14,23 +14,20 @@
 
 package com.liferay.portal.tools.sourceformatter.dependencies;
 
+import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+import com.liferay.portal.kernel.spring.aop.Skip;
+
 /**
  * @author Hugo Huijser
  */
-public class IncorrectWhitespace {
+public class SortAnnotations {
 
-	public void method(String s1, String s2) {
-		String s3 = s1;
-
-		String s4 = s2;
-
-		String s5 = s4;
-
-		if (true) {
-			String s6 = s5;
-		}
-
-		String s7 = s5;
+	@JSON
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Skip
+	public void method() {
 	}
 
 }

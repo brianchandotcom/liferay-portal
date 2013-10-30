@@ -17,20 +17,44 @@ package com.liferay.portal.tools.sourceformatter.dependencies;
 /**
  * @author Hugo Huijser
  */
-public class IncorrectWhitespace {
+public class IfClauseParentheses {
 
-	public void method(String s1, String s2) {
-		String s3 = s1;
+	public void method() {
+		int i = 0;
 
-		String s4 = s2;
-
-		String s5 = s4;
-
-		if (true) {
-			String s6 = s5;
+		if (i < -1 || i >= 1) {
+			return;
 		}
 
-		String s7 = s5;
+		if ((i < -1) || i >= 1) {
+			return;
+		}
+
+		if ((i < -1) || i >= 1) {
+			return;
+		}
+
+		String s = "test";
+
+		if (s != null && s.contains("test")) {
+			return;
+		}
+
+		if ((s != null && s.contains("test"))) {
+			return;
+		}
+
+		if ((s != null) && (s.contains("test"))) {
+			return;
+		}
+
+		if (((s != null) && s.contains("test"))) {
+			return;
+		}
+
+		if ((s != null) && s.contains("test")) {
+			return;
+		}
 	}
 
 }

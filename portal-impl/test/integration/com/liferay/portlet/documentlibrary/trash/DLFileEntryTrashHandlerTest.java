@@ -53,6 +53,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -74,6 +75,12 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Transactional
 	public void testTrashDLFileRank() throws Exception {
 		trashDLFileRank();
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 	}
 
 	@Override
@@ -251,6 +258,13 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
+	protected void restoreParentBaseModelFromTrash(long primaryKey)
+		throws Exception {
+
+		DLAppServiceUtil.restoreFolderFromTrash(primaryKey);
 	}
 
 	protected void trashDLFileRank() throws Exception {

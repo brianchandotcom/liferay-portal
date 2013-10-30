@@ -59,7 +59,6 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -377,7 +376,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				"dataRepositoryId", dlFileEntry.getDataRepositoryId());
 			document.addText(
 				"ddmContent",
-				extractContent(dlFileVersion, LocaleUtil.getSiteDefault()));
+				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
 			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
 				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
@@ -516,18 +515,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			doReindex(dlFileEntry);
 		}
-	}
-
-	protected String extractContent(DLFileVersion dlFileVersion, Locale locale)
-		throws Exception {
-
-		if (dlFileVersion.getFileEntryTypeId() ==
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-			return StringPool.BLANK;
-		}
-
-		return extractDDMContent(dlFileVersion, locale);
 	}
 
 	protected String extractDDMContent(

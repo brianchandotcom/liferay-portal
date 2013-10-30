@@ -26,3 +26,9 @@
 .portlet-msg-success {
 	@extend .alert-success;
 }
+
+/* ---------- Misc ---------- */
+
+.navbar .nav li > a {
+	word-break: break-all;
+}

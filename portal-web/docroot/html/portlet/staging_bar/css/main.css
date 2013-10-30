@@ -101,6 +101,10 @@
 		padding: 0 5px;
 	}
 
+	.staging-details {
+		line-height: 20px;
+	}
+
 	.staging-toggle .variations-options {
 		position: relative;
 
@@ -123,14 +127,40 @@
 			right: -5px;
 			top: 0;
 		}
+
+		.lfr-icon-menu-text {
+			display: inline-block;
+
+			@include ellipsis;
+
+			max-width: 75%;
+			padding-left: 5px;
+			vertical-align: bottom;
+		}
 	}
 
-	.publish-link-container {
-		bottom: 5px;
-		position: absolute;
+	.dropdown-menu .publish-link-container {
+		margin-left: 5px;
+
+		&.branching-enabled {
+			bottom: 5px;
+			position: absolute;
+		}
 
 		.publish-link {
-			margin: 0 5px;
+			@include ellipsis;
+
+			padding: 5px;
+			max-width: 95%;
+
+			em {
+				display: inline-block;
+
+				@include ellipsis;
+
+				max-width: 100px;
+				vertical-align: bottom;
+			}
 
 			&.btn.btn-success:hover {
 				background-color: #0ABA1D;

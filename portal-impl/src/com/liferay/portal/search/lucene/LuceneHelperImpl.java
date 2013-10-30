@@ -32,9 +32,13 @@ import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -663,6 +667,20 @@ public class LuceneHelperImpl implements LuceneHelper {
 		if (isLoadIndexFromClusterEnabled()) {
 			ClusterExecutorUtil.removeClusterEventListener(
 				_loadIndexClusterEventListener);
+		}
+
+		MessageBus messageBus = MessageBusUtil.getMessageBus();
+
+		for (String searchEngineId : SearchEngineUtil.getSearchEngineIds()) {
+			String searchReaderDestinationName =
+				SearchEngineUtil.getSearchWriterDestinationName(searchEngineId);
+
+			Destination searchReaderDestination = messageBus.getDestination(
+				searchReaderDestinationName);
+
+			if (searchReaderDestination != null) {
+				searchReaderDestination.close(true);
+			}
 		}
 
 		for (IndexAccessor indexAccessor : _indexAccessors.values()) {

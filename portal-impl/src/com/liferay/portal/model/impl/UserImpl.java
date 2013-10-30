@@ -734,7 +734,7 @@ public class UserImpl extends UserBaseImpl {
 	public boolean isEmailAddressComplete() {
 		if (Validator.isNull(getEmailAddress()) ||
 			(PropsValues.USERS_EMAIL_ADDRESS_REQUIRED &&
-				Validator.isNull(getDisplayEmailAddress()))) {
+			 Validator.isNull(getDisplayEmailAddress()))) {
 
 			return false;
 		}
@@ -777,10 +777,10 @@ public class UserImpl extends UserBaseImpl {
 		return _passwordModified;
 	}
 
-	public boolean isReminderQueryComplete () {
+	public boolean isReminderQueryComplete() {
 		if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
-			if ((Validator.isNull(getReminderQueryQuestion()) ||
-				Validator.isNull(getReminderQueryAnswer()))) {
+			if (Validator.isNull(getReminderQueryQuestion()) ||
+				Validator.isNull(getReminderQueryAnswer())) {
 
 				return false;
 			}
@@ -792,8 +792,8 @@ public class UserImpl extends UserBaseImpl {
 	public boolean isSetup() {
 		return
 			isEmailAddressComplete() && isEmailAddressVerificationComplete() &&
-				!isPasswordReset() && isReminderQueryComplete() &&
-				isTermsOfUseComplete();
+			!isPasswordReset() && isReminderQueryComplete() &&
+			isTermsOfUseComplete();
 	}
 
 	public boolean isTermsOfUseComplete() {

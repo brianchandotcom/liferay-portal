@@ -129,7 +129,6 @@ public class SetupWizardSampleDataUtil {
 		}
 
 		user.setPasswordReset(false);
-		user.setAgreedToTermsOfUse(true);
 
 		UserLocalServiceUtil.updateUser(user);
 

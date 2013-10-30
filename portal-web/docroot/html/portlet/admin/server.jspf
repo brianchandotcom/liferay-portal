@@ -158,7 +158,7 @@ serverURL.setParameter("tabs3", tabs3);
 
 							// Name
 
-							row.addText(name);
+							row.addText(HtmlUtil.escape(name));
 
 							// Logger
 
@@ -167,7 +167,7 @@ serverURL.setParameter("tabs3", tabs3);
 							sb.append("<select name=\"");
 							sb.append(renderResponse.getNamespace());
 							sb.append("logLevel");
-							sb.append(name);
+							sb.append(HtmlUtil.escapeAttribute(name));
 							sb.append("\">");
 
 							for (int j = 0; j < Levels.ALL_LEVELS.length; j++) {

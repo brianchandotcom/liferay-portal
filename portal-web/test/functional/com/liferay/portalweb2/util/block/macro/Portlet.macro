@@ -46,26 +46,29 @@
 
 		<while>
 			<not>
-				<equals arg1="${i}" arg2="5" />
+				<equals arg1="${i}" arg2="10" />
 			</not>
 			<then>
+				<var name="i" value="${i?increment()}" />
+
 				<if>
-					<condition action="Home#isElementNotPresent" locator-key1="PORTLET_1" />
+					<condition action="Home#isElementPresent" locator-key1="PORTLET_LOADING_ANIMATION" />
 					<then>
-						<execute action="Home#refresh" />
-
 						<execute action="Home#pause" locator1="1000" />
-
-						<echo message="Waiting for ${portletName} portlet to load. Attempt ${i}" />
-
-						<var name="i" value="${i?increment()}" />
 					</then>
 					<else>
-						<var name="i" value="5" />
+						<var name="i" value="10" />
 					</else>
 				</if>
 			</then>
 		</while>
+
+		<if>
+			<condition action="Home#isElementNotPresent" locator-key1="PORTLET_1" />
+			<then>
+				<execute action="Home#refresh" />
+			</then>
+		</if>
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>

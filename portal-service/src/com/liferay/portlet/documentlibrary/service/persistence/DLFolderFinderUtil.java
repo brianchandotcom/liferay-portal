@@ -97,6 +97,14 @@ public class DLFolderFinderUtil {
 		return getFinder().findF_ByNoAssets();
 	}
 
+	public static java.util.List<java.lang.Long> findF_ByC_P(long companyId,
+		long parentFolderId, long previousFolderId, int size)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findF_ByC_P(companyId, parentFolderId, previousFolderId,
+			size);
+	}
+
 	public static java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,

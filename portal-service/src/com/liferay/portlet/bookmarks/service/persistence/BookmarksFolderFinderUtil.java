@@ -47,6 +47,14 @@ public class BookmarksFolderFinderUtil {
 		return getFinder().findByNoAssets();
 	}
 
+	public static java.util.List<java.lang.Long> findF_ByC_P(long companyId,
+		long parentFolderId, long previousFolderId, int size)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findF_ByC_P(companyId, parentFolderId, previousFolderId,
+			size);
+	}
+
 	public static java.util.List<java.lang.Object> findF_E_ByG_F(long groupId,
 		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)

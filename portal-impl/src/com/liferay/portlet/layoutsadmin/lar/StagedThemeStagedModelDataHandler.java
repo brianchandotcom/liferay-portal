@@ -60,20 +60,16 @@ public class StagedThemeStagedModelDataHandler
 			return true;
 		}
 
-		String elementName = referenceElement.getName();
+		String classPK = referenceElement.attributeValue("class-pk");
 
-		if (elementName.equals("missing-reference")) {
-			String classPK = referenceElement.attributeValue("class-pk");
+		List<Theme> themes = ThemeLocalServiceUtil.getThemes(
+			portletDataContext.getCompanyId());
 
-			List<Theme> themes = ThemeLocalServiceUtil.getThemes(
-				portletDataContext.getCompanyId());
+		for (Theme theme : themes) {
+			String themeId = theme.getThemeId();
 
-			for (Theme theme : themes) {
-				String themeId = theme.getThemeId();
-
-				if (themeId.equals(classPK)) {
-					return true;
-				}
+			if (themeId.equals(classPK)) {
+				return true;
 			}
 		}
 

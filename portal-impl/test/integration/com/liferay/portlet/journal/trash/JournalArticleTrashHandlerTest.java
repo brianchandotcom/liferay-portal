@@ -211,6 +211,13 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected void restoreParentBaseModelFromTrash(long primaryKey)
+		throws Exception {
+
+		JournalFolderServiceUtil.restoreFolderFromTrash(primaryKey);
+	}
+
+	@Override
 	protected BaseModel<?> updateBaseModel(
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {

@@ -253,6 +253,13 @@ public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
 	}
 
+	@Override
+	protected void restoreParentBaseModelFromTrash(long primaryKey)
+		throws Exception {
+
+		DLAppServiceUtil.restoreFolderFromTrash(primaryKey);
+	}
+
 	protected void trashDLFileRank() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 

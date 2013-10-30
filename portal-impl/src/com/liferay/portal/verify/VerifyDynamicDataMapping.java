@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,6 +35,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -89,10 +92,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		File file = DLStoreUtil.getFile(
 			companyId, CompanyConstants.SYSTEM, filePath);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+		ServiceContext serviceContext = createServiceContext();
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			userId, groupId, folderId, fileName, contentType, title,
@@ -101,6 +101,39 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		updateFileEntryStatus(fileEntry, status, serviceContext);
 
 		return fileEntry;
+	}
+
+	protected Folder addFolder(
+			long userId, long groupId, long primaryKey, String fieldName)
+		throws Exception {
+
+		Folder ddmFolder = addFolder(
+			userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "DDM",
+			StringPool.BLANK);
+
+		Folder primaryKeyFolder = addFolder(
+			userId, groupId, ddmFolder.getFolderId(),
+			String.valueOf(primaryKey), StringPool.BLANK);
+
+		return addFolder(
+			userId, groupId, primaryKeyFolder.getFolderId(), fieldName,
+			StringPool.BLANK);
+	}
+
+	protected Folder addFolder(
+			long userId, long groupId, long parentFolderId, String name,
+			String description)
+		throws Exception {
+
+		try {
+			return DLAppLocalServiceUtil.getFolder(
+				groupId, parentFolderId, name);
+		}
+		catch (NoSuchFolderException nsfe) {
+			return DLAppLocalServiceUtil.addFolder(
+				userId, groupId, parentFolderId, name, description,
+				createServiceContext());
+		}
 	}
 
 	protected boolean createDefaultMetadataElement(
@@ -123,6 +156,15 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		entryElement.addCDATA(StringPool.BLANK);
 
 		return true;
+	}
+
+	protected ServiceContext createServiceContext() {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return serviceContext;
 	}
 
 	@Override
@@ -353,6 +395,11 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 				continue;
 			}
 
+			long primaryKey = GetterUtil.getLong(baseModel.getPrimaryKeyObj());
+
+			Folder folder = addFolder(
+				userId, groupId, primaryKey, field.getName());
+
 			String valueString = String.valueOf(field.getValue());
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -363,8 +410,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 					field.getName();
 
 			FileEntry fileEntry = addFileEntry(
-				companyId, userId, groupId,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				companyId, userId, groupId, folder.getFolderId(),
 				jsonObject.getString("name"), filePath, status);
 
 			fieldValues.put(field.getName(), getJSON(fileEntry));

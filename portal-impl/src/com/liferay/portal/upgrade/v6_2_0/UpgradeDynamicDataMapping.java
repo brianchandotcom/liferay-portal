@@ -129,7 +129,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				updateStructure(
 					structureId, StringUtil.toUpperCase(structureKey.trim()),
-					updateXSD(xsd));
+					updateXSD(xsd, structureKey));
 			}
 		}
 		finally {
@@ -137,7 +137,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected String updateXSD(String xsd) throws Exception {
+	protected String updateXSD(String xsd, String structureKey)
+		throws Exception {
+
 		Document document = SAXReaderUtil.read(xsd);
 
 		Element rootElement = document.getRootElement();
@@ -146,13 +148,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			updateXSDDynamicElement(dynamicElementElement);
+			updateXSDDynamicElement(dynamicElementElement, structureKey);
 		}
 
 		return DDMXMLUtil.formatXML(document);
 	}
 
-	protected void updateXSDDynamicElement(Element element) {
+	protected void updateXSDDynamicElement(
+			Element element, String structureKey) {
+
 		Element metadataElement = element.element("meta-data");
 
 		updateMetadataElement(
@@ -165,11 +169,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"displayChildLabelAsValue", "fieldCssClass"
 			});
 
+		if (structureKey.equals("TikaRawMetadata")) {
+			element.addAttribute("indexType", "text");
+		}
+
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			updateXSDDynamicElement(dynamicElementElement);
+			updateXSDDynamicElement(dynamicElementElement, structureKey);
 		}
 	}
 

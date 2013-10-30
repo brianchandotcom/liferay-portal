@@ -92,10 +92,9 @@ public class JournalFeedServiceSoap {
 		}
 	}
 
-	public static void deleteFeed(long groupId, long feedId)
-		throws RemoteException {
+	public static void deleteFeed(long feedId) throws RemoteException {
 		try {
-			JournalFeedServiceUtil.deleteFeed(groupId, feedId);
+			JournalFeedServiceUtil.deleteFeed(feedId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -117,10 +116,9 @@ public class JournalFeedServiceSoap {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFeedSoap getFeed(
-		long groupId, long feedId) throws RemoteException {
+		long feedId) throws RemoteException {
 		try {
-			com.liferay.portlet.journal.model.JournalFeed returnValue = JournalFeedServiceUtil.getFeed(groupId,
-					feedId);
+			com.liferay.portlet.journal.model.JournalFeed returnValue = JournalFeedServiceUtil.getFeed(feedId);
 
 			return com.liferay.portlet.journal.model.JournalFeedSoap.toSoapModel(returnValue);
 		}

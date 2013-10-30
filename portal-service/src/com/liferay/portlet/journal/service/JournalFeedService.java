@@ -75,7 +75,7 @@ public interface JournalFeedService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteFeed(long groupId, long feedId)
+	public void deleteFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -84,8 +84,7 @@ public interface JournalFeedService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.journal.model.JournalFeed getFeed(long groupId,
-		long feedId)
+	public com.liferay.portlet.journal.model.JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

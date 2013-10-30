@@ -101,16 +101,14 @@ public class JournalFeedServiceHttp {
 		}
 	}
 
-	public static void deleteFeed(HttpPrincipal httpPrincipal, long groupId,
-		long feedId)
+	public static void deleteFeed(HttpPrincipal httpPrincipal, long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"deleteFeed", _deleteFeedParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					feedId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, feedId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -168,15 +166,14 @@ public class JournalFeedServiceHttp {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFeed getFeed(
-		HttpPrincipal httpPrincipal, long groupId, long feedId)
+		HttpPrincipal httpPrincipal, long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(JournalFeedServiceUtil.class,
 					"getFeed", _getFeedParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					feedId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, feedId);
 
 			Object returnObj = null;
 
@@ -301,13 +298,13 @@ public class JournalFeedServiceHttp {
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFeedParameterTypes1 = new Class[] {
-			long.class, long.class
+			long.class
 		};
 	private static final Class<?>[] _deleteFeedParameterTypes2 = new Class[] {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getFeedParameterTypes3 = new Class[] {
-			long.class, long.class
+			long.class
 		};
 	private static final Class<?>[] _getFeedParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class

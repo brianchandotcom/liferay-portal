@@ -78,10 +78,10 @@ public class JournalFeedServiceUtil {
 			contentField, feedType, feedVersion, serviceContext);
 	}
 
-	public static void deleteFeed(long groupId, long feedId)
+	public static void deleteFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteFeed(groupId, feedId);
+		getService().deleteFeed(feedId);
 	}
 
 	public static void deleteFeed(long groupId, java.lang.String feedId)
@@ -91,10 +91,10 @@ public class JournalFeedServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFeed getFeed(
-		long groupId, long feedId)
+		long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getFeed(groupId, feedId);
+		return getService().getFeed(feedId);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFeed getFeed(

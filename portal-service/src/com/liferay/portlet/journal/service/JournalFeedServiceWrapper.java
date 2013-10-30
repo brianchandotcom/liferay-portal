@@ -72,10 +72,10 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	}
 
 	@Override
-	public void deleteFeed(long groupId, long feedId)
+	public void deleteFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_journalFeedService.deleteFeed(groupId, feedId);
+		_journalFeedService.deleteFeed(feedId);
 	}
 
 	@Override
@@ -86,11 +86,10 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	}
 
 	@Override
-	public com.liferay.portlet.journal.model.JournalFeed getFeed(long groupId,
-		long feedId)
+	public com.liferay.portlet.journal.model.JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _journalFeedService.getFeed(groupId, feedId);
+		return _journalFeedService.getFeed(feedId);
 	}
 
 	@Override

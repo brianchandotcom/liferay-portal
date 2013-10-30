@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -31,13 +32,22 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
+import java.io.InputStream;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -86,6 +96,28 @@ public class JournalArticleServiceTest {
 			"Version 1", _article.getTitle(LocaleUtil.getDefault()));
 		Assert.assertTrue(_article.isApproved());
 		Assert.assertEquals(1.0, _article.getVersion(), 0);
+	}
+
+	@Test(expected = StorageFieldRequiredException.class)
+	public void testAddArticleRequiredHtmlField_EmptyField() throws Exception {
+		Map<String, String> requiredFields = new HashMap<String, String>();
+
+		requiredFields.put("HTML2030", "");
+
+		testAddArticleRequiredFields(
+			"test-ddm-structure-content-html-required.xml",
+			"test-journal-content-html-required.xml", requiredFields);
+	}
+
+	@Test
+	public void testAddArticleRequiredHtmlField_FilledField() throws Exception {
+		Map<String, String> requiredFields = new HashMap<String, String>();
+
+		requiredFields.put("HTML2030", "<p>Hello World!</p>");
+
+		testAddArticleRequiredFields(
+			"test-ddm-structure-content-html-required.xml",
+			"test-journal-content-html-required.xml", requiredFields);
 	}
 
 	@Test
@@ -451,6 +483,17 @@ public class JournalArticleServiceTest {
 			_article.getResourcePrimKey(), status, preferApproved);
 	}
 
+	protected String readText(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portlet/journal/dependencies/" + fileName);
+
+		return StringUtil.read(inputStream);
+	}
+
 	protected List<JournalArticle> searchArticlesByKeyword(
 			String keyword, int status)
 		throws Exception {
@@ -464,6 +507,39 @@ public class JournalArticleServiceTest {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
 			null, keyword, null, "", "", null, null, status, null, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	protected void testAddArticleRequiredFields(
+			String ddmStructureContent, String journalArticleContent,
+			Map<String, String> requiredFields)
+		throws Exception {
+
+		String xsd = readText(ddmStructureContent);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(), xsd);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId());
+
+		String xmlContent = readText(journalArticleContent);
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		for (String requiredFieldName : requiredFields.keySet()) {
+			Assert.assertTrue(ddmStructure.getFieldRequired(requiredFieldName));
+
+			serviceContext.setAttribute(
+				requiredFieldName, requiredFields.get(requiredFieldName));
+		}
+
+		JournalTestUtil.addArticleWithXMLContent(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, xmlContent,
+			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
+			LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId()),
+			serviceContext);
 	}
 
 	protected void updateAndExpireArticle() throws Exception {

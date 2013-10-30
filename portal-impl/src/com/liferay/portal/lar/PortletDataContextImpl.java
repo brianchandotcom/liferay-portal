@@ -2201,6 +2201,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 			referenceElement.addAttribute("uuid", stagedModel.getUuid());
 			referenceElement.addAttribute(
 				"company-id", String.valueOf(stagedModel.getCompanyId()));
+
+			Map<String, String> referenceAttributes =
+				StagedModelDataHandlerUtil.getReferenceAttributes(
+					this, stagedModel);
+
+			for (Map.Entry<String, String> referenceAttribute :
+					referenceAttributes.entrySet()) {
+
+				referenceElement.addAttribute(
+					referenceAttribute.getKey(), referenceAttribute.getValue());
+			}
 		}
 
 		return referenceElement;

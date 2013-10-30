@@ -80,9 +80,6 @@ public class StagedModelDataHandlerUtil {
 					stagedModel.getModelClass(),
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
-				_addReferenceAttributes(
-					portletDataContext, stagedModel, referenceElement);
-
 				return referenceElement;
 			}
 		}
@@ -93,9 +90,6 @@ public class StagedModelDataHandlerUtil {
 			referrerPortlet, portletDataContext.getExportDataRootElement(),
 			stagedModel, stagedModel.getModelClass(),
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
-
-		_addReferenceAttributes(
-			portletDataContext, stagedModel, referenceElement);
 
 		return referenceElement;
 	}
@@ -137,9 +131,6 @@ public class StagedModelDataHandlerUtil {
 					stagedModel, stagedModelClass,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
-				_addReferenceAttributes(
-					portletDataContext, stagedModel, referenceElement);
-
 				return referenceElement;
 			}
 		}
@@ -149,9 +140,6 @@ public class StagedModelDataHandlerUtil {
 		referenceElement = portletDataContext.addReferenceElement(
 			referrerStagedModel, referrerStagedModelElement, stagedModel,
 			stagedModelClass, referenceType, false);
-
-		_addReferenceAttributes(
-			portletDataContext, stagedModel, referenceElement);
 
 		return referenceElement;
 	}
@@ -188,6 +176,16 @@ public class StagedModelDataHandlerUtil {
 		}
 
 		return stagedModelDataHandler.getDisplayName(stagedModel);
+	}
+
+	public static Map<String, String> getReferenceAttributes(
+		PortletDataContext portletDataContext, StagedModel stagedModel) {
+
+		StagedModelDataHandler<StagedModel> stagedModelDataHandler =
+			_getStagedModelDataHandler(stagedModel);
+
+		return stagedModelDataHandler.getReferenceAttributes(
+			portletDataContext, stagedModel);
 	}
 
 	public static <T extends StagedModel> void importReferenceStagedModel(
@@ -318,25 +316,6 @@ public class StagedModelDataHandlerUtil {
 
 		stagedModelDataHandler.importStagedModel(
 			portletDataContext, stagedModel);
-	}
-
-	private static void _addReferenceAttributes(
-		PortletDataContext portletDataContext, StagedModel stagedModel,
-		Element referenceElement) {
-
-		StagedModelDataHandler<StagedModel> stagedModelDataHandler =
-			_getStagedModelDataHandler(stagedModel);
-
-		Map<String, String> referenceAttributes =
-			stagedModelDataHandler.getReferenceAttributes(
-				portletDataContext, stagedModel);
-
-		for (Map.Entry<String, String> referenceAttribute :
-				referenceAttributes.entrySet()) {
-
-			referenceElement.addAttribute(
-				referenceAttribute.getKey(), referenceAttribute.getValue());
-		}
 	}
 
 	private static StagedModel _getStagedModel(

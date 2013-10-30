@@ -43,9 +43,26 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException, SystemException {
-		StringBundler sb = new StringBundler();
+		List<DLFolder> folders = new ArrayList<DLFolder>();
 
-		buildTreePath(sb, this);
+		DLFolder folder = this;
+
+		while (folder != null) {
+			folders.add(folder);
+
+			folder = folder.getParentFolder();
+		}
+
+		StringBundler sb = new StringBundler(folders.size() * 2 + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = folders.size() - 1; i >= 0; i--) {
+			folder = folders.get(i);
+
+			sb.append(folder.getFolderId());
+			sb.append(StringPool.SLASH);
+		}
 
 		return sb.toString();
 	}
@@ -201,20 +218,6 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		}
 
 		return false;
-	}
-
-	protected void buildTreePath(StringBundler sb, DLFolder dlFolder)
-		throws PortalException, SystemException {
-
-		if (dlFolder == null) {
-			sb.append(StringPool.SLASH);
-		}
-		else {
-			buildTreePath(sb, dlFolder.getParentFolder());
-
-			sb.append(dlFolder.getFolderId());
-			sb.append(StringPool.SLASH);
-		}
 	}
 
 }

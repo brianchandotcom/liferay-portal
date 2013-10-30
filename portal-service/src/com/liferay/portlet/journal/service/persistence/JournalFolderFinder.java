@@ -38,4 +38,8 @@ public interface JournalFolderFinder {
 		long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Long> findF_ByC_P(long companyId,
+		long parentFolderId, long previousFolderId, int size)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

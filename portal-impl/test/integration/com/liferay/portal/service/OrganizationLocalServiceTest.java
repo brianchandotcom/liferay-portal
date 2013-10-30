@@ -293,7 +293,7 @@ public class OrganizationLocalServiceTest {
 
 	@Test
 	public void testRebuildTree() throws Exception {
-		createOrganizationTree();
+		createTree();
 
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE");
@@ -303,10 +303,19 @@ public class OrganizationLocalServiceTest {
 		field.setInt(null, 3);
 
 		try {
+			for (Organization organization : _organizations) {
+				organization.setTreePath(null);
+
+				OrganizationLocalServiceUtil.updateOrganization(organization);
+			}
+
 			OrganizationLocalServiceUtil.rebuildTree(
 				TestPropsValues.getCompanyId());
 
 			for (Organization organization : _organizations) {
+				organization = OrganizationLocalServiceUtil.getOrganization(
+					organization.getOrganizationId());
+
 				Assert.assertEquals(
 					organization.buildTreePath(), organization.getTreePath());
 			}
@@ -316,7 +325,7 @@ public class OrganizationLocalServiceTest {
 		}
 	}
 
-	protected void createOrganizationTree() throws Exception {
+	protected void createTree() throws Exception {
 
 		/**
 		 * Tree 1

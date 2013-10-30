@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.journal.service.impl.JournalArticleLocalServiceImpl.updateTreePaths">
+		<![CDATA[
+			UPDATE
+				JournalArticle
+			SET
+				[$SET$]
+			WHERE
+				[$WHERE$]
+				(JournalArticle.companyId = ?) AND
+				(JournalArticle.status != ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F">
 		<![CDATA[
 			SELECT
@@ -325,6 +337,21 @@
 				(JournalFolder.groupId = ?) AND
 				([$STATUS$])
 				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByC_P">
+		<![CDATA[
+			SELECT
+				folderId
+			FROM
+				JournalFolder
+			WHERE
+				(folderId > ?) AND
+				(companyId = ?) AND
+				(parentFolderId = ?) AND
+				(status != ?)
+			ORDER BY
+				folderId ASC
 		]]>
 	</sql>
 </custom-sql>

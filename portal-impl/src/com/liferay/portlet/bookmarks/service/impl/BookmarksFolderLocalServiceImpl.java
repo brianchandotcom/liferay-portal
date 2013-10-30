@@ -25,12 +25,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.bookmarks.FolderNameException;
@@ -44,6 +46,8 @@ import com.liferay.portlet.trash.model.TrashVersion;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -450,13 +454,50 @@ public class BookmarksFolderLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<BookmarksFolder> folders = bookmarksFolderPersistence.findByC_NotS(
-			companyId, WorkflowConstants.STATUS_IN_TRASH);
+		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		for (BookmarksFolder folder : folders) {
-			folder.setTreePath(folder.buildTreePath());
+		traces.push(
+			new Object[] {
+				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringPool.SLASH, 0L
+			});
 
-			bookmarksFolderPersistence.update(folder);
+		Object[] trace = null;
+
+		while ((trace = traces.poll()) != null) {
+			Long parentFolderId = (Long)trace[0];
+			String parentPath = (String)trace[1];
+			Long previousFolderId = (Long)trace[2];
+
+			List<Long> childFolderIds = bookmarksFolderFinder.findF_ByC_P(
+				companyId, parentFolderId, previousFolderId,
+				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
+
+			if (childFolderIds.isEmpty()) {
+				continue;
+			}
+
+			if (childFolderIds.size() ==
+					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
+
+				trace[2] = childFolderIds.get(childFolderIds.size() - 1);
+
+				traces.push(trace);
+			}
+
+			for (long childFolderId : childFolderIds) {
+				String path = parentPath.concat(
+					String.valueOf(childFolderId)).concat(StringPool.SLASH);
+
+				BookmarksFolder folder =
+					bookmarksFolderPersistence.findByPrimaryKey(childFolderId);
+
+				folder.setTreePath(path);
+
+				bookmarksFolderPersistence.update(folder);
+
+				traces.push(new Object[] {childFolderId, path, 0L});
+			}
 		}
 	}
 

@@ -17,7 +17,10 @@ package com.liferay.portlet.journal.service.impl;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -122,6 +125,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -3457,13 +3461,47 @@ public class JournalArticleLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<JournalArticle> articles = journalArticlePersistence.findByC_NotST(
-			companyId, WorkflowConstants.STATUS_IN_TRASH);
+		journalFolderLocalService.rebuildTree(companyId);
 
-		for (JournalArticle article : articles) {
-			article.setTreePath(article.buildTreePath());
+		Session session = journalArticlePersistence.openSession();
 
-			journalArticlePersistence.update(article);
+		try {
+			String sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {_TREE_PATH_SET_SQL, StringPool.BLANK});
+
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+
+			// Update root folder articles
+
+			sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {"treePath = \"/0/\"", "folderId = 0 AND"});
+
+			sqlQuery = session.createSQLQuery(sql);
+
+			qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+		}
+		finally {
+			journalArticlePersistence.closeSession(session);
+
+			journalArticlePersistence.clearCache();
 		}
 	}
 
@@ -6683,6 +6721,13 @@ public class JournalArticleLocalServiceImpl
 
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =
 		PropsValues.JOURNAL_ARTICLE_CHECK_INTERVAL * Time.MINUTE;
+
+	private static final String _TREE_PATH_SET_SQL =
+		"treePath = (SELECT JournalFolder.treePath FROM JournalFolder " +
+			"WHERE JournalFolder.folderId = JournalArticle.folderId)";
+
+	private static final String _UPDATE_TREE_PATHS =
+		JournalArticleLocalServiceImpl.class.getName() + ".updateTreePaths";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		JournalArticleLocalServiceImpl.class);

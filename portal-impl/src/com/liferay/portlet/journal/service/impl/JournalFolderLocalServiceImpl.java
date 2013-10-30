@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -49,6 +50,8 @@ import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -534,13 +537,50 @@ public class JournalFolderLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<JournalFolder> folders = journalFolderPersistence.findByC_NotS(
-			companyId, WorkflowConstants.STATUS_IN_TRASH);
+		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		for (JournalFolder folder : folders) {
-			folder.setTreePath(folder.buildTreePath());
+		traces.push(
+			new Object[] {
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringPool.SLASH, 0L
+			});
 
-			journalFolderPersistence.update(folder);
+		Object[] trace = null;
+
+		while ((trace = traces.poll()) != null) {
+			Long parentFolderId = (Long)trace[0];
+			String parentPath = (String)trace[1];
+			Long previousFolderId = (Long)trace[2];
+
+			List<Long> childFolderIds = journalFolderFinder.findF_ByC_P(
+				companyId, parentFolderId, previousFolderId,
+				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
+
+			if (childFolderIds.isEmpty()) {
+				continue;
+			}
+
+			if (childFolderIds.size() ==
+					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
+
+				trace[2] = childFolderIds.get(childFolderIds.size() - 1);
+
+				traces.push(trace);
+			}
+
+			for (long childFolderId : childFolderIds) {
+				String path = parentPath.concat(
+					String.valueOf(childFolderId)).concat(StringPool.SLASH);
+
+				JournalFolder folder =
+					journalFolderPersistence.findByPrimaryKey(childFolderId);
+
+				folder.setTreePath(path);
+
+				journalFolderPersistence.update(folder);
+
+				traces.push(new Object[] {childFolderId, path, 0L});
+			}
 		}
 	}
 

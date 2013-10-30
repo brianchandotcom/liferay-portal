@@ -14,15 +14,21 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileVersionLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -132,15 +138,55 @@ public class DLFileVersionLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<DLFileVersion> dlFileVersions =
-			dlFileVersionPersistence.findByC_NotS(
-				companyId, WorkflowConstants.STATUS_IN_TRASH);
+		dlFolderLocalService.rebuildTree(companyId);
 
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			dlFileVersion.setTreePath(dlFileVersion.buildTreePath());
+		Session session = dlFileVersionPersistence.openSession();
 
-			dlFileVersionPersistence.update(dlFileVersion);
+		try {
+			String sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {_TREE_PATH_SET_SQL, StringPool.BLANK});
+
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+
+			// Update root folder file versions
+
+			sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {"treePath = \"/0/\"", "folderId = 0 AND"});
+
+			sqlQuery = session.createSQLQuery(sql);
+
+			qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+		}
+		finally {
+			dlFileVersionPersistence.closeSession(session);
+
+			dlFileVersionPersistence.clearCache();
 		}
 	}
+
+	private static final String _TREE_PATH_SET_SQL =
+		"treePath = (SELECT DLFolder.treePath FROM DLFolder " +
+			"WHERE DLFolder.folderId = DLFileVersion.folderId)";
+
+	private static final String _UPDATE_TREE_PATHS =
+		DLFileVersionLocalServiceImpl.class.getName() + ".updateTreePaths";
 
 }

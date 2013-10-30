@@ -63,6 +63,10 @@ public interface DLFolderFinder {
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> findF_ByNoAssets()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<java.lang.Long> findF_ByC_P(long companyId,
+		long parentFolderId, long previousFolderId, int size)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,

@@ -14,9 +14,14 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -26,6 +31,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutLocalServiceBaseImpl;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -289,14 +295,47 @@ public class DLFileShortcutLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<DLFileShortcut> fileShortcuts =
-			dlFileShortcutPersistence.findByC_NotS(
-				companyId, WorkflowConstants.STATUS_IN_TRASH);
+		dlFolderLocalService.rebuildTree(companyId);
 
-		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			fileShortcut.setTreePath(fileShortcut.buildTreePath());
+		Session session = dlFileShortcutPersistence.openSession();
 
-			dlFileShortcutPersistence.update(fileShortcut);
+		try {
+			String sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {_TREE_PATH_SET_SQL, StringPool.BLANK});
+
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+
+			// Update root folder file shortcuts
+
+			sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {"treePath = \"/0/\"", "folderId = 0 AND"});
+
+			sqlQuery = session.createSQLQuery(sql);
+
+			qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+		}
+		finally {
+			dlFileShortcutPersistence.closeSession(session);
+
+			dlFileShortcutPersistence.clearCache();
 		}
 	}
 
@@ -438,5 +477,12 @@ public class DLFileShortcutLocalServiceImpl
 			throw new NoSuchFileEntryException();
 		}
 	}
+
+	private static final String _TREE_PATH_SET_SQL =
+		"treePath = (SELECT DLFolder.treePath FROM DLFolder " +
+			"WHERE DLFolder.folderId = DLFileShortcut.folderId)";
+
+	private static final String _UPDATE_TREE_PATHS =
+		DLFileShortcutLocalServiceImpl.class.getName() + ".updateTreePaths";
 
 }

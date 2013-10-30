@@ -1,6 +1,41 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl.updateTreePaths">
+		<![CDATA[
+			UPDATE
+				DLFileEntry
+			SET
+				[$SET$]
+			WHERE
+				[$WHERE$]
+				(DLFileEntry.companyId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutLocalServiceImpl.updateTreePaths">
+		<![CDATA[
+			UPDATE
+				DLFileShortcut
+			SET
+				[$SET$]
+			WHERE
+				[$WHERE$]
+				(DLFileShortcut.companyId = ?) AND
+				(DLFileShortcut.status != ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.impl.DLFileVersionLocalServiceImpl.updateTreePaths">
+		<![CDATA[
+			UPDATE
+				DLFileVersion
+			SET
+				[$SET$]
+			WHERE
+				[$WHERE$]
+				(DLFileVersion.companyId = ?) AND
+				(DLFileVersion.status != ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByExtraSettings">
 		<![CDATA[
 			SELECT
@@ -338,6 +373,21 @@
 					WHERE
 						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.DOCUMENTLIBRARY.MODEL.DLFOLDER$]
 				))
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByC_P">
+		<![CDATA[
+			SELECT
+				folderId
+			FROM
+				DLFolder
+			WHERE
+				(folderId > ?) AND
+				(companyId = ?) AND
+				(parentFolderId = ?) AND
+				(status != ?)
+			ORDER BY
+				folderId ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByG_M_F">

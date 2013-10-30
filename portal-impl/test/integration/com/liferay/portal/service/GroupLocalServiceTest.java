@@ -51,7 +51,7 @@ public class GroupLocalServiceTest {
 
 	@Test
 	public void testRebuildTree() throws Exception {
-		createGroupTree();
+		createTree();
 
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE");
@@ -61,9 +61,17 @@ public class GroupLocalServiceTest {
 		field.setInt(null, 3);
 
 		try {
+			for (Group group : _groups) {
+				group.setTreePath(null);
+
+				GroupLocalServiceUtil.updateGroup(group);
+			}
+
 			GroupLocalServiceUtil.rebuildTree(TestPropsValues.getCompanyId());
 
 			for (Group group : _groups) {
+				group = GroupLocalServiceUtil.getGroup(group.getGroupId());
+
 				Assert.assertEquals(group.buildTreePath(), group.getTreePath());
 			}
 		}
@@ -72,7 +80,7 @@ public class GroupLocalServiceTest {
 		}
 	}
 
-	protected void createGroupTree() throws Exception {
+	protected void createTree() throws Exception {
 
 		/**
 		 * Tree 1

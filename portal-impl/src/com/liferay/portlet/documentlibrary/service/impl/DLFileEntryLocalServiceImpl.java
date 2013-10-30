@@ -19,7 +19,10 @@ import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -104,6 +107,7 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoRow;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -1352,16 +1356,45 @@ public class DLFileEntryLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
+		dlFolderLocalService.rebuildTree(companyId);
 
-		List<DLFileEntry> dlFileEntries = dlFileEntryFinder.findByCompanyId(
-			companyId, queryDefinition);
+		Session session = dlFileEntryPersistence.openSession();
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			dlFileEntry.setTreePath(dlFileEntry.buildTreePath());
+		try {
+			String sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
 
-			dlFileEntryPersistence.update(dlFileEntry);
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {_TREE_PATH_SET_SQL, StringPool.BLANK});
+
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+
+			sqlQuery.executeUpdate();
+
+			// Update root folder file entries
+
+			sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {"treePath = \"/0/\"", "folderId = 0 AND"});
+
+			sqlQuery = session.createSQLQuery(sql);
+
+			qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+
+			sqlQuery.executeUpdate();
+		}
+		finally {
+			dlFileEntryPersistence.closeSession(session);
+
+			dlFileEntryPersistence.clearCache();
 		}
 	}
 
@@ -2513,6 +2546,13 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private static final int _DELETE_INTERVAL = 100;
+
+	private static final String _TREE_PATH_SET_SQL =
+		"treePath = (SELECT DLFolder.treePath FROM DLFolder " +
+			"WHERE DLFolder.folderId = DLFileEntry.folderId)";
+
+	private static final String _UPDATE_TREE_PATHS =
+		DLFileEntryLocalServiceImpl.class.getName() + ".updateTreePaths";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);

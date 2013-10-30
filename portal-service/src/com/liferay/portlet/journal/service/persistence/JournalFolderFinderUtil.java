@@ -54,6 +54,14 @@ public class JournalFolderFinderUtil {
 		return getFinder().findF_A_ByG_F(groupId, folderId, queryDefinition);
 	}
 
+	public static java.util.List<java.lang.Long> findF_ByC_P(long companyId,
+		long parentFolderId, long previousFolderId, int size)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findF_ByC_P(companyId, parentFolderId, previousFolderId,
+			size);
+	}
+
 	public static JournalFolderFinder getFinder() {
 		if (_finder == null) {
 			_finder = (JournalFolderFinder)PortalBeanLocatorUtil.locate(JournalFolderFinder.class.getName());

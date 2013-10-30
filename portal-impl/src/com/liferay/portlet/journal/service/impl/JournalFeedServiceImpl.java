@@ -50,7 +50,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteFeed(long groupId, long feedId)
+	public void deleteFeed(long feedId)
 		throws PortalException, SystemException {
 
 		JournalFeedPermission.check(
@@ -70,7 +70,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	}
 
 	@Override
-	public JournalFeed getFeed(long groupId, long feedId)
+	public JournalFeed getFeed(long feedId)
 		throws PortalException, SystemException {
 
 		JournalFeedPermission.check(

@@ -187,8 +187,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 	@Override
 	public boolean validateReference(
-		PortletDataContext portletDataContext, Element rootElement,
-		Element referenceElement) {
+		PortletDataContext portletDataContext, Element referenceElement) {
 
 		String uuid = referenceElement.attributeValue("uuid");
 

@@ -1780,7 +1780,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				className);
 
 		if (!stagedModelDataHandler.validateReference(
-				portletDataContext, element.getParent(), element)) {
+				portletDataContext, element)) {
 
 			return new MissingReference(element);
 		}

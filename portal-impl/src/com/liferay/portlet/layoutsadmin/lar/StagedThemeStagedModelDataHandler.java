@@ -49,8 +49,7 @@ public class StagedThemeStagedModelDataHandler
 
 	@Override
 	public boolean validateReference(
-		PortletDataContext portletDataContext, Element rootElement,
-		Element referenceElement) {
+		PortletDataContext portletDataContext, Element referenceElement) {
 
 		boolean importThemeSettings = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),

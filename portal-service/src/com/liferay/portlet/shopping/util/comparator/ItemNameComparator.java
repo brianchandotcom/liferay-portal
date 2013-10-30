@@ -54,6 +54,13 @@ public class ItemNameComparator extends OrderByComparator {
 			String name2 = StringUtil.toLowerCase(item2.getName());
 
 			value = name1.compareTo(name2);
+
+			if (value == 0) {
+				Long itemId1 = new Long(item1.getItemId());
+				Long itemId2 = new Long(item2.getItemId());
+
+				value = itemId1.compareTo(itemId2);
+			}
 		}
 
 		if (_ascending) {

@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.bookmarks.service.impl.BookmarksEntryLocalServiceImpl.updateTreePaths">
+		<![CDATA[
+			UPDATE
+				BookmarksEntry
+			SET
+				[$SET$]
+			WHERE
+				[$WHERE$]
+				(BookmarksEntry.companyId = ?) AND
+				(BookmarksEntry.status != ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.countE_ByG_F">
 		<![CDATA[
 			SELECT

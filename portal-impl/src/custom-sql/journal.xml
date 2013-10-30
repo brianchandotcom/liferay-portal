@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.portlet.journal.service.impl.JournalArticleLocalServiceImpl.updateTreePaths">
+		<![CDATA[
+			UPDATE
+				JournalArticle
+			SET
+				[$SET$]
+			WHERE
+				[$WHERE$]
+				(JournalArticle.companyId = ?) AND
+				(JournalArticle.status != ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F">
 		<![CDATA[
 			SELECT

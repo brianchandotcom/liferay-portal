@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.bookmarks.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -55,6 +59,7 @@ import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -431,13 +436,47 @@ public class BookmarksEntryLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<BookmarksEntry> entries = bookmarksEntryPersistence.findByC_NotS(
-			companyId, WorkflowConstants.STATUS_IN_TRASH);
+		bookmarksFolderLocalService.rebuildTree(companyId);
 
-		for (BookmarksEntry entry : entries) {
-			entry.setTreePath(entry.buildTreePath());
+		Session session = bookmarksEntryPersistence.openSession();
 
-			bookmarksEntryPersistence.update(entry);
+		try {
+			String sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {_TREE_PATH_SET_SQL, StringPool.BLANK});
+
+			SQLQuery sqlQuery = session.createSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+
+			// Update root folder entries
+
+			sql = CustomSQLUtil.get(_UPDATE_TREE_PATHS);
+
+			sql = StringUtil.replace(
+				sql, new String[] {"[$SET$]", "[$WHERE$]"},
+				new String[] {"treePath = \"/0/\"", "folderId = 0 AND"});
+
+			sqlQuery = session.createSQLQuery(sql);
+
+			qPos = QueryPos.getInstance(sqlQuery);
+
+			qPos.add(companyId);
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+
+			sqlQuery.executeUpdate();
+		}
+		finally {
+			bookmarksEntryPersistence.closeSession(session);
+
+			bookmarksEntryPersistence.clearCache();
 		}
 	}
 
@@ -774,6 +813,13 @@ public class BookmarksEntryLocalServiceImpl
 			throw new EntryURLException();
 		}
 	}
+
+	private static final String _TREE_PATH_SET_SQL =
+		"treePath = (SELECT BookmarksFolder.treePath FROM BookmarksFolder " +
+			"WHERE BookmarksFolder.folderId = BookmarksEntry.folderId)";
+
+	private static final String _UPDATE_TREE_PATHS =
+		BookmarksEntryLocalServiceImpl.class.getName() + ".updateTreePaths";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);

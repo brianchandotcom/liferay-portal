@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -67,6 +69,7 @@ import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -728,6 +731,37 @@ public class UserImpl extends UserBaseImpl {
 		}
 	}
 
+	public boolean isEmailAddressComplete() {
+		if (Validator.isNull(getEmailAddress()) ||
+			(PropsValues.USERS_EMAIL_ADDRESS_REQUIRED &&
+				Validator.isNull(getDisplayEmailAddress()))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isEmailAddressVerificationComplete() {
+		boolean emailAddressVerificationRequired = false;
+
+		try {
+			Company company = CompanyLocalServiceUtil.getCompany(
+				getCompanyId());
+
+			emailAddressVerificationRequired = company.isStrangersVerify();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (emailAddressVerificationRequired) {
+			return super.isEmailAddressVerified();
+		}
+
+		return true;
+	}
+
 	@Override
 	public boolean isFemale() throws PortalException, SystemException {
 		return getFemale();
@@ -741,6 +775,43 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public boolean isPasswordModified() {
 		return _passwordModified;
+	}
+
+	public boolean isReminderQueryComplete () {
+		if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
+			if ((Validator.isNull(getReminderQueryQuestion()) ||
+				Validator.isNull(getReminderQueryAnswer()))) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public boolean isSetup() {
+		return
+			isEmailAddressComplete() && isEmailAddressVerificationComplete() &&
+				!isPasswordReset() && isReminderQueryComplete() &&
+				isTermsOfUseComplete();
+	}
+
+	public boolean isTermsOfUseComplete() {
+		boolean termsOfUseRequired = false;
+
+		try {
+			termsOfUseRequired = PrefsPropsUtil.getBoolean(
+				getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED);
+		}
+		catch (SystemException se) {
+			termsOfUseRequired = PropsValues.TERMS_OF_USE_REQUIRED;
+		}
+
+		if (termsOfUseRequired) {
+			return super.isAgreedToTermsOfUse();
+		}
+
+		return true;
 	}
 
 	@Override
@@ -783,6 +854,8 @@ public class UserImpl extends UserBaseImpl {
 				HtmlUtil.escapeURL(getScreenName()), String.valueOf(getUserId())
 			});
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(UserImpl.class);
 
 	private Locale _locale;
 	private boolean _passwordModified;

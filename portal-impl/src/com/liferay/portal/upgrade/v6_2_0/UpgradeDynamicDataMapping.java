@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -152,7 +153,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					structureKey = StringUtil.toUpperCase(structureKey.trim());
 				}
 
-				updateStructure(structureId, structureKey, updateXSD(xsd));
+				updateStructure(
+					structureId, structureKey, updateXSD(xsd, structureKey));
 			}
 		}
 		finally {
@@ -212,7 +214,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					templateKey = StringUtil.toUpperCase(templateKey.trim());
 				}
 
-				updateTemplate(templateId, templateKey, updateXSD(script));
+				updateTemplate(
+					templateId, templateKey,
+					updateXSD(script, StringPool.BLANK));
 			}
 		}
 		finally {
@@ -220,7 +224,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected String updateXSD(String xsd) throws Exception {
+	protected String updateXSD(String xsd, String structureKey)
+		throws Exception {
+
 		Document document = SAXReaderUtil.read(xsd);
 
 		Element rootElement = document.getRootElement();
@@ -229,13 +235,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			updateXSDDynamicElement(dynamicElementElement);
+			updateXSDDynamicElement(dynamicElementElement, structureKey);
 		}
 
 		return DDMXMLUtil.formatXML(document);
 	}
 
-	protected void updateXSDDynamicElement(Element element) {
+	protected void updateXSDDynamicElement(
+		Element element, String structureKey) {
+
 		Element metadataElement = element.element("meta-data");
 
 		updateMetadataElement(
@@ -248,11 +256,15 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"acceptFiles", "displayChildLabelAsValue", "fieldCssClass"
 			});
 
+		if (structureKey.equals("TikaRawMetadata")) {
+			element.addAttribute("indexType", "text");
+		}
+
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			updateXSDDynamicElement(dynamicElementElement);
+			updateXSDDynamicElement(dynamicElementElement, structureKey);
 		}
 	}
 

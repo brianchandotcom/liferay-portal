@@ -50,10 +50,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -210,20 +208,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
-
-		Group group = GroupLocalServiceUtil.getCompanyGroup(
-			searchContext.getCompanyId());
-
-		DDMStructure tikaRawMetadataStructure =
-			DDMStructureLocalServiceUtil.fetchStructure(
-				group.getGroupId(),
-				PortalUtil.getClassNameId(RawMetadataProcessor.class),
-				"TikaRawMetadata");
-
-		if (tikaRawMetadataStructure != null) {
-			addSearchDDMStruture(
-				searchQuery, searchContext, tikaRawMetadataStructure);
-		}
 
 		String keywords = searchContext.getKeywords();
 

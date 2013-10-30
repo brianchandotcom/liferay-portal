@@ -1,3 +1,4 @@
+Bundle-Version: 6.2.0
 Import-Package:\
 	*
 Include-Resource: classes

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -96,7 +97,13 @@ public class ManifestHelperTask extends Task {
 		project.setProperty(
 			"release.info.server.info", ReleaseInfo.getServerInfo());
 		project.setProperty("release.info.vendor", ReleaseInfo.getVendor());
-		project.setProperty("release.info.version", ReleaseInfo.getVersion());
+
+		String releaseInfoVersion = project.getProperty("release.info.version");
+
+		if (Validator.isNull(releaseInfoVersion)) {
+			project.setProperty(
+				"release.info.version", ReleaseInfo.getVersion());
+		}
 
 		if (!_analyze) {
 			return;

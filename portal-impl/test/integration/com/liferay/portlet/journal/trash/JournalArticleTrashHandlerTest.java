@@ -211,6 +211,13 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected void restoreParentBaseModelFromTrash(long primaryKey)
+		throws Exception {
+
+		JournalFolderServiceUtil.restoreFolderFromTrash(primaryKey);
+	}
+
+	@Override
 	protected BaseModel<?> updateBaseModel(
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {
@@ -220,7 +227,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return JournalTestUtil.updateArticle(
 			article, "Content: Enterprise. Open Source. For Life.",
-			article.getContent());
+			article.getContent(), serviceContext);
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

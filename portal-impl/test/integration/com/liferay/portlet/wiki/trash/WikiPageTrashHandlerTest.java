@@ -121,6 +121,12 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	public void testTrashVersionParentBaseModel() throws Exception {
 	}
 
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
 	@Test
 	@Transactional
 	public void testWikiPageChildren1() throws Exception {

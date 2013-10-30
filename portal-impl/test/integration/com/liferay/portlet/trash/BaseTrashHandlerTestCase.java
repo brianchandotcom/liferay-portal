@@ -186,7 +186,13 @@ public abstract class BaseTrashHandlerTestCase {
 	@Test
 	@Transactional
 	public void testTrashVersionParentBaseModel() throws Exception {
-		trashVersionParentBaseModel();
+		trashVersionParentBaseModel(false);
+	}
+
+	@Test
+	@Transactional
+	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+		trashVersionParentBaseModel(true);
 	}
 
 	protected BaseModel<?> addBaseModel(
@@ -418,6 +424,10 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception;
 
 	protected void moveParentBaseModelToTrash(long primaryKey)
+		throws Exception {
+	}
+
+	protected void restoreParentBaseModelFromTrash(long primaryKey)
 		throws Exception {
 	}
 
@@ -1081,7 +1091,9 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 	}
 
-	protected void trashVersionParentBaseModel() throws Exception {
+	protected void trashVersionParentBaseModel(boolean moveBaseModel)
+		throws Exception {
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -1105,6 +1117,10 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		int originalStatus = workflowedModel.getStatus();
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
@@ -1137,7 +1153,7 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
 
-		if (isBaseModelMoveableFromTrash()) {
+		if (moveBaseModel && isBaseModelMoveableFromTrash()) {
 			BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
 				baseModel, group, serviceContext);
 
@@ -1154,6 +1170,16 @@ public abstract class BaseTrashHandlerTestCase {
 			if (isAssetableModel()) {
 				Assert.assertTrue(isAssetEntryVisible(baseModel));
 			}
+		}
+		else {
+			restoreParentBaseModelFromTrash(
+				(Long)parentBaseModel.getPrimaryKeyObj());
+
+			baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+			workflowedModel = getWorkflowedModel(baseModel);
+
+			Assert.assertEquals(originalStatus, workflowedModel.getStatus());
 		}
 	}
 

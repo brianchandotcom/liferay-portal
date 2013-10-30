@@ -53,9 +53,10 @@ AUI.add(
 
 			if (options.useAnimation) {
 				instance._noticeClass += ' popup-alert-notice';
-			}
-			else if (!Lang.isNumber(options.timeout)) {
-				options.timeout = 5000;
+
+				if (!Lang.isNumber(options.timeout)) {
+					options.timeout = 5000;
+				}
 			}
 
 			instance._animationConfig = options.animationConfig || {

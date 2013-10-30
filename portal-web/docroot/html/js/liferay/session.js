@@ -469,7 +469,7 @@ AUI.add(
 								{
 									closeText: instance._extendText,
 									content: instance._warningText,
-									noticeClass: 'hide',
+									noticeClass: 'hide popup-alert-notice',
 									onClose: function() {
 										instance._host.extend();
 									},

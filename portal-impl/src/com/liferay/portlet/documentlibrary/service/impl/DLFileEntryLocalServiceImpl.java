@@ -2467,7 +2467,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		validateFileExtension(extension);
-		validateFileName(title);
 
 		DLStoreUtil.validate(title, false);
 
@@ -2503,12 +2502,6 @@ public class DLFileEntryLocalServiceImpl
 			if (extension.length() > maxLength) {
 				throw new FileExtensionException();
 			}
-		}
-	}
-
-	protected void validateFileName(String fileName) throws PortalException {
-		if (fileName.contains(StringPool.SLASH)) {
-			throw new FileNameException(fileName);
 		}
 	}
 

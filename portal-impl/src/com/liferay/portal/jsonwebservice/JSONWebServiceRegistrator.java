@@ -247,6 +247,10 @@ public class JSONWebServiceRegistrator {
 			String path = _jsonWebServiceMappingResolver.resolvePath(
 				serviceBeanClass, method);
 
+			if (!_jsonWebServiceNaming.isIncludedPath(contextPath, path)) {
+				return;
+			}
+
 			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
 				contextPath, method.getDeclaringClass(), method, path,
 				httpMethod);
@@ -254,6 +258,10 @@ public class JSONWebServiceRegistrator {
 		else {
 			String path = _jsonWebServiceMappingResolver.resolvePath(
 				serviceBeanClass, method);
+
+			if (!_jsonWebServiceNaming.isIncludedPath(contextPath, path)) {
+				return;
+			}
 
 			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
 				contextPath, serviceBean, serviceBeanClass, method, path,

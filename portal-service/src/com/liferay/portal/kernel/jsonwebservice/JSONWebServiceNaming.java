@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -113,6 +114,42 @@ public class JSONWebServiceNaming {
 		return true;
 	}
 
+	public boolean isIncludedPath(String contextPath, String path) {
+		String portalContextPath = PortalUtil.getPathContext();
+
+		if (!contextPath.equals(portalContextPath)) {
+			path = contextPath + StringPool.PERIOD + path.substring(1);
+		}
+
+		if (includedPaths.length > 0) {
+			boolean included = false;
+
+			for (String includedPath : includedPaths) {
+				if (StringUtil.wildcardMatches(
+						path, includedPath, '?', '*', '\\', false)) {
+
+					included = true;
+
+					break;
+				}
+			}
+
+			if (!included) {
+				return false;
+			}
+		}
+
+		for (String excludedPath : excludedPaths) {
+			if (StringUtil.wildcardMatches(
+					path, excludedPath, '?', '*', '\\', false)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public boolean isValidHttpMethod(String httpMethod) {
 		if (invalidHttpMethods.contains(httpMethod)) {
 			return false;
@@ -137,8 +174,12 @@ public class JSONWebServiceNaming {
 
 	protected Set<String> excludedMethodNames = SetUtil.fromArray(
 		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
+	protected String[] excludedPaths = PropsUtil.getArray(
+		PropsKeys.JSONWS_WEB_SERVICE_PATHS_EXCLUDED);
 	protected Set<Class<?>> excludedTypes = SetUtil.fromArray(
 		new Class<?>[] {InputStream.class, OutputStream.class});
+	protected String[] includedPaths = PropsUtil.getArray(
+		PropsKeys.JSONWS_WEB_SERVICE_PATHS_INCLUDED);
 	protected Set<String> invalidHttpMethods = SetUtil.fromArray(
 		PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS));
 	protected Set<String> prefixes = SetUtil.fromArray(

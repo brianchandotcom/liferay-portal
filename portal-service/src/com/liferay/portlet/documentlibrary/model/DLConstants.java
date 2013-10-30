@@ -34,22 +34,23 @@ public class DLConstants {
 		}
 
 		for (String blacklistName : DL_NAME_BLACKLIST) {
-			String blacklistNameNoExtension = filename;
+			String filenamePrefix = filename;
 
 			if (filename.contains(StringPool.PERIOD)) {
 				int pos = filename.lastIndexOf(StringPool.PERIOD);
 
-				blacklistNameNoExtension = filename.substring(0, pos);
+				filenamePrefix = filename.substring(0, pos);
 			}
 
 			if (StringUtil.equalsIgnoreCase(
-					blacklistNameNoExtension, blacklistName)) {
+					filenamePrefix, blacklistName)) {
 
 				return false;
 			}
 		}
 
 		Matcher matcher = DL_CHAR_BLACKLIST_REGEXP.matcher(filename);
+
 		return matcher.matches();
 	}
 

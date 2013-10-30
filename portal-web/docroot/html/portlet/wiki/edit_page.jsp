@@ -501,12 +501,7 @@ if (Validator.isNull(redirect)) {
 	}
 
 	function <portlet:namespace />getSuggestionsContent() {
-		var content = '';
-
-		content += document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ';
-		content += window.<portlet:namespace />editor.getHTML();
-
-		return content;
+		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + window.<portlet:namespace />editor.getHTML();
 	}
 
 	function <portlet:namespace />moveToTrashPage() {

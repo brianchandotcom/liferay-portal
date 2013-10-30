@@ -115,14 +115,15 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFolder"),
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long HIDDEN_COLUMN_BITMASK = 4L;
-	public static long MOUNTPOINT_COLUMN_BITMASK = 8L;
-	public static long NAME_COLUMN_BITMASK = 16L;
-	public static long PARENTFOLDERID_COLUMN_BITMASK = 32L;
-	public static long REPOSITORYID_COLUMN_BITMASK = 64L;
-	public static long STATUS_COLUMN_BITMASK = 128L;
-	public static long UUID_COLUMN_BITMASK = 256L;
+	public static long FOLDERID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long HIDDEN_COLUMN_BITMASK = 8L;
+	public static long MOUNTPOINT_COLUMN_BITMASK = 16L;
+	public static long NAME_COLUMN_BITMASK = 32L;
+	public static long PARENTFOLDERID_COLUMN_BITMASK = 64L;
+	public static long REPOSITORYID_COLUMN_BITMASK = 128L;
+	public static long STATUS_COLUMN_BITMASK = 256L;
+	public static long UUID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -429,7 +430,19 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public void setFolderId(long folderId) {
+		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
+
+		if (!_setOriginalFolderId) {
+			_setOriginalFolderId = true;
+
+			_originalFolderId = _folderId;
+		}
+
 		_folderId = folderId;
+	}
+
+	public long getOriginalFolderId() {
+		return _originalFolderId;
 	}
 
 	@JSON
@@ -1129,6 +1142,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._originalUuid = dlFolderModelImpl._uuid;
 
+		dlFolderModelImpl._originalFolderId = dlFolderModelImpl._folderId;
+
+		dlFolderModelImpl._setOriginalFolderId = false;
+
 		dlFolderModelImpl._originalGroupId = dlFolderModelImpl._groupId;
 
 		dlFolderModelImpl._setOriginalGroupId = false;
@@ -1439,6 +1456,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private String _uuid;
 	private String _originalUuid;
 	private long _folderId;
+	private long _originalFolderId;
+	private boolean _setOriginalFolderId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

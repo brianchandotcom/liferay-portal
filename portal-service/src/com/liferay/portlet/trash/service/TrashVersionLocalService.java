@@ -248,6 +248,11 @@ public interface TrashVersionLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portlet.trash.model.TrashVersion deleteTrashVersion(
+		long entryId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashVersion fetchVersion(
 		long entryId, java.lang.String className, long classPK)

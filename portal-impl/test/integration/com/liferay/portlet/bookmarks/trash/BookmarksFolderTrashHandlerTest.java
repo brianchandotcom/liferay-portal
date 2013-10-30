@@ -52,6 +52,12 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testDeleteTrashVersions() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashAndDeleteDraft() throws Exception {
 	}
 

@@ -51,6 +51,12 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testDeleteTrashVersions() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashDuplicate() throws Exception {
 	}
 

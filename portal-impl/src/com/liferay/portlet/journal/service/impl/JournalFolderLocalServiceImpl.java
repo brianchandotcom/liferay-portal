@@ -777,9 +777,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalArticle article = (JournalArticle)object;
 
-				int oldStatus = article.getStatus();
-
-				if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				if (article.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 					continue;
 				}
 
@@ -833,11 +831,9 @@ public class JournalFolderLocalServiceImpl
 
 				// Asset
 
-				if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey(), false);
-				}
+				assetEntryLocalService.updateVisible(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey(), false);
 
 				// Indexer
 

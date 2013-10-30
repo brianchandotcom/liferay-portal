@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -52,6 +53,8 @@ import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.util.RSSUtil;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -641,14 +644,43 @@ public class JournalTestUtil {
 			titleMap.put(locale, title);
 		}
 
+		Date displayDate = article.getDisplayDate();
+
+		int displayDateMonth = 0;
+		int displayDateDay = 0;
+		int displayDateYear = 0;
+		int displayDateHour = 0;
+		int displayDateMinute = 0;
+
+		if (displayDate != null) {
+			Calendar displayCal = CalendarFactoryUtil.getCalendar(
+				TestPropsValues.getUser().getTimeZone());
+
+			displayCal.setTime(displayDate);
+
+			displayDateMonth = displayCal.get(Calendar.MONTH);
+			displayDateDay = displayCal.get(Calendar.DATE);
+			displayDateYear = displayCal.get(Calendar.YEAR);
+			displayDateHour = displayCal.get(Calendar.HOUR);
+			displayDateMinute = displayCal.get(Calendar.MINUTE);
+
+			if (displayCal.get(Calendar.AM_PM) == Calendar.PM) {
+				displayDateHour += 12;
+			}
+		}
+
 		serviceContext.setCommand(Constants.UPDATE);
 
 		return JournalArticleLocalServiceUtil.updateArticle(
 			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
-			article.getDescriptionMap(),
-			createLocalizedContent(content, LocaleUtil.getSiteDefault()),
-			article.getLayoutUuid(), serviceContext);
+			article.getDescriptionMap(), content, article.getType(),
+			article.getStructureId(), article.getTemplateId(),
+			article.getLayoutUuid(), displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
+			true, 0, 0, 0, 0, 0, true, article.getIndexable(),
+			article.isSmallImage(), article.getSmallImageURL(), null, null,
+			null, serviceContext);
 	}
 
 	private static String _getFeedFriendlyURL(long groupId, long plid)

@@ -16,7 +16,9 @@ package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -81,8 +83,38 @@ public class PortletPreferencesListener
 	protected void updateLayout(PortletPreferences portletPreferences) {
 		try {
 			if ((portletPreferences.getOwnerType() ==
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
-				(portletPreferences.getPlid() > 0)) {
+					PortletKeys.PREFS_OWNER_TYPE_GROUP) &&
+				(portletPreferences.getOwnerId() > 0)) {
+
+				Group group = GroupLocalServiceUtil.fetchGroup(
+					portletPreferences.getOwnerId());
+
+				if (group == null) {
+					return;
+				}
+
+				String className = group.getClassName();
+
+				if (!className.equals(LayoutSetPrototype.class.getName())) {
+					return;
+				}
+
+				LayoutSetPrototype layoutSetPrototype =
+					LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
+						group.getClassPK());
+
+				if (layoutSetPrototype == null) {
+					return;
+				}
+
+				layoutSetPrototype.setModifiedDate(new Date());
+
+				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+					layoutSetPrototype);
+			}
+			else if ((portletPreferences.getOwnerType() ==
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
+					 (portletPreferences.getPlid() > 0)) {
 
 				Layout layout = LayoutLocalServiceUtil.fetchLayout(
 					portletPreferences.getPlid());

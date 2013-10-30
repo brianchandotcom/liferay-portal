@@ -31,7 +31,6 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -77,7 +76,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		resultsMap.put("baseURL", _baseURL);
 
 		if (_discover.length > 0) {
-			resultsMap.put("discover", Arrays.toString(_discover));
+			resultsMap.put("discover", _discover);
 		}
 
 		return new DiscoveryContent(resultsMap);

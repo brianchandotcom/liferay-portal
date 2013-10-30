@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.model;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.FileNotFoundException;
@@ -46,13 +47,16 @@ public class DLConstantsTest extends PowerMockito {
 		mockStatic(PropsUtil.class);
 
 		Properties props = new Properties();
-		String dlNameBlacklist;
-		String dlCharBlacklistRegexp;
 
-		if (randomStringsArray.size() == 0) {
+		String blacklistNames;
+		String blacklistCharRegexp;
+
+		if (_randomStrings.size() == 0) {
 			for (int i = 0; i < 100; i++) {
-				randomStringsArray.add(StringUtil.randomString(20));
+				_randomStrings.add(StringUtil.randomString(20));
 			}
+			_randomStrings.add("._Word Work File D_1.tmp");
+			_randomStrings.add("._Test.docx");
 		}
 
 		try {
@@ -62,24 +66,23 @@ public class DLConstantsTest extends PowerMockito {
 
 			props.load(is);
 
-			dlNameBlacklist = props.getProperty(PropsKeys.DL_NAME_BLACKLIST);
-			dlCharBlacklistRegexp = props.getProperty(
+			blacklistNames = props.getProperty(PropsKeys.DL_NAME_BLACKLIST);
+			blacklistCharRegexp = props.getProperty(
 				PropsKeys.DL_CHAR_BLACKLIST_REGEXP);
 
 			when(
-				PropsUtil.get(PropsKeys.DL_NAME_BLACKLIST)
+				PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
 			).thenReturn(
-				dlNameBlacklist
+				blacklistNames.split(",")
 			);
 
 			when(
 				PropsUtil.get(PropsKeys.DL_CHAR_BLACKLIST_REGEXP)
 			).thenReturn(
-				dlCharBlacklistRegexp
+				blacklistCharRegexp
 			);
 
-			dlNameBlacklistArray = PropsUtil.get(
-				PropsKeys.DL_NAME_BLACKLIST).split(",");
+			_blacklistNames = PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST);
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -88,65 +91,65 @@ public class DLConstantsTest extends PowerMockito {
 
 	@Test
 	public void testNameBlacklist() throws Exception {
-		//Blacklistedd filenames
-
-		for (String name : dlNameBlacklistArray) {
-			Assert.assertFalse(name, DLConstants.isValidName(name));
+		for (String blacklistName : _blacklistNames) {
+			Assert.assertFalse(
+				blacklistName, DLConstants.isValidName(blacklistName));
 		}
 	}
 
 	@Test
 	public void testNameBlacklistExtension() throws Exception {
-		//Blacklisted filenames with extension
 		String testName;
 
-		for (String name : dlNameBlacklistArray) {
-			testName = name + ".txt";
+		for (String blacklistName : _blacklistNames) {
+			testName = blacklistName + ".txt";
 			Assert.assertFalse(testName, DLConstants.isValidName(testName));
 		}
 	}
 
 	@Test
 	public void testPeriodAtEnd() throws Exception {
-		//legal names with trailing period should fail
+		for (String randomString : _randomStrings) {
+			randomString += "1.";
 
-		for (String name : randomStringsArray) {
-			name += "1.";
-			Assert.assertFalse(name, DLConstants.isValidName(name));
+			Assert.assertFalse(
+				randomString, DLConstants.isValidName(randomString));
 		}
 	}
 
 	@Test
 	public void testRandomStrings() throws Exception {
-		//random strings of letters and numbers
-
-		for (String name : randomStringsArray) {
-			Assert.assertTrue(name, DLConstants.isValidName(name));
+		for (String randomString : _randomStrings) {
+			Assert.assertTrue(
+				randomString, DLConstants.isValidName(randomString));
 		}
 
-		Assert.assertFalse("", DLConstants.isValidName(""));
+		Assert.assertFalse(
+			StringPool.BLANK, DLConstants.isValidName(StringPool.BLANK));
 	}
 
 	@Test
 	public void testRandomStringsWithBlacklistedChar() throws Exception {
 		String testName;
 
-		for (String name : randomStringsArray) {
-			for (String blacklistedChar : dlCharBlacklistArray) {
-				//random strings of letters and numbers with an illegal char
+		for (String randomString : _randomStrings) {
+			for (String blacklistChar : BLACKLIST_CHARS) {
 				StringBuilder sb = new StringBuilder();
-				sb.append(name);
-				sb.insert(name.length() / 2, blacklistedChar);
+
+				sb.append(randomString);
+				sb.insert(randomString.length() / 2, blacklistChar);
+
 				testName = sb.toString();
 
 				Assert.assertFalse(testName, DLConstants.isValidName(testName));
 
-				//similar test with file extension
 				StringBuilder sb2 = new StringBuilder();
-				sb2.append(name);
-				sb2.append(blacklistedChar);
-				sb2.append(name);
+
+				sb2.append(randomString);
+				sb2.append(blacklistChar);
+				sb2.append(randomString);
 				sb2.append(".txt");
+
 				testName = sb2.toString();
 
 				Assert.assertFalse(testName, DLConstants.isValidName(testName));
@@ -156,11 +159,11 @@ public class DLConstantsTest extends PowerMockito {
 
 	@Test
 	public void testSpaceAtEnd() throws Exception {
-		//legal names with trailing space should fail
 		String testName;
 
-		for (String name : randomStringsArray) {
-			testName = name + " ";
+		for (String randomString : _randomStrings) {
+			testName = randomString + " ";
+
 			Assert.assertFalse(
 				testName + "[space]", DLConstants.isValidName(testName));
 		}
@@ -170,24 +173,23 @@ public class DLConstantsTest extends PowerMockito {
 	public void testValidNames() throws Exception {
 		String testName;
 
-		for (String name : dlNameBlacklistArray) {
-			//similar to blacklisted names but acceptable
-			testName = name + "1";
+		for (String blacklistName : _blacklistNames) {
+			testName = blacklistName + "1";
 			Assert.assertTrue(testName, DLConstants.isValidName(testName));
 
-			//illegal name plus a space and extension; should be legal
-			testName = name + " .txt";
+			testName = blacklistName + " .txt";
 			Assert.assertTrue(testName, DLConstants.isValidName(testName));
 		}
 	}
 
-	private static String[] dlCharBlacklistArray =
-		("<,>,:,\",/,\\,|,?,*" +
-			"\u0000,\u0001,\u0002,\u0003,\u0004,\u0005,\u0006,\u0007,\u0008," +
-			"\u0009,\u000B,\u000C,\u000E,\u000F,\u0010,\u0011,\u0012,\u0013," +
-			"\u0014,\u0015,\u0016,\u0017,\u0018,\u0019,\u001A,\u001B,\u001C," +
-			"\u001D,\u001E,\u001F"
-		).split(",");
-	private static String[] dlNameBlacklistArray;
-	private static List<String> randomStringsArray = new ArrayList<String>();
+	private static final String[] BLACKLIST_CHARS = new String[] {
+		"<", ">", ":", "\"", "\\", "|", "?", "*", "\u0000", "\u0001",
+		"\u0002", "\u0003", "\u0004", "\u0005", "\u0006", "\u0007", "\u0008",
+		"\u0009", "\u000B", "\u000C", "\u000E", "\u000F", "\u0010", "\u0011",
+		"\u0012", "\u0013", "\u0014", "\u0015", "\u0016", "\u0017", "\u0018",
+		"\u0019", "\u001A", "\u001B", "\u001C", "\u001D", "\u001E", "\u001F"};
+
+	private static String[] _blacklistNames;
+	private static List<String> _randomStrings = new ArrayList<String>();
+
 }

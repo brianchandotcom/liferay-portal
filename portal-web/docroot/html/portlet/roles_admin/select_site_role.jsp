@@ -147,13 +147,18 @@ if (step == 1) {
 			Group group = GroupServiceUtil.getGroup(groupId);
 
 			portletURL.setParameter("step", "1");
-
-			String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName(locale));
 			%>
 
-			<div class="breadcrumbs">
-				<%= breadcrumbs %>
-			</div>
+			<c:if test="<%= selUser != null %>">
+
+				<%
+				String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(pageContext, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName(locale));
+				%>
+
+				<div class="breadcrumbs">
+					<%= breadcrumbs %>
+				</div>
+			</c:if>
 
 			<%
 			portletURL.setParameter("step", "2");

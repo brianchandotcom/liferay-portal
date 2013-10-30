@@ -548,7 +548,7 @@ AUI.add(
 
 								if (results) {
 									data = AArray.map(
-										A.Array(results.Result),
+										AArray(results.Result),
 										function(item, index, collection) {
 											return {
 												name: item

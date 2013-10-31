@@ -98,6 +98,12 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	@Test
+	public void testIsValidNameEmptyString() {
+		Assert.assertFalse(
+			"[EMPTY STRING]", DLStoreUtil.isValidName(StringPool.BLANK));
+	}
+
+	@Test
 	public void testIsValidNameHiddenOSX() throws Exception {
 		String name = "._" + StringUtil.randomString(20) + ".tmp";
 

@@ -354,7 +354,7 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public boolean isValidName(String name) {
-		if (name == null) {
+		if (Validator.isNull(name)) {
 			return false;
 		}
 

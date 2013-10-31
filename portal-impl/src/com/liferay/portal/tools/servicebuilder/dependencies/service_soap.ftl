@@ -1,5 +1,7 @@
 package ${packagePath}.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import ${packagePath}.service.${entity.name}ServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -60,6 +62,7 @@ import java.util.Map;
 </#if>
  * @generated
  */
+@ProviderType
 public class ${entity.name}ServiceSoap {
 
 	<#assign hasMethods = false>

@@ -1,5 +1,7 @@
 package ${packagePath}.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import ${packagePath}.model.${entity.name};
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -25,6 +27,7 @@ import java.util.List;
  * @see ${entity.name}PersistenceImpl
  * @generated
  */
+@ProviderType
 public class ${entity.name}Util {
 
 	/*

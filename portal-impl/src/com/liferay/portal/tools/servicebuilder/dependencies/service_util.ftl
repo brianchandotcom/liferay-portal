@@ -1,5 +1,7 @@
 package ${packagePath}.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
@@ -42,6 +44,7 @@ import com.liferay.portal.service.Invokable${sessionTypeName}Service;
  * @generated
  */
 </#if>
+@ProviderType
 public class ${entity.name}${sessionTypeName}ServiceUtil {
 
 	/*

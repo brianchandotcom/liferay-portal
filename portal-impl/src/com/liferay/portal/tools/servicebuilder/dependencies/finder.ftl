@@ -1,5 +1,8 @@
 package ${packagePath}.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
+@ProviderType
 public interface ${entity.name}Finder {
 
 	<#list methods as method>

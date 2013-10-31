@@ -233,7 +233,7 @@ public class JSONWebServiceRegistrator {
 			return;
 		}
 
-		if (_wireViaUtil == true) {
+		if (_wireViaUtil) {
 			Class<?> utilClass = loadUtilClass(serviceBeanClass);
 
 			try {
@@ -243,26 +243,21 @@ public class JSONWebServiceRegistrator {
 			catch (NoSuchMethodException nsme) {
 				return;
 			}
+		}
 
-			String path = _jsonWebServiceMappingResolver.resolvePath(
-				serviceBeanClass, method);
+		String path = _jsonWebServiceMappingResolver.resolvePath(
+			serviceBeanClass, method);
 
-			if (!_jsonWebServiceNaming.isIncludedPath(contextPath, path)) {
-				return;
-			}
+		if (!_jsonWebServiceNaming.isIncludedPath(contextPath, path)) {
+			return;
+		}
 
+		if (_wireViaUtil) {
 			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
 				contextPath, method.getDeclaringClass(), method, path,
 				httpMethod);
 		}
 		else {
-			String path = _jsonWebServiceMappingResolver.resolvePath(
-				serviceBeanClass, method);
-
-			if (!_jsonWebServiceNaming.isIncludedPath(contextPath, path)) {
-				return;
-			}
-
 			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
 				contextPath, serviceBean, serviceBeanClass, method, path,
 				httpMethod);

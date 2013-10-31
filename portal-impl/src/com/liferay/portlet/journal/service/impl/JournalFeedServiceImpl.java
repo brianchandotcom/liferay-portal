@@ -16,6 +16,8 @@ package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalFeed;
@@ -62,6 +64,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void deleteFeed(long groupId, long feedId)
 		throws PortalException, SystemException {
@@ -92,6 +95,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public JournalFeed getFeed(long groupId, long feedId)
 		throws PortalException, SystemException {

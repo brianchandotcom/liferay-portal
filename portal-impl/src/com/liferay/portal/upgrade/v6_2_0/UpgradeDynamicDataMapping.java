@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -169,7 +170,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"displayChildLabelAsValue", "fieldCssClass"
 			});
 
-		if (StringUtil.equalsIgnoreCase(structureKey, "TIKARAWMETADATA")) {
+		if (StringUtil.equalsIgnoreCase(
+				structureKey, RawMetadataProcessor.TIKA_RAW_METADATA)) {
+
 			element.addAttribute("indexType", "text");
 		}
 

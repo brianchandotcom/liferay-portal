@@ -354,23 +354,14 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public boolean isValidName(String name) {
-		if ((name == null) ||
-			name.contains("\\") ||
-			name.contains("\\\\") ||
-			name.contains("//") ||
-			name.contains(":") ||
-			name.contains("*") ||
-			name.contains("?") ||
-			name.contains("\"") ||
-			name.contains("<") ||
-			name.contains(">") ||
-			name.contains("|") ||
-			name.contains("[") ||
-			name.contains("]") ||
-			name.contains("../") ||
-			name.contains("/..")) {
-
+		if (name == null) {
 			return false;
+		}
+
+		for (String charBlackist : PropsValues.DL_CHAR_BLACKLIST) {
+			if (name.contains(charBlackist)) {
+				return false;
+			}
 		}
 
 		return true;

@@ -10,8 +10,8 @@
 .lfr-asset-column-actions {
 	.lfr-asset-summary {
 		margin-bottom: 2em;
-		overflow: hidden;
 		text-align: center;
+		word-break: break-all;
 	}
 
 	.lfr-asset-avatar img {

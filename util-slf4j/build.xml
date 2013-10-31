@@ -7,6 +7,7 @@
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util SLF4J" />
 	<property name="manifest.bundle.symbolic.name" value="util-slf4j" />
+	<property name="release.info.version" value="6.2.0" />
 
 	<target name="jar" depends="build-common-java.jar">
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />

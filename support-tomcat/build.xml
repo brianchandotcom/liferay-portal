@@ -5,6 +5,7 @@
 
 	<property name="deploy.dir" value="${app.server.lib.support.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="release.info.version" value="6.2.0" />
 
 	<target name="clean">
 		<antcall target="build-common-java.clean" />

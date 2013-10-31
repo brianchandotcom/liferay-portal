@@ -46,6 +46,7 @@ import com.liferay.portlet.documentlibrary.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
@@ -714,6 +715,15 @@ public class DLStoreImpl implements DLStore {
 		}
 		catch (IOException ioe) {
 			throw new FileSizeException(ioe.getMessage());
+		}
+	}
+
+	@Override
+	public void validateDirectory(String directoryName)
+		throws PortalException, SystemException {
+
+		if (!isValidName(directoryName)) {
+			throw new FolderNameException(directoryName);
 		}
 	}
 

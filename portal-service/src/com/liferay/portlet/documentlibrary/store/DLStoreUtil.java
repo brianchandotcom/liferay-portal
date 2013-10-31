@@ -803,6 +803,12 @@ public class DLStoreUtil {
 			fileName, fileExtension, sourceFileName, validateFileExtension, is);
 	}
 
+	public static void validateDirectory(String directoryName)
+		throws PortalException, SystemException {
+
+		getStore().validateDirectory(directoryName);
+	}
+
 	/**
 	 * Set's the {@link DLStore} object. Used primarily by Spring and should not
 	 * be used by the client.

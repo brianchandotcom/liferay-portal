@@ -179,4 +179,7 @@ public interface DLStore {
 			boolean validateFileExtension, InputStream is)
 		throws PortalException, SystemException;
 
+	public void validateDirectory(String directoryName)
+		throws PortalException, SystemException;
+
 }

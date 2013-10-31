@@ -1513,33 +1513,63 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		Map<String, String> filterMap = new HashMap<String, String>();
 
-		filterMap.put("author", pluginPackage.getAuthor());
-		filterMap.put("change_log", pluginPackage.getChangeLog());
+		StringBuilder author = new StringBuilder(3);
+
+		author.append(StringPool.CDATA_OPEN);
+		author.append(pluginPackage.getLongDescription());
+		author.append(StringPool.CDATA_CLOSE);
+
+		StringBuilder changeLog = new StringBuilder(3);
+
+		changeLog.append(StringPool.CDATA_OPEN);
+		changeLog.append(pluginPackage.getLongDescription());
+		changeLog.append(StringPool.CDATA_CLOSE);
+
+		StringBuilder longDescription = new StringBuilder(3);
+
+		longDescription.append(StringPool.CDATA_OPEN);
+		longDescription.append(pluginPackage.getLongDescription());
+		longDescription.append(StringPool.CDATA_CLOSE);
+
+		StringBuilder pluginName = new StringBuilder(3);
+
+		pluginName.append(StringPool.CDATA_OPEN);
+		pluginName.append(pluginPackage.getLongDescription());
+		pluginName.append(StringPool.CDATA_CLOSE);
+
+		StringBuilder shortDescription = new StringBuilder(3);
+
+		shortDescription.append(StringPool.CDATA_OPEN);
+		shortDescription.append(pluginPackage.getShortDescription());
+		shortDescription.append(StringPool.CDATA_CLOSE);
+
+		filterMap.put("author", author.toString());
+		filterMap.put("change_log", changeLog.toString());
 		filterMap.put(
-			"licenses",
-			getPluginPackageLicensesXml(pluginPackage.getLicenses()));
+				"licenses",
+				getPluginPackageLicensesXml(pluginPackage.getLicenses()));
 		filterMap.put(
-			"liferay_versions",
-			getPluginPackageLiferayVersionsXml(
-				pluginPackage.getLiferayVersions()));
-		filterMap.put("long_description", pluginPackage.getLongDescription());
+				"liferay_versions",
+				getPluginPackageLiferayVersionsXml(
+						pluginPackage.getLiferayVersions()));
+		filterMap.put("long_description", longDescription.toString());
 		filterMap.put("module_artifact_id", pluginPackage.getArtifactId());
 		filterMap.put("module_group_id", pluginPackage.getGroupId());
 		filterMap.put("module_version", pluginPackage.getVersion());
 		filterMap.put("page_url", pluginPackage.getPageURL());
-		filterMap.put("plugin_name", pluginPackage.getName());
+		filterMap.put("plugin_name", pluginName.toString());
 		filterMap.put("plugin_type", pluginType);
 		filterMap.put(
-			"plugin_type_name",
-			TextFormatter.format(pluginType, TextFormatter.J));
+				"plugin_type_name",
+				TextFormatter.format(pluginType, TextFormatter.J));
 		filterMap.put(
-			"recommended_deployment_context",
-			pluginPackage.getRecommendedDeploymentContext());
+				"recommended_deployment_context",
+				pluginPackage.getRecommendedDeploymentContext());
 		filterMap.put(
-			"required_deployment_contexts",
-			getPluginPackageRequiredDeploymentContextsXml(
-				pluginPackage.getRequiredDeploymentContexts()));
-		filterMap.put("short_description", pluginPackage.getShortDescription());
+				"required_deployment_contexts",
+				getPluginPackageRequiredDeploymentContextsXml(
+						pluginPackage.getRequiredDeploymentContexts()));
+		filterMap.put("short_description", shortDescription.toString());
 		filterMap.put("tags", getPluginPackageTagsXml(pluginPackage.getTags()));
 
 		return filterMap;

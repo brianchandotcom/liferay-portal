@@ -1,5 +1,7 @@
 package ${packagePath}.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PersistedModel;
@@ -13,6 +15,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see ${packagePath}.model.impl.${entity.name}ModelImpl
  * @generated
  */
+@ProviderType
 public interface ${entity.name} extends
 	${entity.name}Model
 

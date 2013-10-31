@@ -566,6 +566,11 @@ public class DLStoreUtil {
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
+	/**
+	 * Returns <code>true</code> if the name is a valid file or directory name.
+	 *
+	 * @param  name the file's or directory's name
+	 */
 	public static boolean isValidName(String name) {
 		return getStore().isValidName(name);
 	}
@@ -803,6 +808,13 @@ public class DLStoreUtil {
 			fileName, fileExtension, sourceFileName, validateFileExtension, is);
 	}
 
+	/**
+	 * Validates a directory's name.
+	 *
+	 * @param  directoryName the directory's name
+	 * @throws PortalException if the directory's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static void validateDirectory(String directoryName)
 		throws PortalException, SystemException {
 

@@ -301,6 +301,31 @@
 			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.scripting.ScriptingUtil" class="com.liferay.portal.kernel.scripting.ScriptingUtil">
+		<property name="scripting">
+			<bean class="com.liferay.portal.scripting.ScriptingImpl">
+				<property name="scriptingExecutors">
+					<map>
+						<entry key="beanshell">
+							<bean class="com.liferay.portal.scripting.beanshell.BeanShellExecutor" />
+						</entry>
+						<entry key="groovy">
+							<bean class="com.liferay.portal.scripting.groovy.GroovyExecutor" />
+						</entry>
+						<entry key="javascript">
+							<bean class="com.liferay.portal.scripting.javascript.JavaScriptExecutor" />
+						</entry>
+						<entry key="python">
+							<bean class="com.liferay.portal.scripting.python.PythonExecutor" />
+						</entry>
+						<entry key="ruby">
+							<bean class="com.liferay.portal.scripting.ruby.RubyExecutor" />
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.search.IndexerRegistryUtil" class="com.liferay.portal.kernel.search.IndexerRegistryUtil">
 		<property name="indexerRegistry">
 			<bean class="com.liferay.portal.search.IndexerRegistryImpl" />

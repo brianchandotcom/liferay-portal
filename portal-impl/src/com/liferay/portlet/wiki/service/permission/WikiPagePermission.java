@@ -147,6 +147,11 @@ public class WikiPagePermission {
 				return true;
 			}
 		}
+		else if (page.isScheduled() && actionId.equals(ActionKeys.VIEW) &&
+				 !contains(permissionChecker, page, ActionKeys.UPDATE)) {
+
+			return false;
+		}
 		else if (page.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, page.getGroupId(), WikiPage.class.getName(),

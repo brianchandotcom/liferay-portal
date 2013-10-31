@@ -104,7 +104,7 @@ public class JournalArticlePermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (article.isDraft()) {
+		if (article.isDraft() || article.isScheduled()) {
 			if (actionId.equals(ActionKeys.VIEW) &&
 				!contains(permissionChecker, article, ActionKeys.UPDATE)) {
 

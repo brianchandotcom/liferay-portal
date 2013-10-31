@@ -62,12 +62,10 @@ public class FolderStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder =
-			DLFolderLocalServiceUtil.fetchDLFolderByUuidAndGroupId(
-				uuid, groupId);
+		Folder folder = FolderUtil.fetchByUUID_R(uuid, groupId);
 
-		if (dlFolder != null) {
-			DLFolderLocalServiceUtil.deleteFolder(dlFolder);
+		if (folder != null) {
+			DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
 		}
 	}
 

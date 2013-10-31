@@ -85,12 +85,10 @@ public class FileEntryStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException, SystemException {
 
-		DLFileEntry dlFileEntry =
-			DLFileEntryLocalServiceUtil.fetchDLFileEntryByUuidAndGroupId(
-				uuid, groupId);
+		FileEntry fileEntry = FileEntryUtil.fetchByUUID_R(uuid, groupId);
 
-		if (dlFileEntry != null) {
-			DLFileEntryLocalServiceUtil.deleteFileEntry(dlFileEntry);
+		if (fileEntry != null) {
+			DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 		}
 	}
 

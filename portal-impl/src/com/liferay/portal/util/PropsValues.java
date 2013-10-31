@@ -636,6 +636,8 @@ public class PropsValues {
 
 	public static final String[] DL_CHAR_BLACKLIST = PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST);
 
+	public static final String[] DL_CHAR_END_BLACKLIST = PropsUtil.getArray(PropsKeys.DL_CHAR_END_BLACKLIST);
+
 	public static final String[] DL_NAME_BLACKLIST = PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST);
 
 	public static final boolean DL_PUBLISH_TO_LIVE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_PUBLISH_TO_LIVE_BY_DEFAULT));

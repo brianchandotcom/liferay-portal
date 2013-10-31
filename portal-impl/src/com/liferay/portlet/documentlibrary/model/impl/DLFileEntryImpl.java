@@ -66,11 +66,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException, SystemException {
-		StringBundler sb = new StringBundler();
-
-		buildTreePath(sb, getFolder());
-
-		return sb.toString();
+		return getFolder().buildTreePath();
 	}
 
 	@Override
@@ -399,20 +395,6 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		_extraSettingsProperties = extraSettingsProperties;
 
 		super.setExtraSettings(_extraSettingsProperties.toString());
-	}
-
-	protected void buildTreePath(StringBundler sb, DLFolder dlFolder)
-		throws PortalException, SystemException {
-
-		if (dlFolder == null) {
-			sb.append(StringPool.SLASH);
-		}
-		else {
-			buildTreePath(sb, dlFolder.getParentFolder());
-
-			sb.append(dlFolder.getFolderId());
-			sb.append(StringPool.SLASH);
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryImpl.class);

@@ -16,8 +16,6 @@ package com.liferay.portlet.bookmarks.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
@@ -31,11 +29,7 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException, SystemException {
-		StringBundler sb = new StringBundler();
-
-		buildTreePath(sb, getFolder());
-
-		return sb.toString();
+		return getFolder().buildTreePath();
 	}
 
 	@Override
@@ -45,20 +39,6 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 		}
 
 		return BookmarksFolderLocalServiceUtil.getFolder(getFolderId());
-	}
-
-	protected void buildTreePath(StringBundler sb, BookmarksFolder folder)
-		throws PortalException, SystemException {
-
-		if (folder == null) {
-			sb.append(StringPool.SLASH);
-		}
-		else {
-			buildTreePath(sb, folder.getParentFolder());
-
-			sb.append(folder.getFolderId());
-			sb.append(StringPool.SLASH);
-		}
 	}
 
 }

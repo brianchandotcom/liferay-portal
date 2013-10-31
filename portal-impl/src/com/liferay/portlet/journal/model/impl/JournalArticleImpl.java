@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
@@ -63,11 +61,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String buildTreePath() throws PortalException, SystemException {
-		StringBundler sb = new StringBundler();
-
-		buildTreePath(sb, getFolder());
-
-		return sb.toString();
+		return getFolder().buildTreePath();
 	}
 
 	@Override
@@ -236,20 +230,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
-	}
-
-	protected void buildTreePath(StringBundler sb, JournalFolder folder)
-		throws PortalException, SystemException {
-
-		if (folder == null) {
-			sb.append(StringPool.SLASH);
-		}
-		else {
-			buildTreePath(sb, folder.getParentFolder());
-
-			sb.append(folder.getFolderId());
-			sb.append(StringPool.SLASH);
-		}
 	}
 
 	private String _smallImageType;

@@ -49,15 +49,7 @@ AUI.add(
 
 								instance._formValidator = form.formValidator;
 
-								instance._isSignInForm = true;
-
-								var cssClass = formNode.attr('class');
-
-								var pos = cssClass.indexOf('sign-in-form');
-
-								if (pos == -1) {
-									instance._isSignInForm = false;
-								}
+								instance._isSignInForm = formNode.hasClass('sign-in-form');
 							}
 						}
 

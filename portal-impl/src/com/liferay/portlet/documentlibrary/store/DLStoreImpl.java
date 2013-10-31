@@ -352,6 +352,30 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
+	public boolean isValidName(String name) {
+		if ((name == null) ||
+			name.contains("\\") ||
+			name.contains("\\\\") ||
+			name.contains("//") ||
+			name.contains(":") ||
+			name.contains("*") ||
+			name.contains("?") ||
+			name.contains("\"") ||
+			name.contains("<") ||
+			name.contains(">") ||
+			name.contains("|") ||
+			name.contains("[") ||
+			name.contains("]") ||
+			name.contains("../") ||
+			name.contains("/..")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void move(String srcDir, String destDir) throws SystemException {
 		store.move(srcDir, destDir);
 	}
@@ -691,29 +715,6 @@ public class DLStoreImpl implements DLStore {
 		catch (IOException ioe) {
 			throw new FileSizeException(ioe.getMessage());
 		}
-	}
-
-	protected boolean isValidName(String name) {
-		if ((name == null) ||
-			name.contains("\\") ||
-			name.contains("\\\\") ||
-			name.contains("//") ||
-			name.contains(":") ||
-			name.contains("*") ||
-			name.contains("?") ||
-			name.contains("\"") ||
-			name.contains("<") ||
-			name.contains(">") ||
-			name.contains("|") ||
-			name.contains("[") ||
-			name.contains("]") ||
-			name.contains("../") ||
-			name.contains("/..")) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	protected void isValidVersion(String versionLabel) throws PortalException {

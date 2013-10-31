@@ -566,6 +566,10 @@ public class DLStoreUtil {
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
+	public static boolean isValidName(String name) {
+		return getStore().isValidName(name);
+	}
+
 	/**
 	 * Moves an existing directory. Only implemented by {@link
 	 * JCRStore#move(String, String)}.

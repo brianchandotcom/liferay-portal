@@ -209,9 +209,10 @@ public class AddDefaultDocumentLibraryStructuresAction
 	}
 
 	protected String buildDLRawMetadataElementXML(Field field, Locale locale) {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("<dynamic-element dataType=\"string\" name=\"");
+		sb.append("<dynamic-element dataType=\"string\" indexType=\"text\" ");
+		sb.append("name=\"");
 
 		Class<?> fieldClass = field.getDeclaringClass();
 

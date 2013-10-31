@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -95,7 +94,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 			PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD);
 		rubyInstanceConfig.setLoader(ClassLoaderUtil.getPortalClassLoader());
 
-		_basePath = PortalUtil.getPortalLibDir();
+		_basePath = PropsValues.LIFERAY_LIB_PORTAL_DIR;
 
 		_loadPaths = new ArrayList<String>(
 			PropsValues.SCRIPTING_JRUBY_LOAD_PATHS.length);

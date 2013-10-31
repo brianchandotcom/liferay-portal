@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.scripting;
 
-import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
-
 import java.util.Map;
 import java.util.Set;
 
@@ -25,7 +22,6 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@MessagingProxy(mode = ProxyMode.SYNC)
 public interface Scripting {
 
 	public void clearCache(String language) throws ScriptingException;

@@ -87,6 +87,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -1191,6 +1193,33 @@ public class DLImpl implements DL {
 	}
 
 	@Override
+	public boolean isValidName(String filename) {
+		if (Validator.isNull(filename)) {
+			return false;
+		}
+
+		String fileNameWithoutExtension = filename;
+
+		if (filename.contains(StringPool.PERIOD)) {
+			int pos = filename.lastIndexOf(StringPool.PERIOD);
+
+			fileNameWithoutExtension = filename.substring(0, pos);
+		}
+
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			if (StringUtil.equalsIgnoreCase(
+					fileNameWithoutExtension, blacklistName)) {
+
+				return false;
+			}
+		}
+
+		Matcher matcher = DL_CHAR_BLACKLIST_REGEXP.matcher(filename);
+
+		return matcher.matches();
+	}
+
+	@Override
 	public boolean isValidVersion(String version) {
 		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 			return true;
@@ -1262,6 +1291,11 @@ public class DLImpl implements DL {
 	private static final long _DIVISOR = 256;
 
 	private static final String _STRUCTURE_KEY_PREFIX = "AUTO_";
+
+	private static final Pattern DL_CHAR_BLACKLIST_REGEXP =
+		Pattern.compile(
+			PropsValues.DL_CHAR_BLACKLIST_REGEXP,
+			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
 	private static Log _log = LogFactoryUtil.getLog(DLImpl.class);
 

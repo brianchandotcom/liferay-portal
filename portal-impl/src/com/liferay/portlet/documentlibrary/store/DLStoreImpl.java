@@ -69,7 +69,7 @@ public class DLStoreImpl implements DLStore {
 	public void addDirectory(long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName) || dirName.equals("/")) {
+		if (!DLUtil.isValidName(dirName) || dirName.equals("/")) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -303,7 +303,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName)) {
+		if (!DLUtil.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -324,7 +324,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName)) {
+		if (!DLUtil.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -569,7 +569,7 @@ public class DLStoreImpl implements DLStore {
 	public void validate(String fileName, boolean validateFileExtension)
 		throws PortalException, SystemException {
 
-		if (!isValidName(fileName)) {
+		if (!DLUtil.isValidName(fileName)) {
 			throw new FileNameException(fileName);
 		}
 
@@ -691,29 +691,6 @@ public class DLStoreImpl implements DLStore {
 		catch (IOException ioe) {
 			throw new FileSizeException(ioe.getMessage());
 		}
-	}
-
-	protected boolean isValidName(String name) {
-		if ((name == null) ||
-			name.contains("\\") ||
-			name.contains("\\\\") ||
-			name.contains("//") ||
-			name.contains(":") ||
-			name.contains("*") ||
-			name.contains("?") ||
-			name.contains("\"") ||
-			name.contains("<") ||
-			name.contains(">") ||
-			name.contains("|") ||
-			name.contains("[") ||
-			name.contains("]") ||
-			name.contains("../") ||
-			name.contains("/..")) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	protected void isValidVersion(String versionLabel) throws PortalException {

@@ -1055,6 +1055,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
+	public void updateTreePath(java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFolder.updateTreePath(treePath);
+	}
+
+	@Override
 	public java.util.List<java.lang.Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

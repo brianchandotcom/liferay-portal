@@ -14,10 +14,16 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The extended model base implementation for the DLFolder service. Represents a row in the &quot;DLFolder&quot; database table, with each column mapped to a property of this class.
@@ -46,5 +52,40 @@ public abstract class DLFolderBaseImpl extends DLFolderModelImpl
 		else {
 			DLFolderLocalServiceUtil.updateDLFolder(this);
 		}
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		List<DLFolder> dlFolders = new ArrayList<DLFolder>();
+
+		DLFolder dlFolder = this;
+
+		while (dlFolder != null) {
+			dlFolders.add(dlFolder);
+
+			dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(dlFolder.getParentFolderId());
+		}
+
+		StringBundler sb = new StringBundler((dlFolders.size() * 2) + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = dlFolders.size() - 1; i >= 0; i--) {
+			dlFolder = dlFolders.get(i);
+
+			sb.append(dlFolder.getFolderId());
+			sb.append(StringPool.SLASH);
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		DLFolder dlFolder = this;
+
+		dlFolder.setTreePath(treePath);
+
+		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 	}
 }

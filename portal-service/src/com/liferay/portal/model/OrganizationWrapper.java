@@ -656,6 +656,12 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
+	public void updateTreePath(java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_organization.updateTreePath(treePath);
+	}
+
+	@Override
 	public com.liferay.portal.model.Address getAddress() {
 		return _organization.getAddress();
 	}

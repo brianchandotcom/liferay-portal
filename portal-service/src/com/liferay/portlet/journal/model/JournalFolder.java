@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.TreeModel;
 
 /**
  * The extended model interface for the JournalFolder service. Represents a row in the &quot;JournalFolder&quot; database table, with each column mapped to a property of this class.
@@ -29,7 +30,8 @@ import com.liferay.portal.model.PersistedModel;
  * @generated
  */
 @ProviderType
-public interface JournalFolder extends JournalFolderModel, PersistedModel {
+public interface JournalFolder extends JournalFolderModel, PersistedModel,
+	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -41,10 +43,6 @@ public interface JournalFolder extends JournalFolderModel, PersistedModel {
 				return journalFolder.getFolderId();
 			}
 		};
-
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException,

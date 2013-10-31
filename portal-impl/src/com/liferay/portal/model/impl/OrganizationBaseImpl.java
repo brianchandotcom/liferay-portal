@@ -14,9 +14,15 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The extended model base implementation for the Organization service. Represents a row in the &quot;Organization_&quot; database table, with each column mapped to a property of this class.
@@ -45,5 +51,40 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 		else {
 			OrganizationLocalServiceUtil.updateOrganization(this);
 		}
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		List<Organization> organizations = new ArrayList<Organization>();
+
+		Organization organization = this;
+
+		while (organization != null) {
+			organizations.add(organization);
+
+			organization = OrganizationLocalServiceUtil.fetchOrganization(organization.getParentOrganizationId());
+		}
+
+		StringBundler sb = new StringBundler((organizations.size() * 2) + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = organizations.size() - 1; i >= 0; i--) {
+			organization = organizations.get(i);
+
+			sb.append(organization.getOrganizationId());
+			sb.append(StringPool.SLASH);
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		Organization organization = this;
+
+		organization.setTreePath(treePath);
+
+		OrganizationLocalServiceUtil.updateOrganization(organization);
 	}
 }

@@ -28,7 +28,8 @@ import com.liferay.portal.kernel.util.Accessor;
  * @generated
  */
 @ProviderType
-public interface Organization extends OrganizationModel, PersistedModel {
+public interface Organization extends OrganizationModel, PersistedModel,
+	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -40,10 +41,6 @@ public interface Organization extends OrganizationModel, PersistedModel {
 				return organization.getName();
 			}
 		};
-
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.model.Address getAddress();
 

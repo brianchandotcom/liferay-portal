@@ -14,10 +14,16 @@
 
 package com.liferay.portlet.bookmarks.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The extended model base implementation for the BookmarksFolder service. Represents a row in the &quot;BookmarksFolder&quot; database table, with each column mapped to a property of this class.
@@ -46,5 +52,40 @@ public abstract class BookmarksFolderBaseImpl extends BookmarksFolderModelImpl
 		else {
 			BookmarksFolderLocalServiceUtil.updateBookmarksFolder(this);
 		}
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		List<BookmarksFolder> bookmarksFolders = new ArrayList<BookmarksFolder>();
+
+		BookmarksFolder bookmarksFolder = this;
+
+		while (bookmarksFolder != null) {
+			bookmarksFolders.add(bookmarksFolder);
+
+			bookmarksFolder = BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(bookmarksFolder.getParentFolderId());
+		}
+
+		StringBundler sb = new StringBundler((bookmarksFolders.size() * 2) + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = bookmarksFolders.size() - 1; i >= 0; i--) {
+			bookmarksFolder = bookmarksFolders.get(i);
+
+			sb.append(bookmarksFolder.getFolderId());
+			sb.append(StringPool.SLASH);
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		BookmarksFolder bookmarksFolder = this;
+
+		bookmarksFolder.setTreePath(treePath);
+
+		BookmarksFolderLocalServiceUtil.updateBookmarksFolder(bookmarksFolder);
 	}
 }

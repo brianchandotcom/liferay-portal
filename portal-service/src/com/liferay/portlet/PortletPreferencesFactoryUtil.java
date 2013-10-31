@@ -14,12 +14,15 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferencesIds;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
 
@@ -33,7 +36,16 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class PortletPreferencesFactoryUtil {
+
+	public static void checkControlPanelPortletPreferences(
+			ThemeDisplay themeDisplay, Portlet portlet)
+		throws PortalException, SystemException {
+
+		getPortletPreferencesFactory().checkControlPanelPortletPreferences(
+			themeDisplay, portlet);
+	}
 
 	public static PortletPreferences fromDefaultXML(String xml)
 		throws SystemException {

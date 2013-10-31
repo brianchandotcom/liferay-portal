@@ -117,6 +117,39 @@ public class PortletPreferencesLocalServiceImpl
 		portletPreferencesPersistence.removeByPlid(plid);
 	}
 
+	public javax.portlet.PortletPreferences fetchPreferences(
+			PortletPreferencesIds portletPreferencesIds)
+		throws SystemException {
+
+		return fetchPreferences(
+			portletPreferencesIds.getCompanyId(),
+			portletPreferencesIds.getOwnerId(),
+			portletPreferencesIds.getOwnerType(),
+			portletPreferencesIds.getPlid(),
+			portletPreferencesIds.getPortletId());
+	}
+
+	public javax.portlet.PortletPreferences fetchPreferences(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId)
+		throws SystemException {
+
+		PortletPreferences portletPreferences =
+			portletPreferencesPersistence.fetchByO_O_P_P(
+				ownerId, ownerType, plid, portletId);
+
+		if (portletPreferences == null) {
+			return null;
+		}
+
+		PortletPreferencesImpl portletPreferencesImpl =
+			(PortletPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId,
+				portletPreferences.getPreferences());
+
+		return portletPreferencesImpl;
+	}
+
 	@Override
 	@Skip
 	public javax.portlet.PortletPreferences getDefaultPreferences(

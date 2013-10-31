@@ -6,6 +6,12 @@ AUI.add(
 
 		var CSS_PLACEHOLDER = 'text-placeholder';
 
+		var MAP_IGNORE_ATTRS = {
+			id: 1,
+			name: 1,
+			type: 1
+		};
+
 		var SELECTOR_PLACEHOLDER_INPUTS = 'input[placeholder], textarea[placeholder]';
 
 		var STR_BLANK = '';
@@ -13,8 +19,6 @@ AUI.add(
 		var STR_DATA_TYPE_PASSWORD_PLACEHOLDER = 'data-type-password-placeholder';
 
 		var STR_FOCUS = 'focus';
-
-		var STR_NAME = 'name';
 
 		var STR_PASSWORD = 'password';
 
@@ -60,40 +64,29 @@ AUI.add(
 						}
 					},
 
-					_initializePasswordNode: function(passwordItem) {
-						var container = passwordItem.get('parentNode');
+					_initializePasswordNode: function(field) {
+						var placeholder = ANode.create('<input class="' + CSS_PLACEHOLDER + '" name="' + field.attr('name') + '_pass_placeholder" type="text" />');
 
-						var passwordPlaceholderNode = ANode.create('<input name="' + passwordItem.attr(STR_NAME) + '_pass_placeholder" type="text" />');
-
-						var passwordItemAttrs = Liferay.Util.getAttributes(
-							passwordItem,
+						Liferay.Util.getAttributes(
+							field,
 							function(value, name, attrs) {
 								var result = false;
 
-								if (name !== 'id' && name !== STR_NAME && name !== STR_TYPE) {
-									result = value;
+								if (!MAP_IGNORE_ATTRS[name]) {
+									placeholder.setAttribute(name, value);
 								}
 
 								return result;
 							}
 						);
 
-						AObject.each(
-							passwordItemAttrs,
-							function(item, index, collection) {
-								passwordPlaceholderNode.setAttribute(index, item);
-							}
-						);
+						placeholder.val(field.attr(STR_PLACEHOLDER));
 
-						passwordPlaceholderNode.val(passwordItem.attr(STR_PLACEHOLDER));
+						placeholder.attr(STR_DATA_TYPE_PASSWORD_PLACEHOLDER, true);
 
-						passwordPlaceholderNode.addClass(CSS_PLACEHOLDER);
+						field.placeAfter(placeholder);
 
-						passwordPlaceholderNode.attr(STR_DATA_TYPE_PASSWORD_PLACEHOLDER, true);
-
-						container.insertBefore(passwordPlaceholderNode, passwordItem.next());
-
-						passwordItem.hide();
+						field.hide();
 					},
 
 					_removePlaceholders: function() {
@@ -112,7 +105,7 @@ AUI.add(
 						);
 					},
 
-					_togglePasswordPlaceholders: function(currentTarget, event) {
+					_togglePasswordPlaceholders: function(event, currentTarget) {
 						var placeholder = currentTarget.attr(STR_PLACEHOLDER);
 
 						if (placeholder) {
@@ -120,13 +113,13 @@ AUI.add(
 								if (currentTarget.hasAttribute(STR_DATA_TYPE_PASSWORD_PLACEHOLDER)) {
 									currentTarget.hide();
 
-									var passwordItem = currentTarget.previous();
+									var passwordField = currentTarget.previous();
 
-									passwordItem.show();
+									passwordField.show();
 
 									setTimeout(
 										function() {
-											passwordItem.focus();
+											Liferay.Util.focusFormField(passwordField);
 										},
 										0
 									);
@@ -150,7 +143,7 @@ AUI.add(
 						var currentTarget = event.currentTarget;
 
 						if (currentTarget.hasAttribute(STR_DATA_TYPE_PASSWORD_PLACEHOLDER) || currentTarget.attr(STR_TYPE) === STR_PASSWORD) {
-							instance._togglePasswordPlaceholders(currentTarget, event);
+							instance._togglePasswordPlaceholders(event, currentTarget);
 						}
 						else {
 							var placeholder = currentTarget.attr(STR_PLACEHOLDER);

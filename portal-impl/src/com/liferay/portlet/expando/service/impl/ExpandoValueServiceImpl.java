@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -36,6 +38,7 @@ import java.util.Map;
  */
 public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,

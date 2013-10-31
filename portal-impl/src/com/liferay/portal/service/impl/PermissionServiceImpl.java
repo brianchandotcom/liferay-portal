@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.Group;
@@ -94,6 +96,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	 *         the permission information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void checkPermission(long groupId, String name, long primKey)
 		throws PortalException, SystemException {

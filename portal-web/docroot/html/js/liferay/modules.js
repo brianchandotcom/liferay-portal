@@ -58,9 +58,9 @@
 					'liferay-app-view-paginator': {
 						path: 'app_view_paginator.js',
 						requires: [
-							'aui-pagination',
 							'aui-parse-content',
 							'liferay-history-manager',
+							'liferay-paginator',
 							'liferay-portlet-base'
 						]
 					},
@@ -479,6 +479,12 @@
 						path: 'node.js',
 						requires: [
 							'dom-base'
+						]
+					},
+					'liferay-paginator': {
+						path: 'paginator.js',
+						requires: [
+							'aui-pagination'
 						]
 					},
 					'liferay-poller': {

@@ -1,0 +1,33 @@
+.aui {
+	.lfr-paginator {
+		.dropdown-menu {
+			display: none;
+		}
+
+		.lfr-pagination-delta-selector {
+			float: left;
+		}
+
+		.search-results {
+			display: inline-block;
+			margin-left: 10px;
+			margin-top: 5px;
+			top: 10px;
+		}
+
+		li {
+			.lfr-paginator-link {
+				border: none;
+				clear: both;
+				color: #333;
+				display: block;
+				font-weight: normal;
+				line-height: 20px;
+				padding: 3px 20px;
+				text-align: left;
+				white-space: nowrap;
+				width: 100%;
+			}
+		}
+	}
+}

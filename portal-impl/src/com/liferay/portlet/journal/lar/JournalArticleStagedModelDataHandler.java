@@ -714,7 +714,7 @@ public class JournalArticleStagedModelDataHandler
 			return;
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(articleImage.getElInstanceId());
 		sb.append(StringPool.UNDERLINE);

@@ -597,6 +597,9 @@ public class PortletContainerImpl implements PortletContainer {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PortletPreferencesFactoryUtil.checkControlPanelPortletPreferences(
+			themeDisplay, portlet);
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletDisplay portletDisplayClone = PortletDisplayFactory.create();

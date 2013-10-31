@@ -60,7 +60,7 @@
 						requires: [
 							'aui-parse-content',
 							'liferay-history-manager',
-							'liferay-paginator',
+							'liferay-pagination',
 							'liferay-portlet-base'
 						]
 					},
@@ -481,8 +481,8 @@
 							'dom-base'
 						]
 					},
-					'liferay-paginator': {
-						path: 'paginator.js',
+					'liferay-pagination': {
+						path: 'pagination.js',
 						requires: [
 							'aui-pagination'
 						]

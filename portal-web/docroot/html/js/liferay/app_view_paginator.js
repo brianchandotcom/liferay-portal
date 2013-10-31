@@ -149,7 +149,7 @@ AUI.add(
 
 						var totalEntryPages = instance._getTotalPages(entriesTotal, entryRowsPerPage);
 
-						var entryPagination = new Liferay.Paginator(
+						var entryPagination = new Liferay.Pagination(
 							{
 								boundingBox: instance.get('entryPaginationContainer'),
 								circular: false,
@@ -178,7 +178,7 @@ AUI.add(
 
 						var totalFolderPages = instance._getTotalPages(foldersTotal, folderRowsPerPage);
 
-						var folderPagination = new Liferay.Paginator(
+						var folderPagination = new Liferay.Pagination(
 							{
 								boundingBox: instance.get('folderPaginationContainer'),
 								circular: false,
@@ -282,7 +282,7 @@ AUI.add(
 
 						var pagination = instance['_' + paginationData.name];
 
-						if (A.instanceOf(pagination, Liferay.Paginator)) {
+						if (A.instanceOf(pagination, Liferay.Pagination)) {
 							var state = paginationData.state;
 
 							pagination.set('total', instance._getTotalPages(state.total, state.rowsPerPage));
@@ -417,6 +417,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-parse-content', 'liferay-history-manager', 'liferay-paginator', 'liferay-portlet-base']
+		requires: ['aui-parse-content', 'liferay-history-manager', 'liferay-pagination', 'liferay-portlet-base']
 	}
 );

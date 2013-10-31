@@ -1,12 +1,12 @@
 AUI.add(
-	'liferay-paginator',
+	'liferay-pagination',
 	function(A) {
 		var Lang = A.Lang;
 		var AArray = A.Array;
 		var ANode = A.Node;
 		var AObject = A.Object;
 
-		var NAME = 'paginator';
+		var NAME = 'pagination';
 
 		var BOUNDING_BOX = 'boundingBox';
 
@@ -24,7 +24,7 @@ AUI.add(
 
 		var STRINGS = 'strings';
 
-		var Paginator = A.Component.create(
+		var Pagination = A.Component.create(
 			{
 				ATTRS: {
 					itemsPerPage: {
@@ -74,7 +74,7 @@ AUI.add(
 				NAME: NAME,
 
 				prototype: {
-					TPL_CONTAINER: '<div class="pull-left lfr-pagination lfr-paginator" id="{id}"></div>',
+					TPL_CONTAINER: '<div class="pull-left lfr-pagination lfr-pagination" id="{id}"></div>',
 
 					TPL_DELTA_SELECTOR: '<div class="lfr-pagination-delta-selector">' +
 						'<div class="btn-group lfr-icon-menu">' +
@@ -88,7 +88,7 @@ AUI.add(
 					TPL_ITEM_CONTAINER: '<ul class="dropdown-menu lfr-menu-list direction-down" id="{id}" role="menu"></ul>',
 
 					TPL_ITEM: '<li role="presentation" id="{idLi}">' +
-						'<a href="javascript:;" class="taglib-icon lfr-paginator-link" id="{idLink}" role="menuitem">' +
+						'<a href="javascript:;" class="taglib-icon lfr-pagination-link" id="{idLink}" role="menuitem">' +
 							'<span class="taglib-text-icon" data-index="{index}" data-value="{value}"">{value}</span>' +
 						'</a>' +
 					'</li>',
@@ -104,10 +104,10 @@ AUI.add(
 					bindUI: function() {
 						var instance = this;
 
-						Paginator.superclass.bindUI.apply(instance, arguments);
+						Pagination.superclass.bindUI.apply(instance, arguments);
 
 						instance._eventHandles = [
-							instance._itemContainer.delegate('click', instance._onItemClick, '.lfr-paginator-link', instance)
+							instance._itemContainer.delegate('click', instance._onItemClick, '.lfr-pagination-link', instance)
 						];
 
 						instance.on('itemsPerPageChange', instance._onItemsPerPageChange, instance);
@@ -123,7 +123,7 @@ AUI.add(
 					renderUI: function() {
 						var instance = this;
 
-						Paginator.superclass.renderUI.apply(instance, arguments);
+						Pagination.superclass.renderUI.apply(instance, arguments);
 
 						var boundingBox = instance.get(BOUNDING_BOX);
 
@@ -196,7 +196,7 @@ AUI.add(
 							state.itemsPerPage = instance.get(ITEMS_PER_PAGE);
 						}
 
-						Paginator.superclass._dispatchRequest.call(instance, state);
+						Pagination.superclass._dispatchRequest.call(instance, state);
 					},
 
 					_getLabelContent: function(itemsPerPage) {
@@ -322,7 +322,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.Paginator = Paginator;
+		Liferay.Pagination = Pagination;
 	},
 	'',
 	{

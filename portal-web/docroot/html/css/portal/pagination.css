@@ -1,5 +1,5 @@
 .aui {
-	.lfr-paginator {
+	.lfr-pagination {
 		.dropdown-menu {
 			display: none;
 		}
@@ -16,7 +16,7 @@
 		}
 
 		li {
-			.lfr-paginator-link {
+			.lfr-pagination-link {
 				border: none;
 				clear: both;
 				color: #333;

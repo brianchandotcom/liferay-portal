@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -713,8 +714,17 @@ public class JournalArticleStagedModelDataHandler
 			return;
 		}
 
-		String fileName =
-			image.getImageId() + StringPool.PERIOD + image.getType();
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(articleImage.getElInstanceId());
+		sb.append(StringPool.UNDERLINE);
+		sb.append(articleImage.getElName());
+
+		if (Validator.isNotNull(articleImage.getLanguageId())) {
+			sb.append(articleImage.getLanguageId());
+		}
+
+		String fileName = sb.toString();
 
 		String articleImagePath = ExportImportPathUtil.getModelPath(
 			article, fileName);
@@ -725,16 +735,14 @@ public class JournalArticleStagedModelDataHandler
 
 		Element imageElement = portletDataContext.getExportDataElement(image);
 
+		imageElement.addAttribute("file-name", fileName);
 		imageElement.addAttribute("path", articleImagePath);
-
-		if (Validator.isNotNull(fileName)) {
-			imageElement.addAttribute("file-name", fileName);
-		}
 
 		portletDataContext.addZipEntry(articleImagePath, image.getTextObj());
 
 		portletDataContext.addReferenceElement(
-			article, articleElement, image, articleImagePath, false);
+			article, articleElement, image, articleImagePath,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 	}
 
 	protected void prepareLanguagesForImport(JournalArticle article)

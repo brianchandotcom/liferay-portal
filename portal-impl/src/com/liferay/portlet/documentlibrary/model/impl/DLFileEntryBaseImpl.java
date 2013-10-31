@@ -47,4 +47,13 @@ public abstract class DLFileEntryBaseImpl extends DLFileEntryModelImpl
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(this);
 		}
 	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		DLFileEntry dlFileEntry = this;
+
+		dlFileEntry.setTreePath(treePath);
+
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+	}
 }

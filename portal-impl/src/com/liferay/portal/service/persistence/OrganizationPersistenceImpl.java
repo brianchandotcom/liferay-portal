@@ -6003,7 +6003,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Organization organization : list) {
-				if ((organizationId != organization.getOrganizationId()) ||
+				if ((organizationId >= organization.getOrganizationId()) ||
 						(companyId != organization.getCompanyId()) ||
 						(parentOrganizationId != organization.getParentOrganizationId())) {
 					list = null;

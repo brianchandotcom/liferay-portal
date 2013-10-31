@@ -5113,10 +5113,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (DLFolder dlFolder : list) {
-				if ((folderId != dlFolder.getFolderId()) ||
+				if ((folderId >= dlFolder.getFolderId()) ||
 						(companyId != dlFolder.getCompanyId()) ||
 						(parentFolderId != dlFolder.getParentFolderId()) ||
-						(status != dlFolder.getStatus())) {
+						(status == dlFolder.getStatus())) {
 					list = null;
 
 					break;

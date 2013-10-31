@@ -47,4 +47,13 @@ public abstract class DLFileVersionBaseImpl extends DLFileVersionModelImpl
 			DLFileVersionLocalServiceUtil.updateDLFileVersion(this);
 		}
 	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		DLFileVersion dlFileVersion = this;
+
+		dlFileVersion.setTreePath(treePath);
+
+		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+	}
 }

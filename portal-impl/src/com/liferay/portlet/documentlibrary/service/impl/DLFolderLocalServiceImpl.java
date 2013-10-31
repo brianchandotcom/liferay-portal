@@ -42,10 +42,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
-import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -1158,7 +1156,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException, SystemException {
 
-		validateFolderName(name);
+		DLStoreUtil.validateDirectory(name);
 
 		try {
 			dlFileEntryLocalService.getFileEntry(groupId, parentFolderId, name);
@@ -1183,12 +1181,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		long folderId = 0;
 
 		validateFolder(folderId, groupId, parentFolderId, name);
-	}
-
-	protected void validateFolderName(String name) throws PortalException {
-		if (!AssetUtil.isValidWord(name)) {
-			throw new FolderNameException();
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

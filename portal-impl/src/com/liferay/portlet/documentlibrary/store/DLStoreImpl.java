@@ -46,6 +46,7 @@ import com.liferay.portlet.documentlibrary.DirectoryNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
@@ -349,6 +350,30 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false, versionLabel);
 
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
+	}
+
+	@Override
+	public boolean isValidName(String name) {
+		if ((name == null) ||
+			name.contains("\\") ||
+			name.contains("\\\\") ||
+			name.contains("//") ||
+			name.contains(":") ||
+			name.contains("*") ||
+			name.contains("?") ||
+			name.contains("\"") ||
+			name.contains("<") ||
+			name.contains(">") ||
+			name.contains("|") ||
+			name.contains("[") ||
+			name.contains("]") ||
+			name.contains("../") ||
+			name.contains("/..")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -693,27 +718,13 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
-	protected boolean isValidName(String name) {
-		if ((name == null) ||
-			name.contains("\\") ||
-			name.contains("\\\\") ||
-			name.contains("//") ||
-			name.contains(":") ||
-			name.contains("*") ||
-			name.contains("?") ||
-			name.contains("\"") ||
-			name.contains("<") ||
-			name.contains(">") ||
-			name.contains("|") ||
-			name.contains("[") ||
-			name.contains("]") ||
-			name.contains("../") ||
-			name.contains("/..")) {
+	@Override
+	public void validateDirectory(String directoryName)
+		throws PortalException, SystemException {
 
-			return false;
+		if (!isValidName(directoryName)) {
+			throw new FolderNameException(directoryName);
 		}
-
-		return true;
 	}
 
 	protected void isValidVersion(String versionLabel) throws PortalException {

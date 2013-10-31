@@ -84,13 +84,6 @@ public class GroupFinderUtil {
 		return getFinder().findByCompanyId(companyId, params, start, end, obc);
 	}
 
-	public static java.util.List<java.lang.Long> findByC_P(long companyId,
-		long parentGroupId, long previousGroupId, int size)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .findByC_P(companyId, parentGroupId, previousGroupId, size);
-	}
-
 	public static com.liferay.portal.model.Group findByC_N(long companyId,
 		java.lang.String name)
 		throws com.liferay.portal.NoSuchGroupException,

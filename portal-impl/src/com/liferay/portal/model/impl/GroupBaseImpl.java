@@ -14,9 +14,15 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The extended model base implementation for the Group service. Represents a row in the &quot;Group_&quot; database table, with each column mapped to a property of this class.
@@ -44,5 +50,40 @@ public abstract class GroupBaseImpl extends GroupModelImpl implements Group {
 		else {
 			GroupLocalServiceUtil.updateGroup(this);
 		}
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		List<Group> groups = new ArrayList<Group>();
+
+		Group group = this;
+
+		while (group != null) {
+			groups.add(group);
+
+			group = GroupLocalServiceUtil.fetchGroup(group.getParentGroupId());
+		}
+
+		StringBundler sb = new StringBundler((groups.size() * 2) + 1);
+
+		sb.append(StringPool.SLASH);
+
+		for (int i = groups.size() - 1; i >= 0; i--) {
+			group = groups.get(i);
+
+			sb.append(group.getGroupId());
+			sb.append(StringPool.SLASH);
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		Group group = this;
+
+		group.setTreePath(treePath);
+
+		GroupLocalServiceUtil.updateGroup(group);
 	}
 }

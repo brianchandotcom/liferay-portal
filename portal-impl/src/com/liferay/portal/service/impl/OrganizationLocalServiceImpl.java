@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
@@ -56,6 +58,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.util.comparator.OrganizationNameComparator;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -64,12 +67,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1006,55 +1007,23 @@ public class OrganizationLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		Deque<Object[]> traces = new LinkedList<Object[]>();
+		TreePathUtil.rebuildTree(
+			companyId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			new TreeModelFinder<Organization>() {
 
-		traces.push(
-			new Object[] {
-				GetterUtil.getLong(
-					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
-				StringPool.SLASH, 0L
-			});
+				@Override
+				public List<Organization> findTreeModels(
+						long previousId, long companyId, long parentId,
+						int size)
+					throws SystemException {
 
-		Object[] trace = null;
+					return organizationPersistence.findByO_C_P(
+						previousId, companyId, parentId, QueryUtil.ALL_POS,
+						size, new OrganizationIdComparator());
+				}
 
-		while ((trace = traces.poll()) != null) {
-			Long parentOrganizationId = (Long)trace[0];
-			String parentPath = (String)trace[1];
-			Long previousOrganizationId = (Long)trace[2];
-
-			List<Long> childOrganizationIds = organizationFinder.findByC_P(
-				companyId, parentOrganizationId, previousOrganizationId,
-				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
-
-			if (childOrganizationIds.isEmpty()) {
-				continue;
 			}
-
-			if (childOrganizationIds.size() ==
-					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
-
-				trace[2] = childOrganizationIds.get(
-					childOrganizationIds.size() - 1);
-
-				traces.push(trace);
-			}
-
-			for (long childOrganizationId : childOrganizationIds) {
-				String path = parentPath.concat(
-					String.valueOf(childOrganizationId)).concat(
-						StringPool.SLASH);
-
-				Organization organization =
-					organizationPersistence.findByPrimaryKey(
-						childOrganizationId);
-
-				organization.setTreePath(path);
-
-				organizationPersistence.update(organization);
-
-				traces.push(new Object[] {childOrganizationId, path, 0L});
-			}
-		}
+		);
 	}
 
 	/**

@@ -47,4 +47,13 @@ public abstract class DLFileShortcutBaseImpl extends DLFileShortcutModelImpl
 			DLFileShortcutLocalServiceUtil.updateDLFileShortcut(this);
 		}
 	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		DLFileShortcut dlFileShortcut = this;
+
+		dlFileShortcut.setTreePath(treePath);
+
+		DLFileShortcutLocalServiceUtil.updateDLFileShortcut(dlFileShortcut);
+	}
 }

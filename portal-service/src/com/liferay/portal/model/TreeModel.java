@@ -12,33 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.model.impl;
+package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+
+import java.io.Serializable;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shinn Lok
  */
-public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
+public interface TreeModel {
 
-	public BookmarksEntryImpl() {
-	}
+	public String buildTreePath() throws PortalException, SystemException;
 
-	@Override
-	public String buildTreePath() throws PortalException, SystemException {
-		return getFolder().buildTreePath();
-	}
+	public Serializable getPrimaryKeyObj();
 
-	@Override
-	public BookmarksFolder getFolder() throws PortalException, SystemException {
-		if (getFolderId() <= 0) {
-			return new BookmarksFolderImpl();
-		}
+	public String getTreePath();
 
-		return BookmarksFolderLocalServiceUtil.getFolder(getFolderId());
-	}
+	public void updateTreePath(String treePath) throws SystemException;
 
 }

@@ -5,6 +5,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.TreeModel;
 
 /**
  * The extended model interface for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
@@ -28,6 +29,10 @@ public interface ${entity.name} extends
 			, PermissionedModel
 		<#else>
 			, PersistedModel
+		</#if>
+
+		<#if entity.isTreeModel()>
+		, TreeModel
 		</#if>
 	</#if>
 

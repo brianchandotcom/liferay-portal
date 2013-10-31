@@ -17,6 +17,7 @@ package com.liferay.portlet.bookmarks.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.PermissionedModel;
+import com.liferay.portal.model.TreeModel;
 
 /**
  * The extended model interface for the BookmarksEntry service. Represents a row in the &quot;BookmarksEntry&quot; database table, with each column mapped to a property of this class.
@@ -28,7 +29,8 @@ import com.liferay.portal.model.PermissionedModel;
  * @generated
  */
 @ProviderType
-public interface BookmarksEntry extends BookmarksEntryModel, PermissionedModel {
+public interface BookmarksEntry extends BookmarksEntryModel, PermissionedModel,
+	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

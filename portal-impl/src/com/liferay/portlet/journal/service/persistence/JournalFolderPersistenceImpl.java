@@ -4611,10 +4611,10 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 		if ((list != null) && !list.isEmpty()) {
 			for (JournalFolder journalFolder : list) {
-				if ((folderId != journalFolder.getFolderId()) ||
+				if ((folderId >= journalFolder.getFolderId()) ||
 						(companyId != journalFolder.getCompanyId()) ||
 						(parentFolderId != journalFolder.getParentFolderId()) ||
-						(status != journalFolder.getStatus())) {
+						(status == journalFolder.getStatus())) {
 					list = null;
 
 					break;

@@ -47,4 +47,13 @@ public abstract class JournalArticleBaseImpl extends JournalArticleModelImpl
 			JournalArticleLocalServiceUtil.updateJournalArticle(this);
 		}
 	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		JournalArticle journalArticle = this;
+
+		journalArticle.setTreePath(treePath);
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(journalArticle);
+	}
 }

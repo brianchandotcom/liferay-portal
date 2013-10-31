@@ -41,6 +41,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public void updateTreePath(String string)
+			throws 	com.liferay.portal.kernel.exception.SystemException {
+		return;
+	}
+
+	@Override
 	public Class<?> getModelClass() {
 		return DLFileEntry.class;
 	}

@@ -771,6 +771,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public void updateTreePath(java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_group.updateTreePath(treePath);
+	}
+
+	@Override
 	public void clearStagingGroup() {
 		_group.clearStagingGroup();
 	}

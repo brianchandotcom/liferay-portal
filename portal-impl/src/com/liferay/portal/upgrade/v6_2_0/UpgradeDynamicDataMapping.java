@@ -169,7 +169,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"displayChildLabelAsValue", "fieldCssClass"
 			});
 
-		if (structureKey.equals("TikaRawMetadata")) {
+		if (StringUtil.equalsIgnoreCase(structureKey, "TIKARAWMETADATA")) {
 			element.addAttribute("indexType", "text");
 		}
 

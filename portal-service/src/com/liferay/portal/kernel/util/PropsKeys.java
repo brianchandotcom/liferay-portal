@@ -715,6 +715,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_ENABLED = "dl.file.entry.thumbnail.enabled";
 
+	public static final String DL_FILE_ENTRY_THUMBNAIL_LEGACY_GENERATION = "dl.file.entry.thumbnail.legacy.generation";
+
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT = "dl.file.entry.thumbnail.max.height";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH = "dl.file.entry.thumbnail.max.width";

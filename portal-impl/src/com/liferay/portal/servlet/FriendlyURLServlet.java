@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -278,8 +279,6 @@ public class FriendlyURLServlet extends HttpServlet {
 			requestContext);
 
 		if (Validator.isNotNull(friendlyURL)) {
-			Locale locale = PortalUtil.getLocale(request);
-
 			LayoutFriendlyURLComposite layoutFriendlyURLComposite =
 				PortalUtil.getLayoutFriendlyURLComposite(
 					group.getGroupId(), _private, friendlyURL, params,
@@ -296,14 +295,35 @@ public class FriendlyURLServlet extends HttpServlet {
 					friendlyURL = friendlyURL.substring(0, pos);
 				}
 
+				Locale locale = PortalUtil.getLocale(request);
+
 				if (!friendlyURL.equals(layout.getFriendlyURL(locale))) {
 					setAlternativeLayoutFriendlyURL(
 						request, layout, friendlyURL);
 
-					String redirect = PortalUtil.getLocalizedFriendlyURL(
-						request, layout, locale);
+					String localizedFriendlyURL =
+						PortalUtil.getLocalizedFriendlyURL(
+							request, layout, locale);
 
-					return new Object[] {redirect, Boolean.TRUE};
+					int index = actualURL.indexOf(CharPool.QUESTION);
+
+					if (index != -1) {
+						if (localizedFriendlyURL.indexOf(
+								CharPool.QUESTION) == -1) {
+
+							localizedFriendlyURL =
+								localizedFriendlyURL.concat(
+									actualURL.substring(index));
+						}
+						else {
+							localizedFriendlyURL =
+								localizedFriendlyURL.concat(
+									StringPool.AMPERSAND).concat(
+										actualURL.substring(index + 1));
+						}
+					}
+
+					return new Object[] {localizedFriendlyURL, Boolean.TRUE};
 				}
 			}
 		}

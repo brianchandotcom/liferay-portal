@@ -133,7 +133,10 @@ public class AssetPublisherImpl implements AssetPublisher {
 		String referringPortletResource = ParamUtil.getString(
 			portletRequest, "referringPortletResource");
 
-		if (Validator.isNull(referringPortletResource)) {
+		if (Validator.isNull(referringPortletResource) ||
+			!PortletConstants.getRootPortletId(referringPortletResource).equals(
+				PortletKeys.ASSET_PUBLISHER)) {
+
 			return;
 		}
 

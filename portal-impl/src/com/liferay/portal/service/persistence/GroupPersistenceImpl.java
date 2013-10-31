@@ -4870,7 +4870,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Group group : list) {
-				if ((groupId != group.getGroupId()) ||
+				if ((groupId >= group.getGroupId()) ||
 						(companyId != group.getCompanyId()) ||
 						(parentGroupId != group.getParentGroupId())) {
 					list = null;

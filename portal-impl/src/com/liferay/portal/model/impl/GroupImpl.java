@@ -97,32 +97,6 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public String buildTreePath() throws PortalException, SystemException {
-		List<Group> groups = new ArrayList<Group>();
-
-		Group group = this;
-
-		while (group != null) {
-			groups.add(group);
-
-			group = group.getParentGroup();
-		}
-
-		StringBundler sb = new StringBundler(groups.size() * 2 + 1);
-
-		sb.append(StringPool.SLASH);
-
-		for (int i = groups.size() - 1; i >= 0; i--) {
-			group = groups.get(i);
-
-			sb.append(group.getGroupId());
-			sb.append(StringPool.SLASH);
-		}
-
-		return sb.toString();
-	}
-
-	@Override
 	public void clearStagingGroup() {
 		_stagingGroup = null;
 	}

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portal.model.TreeModel;
 
 /**
  * The extended model interface for the JournalArticle service. Represents a row in the &quot;JournalArticle&quot; database table, with each column mapped to a property of this class.
@@ -29,7 +30,8 @@ import com.liferay.portal.model.PersistedModel;
  * @generated
  */
 @ProviderType
-public interface JournalArticle extends JournalArticleModel, PersistedModel {
+public interface JournalArticle extends JournalArticleModel, PersistedModel,
+	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

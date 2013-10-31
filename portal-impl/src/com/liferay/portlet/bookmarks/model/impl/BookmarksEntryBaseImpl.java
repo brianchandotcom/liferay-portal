@@ -47,4 +47,13 @@ public abstract class BookmarksEntryBaseImpl extends BookmarksEntryModelImpl
 			BookmarksEntryLocalServiceUtil.updateBookmarksEntry(this);
 		}
 	}
+
+	@Override
+	public void updateTreePath(String treePath) throws SystemException {
+		BookmarksEntry bookmarksEntry = this;
+
+		bookmarksEntry.setTreePath(treePath);
+
+		BookmarksEntryLocalServiceUtil.updateBookmarksEntry(bookmarksEntry);
+	}
 }

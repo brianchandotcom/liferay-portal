@@ -773,6 +773,14 @@ public class Entity {
 		return _trashEnabled;
 	}
 
+	public boolean isTreeModel() {
+		if (hasColumn("treePath")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isTypedModel() {
 		if (hasColumn("classNameId")) {
 			EntityColumn classNameIdCol = getColumn("classNameId");

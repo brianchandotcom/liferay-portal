@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Address;
@@ -93,32 +91,6 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	public OrganizationImpl() {
-	}
-
-	@Override
-	public String buildTreePath() throws PortalException, SystemException {
-		List<Organization> organizations = new ArrayList<Organization>();
-
-		Organization organization = this;
-
-		while (organization != null) {
-			organizations.add(organization);
-
-			organization = organization.getParentOrganization();
-		}
-
-		StringBundler sb = new StringBundler(organizations.size() * 2 + 1);
-
-		sb.append(StringPool.SLASH);
-
-		for (int i = organizations.size() - 1; i >= 0; i--) {
-			organization = organizations.get(i);
-
-			sb.append(organization.getOrganizationId());
-			sb.append(StringPool.SLASH);
-		}
-
-		return sb.toString();
 	}
 
 	@Override

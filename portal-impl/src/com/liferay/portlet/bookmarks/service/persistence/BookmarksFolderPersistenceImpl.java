@@ -4732,10 +4732,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		if ((list != null) && !list.isEmpty()) {
 			for (BookmarksFolder bookmarksFolder : list) {
-				if ((folderId != bookmarksFolder.getFolderId()) ||
+				if ((folderId >= bookmarksFolder.getFolderId()) ||
 						(companyId != bookmarksFolder.getCompanyId()) ||
 						(parentFolderId != bookmarksFolder.getParentFolderId()) ||
-						(status != bookmarksFolder.getStatus())) {
+						(status == bookmarksFolder.getStatus())) {
 					list = null;
 
 					break;

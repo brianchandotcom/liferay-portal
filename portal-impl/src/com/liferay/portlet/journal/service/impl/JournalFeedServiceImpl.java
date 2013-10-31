@@ -59,6 +59,16 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 		journalFeedLocalService.deleteFeed(feedId);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
+	 */
+	@Override
+	public void deleteFeed(long groupId, long feedId)
+		throws PortalException, SystemException {
+
+		deleteFeed(groupId, String.valueOf(feedId));
+	}
+
 	@Override
 	public void deleteFeed(long groupId, String feedId)
 		throws PortalException, SystemException {
@@ -77,6 +87,16 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 			getPermissionChecker(), feedId, ActionKeys.VIEW);
 
 		return journalFeedLocalService.getFeed(feedId);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
+	 */
+	@Override
+	public JournalFeed getFeed(long groupId, long feedId)
+		throws PortalException, SystemException {
+
+		return getFeed(groupId, String.valueOf(feedId));
 	}
 
 	@Override

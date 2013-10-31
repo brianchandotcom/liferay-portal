@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -82,6 +83,9 @@ public class JSONWebServiceServiceActionTest
 		).thenReturn(
 			""
 		);
+
+		new JSONWebServiceActionsManagerUtil().setJSONWebServiceActionsManager(
+			new JSONWebServiceActionsManagerImpl());
 	}
 
 	@Test
@@ -205,7 +209,7 @@ public class JSONWebServiceServiceActionTest
 			createInvokerHttpServletRequest(json);
 
 		if (setContextPath) {
-			mockHttpServletRequest.setContextPath(ctx);
+			setServletContext(mockHttpServletRequest, ctx);
 		}
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -233,7 +237,7 @@ public class JSONWebServiceServiceActionTest
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		if (setContextPath) {
-			mockHttpServletRequest.setContextPath(ctx);
+			setServletContext(mockHttpServletRequest, ctx);
 		}
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -258,7 +262,7 @@ public class JSONWebServiceServiceActionTest
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		if (setContextPath) {
-			mockHttpServletRequest.setContextPath(ctx);
+			setServletContext(mockHttpServletRequest, ctx);
 		}
 
 		MockHttpServletResponse mockHttpServletResponse =

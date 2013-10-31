@@ -43,6 +43,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.powermock.api.mockito.PowerMockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Igor Spasic
@@ -138,6 +140,21 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 		return JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
 			httpServletRequest);
+	}
+
+	protected void setServletContext(
+			MockHttpServletRequest mockHttpServletRequest, String contextPath) {
+
+		mockHttpServletRequest.setContextPath(contextPath);
+
+		MockServletContext mockServletContext = new MockServletContext();
+
+		mockServletContext.setContextPath(contextPath);
+
+		MockHttpSession mockHttpServletSession = new MockHttpSession(
+			mockServletContext);
+
+		mockHttpServletRequest.setSession(mockHttpServletSession);
 	}
 
 	protected String toJSON(Object object) {

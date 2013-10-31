@@ -38,8 +38,8 @@ import java.util.Map;
  */
 public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public ExpandoValue addValue(
 			long companyId, String className, String tableName,
 			String columnName, long classPK, Object data)

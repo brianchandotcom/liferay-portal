@@ -48,8 +48,8 @@ public class MDRRuleServiceImpl extends MDRRuleServiceBaseImpl {
 			serviceContext);
 	}
 
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public MDRRule addRule(
 			long ruleGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type,

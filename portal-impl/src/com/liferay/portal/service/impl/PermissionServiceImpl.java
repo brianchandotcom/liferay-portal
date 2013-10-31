@@ -96,8 +96,8 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 	 *         the permission information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
-	@Override
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
 	public void checkPermission(long groupId, String name, long primKey)
 		throws PortalException, SystemException {
 

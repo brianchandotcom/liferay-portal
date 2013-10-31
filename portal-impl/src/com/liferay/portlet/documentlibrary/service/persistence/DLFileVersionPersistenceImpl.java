@@ -3072,7 +3072,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		if ((list != null) && !list.isEmpty()) {
 			for (DLFileVersion dlFileVersion : list) {
 				if ((companyId != dlFileVersion.getCompanyId()) ||
-						(status != dlFileVersion.getStatus())) {
+						(status == dlFileVersion.getStatus())) {
 					list = null;
 
 					break;

@@ -2879,7 +2879,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (CalEvent calEvent : list) {
-				if ((remindBy != calEvent.getRemindBy())) {
+				if ((remindBy == calEvent.getRemindBy())) {
 					list = null;
 
 					break;

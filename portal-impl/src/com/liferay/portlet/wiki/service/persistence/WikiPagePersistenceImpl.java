@@ -13502,7 +13502,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			for (WikiPage wikiPage : list) {
 				if ((nodeId != wikiPage.getNodeId()) ||
 						(head != wikiPage.getHead()) ||
-						(status != wikiPage.getStatus())) {
+						(status == wikiPage.getStatus())) {
 					list = null;
 
 					break;
@@ -17860,7 +17860,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				if ((nodeId != wikiPage.getNodeId()) ||
 						(head != wikiPage.getHead()) ||
 						!Validator.equals(parentTitle, wikiPage.getParentTitle()) ||
-						(status != wikiPage.getStatus())) {
+						(status == wikiPage.getStatus())) {
 					list = null;
 
 					break;
@@ -19140,7 +19140,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						(head != wikiPage.getHead()) ||
 						!Validator.equals(redirectTitle,
 							wikiPage.getRedirectTitle()) ||
-						(status != wikiPage.getStatus())) {
+						(status == wikiPage.getStatus())) {
 					list = null;
 
 					break;

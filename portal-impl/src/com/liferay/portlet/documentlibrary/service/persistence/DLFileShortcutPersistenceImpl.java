@@ -3455,7 +3455,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		if ((list != null) && !list.isEmpty()) {
 			for (DLFileShortcut dlFileShortcut : list) {
 				if ((companyId != dlFileShortcut.getCompanyId()) ||
-						(status != dlFileShortcut.getStatus())) {
+						(status == dlFileShortcut.getStatus())) {
 					list = null;
 
 					break;

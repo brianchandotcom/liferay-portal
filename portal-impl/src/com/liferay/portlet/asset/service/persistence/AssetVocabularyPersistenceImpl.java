@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3159,7 +3160,9 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		if ((list != null) && !list.isEmpty()) {
 			for (AssetVocabulary assetVocabulary : list) {
 				if ((groupId != assetVocabulary.getGroupId()) ||
-						!Validator.equals(name, assetVocabulary.getName())) {
+						!StringUtil.wildcardMatches(assetVocabulary.getName(),
+							name, CharPool.UNDERLINE, CharPool.PERCENT,
+							CharPool.BACK_SLASH, false)) {
 					list = null;
 
 					break;

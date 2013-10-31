@@ -4203,7 +4203,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		if ((list != null) && !list.isEmpty()) {
 			for (BookmarksFolder bookmarksFolder : list) {
 				if ((companyId != bookmarksFolder.getCompanyId()) ||
-						(status != bookmarksFolder.getStatus())) {
+						(status == bookmarksFolder.getStatus())) {
 					list = null;
 
 					break;
@@ -5645,7 +5645,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			for (BookmarksFolder bookmarksFolder : list) {
 				if ((groupId != bookmarksFolder.getGroupId()) ||
 						(parentFolderId != bookmarksFolder.getParentFolderId()) ||
-						(status != bookmarksFolder.getStatus())) {
+						(status == bookmarksFolder.getStatus())) {
 					list = null;
 
 					break;

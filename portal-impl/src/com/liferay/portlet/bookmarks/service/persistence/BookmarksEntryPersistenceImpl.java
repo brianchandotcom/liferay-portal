@@ -4746,7 +4746,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		if ((list != null) && !list.isEmpty()) {
 			for (BookmarksEntry bookmarksEntry : list) {
 				if ((groupId != bookmarksEntry.getGroupId()) ||
-						(status != bookmarksEntry.getStatus())) {
+						(status == bookmarksEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -5584,7 +5584,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		if ((list != null) && !list.isEmpty()) {
 			for (BookmarksEntry bookmarksEntry : list) {
 				if ((companyId != bookmarksEntry.getCompanyId()) ||
-						(status != bookmarksEntry.getStatus())) {
+						(status == bookmarksEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -7022,7 +7022,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			for (BookmarksEntry bookmarksEntry : list) {
 				if ((groupId != bookmarksEntry.getGroupId()) ||
 						(userId != bookmarksEntry.getUserId()) ||
-						(status != bookmarksEntry.getStatus())) {
+						(status == bookmarksEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -9384,7 +9384,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			for (BookmarksEntry bookmarksEntry : list) {
 				if ((groupId != bookmarksEntry.getGroupId()) ||
 						(folderId != bookmarksEntry.getFolderId()) ||
-						(status != bookmarksEntry.getStatus())) {
+						(status == bookmarksEntry.getStatus())) {
 					list = null;
 
 					break;

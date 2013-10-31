@@ -3421,8 +3421,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((companyId != blogsEntry.getCompanyId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate())) {
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime())) {
 					list = null;
 
 					break;
@@ -3969,7 +3969,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((companyId != blogsEntry.getCompanyId()) ||
-						(status != blogsEntry.getStatus())) {
+						(status == blogsEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -5274,8 +5274,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate())) {
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime())) {
 					list = null;
 
 					break;
@@ -6234,7 +6234,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
-						(status != blogsEntry.getStatus())) {
+						(status == blogsEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -8038,7 +8038,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
-				if (!Validator.equals(displayDate, blogsEntry.getDisplayDate()) ||
+				if ((displayDate.getTime() <= blogsEntry.getDisplayDate()
+															.getTime()) ||
 						(status != blogsEntry.getStatus())) {
 					list = null;
 
@@ -8596,7 +8597,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			for (BlogsEntry blogsEntry : list) {
 				if ((companyId != blogsEntry.getCompanyId()) ||
 						(userId != blogsEntry.getUserId()) ||
-						(status != blogsEntry.getStatus())) {
+						(status == blogsEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -9718,9 +9719,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((companyId != blogsEntry.getCompanyId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate()) ||
-						(status != blogsEntry.getStatus())) {
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime()) ||
+						(status == blogsEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -10304,8 +10305,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((companyId != blogsEntry.getCompanyId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate()) ||
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime()) ||
 						(status != blogsEntry.getStatus())) {
 					list = null;
 
@@ -10888,8 +10889,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
 						(userId != blogsEntry.getUserId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate())) {
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime())) {
 					list = null;
 
 					break;
@@ -11909,7 +11910,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
 						(userId != blogsEntry.getUserId()) ||
-						(status != blogsEntry.getStatus())) {
+						(status == blogsEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -13830,9 +13831,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate()) ||
-						(status != blogsEntry.getStatus())) {
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime()) ||
+						(status == blogsEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -14852,8 +14853,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate()) ||
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime()) ||
 						(status != blogsEntry.getStatus())) {
 					list = null;
 
@@ -15880,9 +15881,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
 						(userId != blogsEntry.getUserId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate()) ||
-						(status != blogsEntry.getStatus())) {
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime()) ||
+						(status == blogsEntry.getStatus())) {
 					list = null;
 
 					break;
@@ -16957,8 +16958,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			for (BlogsEntry blogsEntry : list) {
 				if ((groupId != blogsEntry.getGroupId()) ||
 						(userId != blogsEntry.getUserId()) ||
-						!Validator.equals(displayDate,
-							blogsEntry.getDisplayDate()) ||
+						(displayDate.getTime() <= blogsEntry.getDisplayDate()
+																.getTime()) ||
 						(status != blogsEntry.getStatus())) {
 					list = null;
 

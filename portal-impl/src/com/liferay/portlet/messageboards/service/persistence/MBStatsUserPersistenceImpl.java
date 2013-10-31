@@ -1382,8 +1382,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		if ((list != null) && !list.isEmpty()) {
 			for (MBStatsUser mbStatsUser : list) {
 				if ((groupId != mbStatsUser.getGroupId()) ||
-						(userId != mbStatsUser.getUserId()) ||
-						(messageCount != mbStatsUser.getMessageCount())) {
+						(userId == mbStatsUser.getUserId()) ||
+						(messageCount == mbStatsUser.getMessageCount())) {
 					list = null;
 
 					break;

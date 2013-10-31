@@ -19,6 +19,7 @@ import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -53,6 +56,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.comparator.FolderIdComparator;
 
 import java.io.Serializable;
 
@@ -782,14 +786,24 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<DLFolder> dlFolders = dlFolderPersistence.findByC_NotS(
-			companyId, WorkflowConstants.STATUS_IN_TRASH);
+		TreePathUtil.rebuildTree(
+			companyId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			new TreeModelFinder<DLFolder>() {
 
-		for (DLFolder dlFolder : dlFolders) {
-			dlFolder.setTreePath(dlFolder.buildTreePath());
+				@Override
+				public List<DLFolder> findTreeModels(
+						long previousId, long companyId, long parentId,
+						int size)
+					throws SystemException {
 
-			dlFolderPersistence.update(dlFolder);
-		}
+					return dlFolderPersistence.findByF_C_P_NotS(
+						previousId, companyId, parentId,
+						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+						size, new FolderIdComparator());
+				}
+
+			}
+		);
 	}
 
 	@Override

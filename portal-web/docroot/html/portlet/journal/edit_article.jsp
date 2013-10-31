@@ -137,7 +137,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 %>
 
-<div class="article-form <%= (article != null) ? "article-form-edit" : "article-form-add" %>">
+<div class="article-form <%= ((article != null) && !article.isNew()) ? "article-form-edit" : "article-form-add" %>">
 	<c:if test="<%= showHeader %>">
 		<liferay-util:include page="/html/portlet/journal/article_header.jsp" />
 	</c:if>
@@ -186,11 +186,11 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 		<div class="journal-article-wrapper" id="<portlet:namespace />journalArticleWrapper">
 			<div class="journal-article-wrapper-content">
 				<c:if test="<%= Validator.isNull(toLanguageId) %>">
-					<c:if test="<%= article != null %>">
+					<c:if test="<%= (article != null) && !article.isNew() %>">
 						<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
-					</c:if>
 
-					<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
+						<liferay-util:include page="/html/portlet/journal/article_toolbar.jsp" />
+					</c:if>
 				</c:if>
 
 				<liferay-util:buffer var="htmlTop">

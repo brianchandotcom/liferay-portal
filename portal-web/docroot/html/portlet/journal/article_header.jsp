@@ -37,7 +37,7 @@ String title = "new-web-content";
 if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 	title = "structure-default-values";
 }
-else if (article != null) {
+else if ((article != null) && !article.isNew()) {
 	localizeTitle = false;
 
 	if (Validator.isNotNull(toLanguageId)) {

@@ -53,12 +53,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 				String indexType = ddmStructure.getFieldProperty(
 					field.getName(), "indexType");
 
-				String structureKey = ddmStructure.getStructureKey();
-
-				if (structureKey.equals("TIKARAWMETADATA")) {
-					indexType = "text";
-				}
-
 				if (Validator.isNull(indexType)) {
 					continue;
 				}
@@ -194,12 +188,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 			try {
 				String indexType = ddmStructure.getFieldProperty(
 					field.getName(), "indexType");
-
-				String structureKey = ddmStructure.getStructureKey();
-
-				if (structureKey.equals("TIKARAWMETADATA")) {
-					indexType = "text";
-				}
 
 				if (Validator.isNull(indexType)) {
 					continue;

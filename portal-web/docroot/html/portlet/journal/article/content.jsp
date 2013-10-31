@@ -316,7 +316,7 @@ if (Validator.isNotNull(content)) {
 								<liferay-ui:icon-help message="default-language-help" />
 							</span>
 
-							<c:if test="<%= article != null %>">
+							<c:if test="<%= (article != null) && !article.isNew() %>">
 								<span class="lfr-translation-manager-add-menu">
 									<liferay-ui:icon-menu
 										cssClass="add-translations-menu"

@@ -621,6 +621,8 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_THREAD_VIEW = "discussion.thread.view";
 
+	public static final String DL_CHAR_BLACKLIST = "dl.char.blacklist";
+
 	public static final String DL_COMPARABLE_FILE_EXTENSIONS = "dl.comparable.file.extensions";
 
 	public static final String DL_DEFAULT_DISPLAY_VIEW = "dl.default.display.view";

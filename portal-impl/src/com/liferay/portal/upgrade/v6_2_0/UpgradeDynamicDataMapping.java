@@ -155,7 +155,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void updateXSDDynamicElement(
-			Element element, String structureKey) {
+		Element element, String structureKey) {
 
 		Element metadataElement = element.element("meta-data");
 

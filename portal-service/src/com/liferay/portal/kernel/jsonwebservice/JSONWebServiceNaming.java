@@ -121,24 +121,6 @@ public class JSONWebServiceNaming {
 			path = contextPath + StringPool.PERIOD + path.substring(1);
 		}
 
-		if (includedPaths.length > 0) {
-			boolean included = false;
-
-			for (String includedPath : includedPaths) {
-				if (StringUtil.wildcardMatches(
-						path, includedPath, '?', '*', '\\', false)) {
-
-					included = true;
-
-					break;
-				}
-			}
-
-			if (!included) {
-				return false;
-			}
-		}
-
 		for (String excludedPath : excludedPaths) {
 			if (StringUtil.wildcardMatches(
 					path, excludedPath, '?', '*', '\\', false)) {
@@ -147,7 +129,19 @@ public class JSONWebServiceNaming {
 			}
 		}
 
-		return true;
+		if (includedPaths.length == 0) {
+			return true;
+		}
+
+		for (String includedPath : includedPaths) {
+			if (StringUtil.wildcardMatches(
+					path, includedPath, '?', '*', '\\', false)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public boolean isValidHttpMethod(String httpMethod) {

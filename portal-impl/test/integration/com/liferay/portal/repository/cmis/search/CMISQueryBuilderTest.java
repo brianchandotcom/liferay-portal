@@ -14,6 +14,9 @@
 
 package com.liferay.portal.repository.cmis.search;
 
+import com.liferay.portal.kernel.bean.BeanLocator;
+import com.liferay.portal.kernel.bean.BeanLocatorException;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -21,21 +24,64 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.service.RepositoryEntryLocalService;
+import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+
+import java.lang.reflect.Field;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
+
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Mika Koivisto
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class CMISQueryBuilderTest {
+public class CMISQueryBuilderTest extends PowerMockito {
+
+	@Before
+	public void setUp() {
+		_portalBeanLocator = mock(BeanLocator.class);
+
+		BeanLocator beanLocator = new WrapperBeanLocator(
+			_portalBeanLocator, PortalBeanLocatorUtil.getBeanLocator());
+
+		PortalBeanLocatorUtil.setBeanLocator(beanLocator);
+	}
+
+	@After
+	public void tearDown() {
+		for (Class<?> serviceUtilClass : _serviceUtilClasses) {
+			try {
+				Field field = serviceUtilClass.getDeclaredField("_service");
+
+				field.setAccessible(true);
+
+				field.set(serviceUtilClass, null);
+			}
+			catch (Exception e) {
+			}
+		}
+	}
 
 	@Test
 	public void testBooleanQuery() throws Exception {
@@ -113,6 +159,47 @@ public class CMISQueryBuilderTest {
 
 		assertQueryEquals(
 			"(cmis:name = 'test.jpg') OR (cmis:createdBy = 'test.jpg')",
+			cmisQuery);
+	}
+
+	@Test
+	public void testFolderQuery() throws Exception {
+		DLAppService dlAppService = getMockPortalService(
+			DLAppServiceUtil.class, DLAppService.class);
+		RepositoryEntryLocalService repositoryEntryLocalService =
+			getMockPortalService(
+				RepositoryEntryLocalServiceUtil.class,
+				RepositoryEntryLocalService.class);
+		RepositoryEntry repositoryEntry = mock(RepositoryEntry.class);
+
+		when(
+			repositoryEntryLocalService.fetchRepositoryEntry(Mockito.eq(1000l))
+		).thenReturn(repositoryEntry);
+
+		when(
+			repositoryEntry.getMappedId()
+		).thenReturn("1000");
+
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test");
+		searchContext.setFolderIds(new long[] { 1000 });
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
+		queryConfig.setSearchSubfolders(false);
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals(
+			"(IN_FOLDER('1000')) AND ((cmis:name = 'test') OR " +
+				"(cmis:createdBy = 'test') OR (CONTAINS('test')))",
 			cmisQuery);
 	}
 
@@ -203,6 +290,47 @@ public class CMISQueryBuilderTest {
 	}
 
 	@Test
+	public void testSubfolderQuery() throws Exception {
+		DLAppService dlAppService = getMockPortalService(
+			DLAppServiceUtil.class, DLAppService.class);
+		RepositoryEntryLocalService repositoryEntryLocalService =
+			getMockPortalService(
+				RepositoryEntryLocalServiceUtil.class,
+				RepositoryEntryLocalService.class);
+		RepositoryEntry repositoryEntry = mock(RepositoryEntry.class);
+
+		when(
+			repositoryEntryLocalService.fetchRepositoryEntry(Mockito.eq(1000l))
+		).thenReturn(repositoryEntry);
+
+		when(
+			repositoryEntry.getMappedId()
+		).thenReturn("1000");
+
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords("test");
+		searchContext.setFolderIds(new long[] { 1000 });
+
+		BooleanQuery searchQuery =
+			RepositorySearchQueryBuilderUtil.getFullQuery(searchContext);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setAttribute(
+			"capabilityQuery", CapabilityQuery.BOTHCOMBINED.value());
+		queryConfig.setSearchSubfolders(true);
+
+		String cmisQuery = CMISSearchQueryBuilderUtil.buildQuery(
+			searchContext, searchQuery);
+
+		assertQueryEquals(
+			"(IN_TREE('1000')) AND ((cmis:name = 'test') OR " +
+				"(cmis:createdBy = 'test') OR (CONTAINS('test')))",
+			cmisQuery);
+	}
+
+	@Test
 	public void testWildcardFieldQuery() throws Exception {
 		SearchContext searchContext = getSearchContext();
 
@@ -240,6 +368,23 @@ public class CMISQueryBuilderTest {
 		Assert.assertEquals(_QUERY_PREFIX + where + _QUERY_POSTFIX, query);
 	}
 
+	protected <T> T getMockPortalService(
+		Class<?> serviceUtilClass, Class<T> serviceClass) {
+
+		_serviceUtilClasses.add(serviceUtilClass);
+
+		T service = mock(serviceClass);
+
+		when(
+			_portalBeanLocator.locate(
+				Mockito.eq(serviceClass.getName()))
+		).thenReturn(
+			service
+		);
+
+		return service;
+	}
+
 	protected SearchContext getSearchContext() {
 		SearchContext searchContext = new SearchContext();
 
@@ -252,5 +397,50 @@ public class CMISQueryBuilderTest {
 
 	private static final String _QUERY_PREFIX =
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE (";
+
+	private BeanLocator _portalBeanLocator;
+	private Map<String, Object> _serviceMocks = new HashMap<String, Object>();
+	private List<Class<?>> _serviceUtilClasses = new ArrayList<Class<?>>();
+
+	private class WrapperBeanLocator implements BeanLocator {
+
+		public WrapperBeanLocator(
+			BeanLocator mockBeanLocator, BeanLocator beanLocator) {
+
+			_beanLocator = beanLocator;
+			_mockBeanLocator = mockBeanLocator;
+		}
+
+		public ClassLoader getClassLoader() {
+			return _beanLocator.getClassLoader();
+		}
+
+		public String[] getNames() {
+			return _beanLocator.getNames();
+		}
+
+		public Class<?> getType(String name) throws BeanLocatorException {
+			return _beanLocator.getType(name);
+		}
+
+		public <T> Map<String, T> locate(Class<T> clazz)
+			throws BeanLocatorException {
+
+			return _beanLocator.locate(clazz);
+		}
+
+		public Object locate(String name) throws BeanLocatorException {
+			Object bean = _mockBeanLocator.locate(name);
+
+			if (bean != null) {
+				return bean;
+			}
+
+			return _beanLocator.locate(name);
+		}
+
+		private BeanLocator _mockBeanLocator;
+		private BeanLocator _beanLocator;
+	}
 
 }

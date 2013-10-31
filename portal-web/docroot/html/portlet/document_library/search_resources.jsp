@@ -50,9 +50,15 @@ if (searchFolderId > 0) {
 else {
 	long defaultFolderId = DLFolderConstants.getFolderId(scopeGroupId, DLFolderConstants.getDataRepositoryId(scopeGroupId, searchFolderIds));
 
-	List<Long> folderIds = DLAppServiceUtil.getSubfolderIds(scopeGroupId, searchFolderIds);
+	List<Folder> folders = DLAppServiceUtil.getFolders(scopeGroupId, searchFolderIds);
 
-	folderIds.add(0, defaultFolderId);
+	List<Long> folderIds = new ArrayList<Long>(folders.size() + 1);
+
+	folderIds.add(defaultFolderId);
+
+	for (Folder subFolder : folders) {
+		folderIds.add(subFolder.getFolderId());
+	}
 
 	folderIdsArray = StringUtil.split(StringUtil.merge(folderIds), 0L);
 }
@@ -189,6 +195,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 				QueryConfig queryConfig = new QueryConfig();
 
 				queryConfig.setHighlightEnabled(true);
+				queryConfig.setSearchSubfolders(true);
 
 				searchContext.setQueryConfig(queryConfig);
 

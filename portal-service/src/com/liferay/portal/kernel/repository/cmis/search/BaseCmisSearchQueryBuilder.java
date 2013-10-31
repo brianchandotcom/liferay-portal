@@ -143,7 +143,12 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 					objectId = CMISParameterValueUtil.formatParameterValue(
 						field, objectId, wildcard, queryConfig);
 
-					cmisCriterion = new CMISInFolderExpression(objectId);
+					if (queryConfig.isSearchSubfolders()) {
+						cmisCriterion = new CMISInTreeExpression(objectId);
+					}
+					else {
+						cmisCriterion = new CMISInFolderExpression(objectId);
+					}
 				}
 			}
 			catch (SystemException se) {

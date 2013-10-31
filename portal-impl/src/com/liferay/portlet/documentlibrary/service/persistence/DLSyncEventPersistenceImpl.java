@@ -160,7 +160,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (DLSyncEvent dlSyncEvent : list) {
-				if ((modifiedTime != dlSyncEvent.getModifiedTime())) {
+				if ((modifiedTime >= dlSyncEvent.getModifiedTime())) {
 					list = null;
 
 					break;

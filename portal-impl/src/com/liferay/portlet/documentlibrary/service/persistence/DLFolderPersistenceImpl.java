@@ -4014,7 +4014,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		if ((list != null) && !list.isEmpty()) {
 			for (DLFolder dlFolder : list) {
 				if ((companyId != dlFolder.getCompanyId()) ||
-						(status != dlFolder.getStatus())) {
+						(status == dlFolder.getStatus())) {
 					list = null;
 
 					break;

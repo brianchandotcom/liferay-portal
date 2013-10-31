@@ -16214,7 +16214,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if ((list != null) && !list.isEmpty()) {
 			for (JournalArticle journalArticle : list) {
 				if ((companyId != journalArticle.getCompanyId()) ||
-						(status != journalArticle.getStatus())) {
+						(status == journalArticle.getStatus())) {
 					list = null;
 
 					break;
@@ -16728,8 +16728,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		if ((list != null) && !list.isEmpty()) {
 			for (JournalArticle journalArticle : list) {
-				if (!Validator.equals(displayDate,
-							journalArticle.getDisplayDate()) ||
+				if ((displayDate.getTime() <= journalArticle.getDisplayDate()
+																.getTime()) ||
 						(status != journalArticle.getStatus())) {
 					list = null;
 
@@ -26082,7 +26082,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				if ((groupId != journalArticle.getGroupId()) ||
 						!Validator.equals(articleId,
 							journalArticle.getArticleId()) ||
-						(status != journalArticle.getStatus())) {
+						(status == journalArticle.getStatus())) {
 					list = null;
 
 					break;

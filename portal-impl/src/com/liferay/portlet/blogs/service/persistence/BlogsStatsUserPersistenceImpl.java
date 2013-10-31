@@ -1387,7 +1387,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsStatsUser blogsStatsUser : list) {
 				if ((groupId != blogsStatsUser.getGroupId()) ||
-						(entryCount != blogsStatsUser.getEntryCount())) {
+						(entryCount == blogsStatsUser.getEntryCount())) {
 					list = null;
 
 					break;
@@ -1902,7 +1902,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		if ((list != null) && !list.isEmpty()) {
 			for (BlogsStatsUser blogsStatsUser : list) {
 				if ((companyId != blogsStatsUser.getCompanyId()) ||
-						(entryCount != blogsStatsUser.getEntryCount())) {
+						(entryCount == blogsStatsUser.getEntryCount())) {
 					list = null;
 
 					break;

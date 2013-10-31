@@ -3275,7 +3275,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		if ((list != null) && !list.isEmpty()) {
 			for (LayoutRevision layoutRevision : list) {
 				if ((plid != layoutRevision.getPlid()) ||
-						(status != layoutRevision.getStatus())) {
+						(status == layoutRevision.getStatus())) {
 					list = null;
 
 					break;

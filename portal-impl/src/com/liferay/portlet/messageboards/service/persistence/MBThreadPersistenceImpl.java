@@ -4046,7 +4046,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if ((list != null) && !list.isEmpty()) {
 			for (MBThread mbThread : list) {
 				if ((groupId != mbThread.getGroupId()) ||
-						(categoryId != mbThread.getCategoryId())) {
+						(categoryId == mbThread.getCategoryId())) {
 					list = null;
 
 					break;
@@ -9535,7 +9535,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			for (MBThread mbThread : list) {
 				if ((groupId != mbThread.getGroupId()) ||
 						(categoryId != mbThread.getCategoryId()) ||
-						(status != mbThread.getStatus())) {
+						(status == mbThread.getStatus())) {
 					list = null;
 
 					break;
@@ -11062,7 +11062,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if ((list != null) && !list.isEmpty()) {
 			for (MBThread mbThread : list) {
 				if ((groupId != mbThread.getGroupId()) ||
-						(categoryId != mbThread.getCategoryId()) ||
+						(categoryId == mbThread.getCategoryId()) ||
 						(status != mbThread.getStatus())) {
 					list = null;
 
@@ -12016,8 +12016,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if ((list != null) && !list.isEmpty()) {
 			for (MBThread mbThread : list) {
 				if ((groupId != mbThread.getGroupId()) ||
-						(categoryId != mbThread.getCategoryId()) ||
-						(status != mbThread.getStatus())) {
+						(categoryId == mbThread.getCategoryId()) ||
+						(status == mbThread.getStatus())) {
 					list = null;
 
 					break;

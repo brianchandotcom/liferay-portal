@@ -4083,7 +4083,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		if ((list != null) && !list.isEmpty()) {
 			for (JournalFolder journalFolder : list) {
 				if ((companyId != journalFolder.getCompanyId()) ||
-						(status != journalFolder.getStatus())) {
+						(status == journalFolder.getStatus())) {
 					list = null;
 
 					break;
@@ -6300,7 +6300,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			for (JournalFolder journalFolder : list) {
 				if ((groupId != journalFolder.getGroupId()) ||
 						(parentFolderId != journalFolder.getParentFolderId()) ||
-						(status != journalFolder.getStatus())) {
+						(status == journalFolder.getStatus())) {
 					list = null;
 
 					break;

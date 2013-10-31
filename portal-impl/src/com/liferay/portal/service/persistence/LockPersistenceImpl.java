@@ -1258,7 +1258,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Lock lock : list) {
-				if (!Validator.equals(expirationDate, lock.getExpirationDate())) {
+				if ((expirationDate.getTime() <= lock.getExpirationDate()
+														 .getTime())) {
 					list = null;
 
 					break;

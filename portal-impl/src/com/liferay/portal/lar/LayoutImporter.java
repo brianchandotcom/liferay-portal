@@ -439,11 +439,26 @@ public class LayoutImporter {
 				groupId, privateLayout, settings);
 		}
 
+		Element portletsElement = _rootElement.element("portlets");
+
+		List<Element> portletElements = portletsElement.elements("portlet");
+
 		// Read asset categories, asset tags, comments, locks, permissions, and
 		// ratings entries to make them available to the data handlers through
 		// the context
 
 		if (importPermissions) {
+			for (Element portletElement : portletElements) {
+				String portletPath = portletElement.attributeValue("path");
+
+				Document portletDocument = SAXReaderUtil.read(
+					portletDataContext.getZipEntryAsString(portletPath));
+
+				_permissionImporter.importRoles(
+					layoutCache, companyId, groupId, userId,
+					portletDocument.getRootElement());
+			}
+
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
@@ -502,10 +517,6 @@ public class LayoutImporter {
 				portletDataContext, sourceLayoutsUuids, newLayouts,
 				layoutElement);
 		}
-
-		Element portletsElement = _rootElement.element("portlets");
-
-		List<Element> portletElements = portletsElement.elements("portlet");
 
 		// Delete portlet data
 

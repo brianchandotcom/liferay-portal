@@ -57,6 +57,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TreeModelFinder;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
@@ -102,6 +104,7 @@ import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.comparator.GroupIdComparator;
 import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -113,12 +116,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -2069,49 +2070,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		Deque<Object[]> traces = new LinkedList<Object[]>();
+		TreePathUtil.rebuildTree(
+			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			new TreeModelFinder<Group>() {
 
-		traces.push(
-			new Object[] {
-				GroupConstants.DEFAULT_PARENT_GROUP_ID, StringPool.SLASH, 0L
-			});
+				@Override
+				public List<Group> findTreeModels(
+						long previousId, long companyId, long parentId,
+						int size)
+					throws SystemException {
 
-		Object[] trace = null;
+					return groupPersistence.findByG_C_P(
+						previousId, companyId, parentId, QueryUtil.ALL_POS,
+						size, new GroupIdComparator());
+				}
 
-		while ((trace = traces.poll()) != null) {
-			Long parentGroupId = (Long)trace[0];
-			String parentPath = (String)trace[1];
-			Long previousGroupId = (Long)trace[2];
-
-			List<Long> childGroupIds = groupFinder.findByC_P(
-				companyId, parentGroupId, previousGroupId,
-				PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE);
-
-			if (childGroupIds.isEmpty()) {
-				continue;
 			}
-
-			if (childGroupIds.size() ==
-					PropsValues.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE) {
-
-				trace[2] = childGroupIds.get(childGroupIds.size() - 1);
-
-				traces.push(trace);
-			}
-
-			for (long childGroupId : childGroupIds) {
-				String path = parentPath.concat(
-					String.valueOf(childGroupId)).concat(StringPool.SLASH);
-
-				Group group = groupPersistence.findByPrimaryKey(childGroupId);
-
-				group.setTreePath(path);
-
-				groupPersistence.update(group);
-
-				traces.push(new Object[] {childGroupId, path, 0L});
-			}
-		}
+		);
 	}
 
 	/**

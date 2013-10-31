@@ -2,8 +2,9 @@ AUI.add(
 	'liferay-form-placeholders',
 	function(A) {
 		var AObject = A.Object;
+		var ANode = A.Node;
 
-		var PLACEHOLDER_TEXT_CLASS = 'text-placeholder';
+		var CSS_PLACEHOLDER = 'text-placeholder';
 
 		var SELECTOR_PLACEHOLDER_INPUTS = 'input[placeholder], textarea[placeholder]';
 
@@ -41,10 +42,10 @@ AUI.add(
 								function(item, index, collection) {
 									if (!item.val()) {
 										if (item.attr(STR_TYPE) === STR_PASSWORD) {
-											instance._initializePassword(item);
+											instance._initializePasswordNode(item);
 										}
 										else {
-											item.addClass(PLACEHOLDER_TEXT_CLASS);
+											item.addClass(CSS_PLACEHOLDER);
 
 											item.val(item.attr(STR_PLACEHOLDER));
 										}
@@ -59,14 +60,14 @@ AUI.add(
 						}
 					},
 
-					_initializePassword: function(passwordItem) {
+					_initializePasswordNode: function(passwordItem) {
 						var container = passwordItem.get('parentNode');
 
-						var passwordPlaceholderItem = A.Node.create('<input name="' + passwordItem.attr(STR_NAME) + '_pass_placeholder" type="text" />');
+						var passwordPlaceholderNode = ANode.create('<input name="' + passwordItem.attr(STR_NAME) + '_pass_placeholder" type="text" />');
 
 						var passwordItemAttrs = Liferay.Util.getAttributes(
-							passwordItem, 
-							function (value, name, attrs) {
+							passwordItem,
+							function(value, name, attrs) {
 								var result = false;
 
 								if (name !== 'id' && name !== STR_NAME && name !== STR_TYPE) {
@@ -79,18 +80,18 @@ AUI.add(
 
 						AObject.each(
 							passwordItemAttrs,
-							function (item, index, collection){
-								passwordPlaceholderItem.setAttribute(index, item);
+							function(item, index, collection) {
+								passwordPlaceholderNode.setAttribute(index, item);
 							}
 						);
 
-						passwordPlaceholderItem.val(passwordItem.attr(STR_PLACEHOLDER));
+						passwordPlaceholderNode.val(passwordItem.attr(STR_PLACEHOLDER));
 
-						passwordPlaceholderItem.addClass(PLACEHOLDER_TEXT_CLASS);
+						passwordPlaceholderNode.addClass(CSS_PLACEHOLDER);
 
-						passwordPlaceholderItem.attr(STR_DATA_TYPE_PASSWORD_PLACEHOLDER, true);
+						passwordPlaceholderNode.attr(STR_DATA_TYPE_PASSWORD_PLACEHOLDER, true);
 
-						container.insertBefore(passwordPlaceholderItem, passwordItem.next());
+						container.insertBefore(passwordPlaceholderNode, passwordItem.next());
 
 						passwordItem.hide();
 					},
@@ -124,7 +125,7 @@ AUI.add(
 									passwordItem.show();
 
 									setTimeout(
-										function () {
+										function() {
 											passwordItem.focus();
 										},
 										0
@@ -137,9 +138,7 @@ AUI.add(
 								if (!value) {
 									currentTarget.hide();
 
-									var passwordPlaceholderItem = currentTarget.next();
-
-									passwordPlaceholderItem.show();
+									currentTarget.next().show();
 								}
 							}
 						}
@@ -150,7 +149,7 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						if (currentTarget.hasAttribute(STR_DATA_TYPE_PASSWORD_PLACEHOLDER) || currentTarget.attr(STR_TYPE) === STR_PASSWORD){
+						if (currentTarget.hasAttribute(STR_DATA_TYPE_PASSWORD_PLACEHOLDER) || currentTarget.attr(STR_TYPE) === STR_PASSWORD) {
 							instance._togglePasswordPlaceholders(currentTarget, event);
 						}
 						else {
@@ -163,13 +162,13 @@ AUI.add(
 									if (value === placeholder) {
 										currentTarget.val(STR_BLANK);
 
-										currentTarget.removeClass(PLACEHOLDER_TEXT_CLASS);
-									}						
+										currentTarget.removeClass(CSS_PLACEHOLDER);
+									}
 								}
 								else if (!value) {
 									currentTarget.val(placeholder);
 
-									currentTarget.addClass(PLACEHOLDER_TEXT_CLASS);
+									currentTarget.addClass(CSS_PLACEHOLDER);
 								}
 							}
 						}

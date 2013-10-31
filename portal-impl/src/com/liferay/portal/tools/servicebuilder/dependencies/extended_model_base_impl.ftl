@@ -4,9 +4,16 @@ import ${packagePath}.model.${entity.name};
 
 <#if entity.hasLocalService() && entity.hasColumns()>
 	import ${packagePath}.service.${entity.name}LocalServiceUtil;
-</#if>
 
-import com.liferay.portal.kernel.exception.SystemException;
+	import com.liferay.portal.kernel.exception.PortalException;
+	import com.liferay.portal.kernel.exception.SystemException;
+	import com.liferay.portal.kernel.util.StringBundler;
+	import com.liferay.portal.kernel.util.StringPool;
+	import com.liferay.portal.model.TreeModel;
+
+	import java.util.ArrayList;
+	import java.util.List;
+</#if>
 
 /**
  * The extended model base implementation for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
@@ -38,6 +45,47 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 				${entity.name}LocalServiceUtil.update${entity.name}(this);
 			}
 		}
+
+		<#if entity.isTreeModel()>
+			<#assign pkColumn = entity.getPKList()?first>
+
+			<#if entity.hasColumn("parent" + pkColumn.methodName)>
+				@Override
+				public String buildTreePath() throws PortalException, SystemException {
+					List<${entity.name}> ${entity.varNames} = new ArrayList<${entity.name}>();
+
+					${entity.name} ${entity.varName} = this;
+
+					while (${entity.varName} != null) {
+						${entity.varNames}.add(${entity.varName});
+
+						${entity.varName} = ${entity.name}LocalServiceUtil.fetch${entity.name}(${entity.varName}.getParent${pkColumn.methodName}());
+					}
+
+					StringBundler sb = new StringBundler(${entity.varNames}.size() * 2 + 1);
+
+					sb.append(StringPool.SLASH);
+
+					for (int i = ${entity.varNames}.size() - 1; i >= 0; i--) {
+						${entity.varName} = ${entity.varNames}.get(i);
+
+						sb.append(${entity.varName}.get${entity.PKList[0].methodName}());
+						sb.append(StringPool.SLASH);
+					}
+
+					return sb.toString();
+				}
+			</#if>
+
+			@Override
+			public void updateTreePath(String treePath) throws SystemException {
+				${entity.name} ${entity.varName} = this;
+
+				${entity.varName}.setTreePath(treePath);
+
+				${entity.name}LocalServiceUtil.update${entity.name}(${entity.varName});
+			}
+		</#if>
 	</#if>
 
 }

@@ -485,7 +485,7 @@ else {
 
 <aui:script>
 	function <portlet:namespace />getSuggestionsContent() {
-		return = document.<portlet:namespace />fm.<portlet:namespace />subject.value + ' ' + <portlet:namespace />getHTML();
+		return document.<portlet:namespace />fm.<portlet:namespace />subject.value + ' ' + <portlet:namespace />getHTML();
 	}
 
 	function <portlet:namespace />previewMessage() {

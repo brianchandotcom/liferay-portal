@@ -40,7 +40,7 @@ import org.testng.Assert;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class GroupLocalServiceTest {
+public class GroupLocalServiceTreeTestCase {
 
 	@After
 	public void tearDown() throws Exception {

@@ -27,6 +27,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 
+import java.util.Map;
+
 /**
  * @author Zsolt Berentey
  */
@@ -63,6 +65,22 @@ public class WikiNodeStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			nodeElement, ExportImportPathUtil.getModelPath(node), node);
+	}
+
+	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long nodeId)
+		throws Exception {
+
+		WikiNode existingNode =
+			WikiNodeLocalServiceUtil.fetchNodeByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> nodeIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				WikiNode.class);
+
+		nodeIds.put(nodeId, existingNode.getNodeId());
 	}
 
 	@Override

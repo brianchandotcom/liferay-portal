@@ -33,6 +33,8 @@ import java.util.Map;
  */
 public interface RawMetadataProcessor {
 
+	public static final String TIKA_RAW_METADATA = "TIKARAWMETADATA";
+
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)

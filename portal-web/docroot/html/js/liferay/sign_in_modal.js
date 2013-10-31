@@ -49,7 +49,7 @@ AUI.add(
 
 								instance._formValidator = form.formValidator;
 
-								instance._isSignInForm = formNode.hasClass('sign-in-form');
+								instance._hasSignInForm = formNode.hasClass('sign-in-form');
 							}
 						}
 
@@ -67,7 +67,7 @@ AUI.add(
 
 						event.preventDefault();
 
-						if (instance._signInPortletBody && instance._isSignInForm) {
+						if (instance._signInPortletBody && instance._hasSignInForm) {
 							instance._loadDOM();
 						}
 						else {

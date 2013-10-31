@@ -49,6 +49,7 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
+import com.liferay.portlet.documentlibrary.model.DLConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
@@ -69,7 +70,7 @@ public class DLStoreImpl implements DLStore {
 	public void addDirectory(long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName) || dirName.equals("/")) {
+		if (!DLConstants.isValidName(dirName) || dirName.equals("/")) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -303,7 +304,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName)) {
+		if (!DLConstants.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -324,7 +325,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException, SystemException {
 
-		if (!isValidName(dirName)) {
+		if (!DLConstants.isValidName(dirName)) {
 			throw new DirectoryNameException(dirName);
 		}
 
@@ -569,7 +570,7 @@ public class DLStoreImpl implements DLStore {
 	public void validate(String fileName, boolean validateFileExtension)
 		throws PortalException, SystemException {
 
-		if (!isValidName(fileName)) {
+		if (!DLConstants.isValidName(fileName)) {
 			throw new FileNameException(fileName);
 		}
 
@@ -691,29 +692,6 @@ public class DLStoreImpl implements DLStore {
 		catch (IOException ioe) {
 			throw new FileSizeException(ioe.getMessage());
 		}
-	}
-
-	protected boolean isValidName(String name) {
-		if ((name == null) ||
-			name.contains("\\") ||
-			name.contains("\\\\") ||
-			name.contains("//") ||
-			name.contains(":") ||
-			name.contains("*") ||
-			name.contains("?") ||
-			name.contains("\"") ||
-			name.contains("<") ||
-			name.contains(">") ||
-			name.contains("|") ||
-			name.contains("[") ||
-			name.contains("]") ||
-			name.contains("../") ||
-			name.contains("/..")) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	protected void isValidVersion(String versionLabel) throws PortalException {

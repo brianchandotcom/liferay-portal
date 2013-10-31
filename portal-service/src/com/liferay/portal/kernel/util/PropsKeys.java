@@ -621,6 +621,8 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_THREAD_VIEW = "discussion.thread.view";
 
+	public static final String DL_CHAR_BLACKLIST_REGEXP = "dl.char.blacklist.regexp";
+
 	public static final String DL_COMPARABLE_FILE_EXTENSIONS = "dl.comparable.file.extensions";
 
 	public static final String DL_DEFAULT_DISPLAY_VIEW = "dl.default.display.view";
@@ -740,6 +742,8 @@ public interface PropsKeys {
 	public static final String DL_FILE_RANK_ENABLED = "dl.file.rank.enabled";
 
 	public static final String DL_FILE_RANK_MAX_SIZE = "dl.file.rank.max.size";
+
+	public static final String DL_NAME_BLACKLIST = "dl.name.blacklist";
 
 	public static final String DL_PUBLISH_TO_LIVE_BY_DEFAULT = "dl.publish.to.live.by.default";
 

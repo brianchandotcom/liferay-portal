@@ -22,6 +22,7 @@ import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.deploy.RequiredPluginsUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -192,6 +193,10 @@ public class GlobalShutdownAction extends SimpleAction {
 		}
 		catch (Exception e) {
 		}
+
+		// Plugins
+
+		RequiredPluginsUtil.shutdown();
 
 		// Wait 1 second so Quartz threads can cleanly shutdown
 

@@ -98,7 +98,7 @@ public class TreePathUtil {
 		String parentTableName, String parentPrimaryKeyColumnName,
 		boolean statusColumn, boolean rootParent) {
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(26);
 
 		sb.append("update ");
 		sb.append(tableName);
@@ -120,20 +120,22 @@ public class TreePathUtil {
 			sb.append(tableName);
 			sb.append(".");
 			sb.append(parentPrimaryKeyColumnName);
-			sb.append(")");
+			sb.append(") ");
 		}
 
 		sb.append("where (");
+		sb.append(tableName);
+		sb.append(".companyId = ?) and (");
+		sb.append(tableName);
+		sb.append(".");
+		sb.append(parentPrimaryKeyColumnName);
 
 		if (rootParent) {
-			sb.append(tableName);
-			sb.append(".");
-			sb.append(parentPrimaryKeyColumnName);
-			sb.append(" = 0) AND (");
+			sb.append(" = 0)");
 		}
-
-		sb.append(tableName);
-		sb.append(".companyId = ?)");
+		else {
+			sb.append(" != 0)");
+		}
 
 		if (statusColumn) {
 			sb.append(" and (");

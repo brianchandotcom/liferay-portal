@@ -250,6 +250,12 @@
 
 			.container .btn-navbar {
 				color: #FFF;
+
+				.user-avatar-image {
+					position: relative;
+					top: 2px;
+					width: 28px;
+				}
 			}
 		}
 
@@ -853,16 +859,16 @@
 			}
 
 			li.dropdown {
-				&.user-avatar {
-					.user-avatar-image {
-						@include border-radius(50%);
-						@include box-shadow(0 0 0 2px #5594E0);
-					}
-				}
-
 				.dropdown-menu {
 					@include border-radius(0);
 				}
+			}
+		}
+
+		.container .btn, .nav li.dropdown.user-avatar {
+			.user-avatar-image {
+				@include border-radius(50%);
+				@include box-shadow(0 0 0 2px #5594E0);
 			}
 		}
 	}

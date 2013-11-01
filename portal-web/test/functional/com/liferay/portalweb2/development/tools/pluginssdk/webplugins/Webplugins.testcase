@@ -23,66 +23,6 @@
 		</execute>
 	</command>
 
-	<command name="DroolsWebSmoke" priority="5">
-		<var name="appName" value="Drools" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-
-	<command name="EhcacheClusterWebSmoke" priority="5">
-		<var name="appName" value="Ehcache Cluster" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-
-	<command name="JasperReportsWebSmoke" priority="5">
-		<var name="appName" value="JasperReports" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-
 	<command name="KaleoWebSmoke" priority="5">
 		<var name="appName" value="Kaleo Workflow" />
 
@@ -185,26 +125,6 @@
 
 	<command name="ThemeLoaderWebSmoke" priority="5">
 		<var name="appName" value="Theme Loader" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
-		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-	</command>
-
-	<command name="VLDAPWebSmoke" priority="5">
-		<var name="appName" value="Virtual LDAP Server" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="App Manager" />

@@ -32,7 +32,7 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 
-		<case comparator="contains" locator1="//span[@data-title='">
+		<case comparator="contains" locator1="//span[@data-title=">
 			<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" />
 		</case>
 	</command>

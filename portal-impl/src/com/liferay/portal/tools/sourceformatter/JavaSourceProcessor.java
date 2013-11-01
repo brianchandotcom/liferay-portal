@@ -1660,9 +1660,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								((previousLineLeadingTabCount + 2) !=
 									lineLeadingTabCount)) {
 
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
 							}
 
 							if (previousLine.endsWith(

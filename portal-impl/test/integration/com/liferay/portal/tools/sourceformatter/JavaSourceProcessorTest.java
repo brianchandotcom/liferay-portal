@@ -108,13 +108,19 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testInefficientStringMethods() throws Exception {
-		test(
-			"InefficientStringMethods.testjava",
-			new String[] {
-				"Use StringUtil.equalsIgnoreCase:",
-				"Use StringUtil.toLowerCase:", "Use StringUtil.toUpperCase:"
-			},
-			new Integer[] {26, 30, 31});
+		String mainReleaseVersion = sourceFormatter.getMainReleaseVersion();
+
+		if (!mainReleaseVersion.equals(
+				BaseSourceProcessor.MAIN_RELEASE_VERSION_6_1_0)) {
+
+			test(
+				"InefficientStringMethods.testjava",
+				new String[] {
+					"Use StringUtil.equalsIgnoreCase:",
+					"Use StringUtil.toLowerCase:", "Use StringUtil.toUpperCase:"
+				},
+				new Integer[] {26, 30, 31});
+		}
 	}
 
 	@Test

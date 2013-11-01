@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UniqueList;
@@ -47,6 +48,8 @@ public class SourceFormatter {
 		_throwException = throwException;
 		_printErrors = printErrors;
 		_autoFix = autoFix;
+
+		_setVersion();
 	}
 
 	public void format() throws Exception {
@@ -77,7 +80,8 @@ public class SourceFormatter {
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
 						sourceProcessor.format(
-							_useProperties, _printErrors, _autoFix);
+							_useProperties, _printErrors, _autoFix,
+							_mainReleaseVersion);
 
 						_errorMessages.addAll(
 							sourceProcessor.getErrorMessages());
@@ -99,7 +103,8 @@ public class SourceFormatter {
 						JSPSourceProcessor.class.newInstance();
 
 					sourceProcessor.format(
-						_useProperties, _printErrors, _autoFix);
+						_useProperties, _printErrors, _autoFix,
+						_mainReleaseVersion);
 
 					_errorMessages.addAll(sourceProcessor.getErrorMessages());
 				}
@@ -133,13 +138,36 @@ public class SourceFormatter {
 		}
 
 		String newContent = sourceProcessor.format(
-			fileName, _useProperties, _printErrors, _autoFix);
+			fileName, _useProperties, _printErrors, _autoFix,
+			_mainReleaseVersion);
 
 		return new Tuple(newContent, sourceProcessor.getErrorMessages());
 	}
 
+	public String getMainReleaseVersion() {
+		return _mainReleaseVersion;
+	}
+
+	private void _setVersion() throws Exception {
+		String releaseInfoVersion = ReleaseInfo.getVersion();
+
+		if (releaseInfoVersion.startsWith("6.1")) {
+			_mainReleaseVersion =
+				BaseSourceProcessor.MAIN_RELEASE_VERSION_6_1_0;
+		}
+		else if (releaseInfoVersion.startsWith("6.2")) {
+			_mainReleaseVersion =
+				BaseSourceProcessor.MAIN_RELEASE_VERSION_6_2_0;
+		}
+		else {
+			throw new Exception(
+				"Invalid release information: " + ReleaseInfo.getVersion());
+		}
+	}
+
 	private static boolean _autoFix;
 	private static List<String> _errorMessages = new UniqueList<String>();
+	private static String _mainReleaseVersion;
 	private static boolean _printErrors;
 	private static boolean _throwException;
 	private static boolean _useProperties;

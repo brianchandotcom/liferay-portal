@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,10 +56,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void format(
-			boolean useProperties, boolean printErrors, boolean autoFix)
+			boolean useProperties, boolean printErrors, boolean autoFix,
+			String mainReleaseVersion)
 		throws Exception {
 
-		_init(useProperties, printErrors, autoFix);
+		_init(useProperties, printErrors, autoFix, mainReleaseVersion);
 
 		format();
 
@@ -70,11 +70,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public String format(
 			String fileName, boolean useProperties, boolean printErrors,
-			boolean autoFix)
+			boolean autoFix, String mainReleaseVersion)
 		throws Exception {
 
 		try {
-			_init(useProperties, printErrors, autoFix);
+			_init(useProperties, printErrors, autoFix, mainReleaseVersion);
 
 			return format(fileName);
 		}
@@ -1086,7 +1086,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.MULTILINE);
 
 	private void _init(
-			boolean useProperties, boolean printErrors, boolean autoFix)
+			boolean useProperties, boolean printErrors, boolean autoFix,
+			String mainReleaseVersion)
 		throws Exception {
 
 		_errorMessages = new ArrayList<String>();
@@ -1101,7 +1102,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_autoFix = autoFix;
 
-		_setVersion();
+		this.mainReleaseVersion = mainReleaseVersion;
 
 		_excludes = StringUtil.split(
 			GetterUtil.getString(
@@ -1120,21 +1121,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 		else {
 			return false;
-		}
-	}
-
-	private void _setVersion() throws Exception {
-		String releaseInfoVersion = ReleaseInfo.getVersion();
-
-		if (releaseInfoVersion.startsWith("6.1")) {
-			mainReleaseVersion = MAIN_RELEASE_VERSION_6_1_0;
-		}
-		else if (releaseInfoVersion.startsWith("6.2")) {
-			mainReleaseVersion = MAIN_RELEASE_VERSION_6_2_0;
-		}
-		else {
-			throw new Exception(
-				"Invalid release information: " + ReleaseInfo.getVersion());
 		}
 	}
 

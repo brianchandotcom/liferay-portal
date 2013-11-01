@@ -34,7 +34,7 @@ public class BaseSourceProcessorTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_sourceFormatter = SourceFormatterUtil.create(
+		sourceFormatter = SourceFormatterUtil.create(
 			false, false, false, false);
 	}
 
@@ -70,7 +70,7 @@ public class BaseSourceProcessorTestCase {
 
 		String fullFileName = _DIR_NAME + StringPool.SLASH + fileName;
 
-		Tuple tuple = _sourceFormatter.format(fullFileName);
+		Tuple tuple = sourceFormatter.format(fullFileName);
 
 		if (tuple == null) {
 			return;
@@ -117,10 +117,10 @@ public class BaseSourceProcessorTestCase {
 		}
 	}
 
+	protected SourceFormatter sourceFormatter;
+
 	private static final String _DIR_NAME =
 		"portal-impl/test/integration/com/liferay/portal/tools/" +
 			"sourceformatter/dependencies";
-
-	private SourceFormatter _sourceFormatter;
 
 }

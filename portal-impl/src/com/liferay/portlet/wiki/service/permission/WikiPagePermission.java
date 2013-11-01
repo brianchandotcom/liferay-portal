@@ -147,11 +147,6 @@ public class WikiPagePermission {
 				return true;
 			}
 		}
-		else if (page.isScheduled() && actionId.equals(ActionKeys.VIEW) &&
-				 !contains(permissionChecker, page, ActionKeys.UPDATE)) {
-
-			return false;
-		}
 		else if (page.isPending()) {
 			hasPermission = WorkflowPermissionUtil.hasPermission(
 				permissionChecker, page.getGroupId(), WikiPage.class.getName(),
@@ -159,6 +154,13 @@ public class WikiPagePermission {
 
 			if ((hasPermission != null) && hasPermission.booleanValue()) {
 				return true;
+			}
+		}
+		else if (page.isScheduled()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!contains(permissionChecker, page, ActionKeys.UPDATE)) {
+
+				return false;
 			}
 		}
 

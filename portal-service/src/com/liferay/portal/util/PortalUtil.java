@@ -890,10 +890,12 @@ public class PortalUtil {
 	}
 
 	public static String getLocalizedFriendlyURL(
-			HttpServletRequest request, Layout layout, Locale locale)
+			HttpServletRequest request, Layout layout, Locale locale,
+			Locale originalLocale)
 		throws Exception {
 
-		return getPortal().getLocalizedFriendlyURL(request, layout, locale);
+		return getPortal().getLocalizedFriendlyURL(
+			request, layout, locale, originalLocale);
 	}
 
 	public static String getMailId(

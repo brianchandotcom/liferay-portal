@@ -292,12 +292,12 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				Locale locale = PortalUtil.getLocale(request);
 
-				if (!friendlyURL.startsWith(layout.getFriendlyURL(locale))) {
-					setAlternativeLayoutFriendlyURL(
+				if (!friendlyURL.equals(layout.getFriendlyURL(locale))) {
+					Locale originalLocale = setAlternativeLayoutFriendlyURL(
 						request, layout, friendlyURL);
 
 					String redirect = PortalUtil.getLocalizedFriendlyURL(
-						request, layout, locale);
+						request, layout, locale, originalLocale);
 
 					return new Object[] {redirect, Boolean.TRUE};
 				}
@@ -311,7 +311,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		return new Object[] {actualURL, Boolean.FALSE};
 	}
 
-	protected void setAlternativeLayoutFriendlyURL(
+	protected Locale setAlternativeLayoutFriendlyURL(
 			HttpServletRequest request, Layout layout, String friendlyURL)
 		throws Exception {
 
@@ -320,7 +320,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				layout.getPlid(), friendlyURL, 0, 1);
 
 		if (layoutFriendlyURLs.isEmpty()) {
-			return;
+			return null;
 		}
 
 		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
@@ -329,7 +329,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			layoutFriendlyURL.getLanguageId());
 
 		String alternativeLayoutFriendlyURL =
-			PortalUtil.getLocalizedFriendlyURL(request, layout, locale);
+			PortalUtil.getLocalizedFriendlyURL(request, layout, locale, locale);
 
 		SessionMessages.add(
 			request, "alternativeLayoutFriendlyURL",
@@ -338,6 +338,8 @@ public class FriendlyURLServlet extends HttpServlet {
 		PortalMessages.add(
 			request, PortalMessages.KEY_JSP_PATH,
 			"/html/common/themes/layout_friendly_url_redirect.jsp");
+
+		return locale;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FriendlyURLServlet.class);

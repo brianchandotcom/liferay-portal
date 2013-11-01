@@ -14,11 +14,11 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseNavTag;
@@ -46,9 +46,8 @@ public class NavTag extends BaseNavTag {
 
 			setCollapsible(true);
 
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-
-			ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
+				"themeDisplay");
 
 			StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
@@ -66,21 +65,20 @@ public class NavTag extends BaseNavTag {
 				sb.append("<span class=\"icon-bar\"></span>");
 				sb.append("<span class=\"icon-bar\"></span>");
 			}
-			else if (icon == "user" && themeDisplay.isSignedIn()) {
-				User user = themeDisplay.getUser();
-
-				String src = "";
-
+			else if (icon.equals("user") && themeDisplay.isSignedIn()) {
 				try {
-					src = user.getPortraitURL(themeDisplay);
+					User user = themeDisplay.getUser();
+
+					sb.append("<img alt=\"");
+					sb.append(LanguageUtil.get(pageContext, "my-account"));
+					sb.append("\" class=\"user-avatar-image\" ");
+					sb.append("src=\"");
+					sb.append(user.getPortraitURL(themeDisplay));
+					sb.append("\">");
 				}
 				catch (Exception e) {
 					throw new JspException(e);
 				}
-
-				sb.append("<img alt=\"My Account\"");
-				sb.append("class=\"user-avatar-image\"");
-				sb.append("src=\"" + src + "\">");
 			}
 			else {
 				sb.append("<i class=\"icon-");

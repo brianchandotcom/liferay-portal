@@ -14,13 +14,16 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.base.DLFileVersionLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 
@@ -132,14 +135,19 @@ public class DLFileVersionLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<DLFileVersion> dlFileVersions =
-			dlFileVersionPersistence.findByC_NotS(
-				companyId, WorkflowConstants.STATUS_IN_TRASH);
+		dlFolderLocalService.rebuildTree(companyId);
 
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			dlFileVersion.setTreePath(dlFileVersion.buildTreePath());
+		Session session = dlFileVersionPersistence.openSession();
 
-			dlFileVersionPersistence.update(dlFileVersion);
+		try {
+			TreePathUtil.rebuildTree(
+				session, companyId, DLFileVersion.class.getSimpleName(),
+				DLFolder.class.getSimpleName(), true);
+		}
+		finally {
+			dlFileVersionPersistence.closeSession(session);
+
+			dlFileVersionPersistence.clearCache();
 		}
 	}
 

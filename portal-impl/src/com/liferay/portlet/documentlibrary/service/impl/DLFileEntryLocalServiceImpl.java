@@ -20,6 +20,7 @@ import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1352,16 +1354,19 @@ public class DLFileEntryLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
+		dlFolderLocalService.rebuildTree(companyId);
 
-		List<DLFileEntry> dlFileEntries = dlFileEntryFinder.findByCompanyId(
-			companyId, queryDefinition);
+		Session session = dlFileEntryPersistence.openSession();
 
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			dlFileEntry.setTreePath(dlFileEntry.buildTreePath());
+		try {
+			TreePathUtil.rebuildTree(
+				session, companyId, DLFileEntry.class.getSimpleName(),
+				DLFolder.class.getSimpleName(), false);
+		}
+		finally {
+			dlFileEntryPersistence.closeSession(session);
 
-			dlFileEntryPersistence.update(dlFileEntry);
+			dlFileEntryPersistence.clearCache();
 		}
 	}
 

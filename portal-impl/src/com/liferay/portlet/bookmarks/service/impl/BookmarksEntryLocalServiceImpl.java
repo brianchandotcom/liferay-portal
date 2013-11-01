@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.bookmarks.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -431,13 +433,19 @@ public class BookmarksEntryLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<BookmarksEntry> entries = bookmarksEntryPersistence.findByC_NotS(
-			companyId, WorkflowConstants.STATUS_IN_TRASH);
+		bookmarksFolderLocalService.rebuildTree(companyId);
 
-		for (BookmarksEntry entry : entries) {
-			entry.setTreePath(entry.buildTreePath());
+		Session session = bookmarksEntryPersistence.openSession();
 
-			bookmarksEntryPersistence.update(entry);
+		try {
+			TreePathUtil.rebuildTree(
+				session, companyId, BookmarksEntry.class.getSimpleName(),
+				BookmarksFolder.class.getSimpleName(), true);
+		}
+		finally {
+			bookmarksEntryPersistence.closeSession(session);
+
+			bookmarksEntryPersistence.clearCache();
 		}
 	}
 

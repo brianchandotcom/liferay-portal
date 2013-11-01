@@ -281,20 +281,25 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			Layout layout = layoutFriendlyURLComposite.getLayout();
 
-			friendlyURL = layoutFriendlyURLComposite.getFriendlyURL();
+			String layoutFriendlyURLCompositeFriendlyURL =
+				layoutFriendlyURLComposite.getFriendlyURL();
 
-			pos = friendlyURL.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+			pos = layoutFriendlyURLCompositeFriendlyURL.indexOf(
+				Portal.FRIENDLY_URL_SEPARATOR);
 
 			if (pos != 0) {
 				if (pos != -1) {
-					friendlyURL = friendlyURL.substring(0, pos);
+					layoutFriendlyURLCompositeFriendlyURL =
+						layoutFriendlyURLCompositeFriendlyURL.substring(0, pos);
 				}
 
 				Locale locale = PortalUtil.getLocale(request);
 
-				if (!friendlyURL.equals(layout.getFriendlyURL(locale))) {
+				if (!layoutFriendlyURLCompositeFriendlyURL.equals(
+						layout.getFriendlyURL(locale))) {
+
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(
-						request, layout, friendlyURL);
+						request, layout, layoutFriendlyURLCompositeFriendlyURL);
 
 					String redirect = PortalUtil.getLocalizedFriendlyURL(
 						request, layout, locale, originalLocale);

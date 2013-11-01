@@ -15,11 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.model.TreeModel;
-import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,28 +45,15 @@ public abstract class BaseLocalServiceTreeTestCase {
 
 	@Test
 	public void testRebuildTree() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			PropsValues.class, "MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE");
+		rebuildTree();
 
-		int oldSize = field.getInt(null);
+		for (TreeModel treeModel : _treeModels) {
+			long primaryKey = GetterUtil.getLong(treeModel.getPrimaryKeyObj());
 
-		field.setInt(null, 3);
+			treeModel = getTreeModel(primaryKey);
 
-		try {
-			rebuildTree();
-
-			for (TreeModel treeModel : _treeModels) {
-				long primaryKey = GetterUtil.getLong(
-					treeModel.getPrimaryKeyObj());
-
-				treeModel = getTreeModel(primaryKey);
-
-				Assert.assertEquals(
-					treeModel.buildTreePath(), treeModel.getTreePath());
-			}
-		}
-		finally {
-			field.setInt(null, oldSize);
+			Assert.assertEquals(
+				treeModel.buildTreePath(), treeModel.getTreePath());
 		}
 	}
 

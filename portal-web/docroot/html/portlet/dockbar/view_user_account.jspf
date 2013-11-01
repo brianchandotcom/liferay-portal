@@ -71,7 +71,7 @@
 					<aui:nav-item cssClass="current-user-language" href='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsUserLanguageId", doAsUserLanguageId) %>' label="<%= changeLanguageMessage %>" />
 				</c:if>
 			</c:if>
-			<c:if test="<%= Validator.isNotNull(themeDisplay.getURLMyAccount()) %>">
+			<c:if test="<%= isUserSetup && Validator.isNotNull(themeDisplay.getURLMyAccount()) %>">
 
 				<%
 				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);

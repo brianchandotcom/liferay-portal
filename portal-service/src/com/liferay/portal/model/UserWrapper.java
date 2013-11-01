@@ -1791,6 +1791,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
+	public boolean isEmailAddressComplete() {
+		return _user.isEmailAddressComplete();
+	}
+
+	@Override
+	public boolean isEmailAddressVerificationComplete() {
+		return _user.isEmailAddressVerificationComplete();
+	}
+
+	@Override
 	public boolean isFemale()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1807,6 +1817,21 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public boolean isPasswordModified() {
 		return _user.isPasswordModified();
+	}
+
+	@Override
+	public boolean isReminderQueryComplete() {
+		return _user.isReminderQueryComplete();
+	}
+
+	@Override
+	public boolean isSetup() {
+		return _user.isSetup();
+	}
+
+	@Override
+	public boolean isTermsOfUseComplete() {
+		return _user.isTermsOfUseComplete();
 	}
 
 	@Override

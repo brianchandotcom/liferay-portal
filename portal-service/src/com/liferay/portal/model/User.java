@@ -284,6 +284,10 @@ public interface User extends UserModel, PersistedModel {
 
 	public boolean isActive();
 
+	public boolean isEmailAddressComplete();
+
+	public boolean isEmailAddressVerificationComplete();
+
 	public boolean isFemale()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -293,6 +297,12 @@ public interface User extends UserModel, PersistedModel {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isPasswordModified();
+
+	public boolean isReminderQueryComplete();
+
+	public boolean isSetup();
+
+	public boolean isTermsOfUseComplete();
 
 	public void setPasswordModified(boolean passwordModified);
 

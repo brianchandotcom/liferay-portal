@@ -69,13 +69,12 @@ AUI.add(
 				NAME: NAME,
 
 				prototype: {
-					TPL_CONTAINER: '<div class="pull-left lfr-pagination lfr-pagination" id="{id}"></div>',
+					TPL_CONTAINER: '<div class="lfr-pagination-controls" id="{id}"></div>',
 
 					TPL_DELTA_SELECTOR: '<div class="lfr-pagination-delta-selector">' +
 						'<div class="btn-group lfr-icon-menu">' +
 							'<a class="btn direction-down dropdown-toggle max-display-items-15" href="javascript:;" id={id} title="{title}">' +
-								'<span class="lfr-icon-menu-text">{title}</span>' +
-								'<i class="caret" />' +
+								'<span class="lfr-icon-menu-text">{title}</span> <i class="icon-caret-down" />' +
 							'</a>' +
 						'</div>' +
 					'</div>',
@@ -103,20 +102,13 @@ AUI.add(
 
 						var boundingBox = instance.get(BOUNDING_BOX);
 
-						var namespace = instance.get('namespace');
+						boundingBox.addClass('lfr-pagination');
 
-						instance._itemsContainer = boundingBox.appendChild(
-							Lang.sub(
-								instance.TPL_CONTAINER,
-								{
-									id: namespace + 'itemsContainer'
-								}
-							)
-						);
+						var namespace = instance.get('namespace');
 
 						var deltaSelectorId = namespace + 'dataSelectorId';
 
-						instance._deltaSelector = instance._itemsContainer.appendChild(
+						var deltaSelector = A.Node.create(
 							Lang.sub(
 								instance.TPL_DELTA_SELECTOR,
 								{
@@ -126,7 +118,25 @@ AUI.add(
 							)
 						);
 
-						instance._searchResults = instance._itemsContainer.appendChild(
+						var itemContainer = A.Node.create(
+							Lang.sub(
+								instance.TPL_ITEM_CONTAINER,
+								{
+									id: namespace + 'itemContainerId'
+								}
+							)
+						);
+
+						var itemsContainer = A.Node.create(
+							Lang.sub(
+								instance.TPL_CONTAINER,
+								{
+									id: namespace + 'itemsContainer'
+								}
+							)
+						);
+
+						var searchResults = A.Node.create(
 							Lang.sub(
 								instance.TPL_RESULTS,
 								{
@@ -136,31 +146,34 @@ AUI.add(
 							)
 						);
 
-						instance._itemContainer = instance._deltaSelector.one('#' + deltaSelectorId).ancestor().appendChild(
-							Lang.sub(
-								instance.TPL_ITEM_CONTAINER,
-								{
-									id: namespace + 'itemContainerId'
-								}
-							)
-						);
-
-						AArray.each(
+						var buffer = AArray.map(
 							instance.get(ITEMS_PER_PAGE_LIST),
 							function(item, index, collection) {
-								instance._itemContainer.appendChild(
-									Lang.sub(
-										instance.TPL_ITEM,
-										{
-											idLi: namespace + 'itemLiId' + index,
-											idLink: namespace + 'itemLinkId' + index,
-											index: index,
-											value: item
-										}
-									)
+								return Lang.sub(
+									instance.TPL_ITEM,
+									{
+										idLi: namespace + 'itemLiId' + index,
+										idLink: namespace + 'itemLinkId' + index,
+										index: index,
+										value: item
+									}
 								);
 							}
 						);
+
+						itemContainer.appendChild(buffer.join(''));
+
+						itemsContainer.appendChild(deltaSelector);
+						itemsContainer.appendChild(searchResults);
+
+						deltaSelector.one('#' + deltaSelectorId).ancestor().appendChild(itemContainer);
+
+						boundingBox.appendChild(itemsContainer);
+
+						instance._deltaSelector = deltaSelector;
+						instance._itemContainer = itemContainer;
+						instance._itemsContainer = itemsContainer;
+						instance._searchResults = searchResults;
 
 						Liferay.Menu.register(deltaSelectorId);
 					},

@@ -37,7 +37,9 @@
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 
-		<execute macro="SetupWizard#configureDefaultPG" />
+		<execute macro="SetupWizard#configureDefaultPG">
+			<var name="setupWizardAddSampleData" value="true" />
+		</execute>
 
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="Welcome" />
 

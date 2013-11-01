@@ -33,11 +33,21 @@
 				<equals arg1="${portletName}" arg2="Asset Publisher" />
 				<equals arg1="${portletName}" arg2="Documents and Media Display" />
 				<equals arg1="${portletName}" arg2="Navigation" />
+				<equals arg1="${portletName}" arg2="OpenSocial Gadget" />
 				<equals arg1="${portletName}" arg2="Web Content Display" />
 			</or>
 			<then>
 				<var name="portletLocator" value="xpath=(${portletLocator})[2]" />
 			</then>
+			<elseif>
+				<or>
+					<equals arg1="${portletName}" arg2="Friends' Activities" />
+					<equals arg1="${portletName}" arg2="Members' Activities" />
+				</or>
+				<then>
+					<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
+				</then>
+			</elseif>
 		</if>
 
 		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />

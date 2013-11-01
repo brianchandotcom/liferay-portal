@@ -94,6 +94,14 @@
 			<var name="portletName" value="App Manager" />
 		</execute>
 
+		<execute macro="AppManager#deactivateAppCP">
+			<var name="appName" value="${appName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
 		<execute macro="AppManager#uninstallAppCP">
 			<var name="appName" value="${appName}" />
 		</execute>
@@ -406,14 +414,6 @@
 			<var name="portletName" value="App Manager" />
 		</execute>
 
-		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="App Manager" />
-		</execute>
-
 		<execute macro="AppManager#viewAppCP">
 			<var name="appName" value="${appName}" />
 		</execute>
@@ -503,7 +503,7 @@
 		</execute>
 	</command>
 
-	<command name="NotificationsPortletPortletSmoke" priority="5">
+	<command name="NotificationsPortletSmoke" priority="5">
 		<var name="appName" value="Notifications" />
 
 		<execute macro="Page#gotoPG">
@@ -512,6 +512,14 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Notifications" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="App Manager" />
+		</execute>
+
+		<execute macro="AppManager#deactivateAppCP">
+			<var name="appName" value="${appName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

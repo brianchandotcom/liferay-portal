@@ -18,6 +18,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -3469,13 +3471,19 @@ public class JournalArticleLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<JournalArticle> articles = journalArticlePersistence.findByC_NotST(
-			companyId, WorkflowConstants.STATUS_IN_TRASH);
+		journalFolderLocalService.rebuildTree(companyId);
 
-		for (JournalArticle article : articles) {
-			article.setTreePath(article.buildTreePath());
+		Session session = journalArticlePersistence.openSession();
 
-			journalArticlePersistence.update(article);
+		try {
+			TreePathUtil.rebuildTree(
+				session, companyId, JournalArticle.class.getSimpleName(),
+				JournalFolder.class.getSimpleName(), true);
+		}
+		finally {
+			journalArticlePersistence.closeSession(session);
+
+			journalArticlePersistence.clearCache();
 		}
 	}
 

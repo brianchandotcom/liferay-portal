@@ -14,7 +14,11 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TreeModel;
 
 import java.util.Deque;
@@ -71,6 +75,72 @@ public class TreePathUtil {
 					new Object[] {treeModel.getPrimaryKeyObj(), treePath, 0L});
 			}
 		}
+	}
+
+	public static void rebuildTree(
+		Session session, long companyId, String modelName,
+		String parentModelName, boolean statusColumn) {
+
+		rebuildTree(
+			session, companyId, modelName, parentModelName, statusColumn,
+			false);
+
+		rebuildTree(
+			session, companyId, modelName, parentModelName, statusColumn, true);
+	}
+
+	protected static void rebuildTree(
+		Session session, long companyId, String tableName,
+		String parentTableName, boolean statusColumn, boolean rootFolder) {
+
+		StringBundler sb = new StringBundler(18);
+
+		sb.append("update ");
+		sb.append(tableName);
+		sb.append(" set ");
+
+		if (rootFolder) {
+			sb.append("treePath = \"/0/\" ");
+		}
+		else {
+			sb.append("treePath = (select ");
+			sb.append(parentTableName);
+			sb.append(".treePath from ");
+			sb.append(parentTableName);
+			sb.append(" where ");
+			sb.append(parentTableName);
+			sb.append(".folderId = ");
+			sb.append(tableName);
+			sb.append(".folderId)");
+		}
+
+		sb.append("where (");
+
+		if (rootFolder) {
+			sb.append(tableName);
+			sb.append(".folderId = 0) AND (");
+		}
+
+		sb.append(tableName);
+		sb.append(".companyId = ?)");
+
+		if (statusColumn) {
+			sb.append(" and (");
+			sb.append(tableName);
+			sb.append(".status != ?)");
+		}
+
+		SQLQuery sqlQuery = session.createSQLQuery(sb.toString());
+
+		QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+		qPos.add(companyId);
+
+		if (statusColumn) {
+			qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+		}
+
+		sqlQuery.executeUpdate();
 	}
 
 }

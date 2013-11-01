@@ -14,9 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -289,14 +291,19 @@ public class DLFileShortcutLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<DLFileShortcut> fileShortcuts =
-			dlFileShortcutPersistence.findByC_NotS(
-				companyId, WorkflowConstants.STATUS_IN_TRASH);
+		dlFolderLocalService.rebuildTree(companyId);
 
-		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			fileShortcut.setTreePath(fileShortcut.buildTreePath());
+		Session session = dlFileShortcutPersistence.openSession();
 
-			dlFileShortcutPersistence.update(fileShortcut);
+		try {
+			TreePathUtil.rebuildTree(
+				session, companyId, DLFileShortcut.class.getSimpleName(),
+				DLFolder.class.getSimpleName(), true);
+		}
+		finally {
+			dlFileShortcutPersistence.closeSession(session);
+
+			dlFileShortcutPersistence.clearCache();
 		}
 	}
 

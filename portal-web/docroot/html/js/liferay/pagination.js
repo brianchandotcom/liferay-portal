@@ -3,6 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 		var AArray = A.Array;
+		var ANode = A.Node;
 		var AObject = A.Object;
 
 		var BOUNDING_BOX = 'boundingBox';
@@ -16,6 +17,8 @@ AUI.add(
 		var PAGE = 'page';
 
 		var RESULTS = 'results';
+
+		var STR_SPACE = ' ';
 
 		var STRINGS = 'strings';
 
@@ -108,7 +111,7 @@ AUI.add(
 
 						var deltaSelectorId = namespace + 'dataSelectorId';
 
-						var deltaSelector = A.Node.create(
+						var deltaSelector = ANode.create(
 							Lang.sub(
 								instance.TPL_DELTA_SELECTOR,
 								{
@@ -118,7 +121,7 @@ AUI.add(
 							)
 						);
 
-						var itemContainer = A.Node.create(
+						var itemContainer = ANode.create(
 							Lang.sub(
 								instance.TPL_ITEM_CONTAINER,
 								{
@@ -127,7 +130,7 @@ AUI.add(
 							)
 						);
 
-						var itemsContainer = A.Node.create(
+						var itemsContainer = ANode.create(
 							Lang.sub(
 								instance.TPL_CONTAINER,
 								{
@@ -136,7 +139,7 @@ AUI.add(
 							)
 						);
 
-						var searchResults = A.Node.create(
+						var searchResults = ANode.create(
 							Lang.sub(
 								instance.TPL_RESULTS,
 								{
@@ -173,6 +176,7 @@ AUI.add(
 						instance._deltaSelector = deltaSelector;
 						instance._itemContainer = itemContainer;
 						instance._itemsContainer = itemsContainer;
+						instance._paginationContentNode = boundingBox.one('.pagination-content');
 						instance._searchResults = searchResults;
 
 						Liferay.Menu.register(deltaSelectorId);
@@ -315,6 +319,20 @@ AUI.add(
 						var result = instance._getResultsContent(page, itemsPerPage);
 
 						instance._searchResults.html(result);
+					},
+
+					_uiSetVisible: function(val) {
+						var instance = this;
+
+						var hideClass = instance.get('hideClass');
+
+						var hiddenClass = instance.getClassName('hidden');
+
+						if (hideClass !== false) {
+							hiddenClass += STR_SPACE + (hideClass || 'hide');
+						}
+
+						instance._paginationContentNode.toggleClass(hiddenClass, !val);
 					}
 				}
 			}

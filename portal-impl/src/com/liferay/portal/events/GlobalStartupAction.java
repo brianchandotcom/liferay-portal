@@ -15,8 +15,8 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.deploy.DeployUtil;
-import com.liferay.portal.deploy.messaging.RequiredPluginsMessageListener;
 import com.liferay.portal.jcr.JCRFactoryUtil;
+import com.liferay.portal.kernel.deploy.RequiredPluginsUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
@@ -30,12 +30,6 @@ import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.StorageType;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -318,21 +312,7 @@ public class GlobalStartupAction extends SimpleAction {
 
 		// Plugins
 
-		try {
-			SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
-
-			schedulerEntry.setEventListenerClass(
-				RequiredPluginsMessageListener.class.getName());
-			schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
-			schedulerEntry.setTriggerType(TriggerType.SIMPLE);
-			schedulerEntry.setTriggerValue(1);
-
-			SchedulerEngineHelperUtil.schedule(
-				schedulerEntry, StorageType.MEMORY, null, 0);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		RequiredPluginsUtil.startUpCheckRequiredPlugins();
 
 		// POP server
 

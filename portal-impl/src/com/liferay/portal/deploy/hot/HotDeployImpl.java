@@ -14,6 +14,7 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.portal.kernel.deploy.RequiredPluginsUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeploy;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
@@ -127,6 +128,8 @@ public class HotDeployImpl implements HotDeploy {
 		TemplateManagerUtil.destroy(classLoader);
 
 		_pacl.unregister(classLoader);
+
+		RequiredPluginsUtil.undeployCheckRequiredPlugins();
 	}
 
 	@Override

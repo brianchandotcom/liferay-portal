@@ -60,7 +60,9 @@ public class TreePathUtil {
 			}
 
 			if (treeModels.size() == size) {
-				trace[2] = treeModels.get(treeModels.size() - 1);
+				TreeModel treeModel = treeModels.get(treeModels.size() - 1);
+
+				trace[2] = treeModel.getPrimaryKeyObj();
 
 				traces.push(trace);
 			}
@@ -81,14 +83,14 @@ public class TreePathUtil {
 	public static void rebuildTree(
 		Session session, long companyId, String tableName,
 		String parentTableName, String parentPrimaryKeyColumnName,
-		boolean rootParent) {
+		boolean statusColumn) {
 
 		rebuildTree(
 			session, companyId, tableName, parentTableName,
-			parentPrimaryKeyColumnName, rootParent, false);
+			parentPrimaryKeyColumnName, statusColumn, false);
 		rebuildTree(
 			session, companyId, tableName, parentTableName,
-			parentPrimaryKeyColumnName, rootParent, true);
+			parentPrimaryKeyColumnName, statusColumn, true);
 	}
 
 	protected static void rebuildTree(
@@ -96,7 +98,7 @@ public class TreePathUtil {
 		String parentTableName, String parentPrimaryKeyColumnName,
 		boolean statusColumn, boolean rootParent) {
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(26);
 
 		sb.append("update ");
 		sb.append(tableName);
@@ -118,20 +120,22 @@ public class TreePathUtil {
 			sb.append(tableName);
 			sb.append(".");
 			sb.append(parentPrimaryKeyColumnName);
-			sb.append(")");
+			sb.append(") ");
 		}
 
 		sb.append("where (");
+		sb.append(tableName);
+		sb.append(".companyId = ?) and (");
+		sb.append(tableName);
+		sb.append(".");
+		sb.append(parentPrimaryKeyColumnName);
 
 		if (rootParent) {
-			sb.append(tableName);
-			sb.append(".");
-			sb.append(parentPrimaryKeyColumnName);
-			sb.append(" = 0) AND (");
+			sb.append(" = 0)");
 		}
-
-		sb.append(tableName);
-		sb.append(".companyId = ?)");
+		else {
+			sb.append(" != 0)");
+		}
 
 		if (statusColumn) {
 			sb.append(" and (");

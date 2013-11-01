@@ -288,10 +288,6 @@
 
 /* ---------- Menus ---------- */
 
-.lfr-menu-list {
-	z-index: 450;
-}
-
 .lfr-page-templates li {
 	a {
 		padding: 0;

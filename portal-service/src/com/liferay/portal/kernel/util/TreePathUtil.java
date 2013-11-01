@@ -60,7 +60,9 @@ public class TreePathUtil {
 			}
 
 			if (treeModels.size() == size) {
-				trace[2] = treeModels.get(treeModels.size() - 1);
+				TreeModel treeModel = treeModels.get(treeModels.size() - 1);
+
+				trace[2] = treeModel.getPrimaryKeyObj();
 
 				traces.push(trace);
 			}

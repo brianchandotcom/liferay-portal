@@ -19,69 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_ERROR_MESSAGE</td>
-	<td>//div[@class='alert alert-error' and contains(.,'Your request failed to complete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success' and contains(.,'Your request completed successfully')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TITLE_ERROR_MESSAGE</td>
-	<td>//div[@class='alert alert-error' and contains(.,'Please enter a valid title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info' and contains(.,'This page does not exist yet. Use the form below to create it')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_FRONTPAGE</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'FrontPage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_RECENT_CHANGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Recent Changes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ALL_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'All Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ORPHAN_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Orphan Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DRAFT_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Draft Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SEARCH_FIELD</td>
-	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SEARCH_BUTTON</td>
-	<td>//div[@class='form-search']//div/button[@type='submit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWikiAddpage</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,33 +34,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY_FIELD</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE_CREOLE_BUTTON</td>
-	<td>//span[@id='cke_36_label']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE_HTML_BUTTON</td>
-	<td>//span[@id='cke_56_label']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CK_EDITOR_SOURCE_FIELD</td>
-	<td>//div[@id='cke_1_contents']/textarea</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>

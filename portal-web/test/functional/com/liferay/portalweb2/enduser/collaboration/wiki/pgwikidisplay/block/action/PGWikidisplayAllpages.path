@@ -9,69 +9,18 @@
 </thead>
 <tbody>
 <tr>
-	<td>PAGE_NAME</td>
-	<td></td>
-	<td>PGWikidisplayAllpages</td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWikiAllpages</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[contains(@id, 'undoForm')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_BUTTON</td>
-	<td>//button[contains(@id, 'addPageButton')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_FRONTPAGE</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'FrontPage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_RECENT_CHANGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Recent Changes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ALL_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'All Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ORPHAN_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Orphan Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DRAFT_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Draft Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SEARCH_FIELD</td>
-	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SEARCH_BUTTON</td>
-	<td>//div[@class='form-search']//div/button[@type='submit']</td>
+	<td>//div[@class='alert alert-success taglib-trash-undo']/form</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,16 +32,6 @@
 <tr>
 	<td>WIKI_PAGE_TABLE_PAGE</td>
 	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_TABLE_PAGE_1</td>
-	<td>xpath=(//tr/td[1]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_TABLE_PAGE_2</td>
-	<td>xpath=(//tr/td[1]/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,47 +57,6 @@
 <tr>
 	<td>WIKI_PAGE_TABLE_ACTIONS</td>
 	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a[@title='Actions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//tr/td[6]/div/a[@title='Actions'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--WIKI_PAGE_MENULIST-->
-<tr>
-	<td>WIKI_PAGE_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_MENULIST_PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_MENULIST_COPY</td>
-	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_MENULIST_MOVE</td>
-	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_MENULIST_SUBSCRIBE</td>
-	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKI_PAGE_MENULIST_RECYCLE_BIN</td>
-	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 </tbody>

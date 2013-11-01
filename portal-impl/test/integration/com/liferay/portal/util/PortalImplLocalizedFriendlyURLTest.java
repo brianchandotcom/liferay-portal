@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -167,7 +168,8 @@ public class PortalImplLocalizedFriendlyURLTest {
 	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURL1()
 		throws Exception {
 
-		testWronglyLocalizedSiteLayoutFriendlyURL(true, LocaleUtil.US, "/home");
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			true, LocaleUtil.US, null, "/home");
 	}
 
 	@Test
@@ -175,7 +177,55 @@ public class PortalImplLocalizedFriendlyURLTest {
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
-			true, LocaleUtil.CANADA_FRENCH, "/accueil");
+			true, LocaleUtil.CANADA_FRENCH, null, "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithBlogsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			true, LocaleUtil.US, "/-/blogs/one", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithBlogsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			true, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithParams1()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			true, LocaleUtil.US, "?param=value", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithParams2()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			true, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithTagsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			true, LocaleUtil.US, "/tags/one", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPrivateFriendlyURLWithTagsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			true, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil");
 	}
 
 	@Test
@@ -183,7 +233,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.US, "/home");
+			false, LocaleUtil.US, null, "/home");
 	}
 
 	@Test
@@ -191,7 +241,55 @@ public class PortalImplLocalizedFriendlyURLTest {
 		throws Exception {
 
 		testWronglyLocalizedSiteLayoutFriendlyURL(
-			false, LocaleUtil.CANADA_FRENCH, "/accueil");
+			false, LocaleUtil.CANADA_FRENCH, null, "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithBlogsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			false, LocaleUtil.US, "/-/blogs/one", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithBlogsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			false, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithParams1()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			false, LocaleUtil.US, "?param=value", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithParams2()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			false, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithTagsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			false, LocaleUtil.US, "/tags/one", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedSiteLayoutPublicFriendlyURLWithTagsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedSiteLayoutFriendlyURL(
+			false, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil");
 	}
 
 	@Test
@@ -199,7 +297,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
-			true, LocaleUtil.US, "/home");
+			true, LocaleUtil.US, null,  "/home");
 	}
 
 	@Test
@@ -207,7 +305,55 @@ public class PortalImplLocalizedFriendlyURLTest {
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
-			true, LocaleUtil.CANADA_FRENCH, "/accueil");
+			true, LocaleUtil.CANADA_FRENCH, null, "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithBlogsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			true, LocaleUtil.US, "/-/blogs/one",  "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithBlogsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			true, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithParams1()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			true, LocaleUtil.US, "?param=value",  "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithParams2()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			true, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithTagsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			true, LocaleUtil.US, "/tags/one",  "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPrivateLayoutFriendlyURLWithTagsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			true, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil");
 	}
 
 	@Test
@@ -215,7 +361,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
-			false, LocaleUtil.US, "/home");
+			false, LocaleUtil.US, null, "/home");
 	}
 
 	@Test
@@ -223,7 +369,55 @@ public class PortalImplLocalizedFriendlyURLTest {
 		throws Exception {
 
 		testWronglyLocalizedVirtualLayoutFriendlyURL(
-			false, LocaleUtil.CANADA_FRENCH, "/accueil");
+			false, LocaleUtil.CANADA_FRENCH, null, "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithBlogsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			false, LocaleUtil.US, "/-/blogs/one", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithBlogsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			false, LocaleUtil.CANADA_FRENCH, "/-/blogs/one", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithParams1()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			false, LocaleUtil.US, "?param=value", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithParams2()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			false, LocaleUtil.CANADA_FRENCH, "?param=value", "/accueil");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithTagsMapping1()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			false, LocaleUtil.US, "/tags/one", "/home");
+	}
+
+	@Test
+	public void testWronglyLocalizedVirtualPublicLayoutFriendlyURLWithTagsMapping2()
+		throws Exception {
+
+		testWronglyLocalizedVirtualLayoutFriendlyURL(
+			false, LocaleUtil.CANADA_FRENCH, "/tags/one", "/accueil");
 	}
 
 	protected void assertLocalizedSiteLayoutFriendlyURL(
@@ -442,7 +636,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	protected void testWronglyLocalizedSiteLayoutFriendlyURL(
-			boolean privateLayout, Locale locale,
+			boolean privateLayout, Locale locale, String queryString,
 			String expectedLayoutFriendlyURL)
 		throws Exception {
 
@@ -451,13 +645,21 @@ public class PortalImplLocalizedFriendlyURLTest {
 		Layout layout = LayoutTestUtil.addLayout(
 			group.getGroupId(), privateLayout, _nameMap, _friendlyURLMap);
 
+		String requestedFriendlyURL = "/inicio";
+
+		if (Validator.isNotNull(queryString)) {
+			requestedFriendlyURL += queryString;
+
+			expectedLayoutFriendlyURL += queryString;
+		}
+
 		assertLocalizedSiteLayoutFriendlyURL(
-			group.getGroupId(), layout, "/inicio", locale, LocaleUtil.SPAIN,
-			expectedLayoutFriendlyURL);
+			group.getGroupId(), layout, requestedFriendlyURL, locale,
+			LocaleUtil.SPAIN, expectedLayoutFriendlyURL);
 	}
 
 	protected void testWronglyLocalizedVirtualLayoutFriendlyURL(
-			boolean privateLayout, Locale locale,
+			boolean privateLayout, Locale locale, String queryString,
 			String expectedLayoutFriendlyURL)
 		throws Exception {
 
@@ -478,8 +680,16 @@ public class PortalImplLocalizedFriendlyURLTest {
 		UserGroupLocalServiceUtil.addUserUserGroup(
 			serviceContext.getUserId(), userGroup.getUserGroupId());
 
+		String requestedFriendlyURL = "/inicio";
+
+		if (Validator.isNotNull(queryString)) {
+			requestedFriendlyURL += queryString;
+
+			expectedLayoutFriendlyURL += queryString;
+		}
+
 		assertLocalizedVirtualLayoutFriendlyURL(
-			userGroupGroup.getGroupId(), layout, "/inicio", locale,
+			userGroupGroup.getGroupId(), layout, requestedFriendlyURL, locale,
 			LocaleUtil.SPAIN, expectedLayoutFriendlyURL);
 	}
 

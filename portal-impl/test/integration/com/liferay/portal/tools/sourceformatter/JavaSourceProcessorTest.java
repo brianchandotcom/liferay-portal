@@ -79,6 +79,21 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectLineBreaks() throws Exception {
+		test(
+			"IncorrectLineBreaks.testjava",
+			new String[] {
+				"line break:", "line break:", "line break:", "line break:",
+				"line break:", "line break:", "line break:", "line break:",
+				"line break:", "line break:", "line break:", "line break:",
+				"line break:", "line break:"
+			},
+			new Integer[] {
+				23, 27, 31, 38, 42, 45, 48, 52, 55, 60, 66, 70, 74, 77
+			});
+	}
+
+	@Test
 	public void testIncorrectTabs() throws Exception {
 		test(
 			"IncorrectTabs.testjava",
@@ -89,6 +104,17 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testIncorrectWhitespace() throws Exception {
 		test("IncorrectWhitespace.testjava");
+	}
+
+	@Test
+	public void testInefficientStringMethods() throws Exception {
+		test(
+			"InefficientStringMethods.testjava",
+			new String[] {
+				"Use StringUtil.equalsIgnoreCase:",
+				"Use StringUtil.toLowerCase:", "Use StringUtil.toUpperCase:"
+			},
+			new Integer[] {26, 30, 31});
 	}
 
 	@Test

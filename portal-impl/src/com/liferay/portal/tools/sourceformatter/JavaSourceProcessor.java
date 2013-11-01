@@ -1250,7 +1250,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {
 				processErrorMessage(
-					fileName, "equal: " + fileName + " " + lineCount);
+					fileName, "line break: " + fileName + " " + lineCount);
 			}
 
 			if (line.contains("ActionForm form")) {
@@ -1383,7 +1383,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String strippedQuotesLine = stripQuotes(
 					trimmedLine, CharPool.QUOTE);
 
-				for (int x = -1;;) {
+				for (int x = 0;;) {
 					x = strippedQuotesLine.indexOf(StringPool.EQUAL, x + 1);
 
 					if (x == -1) {
@@ -1660,9 +1660,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								((previousLineLeadingTabCount + 2) !=
 									lineLeadingTabCount)) {
 
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
+								processErrorMessage(
+									fileName,
+									"line break: " + fileName + " " +
+										lineCount);
 							}
 
 							if (previousLine.endsWith(
@@ -1718,7 +1719,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 							processErrorMessage(
 								fileName,
-								"new line: " + fileName + " " + lineCount);
+								"line break: " + fileName + " " + lineCount);
 						}
 					}
 

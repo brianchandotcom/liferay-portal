@@ -61,7 +61,7 @@ public class BlogsEntryPermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (entry.isDraft()) {
+		if (entry.isDraft() || entry.isScheduled()) {
 			if (actionId.equals(ActionKeys.VIEW) &&
 				!contains(permissionChecker, entry, ActionKeys.UPDATE)) {
 

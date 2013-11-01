@@ -156,6 +156,13 @@ public class WikiPagePermission {
 				return true;
 			}
 		}
+		else if (page.isScheduled()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!contains(permissionChecker, page, ActionKeys.UPDATE)) {
+
+				return false;
+			}
+		}
 
 		if (actionId.equals(ActionKeys.VIEW)) {
 			WikiPage redirectPage = page.getRedirectPage();

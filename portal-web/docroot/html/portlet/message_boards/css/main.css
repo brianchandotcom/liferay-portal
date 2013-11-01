@@ -74,6 +74,7 @@
 	.message-container {
 		border: 1px solid #CCC;
 		margin: 5px 0 0 0;
+		overflow: auto;
 
 		table {
 			border-collapse: collapse;
@@ -246,6 +247,7 @@
 
 	.message-container .thread-message-view, .thread-view {
 		border-collapse: collapse;
+		min-width: 400px;
 		padding: 0;
 		width: 100%;
 	}

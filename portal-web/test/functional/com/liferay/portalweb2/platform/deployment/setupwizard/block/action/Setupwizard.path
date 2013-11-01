@@ -31,7 +31,7 @@
 <!--PORTAL-->
 <tr>
 	<td>PORTAL_PORTAL_NAME_FIELD</td>
-	<td>//input[@id='companyName'] </td>
+	<td>//input[@id='companyName']</td>
 	<td></td>
 </tr>
 <tr>

@@ -11,7 +11,8 @@
 
 		#heading {
 			bottom: 100%;
-			position: absolute;
+			margin-top: -2em;
+			position: relative;
 
 			.site-title {
 				font-size: 26px;
@@ -22,35 +23,21 @@
 			}
 		}
 
-		#navigation {
-			display: none;
+		.dockbar .navbar-inner .container .nav-collapse .nav-add-controls ul.dropdown-menu {
+			background: transparent;
+			padding: 0;
 
-			&.open {
-				display: block;
+			> li > a {
+				background: transparent;
+				padding: 9px 15px;
 
-				.navbar-inner {
-					@include border-radius(3px);
-
-					padding: 10px;
-
-					.nav-collapse {
-						height: auto;
-						overflow: visible;
-					}
+				&.toggle-controls-link {
+					background: transparent;
 				}
-			}
-
-			.nav {
-				margin: 0;
 			}
 		}
 
 		.dockbar-split .dockbar, .dockbar {
-			float: right;
-			height: auto;
-			position: relative;
-			z-index: 401;
-
 			.info-items {
 				height: auto;
 				position: static;
@@ -60,134 +47,111 @@
 			.navbar-inner {
 				width: auto;
 
-				.btn-navbar {
-					background: transparent;
-					border: none;
-					float: left;
-					font-size: 24px;
-					padding: 12px 15px;
+				.container {
+					.btn-navbar {
+						background: transparent;
+						border: none;
+						font-size: 24px;
 
-					&:hover {
-						background-color: #5BBAE8;
-					}
-
-					&.open {
-						background-color: #F5AF45;
-					}
-				}
-
-				.nav-account-controls {
-					padding: 0 5px;
-
-					.user-avatar-image {
-						display: none;
-					}
-				}
-
-				.nav-add-controls {
-					background: transparent;
-					border-top-width: 0;
-					position: static;
-					z-index: 350;
-					padding: 0 5px;
-
-					> li {
-						float: none;
-						margin: 0;
-						position: relative;
-
-						&.toggle-controls a {
-							clip: rect(auto auto auto auto);
-							position: static;
-							visibility: visible;
+						&:hover {
+							background-color: #5BBAE8;
 						}
 
-						.page-preview-controls {
-							display: none;
+						&.open {
+							background-color: #F5AF45;
 						}
+					}
 
-						> a {
+					.nav-collapse {
+						> .nav {
 							background: transparent;
-							text-align: left;
-							white-space: nowrap;
+							border-width: 0;
 
-							&:hover {
-								background: #F3f3f3;
+							.nav-item-icon {
+								font-size: 26px;
 							}
 
-							[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
-								font-size: 22px;
-								margin-top: 0;
-							}
-
-							&.toggle-controls-link {
+							&.nav-add-controls ul.dropdown-menu {
 								background: transparent;
-
-								[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
-									color: #FFF;
-								}
-							}
-
-							.nav-item-label {
-								background: transparent;
-								display: inline;
-								left: 0;
-								margin-left: 0;
-								margin-top: 0;
+								border-top-width: 0;
 								padding: 0;
-								position: relative;
-							}
 
-							&:hover .nav-item-label {
-								display: inline;
-							}
+								> li > a {
+									background: transparent;
+									color: #FFF;
+									text-align: left;
 
-							.icon-caret-down {
-								display: none;
-							}
-						}
-					}
-				}
+									&:focus, &:hover {
+										background-color: #5BBAE8;
+									}
 
-				.nav-collapse {
-					z-index: 400;
+									.nav-item-icon {
+										font-size: 22px;
+										margin-top: 0;
+									}
 
-					&.open {
-						overflow: visible;
-					}
+									&.toggle-controls-link {
+										background: transparent;
 
-					> .nav {
-						background: #009AE5;
-						border-width: 0;
-						left: auto;
-						margin: 0;
-						min-width: 160px;
-						position: absolute;
-						right: 0;
-						z-index: 400;
+										.nav-item-icon {
+											color: #FFF;
+										}
+									}
 
-						> li {
-							&.dropdown {
-								.dropdown-menu li a {
-									font-size: 16px;
-									line-height: 32px;
-								}
-
-								&.open {
-									> .dropdown-toggle {
-										color: #FFFFFF;
+									.nav-item-label {
+										background: transparent;
 									}
 								}
 							}
 
-							> a {
-								color: #FFF;
-								font-size: 16px;
-								margin: 5px 0;
-								padding: 6px 15px;
+							> li {
+								&.dropdown {
+									&.active > .dropdown-toggle {
+										color: #FFF;
+									}
 
-								&:focus, &:hover {
-									background-color: #5BBAE8;
+									&.open > .dropdown-toggle {
+										background: #2FA4F5;
+										color: #FFF;
+									}
+
+									.dropdown-menu {
+										> li > a {
+											font-size: 16px;
+											line-height: 31px;
+										}
+									}
+								}
+
+								&.info-items {
+									background-color: transparent;
+								}
+
+								&.staging-toggle {
+									> a {
+										background-color: #2496E5;
+										padding-bottom: 0;
+										padding-top: 0;
+
+										&:hover {
+											background-color: #2FA4F5;
+										}
+									}
+
+									span.nav-item-label {
+										padding: 5px 10px;
+									}
+								}
+
+								> a {
+									color: #FFF;
+									font-size: 16px;
+									line-height: 20px;
+									padding: 12px 15px;
+
+									&:focus, &:hover {
+										background-color: #5BBAE8;
+									}
 								}
 							}
 						}

@@ -1,6 +1,6 @@
 @import "compass";
 @import "mixins";
-
+ 
 @import url(custom_common.css);
 @import url(color_schemes/common.css);
 @import url(color_schemes/dark.css);
@@ -155,6 +155,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				> li {
 					background-color: $dockbarGradientStart;
 
+					@include respond-to(phone, tablet) {
+						background: transparent;
+					}
+
 					@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 				}
 			}
@@ -167,46 +171,59 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.navbar-inner {
-			.nav-account-controls {
-				border-top: 1px solid #00AEFF;
+			.container .nav-collapse > .nav {
+				&.nav-account-controls {
+					border-top: 1px solid #00AEFF;
 
-				&.nav-account-controls-notice {
-					margin-top: 10px;
-					top: 50px;
-				}
-			}
+					@include respond-to(phone, tablet) {
+						border-top: none;
+					}
 
-			.nav-add-controls {
-				background: transparent;
-				border-top-width: 0;
-
-				&.nav-add-controls-notice {
-					top: 70px;
+					&.nav-account-controls-notice {
+						margin-top: 10px;
+						top: 50px;
+					}
 				}
 
-				> li {
-					background-color: transparent;
+				&.nav-add-controls ul.dropdown-menu {
+					overflow: visible;
 
-					@include background-image(none);
+					&.nav-add-controls-notice {
+						top: 70px;
+					}
 
-					> a {
-						background: #45CBF5;
-						line-height: inherit;
-						padding: 6px 8px;
+					> li {
+						background-color: transparent;
 
-						@include respond-to(phone, tablet) {
-							background: transparent;
-						}
+						@include background-image(none);
 
-						&:hover {
-							background: #5BBAE8;
-						}
-
-						&.toggle-controls-link {
-							background: #92F545;
+						> a {
+							line-height: inherit;
+							padding: 6px 8px;
 
 							@include respond-to(phone, tablet) {
 								background: transparent;
+								padding: 9px 15px;
+							}
+
+							&:focus, &:hover {
+								background: #5BBAE8;
+
+								@include respond-to(phone, tablet) {
+									background: #2FA4F5;
+								}
+							}
+
+							&.toggle-controls-link {
+								background: #92F545;
+
+								@include respond-to(phone, tablet) {
+									background: transparent;
+
+									&:focus, &:hover {
+										background: #2FA4F5;
+									}
+								}
 							}
 						}
 					}

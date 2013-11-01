@@ -224,16 +224,28 @@
 
 	.dockbar-split {
 		.dockbar {
-			.nav {
+			.navbar-inner .container .nav-collapse > .nav {
+				&.nav-add-controls ul.dropdown-menu > li > a {
+					background: #45CBF5;
+
+					@include respond-to(phone, tablet) {
+						background: transparent;
+					}
+				}
+
 				li.dropdown {
 					> .dropdown-toggle {
 						@extend %dockbar-caret;
 					}
 
-					&.open, &.active, &.open.active {
+					&.active, &.open {
 						> .dropdown-toggle {
 							background-color: transparent;
 							color: #FFF;
+
+							@include respond-to(phone, tablet) {
+								background-color: #3EA9DB;
+							}
 
 							@extend %dockbar-caret;
 						}
@@ -260,110 +272,136 @@
 		.navbar-inner {
 			background: #333;
 
-			.container .btn-navbar {
-				color: #FFF;
-
-				.user-avatar-image {
-					position: relative;
-					top: 2px;
-					width: 28px;
-				}
-			}
-		}
-
-		.nav {
-			> li {
-				> a {
-					color: #FFF;
-					line-height: 31px;
-
-					&:focus, &:hover {
-						color: #FFF;
-					}
-
-					[class^="icon-"], [class*=" icon-"] {
-						margin-top: 3px;
-					}
-				}
-
-				&.active > a {
+			.container {
+				.btn-navbar {
 					color: #FFF;
 
-					&, &:hover, &:focus {
-						background: #0066B3;
-					}
-				}
-			}
-
-			%dockbar-caret {
-				&, &:hover {
-					.caret {
-						border-bottom-color: #FFF;
-						border-top-color: #FFF;
-					}
-				}
-			}
-
-			li.dropdown {
-				> .dropdown-toggle {
-					@extend %dockbar-caret;
+                    .user-avatar-image {
+					    position: relative;
+					    top: 2px;
+					    width: 28px;
+				    }
 				}
 
-				&.open, &.active, &.open.active {
-					> .dropdown-toggle {
-						background-color: #3EA9DB;
-						color: #FFF;
+				.nav-collapse {
+					> .nav {
+						&.nav-add-controls, &.nav-navigation {
+							> li.dropdown ul.dropdown-menu {
+								background: transparent;
 
-						@extend %dockbar-caret;
-					}
-				}
-
-				.dropdown-menu, .site-administration-menu {
-					background: #009AE5;
-					border-width: 0;
-					left: 0;
-					margin: 0;
-					right: auto;
-
-					> li > a {
-						color: #FFF;
-						font-size: 0.9em;
-						font-weight: 300;
-
-						&:focus, &:hover {
-							background: #2FA4F5;
-							@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
+								@include respond-to(phone, tablet) {
+									background: #009AE5;
+								}
+							}
 						}
 
-						[class^="icon-"], [class*=" icon-"] {
-							margin-right: 3px;
+						> li {
+							> a {
+								color: #FFF;
+								line-height: 31px;
+
+								@include respond-to(phone, tablet) {
+									line-height: 20px;
+								}
+
+								&:focus, &:hover {
+									color: #FFF;
+								}
+
+																[class^="icon-"], [class*=" icon-"] {
+									margin-top: 3px;
+								}
+							}
+
+							&.active > a {
+								color: #FFF;
+
+								&, &:hover, &:focus {
+									background: #0066B3;
+								}
+							}
 						}
 
-						.icon-spacer {
-							margin-right: 17px;
+						%dockbar-caret {
+							&, &:hover {
+								.caret {
+									border-bottom-color: #FFF;
+									border-top-color: #FFF;
+								}
+							}
+						}
+
+						li.dropdown {
+							> .dropdown-toggle {
+								@extend %dockbar-caret;
+							}
+
+							&.active, &.open {
+								> .dropdown-toggle {
+									background-color: #3EA9DB;
+									color: #FFF;
+
+									@extend %dockbar-caret;
+								}
+							}
+
+							ul.dropdown-menu, .site-administration-menu {
+								border-width: 0;
+								left: 0;
+								margin: 0;
+								right: auto;
+
+								@include respond-to(phone, tablet) {
+									margin-top: 3px;
+								}
+
+								> li > a {
+									color: #FFF;
+									font-size: 0.9em;
+									font-weight: 300;
+
+									@include respond-to(phone, tablet) {
+										font-size: 16px;
+									}
+
+									&:focus, &:hover {
+										background: #2FA4F5;
+										@include filter-gradient(#2FA4F5, #2FA4F5, vertical);
+									}
+
+									[class^="icon-"], [class*=" icon-"] {
+										margin-right: 3px;
+									}
+
+									.icon-spacer {
+										margin-right: 17px;
+									}
+								}
+
+								li.active > a {
+									background: #3B6DCC;
+								}
+							}
+
+							.dropdown-menu {
+								background: #009AE5;
+								max-height: 300px;
+								overflow-x: hidden;
+								overflow-y: auto;
+
+								&:after, &:before {
+									border-width: 0;
+								}
+							}
+						}
+
+						li.dropdown.user-avatar {
+							.dropdown-menu {
+								right: 0;
+								left: auto;
+							}
 						}
 					}
-
-					li.active > a {
-						background: #3B6DCC;
-					}
-				}
-
-				.dropdown-menu {
-					max-height: 300px;
-					overflow-x: hidden;
-					overflow-y: auto;
-
-					&:after, &:before {
-						border-width: 0;
-					}
-				}
-			}
-
-			li.dropdown.user-avatar {
-				.dropdown-menu {
-					right: 0;
-					left: auto;
 				}
 			}
 		}
@@ -472,7 +510,7 @@
 			display: none;
 		}
 
-		@include respond-to(phone) {
+		@include respond-to(phone, tablet) {
 			padding-left: 5px;
 			padding-right: 5px;
 
@@ -760,7 +798,7 @@
 			.lfr-content-item {
 				color: #009AE5;
 
-				&:focus, &:hover {
+				&:hover {
 					background-color: #E5F5FC;
 				}
 

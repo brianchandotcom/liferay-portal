@@ -7,10 +7,44 @@ $diamondSize: 12px;
 $editLayoutPanelWidth: 460px;
 
 .aui {
+	@include respond-to(phone, tablet) {
+		#navigation {
+			display: none;
+
+			&.open {
+				display: block;
+
+				.navbar-inner {
+					@include border-radius(3px);
+
+					padding: 10px;
+
+					.nav-collapse {
+						height: auto;
+						overflow: visible;
+					}
+				}
+			}
+
+			.nav {
+				margin: 0;
+			}
+		}
+	}
+
 	.dockbar {
+		height: auto;
 		left: 0;
+		position: relative;
 		right: 0;
 		top: 0;
+		z-index: 400;
+
+		@include respond-to(phone, tablet) {
+			#_145_navSiteNavigationNavbarBtn {
+				display: inline-block;
+			}
+		}
 
 		.staging-controls {
 			.staging-bar {
@@ -82,8 +116,11 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.navbar-inner {
-			padding-left: 20px;
-			padding-right: 20px;
+			padding: 0 20px;
+
+			@include respond-to(phone, tablet) {
+				padding: 0;
+			}
 
 			.brand {
 				h1 {
@@ -95,13 +132,225 @@ $editLayoutPanelWidth: 460px;
 				}
 			}
 
+			.btn-navbar {
+				float: left;
+				padding: 12px 15px;
+
+				@include respond-to(phone, tablet) {
+					display: none;
+				}
+			}
+
 			.container {
 				margin-left: 0;
 				margin-right: 0;
 				width: 100%;
 
-				.nav-account-controls {
-					float: right;
+				.nav-collapse {
+					@include respond-to(phone, tablet) {
+						clear: none;
+						display: inline-block;
+						float: left;
+						height: auto;
+						overflow: visible;
+						position: static;
+					}
+
+					> .nav {
+						margin: 0;
+
+						> li {
+							@include respond-to(phone, tablet) {
+								float: left;
+								position: static;
+							}
+
+							&.dropdown .dropdown-menu {
+								@include respond-to(phone, tablet) {
+									background-color: #F6F6F6;
+									left: 0;
+									margin: 3px 0 0 0;
+									position: absolute;
+									top: auto;
+									width: 100%;
+								}
+
+								> li a {
+									@include respond-to(phone, tablet) {
+										&:focus, &:hover {
+											background: #555;
+											color: #FFF;
+										}
+									}
+
+									@include respond-to(tablet) {
+										margin: 5px 0;
+									}
+								}
+							}
+
+							> a {
+								@include respond-to(phone, tablet) {
+									display: inline-block;
+									margin-left: 5px;
+									margin-top: 5px;
+									padding: 12px 15px;
+
+									> .nav-item-icon {
+										margin-top: 3px;
+									}
+
+									> .nav-item-label {
+										display: none;
+									}
+
+									&:focus, &:hover {
+										background: #555;
+										color: #FFF;
+
+										> .nav-item-label {
+											display: none;
+										}
+									}
+								}
+							}
+
+							@include respond-to(phone, tablet) {
+								.icon-caret-down {
+									display: none;
+								}
+							}
+						}
+
+						&.nav-account-controls {
+							float: right;
+							padding: 0 5px;
+
+							@include respond-to(phone, tablet) {
+								float: left;
+								min-width: 0;
+								padding: 0;
+								position: static;
+
+								.dropdown-menu .nav-item-label {
+									display: inline;
+								}
+							}
+
+							> li > a > .nav-item-icon {
+								display: none;
+
+								@include respond-to(phone, tablet) {
+									display: inline-block;
+								}
+							}
+
+							.user-avatar-image {
+								display: none;
+							}
+						}
+
+						&.nav-add-controls, &.nav-navigation {
+							@include respond-to(phone, tablet) {
+								position: static;
+							}
+
+							> li > a {
+								display: none;
+
+								@include respond-to(phone, tablet) {
+									display: inline-block;
+								}
+							}
+
+							@include respond-to(phone, tablet) {
+								.open ul.dropdown-menu {
+									display: block;
+								}
+							}
+
+							ul.dropdown-menu {
+								background: transparent;
+								border: none;
+								display: inline-block;
+								letter-spacing: 1px;
+								padding: 0 5px;
+								position: static;
+								z-index: 350;
+
+								@include respond-to(phone, tablet) {
+									background-color: #F6F6F6;
+									display: none;
+									left: 0;
+									margin: 3px 0 0 0;
+									padding: 0;
+									position: absolute;
+									top: auto;
+									width: 100%;
+								}
+
+								&:after {
+									border: none;
+								}
+
+								&:before {
+									border: none;
+								}
+
+								> li {
+									display: inline-block;
+									float: left;
+									margin: 0;
+
+									@include respond-to(phone, tablet) {
+										display: block;
+										float: none;
+
+										&.page-preview-controls {
+											display: none;
+										}
+									}
+
+									&.toggle-controls a {
+										clip: rect(auto auto auto auto);
+										position: static;
+										visibility: visible;
+									}
+
+									> a {
+										font-size: 14px;
+										line-height: 31px;
+										margin: 0;
+										padding: 6px 15px;
+										white-space: nowrap;
+
+										@include respond-to(phone, tablet) {
+											line-height: inherit;
+											padding: 9px 15px;
+
+											&:focus, &:hover {
+												background: #555;
+												color: #FFF;
+											}
+										}
+
+										> .nav-item-icon {
+											margin-right: 0;
+											margin-top: 3px;
+										}
+
+										.nav-item-label {
+											left: 0;
+											margin-left: 0;
+											margin-top: 0;
+											padding: 0;
+											position: relative;
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 
@@ -157,6 +406,14 @@ $editLayoutPanelWidth: 460px;
 			height: 0;
 			position: absolute;
 
+			@include respond-to(phone, tablet) {
+				position: relative;
+			}
+
+			@include respond-to(phone, tablet) {
+				height: auto;
+			}
+
 			.staging-controls {
 				.staging-bar {
 					li.dropdown .dropdown-menu {
@@ -170,6 +427,10 @@ $editLayoutPanelWidth: 460px;
 			&.navbar-static-top {
 				.collapse {
 					position: relative;
+
+					@include respond-to(phone, tablet) {
+						position: static;
+					}
 
 					.nav-account-controls {
 						position: fixed;
@@ -192,153 +453,191 @@ $editLayoutPanelWidth: 460px;
 
 			.navbar-inner {
 				background-color: transparent;
-				border-width: 0;
 				padding: 0;
 				width: 0;
 
-				.nav {
-					border-bottom-width: 0;
-
-					> li {
-						background-color: #333;
-
-						> a {
-							color: #FFF;
-							line-height: 31px;
-
-							&:focus, &:hover {
-								color: #FFF;
-							}
-
-							[class^="icon-"], [class*=" icon-"] {
-								margin-top: 3px;
-							}
-						}
-
-						&.active > a {
-							color: #FFF;
-						}
-					}
-
-					li {
-						&.dropdown {
-							&.active > .dropdown-toggle {
-								color: #FFF;
-							}
-
-							&.open > .dropdown-toggle {
-								background-color: #555;
-								color: #FFF;
-							}
-						}
-
-						&.info-items {
-							background-color: transparent;
-						}
-
-						&.staging-toggle {
-							> a {
-								background-color: #2496E5;
-								padding-bottom: 0;
-								padding-top: 0;
-
-								&:hover {
-									background-color: #2FA4F5;
-								}
-							}
-
-							span.nav-item-label {
-								padding: 5px 10px;
-							}
-						}
-					}
+				@include respond-to(phone, tablet) {
+					width: auto;
 				}
 
-				.nav-account-controls {
-					left: auto;
-					margin-right: 0;
-					padding: 0;
-					position: fixed;
-					right: 5em;
-					z-index: 325;
-				}
+				.container .nav-collapse {
+					z-index: 400;
 
-				.nav-add-controls {
-					background: transparent;
-					position: fixed;
-					top: 10%;
-					z-index: 350;
+					&.open {
+						overflow: visible;
+					}
 
-					> li {
-						float: none;
-						margin: 10px;
-						position: relative;
+					> .nav {
+						border-bottom-width: 0;
+						left: auto;
+						position: fixed;
+						right: 0;
+						z-index: 400;
 
-						&.toggle-controls a {
-							clip: rect(0 0 0 0);
-							position: absolute;
-
-							&:focus {
-								clip: rect(auto auto auto auto);
-								position: static;
-							}
+						@include respond-to(phone, tablet) {
+							min-width: 0;
+							position: static;
 						}
 
-						&.page-preview-controls {
-							@include respond-to(phone, tablet) {
-								display: none;
-							}
-						}
-
-						> a {
+						&.nav-account-controls {
 							background: #333;
-							color: #FFF;
-							padding: 6px 8px;
-							text-align: center;
+							left: auto;
+							margin-right: 0;
+							padding: 0;
+							position: fixed;
+							right: 5em;
+							z-index: 325;
 
-							&:hover {
-								background: #555;
+							@include respond-to(phone, tablet) {
+								background: transparent;
+								position: static;
+								right: auto;
 							}
+						}
 
-							[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
-								font-size: 25px;
-								position: relative;
-								vertical-align: middle;
-							}
-
-							&.toggle-controls-link {
-								background: #92F545;
-
-								[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
-									color: #000;
+						&.nav-add-controls {
+							@include respond-to(phone, tablet) {
+								.open ul.dropdown-menu {
+									display: block;
 								}
 							}
 
-							.nav-item-label {
-								background: #333;
-								display: none;
-								left: 100%;
-								margin-left: 0.5em;
-								margin-top: -1em;
-								padding: 0 20px;
-								position: absolute;
-								top: 50%;
-								white-space: nowrap;
-							}
-
-							&:hover .nav-item-label {
+							ul.dropdown-menu {
+								background: transparent;
 								display: block;
-							}
+								min-width: 0;
+								position: fixed;
+								top: 10%;
+								z-index: 350;
 
-							.icon-caret-down {
-								display: none;
+								@include respond-to(phone, tablet) {
+									background-color: #F6F6F6;
+									display: none;
+									position: absolute;
+									top: auto;
+								}
+
+								> li {
+									display: block;
+									float: none;
+									margin: 10px;
+									position: relative;
+
+									@include respond-to(phone, tablet) {
+										margin: 0;
+
+										&.page-preview-controls {
+											display: none;
+										}
+									}
+
+									&.toggle-controls a {
+										clip: rect(0 0 0 0);
+										position: absolute;
+
+										@include respond-to(phone, tablet) {
+											clip: rect(auto auto auto auto);
+											position: static;
+										}
+
+										&:focus {
+											clip: rect(auto auto auto auto);
+											position: static;
+										}
+									}
+
+									> a {
+										background: #333;
+										color: #FFF;
+										padding: 6px 8px;
+										text-align: center;
+
+										@include respond-to(phone, tablet) {
+											background: transparent;
+											color: inherit;
+											padding: 9px 15px;
+											text-align: left;
+										}
+
+										.nav-item-icon {
+											font-size: 25px;
+											margin-right: 0;
+											position: relative;
+											vertical-align: middle;
+
+											@include respond-to(phone, tablet) {
+												font-size: inherit;
+											}
+										}
+
+										.nav-item-label {
+											background: #333;
+											display: none;
+											left: 100%;
+											margin-left: 0.5em;
+											margin-top: -1em;
+											padding: 0 20px;
+											position: absolute;
+											top: 50%;
+											white-space: nowrap;
+
+											@include respond-to(phone, tablet) {
+												background: transparent;
+												display: inline-block;
+												margin-left: 0;
+												margin-top: 0;
+												padding: 0;
+												position: static;
+											}
+										}
+
+										@include respond-to(phone, tablet) {
+											&:focus, &:hover {
+												background: #555;
+												color: #FFF;
+											}
+										}
+
+										&:hover .nav-item-label {
+											display: block;
+
+											@include respond-to(phone, tablet) {
+												display: inline-block;
+											}
+										}
+									}
+								}
+
+								&:hover > li.toggle-controls a {
+									clip: rect(auto auto auto auto);
+									position: static;
+								}
 							}
 						}
-					}
 
-					&:hover > li.toggle-controls a {
-						clip: rect(auto auto auto auto);
-						position: static;
+						> li {
+							> a {
+								color: #FFF;
+								line-height: 31px;
+								padding: 6px 15px;
+
+								@include respond-to(phone, tablet) {
+									color: inherit;
+								}
+
+								.nav-item-icon {
+									margin-top: 3px;
+								}
+							}
+
+							&.active > a {
+								color: #FFF;
+							}
+
+							&.open > a {
+								color: #333;
+							}
+						}
 					}
 				}
 			}
@@ -389,7 +688,7 @@ $editLayoutPanelWidth: 460px;
 			margin: 10px 0;
 		}
 
-		&.controls-hidden .dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
+		&.controls-hidden .dockbar .navbar-inner .nav-add-controls li.toggle-controls > .toggle-controls-link {
 			background: #F5AF45;
 		}
 
@@ -411,7 +710,7 @@ $editLayoutPanelWidth: 460px;
 	}
 
 	.touch .dockbar-split, .controls-hidden.dockbar-split {
-		.dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
+		.dockbar .navbar-inner .container .nav-collapse > .nav.nav-add-controls ul.dropdown-menu > li.toggle-controls > a.toggle-controls-link {
 			clip: rect(auto auto auto auto);
 			position: static;
 		}
@@ -529,7 +828,7 @@ $editLayoutPanelWidth: 460px;
 		top: 0;
 		z-index: 1100;
 
-		@include respond-to(phone) {
+		@include respond-to(phone, tablet) {
 			margin: 0 -20px;
 			position: static;
 			width: auto;

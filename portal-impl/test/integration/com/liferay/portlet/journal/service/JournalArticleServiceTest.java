@@ -99,25 +99,25 @@ public class JournalArticleServiceTest {
 	}
 
 	@Test(expected = StorageFieldRequiredException.class)
-	public void testAddArticleRequiredHtmlField_EmptyField() throws Exception {
+	public void testAddArticleWithEmptyRequiredHTMLField() throws Exception {
 		Map<String, String> requiredFields = new HashMap<String, String>();
 
 		requiredFields.put("HTML2030", "");
 
 		testAddArticleRequiredFields(
-			"test-ddm-structure-content-html-required.xml",
-			"test-journal-content-html-required.xml", requiredFields);
+			"test-ddm-structure-html-required-field.xml",
+			"test-journal-content-html-required-field.xml", requiredFields);
 	}
 
 	@Test
-	public void testAddArticleRequiredHtmlField_FilledField() throws Exception {
+	public void testAddArticleWithNotEmptyRequiredHTMLField() throws Exception {
 		Map<String, String> requiredFields = new HashMap<String, String>();
 
 		requiredFields.put("HTML2030", "<p>Hello World!</p>");
 
 		testAddArticleRequiredFields(
-			"test-ddm-structure-content-html-required.xml",
-			"test-journal-content-html-required.xml", requiredFields);
+			"test-ddm-structure-html-required-field.xml",
+			"test-journal-content-html-required-field.xml", requiredFields);
 	}
 
 	@Test
@@ -510,11 +510,11 @@ public class JournalArticleServiceTest {
 	}
 
 	protected void testAddArticleRequiredFields(
-			String ddmStructureContent, String journalArticleContent,
+			String ddmStructureXSD, String journalArticleContent,
 			Map<String, String> requiredFields)
 		throws Exception {
 
-		String xsd = readText(ddmStructureContent);
+		String xsd = readText(ddmStructureXSD);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), xsd);

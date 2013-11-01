@@ -1383,7 +1383,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String strippedQuotesLine = stripQuotes(
 					trimmedLine, CharPool.QUOTE);
 
-				for (int x = -1;;) {
+				for (int x = 0;;) {
 					x = strippedQuotesLine.indexOf(StringPool.EQUAL, x + 1);
 
 					if (x == -1) {

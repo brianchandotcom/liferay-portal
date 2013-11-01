@@ -63,38 +63,24 @@ public class DLDirectoryNameAndFileNameTest {
 		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
-	@Test
+	@Test(expected = FileNameException.class)
 	public void testAddFileEntry() throws Exception {
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
-		try {
-			DLAppTestUtil.addFileEntry(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				true, name);
-
-			Assert.fail(name + " is an invalid name");
-		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof FileNameException);
-		}
+		DLAppTestUtil.addFileEntry(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			true, name);
 	}
 
-	@Test
+	@Test(expected = FolderNameException.class)
 	public void testAddFolder() throws Exception {
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
-		try {
-			DLAppTestUtil.addFolder(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				name);
-
-			Assert.fail(name + " is an invalid name");
-		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof FolderNameException);
-		}
+		DLAppTestUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			name);
 	}
 
 	@Test
@@ -178,7 +164,7 @@ public class DLDirectoryNameAndFileNameTest {
 		}
 	}
 
-	@Test
+	@Test(expected = FileNameException.class)
 	public void testUpdateFileEntry() throws Exception {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -187,18 +173,11 @@ public class DLDirectoryNameAndFileNameTest {
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
-		try {
-			DLAppTestUtil.updateFileEntry(
-				_group.getGroupId(), fileEntry.getFileEntryId(), name, name);
-
-			Assert.fail(name + " is an invalid name");
-		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof FileNameException);
-		}
+		DLAppTestUtil.updateFileEntry(
+			_group.getGroupId(), fileEntry.getFileEntryId(), name, name);
 	}
 
-	@Test
+	@Test(expected = FolderNameException.class)
 	public void testUpdateFolder() throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -207,16 +186,9 @@ public class DLDirectoryNameAndFileNameTest {
 		String name =
 			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
-		try {
-			DLAppServiceUtil.updateFolder(
-				folder.getFolderId(), name, StringPool.BLANK,
-				ServiceTestUtil.getServiceContext(_group.getGroupId()));
-
-			Assert.fail(name + " is an invalid name");
-		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof FolderNameException);
-		}
+		DLAppServiceUtil.updateFolder(
+			folder.getFolderId(), name, StringPool.BLANK,
+			ServiceTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	private static Group _group;

@@ -114,6 +114,10 @@ public class InitUtil {
 
 		SanitizerLogWrapper.init();
 
+		// Java properties
+
+		JavaDetector.isJDK5();
+
 		// Security manager
 
 		SecurityManagerUtil.init();
@@ -145,10 +149,6 @@ public class InitUtil {
 		// DB factory
 
 		DBFactoryUtil.setDBFactory(DoPrivilegedUtil.wrap(new DBFactoryImpl()));
-
-		// Java properties
-
-		JavaDetector.isJDK5();
 
 		// ROME
 

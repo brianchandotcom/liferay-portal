@@ -273,13 +273,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
 
-		String actualURL = PortalUtil.getActualURL(
-			group.getGroupId(), _private, mainPath, friendlyURL, params,
-			requestContext);
-
 		if (Validator.isNotNull(friendlyURL)) {
-			Locale locale = PortalUtil.getLocale(request);
-
 			LayoutFriendlyURLComposite layoutFriendlyURLComposite =
 				PortalUtil.getLayoutFriendlyURLComposite(
 					group.getGroupId(), _private, friendlyURL, params,
@@ -296,7 +290,9 @@ public class FriendlyURLServlet extends HttpServlet {
 					friendlyURL = friendlyURL.substring(0, pos);
 				}
 
-				if (!friendlyURL.equals(layout.getFriendlyURL(locale))) {
+				Locale locale = PortalUtil.getLocale(request);
+
+				if (!friendlyURL.startsWith(layout.getFriendlyURL(locale))) {
 					setAlternativeLayoutFriendlyURL(
 						request, layout, friendlyURL);
 
@@ -307,6 +303,10 @@ public class FriendlyURLServlet extends HttpServlet {
 				}
 			}
 		}
+
+		String actualURL = PortalUtil.getActualURL(
+			group.getGroupId(), _private, mainPath, friendlyURL, params,
+			requestContext);
 
 		return new Object[] {actualURL, Boolean.FALSE};
 	}

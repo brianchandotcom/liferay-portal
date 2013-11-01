@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_WORKFLOW_STATUS</td>
+	<td>//h3[contains(.,'Pending Approval')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_DRAFT_STATUS</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'draft')]/div/h3</td>
 	<td></td>

@@ -19,7 +19,19 @@
 		<var name="key_commentBody" value="${commentBody}" />
 
 		<execute action="PGPagecomments#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
-		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_WORKFLOW_STATUS" value1="Pending (Review)" />
+
+		<execute action="PGPagecomments#assertElementPresent" locator-key1="COMMENT_WORKFLOW_STATUS" />
+
+		<if>
+			<condition action="PGPagecomments#isTextEqual" locator-key1="COMMENT_WORKFLOW_STATUS" value1="Pending (Review)" />
+			<then>
+				<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_WORKFLOW_STATUS" value1="Pending (Review)" />
+			</then>
+			<else>
+				<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_WORKFLOW_STATUS" value1="Pending (Created)" />
+			</else>
+		</if>
+
 		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_BODY" value1="${commentBody}" />
 		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_USERNAME" value1="${commentUsername}" />
 	</command>

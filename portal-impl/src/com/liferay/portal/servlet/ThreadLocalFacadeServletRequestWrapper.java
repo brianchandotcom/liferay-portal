@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Closeable;
 
@@ -23,7 +24,9 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.locks.Lock;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
 
@@ -73,7 +76,21 @@ public class ThreadLocalFacadeServletRequestWrapper
 	public Enumeration<String> getAttributeNames() {
 		ServletRequest servletRequest = getRequest();
 
-		return servletRequest.getAttributeNames();
+		Lock lock = (Lock)servletRequest.getAttribute(
+			WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
+
+		if (lock != null) {
+			lock.lock();
+		}
+
+		try {
+			return servletRequest.getAttributeNames();
+		}
+		finally {
+			if (lock != null) {
+				lock.unlock();
+			}
+		}
 	}
 
 	@Override
@@ -84,6 +101,13 @@ public class ThreadLocalFacadeServletRequestWrapper
 	@Override
 	public ServletRequest getRequest() {
 		return _nextServletRequestThreadLocal.get();
+	}
+
+	@Override
+	public RequestDispatcher getRequestDispatcher(String uri) {
+		ServletRequest servletRequest = getRequest();
+
+		return servletRequest.getRequestDispatcher(uri);
 	}
 
 	@Override

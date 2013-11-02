@@ -6,10 +6,17 @@
 			<h2>${seleniumBuilderContext.getTestCaseClassName(testCaseName)}</h2>
 		</div>
 
-		<div id="actionCommandLog">
+		<form>
+			<input id="actionLog" type="radio" name="log" onchange="radioCheck()" checked>
+				<label for="actionLog">Action Command Log</label>
+			<input id="seleniumLog" type="radio" name="log" onchange="radioCheck()">
+				<label for="seleniumLog">Selenium Command Log</label>
+		</form>
+
+		<div id="actionCommandLog" style="display:block">
 		</div>
 
-		<div id="seleniumCommandLog">
+		<div id="seleniumCommandLog" style="display:none">
 		</div>
 
 		<div id="errorLog">

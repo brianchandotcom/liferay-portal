@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -144,9 +145,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				String structureKey = rs.getString("structureKey");
 				String xsd = rs.getString("xsd");
 
-				updateStructure(
-					structureId, StringUtil.toUpperCase(structureKey.trim()),
-					updateXSD(xsd));
+				if (Validator.isNull(structureKey)) {
+					structureKey = String.valueOf(System.currentTimeMillis());
+				}
+				else {
+					structureKey = StringUtil.toUpperCase(structureKey.trim());
+				}
+
+				updateStructure(structureId, structureKey, updateXSD(xsd));
 			}
 		}
 		finally {
@@ -199,9 +205,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				String templateKey = rs.getString("templateKey");
 				String script = rs.getString("script");
 
-				updateTemplate(
-					templateId, StringUtil.toUpperCase(templateKey.trim()),
-					updateXSD(script));
+				if (Validator.isNull(templateKey)) {
+					templateKey = String.valueOf(System.currentTimeMillis());
+				}
+				else {
+					templateKey = StringUtil.toUpperCase(templateKey.trim());
+				}
+
+				updateTemplate(templateId, templateKey, updateXSD(script));
 			}
 		}
 		finally {

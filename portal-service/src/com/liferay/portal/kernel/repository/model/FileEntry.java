@@ -116,6 +116,9 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException;
 
+	public FileVersion getLatestFileVersion(boolean trusted)
+		throws PortalException, SystemException;
+
 	public Lock getLock();
 
 	public String getMimeType();

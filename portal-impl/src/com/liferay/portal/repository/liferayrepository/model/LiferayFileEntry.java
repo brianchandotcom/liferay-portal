@@ -235,7 +235,15 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException {
 
-		return new LiferayFileVersion(_dlFileEntry.getLatestFileVersion(false));
+		return getLatestFileVersion(false);
+	}
+
+	@Override
+	public FileVersion getLatestFileVersion(boolean trusted)
+		throws PortalException, SystemException {
+
+		return new LiferayFileVersion(
+			_dlFileEntry.getLatestFileVersion(trusted));
 	}
 
 	@Override

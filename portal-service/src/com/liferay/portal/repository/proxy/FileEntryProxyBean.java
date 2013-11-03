@@ -189,6 +189,15 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public FileVersion getLatestFileVersion(boolean trusted)
+		throws PortalException, SystemException {
+
+		FileVersion fileVersion = _fileEntry.getLatestFileVersion(trusted);
+
+		return newFileVersionProxyBean(fileVersion);
+	}
+
+	@Override
 	public Lock getLock() {
 		Lock lock = _fileEntry.getLock();
 

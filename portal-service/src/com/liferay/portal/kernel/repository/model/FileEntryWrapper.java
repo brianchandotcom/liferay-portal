@@ -169,6 +169,13 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public FileVersion getLatestFileVersion(boolean trusted)
+		throws PortalException, SystemException {
+
+		return _fileEntry.getLatestFileVersion(trusted);
+	}
+
+	@Override
 	public Lock getLock() {
 		return _fileEntry.getLock();
 	}

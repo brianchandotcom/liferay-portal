@@ -1057,7 +1057,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 
-		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
+		DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion(true));
 
 		dlAppHelperLocalService.updateFileEntry(
 			userId, fileEntry, null, fileEntry.getFileVersion(),
@@ -1152,7 +1152,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			changeLog, majorVersion, is, size, serviceContext);
 
 		if (is != null) {
-			DLProcessorRegistryUtil.cleanUp(fileEntry.getLatestFileVersion());
+			DLProcessorRegistryUtil.cleanUp(
+				fileEntry.getLatestFileVersion(true));
 
 			oldFileVersion = null;
 		}

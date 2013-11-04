@@ -1,15 +1,16 @@
 <head>
 	<script type='text/javascript'>
 		function radioCheck () {
-			if (document.getElementById("actionLog").checked){
+			if (document.getElementById("actionCommandLogButton").checked){
 				document.getElementById("actionCommandLog").style.display = "block";
 				document.getElementById("seleniumCommandLog").style.display = "none";
 			}
-			else if (document.getElementById("seleniumLog").checked){
+			else if (document.getElementById("seleniumCommandLogButton").checked){
 				document.getElementById("actionCommandLog").style.display = "none";
 				document.getElementById("seleniumCommandLog").style.display = "block";
 			}
 		}
+
 		function toggle(event) {
 			var node;
 
@@ -51,17 +52,17 @@
 		}
 
 		input[type=radio] {
-			display:none; 
+			display: none;
 		}
 
 		input[type=radio] + label {
-			display:inline-block;
-			padding: 4px 12px;
 			background-color: #e7e7e7;
+			display: inline-block;
+			padding: 4px 12px;
 		}
 
-		input[type=radio]:checked + label { 
-			background-color:#d0d0d0;
+		input[type=radio]:checked + label {
+			background-color: #d0d0d0;
 		}
 
 		li {

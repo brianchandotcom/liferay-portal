@@ -7,16 +7,19 @@
 		</div>
 
 		<form>
-			<input id="actionLog" type="radio" name="log" onchange="radioCheck()" checked>
-				<label for="actionLog">Action Command Log</label>
-			<input id="seleniumLog" type="radio" name="log" onchange="radioCheck()">
-				<label for="seleniumLog">Selenium Command Log</label>
+			<input checked="checked" id="actionCommandLogButton" name="log" onchange="radioCheck()" type="radio">
+				<label for="actionCommandLogButton">Action Command Log</label>
+			</input>
+
+			<input id="seleniumCommandLogButton" name="log" onchange="radioCheck()" type="radio">
+				<label for="seleniumCommandLogButton">Selenium Command Log</label>
+			</input>
 		</form>
 
-		<div id="actionCommandLog" style="display:block">
+		<div id="actionCommandLog" style="display: block;">
 		</div>
 
-		<div id="seleniumCommandLog" style="display:none">
+		<div id="seleniumCommandLog" style="display: none;">
 		</div>
 
 		<div id="errorLog">

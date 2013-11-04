@@ -66,9 +66,34 @@ AUI.add(
 							}
 						);
 
-						container.delegate('key', instance._childrenEventHandler, instance.get(STR_KEYS).collapse, instance.get(STR_CHILDREN), instance);
+						instance._eventHandles = [
+							container.delegate('key', instance._childrenEventHandler, instance.get(STR_KEYS).collapse, instance.get(STR_CHILDREN), instance),
+							host.on('toggler:expandedChange', instance._onExpandedChange, instance)
+						];
 
 						instance._focusManager = container.focusManager;
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
+					_onExpandedChange: function(event) {
+						var instance = this;
+
+						if (event.silent) {
+							var host = instance.get(STR_HOST);
+
+							var container = host.get(STR_CONTAINER);
+
+							var headerClass = host.get(STR_HEADER) + ':visible';
+
+							instance._focusManager.refresh();
+
+							instance._focusManager.set('activeDescendant', container.one(headerClass));
+						}
 					},
 
 					_childrenEventHandler: function(event) {
@@ -98,7 +123,7 @@ AUI.add(
 					_getDescendants: function() {
 						var instance = this;
 
-						var result = instance.get(STR_HOST).get(STR_HEADER);
+						var result = instance.get(STR_HOST).get(STR_HEADER) + ':visible';
 
 						var children = instance.get(STR_CHILDREN);
 

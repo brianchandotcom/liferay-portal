@@ -5,6 +5,8 @@ AUI.add(
 
 		var AddSearch = Dockbar.AddSearch;
 
+		var CSS_LFR_CONTENT_ITEM_SELECTOR = '.lfr-content-item';
+
 		var CSS_LFR_CATEGORY_CONTAINER = 'lfr-add-content';
 
 		var CSS_LFR_CATEGORY_CONTAINER_SELECTOR = '.' + CSS_LFR_CATEGORY_CONTAINER;
@@ -56,6 +58,22 @@ AUI.add(
 				}
 			},
 
+			_setItemsVisibility: function(visible) {
+				var instance = this;
+
+				var visibleFn = visible ? 'show' : 'hide';
+
+				instance.get(STR_NODES).each(
+					function(item, index, collection) {
+						var contentItem = item.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR);
+
+						if (contentItem) {
+							contentItem[visibleFn].call(contentItem);
+						}
+					}
+				);
+			},
+
 			_updateList: function(event) {
 				var instance = this;
 
@@ -80,7 +98,7 @@ AUI.add(
 				if (!query) {
 					instance._categoryContainers.show();
 
-					instance.get(STR_NODES).show();
+					instance._setItemsVisibility(true);
 
 					if (instance._collapsedCategories) {
 						A.each(
@@ -105,19 +123,19 @@ AUI.add(
 					if (query === '*') {
 						instance._categoryContainers.show();
 
-						instance.get(STR_NODES).show();
+						instance._setItemsVisibility(true);
 					}
 					else {
 						instance._categoryContainers.hide();
 
-						instance.get(STR_NODES).hide();
+						instance._setItemsVisibility(false);
 
 						A.each(
 							event.results,
 							function(item, index, collection) {
 								var node = item.raw.node;
 
-								node.show();
+								node.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR).show();
 
 								var contentParent = node.ancestorsByClassName(CSS_LFR_CATEGORY_CONTAINER);
 

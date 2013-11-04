@@ -92,6 +92,13 @@ public interface DDMDisplay {
 	public Set<String> getViewTemplatesExcludedColumnNames();
 
 	public String getViewTemplatesTitle(
+		DDMStructure structure, boolean controlPanel, boolean search,
+		Locale locale);
+
+	/**
+	 * @deprecated As of 6.2.1
+	 */
+	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean controlPanel, Locale locale);
 
 	public String getViewTemplatesTitle(DDMStructure structure, Locale locale);

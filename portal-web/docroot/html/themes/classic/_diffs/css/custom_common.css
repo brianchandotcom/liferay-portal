@@ -139,8 +139,42 @@
 		}
 	}
 
-	.input-append {
+	.form-search .input-append {
 		padding-right: 12px;
+
+		.btn .icon-search {
+			display: none;
+		}
+
+		@include respond-to(phone, tablet) {
+			.search-query {
+				height: 32px;
+			}
+
+			.btn {
+				padding: 5px 19px;
+			}
+
+			@include respond-to(phone) {
+				.search-query {
+					width: 74%;
+				}
+
+				.btn {
+					display: inline-block;
+					margin-top: 0;
+					width: auto;
+
+					.btn-label {
+						display: none;
+					}
+
+					.icon-search {
+						display: inline;
+					}
+				}
+			}
+		}
 	}
 
 	.navbar .nav > li > a {

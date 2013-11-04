@@ -53,6 +53,11 @@ AUI.add(
 									}
 								}
 							);
+
+							instance._eventHandles = [
+								Liferay.on('dockbarHidePanel', instance._onClose, instance),
+								Liferay.on('dockbarShowPanel', instance._onClose, instance)
+							];
 						}
 					},
 
@@ -139,6 +144,24 @@ AUI.add(
 								data: data
 							}
 						);
+					},
+
+					_onClose: function(event) {
+						var instance = this;
+
+						var columns = A.all('.portlet-column');
+
+						columns.each(
+							function(item, index, collection) {
+								var overlayMask = item.getData('customizationControls');
+
+								if (overlayMask) {
+									overlayMask.hide();
+								}
+							}
+						);
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					_onManageCustomization: function(event) {

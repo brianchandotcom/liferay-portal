@@ -2426,6 +2426,7 @@ public class PortalImpl implements Portal {
 
 		String i18nLanguageId = themeDisplay.getI18nLanguageId();
 		String i18nPath = themeDisplay.getI18nPath();
+		Locale originalLocale = themeDisplay.getLocale();
 
 		try {
 			setThemeDisplayI18n(themeDisplay, locale);
@@ -2433,7 +2434,8 @@ public class PortalImpl implements Portal {
 			return getGroupFriendlyURL(group, privateLayoutSet, themeDisplay);
 		}
 		finally {
-			resetThemeDisplayI18n(themeDisplay, i18nLanguageId, i18nPath);
+			resetThemeDisplayI18n(
+				themeDisplay, i18nLanguageId, i18nPath, originalLocale);
 		}
 	}
 
@@ -2845,6 +2847,7 @@ public class PortalImpl implements Portal {
 
 		String i18nLanguageId = themeDisplay.getI18nLanguageId();
 		String i18nPath = themeDisplay.getI18nPath();
+		Locale originalLocale = themeDisplay.getLocale();
 
 		try {
 			setThemeDisplayI18n(themeDisplay, locale);
@@ -2852,7 +2855,8 @@ public class PortalImpl implements Portal {
 			return getLayoutFriendlyURL(layout, themeDisplay);
 		}
 		finally {
-			resetThemeDisplayI18n(themeDisplay, i18nLanguageId, i18nPath);
+			resetThemeDisplayI18n(
+				themeDisplay, i18nLanguageId, i18nPath, originalLocale);
 		}
 	}
 
@@ -7620,10 +7624,12 @@ public class PortalImpl implements Portal {
 	}
 
 	protected void resetThemeDisplayI18n(
-		ThemeDisplay themeDisplay, String languageId, String path) {
+		ThemeDisplay themeDisplay, String languageId, String path,
+		Locale locale) {
 
 		themeDisplay.setI18nLanguageId(languageId);
 		themeDisplay.setI18nPath(path);
+		themeDisplay.setLocale(locale);
 	}
 
 	protected void setLocale(
@@ -7654,6 +7660,7 @@ public class PortalImpl implements Portal {
 
 		themeDisplay.setI18nLanguageId(i18nLanguageId);
 		themeDisplay.setI18nPath(i18nPath);
+		themeDisplay.setLocale(locale);
 	}
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";

@@ -91,9 +91,13 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+import com.liferay.portlet.dynamicdatamapping.StorageFieldNameException;
+import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.ArticleContentException;
 import com.liferay.portlet.journal.ArticleDisplayDateException;
@@ -323,7 +327,7 @@ public class JournalArticleLocalServiceImpl
 			user.getCompanyId(), groupId, classNameId, articleId, autoArticleId,
 			version, titleMap, content, type, ddmStructureKey, ddmTemplateKey,
 			expirationDate, smallImage, smallImageURL, smallImageFile,
-			smallImageBytes);
+			smallImageBytes, serviceContext);
 
 		if (autoArticleId) {
 			articleId = String.valueOf(counterLocalService.increment());
@@ -4751,7 +4755,7 @@ public class JournalArticleLocalServiceImpl
 			user.getCompanyId(), groupId, latestArticle.getClassNameId(),
 			titleMap, content, type, ddmStructureKey, ddmTemplateKey,
 			expirationDate, smallImage, smallImageURL, smallImageFile,
-			smallImageBytes);
+			smallImageBytes, serviceContext);
 
 		if (addNewVersion) {
 			long id = counterLocalService.increment();
@@ -6546,7 +6550,7 @@ public class JournalArticleLocalServiceImpl
 			Map<Locale, String> titleMap, String content, String type,
 			String ddmStructureKey, String ddmTemplateKey, Date expirationDate,
 			boolean smallImage, String smallImageURL, File smallImageFile,
-			byte[] smallImageBytes)
+			byte[] smallImageBytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
@@ -6585,6 +6589,8 @@ public class JournalArticleLocalServiceImpl
 				PortalUtil.getSiteGroupId(groupId),
 				PortalUtil.getClassNameId(JournalArticle.class),
 				ddmStructureKey, true);
+
+			validateDDMStructureFields(ddmStructure, serviceContext);
 
 			if (Validator.isNotNull(ddmTemplateKey)) {
 				DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
@@ -6654,7 +6660,8 @@ public class JournalArticleLocalServiceImpl
 			boolean autoArticleId, double version, Map<Locale, String> titleMap,
 			String content, String type, String ddmStructureKey,
 			String ddmTemplateKey, Date expirationDate, boolean smallImage,
-			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
+			String smallImageURL, File smallImageFile, byte[] smallImageBytes,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (!autoArticleId) {
@@ -6671,7 +6678,7 @@ public class JournalArticleLocalServiceImpl
 		validate(
 			companyId, groupId, classNameId, titleMap, content, type,
 			ddmStructureKey, ddmTemplateKey, expirationDate, smallImage,
-			smallImageURL, smallImageFile, smallImageBytes);
+			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
 	}
 
 	protected void validate(String articleId) throws PortalException {
@@ -6698,6 +6705,28 @@ public class JournalArticleLocalServiceImpl
 
 			throw new ArticleContentException(
 				"Unable to read content with an XML parser", de);
+		}
+	}
+
+	protected void validateDDMStructureFields(
+			DDMStructure ddmStructure, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Fields fields = DDMUtil.getFields(
+			ddmStructure.getStructureId(), serviceContext);
+
+		for (com.liferay.portlet.dynamicdatamapping.storage.Field field
+			: fields) {
+
+			if (!ddmStructure.hasField(field.getName())) {
+				throw new StorageFieldNameException();
+			}
+
+			if (ddmStructure.getFieldRequired(field.getName()) &&
+				Validator.isNull(field.getValue())) {
+
+				throw new StorageFieldRequiredException();
+			}
 		}
 	}
 

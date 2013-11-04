@@ -520,15 +520,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				recordVersion.getStatus(), serviceContext);
 		}
 
-		boolean keepRecordVersion = false;
-
-		if (!majorVersion) {
-			keepRecordVersion = isKeepRecordVersionLabel(
+		if (!majorVersion &&
+			isKeepRecordVersionLabel(
 				record.getRecordVersion(), recordVersion,
-				serviceContext.getWorkflowAction());
-		}
+				serviceContext.getWorkflowAction())) {
 
-		if (keepRecordVersion) {
 			ddlRecordVersionPersistence.remove(recordVersion);
 
 			return record;
@@ -739,7 +735,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		Map<String, Serializable> latestAttributes =
 			latestExpandoBridge.getAttributes();
 
-		if (!Validator.equals(lastAttributes, latestAttributes)) {
+		if (lastAttributes.equals(latestAttributes)) {
 			return false;
 		}
 

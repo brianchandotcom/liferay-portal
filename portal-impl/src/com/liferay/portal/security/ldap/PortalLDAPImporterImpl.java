@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.ldap.LDAPUtil;
@@ -61,9 +62,7 @@ import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
 
 import java.io.Serializable;
-
 import java.text.ParseException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,32 +107,29 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			return;
 		}
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
-
-		if (LockLocalServiceUtil.hasLock(
-				defaultUserId, PortalLDAPImporterUtil.class.getName(),
-				companyId)) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skipping LDAP import for company " + companyId +
-						"because another LDAP import is in process");
-			}
-
-			return;
-		}
-
-		LockLocalServiceUtil.lock(
-			defaultUserId, PortalLDAPImporterUtil.class.getName(), companyId,
-			PortalLDAPImporterImpl.class.getName(), false,
-			PropsValues.LDAP_IMPORT_LOCK_EXPIRATION_TIME);
-
-		long threadLocalCompanyId = CompanyThreadLocal.getCompanyId();
-
 		try {
-			if (threadLocalCompanyId == CompanyConstants.SYSTEM) {
-				CompanyThreadLocal.setCompanyId(companyId);
+			ShardUtil.pushCompanyService(companyId);
+
+			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				companyId);
+
+			if (LockLocalServiceUtil.hasLock(
+					defaultUserId, PortalLDAPImporterUtil.class.getName(),
+					companyId)) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping LDAP import for company " + companyId +
+							"because another LDAP import is in process");
+				}
+
+				return;
 			}
+
+			LockLocalServiceUtil.lock(
+				defaultUserId, PortalLDAPImporterUtil.class.getName(),
+				companyId, PortalLDAPImporterImpl.class.getName(), false,
+				PropsValues.LDAP_IMPORT_LOCK_EXPIRATION_TIME);
 
 			long[] ldapServerIds = StringUtil.split(
 				PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
@@ -160,7 +156,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			LockLocalServiceUtil.unlock(
 				PortalLDAPImporterUtil.class.getName(), companyId);
 
-			CompanyThreadLocal.setCompanyId(threadLocalCompanyId);
+			ShardUtil.popCompanyService();
 		}
 	}
 

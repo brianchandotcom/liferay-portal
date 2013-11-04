@@ -370,7 +370,7 @@ public class FileEntryStagedModelDataHandler
 			}
 			else {
 				FileVersion latestExistingFileVersion =
-					existingFileEntry.getLatestFileVersion();
+					existingFileEntry.getLatestFileVersion(true);
 
 				boolean indexEnabled = serviceContext.isIndexingEnabled();
 

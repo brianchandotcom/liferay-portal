@@ -217,7 +217,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 					dlFileEntry.getLatestFileVersion(trusted));
 			}
 			else {
-				latestFileVersion = fileEntry.getLatestFileVersion();
+				latestFileVersion = fileEntry.getLatestFileVersion(trusted);
 			}
 
 			return latestFileVersion;

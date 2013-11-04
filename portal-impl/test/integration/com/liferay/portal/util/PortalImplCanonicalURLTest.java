@@ -86,19 +86,56 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testCustomPortalLocaleCanonicalURL() throws Exception {
+	public void testCustomPortalLocaleCanonicalURLForceLayoutFriendlyURL()
+		throws Exception {
+
 		testCanonicalURL(
 			null, "localhost", _layout1, null, null, "/es", "/home1", true);
 	}
 
 	@Test
-	public void testDefaultPortalLocaleCanonicalURL() throws Exception {
+	public void testCustomPortalLocaleCanonicalURLFirstLayout()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout1, null, null, "/es", StringPool.BLANK,
+			false);
+	}
+
+	@Test
+	public void testCustomPortalLocaleCanonicalURLSecondLayout() throws Exception {
+		testCanonicalURL(
+			null, "localhost", _layout2, null, null, "/es", "/home2", false);
+	}
+
+	@Test
+	public void testDefaultPortalLocaleCanonicalURLForceLayoutFriendlyURL()
+		throws Exception {
+
 		testCanonicalURL(
 			null, "localhost", _layout1, null, null, "/en", "/home1", true);
 	}
 
 	@Test
-	public void testLocalizedSiteCustomSiteLocaleCanonicalURL()
+	public void testDefaultPortalLocaleCanonicalURLFirstLayout()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout1, null, null, "/en", StringPool.BLANK,
+			false);
+	}
+
+	@Test
+	public void testDefaultPortalLocaleCanonicalURLSecondLayout()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout2, null, null, "/en", "/home2",
+			false);
+	}
+
+	@Test
+	public void testLocalizedSiteCustomSiteLocaleCanonicalURLForceLayoutFriendlyURL()
 		throws Exception {
 
 		testCanonicalURL(
@@ -108,7 +145,27 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testLocalizedSiteDefaultSiteLocaleCanonicalURL()
+	public void testLocalizedSiteCustomSiteLocaleCanonicalURLFirstLayout()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout1, new Locale[] {
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			LocaleUtil.SPAIN, "/en", StringPool.BLANK, false);
+	}
+
+	@Test
+	public void testLocalizedSiteCustomSiteLocaleCanonicalURLSecondLayout()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout2, new Locale[] {
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			LocaleUtil.SPAIN, "/en", "/casa2", false);
+	}
+
+	@Test
+	public void testLocalizedSiteDefaultSiteLocaleCanonicalURLForceLayoutFriendlyURL()
 		throws Exception {
 
 		testCanonicalURL(
@@ -118,10 +175,44 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testNonLocalhostPortalDomain() throws Exception {
+	public void testLocalizedSiteDefaultSiteLocaleCanonicalURLFirstLayout()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout1, new Locale[] {
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			LocaleUtil.SPAIN, "/es", StringPool.BLANK, false);
+	}
+
+	@Test
+	public void testLocalizedSiteDefaultSiteLocaleCanonicalURLSecondLayout()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout2, new Locale[] {
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			LocaleUtil.SPAIN, "/es", "/casa2", false);
+	}
+
+	@Test
+	public void testNonLocalhostPortalDomainForceLayoutFriendlyURL() throws Exception {
 		testCanonicalURL(
 			"localhost", "liferay.com", _layout1, null, null, "/en", "/home1",
 			true);
+	}
+
+	@Test
+	public void testNonLocalhostPortalDomainFirstLayout() throws Exception {
+		testCanonicalURL(
+			"localhost", "liferay.com", _layout1, null, null, "/en",
+			StringPool.BLANK, false);
+	}
+
+	@Test
+	public void testNonLocalhostPortalDomainSecondLayout() throws Exception {
+		testCanonicalURL(
+			"localhost", "liferay.com", _layout2, null, null, "/en", "/home2",
+			false);
 	}
 
 	protected String generateURL(

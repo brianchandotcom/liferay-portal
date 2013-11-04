@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[@class='alert alert-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
@@ -128,7 +138,109 @@
 	<td></td>
 </tr>
 <!--IDENTIFICATION-->
+<tr>
+	<td>IDENTIFICATION_ADDRESSES</td>
+	<td>//a[@id='_125_addressesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_PHONE_NUMBERS</td>
+	<td>//a[@id='_125_phoneNumbersLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_ADDITIONAL_EMAIL_ADDRESSES</td>
+	<td>//a[@id='_125_additionalEmailAddressesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_WEBSITES</td>
+	<td>//a[@id='_125_websitesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTIFICATION_SERVICES</td>
+	<td>//a[@id='_125_servicesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADDRESSES-->
+<tr>
+	<td>ADDRESSES_STREET_FIELD_1</td>
+	<td>//input[@id='_125_addressStreet1_0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_STREET_FIELD_2</td>
+	<td>//input[@id='_125_addressStreet2_0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_STREET_FIELD_3</td>
+	<td>//input[@id='_125_addressStreet3_0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_POSTAL_CODE_FIELD</td>
+	<td>//input[@id='_125_addressZip0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_CITY_FIELD</td>
+	<td>//input[@id='_125_addressCity0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_TYPE_SELECT</td>
+	<td>//select[@id='_125_addressTypeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_COUNTRY_SELECT</td>
+	<td>//select[@id='_125_addressCountryId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_PRIMARY_RADIO</td>
+	<td>//input[@id='_125_addressPrimary0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_MAILING_CHECKBOX</td>
+	<td>//input[@id='_125_addressMailing0Checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_REGION_SELECT</td>
+	<td>//select[@id='_125_addressRegionId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MISCELLANEOUS-->
+<tr>
+	<td>MISCELLANEOUS_COMMENTS</td>
+	<td>//a[@id='_125_commentsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_FIELD</td>
+	<td>//textarea[@id='_125_comments']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

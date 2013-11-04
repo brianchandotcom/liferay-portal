@@ -86,14 +86,6 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testCustomPortalLocaleCanonicalURLForceLayoutFriendlyURL()
-		throws Exception {
-
-		testCanonicalURL(
-			null, "localhost", _layout1, null, null, "/es", "/home1", true);
-	}
-
-	@Test
 	public void testCustomPortalLocaleCanonicalURLFirstLayout()
 		throws Exception {
 
@@ -103,17 +95,17 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testCustomPortalLocaleCanonicalURLSecondLayout() throws Exception {
-		testCanonicalURL(
-			null, "localhost", _layout2, null, null, "/es", "/home2", false);
-	}
-
-	@Test
-	public void testDefaultPortalLocaleCanonicalURLForceLayoutFriendlyURL()
+	public void testCustomPortalLocaleCanonicalURLForceLayoutFriendlyURL()
 		throws Exception {
 
 		testCanonicalURL(
-			null, "localhost", _layout1, null, null, "/en", "/home1", true);
+			null, "localhost", _layout1, null, null, "/es", "/home1", true);
+	}
+
+	@Test
+	public void testCustomPortalLocaleCanonicalURLSecondLayout() throws Exception {
+		testCanonicalURL(
+			null, "localhost", _layout2, null, null, "/es", "/home2", false);
 	}
 
 	@Test
@@ -126,22 +118,19 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
+	public void testDefaultPortalLocaleCanonicalURLForceLayoutFriendlyURL()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout1, null, null, "/en", "/home1", true);
+	}
+
+	@Test
 	public void testDefaultPortalLocaleCanonicalURLSecondLayout()
 		throws Exception {
 
 		testCanonicalURL(
-			null, "localhost", _layout2, null, null, "/en", "/home2",
-			false);
-	}
-
-	@Test
-	public void testLocalizedSiteCustomSiteLocaleCanonicalURLForceLayoutFriendlyURL()
-		throws Exception {
-
-		testCanonicalURL(
-			null, "localhost", _layout1, new Locale[] {
-				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			LocaleUtil.SPAIN, "/en", "/casa1", true);
+			null, "localhost", _layout2, null, null, "/en", "/home2", false);
 	}
 
 	@Test
@@ -155,6 +144,16 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
+	public void testLocalizedSiteCustomSiteLocaleCanonicalURLForceLayoutFriendlyURL()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout1, new Locale[] {
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			LocaleUtil.SPAIN, "/en", "/casa1", true);
+	}
+
+	@Test
 	public void testLocalizedSiteCustomSiteLocaleCanonicalURLSecondLayout()
 		throws Exception {
 
@@ -162,16 +161,6 @@ public class PortalImplCanonicalURLTest {
 			null, "localhost", _layout2, new Locale[] {
 				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
 			LocaleUtil.SPAIN, "/en", "/casa2", false);
-	}
-
-	@Test
-	public void testLocalizedSiteDefaultSiteLocaleCanonicalURLForceLayoutFriendlyURL()
-		throws Exception {
-
-		testCanonicalURL(
-			null, "localhost", _layout1, new Locale[] {
-				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			LocaleUtil.SPAIN, "/es", "/casa1", true);
 	}
 
 	@Test
@@ -185,6 +174,16 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
+	public void testLocalizedSiteDefaultSiteLocaleCanonicalURLForceLayoutFriendlyURL()
+		throws Exception {
+
+		testCanonicalURL(
+			null, "localhost", _layout1, new Locale[] {
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
+			LocaleUtil.SPAIN, "/es", "/casa1", true);
+	}
+
+	@Test
 	public void testLocalizedSiteDefaultSiteLocaleCanonicalURLSecondLayout()
 		throws Exception {
 
@@ -195,17 +194,17 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	@Test
-	public void testNonLocalhostPortalDomainForceLayoutFriendlyURL() throws Exception {
-		testCanonicalURL(
-			"localhost", "liferay.com", _layout1, null, null, "/en", "/home1",
-			true);
-	}
-
-	@Test
 	public void testNonLocalhostPortalDomainFirstLayout() throws Exception {
 		testCanonicalURL(
 			"localhost", "liferay.com", _layout1, null, null, "/en",
 			StringPool.BLANK, false);
+	}
+
+	@Test
+	public void testNonLocalhostPortalDomainForceLayoutFriendlyURL() throws Exception {
+		testCanonicalURL(
+			"localhost", "liferay.com", _layout1, null, null, "/en", "/home1",
+			true);
 	}
 
 	@Test
@@ -291,7 +290,6 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	private Group _group = null;
-
 	private Layout _layout1 = null;
 	private Layout _layout2 = null;
 

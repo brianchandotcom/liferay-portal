@@ -127,7 +127,7 @@ public class ViewAction extends PortletAction {
 
 		if (PortalUtil.isGroupFriendlyURL(
 				layoutURL, group.getFriendlyURL(),
-				layout.getFriendlyURL(themeDisplay.getLocale()))) {
+				layout.getFriendlyURL(locale))) {
 
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 				redirect = layoutURL;
@@ -140,7 +140,7 @@ public class ViewAction extends PortletAction {
 		else {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 				if (themeDisplay.isI18n()) {
-					redirect = layout.getFriendlyURL(themeDisplay.getLocale());
+					redirect = layout.getFriendlyURL(locale);
 				}
 				else {
 					redirect = PortalUtil.getLayoutURL(layout, themeDisplay);

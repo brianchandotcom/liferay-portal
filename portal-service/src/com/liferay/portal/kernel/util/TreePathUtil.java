@@ -105,7 +105,7 @@ public class TreePathUtil {
 		sb.append(" set ");
 
 		if (rootParent) {
-			sb.append("treePath = \"/0/\" ");
+			sb.append("treePath = '/0/' ");
 		}
 		else {
 			sb.append("treePath = (select ");

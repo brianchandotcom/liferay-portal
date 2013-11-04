@@ -93,6 +93,22 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
+		long companyId, long userId, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _themeLocalService.getControlPanelThemes(companyId, userId,
+			wapTheme);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Theme> getPageThemes(
+		long companyId, long groupId, long userId, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _themeLocalService.getPageThemes(companyId, groupId, userId,
+			wapTheme);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.Theme> getWARThemes() {
 		return _themeLocalService.getWARThemes();
 	}

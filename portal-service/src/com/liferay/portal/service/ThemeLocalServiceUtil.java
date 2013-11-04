@@ -94,6 +94,18 @@ public class ThemeLocalServiceUtil {
 		return getService().getThemes(companyId, groupId, userId, wapTheme);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
+		long companyId, long userId, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getControlPanelThemes(companyId, userId, wapTheme);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Theme> getPageThemes(
+		long companyId, long groupId, long userId, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPageThemes(companyId, groupId, userId, wapTheme);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Theme> getWARThemes() {
 		return getService().getWARThemes();
 	}

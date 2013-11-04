@@ -88,13 +88,13 @@ public class PortalImplCanonicalURLTest {
 	@Test
 	public void testCustomPortalLocaleCanonicalURL() throws Exception {
 		testCanonicalURL(
-			null, "localhost", _layout1, null, null, "/es", "/home1");
+			null, "localhost", _layout1, null, null, "/es", "/home1", true);
 	}
 
 	@Test
 	public void testDefaultPortalLocaleCanonicalURL() throws Exception {
 		testCanonicalURL(
-			null, "localhost", _layout1, null, null, "/en", "/home1");
+			null, "localhost", _layout1, null, null, "/en", "/home1", true);
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class PortalImplCanonicalURLTest {
 		testCanonicalURL(
 			null, "localhost", _layout1, new Locale[] {
 				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			LocaleUtil.SPAIN, "/en", "/casa1");
+			LocaleUtil.SPAIN, "/en", "/casa1", true);
 	}
 
 	@Test
@@ -114,13 +114,14 @@ public class PortalImplCanonicalURLTest {
 		testCanonicalURL(
 			null, "localhost", _layout1, new Locale[] {
 				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			LocaleUtil.SPAIN, "/es", "/casa1");
+			LocaleUtil.SPAIN, "/es", "/casa1", true);
 	}
 
 	@Test
 	public void testNonLocalhostPortalDomain() throws Exception {
 		testCanonicalURL(
-			"localhost", "liferay.com", _layout1, null, null, "/en", "/home1");
+			"localhost", "liferay.com", _layout1, null, null, "/en", "/home1",
+			true);
 	}
 
 	protected String generateURL(
@@ -171,7 +172,8 @@ public class PortalImplCanonicalURLTest {
 	protected void testCanonicalURL(
 			String virtualHostname, String portalDomain, Layout layout,
 			Locale[] groupAvailableLocales, Locale groupDefaultLocale,
-			String i18nPath, String expectedFriendlyURL)
+			String i18nPath, String expectedFriendlyURL,
+			boolean forceLayoutFriendlyURL)
 		throws Exception {
 
 		_group = GroupTestUtil.updateDisplaySettings(
@@ -188,7 +190,7 @@ public class PortalImplCanonicalURLTest {
 		themeDisplay.setPortalURL("http://" + portalDomain + ":8080/");
 
 		String actualCanonicalURL = PortalUtil.getCanonicalURL(
-			completeURL, themeDisplay, layout, true);
+			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);
 
 		String expectedCanonicalURL = generateURL(
 			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),

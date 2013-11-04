@@ -132,7 +132,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		}
 
 		if (groupsHTML == '') {
-			groupsHTML = '<%= UnicodeLanguageUtil.get(pageContext, "all-sites") %>';
+			groupsHTML = '<liferay-ui:message key="all-sites" />';
 		}
 
 		nameEl.innerHTML = groupsHTML;
@@ -192,7 +192,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		var getNoResultsNode = function() {
 			if (!noResultsNode) {
-				noResultsNode = A.Node.create('<div class="alert"><%= LanguageUtil.get(pageContext, "there-are-no-results") %></div>');
+				noResultsNode = A.Node.create('<div class="alert"><liferay-ui:message key="there-are-no-results" /></div>');
 			}
 
 			return noResultsNode;
@@ -278,7 +278,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			notification = new Liferay.Notice(
 				{
 					closeText: false,
-					content: '<%= UnicodeLanguageUtil.get(pageContext, "sorry,-we-were-not-able-to-access-the-server") %>' + '<button type="button" class="close">&times;</button>',
+					content: '<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />' + '<button type="button" class="close">&times;</button>',
 					noticeClass: 'hide',
 					timeout: 10000,
 					toggleText: false,

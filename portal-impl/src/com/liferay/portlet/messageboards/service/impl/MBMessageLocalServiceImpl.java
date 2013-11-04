@@ -69,6 +69,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
+import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -292,11 +293,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			thread = mbThreadPersistence.fetchByPrimaryKey(threadId);
 		}
 
-		if ((thread == null) ||
+		if ((thread == null) &&
 			(parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
 
 			thread = mbThreadLocalService.addThread(
 				categoryId, message, serviceContext);
+		}
+		else if (thread == null) {
+			throw new NoSuchThreadException("No thread found: " + threadId);
 		}
 
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&

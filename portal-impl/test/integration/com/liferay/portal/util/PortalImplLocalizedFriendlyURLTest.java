@@ -443,7 +443,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 		mockHttpServletRequest.setRequestURI(
 			groupServletMapping + group.getFriendlyURL() + layoutFriendlyURL);
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(StringPool.SLASH);
 		sb.append(PortalUtil.getI18nPathLanguageId(locale, StringPool.BLANK));

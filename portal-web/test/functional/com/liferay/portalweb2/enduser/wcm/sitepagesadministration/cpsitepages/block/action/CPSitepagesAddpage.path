@@ -20,13 +20,23 @@
 </tr>
 <!--PAGE_TYPE-->
 <tr>
-	<td>PAGE_TYPE_TEMPLATE</td>
+	<td>PAGE_TYPE_TEMPLATE_LABEL</td>
+	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//label[contains(@for,'addLayoutSelectedPageTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_TEMPLATE_RADIO</td>
 	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//input[contains(@id,'addLayoutSelectedPageTemplate')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES</td>
-	<td>xpath=(//li[contains(@data-search,'${key_pageTemplateName}')]//input[contains(@name,'layoutPrototypeLinkEnabledCheckbox')])</td>
+	<td>PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES_LABEL</td>
+	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//label[contains(@for,'addLayoutLayoutPrototypeLinkEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX</td>
+	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//input[contains(@name,'layoutPrototypeLinkEnabledCheckbox')]</td>
 	<td></td>
 </tr>
 </tbody>

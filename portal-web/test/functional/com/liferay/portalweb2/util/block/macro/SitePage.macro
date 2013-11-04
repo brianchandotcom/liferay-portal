@@ -39,7 +39,6 @@
 	</command>
 
 	<command name="addCP">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 		<var name="key_siteName" value="${siteName}" />
 
 		<if>
@@ -73,14 +72,18 @@
 		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_PAGE" />
 		<execute action="CPSitepages#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
-				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_TEMPLATE" />
-				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES" />
+				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_TEMPLATE_LABEL" value1="${pageTemplateName}" />
+				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_TEMPLATE_RADIO" />
+				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+				<execute action="CPSitepagesAddpage#check" locator-key1="PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
 			</then>
 		</if>
-		
+
 		<execute action="CPSitepages#click" locator-key1="ADD_PAGE_BUTTON" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -125,6 +128,13 @@
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${siteChildPageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
+	</command>
+
+	<command name="viewPageTemplatePG">
+		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+		<execute action="Dockbar#assertTextEquals" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
+		<execute action="Dockbar#assertChecked" locator-key1="EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
 	</command>
 
 	<command name="viewPG">

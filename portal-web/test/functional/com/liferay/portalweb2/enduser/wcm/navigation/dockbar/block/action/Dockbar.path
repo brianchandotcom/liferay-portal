@@ -19,7 +19,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MESSAGE_INFO</td>
+	<td>PAGE_INFO_MESSAGE</td>
 	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
 	<td></td>
 </tr>
@@ -214,10 +214,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--EDIT_PAGE_DETAILS-->
+<!--EDIT_DETAILS-->
 <tr>
-	<td>EDIT_PAGE_DETAILS_AUTOMATICALLY_APPLY_CHANGES</td>
-	<td>xpath=(//input[contains(@id,'layoutPrototypeLinkEnabledCheckbox')])</td>
+	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabledCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabledCheckbox')]/input[contains(@id,'layoutPrototypeLinkEnabledCheckbox')]</td>
 	<td></td>
 </tr>
 <tr>

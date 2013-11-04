@@ -23,19 +23,6 @@
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
-	<command name="addPageTemplateCP">
-		<execute action="Dockbar#assertTextEquals" locator-key1="MESSAGE_INFO" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
-		<execute action="Dockbar#click" locator-key1="EDIT" />
-		<execute action="Dockbar#click" locator-key1="EDIT_PAGE_DETAILS_AUTOMATICALLY_APPLY_CHANGES" />
-		<execute action="Dockbar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute macro="Page#openURL">
-			<var name="pageType" value="Site" />
-		</execute>
-		
-		<execute action="Dockbar#assertTextNotPresent" locator-key1="MESSAGE_INFO" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
-	</command>
-
 	<command name="editCP">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 

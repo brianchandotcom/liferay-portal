@@ -496,8 +496,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 							displayStyle);
 
 					boolean preloaded = false;
-					String templateKey = null;
 					long referenceClassNameId = 0;
+					String templateKey = null;
 
 					for (Element referenceElement : referenceElements) {
 						String className = referenceElement.attributeValue(
@@ -512,11 +512,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 						preloaded = GetterUtil.getBoolean(
 							referenceElement.attributeValue("preloaded"));
-						templateKey = referenceElement.attributeValue(
-							"template-key");
 						referenceClassNameId = PortalUtil.getClassNameId(
 							referenceElement.attributeValue(
 								"referenced-class-name"));
+						templateKey = referenceElement.attributeValue(
+							"template-key");
 
 						break;
 					}

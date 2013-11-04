@@ -89,6 +89,74 @@
 		</execute>
 	</command>
 
+	<command name="AddOrganizationComment" priority="3">
+		<var name="orgComment" value="This is a test comment!" />
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCommentCP">
+			<var name="orgComment" value="${orgComment}" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewCommentCP">
+			<var name="orgComment" value="${orgComment}" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+	</command>
+
+	<command name="AddOrganizationNameDuplicate" priority="3">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="organizationName" value="Duplicate" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+	</command>
+
 	<command name="AddOrganizations" priority="5">
 		<var name="orgName1" value="Organization Name 1" />
 		<var name="orgName2" value="Organization Name 2" />
@@ -541,6 +609,121 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
+	<command name="AdvancedSearchOrganizationAddress" priority="3">
+		<var name="orgAddressCity" value="Diamond Bar" />
+		<var name="orgAddressCountry" value="United States" />
+		<var name="orgAddressPostal" value="41111" />
+		<var name="orgAddressRegion" value="California" />
+		<var name="orgAddressStreet" value="12345 Organization Name St" />
+		<var name="orgAddressType" value="Billing" />
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addAddressCP">
+			<var name="orgAddressCity" value="${orgAddressCity}" />
+			<var name="orgAddressCountry" value="${orgAddressCountry}" />
+			<var name="orgAddressPostal" value="${orgAddressPostal}" />
+			<var name="orgAddressRegion" value="${orgAddressRegion}" />
+			<var name="orgAddressStreet" value="${orgAddressStreet}" />
+			<var name="orgAddressType" value="${orgAddressType}" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewAddressCP">
+			<var name="orgAddressCity" value="${orgAddressCity}" />
+			<var name="orgAddressCountry" value="${orgAddressCountry}" />
+			<var name="orgAddressPostal" value="${orgAddressPostal}" />
+			<var name="orgAddressRegion" value="${orgAddressRegion}" />
+			<var name="orgAddressStreet" value="${orgAddressStreet}" />
+			<var name="orgAddressType" value="${orgAddressType}" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#advancedSearchCP">
+			<var name="orgAddressCity" value="${orgAddressCity}" />
+			<var name="orgAddressCountry" value="${orgAddressCountry}" />
+			<var name="orgAddressRegion" value="${orgAddressRegion}" />
+			<var name="orgAdvancedSearch" value="City" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#advancedSearchCP">
+			<var name="orgAddressCity" value="${orgAddressCity}" />
+			<var name="orgAddressCountry" value="${orgAddressCountry}" />
+			<var name="orgAddressRegion" value="${orgAddressRegion}" />
+			<var name="orgAddressStreet" value="${orgAddressStreet}" />
+			<var name="orgAdvancedSearch" value="Street" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#advancedSearchCP">
+			<var name="orgAddressCity" value="${orgAddressCity}" />
+			<var name="orgAddressCountry" value="${orgAddressCountry}" />
+			<var name="orgAddressPostal" value="${orgAddressPostal}" />
+			<var name="orgAddressRegion" value="${orgAddressRegion}" />
+			<var name="orgAdvancedSearch" value="Postal" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+	</command>
+
+	<command name="AdvancedSearchOrganizationName" priority="3">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#advancedSearchCP">
+			<var name="orgAdvancedSearch" value="Name" />
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
 		</execute>
 	</command>
 
@@ -1139,6 +1322,29 @@
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
+		</execute>
+	</command>
+
+	<command name="SearchOrganization" priority="3">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
 		</execute>
 	</command>
 

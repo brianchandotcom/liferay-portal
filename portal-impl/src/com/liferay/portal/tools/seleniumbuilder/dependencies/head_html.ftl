@@ -1,5 +1,16 @@
 <head>
 	<script type='text/javascript'>
+		function radioCheck () {
+			if (document.getElementById("actionCommandLogButton").checked){
+				document.getElementById("actionCommandLog").style.display = "block";
+				document.getElementById("seleniumCommandLog").style.display = "none";
+			}
+			else if (document.getElementById("seleniumCommandLogButton").checked){
+				document.getElementById("actionCommandLog").style.display = "none";
+				document.getElementById("seleniumCommandLog").style.display = "block";
+			}
+		}
+
 		function toggle(event) {
 			var node;
 
@@ -40,6 +51,20 @@
 			padding: 0px;
 		}
 
+		input[type=radio] {
+			display: none;
+		}
+
+		input[type=radio] + label {
+			background-color: #e7e7e7;
+			display: inline-block;
+			padding: 4px 12px;
+		}
+
+		input[type=radio]:checked + label {
+			background-color: #d0d0d0;
+		}
+
 		li {
 			display: block;
 		}
@@ -51,7 +76,7 @@
 
 		#actionCommandLog {
 			border: 1px solid #CCC;
-			height: 12%;
+			height: 30%;
 			overflow: auto;
 			white-space: nowrap;
 			width: 100%;
@@ -75,7 +100,7 @@
 
 		#seleniumCommandLog {
 			border: 1px solid #CCC;
-			height: 12%;
+			height: 30%;
 			overflow: auto;
 			white-space: nowrap;
 			width: 100%;

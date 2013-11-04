@@ -137,6 +137,55 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Theme> getControlPanelThemes(
+			long companyId, long userId, boolean wapTheme)
+		throws SystemException {
+
+		List<Theme> themes = getThemes(companyId);
+
+		themes = PluginUtil.restrictPlugins(themes, companyId, userId);
+
+		Iterator<Theme> itr = themes.iterator();
+
+		while (itr.hasNext()) {
+			Theme theme = itr.next();
+
+			if (!theme.isControlPanelTheme() ||
+				(theme.isWapTheme() != wapTheme)) {
+
+				itr.remove();
+			}
+		}
+
+		return themes;
+	}
+
+	@Override
+	public List<Theme> getPageThemes(
+			long companyId, long groupId, long userId, boolean wapTheme)
+		throws SystemException {
+
+		List<Theme> themes = getThemes(companyId);
+
+		themes = PluginUtil.restrictPlugins(themes, companyId, userId);
+
+		Iterator<Theme> itr = themes.iterator();
+
+		while (itr.hasNext()) {
+			Theme theme = itr.next();
+
+			if (!theme.isPageTheme() ||
+				!theme.isGroupAvailable(groupId) ||
+				(theme.isWapTheme() != wapTheme)) {
+
+				itr.remove();
+			}
+		}
+
+		return themes;
+	}
+
+	@Override
 	public Theme getTheme(long companyId, String themeId, boolean wapTheme)
 		throws SystemException {
 
@@ -195,29 +244,15 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		return ListUtil.sort(themesList);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
+	 */
 	@Override
 	public List<Theme> getThemes(
 			long companyId, long groupId, long userId, boolean wapTheme)
 		throws SystemException {
 
-		List<Theme> themes = getThemes(companyId);
-
-		themes = PluginUtil.restrictPlugins(themes, companyId, userId);
-
-		Iterator<Theme> itr = themes.iterator();
-
-		while (itr.hasNext()) {
-			Theme theme = itr.next();
-
-			if (theme.getThemeId().equals("controlpanel") ||
-				!theme.isGroupAvailable(groupId) ||
-				(theme.isWapTheme() != wapTheme)) {
-
-				itr.remove();
-			}
-		}
-
-		return themes;
+		return getPageThemes(companyId, groupId, userId, wapTheme);
 	}
 
 	@Override

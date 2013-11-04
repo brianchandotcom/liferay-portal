@@ -128,7 +128,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 			<span class="header-title">
 
 				<%
-				List<Theme> themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), groupId, user.getUserId(), false);
+				List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), groupId, user.getUserId(), false);
 				%>
 
 				<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1)) %>

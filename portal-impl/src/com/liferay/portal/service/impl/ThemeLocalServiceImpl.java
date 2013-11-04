@@ -671,6 +671,14 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				GetterUtil.getBoolean(
 					themeElement.elementText("wap-theme"), theme.isWapTheme()));
 
+			theme.setPageTheme(
+				GetterUtil.getBoolean(
+					themeElement.elementText("page-theme"), Boolean.TRUE));
+
+			theme.setControlPanelTheme(
+				GetterUtil.getBoolean(
+					themeElement.elementText("control-panel-theme")));
+
 			Element rolesElement = themeElement.element("roles");
 
 			if (rolesElement != null) {

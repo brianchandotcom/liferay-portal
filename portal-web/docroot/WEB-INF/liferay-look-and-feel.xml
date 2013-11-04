@@ -39,6 +39,8 @@
 		<settings>
 			<setting configurable="true" key="footer-text" type="textarea" value="Powered by Liferay" />
 		</settings>
+		<page-theme>false</page-theme>
+		<control-panel-theme>true</control-panel-theme>
 	</theme>
 	<theme id="mobile" name="Mobile">
 		<root-path>/wap/themes/${theme-id}</root-path>

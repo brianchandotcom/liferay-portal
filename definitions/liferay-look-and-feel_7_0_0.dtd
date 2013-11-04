@@ -111,7 +111,8 @@ The theme element contains the declarative data of a theme.
 -->
 <!ELEMENT theme (root-path?, templates-path?, css-path?, images-path?,
 javascript-path?, virtual-path?, template-extension?, settings?, wap-theme?,
-roles?, color-scheme*, layout-templates?)>
+page-theme?, control-panel-theme?, roles?, color-scheme*,
+layout-templates?)>
 
 <!--
 The id attribute specifies the unique key for a theme. For convenience, the id
@@ -268,6 +269,18 @@ Set the wap-theme value to true if the theme is designed for cellular phones or
 other mobile devices. The default value is false.
 -->
 <!ELEMENT wap-theme (#PCDATA)>
+
+<!--
+Set the page-theme value to false if the theme is not designed for pages. (e.g.,
+it could be used for the control panel. The default value is true.
+-->
+<!ELEMENT page-theme (#PCDATA)>
+
+<!--
+Set the control-panel-theme value to true if the theme is designed for the
+control panel. The default value is false.
+-->
+<!ELEMENT control-panel-theme (#PCDATA)>
 
 <!--
 The roles element contains a list of role names. Users which have any of these

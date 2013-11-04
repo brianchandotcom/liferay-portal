@@ -98,7 +98,6 @@ public class VerifyCalendar extends VerifyProcess {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for events");
 		}
-
 	}
 
 	protected void verifyRecurrence() throws Exception {

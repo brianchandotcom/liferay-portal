@@ -979,21 +979,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 				groupId, rootFolderId);
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, orderByComparator);
-
 		if (folderIds.isEmpty()) {
 			return Collections.emptyList();
 		}
-		else if (userId <= 0) {
-			return journalArticleFinder.filterFindByG_F(
-				groupId, folderIds, queryDefinition);
-		}
-		else {
-			return journalArticleFinder.filterFindByG_U_F_C(
-				groupId, userId, folderIds,
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
-		}
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, orderByComparator);
+
+		return journalArticleFinder.filterFindByG_U_F_C(
+			groupId, userId, folderIds,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
 	}
 
 	/**
@@ -1063,20 +1058,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 				groupId, rootFolderId);
 		}
 
-		QueryDefinition queryDefinition = new QueryDefinition(status);
-
 		if (folderIds.isEmpty()) {
 			return 0;
 		}
-		else if (userId <= 0) {
-			return journalArticleFinder.filterCountByG_F(
-				groupId, folderIds, queryDefinition);
-		}
-		else {
-			return journalArticleFinder.filterCountByG_U_F_C(
-				groupId, userId, folderIds,
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
-		}
+
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return journalArticleFinder.filterCountByG_U_F_C(
+			groupId, userId, folderIds,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
 	}
 
 	/**

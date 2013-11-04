@@ -87,6 +87,144 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
+	public void testIncludeI18nPathCustomLocaleAlgorithm0() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
+				LocaleUtil.SPAIN, "/inicio", false);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathCustomLocaleAlgorithm1() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
+				LocaleUtil.SPAIN, "/inicio", true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathCustomLocaleAlgorithm2() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
+				LocaleUtil.SPAIN, "/inicio", true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathDefaultLocaleAlgorithm0() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/home", LocaleUtil.US,
+				LocaleUtil.US, "/home", false);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathDefaultLocaleAlgorithm1() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/home", LocaleUtil.US,
+				LocaleUtil.US, "/home", false);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathDefaultLocaleAlgorithm2() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/home", LocaleUtil.US,
+				LocaleUtil.US, "/home", true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
 	public void testLocalizedSitePrivateLayoutFriendlyURL() throws Exception {
 		testLocalizedSiteLayoutFriendlyURL(true);
 	}

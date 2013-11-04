@@ -87,6 +87,144 @@ public class PortalImplLocalizedFriendlyURLTest {
 	}
 
 	@Test
+	public void testIncludeI18nPathCustomLocaleAlgorithm0() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
+				LocaleUtil.SPAIN, "/inicio", false);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathCustomLocaleAlgorithm1() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
+				LocaleUtil.SPAIN, "/inicio", true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathCustomLocaleAlgorithm2() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
+				LocaleUtil.SPAIN, "/inicio", true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathDefaultLocaleAlgorithm0() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 0;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/home", LocaleUtil.US,
+				LocaleUtil.US, "/home", false);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathDefaultLocaleAlgorithm1() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/home", LocaleUtil.US,
+				LocaleUtil.US, "/home", false);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
+	public void testIncludeI18nPathDefaultLocaleAlgorithm2() throws Exception {
+		int originalLocalePrependFriendlyURLStyle =
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
+
+		try {
+			Group group = GroupTestUtil.addGroup();
+
+			Layout layout = LayoutTestUtil.addLayout(
+				group.getGroupId(), false, _nameMap, _friendlyURLMap);
+
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
+
+			assertLocalizedSiteLayoutFriendlyURL(
+				group.getGroupId(), layout, "/home", LocaleUtil.US,
+				LocaleUtil.US, "/home", true);
+		}
+		finally {
+			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
+				originalLocalePrependFriendlyURLStyle;
+		}
+	}
+
+	@Test
 	public void testLocalizedSitePrivateLayoutFriendlyURL() throws Exception {
 		testLocalizedSiteLayoutFriendlyURL(true);
 	}
@@ -423,7 +561,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	protected void assertLocalizedSiteLayoutFriendlyURL(
 			long groupId, Layout layout, String layoutFriendlyURL,
 			Locale locale, Locale originalLocale,
-			String expectedLayoutFriendlyURL)
+			String expectedLayoutFriendlyURL, boolean includeI18nPath)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -443,10 +581,14 @@ public class PortalImplLocalizedFriendlyURLTest {
 		mockHttpServletRequest.setRequestURI(
 			groupServletMapping + group.getFriendlyURL() + layoutFriendlyURL);
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(includeI18nPath ? 5 : 3);
 
-		sb.append(StringPool.SLASH);
-		sb.append(PortalUtil.getI18nPathLanguageId(locale, StringPool.BLANK));
+		if (includeI18nPath) {
+			sb.append(StringPool.SLASH);
+			sb.append(
+				PortalUtil.getI18nPathLanguageId(locale, StringPool.BLANK));
+		}
+
 		sb.append(groupServletMapping);
 		sb.append(group.getFriendlyURL());
 		sb.append(expectedLayoutFriendlyURL);
@@ -460,7 +602,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	protected void assertLocalizedVirtualLayoutFriendlyURL(
 			long userGroupGroupId, Layout layout, String layoutFriendlyURL,
 			Locale locale, Locale originalLocale,
-			String expectedLayoutFriendlyURL)
+			String expectedLayoutFriendlyURL, boolean includeI18nPath)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -501,10 +643,14 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		mockHttpServletRequest.setRequestURI(sb.toString());
 
-		sb = new StringBundler(7);
+		sb = new StringBundler(includeI18nPath ? 7 : 5);
 
-		sb.append(StringPool.SLASH);
-		sb.append(PortalUtil.getI18nPathLanguageId(locale, StringPool.BLANK));
+		if (includeI18nPath) {
+			sb.append(StringPool.SLASH);
+			sb.append(
+				PortalUtil.getI18nPathLanguageId(locale, StringPool.BLANK));
+		}
+
 		sb.append(groupServletMapping);
 		sb.append(groupUser.getFriendlyURL());
 		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
@@ -527,7 +673,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedSiteLayoutFriendlyURL(
 			group.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
-			LocaleUtil.SPAIN, "/inicio");
+			LocaleUtil.SPAIN, "/inicio", true);
 	}
 
 	protected void testLocalizedVirtualLayoutFriendlyURL(boolean privateLayout)
@@ -552,7 +698,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(), layout, "/inicio", LocaleUtil.SPAIN,
-			LocaleUtil.SPAIN, "/inicio");
+			LocaleUtil.SPAIN, "/inicio", true);
 	}
 
 	protected void testNonexistentLocalizedSiteLayoutFriendlyURL(
@@ -566,7 +712,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedSiteLayoutFriendlyURL(
 			group.getGroupId(), layout, "/home", LocaleUtil.GERMANY,
-			LocaleUtil.US, "/home");
+			LocaleUtil.US, "/home", true);
 	}
 
 	protected void testNonexistentLocalizedVirtualLayoutFriendlyURL(
@@ -592,7 +738,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(), layout, "/home", LocaleUtil.GERMANY,
-			LocaleUtil.US, "/home");
+			LocaleUtil.US, "/home", true);
 	}
 
 	protected void testNonexistentWronglyLocalizedSiteLayoutFriendlyURL(
@@ -606,7 +752,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedSiteLayoutFriendlyURL(
 			group.getGroupId(), layout, "/inicio", LocaleUtil.GERMANY,
-			LocaleUtil.SPAIN, "/home");
+			LocaleUtil.SPAIN, "/home", true);
 	}
 
 	protected void testNonexistentWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -632,7 +778,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(), layout, "/inicio", LocaleUtil.US,
-			LocaleUtil.SPAIN, "/home");
+			LocaleUtil.SPAIN, "/home", true);
 	}
 
 	protected void testWronglyLocalizedSiteLayoutFriendlyURL(
@@ -655,7 +801,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedSiteLayoutFriendlyURL(
 			group.getGroupId(), layout, requestedFriendlyURL, locale,
-			LocaleUtil.SPAIN, expectedLayoutFriendlyURL);
+			LocaleUtil.SPAIN, expectedLayoutFriendlyURL, true);
 	}
 
 	protected void testWronglyLocalizedVirtualLayoutFriendlyURL(
@@ -690,7 +836,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(), layout, requestedFriendlyURL, locale,
-			LocaleUtil.SPAIN, expectedLayoutFriendlyURL);
+			LocaleUtil.SPAIN, expectedLayoutFriendlyURL, true);
 	}
 
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =

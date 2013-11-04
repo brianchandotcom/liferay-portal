@@ -206,7 +206,7 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 			_fileVersion.getFileEntryId(), _SOURCE_FILE_NAME,
 			_fileVersion.getMimeType(), _fileVersion.getTitle(),
 			_fileVersion.getDescription(), _fileVersion.getChangeLog(), false,
-			_DATA_VERSION_1, _serviceContext);
+			_DATA_VERSION_1, getServiceContext());
 
 		Assert.assertEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
@@ -236,8 +236,7 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
 	}
 
-	protected ServiceContext getServiceContext()
-		throws PortalException, SystemException {
+	protected ServiceContext getServiceContext() throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
@@ -264,12 +263,14 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 			Set<String> names = ddmStructure.getFieldNames();
 
 			for (String name : names) {
-				if (!ddmStructure.isFieldPrivate(name)) {
-					Field field = new Field(
-						ddmStructure.getStructureId(), name, StringPool.BLANK);
+				Field field = new Field(
+					ddmStructure.getStructureId(), name, StringPool.BLANK);
 
-					fields.put(field);
+				if (ddmStructure.isFieldPrivate(name)) {
+					field.setValue(ServiceTestUtil.randomString());
 				}
+
+				fields.put(field);
 			}
 
 			serviceContext.setAttribute(

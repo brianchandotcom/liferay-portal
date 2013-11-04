@@ -139,6 +139,7 @@ import java.util.Map;
  * @author Harry Mark
  * @author Alexander Chow
  * @author Manuel de la Peña
+ * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl
  */
 public class DLFileEntryLocalServiceImpl
 	extends DLFileEntryLocalServiceBaseImpl {
@@ -1992,7 +1993,7 @@ public class DLFileEntryLocalServiceImpl
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			if (!Validator.equals(lastFields, latestFields)) {
+			if (!lastFields.equals(latestFields, false)) {
 				return false;
 			}
 		}
@@ -2008,7 +2009,7 @@ public class DLFileEntryLocalServiceImpl
 		Map<String, Serializable> latestAttributes =
 			latestExpandoBridge.getAttributes();
 
-		if (!Validator.equals(lastAttributes, latestAttributes)) {
+		if (!lastAttributes.equals(latestAttributes)) {
 			return false;
 		}
 

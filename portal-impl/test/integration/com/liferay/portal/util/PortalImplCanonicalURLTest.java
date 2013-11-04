@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -49,14 +50,51 @@ import org.junit.runner.RunWith;
 @Transactional
 public class PortalImplCanonicalURLTest {
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.GERMANY, "Zuhause1");
+		nameMap.put(LocaleUtil.SPAIN, "Casa1");
+		nameMap.put(LocaleUtil.US, "Home1");
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.GERMANY, "/zuhause1");
+		friendlyURLMap.put(LocaleUtil.SPAIN, "/casa1");
+		friendlyURLMap.put(LocaleUtil.US, "/home1");
+
+		_layout1 = LayoutTestUtil.addLayout(
+			_group.getGroupId(), false, nameMap, friendlyURLMap);
+
+		nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.GERMANY, "Zuhause2");
+		nameMap.put(LocaleUtil.SPAIN, "Casa2");
+		nameMap.put(LocaleUtil.US, "Home2");
+
+		friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.GERMANY, "/zuhause2");
+		friendlyURLMap.put(LocaleUtil.SPAIN, "/casa2");
+		friendlyURLMap.put(LocaleUtil.US, "/home2");
+
+		_layout2 = LayoutTestUtil.addLayout(
+			_group.getGroupId(), false, nameMap, friendlyURLMap);
+	}
+
 	@Test
 	public void testCustomPortalLocaleCanonicalURL() throws Exception {
-		testCanonicalURL(null, "localhost", null, null, "/es", "/home");
+		testCanonicalURL(
+			null, "localhost", _layout1, null, null, "/es", "/home1");
 	}
 
 	@Test
 	public void testDefaultPortalLocaleCanonicalURL() throws Exception {
-		testCanonicalURL(null, "localhost", null, null, "/en", "/home");
+		testCanonicalURL(
+			null, "localhost", _layout1, null, null, "/en", "/home1");
 	}
 
 	@Test
@@ -64,9 +102,9 @@ public class PortalImplCanonicalURLTest {
 		throws Exception {
 
 		testCanonicalURL(
-			null, "localhost", new Locale[] {
+			null, "localhost", _layout1, new Locale[] {
 				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			LocaleUtil.SPAIN, "/en", "/casa");
+			LocaleUtil.SPAIN, "/en", "/casa1");
 	}
 
 	@Test
@@ -74,15 +112,15 @@ public class PortalImplCanonicalURLTest {
 		throws Exception {
 
 		testCanonicalURL(
-			null, "localhost", new Locale[] {
+			null, "localhost", _layout1, new Locale[] {
 				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US},
-			LocaleUtil.SPAIN, "/es", "/casa");
+			LocaleUtil.SPAIN, "/es", "/casa1");
 	}
 
 	@Test
 	public void testNonLocalhostPortalDomain() throws Exception {
 		testCanonicalURL(
-			"localhost", "liferay.com", null, null, "/en", "/home");
+			"localhost", "liferay.com", _layout1, null, null, "/en", "/home1");
 	}
 
 	protected String generateURL(
@@ -116,15 +154,14 @@ public class PortalImplCanonicalURLTest {
 		return themeDisplay;
 	}
 
-	protected void setVirtualHost(Layout layout, String virtualHostname)
+	protected void setVirtualHost(long companyId, String virtualHostname)
 		throws Exception {
 
 		if (Validator.isNull(virtualHostname)) {
 			return;
 		}
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
+		Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 		CompanyLocalServiceUtil.updateCompany(
 			company.getCompanyId(), virtualHostname, company.getMx(),
@@ -132,38 +169,21 @@ public class PortalImplCanonicalURLTest {
 	}
 
 	protected void testCanonicalURL(
-			String virtualHostname, String portalDomain,
+			String virtualHostname, String portalDomain, Layout layout,
 			Locale[] groupAvailableLocales, Locale groupDefaultLocale,
 			String i18nPath, String expectedFriendlyURL)
 		throws Exception {
 
-		Group group = GroupTestUtil.addGroup();
-
-		group = GroupTestUtil.updateDisplaySettings(
-			group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
-
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-		nameMap.put(LocaleUtil.GERMANY, "Zuhause");
-		nameMap.put(LocaleUtil.SPAIN, "Casa");
-		nameMap.put(LocaleUtil.US, "Home");
-
-		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
-
-		friendlyURLMap.put(LocaleUtil.GERMANY, "/zuhause");
-		friendlyURLMap.put(LocaleUtil.SPAIN, "/casa");
-		friendlyURLMap.put(LocaleUtil.US, "/home");
-
-		Layout layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), false, nameMap, friendlyURLMap);
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
 		String completeURL = generateURL(
-			portalDomain, i18nPath, group.getFriendlyURL(),
+			portalDomain, i18nPath, _group.getFriendlyURL(),
 			layout.getFriendlyURL());
 
-		setVirtualHost(layout, virtualHostname);
+		setVirtualHost(layout.getCompanyId(), virtualHostname);
 
-		ThemeDisplay themeDisplay = getThemeDisplay(group);
+		ThemeDisplay themeDisplay = getThemeDisplay(_group);
 
 		themeDisplay.setPortalURL("http://" + portalDomain + ":8080/");
 
@@ -171,10 +191,15 @@ public class PortalImplCanonicalURLTest {
 			completeURL, themeDisplay, layout, true);
 
 		String expectedCanonicalURL = generateURL(
-			portalDomain, StringPool.BLANK, group.getFriendlyURL(),
+			portalDomain, StringPool.BLANK, _group.getFriendlyURL(),
 			expectedFriendlyURL);
 
 		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL);
 	}
+
+	private Group _group = null;
+
+	private Layout _layout1 = null;
+	private Layout _layout2 = null;
 
 }

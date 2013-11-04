@@ -29,8 +29,10 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
@@ -480,8 +482,56 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				if (displayStyleGroupId ==
 						portletDataContext.getCompanyGroupId()) {
 
-					ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
-						portletDataContext.getCompanyGroupId(), displayStyle);
+					Element importDataRootElement =
+						portletDataContext.getImportDataRootElement();
+
+					Element referencesElement = importDataRootElement.element(
+						"references");
+
+					List<Element> referenceElements =
+						referencesElement.elements();
+
+					String ddmTemplateUuid =
+						PortletDisplayTemplateUtil.getDDMTemplateUuid(
+							displayStyle);
+
+					boolean preloaded = false;
+					long referenceClassNameId = 0;
+					String templateKey = null;
+
+					for (Element referenceElement : referenceElements) {
+						String className = referenceElement.attributeValue(
+							"class-name");
+						String uuid = referenceElement.attributeValue("uuid");
+
+						if (!className.equals(DDMTemplate.class.getName()) ||
+							!uuid.equals(ddmTemplateUuid)) {
+
+							continue;
+						}
+
+						preloaded = GetterUtil.getBoolean(
+							referenceElement.attributeValue("preloaded"));
+						referenceClassNameId = PortalUtil.getClassNameId(
+							referenceElement.attributeValue(
+								"referenced-class-name"));
+						templateKey = referenceElement.attributeValue(
+							"template-key");
+
+						break;
+					}
+
+					if (!preloaded) {
+						ddmTemplate =
+							PortletDisplayTemplateUtil.fetchDDMTemplate(
+								portletDataContext.getCompanyGroupId(),
+								displayStyle);
+					}
+					else {
+						ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
+							portletDataContext.getCompanyGroupId(),
+							referenceClassNameId, templateKey);
+					}
 				}
 				else if (displayStyleGroupId ==
 							portletDataContext.getSourceGroupId()) {

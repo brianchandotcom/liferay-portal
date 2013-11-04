@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -241,7 +242,8 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 				int ownerType = rs.getInt("ownerType");
 				long plid = rs.getLong("plid");
 				String portletId = rs.getString("portletId");
-				String preferences = rs.getString("preferences");
+				String preferences = GetterUtil.getString(
+					rs.getString("preferences"));
 
 				long companyId = 0;
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,6 +40,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
@@ -323,11 +325,19 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		LayoutImpl.validateFriendlyURLKeyword(friendlyURL);
 
-		/*List<FriendlyURLMapper> friendlyURLMappers =
-			portletLocalService.getFriendlyURLMappers();
+		List<FriendlyURLMapper> friendlyURLMappers =
+			PortletLocalServiceUtil.getFriendlyURLMappers();
 
 		for (FriendlyURLMapper friendlyURLMapper : friendlyURLMappers) {
-			if (friendlyURL.indexOf(friendlyURLMapper.getMapping()) != -1) {
+			if (friendlyURLMapper.isCheckMappingWithPrefix()) {
+				continue;
+			}
+
+			String mapping = StringPool.SLASH + friendlyURLMapper.getMapping();
+
+			if (friendlyURL.contains(mapping + StringPool.SLASH) ||
+				friendlyURL.endsWith(mapping)) {
+
 				LayoutFriendlyURLException lfurle =
 					new LayoutFriendlyURLException(
 						LayoutFriendlyURLException.KEYWORD_CONFLICT);
@@ -336,7 +346,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 				throw lfurle;
 			}
-		}*/
+		}
 
 		String layoutIdFriendlyURL = friendlyURL.substring(1);
 

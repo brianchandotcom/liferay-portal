@@ -974,13 +974,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
-		if (rootFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (rootFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderIds = journalFolderService.getFolderIds(
 				groupId, rootFolderId);
-		}
-
-		if (folderIds.isEmpty()) {
-			return Collections.emptyList();
 		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(
@@ -1053,13 +1049,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
-		if (rootFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (rootFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderIds = journalFolderService.getFolderIds(
 				groupId, rootFolderId);
-		}
-
-		if (folderIds.isEmpty()) {
-			return 0;
 		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);

@@ -129,6 +129,68 @@ public class LayoutFriendlyURLTest {
 
 	@Test
 	@Transactional
+	public void testNotValidFriendlyURLMapperURLInDefaultLocale()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/tags");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.assertEquals(lfurle.getKeywordConflict(), "tags");
+		}
+
+		friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/home/tags");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.assertEquals(lfurle.getKeywordConflict(), "tags");
+		}
+
+		friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/tags/home");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.assertEquals(lfurle.getKeywordConflict(), "tags");
+		}
+	}
+
+	@Test (expected = LayoutFriendlyURLException.class)
+	@Transactional
+	public void testNotValidFriendlyURLMapperURLInNonDefaultLocale()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.SPAIN, "/tags/two");
+		friendlyURLMap.put(LocaleUtil.US, "/two");
+
+		addLayout(group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test
+	@Transactional
 	public void testSameFriendlyURLDifferentLocaleDifferentGroup()
 		throws Exception {
 
@@ -266,6 +328,67 @@ public class LayoutFriendlyURLTest {
 			Assert.fail();
 		}
 		catch (LayoutFriendlyURLException lfurle) {
+		}
+	}
+
+	@Test
+	@Transactional
+	public void testValidFriendlyURLMapperURLInDefaultLocale()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/blogs");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.fail();
+		}
+
+		friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/home/blogs");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.fail();
+		}
+
+		friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/blogs/home");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	@Transactional
+	public void testValidFriendlyURLMapperURLInNonDefaultLocale()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.SPAIN, "/blogs/two");
+		friendlyURLMap.put(LocaleUtil.US, "/two");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.fail();
 		}
 	}
 

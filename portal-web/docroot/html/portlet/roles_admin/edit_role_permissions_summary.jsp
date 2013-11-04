@@ -19,6 +19,9 @@
 <h3><liferay-ui:message key="summary" /></h3>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 Role role = (Role)request.getAttribute("edit_role_permissions.jsp-role");
 
 PortletURL permissionsAllURL = liferayPortletResponse.createRenderURL();
@@ -27,6 +30,7 @@ permissionsAllURL.setParameter("struts_action", "/roles_admin/edit_role_permissi
 permissionsAllURL.setParameter(Constants.CMD, Constants.VIEW);
 permissionsAllURL.setParameter("tabs1", "roles");
 permissionsAllURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+permissionsAllURL.setParameter("backURL", backURL);
 
 List<String> headerNames = new ArrayList<String>();
 

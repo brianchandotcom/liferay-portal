@@ -55,8 +55,8 @@ AUI.add(
 							);
 
 							instance._eventHandles = [
-								Liferay.on('dockbarHidePanel', instance._onClose, instance),
-								Liferay.on('dockbarShowPanel', instance._onClose, instance)
+								Liferay.on('dockbarHidePanel', instance._onPanelStateChange, instance),
+								Liferay.on('dockbarShowPanel', instance._onPanelStateChange, instance)
 							];
 						}
 					},
@@ -146,7 +146,7 @@ AUI.add(
 						);
 					},
 
-					_onClose: function(event) {
+					_onPanelStateChange: function(event) {
 						var instance = this;
 
 						var columns = A.all('.portlet-column');
@@ -160,6 +160,14 @@ AUI.add(
 								}
 							}
 						);
+
+						var customizationsHandle = instance._customizationsHandle;
+
+						if (customizationsHandle) {
+							customizationsHandle.detach();
+
+							instance._customizationsHandle = null;
+						}
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
@@ -181,7 +189,7 @@ AUI.add(
 						else {
 							customizationsHandle.detach();
 
-							customizationsHandle = null;
+							instance._customizationsHandle = null;
 						}
 
 						instance._manageCustomization.html(customizationString).toggleClass(CSS_ACTIVE);

@@ -50,23 +50,18 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderActionableDynamicQuery;
@@ -214,20 +209,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getCompanyGroup(
-			searchContext.getCompanyId());
-
-		DDMStructure tikaRawMetadataStructure =
-			DDMStructureLocalServiceUtil.fetchStructure(
-				group.getGroupId(),
-				PortalUtil.getClassNameId(RawMetadataProcessor.class),
-				"TikaRawMetadata");
-
-		if (tikaRawMetadataStructure != null) {
-			addSearchDDMStruture(
-				searchQuery, searchContext, tikaRawMetadataStructure);
-		}
-
 		String keywords = searchContext.getKeywords();
 
 		if (Validator.isNull(keywords)) {
@@ -257,28 +238,26 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			Document document, DLFileVersion dlFileVersion)
 		throws PortalException, SystemException {
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
-				dlFileVersion.getFileEntryTypeId());
+		List<DLFileEntryMetadata> dlFileEntryMetadatas =
+			DLFileEntryMetadataLocalServiceUtil.
+				getFileVersionFileEntryMetadatas(
+					dlFileVersion.getFileVersionId());
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
+		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			Fields fields = null;
 
 			try {
-				DLFileEntryMetadata fileEntryMetadata =
-					DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
-						ddmStructure.getStructureId(),
-						dlFileVersion.getFileVersionId());
-
 				fields = StorageEngineUtil.getFields(
-					fileEntryMetadata.getDDMStorageId());
+					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
 			}
 
 			if (fields != null) {
+				DDMStructure ddmStructure =
+					DDMStructureLocalServiceUtil.getStructure(
+						dlFileEntryMetadata.getDDMStructureId());
+
 				DDMIndexerUtil.addAttributes(document, ddmStructure, fields);
 			}
 		}
@@ -381,7 +360,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				"dataRepositoryId", dlFileEntry.getDataRepositoryId());
 			document.addText(
 				"ddmContent",
-				extractContent(dlFileVersion, LocaleUtil.getSiteDefault()));
+				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
 			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
 				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
@@ -522,51 +501,32 @@ public class DLFileEntryIndexer extends BaseIndexer {
 		}
 	}
 
-	protected String extractContent(DLFileVersion dlFileVersion, Locale locale)
-		throws Exception {
-
-		if (dlFileVersion.getFileEntryTypeId() ==
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-			return StringPool.BLANK;
-		}
-
-		return extractDDMContent(dlFileVersion, locale);
-	}
-
 	protected String extractDDMContent(
 			DLFileVersion dlFileVersion, Locale locale)
 		throws Exception {
 
-		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
-				dlFileVersion.getFileEntryTypeId());
-
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		StringBundler sb = new StringBundler(ddmStructures.size());
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata fileEntryMetadata =
-				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(),
+		List<DLFileEntryMetadata> dlFileEntryMetadatas =
+			DLFileEntryMetadataLocalServiceUtil.
+				getFileVersionFileEntryMetadatas(
 					dlFileVersion.getFileVersionId());
 
-			if (fileEntryMetadata == null) {
-				continue;
-			}
+		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size());
 
+		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			Fields fields = null;
 
 			try {
 				fields = StorageEngineUtil.getFields(
-					fileEntryMetadata.getDDMStorageId());
+					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
-				continue;
 			}
 
 			if (fields != null) {
+				DDMStructure ddmStructure =
+					DDMStructureLocalServiceUtil.getStructure(
+						dlFileEntryMetadata.getDDMStructureId());
+
 				sb.append(
 					DDMIndexerUtil.extractAttributes(
 						ddmStructure, fields, locale));

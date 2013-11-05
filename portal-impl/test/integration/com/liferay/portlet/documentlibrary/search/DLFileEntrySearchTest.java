@@ -18,9 +18,13 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
@@ -37,6 +41,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -47,6 +52,10 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
+import java.io.File;
+import java.io.InputStream;
+
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,6 +76,46 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	@Test
 	public void testSearchAttachments() throws Exception {
+	}
+
+	@Test
+	@Transactional
+	public void testSearchTikaRawMetadata() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), "Word", searchContext);
+
+		String fileName = "OSX_Test.docx";
+
+		InputStream inputStream = getClass().getResourceAsStream(
+			"dependencies/" + fileName);
+
+		File file = null;
+
+		try {
+			String mimeType = MimeTypesUtil.getContentType(file, fileName);
+			file = FileUtil.createTempFile(inputStream);
+
+			DLAppLocalServiceUtil.addFileEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
+				fileName, StringPool.BLANK, StringPool.BLANK, file,
+				serviceContext);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), "Word",
+				searchContext));
 	}
 
 	@Override

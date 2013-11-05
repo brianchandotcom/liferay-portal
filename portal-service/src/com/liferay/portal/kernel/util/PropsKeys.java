@@ -819,6 +819,10 @@ public interface PropsKeys {
 
 	public static final String EDITOR_WYSIWYG_DEFAULT = "editor.wysiwyg.default";
 
+	public static final String EDITOR_WYSIWYG_SPELLCHECKER_LIFERAY = "editor.wysiwyg.spellchecker.liferay";
+
+	public static final String EDITOR_WYSIWYG_SPELLCHECKER_WEBSPELLCHECKER = "editor.wysiwyg.spellchecker.webspellchecker";
+
 	public static final String EHCACHE_BLOCKING_CACHE_ALLOWED = "ehcache.blocking.cache.allowed";
 
 	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_FACTORY = "ehcache.bootstrap.cache.loader.factory";

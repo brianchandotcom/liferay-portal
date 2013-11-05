@@ -122,9 +122,9 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 * repositories, this may have an identical functionality with {@link
 	 * #getFileVersion()}.
 	 *
-	 * @param trusted true if bypassing permission checks. In third-party
-	 *         repositories, this may be ignored
-	 * @return latest file version
+	 * @param  trusted whether to bypass permission checks. In third-party
+	 *         repositories, this may be ignored.
+	 * @return the latest file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */

@@ -38,12 +38,10 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Eduardo Garcia
  */
-public class BaseExportImportTestCase extends PowerMockito {
+public class BaseExportImportTestCase {
 
 	@Before
 	public void setUp() throws Exception {

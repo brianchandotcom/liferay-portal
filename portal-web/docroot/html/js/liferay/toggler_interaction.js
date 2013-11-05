@@ -88,11 +88,11 @@ AUI.add(
 
 							var container = host.get(STR_CONTAINER);
 
-							var headerClass = host.get(STR_HEADER) + ':visible';
+							var headerCssClass = host.get(STR_HEADER) + ':visible';
 
 							instance._focusManager.refresh();
 
-							instance._focusManager.set('activeDescendant', container.one(headerClass));
+							instance._focusManager.set('activeDescendant', container.one(headerCssClass));
 						}
 					},
 

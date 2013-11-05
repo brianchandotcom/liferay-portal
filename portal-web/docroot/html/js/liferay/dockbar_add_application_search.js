@@ -61,14 +61,12 @@ AUI.add(
 			_setItemsVisibility: function(visible) {
 				var instance = this;
 
-				var visibleFn = visible ? 'show' : 'hide';
-
 				instance.get(STR_NODES).each(
 					function(item, index, collection) {
 						var contentItem = item.ancestor(CSS_LFR_CONTENT_ITEM_SELECTOR);
 
 						if (contentItem) {
-							contentItem[visibleFn].call(contentItem);
+							contentItem.toggle(visible);
 						}
 					}
 				);

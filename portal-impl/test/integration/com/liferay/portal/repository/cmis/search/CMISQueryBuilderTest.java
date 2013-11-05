@@ -59,10 +59,14 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		// save current status
+
+		_currentBeanLocator = PortalBeanLocatorUtil.getBeanLocator();
+
 		_beanLocator = mock(BeanLocator.class);
 
 		BeanLocator beanLocator = new WrapperBeanLocator(
-			_beanLocator, PortalBeanLocatorUtil.getBeanLocator());
+			_beanLocator, _currentBeanLocator);
 
 		PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 	}
@@ -80,6 +84,10 @@ public class CMISQueryBuilderTest extends PowerMockito {
 			catch (Exception e) {
 			}
 		}
+
+		// restore original status
+
+		PortalBeanLocatorUtil.setBeanLocator(_currentBeanLocator);
 	}
 
 	@Test
@@ -406,6 +414,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		"SELECT cmis:objectId, SCORE() AS HITS FROM cmis:document WHERE (";
 
 	private BeanLocator _beanLocator;
+	private BeanLocator _currentBeanLocator;
 	private List<Class<?>> _serviceUtilClasses = new ArrayList<Class<?>>();
 
 	private class WrapperBeanLocator implements BeanLocator {

@@ -54,7 +54,7 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 * repositories, this may be the latest content regardless of workflow
 	 * state.
 	 *
-	 * @return content stream of the current file version
+	 * @return the content stream of the current file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 * @see    #getFileVersion()
@@ -82,7 +82,7 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 * #getLatestFileVersion()}. In third-party repositories, these two methods
 	 * may function identically.
 	 *
-	 * @return current file version
+	 * @return the current file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -109,13 +109,25 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	 * repositories, this may have an identical functionality with {@link
 	 * #getFileVersion()}.
 	 *
-	 * @return latest file version
+	 * @return the latest file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	public FileVersion getLatestFileVersion()
 		throws PortalException, SystemException;
 
+	/**
+	 * Retrieves the latest file version. In a Liferay repository, this means
+	 * the latest version regardless of workflow state. In third-party
+	 * repositories, this may have an identical functionality with {@link
+	 * #getFileVersion()}.
+	 *
+	 * @param  trusted whether to bypass permission checks. In third-party
+	 *         repositories, this may be ignored.
+	 * @return the latest file version
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public FileVersion getLatestFileVersion(boolean trusted)
 		throws PortalException, SystemException;
 

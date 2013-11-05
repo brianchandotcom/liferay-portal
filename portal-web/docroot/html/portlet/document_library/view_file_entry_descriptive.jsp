@@ -23,7 +23,7 @@ FileVersion fileVersion = fileEntry.getFileVersion();
 
 FileVersion latestFileVersion = fileVersion;
 
-if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
 

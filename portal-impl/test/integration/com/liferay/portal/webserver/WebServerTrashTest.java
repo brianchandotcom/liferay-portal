@@ -29,11 +29,11 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -61,7 +61,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 
 		_user = UserTestUtil.addUser(null, group.getGroupId());
 
-		_role = ServiceTestUtil.addRole(
+		_role = RoleTestUtil.addRole(
 			"Trash Admin", RoleConstants.TYPE_REGULAR, PortletKeys.TRASH,
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),

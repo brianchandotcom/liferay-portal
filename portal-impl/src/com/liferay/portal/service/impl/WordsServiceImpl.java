@@ -79,22 +79,24 @@ public class WordsServiceImpl extends WordsServiceBaseImpl {
 		List<String> suggestions = new ArrayList<String>();
 
 		if (!invalidWords.isEmpty()) {
-			suggestions = invalidWords.get(0).getSuggestions();
+			InvalidWord invalidWord = invalidWords.get(0);
+
+			suggestions = invalidWord.getSuggestions();
 		}
 
 		return suggestions;
 	}
 
 	protected List<String> getInvalidWords(String text) {
-		List<String> invalid = new ArrayList<String>();
+		List<String> invalidWordsList = new ArrayList<String>();
 
 		List<InvalidWord> invalidWords = WordsUtil.checkSpelling(text);
 
 		for (InvalidWord invalidWord : invalidWords) {
-			invalid.add(invalidWord.getInvalidWord());
+			invalidWordsList.add(invalidWord.getInvalidWord());
 		}
 
-		return invalid;
+		return invalidWordsList;
 	}
 
 	private static final String _DATA = "data";

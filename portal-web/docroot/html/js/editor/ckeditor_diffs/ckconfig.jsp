@@ -21,7 +21,7 @@
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.StringBundler" %>
+<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="com.liferay.portal.kernel.xuggler.XugglerUtil" %>
 <%@ page import="com.liferay.portal.util.PropsValues" %>
 
@@ -35,25 +35,22 @@ boolean inlineEdit = ParamUtil.getBoolean(request, "inlineEdit");
 String languageId = ParamUtil.getString(request, "languageId");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
 
-StringBundler extraPluginsSb = new StringBundler("ajaxsave,media,restore,scayt,wsc");
-StringBundler spellcheckerPluginsSb = new StringBundler();
-
-if (PropsValues.EDITOR_WYSIWYG_SPELLCHECKER_WEBSPELLCHECKER) {
-	spellcheckerPluginsSb.append("'SpellChecker', 'Scayt'");
-}
+String extraPlugins = "ajaxsave,media,restore,scayt,wsc";
+String spellcheckerPlugins = StringPool.BLANK;
 
 if (PropsValues.EDITOR_WYSIWYG_SPELLCHECKER_LIFERAY) {
-	extraPluginsSb.append(",liferayspellchecker");
+	extraPlugins = extraPlugins.concat(",liferayspellchecker");
 
-	if (spellcheckerPluginsSb.length() == 0) {
-		spellcheckerPluginsSb.append(',');
-	}
-
-	spellcheckerPluginsSb.append("'LiferaySpellChecker'");
+	spellcheckerPlugins = spellcheckerPlugins.concat("'LiferaySpellChecker'");
 }
 
-String extraPlugins = extraPluginsSb.toString();
-String spellcheckerPlugins = spellcheckerPluginsSb.toString();
+if (PropsValues.EDITOR_WYSIWYG_SPELLCHECKER_WEBSPELLCHECKER) {
+	if (spellcheckerPlugins.length() != 0) {
+		spellcheckerPlugins = spellcheckerPlugins.concat(StringPool.COMMA);
+	}
+
+	spellcheckerPlugins = spellcheckerPlugins.concat("'SpellChecker', 'Scayt'");
+}
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>

@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.LayoutFriendlyURLException;
+import com.liferay.portal.LayoutFriendlyURLsException;
 import com.liferay.portal.LayoutNameException;
 import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.LayoutTypeException;
@@ -367,10 +368,28 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			Map<Locale, String> friendlyURLMap)
 		throws PortalException, SystemException {
 
+		LayoutFriendlyURLsException layoutFriendlyURLsException = null;
+
 		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
 			String friendlyURL = entry.getValue();
 
-			validateFriendlyURL(groupId, privateLayout, layoutId, friendlyURL);
+			try {
+				validateFriendlyURL(
+					groupId, privateLayout, layoutId, friendlyURL);
+			}
+			catch (LayoutFriendlyURLException lfurle) {
+				if (layoutFriendlyURLsException == null) {
+					layoutFriendlyURLsException =
+						new LayoutFriendlyURLsException();
+				}
+
+				layoutFriendlyURLsException.addLayoutFriendlyURLException(
+					lfurle);
+			}
+		}
+
+		if (layoutFriendlyURLsException != null) {
+			throw layoutFriendlyURLsException;
 		}
 	}
 

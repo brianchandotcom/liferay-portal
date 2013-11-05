@@ -2845,6 +2845,7 @@
 		<exception>LARType</exception>
 		<exception>LayoutBranchName</exception>
 		<exception>LayoutFriendlyURL</exception>
+		<exception>LayoutFriendlyURLs</exception>
 		<exception>LayoutHidden</exception>
 		<exception>LayoutImport</exception>
 		<exception>LayoutName</exception>

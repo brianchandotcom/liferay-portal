@@ -64,10 +64,8 @@ public class SQLServerLimitStringUtil {
 
 		StringBundler sb = new StringBundler(15);
 
-		sb.append(outerSelectFrom);
-		sb.append(" from (");
-		sb.append(outerSelectFrom);
-		sb.append(", row_number() over (");
+		sb.append("select * from (");
+		sb.append("select *, row_number() over (");
 		sb.append(outerOrderBy);
 		sb.append(") as _page_row_num from (");
 		sb.append(innerSelectFrom);

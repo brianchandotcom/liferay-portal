@@ -530,10 +530,26 @@ $editLayoutPanelWidth: 460px;
 		z-index: 1100;
 
 		@include respond-to(phone) {
-			height: 100%;
-			padding-bottom: 0;
-			padding-top: 0;
-			position: absolute;
+			margin: 0 -20px;
+			position: static;
+			width: auto;
+
+			&.lfr-add-panel .add-content-menu .lfr-add-page-toolbar, &.lfr-edit-layout-panel .taglib-form-navigator .button-holder {
+				margin-top: 0;
+				position: static;
+				width: auto;
+			}
+
+			&.lfr-edit-layout-panel {
+				.taglib-form-navigator .accordion {
+					margin-bottom: 20px;
+				}
+
+				.site-admin-link {
+					padding: 0;
+					position: static;
+				}
+			}
 		}
 	}
 
@@ -547,6 +563,12 @@ $editLayoutPanelWidth: 460px;
 
 	.lfr-has-edit-layout {
 		padding-left: $editLayoutPanelWidth;
+	}
+
+	@include respond-to(phone) {
+		.lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
+			padding-left: 20px;
+		}
 	}
 
 	/* ---------- Menus ---------- */

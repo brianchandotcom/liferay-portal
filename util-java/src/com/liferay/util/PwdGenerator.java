@@ -62,7 +62,13 @@ public class PwdGenerator {
 			fullKeyLength += key.length();
 		}
 
+		// Calculate reseed period. Assuming chars from keys are unique.
+
+		int reseedPeriod = (int)(_MULTIPLIER / Math.log(fullKeyLength));
+
 		// Ensure every key contributes to the output by an even distribution
+
+		int reseedCounter = 0;
 
 		for (String key : keys) {
 			int count = key.length() * length / fullKeyLength;
@@ -72,6 +78,12 @@ public class PwdGenerator {
 			}
 
 			for (int i = 0; i < count; i++) {
+				if (++reseedCounter > reseedPeriod) {
+					reseedCounter = 0;
+
+					random.setSeed(SecureRandomUtil.nextLong());
+				}
+
 				sb.append(key.charAt(random.nextInt(key.length())));
 			}
 		}
@@ -152,6 +164,8 @@ public class PwdGenerator {
 	public static String getPinNumber() {
 		return getPassword(4, KEY1);
 	}
+
+	private static final double _MULTIPLIER = 64 * Math.log(2);
 
 	private static final String[] KEYS = {KEY1, KEY2, KEY3};
 

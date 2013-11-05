@@ -11,7 +11,8 @@
 				JournalArticle tempJournalArticle ON
 					(JournalArticle.groupId = tempJournalArticle.groupId) AND
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
-					(JournalArticle.version < tempJournalArticle.version)
+					(JournalArticle.version < tempJournalArticle.version) AND
+					(JournalArticle.status = tempJournalArticle.status)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				[$STATUS$] AND
@@ -41,7 +42,8 @@
 			LEFT JOIN JournalArticle tempJournalArticle ON
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
-				(JournalArticle.version < tempJournalArticle.version)
+				(JournalArticle.version < tempJournalArticle.version) AND
+				(JournalArticle.status = tempJournalArticle.status)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
@@ -60,7 +62,8 @@
 			LEFT JOIN JournalArticle tempJournalArticle ON
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
-				(JournalArticle.version < tempJournalArticle.version)
+				(JournalArticle.version < tempJournalArticle.version) AND
+				(JournalArticle.status = tempJournalArticle.status)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -132,7 +135,8 @@
 				JournalArticle tempJournalArticle ON
 					(JournalArticle.groupId = tempJournalArticle.groupId) AND
 					(JournalArticle.articleId = tempJournalArticle.articleId) AND
-					(JournalArticle.version < tempJournalArticle.version)
+					(JournalArticle.version < tempJournalArticle.version) AND
+					(JournalArticle.status = tempJournalArticle.status)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				([$STATUS$]) AND
@@ -151,7 +155,8 @@
 			LEFT JOIN JournalArticle tempJournalArticle ON
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
-				(JournalArticle.version < tempJournalArticle.version)
+				(JournalArticle.version < tempJournalArticle.version) AND
+				(JournalArticle.status = tempJournalArticle.status)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
@@ -171,7 +176,8 @@
 			LEFT JOIN JournalArticle tempJournalArticle ON
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
-				(JournalArticle.version < tempJournalArticle.version)
+				(JournalArticle.version < tempJournalArticle.version) AND
+				(JournalArticle.status = tempJournalArticle.status)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
@@ -192,7 +198,8 @@
 			LEFT JOIN JournalArticle tempJournalArticle ON
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
-				(JournalArticle.version < tempJournalArticle.version)
+				(JournalArticle.version < tempJournalArticle.version) AND
+				(JournalArticle.status = tempJournalArticle.status)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND

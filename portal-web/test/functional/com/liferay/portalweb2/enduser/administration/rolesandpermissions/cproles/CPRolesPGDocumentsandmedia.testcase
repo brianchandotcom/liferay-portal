@@ -92,7 +92,6 @@
 	<command name="AddDMDocumentSiteMemberRoleInline" priority="5">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
-		<var name="pageTypeSite" value="Site" />
 		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX" />
 		<var name="portletName" value="Documents and Media" />
 		<var name="roleName" value="Site Member" />
@@ -109,6 +108,7 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePageType" value="${sitePageType}" />
+			<var name="siteURLTemp" value="true" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -119,7 +119,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
@@ -139,7 +140,8 @@
 
 		<execute macro="PermissionsInline#gotoDocumentsAndMediaPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURLTemp" value="${siteURLTemp}" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -154,7 +156,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
@@ -167,7 +170,8 @@
 
 		<execute macro="PermissionsInline#gotoDocumentsAndMediaPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURLTemp" value="${siteURLTemp}" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -182,7 +186,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
@@ -194,7 +199,6 @@
 	<command name="AddDMDocumentSiteRole" priority="5">
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="pageName" value="Documents and Media Page" />
-		<var name="pageTypeSite" value="Site" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_DOCUMENT" />
 		<var name="permissionDefinitionValue" value="Add Document" />
 		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
@@ -204,6 +208,7 @@
 		<var name="roleType" value="Site" />
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageType" value="Public" />
+		<var name="siteURLTemp" value="true" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -227,7 +232,8 @@
 
 		<execute macro="PermissionsInline#gotoDocumentsAndMediaPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURLTemp" value="${siteURLTemp}" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -242,7 +248,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
@@ -260,7 +267,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
@@ -280,7 +288,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
@@ -312,7 +321,6 @@
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="${pageType}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
@@ -337,7 +345,6 @@
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -361,7 +368,6 @@
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -410,7 +416,6 @@
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="${pageType}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
@@ -430,7 +435,6 @@
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -460,7 +464,6 @@
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="${pageType}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
@@ -468,7 +471,6 @@
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">

@@ -1,9 +1,0 @@
-<definition>
-	<var name="commitMessage" value="LPS-41805" />
-	<var name="ticketSummary" value="LIFERAYQA-6058: Properly handle 'unterminated string literal' errors in the HTML Log" />
-	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-6058" />
-
-	<command name="LogUnsafeJavascriptNonVisibleElement" priority="5">
-		<execute macro="LogUnsafeJavascript#logUnsafeJavascriptNonVisibleElement" />
-	</command>
-</definition>

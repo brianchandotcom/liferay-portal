@@ -1,7 +1,0 @@
-<definition>
-	<command name="logUnsafeJavascriptNonVisibleElement">
-		<echo message="Test error output containing unsafe Javascript: this test case should fail normally, without crashing webdriver unexpectedly." />
-		
-		<execute action="Home#click" locator1="//div[@id='nonVisibleElement']" />
-	</command>
-</definition>

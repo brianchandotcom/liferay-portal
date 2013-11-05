@@ -150,7 +150,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<aui:nav-item cssClass='<%= ((layoutSetBranches != null) ? " active" : StringPool.BLANK) + " staging-toggle" %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" id="stagingLink" label="staging" />
+					<aui:nav-item cssClass='<%= ((layoutSetBranches != null) ? " active" : StringPool.BLANK) + " staging-toggle" %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" label="staging" />
 				</c:otherwise>
 			</c:choose>
 
@@ -223,7 +223,9 @@ if (layout != null) {
 				function(obj) {
 					var incomplete = obj > 0;
 
-					stagingLink.toggle(!incomplete);
+					if (stagingLink) {
+						stagingLink.toggle(!incomplete);
+					}
 
 					if (warningMessage) {
 						warningMessage.toggle(incomplete);

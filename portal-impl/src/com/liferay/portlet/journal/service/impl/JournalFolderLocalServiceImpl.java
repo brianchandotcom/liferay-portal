@@ -135,7 +135,7 @@ public class JournalFolderLocalServiceImpl
 
 		for (JournalFolder curFolder : folders) {
 			if (includeTrashedEntries || !curFolder.isInTrash()) {
-				deleteFolder(curFolder);
+				deleteFolder(curFolder, includeTrashedEntries);
 			}
 		}
 

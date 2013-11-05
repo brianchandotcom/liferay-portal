@@ -34,11 +34,7 @@ String value = ParamUtil.getString(request, name);
 
 	<c:if test="<%= showButton %>">
 		<button class="btn" type="submit">
-			<span class="btn-label">
-				<%= buttonLabel %>
-			</span>
-
-			<i class="icon-search"></i>
+			<%= buttonLabel %>
 		</button>
 	</c:if>
 </div>

@@ -142,28 +142,16 @@
 	.form-search .input-append {
 		padding-right: 12px;
 
-		.btn .icon-search {
-			display: none;
-		}
-
-		@include respond-to(phone, tablet) {
+		@include respond-to(phone) {
 			.btn {
-				padding: 5px 19px;
-			}
+				font-size: 0;
+				padding: 4px 19px 0;
 
-			@include respond-to(phone) {
-				.btn {
-					display: inline-block;
-					margin-top: 0;
-					width: auto;
+				&:after {
+					content: $search;
+					font-size: 18px;
 
-					.btn-label {
-						display: none;
-					}
-
-					.icon-search {
-						display: inline;
-					}
+					@include icon-FontAwesome();
 				}
 			}
 		}

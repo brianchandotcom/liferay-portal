@@ -22,11 +22,7 @@
 			<input class="search-query span9" id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= displayTerms.getKeywords() %>" />
 
 			<button class="btn" type="submit">
-				<span class="btn-label">
-					<%= LanguageUtil.get(pageContext, buttonLabel, "search") %>
-				</span>
-
-				<i class="icon-search"></i>
+				<%= LanguageUtil.get(pageContext, buttonLabel, "search") %>
 			</button>
 		</div>
 		<button class="btn-link" id="<%= id %>toggleAdvanced" type="button">

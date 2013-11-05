@@ -1,27 +1,12 @@
 <definition>
-		<var name="pageName" value="Blogs Page" />
-	<var name="portletName" value="Blogs" />
+	<var name="pageName" value="Blogs Page" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
 	</set-up>
 
 	<tear-down>
 		<execute macro="BlogsEntry#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="DeleteBlogsEntry" priority="5">

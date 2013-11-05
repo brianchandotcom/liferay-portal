@@ -159,6 +159,12 @@
 
 					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryValidTitleLength}" />
 					<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+					<execute action="PGBlogs#assertTextNotEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+					<var name="key_entryTitle" value="${entryTitle}" />
+
+					<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_TITLE" />
+					<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_CONTENT" />
 				</then>
 			</elseif>
 			<else>
@@ -174,16 +180,14 @@
 
 	<command name="addPGViaAP">
 		<if>
-			<isset var="scopeSiteType" />
+			<isset var="siteScope" />
 			<then>
 				<var name="key_siteScope" value="${siteScope}" />
 
-				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN_SITE_NAME" value1="Add New in Site Name" />
-				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_IN_SITE_NAME_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope}" />
 			</then>
 			<else>
 				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
-				<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
 			</else>
 		</if>
 
@@ -199,14 +203,9 @@
 
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE_1" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY_1" value1="${entryContent}" />
-
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
-		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY" value1="${entryContent}" />
 	</command>
 
-	<command name="addPGWithTrackback">
+	<command name="addWithTrackbackURLPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
@@ -295,7 +294,7 @@
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_WORKFLOW_STATUS" value1="Pending Approval" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_BODY" value1="${entryContent}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
@@ -742,6 +741,24 @@
 		<var name="entryViewCount" value="${entryViewCount?increment()}" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
+	</command>
+
+	<command name="viewWithTrackbackURLPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_COMMENT_2" value1="1 Comment" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="1 Comment"/>
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_1" value1="[...] ${entryContent2} [...] Read More"/>
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_READ_MORE_1" value1="Read More"/>
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle2}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent2}" />
 	</command>
 
 	<command name="viewWithWorkflowCP">

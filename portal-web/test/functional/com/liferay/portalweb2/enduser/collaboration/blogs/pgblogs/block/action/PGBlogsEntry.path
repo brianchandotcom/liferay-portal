@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT</td>
-	<td>//div[@class='entry-body']/div</td>
+	<td>//div[@class='entry-body']</td>
 	<td></td>
 </tr>
 <tr>
@@ -218,7 +218,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_SUCCESS</td>
-	<td>//div[@class='lfr-message-response alert alert alert alert-success']</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,6 +275,21 @@
 <tr>
 	<td>COMMENT_3</td>
 	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_READ_MORE_1</td>
+	<td>xpath=(//div[@class='lfr-discussion-message']/a[contains(.,'Read More')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_READ_MORE_2</td>
+	<td>xpath=(//div[@class='lfr-discussion-message']/a[contains(.,'Read More')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_READ_MORE_3</td>
+	<td>xpath=(//div[@class='lfr-discussion-message']/a[contains(.,'Read More')])[3]</td>
 	<td></td>
 </tr>
 <tr>

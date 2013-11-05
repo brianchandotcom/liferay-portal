@@ -181,6 +181,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_COMMENT_1</td>
+	<td>xpath=(//div[@class='stats']/span[@class='comments'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_COMMENT_2</td>
+	<td>xpath=(//div[@class='stats']/span[@class='comments'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_COMMENT_3</td>
+	<td>xpath=(//div[@class='stats']/span[@class='comments'])[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_EDIT</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[contains(@class,'edit-actions')]//span/a/span[.='Edit']</td>
 	<td></td>

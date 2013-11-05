@@ -4,6 +4,7 @@
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
 	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" />

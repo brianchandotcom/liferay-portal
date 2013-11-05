@@ -172,6 +172,19 @@ public class LayoutFriendlyURLTest {
 		catch (LayoutFriendlyURLException lfurle) {
 			Assert.assertEquals(lfurle.getKeywordConflict(), "tags");
 		}
+
+		friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/blogs/-/home");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+
+			Assert.fail();
+		}
+		catch (LayoutFriendlyURLException lfurle) {
+			Assert.assertEquals(lfurle.getKeywordConflict(), "/-/");
+		}
 	}
 
 	@Test(expected = LayoutFriendlyURLException.class)

@@ -22,6 +22,8 @@ String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
 
 int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
 
+String redirect = ParamUtil.getString(request, "redirect");
+
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
@@ -212,6 +214,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			<c:when test='<%= tabs2.equals("current") %>'>
 
 				<%
+				viewUsersURL.setParameter("redirect", currentURL);
 				viewUsersURL.setParameter("tabs2", "available");
 				%>
 
@@ -232,7 +235,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 				<%
 				portletURL.setParameter("tabs2", "current");
 
-				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
+				String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + redirect + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 				%>
 
 				<aui:button-row>

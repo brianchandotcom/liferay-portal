@@ -133,7 +133,7 @@
 
 		boolean deployed = false;
 
-		List<Theme> themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), 0, user.getUserId(), false);
+		List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), 0, user.getUserId(), false);
 
 		for (Theme curTheme: themes) {
 			if (Validator.equals(defaultRegularThemeId, curTheme.getThemeId())) {
@@ -160,7 +160,7 @@
 
 			boolean deployed = false;
 
-			List<Theme> themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), 0, user.getUserId(), true);
+			List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), 0, user.getUserId(), true);
 
 			for (Theme curTheme: themes) {
 				if (Validator.equals(defaultWapThemeId, curTheme.getThemeId())) {
@@ -187,13 +187,7 @@
 
 		boolean deployed = false;
 
-		List<Theme> themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), 0, user.getUserId(), false);
-
-		Theme controlPanelTheme = ThemeLocalServiceUtil.getTheme(company.getCompanyId(), "controlpanel", false);
-
-		if (controlPanelTheme != null) {
-			themes.add(controlPanelTheme);
-		}
+		List<Theme> themes = ThemeLocalServiceUtil.getControlPanelThemes(company.getCompanyId(), user.getUserId(), false);
 
 		for (Theme curTheme: themes) {
 			if (Validator.equals(defaultControlPanelThemeId, curTheme.getThemeId())) {

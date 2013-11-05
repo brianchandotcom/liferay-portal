@@ -74,7 +74,7 @@ public class RandomLookAndFeelAction extends Action {
 
 			boolean wapTheme = BrowserSnifferUtil.isWap(request);
 
-			List<Theme> themes = ThemeLocalServiceUtil.getThemes(
+			List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				themeDisplay.getUserId(), wapTheme);
 

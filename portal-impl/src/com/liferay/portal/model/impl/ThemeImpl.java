@@ -390,6 +390,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	}
 
 	@Override
+	public boolean isControlPanelTheme() {
+		return _controlPanelTheme;
+	}
+
+	@Override
 	public boolean isGroupAvailable(long groupId) {
 		return isAvailable(getThemeGroupLimit(), groupId);
 	}
@@ -397,6 +402,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	@Override
 	public boolean isLoadFromServletContext() {
 		return _loadFromServletContext;
+	}
+
+	@Override
+	public boolean isPageTheme() {
+		return _pageTheme;
 	}
 
 	@Override
@@ -444,6 +454,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	}
 
 	@Override
+	public void setControlPanelTheme(boolean controlPanelTheme) {
+		_controlPanelTheme = controlPanelTheme;
+	}
+
+	@Override
 	public void setCssPath(String cssPath) {
 		_cssPath = cssPath;
 	}
@@ -466,6 +481,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 	@Override
 	public void setName(String name) {
 		_name = name;
+	}
+
+	@Override
+	public void setPageTheme(boolean pageTheme) {
+		_pageTheme = pageTheme;
 	}
 
 	@Override
@@ -632,11 +652,13 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	private Map<String, ColorScheme> _colorSchemesMap =
 		new HashMap<String, ColorScheme>();
+	private boolean _controlPanelTheme;
 	private String _cssPath = "${root-path}/css";
 	private String _imagesPath = "${root-path}/images";
 	private String _javaScriptPath = "${root-path}/js";
 	private boolean _loadFromServletContext;
 	private String _name;
+	private boolean _pageTheme;
 	private Map<String, Boolean> _resourceExistsMap =
 		new ConcurrentHashMap<String, Boolean>();
 	private Map<String, String> _resourcePathsMap =

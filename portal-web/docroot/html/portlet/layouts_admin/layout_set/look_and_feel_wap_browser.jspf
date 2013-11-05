@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<Theme> themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), liveGroupId, user.getUserId(), true);
+List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), liveGroupId, user.getUserId(), true);
 List<ColorScheme> colorSchemes = selWapTheme.getColorSchemes();
 
 request.setAttribute("edit_pages.jsp-themes", themes);

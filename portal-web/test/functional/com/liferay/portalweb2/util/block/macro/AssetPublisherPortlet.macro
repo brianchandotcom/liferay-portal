@@ -49,6 +49,14 @@
 					<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
 				</then>
 			</elseif>
+			 	<elseif>
+          			<equals arg1="${siteScopeType}" arg2="Site" />
+          			<then>
+            			<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
+            			<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="Site" />
+             			<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+ 					</then>
+       			</elseif>
 		</if>
 
 		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />

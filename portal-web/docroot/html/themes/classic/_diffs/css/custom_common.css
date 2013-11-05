@@ -139,8 +139,22 @@
 		}
 	}
 
-	.input-append {
+	.form-search .input-append {
 		padding-right: 12px;
+
+		@include respond-to(phone) {
+			.btn {
+				font-size: 0;
+				padding: 4px 19px 0;
+
+				&:after {
+					content: $search;
+					font-size: 18px;
+
+					@include icon-FontAwesome();
+				}
+			}
+		}
 	}
 
 	.navbar .nav > li > a {

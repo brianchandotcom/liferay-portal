@@ -39,6 +39,18 @@
 			}
 		}
 
+		@include respond-to(phone, tablet) {
+			.form-search .input-append .btn {
+				display: inline-block;
+				padding: 5px 19px 6px;
+
+				@include respond-to(phone) {
+					margin-top: 0;
+					width: auto;
+				}
+			}
+		}
+
 		.dropup .btn .caret {
 			border-bottom-width: 5px;
 		}

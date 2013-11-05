@@ -1513,8 +1513,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		Map<String, String> filterMap = new HashMap<String, String>();
 
-		filterMap.put("author", pluginPackage.getAuthor());
-		filterMap.put("change_log", pluginPackage.getChangeLog());
+		filterMap.put("author", _wrapCDATA(pluginPackage.getAuthor()));
+		filterMap.put("change_log", _wrapCDATA(pluginPackage.getChangeLog()));
 		filterMap.put(
 			"licenses",
 			getPluginPackageLicensesXml(pluginPackage.getLicenses()));
@@ -1522,12 +1522,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			"liferay_versions",
 			getPluginPackageLiferayVersionsXml(
 				pluginPackage.getLiferayVersions()));
-		filterMap.put("long_description", pluginPackage.getLongDescription());
+		filterMap.put(
+			"long_description", _wrapCDATA(pluginPackage.getLongDescription()));
 		filterMap.put("module_artifact_id", pluginPackage.getArtifactId());
 		filterMap.put("module_group_id", pluginPackage.getGroupId());
 		filterMap.put("module_version", pluginPackage.getVersion());
 		filterMap.put("page_url", pluginPackage.getPageURL());
-		filterMap.put("plugin_name", pluginPackage.getName());
+		filterMap.put("plugin_name", _wrapCDATA(pluginPackage.getName()));
 		filterMap.put("plugin_type", pluginType);
 		filterMap.put(
 			"plugin_type_name",
@@ -1539,7 +1540,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			"required_deployment_contexts",
 			getPluginPackageRequiredDeploymentContextsXml(
 				pluginPackage.getRequiredDeploymentContexts()));
-		filterMap.put("short_description", pluginPackage.getShortDescription());
+		filterMap.put(
+			"short_description",
+			_wrapCDATA(pluginPackage.getShortDescription()));
 		filterMap.put("tags", getPluginPackageTagsXml(pluginPackage.getTags()));
 
 		return filterMap;
@@ -2397,6 +2400,10 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	protected boolean unpackWar;
 	protected String utilTaglibDTD;
 	protected List<String> wars;
+
+	private String _wrapCDATA(String string) {
+		return StringPool.CDATA_OPEN + string + StringPool.CDATA_CLOSE;
+	}
 
 	private static final String _PORTAL_CLASS_LOADER =
 		"com.liferay.support.tomcat.loader.PortalClassLoader";

@@ -45,7 +45,8 @@
 
 	tr td, tr th {
 		padding: 0 5px;
-		word-break: break-all;
+
+		@include word-break(break-all);
 
 		&:first-child, &.first-child {
 			padding-left: 0;

@@ -31,6 +31,9 @@ boolean cdnDynamicResourcesEnabled = PrefsPropsUtil.getBoolean(company.getCompan
 
 String defaultLandingPagePath = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LANDING_PAGE_PATH, PropsValues.DEFAULT_LANDING_PAGE_PATH);
 String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LOGOUT_PAGE_PATH, PropsValues.DEFAULT_LOGOUT_PAGE_PATH);
+
+long termsOfUseArticleGroupId = PrefsPropsUtil.getLong(company.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
+String termsOfUseArticleId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="general" />
@@ -93,5 +96,14 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 		<aui:input name="industry" />
 
 		<aui:input name="type" />
+	</aui:col>
+</aui:row>
+
+<h3><liferay-ui:message key="terms-of-use" /></h3>
+
+<aui:row>
+	<aui:col width="<%= 50 %>">
+		<aui:input label="terms-of-use-article-group-id" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID + "--" %>' type="text" value="<%= termsOfUseArticleGroupId %>" />
+		<aui:input label="terms-of-use-article-id" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID + "--" %>' type="text" value="<%= termsOfUseArticleId %>" />
 	</aui:col>
 </aui:row>

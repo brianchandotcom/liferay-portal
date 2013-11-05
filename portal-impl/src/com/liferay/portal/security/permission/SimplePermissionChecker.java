@@ -82,6 +82,11 @@ public class SimplePermissionChecker extends BasePermissionChecker {
 		return signedIn;
 	}
 
+	@Override
+	public boolean isReviewer(long companyId, long groupId) {
+		return signedIn;
+	}
+
 	protected boolean hasPermission(String actionId) {
 		if (signedIn) {
 			return true;

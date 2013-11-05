@@ -46,7 +46,7 @@ if (folder != null) {
 
 int status = WorkflowConstants.STATUS_APPROVED;
 
-if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+if (permissionChecker.isReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 

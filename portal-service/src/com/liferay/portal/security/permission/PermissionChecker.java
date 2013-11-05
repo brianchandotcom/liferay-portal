@@ -257,6 +257,18 @@ public interface PermissionChecker extends Cloneable {
 	public boolean isOrganizationOwner(long organizationId);
 
 	/**
+	 * Returns <code>true</code> if the user is a reviewer or has enough
+	 * permissions to review content (i.e. if the user is a company or group
+	 * administrator).
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @param  groupId the primary key of the ogroup
+	 * @return <code>true</code>  if the user is a reviewer or has enough
+	 *         permissions to review content; <code>false</code> otherwise
+	 */
+	public boolean isReviewer(long companyId, long groupId);
+
+	/**
 	 * Returns <code>true</code> if the user is signed in.
 	 *
 	 * @return <code>true</code> if the user is signed in; <code>false</code>

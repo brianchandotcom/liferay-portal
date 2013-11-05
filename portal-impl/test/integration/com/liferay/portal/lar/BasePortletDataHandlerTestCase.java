@@ -42,12 +42,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Zsolt Berentey
  */
-public abstract class BasePortletDataHandlerTestCase extends PowerMockito {
+public abstract class BasePortletDataHandlerTestCase {
 
 	@Before
 	public void setUp() throws Exception {

@@ -48,16 +48,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Zsolt Berentey
  */
-public abstract class BaseSocialActivityInterpreterTestCase
-	extends PowerMockito {
+public abstract class BaseSocialActivityInterpreterTestCase {
 
 	@Before
 	public void setUp() throws Exception {

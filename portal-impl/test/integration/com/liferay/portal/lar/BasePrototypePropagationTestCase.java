@@ -41,12 +41,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Eduardo Garcia
  */
-public abstract class BasePrototypePropagationTestCase extends PowerMockito {
+public abstract class BasePrototypePropagationTestCase {
 
 	@Before
 	public void setUp() throws Exception {

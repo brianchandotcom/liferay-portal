@@ -39,7 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletContext;
 
@@ -58,7 +57,7 @@ public class HotDeployImpl implements HotDeploy {
 
 		_dependentHotDeployEvents = new ArrayList<HotDeployEvent>();
 		_deployedServletContextNames = new HashSet<String>();
-		_hotDeployListeners = new CopyOnWriteArrayList<HotDeployListener>();
+		_hotDeployListeners = new ArrayList<HotDeployListener>();
 	}
 
 	@Override
@@ -130,7 +129,9 @@ public class HotDeployImpl implements HotDeploy {
 	}
 
 	@Override
-	public void registerListener(HotDeployListener hotDeployListener) {
+	public synchronized void registerListener(
+		HotDeployListener hotDeployListener) {
+
 		_hotDeployListeners.add(hotDeployListener);
 	}
 
@@ -150,12 +151,14 @@ public class HotDeployImpl implements HotDeploy {
 	}
 
 	@Override
-	public void unregisterListener(HotDeployListener hotDeployListener) {
+	public synchronized void unregisterListener(
+		HotDeployListener hotDeployListener) {
+
 		_hotDeployListeners.remove(hotDeployListener);
 	}
 
 	@Override
-	public void unregisterListeners() {
+	public synchronized void unregisterListeners() {
 		_hotDeployListeners.clear();
 	}
 
@@ -304,9 +307,9 @@ public class HotDeployImpl implements HotDeploy {
 	private static PACL _pacl = new NoPACL();
 
 	private boolean _capturePrematureEvents = true;
-	private List<HotDeployEvent> _dependentHotDeployEvents;
-	private Set<String> _deployedServletContextNames;
-	private List<HotDeployListener> _hotDeployListeners;
+	private final List<HotDeployEvent> _dependentHotDeployEvents;
+	private final Set<String> _deployedServletContextNames;
+	private final List<HotDeployListener> _hotDeployListeners;
 
 	private static class NoPACL implements PACL {
 

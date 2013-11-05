@@ -142,6 +142,28 @@ public class QueryUtilTest {
 		testList(_SIZE + 1, _SIZE + 21, true, 0, 0, 0);
 	}
 
+	@Test
+	public void testUnionSQL() throws Exception {
+		Session session = null;
+		try {
+			session = _sessionFactory.openSession();
+			SQLQuery q = session.createSQLQuery(_SQL_UNION_SELECT);
+
+			List<Object[]> result = (List<Object[]>)QueryUtil.list(
+				q, _sessionFactory.getDialect(), _SIZE / 2, _SIZE + (_SIZE / 2),
+				true);
+
+			Object[] firstRow = result.get(0);
+			Object[] lastRow = result.get(result.size() - 1);
+
+			Assert.assertEquals("value", (String)firstRow[0]);
+			Assert.assertEquals("id", (String)lastRow[0]);
+		}
+		finally {
+			_sessionFactory.closeSession(session);
+		}
+	}
+
 	protected static String[] createInserts(int amount) {
 		String[] sqls = new String[amount];
 
@@ -214,6 +236,10 @@ public class QueryUtilTest {
 
 	private static final String _SQL_SELECT =
 		"SELECT id, value FROM QueryUtilTest ORDER BY id ASC";
+
+	private static final String _SQL_UNION_SELECT =
+			"( SELECT 'value' AS type, id as value from QueryUtilTest ) " +
+			"UNION ALL ( SELECT 'id' AS type, id as value from QueryUtilTest )";
 
 	private static DB _db;
 

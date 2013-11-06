@@ -98,13 +98,6 @@ public class DLFolderPermission {
 					}
 
 					dlFolderId = dlFolder.getParentFolderId();
-
-					if (dlFolderId ==
-							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-						return DLPermission.contains(
-							permissionChecker, dlFolder.getGroupId(), actionId);
-					}
 				}
 			}
 			catch (NoSuchFolderException nsfe) {
@@ -113,7 +106,8 @@ public class DLFolderPermission {
 				}
 			}
 
-			return true;
+			return DLPermission.contains(
+				permissionChecker, dlFolder.getGroupId(), actionId);
 		}
 
 		return _hasPermission(permissionChecker, dlFolder, actionId);

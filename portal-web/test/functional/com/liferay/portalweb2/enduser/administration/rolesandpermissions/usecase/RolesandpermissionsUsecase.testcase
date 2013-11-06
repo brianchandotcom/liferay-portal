@@ -1,0 +1,103 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Role#tearDownCP" />
+	</tear-down>
+
+	<command name="ViewAutomaticAssignedRoles" priority="5">
+		<var name="permissionDefinition1Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition1Value" value="Access in Control Panel" />
+		<var name="permissionDefinition2Key" value="SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinition2Value" value="Access in Site Administration" />
+		<var name="permissionDefinition3Value" value="Go to Control Panel" />
+		<var name="permissionDefinition4Value" value="Go to Site Administration" />
+		<var name="permissionNavigation1Key" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS" />
+		<var name="permissionNavigation1Value" value="Users and Organizations" />
+		<var name="permissionNavigation2Key" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+		<var name="permissionNavigation2Value" value="Site Pages" />
+		<var name="permissionNavigation3Value" value="Portal" />
+		<var name="permissionNavigation4Value" value="Sites > Site" />
+		<var name="roleName" value="Roles Regrole Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition1Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionNavigationValue" value="${permissionNavigation3Value}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
+			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
+			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionNavigationValue" value="${permissionNavigation4Value}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition4Value}" />
+		</execute>
+	</command>
+
+	<command name="ViewDocumentsAndMediaAddRepositoryPermissionSiteMemberRole" priority="5">
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENTS_ADD_REPOSITORY" />
+		<var name="permissionDefinitionValue" value="Add Repository" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA" />
+		<var name="permissionNavigationValue" value="Documents and Media" />
+		<var name="roleName" value="Site Member" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute action="CPRolesDefinepermissions#assertTextNotPresent" value1="action.ADD_REPOSITORY" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#removePermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+	</command>
+</definition>

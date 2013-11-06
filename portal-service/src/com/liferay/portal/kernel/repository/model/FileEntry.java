@@ -49,12 +49,12 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public long getCompanyId();
 
 	/**
-	 * Retrieves the content stream of the current file version. In a Liferay
+	 * Returns the content stream of the current file version. In a Liferay
 	 * repository, this is the latest approved version. In third-party
-	 * repositories, this may be the latest content regardless of workflow
-	 * state.
+	 * repositories, the latest content stream may be returned, regardless of
+	 * workflow state.
 	 *
-	 * @return content stream of the current file version
+	 * @return the content stream of the current file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 * @see    #getFileVersion()
@@ -75,14 +75,14 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public long getFileEntryId();
 
 	/**
-	 * Retrieves the current file version. The workflow state of the latest file
-	 * version may affect what is returned by this method. In a Liferay
-	 * repository, this will return the latest approved version; the latest
-	 * version regardless of workflow state can be retrieved by {@link
+	 * Returns the current file version. The workflow state of the latest file
+	 * version may affect the file version that is returned. In a Liferay
+	 * repository, the latest approved version is returned; the latest version
+	 * regardless of workflow state can be retrieved by {@link
 	 * #getLatestFileVersion()}. In third-party repositories, these two methods
 	 * may function identically.
 	 *
-	 * @return current file version
+	 * @return the current file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -104,12 +104,12 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public String getIcon();
 
 	/**
-	 * Retrieves the latest file version. In a Liferay repository, this means
-	 * the latest version regardless of workflow state. In third-party
-	 * repositories, this may have an identical functionality with {@link
-	 * #getFileVersion()}.
+	 * Returns the latest file version. In a Liferay repository, the latest
+	 * version is returned, regardless of workflow state. In third-party
+	 * repositories, the functionality of this method and {@link
+	 * #getFileVersion()} may be identical.
 	 *
-	 * @return latest file version
+	 * @return the latest file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -117,14 +117,14 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 		throws PortalException, SystemException;
 
 	/**
-	 * Retrieves the latest file version. In a Liferay repository, this means
-	 * the latest version regardless of workflow state. In third-party
-	 * repositories, this may have an identical functionality with {@link
-	 * #getFileVersion()}.
+	 * Returns the latest file version, optionally bypassing security checks. In
+	 * a Liferay repository, the latest version is returned, regardless of
+	 * workflow state. In third-party repositories, the functionality of this
+	 * method and {@link #getFileVersion()} may be identical.
 	 *
-	 * @param trusted true if bypassing permission checks. In third-party
-	 *         repositories, this may be ignored
-	 * @return latest file version
+	 * @param  trusted whether to bypass permission checks. In third-party
+	 *         repositories, this parameter may be ignored.
+	 * @return the latest file version
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */

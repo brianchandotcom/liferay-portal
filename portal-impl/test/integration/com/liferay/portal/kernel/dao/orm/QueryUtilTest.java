@@ -31,9 +31,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Purpose of this class is to provide method to test also different SQL
- * dialects
- *
  * @author Sampsa Sohlman
  */
 @ExecutionTestListeners(listeners = { PersistenceExecutionTestListener.class })
@@ -177,14 +174,14 @@ public class QueryUtilTest {
 
 	@Test
 	public void testUnionSQL1() throws Exception {
-		testUnionSQL("ASC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "id",
-		"value");
+		testUnionSQL(
+			"ASC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "id", "value");
 	}
 
 	@Test
 	public void testUnionSQL2() throws Exception {
-		testUnionSQL("DESC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "value",
-		"id");
+		testUnionSQL(
+			"DESC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "value", "id");
 	}
 
 	@Test
@@ -272,20 +269,22 @@ public class QueryUtilTest {
 		throws Exception {
 
 		Session session = null;
+
 		try {
 			session = _sessionFactory.openSession();
-			SQLQuery q = session.createSQLQuery(
+
+			SQLQuery sqlQuery = session.createSQLQuery(
 				"SELECT id FROM QueryUtilTest ORDER BY value ".concat(order));
 
-			q.addScalar("id", Type.INTEGER);
+			sqlQuery.addScalar("id", Type.INTEGER);
 
 			List<Integer> result = (List<Integer>)QueryUtil.list(
-				q, _sessionFactory.getDialect(), start, end, true);
+				sqlQuery, _sessionFactory.getDialect(), start, end, true);
 
 			Assert.assertEquals(end - start, result.size());
 
-			Number firstId = (Integer)result.get(0);
-			Number lastId  =  (Integer)result.get(result.size() - 1);
+			Number firstId = result.get(0);
+			Number lastId = result.get(result.size() - 1);
 
 			Assert.assertEquals(expectedFirstValue, firstId.intValue());
 			Assert.assertEquals(expectedLastValue, lastId.intValue());
@@ -301,12 +300,13 @@ public class QueryUtilTest {
 		throws Exception {
 
 		Session session = null;
+
 		try {
 			session = _sessionFactory.openSession();
 
 			String sql = _SQL_UNION_SELECT;
 
-			if (order!= null) {
+			if (order != null) {
 				sql += " ORDER BY type ".concat(order);
 			}
 
@@ -320,8 +320,8 @@ public class QueryUtilTest {
 			Object[] firstRow = result.get(0);
 			Object[] lastRow = result.get(result.size() - 1);
 
-			Assert.assertEquals(firstType, (String)firstRow[0]);
-			Assert.assertEquals(lastType, (String)lastRow[0]);
+			Assert.assertEquals(firstType, firstRow[0]);
+			Assert.assertEquals(lastType, lastRow[0]);
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -344,7 +344,7 @@ public class QueryUtilTest {
 
 	private static final String _SQL_UNION_SELECT =
 		"( SELECT 'value' AS type, id as value from QueryUtilTest ) " +
-		"UNION ALL ( SELECT 'id' AS type, id as value from QueryUtilTest )";
+			"UNION ALL ( SELECT 'id' AS type, id as value from QueryUtilTest )";
 
 	private static DB _db;
 

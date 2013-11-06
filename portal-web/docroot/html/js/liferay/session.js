@@ -513,6 +513,7 @@ AUI.add(
 						banner.html(instance._expiredText);
 
 						banner.replaceClass('popup-alert-notice', 'popup-alert-warning');
+						banner.addClass('alert-error');
 
 						banner.show();
 

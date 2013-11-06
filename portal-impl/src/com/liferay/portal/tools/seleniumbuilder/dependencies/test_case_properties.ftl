@@ -1,4 +1,4 @@
-<#assign propertiesContainer = seleniumBuilderContext.getPropContainer() />
+<#assign propertiesContainer = seleniumBuilderContext.getPropertyContainer() />
 <#list propertiesContainer as propertyContainerElement>
 	<#if propertyContainerElement.attributeValue("root") == "definition" >
 		${propertyContainerElement.attributeValue("testCaseName")}TestCase.all.${propertyContainerElement.attributeValue("name")}=${propertyContainerElement.attributeValue("value")}

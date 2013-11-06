@@ -1267,13 +1267,13 @@ public class SeleniumBuilderFileUtil {
 	protected void validatePropertyElement(String fileName, Element propertyElement){
 		List<Attribute> attributes = propertyElement.attributes();
 
-		for (Attribute attribute : attributes ){
+		for (Attribute attribute : attributes) {
 			String attributeName = attribute.getName();
 
-			if (attributeName.equals("line-number")){
+			if (attributeName.equals("line-number")) {
 				continue;
 			}
-			if (!(attributeName.equals("name") || attributeName.equals("value"))){
+			if (!(attributeName.equals("name") || attributeName.equals("value"))) {
 				continue;
 			}
 			else{

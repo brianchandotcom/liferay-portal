@@ -40,13 +40,14 @@ public class TestCaseConverter extends BaseConverter {
 		
 		File file = new File(System.getProperty("user.dir"));
 		file = file.getParentFile();
+		String buildPath = file.toString();
 
-		if (seleniumBuilderContext.getPropContainer().size() != 0){
+		if (seleniumBuilderContext.getPropertyContainer().size() != 0){
 			String propertiesContent = processTemplate(
 				"test_case_properties.ftl", context);
 			
 			seleniumBuilderFileUtil.writeFile(
-				file.toString(), "test.generated.properties",
+				buildPath, "test.generated.properties",
 				propertiesContent, false);
 		}
 

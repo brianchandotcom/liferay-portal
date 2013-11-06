@@ -4,6 +4,12 @@
 	margin-bottom: 0.5em;
 }
 
+.lfr-tags-selector-content {
+	.toolbar {
+		position: static;
+	}
+}
+
 .lfr-tag-selector-popup {
 	width: 250px;
 

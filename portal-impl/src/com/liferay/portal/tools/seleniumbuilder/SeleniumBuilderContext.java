@@ -102,7 +102,7 @@ public class SeleniumBuilderContext {
 
 	public void addFile(String fileName) throws Exception {
 		fileName = _normalizeFileName(fileName);
-
+	
 		if (fileName.endsWith(".action")) {
 			String actionName = _getName(fileName);
 
@@ -212,10 +212,14 @@ public class SeleniumBuilderContext {
 			_testCaseClassNames.put(testCaseName, _getClassName(fileName));
 
 			Element rootElement = _getRootElement(fileName);
-
+			
 			_testCaseCommandNames.put(
 				testCaseName, _getTestCaseCommandNames(rootElement));
 
+			_testCaseProperties.put(
+				testCaseName, _getTestCaseProperties(
+					rootElement, _propContainer, testCaseName));
+			
 			_testCaseFileNames.put(testCaseName, fileName);
 
 			_testCaseHTMLFileNames.put(
@@ -223,7 +227,7 @@ public class SeleniumBuilderContext {
 
 			_testCaseJavaFileNames.put(
 				testCaseName, _getJavaFileName(fileName));
-
+			
 			if (_testCaseNames.contains(testCaseName)) {
 				_seleniumBuilderFileUtil.throwValidationException(
 					1008, fileName, testCaseName);
@@ -439,6 +443,10 @@ public class SeleniumBuilderContext {
 	public String getPathSimpleClassName(String pathName) {
 		return _pathSimpleClassNames.get(pathName);
 	}
+	
+	public Set<Element> getPropContainer() {
+		return _propContainer;
+	}
 
 	public int getSeleniumParameterCount(String seleniumCommandName) {
 		return _seleniumParameterCounts.get(seleniumCommandName);
@@ -466,6 +474,11 @@ public class SeleniumBuilderContext {
 
 	public String getTestCasePackageName(String testCaseName) {
 		return _testCasePackageNames.get(testCaseName);
+	}
+
+	public Set<Element> getTestCaseProperties(
+		Element rootElement, Set<Element> propContainer, String testCaseName) {
+		return _getTestCaseProperties(rootElement, propContainer, testCaseName);
 	}
 
 	public Element getTestCaseRootElement(String testCaseName) {
@@ -767,6 +780,42 @@ public class SeleniumBuilderContext {
 		return _seleniumBuilderFileUtil.getSimpleClassName(
 			fileName, classSuffix);
 	}
+	
+	private Set<Element> _getTestCaseProperties(
+		Element rootElement, Set<Element> propContainer, String testCaseName) {
+
+		List<Element> verifyElements = 
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "property");
+
+		List<Element> propertyElements = rootElement.elements("property");
+		
+		if (propertyElements.size() == 0 && verifyElements.size() == 0){
+			return propContainer;
+		}
+
+		for (Element propertyElement : propertyElements){
+			propertyElement.addAttribute("testCaseName", testCaseName);
+			propertyElement.addAttribute("root", rootElement.getName());
+			
+			if (!(rootElement.getName().equals("definition"))){
+				propertyElement.addAttribute(
+					"rootName", rootElement.attributeValue("name"));
+			}
+			propContainer.add(propertyElement);
+		}
+
+		List<Element> commandElements = rootElement.elements("command");
+		if (commandElements.size() != 0){
+			for (Element commandElement : commandElements ){
+				_getTestCaseProperties(
+					commandElement, propContainer, testCaseName);
+			}
+		}
+
+		return propContainer;
+	}
+
 
 	private Set<String> _getTestCaseCommandNames(Element rootElement) {
 		List<Element> commandElements =
@@ -1090,6 +1139,7 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Element>();
 	private Map<String, String> _pathSimpleClassNames =
 		new HashMap<String, String>();
+	private Set<Element> _propContainer = new HashSet<Element>();
 	private SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 	private Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<String, Integer>();
@@ -1103,6 +1153,10 @@ public class SeleniumBuilderContext {
 		new HashMap<String, String>();
 	private Map<String, String> _testCaseJavaFileNames =
 		new HashMap<String, String>();
+	private Map<String, String> _testCasePropertiesFileNames =
+		new HashMap<String, String>();
+	private Map<String, Set<Element>> _testCaseProperties =
+		new HashMap<String, Set<Element>>();
 	private Set<String> _testCaseNames = new HashSet<String>();
 	private Map<String, String> _testCasePackageNames =
 		new HashMap<String, String>();

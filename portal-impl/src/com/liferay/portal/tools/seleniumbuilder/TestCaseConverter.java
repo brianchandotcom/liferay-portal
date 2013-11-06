@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.seleniumbuilder;
 
 import java.util.Map;
+import java.io.File;
 
 /**
  * @author Michael Hashimoto
@@ -36,9 +37,21 @@ public class TestCaseConverter extends BaseConverter {
 		seleniumBuilderFileUtil.writeFile(
 			seleniumBuilderContext.getTestCaseJavaFileName(testCaseName),
 			javaContent, true);
+		
+		File file = new File(System.getProperty("user.dir"));
+		file = file.getParentFile();
+
+		if (seleniumBuilderContext.getPropContainer().size() != 0){
+			String propertiesContent = processTemplate(
+				"test_case_properties.ftl", context);
+			
+			seleniumBuilderFileUtil.writeFile(
+				file.toString(), "test.generated.properties",
+				propertiesContent, false);
+		}
 
 		String htmlContent = processTemplate("test_case_html.ftl", context);
-
+		
 		seleniumBuilderFileUtil.writeFile(
 			seleniumBuilderContext.getTestCaseHTMLFileName(testCaseName),
 			htmlContent, false);

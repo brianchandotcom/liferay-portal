@@ -1,4 +1,5 @@
 <definition>
+	<property name="web.plugins.includes" value="kaleo-web" />
 	<var name="workflowAssetType" value="Web Content Article" />
 
 	<set-up>

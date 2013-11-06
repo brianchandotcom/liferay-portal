@@ -25,6 +25,7 @@
 	</tear-down>
 
 	<command name="AddWikiFrontPageContentJavascript" priority="5">
+		<property name="hook.plugins.include" value="antisamy-hook" />
 		<var name="wikiPageContent">
 			<![CDATA[
 				<p id='demo'>PASS</p>

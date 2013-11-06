@@ -1,4 +1,6 @@
 <definition>
+	<property name="portlet.plugins.includes" value="calendar-portlet" />
+
 	<var name="pageName" value="Calendar Page" />
 	<var name="portletName" value="Calendar" />
 	<var name="user" value="Test Test" />

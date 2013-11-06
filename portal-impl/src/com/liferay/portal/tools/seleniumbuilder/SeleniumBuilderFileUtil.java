@@ -719,6 +719,9 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames,
 					allowedIfConditionElementNames);
 			}
+			else if (elementName.equals("property")){
+				validatePropertyElement(fileName, element);
+			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
 			}
@@ -1261,6 +1264,24 @@ public class SeleniumBuilderFileUtil {
 		}
 	}
 
+	protected void validatePropertyElement(String fileName, Element propertyElement){
+		List<Attribute> attributes = propertyElement.attributes();
+
+		for (Attribute attribute : attributes ){
+			String attributeName = attribute.getName();
+
+			if (attributeName.equals("line-number")){
+				continue;
+			}
+			if (!(attributeName.equals("name") || attributeName.equals("value"))){
+				continue;
+			}
+			else{
+			}
+		}
+
+	}
+
 	protected void validateSimpleElement(
 		String fileName, Element element, String[] neededAttributes) {
 
@@ -1368,10 +1389,15 @@ public class SeleniumBuilderFileUtil {
 				}
 
 				validateBlockElement(
-					fileName, element, new String[] {"execute", "var"},
+					fileName, element, new String[] {"execute", "var", "property"},
 					new String[] {"action", "macro", "test-case"},
 					new String[] {"var"}, new String[0]);
 			}
+
+			else if (elementName.equals("property")){
+				validatePropertyElement(fileName, element);
+			}
+
 			else if (elementName.equals("set-up") ||
 					 elementName.equals("tear-down")) {
 
@@ -1393,6 +1419,9 @@ public class SeleniumBuilderFileUtil {
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
+			}
+			else if (elementName.equals("property")){
+				validatePropertyElement(fileName, element);
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);
@@ -1558,7 +1587,7 @@ public class SeleniumBuilderFileUtil {
 			"and", "case", "command", "condition", "contains", "default",
 			"definition", "echo", "else", "elseif", "equals", "execute", "fail",
 			"if", "isset", "not", "or", "set-up", "td", "tear-down", "then",
-			"tr", "while", "var"
+			"tr", "while", "var", "property"
 		});
 
 	private String _baseDir;

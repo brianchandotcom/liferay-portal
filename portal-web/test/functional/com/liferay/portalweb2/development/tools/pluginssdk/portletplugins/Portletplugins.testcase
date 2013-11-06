@@ -12,6 +12,8 @@
 	</tear-down>
 
 	<command name="AkismetPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="akismet-portlet" />
+
 		<var name="appName" value="Akismet" />
 
 		<execute macro="Page#gotoCP">
@@ -36,7 +38,10 @@
 	</command>
 
 	<command name="CalendarPortletSmoke" priority="5">
-		<var name="appName" value="Calendar" />
+		<property name="portlet.plugins.includes" value="calendar-portlet" />
+
+		<var name="appName" value="Enterprise Calendar" />
+>>>>>>> LPS-42077
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
@@ -64,6 +69,8 @@
 	</command>
 
 	<command name="ChatPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="chat-portlet" />
+
 		<var name="appName" value="Chat" />
 
 		<execute macro="Page#gotoCP">
@@ -92,6 +99,8 @@
 	</command>
 
 	<command name="DDLFormPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="ddl-form-portlet" />
+
 		<var name="appName" value="Dynamic Data List Form" />
 
 		<execute macro="Page#gotoPG">
@@ -120,6 +129,8 @@
 	</command>
 
 	<command name="FlashPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="flash-portlet" />
+
 		<var name="appName" value="Flash" />
 
 		<execute macro="Page#gotoPG">
@@ -148,6 +159,8 @@
 	</command>
 
 	<command name="GoogleAdSensePortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="google-adsense-portlet" />
+
 		<var name="appName" value="Google AdSense" />
 
 		<execute macro="Page#gotoPG">
@@ -176,6 +189,8 @@
 	</command>
 
 	<command name="GoogleMapsPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="google-maps-portlet" />
+
 		<var name="appName" value="Google Maps" />
 
 		<execute macro="Page#gotoPG">
@@ -204,6 +219,8 @@
 	</command>
 
 	<command name="IPGeocoderPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="ip-geocoder-portlet" />
+
 		<var name="appName" value="IP Geocoder" />
 
 		<execute macro="Page#gotoPG">
@@ -231,7 +248,10 @@
 		</execute>
 	</command>
 
+
 	<command name="KnowledgeBasePortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
+
 		<var name="appName" value="Knowledge Base" />
 
 		<execute macro="Page#gotoPG">
@@ -288,6 +308,8 @@
 	</command>
 
 	<command name="LogosRefTaggerPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="logos-reftagger-portlet" />
+
 		<var name="appName" value="Logos RefTagger" />
 
 		<execute macro="Page#gotoCP">
@@ -308,6 +330,8 @@
 	</command>
 
 	<command name="MailPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="mail-portlet" />
+
 		<var name="appName" value="Mail" />
 
 		<execute macro="Page#gotoPG">
@@ -336,7 +360,11 @@
 	</command>
 
 	<command name="MarketplacePortletSmoke" priority="5">
+<<<<<<< HEAD
 		<var name="appName" value="Marketplace" />
+=======
+		<property name="portlet.plugins.includes" value="marketplace-portlet" />
+
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="App Manager" />
@@ -348,6 +376,8 @@
 	</command>
 
 	<command name="MBSubscriptionManagerPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="mb-subscription-manager-portlet" />
+
 		<var name="appName" value="Message Boards Subscription Manager" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -372,6 +402,8 @@
 	</command>
 
 	<command name="MySubscriptionsPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="my-subscriptions-portlet" />
+
 		<var name="appName" value="My Subscriptions" />
 
 		<execute macro="Page#gotoPG">
@@ -404,6 +436,8 @@
 	</command>
 
 	<command name="NetvibesWidgetPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="netvibes-widget-portlet" />
+
 		<var name="appName" value="Netvibes Widget" />
 
 		<execute macro="Page#gotoPG">
@@ -432,6 +466,8 @@
 	</command>
 
 	<command name="NotificationsPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="notifications-portlet" />
+
 		<var name="appName" value="Notifications" />
 
 		<execute macro="Page#gotoPG">
@@ -468,6 +504,8 @@
 	</command>
 
 	<command name="OpenSocialPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="opensocial-portlet" />
+
 		<var name="appName" value="OpenSocial Gadget" />
 
 		<execute macro="Page#gotoPG">
@@ -504,6 +542,8 @@
 	</command>
 
 	<command name="PluginsSecurityManagerPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="plugin-security-manager-portlet" />
+
 		<var name="appName" value="Plugins Security Manager" />
 
 		<execute macro="Page#gotoCP">
@@ -523,7 +563,10 @@
 		</execute>
 	</command>
 
+
 	<command name="SocialNetworkingPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="social-networking-portlet" />
+
 		<var name="appName" value="Social Networking" />
 
 		<execute macro="Page#gotoPG">
@@ -616,6 +659,8 @@
 	</command>
 
 	<command name="StocksPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="stocks-portlet" />
+
 		<var name="appName" value="Stocks" />
 
 		<execute macro="Page#gotoPG">
@@ -644,6 +689,8 @@
 	</command>
 
 	<command name="TwitterPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="twitter-portlet" />
+
 		<var name="appName" value="Twitter" />
 
 		<execute macro="Page#gotoPG">
@@ -672,6 +719,8 @@
 	</command>
 
 	<command name="VimeoPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="vimeo-portlet" />
+
 		<var name="appName" value="Vimeo" />
 
 		<execute macro="Page#gotoPG">
@@ -700,6 +749,8 @@
 	</command>
 
 	<command name="WeatherPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="weather-portlet" />
+
 		<var name="appName" value="Weather" />
 
 		<execute macro="Page#gotoPG">
@@ -728,6 +779,8 @@
 	</command>
 
 	<command name="WebFormPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="web-form-portlet" />
+
 		<var name="appName" value="Web Form" />
 
 		<execute macro="Page#gotoPG">
@@ -756,6 +809,8 @@
 	</command>
 
 	<command name="WikiNavigationPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="wiki-navigation-portlet" />
+
 		<var name="appName" value="Wiki Navigation" />
 
 		<execute macro="Page#gotoPG">
@@ -792,6 +847,8 @@
 	</command>
 
 	<command name="WSRPPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="wsrp-portlet" />
+
 		<var name="appName" value="WSRP" />
 
 		<execute macro="Page#gotoCP">
@@ -816,6 +873,8 @@
 	</command>
 
 	<command name="WYSIWYGPortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="wysiwyg-portlet" />
+
 		<var name="appName" value="WYSIWYG" />
 
 		<execute macro="Page#gotoPG">
@@ -844,6 +903,8 @@
 	</command>
 
 	<command name="YouTubePortletSmoke" priority="5">
+		<property name="portlet.plugins.includes" value="youtube-portlet" />
+
 		<var name="appName" value="YouTube" />
 
 		<execute macro="Page#gotoPG">

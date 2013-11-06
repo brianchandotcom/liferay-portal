@@ -1,4 +1,6 @@
 <definition>
+	<property name="web.plugins.includes" value="kaleo-web" />
+
 	<var name="pageName" value="Page Comments Page" />
 	<var name="portletName" value="Page Comments" />
 	<var name="workflowAssetType" value="Comments" />

@@ -1,4 +1,6 @@
 <definition>
+	<property name="web.plugins.includes" value="kaleo-web" />
+
 	<var name="pageName" value="Wiki Page" />
 	<var name="portletName" value="Wiki" />
 	<var name="workflowAssetType" value="Wiki Page" />

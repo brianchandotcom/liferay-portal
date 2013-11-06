@@ -9,6 +9,10 @@ AUI.add(
 
 		var STR_INPUT_VALUE_CHANGE = '_onInputValueChange';
 
+		var STR_ITEMS = 'items';
+
+		var STR_SELECTED = 'selected';
+
 		var STR_SUBMIT = '_onSubmit';
 
 		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
@@ -53,7 +57,7 @@ AUI.add(
 						valueFn: function() {
 							var instance = this;
 
-							var items = instance.get('items');
+							var items = instance.get(STR_ITEMS);
 
 							defaultLanguageId = instance.get('defaultLanguageId');
 
@@ -131,8 +135,8 @@ AUI.add(
 					getSelectedLanguageId: function() {
 						var instance = this;
 
-						var items = instance.get('items');
-						var selected = instance.get('selected');
+						var items = instance.get(STR_ITEMS);
+						var selected = instance.get(STR_SELECTED);
 
 						return items[selected];
 					},
@@ -348,7 +352,7 @@ AUI.add(
 					_syncTranslatedLanguagesUI: function() {
 						var instance = this;
 
-						var flags = instance.get('items');
+						var flags = instance.get(STR_ITEMS);
 
 						var translatedLanguages = instance.get('translatedLanguages');
 
@@ -410,10 +414,8 @@ AUI.add(
 					delete InputLocalized._instances[id];
 				},
 
-				_onInputUserInteraction: function(event) {
+				_initializeInputLocalized: function(input, initialLanguageId) {
 					var instance = this;
-
-					var input = event.currentTarget;
 
 					var id = input.attr('id');
 
@@ -424,7 +426,37 @@ AUI.add(
 
 						inputLocalized._onDocFocus(event);
 
+						if (initialLanguageId) {
+							var items = inputLocalized.get(STR_ITEMS);
+
+							inputLocalized.set(STR_SELECTED, AArray.indexOf(items, initialLanguageId));
+
+							inputLocalized.selectFlag(initialLanguageId);
+						}
+
 						delete InputLocalized._registered[id];
+					}
+				},
+
+				_onInputUserInteraction: function(event) {
+					var instance = this;
+
+					var input = event.currentTarget;
+
+					InputLocalized._initializeInputLocalized(input);
+				},
+
+				_onFlagUserInteraction: function(event) {
+					var instance = this;
+
+					var target = event.currentTarget;
+
+					var flag = target.one('.lfr-input-localized-flag');
+
+					var input = target.ancestor('.input-localized').one('.language-value');
+
+					if (input && flag) {
+						InputLocalized._initializeInputLocalized(input, flag.attr('data-languageid'));
 					}
 				},
 
@@ -432,7 +464,12 @@ AUI.add(
 					InputLocalized._registered[id] = config;
 
 					if (!InputLocalized._interactionHandle) {
-						InputLocalized._interactionHandle = A.getDoc().delegate(['focus', 'input'], InputLocalized._onInputUserInteraction, '.language-value');
+						var handles = [
+							A.getDoc().delegate(['focus', 'input'], InputLocalized._onInputUserInteraction, '.language-value'),
+							A.getDoc().delegate('click', InputLocalized._onFlagUserInteraction, '.input-localized-content .palette-item')
+						];
+
+						InputLocalized._interactionHandle = new A.EventHandle(handles);
 					}
 				},
 

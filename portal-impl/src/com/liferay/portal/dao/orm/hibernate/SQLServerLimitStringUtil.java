@@ -56,18 +56,13 @@ public class SQLServerLimitStringUtil {
 		String innerOrderBy = splitOrderBy[0];
 		String outerOrderBy = splitOrderBy[1];
 
-		String[] splitSelectFrom = _splitSelectFrom(
+		String innerSelectFrom = _getInnerSelectFrom(
 			selectFrom, innerOrderBy, limit);
-
-		String innerSelectFrom = splitSelectFrom[0];
-		String outerSelectFrom = splitSelectFrom[1];
 
 		StringBundler sb = new StringBundler(15);
 
-		sb.append(outerSelectFrom);
-		sb.append(" from (");
-		sb.append(outerSelectFrom);
-		sb.append(", row_number() over (");
+		sb.append("select * from (");
+		sb.append("select *, row_number() over (");
 		sb.append(outerOrderBy);
 		sb.append(") as _page_row_num from (");
 		sb.append(innerSelectFrom);
@@ -160,7 +155,7 @@ public class SQLServerLimitStringUtil {
 		};
 	}
 
-	private static String[] _splitSelectFrom(
+	private static String _getInnerSelectFrom(
 		String selectFrom, String innerOrderBy, int limit) {
 
 		String innerSelectFrom = selectFrom;
@@ -173,27 +168,7 @@ public class SQLServerLimitStringUtil {
 					StringPool.SPACE));
 		}
 
-		String outerSelectFrom = selectFrom;
-
-		while (outerSelectFrom.charAt(0) == CharPool.OPEN_PARENTHESIS) {
-			outerSelectFrom = outerSelectFrom.substring(1);
-		}
-
-		Matcher matcher = _columnAliasPattern.matcher(outerSelectFrom);
-
-		outerSelectFrom = matcher.replaceAll("$1");
-
-		matcher = _distinctPattern.matcher(outerSelectFrom);
-
-		outerSelectFrom = matcher.replaceAll(StringPool.SPACE);
-
-		matcher = _qualifiedColumnPattern.matcher(outerSelectFrom);
-
-		outerSelectFrom = matcher.replaceAll("$1");
-
-		return new String[] {
-			innerSelectFrom, outerSelectFrom
-		};
+		return innerSelectFrom;
 	}
 
 	private static Pattern _columnAliasPattern = Pattern.compile(

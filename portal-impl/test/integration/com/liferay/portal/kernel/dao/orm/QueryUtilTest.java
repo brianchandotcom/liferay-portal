@@ -142,6 +142,68 @@ public class QueryUtilTest {
 		testList(_SIZE + 1, _SIZE + 21, true, 0, 0, 0);
 	}
 
+	@Test
+	public void testSQLWithLimitWithOuterOrder1a() throws Exception {
+		testSQLWithLimitWithOuterOrder("ASC", 0, 10, 0, 9);
+	}
+
+	@Test
+	public void testSQLWithLimitWithOuterOrder1d() throws Exception {
+		testSQLWithLimitWithOuterOrder("DESC", 0, 10, 19, 10);
+	}
+
+	@Test
+	public void testSQLWithLimitWithOuterOrder2a() throws Exception {
+		testSQLWithLimitWithOuterOrder("ASC", 5, 15, 5, 14);
+	}
+
+	@Test
+	public void testSQLWithLimitWithOuterOrder2d() throws Exception {
+		testSQLWithLimitWithOuterOrder("DESC", 5, 15, 14, 5);
+	}
+
+	@Test
+	public void testSQLWithLimitWithOuterOrder3a() throws Exception {
+		testSQLWithLimitWithOuterOrder("ASC", 10, 20, 10, 19);
+	}
+
+	@Test
+	public void testSQLWithLimitWithOuterOrder3d() throws Exception {
+		testSQLWithLimitWithOuterOrder("DESC", 10, 20, 9, 0);
+	}
+
+	@Test
+	public void testUnionSQL1() throws Exception {
+		testUnionSQL(
+			"ASC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "id", "value");
+	}
+
+	@Test
+	public void testUnionSQL2() throws Exception {
+		testUnionSQL(
+			"DESC",  _SIZE / 2, _SIZE + (_SIZE / 2), _SIZE, "value", "id");
+	}
+
+	@Test
+	public void testUnionSQL3() throws Exception {
+		testUnionSQL("ASC",  0, _SIZE, _SIZE, "id", "id");
+	}
+
+	@Test
+	public void testUnionSQL4() throws Exception {
+		testUnionSQL("DESC",  0, _SIZE, _SIZE, "value", "value");
+	}
+
+	@Test
+	public void testUnionSQL5() throws Exception {
+		testUnionSQL("ASC",  _SIZE, _SIZE * 2, _SIZE, "value", "value");
+	}
+
+	@Test
+	public void testUnionSQL6() throws Exception {
+		testUnionSQL("DESC", _SIZE, _SIZE * 2, _SIZE, "id", "id");
+	}
+
 	protected static String[] createInserts(int amount) {
 		String[] sqls = new String[amount];
 
@@ -201,11 +263,76 @@ public class QueryUtilTest {
 		}
 	}
 
+	protected void testSQLWithLimitWithOuterOrder(
+			String order, int start, int end, int expectedFirstValue,
+			int expectedLastValue)
+		throws Exception {
+
+		Session session = null;
+
+		try {
+			session = _sessionFactory.openSession();
+
+			SQLQuery sqlQuery = session.createSQLQuery(
+				"SELECT id FROM QueryUtilTest ORDER BY value ".concat(order));
+
+			sqlQuery.addScalar("id", Type.INTEGER);
+
+			List<Integer> result = (List<Integer>)QueryUtil.list(
+				sqlQuery, _sessionFactory.getDialect(), start, end, true);
+
+			Assert.assertEquals(end - start, result.size());
+
+			Number firstId = result.get(0);
+			Number lastId = result.get(result.size() - 1);
+
+			Assert.assertEquals(expectedFirstValue, firstId.intValue());
+			Assert.assertEquals(expectedLastValue, lastId.intValue());
+		}
+		finally {
+			_sessionFactory.closeSession(session);
+		}
+	}
+
+	protected void testUnionSQL(
+			String order, int start, int end, int size, String firstType,
+			String lastType)
+		throws Exception {
+
+		Session session = null;
+
+		try {
+			session = _sessionFactory.openSession();
+
+			String sql = _SQL_UNION_SELECT;
+
+			if (order != null) {
+				sql += " ORDER BY type ".concat(order);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			List<Object[]> result = (List<Object[]>)QueryUtil.list(
+				q, _sessionFactory.getDialect(), start, end, true);
+
+			Assert.assertEquals(size, result.size());
+
+			Object[] firstRow = result.get(0);
+			Object[] lastRow = result.get(result.size() - 1);
+
+			Assert.assertEquals(firstType, firstRow[0]);
+			Assert.assertEquals(lastType, lastRow[0]);
+		}
+		finally {
+			_sessionFactory.closeSession(session);
+		}
+	}
+
 	private static final int _SIZE = 20;
 
 	private static final String _SQL_CREATE_TABLE =
 		"CREATE TABLE QueryUtilTest (id INTEGER NOT NULL PRIMARY KEY, " +
-			"value INTEGER)";
+		"value INTEGER)";
 
 	private static final String _SQL_DROP_TABLE = "DROP TABLE QueryUtilTest";
 
@@ -214,6 +341,10 @@ public class QueryUtilTest {
 
 	private static final String _SQL_SELECT =
 		"SELECT id, value FROM QueryUtilTest ORDER BY id ASC";
+
+	private static final String _SQL_UNION_SELECT =
+		"( SELECT 'value' AS type, id as value from QueryUtilTest ) " +
+			"UNION ALL ( SELECT 'id' AS type, id as value from QueryUtilTest )";
 
 	private static DB _db;
 

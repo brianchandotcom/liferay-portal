@@ -217,15 +217,11 @@ public class I18nFilter extends BasePortalFilter {
 			return LocaleUtil.toLanguageId(PortalUtil.getLocale(request));
 		}
 		else if (prependFriendlyUrlStyle == 3) {
-			Locale locale = LocaleUtil.getDefault();
-
 			if (user != null) {
-				locale = user.getLocale();
+				HttpSession session = request.getSession();
+
+				session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
 			}
-
-			HttpSession session = request.getSession();
-
-			session.setAttribute(Globals.LOCALE_KEY, locale);
 
 			return null;
 		}

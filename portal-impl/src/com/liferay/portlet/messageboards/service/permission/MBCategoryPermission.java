@@ -143,7 +143,8 @@ public class MBCategoryPermission {
 				}
 			}
 
-			return true;
+			return MBPermission.contains(
+				permissionChecker, category.getGroupId(), actionId);
 		}
 
 		return _hasPermission(permissionChecker, category, actionId);

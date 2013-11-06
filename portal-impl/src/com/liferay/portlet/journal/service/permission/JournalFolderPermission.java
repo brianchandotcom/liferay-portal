@@ -95,7 +95,8 @@ public class JournalFolderPermission {
 				}
 			}
 
-			return true;
+			return JournalPermission.contains(
+				permissionChecker, folder.getGroupId(), actionId);
 		}
 
 		return _hasPermission(permissionChecker, folder, actionId);

@@ -60,7 +60,6 @@ import java.util.Map;
  *
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
- * @see com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl
  */
 public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
@@ -696,6 +695,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	/**
+	 * @see com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl#isKeepFileVersionLabel(
+	 *      DLFileEntry, DLFileVersion, DLFileVersion, int)}
+	 */
 	protected boolean isKeepRecordVersionLabel(
 			DDLRecordVersion lastRecordVersion,
 			DDLRecordVersion latestRecordVersion, int workflowContext)

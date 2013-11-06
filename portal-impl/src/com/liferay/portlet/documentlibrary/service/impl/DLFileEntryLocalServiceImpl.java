@@ -139,7 +139,6 @@ import java.util.Map;
  * @author Harry Mark
  * @author Alexander Chow
  * @author Manuel de la Peña
- * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl
  */
 public class DLFileEntryLocalServiceImpl
 	extends DLFileEntryLocalServiceBaseImpl {
@@ -1930,6 +1929,10 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	/**
+	 * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl#isKeepRecordVersionLabel(
+	 *      DDLRecordVersion, DDLRecordVersion, int)}
+	 */
 	protected boolean isKeepFileVersionLabel(
 			DLFileEntry dlFileEntry, DLFileVersion lastDLFileVersion,
 			DLFileVersion latestDLFileVersion, int workflowAction)

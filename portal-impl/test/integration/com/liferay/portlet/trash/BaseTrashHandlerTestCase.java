@@ -954,14 +954,15 @@ public abstract class BaseTrashHandlerTestCase {
 
 			Assert.assertEquals(0, getTrashEntriesCount(group.getGroupId()));
 		}
-		else if (isBaseModelMoveableFromTrash()) {
-			if (delete) {
-				parentTrashHandler.deleteTrashEntry(
-					(Long)parentBaseModel.getPrimaryKeyObj());
+		else if (delete) {
+			parentTrashHandler.deleteTrashEntry(
+				(Long)parentBaseModel.getPrimaryKeyObj());
 
-				Assert.assertEquals(
-					initialBaseModelsCount,
-					getNotInTrashBaseModelsCount(parentBaseModel));
+			Assert.assertEquals(
+				initialBaseModelsCount,
+				getNotInTrashBaseModelsCount(parentBaseModel));
+
+			if (isBaseModelMoveableFromTrash()) {
 				Assert.assertEquals(
 					initialTrashEntriesCount + 1,
 					getTrashEntriesCount(group.getGroupId()));
@@ -971,25 +972,25 @@ public abstract class BaseTrashHandlerTestCase {
 						getBaseModelClassName());
 
 				trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
-
-				Assert.assertEquals(
-					initialTrashEntriesCount,
-					getTrashEntriesCount(group.getGroupId()));
 			}
-			else {
-				BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
-					baseModel, group, serviceContext);
 
-				Assert.assertEquals(
-					initialBaseModelsCount + 1,
-					getNotInTrashBaseModelsCount(newParentBaseModel));
-				Assert.assertEquals(
-					initialTrashEntriesCount + 1,
-					getTrashEntriesCount(group.getGroupId()));
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				getTrashEntriesCount(group.getGroupId()));
+		}
+		else if (isBaseModelMoveableFromTrash()) {
+			BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
+				baseModel, group, serviceContext);
 
-				if (isAssetableModel()) {
-					Assert.assertTrue(isAssetEntryVisible(baseModel));
-				}
+			Assert.assertEquals(
+				initialBaseModelsCount + 1,
+				getNotInTrashBaseModelsCount(newParentBaseModel));
+			Assert.assertEquals(
+				initialTrashEntriesCount + 1,
+				getTrashEntriesCount(group.getGroupId()));
+
+			if (isAssetableModel()) {
+				Assert.assertTrue(isAssetEntryVisible(baseModel));
 			}
 		}
 	}

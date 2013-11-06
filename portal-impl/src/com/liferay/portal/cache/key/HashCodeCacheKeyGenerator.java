@@ -29,27 +29,22 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 	}
 
 	@Override
-	public Long getCacheKey(String key) {
-		long hashCode = 0;
-
-		for (int i = 0; i < key.length(); i++) {
-			hashCode = 31 * hashCode + key.charAt(i);
-		}
-
-		return hashCode;
+	public Integer getCacheKey(String key) {
+		return key.hashCode();
 	}
 
 	@Override
-	public Long getCacheKey(String[] keys) {
-		long hashCode = 0;
+	public Integer getCacheKey(String[] keys) {
+		int hashCode = 0;
+		int weight = 1;
 
-		for (String key : keys) {
-			if (key == null) {
-				continue;
-			}
+		for (int i = keys.length - 1; i >= 0; i--) {
+			String s = keys[i];
 
-			for (int i = 0; i < key.length(); i++) {
-				hashCode = 31 * hashCode + key.charAt(i);
+			hashCode = s.hashCode() * weight + hashCode;
+
+			for (int j = s.length(); j > 0; j--) {
+				weight *= 31;
 			}
 		}
 
@@ -57,14 +52,19 @@ public class HashCodeCacheKeyGenerator extends BaseCacheKeyGenerator {
 	}
 
 	@Override
-	public Long getCacheKey(StringBundler sb) {
-		long hashCode = 0;
+	public Integer getCacheKey(StringBundler sb) {
+		int hashCode = 0;
+		int weight = 1;
 
-		for (int i = 0; i < sb.index(); i++) {
-			String key = sb.stringAt(i);
+		String[] array = sb.getStrings();
 
-			for (int j = 0; j < key.length(); j++) {
-				hashCode = 31 * hashCode + key.charAt(j);
+		for (int i = sb.index() - 1; i >= 0; i--) {
+			String s = array[i];
+
+			hashCode = s.hashCode() * weight + hashCode;
+
+			for (int j = s.length(); j > 0; j--) {
+				weight *= 31;
 			}
 		}
 

@@ -168,6 +168,10 @@ public class StringBundler implements Serializable {
 		return _array.length;
 	}
 
+	public String[] getStrings() {
+		return _array;
+	}
+
 	public int index() {
 		return _arrayIndex;
 	}

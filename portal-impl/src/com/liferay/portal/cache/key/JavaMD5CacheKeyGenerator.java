@@ -87,8 +87,10 @@ public class JavaMD5CacheKeyGenerator extends BaseCacheKeyGenerator {
 		}
 
 		try {
+			String[] array = sb.getStrings();
+
 			for (int i = 0; i < sb.index(); i++) {
-				String key = sb.stringAt(i);
+				String key = array[i];
 
 				_messageDigest.update(
 					_charsetEncoder.encode(CharBuffer.wrap(key)));

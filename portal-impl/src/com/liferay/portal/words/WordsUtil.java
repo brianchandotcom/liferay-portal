@@ -122,7 +122,7 @@ public class WordsUtil {
 	}
 
 	private String _getRandomWord() {
-		Random random = new Random(SecureRandomUtil.nextInt());
+		Random random = new Random(SecureRandomUtil.nextLong());
 
 		int pos = random.nextInt(_dictionaryList.size());
 

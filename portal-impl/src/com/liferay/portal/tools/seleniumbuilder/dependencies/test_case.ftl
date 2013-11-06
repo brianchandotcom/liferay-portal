@@ -39,10 +39,10 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 		extends BaseTestCase {
 	</#if>
 
-	<#if rootElement.element("var")??>
-		public ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}() {
-			super();
+	public ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}() {
+		super();
 
+		<#if rootElement.element("var")??>
 			<#assign varElements = rootElement.elements("var")>
 
 			<#assign context = "definitionScopeVariables">
@@ -50,8 +50,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 			<#list varElements as varElement>
 				<#include "var_element.ftl">
 			</#list>
-		}
-	</#if>
+		</#if>
+	}
 
 	@Override
 	public void setUp() throws Exception {

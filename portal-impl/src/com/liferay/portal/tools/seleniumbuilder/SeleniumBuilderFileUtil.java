@@ -1393,9 +1393,16 @@ public class SeleniumBuilderFileUtil {
 
 				validateBlockElement(
 					fileName, element,
-					new String[] {"execute", "property", "var"},
+					new String[] {
+						"echo", "execute", "fail", "if", "property", "var",
+						"while"
+					},
 					new String[] {"action", "macro", "test-case"},
-					new String[] {"var"}, new String[0]);
+					new String[] {"var"},
+					new String[] {
+						"and", "condition", "contains", "equals", "isset",
+						"not", "or"
+					});
 			}
 			else if (elementName.equals("property")) {
 				validatePropertyElement(fileName, element);
@@ -1415,9 +1422,16 @@ public class SeleniumBuilderFileUtil {
 				}
 
 				validateBlockElement(
-					fileName, element, new String[] {"execute", "var"},
+					fileName, element,
+					new String[] {
+						"echo", "execute", "fail", "if", "var", "while"
+					},
 					new String[] {"action", "macro", "test-case"},
-					new String[] {"var"}, new String[0]);
+					new String[] {"var"},
+					new String[] {
+						"and", "condition", "contains", "equals", "isset",
+						"not", "or"
+					});
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
@@ -1585,8 +1599,8 @@ public class SeleniumBuilderFileUtil {
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
 			"definition", "echo", "else", "elseif", "equals", "execute", "fail",
-			"if", "isset", "not", "or", "property", "set-up", "td", "tear-down",
-			"then", "tr", "while", "var"
+			"for", "if", "isset", "not", "or", "property", "set-up", "td",
+			"tear-down", "then", "tr", "while", "var"
 		});
 
 	private String _baseDir;

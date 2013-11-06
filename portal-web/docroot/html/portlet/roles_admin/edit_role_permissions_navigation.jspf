@@ -22,17 +22,28 @@
 	<div class="lfr-permission-navigation" id="<portlet:namespace />permissionNavigationDataContainer">
 		<div id="<portlet:namespace />permissionNavigationData">
 
-			<%
-			ResourceURL viewPermissionsURL = renderResponse.createResourceURL();
+			<liferay-portlet:renderURL varImpl="viewPermissionsURL">
+				<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
+				<portlet:param name="tabs1" value="roles" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
+				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+			</liferay-portlet:renderURL>
 
-			viewPermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
-			viewPermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
-			viewPermissionsURL.setParameter("tabs1", "roles");
-			viewPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+			<liferay-portlet:resourceURL varImpl="viewPermissionsResourceURL">
+				<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
+				<portlet:param name="tabs1" value="roles" />
+				<portlet:param name="backURL" value="<%= backURL %>" />
+				<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+			</liferay-portlet:resourceURL>
+
+			<%
+			Map<String, Object> data = new HashMap<String, Object>();
 			%>
 
 			<div class='permission-navigation-item-summary <%= Validator.isNull(portletResource)? "selected" : "" %>'>
-				<aui:a cssClass="permission-navigation-link" href="<%= viewPermissionsURL.toString() %>">
+				<aui:a cssClass="permission-navigation-link" data-resource-href="<%= viewPermissionsResourceURL.toString() %>" href="<%= viewPermissionsURL.toString() %>">
 					<liferay-ui:message key="summary" />
 				</aui:a>
 			</div>
@@ -44,10 +55,13 @@
 					Portlet usersAdminPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), PortletKeys.USERS_ADMIN);
 
 					editPermissionsURL.setParameter("portletResource", usersAdminPortlet.getPortletId());
+					editPermissionsResourceURL.setParameter("portletResource", usersAdminPortlet.getPortletId());
+
+					data.put("resource-href", editPermissionsResourceURL.toString());
 					%>
 
 					<div class='permission-navigation-item-users-admin <%= portletResource.equals(usersAdminPortlet.getPortletId())? "selected" : "" %>'>
-						<aui:a cssClass="permission-navigation-link" href="<%= editPermissionsURL.toString() %>">
+						<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
 							<%= PortalUtil.getPortletLongTitle(usersAdminPortlet, application, locale) %>
 						</aui:a>
 					</div>
@@ -56,6 +70,9 @@
 
 					<%
 					editPermissionsURL.setParameter("portletResource", PortletKeys.PORTAL);
+					editPermissionsResourceURL.setParameter("portletResource", PortletKeys.PORTAL);
+
+					data.put("resource-href", editPermissionsResourceURL.toString());
 					%>
 
 					<div class="permission-navigation-section">
@@ -71,7 +88,7 @@
 								<ul class="permission-navigation-item-content">
 									<li class="permission-navigation-item-container">
 										<span class='permission-navigation-item <%= portletResource.equals(PortletKeys.PORTAL)? "selected" : "" %>'>
-											<aui:a cssClass="permission-navigation-link" href="<%= editPermissionsURL.toString() %>">
+											<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
 												<liferay-ui:message key="general-permissions" />
 											</aui:a>
 										</span>
@@ -97,11 +114,14 @@
 											<%
 											for (Portlet categoryPortlet : categoryPortlets) {
 												editPermissionsURL.setParameter("portletResource", categoryPortlet.getPortletId());
+												editPermissionsResourceURL.setParameter("portletResource", categoryPortlet.getPortletId());
+
+												data.put("resource-href", editPermissionsResourceURL.toString());
 											%>
 
 												<li class="permission-navigation-item-container">
 													<span class='permission-navigation-item <%= portletResource.equals(categoryPortlet.getPortletId())? "selected" : "" %>'>
-														<aui:a cssClass="permission-navigation-link" href="<%= editPermissionsURL.toString() %>">
+														<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
 															<%= PortalUtil.getPortletLongTitle(categoryPortlet, application, locale) %>
 														</aui:a>
 													</span>
@@ -151,11 +171,14 @@
 									<%
 									for (Portlet categoryPortlet : categoryPortlets) {
 										editPermissionsURL.setParameter("portletResource", categoryPortlet.getPortletId());
+										editPermissionsResourceURL.setParameter("portletResource", categoryPortlet.getPortletId());
+
+										data.put("resource-href", editPermissionsResourceURL.toString());
 									%>
 
 										<li class="permission-navigation-item-container">
 											<span class='permission-navigation-item <%= portletResource.equals(categoryPortlet.getPortletId())? "selected" : "" %>'>
-												<aui:a cssClass="permission-navigation-link" href="<%= editPermissionsURL.toString() %>">
+												<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
 													<%= PortalUtil.getPortletLongTitle(categoryPortlet, application, locale) %>
 												</aui:a>
 											</span>
@@ -205,11 +228,14 @@
 								}
 
 								editPermissionsURL.setParameter("portletResource", curPortlet.getPortletId());
+								editPermissionsResourceURL.setParameter("portletResource", curPortlet.getPortletId());
+
+								data.put("resource-href", editPermissionsResourceURL.toString());
 							%>
 
 								<li class="permission-navigation-item-container">
 									<span class='permission-navigation-item <%= portletResource.equals(curPortlet.getPortletId())? "selected" : "" %>'>
-										<aui:a cssClass="permission-navigation-link" href="<%= editPermissionsURL.toString() %>">
+										<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
 											<%= PortalUtil.getPortletLongTitle(curPortlet, application, locale) %>
 										</aui:a>
 									</span>
@@ -239,11 +265,14 @@
 
 						for (Portlet myAccountPortlet : myAccountPortlets) {
 							editPermissionsURL.setParameter("portletResource", myAccountPortlet.getPortletId());
+							editPermissionsResourceURL.setParameter("portletResource", myAccountPortlet.getPortletId());
+
+							data.put("resource-href", editPermissionsResourceURL.toString());
 						%>
 
 							<li class="permission-navigation-item-container">
 								<span class='permission-navigation-item <%= portletResource.equals(myAccountPortlet.getPortletId())? "selected" : "" %>'>
-									<aui:a cssClass="permission-navigation-link" href="<%= editPermissionsURL.toString() %>">
+									<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= editPermissionsURL.toString() %>">
 										<%= PortalUtil.getPortletLongTitle(myAccountPortlet, application, locale) %>
 									</aui:a>
 								</span>

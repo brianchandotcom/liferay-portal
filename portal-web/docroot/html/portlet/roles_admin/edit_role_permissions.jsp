@@ -39,7 +39,16 @@ portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
+<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
+	<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
+	<portlet:param name="tabs1" value="roles" />
+	<portlet:param name="redirect" value="<%= backURL %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsResourceURL">
 	<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 	<portlet:param name="tabs1" value="roles" />
@@ -308,7 +317,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 				permissionContentContainerNode.unplug(AParseContent);
 
 				A.io.request(
-					event.currentTarget.attr('href'),
+					event.currentTarget.attr('data-resource-href'),
 					{
 						on: {
 							failure: function() {

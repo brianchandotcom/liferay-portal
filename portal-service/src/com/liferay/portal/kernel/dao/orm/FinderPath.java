@@ -141,27 +141,6 @@ public class FinderPath {
 		return _finderCacheEnabled;
 	}
 
-	public void setCacheKeyGeneratorCacheName(
-		String cacheKeyGeneratorCacheName) {
-
-		if (cacheKeyGeneratorCacheName == null) {
-			cacheKeyGeneratorCacheName = FinderCache.class.getName();
-		}
-
-		_cacheKeyGeneratorCacheName = cacheKeyGeneratorCacheName;
-
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				cacheKeyGeneratorCacheName);
-
-		if (cacheKeyGenerator.isCallingGetCacheKeyThreadSafe()) {
-			_cacheKeyGenerator = cacheKeyGenerator;
-		}
-		else {
-			_cacheKeyGenerator = null;
-		}
-	}
-
 	private Serializable _getCacheKey(StringBundler sb) {
 		CacheKeyGenerator cacheKeyGenerator = _cacheKeyGenerator;
 

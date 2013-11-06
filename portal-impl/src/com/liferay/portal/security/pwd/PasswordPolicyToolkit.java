@@ -240,7 +240,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 	}
 
 	protected String getRandomString(int count, char[] chars) {
-		Random random = new Random(SecureRandomUtil.nextInt());
+		Random random = new Random(SecureRandomUtil.nextLong());
 
 		StringBundler sb = new StringBundler(count);
 

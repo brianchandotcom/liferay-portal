@@ -175,6 +175,9 @@
 					<execute action="CPUsersandorganizationsVieworganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_COUNTRY" value1="${orgAddressCountry}" />
 				</then>
 			</elseif>
+			<else>
+				<fail message="Invalid var orgAdvancedSearch. Must be (Name|Street|City|Postal)." />
+			</else>
 		</if>
 	</command>
 

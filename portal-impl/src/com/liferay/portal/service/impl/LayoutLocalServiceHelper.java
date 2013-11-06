@@ -47,6 +47,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.sites.util.SitesUtil;
@@ -325,6 +326,16 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		}
 
 		LayoutImpl.validateFriendlyURLKeyword(friendlyURL);
+
+		if (friendlyURL.contains(Portal.FRIENDLY_URL_SEPARATOR)) {
+			LayoutFriendlyURLException lfurle =
+				new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.KEYWORD_CONFLICT);
+
+			lfurle.setKeywordConflict(Portal.FRIENDLY_URL_SEPARATOR);
+
+			throw lfurle;
+		}
 
 		List<FriendlyURLMapper> friendlyURLMappers =
 			PortletLocalServiceUtil.getFriendlyURLMappers();

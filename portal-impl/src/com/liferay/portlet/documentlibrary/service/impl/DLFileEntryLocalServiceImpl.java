@@ -1929,6 +1929,10 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	/**
+	 * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl#isKeepRecordVersionLabel(
+	 *      DDLRecordVersion, DDLRecordVersion, int)}
+	 */
 	protected boolean isKeepFileVersionLabel(
 			DLFileEntry dlFileEntry, DLFileVersion lastDLFileVersion,
 			DLFileVersion latestDLFileVersion, int workflowAction)
@@ -1992,7 +1996,7 @@ public class DLFileEntryLocalServiceImpl
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			if (!Validator.equals(lastFields, latestFields)) {
+			if (!lastFields.equals(latestFields, false)) {
 				return false;
 			}
 		}
@@ -2008,7 +2012,7 @@ public class DLFileEntryLocalServiceImpl
 		Map<String, Serializable> latestAttributes =
 			latestExpandoBridge.getAttributes();
 
-		if (!Validator.equals(lastAttributes, latestAttributes)) {
+		if (!lastAttributes.equals(latestAttributes)) {
 			return false;
 		}
 

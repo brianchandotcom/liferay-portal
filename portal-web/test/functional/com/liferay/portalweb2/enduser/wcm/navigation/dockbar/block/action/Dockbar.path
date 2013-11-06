@@ -18,6 +18,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_INFO_MESSAGE</td>
+	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADD-->
 <tr>
 	<td>ADD</td>
@@ -197,6 +207,22 @@
 <tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EDIT_DETAILS-->
+<tr>
+	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabledCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX</td>
+	<td>//label[contains(@for,'layoutPrototypeLinkEnabledCheckbox')]/input[contains(@id,'layoutPrototypeLinkEnabledCheckbox')]</td>
 	<td></td>
 </tr>
 <tr>

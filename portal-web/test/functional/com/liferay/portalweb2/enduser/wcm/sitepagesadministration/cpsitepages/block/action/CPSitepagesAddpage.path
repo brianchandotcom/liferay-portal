@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>CPSitepagesAddpage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSitepagesAddpage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSitepagesAddpage</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_TYPE-->
+<tr>
+	<td>PAGE_TYPE_TEMPLATE_LABEL</td>
+	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//label[contains(@for,'addLayoutSelectedPageTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_TEMPLATE_RADIO</td>
+	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//input[contains(@id,'addLayoutSelectedPageTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES_LABEL</td>
+	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//label[contains(@for,'addLayoutLayoutPrototypeLinkEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX</td>
+	<td>//li[contains(@data-search,'${key_pageTemplateName}')]//input[contains(@name,'layoutPrototypeLinkEnabledCheckbox')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

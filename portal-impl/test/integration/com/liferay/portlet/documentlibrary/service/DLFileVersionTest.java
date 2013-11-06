@@ -237,7 +237,6 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 	}
 
 	protected ServiceContext getServiceContext() throws Exception {
-
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 

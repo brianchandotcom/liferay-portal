@@ -674,7 +674,7 @@ public class WebServerServlet extends HttpServlet {
 			LiferayFileVersion fileVersion = new LiferayFileVersion(
 				dlFileEntry.getFileVersion());
 
-			if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_LEGACY_GENERATION &&
+			if (PropsValues.DL_FILE_ENTRY_IG_THUMBNAIL_LEGACY_GENERATION &&
 				Validator.isNotNull(queryString)) {
 
 				ImageProcessorUtil.hasImages(fileVersion);

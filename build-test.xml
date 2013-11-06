@@ -2,7 +2,8 @@
 
 <project name="portal-test" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build.xml" />
-
+	
+	<property file="${project.dir}/test.generated.properties" />
 	<property file="${project.dir}/test.${user.name}.properties" />
 	<property file="${project.dir}/test.${env.COMPUTERNAME}.properties" />
 	<property file="${project.dir}/test.${env.HOST}.properties" />

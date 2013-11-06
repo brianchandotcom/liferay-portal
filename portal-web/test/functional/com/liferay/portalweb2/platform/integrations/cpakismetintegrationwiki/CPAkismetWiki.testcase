@@ -10,7 +10,7 @@
 	</tear-down>
 
 	<command name="AkismetWikiIntegration" priority="5">
-		<property name="portal.plugins.includes" value="akismet-portlet" />
+		<property name="portlet.plugins.includes" value="akismet-portlet" />
 
 		<var name="wikiNodeName" value="Main" />
 		<var name="wikiPageContent" value="Wiki Page Content" />

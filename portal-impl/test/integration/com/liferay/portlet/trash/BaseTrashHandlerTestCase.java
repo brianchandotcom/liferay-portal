@@ -880,7 +880,7 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	protected void trashParentBaseModel(
-			boolean delete, boolean deleteTrashEntries)
+			boolean deleteTrashEntries, boolean deleteGroupTrashEntries)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -949,12 +949,12 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
 
-		if (deleteTrashEntries) {
+		if (deleteGroupTrashEntries) {
 			TrashEntryServiceUtil.deleteEntries(group.getGroupId());
 
 			Assert.assertEquals(0, getTrashEntriesCount(group.getGroupId()));
 		}
-		else if (delete) {
+		else if (deleteTrashEntries) {
 			parentTrashHandler.deleteTrashEntry(
 				(Long)parentBaseModel.getPrimaryKeyObj());
 

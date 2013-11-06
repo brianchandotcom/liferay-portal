@@ -81,7 +81,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
@@ -1493,8 +1492,14 @@ public class StagingImpl implements Staging {
 
 		long scopeGroupId = PortalUtil.getScopeGroupId(portletRequest);
 
-		if (sourceLayout.hasScopeGroup() &&
-			(sourceLayout.getScopeGroup().getGroupId() == scopeGroupId)) {
+		if (sourceLayout.isTypeControlPanel()) {
+			stagingGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+			liveGroup = stagingGroup.getLiveGroup();
+
+			targetLayout = sourceLayout;
+		}
+		else if (sourceLayout.hasScopeGroup() &&
+				 (sourceLayout.getScopeGroup().getGroupId() == scopeGroupId)) {
 
 			stagingGroup = sourceLayout.getScopeGroup();
 			liveGroup = stagingGroup.getLiveGroup();
@@ -1511,20 +1516,10 @@ public class StagingImpl implements Staging {
 				sourceLayout.isPrivateLayout());
 		}
 
-		long sourcePlid = sourceLayout.getPlid();
-
-		long targetPlid = LayoutConstants.DEFAULT_PLID;
-
-		if (targetLayout != null) {
-			targetPlid = targetLayout.getPlid();
-		}
-		else if ((targetLayout == null) && sourceLayout.isTypeControlPanel()) {
-			targetPlid = sourcePlid;
-		}
-
 		copyPortlet(
 			portletRequest, stagingGroup.getGroupId(), liveGroup.getGroupId(),
-			sourcePlid, targetPlid, portlet.getPortletId());
+			sourceLayout.getPlid(), targetLayout.getPlid(),
+			portlet.getPortletId());
 	}
 
 	@Override

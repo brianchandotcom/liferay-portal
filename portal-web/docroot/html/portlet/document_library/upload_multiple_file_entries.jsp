@@ -45,7 +45,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 />
 
 <c:choose>
-	<c:when test="<%= themeDisplay.isSignedIn() %>">
+	<c:when test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
 		<aui:row>
 			<aui:col width="<%= 50 %>">
 				<aui:form name="fm1">
@@ -217,6 +217,8 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		</aui:row>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:message key="please-sign-in-to-continue" />
+		<div class="alert alert-error">
+			<liferay-ui:message key="you-do-not-have-the-required-permissions-to-access-this-application" />
+		</div>
 	</c:otherwise>
 </c:choose>

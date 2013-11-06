@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>CPBookmarksAddsubfolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPBookmarksAddsubfolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPBookmarksAddsubfolder</td>
+</tr>
+<!---->
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPBookmarksAddfolder</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

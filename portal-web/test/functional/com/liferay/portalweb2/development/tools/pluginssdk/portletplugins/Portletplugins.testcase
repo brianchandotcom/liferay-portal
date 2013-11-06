@@ -41,7 +41,6 @@
 		<property name="portlet.plugins.includes" value="calendar-portlet" />
 
 		<var name="appName" value="Enterprise Calendar" />
->>>>>>> LPS-42077
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
@@ -360,9 +359,8 @@
 	</command>
 
 	<command name="MarketplacePortletSmoke" priority="5">
-<<<<<<< HEAD
 		<var name="appName" value="Marketplace" />
-=======
+
 		<property name="portlet.plugins.includes" value="marketplace-portlet" />
 
 

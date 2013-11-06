@@ -127,7 +127,7 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#addNullTitleCP">
+		<execute macro="Bookmark#addCP">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
@@ -141,7 +141,7 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#addNullURLCP">
+		<execute macro="Bookmark#addNullCP">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 		</execute>
@@ -152,7 +152,7 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute macro="BookmarksFolder#addNullCP" /> 
+		<execute macro="BookmarksFolder#addNullCP" />
 	</command>
 
 	<command name="AddNullSubfolder" priority="5">
@@ -172,7 +172,7 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute macro="BookmarksFolder#addNullSubfolderCP" /> 
+		<execute macro="BookmarksFolder#addNullSubfolderCP" />
 	</command>
 
 	<command name="AddSubfolder" priority="5">
@@ -201,6 +201,37 @@
 		</execute>
 	</command>
 
+	<command name="DeleteBookmark" priority="5">
+		<var name="bookmarkDescription" value="This is a test bookmark!" />
+		<var name="bookmarkName" value="Test Bookmark" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Bookmark#addCP">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
+
+		<execute macro="Bookmark#viewCP">
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+
+		<execute macro="Bookmark#moveToRecycleBinCP">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+	</command>
+
 	<command name="DeleteSecondBookmark" priority="5">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
@@ -208,7 +239,7 @@
 		<var name="bookmark2Description" value="This is another test bookmark!" />
 		<var name="bookmark2Name" value="Test Bookmark 2" />
 		<var name="bookmark2URL" value="http://www.digg.com" />
-		
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Bookmarks" />
 		</execute>
@@ -233,7 +264,7 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute macro="Bookmark#deleteSecondCP">
+		<execute macro="Bookmark#moveToRecycleBinCP">
 			<var name="bookmarkName" value="${bookmark2Name}" />
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>
@@ -436,37 +467,6 @@
 			<var name="bookmarkName" value="Test Bookmark" />
 			<var name="folderName" value="Test Bookmarks Folder" />
 			<var name="subfolderName" value="Test Bookmarks Subfolder" />
-		</execute>
-	</command>
-
-	<command name="MoveToRecycleBinBookmark" priority="5">
-		<var name="bookmarkDescription" value="This is a test bookmark!" />
-		<var name="bookmarkName" value="Test Bookmark" />
-		<var name="bookmarkURL" value="http://www.liferay.com" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Bookmark#addCP">
-			<var name="bookmarkDescription" value="${bookmarkDescription}" />
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkURL" value="${bookmarkURL}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Bookmark#viewCP">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkURL" value="${bookmarkURL}" />
-		</execute>
-
-		<execute macro="Bookmark#moveToRecycleBinCP">
-			<var name="bookmarkDescription" value="${bookmarkDescription}" />
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
 	</command>
 

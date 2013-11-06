@@ -102,7 +102,7 @@ public class SeleniumBuilderContext {
 
 	public void addFile(String fileName) throws Exception {
 		fileName = _normalizeFileName(fileName);
-	
+
 		if (fileName.endsWith(".action")) {
 			String actionName = _getName(fileName);
 
@@ -212,14 +212,15 @@ public class SeleniumBuilderContext {
 			_testCaseClassNames.put(testCaseName, _getClassName(fileName));
 
 			Element rootElement = _getRootElement(fileName);
-			
+
 			_testCaseCommandNames.put(
 				testCaseName, _getTestCaseCommandNames(rootElement));
 
-			_testCaseProperties.put(
-				testCaseName, _getTestCaseProperties(
-					rootElement, _propertyContainer, testCaseName));
-			
+			Set<Element> testCasePropertiesSet = _getTestCaseProperties(
+				rootElement, _propertyContainer, testCaseName);
+
+			_testCaseProperties.put(testCaseName, testCasePropertiesSet);
+
 			_testCaseFileNames.put(testCaseName, fileName);
 
 			_testCaseHTMLFileNames.put(
@@ -227,7 +228,7 @@ public class SeleniumBuilderContext {
 
 			_testCaseJavaFileNames.put(
 				testCaseName, _getJavaFileName(fileName));
-			
+
 			if (_testCaseNames.contains(testCaseName)) {
 				_seleniumBuilderFileUtil.throwValidationException(
 					1008, fileName, testCaseName);
@@ -443,7 +444,7 @@ public class SeleniumBuilderContext {
 	public String getPathSimpleClassName(String pathName) {
 		return _pathSimpleClassNames.get(pathName);
 	}
-	
+
 	public Set<Element> getPropertyContainer() {
 		return _propertyContainer;
 	}
@@ -477,8 +478,11 @@ public class SeleniumBuilderContext {
 	}
 
 	public Set<Element> getTestCaseProperties(
-		Element rootElement, Set<Element> propertyContainer, String testCaseName) {
-		return _getTestCaseProperties(rootElement, propertyContainer, testCaseName);
+		Element rootElement, Set<Element> propertyContainer,
+		String testCaseName) {
+
+		return _getTestCaseProperties(
+			rootElement, propertyContainer, testCaseName);
 	}
 
 	public Element getTestCaseRootElement(String testCaseName) {
@@ -780,46 +784,6 @@ public class SeleniumBuilderContext {
 		return _seleniumBuilderFileUtil.getSimpleClassName(
 			fileName, classSuffix);
 	}
-	
-	private Set<Element> _getTestCaseProperties(
-		Element rootElement, Set<Element> propertyContainer, String testCaseName) {
-
-		List<Element> verifyElements = 
-			_seleniumBuilderFileUtil.getAllChildElements(
-				rootElement, "property");
-
-		List<Element> propertyElements = rootElement.elements("property");
-		
-		if (propertyElements.size() == 0 && verifyElements.size() == 0){
-			return propertyContainer;
-		}
-
-		for (Element propertyElement : propertyElements) {
-			propertyElement.addAttribute("testCaseName", testCaseName);
-			
-			String rootElementName = rootElement.getName();
-
-			propertyElement.addAttribute("root", rootElementName);
-			
-			if (!(rootElementName.equals("definition"))){
-				propertyElement.addAttribute(
-					"rootName", rootElement.attributeValue("name"));
-			}
-			System.out.println("Adding: " + propertyElement.attributeValue("name"));
-			propertyContainer.add(propertyElement);
-		}
-
-		List<Element> commandElements = rootElement.elements("command");
-		if (commandElements.size() != 0){
-			for (Element commandElement : commandElements ){
-				_getTestCaseProperties(
-					commandElement, propertyContainer, testCaseName);
-			}
-		}
-
-		return propertyContainer;
-	}
-
 
 	private Set<String> _getTestCaseCommandNames(Element rootElement) {
 		List<Element> commandElements =
@@ -833,6 +797,47 @@ public class SeleniumBuilderContext {
 		}
 
 		return commandNames;
+	}
+
+	private Set<Element> _getTestCaseProperties(
+		Element rootElement, Set<Element> propertyContainer,
+		String testCaseName) {
+
+		List<Element> verifyElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "property");
+
+		List<Element> propertyElements = rootElement.elements("property");
+
+		if ((propertyElements.size() == 0) && (verifyElements.size() == 0)) {
+			return propertyContainer;
+		}
+
+		for (Element propertyElement : propertyElements) {
+			propertyElement.addAttribute("testCaseName", testCaseName);
+
+			String rootElementName = rootElement.getName();
+
+			propertyElement.addAttribute("root", rootElementName);
+
+			if (!rootElementName.equals("definition")) {
+				propertyElement.addAttribute(
+					"rootName", rootElement.attributeValue("name"));
+			}
+
+			propertyContainer.add(propertyElement);
+		}
+
+		List<Element> commandElements = rootElement.elements("command");
+
+		if (commandElements.size() != 0) {
+			for (Element commandElement : commandElements ) {
+				_getTestCaseProperties(
+					commandElement, propertyContainer, testCaseName);
+			}
+		}
+
+		return propertyContainer;
 	}
 
 	private boolean _isActionName(String name) {
@@ -1157,12 +1162,12 @@ public class SeleniumBuilderContext {
 		new HashMap<String, String>();
 	private Map<String, String> _testCaseJavaFileNames =
 		new HashMap<String, String>();
-	private Map<String, String> _testCasePropertiesFileNames =
+	private Set<String> _testCaseNames = new HashSet<String>();
+	private Map<String, String> _testCasePackageNames =
 		new HashMap<String, String>();
 	private Map<String, Set<Element>> _testCaseProperties =
 		new HashMap<String, Set<Element>>();
-	private Set<String> _testCaseNames = new HashSet<String>();
-	private Map<String, String> _testCasePackageNames =
+	private Map<String, String> _testCasePropertiesFileNames =
 		new HashMap<String, String>();
 	private Map<String, Element> _testCaseRootElements =
 		new HashMap<String, Element>();

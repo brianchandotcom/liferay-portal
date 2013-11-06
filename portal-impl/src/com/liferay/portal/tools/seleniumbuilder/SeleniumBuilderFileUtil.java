@@ -719,7 +719,7 @@ public class SeleniumBuilderFileUtil {
 					allowedExecuteChildElementNames,
 					allowedIfConditionElementNames);
 			}
-			else if (elementName.equals("property")){
+			else if (elementName.equals("property")) {
 				validatePropertyElement(fileName, element);
 			}
 			else if (elementName.equals("var")) {
@@ -1264,22 +1264,25 @@ public class SeleniumBuilderFileUtil {
 		}
 	}
 
-	protected void validatePropertyElement(String fileName, Element propertyElement){
+	protected void validatePropertyElement(
+		String fileName, Element propertyElement) {
+
 		List<Attribute> attributes = propertyElement.attributes();
 
 		for (Attribute attribute : attributes) {
 			String attributeName = attribute.getName();
 
-			if (attributeName.equals("line-number")) {
-				continue;
-			}
-			if (!(attributeName.equals("name") || attributeName.equals("value"))) {
-				continue;
-			}
-			else{
-			}
-		}
+			if (attributeName.equals("line-number") ||
+				attributeName.equals("name") ||
+				attributeName.equals("value")) {
 
+				continue;
+			}
+
+			else
+				throwValidationException(
+					1005, fileName, propertyElement, attributeName);
+		}
 	}
 
 	protected void validateSimpleElement(
@@ -1389,12 +1392,13 @@ public class SeleniumBuilderFileUtil {
 				}
 
 				validateBlockElement(
-					fileName, element, new String[] {"execute", "var", "property"},
+					fileName, element,
+					new String[] {"execute", "var", "property"},
 					new String[] {"action", "macro", "test-case"},
 					new String[] {"var"}, new String[0]);
 			}
 
-			else if (elementName.equals("property")){
+			else if (elementName.equals("property")) {
 				validatePropertyElement(fileName, element);
 			}
 
@@ -1420,7 +1424,7 @@ public class SeleniumBuilderFileUtil {
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
 			}
-			else if (elementName.equals("property")){
+			else if (elementName.equals("property")) {
 				validatePropertyElement(fileName, element);
 			}
 			else {

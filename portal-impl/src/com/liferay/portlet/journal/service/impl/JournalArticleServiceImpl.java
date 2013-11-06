@@ -35,7 +35,6 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -974,7 +973,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
-		if (rootFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (rootFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderIds = journalFolderService.getFolderIds(
 				groupId, rootFolderId);
 		}
@@ -982,18 +981,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, orderByComparator);
 
-		if (folderIds.isEmpty()) {
-			return Collections.emptyList();
-		}
-		else if (userId <= 0) {
-			return journalArticleFinder.filterFindByG_F(
-				groupId, folderIds, queryDefinition);
-		}
-		else {
-			return journalArticleFinder.filterFindByG_U_F_C(
-				groupId, userId, folderIds,
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
-		}
+		return journalArticleFinder.filterFindByG_U_F_C(
+			groupId, userId, folderIds,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
 	}
 
 	/**
@@ -1058,25 +1048,16 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
-		if (rootFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (rootFolderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			folderIds = journalFolderService.getFolderIds(
 				groupId, rootFolderId);
 		}
 
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
-		if (folderIds.isEmpty()) {
-			return 0;
-		}
-		else if (userId <= 0) {
-			return journalArticleFinder.filterCountByG_F(
-				groupId, folderIds, queryDefinition);
-		}
-		else {
-			return journalArticleFinder.filterCountByG_U_F_C(
-				groupId, userId, folderIds,
-				JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
-		}
+		return journalArticleFinder.filterCountByG_U_F_C(
+			groupId, userId, folderIds,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, queryDefinition);
 	}
 
 	/**

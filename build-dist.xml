@@ -1819,7 +1819,7 @@ release was successful.</echo>
 				<var name="java.security.config" value="" />
 			</then>
 			<else>
-				<var name="java.security.config" value="${java.security.manager.option} -Djava.security.policy===$CATALINA_BASE/conf/catalina.policy" />
+				<var name="java.security.config" value="${java.security.manager.option} -Djava.security.policy==$CATALINA_BASE/conf/catalina.policy" />
 			</else>
 		</if>
 

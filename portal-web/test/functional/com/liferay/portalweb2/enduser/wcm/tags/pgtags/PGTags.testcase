@@ -36,7 +36,8 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addTagsCP">
@@ -47,7 +48,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -56,7 +58,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addAutoAssertionTagViaBlogsPG">
@@ -90,7 +93,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -132,7 +136,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -175,7 +180,8 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addTagsCP">
@@ -186,7 +192,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -195,7 +202,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addSelectTagMultipleViaBlogsPG">
@@ -230,7 +238,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -268,7 +277,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -309,7 +319,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -326,7 +337,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#removeTagViaBlogsPG">
@@ -363,7 +375,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -419,7 +432,8 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addTagsCP">
@@ -430,7 +444,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -439,7 +454,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addViaBlogsPG">
@@ -450,7 +466,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addViaBlogsPG">
@@ -461,7 +478,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#addViaBlogsPG">
@@ -472,7 +490,8 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Tag#searchMultipleTagsViaBlogsPG">

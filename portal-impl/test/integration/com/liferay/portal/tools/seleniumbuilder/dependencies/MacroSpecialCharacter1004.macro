@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<isset var="siteScopeName" />
+			<then>
+				<var value="\\$\\{siteScopeName\\}" />
+			</then>
+		</if>
+	</command>
+</definition>

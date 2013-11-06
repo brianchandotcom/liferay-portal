@@ -102,8 +102,12 @@ public class DLFileEntryPermission {
 			long dlFolderId = dlFileEntry.getFolderId();
 
 			if (dlFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				return DLPermission.contains(
+				boolean hasDLPermission = DLPermission.contains(
 					permissionChecker, dlFileEntry.getGroupId(), actionId);
+
+				if (!hasDLPermission) {
+					return false;
+				}
 			}
 			else {
 				try {

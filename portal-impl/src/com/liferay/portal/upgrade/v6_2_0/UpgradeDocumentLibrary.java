@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.DLFileEntryTypeTable;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -144,21 +145,23 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
-	protected String localize(String content, String key) {
-		Locale locale = LocaleUtil.getDefault();
+	protected String localize(long companyId, String content, String key)
+		throws Exception {
+
+		String languageId = UpgradeProcessUtil.getDefaultLanguageId(companyId);
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
 
 		localizationMap.put(locale, content);
 
 		return LocalizationUtil.updateLocalization(
-			localizationMap, StringPool.BLANK, key,
-			LocaleUtil.toLanguageId(locale));
+			localizationMap, StringPool.BLANK, key, languageId);
 	}
 
 	protected void updateFileEntryType(
-			long fileEntryTypeId, String fileEntryTypeKey, String name,
-			String description)
+			long fileEntryTypeId, long companyId, String fileEntryTypeKey,
+			String name, String description)
 		throws Exception {
 
 		Connection con = null;
@@ -172,8 +175,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					"description = ? where fileEntryTypeId = ?");
 
 			ps.setString(1, fileEntryTypeKey);
-			ps.setString(2, localize(name, "Name"));
-			ps.setString(3, localize(description, "Description"));
+			ps.setString(2, localize(companyId, name, "Name"));
+			ps.setString(3, localize(companyId, description, "Description"));
 			ps.setLong(4, fileEntryTypeId);
 
 			ps.executeUpdate();
@@ -192,13 +195,14 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select fileEntryTypeId, name, description from " +
+				"select fileEntryTypeId, companyId, name, description from " +
 					"DLFileEntryType");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long fileEntryTypeId = rs.getLong("fileEntryTypeId");
+				long companyId = rs.getLong("companyId");
 				String name = GetterUtil.getString(rs.getString("name"));
 				String description = rs.getString("description");
 
@@ -210,8 +214,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				}
 
 				updateFileEntryType(
-					fileEntryTypeId, StringUtil.toUpperCase(name), name,
-					description);
+					fileEntryTypeId, companyId, StringUtil.toUpperCase(name),
+					name, description);
 			}
 		}
 		finally {

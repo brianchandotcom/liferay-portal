@@ -1739,6 +1739,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testPathVariable1007() throws Exception {
+		test(
+			"PathVariable1007.action",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/PathVariable1007.action");
+	}
+
+	@Test
 	public void testTestCase() throws Exception {
 		test("TestCase.testcase");
 	}

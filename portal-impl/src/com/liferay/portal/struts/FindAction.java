@@ -83,7 +83,11 @@ public abstract class FindAction extends Action {
 
 			if (primaryKey > 0) {
 				try {
-					groupId = getGroupId(primaryKey);
+					long overrideGroupId = getGroupId(primaryKey);
+
+					if (overrideGroupId > 0) {
+						groupId = overrideGroupId;
+					}
 				}
 				catch (Exception e) {
 					if (_log.isDebugEnabled()) {

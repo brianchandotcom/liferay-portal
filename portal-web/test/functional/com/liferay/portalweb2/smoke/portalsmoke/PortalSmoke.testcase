@@ -20,7 +20,7 @@
 			<var name="pageName" value="Test Page1" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
+		<execute macro="Portlet#addPGCmd">
 			<var name="portletName" value="Blogs" />
 		</execute>
 

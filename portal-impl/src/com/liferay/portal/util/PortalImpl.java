@@ -7134,7 +7134,7 @@ public class PortalImpl implements Portal {
 	protected String getCanonicalDomain(
 		boolean canonicalURL, String virtualHostname, String portalDomain) {
 
-		if (!canonicalURL || Validator.isBlank(portalDomain)) {
+		if (canonicalURL || Validator.isBlank(portalDomain)) {
 			return virtualHostname;
 		}
 

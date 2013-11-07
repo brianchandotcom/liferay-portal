@@ -250,7 +250,7 @@ public class ShoppingCartLocalServiceImpl
 			}
 
 			if (item == null) {
-				itemIds = StringUtil.remove(itemIds, itemIdsArray[i]);
+				itemIds = StringUtil.removeFromList(itemIds, itemIdsArray[i]);
 			}
 		}
 

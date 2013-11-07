@@ -348,13 +348,29 @@ public class StringUtil_IW {
 		StringUtil.readLines(is, lines);
 	}
 
-	public java.lang.String remove(java.lang.String s, java.lang.String remove) {
-		return StringUtil.remove(s, remove);
+	/**
+	 * @deprecated
+	 */
+	public java.lang.String remove(java.lang.String s, java.lang.String element) {
+		return StringUtil.remove(s, element);
 	}
 
-	public java.lang.String remove(java.lang.String s, java.lang.String remove,
-		java.lang.String delimiter) {
-		return StringUtil.remove(s, remove, delimiter);
+	/**
+	 * @deprecated
+	 */
+	public java.lang.String remove(java.lang.String s,
+		java.lang.String element, java.lang.String delimiter) {
+		return StringUtil.remove(s, element, delimiter);
+	}
+
+	public java.lang.String removeFromList(java.lang.String s,
+		java.lang.String element) {
+		return StringUtil.removeFromList(s, element);
+	}
+
+	public java.lang.String removeFromList(java.lang.String s,
+		java.lang.String element, java.lang.String delimiter) {
+		return StringUtil.removeFromList(s, element, delimiter);
 	}
 
 	public java.lang.String replace(java.lang.String s, char oldSub, char newSub) {

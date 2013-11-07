@@ -2105,6 +2105,20 @@ public class StringUtil {
 	}
 
 	/**
+	 * @deprecated As of 7.0.0
+	 */
+	public static String remove(String s, String element) {
+		return removeFromList(s, element, StringPool.COMMA);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	public static String remove(String s, String element, String delimiter) {
+		return removeFromList(s, element, delimiter);
+	}
+
+	/**
 	 * Removes the <code>remove</code> string from string <code>s</code> that
 	 * represents a list of comma delimited strings.
 	 *
@@ -2128,14 +2142,14 @@ public class StringUtil {
 	 * </p>
 	 *
 	 * @param  s the string representing the list of comma delimited strings
-	 * @param  remove the string to remove
+	 * @param  element the string to remove
 	 * @return a string representing the list of comma delimited strings with
 	 *         the <code>remove</code> string removed, or <code>null</code> if
 	 *         the original string, the string to remove, or the delimiter is
 	 *         <code>null</code>
 	 */
-	public static String remove(String s, String remove) {
-		return remove(s, remove, StringPool.COMMA);
+	public static String removeFromList(String s, String element) {
+		return removeFromList(s, element, StringPool.COMMA);
 	}
 
 	/**
@@ -2162,15 +2176,17 @@ public class StringUtil {
 	 * </p>
 	 *
 	 * @param  s the string representing the list of delimited strings
-	 * @param  remove the string to remove
+	 * @param  element the string to remove
 	 * @param  delimiter the delimiter
 	 * @return a string representing the list of delimited strings with the
 	 *         <code>remove</code> string removed, or <code>null</code> if the
 	 *         original string, the string to remove, or the delimiter is
 	 *         <code>null</code>
 	 */
-	public static String remove(String s, String remove, String delimiter) {
-		if ((s == null) || (remove == null) || (delimiter == null)) {
+	public static String removeFromList(
+		String s, String element, String delimiter) {
+
+		if ((s == null) || (element == null) || (delimiter == null)) {
 			return null;
 		}
 
@@ -2178,23 +2194,23 @@ public class StringUtil {
 			s += delimiter;
 		}
 
-		String drd = delimiter.concat(remove).concat(delimiter);
+		String drd = delimiter.concat(element).concat(delimiter);
 
-		String rd = remove.concat(delimiter);
+		String rd = element.concat(delimiter);
 
-		while (contains(s, remove, delimiter)) {
+		while (contains(s, element, delimiter)) {
 			int pos = s.indexOf(drd);
 
 			if (pos == -1) {
 				if (s.startsWith(rd)) {
-					int x = remove.length() + delimiter.length();
+					int x = element.length() + delimiter.length();
 					int y = s.length();
 
 					s = s.substring(x, y);
 				}
 			}
 			else {
-				int x = pos + remove.length() + delimiter.length();
+				int x = pos + element.length() + delimiter.length();
 				int y = s.length();
 
 				String temp = s.substring(0, pos);

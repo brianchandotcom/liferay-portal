@@ -632,8 +632,8 @@ public class LocalizationImpl implements Localization {
 			if ((availableLocales != null) &&
 				availableLocales.contains(requestedLanguageId)) {
 
-				availableLocales = StringUtil.remove(
-					availableLocales, requestedLanguageId, StringPool.COMMA);
+				availableLocales = StringUtil.removeFromList(
+					availableLocales, requestedLanguageId);
 
 				UnsyncStringWriter unsyncStringWriter =
 					new UnsyncStringWriter();

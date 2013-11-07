@@ -186,7 +186,7 @@ public class EditLDAPServerAction extends PortletAction {
 		String ldapServerIds = portletPreferences.getValue(
 			"ldap.server.ids", StringPool.BLANK);
 
-		ldapServerIds = StringUtil.remove(
+		ldapServerIds = StringUtil.removeFromList(
 			ldapServerIds, String.valueOf(ldapServerId));
 
 		properties.put("ldap.server.ids", ldapServerIds);

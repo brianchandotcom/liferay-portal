@@ -63,7 +63,8 @@ public class SessionTreeJSClicks {
 		try {
 			String openNodesString = get(request, treeId);
 
-			openNodesString = StringUtil.remove(openNodesString, nodeId);
+			openNodesString = StringUtil.removeFromList(
+				openNodesString, nodeId);
 
 			put(request, treeId, openNodesString);
 		}
@@ -90,7 +91,8 @@ public class SessionTreeJSClicks {
 			String openNodesString = get(request, treeId);
 
 			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.remove(openNodesString, nodeId);
+				openNodesString = StringUtil.removeFromList(
+					openNodesString, nodeId);
 			}
 
 			put(request, treeId, openNodesString);

@@ -1872,6 +1872,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseDefinitionElement1006_1() throws Exception {
+		test(
+			"TestCaseDefinitionElement1006_1.testcase",
+			"Error 1006: Invalid extends attribute value in " + _DIR_NAME +
+				"/TestCaseDefinitionElement1006_1.testcase:1");
+	}
+
+	@Test
 	public void testTestCaseDefinitionElement1007() throws Exception {
 		test(
 			"TestCaseDefinitionElement1007.testcase",
@@ -2008,11 +2016,35 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseSetUpElement1006_1() throws Exception {
+		test(
+			"TestCaseSetUpElement1006_1.testcase",
+			"Error 1006: Invalid test-case attribute value in " + _DIR_NAME +
+				"/TestCaseSetUpElement1006_1.testcase:3");
+	}
+
+	@Test
 	public void testTestCaseSetUpElement1007() throws Exception {
 		test(
 			"TestCaseSetUpElement1007.testcase",
 			"Error 1007: Poorly formed XML in " + _DIR_NAME +
 				"/TestCaseSetUpElement1007.testcase");
+	}
+
+	@Test
+	public void testTestCaseSetUpElement1015_1() throws Exception {
+		test(
+			"TestCaseSetUpElement1015_1.testcase",
+			"Error 1015: Poorly formed test case command super# at " +
+				_DIR_NAME + "/TestCaseSetUpElement1015_1.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseSetUpElement1015_2() throws Exception {
+		test(
+			"TestCaseSetUpElement1015_2.testcase",
+			"Error 1015: Poorly formed test case command fail#fail at " +
+				_DIR_NAME + "/TestCaseSetUpElement1015_2.testcase:3");
 	}
 
 	@Test

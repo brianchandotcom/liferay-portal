@@ -870,6 +870,31 @@ public class SeleniumBuilderFileUtil {
 					1006, fileName, executeElement, "test-case");
 			}
 
+			if (testCase.contains("#")) {
+				int x = testCase.lastIndexOf("#");
+
+				if (x == -1) {
+					throwValidationException(
+						1015, fileName, executeElement, testCaseCommand);
+				}
+
+				String testCaseName = testCase.substring(0, x);
+
+				String testCaseCommandName = testCase.substring(x + 1);
+
+				if (Validator.isNull(testCaseCommandName) ||
+					Validator.isNull(testCaseName) ||
+					!testCaseName.equals("super")) {
+
+					throwValidationException(
+						1015, fileName, executeElement, testCase);
+				}
+			}
+			else {
+				throwValidationException(
+					1015, fileName, executeElement, testCase);
+			}
+
 			for (Attribute attribute : attributes) {
 				String attributeName = attribute.getName();
 

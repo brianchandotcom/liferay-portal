@@ -70,7 +70,7 @@ portletDisplay.setDescription(portletDescription);
 
 Group group = layout.getGroup();
 
-boolean wsrp = ParamUtil.getBoolean(request, "wsrp");
+boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request), "wsrp");
 %>
 
 <c:choose>

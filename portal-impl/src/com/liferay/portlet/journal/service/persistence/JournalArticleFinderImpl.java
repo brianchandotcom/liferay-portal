@@ -1510,7 +1510,8 @@ public class JournalArticleFinderImpl
 		String sql, QueryDefinition queryDefinition) {
 
 		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-			return StringUtil.remove(sql, "[$STATUS_JOIN$] AND");
+			return StringUtil.replace(
+				sql, "[$STATUS_JOIN$] AND", StringPool.BLANK);
 		}
 
 		if (queryDefinition.isExcludeStatus()) {

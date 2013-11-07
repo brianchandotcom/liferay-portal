@@ -1452,7 +1452,7 @@
 
 			Util.openWindow(config);
 
-			Liferay.on(config.eventName, callback);
+			Liferay.once(config.eventName, callback);
 		},
 		['liferay-portlet-url']
 	);

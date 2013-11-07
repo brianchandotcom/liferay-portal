@@ -64,6 +64,23 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addNullCP">
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<if>
+			<isset var="webContentContent" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+			</then>
+		</if>
+
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="ERROR_MESSAGE_INVALID_NAME" value1="Please enter a valid name." />
+	</command>
+
 	<command name="addPGViaAP">
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_WEB_CONTENT" value1="Web Content Article" />
@@ -219,6 +236,30 @@
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
 		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitleEdit}" />
+	</command>
+
+	<command name="editNullCP">
+		<var name='key_webContentTitle' value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPWebcontentEditwebcontent#type" locator-key1="TITLE_FIELD" value1="" />
+
+		<if>
+			<isset var="webContentContent" />
+			<then>
+				<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+			</then>
+		</if>
+
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="ERROR_MESSAGE_INVALID_NAME" value1="Please enter a valid name." />
 	</command>
 
 	<command name="editPGViaWCD">

@@ -655,6 +655,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_DRAFTS_ENABLED = "dl.file.entry.drafts.enabled";
 
+	public static final String DL_FILE_ENTRY_IG_THUMBNAIL_LEGACY_GENERATION = "dl.file.entry.ig.thumbnail.legacy.generation";
+
 	public static final String DL_FILE_ENTRY_LOCK_POLICY = "dl.file.entry.lock.policy";
 
 	public static final String DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED = "dl.file.entry.open.in.ms.office.manual.check.in.required";

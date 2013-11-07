@@ -1,0 +1,9 @@
+<definition>
+	<set-up>
+		<execute test-case="super#" />
+	</set-up>
+
+	<command name="name" priority="5">
+		<var name="name" value="value" />
+	</command>
+</definition>

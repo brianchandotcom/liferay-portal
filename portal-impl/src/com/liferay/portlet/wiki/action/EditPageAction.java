@@ -36,6 +36,9 @@ import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchNodeException;
@@ -46,6 +49,9 @@ import com.liferay.portlet.wiki.PageVersionException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.wiki.model.WikiPageResource;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 
 import java.util.HashMap;
@@ -347,7 +353,29 @@ public class EditPageAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
 
 		for (long restoreEntryId : restoreEntryIds) {
-			WikiPageServiceUtil.restorePageFromTrash(restoreEntryId);
+			long overridePageResourcePrimKey = 0;
+
+			WikiPageResource pageResource =
+				WikiPageResourceLocalServiceUtil.getPageResource(
+					restoreEntryId);
+
+			String title = TrashUtil.getOriginalTitle(pageResource.getTitle());
+
+			if (title.equals(WikiPageConstants.FRONT_PAGE)) {
+				WikiPage overridePage = WikiPageLocalServiceUtil.fetchPage(
+					pageResource.getNodeId(), WikiPageConstants.FRONT_PAGE);
+
+				if (overridePage != null) {
+					overridePageResourcePrimKey =
+						overridePage.getResourcePrimKey();
+				}
+			}
+
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
+				WikiPage.class.getName(), restoreEntryId);
+
+			TrashEntryServiceUtil.restoreEntry(
+				trashEntry.getEntryId(), overridePageResourcePrimKey, null);
 		}
 	}
 

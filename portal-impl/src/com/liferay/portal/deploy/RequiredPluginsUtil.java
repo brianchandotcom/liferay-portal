@@ -12,21 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.deploy.messaging;
+package com.liferay.portal.deploy;
 
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.Time;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -34,24 +39,43 @@ import java.util.List;
  * </p>
  *
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class RequiredPluginsMessageListener extends BaseMessageListener {
+public class RequiredPluginsUtil {
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		if (_firstMessage) {
-
-			// Ignore the first message to give the portal time to fully load
-
-			_firstMessage = false;
-
+	public static synchronized void startCheckingRequiredPlugins() {
+		if (_scheduledExecutorService != null) {
 			return;
 		}
 
+		_scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(
+			new NamedThreadFactory(
+				RequiredPluginsUtil.class.getName(), Thread.NORM_PRIORITY,
+				null));
+
+		_scheduledExecutorService.scheduleWithFixedDelay(
+			new Runnable() {
+
+				@Override
+				public void run() {
+					checkRequiredPlugins();
+				}
+
+			},
+			Time.MINUTE, Time.MINUTE, TimeUnit.MILLISECONDS);
+	}
+
+	public static synchronized void stopCheckingRequiredPlugins() {
+		_unschedule(true);
+	}
+
+	protected synchronized static void checkRequiredPlugins() {
 		List<String[]> levelsRequiredDeploymentContexts =
 			DeployManagerUtil.getLevelsRequiredDeploymentContexts();
 		List<String[]> levelsRequiredDeploymentWARFileNames =
 			DeployManagerUtil.getLevelsRequiredDeploymentWARFileNames();
+
+		boolean deployed = false;
 
 		for (int i = 0; i < levelsRequiredDeploymentContexts.size(); i++) {
 			String[] levelRequiredDeploymentContexts =
@@ -69,6 +93,8 @@ public class RequiredPluginsMessageListener extends BaseMessageListener {
 					continue;
 				}
 
+				deployed = true;
+
 				String levelRequiredDeploymentWARFileName =
 					levelRequiredDeploymentWARFileNames[j];
 
@@ -78,9 +104,8 @@ public class RequiredPluginsMessageListener extends BaseMessageListener {
 							levelRequiredDeploymentWARFileName);
 				}
 
-				Class<?> clazz = getClass();
-
-				ClassLoader classLoader = clazz.getClassLoader();
+				ClassLoader classLoader =
+					PortalClassLoaderUtil.getClassLoader();
 
 				InputStream inputStream = classLoader.getResourceAsStream(
 					"com/liferay/portal/deploy/dependencies/plugins" +
@@ -102,18 +127,50 @@ public class RequiredPluginsMessageListener extends BaseMessageListener {
 					continue;
 				}
 
-				StreamUtil.transfer(
-					inputStream,
-					new FileOutputStream(
-						autoDeployDir.getDeployDir() + "/" +
-							levelRequiredDeploymentWARFileNames[j]));
+				try {
+					StreamUtil.transfer(
+						inputStream,
+						new FileOutputStream(
+							autoDeployDir.getDeployDir() + "/" +
+								levelRequiredDeploymentWARFileNames[j]));
+				}
+				catch (IOException ioe) {
+					_log.error("Unable to write file", ioe);
+				}
 			}
+		}
+
+		if (!deployed) {
+
+			// If all the required plugins were already in place, then we can
+			// safely unschedule our required plugins check to conserve
+			// processing power. Removal of plugins would trigger an undeploy
+			// event which would restart the scheduled required plugins check.
+
+			_unschedule(false);
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		RequiredPluginsMessageListener.class);
+	private static void _unschedule(boolean awaitTermination) {
+		if (_scheduledExecutorService != null) {
+			_scheduledExecutorService.shutdownNow();
 
-	private boolean _firstMessage = true;
+			if (awaitTermination) {
+				try {
+					_scheduledExecutorService.awaitTermination(
+						1, TimeUnit.MINUTES);
+				}
+				catch (InterruptedException ie) {
+					_log.error(ie, ie);
+				}
+			}
+
+			_scheduledExecutorService = null;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(RequiredPluginsUtil.class);
+
+	private static ScheduledExecutorService _scheduledExecutorService;
 
 }

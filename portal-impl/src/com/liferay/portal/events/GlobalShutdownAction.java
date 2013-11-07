@@ -14,6 +14,7 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.portal.deploy.RequiredPluginsUtil;
 import com.liferay.portal.im.AIMConnector;
 import com.liferay.portal.im.ICQConnector;
 import com.liferay.portal.im.MSNConnector;
@@ -144,6 +145,10 @@ public class GlobalShutdownAction extends SimpleAction {
 		// OpenOffice
 
 		DocumentConversionUtil.disconnect();
+
+		// Plugins
+
+		RequiredPluginsUtil.stopCheckingRequiredPlugins();
 
 		// Thread local registry
 

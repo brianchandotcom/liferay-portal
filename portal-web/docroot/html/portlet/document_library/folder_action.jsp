@@ -225,7 +225,7 @@ String iconMenuId = null;
 
 						<liferay-ui:icon
 							image="add_folder"
-							message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
+							message="add-subfolder"
 							url="<%= addFolderURL %>"
 						/>
 					</c:if>

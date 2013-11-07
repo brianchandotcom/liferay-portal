@@ -14,12 +14,18 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,6 +33,31 @@ import com.liferay.portal.util.PropsValues;
  * @author Raymond Augé
  */
 public class UpgradeProcessUtil {
+
+	public static String getDefaultLanguageId(long companyId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select languageId from User_ where defaultUser = TRUE and " +
+					"companyId = " + companyId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				return rs.getString("languageId");
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public static boolean isCreateIGImageDocumentType() {
 		return _createIGImageDocumentType;

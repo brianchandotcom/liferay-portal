@@ -11,6 +11,7 @@ import ${packagePath}.service.ClpSerializer;
 </#if>
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -493,7 +494,14 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			TrashHandler trashHandler = getTrashHandler();
 
 			if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
-				ContainerModel containerModel = trashHandler.getParentContainerModel(this);
+				ContainerModel containerModel = null;
+
+				try {
+					containerModel = trashHandler.getParentContainerModel(this);
+				}
+				catch (NoSuchModelException nsme) {
+	            	return null;
+				}
 
 				while (containerModel != null) {
 					if (containerModel instanceof TrashedModel) {

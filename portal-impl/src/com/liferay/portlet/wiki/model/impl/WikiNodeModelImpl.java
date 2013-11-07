@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -628,7 +629,14 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		TrashHandler trashHandler = getTrashHandler();
 
 		if (!Validator.isNull(trashHandler.getContainerModelClassName())) {
-			ContainerModel containerModel = trashHandler.getParentContainerModel(this);
+			ContainerModel containerModel = null;
+
+			try {
+				containerModel = trashHandler.getParentContainerModel(this);
+			}
+			catch (NoSuchModelException nsme) {
+				return null;
+			}
 
 			while (containerModel != null) {
 				if (containerModel instanceof TrashedModel) {

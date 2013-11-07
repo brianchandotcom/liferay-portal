@@ -136,7 +136,7 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 	}
 
 	public Object getHref() {
-		if (Validator.isNotNull(_href) && (_href instanceof PortletURL)) {
+		if (_href instanceof PortletURL) {
 			_href = _href.toString();
 		}
 

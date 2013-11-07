@@ -158,7 +158,7 @@ public class SearchContainerColumnStatusTag<R>
 	}
 
 	public Object getHref() {
-		if (Validator.isNotNull(_href) && (_href instanceof PortletURL)) {
+		if (_href instanceof PortletURL) {
 			_href = _href.toString();
 		}
 

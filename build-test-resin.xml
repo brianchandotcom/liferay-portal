@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-resin" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-resin">
+		<antcall target="clean-up-logs" />
+
+		<antcall target="run-simple-server">
+			<param name="simple.server.dir" value="${app.server.resin.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.resin.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.resin.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.resin.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.resin.portal.dir}" />
+			<param name="simple.server.start.executable" value="start${file.suffix.bat}" />
+			<param name="simple.server.start.executable.arg.line" value="" />
+			<param name="simple.server.stop.executable" value="stop${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="" />
+		</antcall>
+
+		<tstamp>
+			<format property="log.tstamp.value" pattern="yyyy-MM-dd" />
+		</tstamp>
+
+		<copy file="${liferay.home}/logs/liferay.${log.tstamp.value}.log" tofile="log" />
+
+		<antcall target="evaluate-logs" />
+	</target>
+
+	<target name="run-selenium-resin">
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-resin" />
+			</then>
+		</if>
+
+		<antcall target="revert-test-properties" />
+
+		<antcall target="prepare-virtual-host-name-properties" />
+
+		<antcall target="start-selenium" />
+
+		<antcall target="run-resin">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
+
+		<antcall target="stop-selenium" />
+	</target>
+</project>

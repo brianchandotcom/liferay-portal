@@ -385,7 +385,7 @@ public class BreadcrumbTag extends IncludeTag {
 		StringBundler sb = new StringBundler();
 
 		try {
-			if (Validator.isNull(_selLayout)) {
+			if (_selLayout == null) {
 				setSelLayout(themeDisplay.getLayout());
 			}
 
@@ -481,7 +481,7 @@ public class BreadcrumbTag extends IncludeTag {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			if (Validator.isNull(_selLayout)) {
+			if (_selLayout == null) {
 				setSelLayout(themeDisplay.getLayout());
 			}
 

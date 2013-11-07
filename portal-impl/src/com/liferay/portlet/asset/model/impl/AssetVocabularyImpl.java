@@ -86,7 +86,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isMultiValued() {
-		if (Validator.isNull(_settingsProperties)) {
+		if (_settingsProperties == null) {
 			_settingsProperties = getSettingsProperties();
 		}
 
@@ -96,7 +96,7 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean isRequired(long classNameId) {
-		if (Validator.isNull(_settingsProperties)) {
+		if (_settingsProperties == null) {
 			_settingsProperties = getSettingsProperties();
 		}
 

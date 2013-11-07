@@ -70,7 +70,7 @@ public class EhcacheConfigurationUtil {
 	public static Configuration getConfiguration(
 		URL configurationURL, boolean clusterAware, boolean usingDefault) {
 
-		if (Validator.isNull(configurationURL)) {
+		if (configurationURL == null) {
 			return null;
 		}
 

@@ -63,7 +63,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 		Set<JSONWebServiceActionMapping> jsonWebServiceMappings = jsonWebServiceClasses.get(actionClassName);
 
-		if (Validator.isNull(jsonWebServiceMappings)) {
+		if (jsonWebServiceMappings == null) {
 			jsonWebServiceMappings = new LinkedHashSet<JSONWebServiceActionMapping>();
 
 			jsonWebServiceClasses.put(actionClassName, jsonWebServiceMappings);

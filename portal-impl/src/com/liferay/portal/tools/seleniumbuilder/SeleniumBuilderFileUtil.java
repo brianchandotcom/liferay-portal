@@ -1278,10 +1278,10 @@ public class SeleniumBuilderFileUtil {
 
 				continue;
 			}
-
-			else
+			else {
 				throwValidationException(
 					1005, fileName, propertyElement, attributeName);
+			}
 		}
 	}
 
@@ -1397,11 +1397,9 @@ public class SeleniumBuilderFileUtil {
 					new String[] {"action", "macro", "test-case"},
 					new String[] {"var"}, new String[0]);
 			}
-
 			else if (elementName.equals("property")) {
 				validatePropertyElement(fileName, element);
 			}
-
 			else if (elementName.equals("set-up") ||
 					 elementName.equals("tear-down")) {
 
@@ -1423,9 +1421,6 @@ public class SeleniumBuilderFileUtil {
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
-			}
-			else if (elementName.equals("property")) {
-				validatePropertyElement(fileName, element);
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);
@@ -1590,8 +1585,8 @@ public class SeleniumBuilderFileUtil {
 		new String[] {
 			"and", "case", "command", "condition", "contains", "default",
 			"definition", "echo", "else", "elseif", "equals", "execute", "fail",
-			"if", "isset", "not", "or", "set-up", "td", "tear-down", "then",
-			"tr", "while", "var", "property"
+			"if", "isset", "not", "or", "property", "set-up", "td", "tear-down",
+			"then", "tr", "while", "var"
 		});
 
 	private String _baseDir;

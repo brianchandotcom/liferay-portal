@@ -30,6 +30,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD_REQUIRED</td>
+	<td>//span[@id='_166_nameBoundingBox']/div/div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//div[@class='accordion-toggle']</td>
 	<td></td>

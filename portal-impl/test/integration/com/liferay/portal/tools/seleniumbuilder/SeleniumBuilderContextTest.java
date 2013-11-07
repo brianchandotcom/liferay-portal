@@ -511,6 +511,22 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testTestCaseDefinitionElement1006_2() throws Exception {
+		test(
+			"TestCaseDefinitionElement1006_2.testcase",
+			"Error 1006: Invalid extends attribute value in " + _DIR_NAME +
+				"/TestCaseDefinitionElement1006_2.testcase:1");
+	}
+
+	@Test
+	public void testTestCaseDefinitionElement1006_3() throws Exception {
+		test(
+			"TestCaseDefinitionElement1006_3.testcase",
+			"Error 1006: Invalid extends attribute value in " + _DIR_NAME +
+				"/TestCaseDefinitionElement1006_3.testcase:1");
+	}
+
+	@Test
 	public void testTestCaseExecuteElement1006_3() throws Exception {
 		test(
 			"TestCaseExecuteElement1006_3.testcase",
@@ -588,6 +604,14 @@ public class SeleniumBuilderContextTest {
 			"CPBlogsAcceptance.testcase",
 			"Error 1008: Duplicate file name CPBlogsAcceptance at " +
 				_DIR_NAME + "/CPBlogsAcceptance.testcase");
+	}
+
+	@Test
+	public void testTestCaseSetUpElement1006_2() throws Exception {
+		test(
+			"TestCaseSetUpElement1006_2.testcase",
+			"Error 1006: Invalid test-case attribute value in " + _DIR_NAME +
+				"/TestCaseSetUpElement1006_2.testcase:3");
 	}
 
 	protected void test(String fileName) throws Exception {

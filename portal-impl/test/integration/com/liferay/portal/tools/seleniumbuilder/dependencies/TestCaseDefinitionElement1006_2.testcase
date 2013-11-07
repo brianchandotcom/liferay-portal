@@ -1,8 +1,4 @@
-<definition extends="TestCase">
-	<set-up>
-		<execute test-case="fail#fail" />
-	</set-up>
-
+<definition extends="fail">
 	<command name="name" priority="5">
 		<var name="name" value="value" />
 	</command>

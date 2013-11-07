@@ -304,7 +304,7 @@ String iconMenuId = null;
 
 		<c:choose>
 			<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
-				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && !folder.isMountPoint() %>">
+				<c:if test="<%= showActions && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
 						<portlet:renderURL var="editFileEntryURL">
 							<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
@@ -375,7 +375,7 @@ String iconMenuId = null;
 				boolean hasUpdatePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE);
 				%>
 
-				<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
+				<c:if test="<%= hasUpdatePermission && ((folder == null) || !folder.isMountPoint()) %>">
 					<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY %>" var="moveURL">
 						<portlet:param name="struts_action" value="/document_library/move_folder" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />

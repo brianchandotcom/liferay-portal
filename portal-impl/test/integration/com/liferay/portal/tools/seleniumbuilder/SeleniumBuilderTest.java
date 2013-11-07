@@ -1891,24 +1891,24 @@ public class SeleniumBuilderTest {
 	public void testTestCaseExecuteElement1004_1() throws Exception {
 		test(
 			"TestCaseExecuteElement1004_1.testcase",
-			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
-				"/TestCaseExecuteElement1004_1.testcase:3");
+			"Error 1004: Missing (action|macro|test-case) attribute in " +
+				_DIR_NAME + "/TestCaseExecuteElement1004_1.testcase:3");
 	}
 
 	@Test
 	public void testTestCaseExecuteElement1004_2() throws Exception {
 		test(
 			"TestCaseExecuteElement1004_2.testcase",
-			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
-				"/TestCaseExecuteElement1004_2.testcase:3");
+			"Error 1004: Missing (action|macro|test-case) attribute in " +
+				_DIR_NAME + "/TestCaseExecuteElement1004_2.testcase:3");
 	}
 
 	@Test
 	public void testTestCaseExecuteElement1004_3() throws Exception {
 		test(
 			"TestCaseExecuteElement1004_3.testcase",
-			"Error 1004: Missing (action|macro) attribute in " + _DIR_NAME +
-				"/TestCaseExecuteElement1004_3.testcase:3");
+			"Error 1004: Missing (action|macro|test-case) attribute in " +
+				_DIR_NAME + "/TestCaseExecuteElement1004_3.testcase:3");
 	}
 
 	@Test

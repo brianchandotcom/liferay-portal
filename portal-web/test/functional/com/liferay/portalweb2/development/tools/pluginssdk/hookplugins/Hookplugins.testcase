@@ -5,6 +5,7 @@
 
 	<command name="AntiSamyHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="antisamy-hook" />
+
 		<var name="appName" value="AntiSamy" />
 
 		<execute macro="Page#gotoCP">
@@ -26,6 +27,7 @@
 
 	<command name="DefaultWebContentHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="default-web-content-hook" />
+
 		<var name="appName" value="Default Web Content" />
 
 		<execute macro="Page#gotoCP">
@@ -47,6 +49,7 @@
 
 	<command name="EmailToMBFilterHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="email-to-mb-filter-hook" />
+
 		<var name="appName" value="Email to Message Boards Filter" />
 
 		<execute macro="Page#gotoCP">
@@ -68,6 +71,7 @@
 
 	<command name="LocalizationJAHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="localization-ja-hook" />
+
 		<var name="appName" value="Japanese Localization" />
 
 		<execute macro="Page#gotoCP">
@@ -89,6 +93,7 @@
 
 	<command name="LocalizationZHHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="localization-zh-hook" />
+
 		<var name="appName" value="Chinese Localization" />
 
 		<execute macro="Page#gotoCP">
@@ -110,6 +115,7 @@
 
 	<command name="MongoDBHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="mongodb-hook" />
+
 		<var name="appName" value="MongoDB Expando Adapter" />
 
 		<execute macro="Page#gotoCP">
@@ -131,6 +137,7 @@
 
 	<command name="SocialBookmarksHookSmoke" priority="5">
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
+
 		<var name="appName" value="Social Bookmarks" />
 
 		<execute macro="Page#gotoCP">

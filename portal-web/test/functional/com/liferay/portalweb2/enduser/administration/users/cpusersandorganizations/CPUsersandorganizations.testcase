@@ -585,6 +585,7 @@
 
 	<command name="AddUserScreenNameNumber" priority="5">
 		<property name="custom.properties" value="users.screen.name.allow.numeric=true" />
+
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />

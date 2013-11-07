@@ -1,4 +1,6 @@
 <definition>
+	<property name="portlet.plugins.includes" value="akismet-portlet" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
@@ -10,8 +12,6 @@
 	</tear-down>
 
 	<command name="AkismetWikiIntegration" priority="5">
-		<property name="portlet.plugins.includes" value="akismet-portlet" />
-
 		<var name="wikiNodeName" value="Main" />
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Akismet this" />

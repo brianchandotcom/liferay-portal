@@ -64,6 +64,22 @@
 		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addNullCP">
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+
+		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplates#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="CPWebcontentTemplates#selectFrame" value1="relative=top" />
+
+		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplatesAddtemplate#assertElementNotPresent" locator-key1="NAME_FIELD_REQUIRED" />
+		<execute action="CPWebcontentTemplatesAddtemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPWebcontentTemplatesAddtemplate#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="This field is required." />
+
+		<execute action="CPWebcontentTemplates#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

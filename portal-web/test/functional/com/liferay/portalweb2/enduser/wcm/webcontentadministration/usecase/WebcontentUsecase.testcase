@@ -1,0 +1,73 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="WebContentTemplates#tearDownCP" />
+
+		<execute macro="WebContentStructures#tearDownCP" />
+	</tear-down>
+
+	<command name="WebContentAdministrationDataValidation" priority="5">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addNullCP">
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#editNullCP">
+			<var name="webContentContentEdit" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="${webContentContentEdit}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEdit" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addNullCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addNullCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#addNullCP" />
+	</command>
+</definition>

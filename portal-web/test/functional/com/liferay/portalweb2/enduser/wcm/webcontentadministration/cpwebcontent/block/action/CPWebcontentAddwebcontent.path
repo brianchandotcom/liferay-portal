@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[@class='portlet-body']/div[@class='alert alert-error']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_INVALID_NAME</td>
+	<td>//div[@class='journal-article-body-content']/div[@class='alert alert-error']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_WRENCH_ICON</td>
 	<td>//a[@title='Options']</td>
 	<td></td>

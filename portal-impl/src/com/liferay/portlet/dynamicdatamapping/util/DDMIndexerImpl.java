@@ -167,7 +167,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(fieldName);
 
-		if (Validator.isNotNull(locale)) {
+		if (locale != null) {
 			sb.append(StringPool.UNDERLINE);
 			sb.append(LocaleUtil.toLanguageId(locale));
 		}

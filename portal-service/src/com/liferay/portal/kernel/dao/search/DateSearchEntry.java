@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -42,7 +41,7 @@ public class DateSearchEntry extends TextSearchEntry {
 
 	@Override
 	public String getName(PageContext pageContext) {
-		if (Validator.isNotNull(_date)) {
+		if (_date != null) {
 			Object[] localeAndTimeZone = getLocaleAndTimeZone(pageContext);
 
 			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(

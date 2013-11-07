@@ -80,7 +80,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 			</c:otherwise>
 		</c:choose>
 
-		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && Validator.isNotNull(coupon)) %>" name="name" />
+		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && (coupon != null)) %>" name="name" />
 
 		<aui:input name="description" />
 

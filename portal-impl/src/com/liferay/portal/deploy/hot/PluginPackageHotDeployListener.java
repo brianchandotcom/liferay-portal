@@ -346,7 +346,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		URL configurationFile = classLoader.getResource(
 			hibernateCacheConfigurationPath);
 
-		if (Validator.isNotNull(configurationFile)) {
+		if (configurationFile != null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Reconfiguring Hibernate caches using " +

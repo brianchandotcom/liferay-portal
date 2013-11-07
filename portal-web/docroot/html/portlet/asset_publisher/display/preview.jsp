@@ -40,7 +40,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 	<%
 	String displayDateString = StringPool.BLANK;
 
-	if (Validator.isNotNull(assetRenderer.getDisplayDate())) {
+	if (assetRenderer.getDisplayDate() != null) {
 		Format displayFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMM d, yyyy", locale, timeZone);
 
 		displayDateString = CharPool.OPEN_PARENTHESIS + displayFormatDate.format(assetRenderer.getDisplayDate()) + CharPool.CLOSE_PARENTHESIS;

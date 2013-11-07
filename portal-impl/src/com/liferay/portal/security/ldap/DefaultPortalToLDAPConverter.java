@@ -396,7 +396,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	protected void addModificationItem(
 		BasicAttribute basicAttribute, Modifications modifications) {
 
-		if (Validator.isNotNull(basicAttribute)) {
+		if (basicAttribute != null) {
 			modifications.addItem(basicAttribute);
 		}
 	}

@@ -59,7 +59,7 @@ String copyLayoutIdPrefix = ParamUtil.getString(request, "copyLayoutIdPrefix");
 		if (copiableLayout != null) {
 	%>
 
-			<aui:option disabled="<%= Validator.isNotNull(selLayout) && selLayout.getPlid() == copiableLayout.getPlid() %>" label="<%= name %>" value="<%= copiableLayout.getLayoutId() %>" />
+			<aui:option disabled="<%= (selLayout != null) && selLayout.getPlid() == copiableLayout.getPlid() %>" label="<%= name %>" value="<%= copiableLayout.getLayoutId() %>" />
 
 	<%
 		}

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -41,7 +40,7 @@ public class UpgradeAssetPublisherManualEntries
 	public static void upgradeToAssetEntryIdElement(Element rootElement) {
 		Element assetIdElement = rootElement.element("asset-id");
 
-		if (Validator.isNotNull(assetIdElement)) {
+		if (assetIdElement != null) {
 			String assetEntryId = assetIdElement.getText();
 
 			Element assetEntryIdElement = rootElement.addElement(
@@ -56,7 +55,7 @@ public class UpgradeAssetPublisherManualEntries
 	public static void upgradeToAssetEntryTypeElement(Element rootElement) {
 		Element assetTypeElement = rootElement.element("asset-type");
 
-		if (Validator.isNotNull(assetTypeElement)) {
+		if (assetTypeElement != null) {
 			String assetEntryType = assetTypeElement.getText();
 
 			Element assetEntryTypeElement = rootElement.addElement(

@@ -39,7 +39,7 @@ public class DefaultPollerResponse implements PollerResponse {
 
 	@Override
 	public synchronized void close() {
-		if (Validator.isNotNull(_responseMessage)) {
+		if (_responseMessage != null) {
 			MessageBusUtil.sendMessage(
 				_responseMessage.getDestinationName(), _responseMessage);
 

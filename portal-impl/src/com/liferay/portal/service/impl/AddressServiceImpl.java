@@ -77,7 +77,7 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 			getPermissionChecker(), address.getClassNameId(),
 			address.getClassPK(), ActionKeys.UPDATE);
 
-		addressLocalService.deleteAddress(addressId);
+		addressLocalService.deleteAddress(address);
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 			getPermissionChecker(), website.getClassNameId(),
 			website.getClassPK(), ActionKeys.UPDATE);
 
-		websiteLocalService.deleteWebsite(websiteId);
+		websiteLocalService.deleteWebsite(website);
 	}
 
 	@Override

@@ -22,6 +22,37 @@
 	</command>
 
 	<command name="addPG">
+		<var name="i" value="1" />
+
+		<while>
+			<not>
+				<equals arg1="${i}" arg2="5" />
+			</not>
+			<then>
+				<var name="i" value="${i?increment()}" />
+
+				<execute action="Home#refresh" />
+
+				<execute action="Dockbar#pause" locator1="1000" />
+
+				<if>
+					<condition action="Home#isElementNotPresent" locator-key1="PORTLET_1" />
+					<then>
+						<execute macro="Portlet#addPGCmd">
+							<var name="portletName" value="${portletName}" />
+						</execute>
+					</then>
+					<else>
+						<var name="i" value="5" />
+					</else>
+				</if>
+			</then>
+		</while>
+
+		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
+	</command>
+
+	<command name="addPGCmd">
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
 		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
@@ -51,36 +82,6 @@
 		</if>
 
 		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
-
-		<var name="i" value="1" />
-
-		<while>
-			<not>
-				<equals arg1="${i}" arg2="10" />
-			</not>
-			<then>
-				<var name="i" value="${i?increment()}" />
-
-				<if>
-					<condition action="Home#isElementPresent" locator-key1="PORTLET_LOADING_ANIMATION" />
-					<then>
-						<execute action="Home#pause" locator1="1000" />
-					</then>
-					<else>
-						<var name="i" value="10" />
-					</else>
-				</if>
-			</then>
-		</while>
-
-		<if>
-			<condition action="Home#isElementNotPresent" locator-key1="PORTLET_1" />
-			<then>
-				<execute action="Home#refresh" />
-			</then>
-		</if>
-
-		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>
 
 	<command name="deletePG">

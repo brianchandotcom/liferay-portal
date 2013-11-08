@@ -1270,7 +1270,11 @@
 			property="scm.revert.command.formatted"
 		/>
 
-		<exec executable="${shell.executable}">
+		<exec executable="/bin/sh" os="${os.unix}">
+			<arg line="${scm.revert.command.formatted}" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
 			<arg line="${scm.revert.command.formatted}" />
 		</exec>
 
@@ -1641,7 +1645,11 @@ tck.url=true</echo>
 			property="scm.revert.command.formatted"
 		/>
 
-		<exec executable="${shell.executable}">
+		<exec executable="/bin/sh" os="${os.unix}">
+			<arg line="${scm.revert.command.formatted}" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
 			<arg line="${scm.revert.command.formatted}" />
 		</exec>
 
@@ -2730,7 +2738,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			property="scm.revert.command.formatted"
 		/>
 
-		<exec executable="${shell.executable}">
+		<exec executable="/bin/sh" os="${os.unix}">
+			<arg line="${scm.revert.command.formatted}" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
 			<arg line="${scm.revert.command.formatted}" />
 		</exec>
 
@@ -2742,7 +2754,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			property="scm.revert.command.formatted"
 		/>
 
-		<exec executable="${shell.executable}">
+		<exec executable="/bin/sh" os="${os.unix}">
+			<arg line="${scm.revert.command.formatted}" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
 			<arg line="${scm.revert.command.formatted}" />
 		</exec>
 
@@ -2752,7 +2768,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			property="scm.revert.command.formatted"
 		/>
 
-		<exec executable="${shell.executable}">
+		<exec executable="/bin/sh" os="${os.unix}">
+			<arg line="${scm.revert.command.formatted}" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
 			<arg line="${scm.revert.command.formatted}" />
 		</exec>
 	</target>
@@ -3257,19 +3277,13 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="stop-ldap">
-		<if>
-			<os family="windows" />
-			<then>
-				<exec executable="${shell.executable}">
-					<arg line="/c jps -l > java-processes" />
-				</exec>
-			</then>
-			<else>
-				<exec executable="${shell.executable}" output="java-processes">
-					<arg line="-c jps -l" />
-				</exec>
-			</else>
-		</if>
+		<exec executable="/bin/sh" os="${os.unix}">
+			<arg line="-c jps -l" />
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
+			<arg line="/c jps -l > java-processes" />
+		</exec>
 
 		<loadfile property="java-processes.content" srcfile="java-processes" />
 

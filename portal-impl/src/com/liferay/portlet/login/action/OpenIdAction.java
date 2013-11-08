@@ -113,9 +113,7 @@ public class OpenIdAction extends PortletAction {
 					themeDisplay, actionRequest, actionResponse);
 
 				if (Validator.isNull(redirect)) {
-					redirect =
-						PortalUtil.getPortalURL(actionRequest) +
-							themeDisplay.getURLSignIn();
+					redirect = themeDisplay.getURLSignIn();
 				}
 
 				sendRedirect(actionRequest, actionResponse, redirect);

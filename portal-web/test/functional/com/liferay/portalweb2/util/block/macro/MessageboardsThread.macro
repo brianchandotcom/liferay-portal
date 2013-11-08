@@ -16,9 +16,21 @@
 		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
 
 		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
-		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
+		<if>
+			<isset var="source" />
+			<then>
+				<execute action="PGMessageboardsPostthread#click" locator-key1="SOURCE_BUTTON" />
+				<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD_SOURCE_ON" value1="${threadBody}" />
+				<execute action="PGMessageboardsPostthread#click" locator-key1="SOURCE_BUTTON" />
+
+			</then>
+			<else>
+				<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
+			</else>
+		</if>
+
+		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
@@ -95,6 +107,31 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="splitThreadPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<var name="key_threadBody" value="${threadReplyBody}" />
+
+		<execute action="PGMessageboardsThread#assertClick" locator-key1="MESSAGE_SPLIT_THREAD" value1="Split Thread" />
+
+		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Click OK to create a new thread with the following messages." />
+		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT" value1="RE: ${threadSubject}" />
+		<execute action="PGMessageboardsSplitthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSplitSubject}" />
+		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator-key1="ADD_EXPLANATION_POST_LABEL" value1="Add explanation post to the source thread." />
+		<execute action="PGMessageboardsSplitthread#check" locator-key1="ADD_EXPLANATION_POST_CHECKBOX" />
+		<execute action="PGMessageboardsSplitthread#assertTextEquals" locator-key1="ADD_EXPLANATION_POST_INFO_MESSAGE" value1="The following post will be added in place of the moved message." />
+		<execute action="PGMessageboardsSplitthread#type" locator-key1="ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${threadSplitReplySubject}" />
+		<execute action="PGMessageboardsSplitthread#type" locator-key1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${threadSplitReplyBody}" />
+		<execute action="PGMessageboardsSplitthread#assertClick" locator-key1="OK_BUTTON" value1="OK" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSplitSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadReplyBody}" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_BODY_2" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
@@ -105,7 +142,6 @@
 			<then>
 				<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
 				<execute action="CPMessageboards#click" locator-key1="THREADS_RECYCLE_BIN_BUTTON" />
-				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType}" />
 				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
@@ -188,6 +224,23 @@
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
 	</command>
 
+	<command name="viewNoXSSPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<!--
+			The following assertions needs to be executed but is pending LPS-42086 (isAlertPresent)
+			to be implemented. The test will still fail if an alert box is displayed because webdriver
+			will see a Confirmation/Alert Dialog box and it has to be accepted.
+
+			<execute action="PGMessageboardsThread#assertAlertNotPresent" />
+		-->
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="" />
+	</command>
+
 	<command name="viewPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -242,6 +295,36 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="${userName}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
+	</command>
+
+	<command name="viewSplitThreadPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="2" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_2" value1="${threadSplitReplySubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="${threadSplitReplyBody}"/>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_threadSubject" value="${threadSplitSubject}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSplitSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="1" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSplitSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSplitSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSplitSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadReplyBody}" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_SUBJECT_2" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_BODY_2" />
 	</command>
 
 	<command name="viewWithWorkflowPG">

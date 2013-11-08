@@ -169,11 +169,33 @@ public class ExportImportHelperUtil {
 
 	public static String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
+			StagedModel stagedModel, String content,
+			boolean importReferencedContent)
+		throws Exception {
+
+		return getExportImportHelper().replaceImportContentReferences(
+			portletDataContext, entityElement, stagedModel, content,
+			importReferencedContent);
+	}
+
+	public static String replaceImportContentReferences(
+			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception {
 
 		return getExportImportHelper().replaceImportContentReferences(
 			portletDataContext, entityElement, content,
+			importReferencedContent);
+	}
+
+	public static String replaceImportDLReferences(
+			PortletDataContext portletDataContext, Element entityElement,
+			StagedModel stagedModel, String content,
+			boolean importReferencedContent)
+		throws Exception {
+
+		return getExportImportHelper().replaceImportDLReferences(
+			portletDataContext, entityElement, stagedModel, content,
 			importReferencedContent);
 	}
 

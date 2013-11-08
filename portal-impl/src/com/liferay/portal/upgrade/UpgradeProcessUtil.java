@@ -27,6 +27,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -35,9 +38,17 @@ import java.sql.ResultSet;
 public class UpgradeProcessUtil {
 
 	public static String getDefaultLanguageId(long companyId) throws Exception {
+		String languageId = _languageIdCache.get(companyId);
+
+		if (languageId != null) {
+			return languageId;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+
+		languageId = StringPool.BLANK;
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
@@ -48,15 +59,17 @@ public class UpgradeProcessUtil {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				return rs.getString("languageId");
+			if (rs.next()) {
+				languageId = rs.getString("languageId");
+
+				_languageIdCache.put(companyId, languageId);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		return StringPool.BLANK;
+		return languageId;
 	}
 
 	public static boolean isCreateIGImageDocumentType() {
@@ -161,6 +174,9 @@ public class UpgradeProcessUtil {
 
 		return false;
 	}
+
+	private static final Map<Long, String> _languageIdCache =
+		new HashMap<Long, String>();
 
 	private static Log _log = LogFactoryUtil.getLog(UpgradeProcessUtil.class);
 

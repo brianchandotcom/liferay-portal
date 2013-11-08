@@ -225,7 +225,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		for (DLFolder curDLFolder : dlFolders) {
-			if (includeTrashedEntries || !curDLFolder.isInTrash()) {
+			if (includeTrashedEntries || !curDLFolder.isInTrashExplicitly()) {
 				dlFolderLocalService.deleteFolder(
 					curDLFolder, includeTrashedEntries);
 			}

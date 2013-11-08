@@ -129,7 +129,7 @@ public class BookmarksFolderLocalServiceImpl
 			folder.getGroupId(), folder.getFolderId());
 
 		for (BookmarksFolder curFolder : folders) {
-			if (includeTrashedEntries || !curFolder.isInTrash()) {
+			if (includeTrashedEntries || !curFolder.isInTrashExplicitly()) {
 				deleteFolder(curFolder);
 			}
 		}

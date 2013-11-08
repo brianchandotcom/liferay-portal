@@ -286,7 +286,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			groupId, categoryId);
 
 		for (MBThread thread : threads) {
-			if (includeTrashedEntries || !thread.isInTrash()) {
+			if (includeTrashedEntries || !thread.isInTrashExplicitly()) {
 				mbThreadLocalService.deleteThread(thread);
 			}
 		}

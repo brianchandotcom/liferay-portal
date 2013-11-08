@@ -237,7 +237,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			category.getGroupId(), category.getCategoryId());
 
 		for (MBCategory curCategory : categories) {
-			if (includeTrashedEntries || !curCategory.isInTrash()) {
+			if (includeTrashedEntries || !curCategory.isInTrashExplicitly()) {
 				deleteCategory(curCategory, includeTrashedEntries);
 			}
 		}

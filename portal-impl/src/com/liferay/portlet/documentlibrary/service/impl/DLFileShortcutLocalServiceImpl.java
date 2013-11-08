@@ -231,7 +231,7 @@ public class DLFileShortcutLocalServiceImpl
 			dlFileShortcutPersistence.findByG_F(groupId, folderId);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			if (includeTrashedEntries || !fileShortcut.isInTrash()) {
+			if (includeTrashedEntries || !fileShortcut.isInTrashExplicitly()) {
 				deleteFileShortcut(fileShortcut);
 			}
 		}

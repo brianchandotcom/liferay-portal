@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
@@ -126,19 +128,18 @@ public class FriendlyURLServlet extends HttpServlet {
 				request.setAttribute(WebKeys.LAST_PATH, lastPath);
 			}
 		}
-		catch (NoSuchLayoutException nsle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsle);
-			}
-
-			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsle, request, response);
-
-			return;
-		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e);
+			}
+
+			if ((e instanceof NoSuchGroupException) ||
+				(e instanceof NoSuchLayoutException)) {
+
+				PortalUtil.sendError(
+					HttpServletResponse.SC_NOT_FOUND, e, request, response);
+
+				return;
 			}
 		}
 
@@ -244,7 +245,12 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		if (group == null) {
-			return new Object[] {mainPath, Boolean.FALSE};
+			if (PropsValues.REDIRECT_URL_TO_LAST_ON_NON_EXISTENT_GROUP) {
+				return new Object[] {mainPath, Boolean.FALSE};
+			}
+			else {
+				throw new NoSuchGroupException();
+			}
 		}
 
 		// Layout friendly URL

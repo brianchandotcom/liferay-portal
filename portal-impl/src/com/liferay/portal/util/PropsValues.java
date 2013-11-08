@@ -1576,6 +1576,8 @@ public class PropsValues {
 
 	public static final String REDIRECT_URL_SECURITY_MODE = PropsUtil.get(PropsKeys.REDIRECT_URL_SECURITY_MODE);
 
+	public static final boolean REDIRECT_URL_TO_LAST_ON_NON_EXISTENT_GROUP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.REDIRECT_URL_TO_LAST_ON_NON_EXISTENT_GROUP));
+
 	public static final boolean REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP));
 
 	public static final String[] REQUEST_HEADER_IGNORE_INIT_PARAMS = PropsUtil.getArray(PropsKeys.REQUEST_HEADER_IGNORE_INIT_PARAMS);

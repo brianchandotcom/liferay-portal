@@ -2065,6 +2065,8 @@ public interface PropsKeys {
 
 	public static final String REDIRECT_URL_SECURITY_MODE = "redirect.url.security.mode";
 
+	public static final String REDIRECT_URL_TO_LAST_ON_NON_EXISTENT_GROUP = "redirect.url.to.last.on.non.existent.group";
+
 	public static final String RELEASE_INFO_BUILD_NUMBER = "release.info.build.number";
 
 	public static final String RELEASE_INFO_PREVIOUS_BUILD_NUMBER = "release.info.previous.build.number";

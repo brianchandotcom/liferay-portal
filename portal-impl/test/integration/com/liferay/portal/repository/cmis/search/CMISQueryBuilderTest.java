@@ -59,6 +59,10 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		_serviceUtilClasses.add(DLAppServiceUtil.class);
+
+		resetServices();
+
 		_beanLocator = PortalBeanLocatorUtil.getBeanLocator();
 
 		_mockBeanLocator = mock(BeanLocator.class);

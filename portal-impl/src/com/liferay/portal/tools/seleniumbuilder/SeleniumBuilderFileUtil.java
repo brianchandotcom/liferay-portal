@@ -1393,7 +1393,7 @@ public class SeleniumBuilderFileUtil {
 
 				validateBlockElement(
 					fileName, element,
-					new String[] {"execute", "var", "property"},
+					new String[] {"execute", "property", "var"},
 					new String[] {"action", "macro", "test-case"},
 					new String[] {"var"}, new String[0]);
 			}

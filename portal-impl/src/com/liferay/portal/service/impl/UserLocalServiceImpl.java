@@ -3625,7 +3625,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, groupId, RoleConstants.TYPE_SITE);
 
-		userLocalService.unsetGroupTeamsUsers(groupId, userIds);
+		unsetGroupTeamsUsers(groupId, userIds);
 
 		groupPersistence.removeUsers(groupId, userIds);
 

@@ -73,7 +73,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 			getPermissionChecker(), emailAddress.getClassNameId(),
 			emailAddress.getClassPK(), ActionKeys.UPDATE);
 
-		emailAddressLocalService.deleteEmailAddress(emailAddressId);
+		emailAddressLocalService.deleteEmailAddress(emailAddress);
 	}
 
 	@Override

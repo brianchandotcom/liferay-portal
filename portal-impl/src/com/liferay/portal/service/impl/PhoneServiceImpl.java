@@ -72,7 +72,7 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 			getPermissionChecker(), phone.getClassNameId(), phone.getClassPK(),
 			ActionKeys.UPDATE);
 
-		phoneLocalService.deletePhone(phoneId);
+		phoneLocalService.deletePhone(phone);
 	}
 
 	@Override

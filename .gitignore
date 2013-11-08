@@ -223,6 +223,8 @@ cobertura.ser
 /support-websphere/classes
 /support-websphere/support-websphere*.jar
 
+/selenium-output
+
 /test-coverage
 /test-results
 

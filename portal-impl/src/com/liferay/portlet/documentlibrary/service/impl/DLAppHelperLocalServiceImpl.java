@@ -426,7 +426,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				if (dlFileEntry.isInTrash()) {
+				if (dlFileEntry.isInTrashExplicitely()) {
 					continue;
 				}
 
@@ -497,7 +497,7 @@ public class DLAppHelperLocalServiceImpl
 
 				DLFolder dlFolder = (DLFolder)object;
 
-				if (dlFolder.isInTrash()) {
+				if (dlFolder.isInTrashExplicitely()) {
 					continue;
 				}
 
@@ -616,7 +616,7 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (dlFileShortcut.isInTrash()) {
+		if (dlFileShortcut.isInTrashExplicitely()) {
 			restoreFileShortcutFromTrash(userId, dlFileShortcut);
 		}
 

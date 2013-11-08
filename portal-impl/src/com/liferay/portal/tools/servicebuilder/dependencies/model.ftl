@@ -392,6 +392,9 @@ public interface ${entity.name}Model extends
 		 */
 		@Override
 		public boolean isInTrashContainer();
+
+		@Override
+		public boolean isInTrashExplicitely() throws SystemException;
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>

@@ -611,6 +611,12 @@ public class JournalFolderWrapper implements JournalFolder,
 		return _journalFolder.isInTrashContainer();
 	}
 
+	@Override
+	public boolean isInTrashExplicitely()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolder.isInTrashExplicitely();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

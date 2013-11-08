@@ -32,7 +32,9 @@ public class CronText {
 
 	public static final int MONTHLY_FREQUENCY = 6;
 
-	public static final int NO_FREQUENCY = 1;
+	public static final int NO_FREQUENCY = 0;
+
+	public static final int SECONDLY_FREQUENCY = 1;
 
 	public static final int WEEKLY_FREQUENCY = 5;
 
@@ -66,6 +68,7 @@ public class CronText {
 			(frequency != CronText.MINUTELY_FREQUENCY) &&
 			(frequency != CronText.MONTHLY_FREQUENCY) &&
 			(frequency != CronText.NO_FREQUENCY) &&
+			(frequency != CronText.SECONDLY_FREQUENCY) &&
 			(frequency != CronText.WEEKLY_FREQUENCY) &&
 			(frequency != CronText.YEARLY_FREQUENCY)) {
 
@@ -96,6 +99,15 @@ public class CronText {
 
 		if (_frequency == CronText.NO_FREQUENCY) {
 			dayOfWeek = StringPool.QUESTION;
+		}
+		else if (_frequency == CronText.SECONDLY_FREQUENCY) {
+			second = StringPool.STAR + StringPool.FORWARD_SLASH + _interval;
+			minute = StringPool.STAR;
+			hour = StringPool.STAR;
+			dayOfMonth = StringPool.STAR;
+			month = StringPool.STAR;
+			dayOfWeek = StringPool.QUESTION;
+			year = StringPool.STAR;
 		}
 		else if (_frequency == CronText.MINUTELY_FREQUENCY) {
 			minute = StringPool.STAR + StringPool.FORWARD_SLASH + _interval;

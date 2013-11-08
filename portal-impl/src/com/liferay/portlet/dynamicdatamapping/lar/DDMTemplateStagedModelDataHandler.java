@@ -327,7 +327,7 @@ public class DDMTemplateStagedModelDataHandler
 				if (Validator.isNotNull(template.getSmallImageURL())) {
 					String smallImageURL =
 						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, element,
+							portletDataContext, element, template,
 							template.getSmallImageURL(), true);
 
 					template.setSmallImageURL(smallImageURL);

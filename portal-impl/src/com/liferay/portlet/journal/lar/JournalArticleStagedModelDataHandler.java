@@ -373,7 +373,7 @@ public class JournalArticleStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(article);
 
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, articleElement, content, true);
+			portletDataContext, articleElement, article, content, true);
 
 		article.setContent(content);
 

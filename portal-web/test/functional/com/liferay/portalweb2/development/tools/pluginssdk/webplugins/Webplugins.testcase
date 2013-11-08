@@ -4,6 +4,8 @@
 	</set-up>
 
 	<command name="CasWebSmoke" priority="5">
+		<property name="web.plugins.includess" value="cas-web" />
+
 		<var name="appName" value="Central Authentication Service" />
 
 		<execute macro="Page#gotoCP">
@@ -23,7 +25,10 @@
 		</execute>
 	</command>
 
+
 	<command name="KaleoWebSmoke" priority="5">
+		<property name="web.plugins.includess" value="kaleo-web" />
+
 		<var name="appName" value="Kaleo Workflow" />
 
 		<execute macro="Page#gotoCP">
@@ -44,6 +49,8 @@
 	</command>
 
 	<command name="ResourcesImporterWebSmoke" priority="5">
+		<property name="web.plugins.includess" value="resource-importer-web" />
+
 		<var name="appName" value="Resources Importer" />
 
 		<execute macro="Page#gotoCP">
@@ -64,6 +71,8 @@
 	</command>
 
 	<command name="ScriptingExecutorWebSmoke" priority="5">
+		<property name="web.plugins.includess" value="scripting-executor--web" />
+
 		<var name="appName" value="Scripting Executor" />
 
 		<execute macro="Page#gotoCP">
@@ -84,6 +93,8 @@
 	</command>
 
 	<command name="ServerManagerWebSmoke" priority="5">
+		<property name="web.plugins.includess" value="server-manager-web" />
+
 		<var name="appName" value="Remote IDE Connector" />
 
 		<execute macro="Page#gotoCP">
@@ -104,6 +115,8 @@
 	</command>
 
 	<command name="SyncWebSmoke" priority="5">
+		<property name="web.plugins.includess" value="sync-web" />
+
 		<var name="appName" value="Sync" />
 
 		<execute macro="Page#gotoCP">
@@ -124,6 +137,8 @@
 	</command>
 
 	<command name="ThemeLoaderWebSmoke" priority="5">
+		<property name="web.plugins.includess" value="theme-loader-web" />
+
 		<var name="appName" value="Theme Loader" />
 
 		<execute macro="Page#gotoCP">
@@ -143,7 +158,10 @@
 		</execute>
 	</command>
 
+
 	<command name="WurflWebSmoke" priority="5">
+		<property name="web.plugins.includes" value="wurfl-web" />
+
 		<var name="appName" value="Device Recognition Provider" />
 
 		<execute macro="Page#gotoCP">

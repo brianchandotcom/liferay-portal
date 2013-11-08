@@ -1,4 +1,6 @@
 <definition>
+	<property name="web.plugins.includes" value="kaleo-web" />
+
 	<var name="pageName" value="Asset Publisher Page" />
 	<var name="portletName" value="Asset Publisher" />
 

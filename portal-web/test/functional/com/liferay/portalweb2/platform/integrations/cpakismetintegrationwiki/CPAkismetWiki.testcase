@@ -1,4 +1,6 @@
 <definition>
+	<property name="portlet.plugins.includes" value="akismet-portlet" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

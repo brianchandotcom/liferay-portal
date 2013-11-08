@@ -30,9 +30,12 @@ import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalLifecycle;
+import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
@@ -312,7 +315,18 @@ public class GlobalStartupAction extends SimpleAction {
 
 		// Plugins
 
-		RequiredPluginsUtil.startCheckingRequiredPlugins();
+		PortalLifecycleUtil.register(new BasePortalLifecycle() {
+
+			@Override
+			protected void doPortalDestroy() {
+			}
+
+			@Override
+			protected void doPortalInit() {
+				RequiredPluginsUtil.startCheckingRequiredPlugins();
+			}
+
+		}, PortalLifecycle.METHOD_INIT);
 
 		// POP server
 

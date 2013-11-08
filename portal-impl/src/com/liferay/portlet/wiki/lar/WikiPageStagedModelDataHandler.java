@@ -130,7 +130,7 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(page);
 
 		String content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, pageElement, page.getContent(),
+			portletDataContext, pageElement, page, page.getContent(),
 			portletDataContext.getBooleanParameter(
 				WikiPortletDataHandler.NAMESPACE, "referenced-content"));
 

@@ -126,7 +126,7 @@ public class BlogsEntryStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(entry);
 
 		String content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, entryElement, entry.getContent(),
+			portletDataContext, entryElement, entry, entry.getContent(),
 			portletDataContext.getBooleanParameter(
 				BlogsPortletDataHandler.NAMESPACE, "referenced-content"));
 

@@ -809,43 +809,44 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public void removeModeAboutPortletId(String portletId) {
-		setModeAbout(StringUtil.remove(getModeAbout(), portletId));
+		setModeAbout(StringUtil.removeFromList(getModeAbout(), portletId));
 	}
 
 	@Override
 	public void removeModeConfigPortletId(String portletId) {
-		setModeConfig(StringUtil.remove(getModeConfig(), portletId));
+		setModeConfig(StringUtil.removeFromList(getModeConfig(), portletId));
 	}
 
 	@Override
 	public void removeModeEditDefaultsPortletId(String portletId) {
 		setModeEditDefaults(
-			StringUtil.remove(getModeEditDefaults(), portletId));
+			StringUtil.removeFromList(getModeEditDefaults(), portletId));
 	}
 
 	@Override
 	public void removeModeEditGuestPortletId(String portletId) {
-		setModeEditGuest(StringUtil.remove(getModeEditGuest(), portletId));
+		setModeEditGuest(
+			StringUtil.removeFromList(getModeEditGuest(), portletId));
 	}
 
 	@Override
 	public void removeModeEditPortletId(String portletId) {
-		setModeEdit(StringUtil.remove(getModeEdit(), portletId));
+		setModeEdit(StringUtil.removeFromList(getModeEdit(), portletId));
 	}
 
 	@Override
 	public void removeModeHelpPortletId(String portletId) {
-		setModeHelp(StringUtil.remove(getModeHelp(), portletId));
+		setModeHelp(StringUtil.removeFromList(getModeHelp(), portletId));
 	}
 
 	@Override
 	public void removeModePreviewPortletId(String portletId) {
-		setModePreview(StringUtil.remove(getModePreview(), portletId));
+		setModePreview(StringUtil.removeFromList(getModePreview(), portletId));
 	}
 
 	@Override
 	public void removeModePrintPortletId(String portletId) {
-		setModePrint(StringUtil.remove(getModePrint(), portletId));
+		setModePrint(StringUtil.removeFromList(getModePrint(), portletId));
 	}
 
 	@Override
@@ -947,7 +948,7 @@ public class LayoutTypePortletImpl
 				columnValue = getTypeSettingsProperty(columnId);
 			}
 
-			columnValue = StringUtil.remove(columnValue, portletId);
+			columnValue = StringUtil.removeFromList(columnValue, portletId);
 
 			if (hasUserPreferences()) {
 				setUserPreference(columnId, columnValue);
@@ -969,12 +970,12 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public void removeStateMaxPortletId(String portletId) {
-		setStateMax(StringUtil.remove(getStateMax(), portletId));
+		setStateMax(StringUtil.removeFromList(getStateMax(), portletId));
 	}
 
 	@Override
 	public void removeStateMinPortletId(String portletId) {
-		setStateMin(StringUtil.remove(getStateMin(), portletId));
+		setStateMin(StringUtil.removeFromList(getStateMin(), portletId));
 	}
 
 	@Override

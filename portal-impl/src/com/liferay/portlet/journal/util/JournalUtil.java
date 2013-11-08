@@ -1185,7 +1185,8 @@ public class JournalUtil {
 				return content;
 			}
 
-			availableLocales = StringUtil.remove(availableLocales, languageId);
+			availableLocales = StringUtil.removeFromList(
+				availableLocales, languageId);
 
 			if (availableLocales.endsWith(",")) {
 				availableLocales = availableLocales.substring(

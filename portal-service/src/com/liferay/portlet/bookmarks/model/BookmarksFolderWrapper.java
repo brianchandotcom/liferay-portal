@@ -638,6 +638,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		return _bookmarksFolder.isInTrashContainer();
 	}
 
+	@Override
+	public boolean isInTrashExplicitely()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolder.isInTrashExplicitely();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

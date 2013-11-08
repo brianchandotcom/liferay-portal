@@ -455,6 +455,9 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	@Override
 	public boolean isInTrashContainer();
 
+	@Override
+	public boolean isInTrashExplicitely() throws SystemException;
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */

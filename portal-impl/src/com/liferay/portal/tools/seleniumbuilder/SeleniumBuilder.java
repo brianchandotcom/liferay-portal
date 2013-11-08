@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -117,6 +118,7 @@ public class SeleniumBuilder {
 			new SeleniumBuilderFileUtil(baseDir);
 
 		Set<String> testCaseMethodNames = new TreeSet<String>();
+		Set<String> testCaseProperties = new TreeSet<String>();
 		int testCaseCount = 0;
 
 		Set<String> testCaseNames = seleniumBuilderContext.getTestCaseNames();
@@ -124,6 +126,21 @@ public class SeleniumBuilder {
 		for (String testCaseName : testCaseNames) {
 			Element rootElement = seleniumBuilderContext.getTestCaseRootElement(
 				testCaseName);
+
+			List<Element> rootPropertyElements = rootElement.elements(
+				"property");
+
+			for (Element rootPropertyElement : rootPropertyElements) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(testCaseName);
+				sb.append("TestCase.all.");
+				sb.append(rootPropertyElement.attributeValue("name"));
+				sb.append("=");
+				sb.append(rootPropertyElement.attributeValue("value"));
+
+				testCaseProperties.add(sb.toString());
+			}
 
 			List<Element> commandElements =
 				seleniumBuilderFileUtil.getAllChildElements(
@@ -133,6 +150,24 @@ public class SeleniumBuilder {
 				testCaseMethodNames.add(
 					testCaseName + "TestCase#test" +
 						commandElement.attributeValue("name"));
+
+				List<Element> commandPropertyElements =
+					seleniumBuilderFileUtil.getAllChildElements(
+						commandElement, "property");
+
+				for (Element commandPropertyElement : commandPropertyElements) {
+					StringBundler sb = new StringBundler();
+
+					sb.append(testCaseName);
+					sb.append("TestCase.test");
+					sb.append(commandElement.attributeValue("name"));
+					sb.append(".");
+					sb.append(commandPropertyElement.attributeValue("name"));
+					sb.append("=");
+					sb.append(commandPropertyElement.attributeValue("value"));
+
+					testCaseProperties.add(sb.toString());
+				}
 			}
 
 			testCaseCount += commandElements.size();
@@ -146,6 +181,14 @@ public class SeleniumBuilder {
 		seleniumBuilderFileUtil.writeFile(
 			"../../../test.case.method.names.properties",
 			"TEST_CASE_METHOD_NAMES=" + testCaseMethodNamesString, false);
+
+		String testCasePropertiesString = StringUtil.merge(
+			testCaseProperties.toArray(new String[testCaseProperties.size()]),
+			StringPool.NEW_LINE);
+
+		seleniumBuilderFileUtil.writeFile(
+			"../../../test.generated.properties", testCasePropertiesString,
+				false);
 
 		System.out.println("\nThere are " + testCaseCount + " test cases.");
 	}

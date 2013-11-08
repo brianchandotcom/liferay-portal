@@ -4,6 +4,9 @@
 	</tear-down>
 
 	<command name="WelcomeThemeView" priority="5">
+		<property name="theme.plugins.includes" value="welcome-theme" />
+		<property name="web.plugins.includes" value="resource-importer-web" />
+
 		<execute macro="WelcomeTheme#viewPG" />
 
 		<execute macro="User#firstLoginPG" />

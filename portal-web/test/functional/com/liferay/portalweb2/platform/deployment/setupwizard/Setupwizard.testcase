@@ -1,4 +1,6 @@
 <definition>
+	<property name="setup.wizard.enabled" value="true" />
+
 	<command name="SetupWizardDefaultConfiguration" priority="5">
 		<var name="administratorFirstName" value="Test" />
 		<var name="administratorLastName" value="Test" />

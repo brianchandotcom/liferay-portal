@@ -198,9 +198,9 @@ int sortColumnIndex = -1;
 							</c:choose>
 
 						<c:if test="<%= orderKey != null %>">
-								</a>
-
 								<span class="table-sort-indicator"></span>
+
+								</a>
 							</div>
 						</c:if>
 					</th>

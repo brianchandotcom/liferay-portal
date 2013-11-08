@@ -36,4 +36,6 @@ public interface TrashedModel {
 
 	public boolean isInTrashContainer();
 
+	public boolean isInTrashExplicitly() throws SystemException;
+
 }

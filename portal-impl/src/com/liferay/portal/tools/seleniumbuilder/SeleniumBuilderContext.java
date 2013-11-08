@@ -658,6 +658,17 @@ public class SeleniumBuilderContext {
 
 		String testCaseFileName = getTestCaseFileName(testCaseName);
 
+		String extendedTestCase = rootElement.attributeValue("extends");
+
+		if (extendedTestCase != null) {
+			if (!_testCaseNames.contains(extendedTestCase) ||
+				testCaseName.equals(extendedTestCase)) {
+
+				_seleniumBuilderFileUtil.throwValidationException(
+					1006, testCaseFileName, rootElement, "extends");
+			}
+		}
+
 		validateVarElements(rootElement, testCaseFileName);
 
 		List<Element> commandElements =
@@ -685,12 +696,17 @@ public class SeleniumBuilderContext {
 		for (Element executeElement : executeElements) {
 			String action = executeElement.attributeValue("action");
 			String macro = executeElement.attributeValue("macro");
+			String testCase = executeElement.attributeValue("test-case");
 
 			if (action != null) {
 				_validateActionElement(testCaseFileName, executeElement);
 			}
 			else if (macro != null) {
 				_validateMacroElement(testCaseFileName, executeElement);
+			}
+			else if (testCase != null) {
+				_validateTestCaseElement(
+					testCaseFileName, executeElement, rootElement);
 			}
 		}
 	}
@@ -1030,6 +1046,55 @@ public class SeleniumBuilderContext {
 		if (!_isSeleniumCommand(selenium)) {
 			_seleniumBuilderFileUtil.throwValidationException(
 				1012, fileName, element, "selenium", selenium);
+		}
+	}
+
+	private void _validateTestCaseElement(
+		String fileName, Element element, Element rootElement) {
+
+		String testCase = element.attributeValue("test-case");
+
+		int x = testCase.indexOf(StringPool.POUND);
+
+		String testCaseCommand = testCase.substring(x + 1);
+
+		String extendedTestCase = rootElement.attributeValue("extends");
+
+		if (extendedTestCase != null) {
+			Element extendedTestCaseRootElement = getTestCaseRootElement(
+				extendedTestCase);
+
+			if (testCaseCommand.equals("set-up")) {
+				Element extendedTestCaseSetUpElement =
+					extendedTestCaseRootElement.element("set-up");
+
+				if (extendedTestCaseSetUpElement == null) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1006, fileName, element, "test-case");
+				}
+			}
+			else if (testCaseCommand.equals("tear-down")) {
+				Element extendedTestCaseTearDownElement =
+					extendedTestCaseRootElement.element("tear-down");
+
+				if (extendedTestCaseTearDownElement == null) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1006, fileName, element, "test-case");
+				}
+			}
+			else {
+				Set<String> extendedTestCaseCommandNames =
+					_testCaseCommandNames.get(extendedTestCase);
+
+				if (!extendedTestCaseCommandNames.contains(testCaseCommand)) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1006, fileName, element, "test-case");
+				}
+			}
+		}
+		else {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1004, fileName, rootElement, new String[] {"extends"});
 		}
 	}
 

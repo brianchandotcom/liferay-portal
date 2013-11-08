@@ -1,4 +1,4 @@
-<definition>
+<definition extends="TestCase">
 	<set-up>
 		<execute test-case="super#" />
 	</set-up>

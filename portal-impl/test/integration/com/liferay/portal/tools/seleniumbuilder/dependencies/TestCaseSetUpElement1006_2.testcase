@@ -1,6 +1,6 @@
 <definition extends="TestCase">
 	<set-up>
-		<execute test-case="fail#fail" />
+		<execute test-case="super#fail" />
 	</set-up>
 
 	<command name="name" priority="5">

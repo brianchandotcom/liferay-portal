@@ -199,12 +199,15 @@ public class OpenIdAction extends PortletAction {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
+
+		request = PortalUtil.getOriginalServletRequest(request);
+
 		HttpSession session = request.getSession();
 
 		ConsumerManager consumerManager = OpenIdUtil.getConsumerManager();
 
 		ParameterList parameterList = new ParameterList(
-			actionRequest.getParameterMap());
+			request.getParameterMap());
 
 		DiscoveryInformation discoveryInformation =
 			(DiscoveryInformation)session.getAttribute(WebKeys.OPEN_ID_DISCO);
@@ -213,8 +216,7 @@ public class OpenIdAction extends PortletAction {
 			return null;
 		}
 
-		String receivingURL = ParamUtil.getString(
-			actionRequest, "openid.return_to");
+		String receivingURL = ParamUtil.getString(request, "openid.return_to");
 
 		VerificationResult verificationResult = consumerManager.verify(
 			receivingURL, parameterList, discoveryInformation);

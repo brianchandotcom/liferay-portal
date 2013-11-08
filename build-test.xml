@@ -1922,6 +1922,44 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		<antcall target="start" inheritAll="false" />
 
 		<if>
+			<matches pattern="http" string="${test.build.bundle.geronimo.zip.url}" />
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<get
+					dest="${tstamp.value}.zip"
+					src="${test.build.bundle.geronimo.zip.url}"
+				/>
+
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
+						includes="liferay-portal-*/geronimo-*/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<chmod perm="a+x">
+					<fileset dir="${app.server.geronimo.bin.dir}">
+						<include name="*.sh" />
+					</fileset>
+				</chmod>
+
+				<delete file="${tstamp.value}.zip" />
+			</then>
+		</if>
+
+		<if>
 			<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
@@ -2027,6 +2065,44 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 
 				<chmod perm="a+x">
 					<fileset dir="${app.server.jetty.bin.dir}">
+						<include name="*.sh" />
+					</fileset>
+				</chmod>
+
+				<delete file="${tstamp.value}.zip" />
+			</then>
+		</if>
+
+		<if>
+			<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<get
+					dest="${tstamp.value}.zip"
+					src="${test.build.bundle.jonas.zip.url}"
+				/>
+
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
+						includes="liferay-portal-*/jonas-*/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<chmod perm="a+x">
+					<fileset dir="${app.server.jonas.bin.dir}">
 						<include name="*.sh" />
 					</fileset>
 				</chmod>

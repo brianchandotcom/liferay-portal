@@ -1685,13 +1685,9 @@ AUI.add(
 						if (buttonChangeCategoryPermissions) {
 							buttonChangeCategoryPermissions.on(EVENT_CLICK, instance._onChangePermissions, instance);
 						}
-
-						var inputCategoryNameNode = categoryFormEdit.one(SELECTOR_CATEGORY_NAME_INPUT);
-
-						Util.focusFormField(inputCategoryNameNode);
 					},
 
-					_initializeVocabularyPanelAdd: function(callback) {
+					_initializeVocabularyPanelAdd: function() {
 						var instance = this;
 
 						var vocabularyFormAdd = instance._vocabularyPanelAdd.get(STR_CONTENT_BOX).one(SELECTOR_UPDATE_VOCABULARY_FORM);
@@ -1712,10 +1708,6 @@ AUI.add(
 						);
 
 						instance._vocabularyFormAdd = vocabularyFormAdd;
-
-						if (callback) {
-							callback.call(instance);
-						}
 					},
 
 					_initializeVocabularyPanelEdit: function() {
@@ -1749,10 +1741,6 @@ AUI.add(
 						if (buttonChangeVocabularyPermissions) {
 							buttonChangeVocabularyPermissions.on(EVENT_CLICK, instance._onChangePermissions, instance);
 						}
-
-						var inputVocabularyEditNameNode = vocabularyFormEdit.one(SELECTOR_VOCABULARY_NAME_INPUT);
-
-						Util.focusFormField(inputVocabularyEditNameNode);
 					},
 
 					_loadData: function() {
@@ -2702,7 +2690,7 @@ AUI.add(
 
 							vocabularyPanelAdd._syncUIPosAlign();
 
-							var afterSuccess = A.bind('_initializeVocabularyPanelAdd', instance, instance._focusVocabularyPanelAdd);
+							var afterSuccess = A.bind('_initializeVocabularyPanelAdd', instance);
 
 							vocabularyPanelAdd.plug(
 								A.Plugin.IO,

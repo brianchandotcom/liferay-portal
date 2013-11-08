@@ -1763,7 +1763,7 @@ public class SeleniumBuilderTest {
 	public void testTestCaseCommandElement1001() throws Exception {
 		test(
 			"TestCaseCommandElement1001.testcase",
-			"Error 1001: Missing (execute|var) child element in " +
+			"Error 1001: Missing (execute|property|var) child element in " +
 				_DIR_NAME + "/TestCaseCommandElement1001.testcase:2");
 	}
 

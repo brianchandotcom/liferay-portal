@@ -489,12 +489,16 @@ else {
 	}
 
 	function <portlet:namespace />previewMessage() {
-		if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-will-be-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
-			document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
-			document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
+		<c:if test="<%= !message.isDraft() %>">
+			if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-will-be-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
+				return false;
+			}
+		</c:if>
 
-			<portlet:namespace />saveMessage(true);
-		}
+		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
+		document.<portlet:namespace />fm.<portlet:namespace />preview.value = 'true';
+
+		<portlet:namespace />saveMessage(true);
 	}
 
 	function <portlet:namespace />saveMessage(draft) {

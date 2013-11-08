@@ -124,6 +124,7 @@ import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -894,7 +895,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Override
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			String content, boolean importReferencedContent)
+			StagedModel stagedModel, String content,
+			boolean importReferencedContent)
 		throws Exception {
 
 		content = ExportImportHelperUtil.replaceImportLayoutReferences(
@@ -903,22 +905,42 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			portletDataContext, content, importReferencedContent);
 
 		content = ExportImportHelperUtil.replaceImportDLReferences(
-			portletDataContext, entityElement, content,
+			portletDataContext, entityElement, stagedModel, content,
 			importReferencedContent);
 
 		return content;
 	}
 
 	@Override
-	public String replaceImportDLReferences(
+	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		List<Element> referenceDataElements =
-			portletDataContext.getReferenceDataElements(
-				entityElement, FileEntry.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		return replaceImportContentReferences(
+			portletDataContext, entityElement, null, content,
+			importReferencedContent);
+	}
+
+	@Override
+	public String replaceImportDLReferences(
+			PortletDataContext portletDataContext, Element entityElement,
+			StagedModel parentStagedModel, String content,
+			boolean importReferencedContent)
+		throws Exception {
+
+		List<Element> referenceDataElements = Collections.emptyList();
+
+		if (parentStagedModel == null) {
+			referenceDataElements =
+				portletDataContext.getReferenceDataElements(
+					entityElement, FileEntry.class,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+		else {
+			referenceDataElements = portletDataContext.getReferenceElements(
+				parentStagedModel, FileEntry.class);
+		}
 
 		for (Element referenceDataElement : referenceDataElements) {
 			String fileEntryUUID = referenceDataElement.attributeValue("uuid");
@@ -929,36 +951,71 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			String path = referenceDataElement.attributeValue("path");
 
+			long classPk = GetterUtil.getLong(
+				referenceDataElement.attributeValue("class-pk"), 0);
+
+			long groupId = GetterUtil.getLong(
+				referenceDataElement.attributeValue("group-id"), 0);
+
+			if (Validator.isNull(path)) {
+				String className = referenceDataElement.attributeValue(
+							"class-name");
+				path =
+					ExportImportPathUtil.getModelPath(
+						groupId, className, classPk);
+			}
+
 			if (!content.contains("[$dl-reference=" + path + "$]")) {
 				continue;
 			}
 
-			FileEntry fileEntry =
-				(FileEntry)portletDataContext.getZipEntryAsObject(path);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fileEntry);
-
-			Map<Long, Long> fileEntryIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					DLFileEntry.class);
-
-			long importedFileEntryId = MapUtil.getLong(
-				fileEntryIds, fileEntry.getFileEntryId(),
-				fileEntry.getFileEntryId());
-
 			FileEntry importedFileEntry = null;
 
-			try {
-				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
-					importedFileEntryId);
-			}
-			catch (NoSuchFileEntryException nsfee) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to reference " + path);
-				}
+			if ((portletDataContext.getSourceCompanyGroupId() == groupId) &&
+				(portletDataContext.getGroupId() !=
+								portletDataContext.getCompanyGroupId())) {
 
-				continue;
+				String uuid = referenceDataElement.attributeValue("uuid");
+				try {
+					importedFileEntry =
+						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+								uuid, portletDataContext.getCompanyGroupId());
+				}
+				catch (NoSuchFileEntryException nsfee) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to reference " + path);
+					}
+
+					continue;
+				}
+			}
+			else {
+				FileEntry fileEntry =
+					(FileEntry)portletDataContext.getZipEntryAsObject(path);
+
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, fileEntry);
+
+				Map<Long, Long> fileEntryIds =
+								(Map<Long, Long>)
+								portletDataContext.getNewPrimaryKeysMap(
+									DLFileEntry.class);
+
+				long importedFileEntryId = MapUtil.getLong(
+					fileEntryIds, fileEntry.getFileEntryId(),
+					fileEntry.getFileEntryId());
+
+				try {
+					importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
+						importedFileEntryId);
+				}
+				catch (NoSuchFileEntryException nsfee) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to reference " + path);
+					}
+
+					continue;
+				}
 			}
 
 			String url = DLUtil.getPreviewURL(
@@ -970,6 +1027,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return content;
+	}
+
+	@Override
+	public String replaceImportDLReferences(
+			PortletDataContext portletDataContext, Element entityElement,
+			String content, boolean importReferencedContent)
+		throws Exception {
+
+		return replaceImportDLReferences(
+					portletDataContext, entityElement, null, content,
+					importReferencedContent);
 	}
 
 	@Override

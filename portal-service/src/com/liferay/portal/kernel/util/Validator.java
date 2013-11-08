@@ -982,8 +982,21 @@ public class Validator {
 	}
 
 	/**
+	 * Returns <code>true</code> if the int number object is not
+	 * <code>null</code>, meaning it is not a <code>null</code> reference or
+	 * zero.
+	 *
+	 * @param  i the int number object to check
+	 * @return <code>true</code> if the int number object is not
+	 *         <code>null</code>; <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(Integer i) {
+		return !isNull(i);
+	}
+
+	/**
 	 * Returns <code>true</code> if the long number object is not
-	 * <code>null</code>, meaning it is neither a <code>null</code> reference or
+	 * <code>null</code>, meaning it is not a <code>null</code> reference or
 	 * zero.
 	 *
 	 * @param  l the long number object to check
@@ -1029,6 +1042,23 @@ public class Validator {
 	}
 
 	/**
+	 * Returns <code>true</code> if the int number object is <code>null</code>,
+	 * meaning it is either a <code>null</code> reference or zero.
+	 *
+	 * @param  i the int number object to check
+	 * @return <code>true</code> if the int number object is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(Integer i) {
+		if ((i == null) || (i.intValue()== 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Returns <code>true</code> if the long number object is <code>null</code>,
 	 * meaning it is either a <code>null</code> reference or zero.
 	 *
@@ -1055,7 +1085,10 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isNull(Object obj) {
-		if (obj instanceof Long) {
+		if (obj instanceof Integer) {
+			return isNull((Integer)obj);
+		}
+		else if (obj instanceof Long) {
 			return isNull((Long)obj);
 		}
 		else if (obj instanceof String) {

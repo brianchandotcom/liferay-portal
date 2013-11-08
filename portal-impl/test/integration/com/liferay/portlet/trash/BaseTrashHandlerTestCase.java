@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.trash;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -980,6 +981,14 @@ public abstract class BaseTrashHandlerTestCase {
 			TrashEntryServiceUtil.deleteEntries(group.getGroupId());
 
 			Assert.assertEquals(0, getTrashEntriesCount(group.getGroupId()));
+
+			try {
+				getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+				Assert.fail();
+			}
+			catch (NoSuchModelException nsme) {
+			}
 		}
 		else if (deleteTrashEntries) {
 			parentTrashHandler.deleteTrashEntry(
@@ -999,6 +1008,15 @@ public abstract class BaseTrashHandlerTestCase {
 						getBaseModelClassName());
 
 				trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
+			}
+			else {
+				try {
+					getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+					Assert.fail();
+				}
+				catch (NoSuchModelException nsme) {
+				}
 			}
 
 			Assert.assertEquals(

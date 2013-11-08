@@ -166,6 +166,11 @@
 	<td>xpath=(//td/ul/li[2]/span/a/span)[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MESSAGE_SPLIT_THREAD</td>
+	<td>//table[contains(.,'${key_threadBody}')]/tbody/tr/td[@class='thread-bottom']/ul//a[contains(.,'Split Thread')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

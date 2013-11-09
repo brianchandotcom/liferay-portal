@@ -6,10 +6,6 @@
 	</command>
 
 	<command name="assertClick">
-		<case locator-key1="ADD_RECORD_BUTTON">
-			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
-		</case>
-
 		<case locator-key1="RECORD_MENULIST_DELETE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

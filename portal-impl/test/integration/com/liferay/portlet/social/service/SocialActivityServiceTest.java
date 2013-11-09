@@ -22,6 +22,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -31,10 +32,12 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
@@ -62,12 +65,22 @@ public class SocialActivityServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
+
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(_group);
 		UserLocalServiceUtil.deleteUser(_user);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
 
 		SocialActivityHierarchyEntryThreadLocal.clear();
 	}

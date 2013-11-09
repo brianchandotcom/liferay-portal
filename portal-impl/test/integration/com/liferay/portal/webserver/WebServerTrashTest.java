@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -37,6 +38,7 @@ import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.HashMap;
@@ -66,6 +68,12 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			ActionKeys.ACCESS_IN_CONTROL_PANEL);
+
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.VIEW);
 	}
 
 	@Override
@@ -79,6 +87,12 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		if (_role != null) {
 			RoleLocalServiceUtil.deleteRole(_role.getRoleId());
 		}
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			ActionKeys.VIEW);
 	}
 
 	@Test

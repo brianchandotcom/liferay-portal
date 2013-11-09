@@ -43,6 +43,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
 import java.io.InputStream;
 
@@ -71,6 +72,11 @@ public class DLCheckInCheckOutTest {
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			ActionKeys.ADD_DOCUMENT);
 
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
+
 		_authorUser = UserTestUtil.addUser("author", _group.getGroupId());
 		_overriderUser = UserTestUtil.addUser("overrider", _group.getGroupId());
 
@@ -85,6 +91,11 @@ public class DLCheckInCheckOutTest {
 	@After
 	public void tearDown() throws Exception {
 		DLAppServiceUtil.deleteFolder(_folder.getFolderId());
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
 
 		UserLocalServiceUtil.deleteUser(_authorUser.getUserId());
 		UserLocalServiceUtil.deleteUser(_overriderUser.getUserId());

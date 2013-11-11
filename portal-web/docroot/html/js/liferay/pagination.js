@@ -77,7 +77,9 @@ AUI.add(
 					TPL_DELTA_SELECTOR: '<div class="lfr-pagination-delta-selector">' +
 						'<div class="btn-group lfr-icon-menu">' +
 							'<a class="btn direction-down dropdown-toggle max-display-items-15" href="javascript:;" id={id} title="{title}">' +
-								'<span class="lfr-icon-menu-text">{title}</span> <i class="icon-caret-down" />' +
+								'<span class="lfr-pagination-delta-selector-amount">{amount}</span>' +
+								'<span class="lfr-icon-menu-text">{title}</span>' +
+								'<i class="icon-caret-down" />' +
 							'</a>' +
 						'</div>' +
 					'</div>',
@@ -90,7 +92,7 @@ AUI.add(
 						'</a>' +
 					'</li>',
 
-					TPL_LABEL: '{x} {items} {per} {page}',
+					TPL_LABEL: ' {items} {per} {page}',
 
 					TPL_RESULTS: '<small class="search-results" id="id">{value}</small>',
 
@@ -111,12 +113,15 @@ AUI.add(
 
 						var deltaSelectorId = namespace + 'dataSelectorId';
 
+						var selectorLabel = instance._getLabelContent();
+
 						var deltaSelector = ANode.create(
 							Lang.sub(
 								instance.TPL_DELTA_SELECTOR,
 								{
 									id: deltaSelectorId,
-									title: instance._getLabelContent()
+									amount: selectorLabel.amount,
+									title: selectorLabel.title
 								}
 							)
 						);
@@ -177,6 +182,7 @@ AUI.add(
 						instance._itemContainer = itemContainer;
 						instance._itemsContainer = itemsContainer;
 						instance._paginationContentNode = boundingBox.one('.pagination-content');
+						instance._paginationControls = boundingBox.one('.lfr-pagination-controls');
 						instance._searchResults = searchResults;
 
 						Liferay.Menu.register(deltaSelectorId);
@@ -214,7 +220,7 @@ AUI.add(
 					_getLabelContent: function(itemsPerPage) {
 						var instance = this;
 
-						var result;
+						var results = {};
 
 						var strings = instance.get(STRINGS);
 
@@ -222,17 +228,18 @@ AUI.add(
 							itemsPerPage = instance.get(ITEMS_PER_PAGE);
 						}
 
-						result = Lang.sub(
+						results.amount = itemsPerPage;
+
+						results.title = Lang.sub(
 							instance.TPL_LABEL,
 							{
 								items: strings.items,
 								page: strings.page,
-								per: strings.per,
-								x: itemsPerPage
+								per: strings.per
 							}
 						);
 
-						return result;
+						return results;
 					},
 
 					_getResultsContent: function(page, itemsPerPage) {
@@ -303,14 +310,19 @@ AUI.add(
 								page: page
 							}
 						);
+
+						var results = instance.get(RESULTS);
+
+						instance.set('visible', (results > itemsPerPage));
 					},
 
 					_syncLabel: function(itemsPerPage) {
 						var instance = this;
 
-						var result = instance._getLabelContent(itemsPerPage);
+						var results = instance._getLabelContent(itemsPerPage);
 
-						instance._deltaSelector.one('.lfr-icon-menu-text').html(result);
+						instance._deltaSelector.one('.lfr-pagination-delta-selector-amount').html(results.amount);
+						instance._deltaSelector.one('.lfr-icon-menu-text').html(results.title);
 					},
 
 					_syncResults: function(page, itemsPerPage) {
@@ -331,6 +343,10 @@ AUI.add(
 						if (hideClass !== false) {
 							hiddenClass += STR_SPACE + (hideClass || 'hide');
 						}
+
+						var results = instance.get(RESULTS);
+
+						instance._paginationControls.toggleClass(hiddenClass, (results <= 0));
 
 						instance._paginationContentNode.toggleClass(hiddenClass, !val);
 					}

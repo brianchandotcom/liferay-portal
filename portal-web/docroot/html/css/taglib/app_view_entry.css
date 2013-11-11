@@ -5,7 +5,7 @@
 	&.display-icon {
 		display: inline-block;
 		float: left;
-		margin: 0 5px;
+		margin: 5px;
 		padding: 10px 0;
 		position: relative;
 		vertical-align: top;

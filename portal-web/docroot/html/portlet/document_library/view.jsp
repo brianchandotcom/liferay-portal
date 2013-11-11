@@ -86,13 +86,13 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
 <div id="<portlet:namespace />documentLibraryContainer">
 	<aui:row cssClass="lfr-app-column-view">
-		<aui:col cssClass="navigation-pane" width="<%= 20 %>">
+		<aui:col cssClass="navigation-pane" width="<%= 25 %>">
 			<liferay-util:include page="/html/portlet/document_library/view_folders.jsp" />
 
 			<div class="folder-pagination"></div>
 		</aui:col>
 
-		<aui:col cssClass="context-pane" width="<%= showFolderMenu ? 80 : 100 %>">
+		<aui:col cssClass="context-pane" width="<%= showFolderMenu ? 75 : 100 %>">
 			<liferay-ui:app-view-toolbar
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= true %>"

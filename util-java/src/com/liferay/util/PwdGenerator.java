@@ -47,21 +47,25 @@ public class PwdGenerator {
 			throw new IllegalArgumentException("Keys must be defined!");
 		}
 
-		StringBuilder sb = new StringBuilder(length);
+		StringBundler fullKeySB = new StringBundler(keys);
 
-		String fullKey = new StringBundler().append(keys).toString();
+		String fullKey = fullKeySB.toString();
+
 		int fullKeyLength = fullKey.length();
 
 		int refreshPeriod = (int) (_MULTIPLIER / Math.log(fullKeyLength));
 
 		long secureLong = 0;
 
+		StringBuilder sb = new StringBuilder(length);
+
 		for (int i = 0; i < length; i++) {
 			if ((i % refreshPeriod) == 0) {
 				secureLong = SecureRandomUtil.nextLong();
 			}
 
-			int pos = (int)Math.abs(secureLong % fullKeyLength);
+			int pos = Math.abs((int)(secureLong % fullKeyLength));
+
 			secureLong = secureLong / fullKeyLength;
 
 			sb.append(fullKey.charAt(pos));

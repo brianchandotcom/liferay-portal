@@ -654,7 +654,7 @@ public class DLAppHelperLocalServiceImpl
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(
 					trashEntry.getEntryId(), DLFileShortcut.class.getName(),
-					dlFileShortcut.getFolderId());
+					dlFileShortcut.getFileShortcutId());
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -921,7 +921,7 @@ public class DLAppHelperLocalServiceImpl
 
 				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
 					DLFileShortcut.class.getName(),
-					dlFileShortcut.getFolderId());
+					dlFileShortcut.getFileShortcutId());
 
 				if (trashEntry != null) {
 					continue;
@@ -930,7 +930,7 @@ public class DLAppHelperLocalServiceImpl
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
 						trashEntryId, DLFileShortcut.class.getName(),
-						dlFileShortcut.getFolderId());
+						dlFileShortcut.getFileShortcutId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
 

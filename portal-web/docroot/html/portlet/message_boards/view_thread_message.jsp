@@ -70,7 +70,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(userDisplay.getCreateDate()) %>
 						</div>
 
-						<c:if test="<%= !showRecentPost %>">
+						<c:if test="<%= showRecentPost %>">
 							<portlet:renderURL var="recentPostsURL">
 								<portlet:param name="struts_action" value="/message_boards/view" />
 								<portlet:param name="topLink" value="recent-posts" />
@@ -359,7 +359,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								}
 								%>
 
-								<c:if test="<%= !showDeletedAttachments && (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+								<c:if test="<%= showDeletedAttachments && (deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
 									<li class="message-attachment">
 										<portlet:renderURL var="viewTrashAttachmentsURL">
 											<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />

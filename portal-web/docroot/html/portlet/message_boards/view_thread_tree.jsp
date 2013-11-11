@@ -33,9 +33,9 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 	request.setAttribute("edit_message.jsp-depth", depth);
 	request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
 	request.setAttribute("edit_message.jsp-message", message);
-	request.setAttribute("edit-message.jsp-showDeletedAttachments", Boolean.FALSE);
+	request.setAttribute("edit-message.jsp-showDeletedAttachments", Boolean.TRUE);
 	request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
-	request.setAttribute("edit-message.jsp-showRecentPost", Boolean.FALSE);
+	request.setAttribute("edit-message.jsp-showRecentPost", Boolean.TRUE);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 

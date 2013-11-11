@@ -1450,9 +1450,20 @@
 				config.dialog = dialogConfig;
 			}
 
-			Util.openWindow(config);
+			var eventHandles = [Liferay.once(config.eventName, callback)];
 
-			Liferay.on(config.eventName, callback);
+			var detachSelectionOnHideFn = function(event) {
+				if (!event.newVal) {
+					(new A.EventHandle(eventHandles)).detach();
+				}
+			};
+
+			Util.openWindow(
+				config,
+				function(dialogWindow) {
+					eventHandles.push(dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
+				}
+			);
 		},
 		['liferay-portlet-url']
 	);
@@ -1737,9 +1748,7 @@
 
 			var eventName = config.eventName || config.id;
 
-			var eventHandles = [];
-
-			eventHandles.push(Liferay.on(eventName, callback));
+			var eventHandles = [Liferay.on(eventName, callback)];
 
 			var detachSelectionOnHideFn = function(event) {
 				if (!event.newVal) {

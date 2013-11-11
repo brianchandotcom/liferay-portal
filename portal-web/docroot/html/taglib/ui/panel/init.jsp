@@ -57,10 +57,6 @@ if (collapsible) {
 	contentCssClass += "toggler-content";
 	headerCssClass += "toggler-header";
 
-	if (BrowserSnifferUtil.isMobile(request)) {
-		state = "closed";
-	}
-
 	if (state == null) {
 		state = GetterUtil.getString(SessionClicks.get(request, id, null), defaultState);
 	}

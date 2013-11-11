@@ -30,13 +30,14 @@
 			</not>
 			<then>
 				<var name="i" value="${i?increment()}" />
+				<var name="key_portletName" value="${portletName}" />
 
 				<execute action="Home#refresh" />
 
 				<execute action="Dockbar#pause" locator1="1000" />
 
 				<if>
-					<condition action="Home#isElementNotPresent" locator-key1="PORTLET_1" />
+					<condition action="Home#isElementNotPresent" locator-key1="PORTLET" />
 					<then>
 						<execute macro="Portlet#addPGCmd">
 							<var name="portletName" value="${portletName}" />
@@ -49,7 +50,7 @@
 			</then>
 		</while>
 
-		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
+		<execute action="Home#assertElementPresent" locator-key1="PORTLET" />
 	</command>
 
 	<command name="addPGCmd">

@@ -14,23 +14,24 @@
 
 package com.liferay.portal.kernel.exception;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Sergio González
  */
 public class LocalizedException extends PortalException {
 
-	public void addLocale(Locale locale) {
-		_locales.add(locale);
+	public void addLocalizedException(Locale locale, Exception exception) {
+		_localizedExceptions.put(locale, exception);
 	}
 
-	public List<Locale> getLocales() {
-		return _locales;
+	public Map<Locale, Exception> getLocalizedExceptions() {
+		return _localizedExceptions;
 	}
 
-	private List<Locale> _locales = new ArrayList<Locale>();
+	private Map<Locale, Exception> _localizedExceptions =
+		new HashMap<Locale, Exception>();
 
 }

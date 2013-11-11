@@ -12,33 +12,25 @@
  * details.
  */
 
-package com.liferay.portal;
-
-import com.liferay.portal.kernel.exception.LocalizedException;
+package com.liferay.portal.kernel.exception;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Sergio González
  */
-public class LayoutFriendlyURLsException extends LocalizedException {
+public class LocalizedException extends PortalException {
 
-	public LayoutFriendlyURLsException() {
-		super();
+	public void addLocale(Locale locale) {
+		_locales.add(locale);
 	}
 
-	public void addLayoutFriendlyURLException(
-		LayoutFriendlyURLException lfurle) {
-
-		_layoutFriendlyURLExceptions.add(lfurle);
+	public List<Locale> getLocales() {
+		return _locales;
 	}
 
-	public List<LayoutFriendlyURLException> getLayoutFriendlyURLExceptions() {
-		return _layoutFriendlyURLExceptions;
-	}
-
-	private List<LayoutFriendlyURLException> _layoutFriendlyURLExceptions =
-		new ArrayList<LayoutFriendlyURLException>();
+	private List<Locale> _locales = new ArrayList<Locale>();
 
 }

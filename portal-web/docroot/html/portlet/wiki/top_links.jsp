@@ -29,12 +29,8 @@ if (Validator.isNotNull(strutsAction)) {
 	}
 }
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
-
-String keywords = ParamUtil.getString(request, "keywords");
 
 List<WikiNode> nodes = WikiUtil.getNodes(allNodes, hiddenNodes, permissionChecker);
 
@@ -62,7 +58,7 @@ if (categoryId > 0) {
 
 <c:if test="<%= portletName.equals(PortletKeys.WIKI_ADMIN) %>">
 	<liferay-ui:header
-		backURL="<%= redirect %>"
+		backURL="<%= portletURL.toString() %>"
 		localizeTitle="<%= false %>"
 		title="<%= node.getName() %>"
 	/>

@@ -59,6 +59,10 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
+		_serviceUtilClasses.add(DLAppServiceUtil.class);
+
+		resetServices();
+
 		_beanLocator = PortalBeanLocatorUtil.getBeanLocator();
 
 		_mockBeanLocator = mock(BeanLocator.class);
@@ -107,17 +111,7 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 	@After
 	public void tearDown() {
-		for (Class<?> serviceUtilClass : _serviceUtilClasses) {
-			try {
-				Field field = serviceUtilClass.getDeclaredField("_service");
-
-				field.setAccessible(true);
-
-				field.set(serviceUtilClass, null);
-			}
-			catch (Exception e) {
-			}
-		}
+		resetServices();
 
 		PortalBeanLocatorUtil.setBeanLocator(_beanLocator);
 	}
@@ -438,6 +432,20 @@ public class CMISQueryBuilderTest extends PowerMockito {
 		);
 
 		return service;
+	}
+
+	protected void resetServices() {
+		for (Class<?> serviceUtilClass : _serviceUtilClasses) {
+			try {
+				Field field = serviceUtilClass.getDeclaredField("_service");
+
+				field.setAccessible(true);
+
+				field.set(serviceUtilClass, null);
+			}
+			catch (Exception e) {
+			}
+		}
 	}
 
 	private static final String _QUERY_POSTFIX = ") ORDER BY HITS DESC";

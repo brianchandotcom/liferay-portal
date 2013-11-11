@@ -32,18 +32,6 @@
 			</li>
 		</#list>
 
-		<#assign macroVarElements = macroElement.elements("var")>
-
-		<#list macroVarElements as macroVarElement>
-			<#assign lineNumber = macroVarElement.attributeValue("line-number")>
-
-			<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-				<#assign displayElement = macroVarElement>
-
-				<#include "element_whole_html.ftl">
-			</li>
-		</#list>
-
 		<#assign macroBlockElement = macroCommandElement>
 
 		<#include "macro_block_element_html.ftl">

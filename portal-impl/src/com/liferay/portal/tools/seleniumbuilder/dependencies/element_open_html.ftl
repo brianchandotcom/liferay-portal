@@ -38,6 +38,10 @@
 		<span class="arrow">&gt;</span>
 
 		<div class="line-number">${lineNumber}</div>
+
+		<#if collapsed>
+			<#include "element_open_parameters_html.ftl">
+		</#if>
 	</div>
 </div>
 

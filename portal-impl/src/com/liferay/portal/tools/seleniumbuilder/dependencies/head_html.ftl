@@ -142,9 +142,21 @@
 		}
 
 		.line-number {
+			color: black;
 			float: right;
 			margin-left: 5px;
 			margin-right: 5px;
+		}
+
+		.parameter-border {
+			background-color: white;
+			border-style: inset;
+			color: darkgray;
+			margin-left: 38px;
+		}
+
+		.parameter-value {
+			color: black;
 		}
 
 		.pass {

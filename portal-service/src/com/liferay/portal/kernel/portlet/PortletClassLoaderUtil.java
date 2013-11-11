@@ -16,9 +16,8 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 import javax.servlet.ServletContext;
 
@@ -28,9 +27,7 @@ import javax.servlet.ServletContext;
 public class PortletClassLoaderUtil {
 
 	public static ClassLoader getClassLoader() {
-		Thread currentThread = Thread.currentThread();
-
-		return _classLoaders.get(currentThread.getId());
+		return ClassLoaderPool.getClassLoader(getServletContextName());
 	}
 
 	public static ClassLoader getClassLoader(String portletId) {
@@ -49,27 +46,25 @@ public class PortletClassLoaderUtil {
 	}
 
 	public static String getServletContextName() {
-		return _servletContextName;
-	}
+		String servletContextName = _servletContextName.get();
 
-	public static void setClassLoader(ClassLoader classLoader) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			PortletClassLoaderUtil.class);
+		if (servletContextName == null) {
+			throw new IllegalStateException(
+				"No servlet context name attached in current context");
+		}
 
-		Thread currentThread = Thread.currentThread();
-
-		_classLoaders.put(currentThread.getId(), classLoader);
+		return servletContextName;
 	}
 
 	public static void setServletContextName(String servletContextName) {
 		PortalRuntimePermission.checkSetBeanProperty(
 			PortletClassLoaderUtil.class);
 
-		_servletContextName = servletContextName;
+		_servletContextName.set(servletContextName);
 	}
 
-	private static Map<Long, ClassLoader> _classLoaders =
-		new HashMap<Long, ClassLoader>();
-	private static String _servletContextName;
+	private static ThreadLocal<String> _servletContextName =
+		new AutoResetThreadLocal<String>(
+			PortletClassLoaderUtil.class + "._servletContextName");
 
 }

@@ -491,6 +491,30 @@ public class DLAppHelperLocalServiceImpl
 
 				indexer.reindex(dlFileEntry);
 			}
+			else if (object instanceof DLFileShortcut) {
+
+				// File shortcut
+
+				DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
+
+				if (dlFileShortcut.isInTrash()) {
+					continue;
+				}
+
+				int oldStatus = dlFileShortcut.getStatus();
+
+				dlFileShortcut.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+				dlFileShortcutPersistence.update(dlFileShortcut);
+
+				// Trash
+
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					trashVersionLocalService.addTrashVersion(
+						trashEntryId, DLFileShortcut.class.getName(),
+						dlFileShortcut.getFileShortcutId(), oldStatus, null);
+				}
+			}
 			else if (object instanceof DLFolder) {
 
 				// Folder
@@ -616,8 +640,50 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (dlFileShortcut.isInTrash()) {
+		TrashEntry trashEntry = dlFileShortcut.getTrashEntry();
+
+		if (trashEntry.isTrashEntry(
+				DLFileShortcut.class, dlFileShortcut.getFileShortcutId())) {
+
 			restoreFileShortcutFromTrash(userId, dlFileShortcut);
+		}
+		else {
+
+			// File shortcut
+
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), DLFileShortcut.class.getName(),
+					dlFileShortcut.getFileShortcutId());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
+			dlFileShortcutLocalService.updateStatus(
+				userId, dlFileShortcut.getFileShortcutId(), status,
+				new ServiceContext());
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
+
+			// Social
+
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put("title", dlFileShortcut.getToTitle());
+
+			socialActivityLocalService.addActivity(
+				userId, dlFileShortcut.getGroupId(),
+				DLFileShortcut.class.getName(),
+				dlFileShortcut.getFileShortcutId(),
+				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+				extraDataJSONObject.toString(), 0);
 		}
 
 		return dlAppService.updateFileShortcut(
@@ -846,6 +912,39 @@ public class DLAppHelperLocalServiceImpl
 					DLFileEntry.class);
 
 				indexer.reindex(dlFileEntry);
+			}
+			else if (object instanceof DLFileShortcut) {
+
+				// Folder
+
+				DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
+
+				TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
+					DLFileShortcut.class.getName(),
+					dlFileShortcut.getFileShortcutId());
+
+				if (trashEntry != null) {
+					continue;
+				}
+
+				TrashVersion trashVersion =
+					trashVersionLocalService.fetchVersion(
+						trashEntryId, DLFileShortcut.class.getName(),
+						dlFileShortcut.getFileShortcutId());
+
+				int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+				if (trashVersion != null) {
+					oldStatus = trashVersion.getStatus();
+				}
+
+				dlFileShortcut.setStatus(oldStatus);
+
+				dlFileShortcutPersistence.update(dlFileShortcut);
+
+				if (trashVersion != null) {
+					trashVersionLocalService.deleteTrashVersion(trashVersion);
+				}
 			}
 			else if (object instanceof DLFolder) {
 

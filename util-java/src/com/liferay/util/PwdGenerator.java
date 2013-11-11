@@ -16,12 +16,10 @@ package com.liferay.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.RandomUtil;
-import com.liferay.portal.kernel.security.SecureRandom;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Random;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,48 +43,33 @@ public class PwdGenerator {
 	}
 
 	public static String getPassword(int length, String... keys) {
-		if (length < keys.length) {
-			length = keys.length;
+		if (keys == null) {
+			throw new IllegalArgumentException("Keys must be defined!");
 		}
+
+		StringBundler fullKeySB = new StringBundler(keys);
+
+		String fullKey = fullKeySB.toString();
+
+		int fullKeyLength = fullKey.length();
+
+		int refreshPeriod = (int) (_MULTIPLIER / Math.log(fullKeyLength));
+
+		long secureLong = 0;
 
 		StringBuilder sb = new StringBuilder(length);
 
-		// It is safe to use the regular Random class because each generated
-		// password only consumes one secure random long
-
-		Random random = new SecureRandom();
-
-		int fullKeyLength = 0;
-
-		for (String key : keys) {
-			fullKeyLength += key.length();
-		}
-
-		// Ensure every key contributes to the output by an even distribution
-
-		for (String key : keys) {
-			int count = key.length() * length / fullKeyLength;
-
-			if (count == 0) {
-				count = 1;
+		for (int i = 0; i < length; i++) {
+			if ((i % refreshPeriod) == 0) {
+				secureLong = SecureRandomUtil.nextLong();
 			}
 
-			for (int i = 0; i < count; i++) {
-				sb.append(key.charAt(random.nextInt(key.length())));
-			}
+			int pos = Math.abs((int)(secureLong % fullKeyLength));
+
+			secureLong = secureLong / fullKeyLength;
+
+			sb.append(fullKey.charAt(pos));
 		}
-
-		// Round up the tail
-
-		for (int i = sb.length(); i < length; i++) {
-			String key = keys[random.nextInt(keys.length)];
-
-			sb.append(key.charAt(random.nextInt(key.length())));
-		}
-
-		// Shuffle
-
-		RandomUtil.shuffle(random, sb);
 
 		return sb.toString();
 	}
@@ -152,6 +135,8 @@ public class PwdGenerator {
 	public static String getPinNumber() {
 		return getPassword(4, KEY1);
 	}
+
+	private static final double _MULTIPLIER = Long.SIZE * Math.log(2);
 
 	private static final String[] KEYS = {KEY1, KEY2, KEY3};
 

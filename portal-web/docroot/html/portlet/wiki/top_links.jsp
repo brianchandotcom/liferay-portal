@@ -29,8 +29,6 @@ if (Validator.isNotNull(strutsAction)) {
 	}
 }
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 

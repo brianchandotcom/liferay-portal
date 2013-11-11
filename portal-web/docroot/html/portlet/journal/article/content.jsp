@@ -735,6 +735,7 @@ if (Validator.isNotNull(content)) {
 						Liferay.Util.openWindow(
 							{
 								id: windowId,
+								refreshWindow: window,
 								title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>',
 
 								<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

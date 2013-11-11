@@ -8,8 +8,6 @@
 	</tear-down>
 
 	<command name="ParentTestCaseCommand" priority="5">
-		<execute macro="Test#echo">
-			<execute macro="TestUtils#pass" />
-		</execute>
+		<execute macro="TestUtils#pass" />
 	</command>
 </definition>

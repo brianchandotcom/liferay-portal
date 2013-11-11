@@ -34,7 +34,6 @@ import java.util.Map;
 
 public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 	<#if extendedTestCase??>
-
 		extends ${extendedTestCase}TestCase {
 	<#else>
 		extends BaseTestCase {

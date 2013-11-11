@@ -410,6 +410,7 @@ public class LayoutStagedModelDataHandler
 
 			importedLayout.setUuid(layout.getUuid());
 			importedLayout.setGroupId(groupId);
+			importedLayout.setUserId(userId);
 			importedLayout.setPrivateLayout(privateLayout);
 			importedLayout.setLayoutId(layoutId);
 

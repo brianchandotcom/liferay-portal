@@ -195,7 +195,12 @@ AUI.add(
 						}
 					);
 
-					instance._notice.transition(animationConfig);
+					instance._notice.transition(
+						animationConfig,
+						function() {
+							instance._notice.toggle(false);
+						}
+					);
 
 					returnVal = new Do.Halt(null);
 				}
@@ -209,6 +214,12 @@ AUI.add(
 				);
 
 				return returnVal;
+			},
+
+			_beforeNoticeShow: function(event) {
+				var instance = this;
+
+				instance._notice.toggle(true);
 			},
 
 			_createHTML: function() {
@@ -240,6 +251,8 @@ AUI.add(
 				instance._body.addClass(CSS_ALERTS);
 
 				Do.before(instance._beforeNoticeHide, notice, STR_HIDE, instance);
+
+				Do.before(instance._beforeNoticeShow, notice, STR_SHOW, instance);
 
 				Do.after(instance._afterNoticeShow, notice, STR_SHOW, instance);
 

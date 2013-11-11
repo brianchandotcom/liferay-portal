@@ -101,6 +101,7 @@
 		</execute>
 
 		<execute macro="ListRecord#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listName" value="${listName}" />
 			<var name="recordText" value="${recordText}" />
 		</execute>
@@ -181,6 +182,7 @@
 		</execute>
 
 		<execute macro="ListRecord#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listName" value="${listName}" />
 			<var name="recordText" value="${recordText}" />
 		</execute>
@@ -275,6 +277,7 @@
 		</execute>
 
 		<execute macro="ListRecord#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listName" value="${listName}" />
 			<var name="recordText" value="${recordText}" />
 		</execute>

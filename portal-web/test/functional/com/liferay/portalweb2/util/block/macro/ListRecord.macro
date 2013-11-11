@@ -6,7 +6,7 @@
 		<execute action="CPDynamicdatalists#click" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
 
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${listName}" />
-		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="ADD_RECORD_BUTTON" value1="Add" />
+		<execute action="CPDynamicdatalistsList#assertClick" locator-key1="ADD_RECORD_BUTTON" value1="Add ${dataDefinitionName}" />
 
 		<execute macro="ListRecord#addTextCmdCP">
 			<var name="textNameLabel" value="text" />
@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="addPG">
-		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add" />
+		<execute action="PGDynamicdatalists#click" locator-key1="ADD_RECORD_BUTTON" value1="Add ${dataDefinitionName}" />
 
 		<execute macro="ListRecord#addTextCmdPG">
 			<var name="textNameLabel" value="text" />

@@ -54,6 +54,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 					<portlet:param name="className" value="<%= className %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 					<portlet:param name="chooseCallback" value="<%= chooseCallback %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				</portlet:renderURL>
 
 				<liferay-portlet:renderURL var="addRuleGroupURL">

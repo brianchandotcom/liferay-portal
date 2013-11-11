@@ -135,12 +135,6 @@ AUI.add(
 				}
 			},
 
-			_beforeNoticeShow: function(event) {
-				var instance = this;
-
-				instance._notice.toggle(true);
-			},
-
 			_afterNoticeShow: function(event) {
 				var instance = this;
 
@@ -220,6 +214,12 @@ AUI.add(
 				);
 
 				return returnVal;
+			},
+
+			_beforeNoticeShow: function(event) {
+				var instance = this;
+
+				instance._notice.toggle(true);
 			},
 
 			_createHTML: function() {

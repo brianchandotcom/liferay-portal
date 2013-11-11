@@ -92,8 +92,6 @@ AUI.add(
 
 		var SELECTOR_CATEGORY_MESSAGES_EDIT = '#categoryMessagesEdit';
 
-		var SELECTOR_CATEGORY_NAME_INPUT = '.category-name';
-
 		var SELECTOR_FLOATING_TRIGGER = '.lfr-floating-trigger';
 
 		var SELECTOR_UPDATE_CATEGORY_FORM = 'form.update-category-form';
@@ -1687,7 +1685,7 @@ AUI.add(
 						}
 					},
 
-					_initializeVocabularyPanelAdd: function() {
+					_initializeVocabularyPanelAdd: function(callback) {
 						var instance = this;
 
 						var vocabularyFormAdd = instance._vocabularyPanelAdd.get(STR_CONTENT_BOX).one(SELECTOR_UPDATE_VOCABULARY_FORM);
@@ -1708,6 +1706,10 @@ AUI.add(
 						);
 
 						instance._vocabularyFormAdd = vocabularyFormAdd;
+
+						if (callback) {
+							callback.call(instance);
+						}
 					},
 
 					_initializeVocabularyPanelEdit: function() {

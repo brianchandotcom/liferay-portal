@@ -125,7 +125,6 @@ log
 /portal-web/portal-web.war.asc
 /portal-web/ROOT.war
 /portal-web/test/functional-generated
-/portal-web/test/test-portal-web.properties
 /portal-web/test-ant-scripts
 /portal-web/test-classes
 /portal-web/test-output

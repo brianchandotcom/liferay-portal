@@ -1732,14 +1732,14 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 	</target>
 
 	<target name="prepare-selenium">
+		<delete file="portal-web/test/test-portal-web-ext.properties" />
+
 		<if>
 			<isset property="selenium.output.dir" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="output.dir=H:\\selenium-output\\"
-					value="output.dir=${selenium.output.dir}"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					output.dir=${selenium.output.dir}
+				</echo>
 			</then>
 			<else>
 				<property name="selenium.output.dir" value="H:\\selenium-output\\" />
@@ -1749,44 +1749,36 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		<if>
 			<isset property="email.address.1" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#email.address.1="
-					value="email.address.1=${email.address.1}"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.1=${email.address.1}
+				</echo>
 			</then>
 		</if>
 
 		<if>
 			<isset property="email.address.2" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#email.address.2="
-					value="email.address.2=${email.address.2}"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.2=${email.address.2}
+				</echo>
 			</then>
 		</if>
 
 		<if>
 			<isset property="email.password.1" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#email.password.1="
-					value="email.password.1=${email.password.1}"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.1=${email.password.1}
+				</echo>
 			</then>
 		</if>
 
 		<if>
 			<isset property="email.password.2" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#email.password.2="
-					value="email.password.2=${email.password.2}"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.2=${email.password.2}
+				</echo>
 			</then>
 		</if>
 
@@ -1804,22 +1796,18 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 		<if>
 			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="test.assert.javascript.errors=true"
-					value="test.assert.javascript.errors=false"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.assert.javascript.errors=false
+				</echo>
 			</then>
 		</if>
 
 		<if>
 			<isset property="test.browser" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="browser.type=*chrome"
-					value="browser.type=*${test.browser}"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					browser.type=*${test.browser}
+				</echo>
 			</then>
 			<else>
 				<property name="test.browser" value="chrome" />
@@ -1857,70 +1845,66 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 			</elseif>
 		</if>
 
-		<replace
-			file="portal-web/test/test-portal-web.properties"
-			token="#browser.commands.dir="
-			value="browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/${test.selenium.implementation}/${os.type}/${browser.type}/${browser.version}/"
-		/>
+		<if>
+			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/selenium/${os.type}/${browser.type}/${browser.version}/
+				</echo>
+			</then>
+			<else>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/webdriver/${os.type}/${browser.type}/${browser.version}/
+				</echo>
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="portal.url=http://localhost:8080"
-					value="portal.url=file:///${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/selenium/dependencies/Site.html"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					portal.url=file:///${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/selenium/dependencies/Site.html
+				</echo>
 			</then>
 		</if>
 
-		<replace
-			file="portal-web/test/test-portal-web.properties"
-			token="#selenium.executable.dir="
-			value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
-		/>
+		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+			selenium.executable.dir=${basedir.unix}/tools/selenium/
+		</echo>
 
 		<if>
 			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="selenium.implementation=org.openqa.selenium.WebDriver"
-					value="selenium.implementation=com.thoughtworks.selenium.Selenium"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					selenium.implementation=com.thoughtworks.selenium.Selenium
+				</echo>
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="selenium.logger.enabled=false"
-					value="selenium.logger.enabled=true"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					selenium.logger.enabled=true
+				</echo>
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${test.save.screenshot}" arg2="true" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="save.screenshot=false"
-					value="save.screenshot=true"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					save.screenshot=true
+				</echo>
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${test.skip.tear.down}" arg2="true" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="test.skip.tear.down=false"
-					value="test.skip.tear.down=true"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.skip.tear.down=true
+				</echo>
 			</then>
 		</if>
 	</target>
@@ -2440,16 +2424,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<isset property="virtual.host.name" />
 			<then>
-				<replace
-					file="portal-impl/test/test-portal-impl.properties"
-					token="localhost:8080"
-					value="www.${virtual.host.name}.com:8080"
-				/>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="localhost:8080"
-					value="www.${virtual.host.name}.com:8080"
-				/>
+				<echo file="portal-web/test/test-portal-impl-ext.properties" append="true">
+					portal.url=www.${virtual.host.name}.com:8080
+				</echo>
+
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					portal.url=www.${virtual.host.name}.com:8080
+				</echo>
 			</then>
 		</if>
 	</target>
@@ -2813,18 +2794,14 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<isset property="legacy.theme.ids" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#theme.ids="
-					value="theme.ids=${legacy.theme.ids}"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					theme.ids=${legacy.theme.ids}
+				</echo>
 			</then>
 			<else>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="#theme.ids="
-					value="theme.ids=classic,controlpanel"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					theme.ids=classic,controlpanel
+				</echo>
 			</else>
 		</if>
 
@@ -2833,11 +2810,9 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<replace
-					file="portal-web/test/test-portal-web.properties"
-					token="testing.class.method=false"
-					value="testing.class.method=true"
-				/>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					testing.class.method=true
+				</echo>
 
 				<script classpathref="project.classpath" language="beanshell">
 					String testClass = project.getProperty("test.class");

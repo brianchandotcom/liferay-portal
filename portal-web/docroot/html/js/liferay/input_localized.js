@@ -440,26 +440,26 @@ AUI.add(
 					}
 				},
 
-				_onInputUserInteraction: function(event) {
-					var instance = this;
-
-					var input = event.currentTarget;
-
-					InputLocalized._initializeInputLocalized(input);
-				},
-
 				_onFlagUserInteraction: function(event) {
 					var instance = this;
 
-					var target = event.currentTarget;
+					var currentTarget = event.currentTarget;
 
-					var flag = target.one('.lfr-input-localized-flag');
+					var flag = currentTarget.one('.lfr-input-localized-flag');
 
-					var input = target.ancestor('.input-localized').one(SELECTOR_LANG_VALUE);
+					var input = currentTarget.ancestor('.input-localized').one(SELECTOR_LANG_VALUE);
 
 					if (input && flag) {
 						InputLocalized._initializeInputLocalized(input, flag.attr('data-languageid'));
 					}
+				},
+
+				_onInputUserInteraction: function(event) {
+					var instance = this;
+
+					var currentTarget = event.currentTarget;
+
+					InputLocalized._initializeInputLocalized(currentTarget);
 				},
 
 				_registerConfiguration: function(id, config) {

@@ -32,8 +32,6 @@ if (Validator.isNotNull(strutsAction)) {
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
-String keywords = ParamUtil.getString(request, "keywords");
-
 List<WikiNode> nodes = WikiUtil.getNodes(allNodes, hiddenNodes, permissionChecker);
 
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);

@@ -240,6 +240,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET</td>
+	<td>//section[header/h1[contains(.,'${key_portletName}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_1</td>
 	<td>xpath=(//section)[1]</td>
 	<td></td>

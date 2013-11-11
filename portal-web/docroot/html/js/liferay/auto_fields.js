@@ -369,12 +369,13 @@ AUI.add(
 									item.set('checked', false);
 								}
 								else if (tag == 'select') {
+									var selectedIndex = 0;
+
 									if (item.getAttribute('showEmptyOption')) {
-										item.set('selectedIndex', -1);
+										selectedIndex = -1;
 									}
-									else {
-										item.set('selectedIndex', 0);
-									}
+
+									item.set('selectedIndex', selectedIndex);
 								}
 							}
 						);

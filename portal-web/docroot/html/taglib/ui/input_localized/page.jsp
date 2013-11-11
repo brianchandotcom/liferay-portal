@@ -77,13 +77,15 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 Exception exception = (Exception)request.getAttribute("liferay-ui:error:exception");
 String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
 
-List<Locale> errorLocales = new ArrayList<Locale>();
+Set<Locale> errorLocales = new HashSet<Locale>();
 
 if ((exception != null) && fieldName.equals(focusField)) {
 	if (LocalizedException.class.isAssignableFrom(exception.getClass())) {
 		LocalizedException le = (LocalizedException)exception;
 
-		errorLocales = le.getLocales();
+		Map<Locale, Exception> localizedExceptions = le.getLocalizedExceptions();
+
+		errorLocales = localizedExceptions.keySet();
 	}
 }
 %>

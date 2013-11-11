@@ -5,6 +5,8 @@ AUI.add(
 
 		var AArray = A.Array;
 
+		var SELECTOR_LANG_VALUE = '.language-value';
+
 		var STR_INPUT_PLACEHOLDER = 'inputPlaceholder';
 
 		var STR_INPUT_VALUE_CHANGE = '_onInputValueChange';
@@ -453,7 +455,7 @@ AUI.add(
 
 					var flag = target.one('.lfr-input-localized-flag');
 
-					var input = target.ancestor('.input-localized').one('.language-value');
+					var input = target.ancestor('.input-localized').one(SELECTOR_LANG_VALUE);
 
 					if (input && flag) {
 						InputLocalized._initializeInputLocalized(input, flag.attr('data-languageid'));
@@ -464,12 +466,14 @@ AUI.add(
 					InputLocalized._registered[id] = config;
 
 					if (!InputLocalized._interactionHandle) {
-						var handles = [
-							A.getDoc().delegate(['focus', 'input'], InputLocalized._onInputUserInteraction, '.language-value'),
-							A.getDoc().delegate('click', InputLocalized._onFlagUserInteraction, '.input-localized-content .palette-item')
-						];
+						var doc = A.getDoc();
 
-						InputLocalized._interactionHandle = new A.EventHandle(handles);
+						InputLocalized._interactionHandle = new A.EventHandle(
+							[
+								doc.delegate(['focus', 'input'], InputLocalized._onInputUserInteraction, SELECTOR_LANG_VALUE),
+								doc.delegate('click', InputLocalized._onFlagUserInteraction, '.input-localized-content .palette-item')
+							]
+						);
 					}
 				},
 

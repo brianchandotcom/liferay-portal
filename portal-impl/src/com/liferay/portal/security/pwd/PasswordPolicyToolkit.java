@@ -18,7 +18,7 @@ import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.RandomUtil;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -231,8 +231,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 					PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH));
 		}
 
-		return RandomUtil.shuffle(
-			new Random(SecureRandomUtil.nextLong()), sb.toString());
+		return RandomUtil.shuffle(new SecureRandom(), sb.toString());
 	}
 
 	protected String generateStatic(PasswordPolicy passwordPolicy) {
@@ -240,7 +239,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 	}
 
 	protected String getRandomString(int count, char[] chars) {
-		Random random = new Random(SecureRandomUtil.nextLong());
+		Random random = new SecureRandom();
 
 		StringBundler sb = new StringBundler(count);
 

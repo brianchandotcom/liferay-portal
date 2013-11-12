@@ -1075,7 +1075,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			processErrorMessage(
 				fileName,
-				"Use SecureRandomUtil instead of java.security.SecureRandom: " +
+				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
+					"SecureRandom instead of java.security.SecureRandom: " +
 					fileName);
 		}
 

@@ -59,10 +59,6 @@ public class Fields implements Iterable<Field>, Serializable {
 			return Validator.equals(_fieldsMap, fields._fieldsMap);
 		}
 
-		if (Validator.isNull(fields)) {
-			return false;
-		}
-
 		List<Field> fieldList1 = getFieldsList(includePrivateFields);
 		List<Field> fieldList2 = fields.getFieldsList(includePrivateFields);
 

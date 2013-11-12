@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
@@ -119,12 +120,15 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 			return sessionFactory;
 		}
 
-		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
+		String servletContextName =
+			PortletClassLoaderUtil.getServletContextName();
+
+		ClassLoader classLoader = getSessionFactoryClassLoader();
+
+		PortletClassLoaderUtil.setServletContextName(
+			ClassLoaderPool.getContextName(classLoader));
 
 		try {
-			PortletClassLoaderUtil.setClassLoader(
-				getSessionFactoryClassLoader());
-
 			PortletHibernateConfiguration portletHibernateConfiguration =
 				new PortletHibernateConfiguration();
 
@@ -145,7 +149,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 			return sessionFactory;
 		}
 		finally {
-			PortletClassLoaderUtil.setClassLoader(classLoader);
+			PortletClassLoaderUtil.setServletContextName(servletContextName);
 		}
 	}
 

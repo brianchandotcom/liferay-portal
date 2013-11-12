@@ -33,8 +33,10 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -571,20 +573,30 @@ public abstract class BaseClusterExecutorImplTestCase
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
-			PortletClassLoaderUtil.setClassLoader(classLoader);
+			String servletContextName = StringUtil.randomId();
 
-			ApplicationContext applicationContext =
-				new FileSystemXmlApplicationContext(
-					"portal-impl/test/unit/com/liferay/portal/cluster/" +
-						"test-spring.xml");
+			ClassLoaderPool.register(servletContextName, classLoader);
 
-			BeanLocator beanLocator = new BeanLocatorImpl(
-				classLoader, applicationContext);
+			PortletClassLoaderUtil.setServletContextName(servletContextName);
 
-			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
+			try {
+				ApplicationContext applicationContext =
+					new FileSystemXmlApplicationContext(
+						"portal-impl/test/unit/com/liferay/portal/cluster/" +
+							"test-spring.xml");
 
-			PortletBeanLocatorUtil.setBeanLocator(
-				SERVLET_CONTEXT_NAME, beanLocator);
+				BeanLocator beanLocator = new BeanLocatorImpl(
+					classLoader, applicationContext);
+
+				PortalBeanLocatorUtil.setBeanLocator(beanLocator);
+
+				PortletBeanLocatorUtil.setBeanLocator(
+					SERVLET_CONTEXT_NAME, beanLocator);
+			}
+			finally {
+				PortletClassLoaderUtil.setServletContextName(null);
+				ClassLoaderPool.unregister(servletContextName);
+			}
 		}
 
 		JDKLoggerTestUtil.configureJDKLogger(

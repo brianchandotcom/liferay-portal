@@ -24,6 +24,8 @@ AUI.add(
 
 		var STR_PLACEHOLDER = 'placeholder';
 
+		var STR_SPACE = ' ';
+
 		var STR_TYPE = 'type';
 
 		var Placeholders = A.Component.create(
@@ -65,7 +67,7 @@ AUI.add(
 					},
 
 					_initializePasswordNode: function(field) {
-						var placeholder = ANode.create('<input class="' + CSS_PLACEHOLDER + '" name="' + field.attr('name') + '_pass_placeholder" type="text" />');
+						var placeholder = ANode.create('<input name="' + field.attr('name') + '_pass_placeholder" type="text" />');
 
 						Liferay.Util.getAttributes(
 							field,
@@ -73,6 +75,10 @@ AUI.add(
 								var result = false;
 
 								if (!MAP_IGNORE_ATTRS[name]) {
+									if (name === 'class') {
+										value += STR_SPACE + CSS_PLACEHOLDER;
+									}
+
 									placeholder.setAttribute(name, value);
 								}
 

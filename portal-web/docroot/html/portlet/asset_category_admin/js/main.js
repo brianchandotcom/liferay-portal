@@ -2692,7 +2692,7 @@ AUI.add(
 
 							vocabularyPanelAdd._syncUIPosAlign();
 
-							var afterSuccess = A.bind('_initializeVocabularyPanelAdd', instance);
+							var afterSuccess = A.bind('_initializeVocabularyPanelAdd', instance, null);
 
 							vocabularyPanelAdd.plug(
 								A.Plugin.IO,

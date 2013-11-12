@@ -416,7 +416,7 @@ AUI.add(
 					delete InputLocalized._instances[id];
 				},
 
-				_initializeInputLocalized: function(input, initialLanguageId) {
+				_initializeInputLocalized: function(event, input, initialLanguageId) {
 					var instance = this;
 
 					var id = input.attr('id');
@@ -450,7 +450,7 @@ AUI.add(
 					var input = currentTarget.ancestor('.input-localized').one(SELECTOR_LANG_VALUE);
 
 					if (input && flag) {
-						InputLocalized._initializeInputLocalized(input, flag.attr('data-languageid'));
+						InputLocalized._initializeInputLocalized(event, input, flag.attr('data-languageid'));
 					}
 				},
 
@@ -459,7 +459,7 @@ AUI.add(
 
 					var currentTarget = event.currentTarget;
 
-					InputLocalized._initializeInputLocalized(currentTarget);
+					InputLocalized._initializeInputLocalized(event, currentTarget);
 				},
 
 				_registerConfiguration: function(id, config) {

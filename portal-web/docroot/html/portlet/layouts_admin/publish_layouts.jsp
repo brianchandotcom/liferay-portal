@@ -409,9 +409,34 @@ else {
 		'<portlet:namespace />publishPages',
 		function() {
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-" + publishActionKey + "-these-pages") %>')) {
+				var A = AUI();
+
+				var allContentRadioChecked = A.one('#<portlet:namespace />allContent').attr('checked');
+
+				if (allContentRadioChecked) {
+					var selectedContents = A.one('#<portlet:namespace />selectContents');
+
+					var checkedNodes = selectedContents.all('input[type=checkbox]');
+
+					checkedNodes.each(
+						function(item, index, collection) {
+							if (!item.attr('checked')) {
+								item.attr('checked', true);
+
+								Liferay.Util.updateCheckboxValue(item);
+							}
+						}
+					);
+
+					var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
+
+					portletDataControlDefault.attr('value', true);
+				}
+
 				submitForm(document.<portlet:namespace />exportPagesFm);
 			}
-		}
+		},
+		['aui-base']
 	);
 
 	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);

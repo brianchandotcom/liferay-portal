@@ -719,6 +719,12 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		return _bookmarksEntry.isInTrashContainer();
 	}
 
+	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksEntry.isInTrashExplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

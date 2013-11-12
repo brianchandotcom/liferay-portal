@@ -1033,6 +1033,22 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return false;
 	}
 
+	@Override
+	public boolean isInTrashExplicitly() throws SystemException {
+		if (!isInTrash()) {
+			return false;
+		}
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}

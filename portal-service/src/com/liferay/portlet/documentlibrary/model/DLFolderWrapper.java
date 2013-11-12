@@ -804,6 +804,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.isInTrashContainer();
 	}
 
+	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolder.isInTrashExplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

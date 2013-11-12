@@ -575,6 +575,9 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	public boolean isInTrashContainer();
 
 	@Override
+	public boolean isInTrashExplicitly() throws SystemException;
+
+	@Override
 	public boolean isNew();
 
 	@Override

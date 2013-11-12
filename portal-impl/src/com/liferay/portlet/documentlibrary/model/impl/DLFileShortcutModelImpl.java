@@ -749,6 +749,22 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return false;
 	}
 
+	@Override
+	public boolean isInTrashExplicitly() throws SystemException {
+		if (!isInTrash()) {
+			return false;
+		}
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
+				getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 	 */

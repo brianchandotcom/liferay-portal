@@ -583,6 +583,12 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		return _wikiNode.isInTrashContainer();
 	}
 
+	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiNode.isInTrashExplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

@@ -824,6 +824,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.isInTrashContainer();
 	}
 
+	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.isInTrashExplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

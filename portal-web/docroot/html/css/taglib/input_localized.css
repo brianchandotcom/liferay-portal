@@ -50,6 +50,11 @@
 	.lfr-input-localized .lfr-input-localized-state {
 		background: #ddd;
 		@include box-shadow(0 0 3px #ddd);
+
+		&.lfr-input-localized-state-error {
+			@include box-shadow(0 0 3px #FF0047);
+			background: #FF0047;
+		}
 	}
 
 	.palette-item-selected .lfr-input-localized-state {

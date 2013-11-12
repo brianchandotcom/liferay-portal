@@ -214,7 +214,9 @@ if ((exception != null) && fieldName.equals(focusField)) {
 					for (String curLanguageId : uniqueLanguageIds) {
 						String itemCssClass = "palette-item";
 
-						if (index == 0) {
+						Locale curLocale = LocaleUtil.fromLanguageId(curLanguageId);
+
+						if (errorLocales.contains(curLocale) || (index == 0 && errorLocales.size() == 0)) {
 							itemCssClass += " palette-item-selected";
 						}
 
@@ -230,7 +232,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 						<td class="palette-item <%= itemCssClass %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>">
 							<a class="palette-item-inner" href="javascript:void(0);">
 								<img class="lfr-input-localized-flag" data-languageid="<%= curLanguageId %>" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= curLanguageId %>.png" />
-								<div class="lfr-input-localized-state"></div>
+								<div class='<%= errorLocales.contains(curLocale) ? "lfr-input-localized-state lfr-input-localized-state-error" : "lfr-input-localized-state" %>'></div>
 							</a>
 						</td>
 
@@ -262,6 +264,8 @@ if ((exception != null) && fieldName.equals(focusField)) {
 
 			var available = {};
 
+			var errores = {};
+
 			<%
 			for (Locale availableLocale : availableLocales) {
 				String availableLanguageId = LocaleUtil.toLanguageId(availableLocale);
@@ -277,6 +281,19 @@ if ((exception != null) && fieldName.equals(focusField)) {
 				[defaultLanguageId].concat(A.Object.keys(available))
 			);
 
+			<%
+			for (Locale errorLocale : errorLocales) {
+				String errorLocaleId = LocaleUtil.toLanguageId(errorLocale);
+			%>
+
+				errores['<%= errorLocaleId %>'] = '<%= errorLocale.getDisplayName(locale) %>';
+
+			<%
+			}
+			%>
+
+			var errorLanguageIds = A.Array.dedupe(A.Object.keys(errores));
+
 			Liferay.InputLocalized.register(
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 				{
@@ -290,6 +307,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 
 					inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 					items: availableLanguageIds,
+					itemsError: errorLanguageIds,
 					lazy: <%= !type.equals("editor") %>,
 					name: '<portlet:namespace /><%= name + StringPool.UNDERLINE %>',
 					namespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',

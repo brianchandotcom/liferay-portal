@@ -7,11 +7,15 @@ AUI.add(
 
 		var SELECTOR_LANG_VALUE = '.language-value';
 
+		var STR_BLANK = '';
+
 		var STR_INPUT_PLACEHOLDER = 'inputPlaceholder';
 
 		var STR_INPUT_VALUE_CHANGE = '_onInputValueChange';
 
 		var STR_ITEMS = 'items';
+
+		var STR_ITEMS_ERROR = 'itemsError';
 
 		var STR_SELECTED = 'selected';
 
@@ -30,6 +34,7 @@ AUI.add(
 			{
 				ATTRS: {
 					animateClass: {
+						validator: Lang.isString,
 						value: 'highlight-animation'
 					},
 
@@ -55,15 +60,28 @@ AUI.add(
 						value: availableLanguageIds
 					},
 
+					itemsError: {
+						validator: Lang.isArray
+					},
+
 					selected: {
 						valueFn: function() {
 							var instance = this;
 
 							var items = instance.get(STR_ITEMS);
 
-							defaultLanguageId = instance.get('defaultLanguageId');
+							var itemsError = instance.get(STR_ITEMS_ERROR);
 
-							return AArray.indexOf(items, defaultLanguageId);
+							var selectedIndex;
+
+							if (itemsError.length) {
+								selectedIndex = AArray.indexOf(items, itemsError[0]);
+							}
+							else {
+								selectedIndex = AArray.indexOf(items, instance.get('defaultLanguageId'));
+							}
+
+							return selectedIndex;
 						}
 					},
 
@@ -95,7 +113,7 @@ AUI.add(
 					ITEM_TEMPLATE: '<td class="palette-item {selectedClassName}" data-column={column} data-index={index} data-row={row} data-value="{value}">' +
 						'<a href="" class="palette-item-inner" onclick="return false;">' +
 							'<img class="lfr-input-localized-flag" data-languageId="{value}" src="' + themeDisplay.getPathThemeImages() + '/language/{value}.png" />' +
-							'<div class="lfr-input-localized-state"></div>' +
+							'<div class="lfr-input-localized-state {stateClass}"></div>' +
 						'</a>' +
 					'</td>',
 
@@ -369,6 +387,27 @@ AUI.add(
 								);
 							}
 						);
+					},
+
+					_valueFormatterFn: function() {
+						return function(items, index, row, column, selected) {
+							var instance = this;
+
+							var item = items[index];
+
+							var itemsError = instance.get(STR_ITEMS_ERROR);
+
+							return Lang.sub(
+								instance.ITEM_TEMPLATE, {
+									column: column,
+									index: index,
+									row: row,
+									selectedClassName: selected ? 'palette-item-selected' : STR_BLANK,
+									stateClass: AArray.indexOf(itemsError, item) >= 0 ? 'lfr-input-localized-state-error' : STR_BLANK,
+									value: Lang.isObject(item) ? item.value : item
+								}
+							);
+						};
 					},
 
 					_animating: null,

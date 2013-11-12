@@ -288,11 +288,9 @@ AUI.add(
 							pagination.set('results', state.total);
 							pagination.set('total', instance._getTotalPages(state.total, state.rowsPerPage));
 
-							pagination._uiSetVisible(state.total > state.rowsPerPage);
+							pagination.set('visible', !!(state.total && state.total > state.rowsPerPage));
 
 							pagination.setState(state);
-
-							pagination._syncResults();
 						}
 					},
 

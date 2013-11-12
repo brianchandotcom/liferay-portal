@@ -197,14 +197,21 @@ AUI.add(
 							instance._itemContainer.delegate('click', instance._onItemClick, '.lfr-pagination-link', instance)
 						];
 
-						instance.on('itemsPerPageChange', instance._onItemsPerPageChange, instance);
+						instance.after('resultsChange', instance._afterResultsChange, instance);
 						instance.on('changeRequest', instance._onChangeRequest, instance);
+						instance.on('itemsPerPageChange', instance._onItemsPerPageChange, instance);
 					},
 
 					destructor: function() {
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandles)).detach();
+					},
+
+					_afterResultsChange: function(event) {
+						var instance = this;
+
+						instance._syncResults();
 					},
 
 					_dispatchRequest: function(state) {
@@ -313,7 +320,7 @@ AUI.add(
 
 						var results = instance.get(RESULTS);
 
-						instance.set('visible', (results > itemsPerPage));
+						instance.set('visible', !!(results && results > itemsPerPage));
 					},
 
 					_syncLabel: function(itemsPerPage) {
@@ -346,7 +353,9 @@ AUI.add(
 
 						var results = instance.get(RESULTS);
 
-						instance._paginationControls.toggleClass(hiddenClass, (results <= 0));
+						var itemsPerPageList = instance.get(ITEMS_PER_PAGE_LIST);
+
+						instance._paginationControls.toggleClass(hiddenClass, (results <= itemsPerPageList[0]));
 
 						instance._paginationContentNode.toggleClass(hiddenClass, !val);
 					}

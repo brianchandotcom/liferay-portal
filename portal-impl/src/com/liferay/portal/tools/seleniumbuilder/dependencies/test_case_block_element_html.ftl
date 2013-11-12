@@ -57,7 +57,7 @@
 
 					<#include "element_open_html.ftl">
 
-					<#assign macroBlockElement = element.element("else")>
+					<#assign testCaseBlockElement = element.element("else")>
 
 					<#include "test_case_block_element_html.ftl">
 

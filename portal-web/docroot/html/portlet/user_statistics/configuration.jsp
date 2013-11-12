@@ -18,8 +18,6 @@
 
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2");
-
-String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />

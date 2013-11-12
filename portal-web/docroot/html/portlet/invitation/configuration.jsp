@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/invitation/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 String emailMessageSubject = ParamUtil.getString(request, "emailMessageSubject", InvitationUtil.getEmailMessageSubject(portletPreferences));
 String emailMessageBody = ParamUtil.getString(request, "emailMessageBody", InvitationUtil.getEmailMessageBody(portletPreferences));
 

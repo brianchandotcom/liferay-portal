@@ -20,7 +20,6 @@
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
-String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL");
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");

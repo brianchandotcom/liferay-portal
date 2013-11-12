@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -164,7 +165,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				className.lastIndexOf(StringPool.PERIOD) + 1);
 
 			if (!isClassOrVariableRequired(
-					fileName, className, includeFileNames, checkedFileNames)) {
+					fileName, className, "class", includeFileNames,
+					checkedFileNames)) {
 
 				unneededImports.add(importLine);
 			}
@@ -257,6 +259,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
+		_unusedVariablesExclusions = getExclusionsProperties(
+			"source_formatter_jsp_unused_variables_exclusions.properties");
+
 		String[] excludes = new String[] {
 			"**\\portal\\aui\\**", "**\\bin\\**", "**\\null.jsp", "**\\tmp\\**",
 			"**\\tools\\**"
@@ -503,7 +508,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				checkInefficientStringMethods(line, fileName, lineCount);
 			}
 
-			if (javaSource && portalSource && !_jspContents.isEmpty() &&
+			String excluded = null;
+
+			if (_unusedVariablesExclusions != null) {
+				excluded = _unusedVariablesExclusions.getProperty(
+					fileName + StringPool.AT + lineCount);
+			}
+
+			if ((excluded == null) && javaSource && portalSource &&
+				!_jspContents.isEmpty() &&
 				hasUnusedVariable(fileName, trimmedLine)) {
 
 				processErrorMessage(
@@ -907,11 +920,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Set<String> checkedFileNames = new HashSet<String>();
 
 		return !isClassOrVariableRequired(
-			fileName, variableName, includeFileNames, checkedFileNames);
+			fileName, variableName, "variable", includeFileNames,
+			checkedFileNames);
 	}
 
 	protected boolean isClassOrVariableRequired(
-		String fileName, String name, Set<String> includeFileNames,
+		String fileName, String name, String type, Set<String> includeFileNames,
 		Set<String> checkedFileNames) {
 
 		if (checkedFileNames.contains(fileName)) {
@@ -927,12 +941,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		Pattern pattern = Pattern.compile(
-			"[^A-Za-z0-9_]" + name + "[^A-Za-z0-9_]");
+			"[^A-Za-z0-9_\"]" + name + "[^A-Za-z0-9_\"]");
 
 		Matcher matcher = pattern.matcher(content);
 
 		if (matcher.find() &&
-			((checkedFileNames.size() > 1) || matcher.find())) {
+			(type.equals("class") || (checkedFileNames.size() > 1) ||
+			 matcher.find())) {
 
 			return true;
 		}
@@ -956,7 +971,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedFileNames.contains(includeFileName) &&
 				isClassOrVariableRequired(
-					includeFileName, name, includeFileNames,
+					includeFileName, name, type, includeFileNames,
 					checkedFileNames)) {
 
 				return true;
@@ -1295,6 +1310,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _taglibLanguageKeyPattern = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");
+	private Properties _unusedVariablesExclusions;
 	private Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 

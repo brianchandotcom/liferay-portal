@@ -36,7 +36,6 @@ if (StateUtil.isStateId(shippingState)) {
 }
 
 String ccType = ParamUtil.getString(request, "ccType");
-String ccNumber = ParamUtil.getString(request, "ccNumber");
 
 Calendar cal = CalendarFactoryUtil.getCalendar();
 
@@ -52,8 +51,6 @@ if (request.getParameter("ccExpMonth") == null) {
 		ccExpMonth++;
 	}
 }
-
-String ccVerNumber = ParamUtil.getString(request, "ccVerNumber");
 
 List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contact.getContactId());
 %>

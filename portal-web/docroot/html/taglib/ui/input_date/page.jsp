@@ -23,14 +23,11 @@ if (GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:di
 	namespace = StringPool.BLANK;
 }
 
-boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:autoFocus"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:cssClass"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:disabled"));
 String dayParam = namespace + request.getAttribute("liferay-ui:input-date:dayParam");
 String dayParamId = namespace + request.getAttribute("liferay-ui:input-date:dayParamId");
 int dayValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:dayValue"));
-int firstDayOfWeek = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:firstDayOfWeek"));
-String monthAndYearParam = namespace + request.getAttribute("liferay-ui:input-date:monthAndYearParam");
 String monthParam = namespace + request.getAttribute("liferay-ui:input-date:monthParam");
 String monthParamId = namespace + request.getAttribute("liferay-ui:input-date:monthParamId");
 int monthValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:monthValue"));

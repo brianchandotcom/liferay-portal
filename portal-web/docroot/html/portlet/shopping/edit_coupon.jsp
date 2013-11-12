@@ -33,8 +33,6 @@ if (coupon != null) {
 	}
 }
 
-String limitCategories = BeanParamUtil.getString(coupon, request, "limitCategories");
-String limitSkus = BeanParamUtil.getString(coupon, request, "limitSkus");
 double minOrder = BeanParamUtil.getDouble(coupon, request, "minOrder");
 double discount = BeanParamUtil.getDouble(coupon, request, "discount");
 String discountType = BeanParamUtil.getString(coupon, request, "discountType");

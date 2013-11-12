@@ -20,11 +20,9 @@
 	<div class="form-search">
 		<div class="input-append" id="<%= id %>simple">
 			<div class="advanced-search">
-				<span class="toggle-advanced">
-					<button class="btn-link" id="<%= id %>toggleAdvanced" type="button">
-						<i class="icon-search"></i>
-						<i class="caret"></i>
-					</button>
+				<span class="toggle-advanced" id="<%= id %>toggleAdvanced">
+					<i class="icon-search"></i>
+					<i class="caret"></i>
 				</span>
 
 				<input class="search-query span9" id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= displayTerms.getKeywords() %>" />
@@ -32,7 +30,7 @@
 				<button class="btn" type="submit">
 					<%= LanguageUtil.get(pageContext, buttonLabel, "search") %>
 				</button>
-			<div>
+			</div>
 		</div>
 	</div>
 	<div class="popover taglib-search-toggle-advanced" id="<%= id %>advanced">

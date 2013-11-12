@@ -139,34 +139,8 @@
 		}
 	}
 
-	.form-search .input-append {
-		padding-left: 40px;
-		padding-right: 12px;
-		position: relative;
-
-		.advanced-search {
-			.toggle-advanced {
-				cursor: pointer;
-				left: 40px;
-				position: absolute;
-				top: 2px;
-				z-index: 100;
-
-				.caret {
-					margin-top: 7px;
-				}
-
-				.icon-search {
-					font-size: 14px;
-				}
-			}
-
-			.search-query {
-				padding-left: 40px;
-			}
-		}
-
-		@include respond-to(phone) {
+	@include respond-to(phone) {
+		.form-search .input-append {
 			.btn {
 				font-size: 0;
 				padding: 4px 19px 0;

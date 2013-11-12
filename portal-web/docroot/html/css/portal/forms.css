@@ -9,6 +9,35 @@
 	margin: 20px 0;
 }
 
+.form-search .input-append {
+	padding-left: 40px;
+	position: relative;
+
+	.advanced-search {
+		.toggle-advanced {
+			cursor: pointer;
+			left: 40px;
+			line-height: 1;
+			padding: 8px 10px;
+			position: absolute;
+			top: 0;
+			z-index: 100;
+
+			.caret {
+				margin-top: 7px;
+			}
+
+			.icon-search {
+				font-size: 14px;
+			}
+		}
+
+		.search-query {
+			padding-left: 40px;
+		}
+	}
+}
+
 .input-flex-add-on {
 	width: 100%;
 

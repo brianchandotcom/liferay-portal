@@ -24,6 +24,8 @@ AUI.add(
 
 		var STR_PLACEHOLDER = 'placeholder';
 
+		var STR_SPACE = ' ';
+
 		var STR_TYPE = 'type';
 
 		var Placeholders = A.Component.create(
@@ -73,6 +75,10 @@ AUI.add(
 								var result = false;
 
 								if (!MAP_IGNORE_ATTRS[name]) {
+									if (name === 'class') {
+										value += STR_SPACE + CSS_PLACEHOLDER;
+									}
+
 									placeholder.setAttribute(name, value);
 								}
 
@@ -80,8 +86,6 @@ AUI.add(
 							}
 						);
 
-						placeholder.addClass(CSS_PLACEHOLDER);
-						
 						placeholder.val(field.attr(STR_PLACEHOLDER));
 
 						placeholder.attr(STR_DATA_TYPE_PASSWORD_PLACEHOLDER, true);

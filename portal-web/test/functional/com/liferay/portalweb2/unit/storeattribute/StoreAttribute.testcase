@@ -1,25 +1,72 @@
 <definition>
+	<var name="commitMessage" value="LPS-40675" />
+	<var name="ticketSummary" value="LIFERAYQA-5720: Implement storeAttribute" />
+	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5720" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<command name="storeAttributeWithoutVariablesInLocator" priority="5">
-		<execute macro="StoreAttribute#storeAttributeWithoutVariablesInLocator" />
+		<var name="attributeValue" path="TestUtils" locator-key="TEST_PATH" attribute="class" />
+
+		<echo message="Test storeAttribute #1: using locator-key/path with xpath containing no variables" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${attributeValue}" />
+			<var name="expected" value="site-name" />
+		</execute>
 	</command>
 
 	<command name="storeAttributeWithoutVariablesInLocatorKey" priority="5">
-		<execute macro="StoreAttribute#storeAttributeWithoutVariablesInLocatorKey" />
+		<var name="attributeValue" locator="//h1[@class='site-title']/a/span" attribute="class" />
+
+		<echo message="Test storeAttribute #2: using locator with xpath containing no variables" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${attributeValue}" />
+			<var name="expected" value="site-name" />
+		</execute>
 	</command>
 
 	<command name="storeAttributeWithVariablesInAttributeName" priority="5">
-		<execute macro="StoreAttribute#storeAttributeWithVariablesInAttributeName" />
+		<var name="key_testVar" value="site-title" />
+
+		<var name="attributeValue" path="TestUtils" locator-key="TEST_VAR_PATH" attribute="class" />
+
+		<echo message="Test storeAttribute #3: using locator-key/path with xpath containing variables" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${attributeValue}" />
+			<var name="expected" value="site-name" />
+		</execute>
 	</command>
 
 	<command name="storeAttributeWithVariablesInLocator" priority="5">
-		<execute macro="StoreAttribute#storeAttributeWithVariablesInLocator" />
+		<var name="class-name">site-title</var>
+
+		<var name="attributeValue" locator="//h1[@class='${class-name}']" attribute="class" />
+
+		<echo message="Test storeAttribute #4: using locator with xpath containing variables" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${attributeValue}" />
+			<var name="expected" value="site-title" />
+		</execute>
 	</command>
 
 	<command name="storeAttributeWithVariablesInLocatorKey" priority="5">
-		<execute macro="StoreAttribute#storeAttributeWithVariablesInLocatorKey" />
+		<var name="attributeNamePart1">la</var>
+		<var name="attributeNamePart2">ss</var>
+		<var name="class-name">site-title</var>
+
+		<var name="attributeValue" locator="//h1[@class='${class-name}']" attribute="c${attributeNamePart1}${attributeNamePart2}" />
+
+		<echo message="Test storeAttribute #5: using locator with xpath containing variables" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="actual" value="${attributeValue}" />
+			<var name="expected" value="site-title" />
+		</execute>
 	</command>
 </definition>

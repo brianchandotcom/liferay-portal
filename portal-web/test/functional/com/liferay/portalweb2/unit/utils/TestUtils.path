@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>TEST_VAR_PATH</td>
-	<td>//h1[@class='${testVar}']/a/span</td>
+	<td>//h1[@class='${key_testVar}']/a/span</td>
 	<td></td>
 </tr>
 </tbody>

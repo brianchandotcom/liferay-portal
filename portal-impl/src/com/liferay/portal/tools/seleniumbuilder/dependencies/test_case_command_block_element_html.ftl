@@ -1,4 +1,4 @@
-<li id="${testCaseName?uncap_first}TestCase${testCaseCommand}">
+<li id="${testCaseNameStack.peek()?uncap_first}TestCase${testCaseCommand}">
 	<#assign lineFolds = lineFolds + 1>
 
 	<div>
@@ -21,7 +21,7 @@
 		<#list testCaseVarElements as testCaseVarElement>
 			<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
 
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
+			<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
 				<#assign displayElement = testCaseVarElement>
 
 				<#include "element_whole_html.ftl">
@@ -33,7 +33,7 @@
 
 			<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
+			<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
 				<#assign displayElement = testCaseSetupElement>
 
 				<#include "element_open_html.ftl">
@@ -50,7 +50,7 @@
 
 		<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
 
-		<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
+		<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
 			<#assign displayElement = testCaseCommandElement>
 
 			<#include "element_open_html.ftl">
@@ -69,7 +69,7 @@
 
 			<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
 
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
+			<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
 				<#assign displayElement = testCaseTearDownElement>
 
 				<#include "element_open_html.ftl">

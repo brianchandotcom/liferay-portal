@@ -1763,8 +1763,9 @@ public class SeleniumBuilderTest {
 	public void testTestCaseCommandElement1001() throws Exception {
 		test(
 			"TestCaseCommandElement1001.testcase",
-			"Error 1001: Missing (execute|property|var) child element in " +
-				_DIR_NAME + "/TestCaseCommandElement1001.testcase:2");
+			"Error 1001: Missing (echo|execute|fail|if|property|var|while) " +
+				"child element in " + _DIR_NAME +
+				"/TestCaseCommandElement1001.testcase:2");
 	}
 
 	@Test
@@ -1773,22 +1774,6 @@ public class SeleniumBuilderTest {
 			"TestCaseCommandElement1002_1.testcase",
 			"Error 1002: Invalid execute-fail element in " + _DIR_NAME +
 				"/TestCaseCommandElement1002_1.testcase:3");
-	}
-
-	@Test
-	public void testTestCaseCommandElement1002_2() throws Exception {
-		test(
-			"TestCaseCommandElement1002_2.testcase",
-			"Error 1002: Invalid if element in " + _DIR_NAME +
-				"/TestCaseCommandElement1002_2.testcase:3");
-	}
-
-	@Test
-	public void testTestCaseCommandElement1002_3() throws Exception {
-		test(
-			"TestCaseCommandElement1002_3.testcase",
-			"Error 1002: Invalid while element in " + _DIR_NAME +
-				"/TestCaseCommandElement1002_3.testcase:3");
 	}
 
 	@Test
@@ -1995,16 +1980,9 @@ public class SeleniumBuilderTest {
 	public void testTestCaseSetUpElement1001() throws Exception {
 		test(
 			"TestCaseSetUpElement1001.testcase",
-			"Error 1001: Missing (execute|var) child element in " + _DIR_NAME +
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME +
 				"/TestCaseSetUpElement1001.testcase:2");
-	}
-
-	@Test
-	public void testTestCaseSetUpElement1002() throws Exception {
-		test(
-			"TestCaseSetUpElement1002.testcase",
-			"Error 1002: Invalid fail element in " + _DIR_NAME +
-				"/TestCaseSetUpElement1002.testcase:3");
 	}
 
 	@Test
@@ -2051,16 +2029,9 @@ public class SeleniumBuilderTest {
 	public void testTestCaseTearDownElement1001() throws Exception {
 		test(
 			"TestCaseTearDownElement1001.testcase",
-			"Error 1001: Missing (execute|var) child element in " + _DIR_NAME +
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME +
 				"/TestCaseTearDownElement1001.testcase:6");
-	}
-
-	@Test
-	public void testTestCaseTearDownElement1002() throws Exception {
-		test(
-			"TestCaseTearDownElement1002.testcase",
-			"Error 1002: Invalid fail element in " + _DIR_NAME +
-				"/TestCaseTearDownElement1002.testcase:7");
 	}
 
 	@Test

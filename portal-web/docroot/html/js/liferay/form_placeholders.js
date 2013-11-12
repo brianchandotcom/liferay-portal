@@ -65,7 +65,7 @@ AUI.add(
 					},
 
 					_initializePasswordNode: function(field) {
-						var placeholder = ANode.create('<input class="' + CSS_PLACEHOLDER + '" name="' + field.attr('name') + '_pass_placeholder" type="text" />');
+						var placeholder = ANode.create('<input name="' + field.attr('name') + '_pass_placeholder" type="text" />');
 
 						Liferay.Util.getAttributes(
 							field,
@@ -80,6 +80,8 @@ AUI.add(
 							}
 						);
 
+						placeholder.addClass(CSS_PLACEHOLDER);
+						
 						placeholder.val(field.attr(STR_PLACEHOLDER));
 
 						placeholder.attr(STR_DATA_TYPE_PASSWORD_PLACEHOLDER, true);

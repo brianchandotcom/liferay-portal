@@ -39,8 +39,6 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
 	public DDLDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences(
-			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 

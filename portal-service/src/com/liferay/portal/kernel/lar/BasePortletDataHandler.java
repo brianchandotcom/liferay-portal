@@ -142,9 +142,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _dataLevel;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Override
 	public String[] getDataPortletPreferences() {
-		return _dataPortletPreferences;
+		return StringPool.EMPTY_ARRAY;
 	}
 
 	@Override
@@ -369,11 +372,13 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _dataLevel.equals(DataLevel.SITE);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isDataPortletInstanceLevel()}
+	 */
 	@Override
 	public boolean isDisplayPortlet() {
-		if (isDataPortletInstanceLevel() &&
-			!ArrayUtil.isEmpty(getDataPortletPreferences())) {
-
+		if (isDataPortletInstanceLevel()) {
 			return true;
 		}
 
@@ -846,8 +851,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_dataLocalized = dataLocalized;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	protected void setDataPortletPreferences(String... dataPortletPreferences) {
-		_dataPortletPreferences = dataPortletPreferences;
 	}
 
 	protected void setDeletionSystemEventStagedModelTypes(
@@ -900,7 +907,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	private DataLevel _dataLevel = DataLevel.SITE;
 	private boolean _dataLocalized;
-	private String[] _dataPortletPreferences = StringPool.EMPTY_ARRAY;
 	private StagedModelType[] _deletionSystemEventStagedModelTypes =
 		new StagedModelType[0];
 	private PortletDataHandlerControl[] _exportControls =

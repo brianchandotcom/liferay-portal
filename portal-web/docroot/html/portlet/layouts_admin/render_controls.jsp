@@ -52,12 +52,14 @@ for (int i = 0; i < controls.length; i++) {
 				data.put("name", controlLabel);
 
 				PortletDataHandlerControl[] children = control.getChildren();
+
+				String controlName = Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : control.getControlName() + StringPool.UNDERLINE + portletId;
 				%>
 
-				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlLabel %>" name="<%= Validator.isNotNull(control.getNamespace()) ? control.getNamespacedControlName() : control.getControlName() + StringPool.UNDERLINE + portletId %>" type="checkbox" value="<%= control.getDefaultState() %>" />
+				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlLabel %>" name="<%= controlName %>" type="checkbox" value="<%= control.getDefaultState() %>" />
 
 				<c:if test="<%= children != null %>">
-					<ul class="unstyled" id="<portlet:namespace /><%= control.getNamespacedControlName() %>Controls">
+					<ul class="unstyled" id="<portlet:namespace /><%= controlName %>Controls">
 
 						<%
 						request.setAttribute("render_controls.jsp-controls", children);
@@ -67,7 +69,7 @@ for (int i = 0; i < controls.length; i++) {
 					</ul>
 
 					<aui:script>
-						Liferay.Util.toggleBoxes('<portlet:namespace /><%= control.getNamespacedControlName() %>Checkbox','<portlet:namespace /><%= control.getNamespacedControlName() %>Controls', false, true);
+						Liferay.Util.toggleBoxes('<portlet:namespace /><%= controlName %>Checkbox', '<portlet:namespace /><%= controlName %>Controls', false, true);
 					</aui:script>
 				</c:if>
 			</c:when>

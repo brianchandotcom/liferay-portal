@@ -119,8 +119,8 @@ AUI.add(
 							Lang.sub(
 								instance.TPL_DELTA_SELECTOR,
 								{
-									id: deltaSelectorId,
 									amount: selectorLabel.amount,
+									id: deltaSelectorId,
 									title: selectorLabel.title
 								}
 							)

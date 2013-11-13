@@ -34,9 +34,7 @@ if (PortalUtil.isCompanyControlPanelVisible(themeDisplay)) {
 }
 
 manageableSiteGroups.remove(group);
-%>
 
-<%
 Group siteGroup = themeDisplay.getSiteGroup();
 
 String switchGroupURL = HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "switchGroup", "1");

@@ -156,7 +156,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testSecureRandomNumberGeneration() throws Exception {
 		test(
 			"SecureRandomNumberGeneration.testjava",
-			"Use SecureRandomUtil instead of java.security.SecureRandom:");
+			"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
+				"SecureRandom instead of java.security.SecureRandom:");
 	}
 
 	@Test

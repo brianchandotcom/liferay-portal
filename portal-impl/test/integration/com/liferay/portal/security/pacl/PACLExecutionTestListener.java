@@ -59,14 +59,17 @@ public class PACLExecutionTestListener
 		PortletContextLoaderListener portletContextLoaderListener =
 			new PortletContextLoaderListener();
 
-		PortletClassLoaderUtil.setServletContextName(
-			hotDeployEvent.getServletContextName());
-
 		try {
+			PortletClassLoaderUtil.setClassLoader(
+				hotDeployEvent.getContextClassLoader());
+			PortletClassLoaderUtil.setServletContextName(
+				hotDeployEvent.getServletContextName());
+
 			portletContextLoaderListener.contextDestroyed(
 				new ServletContextEvent(hotDeployEvent.getServletContext()));
 		}
 		finally {
+			PortletClassLoaderUtil.setClassLoader(null);
 			PortletClassLoaderUtil.setServletContextName(null);
 		}
 	}
@@ -111,14 +114,17 @@ public class PACLExecutionTestListener
 		PortletContextLoaderListener portletContextLoaderListener =
 			new PortletContextLoaderListener();
 
-		PortletClassLoaderUtil.setServletContextName(
-			hotDeployEvent.getServletContextName());
-
 		try {
+			PortletClassLoaderUtil.setClassLoader(
+				hotDeployEvent.getContextClassLoader());
+			PortletClassLoaderUtil.setServletContextName(
+				hotDeployEvent.getServletContextName());
+
 			portletContextLoaderListener.contextInitialized(
 				new ServletContextEvent(mockServletContext));
 		}
 		finally {
+			PortletClassLoaderUtil.setClassLoader(null);
 			PortletClassLoaderUtil.setServletContextName(null);
 		}
 

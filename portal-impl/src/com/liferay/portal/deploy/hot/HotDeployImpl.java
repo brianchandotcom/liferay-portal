@@ -102,16 +102,19 @@ public class HotDeployImpl implements HotDeploy {
 		for (int i = _hotDeployListeners.size() - 1; i >= 0; i--) {
 			HotDeployListener hotDeployListener = _hotDeployListeners.get(i);
 
-			PortletClassLoaderUtil.setServletContextName(
-				hotDeployEvent.getServletContextName());
-
 			try {
+				PortletClassLoaderUtil.setClassLoader(
+					hotDeployEvent.getContextClassLoader());
+				PortletClassLoaderUtil.setServletContextName(
+					hotDeployEvent.getServletContextName());
+
 				hotDeployListener.invokeUndeploy(hotDeployEvent);
 			}
 			catch (HotDeployException hde) {
 				_log.error(hde, hde);
 			}
 			finally {
+				PortletClassLoaderUtil.setClassLoader(null);
 				PortletClassLoaderUtil.setServletContextName(null);
 			}
 		}
@@ -199,16 +202,19 @@ public class HotDeployImpl implements HotDeploy {
 			}
 
 			for (HotDeployListener hotDeployListener : _hotDeployListeners) {
-				PortletClassLoaderUtil.setServletContextName(
-					hotDeployEvent.getServletContextName());
-
 				try {
+					PortletClassLoaderUtil.setClassLoader(
+						hotDeployEvent.getContextClassLoader());
+					PortletClassLoaderUtil.setServletContextName(
+						hotDeployEvent.getServletContextName());
+
 					hotDeployListener.invokeDeploy(hotDeployEvent);
 				}
 				catch (HotDeployException hde) {
 					_log.error(hde, hde);
 				}
 				finally {
+					PortletClassLoaderUtil.setClassLoader(null);
 					PortletClassLoaderUtil.setServletContextName(null);
 				}
 			}

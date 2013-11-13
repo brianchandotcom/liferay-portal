@@ -33,10 +33,8 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -569,33 +567,24 @@ public abstract class BaseClusterExecutorImplTestCase
 			new MockPortalExecutorManager());
 
 		if (loadSpringXML) {
-			String servletContextName = StringUtil.randomId();
-
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
-			ClassLoaderPool.register(servletContextName, classLoader);
-			PortletClassLoaderUtil.setServletContextName(servletContextName);
+			PortletClassLoaderUtil.setClassLoader(classLoader);
 
-			try {
-				ApplicationContext applicationContext =
-					new FileSystemXmlApplicationContext(
-						"portal-impl/test/unit/com/liferay/portal/cluster/" +
-							"test-spring.xml");
+			ApplicationContext applicationContext =
+				new FileSystemXmlApplicationContext(
+					"portal-impl/test/unit/com/liferay/portal/cluster/" +
+						"test-spring.xml");
 
-				BeanLocator beanLocator = new BeanLocatorImpl(
-					classLoader, applicationContext);
+			BeanLocator beanLocator = new BeanLocatorImpl(
+				classLoader, applicationContext);
 
-				PortalBeanLocatorUtil.setBeanLocator(beanLocator);
+			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 
-				PortletBeanLocatorUtil.setBeanLocator(
-					SERVLET_CONTEXT_NAME, beanLocator);
-			}
-			finally {
-				ClassLoaderPool.unregister(servletContextName);
-				PortletClassLoaderUtil.setServletContextName(null);
-			}
+			PortletBeanLocatorUtil.setBeanLocator(
+				SERVLET_CONTEXT_NAME, beanLocator);
 		}
 
 		JDKLoggerTestUtil.configureJDKLogger(

@@ -76,7 +76,7 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 
 		if (permissionChecker.isGroupOwner(groupId) ||
 			GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.ASSIGN_USER_ROLES) ||
+				permissionChecker, group, ActionKeys.ASSIGN_USER_ROLES) ||
 			OrganizationPermissionUtil.contains(
 				permissionChecker, group.getOrganizationId(),
 				ActionKeys.ASSIGN_USER_ROLES) ||

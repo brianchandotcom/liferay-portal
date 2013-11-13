@@ -46,8 +46,7 @@ public class SiteTeamsControlPanelEntry extends BaseControlPanelEntry {
 		throws Exception {
 
 		if (GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(),
-				ActionKeys.MANAGE_TEAMS)) {
+				permissionChecker, group, ActionKeys.MANAGE_TEAMS)) {
 
 			return true;
 		}

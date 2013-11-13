@@ -1822,8 +1822,7 @@ public class StagingImpl implements Staging {
 		long userId = permissionChecker.getUserId();
 
 		if (!GroupPermissionUtil.contains(
-				permissionChecker, liveGroup.getGroupId(),
-				ActionKeys.MANAGE_STAGING)) {
+				permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING)) {
 
 			return;
 		}

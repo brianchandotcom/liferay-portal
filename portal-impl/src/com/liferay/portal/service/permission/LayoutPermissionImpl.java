@@ -252,16 +252,14 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			}
 
 			if (GroupPermissionUtil.contains(
-					permissionChecker, layout.getGroupId(),
-					ActionKeys.ADD_LAYOUT)) {
+					permissionChecker, group, ActionKeys.ADD_LAYOUT)) {
 
 				return true;
 			}
 		}
 
 		if (GroupPermissionUtil.contains(
-				permissionChecker, layout.getGroupId(),
-				ActionKeys.MANAGE_LAYOUTS)) {
+				permissionChecker, group, ActionKeys.MANAGE_LAYOUTS)) {
 
 			return true;
 		}
@@ -417,8 +415,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 			if (layout.isPrivateLayout()) {
 				if (GroupPermissionUtil.contains(
-						permissionChecker, groupUser.getGroupId(),
-						ActionKeys.MANAGE_LAYOUTS) ||
+						permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) ||
 					UserPermissionUtil.contains(
 						permissionChecker, groupUserId,
 						groupUser.getOrganizationIds(), ActionKeys.UPDATE)) {
@@ -435,8 +432,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 		if (group.isStagingGroup()) {
 			if (GroupPermissionUtil.contains(
-					permissionChecker, group.getGroupId(),
-					ActionKeys.VIEW_STAGING)) {
+					permissionChecker, group, ActionKeys.VIEW_STAGING)) {
 
 				return true;
 			}
@@ -449,10 +445,9 @@ public class LayoutPermissionImpl implements LayoutPermission {
 
 		if (group.isSite()) {
 			if (GroupPermissionUtil.contains(
-					permissionChecker, group.getGroupId(),
-					ActionKeys.MANAGE_LAYOUTS) ||
+					permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) ||
 				GroupPermissionUtil.contains(
-					permissionChecker, group.getGroupId(), ActionKeys.UPDATE)) {
+					permissionChecker, group, ActionKeys.UPDATE)) {
 
 				return true;
 			}

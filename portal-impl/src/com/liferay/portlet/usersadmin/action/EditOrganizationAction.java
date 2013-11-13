@@ -275,8 +275,8 @@ public class EditOrganizationAction extends PortletAction {
 		Group organizationGroup = organization.getGroup();
 
 		if (GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				organizationGroup.getGroupId(), ActionKeys.UPDATE)) {
+				themeDisplay.getPermissionChecker(), organizationGroup,
+				ActionKeys.UPDATE)) {
 
 			SitesUtil.updateLayoutSetPrototypesLinks(
 				organizationGroup, publicLayoutSetPrototypeId,

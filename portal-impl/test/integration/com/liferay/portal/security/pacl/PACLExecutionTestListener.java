@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.test.TestContext;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -59,6 +60,10 @@ public class PACLExecutionTestListener
 		PortletContextLoaderListener portletContextLoaderListener =
 			new PortletContextLoaderListener();
 
+		ClassLoaderPool.register(
+			hotDeployEvent.getServletContextName(),
+			hotDeployEvent.getContextClassLoader());
+
 		PortletClassLoaderUtil.setServletContextName(
 			hotDeployEvent.getServletContextName());
 
@@ -67,6 +72,8 @@ public class PACLExecutionTestListener
 				new ServletContextEvent(hotDeployEvent.getServletContext()));
 		}
 		finally {
+			ClassLoaderPool.unregister(hotDeployEvent.getServletContextName());
+
 			PortletClassLoaderUtil.setServletContextName(null);
 		}
 	}
@@ -111,6 +118,10 @@ public class PACLExecutionTestListener
 		PortletContextLoaderListener portletContextLoaderListener =
 			new PortletContextLoaderListener();
 
+		ClassLoaderPool.register(
+			hotDeployEvent.getServletContextName(),
+			hotDeployEvent.getContextClassLoader());
+
 		PortletClassLoaderUtil.setServletContextName(
 			hotDeployEvent.getServletContextName());
 
@@ -119,6 +130,8 @@ public class PACLExecutionTestListener
 				new ServletContextEvent(mockServletContext));
 		}
 		finally {
+			ClassLoaderPool.unregister(hotDeployEvent.getServletContextName());
+
 			PortletClassLoaderUtil.setServletContextName(null);
 		}
 

@@ -228,12 +228,12 @@
 </tr>
 <tr>
 	<td>COMMENTS_ADD</td>
-	<td>//span[@class='taglib-text' and contains(.,'Add Comment')]</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Add Comment')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_UNSUBSCRIBE_COMMENTS</td>
-	<td>//span[@class='taglib-text' and contains(.,'Unsubscribe from Comments')]</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Unsubscribe from Comments')]</td>
 	<td></td>
 </tr>
 <tr>

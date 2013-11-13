@@ -14,7 +14,9 @@
 
 package com.liferay.portal.repository.cmis;
 
-import java.util.regex.Pattern;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
 
@@ -25,6 +27,10 @@ public class CMISRepositoryDetector {
 
 	public CMISRepositoryDetector(RepositoryInfo repositoryInfo) {
 		_detectVendor(repositoryInfo);
+	}
+
+	public boolean isNuxeo() {
+		return _nuxeo;
 	}
 
 	public boolean isNuxeo5_4() {
@@ -41,9 +47,12 @@ public class CMISRepositoryDetector {
 
 	private void _detectNuxeo(RepositoryInfo repositoryInfo) {
 		String productVersion = repositoryInfo.getProductVersion();
-		String[] versionParts = productVersion.split(Pattern.quote("."));
-		int major = _safeParseInt(versionParts[0]);
-		int minor = _safeParseInt(versionParts[1]);
+
+		String[] versionParts = StringUtil.split(
+			productVersion, StringPool.PERIOD);
+
+		int major = GetterUtil.getInteger(versionParts[0]);
+		int minor = GetterUtil.getInteger(versionParts[1]);
 
 		if (major > 5) {
 			_nuxeo5_8OrHigher = true;
@@ -69,16 +78,8 @@ public class CMISRepositoryDetector {
 
 		if (productName.contains(_NUXEO_ID)) {
 			_nuxeo = true;
-			_detectNuxeo(repositoryInfo);
-		}
-	}
 
-	private int _safeParseInt(String number) {
-		try {
-			return Integer.parseInt(number);
-		}
-		catch (NumberFormatException e) {
-			return 0;
+			_detectNuxeo(repositoryInfo);
 		}
 	}
 

@@ -4,7 +4,7 @@
 	</set-up>
 
 	<command name="CasWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="cas-web" />
+		<property name="web.plugins.includes" value="cas-web" />
 
 		<var name="appName" value="Central Authentication Service" />
 
@@ -27,7 +27,7 @@
 
 
 	<command name="KaleoWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="kaleo-web" />
+		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<var name="appName" value="Kaleo Workflow" />
 
@@ -49,7 +49,7 @@
 	</command>
 
 	<command name="ResourcesImporterWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resource-importer-web" />
 
 		<var name="appName" value="Resources Importer" />
 
@@ -71,7 +71,7 @@
 	</command>
 
 	<command name="ScriptingExecutorWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="scripting-executor--web" />
+		<property name="web.plugins.includes" value="scripting-executor--web" />
 
 		<var name="appName" value="Scripting Executor" />
 
@@ -93,7 +93,7 @@
 	</command>
 
 	<command name="ServerManagerWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="server-manager-web" />
+		<property name="web.plugins.includes" value="server-manager-web" />
 
 		<var name="appName" value="Remote IDE Connector" />
 
@@ -115,7 +115,7 @@
 	</command>
 
 	<command name="SyncWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="sync-web" />
+		<property name="web.plugins.includes" value="sync-web" />
 
 		<var name="appName" value="Sync" />
 
@@ -137,7 +137,7 @@
 	</command>
 
 	<command name="ThemeLoaderWebSmoke" priority="5">
-		<property name="web.plugins.includess" value="theme-loader-web" />
+		<property name="web.plugins.includes" value="theme-loader-web" />
 
 		<var name="appName" value="Theme Loader" />
 

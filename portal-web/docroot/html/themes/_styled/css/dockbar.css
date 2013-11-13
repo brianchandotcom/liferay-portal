@@ -285,11 +285,7 @@ $editLayoutPanelWidth: 460px;
 						}
 
 						&.page-preview-controls {
-							@include respond-to(phone) {
-								display: none;
-							}
-
-							@include respond-to(tablet) {
+							@include respond-to(phone, tablet) {
 								display: none;
 							}
 						}
@@ -408,6 +404,10 @@ $editLayoutPanelWidth: 460px;
 		&.lfr-has-edit-layout .nav-add-controls {
 			left: $editLayoutPanelWidth;
 		}
+	}
+
+	&.dialog-iframe-root-node .dockbar .nav-add-controls .page-preview-controls {
+		display: none;
 	}
 
 	.touch .dockbar-split, .controls-hidden.dockbar-split {

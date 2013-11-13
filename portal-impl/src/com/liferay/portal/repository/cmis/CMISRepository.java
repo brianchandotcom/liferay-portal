@@ -164,15 +164,16 @@ public class CMISRepository extends BaseCmisRepository {
 
 			Document doc;
 
-			if (_repositoryDetector.isNuxeo5_5OrHigher()) {
-				doc = cmisFolder.createDocument(properties, contentStream,
-					VersioningState.NONE);
+			if (_cmisRepositoryDetector.isNuxeo5_5OrHigher()) {
+				doc = cmisFolder.createDocument(
+					properties, contentStream, VersioningState.NONE);
 
-				doc.checkIn(true, Collections.EMPTY_MAP, null, "");
+				doc.checkIn(
+					true, Collections.EMPTY_MAP, null, StringPool.BLANK);
 			}
 			else {
-				doc = cmisFolder.createDocument(properties, contentStream,
-					null);
+				doc = cmisFolder.createDocument(
+					properties, contentStream, null);
 			}
 
 			return toFileEntry(doc);
@@ -874,7 +875,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		setCachedSession(session);
 
-		_initRepositoryDetector();
+		_initCMISRepositoryDetector();
 
 		return session;
 	}
@@ -1693,7 +1694,7 @@ public class CMISRepository extends BaseCmisRepository {
 		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, query);
 
-		if (_repositoryDetector.isNuxeo5_4()) {
+		if (_cmisRepositoryDetector.isNuxeo5_4()) {
 			queryString +=
 				" AND (" + PropertyIds.IS_LATEST_VERSION + " = true)";
 		}
@@ -1702,9 +1703,9 @@ public class CMISRepository extends BaseCmisRepository {
 			_log.debug("CMIS search query: " + queryString);
 		}
 
-		ItemIterable<QueryResult> queryResults;
+		ItemIterable<QueryResult> queryResults = null;
 
-		if (_repositoryDetector.isNuxeo5_5OrHigher()) {
+		if (_cmisRepositoryDetector.isNuxeo5_5OrHigher()) {
 			queryResults = session.query(queryString, true);
 		}
 		else {
@@ -2389,14 +2390,14 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	private void _initRepositoryDetector()
+	private void _initCMISRepositoryDetector()
 		throws PortalException, SystemException {
 
 		Session session = getSession();
 
 		RepositoryInfo repositoryInfo = session.getRepositoryInfo();
 
-		_repositoryDetector = new CMISRepositoryDetector(repositoryInfo);
+		_cmisRepositoryDetector = new CMISRepositoryDetector(repositoryInfo);
 	}
 
 	private static final int _DELETE_DEEP = -1;
@@ -2419,8 +2420,8 @@ public class CMISRepository extends BaseCmisRepository {
 			CMISRepository.class + "._foldersCache",
 			new HashMap<Long, List<Folder>>());
 
+	private CMISRepositoryDetector _cmisRepositoryDetector;
 	private CMISRepositoryHandler _cmisRepositoryHandler;
-	private CMISRepositoryDetector _repositoryDetector;
 	private String _sessionKey;
 
 }

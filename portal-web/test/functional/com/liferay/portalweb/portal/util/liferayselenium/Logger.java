@@ -226,6 +226,8 @@ public class Logger {
 
 		String xpath = generateXpath(_xpathIdStack);
 
+		System.out.println(xpath);
+
 		List<WebElement> webElements = _webDriver.findElements(By.xpath(xpath));
 
 		if (status.equals("pass")) {

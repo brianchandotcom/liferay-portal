@@ -32,9 +32,13 @@
 					<#assign extendedTestCaseCommand = extendedTestCaseCommandElement.attributeValue("name")>
 
 					<#if extendedTestCaseCommand = testCaseCommandName>
+						<#assign void = testCaseNameStack.push(extendedTestCaseName)>
+
 						<#assign testCaseCommandElement = extendedTestCaseCommandElement>
 
 						<#include "test_case_command_block_element_html.ftl">
+
+						<#assign void = testCaseNameStack.pop()>
 
 						<#assign testCaseCommandFound = true>
 
@@ -51,14 +55,17 @@
 		</#list>
 	<#else>
 		<#list extendedTestCaseCommandElements as extendedTestCaseCommandElement>
+			<#assign void = testCaseNameStack.push(extendedTestCaseName)>
+
 			<#assign testCaseCommandElement = extendedTestCaseCommandElement>
 
 			<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
 			<#include "test_case_command_block_element_html.ftl">
+
+			<#assign void = testCaseNameStack.pop()>
 		</#list>
 	</#if>
-
 <#else>
 	<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 

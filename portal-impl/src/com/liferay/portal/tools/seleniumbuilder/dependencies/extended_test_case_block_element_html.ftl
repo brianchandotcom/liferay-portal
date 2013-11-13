@@ -1,9 +1,9 @@
-<#assign elements = testCaseBlockElement.elements()>
+<#assign elements = currentTestCaseElement.elements()>
 
 <#list elements as element>
 	<#assign lineNumber = element.attributeValue("line-number")>
 
-	<li id="${extendedTestCase?uncap_first}TestCase${lineNumber}">
+	<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
 		<#if element.getName() == "execute">
 			<#if element.attributeValue("action")??>
 				<#assign displayElement = element>

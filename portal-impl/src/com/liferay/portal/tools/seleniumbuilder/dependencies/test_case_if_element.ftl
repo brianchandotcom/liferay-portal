@@ -29,15 +29,15 @@ ${ifType} (
 ) {
 	<#assign lineNumber = conditionalElement.attributeValue("line-number")>
 
-	selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
+	selenium.sendLogger(testCaseName + "${lineNumber}", "pending");
 
-	selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+	selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 
 	<#assign thenElement = ifElement.element("then")>
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
+	selenium.sendLogger(testCaseName + "${lineNumber}", "pending");
 
 	<#assign blockElement = thenElement>
 
@@ -45,5 +45,5 @@ ${ifType} (
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+	selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 }

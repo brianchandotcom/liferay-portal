@@ -448,6 +448,28 @@ public class SeleniumBuilderContext {
 		return _testCaseClassNames.get(testCaseName);
 	}
 
+	public Set<String> getTestCaseCommandNames(String testCaseName) {
+		Element testCaseRootElement = getTestCaseRootElement(testCaseName);
+
+		String extendedTestCaseName = testCaseRootElement.attributeValue(
+			"extends");
+
+		if (extendedTestCaseName != null) {
+			Set<String> extendedTestCaseCommandNames =
+				_testCaseCommandNames.get(extendedTestCaseName);
+
+			Set<String> currentTestCaseCommandNames = _testCaseCommandNames.get(
+				testCaseName);
+
+			currentTestCaseCommandNames.addAll(extendedTestCaseCommandNames);
+
+			return currentTestCaseCommandNames;
+		}
+		else {
+			return _testCaseCommandNames.get(testCaseName);
+		}
+	}
+
 	public String getTestCaseFileName(String testCaseName) {
 		return _testCaseFileNames.get(testCaseName);
 	}

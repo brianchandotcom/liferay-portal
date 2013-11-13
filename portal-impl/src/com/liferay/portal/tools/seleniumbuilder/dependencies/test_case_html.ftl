@@ -2,8 +2,21 @@
 	<#include "head_html.ftl">
 
 	<body>
+		<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
+
+		<#if testCaseRootElement.attributeValue("extends")??>
+			<#assign extendedTestCase = testCaseRootElement.attributeValue("extends")>
+		</#if>
+
 		<div id="title">
-			<h2>${seleniumBuilderContext.getTestCaseClassName(testCaseName)}</h2>
+			<h2>
+				${seleniumBuilderContext.getTestCaseClassName(testCaseName)}
+
+				<#if extendedTestCase??>
+					(extends ${extendedTestCase}TestCase)
+				</#if>
+			</h2>
+
 		</div>
 
 		<form>

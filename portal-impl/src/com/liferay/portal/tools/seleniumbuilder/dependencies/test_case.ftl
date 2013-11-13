@@ -78,7 +78,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 				public void method${methodElement.attributeValue("name")}
 			</#if>
 
-			(String commandName) throws Exception {
+			(String commandName, boolean nested) throws Exception {
 				commandScopeVariables = new HashMap<String, String>();
 
 				commandScopeVariables.putAll(definitionScopeVariables);
@@ -95,9 +95,11 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 					${childElementAttributeValue}Macro ${seleniumBuilderFileUtil.getVariableName(childElementAttributeValue)}Macro = new ${childElementAttributeValue}Macro(selenium);
 				</#list>
 
-				selenium.sendLogger("${testCaseName?uncap_first}TestCase" + commandName, "start");
+				if (!nested) {
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase" + commandName, "start");
 
-				selenium.sendLogger("${testCaseName?uncap_first}TestCase" + commandName, "pending");
+					selenium.sendLogger("${testCaseName?uncap_first}TestCase" + commandName, "pending");
+				}
 
 				<#assign lineNumber = methodElement.attributeValue("line-number")>
 
@@ -127,7 +129,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 				definitionScopeVariables.put("testCaseName", "${testCaseName}TestCase${commandName}");
 
 				<#if rootElement.element("set-up")??>
-					methodSetUp("${commandName}");
+					methodSetUp("${commandName}", false);
 				</#if>
 
 				<#if commandElement.attributeValue("depends")??>
@@ -138,7 +140,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 					}
 				</#if>
 
-				method${commandName}("${commandName}");
+				method${commandName}("${commandName}", false);
 
 				testPassed = true;
 			}
@@ -148,7 +150,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 			finally {
 				<#if rootElement.element("tear-down")??>
 					if (!TestPropsValues.TEST_SKIP_TEAR_DOWN) {
-							methodTearDown("${commandName}");
+							methodTearDown("${commandName}", false);
 					}
 				</#if>
 

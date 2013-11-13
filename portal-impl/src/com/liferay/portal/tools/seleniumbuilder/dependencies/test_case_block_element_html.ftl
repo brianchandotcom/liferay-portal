@@ -17,6 +17,10 @@
 				<#assign macroElement = element>
 
 				<#include "macro_element_html.ftl">
+			<#elseif element.attributeValue("test-case")??>
+				<#assign currentTestCaseElement = element>
+
+				<#include "extended_test_case_element_html.ftl">
 			</#if>
 		<#elseif element.getName() == "if">
 			<#assign displayElement = element>

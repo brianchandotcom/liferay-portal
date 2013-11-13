@@ -54,8 +54,10 @@ public class UpgradeProcessUtil {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select languageId from User_ where defaultUser = TRUE and " +
+				"select languageId from User_ where defaultUser = ? and " +
 					"companyId = " + companyId);
+
+			ps.setBoolean(1, true);
 
 			rs = ps.executeQuery();
 

@@ -172,7 +172,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return DLFileShortcutLocalServiceUtil.fetchDLFileShortcut(primaryKey);
+		return DLFileShortcutLocalServiceUtil.getDLFileShortcut(primaryKey);
 	}
 
 	@Override

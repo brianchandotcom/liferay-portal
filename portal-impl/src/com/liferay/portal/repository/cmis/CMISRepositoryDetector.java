@@ -14,9 +14,9 @@
 
 package com.liferay.portal.repository.cmis;
 
-import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
-
 import java.util.regex.Pattern;
+
+import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
 
 /**
  * @author Ivan Zaera
@@ -45,18 +45,20 @@ public class CMISRepositoryDetector {
 		int major = _safeParseInt(versionParts[0]);
 		int minor = _safeParseInt(versionParts[1]);
 
-		if (major>5) {
+		if (major > 5) {
 			_nuxeo5_8OrHigher = true;
 			_nuxeo5_5OrHigher = true;
 		}
-		else if (major==5) {
-			if(minor>=8) {
+		else if (major == 5) {
+			if (minor >= 8) {
 				_nuxeo5_8OrHigher = true;
 			}
-			if(minor>=5) {
+
+			if (minor >= 5) {
 				_nuxeo5_5OrHigher = true;
 			}
-			if(minor==4) {
+
+			if (minor == 4) {
 				_nuxeo5_4 = true;
 			}
 		}
@@ -65,7 +67,7 @@ public class CMISRepositoryDetector {
 	private void _detectVendor(RepositoryInfo repositoryInfo) {
 		String productName = repositoryInfo.getProductName();
 
-		if( productName.contains(_NUXEO_ID) ) {
+		if (productName.contains(_NUXEO_ID)) {
 			_nuxeo = true;
 			_detectNuxeo(repositoryInfo);
 		}
@@ -74,7 +76,8 @@ public class CMISRepositoryDetector {
 	private int _safeParseInt(String number) {
 		try {
 			return Integer.parseInt(number);
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e) {
 			return 0;
 		}
 	}

@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.portal.cmis;
 
 import com.liferay.portal.repository.cmis.CMISRepositoryDetector;
@@ -59,18 +73,32 @@ public class CMISRepositoryDetectorTest {
 		assertTrue(detector.isNuxeo5_8OrHigher());
 	}
 
-	private CMISRepositoryDetector _createDetectorFor(String productName,
-													  String productVersion ) {
-		RepositoryInfo repInfo = _mockRepositoryInfo(productName,
-				productVersion);
+	private CMISRepositoryDetector _createDetectorFor(
+		String productName, String productVersion) {
+
+		RepositoryInfo repInfo = _mockRepositoryInfo(
+			productName, productVersion);
+
 		return new CMISRepositoryDetector(repInfo);
 	}
 
-	private RepositoryInfo _mockRepositoryInfo(String productName,
-											   String productVersion) {
+	private RepositoryInfo _mockRepositoryInfo(
+		String productName, String productVersion) {
+
 		RepositoryInfo repInfo = mock(RepositoryInfo.class);
-		when(repInfo.getProductName()).thenReturn(productName);
-		when(repInfo.getProductVersion()).thenReturn(productVersion);
+
+		when(
+			repInfo.getProductName()
+		).thenReturn(
+			productName
+		);
+
+		when(
+			repInfo.getProductVersion()
+		).thenReturn(
+			productVersion
+		);
+
 		return repInfo;
 	}
 

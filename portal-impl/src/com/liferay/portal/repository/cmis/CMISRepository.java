@@ -163,6 +163,7 @@ public class CMISRepository extends BaseCmisRepository {
 				title, BigInteger.valueOf(size), mimeType, is);
 
 			Document doc;
+
 			if (_repositoryDetector.isNuxeo5_5OrHigher()) {
 				doc = cmisFolder.createDocument(properties, contentStream,
 					VersioningState.NONE);
@@ -173,6 +174,7 @@ public class CMISRepository extends BaseCmisRepository {
 				doc = cmisFolder.createDocument(properties, contentStream,
 					null);
 			}
+
 			return toFileEntry(doc);
 		}
 		catch (PortalException pe) {
@@ -1701,6 +1703,7 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 
 		ItemIterable<QueryResult> queryResults;
+
 		if (_repositoryDetector.isNuxeo5_5OrHigher()) {
 			queryResults = session.query(queryString, true);
 		}
@@ -2387,7 +2390,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	private void _initRepositoryDetector()
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		Session session = getSession();
 

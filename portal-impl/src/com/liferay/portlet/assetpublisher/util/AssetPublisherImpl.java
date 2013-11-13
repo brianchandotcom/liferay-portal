@@ -155,7 +155,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 				layout, referringPortletResource);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
+			return;
 		}
 
 		String selectionStyle = portletPreferences.getValue(

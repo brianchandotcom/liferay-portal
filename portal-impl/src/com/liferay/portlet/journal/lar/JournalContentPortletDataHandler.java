@@ -75,7 +75,7 @@ public class JournalContentPortletDataHandler
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "selected-web-content", true, true, null,
+				null, "selected-web-content", true, true, null,
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
 			PropsValues.JOURNAL_CONTENT_PUBLISH_TO_LIVE_BY_DEFAULT);

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.scheduler;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,40 +27,54 @@ public class CronTextTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidFrequency() throws Exception {
-		Calendar cal = Calendar.getInstance();
-		cal.set(2010, 0, 2, 3, 4, 5);
+		Calendar startDate = new GregorianCalendar(2010, 0, 2, 3, 4, 5);
 
-		CronText cronText = new CronText(cal, 100, 10);
+		new CronText(startDate, 100, 10);
 	}
 
 	@Test
 	public void testValidFrequencies() throws Exception {
-		Calendar cal = Calendar.getInstance();
-		cal.set(2010, 0, 2, 3, 4, 5);
+		Calendar startDate = new GregorianCalendar(2010, 0, 2, 3, 4, 5);
 
-		CronText cronText = new CronText(cal, CronText.NO_FREQUENCY, 10);
-		Assert.assertEquals("5 4 3 2 1 ? 2010", cronText.toString());
+		Assert.assertEquals(
+			"5 4 3 2 1 ? 2010",
+			getCronText(startDate, CronText.NO_FREQUENCY, 10));
 
-		cronText = new CronText(cal, CronText.SECONDLY_FREQUENCY, 11);
-		Assert.assertEquals("*/11 * * * * ? *", cronText.toString());
+		Assert.assertEquals(
+			"*/11 * * * * ? *",
+			getCronText(startDate, CronText.SECONDLY_FREQUENCY, 11));
 
-		cronText = new CronText(cal, CronText.MINUTELY_FREQUENCY, 12);
-		Assert.assertEquals("5 */12 * * * ? *", cronText.toString());
+		Assert.assertEquals(
+			"5 */12 * * * ? *",
+			getCronText(startDate, CronText.MINUTELY_FREQUENCY, 12));
 
-		cronText = new CronText(cal, CronText.HOURLY_FREQUENCY, 13);
-		Assert.assertEquals("5 * */13 * * ? *", cronText.toString());
+		Assert.assertEquals(
+			"5 * */13 * * ? *",
+			getCronText(startDate, CronText.HOURLY_FREQUENCY, 13));
 
-		cronText = new CronText(cal, CronText.DAILY_FREQUENCY, 14);
-		Assert.assertEquals("5 4 3 2/14 * ? *", cronText.toString());
+		Assert.assertEquals(
+			"5 4 3 2/14 * ? *",
+			getCronText(startDate, CronText.DAILY_FREQUENCY, 14));
 
-		cronText = new CronText(cal, CronText.WEEKLY_FREQUENCY, 15);
-		Assert.assertEquals("5 4 3 2/105 * ? *", cronText.toString());
+		Assert.assertEquals(
+			"5 4 3 2/105 * ? *",
+			getCronText(startDate, CronText.WEEKLY_FREQUENCY, 15));
 
-		cronText = new CronText(cal, CronText.MONTHLY_FREQUENCY, 6);
-		Assert.assertEquals("5 4 3 2 1/6 ? *", cronText.toString());
+		Assert.assertEquals(
+			"5 4 3 2 1/6 ? *",
+			getCronText(startDate, CronText.MONTHLY_FREQUENCY, 6));
 
-		cronText = new CronText(cal, CronText.YEARLY_FREQUENCY, 7);
-		Assert.assertEquals("5 4 3 2 1 ? 2010/7", cronText.toString());
+		Assert.assertEquals(
+			"5 4 3 2 1 ? 2010/7",
+			getCronText(startDate, CronText.YEARLY_FREQUENCY, 7));
+	}
+
+	protected String getCronText(
+		Calendar startDate, int frequency, int interval) {
+
+		CronText cronText = new CronText(startDate, frequency, interval);
+
+		return cronText.toString();
 	}
 
 }

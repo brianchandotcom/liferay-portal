@@ -287,7 +287,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		Group group = groupLocalService.getCompanyGroup(companyId);
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), group.getGroupId(), ActionKeys.VIEW);
+			getPermissionChecker(), group, ActionKeys.VIEW);
 
 		return group;
 	}
@@ -306,10 +306,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public Group getGroup(long groupId)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.VIEW);
+		Group group = groupLocalService.getGroup(groupId);
 
-		return groupLocalService.getGroup(groupId);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.VIEW);
+
+		return group;
 	}
 
 	/**
@@ -329,7 +331,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		Group group = groupLocalService.getGroup(companyId, name);
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), group.getGroupId(), ActionKeys.VIEW);
+			getPermissionChecker(), group, ActionKeys.VIEW);
 
 		return group;
 	}
@@ -461,7 +463,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		Group group = groupLocalService.getUserGroup(companyId, userId);
 
 		GroupPermissionUtil.check(
-			getPermissionChecker(), group.getGroupId(), ActionKeys.VIEW);
+			getPermissionChecker(), group, ActionKeys.VIEW);
 
 		return group;
 	}
@@ -1135,10 +1137,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public Group updateGroup(long groupId, String typeSettings)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.UPDATE);
-
 		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.UPDATE);
 
 		if (group.isSite()) {
 			Group oldGroup = group;
@@ -1163,10 +1165,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long groupId, Map<String, String> stagedPortletIds)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.UPDATE);
-
 		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.UPDATE);
 
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();

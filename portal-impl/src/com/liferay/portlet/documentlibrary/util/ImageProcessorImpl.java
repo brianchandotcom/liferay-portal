@@ -140,6 +140,10 @@ public class ImageProcessorImpl
 			return false;
 		}
 
+		if (fileVersion.getSize() == 0) {
+			return false;
+		}
+
 		boolean hasImages = false;
 
 		try {

@@ -216,7 +216,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 
 						Locale curLocale = LocaleUtil.fromLanguageId(curLanguageId);
 
-						if (errorLocales.contains(curLocale) || (index == 0 && errorLocales.size() == 0)) {
+						if (errorLocales.contains(curLocale) || ((index == 0) && errorLocales.isEmpty())) {
 							itemCssClass += " palette-item-selected";
 						}
 

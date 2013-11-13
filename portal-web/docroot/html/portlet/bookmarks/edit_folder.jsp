@@ -48,7 +48,9 @@ else {
 }
 %>
 
-<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
+<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
+	<liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
+</c:if>
 
 <portlet:actionURL var="editFolderURL">
 	<portlet:param name="struts_action" value="/bookmarks/edit_folder" />

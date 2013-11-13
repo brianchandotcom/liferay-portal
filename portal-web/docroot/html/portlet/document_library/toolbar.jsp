@@ -47,25 +47,25 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="cancel-checkout[document]" />
+				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-undo" label="cancel-checkout[document]" />
 
 				<%
 				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="checkin" />
+				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-unlock" label="checkin" />
 
 				<%
 				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="checkout[document]" />
+				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-lock" label="checkout[document]" />
 
 				<%
 				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="move" />
+				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-move" label="move" />
 			</c:if>
 
 			<%

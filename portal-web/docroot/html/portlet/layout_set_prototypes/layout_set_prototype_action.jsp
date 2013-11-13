@@ -96,7 +96,7 @@ Group group = layoutSetPrototype.getGroup();
 		/>
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 		<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />

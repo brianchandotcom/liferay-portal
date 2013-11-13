@@ -64,9 +64,9 @@ if (group.isGuest()) {
 
 String[][] categorySections = {mainSections};
 
-boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, liveGroupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-boolean hasAddPageLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_LAYOUT);
+boolean hasAddPageLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT);
 
 boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN));
 %>
@@ -120,7 +120,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
 		jspPath="/html/portlet/layouts_admin/layout_set/"
-		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
+		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>
 

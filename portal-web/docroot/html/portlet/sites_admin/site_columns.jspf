@@ -70,7 +70,7 @@
 		buffer.append(iconHelp);
 	}
 
-	if (GroupPermissionUtil.contains(permissionChecker, curGroup.getGroupId(), ActionKeys.VIEW)) {
+	if (GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW)) {
 		List<Group> childSites = GroupServiceUtil.getGroups(company.getCompanyId(), curGroup.getGroupId(), true);
 
 		if (!childSites.isEmpty()) {

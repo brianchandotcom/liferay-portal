@@ -1209,7 +1209,7 @@ public class JournalArticleLocalServiceImpl
 					articleResources.add(articleResource);
 				}
 
-				if (includeTrashedEntries || !article.isInTrash()) {
+				if (includeTrashedEntries || !article.isInTrashExplicitly()) {
 					journalArticleLocalService.deleteArticle(
 						article, null, null);
 				}

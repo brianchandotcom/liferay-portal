@@ -134,7 +134,7 @@ public class JournalFolderLocalServiceImpl
 			folder.getGroupId(), folder.getFolderId());
 
 		for (JournalFolder curFolder : folders) {
-			if (includeTrashedEntries || !curFolder.isInTrash()) {
+			if (includeTrashedEntries || !curFolder.isInTrashExplicitly()) {
 				deleteFolder(curFolder, includeTrashedEntries);
 			}
 		}
@@ -860,7 +860,7 @@ public class JournalFolderLocalServiceImpl
 
 				JournalFolder folder = (JournalFolder)object;
 
-				if (folder.isInTrash()) {
+				if (folder.isInTrashExplicitly()) {
 					continue;
 				}
 

@@ -73,26 +73,6 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Theme getTheme(long companyId,
-		java.lang.String themeId, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _themeLocalService.getTheme(companyId, themeId, wapTheme);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Theme> getThemes(
-		long companyId) {
-		return _themeLocalService.getThemes(companyId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Theme> getThemes(
-		long companyId, long groupId, long userId, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _themeLocalService.getThemes(companyId, groupId, userId, wapTheme);
-	}
-
-	@Override
 	public java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
 		long companyId, long userId, boolean wapTheme)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -106,6 +86,29 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _themeLocalService.getPageThemes(companyId, groupId, userId,
 			wapTheme);
+	}
+
+	@Override
+	public com.liferay.portal.model.Theme getTheme(long companyId,
+		java.lang.String themeId, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _themeLocalService.getTheme(companyId, themeId, wapTheme);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Theme> getThemes(
+		long companyId) {
+		return _themeLocalService.getThemes(companyId);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.model.Theme> getThemes(
+		long companyId, long groupId, long userId, boolean wapTheme)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _themeLocalService.getThemes(companyId, groupId, userId, wapTheme);
 	}
 
 	@Override

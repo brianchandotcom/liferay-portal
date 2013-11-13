@@ -159,7 +159,7 @@ public class BookmarksEntryLocalServiceImpl
 			groupId, folderId);
 
 		for (BookmarksEntry entry : entries) {
-			if (includeTrashedEntries || !entry.isInTrash()) {
+			if (includeTrashedEntries || !entry.isInTrashExplicitly()) {
 				bookmarksEntryLocalService.deleteEntry(entry);
 			}
 		}

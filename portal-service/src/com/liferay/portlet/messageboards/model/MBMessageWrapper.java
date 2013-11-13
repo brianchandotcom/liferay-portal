@@ -898,6 +898,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		return _mbMessage.isInTrashContainer();
 	}
 
+	@Override
+	public boolean isInTrashExplicitly()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbMessage.isInTrashExplicitly();
+	}
+
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/

@@ -43,7 +43,6 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 
 	public WikiDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences("title", "nodeId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 

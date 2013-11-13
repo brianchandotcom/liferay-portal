@@ -15,91 +15,96 @@
 package com.liferay.portal.cmis;
 
 import com.liferay.portal.repository.cmis.CMISRepositoryDetector;
+
 import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
+
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.jgroups.util.Util.assertFalse;
-import static org.jgroups.util.Util.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Ivan Zaera
  */
-public class CMISRepositoryDetectorTest {
+public class CMISRepositoryDetectorTest extends PowerMockito {
 
 	@Test
-	public void testDetectionForNuxeo5_4() {
-		CMISRepositoryDetector detector = _createDetectorFor("Nuxeo", "5.4");
+	public void testCMISDetectorWhenNuxeo5_4() {
+		CMISRepositoryDetector cmisRepositoryDetector =
+			_createCMISRepositoryDetector("Nuxeo", "5.4");
 
-		assertTrue(detector.isNuxeo5_4());
-		assertFalse(detector.isNuxeo5_5OrHigher());
-		assertFalse(detector.isNuxeo5_8OrHigher());
+		Assert.assertTrue(cmisRepositoryDetector.isNuxeo5_4());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_5OrHigher());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_8OrHigher());
 	}
 
 	@Test
-	public void testDetectionForNuxeo5_5() {
-		CMISRepositoryDetector detector = _createDetectorFor("Nuxeo", "5.5");
+	public void testCMISDetectorWhenNuxeo5_5() {
+		CMISRepositoryDetector cmisRepositoryDetector =
+			_createCMISRepositoryDetector("Nuxeo", "5.5");
 
-		assertFalse(detector.isNuxeo5_4());
-		assertTrue(detector.isNuxeo5_5OrHigher());
-		assertFalse(detector.isNuxeo5_8OrHigher());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_4());
+		Assert.assertTrue(cmisRepositoryDetector.isNuxeo5_5OrHigher());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_8OrHigher());
 	}
 
 	@Test
-	public void testDetectionForNuxeo5_7() {
-		CMISRepositoryDetector detector = _createDetectorFor("Nuxeo", "5.7");
+	public void testCMISDetectorWhenNuxeo5_7() {
+		CMISRepositoryDetector cmisRepositoryDetector =
+			_createCMISRepositoryDetector("Nuxeo", "5.7");
 
-		assertFalse(detector.isNuxeo5_4());
-		assertTrue(detector.isNuxeo5_5OrHigher());
-		assertFalse(detector.isNuxeo5_8OrHigher());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_4());
+		Assert.assertTrue(cmisRepositoryDetector.isNuxeo5_5OrHigher());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_8OrHigher());
 	}
 
 	@Test
-	public void testDetectionForNuxeo5_8() {
-		CMISRepositoryDetector detector = _createDetectorFor("Nuxeo", "5.8");
+	public void testCMISDetectorWhenNuxeo5_8() {
+		CMISRepositoryDetector cmisRepositoryDetector =
+			_createCMISRepositoryDetector("Nuxeo", "5.8");
 
-		assertFalse(detector.isNuxeo5_4());
-		assertTrue(detector.isNuxeo5_5OrHigher());
-		assertTrue(detector.isNuxeo5_8OrHigher());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_4());
+		Assert.assertTrue(cmisRepositoryDetector.isNuxeo5_5OrHigher());
+		Assert.assertTrue(cmisRepositoryDetector.isNuxeo5_8OrHigher());
 	}
 
 	@Test
-	public void testDetectionForNuxeo6_0() {
-		CMISRepositoryDetector detector = _createDetectorFor("Nuxeo", "6.0");
+	public void testCMISDetectorWhenNuxeo6_0() {
+		CMISRepositoryDetector cmisRepositoryDetector =
+			_createCMISRepositoryDetector("Nuxeo", "6.0");
 
-		assertFalse(detector.isNuxeo5_4());
-		assertTrue(detector.isNuxeo5_5OrHigher());
-		assertTrue(detector.isNuxeo5_8OrHigher());
+		Assert.assertFalse(cmisRepositoryDetector.isNuxeo5_4());
+		Assert.assertTrue(cmisRepositoryDetector.isNuxeo5_5OrHigher());
+		Assert.assertTrue(cmisRepositoryDetector.isNuxeo5_8OrHigher());
 	}
 
-	private CMISRepositoryDetector _createDetectorFor(
+	private CMISRepositoryDetector _createCMISRepositoryDetector(
 		String productName, String productVersion) {
 
-		RepositoryInfo repInfo = _mockRepositoryInfo(
+		RepositoryInfo repositoryInfo = _mockRepositoryInfo(
 			productName, productVersion);
 
-		return new CMISRepositoryDetector(repInfo);
+		return new CMISRepositoryDetector(repositoryInfo);
 	}
 
 	private RepositoryInfo _mockRepositoryInfo(
 		String productName, String productVersion) {
 
-		RepositoryInfo repInfo = mock(RepositoryInfo.class);
+		RepositoryInfo repositoryInfo = mock(RepositoryInfo.class);
 
 		when(
-			repInfo.getProductName()
+			repositoryInfo.getProductName()
 		).thenReturn(
 			productName
 		);
 
 		when(
-			repInfo.getProductVersion()
+			repositoryInfo.getProductVersion()
 		).thenReturn(
 			productVersion
 		);
 
-		return repInfo;
+		return repositoryInfo;
 	}
 
 }

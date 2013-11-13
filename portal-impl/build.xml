@@ -545,8 +545,8 @@ public class Creole10Parser]]></replacevalue>
 
 	<target name="build-selenium-java-jar">
 		<get
-			dest="selenium-firefox-driver-2.33.0-sources.jar"
-			src="http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.33.0/selenium-firefox-driver-2.33.0-sources.jar"
+			dest="selenium-firefox-driver-2.37.0-sources.jar"
+			src="http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.37.0/selenium-firefox-driver-2.37.0-sources.jar"
 		/>
 
 		<tstamp>
@@ -555,14 +555,14 @@ public class Creole10Parser]]></replacevalue>
 
 		<unzip
 			dest="${tstamp.value}"
-			src="selenium-firefox-driver-2.33.0-sources.jar"
+			src="selenium-firefox-driver-2.37.0-sources.jar"
 		>
 			<patternset>
 				<include name="**/FirefoxDriver.java" />
 			</patternset>
 		</unzip>
 
-		<delete file="selenium-firefox-driver-2.33.0-sources.jar" />
+		<delete file="selenium-firefox-driver-2.37.0-sources.jar" />
 
 		<replace file="${tstamp.value}/org/openqa/selenium/firefox/FirefoxDriver.java">
 			<replacefilter token="localhost" value="127.0.0.1" />

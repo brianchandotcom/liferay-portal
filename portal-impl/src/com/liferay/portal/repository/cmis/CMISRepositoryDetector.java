@@ -19,17 +19,10 @@ import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
 import java.util.regex.Pattern;
 
 /**
- * This class implements the logic for CMIS repository vendor and version
- * detection.
  * @author Ivan Zaera
  */
 public class CMISRepositoryDetector {
 
-	/**
-	 * Create a detector for the given repository. The detection routines are
-	 * run once and cached inside the object for future reference.
-	 * @param repositoryInfo the repository description
-	 */
 	public CMISRepositoryDetector(RepositoryInfo repositoryInfo) {
 		_detectVendor(repositoryInfo);
 	}
@@ -46,10 +39,6 @@ public class CMISRepositoryDetector {
 		return _nuxeo5_8OrHigher;
 	}
 
-	/**
-	 * Detects version number for a Nuxeo repository
-	 * @param repositoryInfo the repository description
-	 */
 	private void _detectNuxeo(RepositoryInfo repositoryInfo) {
 		String productVersion = repositoryInfo.getProductVersion();
 		String[] versionParts = productVersion.split(Pattern.quote("."));
@@ -73,10 +62,6 @@ public class CMISRepositoryDetector {
 		}
 	}
 
-	/**
-	 * Detects vendor for a CMIS repository
-	 * @param repositoryInfo the repository description
-	 */
 	private void _detectVendor(RepositoryInfo repositoryInfo) {
 		String productName = repositoryInfo.getProductName();
 
@@ -86,12 +71,6 @@ public class CMISRepositoryDetector {
 		}
 	}
 
-	/**
-	 * Parses a number like {@link Integer#parseInt} but does not throw any
-	 * exception if it fails (instead returns 0)
-	 * @param number the number to parse as a String
-	 * @return the parsed number of 0 if it is not a number
-	 */
 	private int _safeParseInt(String number) {
 		try {
 			return Integer.parseInt(number);

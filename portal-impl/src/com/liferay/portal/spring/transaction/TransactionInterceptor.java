@@ -28,6 +28,10 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
  */
 public class TransactionInterceptor implements MethodInterceptor {
 
+	public TransactionAttributeSource getTransactionAttributeSource() {
+		return transactionAttributeSource;
+	}
+
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Method method = methodInvocation.getMethod();

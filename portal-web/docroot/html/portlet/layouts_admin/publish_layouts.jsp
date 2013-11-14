@@ -430,7 +430,7 @@ else {
 
 					var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
 
-					portletDataControlDefault.attr('value', true);
+					portletDataControlDefault.val(true);
 				}
 
 				submitForm(document.<portlet:namespace />exportPagesFm);

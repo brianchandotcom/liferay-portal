@@ -266,6 +266,8 @@ Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 <%!
 private String _checkViewURL(AssetEntry assetEntry, boolean viewInContext, String viewURL, String currentURL, ThemeDisplay themeDisplay) {
 	if (Validator.isNotNull(viewURL)) {
+		viewURL = HttpUtil.setParameter(viewURL, "inheritRedirect", viewInContext);
+
 		Layout layout = themeDisplay.getLayout();
 
 		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();

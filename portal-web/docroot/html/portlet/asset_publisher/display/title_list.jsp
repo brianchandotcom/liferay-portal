@@ -49,11 +49,18 @@ if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 	viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 }
 
-String viewFullContentURLString = viewFullContentURL.toString();
+String viewURL = null;
 
-viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+if (viewInContext) {
+	String viewFullContentURLString = viewFullContentURL.toString();
 
-String viewURL = viewInContext ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString) : viewFullContentURLString;
+	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+
+	viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
+}
+else {
+	viewURL = viewFullContentURL.toString();
+}
 
 viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 %>

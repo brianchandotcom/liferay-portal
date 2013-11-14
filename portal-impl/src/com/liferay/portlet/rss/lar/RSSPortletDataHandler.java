@@ -49,6 +49,7 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 
 	public RSSPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
+		setDataPortletPreferences("footerArticleValues", "headerArticleValues");
 		setExportControls(new PortletDataHandlerControl[0]);
 		setPublishToLiveByDefault(PropsValues.RSS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}

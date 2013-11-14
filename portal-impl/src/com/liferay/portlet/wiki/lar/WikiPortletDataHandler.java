@@ -51,6 +51,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "wiki";
 
 	public WikiPortletDataHandler() {
+		setDataPortletPreferences("hiddenNodes, visibleNodes");
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(WikiNode.class),
 			new StagedModelType(WikiPage.class));

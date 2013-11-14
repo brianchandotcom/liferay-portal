@@ -12,13 +12,26 @@
  * details.
  */
 
-package com.liferay.portal;
+package com.liferay.portal.kernel.exception;
 
-import com.liferay.portal.kernel.exception.LocalizedException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Sergio González
  */
-public class LayoutFriendlyURLsException extends LocalizedException {
+public class LocalizedException extends PortalException {
+
+	public void addLocalizedException(Locale locale, Exception exception) {
+		_localizedExceptionsMap.put(locale, exception);
+	}
+
+	public Map<Locale, Exception> getLocalizedExceptionsMap() {
+		return _localizedExceptionsMap;
+	}
+
+	private Map<Locale, Exception> _localizedExceptionsMap =
+		new HashMap<Locale, Exception>();
 
 }

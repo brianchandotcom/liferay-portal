@@ -73,6 +73,21 @@ if (!Validator.isNull(languageId)) {
 List<String> languageIds = new ArrayList<String>();
 
 String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
+
+Exception exception = (Exception)request.getAttribute("liferay-ui:error:exception");
+String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
+
+Set<Locale> errorLocales = new HashSet<Locale>();
+
+if ((exception != null) && fieldName.equals(focusField)) {
+	if (LocalizedException.class.isAssignableFrom(exception.getClass())) {
+		LocalizedException le = (LocalizedException)exception;
+
+		Map<Locale, Exception> localizedExceptionsMap = le.getLocalizedExceptionsMap();
+
+		errorLocales = localizedExceptionsMap.keySet();
+	}
+}
 %>
 
 <span class="input-localized input-localized-<%= type %>" id="<portlet:namespace /><%= id %>BoundingBox">
@@ -199,7 +214,9 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 					for (String curLanguageId : uniqueLanguageIds) {
 						String itemCssClass = "palette-item";
 
-						if (index == 0) {
+						Locale curLocale = LocaleUtil.fromLanguageId(curLanguageId);
+
+						if (errorLocales.contains(curLocale) || ((index == 0) && errorLocales.isEmpty())) {
 							itemCssClass += " palette-item-selected";
 						}
 
@@ -215,7 +232,7 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 						<td class="palette-item <%= itemCssClass %>" data-index="<%= index++ %>" data-value="<%= curLanguageId %>">
 							<a class="palette-item-inner" href="javascript:void(0);">
 								<img class="lfr-input-localized-flag" data-languageid="<%= curLanguageId %>" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= curLanguageId %>.png" />
-								<div class="lfr-input-localized-state"></div>
+								<div class='<%= errorLocales.contains(curLocale) ? "lfr-input-localized-state lfr-input-localized-state-error" : "lfr-input-localized-state" %>'></div>
 							</a>
 						</td>
 
@@ -247,6 +264,8 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 
 			var available = {};
 
+			var errores = {};
+
 			<%
 			for (Locale availableLocale : availableLocales) {
 				String availableLanguageId = LocaleUtil.toLanguageId(availableLocale);
@@ -262,6 +281,19 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 				[defaultLanguageId].concat(A.Object.keys(available))
 			);
 
+			<%
+			for (Locale errorLocale : errorLocales) {
+				String errorLocaleId = LocaleUtil.toLanguageId(errorLocale);
+			%>
+
+				errores['<%= errorLocaleId %>'] = '<%= errorLocale.getDisplayName(locale) %>';
+
+			<%
+			}
+			%>
+
+			var errorLanguageIds = A.Array.dedupe(A.Object.keys(errores));
+
 			Liferay.InputLocalized.register(
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 				{
@@ -275,6 +307,7 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 
 					inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 					items: availableLanguageIds,
+					itemsError: errorLanguageIds,
 					lazy: <%= !type.equals("editor") %>,
 					name: '<portlet:namespace /><%= name + StringPool.UNDERLINE %>',
 					namespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',

@@ -40,10 +40,12 @@
 
 			<%
 			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("resource-href", viewPermissionsResourceURL.toString());
 			%>
 
 			<div class='permission-navigation-item-summary <%= Validator.isNull(portletResource)? "selected" : "" %>'>
-				<aui:a cssClass="permission-navigation-link" data-resource-href="<%= viewPermissionsResourceURL.toString() %>" href="<%= viewPermissionsURL.toString() %>">
+				<aui:a cssClass="permission-navigation-link" data="<%= data %>" href="<%= viewPermissionsURL.toString() %>">
 					<liferay-ui:message key="summary" />
 				</aui:a>
 			</div>

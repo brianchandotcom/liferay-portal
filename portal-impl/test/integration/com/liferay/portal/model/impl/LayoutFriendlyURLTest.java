@@ -146,11 +146,11 @@ public class LayoutFriendlyURLTest {
 			Assert.fail();
 		}
 		catch (LayoutFriendlyURLsException lfurlse) {
-			Map<Locale, Exception> localizedExceptions =
-				lfurlse.getLocalizedExceptions();
+			Map<Locale, Exception> localizedExceptionsMap =
+				lfurlse.getLocalizedExceptionsMap();
 
 			List<Exception> layoutFriendlyURLExceptions =
-				(List<Exception>)localizedExceptions.values();
+				(List<Exception>)localizedExceptionsMap.values();
 
 			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
 
@@ -170,11 +170,11 @@ public class LayoutFriendlyURLTest {
 			Assert.fail();
 		}
 		catch (LayoutFriendlyURLsException lfurlse) {
-			Map<Locale, Exception> localizedExceptions =
-				lfurlse.getLocalizedExceptions();
+			Map<Locale, Exception> localizedExceptionsMap =
+				lfurlse.getLocalizedExceptionsMap();
 
 			List<Exception> layoutFriendlyURLExceptions =
-				(List<Exception>)localizedExceptions.values();
+				(List<Exception>)localizedExceptionsMap.values();
 
 			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
 
@@ -194,11 +194,11 @@ public class LayoutFriendlyURLTest {
 			Assert.fail();
 		}
 		catch (LayoutFriendlyURLsException lfurlse) {
-			Map<Locale, Exception> localizedExceptions =
-				lfurlse.getLocalizedExceptions();
+			Map<Locale, Exception> localizedExceptionsMap =
+				lfurlse.getLocalizedExceptionsMap();
 
 			List<Exception> layoutFriendlyURLExceptions =
-				(List<Exception>)localizedExceptions.values();
+				(List<Exception>)localizedExceptionsMap.values();
 
 			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
 
@@ -218,11 +218,11 @@ public class LayoutFriendlyURLTest {
 			Assert.fail();
 		}
 		catch (LayoutFriendlyURLsException lfurlse) {
-			Map<Locale, Exception> localizedExceptions =
-				lfurlse.getLocalizedExceptions();
+			Map<Locale, Exception> localizedExceptionsMap =
+				lfurlse.getLocalizedExceptionsMap();
 
 			List<Exception> layoutFriendlyURLExceptions =
-				(List<Exception>)localizedExceptions.values();
+				(List<Exception>)localizedExceptionsMap.values();
 
 			Assert.assertEquals(1, layoutFriendlyURLExceptions.size());
 
@@ -262,11 +262,11 @@ public class LayoutFriendlyURLTest {
 			addLayout(group.getGroupId(), false, friendlyURLMap);
 		}
 		catch (LayoutFriendlyURLsException lfurlse) {
-			Map<Locale, Exception> localizedExceptions =
-				lfurlse.getLocalizedExceptions();
+			Map<Locale, Exception> localizedExceptionsMap =
+				lfurlse.getLocalizedExceptionsMap();
 
 			List<Exception> layoutFriendlyURLExceptions =
-				(List<Exception>)localizedExceptions.values();
+				(List<Exception>)localizedExceptionsMap.values();
 
 			Assert.assertEquals(2, layoutFriendlyURLExceptions.size());
 

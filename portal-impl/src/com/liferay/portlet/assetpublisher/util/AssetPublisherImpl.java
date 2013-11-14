@@ -324,8 +324,12 @@ public class AssetPublisherImpl implements AssetPublisher {
 			long scopeGroupId, int max, boolean checkPermission)
 		throws PortalException, SystemException {
 
+		long[] groupIds = getGroupIds(portletPreferences, scopeGroupId, layout);
+
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			portletPreferences, new long[] {scopeGroupId});
+			portletPreferences, groupIds);
+
+		assetEntryQuery.setGroupIds(groupIds);
 
 		boolean anyAssetType = GetterUtil.getBoolean(
 			portletPreferences.getValue("anyAssetType", null), true);
@@ -357,10 +361,6 @@ public class AssetPublisherImpl implements AssetPublisher {
 			portletPreferences.getValue("excludeZeroViewCount", null));
 
 		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-
-		long[] groupIds = getGroupIds(portletPreferences, scopeGroupId, layout);
-
-		assetEntryQuery.setGroupIds(groupIds);
 
 		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
 			portletPreferences.getValue("showOnlyLayoutAssets", null));

@@ -5,7 +5,7 @@
 
 	<command name="WelcomeThemeView" priority="5">
 		<property name="theme.plugins.includes" value="welcome-theme" />
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<execute macro="WelcomeTheme#viewPG" />
 

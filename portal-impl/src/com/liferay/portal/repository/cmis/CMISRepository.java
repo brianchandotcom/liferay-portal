@@ -76,6 +76,7 @@ import java.io.InputStream;
 import java.math.BigInteger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -102,6 +103,7 @@ import org.apache.chemistry.opencmis.commons.enums.Action;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
+import org.apache.chemistry.opencmis.commons.enums.VersioningState;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisObjectNotFoundException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisPermissionDeniedException;
 import org.apache.chemistry.opencmis.commons.exceptions.CmisRuntimeException;
@@ -160,8 +162,21 @@ public class CMISRepository extends BaseCmisRepository {
 			ContentStream contentStream = new ContentStreamImpl(
 				title, BigInteger.valueOf(size), mimeType, is);
 
-			return toFileEntry(
-				cmisFolder.createDocument(properties, contentStream, null));
+			Document doc;
+
+			if (_cmisRepositoryDetector.isNuxeo5_5OrHigher()) {
+				doc = cmisFolder.createDocument(
+					properties, contentStream, VersioningState.NONE);
+
+				doc.checkIn(
+					true, Collections.EMPTY_MAP, null, StringPool.BLANK);
+			}
+			else {
+				doc = cmisFolder.createDocument(
+					properties, contentStream, null);
+			}
+
+			return toFileEntry(doc);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -859,6 +874,8 @@ public class CMISRepository extends BaseCmisRepository {
 		session = sessionImpl.getSession();
 
 		setCachedSession(session);
+
+		_initCMISRepositoryDetector();
 
 		return session;
 	}
@@ -1677,7 +1694,7 @@ public class CMISRepository extends BaseCmisRepository {
 		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, query);
 
-		if (productName.contains("Nuxeo") && productVersion.contains("5.4")) {
+		if (_cmisRepositoryDetector.isNuxeo5_4()) {
 			queryString +=
 				" AND (" + PropertyIds.IS_LATEST_VERSION + " = true)";
 		}
@@ -1686,8 +1703,14 @@ public class CMISRepository extends BaseCmisRepository {
 			_log.debug("CMIS search query: " + queryString);
 		}
 
-		ItemIterable<QueryResult> queryResults = session.query(
-			queryString, false);
+		ItemIterable<QueryResult> queryResults = null;
+
+		if (_cmisRepositoryDetector.isNuxeo5_5OrHigher()) {
+			queryResults = session.query(queryString, true);
+		}
+		else {
+			queryResults = session.query(queryString, false);
+		}
 
 		int start = searchContext.getStart();
 		int end = searchContext.getEnd();
@@ -2367,6 +2390,16 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
+	private void _initCMISRepositoryDetector()
+		throws PortalException, SystemException {
+
+		Session session = getSession();
+
+		RepositoryInfo repositoryInfo = session.getRepositoryInfo();
+
+		_cmisRepositoryDetector = new CMISRepositoryDetector(repositoryInfo);
+	}
+
 	private static final int _DELETE_DEEP = -1;
 
 	private static final int _DELETE_NONE = 0;
@@ -2387,6 +2420,7 @@ public class CMISRepository extends BaseCmisRepository {
 			CMISRepository.class + "._foldersCache",
 			new HashMap<Long, List<Folder>>());
 
+	private CMISRepositoryDetector _cmisRepositoryDetector;
 	private CMISRepositoryHandler _cmisRepositoryHandler;
 	private String _sessionKey;
 

@@ -32,6 +32,8 @@ public abstract class BaseIndexWriter
 			if (_log.isDebugEnabled()) {
 				_log.debug("No spell check index writer configured");
 			}
+
+			return;
 		}
 
 		_spellCheckIndexWriter.clearQuerySuggestionDictionaryIndexes(
@@ -46,6 +48,8 @@ public abstract class BaseIndexWriter
 			if (_log.isDebugEnabled()) {
 				_log.debug("No spell check index writer configured");
 			}
+
+			return;
 		}
 
 		_spellCheckIndexWriter.clearSpellCheckerDictionaryIndexes(
@@ -61,6 +65,8 @@ public abstract class BaseIndexWriter
 			if (_log.isDebugEnabled()) {
 				_log.debug("No spell check index writer configured");
 			}
+
+			return;
 		}
 
 		_spellCheckIndexWriter.indexKeyword(searchContext, weight, keywordType);
@@ -74,6 +80,8 @@ public abstract class BaseIndexWriter
 			if (_log.isDebugEnabled()) {
 				_log.debug("No spell check index writer configured");
 			}
+
+			return;
 		}
 
 		_spellCheckIndexWriter.indexQuerySuggestionDictionaries(searchContext);
@@ -87,6 +95,8 @@ public abstract class BaseIndexWriter
 			if (_log.isDebugEnabled()) {
 				_log.debug("No spell check index writer configured");
 			}
+
+			return;
 		}
 
 		_spellCheckIndexWriter.indexQuerySuggestionDictionary(searchContext);
@@ -100,6 +110,8 @@ public abstract class BaseIndexWriter
 			if (_log.isDebugEnabled()) {
 				_log.debug("No spell check index writer configured");
 			}
+
+			return;
 		}
 
 		_spellCheckIndexWriter.indexSpellCheckerDictionaries(searchContext);
@@ -113,6 +125,8 @@ public abstract class BaseIndexWriter
 			if (_log.isDebugEnabled()) {
 				_log.debug("No spell check index writer configured");
 			}
+
+			return;
 		}
 
 		_spellCheckIndexWriter.indexSpellCheckerDictionary(searchContext);

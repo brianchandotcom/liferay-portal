@@ -157,18 +157,20 @@
 	}
 }
 
-.popover {
-	.lfr-discussion-parent-message-user-avatar {
+.lfr-discussion-reply.popover {
+	max-width: none;
+
+	.lfr-discussion-reply-user-avatar {
 		float: left;
 		margin-right: 15px;
 		margin-top: 3px;
 	}
 
-	.lfr-discussion-parent-message-user-name {
+	.lfr-discussion-reply-user-name {
 		font-weight: bold;
 	}
 
-	.lfr-discussion-parent-message-content {
+	.lfr-discussion-reply-content {
 		margin-top: 5px;
 	}
 }

@@ -479,14 +479,14 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											long imageId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
 											%>
 
-											<span id="lfr-discussion-parent-message-user-info">
-												<div class="lfr-discussion-parent-message-user-avatar">
+											<span id="lfr-discussion-reply-user-info">
+												<div class="lfr-discussion-reply-user-avatar">
 														<img alt="<%= parentMessage.getUserName() %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, imageId) %>" width="30" />
 												</div>
-												<div class="lfr-discussion-parent-message-user-name">
+												<div class="lfr-discussion-reply-user-name">
 														<%= parentMessage.getUserName() %>
 												</div>
-												<div class="lfr-discussion-parent-message-creation-date">
+												<div class="lfr-discussion-reply-creation-date">
 														<%= dateFormatDateTime.format(parentMessage.getCreateDate()) %>
 												</div>
 											</span>
@@ -784,40 +784,43 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	<aui:script use="aui-popover,event-outside">
 		var discussionContainer = A.one('#<portlet:namespace />discussion-container');
 
-		var tooltip = new A.Popover(
+		var popover = new A.Popover(
 			{
-				align: {
-					points: [A.WidgetPositionAlign.BR, A.WidgetPositionAlign.TR]
-				},
+				cssClass: 'lfr-discussion-reply',
 				constrain: true,
+				position: 'top',
 				visible: false,
-				width: '400px'
+				width: 400,
+				zIndex: Liferay.zIndex.TOOLTIP
 			}
 		).render(discussionContainer);
+
+		var handle;
+
+		var boundingBox = popover.get('boundingBox');
 
 		discussionContainer.delegate(
 			'click',
 			function(event) {
-				var boundingBox = tooltip.get('boundingBox');
+				event.stopPropagation();
 
-				setTimeout(
-					function() {
-						boundingBox.once('clickoutside', tooltip.hide, tooltip);
-					},
-					0
-				);
+				if (handle) {
+					handle.detach();
 
-				boundingBox.detach('clickoutside');
+					handle = null;
+				}
 
-				tooltip.hide();
+				handle = boundingBox.once('clickoutside', popover.hide, popover);
 
-				var node = event.currentTarget;
+				popover.hide();
 
-				tooltip.set('align.node', node);
-				tooltip.set('bodyContent', node.attr('data-metaData'));
-				tooltip.set('headerContent', node.attr('data-title'));
+				var currentTarget = event.currentTarget;
 
-				tooltip.show();
+				popover.set('align.node', currentTarget);
+				popover.set('bodyContent', currentTarget.attr('data-metaData'));
+				popover.set('headerContent', currentTarget.attr('data-title'));
+
+				popover.show();
 			},
 			'.lfr-discussion-parent-link'
 		);

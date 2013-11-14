@@ -17,7 +17,12 @@ package com.liferay.portal.spring.context;
 import com.liferay.portal.kernel.spring.util.SpringFactoryUtil;
 import com.liferay.portal.spring.aop.ChainableMethodAdviceInjectorCollector;
 
+import java.util.Map;
+
+import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.BeanIsAbstractException;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -37,6 +42,39 @@ public class PortletBeanFactoryPostProcessor
 
 		configurableListableBeanFactory.setBeanClassLoader(
 			PortletApplicationContext.getBeanClassLoader());
+
+		ListableBeanFactory parentListableBeanFactory =
+			(ListableBeanFactory)
+				configurableListableBeanFactory.getParentBeanFactory();
+
+		Map<String, BeanPostProcessor> beanPostProcessors =
+			parentListableBeanFactory.getBeansOfType(
+				BeanPostProcessor.class, true, false);
+
+		for (BeanPostProcessor beanPostProcessor :
+				beanPostProcessors.values()) {
+
+			if (beanPostProcessor instanceof BeanFactoryAware) {
+				BeanFactoryAware beanFactoryAware =
+					(BeanFactoryAware)beanPostProcessor;
+
+				beanFactoryAware.setBeanFactory(
+					configurableListableBeanFactory);
+			}
+
+			if (beanPostProcessor instanceof
+					AbstractAutoProxyCreator) {
+
+				AbstractAutoProxyCreator abstractAutoProxyCreator =
+					(AbstractAutoProxyCreator)beanPostProcessor;
+
+				abstractAutoProxyCreator.setProxyClassLoader(
+					PortletApplicationContext.getBeanClassLoader());
+			}
+
+			configurableListableBeanFactory.addBeanPostProcessor(
+				beanPostProcessor);
+		}
 
 		String[] names =
 			configurableListableBeanFactory.getBeanDefinitionNames();

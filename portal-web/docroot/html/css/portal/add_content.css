@@ -276,6 +276,8 @@
 	}
 
 	.asset-title {
+		@include ellipsis;
+
 		margin-bottom: 5px;
 	}
 }

@@ -19,7 +19,9 @@
 
 		<antcall target="revert-test-properties" />
 
-		<antcall target="prepare-selenium" />
+		<antcall target="prepare-selenium">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
 
 		<antcall target="start-selenium" />
 

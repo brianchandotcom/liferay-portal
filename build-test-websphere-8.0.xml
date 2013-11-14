@@ -219,7 +219,9 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')</ech
 			value="${vm.host}:9080"
 		/>
 
-		<antcall target="prepare-selenium" />
+		<antcall target="prepare-selenium">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
 
 		<antcall target="start-selenium" />
 

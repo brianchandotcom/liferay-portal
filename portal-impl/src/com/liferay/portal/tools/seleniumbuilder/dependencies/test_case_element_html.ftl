@@ -18,7 +18,7 @@
 			<#list testCaseCommandElements as testCaseCommandElement>
 				<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-				<#if testCaseCommand = testCaseCommandName>
+				<#if testCaseCommand == testCaseCommandName>
 					<#include "test_case_command_block_element_html.ftl">
 
 					<#assign testCaseCommandFound = true>
@@ -32,7 +32,7 @@
 					<#assign extendedTestCaseCommand = extendedTestCaseCommandElement.attributeValue("name")>
 
 					<#if extendedTestCaseCommand = testCaseCommandName>
-						<#assign void = testCaseNameStack.push(extendedTestCaseName)>
+						<#assign void = testCaseNameStack.push(extendedTestCase)>
 
 						<#assign testCaseCommandElement = extendedTestCaseCommandElement>
 
@@ -49,17 +49,13 @@
 
 			<#if testCaseCommandFound>
 				<#assign testCaseCommandFound = false>
-
-				<#break>
 			</#if>
 		</#list>
 	<#else>
 		<#list extendedTestCaseCommandElements as extendedTestCaseCommandElement>
-			<#assign void = testCaseNameStack.push(extendedTestCaseName)>
+			<#assign void = testCaseNameStack.push(extendedTestCase)>
 
 			<#assign testCaseCommandElement = extendedTestCaseCommandElement>
-
-			<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
 			<#include "test_case_command_block_element_html.ftl">
 
@@ -70,8 +66,6 @@
 	<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
 	<#list testCaseCommandElements as testCaseCommandElement>
-		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
-
 		<#include "test_case_command_block_element_html.ftl">
 	</#list>
 </#if>

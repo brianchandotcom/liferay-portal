@@ -20,7 +20,11 @@
 			<#elseif element.attributeValue("test-case")??>
 				<#assign currentTestCaseElement = element>
 
+				<#assign void = testCaseNameStack.push(extendedTestCase)>
+
 				<#include "extended_test_case_element_html.ftl">
+
+				<#assign void = testCaseNameStack.pop()>
 			</#if>
 		<#elseif element.getName() == "if">
 			<#assign displayElement = element>

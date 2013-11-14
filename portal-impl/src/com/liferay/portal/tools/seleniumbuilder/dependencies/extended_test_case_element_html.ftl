@@ -2,7 +2,7 @@
 
 <#assign lineNumber = currentTestCaseElement.attributeValue("line-number")>
 
-<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
+<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 	<#include "element_open_html.ftl">
 
 	<#assign currentTestCase = currentTestCaseElement.attributeValue("test-case")>

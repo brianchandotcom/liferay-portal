@@ -1,4 +1,6 @@
-<li id="${testCaseNameStack.peek()?uncap_first}TestCase${testCaseCommand}">
+<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
+
+<li id="${testCaseName?uncap_first}TestCase${testCaseCommand}">
 	<#assign lineFolds = lineFolds + 1>
 
 	<div>
@@ -21,7 +23,7 @@
 		<#list testCaseVarElements as testCaseVarElement>
 			<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
 
-			<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
+			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 				<#assign displayElement = testCaseVarElement>
 
 				<#include "element_whole_html.ftl">
@@ -33,14 +35,18 @@
 
 			<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
-			<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
+			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 				<#assign displayElement = testCaseSetupElement>
 
 				<#include "element_open_html.ftl">
 
 				<#assign testCaseBlockElement = testCaseSetupElement>
 
+				<#assign void = testCaseNameStack.push(testCaseName)>
+
 				<#include "test_case_block_element_html.ftl">
+
+				<#assign void = testCaseNameStack.pop()>
 
 				<#assign displayElement = testCaseSetupElement>
 
@@ -69,14 +75,18 @@
 
 			<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
 
-			<li id="${testCaseNameStack.peek()?uncap_first}TestCase${lineNumber}">
+			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 				<#assign displayElement = testCaseTearDownElement>
 
 				<#include "element_open_html.ftl">
 
+				<#assign void = testCaseNameStack.push(testCaseName)>
+
 				<#assign testCaseBlockElement = testCaseTearDownElement>
 
 				<#include "test_case_block_element_html.ftl">
+
+				<#assign void = testCaseNameStack.pop()>
 
 				<#assign displayElement = testCaseTearDownElement>
 

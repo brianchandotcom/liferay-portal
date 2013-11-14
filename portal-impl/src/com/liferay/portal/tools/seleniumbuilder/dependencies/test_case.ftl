@@ -173,9 +173,9 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 	</#list>
 
 	static {
-		<#assign commandElements = rootElement.elements("command")>
+		<#assign testCaseCommandNames = seleniumBuilderContext.getTestCaseCommandNames(testCaseName)>
 
-		testCaseCount = ${commandElements?size};
+		testCaseCount = ${testCaseCommandNames?size};
 	}
 
 	private static String testCaseName;

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.io.File;
 
@@ -248,7 +249,7 @@ public class Logger {
 			_liferaySelenium.getPrimaryTestSuiteName();
 
 		String htmlFileName =
-			"portal-web/test/functional-generated/" +
+			_TEST_BASEDIR_NAME + "/test/functional-generated/" +
 				StringUtil.replace(primaryTestSuiteName, ".", "/") + ".html";
 
 		if (_loggerStarted) {
@@ -262,8 +263,9 @@ public class Logger {
 		else {
 			_webDriver.get(
 				"file:///" + _liferaySelenium.getProjectDir() +
-					"portal-web/test/functional/com/liferay/portalweb/portal/" +
-						"util/liferayselenium/dependencies/Logger.html");
+					_TEST_BASEDIR_NAME + "/test/functional/com/liferay/" +
+						"portalweb/portal/util/liferayselenium/dependencies/" +
+						"Logger.html");
 		}
 
 		_loggerStarted = true;
@@ -280,7 +282,7 @@ public class Logger {
 
 			String fileName =
 				_liferaySelenium.getProjectDir() +
-					"portal-web/test-results/functional/report.html";
+					_TEST_BASEDIR_NAME + "/test-results/functional/report.html";
 
 			File file = new File(fileName);
 
@@ -430,6 +432,9 @@ public class Logger {
 
 		_javascriptExecutor.executeScript(sb.toString());
 	}
+
+	private static final String _TEST_BASEDIR_NAME =
+		TestPropsValues.TEST_BASEDIR_NAME;
 
 	private int _errorCount;
 	private JavascriptExecutor _javascriptExecutor;

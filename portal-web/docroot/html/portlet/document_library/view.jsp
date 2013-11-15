@@ -77,12 +77,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" /></liferay-util:buffer>
 
-<portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/document_library/edit_entry" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-</portlet:actionURL>
-
-<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+<liferay-ui:trash-undo />
 
 <div id="<portlet:namespace />documentLibraryContainer">
 	<aui:row cssClass="lfr-app-column-view">

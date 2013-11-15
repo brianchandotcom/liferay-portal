@@ -545,14 +545,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		TrashEntry trashEntry = category.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(MBCategory.class, categoryId)) {
+		if (category.isInTrashExplicitly()) {
 			restoreCategoryFromTrash(userId, categoryId);
 		}
 		else {
 
 			// Category
+
+			TrashEntry trashEntry = category.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

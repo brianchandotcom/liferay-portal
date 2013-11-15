@@ -3290,16 +3290,14 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		TrashEntry trashEntry = article.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(
-				JournalArticle.class, article.getResourcePrimKey())) {
-
+		if (article.isInTrashExplicitly()) {
 			restoreArticleFromTrash(userId, article);
 		}
 		else {
 
 			// Article
+
+			TrashEntry trashEntry = article.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

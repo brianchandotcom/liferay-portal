@@ -1135,7 +1135,7 @@ public abstract class BaseIndexer implements Indexer {
 				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
 
 			if (trashedModel.isInTrash() &&
-				!trashEntry.isTrashEntry(trashedModel)) {
+				!trashedModel.isInTrashExplicitly()) {
 
 				document.addKeyword(
 					Field.ROOT_ENTRY_CLASS_NAME, trashEntry.getClassName());

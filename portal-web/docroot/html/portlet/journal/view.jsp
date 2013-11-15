@@ -53,12 +53,7 @@ request.setAttribute("view.jsp-folder", folder);
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 %>
 
-<portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/journal/edit_entry" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-</portlet:actionURL>
-
-<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+<liferay-ui:trash-undo />
 
 <div id="<portlet:namespace />journalContainer">
 	<aui:row cssClass="lfr-app-column-view">

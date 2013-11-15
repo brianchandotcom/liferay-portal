@@ -864,7 +864,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			blogsEntryPersistence.update(entry);
 		}
 
-		updateStatus(
+		entry = updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
 

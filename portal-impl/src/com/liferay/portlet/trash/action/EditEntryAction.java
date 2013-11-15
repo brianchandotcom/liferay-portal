@@ -292,8 +292,9 @@ public class EditEntryAction extends PortletAction {
 		List<ObjectValuePair<String, Long>> entryOVPs =
 			new ArrayList<ObjectValuePair<String, Long>>();
 
-		for (int i = 0; i < restoreEntryIds.length; i++) {
-			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(trashEntryId);
+		for (long restoreEntryId : restoreEntryIds) {
+			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
+				restoreEntryId);
 
 			entryOVPs.addAll(
 				getEntryOVPs(entry.getClassName(), entry.getClassPK()));

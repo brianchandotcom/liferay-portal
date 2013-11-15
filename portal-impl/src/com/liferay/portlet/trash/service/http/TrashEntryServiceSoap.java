@@ -330,5 +330,36 @@ public class TrashEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.trash.model.TrashEntrySoap restoreEntry(
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			com.liferay.portlet.trash.model.TrashEntry returnValue = TrashEntryServiceUtil.restoreEntry(className,
+					classPK);
+
+			return com.liferay.portlet.trash.model.TrashEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.trash.model.TrashEntrySoap restoreEntry(
+		java.lang.String className, long classPK, long overrideClassPK,
+		java.lang.String name) throws RemoteException {
+		try {
+			com.liferay.portlet.trash.model.TrashEntry returnValue = TrashEntryServiceUtil.restoreEntry(className,
+					classPK, overrideClassPK, name);
+
+			return com.liferay.portlet.trash.model.TrashEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(TrashEntryServiceSoap.class);
 }

@@ -549,12 +549,6 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public boolean isTrashEntry(
-		com.liferay.portal.model.TrashedModel trashedModel) {
-		return _trashEntry.isTrashEntry(trashedModel);
-	}
-
-	@Override
 	public void setRootEntry(
 		com.liferay.portlet.trash.model.TrashEntry rootEntry) {
 		_trashEntry.setRootEntry(rootEntry);

@@ -65,12 +65,7 @@ if (folder != null) {
 }
 %>
 
-<portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-</portlet:actionURL>
-
-<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+<liferay-ui:trash-undo />
 
 <liferay-util:include page="/html/portlet/bookmarks/top_links.jsp" />
 

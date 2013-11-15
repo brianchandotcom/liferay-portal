@@ -31,6 +31,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -451,6 +452,28 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		trashHandler.restoreTrashEntry(getUserId(), entry.getClassPK());
 
 		return entry;
+	}
+
+	@Override
+	public TrashEntry restoreEntry(String className, long classPK)
+		throws PortalException, SystemException {
+
+		return restoreEntry(className, classPK, 0, null);
+	}
+
+	@Override
+	public TrashEntry restoreEntry(
+			String className, long classPK, long overrideClassPK, String name)
+		throws PortalException, SystemException {
+
+		TrashEntry trashEntry = trashEntryPersistence.fetchByC_C(
+			PortalUtil.getClassNameId(className), classPK);
+
+		if (trashEntry != null) {
+			return restoreEntry(trashEntry.getEntryId(), overrideClassPK, name);
+		}
+
+		return null;
 	}
 
 	protected void deleteEntry(TrashEntry entry)

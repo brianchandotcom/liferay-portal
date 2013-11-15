@@ -14,16 +14,12 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -33,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -55,12 +52,13 @@ import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -113,9 +111,6 @@ public class EditEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribe(actionRequest);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				restoreEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribe(actionRequest);
@@ -306,42 +301,22 @@ public class EditEntryAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
 		}
 
-		String deleteEntryTitle = null;
+		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
 
-		for (int i = 0; i < deleteEntryIds.length; i++) {
-			long deleteEntryId = deleteEntryIds[i];
-
+		for (long deleteEntryId : deleteEntryIds) {
 			if (moveToTrash) {
 				BlogsEntry entry = BlogsEntryServiceUtil.moveEntryToTrash(
 					deleteEntryId);
 
-				if (i == 0) {
-					deleteEntryTitle = entry.getTitle();
-				}
+				trashedModels.add(entry);
 			}
 			else {
 				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
 			}
 		}
 
-		if (moveToTrash && (deleteEntryIds.length > 0)) {
-			Map<String, String[]> data = new HashMap<String, String[]>();
-
-			data.put(
-				"deleteEntryClassName",
-				new String[] {BlogsEntry.class.getName()});
-
-			if (Validator.isNotNull(deleteEntryTitle)) {
-				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
-			}
-
-			data.put(
-				"restoreEntryIds", ArrayUtil.toStringArray(deleteEntryIds));
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+		if (moveToTrash && (trashedModels.size() > 0)) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
@@ -383,17 +358,6 @@ public class EditEntryAction extends PortletAction {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
-	}
-
-	protected void restoreEntries(ActionRequest actionRequest)
-		throws PortalException, SystemException {
-
-		long[] restoreEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
-
-		for (long restoreEntryId : restoreEntryIds) {
-			BlogsEntryServiceUtil.restoreEntryFromTrash(restoreEntryId);
-		}
 	}
 
 	protected void subscribe(ActionRequest actionRequest) throws Exception {

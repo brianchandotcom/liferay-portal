@@ -95,12 +95,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		request.setAttribute("view.jsp-portletURL", portletURL);
 		%>
 
-		<portlet:actionURL var="undoTrashURL">
-			<portlet:param name="struts_action" value="/document_library/edit_entry" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+		<liferay-ui:trash-undo />
 
 		<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 

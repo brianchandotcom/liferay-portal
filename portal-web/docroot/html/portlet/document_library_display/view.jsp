@@ -81,12 +81,7 @@ request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
 %>
 
-<portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/document_library/edit_entry" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-</portlet:actionURL>
-
-<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+<liferay-ui:trash-undo />
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 

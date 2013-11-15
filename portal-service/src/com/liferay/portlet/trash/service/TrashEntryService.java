@@ -249,4 +249,15 @@ public interface TrashEntryService extends BaseService {
 		long entryId, long overrideClassPK, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK, long overrideClassPK,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

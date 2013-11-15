@@ -266,6 +266,22 @@ public class TrashEntryServiceUtil {
 		return getService().restoreEntry(entryId, overrideClassPK, name);
 	}
 
+	public static com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().restoreEntry(className, classPK);
+	}
+
+	public static com.liferay.portlet.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK, long overrideClassPK,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .restoreEntry(className, classPK, overrideClassPK, name);
+	}
+
 	public static TrashEntryService getService() {
 		if (_service == null) {
 			_service = (TrashEntryService)PortalBeanLocatorUtil.locate(TrashEntryService.class.getName());

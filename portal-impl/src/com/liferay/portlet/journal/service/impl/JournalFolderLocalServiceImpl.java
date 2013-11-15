@@ -440,14 +440,14 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		TrashEntry trashEntry = folder.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(JournalFolder.class, folderId)) {
+		if (folder.isInTrashExplicitly()) {
 			restoreFolderFromTrash(userId, folderId);
 		}
 		else {
 
 			// Folder
+
+			TrashEntry trashEntry = folder.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

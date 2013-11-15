@@ -811,14 +811,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		TrashEntry trashEntry = thread.getTrashEntry();
-
-		if (trashEntry.isTrashEntry(MBThread.class, threadId)) {
+		if (thread.isInTrashExplicitly()) {
 			restoreThreadFromTrash(userId, threadId);
 		}
 		else {
 
 			// Thread
+
+			TrashEntry trashEntry = thread.getTrashEntry();
 
 			TrashVersion trashVersion =
 				trashVersionLocalService.fetchVersion(

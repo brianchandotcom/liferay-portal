@@ -1139,10 +1139,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 
-		<action path="/message_boards/edit_entry" type="com.liferay.portlet.messageboards.action.EditEntryAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
 		<action path="/message_boards/edit_message" type="com.liferay.portlet.messageboards.action.EditMessageAction">
 			<forward name="portlet.message_boards.edit_message" path="portlet.message_boards.edit_message" />
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
@@ -1223,10 +1219,6 @@
 
 		<action path="/message_boards_admin/edit_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.edit_discussion" path="portlet.message_boards.edit_discussion" />
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-		</action>
-
-		<action path="/message_boards_admin/edit_entry" type="com.liferay.portlet.messageboards.action.EditEntryAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -71,11 +71,14 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -156,9 +159,6 @@ public class EditArticleAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteArticles(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				restoreArticles(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeArticles(actionRequest);
@@ -348,8 +348,6 @@ public class EditArticleAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String deleteEntryTitle = null;
-
 		String[] deleteArticleIds = null;
 
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
@@ -362,47 +360,23 @@ public class EditArticleAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "articleIds"));
 		}
 
-		long[] restoreArticleIds = new long[deleteArticleIds.length];
+		List<TrashedModel> trashedModels = new ArrayList<TrashedModel>();
 
-		for (int i = 0; i < deleteArticleIds.length; i++) {
-			String deleteArticleId = deleteArticleIds[i];
-
+		for (String deleteArticleId : deleteArticleIds) {
 			if (moveToTrash) {
 				JournalArticle article =
 					JournalArticleServiceUtil.moveArticleToTrash(
 						themeDisplay.getScopeGroupId(), deleteArticleId);
 
-				if (i == 0) {
-					deleteEntryTitle = article.getTitle(
-						themeDisplay.getLocale());
-				}
-
-				restoreArticleIds[i] = article.getResourcePrimKey();
+				trashedModels.add(article);
 			}
 			else {
 				ActionUtil.deleteArticle(actionRequest, deleteArticleId);
 			}
 		}
 
-		if (moveToTrash && (deleteArticleIds.length > 0)) {
-			Map<String, String[]> data = new HashMap<String, String[]>();
-
-			data.put(
-				"deleteEntryClassName",
-				new String[] {JournalArticle.class.getName()});
-
-			if (Validator.isNotNull(deleteEntryTitle)) {
-				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
-			}
-
-			data.put(
-				"restoreArticleIds",
-				ArrayUtil.toStringArray(restoreArticleIds));
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+		if (moveToTrash && (trashedModels.size() > 0)) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
@@ -503,21 +477,6 @@ public class EditArticleAction extends PortletAction {
 
 			JournalArticleServiceUtil.removeArticleLocale(
 				groupId, articleId, version, languageId);
-		}
-	}
-
-	protected void restoreArticles(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String[] restoreEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreEntryIds"));
-
-		for (String restoreEntryId : restoreEntryIds) {
-			JournalArticleServiceUtil.restoreArticleFromTrash(
-				themeDisplay.getScopeGroupId(), restoreEntryId);
 		}
 	}
 

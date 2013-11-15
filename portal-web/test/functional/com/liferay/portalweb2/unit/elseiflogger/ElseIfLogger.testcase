@@ -1,0 +1,77 @@
+<definition>
+	<command name="TestCaseElseClauseEvaluated" priority="5">
+		<var name="switch" value="5" />
+		
+		<if>
+			<equals arg1="${switch}" arg2="1" />
+			<then>
+				<echo message="first clause was true; this should not print" />
+			</then>
+			<elseif>
+				<equals arg1="${switch}" arg2="2" />
+				<then>
+					<echo message="2nd clause was true" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${switch}" arg2="3" />
+				<then>
+					<echo message="3rd clause was true" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${switch}" arg2="4" />
+				<then>
+					<echo message="4th clause was true" />
+				</then>
+			</elseif>
+			<else>
+				<echo message="last clause" />
+			</else>
+		</if>
+	</command>
+
+	<command name="TestCaseElseIfClauseEvaluated" priority="5">
+		<var name="switch" value="4" />
+		
+		<if>
+			<equals arg1="${switch}" arg2="1" />
+			<then>
+				<echo message="first clause was true" />
+			</then>
+			<elseif>
+				<equals arg1="${switch}" arg2="2" />
+				<then>
+					<echo message="2nd clause was true" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${switch}" arg2="3" />
+				<then>
+					<echo message="3rd clause was true" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${switch}" arg2="4" />
+				<then>
+					<echo message="4th clause was true" />
+				</then>
+			</elseif>
+			<else>
+				<echo message="last clause" />
+			</else>
+		</if>
+	</command>
+
+	<command name="MacroElseClauseEvaluated" priority="5">
+		<execute macro="ElseIfLogger#switchConditional">
+			<var name="switch" value="5" />
+		</execute>
+	</command>
+
+	<command name="MacroElseIfClauseEvaluated" priority="5">
+		<execute macro="ElseIfLogger#switchConditional">
+			<var name="switch" value="3" />
+		</execute>
+	</command>
+</definition>

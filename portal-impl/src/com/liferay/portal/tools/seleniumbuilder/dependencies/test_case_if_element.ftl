@@ -27,6 +27,12 @@ ${ifType} (
 
 	<#include "test_case_if_conditional_element.ftl">
 ) {
+	<#if ifType == "else if">
+		<#assign lineNumber = ifElement.attributeValue("line-number")>
+
+		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
+	</#if>
+
 	<#assign lineNumber = conditionalElement.attributeValue("line-number")>
 
 	selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
@@ -46,4 +52,10 @@ ${ifType} (
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
 	selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+
+	<#if ifType == "else if">
+		<#assign lineNumber = ifElement.attributeValue("line-number")>
+
+		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+	</#if>
 }

@@ -27,6 +27,12 @@ ${ifType} (
 
 	<#include "macro_if_conditional_element.ftl">
 ) {
+	<#if ifType == "else if">
+		<#assign lineNumber = ifElement.attributeValue("line-number")>
+
+		liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
+	</#if>
+
 	<#assign lineNumber = conditionalElement.attributeValue("line-number")>
 
 	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
@@ -46,4 +52,10 @@ ${ifType} (
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
 	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
+
+	<#if ifType == "else if">
+		<#assign lineNumber = ifElement.attributeValue("line-number")>
+
+		liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
+	</#if>
 }

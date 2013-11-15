@@ -184,6 +184,8 @@ body.portlet {
 	.lfr-url-error {
 		display: inline-block;
 		white-space: normal;
+
+		@include word-break(break-all);
 	}
 }
 

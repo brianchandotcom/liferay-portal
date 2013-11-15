@@ -116,6 +116,7 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 		}
 	}
 
+	protected static String currentTestCaseName;
 	protected static int testCaseCount;
 
 	protected Map<String, String> commandScopeVariables;

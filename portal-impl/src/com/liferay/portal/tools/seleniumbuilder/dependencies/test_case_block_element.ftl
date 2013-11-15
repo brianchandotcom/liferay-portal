@@ -9,7 +9,7 @@
 
 	<#assign lineNumber = element.attributeValue("line-number")>
 
-	selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
+	selenium.sendLogger(testCaseName + "${lineNumber}", "pending");
 
 	<#if name == "echo">
 		<#assign message = element.attributeValue("message")>
@@ -24,7 +24,7 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+		selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 	<#elseif name == "execute">
 		<#if element.attributeValue("action")??>
 			<#assign action = element.attributeValue("action")>
@@ -50,12 +50,12 @@
 				finally {
 					<#assign lineNumber = element.attributeValue("line-number")>
 
-					selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+					selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 				}
 			<#else>
 				<#assign lineNumber = element.attributeValue("line-number")>
 
-				selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+				selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 			</#if>
 		<#elseif element.attributeValue("macro")??>
 			<#assign macroElement = element>
@@ -64,19 +64,15 @@
 
 			<#assign lineNumber = element.attributeValue("line-number")>
 
-			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+			selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 		<#elseif element.attributeValue("test-case")??>
-			<#assign lineNumber = element.attributeValue("line-number")>
-
-			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
-
 			<#assign testCaseElement = element>
 
 			<#include "test_case_element.ftl">
 
 			<#assign lineNumber = element.attributeValue ("line-number")>
 
-			selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+			selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 		</#if>
 	<#elseif name == "fail">
 		<#assign message = element.attributeValue("message")>
@@ -91,7 +87,7 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+		selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 	<#elseif name == "if">
 		executeScopeVariables = new HashMap<String, String>();
 
@@ -115,7 +111,7 @@
 			else {
 				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-				selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pending");
+				selenium.sendLogger(testCaseName + "${lineNumber}", "pending");
 
 				<#assign blockElement = elseElement>
 
@@ -123,13 +119,13 @@
 
 				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-				selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+				selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 			}
 		</#if>
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+		selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 	<#elseif name == "var">
 		<#assign varElement = element>
 
@@ -139,7 +135,7 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+		selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 	<#elseif name == "while">
 		executeScopeVariables = new HashMap<String, String>();
 
@@ -151,7 +147,7 @@
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 
-		selenium.sendLogger("${testCaseName?uncap_first}TestCase${lineNumber}", "pass");
+		selenium.sendLogger(testCaseName + "${lineNumber}", "pass");
 	</#if>
 </#list>
 

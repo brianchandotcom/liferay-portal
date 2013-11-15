@@ -60,11 +60,6 @@ public class BlogsIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public void addRelatedEntryFields(Document document, Object obj) {
-		document.addKeyword(Field.RELATED_ENTRY, true);
-	}
-
-	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
 	}

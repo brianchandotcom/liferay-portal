@@ -12,45 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.spring.transaction;
+package com.liferay.portal.dao.jdbc.aop;
 
-import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice;
-import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTargetSource;
-import com.liferay.portal.kernel.spring.util.FactoryBean;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.spring.transaction.TransactionInterceptor;
 
 import org.aopalliance.intercept.MethodInterceptor;
 
 /**
  * @author Shuyang Zhou
  */
-public class TransactionInterceptorFactoryBean
-	implements FactoryBean<MethodInterceptor> {
+public class DynamicDataSourceAdviceFactoryUtil {
 
-	@Override
-	public MethodInterceptor create() {
-		return new TransactionInterceptor();
-	}
-
-	@Override
-	public MethodInterceptor postProcessing(
-		MethodInterceptor methodInterceptor) {
-
-		TransactionInterceptor transactionInterceptor =
-			(TransactionInterceptor)methodInterceptor;
-
-		TransactionExecutor transactionExecutor =
-			TransactionExecutorFactory.createTransactionExecutor(
-				transactionInterceptor.platformTransactionManager, false);
-
-		transactionInterceptor.setTransactionExecutor(transactionExecutor);
+	public static MethodInterceptor createDynamicDataSourceAdvice(
+		TransactionInterceptor transactionInterceptor) {
 
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 			(DynamicDataSourceTargetSource)
 				InfrastructureUtil.getDynamicDataSourceTargetSource();
 
 		if (dynamicDataSourceTargetSource == null) {
-			return methodInterceptor;
+			return transactionInterceptor;
 		}
 
 		DynamicDataSourceAdvice dynamicDataSourceAdvice =
@@ -58,10 +40,10 @@ public class TransactionInterceptorFactoryBean
 
 		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			dynamicDataSourceTargetSource);
-		dynamicDataSourceAdvice.setNextMethodInterceptor(methodInterceptor);
-
+		dynamicDataSourceAdvice.setNextMethodInterceptor(
+			transactionInterceptor);
 		dynamicDataSourceAdvice.setTransactionAttributeSource(
-			transactionInterceptor.transactionAttributeSource);
+			transactionInterceptor.getTransactionAttributeSource());
 
 		return dynamicDataSourceAdvice;
 	}

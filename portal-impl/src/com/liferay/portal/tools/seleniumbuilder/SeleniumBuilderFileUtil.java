@@ -873,8 +873,8 @@ public class SeleniumBuilderFileUtil {
 					1006, fileName, executeElement, "test-case");
 			}
 
-			if (testCase.contains("#")) {
-				int x = testCase.lastIndexOf("#");
+			if (testCase.contains(StringPool.POUND)) {
+				int x = testCase.lastIndexOf(StringPool.POUND);
 
 				if (x == -1) {
 					throwValidationException(
@@ -917,8 +917,8 @@ public class SeleniumBuilderFileUtil {
 					1006, fileName, executeElement, "test-case-command");
 			}
 
-			if (testCaseCommand.contains("#")) {
-				int x = testCaseCommand.lastIndexOf("#");
+			if (testCaseCommand.contains(StringPool.POUND)) {
+				int x = testCaseCommand.lastIndexOf(StringPool.POUND);
 
 				String testCaseName = testCaseCommand.substring(0, x);
 

@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -448,6 +449,28 @@ public class SeleniumBuilderContext {
 		return _testCaseClassNames.get(testCaseName);
 	}
 
+	public Set<String> getTestCaseCommandNames(String testCaseName) {
+		Element testCaseRootElement = getTestCaseRootElement(testCaseName);
+
+		String extendedTestCaseName = testCaseRootElement.attributeValue(
+			"extends");
+
+		if (extendedTestCaseName != null) {
+			Set<String> extendedTestCaseCommandNames =
+				_testCaseCommandNames.get(extendedTestCaseName);
+
+			Set<String> currentTestCaseCommandNames = _testCaseCommandNames.get(
+				testCaseName);
+
+			currentTestCaseCommandNames.addAll(extendedTestCaseCommandNames);
+
+			return currentTestCaseCommandNames;
+		}
+		else {
+			return _testCaseCommandNames.get(testCaseName);
+		}
+	}
+
 	public String getTestCaseFileName(String testCaseName) {
 		return _testCaseFileNames.get(testCaseName);
 	}
@@ -789,7 +812,7 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
 
-		Set<String> commandNames = new HashSet<String>();
+		Set<String> commandNames = new TreeSet<String>();
 
 		for (Element commandElement : commandElements) {
 			commandNames.add(commandElement.attributeValue("name"));

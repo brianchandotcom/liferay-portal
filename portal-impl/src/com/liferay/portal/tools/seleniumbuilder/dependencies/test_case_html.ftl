@@ -3,7 +3,17 @@
 
 	<body>
 		<div id="title">
-			<h2>${seleniumBuilderContext.getTestCaseClassName(testCaseName)}</h2>
+			<h2>
+				${seleniumBuilderContext.getTestCaseClassName(testCaseName)}
+
+				<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
+
+				<#if testCaseRootElement.attributeValue("extends")??>
+					<#assign extendedTestCase = testCaseRootElement.attributeValue("extends")>
+
+					(extends ${extendedTestCase}TestCase)
+				</#if>
+			</h2>
 		</div>
 
 		<form>

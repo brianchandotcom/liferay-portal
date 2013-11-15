@@ -2,72 +2,50 @@
 
 <#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
 
+<#assign testCaseCommandNames = seleniumBuilderContext.getTestCaseCommandNames(testCaseName)>
+
 <#if extendedTestCase??>
 	<#assign extendedTestCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(extendedTestCase)>
+</#if>
 
-	<#assign testCaseCommandNames = seleniumBuilderContext.getTestCaseCommandNames(testCaseName)>
+<#list testCaseCommandNames as testCaseCommandName>
+	<#assign testCaseCommandFound = false>
 
-	<#assign extendedTestCaseCommandElements = extendedTestCaseRootElement.elements("command")>
-
-	<#if testCaseRootElement.element("command")??>
+	<#if testCaseRootElement.elements("command")??>
 		<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
-		<#assign testCaseCommandFound = false>
+		<#list testCaseCommandElements as testCaseCommandElement>
+			<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-		<#list testCaseCommandNames as testCaseCommandName>
-			<#list testCaseCommandElements as testCaseCommandElement>
-				<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
+			<#if testCaseCommand == testCaseCommandName>
+				<#include "test_case_command_block_element_html.ftl">
 
-				<#if testCaseCommand == testCaseCommandName>
-					<#include "test_case_command_block_element_html.ftl">
+				<#assign testCaseCommandFound = true>
 
-					<#assign testCaseCommandFound = true>
-
-					<#break>
-				</#if>
-			</#list>
-
-			<#if !testCaseCommandFound>
-				<#list extendedTestCaseCommandElements as extendedTestCaseCommandElement>
-					<#assign extendedTestCaseCommand = extendedTestCaseCommandElement.attributeValue("name")>
-
-					<#if extendedTestCaseCommand = testCaseCommandName>
-						<#assign void = testCaseNameStack.push(extendedTestCase)>
-
-						<#assign testCaseCommandElement = extendedTestCaseCommandElement>
-
-						<#include "test_case_command_block_element_html.ftl">
-
-						<#assign void = testCaseNameStack.pop()>
-
-						<#assign testCaseCommandFound = true>
-
-						<#break>
-					</#if>
-				</#list>
+				<#break>
 			</#if>
-
-			<#if testCaseCommandFound>
-				<#assign testCaseCommandFound = false>
-			</#if>
-		</#list>
-	<#else>
-		<#list extendedTestCaseCommandElements as extendedTestCaseCommandElement>
-			<#assign void = testCaseNameStack.push(extendedTestCase)>
-
-			<#assign testCaseCommandElement = extendedTestCaseCommandElement>
-
-			<#include "test_case_command_block_element_html.ftl">
-
-			<#assign void = testCaseNameStack.pop()>
 		</#list>
 	</#if>
-<#else>
-	<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
-	<#list testCaseCommandElements as testCaseCommandElement>
-		<#include "test_case_command_block_element_html.ftl">
-	</#list>
-</#if>
+	<#if !testCaseCommandFound && extendedTestCaseRootElement?? && extendedTestCaseRootElement.elements("command")??>
+		<#assign extendedTestCaseCommandElements = extendedTestCaseRootElement.elements("command")>
+
+		<#list extendedTestCaseCommandElements as extendedTestCaseCommandElement>
+			<#assign extendedTestCaseCommand = extendedTestCaseCommandElement.attributeValue("name")>
+
+			<#if extendedTestCaseCommand = testCaseCommandName>
+				<#assign void = testCaseNameStack.push(extendedTestCase)>
+
+				<#assign testCaseCommandElement = extendedTestCaseCommandElement>
+
+				<#include "test_case_command_block_element_html.ftl">
+
+				<#assign void = testCaseNameStack.pop()>
+
+				<#break>
+			</#if>
+		</#list>
+	</#if>
+</#list>
 
 <#assign void = testCaseNameStack.pop()>

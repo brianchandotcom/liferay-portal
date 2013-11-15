@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -811,7 +812,7 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
 
-		Set<String> commandNames = new HashSet<String>();
+		Set<String> commandNames = new TreeSet<String>();
 
 		for (Element commandElement : commandElements) {
 			commandNames.add(commandElement.attributeValue("name"));

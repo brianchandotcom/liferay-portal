@@ -14,7 +14,6 @@
 					(extends ${extendedTestCase}TestCase)
 				</#if>
 			</h2>
-
 		</div>
 
 		<form>

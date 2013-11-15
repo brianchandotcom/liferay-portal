@@ -18,7 +18,7 @@
 
 				<#include "macro_element_html.ftl">
 			<#elseif element.attributeValue("test-case")??>
-				<#assign currentTestCaseElement = element>
+				<#assign testCaseExecuteElement = element>
 
 				<#assign void = testCaseNameStack.push(extendedTestCase)>
 

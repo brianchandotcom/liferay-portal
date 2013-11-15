@@ -1,28 +1,24 @@
-<#assign displayElement = currentTestCaseElement>
+<#assign displayElement = testCaseExecuteElement>
 
-<#assign lineNumber = currentTestCaseElement.attributeValue("line-number")>
+<#assign lineNumber = testCaseExecuteElement.attributeValue("line-number")>
 
 <li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 	<#include "element_open_html.ftl">
 
-	<#assign currentTestCase = currentTestCaseElement.attributeValue("test-case")>
+	<#assign testCase = testCaseExecuteElement.attributeValue("test-case")>
 
-	<#assign x = currentTestCase?last_index_of("#")>
+	<#assign x = testCase?last_index_of("#")>
 
-	<#assign currentTestCaseCommand = currentTestCase?substring(x + 1)>
+	<#assign currentTestCaseCommand = testCase?substring(x + 1)>
 
 	<#if currentTestCaseCommand == "set-up">
-		<#assign extendedTestCaseSetUpElement = extendedTestCaseRootElement.element("set-up")>
+		<#assign testCaseBlockElement = extendedTestCaseRootElement.element("set-up")>
 
-		<#assign currentTestCaseElement = extendedTestCaseSetUpElement>
-
-		<#include "extended_test_case_block_element_html.ftl">
+		<#include "test_case_block_element_html.ftl">
 	<#elseif currentTestCaseCommand == "tear-down">
-		<#assign extendedTestCaseTearDownElement = extendedTestCaseRootElement.element("tear-down")>
+		<#assign testCaseBlockElement = extendedTestCaseRootElement.element("tear-down")>
 
-		<#assign currentTestCaseElement = extendedTestCaseTearDownElement>
-
-		<#include "extended_test_case_block_element_html.ftl">
+		<#include "test_case_block_element_html.ftl">
 	<#else>
 		<#assign extendedTestCaseCommandElements = extendedTestCaseRootElement.elements("command")>
 
@@ -30,14 +26,16 @@
 			<#assign extendedTestCaseCommandName = extendedTestCaseCommandElement.attributeValue("name")>
 
 			<#if extendedTestCaseCommandName == currentTestCaseCommand>
-				<#assign currentTestCaseElement = extendedTestCaseCommandElement>
+				<#assign testCaseBlockElement = extendedTestCaseCommandElement>
 
-				<#include "extended_test_case_block_element_html.ftl">
+				<#include "test_case_block_element_html.ftl">
+
+				<#break>
 			</#if>
 		</#list>
 	</#if>
 
-	<#assign displayElement = currentTestCaseElement>
+	<#assign displayElement = testCaseExecuteElement>
 
 	<#include "element_close_html.ftl">
 </li>

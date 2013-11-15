@@ -21,8 +21,14 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Bruno Farache
+ * @author Carlos Sierra Andrés
+ * @author Marcellus Tavares
  */
 @DoPrivileged
 public class BaseSearchEngine implements SearchEngine {
@@ -216,11 +222,137 @@ public class BaseSearchEngine implements SearchEngine {
 	private BooleanQueryFactory _booleanQueryFactory;
 	private boolean _clusteredWrite;
 	private Priority _clusteredWritePriority;
-	private IndexSearcher _indexSearcher;
-	private IndexWriter _indexWriter;
+	private IndexSearcher _indexSearcher = new NullIndexSearcher();
+	private IndexWriter _indexWriter = new NullIndexWriter();
 	private boolean _luceneBased;
 	private TermQueryFactory _termQueryFactory;
 	private TermRangeQueryFactory _termRangeQueryFactory;
 	private String _vendor;
+
+	private class NullIndexSearcher implements IndexSearcher {
+
+		@Override
+		public String spellCheckKeywords(SearchContext searchContext)
+			throws SearchException {
+
+			return null;
+		}
+
+		@Override
+		public Map<String, List<String>> spellCheckKeywords(
+				SearchContext searchContext, int max)
+			throws SearchException {
+
+			return null;
+		}
+
+		@Override
+		public String[] suggestKeywordQueries(
+				SearchContext searchContext, int max)
+			throws SearchException {
+
+			return null;
+		}
+
+		@Override
+		public Hits search(SearchContext searchContext, Query query)
+			throws SearchException {
+
+			return null;
+		}
+
+		@Override
+		public Hits search(
+				String searchEngineId, long companyId, Query query, Sort[] sort,
+				int start, int end)
+			throws SearchException {
+
+			return null;
+		}
+
+	}
+
+	private class NullIndexWriter implements IndexWriter {
+
+		@Override
+		public void clearQuerySuggestionDictionaryIndexes(
+				SearchContext searchContext)
+			throws SearchException {
+		}
+
+		@Override
+		public void clearSpellCheckerDictionaryIndexes(
+				SearchContext searchContext)
+			throws SearchException {
+		}
+
+		@Override
+		public void indexKeyword(
+				SearchContext searchContext, float weight, String keywordType)
+			throws SearchException {
+		}
+
+		@Override
+		public void indexQuerySuggestionDictionaries(
+				SearchContext searchContext)
+			throws SearchException {
+		}
+
+		@Override
+		public void indexQuerySuggestionDictionary(SearchContext searchContext)
+			throws SearchException {
+		}
+
+		@Override
+		public void indexSpellCheckerDictionaries(SearchContext searchContext)
+			throws SearchException {
+		}
+
+		@Override
+		public void indexSpellCheckerDictionary(SearchContext searchContext)
+			throws SearchException {
+		}
+
+		@Override
+		public void addDocument(SearchContext searchContext, Document document)
+			throws SearchException {
+		}
+
+		@Override
+		public void addDocuments(
+				SearchContext searchContext, Collection<Document> documents)
+			throws SearchException {
+		}
+
+		@Override
+		public void deleteDocument(SearchContext searchContext, String uid)
+			throws SearchException {
+		}
+
+		@Override
+		public void deleteDocuments(
+				SearchContext searchContext, Collection<String> uids)
+			throws SearchException {
+		}
+
+		@Override
+		public void deletePortletDocuments(
+				SearchContext searchContext, String portletId)
+			throws SearchException {
+		}
+
+		@Override
+		public void updateDocument(
+				SearchContext searchContext, Document document)
+			throws SearchException {
+		}
+
+		@Override
+		public void updateDocuments(
+				SearchContext searchContext, Collection<Document> documents)
+			throws SearchException {
+		}
+
+	}
 
 }

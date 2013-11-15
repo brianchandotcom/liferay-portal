@@ -22,40 +22,30 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class SocialBookmarksTag extends IncludeTag {
+public class SocialBookmarksSettingsTag extends IncludeTag {
 
-	public void setContentId(String contentId) {
-		_contentId = contentId;
+	public void setDisplayPosition(String displayPosition) {
+		_displayPosition = displayPosition;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
 
-	public void setTarget(String target) {
-		_target = target;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
 	}
 
 	public void setTypes(String types) {
 		_types = types;
 	}
 
-	public void setUrl(String url) {
-		_url = url;
-	}
-
 	@Override
 	protected void cleanUp() {
-		_contentId = null;
 		_displayStyle = null;
-		_target = null;
-		_title = null;
+		_displayPosition = null;
+		_enabled = false;
 		_types = null;
-		_url = null;
 	}
 
 	@Override
@@ -66,24 +56,23 @@ public class SocialBookmarksTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:social-bookmarks:displayStyle", _displayStyle);
-
+			"liferay-ui:social-bookmarks-settings:displayPosition",
+			_displayPosition);
 		request.setAttribute(
-			"liferay-ui:social-bookmark:contentId", _contentId);
-		request.setAttribute("liferay-ui:social-bookmark:target", _target);
-		request.setAttribute("liferay-ui:social-bookmark:title", _title);
-		request.setAttribute("liferay-ui:social-bookmark:types", _types);
-		request.setAttribute("liferay-ui:social-bookmark:url", _url);
+			"liferay-ui:social-bookmarks-settings:displayStyle", _displayStyle);
+		request.setAttribute(
+			"liferay-ui:social-bookmarks-settings:enabled",
+			String.valueOf(_enabled));
+		request.setAttribute(
+			"liferay-ui:social-bookmarks-settings:types", _types);
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/ui/social_bookmarks/page.jsp";
+		"/html/taglib/ui/social_bookmarks_settings/page.jsp";
 
-	private String _contentId;
+	private String _displayPosition;
 	private String _displayStyle;
-	private String _target;
-	private String _title;
+	private boolean _enabled;
 	private String _types;
-	private String _url;
 
 }

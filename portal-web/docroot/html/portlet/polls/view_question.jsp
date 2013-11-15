@@ -60,7 +60,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 			title="<%= question.getTitle(locale) %>"
 		/>
 
-		<span style="font-size: x-small;">
+		<span>
 			<%= StringUtil.replace(question.getDescription(locale), StringPool.NEW_LINE, "<br />") %>
 		</span>
 

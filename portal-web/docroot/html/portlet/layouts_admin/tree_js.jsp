@@ -50,16 +50,14 @@ if (!selectableTree) {
 	var STR_CHILDREN = 'children';
 
 	var TREE_CSS_CLASSES = {
-		pages: {
-			iconCheck: 'tree-icon icon-check',
-			iconCollapsed: 'icon-file',
-			iconExpanded: 'icon-file',
-			iconHitAreaCollapsed: 'tree-hitarea icon-plus',
-			iconHitAreaExpanded: 'tree-hitarea icon-minus',
-			iconLeaf: 'icon-leaf',
-			iconLoading: 'icon-refresh',
-			iconUncheck: 'icon-check'
-		}
+		iconCheck: 'tree-icon icon-check',
+		iconCollapsed: 'icon-file',
+		iconExpanded: 'icon-file',
+		iconHitAreaCollapsed: 'tree-hitarea icon-plus',
+		iconHitAreaExpanded: 'tree-hitarea icon-minus',
+		iconLeaf: 'icon-leaf',
+		iconLoading: 'icon-refresh',
+		iconUncheck: 'icon-check'
 	};
 
 	<%
@@ -176,7 +174,7 @@ if (!selectableTree) {
 						(nodeType === 'link_to_layout') ||
 						(nodeType === 'url')) {
 
-						cssIcons.pages = {
+						cssIcons = {
 							iconCollapsed: iconCssClassName,
 							iconExpanded: iconCssClassName,
 							iconLeaf: iconCssClassName
@@ -244,7 +242,9 @@ if (!selectableTree) {
 							checked: true,
 						</c:if>
 
-						cssClasses: A.merge(TREE_CSS_CLASSES, cssIcons),
+						cssClasses: {
+							pages: A.merge(TREE_CSS_CLASSES, cssIcons)
+						},
 						draggable: node.sortable,
 						expanded: expanded,
 						id: TreeUtil.createListItemId(node.groupId, node.layoutId, node.plid),
@@ -596,7 +596,9 @@ if (!selectableTree) {
 			%>
 
 			children: TreeUtil.formatJSONResults(<%= layoutsJSON %>),
-			cssClasses: TREE_CSS_CLASSES,
+			cssClasses: {
+				pages: TREE_CSS_CLASSES
+			},
 			draggable: false,
 
 			<c:choose>

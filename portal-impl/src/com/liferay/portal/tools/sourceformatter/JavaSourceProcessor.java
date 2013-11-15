@@ -1087,6 +1087,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLogLevel(newContent, fileName, "trace");
 		checkLogLevel(newContent, fileName, "warn");
 
+		// LPS-41205
+
+		if (fileName.contains("/upgrade/") &&
+			newContent.contains("LocaleUtil.getDefault()")) {
+
+			processErrorMessage(
+				fileName,
+				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
+					"instead of LocaleUtil.getDefault(): " + fileName);
+		}
+
 		String oldContent = newContent;
 
 		while (true) {

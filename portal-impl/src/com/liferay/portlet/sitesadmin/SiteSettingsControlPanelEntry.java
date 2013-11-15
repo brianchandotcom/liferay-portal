@@ -34,7 +34,7 @@ public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 
 		if (group.isUser() || group.isLayoutSetPrototype() ||
 			!GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(), ActionKeys.UPDATE)) {
+				permissionChecker, group, ActionKeys.UPDATE)) {
 
 			return true;
 		}

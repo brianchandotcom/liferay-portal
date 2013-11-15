@@ -41,7 +41,7 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 		throws Exception {
 
 		return GroupPermissionUtil.contains(
-			permissionChecker, group.getGroupId(), ActionKeys.MANAGE_LAYOUTS);
+			permissionChecker, group, ActionKeys.MANAGE_LAYOUTS);
 	}
 
 }

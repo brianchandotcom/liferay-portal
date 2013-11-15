@@ -47,8 +47,7 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 		throws Exception {
 
 		if (GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(),
-				ActionKeys.ASSIGN_MEMBERS)) {
+				permissionChecker, group, ActionKeys.ASSIGN_MEMBERS)) {
 
 			return true;
 		}

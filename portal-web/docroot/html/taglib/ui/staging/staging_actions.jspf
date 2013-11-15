@@ -15,7 +15,7 @@
 --%>
 
 <c:choose>
-	<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
+	<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PUBLISH_STAGING) %>">
 		<liferay-ui:icon
 			id='<%= groupId + "publishGlobalLink" %>'
 			message="<%= publishDialogTitle %>"
@@ -50,7 +50,7 @@
 		Group groupType = layout.getGroup();
 		%>
 
-		<c:if test="<%= (liveGroup != null) && GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
+		<c:if test="<%= (liveGroup != null) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.PUBLISH_STAGING) %>">
 
 			<%
 			if (groupId == 0) {

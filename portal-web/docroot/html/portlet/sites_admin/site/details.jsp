@@ -465,7 +465,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		List<Group> manageableGroups = new ArrayList<Group>();
 
 		for (Group curGroup : user.getGroups()) {
-			if (GroupPermissionUtil.contains(permissionChecker, curGroup.getGroupId(), ActionKeys.MANAGE_SUBGROUPS)) {
+			if (GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.MANAGE_SUBGROUPS)) {
 				manageableGroups.add(curGroup);
 			}
 		}

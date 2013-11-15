@@ -66,7 +66,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 	<liferay-ui:message key="page-variations-help" />
 </div>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup.getGroupId(), ActionKeys.ADD_LAYOUT_BRANCH) %>">
+<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_BRANCH) %>">
 	<liferay-util:html-top>
 		<liferay-util:include page="/html/portlet/staging_bar/edit_layout_branch.jsp">
 			<liferay-util:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevisionId) %>" />

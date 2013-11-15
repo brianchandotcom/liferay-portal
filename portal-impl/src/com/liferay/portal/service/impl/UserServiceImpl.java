@@ -2216,8 +2216,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 				if (!ArrayUtil.contains(groupIds, group.getGroupId()) &&
 					(!GroupPermissionUtil.contains(
-						permissionChecker, group.getGroupId(),
-						ActionKeys.ASSIGN_MEMBERS) ||
+						permissionChecker, group, ActionKeys.ASSIGN_MEMBERS) ||
 					 SiteMembershipPolicyUtil.isMembershipProtected(
 						 permissionChecker, user.getUserId(),
 						 group.getGroupId()) ||

@@ -42,6 +42,7 @@ ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
 <%
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
+searchTerms.setFolderIds(new ArrayList<Long>());
 searchTerms.setVersion(-1);
 
 List<JournalArticle> results = null;

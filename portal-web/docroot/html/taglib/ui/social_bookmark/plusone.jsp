@@ -36,7 +36,7 @@ if (displayStyle.equals("vertical")) {
 			script.async = true;
 			script.type = 'text/javascript';
 
-			script.src = '<%= HttpUtil.getProtocol(request) %>://apis.google.com/js/plusone.js';
+			script.src = 'https://apis.google.com/js/plusone.js';
 
 			var firstScript = document.getElementsByTagName('script')[0];
 

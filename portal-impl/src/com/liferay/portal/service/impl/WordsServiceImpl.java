@@ -29,17 +29,6 @@ import java.util.List;
  */
 public class WordsServiceImpl extends WordsServiceBaseImpl {
 
-	/**
-	 * Checks the spelling of a block of text.
-	 *
-	 * <p>
-	 * This method handles spell checking of text. It takes a block of text
-	 * as input,and returns a list of any incorrectly spelled words found.
-	 * </p>
-	 *
-	 * @param  text the block of text to be spell checked.
-	 * @return the mis-spelled words
-	 */
 	public JSONObject checkSpelling(String text) {
 		JSONArray inner = JSONFactoryUtil.createJSONArray();
 
@@ -61,18 +50,6 @@ public class WordsServiceImpl extends WordsServiceBaseImpl {
 		return jsonObj;
 	}
 
-	/**
-	 * Finds suggestions for a misspelled word.
-	 *
-	 * <p>
-	 * This method finds suggested spellings for a misspelled word.
-	 * It takes a misspelled word as input,and returns a list of
-	 * suggested correctly spelled words.
-	 * </p>
-	 *
-	 * @param  word the misspelled word.
-	 * @return the suggested corrections.
-	 */
 	public List<String> getSuggestions(String word) {
 		List<InvalidWord> invalidWords = WordsUtil.checkSpelling(word);
 

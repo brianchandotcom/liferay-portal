@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class WordsServiceImpl extends WordsServiceBaseImpl {
 
+	@Override
 	public JSONObject checkSpelling(String text) {
 		JSONArray inner = JSONFactoryUtil.createJSONArray();
 
@@ -50,6 +51,7 @@ public class WordsServiceImpl extends WordsServiceBaseImpl {
 		return jsonObj;
 	}
 
+	@Override
 	public List<String> getSuggestions(String word) {
 		List<InvalidWord> invalidWords = WordsUtil.checkSpelling(word);
 

@@ -817,7 +817,7 @@
 	</target>
 
 	<target name="build-selenium-new">
-		<delete dir="${project.dir}/portal-web/test/functional-generated" />
+		<delete dir="${basedir.unix}/test/functional-generated" />
 
 		<if>
 			<not>

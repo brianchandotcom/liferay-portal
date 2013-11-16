@@ -14,14 +14,12 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.service.base.WordsServiceBaseImpl;
 import com.liferay.portal.words.WordsUtil;
 import com.liferay.util.jazzy.InvalidWord;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,58 +28,27 @@ import java.util.List;
 public class WordsServiceImpl extends WordsServiceBaseImpl {
 
 	@Override
-	public JSONObject checkSpelling(String text) {
-		JSONArray inner = JSONFactoryUtil.createJSONArray();
-
-		List<String> invalidWords = getInvalidWords(text);
-
-		for (String s : invalidWords) {
-			inner.put(s);
-		}
-
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		jsonArray.put(inner);
-
-		jsonObj.put(_OUTCOME, _SUCCESS);
-		jsonObj.put(_DATA, jsonArray);
-
-		return jsonObj;
-	}
-
-	@Override
-	public List<String> getSuggestions(String word) {
-		List<InvalidWord> invalidWords = WordsUtil.checkSpelling(word);
-
-		List<String> suggestions = new ArrayList<String>();
-
-		if (!invalidWords.isEmpty()) {
-			InvalidWord invalidWord = invalidWords.get(0);
-
-			suggestions = invalidWord.getSuggestions();
-		}
-
-		return suggestions;
-	}
-
-	protected List<String> getInvalidWords(String text) {
+	public List<String> checkSpelling(String text) {
 		List<String> invalidWordsList = new ArrayList<String>();
 
-		List<InvalidWord> invalidWords = WordsUtil.checkSpelling(text);
-
-		for (InvalidWord invalidWord : invalidWords) {
+		for (InvalidWord invalidWord : WordsUtil.checkSpelling(text)) {
 			invalidWordsList.add(invalidWord.getInvalidWord());
 		}
 
 		return invalidWordsList;
 	}
 
-	private static final String _DATA = "data";
+	@Override
+	public List<String> getSuggestions(String word) {
+		List<InvalidWord> invalidWords = WordsUtil.checkSpelling(word);
 
-	private static final String _OUTCOME = "outcome";
+		if (invalidWords.isEmpty()) {
+			return Collections.emptyList();
+		}
 
-	private static final String _SUCCESS = "success";
+		InvalidWord invalidWord = invalidWords.get(0);
+
+		return invalidWord.getSuggestions();
+	}
 
 }

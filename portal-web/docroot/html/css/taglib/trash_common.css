@@ -1,4 +1,3 @@
-@import "compass";
 @import "mixins";
 
 .taglib-trash-empty, .taglib-trash-undo {
@@ -18,9 +17,5 @@
 
 	.trash-empty-link, .trash-undo-link {
 		display: inline-block;
-
-		@include respond-to(tablet) {
-			padding: 5px 19px;
-		}
 	}
 }

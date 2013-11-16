@@ -21,9 +21,7 @@
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="com.liferay.portal.kernel.xuggler.XugglerUtil" %>
-<%@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.Locale" %>
 
@@ -34,23 +32,6 @@ String cssClasses = ParamUtil.getString(request, "cssClasses");
 boolean inlineEdit = ParamUtil.getBoolean(request, "inlineEdit");
 String languageId = ParamUtil.getString(request, "languageId");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
-
-String extraPlugins = "ajaxsave,media,restore,scayt,wsc";
-String spellcheckerPlugins = StringPool.BLANK;
-
-if (PropsValues.EDITOR_WYSIWYG_SPELLCHECKER_LIFERAY) {
-	extraPlugins = extraPlugins.concat(",liferayspellchecker");
-
-	spellcheckerPlugins = spellcheckerPlugins.concat("'LiferaySpellChecker'");
-}
-
-if (PropsValues.EDITOR_WYSIWYG_SPELLCHECKER_WEBSPELLCHECKER) {
-	if (spellcheckerPlugins.length() != 0) {
-		spellcheckerPlugins = spellcheckerPlugins.concat(StringPool.COMMA);
-	}
-
-	spellcheckerPlugins = spellcheckerPlugins.concat("'SpellChecker', 'Scayt'");
-}
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
@@ -105,7 +86,7 @@ CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.rep
 
 CKEDITOR.config.entities = false;
 
-CKEDITOR.config.extraPlugins = '<%= extraPlugins %>';
+CKEDITOR.config.extraPlugins = 'ajaxsave,media,restore,scayt,wsc';
 
 CKEDITOR.config.height = 265;
 
@@ -124,14 +105,14 @@ CKEDITOR.config.toolbar_editInPlace = [
 	['Bold', 'Italic', 'Underline', 'Strike'],
 	['Subscript', 'Superscript', 'SpecialChar'],
 	['Undo', 'Redo'],
-	[<%= spellcheckerPlugins %>],
+	['SpellChecker', 'Scayt'],
 	['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat'],
 ];
 
 CKEDITOR.config.toolbar_email = [
 	['FontSize', 'TextColor', 'BGColor', '-', 'Bold', 'Italic', 'Underline', 'Strike'],
 	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-	[<%= spellcheckerPlugins %>],
+	['SpellChecker', 'Scayt'],
 	'/',
 	['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
 	['Source'],
@@ -153,7 +134,7 @@ CKEDITOR.config.toolbar_liferay = [
 	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
 	['Image', 'Link', 'Unlink', 'Anchor'],
 	['Flash', <c:if test="<%= XugglerUtil.isEnabled() %>"> 'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar'],
-	['Find', 'Replace', <%= spellcheckerPlugins %>],
+	['Find', 'Replace', 'SpellChecker', 'Scayt'],
 	['SelectAll', 'RemoveFormat'],
 	['Subscript', 'Superscript']
 
@@ -168,7 +149,7 @@ CKEDITOR.config.toolbar_liferayArticle = [
 	['Subscript', 'Superscript'],
 	'/',
 	['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
-	['Find', 'Replace', <%= spellcheckerPlugins %>],
+	['Find', 'Replace', 'SpellChecker', 'Scayt'],
 	['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
 	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
 	'/',

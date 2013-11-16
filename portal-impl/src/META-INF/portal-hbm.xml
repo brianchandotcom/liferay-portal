@@ -74,6 +74,7 @@
 	<import class="com.liferay.portal.model.VirtualHost" />
 	<import class="com.liferay.portal.model.WebDAVProps" />
 	<import class="com.liferay.portal.model.Website" />
+	<import class="com.liferay.portal.model.Words" />
 	<import class="com.liferay.portal.model.WorkflowDefinitionLink" />
 	<import class="com.liferay.portal.model.WorkflowInstanceLink" />
 	<import class="com.liferay.portlet.announcements.model.AnnouncementsDelivery" />

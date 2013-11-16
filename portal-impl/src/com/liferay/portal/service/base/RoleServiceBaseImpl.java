@@ -3595,6 +3595,25 @@ public abstract class RoleServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the words remote service.
+	 *
+	 * @return the words remote service
+	 */
+	public com.liferay.portal.service.WordsService getWordsService() {
+		return wordsService;
+	}
+
+	/**
+	 * Sets the words remote service.
+	 *
+	 * @param wordsService the words remote service
+	 */
+	public void setWordsService(
+		com.liferay.portal.service.WordsService wordsService) {
+		this.wordsService = wordsService;
+	}
+
+	/**
 	 * Returns the workflow definition link local service.
 	 *
 	 * @return the workflow definition link local service
@@ -4153,6 +4172,8 @@ public abstract class RoleServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.WebsiteService websiteService;
 	@BeanReference(type = WebsitePersistence.class)
 	protected WebsitePersistence websitePersistence;
+	@BeanReference(type = com.liferay.portal.service.WordsService.class)
+	protected com.liferay.portal.service.WordsService wordsService;
 	@BeanReference(type = com.liferay.portal.service.WorkflowDefinitionLinkLocalService.class)
 	protected com.liferay.portal.service.WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
 	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)

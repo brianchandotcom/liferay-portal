@@ -55,19 +55,7 @@ import java.util.Map;
  */
 public class PermissionImporter {
 
-	protected List<String> getActions(Element element) {
-		List<String> actions = new ArrayList<String>();
-
-		List<Element> actionKeyElements = element.elements("action-key");
-
-		for (Element actionKeyElement : actionKeyElements) {
-			actions.add(actionKeyElement.getText());
-		}
-
-		return actions;
-	}
-
-	protected Role getRole(
+	protected Role checkRole(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
 			Element roleElement)
 		throws Exception {
@@ -121,6 +109,36 @@ public class PermissionImporter {
 		return role;
 	}
 
+	protected void checkRoles(
+			LayoutCache layoutCache, long companyId, long groupId, long userId,
+			Element portletElement)
+		throws Exception {
+
+		Element permissionsElement = portletElement.element("permissions");
+
+		if (permissionsElement == null) {
+			return;
+		}
+
+		List<Element> roleElements = permissionsElement.elements("role");
+
+		for (Element roleElement : roleElements) {
+			checkRole(layoutCache, companyId, groupId, userId, roleElement);
+		}
+	}
+
+	protected List<String> getActions(Element element) {
+		List<String> actions = new ArrayList<String>();
+
+		List<Element> actionKeyElements = element.elements("action-key");
+
+		for (Element actionKeyElement : actionKeyElements) {
+			actions.add(actionKeyElement.getText());
+		}
+
+		return actions;
+	}
+
 	protected void importPermissions(
 			LayoutCache layoutCache, long companyId, long groupId, long userId,
 			Layout layout, String resourceName, String resourcePrimKey,
@@ -132,7 +150,7 @@ public class PermissionImporter {
 		List<Element> roleElements = permissionsElement.elements("role");
 
 		for (Element roleElement : roleElements) {
-			Role role = getRole(
+			Role role = checkRole(
 				layoutCache, companyId, groupId, userId, roleElement);
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -178,24 +196,6 @@ public class PermissionImporter {
 			importPermissions(
 				layoutCache, companyId, groupId, userId, layout, resourceName,
 				resourcePrimKey, permissionsElement, true);
-		}
-	}
-
-	protected void importRoles(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Element portletElement)
-		throws Exception {
-
-		Element permissionsElement = portletElement.element("permissions");
-
-		if (permissionsElement == null) {
-			return;
-		}
-
-		List<Element> roleElements = permissionsElement.elements("role");
-
-		for (Element roleElement : roleElements) {
-			getRole(layoutCache, companyId, groupId, userId, roleElement);
 		}
 	}
 

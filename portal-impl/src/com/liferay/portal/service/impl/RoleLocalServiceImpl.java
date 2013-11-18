@@ -605,6 +605,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
+		if (group.isStagingGroup()) {
+			group = group.getLiveGroup();
+		}
+
 		int[] types = RoleConstants.TYPES_REGULAR;
 
 		if (group.isOrganization()) {

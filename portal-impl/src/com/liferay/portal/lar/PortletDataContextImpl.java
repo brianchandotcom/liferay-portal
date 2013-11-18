@@ -452,15 +452,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
 
-		long groupId = _groupId;
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isStagingGroup() && !group.isStagedRemotely()) {
-			groupId = group.getLiveGroupId();
-		}
-
-		List<Role> roles = RoleLocalServiceUtil.getGroupRelatedRoles(groupId);
+		List<Role> roles = RoleLocalServiceUtil.getGroupRelatedRoles(_groupId);
 
 		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
 		Map<Long, String> roleIdsToNames = new HashMap<Long, String>();

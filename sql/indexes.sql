@@ -862,6 +862,7 @@ create index IX_3F9C2FA8 on SocialRelation (userId2, type_);
 create index IX_F0CA24A5 on SocialRelation (uuid_);
 create index IX_5B30F663 on SocialRelation (uuid_, companyId);
 
+create index IX_CEF175DD on SocialRequest (classNameId, classPK);
 create index IX_D3425487 on SocialRequest (classNameId, classPK, type_, receiverUserId, status);
 create index IX_A90FE5A0 on SocialRequest (companyId);
 create index IX_32292ED1 on SocialRequest (receiverUserId);

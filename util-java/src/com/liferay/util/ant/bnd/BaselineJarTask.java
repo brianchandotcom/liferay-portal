@@ -27,6 +27,7 @@ import aQute.bnd.service.diff.Delta;
 import aQute.bnd.service.diff.Diff;
 import aQute.bnd.version.Version;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -159,7 +160,9 @@ public class BaselineJarTask extends BaseBndTask {
 					}
 				}
 
-				if (_reportLevelIsStandard && warnings.equals("-")) {
+				if ((_reportLevelIsStandard || _reportOnlyDirtyPackages)
+					&& warnings.equals("-")) {
+
 					continue;
 				}
 
@@ -244,6 +247,10 @@ public class BaselineJarTask extends BaseBndTask {
 				_logFile.delete();
 			}
 		}
+
+		_reportOnlyDirtyPackages = GetterUtil.getBoolean(
+			project.getProperty("baseline.jar.report.only.dirty.packages"),
+			false);
 
 		if ((_sourcePath == null) || !_sourcePath.exists() ||
 			!_sourcePath.isDirectory()) {
@@ -536,6 +543,7 @@ public class BaselineJarTask extends BaseBndTask {
 	private boolean _reportLevelIsOff = true;
 	private boolean _reportLevelIsPersist;
 	private boolean _reportLevelIsStandard;
+	private boolean _reportOnlyDirtyPackages;
 	private File _sourcePath;
 
 }

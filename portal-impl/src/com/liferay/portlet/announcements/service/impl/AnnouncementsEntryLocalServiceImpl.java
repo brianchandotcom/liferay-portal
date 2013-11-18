@@ -543,8 +543,9 @@ public class AnnouncementsEntryLocalServiceImpl
 			"[$ENTRY_CONTENT$]", entry.getContent(), false);
 		subscriptionSender.setContextAttributes(
 			"[$ENTRY_ID$]", entry.getEntryId(), "[$ENTRY_TITLE$]",
-			entry.getTitle(), "[$ENTRY_TYPE$]", "[$ENTRY_URL$]", entry.getUrl(),
-			"[$PORTLET_NAME$]",
+			entry.getTitle(), "[$ENTRY_TYPE$]",
+			LanguageUtil.get(locale, entry.getType()), "[$ENTRY_URL$]",
+			entry.getUrl(), "[$PORTLET_NAME$]",
 			LanguageUtil.get(
 				locale, (entry.isAlert() ? "alert" : "announcement")));
 		subscriptionSender.setFrom(fromAddress, fromName);

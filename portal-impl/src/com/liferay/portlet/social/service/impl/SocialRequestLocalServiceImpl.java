@@ -109,7 +109,7 @@ public class SocialRequestLocalServiceImpl
 		throws SystemException {
 
 		List<SocialRequest> membershipRequests =
-				socialRequestPersistence.findByC_C(className, classPK);
+			socialRequestPersistence.findByC_C(className, classPK);
 
 		for (SocialRequest membershipRequest : membershipRequests) {
 			deleteRequest(membershipRequest);

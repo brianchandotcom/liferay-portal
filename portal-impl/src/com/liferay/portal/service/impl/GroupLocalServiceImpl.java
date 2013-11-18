@@ -805,8 +805,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			//Social requests
 
 			socialRequestLocalService.deleteMembershipRequests(
-					PortalUtil.getClassNameId(Group.class), 
-					group.getGroupId());
+				PortalUtil.getClassNameId(Group.class), group.getGroupId());
 
 			// Subscriptions
 

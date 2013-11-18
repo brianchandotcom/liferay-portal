@@ -166,15 +166,15 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				<%= fileVersion.getTitle() %>
 
 				<c:if test="<%= versionSpecific %>">
-					(<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>)
+					(<liferay-ui:message key="version" /> <%= fileVersion.getVersion() %>)
 				</c:if>
 			</liferay-util:buffer>
 
 			<div class="body-row">
 				<div class="document-info">
 					<c:if test="<%= showAssetMetadata %>">
-						<h2 class="document-title" title="<%= documentTitle %>">
-							<%= documentTitle %>
+						<h2 class="document-title" title="<%= HtmlUtil.escapeAttribute(documentTitle) %>">
+							<%= HtmlUtil.escape(documentTitle) %>
 						</h2>
 
 						<span class="document-thumbnail">

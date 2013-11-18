@@ -76,7 +76,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			PortletFileRepositoryUtil.deleteFolder(stagingRequestId);
+			PortletFileRepositoryUtil.deletePortletFolder(stagingRequestId);
 		}
 		catch (NoSuchFolderException nsfe) {
 			if (_log.isDebugEnabled()) {

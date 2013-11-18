@@ -533,7 +533,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		long folderId = page.getAttachmentsFolderId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			PortletFileRepositoryUtil.deleteFolder(folderId);
+			PortletFileRepositoryUtil.deletePortletFolder(folderId);
 		}
 
 		// Subscriptions

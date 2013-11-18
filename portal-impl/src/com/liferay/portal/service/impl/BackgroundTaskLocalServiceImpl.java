@@ -266,7 +266,7 @@ public class BackgroundTaskLocalServiceImpl
 		long folderId = backgroundTask.getAttachmentsFolderId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			PortletFileRepositoryUtil.deleteFolder(folderId);
+			PortletFileRepositoryUtil.deletePortletFolder(folderId);
 		}
 
 		if (backgroundTask.getStatus() ==

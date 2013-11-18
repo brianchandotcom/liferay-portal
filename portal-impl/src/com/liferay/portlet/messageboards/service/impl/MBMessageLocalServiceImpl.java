@@ -532,7 +532,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		long folderId = message.getAttachmentsFolderId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			PortletFileRepositoryUtil.deleteFolder(folderId);
+			PortletFileRepositoryUtil.deletePortletFolder(folderId);
 		}
 
 		// Thread
@@ -549,7 +549,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if (threadAttachmentsFolderId !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				PortletFileRepositoryUtil.deleteFolder(
+				PortletFileRepositoryUtil.deletePortletFolder(
 					threadAttachmentsFolderId);
 			}
 

@@ -14,9 +14,12 @@
 
 package com.liferay.portal.portletfilerepository;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -222,20 +225,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #deletePortletFolder}
+	 */
 	@Override
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
-
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			DLAppLocalServiceUtil.deleteFolder(folderId);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+		deletePortletFolder(folderId);
 	}
 
 	@Override
@@ -276,6 +273,11 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			DLAppLocalServiceUtil.deleteFileEntry(fileEntryId);
 		}
+		catch (NoSuchRepositoryEntryException nsree) {
+			if (_log.isErrorEnabled()) {
+				_log.error(nsree, nsree);
+			}
+		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
 		}
@@ -290,6 +292,27 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			groupId, folderId, fileName);
 
 		deletePortletFileEntry(fileEntry.getFileEntryId());
+	}
+
+	@Override
+	public void deletePortletFolder(long folderId)
+		throws PortalException, SystemException {
+
+		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+
+		try {
+			DLAppHelperThreadLocal.setEnabled(false);
+
+			DLAppLocalServiceUtil.deleteFolder(folderId);
+		}
+		catch (NoSuchRepositoryEntryException nsree) {
+			if (_log.isErrorEnabled()) {
+				_log.error(nsree, nsree);
+			}
+		}
+		finally {
+			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+		}
 	}
 
 	@Override
@@ -553,5 +576,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			return fileEntries;
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletFileRepositoryImpl.class);
 
 }

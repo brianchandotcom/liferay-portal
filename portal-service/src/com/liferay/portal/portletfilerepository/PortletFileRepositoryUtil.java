@@ -86,6 +86,9 @@ public class PortletFileRepositoryUtil {
 			groupId, portletId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #deletePortletFolder}
+	 */
 	public static void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -118,6 +121,12 @@ public class PortletFileRepositoryUtil {
 
 		getPortletFileRepository().deletePortletFileEntry(
 			groupId, folderId, fileName);
+	}
+
+	public static void deletePortletFolder(long folderId)
+		throws PortalException, SystemException {
+
+		getPortletFileRepository().deletePortletFolder(folderId);
 	}
 
 	public static void deletePortletRepository(long groupId, String portletId)

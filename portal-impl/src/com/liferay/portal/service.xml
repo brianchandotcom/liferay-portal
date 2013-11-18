@@ -2714,6 +2714,7 @@
 			<finder-column name="primary" />
 		</finder>
 	</entity>
+	<entity name="Words" local-service="false" remote-service="true" />
 	<entity name="WorkflowDefinitionLink" local-service="true" remote-service="false">
 
 		<!-- PK fields -->

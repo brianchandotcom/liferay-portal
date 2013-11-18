@@ -185,6 +185,7 @@
 	<bean id="com.liferay.portal.service.WebsiteLocalService" class="com.liferay.portal.service.impl.WebsiteLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.WebsiteService" class="com.liferay.portal.service.impl.WebsiteServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.WebsitePersistence" class="com.liferay.portal.service.persistence.WebsitePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.WordsService" class="com.liferay.portal.service.impl.WordsServiceImpl" />
 	<bean id="com.liferay.portal.service.WorkflowDefinitionLinkLocalService" class="com.liferay.portal.service.impl.WorkflowDefinitionLinkLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence" class="com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.WorkflowInstanceLinkLocalService" class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" />

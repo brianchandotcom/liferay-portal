@@ -130,11 +130,15 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			}
 		}
 
-		if (newFriendlyURLMap.isEmpty()) {
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		if (newFriendlyURLMap.isEmpty() ||
+			Validator.isNull(newFriendlyURLMap.get(siteDefaultLocale))) {
+
 			String friendlyURL = getFriendlyURL(
 				groupId, privateLayout, layoutId, name, StringPool.BLANK);
 
-			newFriendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
+			newFriendlyURLMap.put(siteDefaultLocale, friendlyURL);
 		}
 
 		return newFriendlyURLMap;

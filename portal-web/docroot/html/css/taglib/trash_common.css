@@ -1,5 +1,3 @@
-@import "mixins";
-
 .taglib-trash-empty, .taglib-trash-undo {
 	.trash-empty-button, .trash-undo-button {
 		display: inline;

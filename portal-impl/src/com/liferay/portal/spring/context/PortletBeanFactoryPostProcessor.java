@@ -47,33 +47,35 @@ public class PortletBeanFactoryPostProcessor
 			(ListableBeanFactory)
 				configurableListableBeanFactory.getParentBeanFactory();
 
-		Map<String, BeanPostProcessor> beanPostProcessors =
-			parentListableBeanFactory.getBeansOfType(
-				BeanPostProcessor.class, true, false);
+		if (parentListableBeanFactory != null) {
+			Map<String, BeanPostProcessor> beanPostProcessors =
+				parentListableBeanFactory.getBeansOfType(
+					BeanPostProcessor.class, true, false);
 
-		for (BeanPostProcessor beanPostProcessor :
-				beanPostProcessors.values()) {
+			for (BeanPostProcessor beanPostProcessor :
+					beanPostProcessors.values()) {
 
-			if (beanPostProcessor instanceof BeanFactoryAware) {
-				BeanFactoryAware beanFactoryAware =
-					(BeanFactoryAware)beanPostProcessor;
+				if (beanPostProcessor instanceof BeanFactoryAware) {
+					BeanFactoryAware beanFactoryAware =
+						(BeanFactoryAware)beanPostProcessor;
 
-				beanFactoryAware.setBeanFactory(
-					configurableListableBeanFactory);
+					beanFactoryAware.setBeanFactory(
+						configurableListableBeanFactory);
+				}
+
+				if (beanPostProcessor instanceof
+						AbstractAutoProxyCreator) {
+
+					AbstractAutoProxyCreator abstractAutoProxyCreator =
+						(AbstractAutoProxyCreator)beanPostProcessor;
+
+					abstractAutoProxyCreator.setProxyClassLoader(
+						PortletApplicationContext.getBeanClassLoader());
+				}
+
+				configurableListableBeanFactory.addBeanPostProcessor(
+					beanPostProcessor);
 			}
-
-			if (beanPostProcessor instanceof
-					AbstractAutoProxyCreator) {
-
-				AbstractAutoProxyCreator abstractAutoProxyCreator =
-					(AbstractAutoProxyCreator)beanPostProcessor;
-
-				abstractAutoProxyCreator.setProxyClassLoader(
-					PortletApplicationContext.getBeanClassLoader());
-			}
-
-			configurableListableBeanFactory.addBeanPostProcessor(
-				beanPostProcessor);
 		}
 
 		String[] names =

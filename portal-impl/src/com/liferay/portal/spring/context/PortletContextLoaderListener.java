@@ -17,6 +17,7 @@ package com.liferay.portal.spring.context;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -163,6 +164,17 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 	@Override
 	protected ApplicationContext loadParentContext(
 		ServletContext servletContext) {
+
+		try {
+			ConfigurationFactoryUtil.getConfiguration(
+				PortletClassLoaderUtil.getClassLoader(), "service");
+		}
+		catch (Exception e) {
+
+			// Not a service builder plugin, don't create parent context
+
+			return null;
+		}
 
 		ApplicationContext applicationContext =
 			new ClassPathXmlApplicationContext(

@@ -43,7 +43,7 @@ public class ReplyEmailTestCase extends BaseSeleniumTestCase {
 		selenium.connectToEmailAccount(
 			TestPropsValues.EMAIL_ADDRESS_1, TestPropsValues.EMAIL_PASSWORD_1);
 
-		selenium.assertEmailContent("1", "This is a reply.");
+		selenium.assertEmailBody("1", "This is a reply.");
 		selenium.assertEmailSubject("1", "Re: Email Test");
 
 		selenium.deleteAllEmails();

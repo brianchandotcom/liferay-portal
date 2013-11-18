@@ -77,12 +77,12 @@ public class EmailCommands {
 		_imapFolder.close(true);
 	}
 
-	public static String getEmailContent(int index) throws Exception {
+	public static String getEmailBody(int index) throws Exception {
 		Message message = _imapFolder.getMessage(index);
 
-		String content = (String)message.getContent();
+		String body = (String)message.getContent();
 
-		return content.trim();
+		return body.trim();
 	}
 
 	public static String getEmailSubject(int index) throws Exception {
@@ -93,15 +93,13 @@ public class EmailCommands {
 		return subject;
 	}
 
-	public static void replyToEmail(String to, String content)
-		throws Exception {
-
+	public static void replyToEmail(String to, String body) throws Exception {
 		Message message = _imapFolder.getMessage(1);
 
 		Message replyMessage = message.reply(false);
 
 		replyMessage.setRecipient(RecipientType.TO, new InternetAddress(to));
-		replyMessage.setText(content);
+		replyMessage.setText(body);
 
 		_transport.sendMessage(
 			replyMessage, replyMessage.getRecipients(RecipientType.TO));
@@ -109,14 +107,14 @@ public class EmailCommands {
 		_transport.close();
 	}
 
-	public static void sendEmail(String to, String subject, String content)
+	public static void sendEmail(String to, String subject, String body)
 		throws Exception {
 
 		Message message = new MimeMessage(_smtpSession);
 
 		message.addRecipient(RecipientType.TO, new InternetAddress(to));
 		message.setSubject(subject);
-		message.setText(content);
+		message.setText(body);
 
 		message.saveChanges();
 

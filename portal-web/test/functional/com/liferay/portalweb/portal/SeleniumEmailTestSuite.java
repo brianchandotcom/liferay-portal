@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.selenium.AssertEmailContentTestCase;
+import com.liferay.portalweb.selenium.AssertEmailBodyTestCase;
 import com.liferay.portalweb.selenium.AssertEmailSubjectTestCase;
 import com.liferay.portalweb.selenium.ConnectEmailTestCase;
 import com.liferay.portalweb.selenium.DeleteEmailsTestCase;
@@ -32,7 +32,7 @@ public class SeleniumEmailTestSuite extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AssertEmailContentTestCase.class);
+		testSuite.addTestSuite(AssertEmailBodyTestCase.class);
 		testSuite.addTestSuite(AssertEmailSubjectTestCase.class);
 		testSuite.addTestSuite(ConnectEmailTestCase.class);
 		testSuite.addTestSuite(DeleteEmailsTestCase.class);

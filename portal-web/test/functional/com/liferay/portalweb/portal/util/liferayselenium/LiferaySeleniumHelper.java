@@ -77,12 +77,11 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void assertEmailContent(
-			LiferaySelenium liferaySelenium, String index, String content)
+	public static void assertEmailBody(
+			LiferaySelenium liferaySelenium, String index, String body)
 		throws Exception {
 
-		BaseTestCase.assertEquals(
-			content, liferaySelenium.getEmailContent(index));
+		BaseTestCase.assertEquals(body, liferaySelenium.getEmailBody(index));
 	}
 
 	public static void assertEmailSubject(
@@ -304,8 +303,8 @@ public class LiferaySeleniumHelper {
 		BaseTestCase.fail(message);
 	}
 
-	public static String getEmailContent(String index) throws Exception {
-		return EmailCommands.getEmailContent(GetterUtil.getInteger(index));
+	public static String getEmailBody(String index) throws Exception {
+		return EmailCommands.getEmailBody(GetterUtil.getInteger(index));
 	}
 
 	public static String getEmailSubject(String index) throws Exception {
@@ -375,20 +374,20 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void replyToEmail(
-			LiferaySelenium liferaySelenium, String to, String content)
+			LiferaySelenium liferaySelenium, String to, String body)
 		throws Exception {
 
-		EmailCommands.replyToEmail(to, content);
+		EmailCommands.replyToEmail(to, body);
 
 		liferaySelenium.pause("3000");
 	}
 
 	public static void sendEmail(
 			LiferaySelenium liferaySelenium, String to, String subject,
-			String content)
+			String body)
 		throws Exception {
 
-		EmailCommands.sendEmail(to, subject, content);
+		EmailCommands.sendEmail(to, subject, body);
 
 		liferaySelenium.pause("3000");
 	}

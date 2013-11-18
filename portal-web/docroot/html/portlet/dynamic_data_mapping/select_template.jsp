@@ -28,7 +28,7 @@ DDMStructure structure = null;
 long structureClassNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 if ((classPK > 0) && (structureClassNameId == classNameId)) {
-	structure = DDMStructureServiceUtil.getStructure(classPK);
+	structure = DDMStructureLocalServiceUtil.getStructure(classPK);
 }
 
 String title = ddmDisplay.getViewTemplatesTitle(structure, locale);

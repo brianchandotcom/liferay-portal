@@ -959,10 +959,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			if (Validator.isNull(path)) {
 				String className = referenceDataElement.attributeValue(
-							"class-name");
-				path =
-					ExportImportPathUtil.getModelPath(
-						groupId, className, classPk);
+					"class-name");
+				path = ExportImportPathUtil.getModelPath(
+					groupId, className, classPk);
 			}
 
 			if (!content.contains("[$dl-reference=" + path + "$]")) {
@@ -973,7 +972,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			if ((portletDataContext.getSourceCompanyGroupId() == groupId) &&
 				(portletDataContext.getGroupId() !=
-								portletDataContext.getCompanyGroupId())) {
+					portletDataContext.getCompanyGroupId())) {
 
 				String uuid = referenceDataElement.attributeValue("uuid");
 				try {
@@ -997,9 +996,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					portletDataContext, fileEntry);
 
 				Map<Long, Long> fileEntryIds =
-								(Map<Long, Long>)
-								portletDataContext.getNewPrimaryKeysMap(
-									DLFileEntry.class);
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						DLFileEntry.class);
 
 				long importedFileEntryId = MapUtil.getLong(
 					fileEntryIds, fileEntry.getFileEntryId(),
@@ -1036,8 +1034,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 
 		return replaceImportDLReferences(
-					portletDataContext, entityElement, null, content,
-					importReferencedContent);
+			portletDataContext, entityElement, null, content,
+			importReferencedContent);
 	}
 
 	@Override

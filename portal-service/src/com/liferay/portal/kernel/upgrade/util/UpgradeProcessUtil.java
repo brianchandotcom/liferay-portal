@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +39,7 @@ import java.util.Map;
  * @author Alexander Chow
  * @author Raymond Augé
  */
+@ProviderType
 public class UpgradeProcessUtil {
 
 	public static String getDefaultLanguageId(long companyId) throws Exception {

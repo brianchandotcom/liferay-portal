@@ -1760,6 +1760,31 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseActionComplexString1001() throws Exception {
+		test(
+			"TestCaseActionComplexString1001.testcase",
+			"Error 1001: Missing (echo|execute|fail|if|property|var|while) " +
+				"child element in " + _DIR_NAME +
+				"/TestCaseActionComplexString1001.testcase:2");
+	}
+
+	@Test
+	public void testTestCaseActionComplexString1004() throws Exception {
+		test(
+			"TestCaseActionComplexString1004.testcase",
+			"Error 1004: Missing (value) attribute in " +
+				_DIR_NAME + "/TestCaseActionComplexString1004.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseActionComplexString1007() throws Exception {
+		test(
+			"TestCaseActionComplexString1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseActionComplexString1007.testcase");
+	}
+
+	@Test
 	public void testTestCaseCommandElement1001() throws Exception {
 		test(
 			"TestCaseCommandElement1001.testcase",

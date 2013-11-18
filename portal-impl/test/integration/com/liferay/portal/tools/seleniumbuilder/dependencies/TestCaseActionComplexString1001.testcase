@@ -1,0 +1,11 @@
+<definition>
+	<command name="AddWikiFrontPageContentJavascript" priority="5">
+		<![CDATA[
+			<p id='demo'>PASS</p>
+
+			<script type='text/javascript'>
+				document.getElementById('demo').innerHTML = 'FAIL';
+			</script>
+		]]>
+	</command>
+</definition>

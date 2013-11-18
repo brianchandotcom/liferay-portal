@@ -1,0 +1,8 @@
+<definition>
+	<command name="AddWikiFrontPageContentJavascript" priority="5">
+		<var name="wikiPageContent">
+			<![CDATA[
+			]]>
+		</var>
+	</command>
+</definition>

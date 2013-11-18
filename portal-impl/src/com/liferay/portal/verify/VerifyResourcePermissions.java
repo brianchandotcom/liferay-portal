@@ -89,16 +89,28 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		List<Layout> layouts = LayoutLocalServiceUtil.getNoPermissionLayouts(
 			role.getRoleId());
 
-		for (Layout layout : layouts) {
+		int total = layouts.size();
+
+		for (int i = 0; i < total; i++) {
+			Layout layout = layouts.get(i);
+
 			verifyModel(
 				role.getCompanyId(), Layout.class.getName(), layout.getPlid(),
-				role, 0);
+				role, 0, i, total);
 		}
 	}
 
 	protected void verifyModel(
-			long companyId, String name, long primKey, Role role, long ownerId)
+			long companyId, String name, long primKey, Role role, long ownerId,
+			int cur, int total)
 		throws Exception {
+
+		if (_log.isInfoEnabled() && ((cur % 100) == 0)) {
+			_log.info(
+				"Processed " + cur + " of " + total + " resource permissions " +
+					"for companyId = " + role.getCompanyId() + ", modelName " +
+						"= " + name);
+		}
 
 		ResourcePermission resourcePermission = null;
 
@@ -156,12 +168,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			ResourcePermissionLocalServiceUtil.updateResourcePermission(
 				resourcePermission);
 		}
-
-		if (_log.isInfoEnabled() &&
-			((resourcePermission.getResourcePermissionId() % 100) == 0)) {
-
-			_log.info("Processed 100 resource permissions for " + name);
-		}
 	}
 
 	protected void verifyModel(
@@ -172,21 +178,40 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
+		int total = 0;
+
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select " + pkColumnName + ", userId AS ownerId " +
-					"from " + modelName + " where companyId = " +
-						role.getCompanyId());
+				"select count(*) from " + modelName + " where companyId = " +
+					role.getCompanyId());
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				long primKey = rs.getLong(pkColumnName);
-				long ownerId = rs.getLong("ownerId");
+			if (rs.next()) {
+				total = rs.getInt(1);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 
-				verifyModel(role.getCompanyId(), name, primKey, role, ownerId);
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select " + pkColumnName + ", userId from " + modelName +
+					" where companyId = " + role.getCompanyId());
+
+			rs = ps.executeQuery();
+
+			for (int i = 0; rs.next(); i++) {
+				long primKey = rs.getLong(pkColumnName);
+				long userId = rs.getLong("userId");
+
+				verifyModel(
+					role.getCompanyId(), name, primKey, role, userId, i, total);
 			}
 		}
 		finally {

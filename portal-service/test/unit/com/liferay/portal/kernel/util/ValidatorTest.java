@@ -92,7 +92,7 @@ public class ValidatorTest extends PowerMockito {
 			"test", "liferay.com", "@liferay.com", "test(@liferay.com",
 			"test)@liferay.com", "test,@liferay.com", ".test@liferay.com",
 			"test.@liferay.com", "te..st@liferay.com", "test user@liferay.com",
-			"test@-liferay.com", "test@liferay"
+			"test@-liferay.com", "test@_liferay.com"
 		};
 
 		testValidEmailAddreses(invalidEmailAddresses, false);
@@ -384,7 +384,8 @@ public class ValidatorTest extends PowerMockito {
 			"test-@liferay.com", "test/@liferay.com", "test=@liferay.com",
 			"test?@liferay.com", "test^@liferay.com", "test_@liferay.com",
 			"test`@liferay.com", "test{@liferay.com", "test|@liferay.com",
-			"test{@liferay.com", "test~@liferay.com"
+			"test{@liferay.com", "test~@liferay.com", "test@liferay.com.",
+			"test@liferay"
 		};
 
 		testValidEmailAddreses(validEmailAddresses, true);

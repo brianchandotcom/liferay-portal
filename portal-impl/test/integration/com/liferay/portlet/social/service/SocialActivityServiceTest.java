@@ -67,7 +67,7 @@ public class SocialActivityServiceTest {
 		_user = UserTestUtil.addUser();
 
 		RoleTestUtil.addResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 	}
@@ -78,7 +78,7 @@ public class SocialActivityServiceTest {
 		UserLocalServiceUtil.deleteUser(_user);
 
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 

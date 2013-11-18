@@ -70,7 +70,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 			ActionKeys.ACCESS_IN_CONTROL_PANEL);
 
 		RoleTestUtil.addResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			ActionKeys.VIEW);
@@ -89,7 +89,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		}
 
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			ActionKeys.VIEW);

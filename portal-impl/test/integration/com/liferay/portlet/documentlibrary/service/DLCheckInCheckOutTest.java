@@ -73,7 +73,7 @@ public class DLCheckInCheckOutTest {
 			ActionKeys.ADD_DOCUMENT);
 
 		RoleTestUtil.addResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 
@@ -93,7 +93,7 @@ public class DLCheckInCheckOutTest {
 		DLAppServiceUtil.deleteFolder(_folder.getFolderId());
 
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 

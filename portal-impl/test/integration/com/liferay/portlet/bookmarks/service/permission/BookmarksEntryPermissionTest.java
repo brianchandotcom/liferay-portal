@@ -15,128 +15,65 @@
 package com.liferay.portlet.bookmarks.service.permission;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.permission.BasePermissionTest;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.RoleTestUtil;
-import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Eric Chin
+ * @author Shinn Lok
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class BookmarksEntryPermissionTest {
+public class BookmarksEntryPermissionTest extends BasePermissionTest {
 
-	@Before
-	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	@Test
+	public void testContains() throws Exception {
+		Assert.assertTrue(
+			BookmarksEntryPermission.contains(
+				permissionChecker, _entry.getEntryId(), ActionKeys.VIEW));
 
-		_group = GroupTestUtil.addGroup();
+		Assert.assertTrue(
+			BookmarksEntryPermission.contains(
+				permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW));
 
-		_entry = BookmarksTestUtil.addEntry(_group.getGroupId(), true);
+		removePortletModelViewPermission();
 
-		_folder = BookmarksTestUtil.addFolder(
-			_group.getGroupId(), "Test Folder Permission");
+		Assert.assertFalse(
+			BookmarksEntryPermission.contains(
+				permissionChecker, _entry.getEntryId(), ActionKeys.VIEW));
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
+		Assert.assertFalse(
+			BookmarksEntryPermission.contains(
+				permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW));
+	}
+
+	@Override
+	protected void doSetUp() throws Exception {
+		_entry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
+
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), ServiceTestUtil.randomString());
 
 		_subentry = BookmarksTestUtil.addEntry(
-			_folder.getFolderId(), true, serviceContext);
-
-		RoleTestUtil.addResourcePermission(
-			RoleConstants.POWER_USER, BookmarksPermission.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
+			folder.getFolderId(), true, serviceContext);
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.POWER_USER, BookmarksPermission.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
-	}
-
-	@Test
-	public void testGetEntryWithoutRootPermission() throws Exception {
-		checkEntryRootPermission(false);
-	}
-
-	@Test
-	public void testGetEntryWithRootPermission() throws Exception {
-		checkEntryRootPermission(true);
-	}
-
-	protected void checkEntryRootPermission(boolean hasRootPermission)
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-
-		PermissionChecker permissionChecker = _getPermissionChecker(user);
-
-		if (!hasRootPermission) {
-			RoleTestUtil.removeResourcePermission(
-				RoleConstants.POWER_USER, BookmarksPermission.RESOURCE_NAME,
-				ResourceConstants.SCOPE_GROUP,
-				String.valueOf(_group.getGroupId()), ActionKeys.VIEW);
-		}
-
-		boolean hasViewPermission = BookmarksEntryPermission.contains(
-			permissionChecker, _entry.getEntryId(), ActionKeys.VIEW);
-
-		boolean hasSubentryViewPermission = BookmarksEntryPermission.contains(
-			permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW);
-
-		if (!hasRootPermission) {
-			Assert.assertFalse(hasViewPermission);
-			Assert.assertFalse(hasSubentryViewPermission);
-		}
-		else {
-			Assert.assertTrue(hasViewPermission);
-			Assert.assertTrue(hasSubentryViewPermission);
-		}
-
-		if (!hasRootPermission) {
-			RoleTestUtil.addResourcePermission(
-				RoleConstants.POWER_USER, BookmarksPermission.RESOURCE_NAME,
-				ResourceConstants.SCOPE_GROUP,
-				String.valueOf(_group.getGroupId()), ActionKeys.VIEW);
-		}
-	}
-
-	private PermissionChecker _getPermissionChecker(User user)
-		throws Exception {
-
-		return PermissionCheckerFactoryUtil.create(user);
+	@Override
+	protected String getResourceName() {
+		return BookmarksPermission.RESOURCE_NAME;
 	}
 
 	private BookmarksEntry _entry;
-	private BookmarksFolder _folder;
-	private Group _group;
 	private BookmarksEntry _subentry;
 
 }

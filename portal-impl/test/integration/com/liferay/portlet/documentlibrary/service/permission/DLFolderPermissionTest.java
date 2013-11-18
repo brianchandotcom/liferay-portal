@@ -16,118 +16,64 @@ package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ResourceConstants;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.permission.BasePermissionTest;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.util.RoleTestUtil;
-import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Eric Chin
+ * @author Shinn Lok
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFolderPermissionTest {
+public class DLFolderPermissionTest extends BasePermissionTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+	@Test
+	public void testContains() throws Exception {
+		Assert.assertTrue(
+			DLFolderPermission.contains(
+				permissionChecker, _folder, ActionKeys.VIEW));
 
+		Assert.assertTrue(
+			DLFolderPermission.contains(
+				permissionChecker, _subfolder, ActionKeys.VIEW));
+
+		removePortletModelViewPermission();
+
+		Assert.assertFalse(
+			DLFolderPermission.contains(
+				permissionChecker, _folder, ActionKeys.VIEW));
+
+		Assert.assertFalse(
+			DLFolderPermission.contains(
+				permissionChecker, _subfolder, ActionKeys.VIEW));
+	}
+
+	@Override
+	protected void doSetUp() throws Exception {
 		_folder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Test Folder Permissions", true);
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString(), true);
 
 		_subfolder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), _folder.getFolderId(),
-			"Test SubFolder Permissions", true);
-
-		RoleTestUtil.addResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
+			group.getGroupId(), _folder.getFolderId(),
+			ServiceTestUtil.randomString(), true);
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			ActionKeys.VIEW);
-	}
-
-	@Test
-	public void testGetFolderWithoutRootPermission() throws Exception {
-		checkFolderRootPermission(false);
-	}
-
-	@Test
-	public void testGetFolderWithRootPermission() throws Exception {
-		checkFolderRootPermission(true);
-	}
-
-	protected void checkFolderRootPermission(boolean hasRootPermission)
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-
-		PermissionChecker permissionChecker = _getPermissionChecker(user);
-
-		if (!hasRootPermission) {
-			RoleTestUtil.removeResourcePermission(
-				RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
-				ResourceConstants.SCOPE_GROUP,
-				String.valueOf(_group.getGroupId()), ActionKeys.VIEW);
-		}
-
-		boolean hasViewPermission = DLFolderPermission.contains(
-			permissionChecker, _folder, ActionKeys.VIEW);
-
-		boolean hasSubfolderViewPermission = DLFolderPermission.contains(
-			permissionChecker, _subfolder, ActionKeys.VIEW);
-
-		if (!hasRootPermission) {
-			Assert.assertFalse(hasViewPermission);
-			Assert.assertFalse(hasSubfolderViewPermission);
-		}
-		else {
-			Assert.assertTrue(hasViewPermission);
-			Assert.assertTrue(hasSubfolderViewPermission);
-		}
-
-		if (!hasRootPermission) {
-			RoleTestUtil.addResourcePermission(
-				RoleConstants.POWER_USER, DLPermission.RESOURCE_NAME,
-				ResourceConstants.SCOPE_GROUP,
-				String.valueOf(_group.getGroupId()), ActionKeys.VIEW);
-		}
-	}
-
-	private PermissionChecker _getPermissionChecker(User user)
-		throws Exception {
-
-		return PermissionCheckerFactoryUtil.create(user);
+	@Override
+	protected String getResourceName() {
+		return DLPermission.RESOURCE_NAME;
 	}
 
 	private Folder _folder;
-	private Group _group;
 	private Folder _subfolder;
 
 }

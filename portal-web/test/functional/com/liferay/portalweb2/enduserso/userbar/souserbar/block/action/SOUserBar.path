@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>SOUserBar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOUserBar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SOUserBar</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_BAR</td>
+	<td>//div[@class='so-portlet-user-bar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VISIBLE_PAGE_CONTROLS</td>
+	<td>//body[contains(@class,'show-dockbar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD</td>
+	<td>//a[contains(text(),'Dashboard')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTACT_CENTER</td>
+	<td>//a[contains(text(),'Contacts Center')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MICROBLOGS</td>
+	<td>//a[contains(text(),'Microblogs')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGES</td>
+	<td>//a[contains(text(),'Messages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MY_DOCUMENTS</td>
+	<td>//a[contains(text(),'My Documents')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASKS</td>
+	<td>//a[contains(text(),'Tasks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME</td>
+	<td>//a[contains(text(),'Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUGINS</td>
+	<td>//a[contains(text(),'Plugins')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME</td>
+	<td>//a[contains(text(),'Welcome')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO</td>
+	<td>//li[contains(@class,'go-to')]//input[contains(@class,'search-input')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_DOCKBAR</td>
+	<td>//a[contains(@id,'toggleDockbar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_CONTROLS_NOT_FLAGGED</td>
+	<td>//body[contains(@class,'controls-hidden')] 	</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//span[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NOTIFICATION_MENU-->
+<tr>
+	<td>NOTIFICATION_MENU_COUNT</td>
+	<td>//span[contains(@class,'user-notifications-count')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_ENTRY_SENDER</td>
+	<td>//div[contains(@class,'user-notification')]//div[@class='title']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_ENTRY_CONTENT</td>
+	<td>//div[contains(@class,'user-notification')]//div[@class='title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_ENTRY_SUBCONTENT</td>
+	<td>//div[contains(@class,'user-notification')]//div[@class='body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_CONFIRM</td>
+	<td>//a[contains(text(),'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_IGNORE</td>
+	<td>//a[contains(text(),'Ignore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_VIEW_ALL</td>
+	<td>//a[contains(text(),'View All Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--GO_TO-->
+<tr>
+	<td>GO_TO_SEARCH_FIELD</td>
+	<td>//li[@class='go-to search-focus']//input[contains(@class,'search-input')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_SITE_CATEGORY_SELECT</td>
+	<td>//select[contains(@id,'soportlet_tabs1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_SITE_LIST</td>
+	<td>//ul[contains(@class,'site-list')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_SITE_EMPTY</td>
+	<td>//li[@class='empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_SITE_NAME</td>
+	<td>//li[contains(@class,'social-office-enabled')]//span[contains(.,'${siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_SITE_NAME_LINK</td>
+	<td>//li[contains(@class,'social-office-enabled')]/span[contains(.,'${siteName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_FAVORITE_SITE_ICON</td>
+	<td>//li[contains(@class,'social-office-enabled')]/span[@class='action favorite']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_UNFAVORITE_SITE_ICON</td>
+	<td>//li[contains(@class,'social-office-enabled')]/span[@class='action unfavorite']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_ADD_SITE_BUTTON</td>
+	<td>//button[contains(.,'Add Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GO_TO_SITES_DIRECTORY_BUTTON</td>
+	<td>//button[contains(.,'Sites Directory')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

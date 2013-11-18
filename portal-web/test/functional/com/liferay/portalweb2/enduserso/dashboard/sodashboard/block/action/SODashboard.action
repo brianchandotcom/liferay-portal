@@ -1,0 +1,77 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="VIEW_ALL_TASKS_LINK">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="ANNOUNCEMENTS_ENTRY_ACTION">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="NAVIGATION_CONTACTS_CENTER">
+			<execute function="Click#textClickAtAndWait" value1="Contacts Center" />
+		</case>
+
+		<case locator-key1="NAVIGATION_MESSAGES">
+			<execute function="Click#textClickAtAndWait" value1="Messages" />
+		</case>
+
+		<case locator-key1="NAVIGATION_MICROBLOGS">
+			<execute function="Click#textClickAtAndWait" value1="Microblogs" />
+		</case>
+
+		<case locator-key1="NAVIGATION_MY_DOCUMENTS">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+
+		<case locator-key1="NAVIGATION_PAGE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="NAVIGATION_PAGE_DELETE">
+			<execute function="AssertClick#assertTextClick" value1="X" />
+		</case>
+
+		<case locator-key1="NAVIGATION_TASKS">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="confirm">
+		<case locator-key1="CONFIRMATION">
+			<execute function="Confirm#waitForConfirmation" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+		<case locator-key1="NAVIGATION_PAGE">
+			<execute function="IsElementPresent#isElementPresentClickNavigation" />
+		</case>
+	</command>
+
+	<command name="mouseOver">
+		<case locator-key1="NAVIGATION_PAGE">
+			<execute function="MouseOver#mouseOverClickNavigation" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="WHATS_HAPPENING_CONTENT_INPUT_FIELD">
+			<execute function="Type#sendKeys" />
+		</case>
+	</command>
+</definition>

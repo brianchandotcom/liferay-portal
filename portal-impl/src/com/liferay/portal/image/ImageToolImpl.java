@@ -37,6 +37,7 @@ import com.sun.media.jai.codec.ImageEncoder;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.IndexColorModel;
@@ -224,6 +225,22 @@ public class ImageToolImpl implements ImageTool {
 		graphics.dispose();
 
 		return targetImage;
+	}
+
+	@Override
+	public RenderedImage crop(
+		RenderedImage renderedImage, int height, int width, int x, int y) {
+
+		Rectangle rectangle = new Rectangle(x, y, width, height);
+
+		Rectangle croppedRectangle = rectangle.intersection(
+			new Rectangle(renderedImage.getWidth(), renderedImage.getHeight()));
+
+		BufferedImage bufferedImage = getBufferedImage(renderedImage);
+
+		return bufferedImage.getSubimage(
+			croppedRectangle.x, croppedRectangle.y, croppedRectangle.width,
+			croppedRectangle.height);
 	}
 
 	@Override

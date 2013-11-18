@@ -1,0 +1,19 @@
+<definition>
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+	</set-up>
+
+	<command name="AddSOUser" priority="5">
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userLastName" value="User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole" />
+	</command>
+
+	<tear-down>
+		<execute macro="SOUser#tearDownCP" />
+	</tear-down>
+</definition>

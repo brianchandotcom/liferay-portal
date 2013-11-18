@@ -193,6 +193,10 @@ if (fileEntryId > 0) {
 	editFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 }
 
+if (fileEntryTypeId > 0) {
+	editFileEntryURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
+}
+
 editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants.ACTION_PUBLISH));
 %>
 

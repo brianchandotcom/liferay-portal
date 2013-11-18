@@ -952,10 +952,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String path = referenceDataElement.attributeValue("path");
 
 			long classPk = GetterUtil.getLong(
-				referenceDataElement.attributeValue("class-pk"), 0);
+				referenceDataElement.attributeValue("class-pk"));
 
 			long groupId = GetterUtil.getLong(
-				referenceDataElement.attributeValue("group-id"), 0);
+				referenceDataElement.attributeValue("group-id"));
 
 			if (Validator.isNull(path)) {
 				String className = referenceDataElement.attributeValue(

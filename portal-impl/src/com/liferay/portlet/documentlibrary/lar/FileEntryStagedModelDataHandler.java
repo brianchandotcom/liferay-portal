@@ -221,6 +221,22 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long fileEntryId)
+		throws Exception {
+
+		FileEntry existingFileEntry = FileEntryUtil.fetchByUUID_R(
+			uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
+		fileEntryIds.put(fileEntryId, existingFileEntry.getFileEntryId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, FileEntry fileEntry)
 		throws Exception {

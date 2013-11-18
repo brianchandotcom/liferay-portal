@@ -18,15 +18,18 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.RepositoryServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -39,6 +42,7 @@ import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -186,7 +190,7 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long folderId = ParamUtil.getLong(request, "folderId");
+		long folderId = getFolderId(request);
 
 		Folder folder = null;
 
@@ -219,6 +223,34 @@ public class ActionUtil {
 			portletRequest);
 
 		getFolder(request);
+	}
+
+	public static long getFolderId(HttpServletRequest request)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getId();
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				request, portletId);
+
+		long folderId = ParamUtil.getLong(request, "folderId");
+
+		if (folderId <= 0) {
+			String defaultParentFolderId = String.valueOf(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			folderId = GetterUtil.getLong(
+				portletPreferences.getValue(
+					"rootFolderId", defaultParentFolderId));
+		}
+
+		return folderId;
 	}
 
 	public static void getFolders(HttpServletRequest request) throws Exception {

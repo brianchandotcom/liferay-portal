@@ -14,6 +14,8 @@
 
 package com.liferay.portal.repository.proxy;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -37,6 +39,7 @@ import java.util.Map;
 /**
  * @author Mika Koivisto
  */
+@ProviderType
 public class FileEntryProxyBean
 	extends RepositoryModelProxyBean implements FileEntry {
 

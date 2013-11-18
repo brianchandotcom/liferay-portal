@@ -110,7 +110,7 @@ portletURL.setParameter("modelResource", modelResource);
 
 						<%
 						for (int curType : ExpandoColumnConstants.TYPES) {
-							if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY)) {
+							if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY) || (curType == ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
 								continue;
 							}
 						%>

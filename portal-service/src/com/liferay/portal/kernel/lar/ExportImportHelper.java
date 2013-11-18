@@ -139,23 +139,23 @@ public interface ExportImportHelper {
 
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			StagedModel stagedModel, String content,
-			boolean importReferencedContent)
+			String content, boolean importReferencedContent)
 		throws Exception;
 
 	public String replaceImportContentReferences(
-			PortletDataContext portletDataContext, Element entityElement,
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception;
 
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			StagedModel parentStagedModel, String content,
-			boolean importReferencedContent)
+			String content, boolean importReferencedContent)
 		throws Exception;
 
 	public String replaceImportDLReferences(
-			PortletDataContext portletDataContext, Element entityElement,
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception;
 

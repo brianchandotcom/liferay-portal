@@ -894,9 +894,20 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public String replaceImportContentReferences(
-			PortletDataContext portletDataContext, Element entityElement,
-			StagedModel stagedModel, String content,
-			boolean importReferencedContent)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean importReferencedContent)
+
+		return replaceImportContentReferences(
+			portletDataContext, null, entityElement, content,
+			importReferencedContent);
+	}
+
+	@Override
+	public String replaceImportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean importReferencedContent)
 		throws Exception {
 
 		content = ExportImportHelperUtil.replaceImportLayoutReferences(
@@ -905,33 +916,33 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			portletDataContext, content, importReferencedContent);
 
 		content = ExportImportHelperUtil.replaceImportDLReferences(
-			portletDataContext, entityElement, stagedModel, content,
+			portletDataContext, entityStagedModel, entityElement, content,
 			importReferencedContent);
 
 		return content;
 	}
 
 	@Override
-	public String replaceImportContentReferences(
+	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		return replaceImportContentReferences(
-			portletDataContext, entityElement, null, content,
+		return replaceImportDLReferences(
+			portletDataContext, null, entityElement, content,
 			importReferencedContent);
 	}
 
 	@Override
 	public String replaceImportDLReferences(
-			PortletDataContext portletDataContext, Element entityElement,
-			StagedModel parentStagedModel, String content,
-			boolean importReferencedContent)
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean importReferencedContent)
 		throws Exception {
 
 		List<Element> referenceDataElements = Collections.emptyList();
 
-		if (parentStagedModel == null) {
+		if (entityStagedModel == null) {
 			referenceDataElements =
 				portletDataContext.getReferenceDataElements(
 					entityElement, FileEntry.class,
@@ -939,7 +950,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 		else {
 			referenceDataElements = portletDataContext.getReferenceElements(
-				parentStagedModel, FileEntry.class);
+				entityStagedModel, FileEntry.class);
 		}
 
 		for (Element referenceDataElement : referenceDataElements) {
@@ -1025,17 +1036,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return content;
-	}
-
-	@Override
-	public String replaceImportDLReferences(
-			PortletDataContext portletDataContext, Element entityElement,
-			String content, boolean importReferencedContent)
-		throws Exception {
-
-		return replaceImportDLReferences(
-			portletDataContext, entityElement, null, content,
-			importReferencedContent);
 	}
 
 	@Override

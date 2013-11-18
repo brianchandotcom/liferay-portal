@@ -169,33 +169,22 @@ public class ExportImportHelperUtil {
 
 	public static String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
-			StagedModel stagedModel, String content,
-			boolean importReferencedContent)
+			String content, boolean importReferencedContent)
 		throws Exception {
 
 		return getExportImportHelper().replaceImportContentReferences(
-			portletDataContext, entityElement, stagedModel, content,
+			portletDataContext, entityElement, content,
 			importReferencedContent);
 	}
 
 	public static String replaceImportContentReferences(
-			PortletDataContext portletDataContext, Element entityElement,
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception {
 
 		return getExportImportHelper().replaceImportContentReferences(
-			portletDataContext, entityElement, content,
-			importReferencedContent);
-	}
-
-	public static String replaceImportDLReferences(
-			PortletDataContext portletDataContext, Element entityElement,
-			StagedModel stagedModel, String content,
-			boolean importReferencedContent)
-		throws Exception {
-
-		return getExportImportHelper().replaceImportDLReferences(
-			portletDataContext, entityElement, stagedModel, content,
+			portletDataContext, entityStagedModel, entityElement, content,
 			importReferencedContent);
 	}
 
@@ -206,6 +195,17 @@ public class ExportImportHelperUtil {
 
 		return getExportImportHelper().replaceImportDLReferences(
 			portletDataContext, entityElement, content,
+			importReferencedContent);
+	}
+
+	public static String replaceImportDLReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean importReferencedContent)
+		throws Exception {
+
+		return getExportImportHelper().replaceImportDLReferences(
+			portletDataContext, entityStagedModel, entityElement, content,
 			importReferencedContent);
 	}
 

@@ -102,14 +102,14 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	protected void verifyModel(
 			long companyId, String name, long primKey, Role role, long ownerId,
-			int current, int total)
+			int cur, int total)
 		throws Exception {
 
-		if (_log.isInfoEnabled() && ((current % 100) == 0)) {
+		if (_log.isInfoEnabled() && ((cur % 100) == 0)) {
 			_log.info(
-				"Processed " + current + " of " + total + " resource " +
-					"permissions for companyId = " + role.getCompanyId() +
-					", modelName = " + name);
+				"Processed " + cur + " of " + total + " resource permissions " +
+					"for companyId = " + role.getCompanyId() + ", modelName " +
+						"= " + name);
 		}
 
 		ResourcePermission resourcePermission = null;
@@ -184,8 +184,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select count(" + pkColumnName + ") from " + modelName +
-					"where companyId = " + role.getCompanyId());
+				"select count(*) from " + modelName + " where companyId = " +
+					role.getCompanyId());
 
 			rs = ps.executeQuery();
 
@@ -201,19 +201,17 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select " + pkColumnName + ", userId AS ownerId " +
-					"from " + modelName + " where companyId = " +
-						role.getCompanyId());
+				"select " + pkColumnName + ", userId from " + modelName +
+					" where companyId = " + role.getCompanyId());
 
 			rs = ps.executeQuery();
 
 			for (int i = 0; rs.next(); i++) {
 				long primKey = rs.getLong(pkColumnName);
-				long ownerId = rs.getLong("ownerId");
+				long userId = rs.getLong("userId");
 
 				verifyModel(
-					role.getCompanyId(), name, primKey, role, ownerId, i,
-					total);
+					role.getCompanyId(), name, primKey, role, userId, i, total);
 			}
 		}
 		finally {

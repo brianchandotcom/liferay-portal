@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.User;
 
 import java.util.List;
@@ -23,6 +25,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface PermissionChecker extends Cloneable {
 
 	public static final long[] DEFAULT_ROLE_IDS = {};

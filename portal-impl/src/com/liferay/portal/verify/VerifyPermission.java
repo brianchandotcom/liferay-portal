@@ -56,6 +56,16 @@ public class VerifyPermission extends VerifyProcess {
 				ResourceActionLocalServiceUtil.checkResourceActions(
 					modelName, actionIds, true);
 		}
+
+		List<String> portletNames = ResourceActionsUtil.getPortletNames();
+
+		for (String portletName : portletNames) {
+			List<String> actionIds =
+				ResourceActionsUtil.getPortletResourceActions(portletName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				portletName, actionIds, true);
+		}
 	}
 
 	protected void deleteDefaultPrivateLayoutPermissions() throws Exception {

@@ -104,6 +104,18 @@ public class SocialRequestLocalServiceImpl
 		return request;
 	}
 
+	@Override
+	public void deleteMembershipRequests(long className, long classPK)
+		throws SystemException {
+
+		List<SocialRequest> membershipRequests =
+				socialRequestPersistence.findByC_C(className, classPK);
+
+		for (SocialRequest membershipRequest : membershipRequests) {
+			deleteRequest(membershipRequest);
+		}
+	}
+
 	/**
 	 * Removes all the social requests for the receiving user.
 	 *

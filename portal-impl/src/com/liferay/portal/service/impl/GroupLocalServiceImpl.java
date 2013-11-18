@@ -802,6 +802,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			repositoryLocalService.deleteRepositories(group.getGroupId());
 
+			//Social requests
+
+			socialRequestLocalService.deleteMembershipRequests(
+					PortalUtil.getClassNameId(Group.class), 
+					group.getGroupId());
+
 			// Subscriptions
 
 			subscriptionLocalService.deleteSubscriptions(

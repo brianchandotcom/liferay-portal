@@ -126,7 +126,7 @@ public class BlogsEntryStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(entry);
 
 		String content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, entryElement, entry, entry.getContent(),
+			portletDataContext, entry, entryElement, entry.getContent(),
 			portletDataContext.getBooleanParameter(
 				BlogsPortletDataHandler.NAMESPACE, "referenced-content"));
 
@@ -161,7 +161,7 @@ public class BlogsEntryStagedModelDataHandler
 				if (Validator.isNotNull(entry.getSmallImageURL())) {
 					String smallImageURL =
 						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, entryElement,
+							portletDataContext, entry, entryElement,
 							entry.getSmallImageURL(), true);
 
 					entry.setSmallImageURL(smallImageURL);

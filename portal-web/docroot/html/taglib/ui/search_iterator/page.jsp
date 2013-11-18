@@ -56,8 +56,6 @@ if (iteratorURL != null) {
 }
 
 List<String> primaryKeys = new ArrayList<String>();
-
-int sortColumnIndex = -1;
 %>
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
@@ -123,13 +121,11 @@ int sortColumnIndex = -1;
 					}
 
 					if (orderCurrentHeader) {
-						cssClass += " table-sortable-column table-sorted";
+						cssClass += "table-sorted";
 
 						if (HtmlUtil.escapeAttribute(orderByType).equals("desc")) {
 							cssClass += " table-sorted-desc";
 						}
-
-						sortColumnIndex = i;
 
 						if (orderByType.equals("asc")) {
 							orderByType = "desc";
@@ -291,10 +287,6 @@ int sortColumnIndex = -1;
 				}
 				else if ((j + 1) == entries.size()) {
 					columnClassName += " last";
-				}
-
-				if (j == sortColumnIndex) {
-					columnClassName += " table-sortable-column";
 				}
 			%>
 

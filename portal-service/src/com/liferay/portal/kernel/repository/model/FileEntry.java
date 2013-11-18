@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.repository.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Accessor;
@@ -28,6 +30,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
+@ProviderType
 public interface FileEntry extends RepositoryModel<FileEntry> {
 
 	public static final Accessor<FileEntry, Long> FILE_ENTRY_ID_ACCESSOR =

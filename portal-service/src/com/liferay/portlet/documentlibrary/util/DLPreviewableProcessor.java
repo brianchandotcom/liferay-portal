@@ -367,23 +367,35 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 	}
 
-	protected void deleteThumbnails(
+	protected void deleteThumbnail(
 		long companyId, long groupId, long fileEntryId, long fileVersionId,
-		String thumbnailType) {
+		int index, String thumbnailType) {
 
 		try {
-			String dirName = getPathSegment(
-				groupId, fileEntryId, fileVersionId, false);
-
-			if (fileVersionId > 0) {
-				dirName = dirName.concat(StringPool.PERIOD);
-				dirName = dirName.concat(thumbnailType);
-			}
+			String dirName = getThumbnailFilePath(
+				groupId, fileEntryId, fileVersionId, index, thumbnailType);
 
 			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, dirName);
 		}
 		catch (Exception e) {
 		}
+	}
+
+	protected void deleteThumbnails(
+		long companyId, long groupId, long fileEntryId, long fileVersionId,
+		String thumbnailType) {
+
+		deleteThumbnail(
+			companyId, groupId, fileEntryId, fileVersionId,
+			THUMBNAIL_INDEX_DEFAULT, thumbnailType);
+
+		deleteThumbnail(
+			companyId, groupId, fileEntryId, fileVersionId,
+			THUMBNAIL_INDEX_CUSTOM_1, thumbnailType);
+
+		deleteThumbnail(
+			companyId, groupId, fileEntryId, fileVersionId,
+			THUMBNAIL_INDEX_CUSTOM_2, thumbnailType);
 	}
 
 	protected void destroyProcess(String processIdentity) {

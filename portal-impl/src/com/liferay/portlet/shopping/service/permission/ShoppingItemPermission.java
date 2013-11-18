@@ -69,10 +69,9 @@ public class ShoppingItemPermission {
 			if (item.getCategoryId() ==
 					ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				boolean hasShoppingPermission = ShoppingPermission.contains(
-					permissionChecker, item.getGroupId(), actionId);
+				if (!ShoppingPermission.contains(
+						permissionChecker, item.getGroupId(), actionId)) {
 
-				if (!hasShoppingPermission) {
 					return false;
 				}
 			}

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portal.util.PortletKeys;
@@ -79,11 +80,8 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			entryClassPK);
-
 		return BookmarksEntryPermission.contains(
-			permissionChecker, entry, actionId);
+			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
 	@Override

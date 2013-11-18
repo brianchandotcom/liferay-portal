@@ -128,10 +128,9 @@ public class JournalArticlePermission {
 			long folderId = article.getFolderId();
 
 			if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				boolean hasJournalPermission = JournalPermission.contains(
-					permissionChecker, article.getGroupId(), actionId);
+				if (!JournalPermission.contains(
+						permissionChecker, article.getGroupId(), actionId)) {
 
-				if (!hasJournalPermission) {
 					return false;
 				}
 			}

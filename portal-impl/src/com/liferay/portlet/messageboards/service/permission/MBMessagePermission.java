@@ -112,10 +112,9 @@ public class MBMessagePermission {
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
 				(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-				boolean hasMBPermission = MBPermission.contains(
-					permissionChecker, message.getGroupId(), actionId);
+				if (!MBPermission.contains(
+						permissionChecker, message.getGroupId(), actionId)) {
 
-				if (!hasMBPermission) {
 					return false;
 				}
 			}

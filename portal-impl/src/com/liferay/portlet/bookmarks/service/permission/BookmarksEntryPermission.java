@@ -73,10 +73,9 @@ public class BookmarksEntryPermission {
 			long folderId = entry.getFolderId();
 
 			if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				boolean hasBookmarksPermission = BookmarksPermission.contains(
-					permissionChecker, entry.getGroupId(), actionId);
+				if (!BookmarksPermission.contains(
+						permissionChecker, entry.getGroupId(), actionId)) {
 
-				if (!hasBookmarksPermission) {
 					return false;
 				}
 			}

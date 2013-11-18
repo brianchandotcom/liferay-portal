@@ -857,9 +857,18 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected String getThumbnailFilePath(
 		FileVersion fileVersion, String type, int index) {
 
+		return getThumbnailFilePath(
+			fileVersion.getGroupId(), fileVersion.getFileEntryId(),
+			fileVersion.getFileVersionId(), index, type);
+	}
+
+	protected String getThumbnailFilePath(
+		long groupId, long fileEntryId, long fileVersionId, int index,
+		String type) {
+
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(getPathSegment(fileVersion, false));
+		sb.append(getPathSegment(groupId, fileEntryId, fileVersionId, false));
 
 		if (index != THUMBNAIL_INDEX_DEFAULT) {
 			sb.append(StringPool.DASH);

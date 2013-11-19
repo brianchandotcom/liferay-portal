@@ -802,11 +802,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			repositoryLocalService.deleteRepositories(group.getGroupId());
 
-			//Social requests
-
-			socialRequestLocalService.deleteRequests(
-				PortalUtil.getClassNameId(Group.class), group.getGroupId());
-
 			// Subscriptions
 
 			subscriptionLocalService.deleteSubscriptions(
@@ -880,6 +875,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			socialActivityLocalService.deleteActivities(group.getGroupId());
 			socialActivitySettingLocalService.deleteActivitySettings(
 				group.getGroupId());
+			socialRequestLocalService.deleteRequests(
+				PortalUtil.getClassNameId(Group.class), group.getGroupId());
 
 			// Software catalog
 

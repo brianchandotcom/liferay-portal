@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.permission.BasePermissionTest;
+import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFileEntryPermissionTest extends BasePermissionTest {
+public class DLFileEntryPermissionTest extends BasePermissionTestCase {
 
 	@Test
 	public void testContains() throws Exception {

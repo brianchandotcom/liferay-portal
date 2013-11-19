@@ -238,6 +238,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				String title = DLUtil.getTitleWithExtension(
 					dlFileVersion.getTitle(), dlFileVersion.getExtension());
 
+				String mimeType = null;
+
 				try {
 					mimeType = MimeTypesUtil.getContentType(inputStream, title);
 				}

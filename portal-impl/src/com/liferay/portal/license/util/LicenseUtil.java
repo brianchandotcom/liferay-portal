@@ -433,11 +433,6 @@ public class LicenseUtil {
 		HttpClientConnectionManager connectionManager =
 			new BasicHttpClientConnectionManager();
 
-		CredentialsProvider credentialsProvider =
-			new BasicCredentialsProvider();
-
-		HttpHost proxyHttpHost = null;
-
 		try {
 			String serverURL = LICENSE_SERVER_URL;
 
@@ -450,6 +445,11 @@ public class LicenseUtil {
 			URI uri = new URI(serverURL);
 
 			HttpPost httpPost = new HttpPost(uri);
+
+			CredentialsProvider credentialsProvider =
+				new BasicCredentialsProvider();
+
+			HttpHost proxyHttpHost = null;
 
 			if (Validator.isNotNull(_PROXY_URL)) {
 				if (_log.isInfoEnabled()) {
@@ -475,11 +475,14 @@ public class LicenseUtil {
 
 			httpPost.setEntity(byteArrayEntity);
 
-			httpClient = HttpClientBuilder.create()
-				.setProxy(proxyHttpHost)
-				.setDefaultCredentialsProvider(credentialsProvider)
-				.setConnectionManager(connectionManager)
-				.build();
+			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+			httpClientBuilder.setConnectionManager(connectionManager);
+			httpClientBuilder.setDefaultCredentialsProvider(
+				credentialsProvider);
+			httpClientBuilder.setProxy(proxyHttpHost);
+
+			httpClient = httpClientBuilder.build();
 
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 

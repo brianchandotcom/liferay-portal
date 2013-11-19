@@ -93,7 +93,8 @@ public class BaseJsonClientTestCase {
 
 	public String executeRequest(HttpRequest request) throws Exception {
 		return executeRequest(
-			TestPropsValues.getLogin(false), TestPropsValues.USER_PASSWORD, request);
+			TestPropsValues.getLogin(false), TestPropsValues.USER_PASSWORD,
+			request);
 	}
 
 	public String executeRequest(
@@ -109,8 +110,11 @@ public class BaseJsonClientTestCase {
 			new AuthScope(url.getHost(), url.getPort()),
 			new UsernamePasswordCredentials(login, password));
 
-		HttpClient httpClient = HttpClientBuilder.create()
-			.setDefaultCredentialsProvider(credentialsProvider).build();
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+
+		HttpClient httpClient = httpClientBuilder.build();
 
 		HttpHost httpHost = new HttpHost(
 			url.getHost(), url.getPort(), url.getProtocol());

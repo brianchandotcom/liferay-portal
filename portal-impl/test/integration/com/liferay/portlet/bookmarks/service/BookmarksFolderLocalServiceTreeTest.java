@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portlet.bookmarks.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.TreeModel;
+import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -30,45 +32,45 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class OrganizationLocalServiceTreeTestCase
+public class BookmarksFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)
 		throws Exception {
 
-		long parentOrganizationId =
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		if (parentTreeModel != null) {
-			Organization organization = (Organization)parentTreeModel;
+			BookmarksFolder folder = (BookmarksFolder)parentTreeModel;
 
-			parentOrganizationId = organization.getOrganizationId();
+			parentFolderId = folder.getFolderId();
 		}
 
-		Organization organization = OrganizationTestUtil.addOrganization(
-			parentOrganizationId, ServiceTestUtil.randomString(), false);
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			TestPropsValues.getGroupId(), parentFolderId,
+			ServiceTestUtil.randomString());
 
-		organization.setTreePath(null);
+		folder.setTreePath(null);
 
-		return OrganizationLocalServiceUtil.updateOrganization(organization);
+		return BookmarksFolderLocalServiceUtil.updateBookmarksFolder(folder);
 	}
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
-		Organization organization = (Organization)treeModel;
+		BookmarksFolder folder = (BookmarksFolder)treeModel;
 
-		OrganizationLocalServiceUtil.deleteOrganization(organization);
+		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
 	}
 
 	@Override
 	protected TreeModel getTreeModel(long primaryKey) throws Exception {
-		return OrganizationLocalServiceUtil.getOrganization(primaryKey);
+		return BookmarksFolderLocalServiceUtil.getFolder(primaryKey);
 	}
 
 	@Override
 	protected void rebuildTree() throws Exception {
-		OrganizationLocalServiceUtil.rebuildTree(
+		BookmarksFolderLocalServiceUtil.rebuildTree(
 			TestPropsValues.getCompanyId());
 	}
 

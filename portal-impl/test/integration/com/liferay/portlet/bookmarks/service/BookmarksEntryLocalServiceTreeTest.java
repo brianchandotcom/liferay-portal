@@ -38,7 +38,7 @@ import org.testng.Assert;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class BookmarksEntryLocalServiceTreeTestCase {
+public class BookmarksEntryLocalServiceTreeTest {
 
 	@After
 	public void tearDown() throws Exception {

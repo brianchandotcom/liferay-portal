@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.service;
+package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.TreeModel;
-import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
-import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -32,46 +30,44 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class BookmarksFolderLocalServiceTreeTestCase
-	extends BaseLocalServiceTreeTestCase {
+
+public class GroupLocalServiceTreeTest extends BaseLocalServiceTreeTestCase {
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)
 		throws Exception {
 
-		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 
 		if (parentTreeModel != null) {
-			BookmarksFolder folder = (BookmarksFolder)parentTreeModel;
+			Group group = (Group)parentTreeModel;
 
-			parentFolderId = folder.getFolderId();
+			parentGroupId = group.getGroupId();
 		}
 
-		BookmarksFolder folder = BookmarksTestUtil.addFolder(
-			TestPropsValues.getGroupId(), parentFolderId,
-			ServiceTestUtil.randomString());
+		Group group = GroupTestUtil.addGroup(
+			parentGroupId, ServiceTestUtil.randomString());
 
-		folder.setTreePath(null);
+		group.setTreePath(null);
 
-		return BookmarksFolderLocalServiceUtil.updateBookmarksFolder(folder);
+		return GroupLocalServiceUtil.updateGroup(group);
 	}
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
-		BookmarksFolder folder = (BookmarksFolder)treeModel;
+		Group group = (Group)treeModel;
 
-		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
+		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Override
 	protected TreeModel getTreeModel(long primaryKey) throws Exception {
-		return BookmarksFolderLocalServiceUtil.getFolder(primaryKey);
+		return GroupLocalServiceUtil.getGroup(primaryKey);
 	}
 
 	@Override
 	protected void rebuildTree() throws Exception {
-		BookmarksFolderLocalServiceUtil.rebuildTree(
-			TestPropsValues.getCompanyId());
+		GroupLocalServiceUtil.rebuildTree(TestPropsValues.getCompanyId());
 	}
 
 }

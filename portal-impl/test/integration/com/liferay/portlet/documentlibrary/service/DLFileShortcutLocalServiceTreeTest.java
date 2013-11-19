@@ -38,7 +38,7 @@ import org.testng.Assert;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFileShortcutLocalServiceTreeTestCase {
+public class DLFileShortcutLocalServiceTreeTest {
 
 	@After
 	public void tearDown() throws Exception {

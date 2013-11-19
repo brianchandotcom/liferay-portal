@@ -12,19 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.TreeModel;
-import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -33,48 +30,46 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFolderLocalServiceTreeTestCase
+public class OrganizationLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)
 		throws Exception {
 
-		long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		long parentOrganizationId =
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
 
 		if (parentTreeModel != null) {
-			DLFolder folder = (DLFolder)parentTreeModel;
+			Organization organization = (Organization)parentTreeModel;
 
-			parentFolderId = folder.getFolderId();
+			parentOrganizationId = organization.getOrganizationId();
 		}
 
-		Folder folder = DLAppTestUtil.addFolder(
-			TestPropsValues.getGroupId(), parentFolderId,
-			ServiceTestUtil.randomString());
+		Organization organization = OrganizationTestUtil.addOrganization(
+			parentOrganizationId, ServiceTestUtil.randomString(), false);
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-			folder.getFolderId());
+		organization.setTreePath(null);
 
-		dlFolder.setTreePath(null);
-
-		return DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
+		return OrganizationLocalServiceUtil.updateOrganization(organization);
 	}
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
-		DLFolder folder = (DLFolder)treeModel;
+		Organization organization = (Organization)treeModel;
 
-		DLFolderLocalServiceUtil.deleteFolder(folder.getFolderId());
+		OrganizationLocalServiceUtil.deleteOrganization(organization);
 	}
 
 	@Override
 	protected TreeModel getTreeModel(long primaryKey) throws Exception {
-		return DLFolderLocalServiceUtil.getFolder(primaryKey);
+		return OrganizationLocalServiceUtil.getOrganization(primaryKey);
 	}
 
 	@Override
 	protected void rebuildTree() throws Exception {
-		DLFolderLocalServiceUtil.rebuildTree(TestPropsValues.getCompanyId());
+		OrganizationLocalServiceUtil.rebuildTree(
+			TestPropsValues.getCompanyId());
 	}
 
 }

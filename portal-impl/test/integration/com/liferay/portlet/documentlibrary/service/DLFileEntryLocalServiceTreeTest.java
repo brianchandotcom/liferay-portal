@@ -20,8 +20,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
@@ -39,7 +38,7 @@ import org.testng.Assert;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFileVersionLocalServiceTreeTestCase {
+public class DLFileEntryLocalServiceTreeTest {
 
 	@After
 	public void tearDown() throws Exception {
@@ -57,27 +56,22 @@ public class DLFileVersionLocalServiceTreeTestCase {
 		createTree();
 
 		for (FileEntry fileEntry : _fileEntries) {
-			DLFileVersion dlFileVersion =
-				DLFileVersionLocalServiceUtil.getFileVersion(
-					fileEntry.getFileEntryId(),
-					DLFileEntryConstants.VERSION_DEFAULT);
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
 
-			dlFileVersion.setTreePath(null);
+			dlFileEntry.setTreePath(null);
 
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 		}
 
-		DLFileVersionLocalServiceUtil.rebuildTree(
-			TestPropsValues.getCompanyId());
+		DLFileEntryLocalServiceUtil.rebuildTree(TestPropsValues.getCompanyId());
 
 		for (FileEntry fileEntry : _fileEntries) {
-			DLFileVersion dlFileVersion =
-				DLFileVersionLocalServiceUtil.getFileVersion(
-					fileEntry.getFileEntryId(),
-					DLFileEntryConstants.VERSION_DEFAULT);
+			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
 
 			Assert.assertEquals(
-				dlFileVersion.buildTreePath(), dlFileVersion.getTreePath());
+				dlFileEntry.buildTreePath(), dlFileEntry.getTreePath());
 		}
 	}
 
@@ -93,8 +87,7 @@ public class DLFileVersionLocalServiceTreeTestCase {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A");
 
 		FileEntry fileEntryAA = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(), _folder.getFolderId(),
-			"Entry AA.txt");
+			TestPropsValues.getGroupId(), _folder.getFolderId(), "Entry A.txt");
 
 		_fileEntries.add(fileEntryAA);
 	}

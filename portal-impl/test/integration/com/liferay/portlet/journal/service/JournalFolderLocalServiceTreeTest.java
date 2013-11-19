@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.TreeModel;
+import com.liferay.portal.service.BaseLocalServiceTreeTestCase;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -30,45 +32,46 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-
-public class GroupLocalServiceTreeTestCase
+public class JournalFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)
 		throws Exception {
 
-		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
+		long parentFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		if (parentTreeModel != null) {
-			Group group = (Group)parentTreeModel;
+			JournalFolder folder = (JournalFolder)parentTreeModel;
 
-			parentGroupId = group.getGroupId();
+			parentFolderId = folder.getFolderId();
 		}
 
-		Group group = GroupTestUtil.addGroup(
-			parentGroupId, ServiceTestUtil.randomString());
+		JournalFolder folder = JournalTestUtil.addFolder(
+			TestPropsValues.getGroupId(), parentFolderId,
+			ServiceTestUtil.randomString());
 
-		group.setTreePath(null);
+		folder.setTreePath(null);
 
-		return GroupLocalServiceUtil.updateGroup(group);
+		return JournalFolderLocalServiceUtil.updateJournalFolder(folder);
 	}
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
-		Group group = (Group)treeModel;
+		JournalFolder folder = (JournalFolder)treeModel;
 
-		GroupLocalServiceUtil.deleteGroup(group);
+		JournalFolderLocalServiceUtil.deleteFolder(folder);
 	}
 
 	@Override
 	protected TreeModel getTreeModel(long primaryKey) throws Exception {
-		return GroupLocalServiceUtil.getGroup(primaryKey);
+		return JournalFolderLocalServiceUtil.getFolder(primaryKey);
 	}
 
 	@Override
 	protected void rebuildTree() throws Exception {
-		GroupLocalServiceUtil.rebuildTree(TestPropsValues.getCompanyId());
+		JournalFolderLocalServiceUtil.rebuildTree(
+			TestPropsValues.getCompanyId());
 	}
 
 }

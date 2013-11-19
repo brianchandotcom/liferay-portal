@@ -17,7 +17,7 @@ package com.liferay.portlet.journal.service.permission;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.service.permission.BasePermissionTest;
+import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class JournalArticlePermissionTest extends BasePermissionTest {
+public class JournalArticlePermissionTest extends BasePermissionTestCase {
 
 	@Test
 	public void testContains() throws Exception {

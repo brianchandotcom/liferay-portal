@@ -563,21 +563,21 @@ public class GroupFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			setJoin(qPos, params1);
-
+			qPos.add(params1.get("site"));
+			qPos.add(params1.get("usersGroups"));
 			qPos.add(companyId);
 
 			if (doUnion) {
-				setJoin(qPos, params2);
-
+				qPos.add(params2.get("site"));
+				qPos.add(params2.get("groupOrg"));
 				qPos.add(companyId);
 
-				setJoin(qPos, params3);
-
+				qPos.add(params3.get("site"));
+				qPos.add(params3.get("groupsOrgs"));
 				qPos.add(companyId);
 
-				setJoin(qPos, params4);
-
+				qPos.add(params4.get("site"));
+				qPos.add(params4.get("groupsUserGroups"));
 				qPos.add(companyId);
 			}
 

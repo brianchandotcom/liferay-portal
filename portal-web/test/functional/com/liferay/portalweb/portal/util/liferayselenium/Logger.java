@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.io.File;
 
@@ -51,7 +50,7 @@ public class Logger {
 		WebDriver.Window window = options.window();
 
 		window.setPosition(new Point(1000, 50));
-		window.setSize(new Dimension(650, 850));
+		window.setSize(new Dimension(850, 1250));
 
 		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
@@ -64,6 +63,29 @@ public class Logger {
 		String command = (String)arguments[0];
 		String[] params = (String[])arguments[1];
 
+		sb.append("<li id=\"");
+		sb.append(command);
+		sb.append("\">");
+		sb.append("<ul onclick=\"toggle(event);\">");
+		sb.append("<div class= \"status\">");
+		sb.append("<div id=\"action");
+		sb.append(_actionCount);
+		sb.append("\" class=\"expand-toggle\">");
+		sb.append("+");
+		sb.append("</div>");
+		sb.append("<div id = 'test");
+		sb.append(_actionCount);
+		sb.append("'");
+		sb.append("class=\"expand-line");
+		sb.append(_actionCount);
+		sb.append("\" ");
+		sb.append(">");
+		sb.append("<a href='#image");
+		sb.append(_actionCount);
+		sb.append("'>");
+		sb.append("[");
+		sb.append(_actionCount);
+		sb.append("] ");
 		sb.append("Running <b>");
 		sb.append(command);
 		sb.append("</b>");
@@ -96,7 +118,55 @@ public class Logger {
 			}
 		}
 
-		log("actionCommandLog", sb.toString());
+		sb.append("</a>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</ul>");
+		sb.append("</li>");
+
+		log("actionCommandLog", sb.toString(), "action");
+
+		sb = new StringBundler();
+
+		sb.append("<div id='image");
+		sb.append(_actionCount);
+		sb.append("'>");
+		sb.append("[");
+		sb.append(_actionCount);
+		sb.append("] ");
+		sb.append("Running <b>");
+		sb.append(command);
+		sb.append("</b>");
+
+		for (int i = 0; i < paramsLength; i++) {
+			String locator = params[i];
+
+			if (Validator.isNotNull(locator)) {
+				sb.append(" with locator <b>");
+				sb.append(locator);
+				sb.append("</b>");
+			}
+
+			String locatorKey = params[i + 1];
+
+			if (Validator.isNotNull(locatorKey)) {
+				sb.append(" with locator-key <b>");
+				sb.append(locatorKey);
+				sb.append("</b>");
+			}
+
+			String value = params[i + 2];
+
+			if (Validator.isNotNull(value)) {
+				sb.append(" value <b>");
+				sb.append(value);
+				sb.append("</b>");
+			}
+		}
+
+		sb.append("</div>");
+		_actionCount++;
+		log("actionScreenShotLog", sb.toString(), "screenShot");
 	}
 
 	public void logError(
@@ -130,6 +200,10 @@ public class Logger {
 
 		sb = new StringBundler();
 
+		sb.append("<div class =\"testFail\" ");
+		sb.append("id = \"");
+		sb.append(_actionCount - 1);
+		sb.append("\">");
 		sb.append("<font color=\"red\">");
 		sb.append("Command failure <b>");
 		sb.append(method.getName());
@@ -152,8 +226,8 @@ public class Logger {
 
 		sb.append(": ");
 		sb.append(thowableMessage);
-
-		log("seleniumCommandLog", sb.toString());
+		sb.append("</div>");
+		log("actionCommandLog", sb.toString(), "selenium");
 
 		sb = new StringBundler();
 
@@ -182,6 +256,46 @@ public class Logger {
 		BaseTestCase.fail(sb.toString());
 	}
 
+	public void logScreenShots(Object[] arguments) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String fileName = (String)arguments[0];
+
+		if (_screenshotFileName.equals(fileName)) {
+			_screenshotCount++;
+		}
+		else {
+			_screenshotCount = 0;
+
+			_screenshotFileName = fileName;
+		}
+
+		_screenshotFileName = fileName;
+
+		String screenShotDir = _liferaySelenium.getProjectDir();
+
+		screenShotDir = StringUtil.replace(screenShotDir, "\\", "/");
+
+		sb.append("<img src=\'");
+		sb.append("file:///");
+		sb.append(screenShotDir);
+		sb.append("portal-web/test-results/functional/");
+		sb.append(_screenshotFileName);
+		sb.append("/");
+		sb.append(_screenshotFileName);
+		sb.append(_screenshotCount);
+		sb.append(".jpg\' ");
+		sb.append("alt=");
+		sb.append("\'");
+		sb.append(_screenshotFileName);
+		sb.append(_screenshotCount);
+		sb.append("\'");
+		sb.append(" width=\'950\' height=\'750\'' />");
+		sb.append("<hr />");
+
+		log("actionScreenShotLog", sb.toString(), "screenShot");
+	}
+
 	public void logSeleniumCommand(Method method, Object[] arguments) {
 		StringBundler sb = new StringBundler();
 
@@ -204,7 +318,7 @@ public class Logger {
 			}
 		}
 
-		log("seleniumCommandLog", sb.toString());
+		log("actionCommandLog", sb.toString(), "selenium");
 	}
 
 	public void send(Object[] arguments) {
@@ -413,29 +527,63 @@ public class Logger {
 		}
 	}
 
-	protected void log(String log, String message) {
+	protected void log(String log, String message, String type) {
 		StringBundler sb = new StringBundler();
 
 		sb.append("logger = window.document.getElementById('");
 		sb.append(log);
 		sb.append("');");
-		sb.append("var newLine = window.document.createElement('div');");
-		sb.append("newLine.setAttribute('class', 'line');");
-		sb.append("newLine.innerHTML = '");
-		sb.append(StringEscapeUtils.escapeEcmaScript(message));
-		sb.append("';");
-		sb.append("logger.appendChild(newLine);");
-		sb.append("logger.scrollTop = logger.scrollHeight;");
+
+		if (type.equals("selenium")) {
+			if (_actionCount == _seleniumCount) {
+				_seleniumCount++;
+				sb.append(
+					"var newAction = window.document.createElement('ul');");
+				sb.append("newAction.setAttribute('class', 'collapse');");
+				sb.append("newAction.setAttribute('id', 'collapseAction");
+				sb.append(_actionCount - 1);
+				sb.append("');");
+				sb.append("logger.appendChild(newAction);");
+			}
+
+			sb.append("var actionLog = window.document.getElementById('");
+			sb.append("collapseAction");
+			sb.append(_actionCount - 1);
+			sb.append("');");
+
+			sb.append("var newLine = window.document.createElement('div');");
+			sb.append("newLine.setAttribute('class', 'line');");
+			sb.append("newLine.innerHTML = '");
+			sb.append(StringEscapeUtils.escapeEcmaScript(message));
+			sb.append("';");
+			sb.append("actionLog.appendChild(newLine);");
+			sb.append("actionLog.scrollTop = logger.scrollHeight;");
+		}
+
+		else {
+			sb.append("var newLine = window.document.createElement('div');");
+			sb.append("newLine.setAttribute('class', 'line');");
+			sb.append("newLine.innerHTML = '");
+			sb.append(StringEscapeUtils.escapeEcmaScript(message));
+			sb.append("';");
+			sb.append("logger.appendChild(newLine);");
+			sb.append("logger.scrollTop = logger.scrollHeight;");
+		}
 
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
 	private static final String _TEST_BASEDIR = TestPropsValues.TEST_BASEDIR;
 
+	private int _actionCount = 1;
+	private int _currentToggleCount;
 	private int _errorCount;
 	private JavascriptExecutor _javascriptExecutor;
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
+	private int _screenshotCount = 0;
+	private String _screenshotFileName = "";
+	private int _seleniumCount = 2;
 	private WebDriver _webDriver = new FirefoxDriver();
 	private Stack<String> _xpathIdStack = new Stack<String>();
 

@@ -16,20 +16,40 @@
 			</h2>
 		</div>
 
-		<form>
-			<input checked="checked" id="actionCommandLogButton" name="log" onchange="radioCheck()" type="radio">
-				<label for="actionCommandLogButton">Action Command Log</label>
-			</input>
+		<span class="spanFormat">
+			<form>
+				<input checked="checked" id="actionCommandLogButton" name="log" onchange="radioCheck()" type="radio">
+					<label for="actionCommandLogButton">Action Command Log</label>
 
-			<input id="seleniumCommandLogButton" name="log" onchange="radioCheck()" type="radio">
-				<label for="seleniumCommandLogButton">Selenium Command Log</label>
-			</input>
-		</form>
+				<input id="xmlLogButton" name="log" onchange="radioCheck()" type="radio">
+					<label for="xmlLogButton">XML Log</label>
+			</form>
+		</span>
+
+		<span class="spanFormat">
+			<form>
+				<input id="actionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
+					<label for="actionScreenShotButton">Enable Screenshots </label>
+
+				<input checked="checked" id="nothingButton" name="log" onchange="radioCheck()" type="radio">
+					<label for="nothingButton">Disable Screenshots </label>
+
+			</form>
+		</span>
+
 
 		<div id="actionCommandLog" style="display: block;">
 		</div>
 
-		<div id="seleniumCommandLog" style="display: none;">
+		<div id="pageObjectXMLLog" style="display: none;">
+			<ul onclick="toggle(event);">
+				<#assign lineFolds = 0>
+
+				<#include "test_case_element_html.ftl">
+			</ul>
+		</div>
+
+		<div id="actionScreenShotLog" style="display: none;">
 		</div>
 
 		<div id="errorLog">
@@ -38,13 +58,6 @@
 			<p id="errorList">
 			</p>
 		</div>
-
-		<div id="pageObjectXMLLog">
-			<ul onclick="toggle(event);">
-				<#assign lineFolds = 0>
-
-				<#include "test_case_element_html.ftl">
-			</ul>
-		</div>
 	</body>
+	<#include "tail_html.ftl">
 </html>

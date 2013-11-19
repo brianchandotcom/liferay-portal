@@ -1,13 +1,30 @@
 <head>
-	<script type='text/javascript'>
+	<script type="text/javascript">
 		function radioCheck () {
-			if (document.getElementById("actionCommandLogButton").checked){
+			if ((document.getElementById("actionCommandLogButton").checked) && (document.getElementById("nothingButton").checked)){
 				document.getElementById("actionCommandLog").style.display = "block";
-				document.getElementById("seleniumCommandLog").style.display = "none";
+				document.getElementById("actionCommandLog").style.width = "99%";
+				document.getElementById("pageObjectXMLLog").style.display = "none";
+				document.getElementById("actionScreenShotLog").style.display = "none";
 			}
-			else if (document.getElementById("seleniumCommandLogButton").checked){
+			else if ((document.getElementById("actionCommandLogButton").checked) && (document.getElementById("actionScreenShotButton").checked)){
+				document.getElementById("actionCommandLog").style.display = "block";
+				document.getElementById("actionCommandLog").style.width = "46%";
+				document.getElementById("pageObjectXMLLog").style.display = "none";
+				document.getElementById("actionScreenShotLog").style.display = "block";
+			}
+
+			else if ((document.getElementById("xmlLogButton").checked) && (document.getElementById("nothingButton").checked)){
 				document.getElementById("actionCommandLog").style.display = "none";
-				document.getElementById("seleniumCommandLog").style.display = "block";
+				document.getElementById("pageObjectXMLLog").style.width = "99%";
+				document.getElementById("pageObjectXMLLog").style.display = "block";
+				document.getElementById("actionScreenShotLog").style.display = "none";
+			}
+			else if ((document.getElementById("xmlLogButton").checked) && (document.getElementById("actionScreenShotButton").checked)){
+				document.getElementById("actionCommandLog").style.display = "none";
+				document.getElementById("pageObjectXMLLog").style.width = "46%";
+				document.getElementById("pageObjectXMLLog").style.display = "block";
+				document.getElementById("actionScreenShotLog").style.display = "block";
 			}
 		}
 
@@ -76,10 +93,20 @@
 
 		#actionCommandLog {
 			border: 1px solid #CCC;
-			height: 30%;
+			float:left;
+			height: 75%;
 			overflow: auto;
+			width: 99%;
 			white-space: nowrap;
-			width: 100%;
+		}
+
+		#actionScreenShotLog {
+			border: 1px solid #CCC;
+			float:left;
+			height: 75%;
+			overflow: auto;
+			width: 53%;
+			white-space: nowrap;
 		}
 
 		#errorLog {
@@ -87,23 +114,16 @@
 			height: 12%;
 			overflow: auto;
 			white-space: nowrap;
-			width: 100%;
+			width: 99%;
 		}
 
 		#pageObjectXMLLog {
-			height: 64%;
-			margin: 0px;
-			overflow: auto;
-			padding: 0px;
-			width: 100%;
-		}
-
-		#seleniumCommandLog {
 			border: 1px solid #CCC;
-			height: 30%;
+			float:left;
+			height: 75%;
 			overflow: auto;
+			width: 99%;
 			white-space: nowrap;
-			width: 100%;
 		}
 
 		#title {
@@ -178,5 +198,13 @@
 		.tag {
 			color: green;
 		}
+
+		.spanFormat
+			{
+			  text-align: left;
+			  display: table-cell;
+			  min-width: 800px;
+			  padding-right: 10px;
+			}
 	</style>
 </head>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.io.File;
 
@@ -66,57 +67,26 @@ public class Logger {
 		sb.append("<li id=\"");
 		sb.append(command);
 		sb.append("\">");
+
 		sb.append("<ul onclick=\"toggle(event);\">");
-		sb.append("<div class= \"status\">");
-		sb.append("<div id=\"action");
+
+		sb.append("<div class=\"status\">");
+
+		sb.append("<div class=\"expand-toggle\" id=\"action");
 		sb.append(_actionCount);
-		sb.append("\" class=\"expand-toggle\">");
-		sb.append("+");
-		sb.append("</div>");
-		sb.append("<div id = 'test");
+		sb.append("\">+</div>");
+
+		sb.append("<div class=\"expand-line");
 		sb.append(_actionCount);
-		sb.append("'");
-		sb.append("class=\"expand-line");
+		sb.append("\" id=\"test");
 		sb.append(_actionCount);
-		sb.append("\" ");
-		sb.append(">");
+		sb.append("\">");
+
 		sb.append("<a href='#image");
 		sb.append(_actionCount);
 		sb.append("'>");
-		sb.append("[");
-		sb.append(_actionCount);
-		sb.append("] ");
-		sb.append("Running <b>");
-		sb.append(command);
-		sb.append("</b>");
 
-		int paramsLength = params.length / 3;
-
-		for (int i = 0; i < paramsLength; i++) {
-			String locator = params[i];
-
-			if (Validator.isNotNull(locator)) {
-				sb.append(" with locator <b>");
-				sb.append(locator);
-				sb.append("</b>");
-			}
-
-			String locatorKey = params[i + 1];
-
-			if (Validator.isNotNull(locatorKey)) {
-				sb.append(" with locator-key <b>");
-				sb.append(locatorKey);
-				sb.append("</b>");
-			}
-
-			String value = params[i + 2];
-
-			if (Validator.isNotNull(value)) {
-				sb.append(" value <b>");
-				sb.append(value);
-				sb.append("</b>");
-			}
-		}
+		sb.append(getActionCommand(command, params));
 
 		sb.append("</a>");
 		sb.append("</div>");
@@ -128,44 +98,16 @@ public class Logger {
 
 		sb = new StringBundler();
 
-		sb.append("<div id='image");
+		sb.append("<div id=\"image");
 		sb.append(_actionCount);
-		sb.append("'>");
-		sb.append("[");
-		sb.append(_actionCount);
-		sb.append("] ");
-		sb.append("Running <b>");
-		sb.append(command);
-		sb.append("</b>");
+		sb.append("\">");
 
-		for (int i = 0; i < paramsLength; i++) {
-			String locator = params[i];
-
-			if (Validator.isNotNull(locator)) {
-				sb.append(" with locator <b>");
-				sb.append(locator);
-				sb.append("</b>");
-			}
-
-			String locatorKey = params[i + 1];
-
-			if (Validator.isNotNull(locatorKey)) {
-				sb.append(" with locator-key <b>");
-				sb.append(locatorKey);
-				sb.append("</b>");
-			}
-
-			String value = params[i + 2];
-
-			if (Validator.isNotNull(value)) {
-				sb.append(" value <b>");
-				sb.append(value);
-				sb.append("</b>");
-			}
-		}
+		sb.append(getActionCommand(command, params));
 
 		sb.append("</div>");
+
 		_actionCount++;
+
 		log("actionScreenShotLog", sb.toString(), "screenShot");
 	}
 
@@ -200,10 +142,6 @@ public class Logger {
 
 		sb = new StringBundler();
 
-		sb.append("<div class =\"testFail\" ");
-		sb.append("id = \"");
-		sb.append(_actionCount - 1);
-		sb.append("\">");
 		sb.append("<font color=\"red\">");
 		sb.append("Command failure <b>");
 		sb.append(method.getName());
@@ -226,7 +164,7 @@ public class Logger {
 
 		sb.append(": ");
 		sb.append(thowableMessage);
-		sb.append("</div>");
+
 		log("actionCommandLog", sb.toString(), "selenium");
 
 		sb = new StringBundler();
@@ -276,21 +214,18 @@ public class Logger {
 
 		screenShotDir = StringUtil.replace(screenShotDir, "\\", "/");
 
-		sb.append("<img src=\'");
-		sb.append("file:///");
+		sb.append("<img alt=\"");
+		sb.append(_screenshotFileName);
+		sb.append(_screenshotCount);
+		sb.append("\" height=\"750\" src=\"file:///");
 		sb.append(screenShotDir);
 		sb.append("portal-web/test-results/functional/");
 		sb.append(_screenshotFileName);
 		sb.append("/");
 		sb.append(_screenshotFileName);
 		sb.append(_screenshotCount);
-		sb.append(".jpg\' ");
-		sb.append("alt=");
-		sb.append("\'");
-		sb.append(_screenshotFileName);
-		sb.append(_screenshotCount);
-		sb.append("\'");
-		sb.append(" width=\'950\' height=\'750\'' />");
+		sb.append(".jpg\" width=\"950\" />");
+
 		sb.append("<hr />");
 
 		log("actionScreenShotLog", sb.toString(), "screenShot");
@@ -514,6 +449,47 @@ public class Logger {
 		return sb.toString();
 	}
 
+	protected String getActionCommand(String command, String[] params) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("[");
+		sb.append(_actionCount);
+		sb.append("] ");
+		sb.append("Running <b>");
+		sb.append(command);
+		sb.append("</b>");
+
+		int paramsLength = params.length / 3;
+
+		for (int i = 0; i < paramsLength; i++) {
+			String locator = params[i];
+
+			if (Validator.isNotNull(locator)) {
+				sb.append(" with locator <b>");
+				sb.append(locator);
+				sb.append("</b>");
+			}
+
+			String locatorKey = params[i + 1];
+
+			if (Validator.isNotNull(locatorKey)) {
+				sb.append(" with locator-key <b>");
+				sb.append(locatorKey);
+				sb.append("</b>");
+			}
+
+			String value = params[i + 2];
+
+			if (Validator.isNotNull(value)) {
+				sb.append(" value <b>");
+				sb.append(value);
+				sb.append("</b>");
+			}
+		}
+
+		return sb.toString();
+	}
+
 	protected String getLogElementText(String xpath) {
 		try {
 			WebElement webElement = _webDriver.findElement(By.xpath(xpath));
@@ -537,12 +513,15 @@ public class Logger {
 		if (type.equals("selenium")) {
 			if (_actionCount == _seleniumCount) {
 				_seleniumCount++;
+
 				sb.append(
 					"var newAction = window.document.createElement('ul');");
+
 				sb.append("newAction.setAttribute('class', 'collapse');");
 				sb.append("newAction.setAttribute('id', 'collapseAction");
 				sb.append(_actionCount - 1);
 				sb.append("');");
+
 				sb.append("logger.appendChild(newAction);");
 			}
 
@@ -552,21 +531,28 @@ public class Logger {
 			sb.append("');");
 
 			sb.append("var newLine = window.document.createElement('div');");
+
 			sb.append("newLine.setAttribute('class', 'line');");
+
 			sb.append("newLine.innerHTML = '");
 			sb.append(StringEscapeUtils.escapeEcmaScript(message));
 			sb.append("';");
+
 			sb.append("actionLog.appendChild(newLine);");
+
 			sb.append("actionLog.scrollTop = logger.scrollHeight;");
 		}
-
 		else {
 			sb.append("var newLine = window.document.createElement('div');");
+
 			sb.append("newLine.setAttribute('class', 'line');");
+
 			sb.append("newLine.innerHTML = '");
 			sb.append(StringEscapeUtils.escapeEcmaScript(message));
 			sb.append("';");
+
 			sb.append("logger.appendChild(newLine);");
+
 			sb.append("logger.scrollTop = logger.scrollHeight;");
 		}
 
@@ -575,15 +561,14 @@ public class Logger {
 
 	private static final String _TEST_BASEDIR = TestPropsValues.TEST_BASEDIR;
 
-	private int _actionCount = 1;
-	private int _currentToggleCount;
+	private int _actionCount;
 	private int _errorCount;
 	private JavascriptExecutor _javascriptExecutor;
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
-	private int _screenshotCount = 0;
+	private int _screenshotCount;
 	private String _screenshotFileName = "";
-	private int _seleniumCount = 2;
+	private int _seleniumCount = 1;
 	private WebDriver _webDriver = new FirefoxDriver();
 	private Stack<String> _xpathIdStack = new Stack<String>();
 

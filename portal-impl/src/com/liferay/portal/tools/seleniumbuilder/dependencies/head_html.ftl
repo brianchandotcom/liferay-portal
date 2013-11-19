@@ -1,30 +1,38 @@
 <head>
-	<script type="text/javascript">
+	<script type='text/javascript'>
 		function radioCheck () {
-			if ((document.getElementById("actionCommandLogButton").checked) && (document.getElementById("nothingButton").checked)){
-				document.getElementById("actionCommandLog").style.display = "block";
-				document.getElementById("actionCommandLog").style.width = "99%";
-				document.getElementById("pageObjectXMLLog").style.display = "none";
-				document.getElementById("actionScreenShotLog").style.display = "none";
-			}
-			else if ((document.getElementById("actionCommandLogButton").checked) && (document.getElementById("actionScreenShotButton").checked)){
-				document.getElementById("actionCommandLog").style.display = "block";
-				document.getElementById("actionCommandLog").style.width = "46%";
-				document.getElementById("pageObjectXMLLog").style.display = "none";
-				document.getElementById("actionScreenShotLog").style.display = "block";
-			}
+			var actionCommandLogButtonChecked = document.getElementById("actionCommandLogButton").checked;
+			var disableActionScreenShotButtonChecked = document.getElementById("disableActionScreenShotButton").checked;
+			var enableActionScreenShotButtonChecked = document.getElementById("enableActionScreenShotButton").checked;
+			var xmlLogButtonChecked = document.getElementById("xmlLogButton").checked;
 
-			else if ((document.getElementById("xmlLogButton").checked) && (document.getElementById("nothingButton").checked)){
-				document.getElementById("actionCommandLog").style.display = "none";
-				document.getElementById("pageObjectXMLLog").style.width = "99%";
-				document.getElementById("pageObjectXMLLog").style.display = "block";
-				document.getElementById("actionScreenShotLog").style.display = "none";
+			var actionCommandLog = document.getElementById("actionCommandLog");
+			var actionScreenShotLog = document.getElementById("actionScreenShotLog");
+			var pageObjectXMLLog = document.getElementById("pageObjectXMLLog");
+
+			if ((actionCommandLogButtonChecked) && (disableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "block";
+				actionCommandLog.style.width = "99%";
+				actionScreenShotLog.style.display = "none";
+				pageObjectXMLLog.style.display = "none";
 			}
-			else if ((document.getElementById("xmlLogButton").checked) && (document.getElementById("actionScreenShotButton").checked)){
-				document.getElementById("actionCommandLog").style.display = "none";
-				document.getElementById("pageObjectXMLLog").style.width = "46%";
-				document.getElementById("pageObjectXMLLog").style.display = "block";
-				document.getElementById("actionScreenShotLog").style.display = "block";
+			else if ((actionCommandLogButtonChecked) && (enableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "block";
+				actionCommandLog.style.width = "46%";
+				actionScreenShotLog.style.display = "block";
+				pageObjectXMLLog.style.display = "none";
+			}
+			else if ((xmlLogButtonChecked) && (disableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "none";
+				actionScreenShotLog.style.display = "none";
+				pageObjectXMLLog.style.width = "99%";
+				pageObjectXMLLog.style.display = "block";
+			}
+			else if ((xmlLogButtonChecked) && (enableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "none";
+				actionScreenShotLog.style.display = "block";
+				pageObjectXMLLog.style.width = "46%";
+				pageObjectXMLLog.style.display = "block";
 			}
 		}
 
@@ -93,20 +101,20 @@
 
 		#actionCommandLog {
 			border: 1px solid #CCC;
-			float:left;
+			float: left;
 			height: 75%;
 			overflow: auto;
-			width: 99%;
 			white-space: nowrap;
+			width: 99%;
 		}
 
 		#actionScreenShotLog {
 			border: 1px solid #CCC;
-			float:left;
+			float: left;
 			height: 75%;
 			overflow: auto;
-			width: 53%;
 			white-space: nowrap;
+			width: 53%;
 		}
 
 		#errorLog {
@@ -119,11 +127,11 @@
 
 		#pageObjectXMLLog {
 			border: 1px solid #CCC;
-			float:left;
+			float: left;
 			height: 75%;
 			overflow: auto;
-			width: 99%;
 			white-space: nowrap;
+			width: 99%;
 		}
 
 		#title {
@@ -168,6 +176,13 @@
 			margin-right: 5px;
 		}
 
+		.options {
+			display: table-cell;
+			min-width: 800px;
+			padding-right: 10px;
+			text-align: left;
+		}
+
 		.parameter-border {
 			background-color: white;
 			border-style: inset;
@@ -198,13 +213,5 @@
 		.tag {
 			color: green;
 		}
-
-		.spanFormat
-			{
-			  text-align: left;
-			  display: table-cell;
-			  min-width: 800px;
-			  padding-right: 10px;
-			}
 	</style>
 </head>

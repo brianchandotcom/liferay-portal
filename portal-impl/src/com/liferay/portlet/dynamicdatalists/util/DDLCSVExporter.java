@@ -16,16 +16,12 @@ package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -46,13 +42,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			OrderByComparator orderByComparator)
 		throws Exception {
 
-		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
-			recordSetId);
-
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(
-			LocaleUtil.toLanguageId(getLocale()));
+		Map<String, Map<String, String>> fieldsMap = getFieldsMap(recordSetId);
 
 		StringBundler sb = new StringBundler();
 

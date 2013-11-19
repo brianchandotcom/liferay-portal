@@ -713,6 +713,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		layoutSetModelImpl._originalLayoutSetPrototypeUuid = layoutSetModelImpl._layoutSetPrototypeUuid;
 
+		setVirtualHostname(null);
+
 		layoutSetModelImpl._columnBitmask = 0;
 	}
 

@@ -1063,6 +1063,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureModelImpl._originalDescription = ddmStructureModelImpl._description;
 
+		setDocument(null);
+
+		setLocalizedFieldsMap(null);
+
+		setLocalizedTransientFieldsMap(null);
+
 		ddmStructureModelImpl._columnBitmask = 0;
 	}
 

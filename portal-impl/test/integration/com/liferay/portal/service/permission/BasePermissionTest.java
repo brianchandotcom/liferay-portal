@@ -12,60 +12,79 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.portal.service.permission;
 
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
-import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.portal.util.UserTestUtil;
 
 import org.junit.After;
 import org.junit.Before;
 
 /**
- * @author Alexander Chow
+ * @author Shinn Lok
  */
-public abstract class BaseDLAppTestCase {
+public abstract class BasePermissionTest {
 
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+		user = UserTestUtil.addUser();
 
-		parentFolder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Test Folder", true);
+		serviceContext = ServiceTestUtil.getServiceContext(group.getGroupId());
 
-		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
-			ActionKeys.VIEW);
+		doSetUp();
+
+		ServiceTestUtil.setUser(user);
+
+		permissionChecker = PermissionThreadLocal.getPermissionChecker();
+
+		addPortletModelViewPermission();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
 		GroupLocalServiceUtil.deleteGroup(group);
+		UserLocalServiceUtil.deleteUser(user);
 
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		removePortletModelViewPermission();
+	}
+
+	protected void addPortletModelViewPermission() throws Exception {
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.GUEST, getResourceName(),
 			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
 			ActionKeys.VIEW);
 	}
 
-	protected static final String CONTENT =
-		"Content: Enterprise. Open Source. For Life.";
+	protected abstract void doSetUp() throws Exception;
+
+	protected abstract String getResourceName();
+
+	protected void removePortletModelViewPermission() throws Exception {
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, getResourceName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
+			ActionKeys.VIEW);
+	}
 
 	protected Group group;
-	protected Folder parentFolder;
+	protected PermissionChecker permissionChecker;
+	protected ServiceContext serviceContext;
+	protected User user;
 
 }

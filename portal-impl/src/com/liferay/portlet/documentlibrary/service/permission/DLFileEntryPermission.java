@@ -101,7 +101,15 @@ public class DLFileEntryPermission {
 
 			long dlFolderId = dlFileEntry.getFolderId();
 
-			if (dlFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (dlFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				if (!DLPermission.contains(
+						permissionChecker, dlFileEntry.getGroupId(),
+						actionId)) {
+
+					return false;
+				}
+			}
+			else {
 				try {
 					DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
 						dlFolderId);

@@ -66,9 +66,16 @@ public class ShoppingItemPermission {
 		if (actionId.equals(ActionKeys.VIEW) &&
 			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
-			if (item.getCategoryId() !=
+			if (item.getCategoryId() ==
 					ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
+				if (!ShoppingPermission.contains(
+						permissionChecker, item.getGroupId(), actionId)) {
+
+					return false;
+				}
+			}
+			else {
 				ShoppingCategory category = item.getCategory();
 
 				if (!ShoppingCategoryPermission.contains(

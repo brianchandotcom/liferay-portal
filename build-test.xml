@@ -1240,13 +1240,16 @@
 		<mkdir dir="test-results" />
 
 		<junitreport todir="test-results">
-			<fileset dir="portal-impl/test-results">
+			<fileset dir="portal-impl/test-results" erroronmissingdir="false">
 				<include name="**/TEST-*.xml" />
 			</fileset>
-			<fileset dir="portal-service/test-results">
+			<fileset dir="portal-service/test-results" erroronmissingdir="false">
 				<include name="**/TEST-*.xml" />
 			</fileset>
-			<fileset dir="util-java/test-results">
+			<fileset dir="portal-web/test-results" erroronmissingdir="false">
+				<include name="**/TEST-*.xml" />
+			</fileset>
+			<fileset dir="util-java/test-results" erroronmissingdir="false">
 				<include name="**/TEST-*.xml" />
 			</fileset>
 			<report format="frames" todir="test-results/html" />

@@ -47,6 +47,10 @@
 	a.close-note {
 		float: right;
 	}
+
+	.note-content {
+		word-break: break-all;
+	}
 }
 
 .ie6 {

@@ -17,9 +17,7 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-List<AssetRendererFactory> classTypesAssetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
-String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String rootPortletId = (String)request.getAttribute("configuration.jsp-rootPortletId");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
@@ -44,6 +42,8 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 		<aui:fieldset label="model.resource.com.liferay.portlet.asset">
 
 			<%
+			boolean enablePermissions = AssetUtil.isEnablePermissions(portletPreferences, portletName);
+
 			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
 			%>
 
@@ -99,10 +99,6 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 			</c:if>
 
 			<%
-			classNameIds = availableClassNameIds;
-
-			String portletId = portletResource;
-
 			for (long groupId : groupIds) {
 			%>
 

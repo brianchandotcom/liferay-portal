@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, allAssetCategoryIds, assetEntryXmls, allAssetTagNames, false, enablePermissions);
+List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, allAssetCategoryIds, assetEntryXmls, allAssetTagNames, false, assetEntryQuery.isEnablePermissions());
 
 searchContainer.setTotal(assetEntries.size());
 

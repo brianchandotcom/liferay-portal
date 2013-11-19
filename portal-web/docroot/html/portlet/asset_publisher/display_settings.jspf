@@ -89,7 +89,7 @@
 
 	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
 
-	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= defaultAssetPublisher %>" />
+	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource) %>" />
 
 	<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
 		<div class="field-row">
@@ -114,7 +114,7 @@
 	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
 
 	<c:if test="<%= rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) || rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) || !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
-		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= enablePermissions %>" />
+		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= AssetUtil.isEnablePermissions(portletPreferences, portletName) %>" />
 	</c:if>
 
 	<c:choose>
@@ -131,6 +131,20 @@
 	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
 
 	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+
+	<%
+	boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
+
+	String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", null);
+
+	if (Validator.isNull(socialBookmarksDisplayStyle)) {
+		String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+
+		socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
+	}
+
+	String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
+	%>
 
 	<liferay-ui:social-bookmarks-settings
 		displayPosition="<%= socialBookmarksDisplayPosition %>"

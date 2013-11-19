@@ -332,9 +332,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteMembershipRequests(long className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Removes all the social requests for the receiving user.
 	*
@@ -364,6 +361,9 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	*/
 	public void deleteRequest(
 		com.liferay.portlet.social.model.SocialRequest request)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteRequests(long className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

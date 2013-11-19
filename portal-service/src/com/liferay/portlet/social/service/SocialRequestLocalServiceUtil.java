@@ -365,11 +365,6 @@ public class SocialRequestLocalServiceUtil {
 			extraData, receiverUserId);
 	}
 
-	public static void deleteMembershipRequests(long className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteMembershipRequests(className, classPK);
-	}
-
 	/**
 	* Removes all the social requests for the receiving user.
 	*
@@ -405,6 +400,11 @@ public class SocialRequestLocalServiceUtil {
 		com.liferay.portlet.social.model.SocialRequest request)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteRequest(request);
+	}
+
+	public static void deleteRequests(long className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRequests(className, classPK);
 	}
 
 	/**

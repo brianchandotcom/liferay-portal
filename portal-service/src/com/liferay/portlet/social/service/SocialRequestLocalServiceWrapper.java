@@ -385,12 +385,6 @@ public class SocialRequestLocalServiceWrapper
 			className, classPK, type, extraData, receiverUserId);
 	}
 
-	@Override
-	public void deleteMembershipRequests(long className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_socialRequestLocalService.deleteMembershipRequests(className, classPK);
-	}
-
 	/**
 	* Removes all the social requests for the receiving user.
 	*
@@ -429,6 +423,12 @@ public class SocialRequestLocalServiceWrapper
 		com.liferay.portlet.social.model.SocialRequest request)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_socialRequestLocalService.deleteRequest(request);
+	}
+
+	@Override
+	public void deleteRequests(long className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialRequestLocalService.deleteRequests(className, classPK);
 	}
 
 	/**

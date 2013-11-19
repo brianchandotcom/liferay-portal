@@ -16,7 +16,7 @@ package com.liferay.portlet.shopping.service.permission;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.service.permission.BasePermissionTest;
+import com.liferay.portal.service.permission.BasePermissionTestCase;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
@@ -32,7 +32,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class ShoppingCategoryPermissionTest extends BasePermissionTest {
+public class ShoppingCategoryPermissionTest extends BasePermissionTestCase {
 
 	@Test
 	public void testContains() throws Exception {

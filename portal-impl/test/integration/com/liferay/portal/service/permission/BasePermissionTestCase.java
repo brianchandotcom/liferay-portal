@@ -36,7 +36,7 @@ import org.junit.Before;
 /**
  * @author Shinn Lok
  */
-public abstract class BasePermissionTest {
+public abstract class BasePermissionTestCase {
 
 	@Before
 	public void setUp() throws Exception {

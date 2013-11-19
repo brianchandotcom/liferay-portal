@@ -171,14 +171,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				String title = DLUtil.getTitleWithExtension(
 					dlFileEntry.getTitle(), dlFileEntry.getExtension());
 
-				String mimeType = null;
-
-				try {
-					mimeType = MimeTypesUtil.getContentType(inputStream, title);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-				}
+				String mimeType = getMimeType(inputStream, title);
 
 				if (mimeType.equals(originalMimeType)) {
 					return;
@@ -238,14 +231,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				String title = DLUtil.getTitleWithExtension(
 					dlFileVersion.getTitle(), dlFileVersion.getExtension());
 
-				String mimeType = null;
-
-				try {
-					mimeType = MimeTypesUtil.getContentType(inputStream, title);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
-				}
+				String mimeType = getMimeType(inputStream, title);
 
 				if (mimeType.equals(originalMimeType)) {
 					return;
@@ -395,6 +381,19 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		updateFileEntryAssets();
 		updateFolderAssets();
 		verifyTree();
+	}
+
+	protected String getMimeType(InputStream inputStream, String title) {
+		String mimeType = null;
+
+		try {
+			mimeType = MimeTypesUtil.getContentType(inputStream, title);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+
+		return mimeType;
 	}
 
 	protected void removeOrphanedDLFileEntries() throws Exception {

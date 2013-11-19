@@ -3,9 +3,12 @@
 <#assign displayElementName = displayElement.getName()>
 
 <#if
+	(displayElementName == "and") ||
 	(displayElementName == "command") ||
 	(displayElementName == "elseif") ||
-	(displayElementName == "if")
+	(displayElementName == "if") ||
+	(displayElementName == "not") ||
+	(displayElementName == "or")
 >
 	<#assign collapsed = false>
 </#if>

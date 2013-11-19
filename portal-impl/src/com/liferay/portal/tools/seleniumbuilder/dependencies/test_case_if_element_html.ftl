@@ -1,4 +1,6 @@
-<#if ifElement.element("condition")??>
+<#if ifElement.element("and")??>
+	<#assign ifConditionalElement = ifElement.element("and")>
+<#elseif ifElement.element("condition")??>
 	<#assign ifConditionalElement = ifElement.element("condition")>
 <#elseif ifElement.element("contains")??>
 	<#assign ifConditionalElement = ifElement.element("contains")>
@@ -8,6 +10,8 @@
 	<#assign ifConditionalElement = ifElement.element("isset")>
 <#elseif ifElement.element("not")??>
 	<#assign ifConditionalElement = ifElement.element("not")>
+<#elseif ifElement.element("or")??>
+	<#assign ifConditionalElement = ifElement.element("or")>
 </#if>
 
 <#include "test_case_if_conditional_element_html.ftl">

@@ -465,7 +465,7 @@ public class BookmarksFolderLocalServiceImpl
 					return bookmarksFolderPersistence.findByF_C_P_NotS(
 						previousId, companyId, parentPrimaryKey,
 						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
-						size, new FolderIdComparator());
+						size, new FolderIdComparator(true));
 				}
 
 			}

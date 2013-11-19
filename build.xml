@@ -877,32 +877,6 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<echo file="git-commit-portal">${git.commit.portal.rev.parse}</echo>
 	</target>
 
-	<target name="record-svn-revision">
-		<exec dir="${project.dir}" executable="cmd.exe" os="${os.windows}" outputproperty="svn.info.output">
-			<arg line="/c svn info" />
-		</exec>
-
-		<script classpathref="project.classpath" language="beanshell">
-			String svnInfoOutput = project.getProperty("svn.info.output");
-
-			int x = svnInfoOutput.indexOf("Revision: ");
-
-			x = svnInfoOutput.indexOf(" ", x);
-
-			int y = svnInfoOutput.indexOf("Node ", x);
-
-			String revision = svnInfoOutput.substring(x, y).trim();
-
-			project.setProperty("svn.info.revision", revision);
-		</script>
-
-		<echo file="svn-revision">Revision: ${svn.info.revision}
-Username: ${svn.username}
-Password: ${svn.password}
-Portal: ${lp.source.dir}
-Plugins: ${lp.plugins.dir}</echo>
-	</target>
-
 	<target name="setup-jrebel">
 		<setup-jrebel />
 	</target>

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-websphere-7.0" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-websphere" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="run-selenium-websphere-7.0">
+	<target name="run-selenium-websphere">
 		<echo file="app.server.${user.name}.properties">app.server.type=websphere</echo>
 
 		<if>
@@ -25,14 +25,14 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-websphere-7.0">
+		<antcall target="run-websphere">
 			<param name="test.class" value="${test.name}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />
 	</target>
 
-	<target name="run-websphere-7.0">
+	<target name="run-websphere">
 		<antcall target="clean-up-logs" />
 
 		<record action="start" name="log" />

@@ -40,6 +40,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.ResourcePermissionTestUtil;
 import com.liferay.portal.util.ResourceTypePermissionTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.util.ArrayList;
@@ -180,6 +181,26 @@ public class GroupFinderTest {
 		Assert.assertTrue(groups.isEmpty());
 	}
 
+	@Test
+	public void testVerifyFindByCompanyIdQuery1() throws Exception {
+		verifyThatFindByCompanyIdVerifyIsValid(true, true);
+	}
+
+	@Test
+	public void testVerifyFindByCompanyIdQuery2() throws Exception {
+		verifyThatFindByCompanyIdVerifyIsValid(false, true);
+	}
+
+	@Test
+	public void testVerifyFindByCompanyIdQuery3() throws Exception {
+		verifyThatFindByCompanyIdVerifyIsValid(true, false);
+	}
+
+	@Test
+	public void testVerifyFindByCompanyIdQuery4() throws Exception {
+		verifyThatFindByCompanyIdVerifyIsValid(false, false);
+	}
+
 	protected void addLayout(long groupId) throws Exception {
 		LayoutTestUtil.addLayout(
 			groupId, ServiceTestUtil.randomString(), false);
@@ -215,6 +236,24 @@ public class GroupFinderTest {
 	protected List<Group> findByLayouts(long parentGroupId) throws Exception {
 		return GroupFinderUtil.findByLayouts(
 			TestPropsValues.getCompanyId(), parentGroupId, true, -1, -1);
+	}
+
+	protected void verifyThatFindByCompanyIdVerifyIsValid(
+			boolean inherit, boolean site)
+		throws Exception {
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("inherit", Boolean.FALSE);
+		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("usersGroups", TestPropsValues.getUserId());
+
+		List<Group> list = GroupFinderUtil.findByCompanyId(
+			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS,  new GroupNameComparator(true));
+
+		Assert.assertTrue( list.size() > 0 );
 	}
 
 	private static ResourceAction _arbitraryResourceAction;

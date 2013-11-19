@@ -1759,6 +1759,20 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	/**
+	* Returns the user with the portraitId.
+	*
+	* @param portraitId the user's portraitId
+	* @return the user with the portraitId, or <code>null</code> if a user with
+	the portraitId could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.User fetchUserByPortraitId(long portraitId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.fetchUserByPortraitId(portraitId);
+	}
+
+	/**
 	* Returns the user with the screen name.
 	*
 	* @param companyId the primary key of the user's company

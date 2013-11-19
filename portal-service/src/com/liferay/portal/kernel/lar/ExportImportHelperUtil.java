@@ -167,6 +167,12 @@ public class ExportImportHelperUtil {
 			exportReferencedContent);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportContentReferences(PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel,
+	 *             com.liferay.portal.kernel.xml.Element, String, boolean)}
+	 */
 	public static String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
@@ -177,6 +183,22 @@ public class ExportImportHelperUtil {
 			importReferencedContent);
 	}
 
+	public static String replaceImportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean importReferencedContent)
+		throws Exception {
+
+		return getExportImportHelper().replaceImportContentReferences(
+			portletDataContext, entityStagedModel, entityElement, content,
+			importReferencedContent);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportDLReferences(PortletDataContext,
+	 *             com.liferay.portal.model.StagedModel, String, boolean)}
+	 */
 	public static String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
@@ -184,6 +206,17 @@ public class ExportImportHelperUtil {
 
 		return getExportImportHelper().replaceImportDLReferences(
 			portletDataContext, entityElement, content,
+			importReferencedContent);
+	}
+
+	public static String replaceImportDLReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean importReferencedContent)
+		throws Exception {
+
+		return getExportImportHelper().replaceImportDLReferences(
+			portletDataContext, entityStagedModel, content,
 			importReferencedContent);
 	}
 

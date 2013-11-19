@@ -16,32 +16,35 @@
 			</h2>
 		</div>
 
-		<span class="spanFormat">
+		<div class="options">
 			<form>
-				<input checked="checked" id="actionCommandLogButton" name="log" onchange="radioCheck()" type="radio">
+				<input id="actionCommandLogButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="actionCommandLogButton">Action Command Log</label>
+				</input>
 
-				<input id="xmlLogButton" name="log" onchange="radioCheck()" type="radio">
+				<input checked="checked" id="xmlLogButton" name="log" onchange="radioCheck()" type="radio">
 					<label for="xmlLogButton">XML Log</label>
+				</input>
 			</form>
-		</span>
-
-		<span class="spanFormat">
-			<form>
-				<input id="actionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
-					<label for="actionScreenShotButton">Enable Screenshots </label>
-
-				<input checked="checked" id="nothingButton" name="log" onchange="radioCheck()" type="radio">
-					<label for="nothingButton">Disable Screenshots </label>
-
-			</form>
-		</span>
-
-
-		<div id="actionCommandLog" style="display: block;">
 		</div>
 
-		<div id="pageObjectXMLLog" style="display: none;">
+		<div class="options">
+			<form>
+				<input id="enableActionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
+					<label for="enableActionScreenShotButton">Enable Screenshots </label>
+				</input>
+
+				<input checked="checked" id="disableActionScreenShotButton" name="log" onchange="radioCheck()" type="radio">
+					<label for="disableActionScreenShotButton">Disable Screenshots </label>
+				</input>
+			</form>
+		</div>
+
+
+		<div id="actionCommandLog" style="display: none;">
+		</div>
+
+		<div id="pageObjectXMLLog" style="display: block;">
 			<ul onclick="toggle(event);">
 				<#assign lineFolds = 0>
 
@@ -59,5 +62,4 @@
 			</p>
 		</div>
 	</body>
-	<#include "tail_html.ftl">
 </html>

@@ -1125,8 +1125,13 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<fileset
 						dir="test/integration"
 						excludes="**/${test.package.dir}/*PersistenceTest.java"
+						id="test.integration.other"
 						includes="**/${test.package.dir}/*Test.java"
-					/>
+					>
+						<not>
+							<contains text="public abstract class" />
+						</not>
+					</fileset>
 				</resourcecount>
 
 				<if>
@@ -1134,11 +1139,27 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<equals arg1="${test.integration.other.count}" arg2="0" />
 					</not>
 					<then>
-						<var name="test.class" value="**/${test.package.dir}/*Test" />
+						<propertyregex
+							global="true"
+							input="${toString:test.integration.other}"
+							property="test.integration.other"
+							regexp="\.java"
+							replace=".class"
+						/>
+
+						<propertyregex
+							global="true"
+							input="${test.integration.other}"
+							override="true"
+							property="test.integration.other"
+							regexp=";"
+							replace=","
+						/>
+
+						<var name="test.class" value="${test.integration.other}" />
 
 						<ant target="test-cmd">
 							<property name="junit.forkmode" value="once" />
-							<property name="test.excludes" value="**/*PersistenceTest.class" />
 							<property name="test.type" value="integration" />
 						</ant>
 
@@ -1151,8 +1172,13 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<resourcecount property="test.integration.persistence.count">
 					<fileset
 						dir="test/integration"
+						id="test.integration.persistence"
 						includes="**/${test.package.dir}/*PersistenceTest.java"
-					/>
+					>
+						<not>
+							<contains text="public abstract class" />
+						</not>
+					</fileset>
 				</resourcecount>
 
 				<if>
@@ -1160,7 +1186,24 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<equals arg1="${test.integration.persistence.count}" arg2="0" />
 					</not>
 					<then>
-						<var name="test.class" value="**/${test.package.dir}/*PersistenceTest" />
+						<propertyregex
+							global="true"
+							input="${toString:test.integration.persistence}"
+							property="test.integration.persistence"
+							regexp="\.java"
+							replace=".class"
+						/>
+
+						<propertyregex
+							global="true"
+							input="${test.integration.persistence}"
+							override="true"
+							property="test.integration.persistence"
+							regexp=";"
+							replace=","
+						/>
+
+						<var name="test.class" value="${test.integration.persistence}" />
 
 						<ant target="test-cmd">
 							<property name="junit.forkmode" value="once" />
@@ -1181,8 +1224,13 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<resourcecount property="test.unit.count">
 					<fileset
 						dir="test/unit"
+						id="test.unit"
 						includes="**/${test.package.dir}/*Test.java"
-					/>
+					>
+						<not>
+							<contains text="public abstract class" />
+						</not>
+					</fileset>
 				</resourcecount>
 
 				<if>
@@ -1190,7 +1238,24 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<equals arg1="${test.unit.count}" arg2="0" />
 					</not>
 					<then>
-						<var name="test.class" value="**/${test.package.dir}/*Test" />
+						<propertyregex
+							global="true"
+							input="${toString:test.unit}"
+							property="test.unit"
+							regexp="\.java"
+							replace=".class"
+						/>
+
+						<propertyregex
+							global="true"
+							input="${test.unit}"
+							override="true"
+							property="test.unit"
+							regexp=";"
+							replace=","
+						/>
+
+						<var name="test.class" value="${test.unit}" />
 
 						<ant target="test-cmd">
 							<property name="junit.forkmode" value="perTest" />

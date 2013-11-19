@@ -2060,6 +2060,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the user with the portraitId.
+	 *
+	 * @param  portraitId the user's portraitId
+	 * @return the user with the portraitId, or <code>null</code> if a user with
+	 *         the portraitId could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public User fetchUserByPortraitId(long portraitId) throws SystemException {
+		return userPersistence.fetchByPortraitId(portraitId);
+	}
+
+	/**
 	 * Returns the user with the screen name.
 	 *
 	 * @param  companyId the primary key of the user's company

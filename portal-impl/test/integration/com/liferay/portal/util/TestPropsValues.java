@@ -112,13 +112,20 @@ public class TestPropsValues {
 	}
 
 	public static String getLogin() throws Exception {
+		return getLogin(true);
+	}
+
+	public static String getLogin(boolean encodeLogin) throws Exception {
 		String login = null;
 
 		String authType = PropsValues.COMPANY_SECURITY_AUTH_TYPE;
 
 		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 			login = getUser().getEmailAddress();
-			login = HttpUtil.encodeURL(login);
+
+			if (encodeLogin) {
+				login = HttpUtil.encodeURL(login);
+			}
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
 			login = getUser().getScreenName();

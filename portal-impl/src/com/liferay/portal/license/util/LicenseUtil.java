@@ -83,12 +83,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 
 /**
  * @author Amos Fong
@@ -427,7 +428,10 @@ public class LicenseUtil {
 	}
 
 	public static String sendRequest(String request) throws Exception {
-		DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+		HttpClient httpClient = null;
+
+		HttpClientConnectionManager connectionManager =
+			new BasicHttpClientConnectionManager();
 
 		try {
 			String serverURL = LICENSE_SERVER_URL;
@@ -442,6 +446,11 @@ public class LicenseUtil {
 
 			HttpPost httpPost = new HttpPost(uri);
 
+			CredentialsProvider credentialsProvider =
+				new BasicCredentialsProvider();
+
+			HttpHost proxyHttpHost = null;
+
 			if (Validator.isNotNull(_PROXY_URL)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -449,17 +458,9 @@ public class LicenseUtil {
 							_PROXY_PORT);
 				}
 
-				HttpHost httpHost = new HttpHost(_PROXY_URL, _PROXY_PORT);
-
-				HttpParams httpParams = defaultHttpClient.getParams();
-
-				httpParams.setParameter(
-					ConnRoutePNames.DEFAULT_PROXY, httpHost);
+				proxyHttpHost = new HttpHost(_PROXY_URL, _PROXY_PORT);
 
 				if (Validator.isNotNull(_PROXY_USER_NAME)) {
-					CredentialsProvider credentialsProvider =
-						defaultHttpClient.getCredentialsProvider();
-
 					credentialsProvider.setCredentials(
 						new AuthScope(_PROXY_URL, _PROXY_PORT),
 						new UsernamePasswordCredentials(
@@ -474,7 +475,16 @@ public class LicenseUtil {
 
 			httpPost.setEntity(byteArrayEntity);
 
-			HttpResponse httpResponse = defaultHttpClient.execute(httpPost);
+			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+			httpClientBuilder.setConnectionManager(connectionManager);
+			httpClientBuilder.setDefaultCredentialsProvider(
+				credentialsProvider);
+			httpClientBuilder.setProxy(proxyHttpHost);
+
+			httpClient = httpClientBuilder.build();
+
+			HttpResponse httpResponse = httpClient.execute(httpPost);
 
 			HttpEntity httpEntity = httpResponse.getEntity();
 
@@ -492,10 +502,9 @@ public class LicenseUtil {
 			return response;
 		}
 		finally {
-			ClientConnectionManager clientConnectionManager =
-				defaultHttpClient.getConnectionManager();
-
-			clientConnectionManager.shutdown();
+			if (httpClient != null) {
+				connectionManager.shutdown();
+			}
 		}
 	}
 

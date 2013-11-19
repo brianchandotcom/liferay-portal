@@ -1018,6 +1018,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroDefinitionElement1006_1() throws Exception {
+		test(
+			"MacroDefinitionElement1006_1.macro",
+			"Error 1006: Invalid extends attribute value in " + _DIR_NAME +
+				"/MacroDefinitionElement1006_1.macro:1");
+	}
+
+	@Test
 	public void testMacroDefinitionElement1007() throws Exception {
 		test(
 			"MacroDefinitionElement1007.macro",

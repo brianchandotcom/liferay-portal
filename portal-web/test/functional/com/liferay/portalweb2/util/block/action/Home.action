@@ -13,6 +13,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementNotPresent">
+		<case locator-key1="PAGE_DELETE">
+			<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="PAGE_DELETE">
 			<execute function="Click#click" />

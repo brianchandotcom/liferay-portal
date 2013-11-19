@@ -105,14 +105,14 @@ public class SocialRequestLocalServiceImpl
 	}
 
 	@Override
-	public void deleteMembershipRequests(long className, long classPK)
+	public void deleteRequests(long className, long classPK)
 		throws SystemException {
 
-		List<SocialRequest> membershipRequests =
-			socialRequestPersistence.findByC_C(className, classPK);
+		List<SocialRequest> requests = socialRequestPersistence.findByC_C(
+			className, classPK);
 
-		for (SocialRequest membershipRequest : membershipRequests) {
-			deleteRequest(membershipRequest);
+		for (SocialRequest request : requests) {
+			deleteRequest(request);
 		}
 	}
 

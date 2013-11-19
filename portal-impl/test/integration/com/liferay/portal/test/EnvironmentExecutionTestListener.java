@@ -16,7 +16,9 @@ package com.liferay.portal.test;
 
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
+import com.liferay.portal.search.lucene.LuceneHelperUtil;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.TestPropsValues;
 
 /**
  * @author Miguel Pastor
@@ -27,6 +29,13 @@ public class EnvironmentExecutionTestListener
 	@Override
 	public void runAfterClass(TestContext testContext) {
 		ServiceTestUtil.destroyServices();
+
+		try {
+			LuceneHelperUtil.delete(TestPropsValues.getCompanyId());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

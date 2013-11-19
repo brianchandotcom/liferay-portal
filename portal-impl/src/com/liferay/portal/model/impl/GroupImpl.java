@@ -589,16 +589,12 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
+	 */
 	@Override
 	public boolean isChild(long groupId) {
-		String treePath = getTreePath();
-
-		if (treePath.contains(StringPool.SLASH + groupId + StringPool.SLASH)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return hasAncestor(groupId);
 	}
 
 	/**

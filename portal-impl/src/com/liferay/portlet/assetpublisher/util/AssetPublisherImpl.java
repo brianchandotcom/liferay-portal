@@ -826,7 +826,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
 
-			if (!childGroup.isChild(siteGroupId)) {
+			if (!childGroup.hasAncestor(siteGroupId)) {
 				throw new PrincipalException();
 			}
 
@@ -898,7 +898,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
 
-			if (!group.isChild(parentGroupId)) {
+			if (!group.hasAncestor(parentGroupId)) {
 				throw new PrincipalException();
 			}
 

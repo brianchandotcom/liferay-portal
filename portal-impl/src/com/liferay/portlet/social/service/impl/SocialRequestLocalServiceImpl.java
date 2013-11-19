@@ -104,18 +104,6 @@ public class SocialRequestLocalServiceImpl
 		return request;
 	}
 
-	@Override
-	public void deleteRequests(long className, long classPK)
-		throws SystemException {
-
-		List<SocialRequest> requests = socialRequestPersistence.findByC_C(
-			className, classPK);
-
-		for (SocialRequest request : requests) {
-			deleteRequest(request);
-		}
-	}
-
 	/**
 	 * Removes all the social requests for the receiving user.
 	 *
@@ -161,6 +149,18 @@ public class SocialRequestLocalServiceImpl
 	@Override
 	public void deleteRequest(SocialRequest request) throws SystemException {
 		socialRequestPersistence.remove(request);
+	}
+
+	@Override
+	public void deleteRequests(long className, long classPK)
+		throws SystemException {
+
+		List<SocialRequest> requests = socialRequestPersistence.findByC_C(
+			className, classPK);
+
+		for (SocialRequest request : requests) {
+			deleteRequest(request);
+		}
 	}
 
 	/**

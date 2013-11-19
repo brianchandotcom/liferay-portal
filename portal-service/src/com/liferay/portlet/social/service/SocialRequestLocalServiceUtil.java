@@ -402,6 +402,11 @@ public class SocialRequestLocalServiceUtil {
 		getService().deleteRequest(request);
 	}
 
+	public static void deleteRequests(long className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRequests(className, classPK);
+	}
+
 	/**
 	* Removes all the social requests for the requesting user.
 	*

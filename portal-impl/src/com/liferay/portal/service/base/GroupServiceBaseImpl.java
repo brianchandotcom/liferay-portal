@@ -140,6 +140,7 @@ import com.liferay.portlet.shopping.service.persistence.ShoppingOrderPersistence
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
+import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCFrameworkVersionPersistence;
 import com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryPersistence;
 import com.liferay.portlet.wiki.service.persistence.WikiNodePersistence;
@@ -5226,6 +5227,63 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the social request local service.
+	 *
+	 * @return the social request local service
+	 */
+	public com.liferay.portlet.social.service.SocialRequestLocalService getSocialRequestLocalService() {
+		return socialRequestLocalService;
+	}
+
+	/**
+	 * Sets the social request local service.
+	 *
+	 * @param socialRequestLocalService the social request local service
+	 */
+	public void setSocialRequestLocalService(
+		com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService) {
+		this.socialRequestLocalService = socialRequestLocalService;
+	}
+
+	/**
+	 * Returns the social request remote service.
+	 *
+	 * @return the social request remote service
+	 */
+	public com.liferay.portlet.social.service.SocialRequestService getSocialRequestService() {
+		return socialRequestService;
+	}
+
+	/**
+	 * Sets the social request remote service.
+	 *
+	 * @param socialRequestService the social request remote service
+	 */
+	public void setSocialRequestService(
+		com.liferay.portlet.social.service.SocialRequestService socialRequestService) {
+		this.socialRequestService = socialRequestService;
+	}
+
+	/**
+	 * Returns the social request persistence.
+	 *
+	 * @return the social request persistence
+	 */
+	public SocialRequestPersistence getSocialRequestPersistence() {
+		return socialRequestPersistence;
+	}
+
+	/**
+	 * Sets the social request persistence.
+	 *
+	 * @param socialRequestPersistence the social request persistence
+	 */
+	public void setSocialRequestPersistence(
+		SocialRequestPersistence socialRequestPersistence) {
+		this.socialRequestPersistence = socialRequestPersistence;
+	}
+
+	/**
 	 * Returns the s c framework version local service.
 	 *
 	 * @return the s c framework version local service
@@ -5993,6 +6051,12 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.social.service.SocialActivitySettingService socialActivitySettingService;
 	@BeanReference(type = SocialActivitySettingPersistence.class)
 	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestLocalService.class)
+	protected com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService;
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestService.class)
+	protected com.liferay.portlet.social.service.SocialRequestService socialRequestService;
+	@BeanReference(type = SocialRequestPersistence.class)
+	protected SocialRequestPersistence socialRequestPersistence;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService scFrameworkVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService.class)

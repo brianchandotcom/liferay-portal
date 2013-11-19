@@ -425,6 +425,12 @@ public class SocialRequestLocalServiceWrapper
 		_socialRequestLocalService.deleteRequest(request);
 	}
 
+	@Override
+	public void deleteRequests(long className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialRequestLocalService.deleteRequests(className, classPK);
+	}
+
 	/**
 	* Removes all the social requests for the requesting user.
 	*

@@ -1074,266 +1074,77 @@ tck.url=true</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.geronimo.zip.url}" />
 			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.geronimo.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-portal-*/geronimo-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<chmod perm="a+x">
-					<fileset dir="${app.server.geronimo.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
-
-				<delete file="${tstamp.value}.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="geronimo" />
+					<param name="test.app.server.bin.dir" value="${app.server.geronimo.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.geronimo.zip.url}" />
+				</antcall>
 			</then>
 		</if>
 
 		<if>
 			<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
 			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.glassfish.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-portal-*/glassfish-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<chmod perm="a+x">
-					<fileset dir="${app.server.glassfish.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
-
-				<delete file="${tstamp.value}.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="glassfish" />
+					<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
+				</antcall>
 			</then>
 		</if>
 
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jboss.zip.url}" />
 			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.jboss.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-portal-*/jboss-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<chmod perm="a+x">
-					<fileset dir="${app.server.jboss.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
-
-				<delete file="${tstamp.value}.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="jboss" />
+					<param name="test.app.server.bin.dir" value="${app.server.jboss.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
+				</antcall>
 			</then>
 		</if>
 
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
 			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.jetty.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-portal-*/jetty-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<chmod perm="a+x">
-					<fileset dir="${app.server.jetty.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
-
-				<delete file="${tstamp.value}.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="jetty" />
+					<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
+				</antcall>
 			</then>
 		</if>
 
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
 			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.jonas.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-portal-*/jonas-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<chmod perm="a+x">
-					<fileset dir="${app.server.jonas.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
-
-				<delete file="${tstamp.value}.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="jonas" />
+					<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
+				</antcall>
 			</then>
 		</if>
 
 		<if>
 			<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
 			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.resin.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-portal-*/resin-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<chmod perm="a+x">
-					<fileset dir="${app.server.resin.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
-
-				<delete file="${tstamp.value}.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="resin" />
+					<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
+				</antcall>
 			</then>
 		</if>
 
 		<if>
 			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
 			<then>
-				<mkdir dir="${app.server.parent.dir}" />
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.tomcat.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-portal-*/tomcat-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<chmod perm="a+x">
-					<fileset dir="${app.server.tomcat.bin.dir}">
-						<include name="*.sh" />
-					</fileset>
-				</chmod>
-
-				<delete file="${tstamp.value}.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="tomcat" />
+					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
+				</antcall>
 			</then>
 			<else>
 				<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false" />
@@ -1345,37 +1156,9 @@ tck.url=true</echo>
 		<if>
 			<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
 			<then>
-				<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
-
-				<get
-					dest="liferay-portal.war"
-					src="${test.build.portal.war.url}"
-				/>
-
-				<unzip
-					dest="${app.server.weblogic.portal.dir}"
-					src="liferay-portal.war"
-				/>
-
-				<delete file="liferay-portal.war" />
-
-				<get
-					dest="liferay-portal-dependencies.zip"
-					src="${test.build.portal.dependencies.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.weblogic.lib.global.dir}"
-					src="liferay-portal-dependencies.zip"
-				>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<delete file="liferay-portal-dependencies.zip" />
+				<antcall target="prepare-test-bundle">
+					<param name="app.server.type" value="weblogic" />
+				</antcall>
 			</then>
 		</if>
 
@@ -1413,6 +1196,79 @@ tck.url=true</echo>
 		<antcall target="compile-test" inheritAll="false" />
 
 		<antcall target="record-test-package-names" inheritAll="false" />
+	</target>
+
+	<target name="prepare-test-bundle">
+		<if>
+			<equals arg1="${app.server.type}" arg2="weblogic" />
+			<then>
+				<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+
+				<get
+					dest="liferay-portal.war"
+					src="${test.build.portal.war.url}"
+				/>
+
+				<unzip
+					dest="${app.server.weblogic.portal.dir}"
+					src="liferay-portal.war"
+				/>
+
+				<delete file="liferay-portal.war" />
+
+				<get
+					dest="liferay-portal-dependencies.zip"
+					src="${test.build.portal.dependencies.zip.url}"
+				/>
+
+				<unzip
+					dest="${app.server.weblogic.lib.global.dir}"
+					src="liferay-portal-dependencies.zip"
+				>
+					<mapper
+						from="[^/]+/(.*)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<delete file="liferay-portal-dependencies.zip" />
+			</then>
+			<else>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<get
+					dest="${tstamp.value}.zip"
+					src="${test.build.bundle.zip.url}"
+				/>
+
+				<unzip
+					dest="${app.server.parent.dir}"
+					src="${tstamp.value}.zip"
+				>
+					<patternset
+						includes="liferay-portal-*/${app.server.type}-*/**"
+					/>
+					<mapper
+						from="[^/]+/(.*)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<chmod perm="a+x">
+					<fileset dir="${test.app.server.bin.dir}">
+						<include name="*.sh" />
+					</fileset>
+				</chmod>
+
+				<delete file="${tstamp.value}.zip" />
+			</else>
+		</if>
 	</target>
 
 	<target name="prepare-test-properties" depends="generate-test-properties">

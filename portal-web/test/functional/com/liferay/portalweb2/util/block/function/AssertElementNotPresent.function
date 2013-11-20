@@ -5,6 +5,14 @@
 		<execute selenium="assertElementNotPresent" />
 	</command>
 
+	<command name="assertElementNotPresentClickDockbar">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="click" argument1="//div[@id='_145_dockbar']" />
+
+		<execute function="AssertElementNotPresent#assertElementNotPresent" />
+	</command>
+
 	<command name="assertNotVisible">
 		<execute selenium="waitForNotVisible" />
 

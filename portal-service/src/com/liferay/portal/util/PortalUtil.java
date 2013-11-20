@@ -237,6 +237,22 @@ public class PortalUtil {
 		return getPortal().getAlternateLocales(request);
 	}
 
+	/**
+	 * Returns the alternate URL for the requested canonical URL in the given
+	 * locale. The alternate URL lets search engines know that an equivalent
+	 * page is available for the given locale. For more information, see <a
+	 * href="https://support.google.com/webmasters/answer/189077?hl=en">https://support.google.com/webmasters/answer/189077?hl=en</a>.
+	 *
+	 * @param  canonicalURL the canonical URL being requested. For more
+	 *         information, see {@link #getCanonicalURL}.
+	 * @param  themeDisplay the theme display
+	 * @param  locale the locale of the alternate URL being generated
+	 * @param  layout the page being requested
+	 * @return the alternate URL for the requested canonical URL in the given
+	 *         locale
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static String getAlternateURL(
 			String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
 			Layout layout)
@@ -288,6 +304,28 @@ public class PortalUtil {
 		return getPortal().getBasicAuthUserId(request, companyId);
 	}
 
+	/**
+	 * Returns the canonical URL for the requested complete URL. A canonical URL
+	 * for the page is the preferred version of a set of pages with similar or
+	 * identical content.
+	 *
+	 * <p>
+	 * The canonical URL is used to inform search engines that several URLs
+	 * point to the same page using the tag <code>&#60;link rel="canonical"
+	 * /></code>. It is also used to generate the URLs for site maps, the URLs
+	 * that social bookmarks publish (Twitter, Facebook links, etc.), and the
+	 * URLs in sent email. For more information, see <a
+	 * href="https://support.google.com/webmasters/answer/139394?hl=en">https://support.google.com/webmasters/answer/139394?hl=en</a>.
+	 * </p>
+	 *
+	 * @param  completeURL the original URL being requested
+	 * @param  themeDisplay the theme display
+	 * @param  layout the page being requested
+	 * @return the canonical URL for the requested complete URL
+	 * @throws PortalException if a friendly URL could not be retrieved or if a
+	 *         portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	public static String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException, SystemException {

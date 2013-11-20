@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 
@@ -23,6 +25,7 @@ import java.util.List;
  * @author Bruno Farache
  * @author Marcellus Tavares
  */
+@ProviderType
 public class AssetRendererFactoryRegistryUtil {
 
 	/**

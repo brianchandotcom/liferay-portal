@@ -1020,7 +1020,7 @@ public class OrganizationLocalServiceImpl
 					return organizationPersistence.findByO_C_P(
 						previousId, companyId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size,
-						new OrganizationIdComparator());
+						new OrganizationIdComparator(true));
 				}
 
 			}

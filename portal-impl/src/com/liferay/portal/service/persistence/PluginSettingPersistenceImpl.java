@@ -1218,6 +1218,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		clearUniqueFindersCache(pluginSetting);
 		cacheUniqueFindersCache(pluginSetting);
 
+		pluginSetting.resetOriginalValues();
+
 		return pluginSetting;
 	}
 

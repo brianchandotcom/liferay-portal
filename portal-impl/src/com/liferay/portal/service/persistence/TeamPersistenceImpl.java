@@ -1491,6 +1491,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		clearUniqueFindersCache(team);
 		cacheUniqueFindersCache(team);
 
+		team.resetOriginalValues();
+
 		return team;
 	}
 

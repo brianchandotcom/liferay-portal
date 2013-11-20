@@ -681,9 +681,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			cacheUniqueFindersCache(${entity.varName});
 		</#if>
 
-		<#if entity.hasLazyBlobColumn()>
-			${entity.varName}.resetOriginalValues();
-		</#if>
+		${entity.varName}.resetOriginalValues();
 
 		return ${entity.varName};
 	}

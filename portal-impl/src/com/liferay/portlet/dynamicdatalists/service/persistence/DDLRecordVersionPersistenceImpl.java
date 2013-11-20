@@ -1703,6 +1703,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		clearUniqueFindersCache(ddlRecordVersion);
 		cacheUniqueFindersCache(ddlRecordVersion);
 
+		ddlRecordVersion.resetOriginalValues();
+
 		return ddlRecordVersion;
 	}
 

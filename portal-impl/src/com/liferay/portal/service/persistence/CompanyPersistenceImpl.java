@@ -1629,6 +1629,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		clearUniqueFindersCache(company);
 		cacheUniqueFindersCache(company);
 
+		company.resetOriginalValues();
+
 		return company;
 	}
 

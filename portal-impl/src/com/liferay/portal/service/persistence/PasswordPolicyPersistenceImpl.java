@@ -3800,6 +3800,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		clearUniqueFindersCache(passwordPolicy);
 		cacheUniqueFindersCache(passwordPolicy);
 
+		passwordPolicy.resetOriginalValues();
+
 		return passwordPolicy;
 	}
 

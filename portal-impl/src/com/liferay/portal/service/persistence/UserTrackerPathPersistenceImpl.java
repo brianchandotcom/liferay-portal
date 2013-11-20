@@ -837,6 +837,8 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 			UserTrackerPathImpl.class, userTrackerPath.getPrimaryKey(),
 			userTrackerPath);
 
+		userTrackerPath.resetOriginalValues();
+
 		return userTrackerPath;
 	}
 

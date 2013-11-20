@@ -7905,6 +7905,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		clearUniqueFindersCache(calEvent);
 		cacheUniqueFindersCache(calEvent);
 
+		calEvent.resetOriginalValues();
+
 		return calEvent;
 	}
 

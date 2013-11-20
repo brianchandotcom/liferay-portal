@@ -2044,6 +2044,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		clearUniqueFindersCache(journalArticleResource);
 		cacheUniqueFindersCache(journalArticleResource);
 
+		journalArticleResource.resetOriginalValues();
+
 		return journalArticleResource;
 	}
 

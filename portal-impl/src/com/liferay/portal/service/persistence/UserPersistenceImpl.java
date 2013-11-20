@@ -7121,6 +7121,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		clearUniqueFindersCache(user);
 		cacheUniqueFindersCache(user);
 
+		user.resetOriginalValues();
+
 		return user;
 	}
 

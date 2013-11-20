@@ -4930,6 +4930,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		clearUniqueFindersCache(wikiNode);
 		cacheUniqueFindersCache(wikiNode);
 
+		wikiNode.resetOriginalValues();
+
 		return wikiNode;
 	}
 

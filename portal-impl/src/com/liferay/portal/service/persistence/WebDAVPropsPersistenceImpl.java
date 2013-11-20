@@ -598,6 +598,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		clearUniqueFindersCache(webDAVProps);
 		cacheUniqueFindersCache(webDAVProps);
 
+		webDAVProps.resetOriginalValues();
+
 		return webDAVProps;
 	}
 

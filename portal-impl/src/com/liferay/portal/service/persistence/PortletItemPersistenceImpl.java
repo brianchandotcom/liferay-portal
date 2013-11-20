@@ -1915,6 +1915,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		clearUniqueFindersCache(portletItem);
 		cacheUniqueFindersCache(portletItem);
 
+		portletItem.resetOriginalValues();
+
 		return portletItem;
 	}
 

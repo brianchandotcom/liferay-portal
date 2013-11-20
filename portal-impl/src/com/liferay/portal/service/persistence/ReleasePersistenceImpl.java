@@ -608,6 +608,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		clearUniqueFindersCache(release);
 		cacheUniqueFindersCache(release);
 
+		release.resetOriginalValues();
+
 		return release;
 	}
 

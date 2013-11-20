@@ -12800,6 +12800,8 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		clearUniqueFindersCache(bookmarksEntry);
 		cacheUniqueFindersCache(bookmarksEntry);
 
+		bookmarksEntry.resetOriginalValues();
+
 		return bookmarksEntry;
 	}
 

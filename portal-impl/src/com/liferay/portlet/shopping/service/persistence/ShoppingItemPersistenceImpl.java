@@ -2324,6 +2324,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		clearUniqueFindersCache(shoppingItem);
 		cacheUniqueFindersCache(shoppingItem);
 
+		shoppingItem.resetOriginalValues();
+
 		return shoppingItem;
 	}
 

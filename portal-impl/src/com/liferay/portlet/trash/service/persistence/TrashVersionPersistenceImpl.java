@@ -2237,6 +2237,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		clearUniqueFindersCache(trashVersion);
 		cacheUniqueFindersCache(trashVersion);
 
+		trashVersion.resetOriginalValues();
+
 		return trashVersion;
 	}
 

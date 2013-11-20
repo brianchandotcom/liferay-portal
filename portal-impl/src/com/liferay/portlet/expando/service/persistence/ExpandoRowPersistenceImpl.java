@@ -1611,6 +1611,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		clearUniqueFindersCache(expandoRow);
 		cacheUniqueFindersCache(expandoRow);
 
+		expandoRow.resetOriginalValues();
+
 		return expandoRow;
 	}
 

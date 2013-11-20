@@ -2720,6 +2720,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		clearUniqueFindersCache(trashEntry);
 		cacheUniqueFindersCache(trashEntry);
 
+		trashEntry.resetOriginalValues();
+
 		return trashEntry;
 	}
 

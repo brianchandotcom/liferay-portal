@@ -9467,6 +9467,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		clearUniqueFindersCache(dlFolder);
 		cacheUniqueFindersCache(dlFolder);
 
+		dlFolder.resetOriginalValues();
+
 		return dlFolder;
 	}
 

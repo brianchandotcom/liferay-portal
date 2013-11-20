@@ -1968,6 +1968,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		clearUniqueFindersCache(resourceBlock);
 		cacheUniqueFindersCache(resourceBlock);
 
+		resourceBlock.resetOriginalValues();
+
 		return resourceBlock;
 	}
 

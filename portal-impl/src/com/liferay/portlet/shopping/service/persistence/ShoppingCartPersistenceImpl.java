@@ -1613,6 +1613,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		clearUniqueFindersCache(shoppingCart);
 		cacheUniqueFindersCache(shoppingCart);
 
+		shoppingCart.resetOriginalValues();
+
 		return shoppingCart;
 	}
 

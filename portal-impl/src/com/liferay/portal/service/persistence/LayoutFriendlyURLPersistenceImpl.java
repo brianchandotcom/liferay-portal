@@ -5300,6 +5300,8 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		clearUniqueFindersCache(layoutFriendlyURL);
 		cacheUniqueFindersCache(layoutFriendlyURL);
 
+		layoutFriendlyURL.resetOriginalValues();
+
 		return layoutFriendlyURL;
 	}
 

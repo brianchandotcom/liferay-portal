@@ -2166,6 +2166,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		clearUniqueFindersCache(mbStatsUser);
 		cacheUniqueFindersCache(mbStatsUser);
 
+		mbStatsUser.resetOriginalValues();
+
 		return mbStatsUser;
 	}
 

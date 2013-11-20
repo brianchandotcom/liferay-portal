@@ -955,6 +955,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 			WorkflowInstanceLinkImpl.class,
 			workflowInstanceLink.getPrimaryKey(), workflowInstanceLink);
 
+		workflowInstanceLink.resetOriginalValues();
+
 		return workflowInstanceLink;
 	}
 

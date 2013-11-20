@@ -1480,6 +1480,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		clearUniqueFindersCache(userIdMapper);
 		cacheUniqueFindersCache(userIdMapper);
 
+		userIdMapper.resetOriginalValues();
+
 		return userIdMapper;
 	}
 

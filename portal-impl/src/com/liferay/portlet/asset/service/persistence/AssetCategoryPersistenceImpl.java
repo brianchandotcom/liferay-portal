@@ -11100,6 +11100,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		clearUniqueFindersCache(assetCategory);
 		cacheUniqueFindersCache(assetCategory);
 
+		assetCategory.resetOriginalValues();
+
 		return assetCategory;
 	}
 

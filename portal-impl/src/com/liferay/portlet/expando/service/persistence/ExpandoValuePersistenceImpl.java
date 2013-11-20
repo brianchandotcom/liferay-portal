@@ -5267,6 +5267,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		clearUniqueFindersCache(expandoValue);
 		cacheUniqueFindersCache(expandoValue);
 
+		expandoValue.resetOriginalValues();
+
 		return expandoValue;
 	}
 

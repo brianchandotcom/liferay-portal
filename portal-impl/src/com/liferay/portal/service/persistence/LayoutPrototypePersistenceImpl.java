@@ -4130,6 +4130,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey(),
 			layoutPrototype);
 
+		layoutPrototype.resetOriginalValues();
+
 		return layoutPrototype;
 	}
 

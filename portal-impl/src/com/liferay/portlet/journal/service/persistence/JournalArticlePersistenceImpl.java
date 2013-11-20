@@ -29696,6 +29696,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		clearUniqueFindersCache(journalArticle);
 		cacheUniqueFindersCache(journalArticle);
 
+		journalArticle.resetOriginalValues();
+
 		return journalArticle;
 	}
 

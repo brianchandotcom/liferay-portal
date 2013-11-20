@@ -2532,6 +2532,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		clearUniqueFindersCache(journalArticleImage);
 		cacheUniqueFindersCache(journalArticleImage);
 
+		journalArticleImage.resetOriginalValues();
+
 		return journalArticleImage;
 	}
 

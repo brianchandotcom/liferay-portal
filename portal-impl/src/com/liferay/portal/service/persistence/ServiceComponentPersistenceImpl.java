@@ -1223,6 +1223,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		clearUniqueFindersCache(serviceComponent);
 		cacheUniqueFindersCache(serviceComponent);
 
+		serviceComponent.resetOriginalValues();
+
 		return serviceComponent;
 	}
 

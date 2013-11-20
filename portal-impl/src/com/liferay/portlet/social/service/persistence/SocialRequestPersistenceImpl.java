@@ -6701,6 +6701,8 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		clearUniqueFindersCache(socialRequest);
 		cacheUniqueFindersCache(socialRequest);
 
+		socialRequest.resetOriginalValues();
+
 		return socialRequest;
 	}
 

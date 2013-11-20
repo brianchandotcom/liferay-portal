@@ -301,6 +301,8 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		EntityCacheUtil.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 			CounterImpl.class, counter.getPrimaryKey(), counter);
 
+		counter.resetOriginalValues();
+
 		return counter;
 	}
 

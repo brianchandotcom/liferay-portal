@@ -13393,6 +13393,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		clearUniqueFindersCache(mbThread);
 		cacheUniqueFindersCache(mbThread);
 
+		mbThread.resetOriginalValues();
+
 		return mbThread;
 	}
 

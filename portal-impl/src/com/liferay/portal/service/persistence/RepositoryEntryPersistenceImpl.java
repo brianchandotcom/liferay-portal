@@ -2629,6 +2629,8 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		clearUniqueFindersCache(repositoryEntry);
 		cacheUniqueFindersCache(repositoryEntry);
 
+		repositoryEntry.resetOriginalValues();
+
 		return repositoryEntry;
 	}
 

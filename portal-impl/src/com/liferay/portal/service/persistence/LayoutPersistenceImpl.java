@@ -8609,6 +8609,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		clearUniqueFindersCache(layout);
 		cacheUniqueFindersCache(layout);
 
+		layout.resetOriginalValues();
+
 		return layout;
 	}
 

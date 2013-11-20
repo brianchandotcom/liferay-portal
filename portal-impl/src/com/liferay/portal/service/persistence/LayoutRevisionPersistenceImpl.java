@@ -6189,6 +6189,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		clearUniqueFindersCache(layoutRevision);
 		cacheUniqueFindersCache(layoutRevision);
 
+		layoutRevision.resetOriginalValues();
+
 		return layoutRevision;
 	}
 

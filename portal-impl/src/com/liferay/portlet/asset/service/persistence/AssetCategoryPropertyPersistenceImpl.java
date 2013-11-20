@@ -2284,6 +2284,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		clearUniqueFindersCache(assetCategoryProperty);
 		cacheUniqueFindersCache(assetCategoryProperty);
 
+		assetCategoryProperty.resetOriginalValues();
+
 		return assetCategoryProperty;
 	}
 

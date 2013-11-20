@@ -1512,6 +1512,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		clearUniqueFindersCache(assetTag);
 		cacheUniqueFindersCache(assetTag);
 
+		assetTag.resetOriginalValues();
+
 		return assetTag;
 	}
 

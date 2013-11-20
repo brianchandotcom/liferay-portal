@@ -1263,6 +1263,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		clearUniqueFindersCache(userNotificationDelivery);
 		cacheUniqueFindersCache(userNotificationDelivery);
 
+		userNotificationDelivery.resetOriginalValues();
+
 		return userNotificationDelivery;
 	}
 

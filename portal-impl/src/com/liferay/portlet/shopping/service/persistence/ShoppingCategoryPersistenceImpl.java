@@ -2130,6 +2130,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey(),
 			shoppingCategory);
 
+		shoppingCategory.resetOriginalValues();
+
 		return shoppingCategory;
 	}
 

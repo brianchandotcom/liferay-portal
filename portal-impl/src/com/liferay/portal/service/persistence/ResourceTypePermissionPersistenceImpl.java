@@ -1862,6 +1862,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		clearUniqueFindersCache(resourceTypePermission);
 		cacheUniqueFindersCache(resourceTypePermission);
 
+		resourceTypePermission.resetOriginalValues();
+
 		return resourceTypePermission;
 	}
 

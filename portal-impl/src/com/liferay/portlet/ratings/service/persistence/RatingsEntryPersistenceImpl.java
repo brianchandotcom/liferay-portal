@@ -1774,6 +1774,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		clearUniqueFindersCache(ratingsEntry);
 		cacheUniqueFindersCache(ratingsEntry);
 
+		ratingsEntry.resetOriginalValues();
+
 		return ratingsEntry;
 	}
 

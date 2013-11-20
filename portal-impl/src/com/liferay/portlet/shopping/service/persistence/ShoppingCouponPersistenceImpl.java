@@ -1119,6 +1119,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		clearUniqueFindersCache(shoppingCoupon);
 		cacheUniqueFindersCache(shoppingCoupon);
 
+		shoppingCoupon.resetOriginalValues();
+
 		return shoppingCoupon;
 	}
 

@@ -827,6 +827,8 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 			ShoppingItemFieldImpl.class, shoppingItemField.getPrimaryKey(),
 			shoppingItemField);
 
+		shoppingItemField.resetOriginalValues();
+
 		return shoppingItemField;
 	}
 

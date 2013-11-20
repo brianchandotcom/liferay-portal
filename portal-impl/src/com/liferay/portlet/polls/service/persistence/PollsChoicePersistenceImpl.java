@@ -2608,6 +2608,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		clearUniqueFindersCache(pollsChoice);
 		cacheUniqueFindersCache(pollsChoice);
 
+		pollsChoice.resetOriginalValues();
+
 		return pollsChoice;
 	}
 

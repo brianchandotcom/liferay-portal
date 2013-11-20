@@ -2327,6 +2327,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		clearUniqueFindersCache(layoutBranch);
 		cacheUniqueFindersCache(layoutBranch);
 
+		layoutBranch.resetOriginalValues();
+
 		return layoutBranch;
 	}
 

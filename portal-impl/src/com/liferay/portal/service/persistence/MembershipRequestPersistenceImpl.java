@@ -2482,6 +2482,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 			MembershipRequestImpl.class, membershipRequest.getPrimaryKey(),
 			membershipRequest);
 
+		membershipRequest.resetOriginalValues();
+
 		return membershipRequest;
 	}
 

@@ -2937,6 +2937,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		clearUniqueFindersCache(socialActivitySetting);
 		cacheUniqueFindersCache(socialActivitySetting);
 
+		socialActivitySetting.resetOriginalValues();
+
 		return socialActivitySetting;
 	}
 

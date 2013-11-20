@@ -18489,6 +18489,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		clearUniqueFindersCache(blogsEntry);
 		cacheUniqueFindersCache(blogsEntry);
 
+		blogsEntry.resetOriginalValues();
+
 		return blogsEntry;
 	}
 

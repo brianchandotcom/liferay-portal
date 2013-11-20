@@ -826,6 +826,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 			PasswordTrackerImpl.class, passwordTracker.getPrimaryKey(),
 			passwordTracker);
 
+		passwordTracker.resetOriginalValues();
+
 		return passwordTracker;
 	}
 

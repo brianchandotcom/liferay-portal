@@ -597,6 +597,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		clearUniqueFindersCache(className);
 		cacheUniqueFindersCache(className);
 
+		className.resetOriginalValues();
+
 		return className;
 	}
 

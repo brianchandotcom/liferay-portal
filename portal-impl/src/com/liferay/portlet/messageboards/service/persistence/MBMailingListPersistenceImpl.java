@@ -2580,6 +2580,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		clearUniqueFindersCache(mbMailingList);
 		cacheUniqueFindersCache(mbMailingList);
 
+		mbMailingList.resetOriginalValues();
+
 		return mbMailingList;
 	}
 

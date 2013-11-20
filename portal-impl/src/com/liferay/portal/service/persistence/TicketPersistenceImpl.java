@@ -602,6 +602,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		clearUniqueFindersCache(ticket);
 		cacheUniqueFindersCache(ticket);
 
+		ticket.resetOriginalValues();
+
 		return ticket;
 	}
 

@@ -3496,6 +3496,8 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		clearUniqueFindersCache(layoutSetBranch);
 		cacheUniqueFindersCache(layoutSetBranch);
 
+		layoutSetBranch.resetOriginalValues();
+
 		return layoutSetBranch;
 	}
 

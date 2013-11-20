@@ -3465,6 +3465,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		clearUniqueFindersCache(dlFileEntryType);
 		cacheUniqueFindersCache(dlFileEntryType);
 
+		dlFileEntryType.resetOriginalValues();
+
 		return dlFileEntryType;
 	}
 

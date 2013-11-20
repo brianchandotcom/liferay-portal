@@ -7638,6 +7638,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 			BackgroundTaskImpl.class, backgroundTask.getPrimaryKey(),
 			backgroundTask);
 
+		backgroundTask.resetOriginalValues();
+
 		return backgroundTask;
 	}
 

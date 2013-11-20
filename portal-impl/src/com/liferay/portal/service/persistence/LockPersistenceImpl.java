@@ -2313,6 +2313,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		clearUniqueFindersCache(lock);
 		cacheUniqueFindersCache(lock);
 
+		lock.resetOriginalValues();
+
 		return lock;
 	}
 

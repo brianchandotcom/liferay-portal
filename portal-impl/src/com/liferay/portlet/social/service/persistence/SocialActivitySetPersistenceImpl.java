@@ -3791,6 +3791,8 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 			SocialActivitySetImpl.class, socialActivitySet.getPrimaryKey(),
 			socialActivitySet);
 
+		socialActivitySet.resetOriginalValues();
+
 		return socialActivitySet;
 	}
 

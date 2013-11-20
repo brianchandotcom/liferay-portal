@@ -21851,6 +21851,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		clearUniqueFindersCache(wikiPage);
 		cacheUniqueFindersCache(wikiPage);
 
+		wikiPage.resetOriginalValues();
+
 		return wikiPage;
 	}
 

@@ -773,6 +773,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		EntityCacheUtil.putResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 			ImageImpl.class, image.getPrimaryKey(), image);
 
+		image.resetOriginalValues();
+
 		return image;
 	}
 

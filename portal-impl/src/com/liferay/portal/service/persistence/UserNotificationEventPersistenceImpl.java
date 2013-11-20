@@ -3104,6 +3104,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 			UserNotificationEventImpl.class,
 			userNotificationEvent.getPrimaryKey(), userNotificationEvent);
 
+		userNotificationEvent.resetOriginalValues();
+
 		return userNotificationEvent;
 	}
 

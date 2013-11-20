@@ -1653,6 +1653,8 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		clearUniqueFindersCache(ddmStorageLink);
 		cacheUniqueFindersCache(ddmStorageLink);
 
+		ddmStorageLink.resetOriginalValues();
+
 		return ddmStorageLink;
 	}
 

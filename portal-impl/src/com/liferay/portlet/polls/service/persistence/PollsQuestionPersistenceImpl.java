@@ -2673,6 +2673,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		clearUniqueFindersCache(pollsQuestion);
 		cacheUniqueFindersCache(pollsQuestion);
 
+		pollsQuestion.resetOriginalValues();
+
 		return pollsQuestion;
 	}
 

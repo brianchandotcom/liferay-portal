@@ -302,6 +302,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		EntityCacheUtil.putResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
 			AccountImpl.class, account.getPrimaryKey(), account);
 
+		account.resetOriginalValues();
+
 		return account;
 	}
 

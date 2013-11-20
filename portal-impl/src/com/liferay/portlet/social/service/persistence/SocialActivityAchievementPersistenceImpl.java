@@ -3512,6 +3512,8 @@ public class SocialActivityAchievementPersistenceImpl
 		clearUniqueFindersCache(socialActivityAchievement);
 		cacheUniqueFindersCache(socialActivityAchievement);
 
+		socialActivityAchievement.resetOriginalValues();
+
 		return socialActivityAchievement;
 	}
 

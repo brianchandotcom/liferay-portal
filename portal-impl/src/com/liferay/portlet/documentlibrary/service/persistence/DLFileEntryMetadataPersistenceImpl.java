@@ -2758,6 +2758,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		clearUniqueFindersCache(dlFileEntryMetadata);
 		cacheUniqueFindersCache(dlFileEntryMetadata);
 
+		dlFileEntryMetadata.resetOriginalValues();
+
 		return dlFileEntryMetadata;
 	}
 

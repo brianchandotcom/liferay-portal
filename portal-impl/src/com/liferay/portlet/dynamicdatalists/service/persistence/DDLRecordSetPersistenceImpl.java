@@ -2969,6 +2969,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		clearUniqueFindersCache(ddlRecordSet);
 		cacheUniqueFindersCache(ddlRecordSet);
 
+		ddlRecordSet.resetOriginalValues();
+
 		return ddlRecordSet;
 	}
 

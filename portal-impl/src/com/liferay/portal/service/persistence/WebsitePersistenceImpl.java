@@ -4237,6 +4237,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		EntityCacheUtil.putResult(WebsiteModelImpl.ENTITY_CACHE_ENABLED,
 			WebsiteImpl.class, website.getPrimaryKey(), website);
 
+		website.resetOriginalValues();
+
 		return website;
 	}
 

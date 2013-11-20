@@ -8951,6 +8951,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		clearUniqueFindersCache(role);
 		cacheUniqueFindersCache(role);
 
+		role.resetOriginalValues();
+
 		return role;
 	}
 

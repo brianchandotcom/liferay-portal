@@ -7675,6 +7675,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		clearUniqueFindersCache(journalFolder);
 		cacheUniqueFindersCache(journalFolder);
 
+		journalFolder.resetOriginalValues();
+
 		return journalFolder;
 	}
 

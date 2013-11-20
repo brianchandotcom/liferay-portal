@@ -3020,6 +3020,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		clearUniqueFindersCache(scProductEntry);
 		cacheUniqueFindersCache(scProductEntry);
 
+		scProductEntry.resetOriginalValues();
+
 		return scProductEntry;
 	}
 

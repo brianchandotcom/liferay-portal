@@ -6917,6 +6917,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		clearUniqueFindersCache(organization);
 		cacheUniqueFindersCache(organization);
 
+		organization.resetOriginalValues();
+
 		return organization;
 	}
 

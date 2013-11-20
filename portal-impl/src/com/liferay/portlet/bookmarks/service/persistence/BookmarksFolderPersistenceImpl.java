@@ -7323,6 +7323,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		clearUniqueFindersCache(bookmarksFolder);
 		cacheUniqueFindersCache(bookmarksFolder);
 
+		bookmarksFolder.resetOriginalValues();
+
 		return bookmarksFolder;
 	}
 

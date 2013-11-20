@@ -2284,6 +2284,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		clearUniqueFindersCache(mdrRule);
 		cacheUniqueFindersCache(mdrRule);
 
+		mdrRule.resetOriginalValues();
+
 		return mdrRule;
 	}
 

@@ -2803,6 +2803,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		clearUniqueFindersCache(ddmContent);
 		cacheUniqueFindersCache(ddmContent);
 
+		ddmContent.resetOriginalValues();
+
 		return ddmContent;
 	}
 

@@ -1141,6 +1141,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		clearUniqueFindersCache(passwordPolicyRel);
 		cacheUniqueFindersCache(passwordPolicyRel);
 
+		passwordPolicyRel.resetOriginalValues();
+
 		return passwordPolicyRel;
 	}
 

@@ -1607,6 +1607,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		clearUniqueFindersCache(ddmStructureLink);
 		cacheUniqueFindersCache(ddmStructureLink);
 
+		ddmStructureLink.resetOriginalValues();
+
 		return ddmStructureLink;
 	}
 

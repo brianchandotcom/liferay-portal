@@ -6334,6 +6334,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		clearUniqueFindersCache(dlFileShortcut);
 		cacheUniqueFindersCache(dlFileShortcut);
 
+		dlFileShortcut.resetOriginalValues();
+
 		return dlFileShortcut;
 	}
 

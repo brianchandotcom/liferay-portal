@@ -874,6 +874,8 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		clearUniqueFindersCache(shard);
 		cacheUniqueFindersCache(shard);
 
+		shard.resetOriginalValues();
+
 		return shard;
 	}
 

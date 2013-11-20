@@ -1684,6 +1684,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		clearUniqueFindersCache(layoutSet);
 		cacheUniqueFindersCache(layoutSet);
 
+		layoutSet.resetOriginalValues();
+
 		return layoutSet;
 	}
 

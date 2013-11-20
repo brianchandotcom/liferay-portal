@@ -825,6 +825,8 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		EntityCacheUtil.putResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
 			OrgLaborImpl.class, orgLabor.getPrimaryKey(), orgLabor);
 
+		orgLabor.resetOriginalValues();
+
 		return orgLabor;
 	}
 

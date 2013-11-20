@@ -1205,6 +1205,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		clearUniqueFindersCache(wikiPageResource);
 		cacheUniqueFindersCache(wikiPageResource);
 
+		wikiPageResource.resetOriginalValues();
+
 		return wikiPageResource;
 	}
 

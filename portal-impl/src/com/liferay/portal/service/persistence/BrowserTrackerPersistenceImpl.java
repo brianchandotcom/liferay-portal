@@ -570,6 +570,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		clearUniqueFindersCache(browserTracker);
 		cacheUniqueFindersCache(browserTracker);
 
+		browserTracker.resetOriginalValues();
+
 		return browserTracker;
 	}
 

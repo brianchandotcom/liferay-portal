@@ -5129,6 +5129,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			AnnouncementsEntryImpl.class, announcementsEntry.getPrimaryKey(),
 			announcementsEntry);
 
+		announcementsEntry.resetOriginalValues();
+
 		return announcementsEntry;
 	}
 

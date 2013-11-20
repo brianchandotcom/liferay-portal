@@ -1049,6 +1049,8 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		clearUniqueFindersCache(dlSyncEvent);
 		cacheUniqueFindersCache(dlSyncEvent);
 
+		dlSyncEvent.resetOriginalValues();
+
 		return dlSyncEvent;
 	}
 

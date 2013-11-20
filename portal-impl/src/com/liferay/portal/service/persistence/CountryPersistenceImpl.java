@@ -1645,6 +1645,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		clearUniqueFindersCache(country);
 		cacheUniqueFindersCache(country);
 
+		country.resetOriginalValues();
+
 		return country;
 	}
 

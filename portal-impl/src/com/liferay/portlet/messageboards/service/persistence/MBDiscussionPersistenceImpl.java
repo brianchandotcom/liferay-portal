@@ -2819,6 +2819,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		clearUniqueFindersCache(mbDiscussion);
 		cacheUniqueFindersCache(mbDiscussion);
 
+		mbDiscussion.resetOriginalValues();
+
 		return mbDiscussion;
 	}
 

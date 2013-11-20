@@ -1665,6 +1665,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		clearUniqueFindersCache(scProductScreenshot);
 		cacheUniqueFindersCache(scProductScreenshot);
 
+		scProductScreenshot.resetOriginalValues();
+
 		return scProductScreenshot;
 	}
 

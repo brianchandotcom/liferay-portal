@@ -2964,6 +2964,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		clearUniqueFindersCache(journalFeed);
 		cacheUniqueFindersCache(journalFeed);
 
+		journalFeed.resetOriginalValues();
+
 		return journalFeed;
 	}
 

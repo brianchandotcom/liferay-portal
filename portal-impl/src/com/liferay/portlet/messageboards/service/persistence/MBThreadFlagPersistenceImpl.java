@@ -3073,6 +3073,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		clearUniqueFindersCache(mbThreadFlag);
 		cacheUniqueFindersCache(mbThreadFlag);
 
+		mbThreadFlag.resetOriginalValues();
+
 		return mbThreadFlag;
 	}
 

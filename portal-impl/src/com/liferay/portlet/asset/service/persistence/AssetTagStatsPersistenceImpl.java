@@ -1627,6 +1627,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		clearUniqueFindersCache(assetTagStats);
 		cacheUniqueFindersCache(assetTagStats);
 
+		assetTagStats.resetOriginalValues();
+
 		return assetTagStats;
 	}
 

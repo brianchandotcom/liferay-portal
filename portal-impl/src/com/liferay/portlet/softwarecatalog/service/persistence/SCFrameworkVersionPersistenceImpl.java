@@ -2654,6 +2654,8 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 			SCFrameworkVersionImpl.class, scFrameworkVersion.getPrimaryKey(),
 			scFrameworkVersion);
 
+		scFrameworkVersion.resetOriginalValues();
+
 		return scFrameworkVersion;
 	}
 

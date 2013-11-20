@@ -2186,6 +2186,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		clearUniqueFindersCache(region);
 		cacheUniqueFindersCache(region);
 
+		region.resetOriginalValues();
+
 		return region;
 	}
 

@@ -2853,6 +2853,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		clearUniqueFindersCache(shoppingOrder);
 		cacheUniqueFindersCache(shoppingOrder);
 
+		shoppingOrder.resetOriginalValues();
+
 		return shoppingOrder;
 	}
 

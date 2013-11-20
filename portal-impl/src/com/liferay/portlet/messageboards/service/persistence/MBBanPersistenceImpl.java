@@ -3541,6 +3541,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		clearUniqueFindersCache(mbBan);
 		cacheUniqueFindersCache(mbBan);
 
+		mbBan.resetOriginalValues();
+
 		return mbBan;
 	}
 

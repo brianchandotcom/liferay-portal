@@ -3284,6 +3284,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		clearUniqueFindersCache(assetLink);
 		cacheUniqueFindersCache(assetLink);
 
+		assetLink.resetOriginalValues();
+
 		return assetLink;
 	}
 

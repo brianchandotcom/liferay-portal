@@ -2348,6 +2348,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		clearUniqueFindersCache(socialActivityLimit);
 		cacheUniqueFindersCache(socialActivityLimit);
 
+		socialActivityLimit.resetOriginalValues();
+
 		return socialActivityLimit;
 	}
 

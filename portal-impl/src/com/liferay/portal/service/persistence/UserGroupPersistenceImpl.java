@@ -4427,6 +4427,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		clearUniqueFindersCache(userGroup);
 		cacheUniqueFindersCache(userGroup);
 
+		userGroup.resetOriginalValues();
+
 		return userGroup;
 	}
 

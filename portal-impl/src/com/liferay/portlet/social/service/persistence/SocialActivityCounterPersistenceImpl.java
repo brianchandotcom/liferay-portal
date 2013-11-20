@@ -2905,6 +2905,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		clearUniqueFindersCache(socialActivityCounter);
 		cacheUniqueFindersCache(socialActivityCounter);
 
+		socialActivityCounter.resetOriginalValues();
+
 		return socialActivityCounter;
 	}
 

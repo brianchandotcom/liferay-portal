@@ -1160,6 +1160,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		clearUniqueFindersCache(announcementsDelivery);
 		cacheUniqueFindersCache(announcementsDelivery);
 
+		announcementsDelivery.resetOriginalValues();
+
 		return announcementsDelivery;
 	}
 

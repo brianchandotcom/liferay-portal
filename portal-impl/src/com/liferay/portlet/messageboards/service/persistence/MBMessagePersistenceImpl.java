@@ -19427,6 +19427,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		clearUniqueFindersCache(mbMessage);
 		cacheUniqueFindersCache(mbMessage);
 
+		mbMessage.resetOriginalValues();
+
 		return mbMessage;
 	}
 

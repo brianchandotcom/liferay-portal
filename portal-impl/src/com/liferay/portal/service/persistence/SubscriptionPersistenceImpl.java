@@ -2710,6 +2710,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		clearUniqueFindersCache(subscription);
 		cacheUniqueFindersCache(subscription);
 
+		subscription.resetOriginalValues();
+
 		return subscription;
 	}
 

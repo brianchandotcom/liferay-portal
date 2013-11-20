@@ -6031,6 +6031,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		clearUniqueFindersCache(socialRelation);
 		cacheUniqueFindersCache(socialRelation);
 
+		socialRelation.resetOriginalValues();
+
 		return socialRelation;
 	}
 

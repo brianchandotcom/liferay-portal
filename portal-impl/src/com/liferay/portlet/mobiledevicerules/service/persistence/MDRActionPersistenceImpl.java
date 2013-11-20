@@ -2306,6 +2306,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		clearUniqueFindersCache(mdrAction);
 		cacheUniqueFindersCache(mdrAction);
 
+		mdrAction.resetOriginalValues();
+
 		return mdrAction;
 	}
 

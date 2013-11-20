@@ -9177,6 +9177,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		clearUniqueFindersCache(ddmStructure);
 		cacheUniqueFindersCache(ddmStructure);
 
+		ddmStructure.resetOriginalValues();
+
 		return ddmStructure;
 	}
 

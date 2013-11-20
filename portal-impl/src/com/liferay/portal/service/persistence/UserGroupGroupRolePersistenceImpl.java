@@ -2952,6 +2952,8 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 			UserGroupGroupRoleImpl.class, userGroupGroupRole.getPrimaryKey(),
 			userGroupGroupRole);
 
+		userGroupGroupRole.resetOriginalValues();
+
 		return userGroupGroupRole;
 	}
 

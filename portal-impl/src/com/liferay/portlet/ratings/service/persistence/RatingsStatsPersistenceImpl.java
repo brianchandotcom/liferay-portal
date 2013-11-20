@@ -600,6 +600,8 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		clearUniqueFindersCache(ratingsStats);
 		cacheUniqueFindersCache(ratingsStats);
 
+		ratingsStats.resetOriginalValues();
+
 		return ratingsStats;
 	}
 

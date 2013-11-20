@@ -3594,6 +3594,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		clearUniqueFindersCache(assetEntry);
 		cacheUniqueFindersCache(assetEntry);
 
+		assetEntry.resetOriginalValues();
+
 		return assetEntry;
 	}
 

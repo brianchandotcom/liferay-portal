@@ -7896,6 +7896,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		clearUniqueFindersCache(group);
 		cacheUniqueFindersCache(group);
 
+		group.resetOriginalValues();
+
 		return group;
 	}
 

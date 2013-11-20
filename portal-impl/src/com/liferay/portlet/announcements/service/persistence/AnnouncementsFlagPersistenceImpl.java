@@ -1154,6 +1154,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		clearUniqueFindersCache(announcementsFlag);
 		cacheUniqueFindersCache(announcementsFlag);
 
+		announcementsFlag.resetOriginalValues();
+
 		return announcementsFlag;
 	}
 

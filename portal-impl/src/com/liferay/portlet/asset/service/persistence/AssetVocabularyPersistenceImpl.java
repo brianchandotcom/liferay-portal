@@ -4482,6 +4482,8 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		clearUniqueFindersCache(assetVocabulary);
 		cacheUniqueFindersCache(assetVocabulary);
 
+		assetVocabulary.resetOriginalValues();
+
 		return assetVocabulary;
 	}
 

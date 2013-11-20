@@ -2659,6 +2659,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		clearUniqueFindersCache(repository);
 		cacheUniqueFindersCache(repository);
 
+		repository.resetOriginalValues();
+
 		return repository;
 	}
 

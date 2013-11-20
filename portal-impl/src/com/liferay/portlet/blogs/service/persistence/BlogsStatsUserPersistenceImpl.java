@@ -3245,6 +3245,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		clearUniqueFindersCache(blogsStatsUser);
 		cacheUniqueFindersCache(blogsStatsUser);
 
+		blogsStatsUser.resetOriginalValues();
+
 		return blogsStatsUser;
 	}
 

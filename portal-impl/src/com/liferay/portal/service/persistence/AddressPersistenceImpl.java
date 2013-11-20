@@ -4868,6 +4868,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		EntityCacheUtil.putResult(AddressModelImpl.ENTITY_CACHE_ENABLED,
 			AddressImpl.class, address.getPrimaryKey(), address);
 
+		address.resetOriginalValues();
+
 		return address;
 	}
 

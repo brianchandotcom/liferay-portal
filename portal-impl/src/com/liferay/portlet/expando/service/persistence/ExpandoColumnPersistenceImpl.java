@@ -2031,6 +2031,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		clearUniqueFindersCache(expandoColumn);
 		cacheUniqueFindersCache(expandoColumn);
 
+		expandoColumn.resetOriginalValues();
+
 		return expandoColumn;
 	}
 

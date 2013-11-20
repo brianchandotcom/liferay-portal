@@ -2791,6 +2791,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		clearUniqueFindersCache(dlFileRank);
 		cacheUniqueFindersCache(dlFileRank);
 
+		dlFileRank.resetOriginalValues();
+
 		return dlFileRank;
 	}
 

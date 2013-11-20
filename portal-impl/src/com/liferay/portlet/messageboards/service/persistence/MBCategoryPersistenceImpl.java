@@ -7692,6 +7692,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		clearUniqueFindersCache(mbCategory);
 		cacheUniqueFindersCache(mbCategory);
 
+		mbCategory.resetOriginalValues();
+
 		return mbCategory;
 	}
 

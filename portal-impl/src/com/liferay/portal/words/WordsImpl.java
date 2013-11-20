@@ -15,15 +15,14 @@
 package com.liferay.portal.words;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.jazzy.InvalidWord;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.words.Words;
 import com.liferay.util.ContentUtil;
-import com.liferay.util.jazzy.BasicSpellCheckListener;
-import com.liferay.util.jazzy.InvalidWord;
 
 import com.swabunga.spell.engine.SpellDictionaryHashMap;
 import com.swabunga.spell.event.DefaultWordFinder;
@@ -32,7 +31,6 @@ import com.swabunga.spell.event.StringWordTokenizer;
 
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -40,42 +38,69 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shinn Lok
  */
-public class WordsUtil {
+public class WordsImpl implements Words {
 
-	public static List<InvalidWord> checkSpelling(String text) {
-		return _instance._checkSpelling(text);
+	@Override
+	public List<InvalidWord> checkSpelling(String text) {
+		SpellChecker spellChecker = new SpellChecker(
+			getSpellDictionaryHashMap());
+
+		BasicSpellCheckListener basicSpellCheckListener =
+			new BasicSpellCheckListener(text);
+
+		spellChecker.addSpellCheckListener(basicSpellCheckListener);
+
+		spellChecker.checkSpelling(
+			new StringWordTokenizer(new DefaultWordFinder(text)));
+
+		return basicSpellCheckListener.getInvalidWords();
 	}
 
-	public static List<String> getDictionaryList() {
-		return _instance._getDictionaryList();
+	@Override
+	public List<String> getDictionaryList() {
+		if (_dictionaryList == null) {
+			_dictionaryList = ListUtil.fromArray(
+				StringUtil.splitLines(
+					ContentUtil.get(
+						"com/liferay/portal/words/dependencies/words.txt")));
+		}
+
+		return _dictionaryList;
 	}
 
-	public static Set<String> getDictionarySet() {
-		return _instance._getDictionarySet();
+	@Override
+	public Set<String> getDictionarySet() {
+		if (_dictionarySet == null) {
+			_dictionarySet = new HashSet<String>(getDictionaryList());
+		}
+
+		return _dictionarySet;
 	}
 
-	public static String getRandomWord() {
-		return _instance._getRandomWord();
+	@Override
+	public String getRandomWord() {
+		List<String> dictionaryList = getDictionaryList();
+
+		Random random = new Random(SecureRandomUtil.nextLong());
+
+		int pos = random.nextInt(dictionaryList.size());
+
+		return dictionaryList.get(pos);
 	}
 
-	public static boolean isDictionaryWord(String word) {
-		return _instance._isDictionaryWord(word);
+	@Override
+	public boolean isDictionaryWord(String word) {
+		Set<String> dictionarySet = getDictionarySet();
+
+		return dictionarySet.contains(word);
 	}
 
-	private WordsUtil() {
-		_dictionaryList = ListUtil.fromArray(
-			StringUtil.splitLines(
-				ContentUtil.get(
-					"com/liferay/portal/words/dependencies/words.txt")));
-
-		_dictionaryList = new UnmodifiableList<String>(_dictionaryList);
-
-		_dictionarySet = new HashSet<String>(_dictionaryList.size());
-
-		_dictionarySet.addAll(_dictionaryList);
-
-		_dictionarySet = Collections.unmodifiableSet(_dictionarySet);
+	protected SpellDictionaryHashMap getSpellDictionaryHashMap() {
+		if (_spellDictionaryHashMap != null) {
+			return _spellDictionaryHashMap;
+		}
 
 		try {
 			_spellDictionaryHashMap = new SpellDictionaryHashMap();
@@ -97,45 +122,11 @@ public class WordsUtil {
 		catch (IOException ioe) {
 			_log.error(ioe);
 		}
+
+		return _spellDictionaryHashMap;
 	}
 
-	private List<InvalidWord> _checkSpelling(String text) {
-		SpellChecker spellChecker = new SpellChecker(_spellDictionaryHashMap);
-
-		BasicSpellCheckListener basicSpellCheckListener =
-			new BasicSpellCheckListener(text);
-
-		spellChecker.addSpellCheckListener(basicSpellCheckListener);
-
-		spellChecker.checkSpelling(
-			new StringWordTokenizer(new DefaultWordFinder(text)));
-
-		return basicSpellCheckListener.getInvalidWords();
-	}
-
-	private List<String> _getDictionaryList() {
-		return _dictionaryList;
-	}
-
-	private Set<String> _getDictionarySet() {
-		return _dictionarySet;
-	}
-
-	private String _getRandomWord() {
-		Random random = new Random(SecureRandomUtil.nextLong());
-
-		int pos = random.nextInt(_dictionaryList.size());
-
-		return _dictionaryList.get(pos);
-	}
-
-	private boolean _isDictionaryWord(String word) {
-		return _dictionarySet.contains(word);
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(WordsUtil.class);
-
-	private static WordsUtil _instance = new WordsUtil();
+	private static Log _log = LogFactoryUtil.getLog(WordsImpl.class);
 
 	private List<String> _dictionaryList;
 	private Set<String> _dictionarySet;

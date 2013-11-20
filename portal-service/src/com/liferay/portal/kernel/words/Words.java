@@ -12,20 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.captcha.simplecaptcha;
+package com.liferay.portal.kernel.words;
 
-import com.liferay.portal.kernel.words.WordsUtil;
+import com.liferay.portal.kernel.jazzy.InvalidWord;
 
-import nl.captcha.text.producer.TextProducer;
+import java.util.List;
+import java.util.Set;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shinn Lok
  */
-public class DictionaryWordTextProducer implements TextProducer {
+public interface Words {
 
-	@Override
-	public String getText() {
-		return WordsUtil.getRandomWord();
-	}
+	public List<InvalidWord> checkSpelling(String text);
+
+	public List<String> getDictionaryList();
+
+	public Set<String> getDictionarySet();
+
+	public String getRandomWord();
+
+	public boolean isDictionaryWord(String word);
 
 }

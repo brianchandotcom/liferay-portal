@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.util.jazzy;
+package com.liferay.portal.words;
+
+import com.liferay.portal.kernel.jazzy.InvalidWord;
 
 import com.swabunga.spell.engine.Word;
 import com.swabunga.spell.event.SpellCheckEvent;

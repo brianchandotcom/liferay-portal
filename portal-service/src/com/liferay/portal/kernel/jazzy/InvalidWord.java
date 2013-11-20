@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.jazzy;
+package com.liferay.portal.kernel.jazzy;
 
 import java.io.Serializable;
 

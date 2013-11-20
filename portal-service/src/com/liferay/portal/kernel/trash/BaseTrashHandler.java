@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.trash;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -46,6 +48,7 @@ import javax.portlet.PortletRequest;
  * @author Zsolt Berentey
  * @see    TrashHandler
  */
+@ProviderType
 public abstract class BaseTrashHandler implements TrashHandler {
 
 	@Override

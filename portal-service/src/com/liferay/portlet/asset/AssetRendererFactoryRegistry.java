@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
  * @author Bruno Farache
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface AssetRendererFactoryRegistry {
 
 	/**

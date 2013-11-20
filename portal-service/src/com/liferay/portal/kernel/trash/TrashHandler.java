@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.trash;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ContainerModel;
@@ -85,6 +87,7 @@ import javax.portlet.PortletRequest;
  * @author Alexander Chow
  * @author Zsolt Berentey
  */
+@ProviderType
 public interface TrashHandler {
 
 	public SystemEvent addDeletionSystemEvent(

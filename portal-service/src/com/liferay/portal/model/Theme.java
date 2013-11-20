@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.theme.ThemeCompanyLimit;
 import com.liferay.portal.theme.ThemeGroupLimit;
 
@@ -29,6 +31,7 @@ import javax.servlet.ServletContext;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@ProviderType
 public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 
 	public void addSetting(

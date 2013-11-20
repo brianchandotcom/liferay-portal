@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,6 +49,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Eduardo Garcia
  */
+@ProviderType
 public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override

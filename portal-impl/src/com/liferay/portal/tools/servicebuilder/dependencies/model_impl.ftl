@@ -1190,6 +1190,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#if>
 		</#list>
 
+		<#list cacheFields as cacheField>
+			<#assign variableName = serviceBuilder.getVariableName(cacheField)>
+			<#assign methodName = textFormatter.format(variableName, 6)>
+
+			set${methodName}(null);
+		</#list>
+
 		<#if columnBitmaskEnabled>
 			${entity.varName}ModelImpl._columnBitmask = 0;
 		</#if>

@@ -561,6 +561,10 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 		companyModelImpl._setOriginalSystem = false;
 
+		setKeyObj(null);
+
+		setVirtualHostname(null);
+
 		companyModelImpl._columnBitmask = 0;
 	}
 

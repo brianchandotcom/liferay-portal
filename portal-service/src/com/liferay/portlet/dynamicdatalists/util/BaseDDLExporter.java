@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,6 +34,7 @@ import java.util.Map;
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
+@ProviderType
 public abstract class BaseDDLExporter implements DDLExporter {
 
 	@Override

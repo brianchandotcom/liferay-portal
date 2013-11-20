@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -26,6 +28,7 @@ import java.util.Set;
 /**
  * @author Eduardo Garcia
  */
+@ProviderType
 public interface DDMDisplay {
 
 	public String getAddStructureActionId();
@@ -98,6 +101,7 @@ public interface DDMDisplay {
 	/**
 	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean controlPanel, Locale locale);
 

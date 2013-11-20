@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
@@ -28,6 +30,7 @@ import java.io.Serializable;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@ProviderType
 public class FinderPath {
 
 	public FinderPath(

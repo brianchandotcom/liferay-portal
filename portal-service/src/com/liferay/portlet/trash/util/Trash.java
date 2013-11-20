@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.trash.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
@@ -34,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  */
+@ProviderType
 public interface Trash {
 
 	public static final String TRASH_TIME_SEPARATOR = "_TRASH_TIME_";

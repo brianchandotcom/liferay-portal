@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.image;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.Image;
 
 import java.awt.image.BufferedImage;
@@ -30,6 +32,7 @@ import java.util.concurrent.Future;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
+@ProviderType
 public interface ImageTool {
 
 	public static final String TYPE_BMP = "bmp";

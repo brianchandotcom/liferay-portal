@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.trash.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
@@ -35,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  */
+@ProviderType
 public class TrashUtil {
 
 	public static void addBaseModelBreadcrumbEntries(

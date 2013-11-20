@@ -1,4 +1,9 @@
 <definition>
+	<property name="hook.plugins.includes" value="deploy-listener-hook,so-hook,so-activities-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-strata-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
 	<set-up>
 		<execute macro="SOUser#firstLoginPG" />
 	</set-up>

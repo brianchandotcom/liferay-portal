@@ -14,6 +14,8 @@
 
 package com.liferay.portal.portletfilerepository;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -34,6 +36,7 @@ import java.util.List;
  * @author Eudaldo Alonso
  * @author Alexander Chow
  */
+@ProviderType
 public class PortletFileRepositoryUtil {
 
 	public static void addPortletFileEntries(

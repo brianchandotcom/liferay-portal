@@ -396,7 +396,8 @@ public class DynamicCSSUtil {
 	}
 
 	/**
-	 * @see {@link AggregateFilter#aggregateCss(String, String)}
+	 * @see com.liferay.portal.servlet.filters.aggregate.AggregateFilter#aggregateCss(
+	 *      AggregateContext, String)
 	 */
 	private static String propagateQueryString(
 		String content, String queryString) {

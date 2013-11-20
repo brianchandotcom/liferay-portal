@@ -25,9 +25,8 @@ import java.net.URL;
 public class URLUtil {
 
 	/**
-	 * @see {@link
-	 *      com.liferay.portal.kernel.process.ClassPathUtil#_buildClassPath(
-	 *      ClassLoader, String)}
+	 * @see com.liferay.portal.kernel.process.ClassPathUtil#_buildClassPath(
+	 *      ClassLoader, String)
 	 */
 	public static URL normalizeURL(URL url) throws MalformedURLException {
 		String urlString = url.toString();

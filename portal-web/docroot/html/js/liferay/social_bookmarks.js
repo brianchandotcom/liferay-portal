@@ -29,26 +29,28 @@ AUI.add(
 
 						var menuList = instance.get('contentBox').one('.lfr-menu-list');
 
-						menuList.delegate(
-							'click',
-							function(event) {
-								event.preventDefault();
+						if (menuList) {
+							menuList.delegate(
+								'click',
+								function(event) {
+									event.preventDefault();
 
-								var shareWindowFeatures = [
-									'left=' + ((WIN.get('innerWidth') / 2) - (SHARE_WINDOW_WIDTH / 2)),
-									'height=' + SHARE_WINDOW_HEIGHT,
-									'toolbar=0',
-									'top=' + ((WIN.get('innerHeight') / 2) - (SHARE_WINDOW_HEIGHT / 2)),
-									'status=0',
-									'width=' + SHARE_WINDOW_WIDTH
-								];
+									var shareWindowFeatures = [
+										'left=' + ((WIN.get('innerWidth') / 2) - (SHARE_WINDOW_WIDTH / 2)),
+										'height=' + SHARE_WINDOW_HEIGHT,
+										'toolbar=0',
+										'top=' + ((WIN.get('innerHeight') / 2) - (SHARE_WINDOW_HEIGHT / 2)),
+										'status=0',
+										'width=' + SHARE_WINDOW_WIDTH
+									];
 
-								var url = event.currentTarget.attr('href');
+									var url = event.currentTarget.attr('href');
 
-								WIN.getDOM().open(url, null, shareWindowFeatures.join(',')).focus();
-							},
-							'.social-bookmark .taglib-icon'
-						);
+									WIN.getDOM().open(url, null, shareWindowFeatures.join()).focus();
+								},
+								'.social-bookmark .taglib-icon'
+							);
+						}
 					}
 				}
 			}

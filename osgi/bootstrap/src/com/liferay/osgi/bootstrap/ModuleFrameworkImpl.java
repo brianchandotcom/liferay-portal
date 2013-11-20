@@ -149,9 +149,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	/**
-	 * @see {@link
-	 *      com.liferay.modulesadmin.portlet.ModulesAdminPortlet#getBundle(
-	 *      BundleContext, InputStream)}
+	 * @see com.liferay.modulesadmin.portlet.ModulesAdminPortlet#getBundle(
+	 *      BundleContext, InputStream)
 	 */
 	public Bundle getBundle(
 			BundleContext bundleContext, InputStream inputStream)

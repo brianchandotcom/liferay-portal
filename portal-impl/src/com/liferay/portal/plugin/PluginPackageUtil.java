@@ -998,9 +998,8 @@ public class PluginPackageUtil {
 	}
 
 	/**
-	 * @see {@link
-	 *      com.liferay.portal.tools.deploy.BaseDeployer#readPluginPackage(
-	 *      java.io.File)}
+	 * @see com.liferay.portal.tools.deploy.BaseDeployer#readPluginPackage(
+	 *      java.io.File)
 	 */
 	private PluginPackage _readPluginPackageServletContext(
 			ServletContext servletContext)

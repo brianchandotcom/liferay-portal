@@ -248,7 +248,7 @@ public class SetupWizardUtil {
 	}
 
 	/**
-	 * @see {@link com.liferay.portal.servlet.MainServlet#initPlugins}
+	 * @see com.liferay.portal.servlet.MainServlet#initPlugins
 	 */
 	private static void _initPlugins() {
 		HotDeployUtil.setCapturePrematureEvents(false);

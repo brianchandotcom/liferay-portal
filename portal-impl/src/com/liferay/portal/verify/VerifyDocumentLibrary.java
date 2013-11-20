@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -170,8 +171,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				String title = DLUtil.getTitleWithExtension(
 					dlFileEntry.getTitle(), dlFileEntry.getExtension());
 
-				String mimeType = MimeTypesUtil.getContentType(
-					inputStream, title);
+				String mimeType = getMimeType(inputStream, title);
 
 				if (mimeType.equals(originalMimeType)) {
 					return;
@@ -231,8 +231,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				String title = DLUtil.getTitleWithExtension(
 					dlFileVersion.getTitle(), dlFileVersion.getExtension());
 
-				String mimeType = MimeTypesUtil.getContentType(
-					inputStream, title);
+				String mimeType = getMimeType(inputStream, title);
 
 				if (mimeType.equals(originalMimeType)) {
 					return;
@@ -382,6 +381,19 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		updateFileEntryAssets();
 		updateFolderAssets();
 		verifyTree();
+	}
+
+	protected String getMimeType(InputStream inputStream, String title) {
+		String mimeType = null;
+
+		try {
+			mimeType = MimeTypesUtil.getContentType(inputStream, title);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+
+		return mimeType;
 	}
 
 	protected void removeOrphanedDLFileEntries() throws Exception {

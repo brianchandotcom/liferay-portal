@@ -1,0 +1,190 @@
+<definition>
+	<set-up>
+		<echo message="testing logical operators in a test case set-up element" />
+
+		<if>
+			<and>
+				<equals arg1="true" arg2="false" />
+				<equals arg1="true" arg2="true" />
+			</and>
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="true" arg2="true" />
+					<equals arg1="true" arg2="true" />
+				</or>
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</elseif>
+			<elseif>
+				<not>
+					<equals arg1="true" arg2="true" />
+				</not>
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</elseif>
+			<else>
+				<if>
+					<and>
+						<not>
+							<equals arg1="true" arg2="false" />
+						</not>
+						<equals arg1="true" arg2="true" />
+						<equals arg1="true" arg2="true" />
+						<or>
+							<equals arg1="true" arg2="false" />
+							<equals arg1="true" arg2="true" />
+						</or>
+						<not>
+							<equals arg1="true" arg2="false" />
+							<and>
+								<equals arg1="true" arg2="true" />
+								<equals arg1="true" arg2="true" />
+								<or>
+									<equals arg1="true" arg2="true" />
+									<equals arg1="true" arg2="false" />
+									<equals arg1="true" arg2="false" />
+								</or>						
+							</and>							
+						</not>
+					</and>
+					<then>
+						<execute macro="TestUtils#pass" />
+					</then>
+				</if>
+			</else>
+		</if>
+	</set-up>
+
+	<command name="TestCaseLogicalOperators" priority="5">
+		<echo message="testing logical operators in a test case command element" />
+
+		<if>
+			<and>
+				<equals arg1="true" arg2="false" />
+				<equals arg1="true" arg2="true" />
+			</and>
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="true" arg2="true" />
+					<equals arg1="true" arg2="true" />
+				</or>
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</elseif>
+			<elseif>
+				<not>
+					<equals arg1="true" arg2="true" />
+				</not>
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</elseif>
+			<else>
+				<if>
+					<and>
+						<not>
+							<equals arg1="true" arg2="false" />
+						</not>
+						<equals arg1="true" arg2="true" />
+						<equals arg1="true" arg2="true" />
+						<or>
+							<equals arg1="true" arg2="false" />
+							<equals arg1="true" arg2="true" />
+						</or>
+						<not>
+							<equals arg1="true" arg2="false" />
+							<and>
+								<equals arg1="true" arg2="true" />
+								<equals arg1="true" arg2="true" />
+								<or>
+									<equals arg1="true" arg2="true" />
+									<equals arg1="true" arg2="false" />
+									<equals arg1="true" arg2="false" />
+								</or>						
+							</and>							
+						</not>
+					</and>
+					<then>
+						<execute macro="TestUtils#pass" />
+					</then>
+				</if>
+			</else>
+		</if>
+	</command>
+
+	<command name="MacroLogicalOperators" priority="5">
+		<echo message="testing logical operators defined inside a macro" />
+		
+		<execute macro="LogicalOperators#macroLogicalOperators" />
+	</command>
+
+	<tear-down>
+		<echo message="testing logical operators in a test case tear-down element" />
+
+		<if>
+			<and>
+				<equals arg1="true" arg2="false" />
+				<equals arg1="true" arg2="true" />
+			</and>
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+			<elseif>
+				<or>
+					<equals arg1="true" arg2="true" />
+					<equals arg1="true" arg2="true" />
+				</or>
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</elseif>
+			<elseif>
+				<not>
+					<equals arg1="true" arg2="true" />
+				</not>
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</elseif>
+			<else>
+				<if>
+					<and>
+						<not>
+							<equals arg1="true" arg2="false" />
+						</not>
+						<equals arg1="true" arg2="true" />
+						<equals arg1="true" arg2="true" />
+						<or>
+							<equals arg1="true" arg2="false" />
+							<equals arg1="true" arg2="true" />
+						</or>
+						<not>
+							<equals arg1="true" arg2="false" />
+							<and>
+								<equals arg1="true" arg2="true" />
+								<equals arg1="true" arg2="true" />
+								<or>
+									<equals arg1="true" arg2="true" />
+									<equals arg1="true" arg2="false" />
+									<equals arg1="true" arg2="false" />
+								</or>						
+							</and>							
+						</not>
+					</and>
+					<then>
+						<execute macro="TestUtils#pass" />
+					</then>
+				</if>
+			</else>
+		</if>
+	</tear-down>
+</definition>

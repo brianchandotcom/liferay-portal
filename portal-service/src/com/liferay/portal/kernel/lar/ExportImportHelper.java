@@ -93,6 +93,21 @@ public interface ExportImportHelper {
 	public String getExportableRootPortletId(long companyId, String portletId)
 		throws Exception;
 
+	public boolean[] getExportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception;
+
+	public boolean[] getExportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception;
+
+	public boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement)
+		throws Exception;
+
 	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
 		throws Exception;
 

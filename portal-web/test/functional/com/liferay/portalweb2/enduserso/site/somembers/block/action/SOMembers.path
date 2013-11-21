@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>SOMembers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOMembers</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SOMembers</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_BUTTON</td>
+	<td>//a[@class='invite-members']</td>
+	<td></td>
+</tr>
+<!--MEMBERS_LIST-->
+<tr>
+	<td>MEMBERS_LIST_FILTER</td>
+	<td>//select[contains(@id,'contactsportlet_filterBy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_LIST_SEARCH</td>
+	<td>//input[contains(@id,'contactsportlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_LIST_NAME</td>
+	<td>//div[contains(@class,'lfr-contact-name')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_LIST_EMAIL</td>
+	<td>//div[contains(@class,'lfr-contact-extra')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_LIST_EMPTY</td>
+	<td>//div[@class='empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_DETAILS-->
+<tr>
+	<td>USER_DETAILS_NAME</td>
+	<td>//div[contains(@class,'contacts-profile')]/div/div[2]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_DETAILS_EMAIL</td>
+	<td>//div[contains(@class,'contacts-profile')]/div/div[2]/div[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MEMBERS_LINK-->
+<tr>
+	<td>MEMBERS_LINK_CONNECTIONS</td>
+	<td>//div[contains(@class,'contacts-count connections')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_LINK_FOLLOWING</td>
+	<td>//div[contains(@class,'contacts-count followings')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_LINK_ALL</td>
+	<td>//div[contains(@class,'contacts-count all')]/div/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

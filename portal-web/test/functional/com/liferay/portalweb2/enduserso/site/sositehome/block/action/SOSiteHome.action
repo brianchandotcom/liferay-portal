@@ -1,0 +1,69 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="BOOKMARKS_ADD_ENTRY_LINK">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="ACTIONS_MENULIST_EDIT">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_INCREMENT">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_INCREMENT">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="BOOKMARKS_NO_ENTRIES_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="RSS_FEED_TITLE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="assertTextNotEquals">
+		<case locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS">
+			<execute function="AssertTextNotEquals#assertNotPartialText" />
+		</case>
+		<case locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS">
+			<execute function="AssertTextNotEquals#assertNotPartialText" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="NAVIGATION_DOCUMENTS">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+
+		<case locator-key1="NAVIGATION_MEMBERS">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="close">
+		<case locator-key1="BOOKMARKS_POP_UP_GOOGLE">
+			<execute function="Close#closeWindow" />
+		</case>
+
+		<case locator-key1="BOOKMARKS_POP_UP_MSN">
+			<execute function="Close#closeWindow" />
+		</case>
+
+		<case locator-key1="BOOKMARKS_POP_UP_YAHOO">
+			<execute function="Close#closeWindow" />
+		</case>
+	</command>
+</definition>

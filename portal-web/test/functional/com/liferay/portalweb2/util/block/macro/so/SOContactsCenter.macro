@@ -1,0 +1,197 @@
+<definition>
+	<var name="password" value="test" />
+	<var name="adminName" value="Joe Bloggs" />
+	<var name="adminListName" value="Bloggs, Joe" />
+	<var name="adminEmailAddress" value="test@liferay.com" />
+
+	<command name="addConnection">
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="SOContactsCenter#requestToConnect">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userListName" value="${userListName}" />
+			<var name="userName" value="${userName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="SOContactsCenter#confirmRequestToConnect">
+			<var name="senderName" value="${adminName}" />
+			<var name="userName" value="${userName}" />
+		</execute>
+	</command>
+
+	<command name="addContact">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+	
+		<execute action="SOContactscenter#assertClick" locator-key1="ADD_CONTACT_BUTTON" value1="Add Contact" />
+	
+		<execute action="SOContactscenterAddcontact#type" locator-key1="NAME_FIELD" value1="${contactName}" />
+		<execute action="SOContactscenterAddcontact#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${contactEmailAddress}" />
+		<execute action="SOContactscenterAddcontact#type" locator-key1="COMMENTS_FIELD" value1="${contactName} Comments" />
+		<execute action="SOContactscenterAddcontact#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully added a new contact." />
+	</command>
+
+	<command name="addFollower">
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="SOContactsCenter#followUser">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="adminListName" value="${adminListName}" />
+			<var name="adminName" value="${adminName}" />
+		</execute>
+	</command>
+
+	<command name="confirmRequestToConnect">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1"/>
+		<execute action="SOUserBar#mouseOver" locator-key1="NOTIFICATION_MENU_COUNT" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}"/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection."/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_CONFIRM" value1="Confirm" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_CONFIRM" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0"/>
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 1 connections."/>
+	</command>
+
+	<command name="disconnectFromConnection">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#click" locator-key1="DISCONNECT_BUTTON" value1="Disconnect" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="DISCONNECT_BUTTON" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You are not connected to this user anymore." />
+	</command>
+
+	<command name="followUser">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${adminName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${adminName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${adminEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOWING_MESSAGE" value1="Following" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="UNFOLLOW_BUTTON" value1="Unfollow" />
+	</command>
+
+	<command name="gotoProfile">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+	</command>
+
+	<command name="requestToConnect">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONNECT_BUTTON" value1="Connect" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECTION_REQUESTED_MESSAGE" value1="Connection Requested" />
+		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="CONNECT_BUTTON" value1="Connect" />
+	</command>
+
+	<command name="tearDownContacts">
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="My Contacts" />
+		<execute action="SOContactscenter#pause" value1="1000" />
+
+		<while>
+			<condition action="SOContactscenter#isElementPresent" locator-key1="CONTACTS_LIST_NAME" />
+			<then>
+				<var name="contactName" path="SOContactscenter" locator-key="CONTACTS_LIST_NAME" />
+
+				<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" />
+				<execute action="SOContactscenter#click" locator-key1="CONTACTS_LIST_NAME" />
+				<execute action="SOContactscenter#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="SOContactscenter#confirm" value1="Are you sure you want to delete ${contactName} from your contacts?" />
+				<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="My Contacts" />
+				<execute action="SOContactscenter#pause" value1="1000" />
+			</then>
+		</while>
+	</command>
+
+	<command name="unfollowUser">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${adminName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${adminName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${adminEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="UNFOLLOW_BUTTON" value1="Unfollow" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You are not following this user anymore." />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+	</command>
+
+	<command name="viewContact">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+	
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${contactName}" />
+		<execute action="SOContactscenter#pause" value1="1000" />	
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${contactName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACT_DETAILS_NAME" value1="${contactName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACT_DETAILS_EMAIL" value1="${contactEmailAddress}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACT_DETAILS_COMMENTS" value1="${contactName} Comments" />
+	</command>
+</definition>

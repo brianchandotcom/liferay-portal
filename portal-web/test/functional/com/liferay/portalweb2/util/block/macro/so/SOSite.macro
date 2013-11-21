@@ -1,0 +1,360 @@
+<definition>
+	<command name="acceptMemberRequestSOSite">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="MEMBERSHIP_TYPE" value1="Membership Type: Restricted"/>
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="REQUESTS_TABLE_REPLY" value1="Reply" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#select" locator-key1="STATUS" value1="Approve" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#type" locator-key1="REPLY_COMMENTS" value1="${siteName} Membership Approved" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your reply will be sent to the user by email." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLIER_NAME" value1="Test Test" />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLY_COMMENTS" value1="${siteName} Membership Approved" />
+	</command>
+
+	<command name="denyMemberRequestSOSite">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="MEMBERSHIP_TYPE" value1="Membership Type: Restricted"/>
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="REQUESTS_TABLE_REPLY" value1="Reply" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#select" locator-key1="STATUS" value1="Deny" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#type" locator-key1="REPLY_COMMENTS" value1="${siteName} Membership Denied" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your reply will be sent to the user by email." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="VIEW_MEMBERSHIP_NAVIGATION_DENIED" value1="Denied" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsDenied#assertTextEquals" locator-key1="DENIED_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsDenied#assertTextEquals" locator-key1="DENIED_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute action="CPSitemembershipsViewmembershiprequestsDenied#assertTextEquals" locator-key1="DENIED_TABLE_REPLIER_NAME" value1="Test Test" />
+		<execute action="CPSitemembershipsViewmembershiprequestsDenied#assertTextEquals" locator-key1="DENIED_TABLE_REPLY_COMMENTS" value1="${siteName} Membership Denied" />
+	</command>
+
+	<command name="joinSitePG">
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertClick" locator-key1="JOIN_SITE_BUTTON" value1="Join Site" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="JOIN_SITE_BUTTON" />
+	</command>
+
+	<command name="requestMembershipPG">
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertClick" locator-key1="REQUEST_MEMBERSHIP_BUTTON" value1="Request Membership" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="MEMBERSHIP_REQUESTED_BUTTON" value1="Membership Requested" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="Site#tearDownCP" />
+	</command>
+
+	<command name="viewSOSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute macro="SOUserBar#searchSOSite" />
+
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITE_NAME_LINK" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<if>
+			<equals arg1="${siteType}" arg2="Private" />
+			<then>
+				<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
+			</then>
+			<else>
+				<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="All Sites" />
+			</else>
+		</if>
+
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
+		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<if>
+			<contains string="${siteType}" substring="Private" />
+			<then>
+				<execute action="CPSitesettings#assertChecked" locator-key1="PRIVATE_PAGE_PROPAGATION_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="CPSitesettings#assertChecked" locator-key1="PUBLIC_PAGE_PROPAGATION_CHECKBOX" />
+			</else>
+		</if>
+
+		<execute action="CPSitesettings#assertSelectedLabel" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Social Office EE Hook" />
+	</command>
+
+	<command name="viewSOSiteFavorite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Favorites" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_UNFAVORITE_SITE_ICON" />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_FAVORITE_SITE_ICON" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITE_NAME_LINK" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Favorites" />
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
+		<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="UNFAVORITE_SITE_ICON" />
+		<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator-key1="FAVORITE_SITE_ICON" />
+		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+	</command>
+
+
+	<command name="viewSOSiteMembership">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITE_NAME_LINK" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="JOIN_SITE_BUTTON" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
+		<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="SOSiteHome#assertElementNotPresent" locator-key1="JOIN_SITE_BUTTON" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+		<execute action="SOSiteHome#click" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+		<execute macro="SOMembers#viewMember" />
+	</command>
+
+	<command name="viewSOSiteNonMembership">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
+
+		<if>
+			<equals arg1="${siteType}" arg2="Private" />
+			<then>
+				<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_EMPTY" value1="There are no results." />
+				<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_SITE_NAME_LINK" />
+			</then>
+				<elseif>
+				<equals arg1="${siteType}" arg2="Private Restricted" />
+				<then>
+					<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_NAME" />
+					<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_SITE_NAME_LINK" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_NAME_LINK" />
+			</else>
+		</if>
+			
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_EMPTY" value1="There are no results." />
+		<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_SITE_NAME_LINK" />
+		<execute action="SOUserBar#assertTextNotPresent" value1="${siteName}" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="My Sites" />
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="EMPTY_INFO_MESSAGE" value1="There are no results." />
+		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#select" locator-key1="SITE_CATEGORY_SELECT" value1="All Sites" />
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+
+		<if>
+			<equals arg1="${siteType}" arg2="Private Restricted" />
+			<then>
+				<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+				<execute action="SOUserBarSitesDirectory#assertElementNotPresent" locator-key1="SITE_NAME_LINK" />
+				<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
+			</then>
+			<elseif>
+				<equals arg1="${siteType}" arg2="Private" />
+				<then>
+					<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="EMPTY_INFO_MESSAGE" value1="There are no results." />
+					<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteName}" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+				<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_DESCRIPTION" value1="${siteDescription}" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<equals arg1="${siteType}" arg2="Private" />
+			</not>
+			<then>
+				<if>
+					<equals arg1="${siteType}" arg2="Open" />
+					<then>
+						<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="JOIN_SITE_ICON" />
+					</then>
+					<else>
+						<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="REQUEST_MEMBERSHIP_ICON" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<contains string="${siteType}" substring="Private" />
+			</not>
+			<then>
+				<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+				
+				<if>
+					<equals arg1="${siteType}" arg2="Open" />
+					<then>
+						<execute action="SOSiteHome#assertTextEquals" locator-key1="JOIN_SITE_BUTTON" value1="Join Site" />
+					</then>
+					<else>
+						<execute action="SOSiteHome#assertTextEquals" locator-key1="REQUEST_MEMBERSHIP_BUTTON" value1="Request Membership" />
+					</else>
+				</if>
+
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_HOME" value1="Home" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_CALENDAR" value1="Calendar" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_DOCUMENTS" value1="Documents" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_FORUMS" value1="Forums" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_BLOGS" value1="Blogs" />
+				<execute action="SOSiteHome#assertTextEquals" locator-key1="NAVIGATION_WIKI" value1="Wiki" />
+				<execute action="SOSiteHome#click" locator-key1="NAVIGATION_MEMBERS" value1="Members" />
+
+				<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LINK_ALL" value1="View all 1 users." />
+				<execute action="SOMembers#type" locator-key1="MEMBERS_LIST_SEARCH" value1="${userEmailAddress}" />
+				<execute action="SOMembers#assertTextEquals" locator-key1="MEMBERS_LIST_EMPTY" value1="There are no results." />
+				<execute action="SOMembers#assertTextNotPresent" value1="${userListName}" />
+			</then>
+		</if>
+	</command>
+</definition>

@@ -214,6 +214,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--EDIT_CONTROLS-->
+<tr>
+	<td>EDIT_CONTROLS</td>
+	<td>//li[@id='_145_toggleControls']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--EDIT_DETAILS-->
 <tr>
 	<td>EDIT_DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL</td>

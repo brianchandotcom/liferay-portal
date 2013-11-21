@@ -167,12 +167,12 @@
 </tr>
 <tr>
 	<td>GO_TO_SITE_NAME</td>
-	<td>//li[contains(@class,'social-office-enabled')]//span[contains(.,'${siteName}')]</td>
+	<td>//li[contains(@class,'social-office-enabled')]//span[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GO_TO_SITE_NAME_LINK</td>
-	<td>//li[contains(@class,'social-office-enabled')]/span[contains(.,'${siteName}')]/a</td>
+	<td>//li[contains(@class,'social-office-enabled')]/span[contains(.,'${key_siteName}')]/a</td>
 	<td></td>
 </tr>
 <tr>

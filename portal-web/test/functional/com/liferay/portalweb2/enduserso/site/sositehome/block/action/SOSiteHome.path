@@ -1,0 +1,469 @@
+<html>
+<head>
+<title>SOSiteHome</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOSiteHome</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SOSiteHome</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_NAME</td>
+	<td>//h1[@class='site-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JOIN_SITE_BUTTON</td>
+	<td>//a[@id='memberButton' and contains(.,'Join Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUEST_MEMBERSHIP_BUTTON</td>
+	<td>//a[@id='memberButton' and contains(.,'Request Membership')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERSHIP_REQUESTED_BUTTON</td>
+	<td>//a[@id='memberButton' and contains(.,'Membership Requested')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_HOME</td>
+	<td>//div/ul/li[contains(.,'Home')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_CALENDAR</td>
+	<td>//div/ul/li[contains(.,'Calendar')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DOCUMENTS</td>
+	<td>//div/ul/li/a/span[.=' Documents']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_FORUMS</td>
+	<td>//div/ul/li[contains(.,'Forums')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_BLOGS</td>
+	<td>//div/ul/li[contains(.,'Blogs')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WIKI</td>
+	<td>//div/ul/li[contains(.,'Wiki')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MEMBERS</td>
+	<td>//div/ul/li[contains(.,'Members')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ANNOUNCEMENTS-->
+<tr>
+	<td>ANNOUNCEMENTS_OPTIONS</td>
+	<td>//header[contains(.,'Announcements')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_CLOSE</td>
+	<td>//header[contains(.,'Announcements')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ADD_ENTRY_BUTTON</td>
+	<td>//button[contains(.,'Add Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_MANAGE_ENTRIES_BUTTON</td>
+	<td>//button[contains(.,'Manage Entries')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_ACTION</td>
+	<td>//div[@class='entry-action']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_AUTHOR</td>
+	<td>//div[@class='entry-action']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_TITLE</td>
+	<td>//div[@class='entry-body']/div[@class='title']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_CONTENT</td>
+	<td>//div[@class='entry-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_EDIT_LINK</td>
+	<td>//span[@class='action edit-entry']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_DELETE_LINK</td>
+	<td>//span[@class='action delete-entry']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_MARK_LINK</td>
+	<td>//span[@class='action control-entry']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_READ_ENTRIES_DROPDOWN</td>
+	<td>//div[contains(@class,'read-entries')]/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_COLLAPSED</td>
+	<td>//div[contains(@class,'content-collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS_ENTRY_EXPANDED</td>
+	<td>//div[contains(@class,'content-expande')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIVITIES-->
+<tr>
+	<td>ACTIVITIES_OPTIONS</td>
+	<td>//header[contains(.,'Activities')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITIES_CLOSE</td>
+	<td>//header[contains(.,'Activities')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WELCOME-->
+<tr>
+	<td>WELCOME_OPTIONS</td>
+	<td>//header[contains(.,'Welcome')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_CLOSE</td>
+	<td>//header[contains(.,'Welcome')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARKS-->
+<tr>
+	<td>BOOKMARKS_OPTIONS</td>
+	<td>//header[contains(.,'Bookmarks')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_CLOSE</td>
+	<td>//header[contains(.,'Bookmarks')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_ADD_ENTRY_LINK</td>
+	<td>//a[contains(.,'Add Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_ENTRY_LINK</td>
+	<td>//tr[contains(.,'${key_bookmarksEntryName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_ENTRY_LINK_INCREMENT</td>
+	<td>//tr[contains(.,'${number}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_ENTRY_ACTIONS</td>
+	<td>//tr[contains(.,'${key_bookmarksEntryName}')]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_ENTRY_ACTIONS_INCREMENT</td>
+	<td>//tr[contains(.,'${number}')]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_NO_ENTRIES_MESSAGE</td>
+	<td>//div[@class='portlet-body']/form[contains(.,'There are no entries')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARKS_ACTIONS_MENULIST-->
+<tr>
+	<td>ACTIONS_MENULIST_EDIT</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[1]/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_PERMISSIONS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[2]/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_DELETE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[3]/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[4]/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOOKMARKS_POP_UP-->
+<tr>
+	<td>BOOKMARKS_POP_UP_GOOGLE</td>
+	<td>title=Google</td>
+	<td>Google</td>
+</tr>
+<tr>
+	<td>BOOKMARKS_POP_UP_YAHOO</td>
+	<td>title=Yahoo</td>
+	<td>Yahoo</td>
+</tr>
+<tr>
+	<td>BOOKMARKS_POP_UP_MSN</td>
+	<td>title=MSN.com</td>
+	<td>MSN</td>
+</tr>
+<tr>
+	<td>BOOKMARKS_POP_UP_IMAGE_GOOGLE</td>
+	<td>xPath=(//button[@aria-label='Google Search'])[2]</td>
+	<td>Google</td>
+</tr>
+<tr>
+	<td>BOOKMARKS_POP_UP_IMAGE_YAHOO</td>
+	<td>//button[@id='search-submit']</td>
+	<td>Yahoo</td>
+</tr>
+<tr>
+	<td>BOOKMARKS_POP_UP_IMAGE_MSN</td>
+	<td>//img[@alt='MSN Logo']</td>
+	<td>MSN</td>
+</tr>
+<tr>
+	<td>BOOKMARKS_NULL_WINDOW</td>
+	<td>null</td>
+	<td>Bookmarks Null Window</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RSS-->
+<tr>
+	<td>RSS_OPTIONS</td>
+	<td>//header[contains(.,'RSS')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_CLOSE</td>
+	<td>//header[contains(.,'RSS')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_TITLE</td>
+	<td>//div[contains(.,'${feedTitle}')]/div[@class='feed-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_PUBLISHED_DATE</td>
+	<td>//div[contains(.,'${feedTitle}')]/div[contains(@class,'feed-published-date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_DESCRIPTION</td>
+	<td>//div[contains(.,'${feedTitle}')]/div[@class='feed-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_IMAGE</td>
+	<td>//a[contains(@title,'${feedTitle}')]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_ENTRY_TITLE_INCREMENT</td>
+	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/span[@class='feed-entry-title'])[${feedEntryNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_ENTRY_EXPAND_BUTTON_INCREMENT</td>
+	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/img)[${feedEntryNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_ENTRY_DATE_AND_TIME_INCREMENT</td>
+	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/div[@class='feed-date'])[${feedEntryNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_ENTRY_AUTHOR_INCREMENT</td>
+	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/span[@class='feed-entry-author'])[${feedEntryNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_ENTRY_CONTENT_INCREMENT</td>
+	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')])[${feedEntryNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_ENTRY_CONTENT_READ_MORE_INCREMENT</td>
+	<td>xPath=(//div[contains(.,'${feedTitle}')]/div[@class='feed-entries']/div[@class='feed-entry']/div[contains(@class,'feed-entry-content')]/a)[${feedEntryNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECENT_DOWNLOADS-->
+<tr>
+	<td>RECENT_DOWNLOADS_OPTIONS</td>
+	<td>//header[contains(.,'Recent Downloads')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_DOWNLOADS_CLOSE</td>
+	<td>//header[contains(.,'Recent Downloads')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EVENTS_DISPLAY-->
+<tr>
+	<td>EVENTS_DISPLAY_OPTIONS</td>
+	<td>//header[contains(.,'Events')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_CLOSE</td>
+	<td>//header[contains(.,'Events')]//menu//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_TODAYS_EVENTS</td>
+	<td>//div[@class='today-events']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_UPCOMING_EVENTS</td>
+	<td>//div[@class='upcoming-events']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE</td>
+	<td>//div[@class='today-events']//span[@class='event-name']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE_INCREMENT</td>
+	<td>//div[@class='today-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-name']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME</td>
+	<td>//div[@class='today-events']//span[@class='event-time']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME_INCREMENT</td>
+	<td>//div[@class='today-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-time']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE</td>
+	<td>//div[@class='upcoming-events']//span[@class='event-name']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE_INCREMENT</td>
+	<td>//div[@class='upcoming-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-name']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME</td>
+	<td>//div[@class='upcoming-events']//span[@class='event-time']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME_INCREMENT</td>
+	<td>//div[@class='upcoming-events']//div[@class='event' and contains(.,'${number}')]/span[@class='event-time']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

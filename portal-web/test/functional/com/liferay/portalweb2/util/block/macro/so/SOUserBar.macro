@@ -1,0 +1,170 @@
+<definition>
+	<command name="addSOSite">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_ADD_SITE_BUTTON" />
+
+		<execute action="SOUserBarAddSite#type" locator-key1="NAME_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarAddSite#type" locator-key1="DESCRIPTION_FIELD" value1="${siteDescription}" />
+		<execute action="SOUserBarAddSite#click" locator-key1="NEXT_BUTTON" />
+		<execute action="SOUserBarAddSite#select" locator-key1="DEFAULT_PAGES_SELECT" value1="Default Social Office Site" />
+
+		<execute action="SOUserBarAddSite#check" locator-key1="HOME_CHECKBOX" />
+		<execute action="SOUserBarAddSite#check" locator-key1="CALENDAR_CHECKBOX" />
+		<execute action="SOUserBarAddSite#check" locator-key1="DOCUMENTS_CHECKBOX" />
+		<execute action="SOUserBarAddSite#check" locator-key1="FORUMS_CHECKBOX" />
+		<execute action="SOUserBarAddSite#check" locator-key1="BLOGS_CHECKBOX" />
+		<execute action="SOUserBarAddSite#check" locator-key1="WIKI_CHECKBOX" />
+		<execute action="SOUserBarAddSite#check" locator-key1="MEMBERS_CHECKBOX" />
+
+		<if>
+			<equals arg1="${siteType}" arg2="Private" />
+			<then>
+				<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="value=3" />
+				<execute action="SOUserBarAddSite#assertSelectedLabel" locator-key1="TYPE_SELECT" value1="Private" />
+			</then>
+			<else>
+				<execute action="SOUserBarAddSite#select" locator-key1="TYPE_SELECT" value1="${siteType}" />
+			</else>
+		</if>
+
+		<execute action="SOUserBarAddSite#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="SAVE_BUTTON" />
+	</command>
+
+	<command name="deleteSOSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<if>
+			<equals arg1="${siteType}" arg2="Private" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="GO_TO" />
+				<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+			</then>
+			<else>
+				<execute action="SOUserBar#click" locator-key1="GO_TO" />
+				<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+			</else>
+		</if>
+
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#click" locator-key1="DELETE_SITE_ICON" value1="Delete" />
+		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete ${siteName}?" />
+		<execute action="SOUserBarSitesDirectory#assertTextNotPresent" value1="${siteName}" />
+	</command>
+
+	<command name="favoriteSOSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_FAVORITE_SITE_ICON" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_UNFAVORITE_SITE_ICON" />
+	</command>
+
+	<command name="joinSOSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#click" locator-key1="JOIN_SITE_ICON" />
+		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to join ${siteName}?" />
+		<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="LEAVE_SITE_ICON" />
+	</command>
+
+	<command name="leaveSOSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+		<execute action="SOUserBarSitesDirectory#click" locator-key1="LEAVE_SITE_ICON" />
+		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to leave ${siteName}?" />
+
+		<if>
+			<equals arg1="${siteType}" arg2="Open" />
+			<then>
+				<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="JOIN_SITE_ICON" />
+			</then>
+			<else>
+				<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="REQUEST_MEMBERSHIP_ICON" />
+			</else>
+		</if>
+	</command>
+
+	<command name="requestMembershipSOSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
+
+		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
+	
+		<if>
+			<equals arg1="${siteType}" arg2="Private Restricted" />
+			<then>
+				<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+			</then>
+			<else>
+				<execute action="SOUserBarSitesDirectory#assertTextEquals" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
+			</else>
+		</if>
+
+		<execute action="SOUserBarSitesDirectory#click" locator-key1="REQUEST_MEMBERSHIP_ICON" />
+		<execute action="SOUserBarSitesDirectory#confirm" locator-key1="CONFIRMATION" value1="This is a restricted site. Do you want to send a membership request to ${siteName}?" />
+		<execute action="SOUserBarSitesDirectory#assertElementPresent" locator-key1="MEMBERSHIP_REQUESTED_ICON" />
+	</command>
+
+	<command name="searchSOSite">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+
+		<if>
+			<equals arg1="${siteType}" arg2="Private" />
+			<then>
+				<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
+			</then>
+			<else>
+				<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="All Sites" />
+			</else>
+		</if>
+
+		<execute action="SOUserBar#click" locator-key1="GO_TO" />
+		<execute action="SOUserBar#type" locator-key1="GO_TO_SEARCH_FIELD" value1="${siteName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_NAME_LINK" value1="${siteName}" />
+	</command>
+
+	<command name="tearDownNotifications">
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SOUserBar#mouseOver" locator-key1="NOTIFICATION_MENU_COUNT" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_VIEW_ALL" value1="View All" />
+
+		<while>
+			<condition action="SONotifications#isElementPresent" locator-key1="NOTIFICATIONS_CHECKBOX" />
+			<then>
+				<execute action="SONotifications#check" locator-key1="NOTIFICATIONS_CHECKBOX" />
+				<execute action="SONotifications#click" locator-key1="DELETE_BUTTON" />
+			</then>
+		</while>
+	</command>
+</definition>

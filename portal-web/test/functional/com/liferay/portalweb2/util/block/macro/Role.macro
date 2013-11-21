@@ -143,6 +143,24 @@
 		</while>
 	</command>
 
+	<command name="unassignRegRoleCP">
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
+		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPRoles#assertClick" locator-key1="ROLE_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPRolesAssignmembersUsers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPRolesAssignmembersUsers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPRolesAssignmembersUsers#uncheck" locator-key1="USER_TABLE_CHECKBOX" />
+		<execute action="CPRolesAssignmembersUsers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute action="CPRolesAssignmembersUsers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_roleName" value="${roleName}" />
 

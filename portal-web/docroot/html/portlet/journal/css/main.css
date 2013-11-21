@@ -404,14 +404,6 @@
 		right: 0;
 	}
 
-	.taglib-search-iterator {
-		table-layout: fixed;
-
-		.align-left {
-			word-wrap: break-word;
-		}
-	}
-
 	.entry-thumbnail .taglib-workflow-status {
 		left: 6px;
 		margin: 0;

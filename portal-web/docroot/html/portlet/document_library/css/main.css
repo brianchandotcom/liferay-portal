@@ -263,14 +263,6 @@
 		right: 0;
 	}
 
-	.taglib-search-iterator {
-		table-layout: fixed;
-
-		.align-left {
-			word-wrap: break-word;
-		}
-	}
-
 	.taglib-webdav {
 		margin-top: 3em;
 	}
@@ -557,10 +549,6 @@
 }
 
 .portlet-document-library {
-	.taglib-search-iterator .results-header input {
-		display: none;
-	}
-
 	.lfr-asset-column-details .lfr-panel {
 		margin-bottom: 0.5em;
 		padding-bottom: 0;

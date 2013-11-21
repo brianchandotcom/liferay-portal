@@ -902,11 +902,17 @@ public class PortalImpl implements Portal {
 		String queryString = StringPool.BLANK;
 
 		if (Validator.isNull(friendlyURL)) {
-			layout = LayoutLocalServiceUtil.fetchFirstLayout(
+
+			// We need to make sure any virtual layouts are merged.
+
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 				groupId, privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if (layout == null) {
+			if (!layouts.isEmpty()) {
+				layout = layouts.get(0);
+			}
+			else {
 				throw new NoSuchLayoutException(
 					"{groupId=" + groupId + ", privateLayout=" + privateLayout +
 						"}");

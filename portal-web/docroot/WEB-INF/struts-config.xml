@@ -1646,6 +1646,11 @@
 
 		<!-- Roles Admin -->
 
+		<action path="/roles_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
+
 		<action path="/roles_admin/edit_role" type="com.liferay.portlet.rolesadmin.action.EditRoleAction">
 			<forward name="portlet.roles_admin.edit_role" path="portlet.roles_admin.edit_role" />
 			<forward name="portlet.roles_admin.error" path="portlet.roles_admin.error" />

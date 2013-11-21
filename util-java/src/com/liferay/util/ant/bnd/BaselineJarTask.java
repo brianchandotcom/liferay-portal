@@ -82,6 +82,12 @@ public class BaselineJarTask extends BaseBndTask {
 
 		ProjectBuilder projectBuilder = new ProjectBuilder(bndProject);
 
+		projectBuilder.setClasspath(
+			_classpathFiles.toArray(new File[_classpathFiles.size()]));
+		projectBuilder.setPedantic(isPedantic());
+		projectBuilder.setProperties(_file);
+		projectBuilder.setSourcepath(new File[] {_sourcePath});
+
 		Jar baselineJar = projectBuilder.getBaselineJar();
 
 		try {

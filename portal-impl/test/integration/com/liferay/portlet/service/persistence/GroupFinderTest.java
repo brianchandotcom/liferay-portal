@@ -182,23 +182,21 @@ public class GroupFinderTest {
 	}
 
 	@Test
-	public void testVerifyFindByCompanyIdQuery1() throws Exception {
-		verifyThatFindByCompanyIdVerifyIsValid(true, true);
-	}
+	public void testFindByCompanyId()
+		throws Exception {
 
-	@Test
-	public void testVerifyFindByCompanyIdQuery2() throws Exception {
-		verifyThatFindByCompanyIdVerifyIsValid(false, true);
-	}
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
 
-	@Test
-	public void testVerifyFindByCompanyIdQuery3() throws Exception {
-		verifyThatFindByCompanyIdVerifyIsValid(true, false);
-	}
+		groupParams.put("inherit", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("usersGroups", TestPropsValues.getUserId());
 
-	@Test
-	public void testVerifyFindByCompanyIdQuery4() throws Exception {
-		verifyThatFindByCompanyIdVerifyIsValid(false, false);
+		List<Group> list = GroupFinderUtil.findByCompanyId(
+			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new GroupNameComparator(true));
+
+		Assert.assertFalse(list.isEmpty());
 	}
 
 	protected void addLayout(long groupId) throws Exception {
@@ -236,24 +234,6 @@ public class GroupFinderTest {
 	protected List<Group> findByLayouts(long parentGroupId) throws Exception {
 		return GroupFinderUtil.findByLayouts(
 			TestPropsValues.getCompanyId(), parentGroupId, true, -1, -1);
-	}
-
-	protected void verifyThatFindByCompanyIdVerifyIsValid(
-			boolean inherit, boolean site)
-		throws Exception {
-
-		LinkedHashMap<String, Object> groupParams =
-			new LinkedHashMap<String, Object>();
-
-		groupParams.put("inherit", inherit);
-		groupParams.put("site", site);
-		groupParams.put("usersGroups", TestPropsValues.getUserId());
-
-		List<Group> list = GroupFinderUtil.findByCompanyId(
-			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS,  new GroupNameComparator(true));
-
-		Assert.assertTrue( list.size() > 0 );
 	}
 
 	private static ResourceAction _arbitraryResourceAction;

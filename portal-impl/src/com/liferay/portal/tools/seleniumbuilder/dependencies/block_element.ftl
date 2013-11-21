@@ -39,6 +39,14 @@
 		<#if element.attributeValue("action")??>
 			<#assign action = element.attributeValue("action")>
 
+			<#if testCaseName??>
+				selenium
+			<#else>
+				liferaySelenium
+			</#if>
+
+			.assertPausePlay();
+
 			<#if action?contains("#is")>
 				try {
 			</#if>

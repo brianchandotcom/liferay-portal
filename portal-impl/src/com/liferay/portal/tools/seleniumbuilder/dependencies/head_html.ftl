@@ -36,6 +36,15 @@
 			}
 		}
 
+		function pausePlayCheck(){
+			if (document.getElementById("pausePlayButton").checked)
+			{
+				document.getElementById("pausePlay").innerHTML = "Paused";
+			}
+			else
+				document.getElementById("pausePlay").innerHTML = "Playing";
+		}
+
 		function toggle(event) {
 			var node;
 
@@ -74,6 +83,20 @@
 			line-height: 1.75em;
 			margin-bottom: 0px;
 			padding: 0px;
+		}
+
+		input[type=checkbox] {
+			display: none;
+		}
+
+		input[type=checkbox] + label {
+			background-color: #e7e7e7;
+			display: inline-block;
+			padding: 4px 12px;
+		}
+
+		input[type=checkbox]:checked + label {
+			background-color: #d0d0d0;
 		}
 
 		input[type=radio] {

@@ -143,6 +143,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public boolean assertPausePlay() throws Exception {
+		return true;
+	}
+
+	@Override
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 

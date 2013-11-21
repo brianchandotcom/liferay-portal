@@ -902,6 +902,9 @@ public class PortalImpl implements Portal {
 		String queryString = StringPool.BLANK;
 
 		if (Validator.isNull(friendlyURL)) {
+
+			// We need to make sure any virtual layouts are merged.
+
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 				groupId, privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

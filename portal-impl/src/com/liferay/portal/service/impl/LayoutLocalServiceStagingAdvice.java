@@ -172,7 +172,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			if (arguments.length == 6) {
 				showIncomplete = (Boolean)arguments[3];
 			}
-			else if (Arrays.equals(parameterTypes, _TYPES_L_B_L)) {
+			else if (Arrays.equals(parameterTypes, _GET_LAYOUTS_TYPES)) {
 				showIncomplete = true;
 			}
 
@@ -653,7 +653,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 	@BeanReference(type = LayoutLocalServiceHelper.class)
 	protected LayoutLocalServiceHelper layoutLocalServiceHelper;
 
-	private static final Class<?>[] _TYPES_L_B_L = {
+	private static final Class<?>[] _GET_LAYOUTS_TYPES = {
 		Long.TYPE, Boolean.TYPE, Long.TYPE
 	};
 

@@ -40,6 +40,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.ResourcePermissionTestUtil;
 import com.liferay.portal.util.ResourceTypePermissionTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.util.ArrayList;
@@ -178,6 +179,24 @@ public class GroupFinderTest {
 		groups = findByLayouts(childGroup1.getGroupId());
 
 		Assert.assertTrue(groups.isEmpty());
+	}
+
+	@Test
+	public void testFindByCompanyId()
+		throws Exception {
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("inherit", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("usersGroups", TestPropsValues.getUserId());
+
+		List<Group> list = GroupFinderUtil.findByCompanyId(
+			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new GroupNameComparator(true));
+
+		Assert.assertFalse(list.isEmpty());
 	}
 
 	protected void addLayout(long groupId) throws Exception {

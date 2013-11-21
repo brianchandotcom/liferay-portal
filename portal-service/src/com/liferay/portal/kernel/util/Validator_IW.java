@@ -195,10 +195,6 @@ public class Validator_IW {
 		return Validator.isName(name);
 	}
 
-	public boolean isNotNull(java.lang.Integer i) {
-		return Validator.isNotNull(i);
-	}
-
 	public boolean isNotNull(java.lang.Long l) {
 		return Validator.isNotNull(l);
 	}
@@ -216,10 +212,6 @@ public class Validator_IW {
 
 	public boolean isNotNull(java.lang.String s) {
 		return Validator.isNotNull(s);
-	}
-
-	public boolean isNull(java.lang.Integer i) {
-		return Validator.isNull(i);
 	}
 
 	public boolean isNull(java.lang.Long l) {

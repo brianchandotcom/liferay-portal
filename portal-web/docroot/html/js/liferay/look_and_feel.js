@@ -822,7 +822,7 @@ AUI.add(
 
 					// Portlet config
 
-					var portletTitle = instance._curPortlet.one('.portlet-title');
+					var portletTitle = instance._curPortlet.one('.portlet-title-text');
 
 					instance._defaultPortletTitle = Lang.trim(portletTitle ? portletTitle.text() : EMPTY);
 
@@ -1283,7 +1283,7 @@ AUI.add(
 					CLICK,
 					function(event) {
 						var title;
-						var portletTitle = instance._curPortlet.one('.portlet-title');
+						var portletTitleText = instance._curPortlet.one('.portlet-title-text');
 
 						var checked = event.currentTarget.get(CHECKED);
 
@@ -1296,7 +1296,7 @@ AUI.add(
 							title = Lang.trim(customTitleInput.val());
 
 							if (title == EMPTY) {
-								title = (portletTitle && portletTitle.text()) || EMPTY;
+								title = (portletTitleText && portletTitleText.text()) || EMPTY;
 								title = Lang.trim(title);
 
 								customTitleInput.val(title);
@@ -1312,8 +1312,8 @@ AUI.add(
 							title = instance._defaultPortletTitle;
 						}
 
-						if (portletTitle) {
-							portletTitle.text(title);
+						if (portletTitleText) {
+							portletTitleText.text(title);
 						}
 					}
 				);

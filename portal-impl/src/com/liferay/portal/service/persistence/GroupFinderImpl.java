@@ -468,12 +468,7 @@ public class GroupFinderImpl
 			params = _emptyLinkedHashMap;
 		}
 
-		boolean inherit = GetterUtil.getBoolean(params.get("inherit"), true);
-
-		LinkedHashMap<String, Object> params1 =
-			new LinkedHashMap<String, Object>(params);
-
-		params1.remove("inherit");
+		LinkedHashMap<String, Object> params1 = params;
 
 		LinkedHashMap<String, Object> params2 = null;
 
@@ -482,6 +477,7 @@ public class GroupFinderImpl
 		LinkedHashMap<String, Object> params4 = null;
 
 		Long userId = (Long)params.get("usersGroups");
+		boolean inherit = GetterUtil.getBoolean(params.get("inherit"), true);
 
 		boolean doUnion = Validator.isNotNull(userId) && inherit;
 
@@ -563,21 +559,21 @@ public class GroupFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(params1.get("site"));
-			qPos.add(params1.get("usersGroups"));
+			setJoin(qPos, params1);
+
 			qPos.add(companyId);
 
 			if (doUnion) {
-				qPos.add(params2.get("site"));
-				qPos.add(params2.get("groupOrg"));
+				setJoin(qPos, params2);
+
 				qPos.add(companyId);
 
-				qPos.add(params3.get("site"));
-				qPos.add(params3.get("groupsOrgs"));
+				setJoin(qPos, params3);
+
 				qPos.add(companyId);
 
-				qPos.add(params4.get("site"));
-				qPos.add(params4.get("groupsUserGroups"));
+				setJoin(qPos, params4);
+
 				qPos.add(companyId);
 			}
 

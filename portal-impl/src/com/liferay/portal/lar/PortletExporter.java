@@ -411,10 +411,15 @@ public class PortletExporter {
 		portletDataContext.setMissingReferencesElement(
 			missingReferencesElement);
 
+		boolean[] exportPortletControls =
+			ExportImportHelperUtil.getExportPortletControls(
+				layout.getCompanyId(), portletId, parameterMap);
+
 		exportPortlet(
 			portletDataContext, layoutCache, portletId, layout, rootElement,
-			exportPermissions, exportPortletArchivedSetups, exportPortletData,
-			exportPortletSetup, exportPortletUserPreferences);
+			exportPermissions, exportPortletControls[0],
+			exportPortletControls[1], exportPortletControls[2],
+			exportPortletControls[3]);
 
 		exportAssetCategories(portletDataContext);
 		exportAssetLinks(portletDataContext);

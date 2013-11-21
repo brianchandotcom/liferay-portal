@@ -519,8 +519,9 @@ public class LayoutExporter {
 			portletDataContext.setScopeType(scopeType);
 			portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
 
-			boolean[] exportPortletControls = getExportPortletControls(
-				companyId, portletId, parameterMap, type);
+			boolean[] exportPortletControls =
+				ExportImportHelperUtil.getExportPortletControls(
+					companyId, portletId, parameterMap, type);
 
 			_portletExporter.exportPortlet(
 				portletDataContext, layoutCache, portletId, layout,

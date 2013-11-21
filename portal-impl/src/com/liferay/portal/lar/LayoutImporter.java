@@ -596,8 +596,9 @@ public class LayoutImporter {
 
 			Element portletDataElement = portletElement.element("portlet-data");
 
-			boolean[] importPortletControls = getImportPortletControls(
-				companyId, portletId, parameterMap, portletDataElement);
+			boolean[] importPortletControls =
+				ExportImportHelperUtil.getImportPortletControls(
+					companyId, portletId, parameterMap, portletDataElement);
 
 			try {
 				if (layout != null) {
@@ -609,8 +610,8 @@ public class LayoutImporter {
 				_portletImporter.importPortletPreferences(
 					portletDataContext, layoutSet.getCompanyId(),
 					portletPreferencesGroupId, layout, null, portletElement,
-					importPortletControls[2], importPortletControls[0],
-					importPortletControls[3], false, importPortletControls[1]);
+					false, importPortletControls[0], importPortletControls[1],
+					importPortletControls[2], importPortletControls[3]);
 
 				// Portlet data
 
@@ -637,9 +638,9 @@ public class LayoutImporter {
 
 			_portletImporter.importPortletPreferences(
 				portletDataContext, layoutSet.getCompanyId(), groupId, null,
-				null, portletElement, importPortletControls[2],
-				importPortletControls[0], importPortletControls[3], false,
-				importPortletControls[1]);
+				null, portletElement, false, importPortletControls[0],
+				importPortletControls[1], importPortletControls[2],
+				importPortletControls[3]);
 		}
 
 		if (importPermissions) {

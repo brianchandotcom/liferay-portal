@@ -16,6 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -138,7 +139,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		_portletDataContextImport =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				_stagingGroup.getCompanyId(), _stagingGroup.getGroupId(),
+				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
 				new HashMap<String, String[]>(),
 				new CurrentUserIdStrategy(TestPropsValues.getUser()),
 				testReaderWriter);
@@ -380,16 +381,25 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		Element rootElement =
 			_portletDataContextExport.getExportDataRootElement();
 
-		Element entryElement = rootElement.element("entry");
+		Element referrerStagedModelElement =
+			_portletDataContextExport.getExportDataElement(
+				_referrerStagedModel);
+
+		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
+			_referrerStagedModel);
+
+		referrerStagedModelElement.addAttribute(
+			"path", referrerStagedModelPath);
 
 		String content = replaceParameters(
 			getContent("dl_references.txt"), _fileEntry);
 
 		content = ExportImportHelperUtil.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, entryElement,
-			content, true);
+			_portletDataContextExport, _referrerStagedModel,
+			referrerStagedModelElement, content, true);
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			_portletDataContextImport, entryElement, content, true);
+			_portletDataContextImport, _referrerStagedModel,
+			referrerStagedModelElement, content, true);
 
 		Assert.assertFalse(content.contains("[$dl-reference="));
 	}
@@ -408,7 +418,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			_portletDataContextExport, _referrerStagedModel, entryElement,
 			content, true);
 		content = ExportImportHelperUtil.replaceImportContentReferences(
-			_portletDataContextExport, entryElement, content, true);
+			_portletDataContextImport, _referrerStagedModel, entryElement,
+			content, true);
 
 		Assert.assertFalse(
 			content.contains("@data_handler_group_friendly_url@"));

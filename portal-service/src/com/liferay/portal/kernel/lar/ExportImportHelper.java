@@ -137,14 +137,36 @@ public interface ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportContentReferences(PortletDataContext,
+	 *             StagedModel, Element, String, boolean)}
+	 */
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception;
 
+	public String replaceImportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
+			String content, boolean importReferencedContent)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
+	 *             String, boolean)}
+	 */
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
+		throws Exception;
+
+	public String replaceImportDLReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean importReferencedContent)
 		throws Exception;
 
 	public String replaceImportLayoutReferences(

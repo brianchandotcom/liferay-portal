@@ -105,7 +105,7 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -145,6 +145,7 @@ import org.xml.sax.InputSource;
  * @author Zsolt Berentey
  * @author Levente Hudák
  * @author Julio Camarero
+ * @author Mate Thurzo
  */
 public class ExportImportHelperImpl implements ExportImportHelper {
 
@@ -891,9 +892,24 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportContentReferences(PortletDataContext,
+	 *             StagedModel, Element, String, boolean)}
+	 */
 	@Override
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
+			String content, boolean importReferencedContent)
+		throws Exception {
+
+		return content;
+	}
+
+	@Override
+	public String replaceImportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception {
 
@@ -903,61 +919,76 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			portletDataContext, content, importReferencedContent);
 
 		content = ExportImportHelperUtil.replaceImportDLReferences(
-			portletDataContext, entityElement, content,
+			portletDataContext, entityStagedModel, content,
 			importReferencedContent);
 
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
+	 *             String, boolean)}
+	 */
 	@Override
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		List<Element> referenceDataElements =
-			portletDataContext.getReferenceDataElements(
-				entityElement, FileEntry.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		return content;
+	}
 
-		for (Element referenceDataElement : referenceDataElements) {
-			String fileEntryUUID = referenceDataElement.attributeValue("uuid");
+	@Override
+	public String replaceImportDLReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean importReferencedContent)
+		throws Exception {
 
-			if (fileEntryUUID == null) {
-				continue;
+		List<Element> referenceElements =
+			portletDataContext.getReferenceElements(
+				entityStagedModel, FileEntry.class);
+
+		for (Element referenceElement : referenceElements) {
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			Element referenceDataElement =
+				portletDataContext.getReferenceDataElement(
+					entityStagedModel, FileEntry.class, classPK);
+
+			String path = null;
+
+			if (referenceDataElement != null) {
+				path = referenceDataElement.attributeValue("path");
 			}
 
-			String path = referenceDataElement.attributeValue("path");
+			long groupId = GetterUtil.getLong(
+				referenceElement.attributeValue("group-id"));
+
+			if (Validator.isNull(path)) {
+				String className = referenceElement.attributeValue(
+					"class-name");
+
+				path = ExportImportPathUtil.getModelPath(
+					groupId, className, classPK);
+			}
 
 			if (!content.contains("[$dl-reference=" + path + "$]")) {
 				continue;
 			}
 
-			FileEntry fileEntry =
-				(FileEntry)portletDataContext.getZipEntryAsObject(path);
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, entityStagedModel, FileEntry.class,
+				classPK);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fileEntry);
+			String uuid = referenceElement.attributeValue("uuid");
 
-			Map<Long, Long> fileEntryIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					DLFileEntry.class);
+			FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
+				uuid, groupId);
 
-			long importedFileEntryId = MapUtil.getLong(
-				fileEntryIds, fileEntry.getFileEntryId(),
-				fileEntry.getFileEntryId());
-
-			FileEntry importedFileEntry = null;
-
-			try {
-				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
-					importedFileEntryId);
-			}
-			catch (NoSuchFileEntryException nsfee) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to reference " + path);
-				}
-
+			if (importedFileEntry == null) {
 				continue;
 			}
 

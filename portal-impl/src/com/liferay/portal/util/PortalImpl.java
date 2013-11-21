@@ -4511,6 +4511,14 @@ public class PortalImpl implements Portal {
 			if (group.isControlPanel()) {
 				long doAsGroupId = ParamUtil.getLong(request, "doAsGroupId");
 
+				if (doAsGroupId <= 0) {
+					HttpServletRequest originalRequest =
+						getOriginalServletRequest(request);
+
+					doAsGroupId = ParamUtil.getLong(
+						originalRequest, "doAsGroupId");
+				}
+
 				Group doAsGroup = GroupLocalServiceUtil.fetchGroup(doAsGroupId);
 
 				if ((doAsGroupId <= 0) || (doAsGroup == null)) {

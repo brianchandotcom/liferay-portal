@@ -45,11 +45,17 @@ String rootFolderName = StringPool.BLANK;
 
 if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	try {
-		BookmarksFolder rootFolder = BookmarksFolderServiceUtil.getFolder(rootFolderId);
+		BookmarksFolder rootFolder = BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
 
 		rootFolderName = rootFolder.getName();
+
+		if (rootFolder.getGroupId() != scopeGroupId) {
+			rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			rootFolderName = StringPool.BLANK;
+		}
 	}
 	catch (NoSuchFolderException nsfe) {
+		rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 }
 

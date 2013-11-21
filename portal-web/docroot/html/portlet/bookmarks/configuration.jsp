@@ -49,6 +49,20 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 String emailSubject = PrefsParamUtil.getString(portletPreferences, request, emailSubjectParam, defaultEmailSubject);
 String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBodyParam, defaultEmailBody);
+
+try {
+	BookmarksFolder rootFolder = BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
+
+	rootFolderName = rootFolder.getName();
+
+	if (rootFolder.getGroupId() != scopeGroupId) {
+		rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		rootFolderName = StringPool.BLANK;
+	}
+}
+catch (NoSuchFolderException nsfe) {
+	rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+}
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">

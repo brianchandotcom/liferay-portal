@@ -26,6 +26,20 @@ if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 String redirect = ParamUtil.getString(request, "redirect");
 
 String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
+
+try {
+	Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+
+	rootFolderName = rootFolder.getName();
+
+	if (rootFolder.getGroupId() != scopeGroupId) {
+		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		rootFolderName = StringPool.BLANK;
+	}
+}
+catch (NoSuchFolderException nsfe) {
+	rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />

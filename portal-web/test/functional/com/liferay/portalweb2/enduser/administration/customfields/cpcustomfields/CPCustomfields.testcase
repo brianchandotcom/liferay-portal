@@ -136,7 +136,7 @@
 
 		<execute macro="CustomFields#addCP">
 			<var name="customFieldName" value="Text" />
-			<var name="customFieldType" value="Group of Localized Text Values" />
+			<var name="customFieldType" value="Group of Text Values" />
 			<var name="resourceName" value="User Group" />
 		</execute>
 

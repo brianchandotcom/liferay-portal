@@ -887,8 +887,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			sb.append(index);
 		}
 
-		sb.append(StringPool.PERIOD);
-		sb.append(type);
+		if (fileVersionId > 0) {
+			sb.append(StringPool.PERIOD);
+			sb.append(type);
+		}
 
 		return sb.toString();
 	}

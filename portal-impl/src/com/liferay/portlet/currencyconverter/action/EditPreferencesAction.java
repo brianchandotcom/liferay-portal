@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,7 +54,10 @@ public class EditPreferencesAction extends PortletAction {
 			return;
 		}
 
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				PortalUtil.getHttpServletRequest(actionRequest),
+				PortletKeys.CURRENCY_CONVERTER);
 
 		String[] symbols = StringUtil.split(
 			StringUtil.toUpperCase(

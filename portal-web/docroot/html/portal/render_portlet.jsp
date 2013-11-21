@@ -68,18 +68,6 @@ else {
 	privateLayout = layout.isPrivateLayout();
 }
 
-String scopeLayoutUuid = portletPreferences.getValue("lfrScopeLayoutUuid", null);
-
-if (Validator.isNotNull(scopeLayoutUuid)) {
-	Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(scopeLayoutUuid, group.getGroupId(), privateLayout);
-
-	if (scopeLayout != null) {
-		portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);
-
-		portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
-	}
-}
-
 long portletItemId = ParamUtil.getLong(request, "p_p_i_id");
 
 if (portletItemId > 0) {

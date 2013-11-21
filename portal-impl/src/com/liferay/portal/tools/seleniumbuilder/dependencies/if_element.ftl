@@ -77,4 +77,10 @@ ${ifType} (
 
 		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", commandScopeVariables);
 	</#if>
+	if(_counter == 15){
+		break;
+	}
+
+	Thread.sleeap(1000);
+	_counter++;
 }

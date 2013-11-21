@@ -1,0 +1,96 @@
+<definition>
+	<var name="userEmailAddress" value="test@liferay.com" />
+	<var name="password" value="test" />
+
+	<command name="addUserWithSORole">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Social Office" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
+	<command name="firstLoginPG">
+		<if>
+			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+
+			<then>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginFullName" value="Test Test" />
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="User#loginPG">
+					<var name="userEmailAddress" value="test@liferay.com" />
+					<var name="password" value="test" />
+				</execute>
+			</else>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="USER_BAR" />
+			<then>
+				<execute macro="Page#gotoCP">
+					<var name="portletName" value="Roles" />
+				</execute>
+
+				<execute macro="Role#assignRegRoleCP">
+					<var name="roleName" value="Social Office" />
+					<var name="userScreenName" value="test" />
+				</execute>
+
+				<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+				<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_DASHBOARD" value1="Dashboard" />
+				<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
+				<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
+				<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MICROBLOGS" value1="Microblogs" />
+				<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_MESSAGES" value1="Messages" />
+				<execute action="SODashboard#assertTextEquals" locator-key1="NAVIGATION_TASKS" value1="Tasks" />
+			</then>
+		</if>
+	</command>
+
+	<command name="tearDownCP">
+		<var name="userFirstName" value="social*" />
+
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#deactivateCP" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#deleteCP" />
+	</command>
+</definition>

@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.util.jazzy;
+package com.liferay.portal.words;
+
+import com.liferay.portal.kernel.jazzy.InvalidWord;
 
 import com.swabunga.spell.engine.Word;
 import com.swabunga.spell.event.SpellCheckEvent;
@@ -22,9 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author     Brian Wing Shun Chan
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.words.BasicSpellCheckListener}
+ * @author Brian Wing Shun Chan
  */
 public class BasicSpellCheckListener implements SpellCheckListener {
 

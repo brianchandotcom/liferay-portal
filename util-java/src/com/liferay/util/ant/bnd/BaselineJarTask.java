@@ -20,7 +20,6 @@ import aQute.bnd.differ.Baseline.BundleInfo;
 import aQute.bnd.differ.Baseline.Info;
 import aQute.bnd.differ.DiffPluginImpl;
 import aQute.bnd.osgi.Builder;
-import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.diff.Delta;
@@ -92,9 +91,7 @@ public class BaselineJarTask extends BaseBndTask {
 
 		try {
 			if (baselineJar == null) {
-				String name = bndProject.getProperty(Constants.BASELINEREPO);
-
-				bndProject.deploy(name, output);
+				bndProject.deploy(output);
 
 				return;
 			}

@@ -543,7 +543,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<release-to-repo
 				bndRootFile="@{bndRootFile}"
-				deployRepo="baselinerepo"
 				file="@{file}"
 			/>
 		</sequential>

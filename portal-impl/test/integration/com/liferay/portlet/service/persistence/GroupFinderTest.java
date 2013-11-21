@@ -245,8 +245,8 @@ public class GroupFinderTest {
 		LinkedHashMap<String, Object> groupParams =
 			new LinkedHashMap<String, Object>();
 
-		groupParams.put("inherit", Boolean.FALSE);
-		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("inherit", inherit);
+		groupParams.put("site", site);
 		groupParams.put("usersGroups", TestPropsValues.getUserId());
 
 		List<Group> list = GroupFinderUtil.findByCompanyId(

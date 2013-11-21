@@ -16,5 +16,20 @@ Liferay-Portal-Release-Info: ${release.info.release.info}
 Liferay-Portal-Server-Info: ${release.info.server.info}
 Liferay-Portal-Version: ${release.info.version}
 
+-baseline: *
+-baselinerepo: remoterepo
 -donotcopy: (\.touch)
+-plugin: \
+	aQute.bnd.deployer.obr.LocalOBR;\
+		name=localrepo;\
+		mode=build;\
+		local=${workspace}/.bnd/localrepo,\
+	aQute.bnd.deployer.obr.OBR;\
+		name=remoterepo;\
+		mode=any;\
+		locations='http://obr.liferay.com/liferay-portal/repository.xml';\
+		cache=${workspace}/.bnd/remoterepo,\
+	aQute.bnd.signing.JartoolSigner
+-pluginpath: ${workspace}/osgi/lib/plugin/bnd-repository.jar
+-releaserepo: localrepo
 -sources: false

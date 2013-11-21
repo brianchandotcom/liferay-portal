@@ -31,9 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -275,31 +273,17 @@ public class BaselineJarTask extends BaseBndTask {
 			return;
 		}
 
-		File buildFile = new File(_bndDir, "build.bnd");
-
 		if (!_bndDir.exists() && !_bndDir.mkdir()) {
 			return;
 		}
+
+		File buildFile = new File(_bndDir, "build.bnd");
 
 		if (buildFile.exists() || !_bndDir.canWrite()) {
 			return;
 		}
 
-		BufferedWriter bufferedWriter = new BufferedWriter(
-			new FileWriter(buildFile));
-
-		for (String line : _BUILD_DEFAULTS) {
-			bufferedWriter.write(line);
-			bufferedWriter.newLine();
-		}
-
-		bufferedWriter.close();
-
-		File baselineRepoDir = new File(_bndDir, "baselinerepo");
-
-		if (!baselineRepoDir.exists()) {
-			baselineRepoDir.mkdir();
-		}
+		buildFile.createNewFile();
 	}
 
 	protected void doDiff(Diff diff, StringBuffer sb) {
@@ -519,14 +503,6 @@ public class BaselineJarTask extends BaseBndTask {
 	}
 
 	private static final String _BASELINE_REPORTS_DIR = "baseline-reports";
-
-	private final String[] _BUILD_DEFAULTS = new String[] {
-		"-plugin: aQute.bnd.deployer.obr.LocalOBR;name=baselinerepo;" +
-			"mode=build;local=${workspace}/.bnd/baselinerepo",
-		"-pluginpath: ${workspace}/osgi/lib/plugin/bnd-repository.jar",
-		"-baseline: ${ant.project.name}",
-		"-baselinerepo: baselinerepo", "-releaserepo: baselinerepo"
-	};
 
 	private String _baselineResportsDirName;
 	private File _bndDir;

@@ -39,10 +39,12 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 
 			<div class="tab-pane">
 				<aui:fieldset id="portlet-config">
-					<span class="field-row">
-						<aui:input inlineField="<%= true %>" label="portlet-title" name="custom-title" />
+					<aui:input name="use-custom-title" type="checkbox" />
 
-						<aui:select inlineField="<%= true %>" label="portlet-title" name="lfr-portlet-language">
+					<span class="field-row">
+						<aui:input inlineField="<%= true %>" label="" name="custom-title" />
+
+						<aui:select inlineField="<%= true %>" label="" name="lfr-portlet-language">
 
 							<%
 							Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
@@ -58,8 +60,6 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 
 						</aui:select>
 					</span>
-
-					<aui:input name="use-custom-title" type="checkbox" />
 
 					<aui:select label="link-portlet-urls-to-page" name="lfr-point-links">
 						<aui:option label="current-page" value="" />

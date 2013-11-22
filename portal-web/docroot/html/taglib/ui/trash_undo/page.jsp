@@ -127,8 +127,8 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 								<c:when test="<%= !Validator.equals(cmd, Constants.REMOVE) && themeDisplay.isShowSiteAdministrationIcon() && Validator.isNotNull(className) && Validator.isNotNull(title) && Validator.isNotNull(primaryKeys[0]) %>">
 									<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>">
 										<portlet:param name="struts_action" value="/trash/view_content" />
-										<portlet:param name="className" value="<%= className %>" />
-										<portlet:param name="classPK" value="<%= String.valueOf(primaryKeys[0]) %>" />
+										<portlet:param name="trashEntryId" value="<%= String.valueOf(primaryKeys[0]) %>" />
+										<portlet:param name="redirect" value="<%= currentURL %>" />
 									</liferay-portlet:renderURL>
 
 									<%

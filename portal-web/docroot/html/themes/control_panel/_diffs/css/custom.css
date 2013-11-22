@@ -31,6 +31,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		font-weight: 200;
 	}
 
+	#banner {
+		display: none;
+	}
+
 	#wrapper {
 		padding: 0;
 	}
@@ -44,6 +48,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.panel-page-application {
 			margin: 0;
+		}
+	}
+
+	.panel-manage-frontpage {
+		.control-panel-bar-secondary {
+			margin-bottom: 1px;
+			margin-left: 20px;
 		}
 	}
 
@@ -209,6 +220,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 					margin-top: 0;
 					vertical-align: baseline;
 
+					@include respond-to(phone) {
+						display: none;
+					}
+
 					a {
 						text-decoration: none;
 					}
@@ -228,86 +243,134 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
-			.nav-account-controls {
-				float: right;
+			.container {
+				.nav-account-controls {
+					float: right;
 
-				li.open > .dropdown-toggle {
-					margin: 0;
-					padding: 5px 15px;
-					background-color: $dockbarOpenGradientEnd;
-				}
-			}
+					> li.open > .dropdown-toggle {
+						background-color: $dockbarOpenGradientEnd;
+						margin: 0;
+						padding: 5px 15px;
 
-			.nav-navigation {
-				letter-spacing: 1px;
-
-				> li {
-					&.active a {
-						border-radius: 4px;
-
-						&:hover {
-							background: #0066B3;
-							color: #FFF;
+						@include respond-to(phone, tablet) {
+							margin: 5px 0 5px 10px;
+							padding: 12px 15px;
 						}
 					}
-
-					a:hover {
-						background: #0993DD;
-					}
 				}
 
-				li {
-					margin-right: 5px;
+				.nav-collapse > .nav li.dropdown ul.dropdown-menu {
+					margin-top: 0;
+				}
 
+				.nav-navigation {
+					letter-spacing: 1px;
 
-					/* ---------- Menu icons ---------- */
-
-					&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
-						[class^="icon-"], [class*=" icon-"] {
-							&:before {
-								content: '';
+					> li {
+						@include respond-to(phone, tablet) {
+							&.open ul.dropdown-menu {
+								display: block;
 							}
 						}
 					}
 
-					.icon-cog, .icon-globe, .icon-list, .icon-th, .icon-user, .icon-arrow-left {
-						background: none no-repeat 50%;
-						height: 21px;
-						width: 24px;
-						vertical-align: top;
-					}
+					ul.dropdown-menu {
+						@include respond-to(phone, tablet) {
+							background: #009AE5;
+							display: none;
+							position: absolute;
+						}
 
-					.icon-cog, .icon-globe, .icon-th, .icon-user {
-						height: 26px;
-						width: 29px;
-					}
+						> li {
+							@include respond-to(phone, tablet) {
+								display: block;
+							}
 
-					.icon-arrow-left {
-						background-image: url(../images/custom/dockbar_back.png);
-						margin-top: 4px;
-					}
+							&.active > a {
+								background: #0066B3;
+								color: #FFF;
 
-					.icon-cog {
-						background-image: url(../images/custom/dockbar_configuration.png);
-					}
+								@include border-radius(4px);
 
-					.icon-globe {
-						background-image: url(../images/custom/dockbar_sites.png);
-					}
+								@include respond-to(phone, tablet) {
+									@include border-radius(0);
+								}
+							}
 
-					.icon-list {
-						background-image: url(../images/custom/dockbar_home.png);
-						height: 24px;
-						margin-top: 3px;
-					}
+							> a {
+								margin: 3px 0;
+								padding: 2px 15px;
 
-					.icon-th {
-						background-image: url(../images/custom/dockbar_apps.png);
-					}
+								@include respond-to(phone, tablet) {
+									font-size: 16px;
+									margin: 0;
+									line-height: 32px;
+									padding: 9px 15px;
+								}
+							}
 
-					.icon-user {
-						background-image: url(../images/custom/dockbar_users.png);
-						width: 40px;
+							a:hover {
+								background: #0993DD;
+							}
+						}
+
+						li {
+							margin-right: 5px;
+
+							@include respond-to(phone, tablet) {
+								margin-right: 0;
+							}
+
+							/* ---------- Menu icons ---------- */
+
+							&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
+								[class^="icon-"], [class*=" icon-"] {
+									&:before {
+										content: '';
+									}
+								}
+							}
+
+							.icon-cog, .icon-globe, .icon-list, .icon-th, .icon-user, .icon-arrow-left {
+								background: none no-repeat 50%;
+								height: 21px;
+								width: 24px;
+								vertical-align: top;
+							}
+
+							.icon-cog, .icon-globe, .icon-th, .icon-user {
+								height: 26px;
+								width: 29px;
+							}
+
+							.icon-arrow-left {
+								background-image: url(../images/custom/dockbar_back.png);
+								margin-top: 4px;
+							}
+
+							.icon-cog {
+								background-image: url(../images/custom/dockbar_configuration.png);
+							}
+
+							.icon-globe {
+								background-image: url(../images/custom/dockbar_sites.png);
+							}
+
+							.icon-list {
+								background-image: url(../images/custom/dockbar_home.png);
+								height: 24px;
+								margin-top: 3px;
+							}
+
+							.icon-th {
+								background-image: url(../images/custom/dockbar_apps.png);
+							}
+
+							.icon-user {
+								background-image: url(../images/custom/dockbar_users.png);
+								width: 40px;
+							}
+						}
 					}
 				}
 			}
@@ -395,10 +458,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.panel-page-menu {
 		position: relative;
 
-		.accordion-toggle [class^="icon-"] {
-			display: none;
-		}
-
 		.minimize-panels a {
 			background: url(../images/custom/panel_close.png) no-repeat;
 			display: none;
@@ -462,7 +521,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.search-panels {
-			padding: 0 10px 14px;
+			padding: 0 10px 13px;
 			position: relative;
 
 			.cancel-search {
@@ -479,27 +538,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
-			.icon-search {
-				display: none;
-			}
-
 			.search-panels-bar {
-				position: relative;
-
-				&:after {
-					background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
-					color: #D4D4D4;
-					content: '';
-					display: block;
-					font-size: 0;
-					height: 18px;
-					margin-left: 8px;
-					margin-top: 6px;
-					position: absolute;
-					top: 0;
-					width: 27px;
-				}
-
 				.control-group {
 					margin: 0;
 
@@ -511,6 +550,17 @@ $dockbarOpenGradientStart: #0EA6F9;
 							border-color: rgba(0, 172, 255, 0.8);
 						}
 					}
+				}
+
+				.search-panel-icon {
+					background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
+					color: #D4D4D4;
+					font-size: 0;
+					height: 18px;
+					margin-left: 8px;
+					margin-top: 6px;
+					position: absolute;
+					width: 27px;
 				}
 
 				input {
@@ -555,15 +605,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			.accordion-toggle {
 				position: relative;
-				text-align: center;
-
-				[class^="icon-"] {
-					display: inline;
-				}
-
-				.title-text {
-					display: none;
-				}
+				text-indent: -9999px;
 			}
 
 			.control-panel-tools {
@@ -585,6 +627,26 @@ $dockbarOpenGradientStart: #0EA6F9;
 				.accordion {
 					.toggler-header .accordion-toggle {
 						background: none no-repeat right;
+					}
+
+					#panel-manage-site_administration\.configuration .toggler-header .accordion-toggle {
+						background-image: url(../images/custom/panel_icons_white_server_bg.png);
+						right: 8px;
+					}
+
+					#panel-manage-site_administration\.content .toggler-header .accordion-toggle {
+						background-image: url(../images/custom/panel_icons_white_portal_bg.png);
+						right: 4px;
+					}
+
+					#panel-manage-site_administration\.pages .toggler-header .accordion-toggle {
+						background-image: url(../images/custom/panel_icons_white_marketplace_bg.png);
+						right: 4px;
+					}
+
+					#panel-manage-site_administration\.users .toggler-header .accordion-toggle {
+						background-image: url(../images/custom/panel_icons_white_marketplace_bg.png);
+						right: 4px;
 					}
 
 					.accordion-group {
@@ -615,17 +677,16 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 
 					.toggler-header {
-						padding: 14px 10px 10px;
+						padding: 12px 10px;
 					}
 				}
 			}
 
 			.search-panels {
-				text-align: center;
-
-				.icon-search {
-					display: block;
-				}
+				background: url(../images/custom/search_navigation_min_icon.png) no-repeat right;
+				padding: 14px 10px 14px;
+				right: 10px;
+				top: -7px;
 			}
 
 			.search-panels-bar {
@@ -895,8 +956,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 			}
 
 			ul.nav-navigation {
-				> li a:hover {
-					@include border-radius(4px);
+				ul.dropdown-menu > li.active > a {
+					@include box-shadow(inset 0 3px 8px rgba(0,0,0,.125));
+				}
+
+				> li {
+					@include respond-to(phone, tablet) {
+						&.open > a {
+							@include box-shadow(none);
+						}
+					}
+
+					a:hover {
+						@include border-radius(4px);
+					}
 				}
 			}
 		}

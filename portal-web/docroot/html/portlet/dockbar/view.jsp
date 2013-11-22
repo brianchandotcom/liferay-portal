@@ -123,44 +123,46 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 
 	<c:if test="<%= !(group.isControlPanel() && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) %>">
 		<aui:nav collapsible="<%= true %>" cssClass="nav-navigation" icon="reorder" id="navSiteNavigation">
-			<c:if test="<%= group.isControlPanel() && !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-cog">
+				<c:if test="<%= group.isControlPanel() && !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 
-				<%
-				String[] categories = PortletCategoryKeys.ALL;
+					<%
+					String[] categories = PortletCategoryKeys.ALL;
 
-				for (String curCategory : categories) {
-					String urlControlPanelCategory = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", curCategory);
+					for (String curCategory : categories) {
+						String urlControlPanelCategory = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", curCategory);
 
-					String cssClass = StringPool.BLANK;
-					String iconCssClass = StringPool.BLANK;
+						String cssClass = StringPool.BLANK;
+						String iconCssClass = StringPool.BLANK;
 
-					if (curCategory.equals(PortletCategoryKeys.APPS)) {
-						cssClass = "control-panel-apps";
-						iconCssClass = "icon-th";
+						if (curCategory.equals(PortletCategoryKeys.APPS)) {
+							cssClass = "control-panel-apps";
+							iconCssClass = "icon-th";
+						}
+						else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
+							cssClass = "control-panel-configuration";
+							iconCssClass = "icon-cog";
+						}
+						else if (curCategory.equals(PortletCategoryKeys.SITES)) {
+							cssClass = "control-panel-sites";
+							iconCssClass = "icon-globe";
+						}
+						else if (curCategory.equals(PortletCategoryKeys.USERS)) {
+							cssClass = "control-panel-users";
+							iconCssClass = "icon-user";
+						}
+					%>
+
+						<c:if test="<%= _hasPortlets(curCategory, themeDisplay) %>">
+							<aui:nav-item anchorId='<%= "controlPanelNav" + curCategory + "Link" %>' cssClass="<%= cssClass %>" href="<%= urlControlPanelCategory %>" iconCssClass="<%= iconCssClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
+						</c:if>
+
+					<%
 					}
-					else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
-						cssClass = "control-panel-configuration";
-						iconCssClass = "icon-cog";
-					}
-					else if (curCategory.equals(PortletCategoryKeys.SITES)) {
-						cssClass = "control-panel-sites";
-						iconCssClass = "icon-globe";
-					}
-					else if (curCategory.equals(PortletCategoryKeys.USERS)) {
-						cssClass = "control-panel-users";
-						iconCssClass = "icon-user";
-					}
-				%>
+					%>
 
-					<c:if test="<%= _hasPortlets(curCategory, themeDisplay) %>">
-						<aui:nav-item anchorId='<%= "controlPanelNav" + curCategory + "Link" %>' cssClass="<%= cssClass %>" href="<%= urlControlPanelCategory %>" iconCssClass="<%= iconCssClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
-					</c:if>
-
-				<%
-				}
-				%>
-
-			</c:if>
+				</c:if>
+			</aui:nav-item>
 		</aui:nav>
 	</c:if>
 
@@ -171,50 +173,52 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 	%>
 
 	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' collapsible="<%= true %>" cssClass='<%= portalMessageUseAnimation ? "nav-add-controls" : "nav-add-controls nav-add-controls-notice" %>' icon="pencil" id="navAddControls">
+		<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-pencil">
 
-		<%
-		boolean hasLayoutAddPermission = false;
+			<%
+			boolean hasLayoutAddPermission = false;
 
-		if (layout.getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-			hasLayoutAddPermission = GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT);
-		}
-		else {
-			hasLayoutAddPermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.ADD_LAYOUT);
-		}
-		%>
+			if (layout.getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+				hasLayoutAddPermission = GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT);
+			}
+			else {
+				hasLayoutAddPermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.ADD_LAYOUT);
+			}
+			%>
 
-		<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
-			<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-				<portlet:param name="struts_action" value="/dockbar/add_panel" />
-				<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
-				<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:renderURL>
+			<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
+				<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:param name="struts_action" value="/dockbar/add_panel" />
+					<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
+					<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
+				</portlet:renderURL>
 
-			<aui:nav-item anchorId="addPanel" cssClass="site-add-controls" data-panelURL="<%= addURL %>" href="javascript:;" iconCssClass="icon-plus" label="add" />
-		</c:if>
+				<aui:nav-item anchorId="addPanel" cssClass="site-add-controls" data-panelURL="<%= addURL %>" href="javascript:;" iconCssClass="icon-plus" label="add" />
+			</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutUpdatePermission || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE)) %>">
-			<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-				<portlet:param name="struts_action" value="/dockbar/preview_panel" />
-			</portlet:renderURL>
+			<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutUpdatePermission || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE)) %>">
+				<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:param name="struts_action" value="/dockbar/preview_panel" />
+				</portlet:renderURL>
 
-			<aui:nav-item anchorId="previewPanel" cssClass="page-preview-controls" data-panelURL="<%= previewContentURL %>" href="javascript:;" iconCssClass="icon-desktop" label="preview" />
-		</c:if>
+				<aui:nav-item anchorId="previewPanel" cssClass="page-preview-controls" data-panelURL="<%= previewContentURL %>" href="javascript:;" iconCssClass="icon-desktop" label="preview" />
+			</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
-			<portlet:renderURL var="editLayoutURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-				<portlet:param name="struts_action" value="/dockbar/edit_layout_panel" />
-				<portlet:param name="closeRedirect" value="<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="selPlid" value="<%= String.valueOf(plid) %>" />
-			</portlet:renderURL>
+			<c:if test="<%= !group.isControlPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
+				<portlet:renderURL var="editLayoutURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+					<portlet:param name="struts_action" value="/dockbar/edit_layout_panel" />
+					<portlet:param name="closeRedirect" value="<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="selPlid" value="<%= String.valueOf(plid) %>" />
+				</portlet:renderURL>
 
-			<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconCssClass="icon-edit" label="edit" />
-		</c:if>
+				<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconCssClass="icon-edit" label="edit" />
+			</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
-			<aui:nav-item anchorCssClass="toggle-controls-link" cssClass="toggle-controls" iconCssClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close") %>' id="toggleControls" label="edit-controls" />
-		</c:if>
+			<c:if test="<%= !group.isControlPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
+				<aui:nav-item anchorCssClass="toggle-controls-link" cssClass="toggle-controls" iconCssClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close") %>' id="toggleControls" label="edit-controls" />
+			</c:if>
+		</aui:nav-item>
 	</aui:nav>
 
 	<%@ include file="/html/portlet/dockbar/view_user_panel.jspf" %>

@@ -100,25 +100,39 @@
 	}
 }
 
-.dockbar-split .dockbar {
-	.navbar-inner {
-		.nav > li > a {
-			@include text-shadow(none);
+.dockbar .navbar-inner .nav-add-controls > li > ul.dropdown-menu {
+	@include box-shadow(none);
+}
+
+.dockbar-split .dockbar .navbar-inner .container .nav-collapse > .nav {
+	 > li > a {
+		@include text-shadow(none);
+
+		@include respond-to(phone) {
+			@include border-radius(4px);
 		}
+	}
 
-		.nav-add-controls {
-			> li {
-				a {
-					@include border-radius(4px);
+	&.nav-add-controls {
+		> li {
+			a {
+				@include border-radius(4px);
 
-					.nav-item-label {
-						@include border-radius(30px);
-					}
+				.nav-item-label {
+					@include border-radius(30px);
 				}
+			}
 
-				&.open a {
-					@include border-radius(4px 4px 0 0);
+			&.open a {
+				@include border-radius(4px);
+
+				@include respond-to(phone) {
+					@include border-radius(0);
 				}
+			}
+
+			> ul {
+				@include box-shadow(none);
 			}
 		}
 	}

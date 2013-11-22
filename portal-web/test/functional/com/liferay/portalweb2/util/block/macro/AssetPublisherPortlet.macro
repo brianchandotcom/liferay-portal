@@ -33,33 +33,11 @@
 
 		<execute action="PGAssetpublisherConfigurationSites#selectFrame" value1="relative=top" />
 		<execute action="PGAssetpublisherConfigurationSites#selectFrame" locator-key1="SITES_IFRAME" />
+		<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
+		<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="${siteScopeType}" />
+		<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="PGAssetpublisherConfigurationSites#selectFrame" value1="relative=top" />
 
-		<if>
-			<equals arg1="${siteScopeType}" arg2="Child Site" />
-			<then>
-				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
-				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="Child Site" />
-				<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
-			</then>
-			<elseif>
-				<equals arg1="${siteScopeType}" arg2="Parent Site" />
-				<then>
-					<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
-					<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="Parent Site" />
-					<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
-				</then>
-			</elseif>
-			 	<elseif>
-          			<equals arg1="${siteScopeType}" arg2="Site" />
-          			<then>
-            			<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
-            			<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="Site" />
-             			<execute action="PGAssetpublisherConfigurationSites#assertClick" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
- 					</then>
-       			</elseif>
-		</if>
-
-		<execute action="PGAssetpublisherConfiguration#selectFrame" value1="relative=top" />
 		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
@@ -89,13 +67,22 @@
 
 				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${globalSiteName}" />
 				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="${globalSiteType}" />
-				<execute action="PGAssetpublisherConfigurationSites#assertElementPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute action="PGAssetpublisherConfigurationSites#assertElementPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" />
 
 				<var name="key_siteName" value="${liferaySiteName}" />
 
 				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${liferaySiteName}" />
 				<execute action="PGAssetpublisherConfigurationSites#assertTextEquals" locator-key1="SITES_TABLE_TYPE" value1="${liferaySiteType}" />
-				<execute action="PGAssetpublisherConfigurationSites#assertElementPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+				<if>
+					<isset var="currentSite" />
+					<then>
+						<execute action="PGAssetpublisherConfigurationSites#assertElementPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON_DISABLED" />
+					</then>
+					<else>
+						<execute action="PGAssetpublisherConfigurationSites#assertElementPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" />
+					</else>
+				</if>
 			</then>
 			<elseif>
 				<equals arg1="${contentSharingAcrossSitesEnabled}" arg2="false" />
@@ -105,14 +92,14 @@
 					<execute action="PGAssetpublisherConfigurationSites#assertTextNotPresent" value1="${globalSiteName}" />
 					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_NAME" value1="${globalSiteName}" />
 					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_TYPE" value1="${globalSiteType}" />
-					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" />
 
 					<var name="key_siteName" value="${liferaySiteName}" />
 
 					<execute action="PGAssetpublisherConfigurationSites#assertTextNotPresent" value1="${liferaySiteName}" />
 					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_NAME" value1="${liferaySiteName}" />
 					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_TYPE" value1="${liferaySiteType}" />
-					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+					<execute action="PGAssetpublisherConfigurationSites#assertElementNotPresent" locator-key1="SITES_TABLE_CHOOSE_BUTTON" />
 				</then>
 			</elseif>
 		</if>

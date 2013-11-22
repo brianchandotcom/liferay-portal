@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITES_TABLE_CHOOSE_BUTTON_DISABLED</td>
+	<td>//div[@id='_185_groupsSearchContainerSearchContainer']//tr[contains(.,'${key_siteName}')]/td[3]/button[@class='btn disabled selector-button']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

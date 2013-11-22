@@ -51,7 +51,26 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 	</c:if>
 
 	<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.DUPLICATE %>">
-		<liferay-ui:message key="please-enter-a-unique-friendly-url" />
+
+		<%
+		long duplicateClassPK = gfurle.getDuplicateClassPK();
+		String duplicateClassName = gfurle.getDuplicateClassName();
+
+		String name = StringPool.BLANK;
+
+		if (duplicateClassName.equals(Group.class.getName())) {
+			Group duplicateGroup = GroupLocalServiceUtil.getGroup(duplicateClassPK);
+
+			name = duplicateGroup.getDescriptiveName(locale);
+		}
+		else if (duplicateClassName.equals(Layout.class.getName())) {
+			Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(duplicateClassPK);
+
+			name = duplicateLayout.getName(locale);
+		}
+		%>
+
+		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), name} %>" key="please-enter-a-unique-friendly-url" />
 	</c:if>
 
 	<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.ENDS_WITH_SLASH %>">

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
 public class LayoutFriendlyURLException extends PortalException {
 
@@ -45,6 +46,14 @@ public class LayoutFriendlyURLException extends PortalException {
 		_type = type;
 	}
 
+	public String getDuplicateClassName() {
+		return _duplicateClassName;
+	}
+
+	public long getDuplicateClassPK() {
+		return _duplicateClassPK;
+	}
+
 	public String getKeywordConflict() {
 		return _keywordConflict;
 	}
@@ -53,10 +62,20 @@ public class LayoutFriendlyURLException extends PortalException {
 		return _type;
 	}
 
+	public void setDuplicateClassName(String duplicateClassName) {
+		_duplicateClassName = duplicateClassName;
+	}
+
+	public void setDuplicateClassPK(long duplicateClassPK) {
+		_duplicateClassPK = duplicateClassPK;
+	}
+
 	public void setKeywordConflict(String keywordConflict) {
 		_keywordConflict = keywordConflict;
 	}
 
+	private String _duplicateClassName;
+	private long _duplicateClassPK;
 	private String _keywordConflict;
 	private int _type;
 

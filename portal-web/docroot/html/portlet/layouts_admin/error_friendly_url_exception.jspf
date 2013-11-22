@@ -32,7 +32,15 @@
 	</c:if>
 
 	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DUPLICATE %>">
-		<liferay-ui:message key="please-enter-a-unique-friendly-url" />
+
+		<%
+		long duplicateClassPK = lfurle.getDuplicateClassPK();
+		String duplicateClassName = lfurle.getDuplicateClassName();
+
+		Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(duplicateClassPK);
+		%>
+
+		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>" key="please-enter-a-unique-friendly-url" />
 	</c:if>
 
 	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_SLASH %>">

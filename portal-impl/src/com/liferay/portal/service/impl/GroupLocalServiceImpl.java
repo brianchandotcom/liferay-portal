@@ -4422,8 +4422,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Group group = groupPersistence.fetchByC_F(companyId, friendlyURL);
 
 		if ((group != null) && (group.getGroupId() != groupId)) {
-			throw new GroupFriendlyURLException(
+			GroupFriendlyURLException gfurle = new GroupFriendlyURLException(
 				GroupFriendlyURLException.DUPLICATE);
+
+			gfurle.setDuplicateClassPK(group.getGroupId());
+			gfurle.setDuplicateClassName(Group.class.getName());
+
+			throw gfurle;
 		}
 
 		String groupIdFriendlyURL = friendlyURL.substring(1);
@@ -4458,8 +4463,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				(classPK == user.getUserId())) {
 			}
 			else {
-				throw new GroupFriendlyURLException(
-					GroupFriendlyURLException.DUPLICATE);
+				GroupFriendlyURLException gfurle =
+					new GroupFriendlyURLException(
+						GroupFriendlyURLException.DUPLICATE);
+
+				gfurle.setDuplicateClassPK(user.getUserId());
+				gfurle.setDuplicateClassName(User.class.getName());
+
+				throw gfurle;
 			}
 		}
 

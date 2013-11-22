@@ -121,7 +121,7 @@ public class ThemeDeployer extends BaseDeployer {
 
 		String themeName = filterMap.get("plugin_name");
 
-		filterMap.put("theme_name", themeName);
+		filterMap.put("theme_name", StringUtil.stripCDATA(themeName));
 
 		String liferayVersions = filterMap.get("liferay_versions");
 

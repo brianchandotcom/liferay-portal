@@ -3648,6 +3648,22 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String stripCDATA(String s) {
+		if (s == null) {
+			return s;
+		}
+
+		if (s.startsWith(StringPool.CDATA_OPEN) &&
+			s.endsWith(StringPool.CDATA_CLOSE)) {
+
+			s = s.substring(
+				StringPool.CDATA_OPEN.length(),
+				s.length() - StringPool.CDATA_CLOSE.length());
+		}
+
+		return s;
+	}
+
 	/**
 	 * Returns a string representing the Unicode character codes of the
 	 * characters comprising the string <code>s</code>.

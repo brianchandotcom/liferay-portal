@@ -525,7 +525,7 @@ public class Transformer {
 				"type", StringPool.BLANK);
 
 			TemplateNode templateNode = new TemplateNode(
-				themeDisplay, name, stripCDATA(data), type);
+				themeDisplay, name, StringUtil.stripCDATA(data), type);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
@@ -539,7 +539,7 @@ public class Transformer {
 
 				for (Element optionElement : optionElements) {
 					templateNode.appendOption(
-						stripCDATA(optionElement.getText()));
+						StringUtil.stripCDATA(optionElement.getText()));
 				}
 			}
 
@@ -645,18 +645,6 @@ public class Transformer {
 		}
 
 		template.prepare(themeDisplay.getRequest());
-	}
-
-	protected String stripCDATA(String s) {
-		if (s.startsWith(StringPool.CDATA_OPEN) &&
-			s.endsWith(StringPool.CDATA_CLOSE)) {
-
-			s = s.substring(
-				StringPool.CDATA_OPEN.length(),
-				s.length() - StringPool.CDATA_CLOSE.length());
-		}
-
-		return s;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(Transformer.class);

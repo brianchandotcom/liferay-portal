@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationDelivery;
@@ -49,13 +51,17 @@ public abstract class BaseUserNotificationHandler
 			UserNotificationFeedEntry userNotificationFeedEntry = doInterpret(
 				userNotificationEvent, serviceContext);
 
-			userNotificationFeedEntry.setPortletId(getPortletId());
+			if (userNotificationEvent != null) {
+				userNotificationFeedEntry.setPortletId(getPortletId());
+			}
 
 			return userNotificationFeedEntry;
 		}
 		catch (Exception e) {
-			throw new PortalException(e);
+			_log.error("Unable to interpret notification", e);
 		}
+
+		return null;
 	}
 
 	@Override
@@ -120,6 +126,9 @@ public abstract class BaseUserNotificationHandler
 	protected void setSelector(String selector) {
 		_selector = selector;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BaseUserNotificationHandler.class);
 
 	private String _portletId;
 	private String _selector = StringPool.BLANK;

@@ -1,6 +1,6 @@
 @import "compass";
 @import "mixins";
- 
+
 @import url(custom_common.css);
 @import url(color_schemes/common.css);
 @import url(color_schemes/dark.css);
@@ -176,7 +176,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					border-top: 1px solid #00AEFF;
 
 					@include respond-to(phone, tablet) {
-						border-top: none;
+						border-top-width: 0;
 					}
 
 					&.nav-account-controls-notice {

@@ -271,7 +271,7 @@ $editLayoutPanelWidth: 460px;
 
 							ul.dropdown-menu {
 								background: transparent;
-								border: none;
+								border-width: 0;
 								display: inline-block;
 								letter-spacing: 1px;
 								padding: 0 5px;
@@ -289,12 +289,8 @@ $editLayoutPanelWidth: 460px;
 									width: 100%;
 								}
 
-								&:after {
-									border: none;
-								}
-
-								&:before {
-									border: none;
+								&:after, &:before {
+									border-width: 0;
 								}
 
 								> li {

@@ -50,7 +50,7 @@
 				.container {
 					.btn-navbar {
 						background: transparent;
-						border: none;
+						border-width: 0;
 						font-size: 24px;
 
 						&:hover {

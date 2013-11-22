@@ -324,8 +324,14 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 				layoutFriendlyURL.getPlid());
 
 			if (layout.getLayoutId() != layoutId) {
-				throw new LayoutFriendlyURLException(
-					LayoutFriendlyURLException.DUPLICATE);
+				LayoutFriendlyURLException lfurle =
+					new LayoutFriendlyURLException(
+						LayoutFriendlyURLException.DUPLICATE);
+
+				lfurle.setDuplicateClassPK(layout.getPlid());
+				lfurle.setDuplicateClassName(Layout.class.getName());
+
+				throw lfurle;
 			}
 		}
 

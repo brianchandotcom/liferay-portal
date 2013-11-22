@@ -54,13 +54,22 @@ public class ViewMessageAction extends PortletAction {
 		throws Exception {
 
 		try {
+			long messageId = ParamUtil.getLong(renderRequest, "messageId");
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
 
-			long messageId = ParamUtil.getLong(renderRequest, "messageId");
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (themeDisplay.getLayout().isTypeControlPanel() &&
+				permissionChecker.isContentReviewer(
+					themeDisplay.getUserId(), themeDisplay.getScopeGroupId())) {
+
+				status = WorkflowConstants.STATUS_ANY;
+			}
 
 			PortalPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -91,15 +100,6 @@ public class ViewMessageAction extends PortletAction {
 			boolean includePrevAndNext =
 				PropsValues.
 					MESSAGE_BOARDS_THREAD_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED;
-
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			if (themeDisplay.getLayout().isTypeControlPanel() &&
-				permissionChecker.isContentReviewer(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId())) {
-
-				status = WorkflowConstants.STATUS_ANY;
-			}
 
 			MBMessageDisplay messageDisplay =
 				MBMessageServiceUtil.getMessageDisplay(

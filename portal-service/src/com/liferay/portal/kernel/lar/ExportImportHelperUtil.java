@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -38,6 +40,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Zsolt Berentey
  */
+@ProviderType
 public class ExportImportHelperUtil {
 
 	public static Calendar getCalendar(

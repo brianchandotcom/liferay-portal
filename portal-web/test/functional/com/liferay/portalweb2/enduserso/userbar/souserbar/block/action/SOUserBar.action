@@ -22,6 +22,9 @@
 		<case locator-key1="GO_TO">
 			<execute function="Click#pauseClickAt" />
 		</case>
+		<case locator-key1="GO_TO_ADD_SITE_BUTTON">
+			<execute function="Click#pauseClickAt" />
+		</case>
 		<case locator-key1="GO_TO_SITES_DIRECTORY_BUTTON">
 			<execute function="Click#pauseClickAt" />
 		</case>

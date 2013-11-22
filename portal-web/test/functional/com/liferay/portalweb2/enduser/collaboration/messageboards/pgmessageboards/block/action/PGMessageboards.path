@@ -56,32 +56,32 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_MESSAGE_BOARDS_HOME</td>
-	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Message Boards Home')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Message Boards Home')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_RECENT_POSTS</td>
-	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Recent Posts')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Recent Posts')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_POSTS</td>
-	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'My Posts')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'My Posts')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_SUBSCRIPTIONS</td>
-	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'My Subscriptions')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'My Subscriptions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_STATISTICS</td>
-	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Statistics')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Statistics')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_BANNED_USERS</td>
-	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Banned Users')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Banned Users')]</td>
 	<td></td>
 </tr>
 <tr>

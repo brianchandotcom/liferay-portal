@@ -40,11 +40,15 @@
 
 				<#include "element_open_html.ftl">
 
-				<#assign testCaseBlockElement = testCaseSetupElement>
+				<#assign blockElement = testCaseSetupElement>
 
 				<#assign void = testCaseNameStack.push(testCaseName)>
 
-				<#include "test_case_block_element_html.ftl">
+				<#assign void = blockLevelStack.push("testcase")>
+
+				<#include "block_element_html.ftl">
+
+				<#assign void = blockLevelStack.pop()>
 
 				<#assign void = testCaseNameStack.pop()>
 
@@ -61,10 +65,14 @@
 
 			<#include "element_open_html.ftl">
 
-			<#assign testCaseBlockElement = testCaseCommandElement>
+			<#assign void = blockLevelStack.push("testcase")>
 
-			<#include "test_case_block_element_html.ftl">
+			<#assign blockElement = testCaseCommandElement>
 
+			<#include "block_element_html.ftl">
+
+			<#assign void = blockLevelStack.pop()>
+		
 			<#assign displayElement = testCaseCommandElement>
 
 			<#include "element_close_html.ftl">
@@ -82,9 +90,13 @@
 
 				<#assign void = testCaseNameStack.push(testCaseName)>
 
-				<#assign testCaseBlockElement = testCaseTearDownElement>
+				<#assign void = blockLevelStack.push("testcase")>
 
-				<#include "test_case_block_element_html.ftl">
+				<#assign blockElement = testCaseTearDownElement>
+
+				<#include "block_element_html.ftl">
+
+				<#assign void = blockLevelStack.pop()>
 
 				<#assign void = testCaseNameStack.pop()>
 

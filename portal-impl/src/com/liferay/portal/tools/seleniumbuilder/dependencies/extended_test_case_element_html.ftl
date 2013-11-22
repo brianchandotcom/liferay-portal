@@ -12,13 +12,20 @@
 	<#assign currentTestCaseCommand = testCase?substring(x + 1)>
 
 	<#if currentTestCaseCommand == "set-up">
-		<#assign testCaseBlockElement = extendedTestCaseRootElement.element("set-up")>
+		<#assign void = blockLevelStack.push("testcase")>
 
-		<#include "test_case_block_element_html.ftl">
+		<#assign blockElement = extendedTestCaseRootElement.element("set-up")>
+
+		<#include "block_element_html.ftl">
+
 	<#elseif currentTestCaseCommand == "tear-down">
-		<#assign testCaseBlockElement = extendedTestCaseRootElement.element("tear-down")>
+		<#assign void = blockLevelStack.push("testcase")>
 
-		<#include "test_case_block_element_html.ftl">
+		<#assign blockElement = extendedTestCaseRootElement.element("tear-down")>
+
+		<#include "block_element_html.ftl">
+
+		<#assign void = blockLevelStack.pop()>
 	<#else>
 		<#assign extendedTestCaseCommandElements = extendedTestCaseRootElement.elements("command")>
 
@@ -26,9 +33,13 @@
 			<#assign extendedTestCaseCommandName = extendedTestCaseCommandElement.attributeValue("name")>
 
 			<#if extendedTestCaseCommandName == currentTestCaseCommand>
-				<#assign testCaseBlockElement = extendedTestCaseCommandElement>
+				<#assign void = blockLevelStack.push("testcase")>
 
-				<#include "test_case_block_element_html.ftl">
+				<#assign blockElement = extendedTestCaseCommandElement>
+
+				<#include "block_element_html.ftl">
+
+				<#assign void = blockLevelStack.pop()>
 
 				<#break>
 			</#if>

@@ -14,20 +14,28 @@
 	<#assign ifConditionalElement = ifElement.element("or")>
 </#if>
 
-<#include "macro_if_conditional_element_html.ftl">
+<#include "if_conditional_element_html.ftl">
 
 <#assign thenElement = ifElement.element("then")>
 
+<#assign level = blockLevelStack.peek()>
+
+<#if level == "testcase">
+	<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
+<#elseif level == "macro">
+	<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
+</#if>
+
 <#assign lineNumber = thenElement.attributeValue("line-number")>
 
-<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+<li id="${lineId}${lineNumber}">
 	<#assign displayElement = thenElement>
 
 	<#include "element_open_html.ftl">
 
-	<#assign macroBlockElement = thenElement>
+	<#assign blockElement = thenElement>
 
-	<#include "macro_block_element_html.ftl">
+	<#include "block_element_html.ftl">
 
 	<#assign displayElement = thenElement>
 

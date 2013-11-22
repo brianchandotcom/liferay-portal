@@ -1,9 +1,17 @@
-<#assign elements = macroBlockElement.elements()>
+<#assign elements = blockElement.elements()>
 
 <#list elements as element>
 	<#assign lineNumber = element.attributeValue("line-number")>
 
-	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+	<#assign level = blockLevelStack.peek()>
+
+	<#if level == "testcase">
+		<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
+	<#elseif level == "macro">
+		<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
+	</#if>
+
+	<li id="${lineId}${lineNumber}">
 		<#if element.getName() == "echo" || element.getName() == "fail" || element.getName() == "var">
 			<#assign displayElement = element>
 
@@ -17,6 +25,14 @@
 				<#assign macroElement = element>
 
 				<#include "macro_element_html.ftl">
+			<#elseif element.attributeValue("test-case")??>
+				<#assign testCaseExecuteElement = element>
+
+				<#assign void = testCaseNameStack.push(extendedTestCase)>
+
+				<#include "extended_test_case_element_html.ftl">
+
+				<#assign void = testCaseNameStack.pop()>
 			</#if>
 		<#elseif element.getName() == "if">
 			<#assign displayElement = element>
@@ -25,21 +41,29 @@
 
 			<#assign ifElement = element>
 
-			<#include "macro_if_element_html.ftl">
+			<#include "if_element_html.ftl">
 
 			<#assign elseifElements = element.elements("elseif")>
 
 			<#list elseifElements as elseifElement>
 				<#assign lineNumber = elseifElement.attributeValue("line-number")>
 
-				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+				<#assign level = blockLevelStack.peek()>
+
+				<#if level == "testcase">
+					<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
+				<#elseif level == "macro">
+					<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
+				</#if>
+
+				<li id="${lineId}${lineNumber}">
 					<#assign displayElement = elseifElement>
 
 					<#include "element_open_html.ftl">
 
 					<#assign ifElement = elseifElement>
 
-					<#include "macro_if_element_html.ftl">
+					<#include "if_element_html.ftl">
 
 					<#assign displayElement = elseifElement>
 
@@ -52,14 +76,22 @@
 
 				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-				<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+				<#assign level = blockLevelStack.peek()>
+
+				<#if level == "testcase">
+					<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
+				<#elseif level == "macro">
+					<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
+				</#if>
+
+				<li id="${lineId}${lineNumber}">
 					<#assign displayElement = elseElement>
 
 					<#include "element_open_html.ftl">
 
-					<#assign macroBlockElement = element.element("else")>
+					<#assign blockElement = element.element("else")>
 
-					<#include "macro_block_element_html.ftl">
+					<#include "block_element_html.ftl">
 
 					<#assign displayElement = elseElement>
 
@@ -77,7 +109,7 @@
 
 			<#assign ifElement = element>
 
-			<#include "macro_if_element_html.ftl">
+			<#include "if_element_html.ftl">
 
 			<#assign displayElement = element>
 

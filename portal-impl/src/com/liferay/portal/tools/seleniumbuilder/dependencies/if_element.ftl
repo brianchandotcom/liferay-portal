@@ -25,37 +25,51 @@ ${ifType} (
 
 	<#assign ifConditionalElement = conditionalElement>
 
-	<#include "macro_if_conditional_element.ftl">
+	<#include "if_conditional_element.ftl">
 ) {
+	<#if !level??>
+		<#assign level = "testcase">
+	</#if>
+
+	<#if level == "testcase">
+		<#assign lineId = "testCaseName">
+
+		<#assign selenium = "selenium">
+	<#elseif level == "macro">
+		<#assign lineId = "\"${macroName?uncap_first}Macro\"">
+
+		<#assign selenium = "liferaySelenium">
+	</#if>
+
 	<#if ifType == "else if">
 		<#assign lineNumber = ifElement.attributeValue("line-number")>
 
-		liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
+		 ${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 	</#if>
 
 	<#assign lineNumber = conditionalElement.attributeValue("line-number")>
 
-	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
-	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 
 	<#assign thenElement = ifElement.element("then")>
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pending");
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
 	<#assign blockElement = thenElement>
 
-	<#include "macro_block_element.ftl">
+	<#include "block_element.ftl">
 
 	<#assign lineNumber = thenElement.attributeValue("line-number")>
 
-	liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
+	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 
 	<#if ifType == "else if">
 		<#assign lineNumber = ifElement.attributeValue("line-number")>
 
-		liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
+		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");
 	</#if>
 }

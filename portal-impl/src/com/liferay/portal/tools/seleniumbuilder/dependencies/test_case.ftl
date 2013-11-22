@@ -110,7 +110,9 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 				<#assign blockElement = methodElement>
 
-				<#include "test_case_block_element.ftl">
+				<#assign level = "testcase">
+
+				<#include "block_element.ftl">
 
 				if (!nested) {
 					<#assign lineNumber = methodElement.attributeValue("line-number")>

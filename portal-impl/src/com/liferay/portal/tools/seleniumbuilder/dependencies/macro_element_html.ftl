@@ -32,9 +32,13 @@
 			</li>
 		</#list>
 
-		<#assign macroBlockElement = macroCommandElement>
+		<#assign void = blockLevelStack.push("macro")>
 
-		<#include "macro_block_element_html.ftl">
+		<#assign blockElement = macroCommandElement>
+
+		<#include "block_element_html.ftl">
+
+		<#assign void = blockLevelStack.pop()>
 
 		<#break>
 	</#if>

@@ -69,7 +69,9 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extend
 
 			<#assign blockElement = commandElement>
 
-			<#include "macro_block_element.ftl">
+			<#assign level = "macro">
+
+			<#include "block_element.ftl">
 		}
 	</#list>
 

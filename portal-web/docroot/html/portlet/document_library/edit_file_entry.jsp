@@ -168,12 +168,10 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 	/>
 </c:if>
 
-<%
-PortletURL editFileEntryURL = renderResponse.createActionURL();
-
-editFileEntryURL.setParameter("struts_action", "/document_library/edit_file_entry");
-editFileEntryURL.setParameter("backURL", currentURL);
-%>
+<liferay-portlet:actionURL varImpl="editFileEntryURL">
+	<liferay-portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+	<liferay-portlet:param name="backURL" value="<%= currentURL %>" />
+</liferay-portlet:actionURL>
 
 <aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

@@ -1133,14 +1133,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				prevAndNextThreads =
-					mbThreadPersistence.findByG_C_NotS_PrevAndNext(
+					mbThreadPersistence.filterFindByG_C_NotS_PrevAndNext(
 						message.getThreadId(), message.getGroupId(),
 						message.getCategoryId(),
 						WorkflowConstants.STATUS_IN_TRASH, comparator);
 			}
 			else {
 				prevAndNextThreads =
-					mbThreadPersistence.findByG_C_S_PrevAndNext(
+					mbThreadPersistence.filterFindByG_C_S_PrevAndNext(
 						message.getThreadId(), message.getGroupId(),
 						message.getCategoryId(), status, comparator);
 			}

@@ -64,8 +64,7 @@ public class ViewMessageAction extends PortletAction {
 
 			int status = WorkflowConstants.STATUS_APPROVED;
 
-			if (themeDisplay.getLayout().isTypeControlPanel() &&
-				permissionChecker.isContentReviewer(
+			if (permissionChecker.isContentReviewer(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId())) {
 
 				status = WorkflowConstants.STATUS_ANY;

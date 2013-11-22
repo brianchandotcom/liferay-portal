@@ -172,6 +172,7 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 PortletURL editFileEntryURL = renderResponse.createActionURL();
 
 editFileEntryURL.setParameter("struts_action", "/document_library/edit_file_entry");
+editFileEntryURL.setParameter("backURL", currentURL);
 
 if (Validator.isNotNull(redirect)) {
 	editFileEntryURL.setParameter("redirect", redirect);

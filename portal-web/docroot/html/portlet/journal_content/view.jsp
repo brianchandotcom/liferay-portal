@@ -104,15 +104,6 @@ boolean expired = true;
 								<c:if test="<%= enablePrint %>">
 									<c:choose>
 										<c:when test="<%= print %>">
-											<div class="print-action">
-												<liferay-ui:icon
-													image="print"
-													label="<%= true %>"
-													message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", articleDisplay.getTitle()}) %>'
-													url="javascript:print();"
-												/>
-											</div>
-
 											<aui:script>
 												print();
 											</aui:script>

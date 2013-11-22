@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.words;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.jazzy.InvalidWord;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
@@ -23,6 +25,7 @@ import java.util.Set;
 /**
  * @author Shinn Lok
  */
+@ProviderType
 public class WordsUtil {
 
 	public static List<InvalidWord> checkSpelling(String text) {

@@ -67,6 +67,17 @@
 		<execute action="CPSitemembershipsViewmembershiprequestsDenied#assertTextEquals" locator-key1="DENIED_TABLE_REPLY_COMMENTS" value1="${siteName} Membership Denied" />
 	</command>
 
+	<command name="gotoPG">
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="SOSiteHome#click" locator-key1="NAVIGATION_PAGE" />
+	</command>
+
 	<command name="joinSitePG">
 		<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 		<execute action="SOSiteHome#assertClick" locator-key1="JOIN_SITE_BUTTON" value1="Join Site" />

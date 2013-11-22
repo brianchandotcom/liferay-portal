@@ -16,10 +16,12 @@ package com.liferay.util.ant.bnd;
 
 import aQute.bnd.ant.BndTask;
 import aQute.bnd.build.Workspace;
+import aQute.bnd.service.IndexProvider;
 
 import java.io.File;
 
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -65,6 +67,16 @@ public abstract class BaseBndTask extends BndTask {
 		properties.putAll(bndProject.getProperties());
 
 		bndProject.setProperties(properties);
+
+		Set<Object> plugins = bndProject.getPlugins();
+
+		for (Object plugin : plugins) {
+			if (plugin instanceof IndexProvider) {
+				IndexProvider indexProvider = (IndexProvider)plugin;
+
+				indexProvider.getIndexLocations();
+			}
+		}
 
 		return bndProject;
 	}

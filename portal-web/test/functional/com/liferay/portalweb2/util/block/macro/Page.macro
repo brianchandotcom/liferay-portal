@@ -184,6 +184,12 @@
 				<var name="siteNameURL" value="${siteName?replace(' ', '-')}" />
 				<var name="siteNameURL" value="/${siteNameURL?lowercase()}" />
 			</then>
+			<elseif>
+   			 	<isset var="friendlyURL" />
+    			<then>
+     				<var name="siteNameURL" value="/${friendlyURL}" />
+    			</then>
+   			</elseif>
 			<else>
 				<var name="siteNameURL" value="/guest" />
 			</else>

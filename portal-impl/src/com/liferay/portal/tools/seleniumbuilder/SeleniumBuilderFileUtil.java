@@ -124,6 +124,30 @@ public class SeleniumBuilderFileUtil {
 		return childElementAttributeValues;
 	}
 
+	public Set<String> getChildElementLineNumbers(Element element) {
+		Set<String> childElementLineNumbers = new TreeSet<String>();
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			return childElementLineNumbers;
+		}
+
+		for (Element childElement : childElements) {
+			String childElementLineNumber = childElement.attributeValue(
+				"line-number");
+
+			if (childElementLineNumber != null) {
+				childElementLineNumbers.add(childElementLineNumber);
+			}
+
+			childElementLineNumbers.addAll(
+				getChildElementLineNumbers(childElement));
+		}
+
+		return childElementLineNumbers;
+	}
+
 	public String getClassName(String fileName) {
 		String classSuffix = getClassSuffix(fileName);
 

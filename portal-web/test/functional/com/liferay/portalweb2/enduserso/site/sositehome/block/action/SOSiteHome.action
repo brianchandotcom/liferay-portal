@@ -51,6 +51,10 @@
 		<case locator-key1="NAVIGATION_MEMBERS">
 			<execute function="Click#textClickAtAndWait" />
 		</case>
+
+		<case locator-key1="NAVIGATION_PAGE">
+			<execute function="Click#clickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="close">

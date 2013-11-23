@@ -178,6 +178,41 @@
 		</execute>
 	</command>
 
+	<command name="EditFriendlyURL" priority="4">
+		<var name="siteFriendlyURL" value="alpha/alpha" />
+		<var name="pageName" value="Site Page" />
+		<var name="siteName" value="Site Name" />
+		
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteScopeSelected" value="true" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#addFriendlyURLCP">
+			<var name="friendlyURL" value="${siteFriendlyURL}" />
+			<var name="friendlyURLSlashes" value="${siteFriendlyURL}" />
+		</execute>
+	</command>
+
 	<command name="EditSite" priority="5">
 		<var name="siteName" value="Site Name" />
 		<var name="siteNameEdit" value="Site Name Edit" />
@@ -226,6 +261,70 @@
 
 		<execute macro="Site#searchCP">
 			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="SiteFriendlyURL" priority="4">
+		<var name="siteFriendlyURL" value="alpha" />
+		<var name="privateSitePage" value="Private Page" />
+		<var name="privateSitePageURL" value="http://localhost:8080/group/alpha" />
+		<var name="publicSitePage" value="Public Page" />
+		<var name="publicSitePageURL" value="http://localhost:8080/web/alpha" />
+		<var name="siteName" value="Site Name" />
+		
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteScopeSelected" value="true" />
+			<var name="sitePageName" value="${publicSitePage}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteScopeSelected" value="true" />
+			<var name="sitePageName" value="${privateSitePage}" />
+			<var name="sitePageType" value="Private" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#addFriendlyURLCP">
+			<var name="friendlyURL" value="${siteFriendlyURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${siteFriendlyURL}" />
+			<var name="siteName" value="${siteFriendlyURL}" />
+		</execute>
+
+		<execute macro="Site#viewSiteFriendlyURLPG">
+			<var name="sitePageName" value="${publicSitePage}" />
+			<var name="sitePageURL" value="${publicSitePageURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${siteFriendlyURL}" />
+			<var name="pageAccess" value="Private" />
+			<var name="siteName" value="${siteFriendlyURL}" />
+		</execute>
+
+		<execute macro="Site#viewSiteFriendlyURLPG">
+			<var name="sitePageName" value="${privateSitePage}" />
+			<var name="sitePageURL" value="${privateSitePageURL}" />
 		</execute>
 	</command>
 

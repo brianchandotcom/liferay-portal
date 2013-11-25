@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+
 long ruleGroupInstanceId = ParamUtil.getLong(request, "ruleGroupInstanceId");
 
 MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(ruleGroupInstanceId);
@@ -35,7 +37,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= false %>"
-	showBackURL="<%= !windowState.equals(LiferayWindowState.POP_UP) %>"
+	showBackURL="<%= showBackURL %>"
 	title='<%= LanguageUtil.format(pageContext, "actions-for-x", ruleGroup.getName(locale), false) %>'
 />
 

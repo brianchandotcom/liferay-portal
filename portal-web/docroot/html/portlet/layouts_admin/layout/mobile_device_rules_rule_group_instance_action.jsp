@@ -19,7 +19,7 @@
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
-String redirect = searchContainer.getIteratorURL().toString();
+String redirect = currentURL;
 
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
@@ -32,8 +32,9 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 
 <liferay-ui:icon-menu>
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="viewRuleGroupInstanceActionsURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="viewRuleGroupInstanceActionsURL" windowState="<%= themeDisplay.isStateExclusive() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.MY) ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
 			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
+			<portlet:param name="showBackURL" value="<%= themeDisplay.isStateExclusive() ? Boolean.FALSE.toString() : Boolean.TRUE.toString() %>" />
 			<portlet:param name="redirect" value='<%= HttpUtil.setParameter(redirect, liferayPortletResponse.getNamespace() + "historyKey", "mobileDeviceRules") %>' />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:renderURL>
@@ -42,8 +43,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 		String taglibActionHandler = renderResponse.getNamespace() + "mobileDeviceActionHandler('" + viewRuleGroupInstanceActionsURL.toString() + "');";
 		%>
 
-		<liferay-ui:icon image="manage_nodes" message="manage-actions" url='<%= "javascript:" + taglibActionHandler + ";" %>' />
-
+		<liferay-ui:icon image="manage_nodes" message="manage-actions" onClick="<%= taglibActionHandler %>" url="javascript:;" />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.PERMISSIONS) %>">
@@ -52,14 +52,10 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 			modelResourceDescription="<%= mdrRuleGroup.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>"
 			var="permissionsURL"
-			windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
-		<%
-		String taglibActionHandler = renderResponse.getNamespace() + "mobileDeviceActionHandler('" + permissionsURL + "');";
-		%>
-
-		<liferay-ui:icon image="permissions" url='<%= "javascript:" + taglibActionHandler + ";" %>' useDialog="<%= true %>" />
+		<liferay-ui:icon image="permissions" url="<%= permissionsURL %>" useDialog="<%= true %>" />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">

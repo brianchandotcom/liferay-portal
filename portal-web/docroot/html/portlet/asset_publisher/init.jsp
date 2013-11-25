@@ -196,8 +196,6 @@ boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableF
 
 String[] metadataFields = StringUtil.split(portletPreferences.getValue("metadataFields", StringPool.BLANK));
 
-boolean showPortletWithNoResults = false;
-
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 

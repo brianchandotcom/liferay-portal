@@ -249,23 +249,21 @@ public class Logger {
 			_liferaySelenium.getPrimaryTestSuiteName();
 
 		String htmlFileName =
-			_TEST_BASEDIR_NAME + "/test/functional-generated/" +
+			_TEST_BASEDIR + "/test/functional-generated/" +
 				StringUtil.replace(primaryTestSuiteName, ".", "/") + ".html";
 
 		if (_loggerStarted) {
 			return;
 		}
 
-		if (FileUtil.exists(_liferaySelenium.getProjectDir() + htmlFileName)) {
-			_webDriver.get(
-				"file:///" + _liferaySelenium.getProjectDir() + htmlFileName);
+		if (FileUtil.exists(htmlFileName)) {
+			_webDriver.get("file:///" + htmlFileName);
 		}
 		else {
 			_webDriver.get(
-				"file:///" + _liferaySelenium.getProjectDir() +
-					_TEST_BASEDIR_NAME + "/test/functional/com/liferay/" +
-						"portalweb/portal/util/liferayselenium/dependencies/" +
-						"Logger.html");
+				"file:///" + _TEST_BASEDIR + "/test/functional/com/liferay/" +
+					"portalweb/portal/util/liferayselenium/dependencies/" +
+					"Logger.html");
 		}
 
 		_loggerStarted = true;
@@ -281,8 +279,7 @@ public class Logger {
 					"outerHTML;");
 
 			String fileName =
-				_liferaySelenium.getProjectDir() +
-					_TEST_BASEDIR_NAME + "/test-results/functional/report.html";
+				_TEST_BASEDIR + "/test-results/functional/report.html";
 
 			File file = new File(fileName);
 
@@ -433,8 +430,7 @@ public class Logger {
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
-	private static final String _TEST_BASEDIR_NAME =
-		TestPropsValues.TEST_BASEDIR_NAME;
+	private static final String _TEST_BASEDIR = TestPropsValues.TEST_BASEDIR;
 
 	private int _errorCount;
 	private JavascriptExecutor _javascriptExecutor;

@@ -196,8 +196,6 @@ boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableF
 
 String[] metadataFields = StringUtil.split(portletPreferences.getValue("metadataFields", StringPool.BLANK));
 
-String[] assetEntryXmls = portletPreferences.getValues("assetEntryXml", new String[0]);
-
 boolean showPortletWithNoResults = false;
 
 Map<String, PortletURL> addPortletURLs = null;

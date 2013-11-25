@@ -100,6 +100,32 @@ public class AssetPublisherUtil {
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		return getAssetPublisher().getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			deleteMissingAssetEntries, checkPermission);
+	}
+
+	public static List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			long[] allCategoryIds, String[] allTagNames,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		return getAssetPublisher().getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			allCategoryIds, allTagNames, deleteMissingAssetEntries,
+			checkPermission);
+	}
+
+	public static List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
 			long[] assetCategoryIds, String[] assetEntryXmls,
 			String[] assetTagNames, boolean deleteMissingAssetEntries,
 			boolean checkPermission)

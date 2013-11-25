@@ -404,6 +404,40 @@ public class AssetPublisherImpl implements AssetPublisher {
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		String[] assetEntryXmls = portletPreferences.getValues(
+			"assetEntryXml", new String[0]);
+
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			long[] allCategoryIds, String[] allTagNames,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		String[] assetEntryXmls = portletPreferences.getValues(
+			"assetEntryXml", new String[0]);
+
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			allCategoryIds, assetEntryXmls, allTagNames,
+			deleteMissingAssetEntries, checkPermission);
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
 			long[] allCategoryIds, String[] assetEntryXmls,
 			String[] allTagNames, boolean deleteMissingAssetEntries,
 			boolean checkPermission)

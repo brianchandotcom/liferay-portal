@@ -76,10 +76,6 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				searchContainer.setResults(results);
 
 				request.setAttribute("view.jsp-results", results);
-
-				String assetLinkBehavior = GetterUtil.getString(portletPreferences.getValue("assetLinkBehavior", "showFullContent"));
-
-				request.setAttribute("view.jsp-viewInContext", new Boolean(assetLinkBehavior.equals("viewInPortlet")));
 %>
 
 				<h3 class="asset-entries-group-label"><%= assetCategory.getTitle(locale) %></h3>

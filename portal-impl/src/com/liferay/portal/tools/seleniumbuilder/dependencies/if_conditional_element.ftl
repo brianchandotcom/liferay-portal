@@ -10,7 +10,7 @@
 				<#if conditionalCaseNames?seq_contains(conditionalCase.getName())>
 					<#assign ifConditionalElement = conditionalCase>
 
-					<#include "macro_if_conditional_element.ftl">
+					<#include "if_conditional_element.ftl">
 				</#if>
 
 				<#if conditionalCase_has_next>
@@ -92,7 +92,7 @@
 			<#assign ifConditionalElement = ifConditionalElement.element("or")>
 		</#if>
 
-		<#include "macro_if_conditional_element.ftl">
+		<#include "if_conditional_element.ftl">
 	)
 <#elseif ifConditionalElement.getName() == "or" >
 		<#assign conditionalCases = ifConditionalElement.elements()>
@@ -104,7 +104,7 @@
 				<#if conditionalCaseNames?seq_contains(conditionalCase.getName())>
 					<#assign ifConditionalElement = conditionalCase>
 
-					<#include "macro_if_conditional_element.ftl">
+					<#include "if_conditional_element.ftl">
 				</#if>
 
 				<#if conditionalCase_has_next>

@@ -198,8 +198,6 @@ String[] metadataFields = StringUtil.split(portletPreferences.getValue("metadata
 
 boolean showPortletWithNoResults = false;
 
-Map<String, PortletURL> addPortletURLs = null;
-
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 

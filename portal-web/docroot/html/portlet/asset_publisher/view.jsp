@@ -79,6 +79,8 @@ if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQ
 }
 
 Group scopeGroup = themeDisplay.getScopeGroup();
+
+Map<String, PortletURL> addPortletURLs = null;
 %>
 
 <c:if test="<%= showAddContentButton && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">

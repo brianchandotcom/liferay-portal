@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.mail.SMTPAccount;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -357,6 +358,10 @@ public class MailEngine {
 		}
 		catch (SendFailedException sfe) {
 			_log.error(sfe);
+
+			if (_isFailOnException()) {
+				throw new MailEngineException(sfe);
+			}
 		}
 		catch (Exception e) {
 			throw new MailEngineException(e);
@@ -513,9 +518,25 @@ public class MailEngine {
 		}
 	}
 
+	private static boolean _isFailOnException() {
+		boolean failOnException = false;
+
+		try {
+			failOnException = PrefsPropsUtil.getBoolean(
+				PropsKeys.MAIL_THROW_EXCEPTION_WHEN_FAILS, false);
+		}
+		catch (SystemException e) {
+			_log.error(
+				"Error getting preference: " +
+				PropsKeys.MAIL_THROW_EXCEPTION_WHEN_FAILS);
+		}
+
+		return failOnException;
+	}
+
 	private static void _send(
 		Session session, Message message, InternetAddress[] bulkAddresses,
-		int batchSize) {
+		int batchSize) throws MailEngineException {
 
 		try {
 			boolean smtpAuth = GetterUtil.getBoolean(
@@ -591,6 +612,10 @@ public class MailEngine {
 			}
 			else {
 				LogUtil.log(_log, me);
+			}
+
+			if (_isFailOnException()) {
+				throw new MailEngineException(me);
 			}
 		}
 	}

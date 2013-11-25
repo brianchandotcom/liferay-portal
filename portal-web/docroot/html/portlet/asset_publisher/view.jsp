@@ -79,9 +79,16 @@ if (assetCategoryId > 0) {
 String assetTagName = ParamUtil.getString(request, "tag");
 
 if (Validator.isNotNull(assetTagName)) {
-	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, allAssetTagNames);
+	if (selectionStyle.equals("dynamic")) {
+		if (!ArrayUtil.contains(allAssetTagNames, assetTagName)) {
+			long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, ArrayUtil.append(allAssetTagNames, assetTagName));
 
-	assetEntryQuery.setAnyTagIds(assetTagIds);
+			assetEntryQuery.setAllTagIds(allAssetTagIds);
+		}
+	}
+	else if (selectionStyle.equals("manual")) {
+		allAssetTagNames = ArrayUtil.append(allAssetTagNames, assetTagName);
+	}
 
 	PortalUtil.setPageKeywords(assetTagName, request);
 }

@@ -790,14 +790,6 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.spring.jpa.DatabaseDetector">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.spring.jpa.LocalContainerEntityManagerFactoryBean">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.staging">
 		<priority value="WARN" />
 	</category>

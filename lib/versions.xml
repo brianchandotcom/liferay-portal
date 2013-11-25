@@ -1672,18 +1672,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/eclipselink.jar</file-name>
-		<version>2.0.1</version>
-		<project-name>EclipseLink</project-name>
-		<project-url>http://www.eclipse.org/eclipselink</project-url>
-		<licenses>
-			<license>
-				<license-name>Eclipse Public License 1.0</license-name>
-				<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/ecs.jar</file-name>
 		<version>1.4.2</version>
 		<project-name>Element Construction Set</project-name>

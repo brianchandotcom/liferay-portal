@@ -794,7 +794,6 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
 			<arg value="service.input.file=${service.file}" />
 			<arg value="service.hbm.file=${basedir}/src/META-INF/portal-hbm.xml" />
-			<arg value="service.orm.file=${basedir}/src/META-INF/portal-orm.xml" />
 			<arg value="service.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml" />
 			<arg value="service.spring.file=${basedir}/src/META-INF/portal-spring.xml" />
 			<arg value="service.api.dir=${basedir}/../portal-service/src" />

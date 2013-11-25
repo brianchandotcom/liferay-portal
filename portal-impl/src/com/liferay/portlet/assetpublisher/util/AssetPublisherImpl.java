@@ -495,12 +495,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 			boolean deleteMissingAssetEntries, boolean checkPermission)
 		throws Exception {
 
-		String[] assetEntryXmls = portletPreferences.getValues(
-			"assetEntryXml", new String[0]);
-
 		List<AssetEntry> assetEntries = getAssetEntries(
 			portletRequest, portletPreferences, permissionChecker, groupIds,
-			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
+			deleteMissingAssetEntries, checkPermission);
 
 		if (assetEntries.isEmpty() ||
 			(ArrayUtil.isEmpty(allCategoryIds) &&

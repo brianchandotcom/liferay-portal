@@ -17,6 +17,90 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
+AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+long[] allAssetCategoryIds = new long[0];
+String[] allAssetTagNames = new String[0];
+
+if (selectionStyle.equals("dynamic")) {
+	if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
+		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, ArrayUtil.append(groupIds, scopeGroupId));
+	}
+	else {
+		assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, groupIds);
+	}
+
+	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(portletPreferences, scopeGroupId);
+
+	assetEntryQuery.setClassTypeIds(classTypeIds);
+
+	boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(portletPreferences.getValue("subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
+
+	if (subtypeFieldsFilterEnabled && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameIds[0]));
+
+		String ddmStructureFieldName = GetterUtil.getString(portletPreferences.getValue("ddmStructureFieldName", StringPool.BLANK));
+		Serializable ddmStructureFieldValue = portletPreferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
+
+		if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
+			Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldNames(classTypeIds[0], ddmStructureFieldName, locale);
+
+			long ddmStructureId = GetterUtil.getLong(classTypeFieldName.getObject(3));
+
+			assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructureId, ddmStructureFieldName, locale));
+			assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+	}
+
+	AssetPublisherUtil.processAssetEntryQuery(user, portletPreferences, assetEntryQuery);
+}
+
+long assetCategoryId = ParamUtil.getLong(request, "categoryId");
+
+if (assetCategoryId > 0) {
+	if (selectionStyle.equals("dynamic")) {
+		allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+		if (!ArrayUtil.contains(allAssetCategoryIds, assetCategoryId)) {
+			assetEntryQuery.setAllCategoryIds(ArrayUtil.append(allAssetCategoryIds, assetCategoryId));
+		}
+	}
+	else if (selectionStyle.equals("manual")) {
+		allAssetCategoryIds = ArrayUtil.append(allAssetCategoryIds, assetCategoryId);
+	}
+
+	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
+
+	assetCategory = assetCategory.toEscapedModel();
+
+	PortalUtil.setPageKeywords(assetCategory.getTitle(locale), request);
+}
+
+String assetTagName = ParamUtil.getString(request, "tag");
+
+if (Validator.isNotNull(assetTagName)) {
+	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, allAssetTagNames);
+
+	assetEntryQuery.setAnyTagIds(assetTagIds);
+
+	PortalUtil.setPageKeywords(assetTagName, request);
+}
+
+if (showOnlyLayoutAssets) {
+	assetEntryQuery.setLayout(layout);
+}
+
+if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
+	AssetEntry layoutAssetEntry = (AssetEntry)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
+
+	if (layoutAssetEntry != null) {
+		assetEntryQuery.setLinkedAssetEntryId(layoutAssetEntry.getEntryId());
+	}
+}
+
+assetEntryQuery.setPaginationType(paginationType);
+assetEntryQuery.setEnablePermissions(AssetUtil.isEnablePermissions(portletPreferences, portletName));
+
 if (mergeUrlTags || mergeLayoutTags) {
 	String[] compilerTagNames = new String[0];
 

@@ -43,8 +43,6 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
 
-boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
-
 long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
 
 long[] classTypeIds = GetterUtil.getLongValues(portletPreferences.getValues("classTypeIds", null));
@@ -162,7 +160,6 @@ boolean showAddContentButton = GetterUtil.getBoolean(portletPreferences.getValue
 boolean showAssetTitle = GetterUtil.getBoolean(portletPreferences.getValue("showAssetTitle", null), true);
 boolean showContextLink = GetterUtil.getBoolean(portletPreferences.getValue("showContextLink", null), true);
 int abstractLength = GetterUtil.getInteger(portletPreferences.getValue("abstractLength", null), 200);
-String assetLinkBehavior = GetterUtil.getString(portletPreferences.getValue("assetLinkBehavior", "showFullContent"));
 String orderByColumn1 = GetterUtil.getString(portletPreferences.getValue("orderByColumn1", "modifiedDate"));
 String orderByColumn2 = GetterUtil.getString(portletPreferences.getValue("orderByColumn2", "title"));
 String orderByType1 = GetterUtil.getString(portletPreferences.getValue("orderByType1", "DESC"));
@@ -190,44 +187,14 @@ boolean enableComments = GetterUtil.getBoolean(portletPreferences.getValue("enab
 boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null));
 boolean enableTagBasedNavigation = GetterUtil.getBoolean(portletPreferences.getValue("enableTagBasedNavigation", null));
 
-String[] conversions = DocumentConversionUtil.getConversions("html");
 String[] extensions = portletPreferences.getValues("extensions", new String[0]);
 boolean openOfficeServerEnabled = PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED);
-boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);
 boolean enablePrint = GetterUtil.getBoolean(portletPreferences.getValue("enablePrint", null));
 boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableFlags", null));
 
-String allMetadataFields = "create-date,modified-date,publish-date,expiration-date,priority,author,view-count,categories,tags";
-
 String[] metadataFields = StringUtil.split(portletPreferences.getValue("metadataFields", StringPool.BLANK));
-
-String[] assetEntryXmls = portletPreferences.getValues("assetEntryXml", new String[0]);
-
-boolean viewInContext = assetLinkBehavior.equals("viewInPortlet");
-
-boolean showPortletWithNoResults = false;
-
-Map<String, PortletURL> addPortletURLs = null;
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 
 <%@ include file="/html/portlet/asset_publisher/init-ext.jsp" %>
-
-<%!
-private String _checkViewURL(AssetEntry assetEntry, boolean viewInContext, String viewURL, String currentURL, ThemeDisplay themeDisplay) {
-	if (Validator.isNotNull(viewURL)) {
-		viewURL = HttpUtil.setParameter(viewURL, "inheritRedirect", viewInContext);
-
-		Layout layout = themeDisplay.getLayout();
-
-		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
-
-		if (!viewInContext || (Validator.isNotNull(assetEntryLayoutUuid) && !assetEntryLayoutUuid.equals(layout.getUuid()))) {
-			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
-		}
-	}
-
-	return viewURL;
-}
-%>

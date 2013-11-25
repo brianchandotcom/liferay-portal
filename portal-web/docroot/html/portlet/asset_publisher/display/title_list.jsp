@@ -31,8 +31,6 @@ if (Validator.isNull(title)) {
 	title = assetRenderer.getTitle(locale);
 }
 
-boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
-
 request.setAttribute("view.jsp-showIconLabel", false);
 
 PortletURL viewFullContentURL = renderResponse.createRenderURL();
@@ -51,6 +49,8 @@ if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 
 String viewURL = null;
 
+boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
+
 if (viewInContext) {
 	String viewFullContentURLString = viewFullContentURL.toString();
 
@@ -62,7 +62,7 @@ else {
 	viewURL = viewFullContentURL.toString();
 }
 
-viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 %>
 
 	<c:if test="<%= assetEntryIndex == 0 %>">

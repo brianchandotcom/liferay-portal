@@ -61,6 +61,10 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 	</c:if>
 
+	<%
+	boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);
+	%>
+
 	<c:if test="<%= (enableConversions && assetRenderer.isConvertible()) || (enablePrint && assetRenderer.isPrintable()) || (showAvailableLocales && assetRenderer.isLocalizable()) %>">
 		<div class="asset-user-actions">
 			<c:if test="<%= enablePrint %>">

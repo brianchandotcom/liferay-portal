@@ -47,6 +47,10 @@
 
 	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= showContextLink %>" />
 
+	<%
+	String assetLinkBehavior = GetterUtil.getString(portletPreferences.getValue("assetLinkBehavior", "showFullContent"));
+	%>
+
 	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
 		<aui:option label="show-full-content" selected='<%= assetLinkBehavior.equals("showFullContent") %>' value="showFullContent" />
 		<aui:option label="view-in-context" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
@@ -95,6 +99,8 @@
 		<div class="field-row">
 
 			<%
+			String[] conversions = DocumentConversionUtil.getConversions("html");
+
 			for (String conversion : conversions) {
 			%>
 
@@ -165,7 +171,9 @@
 	<aui:field-wrapper label="metadata-fields">
 
 		<%
-		Set<String> availableMetadataFields = SetUtil.fromArray(StringUtil.split(allMetadataFields));
+		String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
+
+		Set<String> availableMetadataFields = SetUtil.fromArray(allMetadataFields);
 
 		// Left list
 

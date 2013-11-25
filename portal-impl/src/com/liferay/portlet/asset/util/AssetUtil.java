@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -153,6 +154,31 @@ public class AssetUtil {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, assetCategory.getTitleCurrentValue(),
 			portletURL.toString());
+	}
+
+	public static String checkViewURL(
+		AssetEntry assetEntry, boolean viewInContext, String viewURL,
+		String currentURL, ThemeDisplay themeDisplay) {
+
+		if (Validator.isNull(viewURL)) {
+			return viewURL;
+		}
+
+		viewURL = HttpUtil.setParameter(
+			viewURL, "inheritRedirect", viewInContext);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
+
+		if (!viewInContext ||
+			(Validator.isNotNull(assetEntryLayoutUuid) &&
+		 	!assetEntryLayoutUuid.equals(layout.getUuid()))) {
+
+			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		}
+
+		return viewURL;
 	}
 
 	public static long[] filterCategoryIds(

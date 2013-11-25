@@ -158,7 +158,7 @@ for (String curAssetTagName : allAssetTagNames) {
 	}
 }
 
-if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQuery.getAllCategoryIds().length > 0) || (assetEntryQuery.getAllTagIds().length > 0))) {
+if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((allAssetCategoryIds.length > 0) || (allAssetTagNames.length > 0))) {
 	selectionStyle = "dynamic";
 }
 

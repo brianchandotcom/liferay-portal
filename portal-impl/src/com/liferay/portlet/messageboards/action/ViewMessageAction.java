@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -54,6 +56,20 @@ public class ViewMessageAction extends PortletAction {
 		try {
 			long messageId = ParamUtil.getLong(renderRequest, "messageId");
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (permissionChecker.isContentReviewer(
+					themeDisplay.getUserId(), themeDisplay.getScopeGroupId())) {
+
+				status = WorkflowConstants.STATUS_ANY;
+			}
+
 			PortalPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					renderRequest);
@@ -86,8 +102,7 @@ public class ViewMessageAction extends PortletAction {
 
 			MBMessageDisplay messageDisplay =
 				MBMessageServiceUtil.getMessageDisplay(
-					messageId, WorkflowConstants.STATUS_ANY, threadView,
-					includePrevAndNext);
+					messageId, status, threadView, includePrevAndNext);
 
 			if (messageDisplay != null) {
 				MBMessage message = messageDisplay.getMessage();

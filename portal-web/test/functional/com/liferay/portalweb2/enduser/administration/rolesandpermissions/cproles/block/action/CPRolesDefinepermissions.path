@@ -53,6 +53,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_EDIT</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFINE_PERMISSION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Define Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ASSIGN_MEMBERS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Assign Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PERMISSION_TABLE-->
 <tr>
 	<td>PERMISSION_TABLE_PERMISSIONS</td>
@@ -137,6 +158,11 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS</td>
 	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Blogs')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BOOKMARKS</td>
+	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Bookmarks')]</td>
 	<td></td>
 </tr>
 <tr>

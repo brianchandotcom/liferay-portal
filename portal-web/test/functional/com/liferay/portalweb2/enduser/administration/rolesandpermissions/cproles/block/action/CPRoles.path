@@ -72,7 +72,12 @@
 <!--ROLE_TABLE-->
 <tr>
 	<td>ROLE_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[1]/a</td>
+	<td>//tr[contains(.,'${key_roleName}') and contains(.,'${key_roleUser}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_TABLE_PERMISSIONS</td>
+	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td</td>
 	<td></td>
 </tr>
 <tr>
@@ -114,6 +119,32 @@
 <tr>
 	<td>ROLE_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGINATION-->
+<tr>
+	<td>PAGINATION_FIRST_BUTTON</td>
+	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'First')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_PREVIOUS_BUTTON</td>
+	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_NEXT_BUTTON</td>
+	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_LAST_BUTTON</td>
+	<td>//ul[@class='pager lfr-pagination-buttons']/li/a[contains(.,'Last')]</td>
 	<td></td>
 </tr>
 </tbody>

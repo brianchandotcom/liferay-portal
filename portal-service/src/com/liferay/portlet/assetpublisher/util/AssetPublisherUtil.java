@@ -87,6 +87,12 @@ public class AssetPublisherUtil {
 		getAssetPublisher().checkAssetEntries();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * AssetPublisherUtil#getAssetEntries(
+	 *  PortletRequest, PortletPreferences, PermissionChecker, long[], boolean,
+	 *  boolean)}
+	 */
 	public static List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
@@ -108,6 +114,12 @@ public class AssetPublisherUtil {
 			deleteMissingAssetEntries, checkPermission);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * AssetPublisherUtil#getAssetEntries(
+	 *  PortletRequest, PortletPreferences, PermissionChecker, long[], long[],
+	 *  String[], boolean , boolean)}
+	 */
 	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,

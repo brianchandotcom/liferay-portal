@@ -410,72 +410,6 @@ public class AssetPublisherImpl implements AssetPublisher {
 		String[] assetEntryXmls = portletPreferences.getValues(
 			"assetEntryXml", new String[0]);
 
-		return getAssetEntries(
-			portletRequest, portletPreferences, permissionChecker, groupIds,
-			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			long[] allCategoryIds, String[] allTagNames,
-			boolean deleteMissingAssetEntries, boolean checkPermission)
-		throws Exception {
-
-		String[] assetEntryXmls = portletPreferences.getValues(
-			"assetEntryXml", new String[0]);
-
-		return getAssetEntries(
-			portletRequest, portletPreferences, permissionChecker, groupIds,
-			allCategoryIds, assetEntryXmls, allTagNames,
-			deleteMissingAssetEntries, checkPermission);
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			long[] allCategoryIds, String[] assetEntryXmls,
-			String[] allTagNames, boolean deleteMissingAssetEntries,
-			boolean checkPermission)
-		throws Exception {
-
-		List<AssetEntry> assetEntries = getAssetEntries(
-			portletRequest, portletPreferences, permissionChecker, groupIds,
-			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
-
-		if (assetEntries.isEmpty() ||
-			(ArrayUtil.isEmpty(allCategoryIds) &&
-			 ArrayUtil.isEmpty(allTagNames))) {
-
-			return assetEntries;
-		}
-
-		if (!ArrayUtil.isEmpty(allCategoryIds)) {
-			assetEntries = _filterAssetCategoriesAssetEntries(
-				assetEntries, allCategoryIds);
-		}
-
-		if (!ArrayUtil.isEmpty(allTagNames)) {
-			assetEntries = _filterAssetTagNamesAssetEntries(
-				assetEntries, allTagNames);
-		}
-
-		return assetEntries;
-	}
-
-	@Override
-	public List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences,
-			PermissionChecker permissionChecker, long[] groupIds,
-			String[] assetEntryXmls, boolean deleteMissingAssetEntries,
-			boolean checkPermission)
-		throws Exception {
-
 		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
 		List<String> missingAssetEntryUuids = new ArrayList<String>();
@@ -550,6 +484,84 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 
 		return assetEntries;
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			long[] allCategoryIds, String[] allTagNames,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		String[] assetEntryXmls = portletPreferences.getValues(
+			"assetEntryXml", new String[0]);
+
+		List<AssetEntry> assetEntries = getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
+
+		if (assetEntries.isEmpty() ||
+			(ArrayUtil.isEmpty(allCategoryIds) &&
+			 ArrayUtil.isEmpty(allTagNames))) {
+
+			return assetEntries;
+		}
+
+		if (!ArrayUtil.isEmpty(allCategoryIds)) {
+			assetEntries = _filterAssetCategoriesAssetEntries(
+				assetEntries, allCategoryIds);
+		}
+
+		if (!ArrayUtil.isEmpty(allTagNames)) {
+			assetEntries = _filterAssetTagNamesAssetEntries(
+				assetEntries, allTagNames);
+		}
+
+		return assetEntries;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * AssetPublisherImpl#getAssetEntries(
+	 *  PortletRequest, PortletPreferences, PermissionChecker, long[], long[],
+	 *  String[], boolean , boolean)}
+	 */
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			long[] allCategoryIds, String[] assetEntryXmls,
+			String[] allTagNames, boolean deleteMissingAssetEntries,
+			boolean checkPermission)
+		throws Exception {
+
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			allCategoryIds, allTagNames, deleteMissingAssetEntries,
+			checkPermission);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 * AssetPublisherImpl#getAssetEntries(
+	 *  PortletRequest, PortletPreferences, PermissionChecker, long[], boolean,
+	 *  boolean)}
+	 */
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			String[] assetEntryXmls, boolean deleteMissingAssetEntries,
+			boolean checkPermission)
+		throws Exception {
+
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			deleteMissingAssetEntries, checkPermission);
 	}
 
 	@Override

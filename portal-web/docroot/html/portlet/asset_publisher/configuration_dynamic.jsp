@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
+boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
+
 List<AssetRendererFactory> classTypesAssetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");

@@ -43,8 +43,6 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
 
-boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
-
 long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
 
 long[] classTypeIds = GetterUtil.getLongValues(portletPreferences.getValues("classTypeIds", null));

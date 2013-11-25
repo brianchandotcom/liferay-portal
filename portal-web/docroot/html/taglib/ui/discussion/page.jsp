@@ -476,12 +476,14 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											<%
 											User parentMessageUser = UserLocalServiceUtil.fetchUser(parentMessage.getUserId());
 
-											long imageId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
+											long portraitId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
+											long companyId = (parentMessageUser == null) ? 0 : parentMessageUser.getCompanyId();
+											String screenName = (parentMessageUser == null) ? StringPool.BLANK : parentMessageUser.getScreenName();
 											%>
 
 											<span id="lfr-discussion-reply-user-info">
 												<div class="lfr-discussion-reply-user-avatar">
-													<img alt="<%= parentMessage.getUserName() %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, imageId) %>" width="30" />
+													<img alt="<%= parentMessage.getUserName() %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, portraitId, companyId, screenName) %>" width="30" />
 												</div>
 
 												<div class="lfr-discussion-reply-user-name">

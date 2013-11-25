@@ -19,14 +19,9 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
-import com.liferay.portal.spring.jpa.LocalContainerEntityManagerFactoryBean;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Properties;
-
-import javax.persistence.EntityManagerFactory;
 
 import javax.sql.DataSource;
 
@@ -65,22 +60,11 @@ public class DataSourceSwapper {
 
 		DataSourceFactoryUtil.destroyDataSource(oldDataSource);
 
-		if (StringUtil.equalsIgnoreCase(
-				PropsValues.PERSISTENCE_PROVIDER, "jpa")) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Reinitialize Hibernate for new counter data source");
-			}
-
-			_reinitializeJPA("counterSessionFactory", newDataSource);
+		if (_log.isInfoEnabled()) {
+			_log.info("Reinitialize Hibernate for new counter data source");
 		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info("Reinitialize JPA for new counter data source");
-			}
 
-			_reinitializeHibernate("counterSessionFactory", newDataSource);
-		}
+		_reinitializeHibernate("counterSessionFactory", newDataSource);
 	}
 
 	public static void swapLiferayDataSource(Properties properties)
@@ -108,22 +92,11 @@ public class DataSourceSwapper {
 
 		DataSourceFactoryUtil.destroyDataSource(oldDataSource);
 
-		if (StringUtil.equalsIgnoreCase(
-				PropsValues.PERSISTENCE_PROVIDER, "jpa")) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Reinitialize Hibernate for new liferay data source");
-			}
-
-			_reinitializeJPA("liferaySessionFactory", newDataSource);
+		if (_log.isInfoEnabled()) {
+			_log.info("Reinitialize Hibernate for new liferay data source");
 		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info("Reinitialize JPA for new liferay data source");
-			}
 
-			_reinitializeHibernate("liferaySessionFactory", newDataSource);
-		}
+		_reinitializeHibernate("liferaySessionFactory", newDataSource);
 	}
 
 	public void setCounterDataSourceWrapper(
@@ -177,27 +150,6 @@ public class DataSourceSwapper {
 					abstractPlatformTransactionManager.getClass() +
 						" which may cause subsequent transaction failures");
 		}
-	}
-
-	private static void _reinitializeJPA(String name, DataSource dataSource)
-		throws Exception {
-
-		LocalContainerEntityManagerFactoryBean
-			localContainerEntityManagerFactoryBean =
-				new LocalContainerEntityManagerFactoryBean();
-
-		localContainerEntityManagerFactoryBean.setDataSource(dataSource);
-
-		localContainerEntityManagerFactoryBean.afterPropertiesSet();
-
-		EntityManagerFactory entityManagerFactory =
-			localContainerEntityManagerFactoryBean.getObject();
-
-		com.liferay.portal.dao.orm.jpa.SessionFactoryImpl sessionFactoryImpl =
-			(com.liferay.portal.dao.orm.jpa.SessionFactoryImpl)
-				PortalBeanLocatorUtil.locate(name);
-
-		sessionFactoryImpl.setEntityManagerFactory(entityManagerFactory);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DataSourceSwapper.class);

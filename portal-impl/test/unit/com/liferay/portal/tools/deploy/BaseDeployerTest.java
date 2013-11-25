@@ -14,47 +14,34 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.util.Properties;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
 
 /**
  * @author Igor Beslic
  */
-@PrepareForTest({FileUtil.class, SAXReaderUtil.class})
-@RunWith(PowerMockRunner.class)
-public class BaseDeployerTest extends PowerMockito {
-
-	public static final String LIFERAY_PLUGIN_PACKAGE_PROPERTIES_CONTENT =
-		"name=Test Theme EE\n" +
-		"module-group-id=liferay-ee\n" +
-		"module-incremental-version=1\n" +
-		"tags=alfa,beta,gama,delta\n" +
-		"short-description=Test <\n" +
-		"long-description=This is test\n" +
-		"change-log=\n" +
-		"page-url=http://www.liferay.com\n" +
-		"author=Liferay, Inc.\n" +
-		"licenses=EE\n" +
-		"liferay-versions=6.1.20+\n\n" +
-		"required-deployment-contexts=\\\n" +
-		"    portal-compat-hook";
-
-	public static String TMP_TEST_DIR = "";
+public abstract class BaseDeployerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -66,57 +53,55 @@ public class BaseDeployerTest extends PowerMockito {
 
 		saxReaderUtil.setSAXReader(new SAXReaderImpl());
 
-		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
-
-		TMP_TEST_DIR = tmpDir + "/WEB-INF";
-
-		File tmpTestDir = new File(TMP_TEST_DIR);
-
-		if (!tmpTestDir.exists()) {
-			tmpTestDir.mkdir();
-		}
-
-		FileUtil.write(
-			tmpTestDir + "/liferay-plugin-package.properties",
-			LIFERAY_PLUGIN_PACKAGE_PROPERTIES_CONTENT);
+		transferPropertiesToTempFile();
 	}
 
-	@AfterClass
-	public static void tearDownClass() {
-		File tmpTestDir = new File(TMP_TEST_DIR);
+	public abstract Deployer getDeployer();
 
-		if (tmpTestDir.exists()) {
-			FileUtil.deltree(tmpTestDir);
+	public File getRootDeploymentFolder() {
+		return getWebInfFolder().getParentFile();
+	}
 
-			FileUtil.delete(tmpTestDir);
+	public File getWebInfFolder() {
+		return new File(WEB_INF_FOLDER);
+	}
+
+	protected static void transferPropertiesToTempFile() throws IOException {
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+
+		try {
+			inputStream = BaseDeployerTest.class.getResourceAsStream(
+				"dependencies/liferay-plugin-package.properties");
+
+			FileUtil.mkdirs(WEB_INF_FOLDER);
+
+			outputStream = new FileOutputStream(
+				new File(WEB_INF_FOLDER, "liferay-plugin-package.properties"));
+
+			StreamUtil.transfer(inputStream, outputStream);
+		}
+		finally {
+			inputStream.close();
+			outputStream.close();
 		}
 	}
 
-	protected String format(Exception e, int stackTraceDepth) {
+	protected Properties getLiferayPluginPackageProperties()
+		throws IOException {
 
-		if (e.getStackTrace().length == 0) {
-			return "";
-		}
+		InputStream inputStream = new FileInputStream(
+			WEB_INF_FOLDER + "/liferay-plugin-package.properties");
 
-		StringBundler sb = new StringBundler(stackTraceDepth * 2);
+		String stringProperties = StringUtil.read(inputStream);
 
-		sb.append(e.getMessage());
+		Properties properties = PropertiesUtil.load(stringProperties);
 
-		StackTraceElement[] stackTraceElements = e.getStackTrace();
+		Assert.assertFalse(
+			"Test properties have not been loaded properly.",
+			properties.isEmpty());
 
-		for (int i = 0;
-				(i < stackTraceElements.length) && (i < stackTraceDepth);) {
-
-			sb.append(stackTraceElements[i].toString());
-
-			i++;
-
-			if ((i != stackTraceElements.length) && (i != stackTraceDepth)) {
-				sb.append("\n");
-			}
-		}
-
-		return sb.toString();
+		return properties;
 	}
 
 	protected void validateLiferayPluginPackageXMLFile(File xmlFile)
@@ -148,7 +133,7 @@ public class BaseDeployerTest extends PowerMockito {
 
 		Assert.assertNotNull(element);
 
-		Assert.assertEquals("Test <", element.getTextTrim());
+		Assert.assertEquals("Test", element.getTextTrim());
 
 		element = rootElement.element("page-url");
 
@@ -168,5 +153,8 @@ public class BaseDeployerTest extends PowerMockito {
 
 		Assert.assertNotNull(element.getTextTrim());
 	}
+
+	private static final String WEB_INF_FOLDER = SystemProperties.get(
+		SystemProperties.TMP_DIR) + "/WEB-INF";
 
 }

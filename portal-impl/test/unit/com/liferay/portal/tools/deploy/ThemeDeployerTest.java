@@ -14,71 +14,77 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.io.File;
+
 import java.util.Map;
 import java.util.Properties;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Igor Beslic
  */
 public class ThemeDeployerTest extends BaseDeployerTest {
 
+	@Override
+	public Deployer getDeployer() {
+		return new ThemeDeployer();
+	}
+
 	@Test
-	public void testProcessPluginPackageProperties() {
-		try {
-			String displayName = "test-theme";
+	public void testProcessPluginPackageProperties() throws Exception {
 
-			Properties properties = PropertiesUtil.load(
-				LIFERAY_PLUGIN_PACKAGE_PROPERTIES_CONTENT);
+		Map<String, String> filterMap = processPluginPackageProperties();
 
-			Assert.assertFalse(
-				"Test properties not loaded.", properties.isEmpty());
+		Assert.assertNotNull("FilterMap must not be null.", filterMap);
 
-			PluginPackage pluginPackage =
-				PluginPackageUtil.readPluginPackageProperties(
-					displayName, properties);
+		Assert.assertFalse("FilterMap must not be empty.", filterMap.isEmpty());
 
-			Assert.assertNotNull(pluginPackage);
+		File xmlFile = new File(
+			getWebInfFolder(), "liferay-plugin-package.xml");
 
-			Assert.assertEquals("Test Theme EE", pluginPackage.getName());
+		validateLiferayPluginPackageXMLFile(xmlFile);
 
-			ThemeDeployer themeDeployer = new ThemeDeployer();
+		xmlFile = new File(getWebInfFolder(),"liferay-look-and-feel.xml");
 
-			File testDir = new File(TMP_TEST_DIR);
+		validateLiferayLookAndFeelXMLFile(xmlFile);
+	}
 
-			Assert.assertTrue(testDir.exists());
+	protected Map<String, String> processPluginPackageProperties()
+		throws Exception {
 
-			Map<String, String> filterMap =
-				themeDeployer.processPluginPackageProperties(
-					testDir.getParentFile(), displayName, pluginPackage);
+		String displayName = "test-theme";
 
-			Assert.assertNotNull("FilterMap must not be null.", filterMap);
+		Properties properties = getLiferayPluginPackageProperties();
 
-			Assert.assertFalse(
-				"FilterMap must not be empty.", filterMap.isEmpty());
+		PluginPackage pluginPackage =
+			PluginPackageUtil.readPluginPackageProperties(
+				displayName, properties);
 
-			File xmlFile = new File(
-				TMP_TEST_DIR + "/liferay-plugin-package.xml");
+		Assert.assertNotNull(pluginPackage);
 
-			validateLiferayPluginPackageXMLFile(xmlFile);
+		Assert.assertEquals("Test Theme EE", pluginPackage.getName());
 
-			xmlFile = new File(TMP_TEST_DIR + "/liferay-look-and-feel.xml");
+		Deployer themeDeployer = getDeployer();
 
-			validateLiferayLookAndFeelXMLFile(xmlFile);
-		}
-		catch (Exception e) {
-			Assert.fail(format(e, 5));
-		}
+		Map<String, String> filterMap =
+			themeDeployer.processPluginPackageProperties(
+				getRootDeploymentFolder(), displayName, pluginPackage);
+
+		Assert.assertNotNull("FilterMap must not be null.", filterMap);
+
+		Assert.assertFalse("FilterMap must not be empty.", filterMap.isEmpty());
+
+		return filterMap;
 	}
 
 	protected void validateLiferayLookAndFeelXMLFile(File xmlFile)

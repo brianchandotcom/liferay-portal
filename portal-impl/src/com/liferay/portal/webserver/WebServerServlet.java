@@ -514,7 +514,8 @@ public class WebServerServlet extends HttpServlet {
 		return image.getTextObj();
 	}
 
-	protected long getImageId(HttpServletRequest request) {
+	protected long getImageId(HttpServletRequest request)
+		throws SystemException {
 
 		// The image id may be passed in as image_id, img_id, or i_id
 
@@ -528,7 +529,14 @@ public class WebServerServlet extends HttpServlet {
 			imageId = ParamUtil.getLong(request, "i_id");
 		}
 
-		if (imageId <= 0) {
+		if (imageId > 0) {
+			User user = UserLocalServiceUtil.fetchUserByPortraitId(imageId);
+
+			if (user != null) {
+				return 0;
+			}
+		}
+		else {
 			long companyId = ParamUtil.getLong(request, "companyId");
 			String screenName = ParamUtil.getString(request, "screenName");
 

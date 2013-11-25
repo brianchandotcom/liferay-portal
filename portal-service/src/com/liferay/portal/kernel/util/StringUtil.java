@@ -3557,7 +3557,7 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
-	 * @param  s the string from which to strip all occurrences the character
+	 * @param  s the string from which to strip all occurrences of the character
 	 * @param  remove the character to strip from the string
 	 * @return a string representing the string <code>s</code> with all
 	 *         occurrences of the specified character removed, or
@@ -3609,7 +3609,7 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
-	 * @param  s the from which to strip a substring
+	 * @param  s the string from which to strip a substring
 	 * @param  begin the beginning characters of the substring to be removed
 	 * @param  end the ending characters of the substring to be removed
 	 * @return a string representing the combination of the substring of
@@ -3649,9 +3649,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the string <code>s</code> with
-	 * <pre>&lt;![CDATA[]]&gt;</pre>
-	 * expression removed.
+	 * Returns a string representing the string <code>s</code> with its
+	 * <code>&lt;![CDATA[]]&gt;</code> wrapper removed.
 	 *
 	 * <p>
 	 * Example:
@@ -3665,10 +3664,10 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
-	 * @param  s the from which to strip a CDATA wrapper
-	 * @return a string representing the string <code>s</code> with
-	 *         <pre>&lt;![CDATA[]]&gt;</pre>expression removed, or the original string if the value of
-	 *         <code>s</code> is <code>null</code>
+	 * @param  s the string from which to strip its CDATA wrapper
+	 * @return a string representing the string <code>s</code> with its
+	 *         <code>&lt;![CDATA[]]&gt;</code> wrapper removed, or
+	 *         <code>null</code> if <code>s</code> is <code>null</code>
 	 */
 	public static String stripCDATA(String s) {
 		if (s == null) {

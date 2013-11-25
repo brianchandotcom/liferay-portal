@@ -217,6 +217,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				.control-panel-site-selector {
 					font-size: inherit;
+					margin-bottom: 0;
 					margin-top: 0;
 					vertical-align: baseline;
 
@@ -952,6 +953,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 					@include background-image(linear-gradient(top, $dockbarOpenGradientStart, $dockbarOpenGradientEnd));
 					@include box-shadow(none);
 					@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
+				}
+
+				> li:hover {
+					background-color: #2FA4F5;
 				}
 			}
 

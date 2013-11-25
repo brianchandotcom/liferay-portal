@@ -15,6 +15,92 @@
 --%>
 
 <%
+AssetEntryQuery assetEntryQuery = null;
+
+if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
+	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, ArrayUtil.append(groupIds, scopeGroupId));
+}
+else {
+	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, groupIds);
+}
+
+assetEntryQuery.setClassTypeIds(classTypeIds);
+
+boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(portletPreferences.getValue("subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
+
+if (subtypeFieldsFilterEnabled && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
+	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameIds[0]));
+
+	String ddmStructureFieldName = GetterUtil.getString(portletPreferences.getValue("ddmStructureFieldName", StringPool.BLANK));
+	Serializable ddmStructureFieldValue = portletPreferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
+
+	if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
+		Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldName(classTypeIds[0], ddmStructureFieldName, locale);
+
+		long ddmStructureId = GetterUtil.getLong(classTypeFieldName.getObject(3));
+
+		assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructureId, ddmStructureFieldName, locale));
+		assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
+	}
+}
+
+AssetPublisherUtil.processAssetEntryQuery(user, portletPreferences, assetEntryQuery);
+
+if (assetCategoryId > 0) {
+	allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+	if (!ArrayUtil.contains(allAssetCategoryIds, assetCategoryId)) {
+		assetEntryQuery.setAllCategoryIds(ArrayUtil.append(allAssetCategoryIds, assetCategoryId));
+	}
+}
+
+if (Validator.isNotNull(assetTagName)) {
+	if (!ArrayUtil.contains(allAssetTagNames, assetTagName)) {
+		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, ArrayUtil.append(allAssetTagNames, assetTagName));
+
+		assetEntryQuery.setAllTagIds(assetTagIds);
+	}
+}
+
+if (showOnlyLayoutAssets) {
+	assetEntryQuery.setLayout(layout);
+}
+
+if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
+	AssetEntry layoutAssetEntry = (AssetEntry)request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY);
+
+	if (layoutAssetEntry != null) {
+		assetEntryQuery.setLinkedAssetEntryId(layoutAssetEntry.getEntryId());
+	}
+}
+
+assetEntryQuery.setPaginationType(paginationType);
+assetEntryQuery.setEnablePermissions(AssetUtil.isEnablePermissions(portletPreferences, portletName));
+
+if (mergeUrlTags || mergeLayoutTags) {
+	String[] compilerTagNames = new String[0];
+
+	if (mergeUrlTags) {
+		compilerTagNames = ParamUtil.getParameterValues(request, "tags");
+	}
+
+	if (mergeLayoutTags) {
+		Set<String> layoutTagNames = AssetUtil.getLayoutTagNames(request);
+
+		if (!layoutTagNames.isEmpty()) {
+			compilerTagNames = ArrayUtil.append(compilerTagNames, layoutTagNames.toArray(new String[layoutTagNames.size()]));
+		}
+	}
+
+	if (ArrayUtil.isNotEmpty(compilerTagNames)) {
+		String[] newAssetTagNames = ArrayUtil.append(allAssetTagNames, compilerTagNames);
+
+		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());
+
+		assetEntryQuery.setAllTagIds(AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames));
+	}
+}
+
 int end = searchContainer.getEnd();
 int start = searchContainer.getStart();
 

@@ -18,6 +18,7 @@
 
 		<#include "block_element_html.ftl">
 
+		<#assign void = blockLevelStack.pop()>
 	<#elseif currentTestCaseCommand == "tear-down">
 		<#assign void = blockLevelStack.push("testcase")>
 

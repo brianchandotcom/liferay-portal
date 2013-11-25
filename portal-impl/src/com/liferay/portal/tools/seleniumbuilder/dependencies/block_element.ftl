@@ -1,8 +1,8 @@
-<#if level == "testcase">
+<#if blockLevel == "testcase">
 	<#assign lineId = "testCaseName">
 
 	<#assign selenium = "selenium">
-<#elseif level == "macro">
+<#elseif blockLevel == "macro">
 	<#assign lineId = "\"${macroName?uncap_first}Macro\"">
 
 	<#assign selenium = "liferaySelenium">

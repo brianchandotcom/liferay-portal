@@ -1,8 +1,8 @@
-<#assign level = blockLevelStack.peek()>
+<#assign blockLevel = blockLevelStack.peek()>
 
-<#if level == "testcase">
+<#if blockLevel == "testcase">
 	<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
-<#elseif level == "macro">
+<#elseif blockLevel == "macro">
 	<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
 </#if>
 

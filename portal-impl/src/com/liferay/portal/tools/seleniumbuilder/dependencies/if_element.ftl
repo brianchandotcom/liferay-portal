@@ -1,12 +1,8 @@
-<#if !level??>
-	<#assign level = "testcase">
-</#if>
-
-<#if level == "testcase">
+<#if blockLevel == "testcase">
 	<#assign lineId = "testCaseName">
 
 	<#assign selenium = "selenium">
-<#elseif level == "macro">
+<#elseif blockLevel == "macro">
 	<#assign lineId = "\"${macroName?uncap_first}Macro\"">
 
 	<#assign selenium = "liferaySelenium">
@@ -52,13 +48,12 @@ ${ifType} (
 
 	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending");
 
-	<#assign conditionalClauseLineNumbers = seleniumBuilderFileUtil.getChildElementLineNumbers(conditionalElement)>
+	<#assign conditionalElementLineNumbers = seleniumBuilderFileUtil.getChildElementLineNumbers(conditionalElement)>
 
-	<#list conditionalClauseLineNumbers as conditionalClauseLineNumber>
-		${selenium}.sendLogger(${lineId} + "${conditionalClauseLineNumber}", "pending");
+	<#list conditionalElementLineNumbers as conditionalElementLineNumber>
+		${selenium}.sendLogger(${lineId} + "${conditionalElementLineNumber}", "pending");
 
-		${selenium}.sendLogger(${lineId} + "${conditionalClauseLineNumber}", "pass");
-
+		${selenium}.sendLogger(${lineId} + "${conditionalElementLineNumber}", "pass");
 	</#list>
 
 	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass");

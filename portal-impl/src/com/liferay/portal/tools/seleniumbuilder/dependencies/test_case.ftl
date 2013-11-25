@@ -110,7 +110,7 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 				<#assign blockElement = methodElement>
 
-				<#assign level = "testcase">
+				<#assign blockLevel = "testcase">
 
 				<#include "block_element.ftl">
 

@@ -72,7 +72,7 @@
 			<#include "block_element_html.ftl">
 
 			<#assign void = blockLevelStack.pop()>
-		
+
 			<#assign displayElement = testCaseCommandElement>
 
 			<#include "element_close_html.ftl">

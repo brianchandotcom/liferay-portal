@@ -3,11 +3,11 @@
 <#list elements as element>
 	<#assign lineNumber = element.attributeValue("line-number")>
 
-	<#assign level = blockLevelStack.peek()>
+	<#assign blockLevel = blockLevelStack.peek()>
 
-	<#if level == "testcase">
+	<#if blockLevel == "testcase">
 		<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
-	<#elseif level == "macro">
+	<#elseif blockLevel == "macro">
 		<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
 	</#if>
 
@@ -48,11 +48,11 @@
 			<#list elseifElements as elseifElement>
 				<#assign lineNumber = elseifElement.attributeValue("line-number")>
 
-				<#assign level = blockLevelStack.peek()>
+				<#assign blockLevel = blockLevelStack.peek()>
 
-				<#if level == "testcase">
+				<#if blockLevel == "testcase">
 					<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
-				<#elseif level == "macro">
+				<#elseif blockLevel == "macro">
 					<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
 				</#if>
 
@@ -76,11 +76,11 @@
 
 				<#assign lineNumber = elseElement.attributeValue("line-number")>
 
-				<#assign level = blockLevelStack.peek()>
+				<#assign blockLevel = blockLevelStack.peek()>
 
-				<#if level == "testcase">
+				<#if blockLevel == "testcase">
 					<#assign lineId = "${testCaseNameStack.peek()?uncap_first}TestCase">
-				<#elseif level == "macro">
+				<#elseif blockLevel == "macro">
 					<#assign lineId = "${macroNameStack.peek()?uncap_first}Macro">
 				</#if>
 

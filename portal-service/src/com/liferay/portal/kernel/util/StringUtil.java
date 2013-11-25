@@ -3557,7 +3557,7 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
-	 * @param  s the string from which to strip all occurrences the character
+	 * @param  s the string from which to strip all occurrences of the character
 	 * @param  remove the character to strip from the string
 	 * @return a string representing the string <code>s</code> with all
 	 *         occurrences of the specified character removed, or
@@ -3609,7 +3609,7 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
-	 * @param  s the from which to strip a substring
+	 * @param  s the string from which to strip a substring
 	 * @param  begin the beginning characters of the substring to be removed
 	 * @param  end the ending characters of the substring to be removed
 	 * @return a string representing the combination of the substring of
@@ -3648,6 +3648,27 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Returns a string representing the string <code>s</code> with its
+	 * <code>&lt;![CDATA[]]&gt;</code> wrapper removed.
+	 *
+	 * <p>
+	 * Example:
+	 * <p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * stripCDATA("&lt;![CDATA[One small step for man]]&gt;") returns "One small step for man"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the string from which to strip its CDATA wrapper
+	 * @return a string representing the string <code>s</code> with its
+	 *         <code>&lt;![CDATA[]]&gt;</code> wrapper removed, or
+	 *         <code>null</code> if <code>s</code> is <code>null</code>
+	 */
 	public static String stripCDATA(String s) {
 		if (s == null) {
 			return s;

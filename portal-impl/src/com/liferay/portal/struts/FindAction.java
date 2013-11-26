@@ -259,31 +259,7 @@ public abstract class FindAction extends Action {
 		return portletId;
 	}
 
-	protected abstract long getGroupId(long primaryKey) throws Exception;
-
-	protected abstract String getPrimaryKeyParameterName();
-
-	protected abstract String getStrutsAction(
-		HttpServletRequest request, String portletId);
-
-	protected abstract String[] initPortletIds();
-
-	protected PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
-		throws Exception {
-
-		return portletURL;
-	}
-
-	protected void setPrimaryKeyParameter(
-			PortletURL portletURL, long primaryKey)
-		throws Exception {
-
-		portletURL.setParameter(
-			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
-	}
-
-	protected void setTargetGroup(
+	protected static void setTargetGroup(
 			HttpServletRequest request, long groupId, long plid)
 		throws Exception {
 
@@ -308,6 +284,30 @@ public abstract class FindAction extends Action {
 		layout = new VirtualLayout(layout, targetGroup);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
+	}
+
+	protected abstract long getGroupId(long primaryKey) throws Exception;
+
+	protected abstract String getPrimaryKeyParameterName();
+
+	protected abstract String getStrutsAction(
+		HttpServletRequest request, String portletId);
+
+	protected abstract String[] initPortletIds();
+
+	protected PortletURL processPortletURL(
+			HttpServletRequest request, PortletURL portletURL)
+		throws Exception {
+
+		return portletURL;
+	}
+
+	protected void setPrimaryKeyParameter(
+			PortletURL portletURL, long primaryKey)
+		throws Exception {
+
+		portletURL.setParameter(
+			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FindAction.class);

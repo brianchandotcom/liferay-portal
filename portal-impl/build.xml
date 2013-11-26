@@ -1511,11 +1511,13 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="../util-java" target="jar" inheritAll="false" />
 		<ant dir="../util-taglib" target="jar" inheritAll="false" />
 
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/core" preservelastmodified="true">
+		<property name="deploy.dependencies.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+
+		<copy todir="${deploy.dependencies.dir}/osgi/core" preservelastmodified="true">
 			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/core" includes="*.jar" />
 		</copy>
 
-		<fileset dir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/core" id="osgi.core.jars">
+		<fileset dir="${deploy.dependencies.dir}/osgi/core" id="osgi.core.jars">
 			<include name="*.jar" />
 		</fileset>
 
@@ -1523,14 +1525,23 @@ public class Creole10Parser]]></replacevalue>
 			<flattenmapper />
 		</pathconvert>
 
-		<echo file="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/core/jars.txt">${osgi.core.jars.list}</echo>
+		<if>
+			<not>
+				<uptodate targetfile="${jar.file}.jar">
+					<srcfiles dir="${deploy.dependencies.dir}/osgi/core" includes="**/*.*" />
+				</uptodate>
+			</not>
+			<then>
+				<echo file="${deploy.dependencies.dir}/osgi/core/jars.txt">${osgi.core.jars.list}</echo>
+			</then>
+		</if>
 
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/portal" preservelastmodified="true">
+		<copy todir="${deploy.dependencies.dir}/osgi/portal" preservelastmodified="true">
 			<fileset dir="${project.dir}/osgi/lib/common/portal" includes="*.jar" />
 			<fileset dir="${project.dir}/osgi/lib/${module.framework.implementation}/portal" includes="*.jar" />
 		</copy>
 
-		<fileset dir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/portal" id="osgi.portal.jars">
+		<fileset dir="${deploy.dependencies.dir}/osgi/portal" id="osgi.portal.jars">
 			<include name="*.jar" />
 		</fileset>
 
@@ -1538,14 +1549,23 @@ public class Creole10Parser]]></replacevalue>
 			<flattenmapper />
 		</pathconvert>
 
-		<echo file="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/osgi/portal/jars.txt">${osgi.portal.jars.list}</echo>
+		<if>
+			<not>
+				<uptodate targetfile="${jar.file}.jar">
+					<srcfiles dir="${deploy.dependencies.dir}/osgi/portal" includes="**/*.*" />
+				</uptodate>
+			</not>
+			<then>
+				<echo file="${deploy.dependencies.dir}/osgi/portal/jars.txt">${osgi.portal.jars.list}</echo>
+			</then>
+		</if>
 
 		<for list="1,2,3,4,5,6,7,8,9" param="index">
 			<sequential>
 				<if>
-					<available file="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/plugins@{index}" />
+					<available file="${deploy.dependencies.dir}/plugins@{index}" />
 					<then>
-						<fileset dir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/plugins@{index}" id="plugins@{index}.wars">
+						<fileset dir="${deploy.dependencies.dir}/plugins@{index}" id="plugins@{index}.wars">
 							<include name="*.war" />
 						</fileset>
 
@@ -1553,7 +1573,16 @@ public class Creole10Parser]]></replacevalue>
 							<flattenmapper />
 						</pathconvert>
 
-						<echo file="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies/plugins@{index}/wars.txt">${plugins@{index}.wars.list}</echo>
+						<if>
+							<not>
+								<uptodate targetfile="${jar.file}.jar">
+									<srcfiles dir="${deploy.dependencies.dir}/plugins@{index}" includes="**/*.*" />
+								</uptodate>
+							</not>
+							<then>
+								<echo file="${deploy.dependencies.dir}/plugins@{index}/wars.txt">${plugins@{index}.wars.list}</echo>
+							</then>
+						</if>
 					</then>
 				</if>
 			</sequential>

@@ -17,6 +17,43 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
+long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
+
+long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
+
+long[] allAssetCategoryIds = new long[0];
+String[] allAssetTagNames = new String[0];
+
+if (selectionStyle.equals("dynamic")) {
+	allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(portletPreferences);
+
+	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(portletPreferences, scopeGroupId);
+}
+
+long assetCategoryId = ParamUtil.getLong(request, "categoryId");
+
+if (assetCategoryId > 0) {
+	if (selectionStyle.equals("manual")) {
+		allAssetCategoryIds = ArrayUtil.append(allAssetCategoryIds, assetCategoryId);
+	}
+
+	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
+
+	assetCategory = assetCategory.toEscapedModel();
+
+	PortalUtil.setPageKeywords(assetCategory.getTitle(locale), request);
+}
+
+String assetTagName = ParamUtil.getString(request, "tag");
+
+if (Validator.isNotNull(assetTagName)) {
+	if (selectionStyle.equals("manual")) {
+		allAssetTagNames = ArrayUtil.append(allAssetTagNames, assetTagName);
+	}
+
+	PortalUtil.setPageKeywords(assetTagName, request);
+}
+
 if (mergeUrlTags || mergeLayoutTags) {
 	String[] compilerTagNames = new String[0];
 
@@ -38,10 +75,6 @@ if (mergeUrlTags || mergeLayoutTags) {
 		String[] newAssetTagNames = ArrayUtil.append(allAssetTagNames, compilerTagNames);
 
 		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());
-
-		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames);
-
-		assetEntryQuery.setAllTagIds(allAssetTagIds);
 
 		titleEntry = compilerTagNames[compilerTagNames.length - 1];
 	}
@@ -74,7 +107,7 @@ for (String curAssetTagName : allAssetTagNames) {
 	}
 }
 
-if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQuery.getAllCategoryIds().length > 0) || (assetEntryQuery.getAllTagIds().length > 0))) {
+if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((allAssetCategoryIds.length > 0) || (allAssetTagNames.length > 0))) {
 	selectionStyle = "dynamic";
 }
 
@@ -167,6 +200,8 @@ if (!paginationType.equals("none")) {
 </c:if>
 
 <%
+long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
+
 long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 
 Map<String, Object> contextObjects = new HashMap<String, Object>();

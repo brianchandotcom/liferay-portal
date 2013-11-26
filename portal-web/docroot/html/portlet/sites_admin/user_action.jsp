@@ -28,7 +28,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 %>
 
 <liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= permissionChecker.isGroupOwner(group.getGroupId()) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
 			<portlet:param name="tabs1" value="users" />

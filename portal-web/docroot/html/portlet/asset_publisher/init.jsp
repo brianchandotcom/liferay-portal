@@ -51,8 +51,6 @@ boolean mergeLayoutTags = GetterUtil.getBoolean(portletPreferences.getValue("mer
 String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayStyle", PropsValues.ASSET_PUBLISHER_DISPLAY_STYLE_DEFAULT));
 
 boolean showAddContentButton = GetterUtil.getBoolean(portletPreferences.getValue("showAddContentButton", null), true);
-boolean showAssetTitle = GetterUtil.getBoolean(portletPreferences.getValue("showAssetTitle", null), true);
-boolean showContextLink = GetterUtil.getBoolean(portletPreferences.getValue("showContextLink", null), true);
 int abstractLength = GetterUtil.getInteger(portletPreferences.getValue("abstractLength", null), 200);
 String orderByColumn1 = GetterUtil.getString(portletPreferences.getValue("orderByColumn1", "modifiedDate"));
 String orderByColumn2 = GetterUtil.getString(portletPreferences.getValue("orderByColumn2", "title"));
@@ -68,7 +66,6 @@ if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
 
 String paginationType = GetterUtil.getString(portletPreferences.getValue("paginationType", "none"));
 
-boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", null));
 boolean showMetadataDescriptions = GetterUtil.getBoolean(portletPreferences.getValue("showMetadataDescriptions", null), true);
 
 boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);

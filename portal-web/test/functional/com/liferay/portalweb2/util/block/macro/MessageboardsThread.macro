@@ -72,7 +72,23 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+		<if>
+			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_EDIT_1" />
+			<then>
+				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_EDIT_1" value1="Edit" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="threadSubjectEdit" />
+			<then>
+				<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubjectEdit}" />
+			</then>
+		</if>
 
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
@@ -99,7 +115,16 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
-		<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+		<if>
+			<condition action="PGMessageboardsThread#isElementNotPresent" locator-key1="MESSAGE_REPLY_1" />
+			<then>
+				<execute action="PGMessageboardsThread#makeVisible" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsThread#click" locator-key1="MESSAGE_REPLY_1" value1="Reply" />
+			</else>
+		</if>
 
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />

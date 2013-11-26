@@ -1,0 +1,243 @@
+<definition>
+	<command name="viewPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />	
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+			</then>
+		</if>
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="1" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="1" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="1" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+		<execute action="PGMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${categoryName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_4" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_BACK" value1="${categoryName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_WORKFLOW_STATUS_1" />
+	</command>
+
+	<command name="viewMyPostsPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_MY_POSTS" value1="My Posts" />
+
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />	
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+			</then>
+		</if>
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="My Posts" />
+
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="1" />
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+		<execute action="PGMessageboardsMyposts#assertElementPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${categoryName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_4" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_BACK" value1="${categoryName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_WORKFLOW_STATUS_1" />
+	</command>
+
+	<command name="viewRecentPostsPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
+
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />	
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+			</then>
+		</if>
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="Recent Posts" />
+
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="1" />
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+		<execute action="PGMessageboardsMyposts#assertElementPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />	
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+			</then>
+		</if>
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${categoryName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_4" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_BACK" value1="${categoryName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="MESSAGE_WORKFLOW_STATUS_1" />
+	</command>
+
+	<command name="viewReplyPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<if>
+			<condition action="SOUserBar#isElementNotPresent" locator-key1="VISIBLE_PAGE_CONTROLS" />
+			<then>
+				<execute action="SOUserBar#click" locator-key1="TOGGLE_DOCKBAR" />	
+			</then>
+		</if>
+
+		<if>
+			<condition action="SOUserBar#isElementPresent" locator-key1="EDIT_CONTROLS_NOT_FLAGGED" />
+			<then>
+				<execute action="Dockbar#mouseOver" locator-key1="EDIT_CONTROLS" />
+				<execute action="Dockbar#assertClick" locator-key1="EDIT_CONTROLS" value1="Edit Controls" />
+			</then>
+		</if>
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="1" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="2" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_POSTS" value1="2" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+		<execute action="PGMessageboards#assertElementPresent" locator-key1="THREAD_TABLE_ACTIONS" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_PORTLET_TITLE" value1="BREADCRUMB" />
+		<execute action="SOForums#assertTextEquals" locator-key1="MESSAGE_BOARDS_PORTLET_TITLE" value1="MESSAGE BOARDS" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${categoryName}" />
+		<execute action="SOForums#assertTextEquals" locator-key1="BREADCRUMB_4" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_BACK" value1="${categoryName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="${threadReplyBody}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
+	</command>
+</definition>

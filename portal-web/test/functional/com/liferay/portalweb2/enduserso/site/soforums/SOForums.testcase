@@ -1,0 +1,136 @@
+<definition>
+	<property name="hook.plugins.includes" value="deploy-listener-hook,so-hook,so-activities-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-strata-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<var name="key_siteName" value="${siteName}" />
+	<var name="pageName" value="Forums" />
+	<var name="siteName" value="Open Site Name" />
+	<var name="siteDescription" value="Open Site Description" />
+	<var name="siteType" value="Open" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+	</set-up>
+
+	<var name="categoryName" value="MB Category Name" />
+	<var name="threadBody" value="MB Category Thread Message Body" />
+	<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
+	<var name="threadBodyEdit" value="MB Category Thread Message Body Edit" />
+	<var name="threadSubject" value="MB Category Thread Message Subject" />
+	<var name="threadSubjectEdit" value="MB Category Thread Message Subject Edit" />
+	<var name="userName" value="Test Test" />
+
+	<command name="AddMBCategoryThread" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#gotoPG" />
+
+		<execute macro="MessageboardsThread#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOForumsCategoryThread#viewPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOForumsCategoryThread#viewMyPostsPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOForumsCategoryThread#viewRecentPostsPG" />
+	</command>
+
+	<command name="DeleteMBCategoryThread" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#gotoPG" />
+
+		<execute macro="MessageboardsThread#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#gotoPG" />
+
+		<execute macro="MessageboardsThread#deletePG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="0" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute action="PGMessageboards#assertTextNotPresent" value1="${threadSubject}" />
+	</command>
+
+	<command name="EditMBCategoryThread" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#gotoPG">
+			<var name="categoryName" value="${categoryName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#gotoPG" />
+
+		<execute macro="MessageboardsThread#editPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOForumsCategoryThread#viewPG">
+			<var name="threadBody" value="${threadBodyEdit}" />
+			<var name="threadSubject" value="${threadSubjectEdit}" />
+		</execute>
+	</command>
+
+	<command name="ReplyMBCategoryThread" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#gotoPG" />
+
+		<execute macro="MessageboardsThread#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="MessageboardsCategory#gotoPG" />
+
+		<execute macro="MessageboardsThread#replyPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOForumsCategoryThread#viewReplyPG" />
+	</command>
+
+	<tear-down>
+		<execute macro="SOSite#tearDownCP" />
+	</tear-down>
+</definition>

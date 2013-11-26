@@ -450,6 +450,7 @@
 
 		<action path="/dockbar/add_panel" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" >
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.dockbar.add_panel" />
+			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.add_panel" />
 		</action>
 
 		<action path="/dockbar/edit_layout_panel" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">

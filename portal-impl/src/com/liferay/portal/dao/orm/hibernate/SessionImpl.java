@@ -115,6 +115,33 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
+	public SQLQuery createSynchronizedSQLQuery(String queryString)
+		throws ORMException {
+
+		SQLQuery sqlQuery = createSQLQuery(queryString);
+
+		String[] tableNames = SQLQueryTableNamesUtil.getTableNames(queryString);
+
+		sqlQuery.addSynchronizedQuerySpaces(tableNames);
+
+		return sqlQuery;
+	}
+
+	@Override
+	public SQLQuery createSynchronizedSQLQuery(
+			String queryString, boolean strictName)
+		throws ORMException {
+
+		SQLQuery sqlQuery = createSQLQuery(queryString, strictName);
+
+		String[] tableNames = SQLQueryTableNamesUtil.getTableNames(queryString);
+
+		sqlQuery.addSynchronizedQuerySpaces(tableNames);
+
+		return sqlQuery;
+	}
+
 	@NotPrivileged
 	@Override
 	public void delete(Object object) throws ORMException {

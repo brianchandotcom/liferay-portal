@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -365,6 +366,32 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 						LayoutFriendlyURLException.KEYWORD_CONFLICT);
 
 				lfurle.setKeywordConflict(friendlyURLMapper.getMapping());
+
+				throw lfurle;
+			}
+		}
+
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : availableLocales) {
+			String languageId = StringUtil.toLowerCase(
+				LocaleUtil.toLanguageId(locale));
+
+			String i18nPathLanguageId =
+				StringPool.SLASH +
+					PortalUtil.getI18nPathLanguageId(locale, languageId);
+
+			if (friendlyURL.startsWith(i18nPathLanguageId + StringPool.SLASH) ||
+				friendlyURL.startsWith(
+					StringPool.SLASH + languageId + StringPool.SLASH) ||
+				friendlyURL.endsWith(i18nPathLanguageId) ||
+				friendlyURL.endsWith(StringPool.SLASH + languageId)) {
+
+				LayoutFriendlyURLException lfurle =
+					new LayoutFriendlyURLException(
+						LayoutFriendlyURLException.KEYWORD_CONFLICT);
+
+				lfurle.setKeywordConflict(i18nPathLanguageId);
 
 				throw lfurle;
 			}

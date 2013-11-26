@@ -282,90 +282,9 @@ public class PortletExporter {
 
 		boolean exportPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
-		boolean exportPortletConfiguration = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
-		boolean exportPortletConfigurationAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
-		boolean exportPortletData = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
-		boolean exportPortletDataAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (exportPortletDataAll) {
-			exportPortletData = true;
-		}
-		else if (parameterMap.containsKey(
-					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-						rootPortletId)) {
-
-			exportPortletData = MapUtil.getBoolean(
-				parameterMap,
-				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-					rootPortletId);
-		}
-
-		boolean exportPortletArchivedSetups = exportPortletConfiguration;
-		boolean exportPortletSetup = exportPortletConfiguration;
-		boolean exportPortletUserPreferences = exportPortletConfiguration;
-
-		if (exportPortletConfigurationAll) {
-			exportPortletArchivedSetups =
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
-			exportPortletSetup =
-				MapUtil.getBoolean(
-					parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
-			exportPortletUserPreferences =
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
-		}
-		else if (parameterMap.containsKey(
-					PortletDataHandlerKeys.PORTLET_CONFIGURATION + "_" +
-						rootPortletId)) {
-
-			exportPortletConfiguration =
-				exportPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_CONFIGURATION +
-						StringPool.UNDERLINE + rootPortletId);
-
-			exportPortletArchivedSetups =
-				exportPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
-						StringPool.UNDERLINE + rootPortletId);
-			exportPortletSetup =
-				exportPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_SETUP +
-						StringPool.UNDERLINE + rootPortletId);
-			exportPortletUserPreferences =
-				exportPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
-						StringPool.UNDERLINE + rootPortletId);
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Export permissions " + exportPermissions);
-			_log.debug(
-				"Export portlet archived setups " +
-					exportPortletArchivedSetups);
-			_log.debug("Export portlet data " + exportPortletData);
-			_log.debug("Export all portlet data " + exportPortletDataAll);
-			_log.debug(
-				"Export portlet configuration " + exportPortletConfiguration);
-			_log.debug(
-				"Export portlet user preferences " +
-					exportPortletUserPreferences);
 		}
 
 		StopWatch stopWatch = null;
@@ -496,10 +415,15 @@ public class PortletExporter {
 		portletDataContext.setMissingReferencesElement(
 			missingReferencesElement);
 
+		boolean[] exportPortletControls =
+			ExportImportHelperUtil.getExportPortletControls(
+				layout.getCompanyId(), portletId, parameterMap);
+
 		exportPortlet(
 			portletDataContext, layoutCache, portletId, layout, rootElement,
-			exportPermissions, exportPortletArchivedSetups, exportPortletData,
-			exportPortletSetup, exportPortletUserPreferences);
+			exportPermissions, exportPortletControls[0],
+			exportPortletControls[1], exportPortletControls[2],
+			exportPortletControls[3]);
 
 		exportAssetCategories(portletDataContext);
 		exportAssetLinks(portletDataContext);

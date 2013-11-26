@@ -82,6 +82,33 @@ public class ExportImportHelperUtil {
 		return _exportImportHelper;
 	}
 
+	public static boolean[] getExportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap)
+		throws Exception {
+
+		return getExportImportHelper().getExportPortletControls(
+			companyId, portletId, parameterMap);
+	}
+
+	public static boolean[] getExportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, String type)
+		throws Exception {
+
+		return getExportImportHelper().getExportPortletControls(
+			companyId, portletId, parameterMap, type);
+	}
+
+	public static boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement)
+		throws Exception {
+
+		return getExportImportHelper().getImportPortletControls(
+			companyId, portletId, parameterMap, portletDataElement);
+	}
+
 	public static Map<Long, Boolean> getLayoutIdMap(
 			PortletRequest portletRequest)
 		throws Exception {

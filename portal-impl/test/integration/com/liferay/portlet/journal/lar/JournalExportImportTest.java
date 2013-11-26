@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.BasePortletExportImportTestCase;
 import com.liferay.portal.model.Company;
@@ -236,10 +236,12 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected Map<String, String[]> getExportParameterMap() throws Exception {
-		Map<String, String[]> parameterMap = getBaseParameterMap(
-			group.getGroupId(), layout.getPlid());
+		Map<String, String[]> parameterMap = super.getExportParameterMap();
 
-		parameterMap.put(Constants.CMD, new String[] {Constants.EXPORT});
+		MapUtil.merge(
+			parameterMap,
+			getBaseParameterMap(group.getGroupId(), layout.getPlid()));
+
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				PortletKeys.JOURNAL,
@@ -250,19 +252,19 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected Map<String, String[]> getImportParameterMap() throws Exception {
-		Map<String, String[]> parameterMap = getBaseParameterMap(
-			importedGroup.getGroupId(), importedLayout.getPlid());
+		Map<String, String[]> parameterMap = super.getImportParameterMap();
 
-		parameterMap.put(Constants.CMD, new String[] {Constants.IMPORT});
+		MapUtil.merge(
+			parameterMap,
+			getBaseParameterMap(
+				importedGroup.getGroupId(), importedLayout.getPlid()));
+
 		parameterMap.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
 			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR});
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID});

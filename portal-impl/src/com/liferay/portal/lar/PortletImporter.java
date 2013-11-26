@@ -345,79 +345,8 @@ public class PortletImporter {
 			parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
-		boolean importPortletConfiguration = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION);
-		boolean importPortletConfigurationAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL);
-		boolean importPortletData = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA);
-		boolean importPortletDataAll = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (importPortletDataAll) {
-			importPortletData = true;
-		}
-		else if (parameterMap.containsKey(
-					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-						rootPortletId)) {
-
-			importPortletData = MapUtil.getBoolean(
-				parameterMap,
-				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-					rootPortletId);
-		}
-
-		boolean importPortletArchivedSetups = importPortletConfiguration;
-		boolean importPortletSetup = importPortletConfiguration;
-		boolean importPortletUserPreferences = importPortletConfiguration;
-
-		if (importPortletConfigurationAll) {
-			importPortletArchivedSetups =
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL);
-			importPortletSetup =
-				MapUtil.getBoolean(
-					parameterMap, PortletDataHandlerKeys.PORTLET_SETUP_ALL);
-			importPortletUserPreferences =
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL);
-		}
-		else if (parameterMap.containsKey(
-					PortletDataHandlerKeys.PORTLET_CONFIGURATION + "_" +
-						rootPortletId)) {
-
-			importPortletConfiguration =
-				importPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_CONFIGURATION +
-						StringPool.UNDERLINE + rootPortletId);
-
-			importPortletArchivedSetups =
-				importPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS +
-						StringPool.UNDERLINE + rootPortletId);
-			importPortletSetup =
-				importPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_SETUP +
-						StringPool.UNDERLINE + rootPortletId);
-			importPortletUserPreferences =
-				importPortletConfiguration &&
-				MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES +
-						StringPool.UNDERLINE + rootPortletId);
-		}
 
 		StopWatch stopWatch = null;
 
@@ -550,7 +479,10 @@ public class PortletImporter {
 
 		Element portletDataElement = portletElement.element("portlet-data");
 
-		boolean importData = importPortletData && (portletDataElement != null);
+		boolean[] importPortletControls =
+			ExportImportHelperUtil.getImportPortletControls(
+				layout.getCompanyId(), portletId, parameterMap,
+				portletDataElement);
 
 		try {
 
@@ -558,13 +490,13 @@ public class PortletImporter {
 
 			importPortletPreferences(
 				portletDataContext, layout.getCompanyId(), groupId, layout,
-				portletId, portletElement, importPortletSetup,
-				importPortletArchivedSetups, importPortletUserPreferences, true,
-				importData);
+				portletId, portletElement, true, importPortletControls[0],
+				importPortletControls[1], importPortletControls[2],
+				importPortletControls[3]);
 
 			// Portlet data
 
-			if (importData) {
+			if (importPortletControls[1]) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Importing portlet data");
 				}
@@ -1022,9 +954,9 @@ public class PortletImporter {
 	protected void importPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long groupId,
 			Layout layout, String portletId, Element parentElement,
-			boolean importPortletSetup, boolean importPortletArchivedSetups,
-			boolean importPortletUserPreferences, boolean preserveScopeLayoutId,
-			boolean importPortletData)
+			boolean preserveScopeLayoutId, boolean importPortletArchivedSetups,
+			boolean importPortletData, boolean importPortletSetup,
+			boolean importPortletUserPreferences)
 		throws Exception {
 
 		if (portletId == null) {

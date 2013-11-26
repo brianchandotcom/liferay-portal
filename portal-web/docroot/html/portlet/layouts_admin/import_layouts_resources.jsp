@@ -347,8 +347,18 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										<%
 										Set<String> displayedControls = new HashSet<String>();
+										Set<String> portletDataHandlerClasses = new HashSet<String>();
 
 										for (Portlet portlet : dataPortlets) {
+											String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
+
+											if (!portletDataHandlerClasses.contains(portletDataHandlerClass)) {
+												portletDataHandlerClasses.add(portletDataHandlerClass);
+											}
+											else {
+												continue;
+											}
+
 											String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 
 											PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();

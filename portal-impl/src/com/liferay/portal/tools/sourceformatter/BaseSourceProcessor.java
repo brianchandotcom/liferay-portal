@@ -721,7 +721,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		excludes = ArrayUtil.append(
 			excludes, _excludes,
 			new String[] {
-				"**\\.git\\**", "**\\test-classes\\**", "**\\test-coverage\\**",
+				"**\\.git\\**", "**\\bin\\**", "**\\classes\\**",
+				"**\\test-classes\\**", "**\\test-coverage\\**",
 				"**\\test-results\\**", "**\\tmp\\**"
 			});
 

@@ -263,8 +263,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"source_formatter_jsp_unused_variables_exclusions.properties");
 
 		String[] excludes = new String[] {
-			"**\\portal\\aui\\**", "**\\bin\\**", "**\\null.jsp", "**\\tmp\\**",
-			"**\\tools\\**"
+			"**\\portal\\aui\\**", "**\\null.jsp", "**\\tools\\**"
 		};
 		String[] includes = new String[] {
 			"**\\*.jsp", "**\\*.jspf", "**\\*.vm"

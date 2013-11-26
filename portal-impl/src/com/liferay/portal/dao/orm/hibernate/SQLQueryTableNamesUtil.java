@@ -14,13 +14,13 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
@@ -35,7 +35,7 @@ import net.sf.jsqlparser.util.TablesNamesFinder;
 public class SQLQueryTableNamesUtil {
 
 	public static String[] getTableNames(String sql) {
-		String[] tableNames = _sqlQueryTableNames.get(sql);
+		String[] tableNames = _sqlQueryTableNamesCache.get(sql);
 
 		if (tableNames != null) {
 			return tableNames;
@@ -53,7 +53,7 @@ public class SQLQueryTableNamesUtil {
 		if ((statement == null) || !(statement instanceof Select)) {
 			tableNames = new String[0];
 
-			_sqlQueryTableNames.put(sql, tableNames);
+			_sqlQueryTableNamesCache.put(sql, tableNames);
 
 			return tableNames;
 		}
@@ -65,7 +65,7 @@ public class SQLQueryTableNamesUtil {
 
 		tableNames = tableNameList.toArray(new String[tableNameList.size()]);
 
-		_sqlQueryTableNames.put(sql, tableNames);
+		_sqlQueryTableNamesCache.put(sql, tableNames);
 
 		return tableNames;
 	}
@@ -74,7 +74,7 @@ public class SQLQueryTableNamesUtil {
 		SQLQueryTableNamesUtil.class);
 
 	private static JSqlParser _jSqlParser = new CCJSqlParserManager();
-	private static Map<String, String[]> _sqlQueryTableNames =
-		new ConcurrentHashMap<String, String[]>();
+	private static PortalCache<String, String[]> _sqlQueryTableNamesCache =
+		SingleVMPoolUtil.getCache(SQLQueryTableNamesUtil.class.getName());
 
 }

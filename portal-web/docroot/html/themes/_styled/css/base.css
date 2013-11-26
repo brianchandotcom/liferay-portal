@@ -29,9 +29,9 @@ body.html-editor {
 			content: '';
 			display: block;
 			float: right;
+			height: 24px;
 			margin-right: -35px;
 			margin-top: -25px;
-			height: 24px;
 			width: 31px;
 			z-index: 999;
 		}

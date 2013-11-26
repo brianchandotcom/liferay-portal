@@ -396,6 +396,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		if (_height == 0) {
 			_height = inputIStreamCoder.getHeight();
 		}
+
 		outputIStreamCoder.setHeight(_height);
 
 		outputIStreamCoder.setPixelType(Type.YUV420P);
@@ -411,7 +412,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		if (_width == 0) {
 			_width = inputIStreamCoder.getWidth();
 		}
-		
+
 		outputIStreamCoder.setWidth(_width);
 
 		iVideoResamplers[index] = createIVideoResampler(

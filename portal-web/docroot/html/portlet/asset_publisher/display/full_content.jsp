@@ -17,6 +17,10 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
+boolean showAssetTitle = GetterUtil.getBoolean(portletPreferences.getValue("showAssetTitle", null), true);
+boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", null));
+boolean showContextLink = GetterUtil.getBoolean(portletPreferences.getValue("showContextLink", null), true);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 List results = (List)request.getAttribute("view.jsp-results");

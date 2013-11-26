@@ -45,6 +45,12 @@
 		<aui:option label="500" selected="<%= abstractLength == 500 %>" />
 	</aui:select>
 
+	<%
+	boolean showAssetTitle = GetterUtil.getBoolean(portletPreferences.getValue("showAssetTitle", null), true);
+
+	boolean showContextLink = GetterUtil.getBoolean(portletPreferences.getValue("showContextLink", null), true);
+	%>
+
 	<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="checkbox" value="<%= showAssetTitle %>" />
 
 	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= showContextLink %>" />
@@ -92,6 +98,10 @@
 	%>
 
 	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= showMetadataDescriptions %>" />
+
+	<%
+	boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", null));
+	%>
 
 	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
 

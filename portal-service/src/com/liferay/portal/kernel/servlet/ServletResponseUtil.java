@@ -550,18 +550,25 @@ public class ServletResponseUtil {
 			HttpServletResponse response, InputStream is, long contentLength)
 		throws IOException {
 
-		if (response.isCommitted()) {
-			return;
+		OutputStream os = null;
+
+		try {
+			if (response.isCommitted()) {
+				return;
+			}
+
+			if (contentLength > 0) {
+				response.setHeader(
+					HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
+			}
+
+			response.flushBuffer();
+
+			StreamUtil.transfer(is, response.getOutputStream(), false);
 		}
-
-		if (contentLength > 0) {
-			response.setHeader(
-				HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
+		finally {
+			StreamUtil.cleanUp(is, os);
 		}
-
-		response.flushBuffer();
-
-		StreamUtil.transfer(is, response.getOutputStream());
 	}
 
 	public static void write(HttpServletResponse response, String s)

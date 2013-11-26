@@ -13,6 +13,31 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="addCPMultiple">
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName1}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName2}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName3}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
 	<command name="addCategoryPropertyMultipleCP">
 		<var name="categoryName" value="Category Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -131,6 +156,42 @@
 		<execute action="CPCategories#assertTextNotPresent" value1="${categoryName}" />
 	</command>
 
+	<command name="deleteCategoryMultipleCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#check" locator-key1="ALL_CATEGORIES_CHECKBOX" />
+		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected categories?" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." />
+		<execute action="CPCategories#assertTextNotPresent" value1="${categoryName1}" />
+		<execute action="CPCategories#assertTextNotPresent" value1="${categoryName2}" />
+		<execute action="CPCategories#assertTextNotPresent" value1="${categoryName3}" />
+	</command>
+
+	<command name="deleteCategoryProperty2CP">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_DETAILS_EDIT_BUTTON" value1="Edit" />
+
+		<execute action="CPCategoriesEdit#click" locator-key1="PROPERTIES_DELETE_ROW_BUTTON_2" />
+		<execute action="CPCategoriesEdit#assertElementPresent" locator-key1="PROPERTIES_UNDO_MESSAGE" />
+		<execute action="CPCategoriesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_KEY" value1="Category Property 1 Key" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 1 Value" />
+		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_KEY" value1="Category Property 2 Key" />
+		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
+	</command>
+
 	<command name="editCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -162,6 +223,24 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="Vocabulary Name 2" />
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+	</command>
+
+	<command name="viewCategoryMultipleCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName1}" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName1}" />
+
+		<var name="key_categoryName" value="${categoryName2}" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName2}" />
+
+		<var name="key_categoryName" value="${categoryName3}" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName3}" />
 	</command>
 
 	<command name="viewCategoryPropertyCP">
@@ -212,6 +291,18 @@
 				<execute action="CPCategoriesEditPermissions#assertChecked" locator-key1="OWNER_VIEW_CHECKBOX" />
 				<execute action="CPCategoriesEditPermissions#assertChecked" locator-key1="SITE_MEMBER_VIEW_CHECKBOX" />
 			</then>
+			<elseif>
+				<equals arg1="${viewableBy}" arg2="Owner" />
+				<then>
+					<execute action="CPCategoriesEditPermissions#assertChecked" locator-key1="OWNER_VIEW_CHECKBOX" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${viewableBy}" arg2="Site Members" />
+				<then>
+					<execute action="CPCategoriesEditPermissions#assertChecked" locator-key1="SITE_MEMBER_VIEW_CHECKBOX" />
+				</then>
+			</elseif>
 		</if>
 
 		<execute action="CPCategories#selectFrameTop" value1="relative=top" />

@@ -23,6 +23,8 @@
 
 		<%
 		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(AssetEntry.class.getName());
+
+		long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 		%>
 
 		<liferay-ui:ddm-template-selector

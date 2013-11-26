@@ -19,6 +19,10 @@
 <%
 boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
 
+long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
+
+long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
+
 String ddmStructureDisplayFieldValue = StringPool.BLANK;
 String ddmStructureFieldLabel = StringPool.BLANK;
 String ddmStructureFieldName = StringPool.BLANK;

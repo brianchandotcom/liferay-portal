@@ -593,7 +593,7 @@ public class PortletPermissionImpl implements PortletPermission {
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(
 					layout.getCompanyId(), portletId);
 
-				if (portlet.isInstanceable() &&
+				if (portlet.isInstanceable() ||
 					portlet.isPreferencesUniquePerLayout()) {
 
 					return true;

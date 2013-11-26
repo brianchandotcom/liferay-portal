@@ -14,8 +14,22 @@ AUI.add(
 						value: ''
 					},
 
-					editLogoURL: {
+					editLogoFn: {
+						setter: function(value) {
+							var fn = function() {};
+
+							if (value && value !== '') {
+								fn = window[value] || fn;
+							}
+
+							return fn;
+						},
+						validator: A.Lang.isString,
 						value: ''
+					},
+
+					editLogoURL: {
+						value: '',
 					},
 
 					logoDisplaySelector: {
@@ -54,12 +68,6 @@ AUI.add(
 
 						var portletNamespace = instance._portletNamespace;
 						var randomNamespace = instance._randomNamespace;
-
-						var logoDisplaySelector = instance.get('logoDisplaySelector');
-
-						if (logoDisplaySelector) {
-							instance._logoDisplay = A.one(logoDisplaySelector);
-						}
 
 						var contentBox = instance.get('contentBox');
 
@@ -111,18 +119,26 @@ AUI.add(
 						var instance = this;
 
 						var logoURL = value;
-						var logoDisplay = instance._logoDisplay;
+
+						var logoDisplaySelector = instance.get('logoDisplaySelector');
 
 						var deleteLogo = src == DELETE_LOGO;
 
 						instance._avatar.attr('src', logoURL);
 
-						if (logoDisplay) {
-							logoDisplay.attr('src', logoURL);
+						if (logoDisplaySelector) {
+							var logoDisplay = A.one(logoDisplaySelector);
+
+							if (logoDisplay) {
+								logoDisplay.attr('src', logoURL);
+							}
 						}
+
+						instance.get('editLogoFn').apply(instance, [logoURL, deleteLogo]);
 
 						instance._deleteLogoInput.val(deleteLogo);
 						instance._deleteLogoButton.attr('disabled', deleteLogo ? 'disabled' : '');
+						instance._deleteLogoButton.toggleClass('disabled', deleteLogo);
 					}
 				}
 			}

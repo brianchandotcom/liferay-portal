@@ -50,45 +50,53 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<aui:input name="iconImage" type="hidden" value="<%= selLayout.isIconImage() %>" />
 
 	<aui:field-wrapper helpMessage="this-icon-will-be-shown-in-the-navigation-menu" label="icon" name="iconFileName">
-		<aui:input inlineField="<%= true %>" label="" name="iconFileName" type="file" />
+		<portlet:renderURL var="editLayoutIconImageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/layouts_admin/edit_layout_icon_image" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+			<portlet:param name="imageId" value="<%= String.valueOf(selLayout.getIconImageId()) %>" />
+		</portlet:renderURL>
 
-		<c:if test="<%= selLayout.getIconImage() %>">
-			<liferay-ui:icon
-				cssClass="modify-link"
-				id="deleteIconLink"
-				image="delete"
-				label="<%= true %>"
-				url="javascript:;"
-			/>
+		<%
+		String editLogoFn = liferayPortletResponse.getNamespace() + "editLayoutLogo";
+		String logoDisplaySelector = ".layout-logo-" + selLayout.getPlid();
+		%>
 
-			<div id="<portlet:namespace />layoutIconContainer">
-				<liferay-theme:layout-icon layout="<%= selLayout %>" />
-			</div>
-		</c:if>
+		<liferay-ui:logo-selector
+			defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/spacer.png" %>'
+			editLogoFn="<%= editLogoFn %>"
+			editLogoURL="<%= editLayoutIconImageURL %>"
+			imageId="<%= selLayout.isIconImage() ? selLayout.getIconImageId() : 0 %>"
+			logoDisplaySelector="<%= logoDisplaySelector %>"
+		/>
 	</aui:field-wrapper>
 </aui:fieldset>
 
-<aui:script use="aui-base">
-	var panel = A.one('#<portlet:namespace />advanced');
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />editLayoutLogo',
+		function(logoURL, deleteLogo) {
+			var A = AUI();
 
-	var deleteLogoLink = panel.one('#<portlet:namespace />deleteIconLink');
-	var iconFileNameInput = panel.one('#<portlet:namespace />iconFileName');
-	var iconImageInput = panel.one('#<portlet:namespace />iconImage');
-	var layoutIconContainer = panel.one('#<portlet:namespace />layoutIconContainer');
+			var layoutLogoInput = A.one('#<portlet:namespace />iconImage');
 
-	var changeLogo = function(event) {
-		var changeLogo = (event.type == 'change');
+			layoutLogoInput.val(!deleteLogo);
 
-		iconImageInput.val(changeLogo);
+			var layoutLogo = A.one('.layout-logo-<%= selLayout.getPlid() %>');
 
-		if (layoutIconContainer) {
-			layoutIconContainer.hide();
-		}
-	};
+			if (!layoutLogo) {
+				var layoutNavItem = A.one('#layout_<%= selLayout.getLayoutId() %> span');
 
-	if (deleteLogoLink) {
-		deleteLogoLink.on('click', changeLogo);
-	}
+				layoutLogo = A.Node.create('<img class="layout-logo-<%= selLayout.getPlid() %>" src="' + logoURL + '" />');
 
-	iconFileNameInput.on('change', changeLogo);
+				if (layoutNavItem) {
+					layoutNavItem.prepend(layoutLogo);
+				}
+			}
+
+			layoutLogo.toggle(!deleteLogo);
+		},
+		['aui-base']
+	);
 </aui:script>

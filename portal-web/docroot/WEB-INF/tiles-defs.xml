@@ -856,6 +856,10 @@
 
 	<definition name="portlet.layouts_admin" extends="portlet" />
 
+	<definition name="portlet.layouts_admin.edit_layout_icon_image" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/edit_layout_icon_image.jsp" />
+	</definition>
+
 	<definition name="portlet.layouts_admin.edit_layouts" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/view.jsp" />
 	</definition>

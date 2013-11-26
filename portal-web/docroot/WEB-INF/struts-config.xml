@@ -453,6 +453,11 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.add_panel" />
 		</action>
 
+		<action path="/dockbar/edit_layout_icon_image" type="com.liferay.portlet.layoutsadmin.action.EditLayoutIconImageAction">
+			<forward name="portlet.layouts_admin.edit_layout_icon_image" path="portlet.layouts_admin.edit_layout_icon_image" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
+
 		<action path="/dockbar/edit_layout_panel" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.dockbar.edit_layout_panel" />
 			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.edit_layout_panel" />
@@ -718,6 +723,11 @@
 		<action path="/group_pages/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
+		</action>
+
+		<action path="/group_pages/edit_layout_icon_image" type="com.liferay.portlet.layoutsadmin.action.EditLayoutIconImageAction">
+			<forward name="portlet.layouts_admin.edit_layout_icon_image" path="portlet.layouts_admin.edit_layout_icon_image" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
 
 		<action path="/group_pages/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
@@ -1027,6 +1037,11 @@
 		<action path="/layouts_admin/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
+		</action>
+
+		<action path="/layouts_admin/edit_layout_icon_image" type="com.liferay.portlet.layoutsadmin.action.EditLayoutIconImageAction">
+			<forward name="portlet.layouts_admin.edit_layout_icon_image" path="portlet.layouts_admin.edit_layout_icon_image" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
 
 		<action path="/layouts_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">

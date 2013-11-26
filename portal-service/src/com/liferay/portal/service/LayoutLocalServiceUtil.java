@@ -1493,6 +1493,13 @@ public class LayoutLocalServiceUtil {
 		return getService().updateFriendlyURL(plid, friendlyURL, languageId);
 	}
 
+	public static com.liferay.portal.model.Layout updateIconImage(long plid,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateIconImage(plid, bytes);
+	}
+
 	/**
 	* Updates the layout.
 	*

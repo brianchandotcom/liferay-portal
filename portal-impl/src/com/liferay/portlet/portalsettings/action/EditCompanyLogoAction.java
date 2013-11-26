@@ -15,50 +15,26 @@
 package com.liferay.portlet.portalsettings.action;
 
 import com.liferay.portal.ImageTypeException;
-import com.liferay.portal.NoSuchRepositoryException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletResponseUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.TempFileUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-
-import java.awt.image.RenderedImage;
-
-import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -67,7 +43,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditCompanyLogoAction extends PortletAction {
+public class EditCompanyLogoAction extends EditLogoAction {
 
 	@Override
 	public void processAction(
@@ -127,79 +103,6 @@ public class EditCompanyLogoAction extends PortletAction {
 	}
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		try {
-			String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
-
-			if (cmd.equals(Constants.GET_TEMP)) {
-				FileEntry tempFileEntry = getTempImageFileEntry(
-					resourceRequest);
-
-				serveTempImageFile(
-					resourceResponse, tempFileEntry.getContentStream());
-			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-	}
-
-	protected void addTempImageFile(PortletRequest portletRequest)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String contentType = uploadPortletRequest.getContentType("fileName");
-
-		if (!MimeTypesUtil.isWebImage(contentType)) {
-			throw new ImageTypeException();
-		}
-
-		try {
-			TempFileUtil.deleteTempFile(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFileName(portletRequest), getTempImageFolderName());
-		}
-		catch (Exception e) {
-		}
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("fileName");
-
-			TempFileUtil.addTempFile(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFileName(portletRequest), getTempImageFolderName(),
-				inputStream, contentType);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
-	}
-
-	protected FileEntry getTempImageFileEntry(PortletRequest portletRequest)
-		throws PortalException, SystemException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return TempFileUtil.getTempFile(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			getTempImageFileName(portletRequest), getTempImageFolderName());
-	}
-
 	protected String getTempImageFileName(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -207,64 +110,7 @@ public class EditCompanyLogoAction extends PortletAction {
 		return String.valueOf(themeDisplay.getCompanyId());
 	}
 
-	protected String getTempImageFolderName() {
-		Class<?> clazz = getClass();
-
-		return clazz.getName();
-	}
-
-	protected void saveTempImageFile(ActionRequest actionRequest)
-		throws Exception {
-
-		FileEntry tempFileEntry = null;
-
-		InputStream tempImageStream = null;
-
-		try {
-			tempFileEntry = getTempImageFileEntry(actionRequest);
-
-			tempImageStream = tempFileEntry.getContentStream();
-
-			ImageBag imageBag = ImageToolUtil.read(tempImageStream);
-
-			RenderedImage renderedImage = imageBag.getRenderedImage();
-
-			String cropRegionJSON = ParamUtil.getString(
-				actionRequest, "cropRegion");
-
-			if (Validator.isNotNull(cropRegionJSON)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					cropRegionJSON);
-
-				int height = jsonObject.getInt("height");
-				int width = jsonObject.getInt("width");
-				int x = jsonObject.getInt("x");
-				int y = jsonObject.getInt("y");
-
-				renderedImage = ImageToolUtil.crop(
-					renderedImage, height, width, x, y);
-			}
-
-			byte[] bytes = ImageToolUtil.getBytes(
-				renderedImage, imageBag.getType());
-
-			saveTempImageFile(actionRequest, bytes);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			throw new UploadException(nsfee);
-		}
-		catch (NoSuchRepositoryException nsre) {
-			throw new UploadException(nsre);
-		}
-		finally {
-			StreamUtil.cleanUp(tempImageStream);
-
-			if (tempFileEntry != null) {
-				TempFileUtil.deleteTempFile(tempFileEntry.getFileEntryId());
-			}
-		}
-	}
-
+	@Override
 	protected void saveTempImageFile(
 			PortletRequest portletRequest, byte[] bytes)
 		throws Exception {
@@ -277,25 +123,5 @@ public class EditCompanyLogoAction extends PortletAction {
 
 		themeDisplay.setCompany(company);
 	}
-
-	protected void serveTempImageFile(
-			MimeResponse mimeResponse, InputStream tempImageStream)
-		throws Exception {
-
-		ImageBag imageBag = ImageToolUtil.read(tempImageStream);
-
-		byte[] bytes = ImageToolUtil.getBytes(
-			imageBag.getRenderedImage(), imageBag.getType());
-
-		String contentType = MimeTypesUtil.getExtensionContentType(
-			imageBag.getType());
-
-		mimeResponse.setContentType(contentType);
-
-		PortletResponseUtil.write(mimeResponse, bytes);
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		EditCompanyLogoAction.class);
 
 }

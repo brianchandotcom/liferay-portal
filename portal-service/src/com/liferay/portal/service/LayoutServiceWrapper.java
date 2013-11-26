@@ -1015,6 +1015,14 @@ public class LayoutServiceWrapper implements LayoutService,
 		_layoutService.unschedulePublishToRemote(groupId, jobName, groupName);
 	}
 
+	@Override
+	public com.liferay.portal.model.Layout updateIconImage(long plid,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.updateIconImage(plid, bytes);
+	}
+
 	/**
 	* Updates the layout with additional parameters.
 	*

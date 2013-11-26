@@ -27,6 +27,10 @@ public class LogoSelectorTag extends IncludeTag {
 		_defaultLogoURL = defaultLogoURL;
 	}
 
+	public void setEditLogoFn(String editLogoFn) {
+		_editLogoFn = editLogoFn;
+	}
+
 	public void setEditLogoURL(String editLogoURL) {
 		_editLogoURL = editLogoURL;
 	}
@@ -46,6 +50,7 @@ public class LogoSelectorTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_defaultLogoURL = null;
+		_editLogoFn = null;
 		_editLogoURL = null;
 		_imageId = 0;
 		_logoDisplaySelector = null;
@@ -62,6 +67,8 @@ public class LogoSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:logo-selector:defaultLogoURL", _defaultLogoURL);
 		request.setAttribute(
+			"liferay-ui:logo-selector:editLogoFn", _editLogoFn);
+		request.setAttribute(
 			"liferay-ui:logo-selector:editLogoURL", _editLogoURL);
 		request.setAttribute(
 			"liferay-ui:logo-selector:imageId", String.valueOf(_imageId));
@@ -77,6 +84,7 @@ public class LogoSelectorTag extends IncludeTag {
 		"/html/taglib/ui/logo_selector/page.jsp";
 
 	private String _defaultLogoURL;
+	private String _editLogoFn;
 	private String _editLogoURL;
 	private long _imageId;
 	private String _logoDisplaySelector;

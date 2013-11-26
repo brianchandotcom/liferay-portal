@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.ImageTypeException;
-import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.UserPortraitSizeException;
-import com.liferay.portal.UserPortraitTypeException;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -25,7 +23,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.portalsettings.action.EditLogoAction;
@@ -42,9 +40,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
-public class EditUserPortraitAction extends EditLogoAction {
+public class EditLayoutIconImageAction extends EditLogoAction {
 
 	@Override
 	public void processAction(
@@ -66,16 +64,15 @@ public class EditUserPortraitAction extends EditLogoAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchUserException ||
+			if (e instanceof NoSuchLayoutException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.users_admin.error");
+				setForward(actionRequest, "portlet.layouts_admin.error");
 			}
 			else if (e instanceof FileSizeException ||
-					 e instanceof ImageTypeException ||
-					 e instanceof UserPortraitTypeException) {
+					 e instanceof ImageTypeException) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -84,7 +81,6 @@ public class EditUserPortraitAction extends EditLogoAction {
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 			else if (e instanceof NoSuchFileException ||
-					 e instanceof UserPortraitSizeException ||
 					 e instanceof UploadException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -104,12 +100,12 @@ public class EditUserPortraitAction extends EditLogoAction {
 
 		return actionMapping.findForward(
 			getForward(
-				renderRequest, "portlet.users_admin.edit_user_portrait"));
+				renderRequest, "portlet.layouts_admin.edit_layout_icon_image"));
 	}
 
 	@Override
 	protected String getTempImageFileName(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "p_u_i_d");
+		return ParamUtil.getString(portletRequest, "plid");
 	}
 
 	@Override
@@ -117,9 +113,9 @@ public class EditUserPortraitAction extends EditLogoAction {
 			PortletRequest portletRequest, byte[] bytes)
 		throws Exception {
 
-		long userId = ParamUtil.getLong(portletRequest, "p_u_i_d");
+		long plid = ParamUtil.getLong(portletRequest, "plid");
 
-		UserServiceUtil.updatePortrait(userId, bytes);
+		LayoutServiceUtil.updateIconImage(plid, bytes);
 	}
 
 }

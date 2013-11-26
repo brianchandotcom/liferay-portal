@@ -1548,6 +1548,14 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			languageId);
 	}
 
+	@Override
+	public com.liferay.portal.model.Layout updateIconImage(long plid,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.updateIconImage(plid, bytes);
+	}
+
 	/**
 	* Updates the layout.
 	*

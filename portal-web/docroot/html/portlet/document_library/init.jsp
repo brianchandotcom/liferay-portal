@@ -37,7 +37,6 @@ page import="com.liferay.portlet.documentlibrary.FolderNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.InvalidFileVersionException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchDirectoryException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFileEntryException" %><%@
-page import="com.liferay.portlet.documentlibrary.NoSuchFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchMetadataSetException" %><%@
 page import="com.liferay.portlet.documentlibrary.RepositoryNameException" %><%@

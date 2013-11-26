@@ -2226,6 +2226,32 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layout;
 	}
 
+	@Override
+	public Layout updateIconImage(long plid, byte[] bytes)
+		throws PortalException, SystemException {
+
+		Layout layout = layoutPersistence.fetchByPrimaryKey(plid);
+
+		if (layout == null) {
+			return null;
+		}
+
+		long iconImageId = layout.getIconImageId();
+
+		if (iconImageId <= 0) {
+			iconImageId = counterLocalService.increment();
+		}
+
+		imageLocalService.updateImage(iconImageId, bytes);
+
+		layout.setIconImage(true);
+		layout.setIconImageId(iconImageId);
+
+		layoutPersistence.update(layout);
+
+		return layout;
+	}
+
 	/**
 	 * Updates the layout.
 	 *

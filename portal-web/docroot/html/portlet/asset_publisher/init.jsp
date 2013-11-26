@@ -41,10 +41,6 @@ String selectionStyle = GetterUtil.getString(portletPreferences.getValue("select
 
 long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
 
-long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
-
-long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
-
 long[] classTypeIds = GetterUtil.getLongValues(portletPreferences.getValues("classTypeIds", null));
 
 boolean showOnlyLayoutAssets = GetterUtil.getBoolean(portletPreferences.getValue("showOnlyLayoutAssets", null));

@@ -17,6 +17,10 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
+long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
+
+long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
+
 long[] allAssetCategoryIds = new long[0];
 String[] allAssetTagNames = new String[0];
 

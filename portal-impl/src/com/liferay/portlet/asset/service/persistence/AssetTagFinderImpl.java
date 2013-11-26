@@ -32,7 +32,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagConstants;
+import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
+import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -272,6 +274,11 @@ public class AssetTagFinderImpl
 			SQLQuery q = session.createSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			q.addSynchronizedQuerySpace(AssetEntryModelImpl.TABLE_NAME);
+			q.addSynchronizedQuerySpace(
+				AssetEntryModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME);
+			q.addSynchronizedQuerySpace(AssetTagModelImpl.TABLE_NAME);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 

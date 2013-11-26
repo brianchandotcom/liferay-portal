@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -48,9 +49,11 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -58,6 +61,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
@@ -471,8 +475,7 @@ public class LayoutExporter {
 
 		for (Layout layout : layouts) {
 			exportLayout(
-				portletDataContext, portlets, layoutIds, portletIds, layout,
-				zipWriter);
+				portletDataContext, portlets, layoutIds, portletIds, layout);
 		}
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
@@ -620,8 +623,7 @@ public class LayoutExporter {
 
 	protected void exportLayout(
 			PortletDataContext portletDataContext, List<Portlet> portlets,
-			long[] layoutIds, Map<String, Object[]> portletIds, Layout layout,
-			ZipWriter zipWriter)
+			long[] layoutIds, Map<String, Object[]> portletIds, Layout layout)
 		throws Exception {
 
 		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId()) &&
@@ -633,6 +635,33 @@ public class LayoutExporter {
 			layoutElement.addAttribute("action", Constants.SKIP);
 
 			return;
+		}
+
+		boolean exportLAR = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(), "exportLAR");
+
+		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout) &&
+			!layout.isTypeURL()) {
+
+			long layoutSetBranchId = MapUtil.getLong(
+				portletDataContext.getParameterMap(), "layoutSetBranchId");
+
+			if (layoutSetBranchId <= 0) {
+				return;
+			}
+
+			LayoutRevision layoutRevision =
+				LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
+					layoutSetBranchId, true, layout.getPlid());
+
+			if (layoutRevision == null) {
+				return;
+			}
+
+			LayoutStagingHandler layoutStagingHandler =
+				LayoutStagingUtil.getLayoutStagingHandler(layout);
+
+			layoutStagingHandler.setLayoutRevision(layoutRevision);
 		}
 
 		StagedModelDataHandlerUtil.exportStagedModel(

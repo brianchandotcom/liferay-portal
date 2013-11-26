@@ -27,7 +27,7 @@ if (!strutsAction.equals("/login/open_id") && OpenIdUtil.isEnabled(company.getCo
 %>
 
 <c:if test="<%= showOpenIdIcon %>">
-	<portlet:renderURL var="openIdURL">
+	<portlet:renderURL var="openIdURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="struts_action" value="/login/open_id" />
 	</portlet:renderURL>
 

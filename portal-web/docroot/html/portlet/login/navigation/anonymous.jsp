@@ -27,7 +27,7 @@ if (!strutsAction.startsWith("/login/create_anonymous_account") && portletName.e
 %>
 
 <c:if test="<%= showAnonymousIcon %>">
-	<portlet:renderURL var="anonymousURL">
+	<portlet:renderURL var="anonymousURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="struts_action" value="/login/create_anonymous_account" />
 	</portlet:renderURL>
 

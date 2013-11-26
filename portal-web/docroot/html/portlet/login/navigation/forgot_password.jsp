@@ -27,7 +27,7 @@ if (!strutsAction.equals("/login/forgot_password") && (company.isSendPassword() 
 %>
 
 <c:if test="<%= showForgotPasswordIcon %>">
-	<portlet:renderURL var="forgotPasswordURL">
+	<portlet:renderURL var="forgotPasswordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="struts_action" value="/login/forgot_password" />
 	</portlet:renderURL>
 

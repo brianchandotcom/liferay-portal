@@ -40,6 +40,12 @@ public interface Session {
 	public SQLQuery createSQLQuery(String queryString, boolean strictName)
 		throws ORMException;
 
+	public SQLQuery createSynchronizedSQLQuery(String queryString)
+		throws ORMException;
+
+	public SQLQuery createSynchronizedSQLQuery(
+		String queryString, boolean strictName) throws ORMException;
+
 	public void delete(Object object) throws ORMException;
 
 	public void evict(Object object) throws ORMException;

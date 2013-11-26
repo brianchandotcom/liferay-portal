@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -126,19 +127,18 @@ public class FriendlyURLServlet extends HttpServlet {
 				request.setAttribute(WebKeys.LAST_PATH, lastPath);
 			}
 		}
-		catch (NoSuchLayoutException nsle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsle);
-			}
-
-			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsle, request, response);
-
-			return;
-		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e);
+			}
+
+			if ((e instanceof NoSuchGroupException) ||
+				(e instanceof NoSuchLayoutException)) {
+
+				PortalUtil.sendError(
+					HttpServletResponse.SC_NOT_FOUND, e, request, response);
+
+				return;
 			}
 		}
 
@@ -244,7 +244,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		if (group == null) {
-			return new Object[] {mainPath, Boolean.FALSE};
+			throw new NoSuchGroupException();
 		}
 
 		// Layout friendly URL

@@ -23,6 +23,8 @@ AUI.add(
 
 		var SELECTOR_NAV_ADD_CONTROLS = '.nav-add-controls';
 
+		var STR_ACTIVE = 'active';
+
 		var STR_ADD_PANEL = 'addPanel';
 
 		var STR_EDIT_LAYOUT_PANEL = 'editLayoutPanel';
@@ -313,11 +315,11 @@ AUI.add(
 							var open = navigation.hasClass(STR_OPEN);
 
 							if (open || (currentTarget === btnNavigation)) {
-								btnNavigation.toggleClass('active');
+								btnNavigation.toggleClass(STR_ACTIVE);
 								navigation.toggleClass(STR_OPEN);
 							}
 						},
-						'.btn-navbar'
+						'.btn-navbar, .nav-collapse .dropdown'
 					);
 				}
 

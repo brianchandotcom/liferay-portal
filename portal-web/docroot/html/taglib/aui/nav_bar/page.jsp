@@ -27,6 +27,8 @@
 				A.one('#<%= id %>').delegate(
 					'click',
 					function(event) {
+						var STR_OPEN = 'open';
+
 						var btnNavbar = event.currentTarget;
 
 						var navId = btnNavbar.attr('data-navId');
@@ -36,7 +38,7 @@
 						if (navbarCollapse) {
 							var handle = Liferay.Data['<%= id %>Handle'];
 
-							if (navbarCollapse.hasClass('open') && handle) {
+							if (navbarCollapse.hasClass(STR_OPEN) && handle) {
 								handle.detach();
 
 								handle = null;
@@ -50,15 +52,15 @@
 
 											handle.detach();
 
-											btnNavbar.removeClass('open');
-											navbarCollapse.removeClass('open');
+											btnNavbar.removeClass(STR_OPEN);
+											navbarCollapse.removeClass(STR_OPEN);
 										}
 									}
 								);
 							}
 
-							btnNavbar.toggleClass('open');
-							navbarCollapse.toggleClass('open');
+							btnNavbar.toggleClass(STR_OPEN);
+							navbarCollapse.toggleClass(STR_OPEN);
 
 							Liferay.Data['<%= id %>Handle'] = handle;
 						}

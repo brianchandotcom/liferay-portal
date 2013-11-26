@@ -501,7 +501,6 @@ $editLayoutPanelWidth: 460px;
 							ul.dropdown-menu {
 								background: transparent;
 								display: block;
-								min-width: 0;
 								position: fixed;
 								top: 10%;
 								z-index: 350;

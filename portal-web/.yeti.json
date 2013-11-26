@@ -1,0 +1,4 @@
+{
+    "basedir": ".",
+    "glob": "**/docroot/html/js/tests/*.html"
+}

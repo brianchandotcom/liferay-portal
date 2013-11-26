@@ -1276,7 +1276,8 @@ public class LayoutTypePortletImpl
 				return null;
 			}
 
-			if (PortletConstants.hasInstanceId(portletId) &&
+			if ((PortletConstants.hasInstanceId(portletId) ||
+				 portlet.isPreferencesUniquePerLayout()) &&
 				hasUserPreferences()) {
 
 				portletId = PortletConstants.assemblePortletId(
@@ -1652,10 +1653,30 @@ public class LayoutTypePortletImpl
 
 			String newPortletId = null;
 
-			if (PortletConstants.hasInstanceId(portletId)) {
+			boolean preferencesUniquePerLayout = false;
+
+			try {
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(
+					getCompanyId(), portletId);
+
+				preferencesUniquePerLayout =
+					portlet.isPreferencesUniquePerLayout();
+			}
+			catch (SystemException se) {
+				_log.error(se, se);
+			}
+
+			if (PortletConstants.hasInstanceId(portletId) ||
+				 preferencesUniquePerLayout) {
+
+				String instanceId = null;
+
+				if (PortletConstants.hasInstanceId(portletId)) {
+					instanceId = generateInstanceId();
+				}
+
 				newPortletId = PortletConstants.assemblePortletId(
-					portletId, _portalPreferences.getUserId(),
-					generateInstanceId());
+					portletId, _portalPreferences.getUserId(), instanceId);
 
 				copyPreferences(
 					_portalPreferences.getUserId(), portletId, newPortletId);

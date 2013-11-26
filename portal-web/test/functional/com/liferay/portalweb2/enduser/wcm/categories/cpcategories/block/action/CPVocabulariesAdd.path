@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALLOW_MULTIPLE_CATEGORIES_CHECKBOX</td>
+	<td>//input[@id='_147_multiValuedCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

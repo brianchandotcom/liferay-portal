@@ -94,6 +94,10 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 		checkLanguageKeys(fileName, newContent, languageKeyPattern);
 
+		if (newContent.contains("debugger.")) {
+			processErrorMessage(fileName, "debugger " + fileName);
+		}
+
 		if (isAutoFix() && (newContent != null) &&
 			!content.equals(newContent)) {
 

@@ -492,6 +492,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					fileName, "aui:button " + fileName + " " + lineCount);
 			}
 
+			if (line.contains("debugger.")) {
+				processErrorMessage(
+					fileName, "debugger " + fileName + " " + lineCount);
+			}
+
 			String trimmedLine = StringUtil.trimLeading(line);
 			String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 

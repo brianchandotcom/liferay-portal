@@ -200,6 +200,8 @@ if (!paginationType.equals("none")) {
 </c:if>
 
 <%
+long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
+
 long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 
 Map<String, Object> contextObjects = new HashMap<String, Object>();

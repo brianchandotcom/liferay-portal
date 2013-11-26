@@ -499,6 +499,68 @@
 		<echo message="A report with all the test results can be found at test-results/html/index.html." />
 	</target>
 
+	<target name="parse-test-class">
+		<script classpathref="project.classpath" language="beanshell">
+			String testClass = project.getProperty("test.class");
+
+			int x = testClass.indexOf("#");
+
+			String testMethodName = testClass.substring(x + 1);
+
+			project.setProperty("test.method.name", testMethodName);
+
+			String testSimpleClassName =  testClass.substring(0, x);
+
+			project.setProperty("test.simple.class.name", testSimpleClassName);
+		</script>
+
+		<if>
+			<not>
+				<isset property="test.basedir" />
+			</not>
+			<then>
+				<property name="test.basedir" value="${basedir.unix}/portal-web" />
+			</then>
+		</if>
+
+		<for param="test.java.file">
+			<path>
+				<fileset dir="${test.basedir}/test/functional-generated">
+					<include name="**/${test.simple.class.name}.java" />
+				</fileset>
+			</path>
+			<sequential>
+				<var name="test.java.file" value="@{test.java.file}" />
+
+				<script classpathref="project.classpath" language="beanshell">
+					import com.liferay.portal.kernel.util.OSDetector;
+
+					String testJavaFile = project.getProperty("test.java.file");
+
+					int x;
+
+					if (OSDetector.isWindows()) {
+						x = testJavaFile.indexOf("\\com\\") + 1;
+					}
+					else {
+						x = testJavaFile.indexOf("/com/") + 1;
+					}
+
+					int y = testJavaFile.lastIndexOf(".");
+
+					testJavaFile = testJavaFile.substring(x, y);
+
+					if (OSDetector.isWindows()) {
+						project.setProperty("test.class.name", testJavaFile.replaceAll("\\\\", "."));
+					}
+					else {
+						project.setProperty("test.class.name", testJavaFile.replaceAll("/", "."));
+					}
+				</script>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="prepare-portal-ext-properties" depends="generate-test-properties">
 		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
 
@@ -1607,56 +1669,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<script classpathref="project.classpath" language="beanshell">
-					String testClass = project.getProperty("test.class");
-
-					int x = testClass.indexOf("#");
-
-					String testMethodName = testClass.substring(x + 1);
-
-					project.setProperty("test.method.name", testMethodName);
-
-					String testSimpleClassName =  testClass.substring(0, x);
-
-					project.setProperty("test.simple.class.name", testSimpleClassName);
-				</script>
-
-				<for param="test.java.file">
-					<path>
-						<fileset dir="portal-web/test/functional-generated">
-							<include name="**/${test.simple.class.name}.java" />
-						</fileset>
-					</path>
-					<sequential>
-						<var name="test.java.file" value="@{test.java.file}" />
-
-						<script classpathref="project.classpath" language="beanshell">
-							import com.liferay.portal.kernel.util.OSDetector;
-
-							String testJavaFile = project.getProperty("test.java.file");
-
-							int x;
-
-							if (OSDetector.isWindows()) {
-								x = testJavaFile.indexOf("\\com\\") + 1;
-							}
-							else {
-								x = testJavaFile.indexOf("/com/") + 1;
-							}
-
-							int y = testJavaFile.lastIndexOf(".");
-
-							testJavaFile = testJavaFile.substring(x, y);
-
-							if (OSDetector.isWindows()) {
-								project.setProperty("test.class.name", testJavaFile.replaceAll("\\\\", "."));
-							}
-							else {
-								project.setProperty("test.class.name", testJavaFile.replaceAll("/", "."));
-							}
-						</script>
-					</sequential>
-				</for>
+				<antcallback return="test.class.name,test.method.name" target="parse-test-class" />
 
 				<var name="test.class" unset="true" />
 				<var name="test.methods" unset="true" />

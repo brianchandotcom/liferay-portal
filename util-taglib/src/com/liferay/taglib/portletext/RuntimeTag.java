@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -40,6 +42,8 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,8 +90,22 @@ public class RuntimeTag extends TagSupport {
 
 		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
 
-		request = DynamicServletRequest.addQueryString(
-			restrictPortletServletRequest, queryString);
+		if ((portletId!= null) &&
+			portletId.equals(
+				restrictPortletServletRequest.getParameter("p_p_id"))) {
+
+			request = DynamicServletRequest.addQueryString(
+				restrictPortletServletRequest, queryString);
+		}
+		else {
+			Map<String, String[]> parameterMap = MapUtil.filter(
+				restrictPortletServletRequest.getParameterMap(),
+				new PrefixPredicateFilter("p_p_", true));
+
+			request = DynamicServletRequest.addQueryString(
+				restrictPortletServletRequest, queryString, parameterMap,
+				false);
+		}
 
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);

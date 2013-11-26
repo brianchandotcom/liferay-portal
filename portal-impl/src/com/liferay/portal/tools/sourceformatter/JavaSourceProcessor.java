@@ -2454,9 +2454,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<String>();
 
 		String[] excludes = new String[] {
-			"**\\bin\\**", "**\\model\\*Clp.java",
-			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
-			"**\\model\\impl\\*ModelImpl.java",
+			"**\\model\\*Clp.java", "**\\model\\impl\\*BaseImpl.java",
+			"**\\model\\impl\\*Model.java", "**\\model\\impl\\*ModelImpl.java",
 			"**\\service\\**\\service\\*Service.java",
 			"**\\service\\**\\service\\*ServiceClp.java",
 			"**\\service\\**\\service\\*ServiceFactory.java",
@@ -2471,7 +2470,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\service\\http\\*JSONSerializer.java",
 			"**\\service\\http\\*ServiceHttp.java",
 			"**\\service\\http\\*ServiceJSON.java",
-			"**\\service\\http\\*ServiceSoap.java", "**\\tmp\\**"
+			"**\\service\\http\\*ServiceSoap.java"
 		};
 		String[] includes = new String[] {"**\\*.java"};
 
@@ -2484,23 +2483,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Collection<String> fileNames = new TreeSet<String>();
 
 		String[] excludes = new String[] {
-			"**\\*_IW.java", "**\\PropsValues.java", "**\\bin\\**",
-			"**\\classes\\*", "**\\counter\\service\\**", "**\\jsp\\*",
-			"**\\model\\impl\\*BaseImpl.java", "**\\model\\impl\\*Model.java",
-			"**\\model\\impl\\*ModelImpl.java", "**\\portal\\service\\**",
-			"**\\portal-client\\**", "**\\portal-web\\classes\\**\\*.java",
+			"**\\*_IW.java", "**\\PropsValues.java", "**\\counter\\service\\**",
+			"**\\jsp\\*", "**\\model\\impl\\*BaseImpl.java",
+			"**\\model\\impl\\*Model.java", "**\\model\\impl\\*ModelImpl.java",
+			"**\\portal\\service\\**", "**\\portal-client\\**",
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portal-web\\test\\**\\*Tests.java",
 			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
-			"**\\tmp\\**", "**\\tools\\tck\\**"
+			"**\\tools\\tck\\**"
 		};
 		String[] includes = new String[] {"**\\*.java"};
 
 		fileNames.addAll(getFileNames(excludes, includes));
 
 		excludes = new String[] {
-			"**\\bin\\**", "**\\portal-client\\**", "**\\tools\\ext_tmpl\\**",
-			"**\\*_IW.java", "**\\test\\**\\*PersistenceTest.java"
+			"**\\portal-client\\**", "**\\tools\\ext_tmpl\\**", "**\\*_IW.java",
+			"**\\test\\**\\*PersistenceTest.java"
 		};
 		includes = new String[] {
 			"**\\com\\liferay\\portal\\service\\ServiceContext*.java",

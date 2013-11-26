@@ -134,9 +134,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		String[] excludes = new String[] {
-			"**\\.bnd\\**", "**\\.idea\\**", "**\\bin\\**", "**\\classes\\**"
-		};
+		String[] excludes = new String[] {"**\\.bnd\\**", "**\\.idea\\**"};
 		String[] includes = new String[] {"**\\*.xml"};
 
 		Properties exclusions = getExclusionsProperties(

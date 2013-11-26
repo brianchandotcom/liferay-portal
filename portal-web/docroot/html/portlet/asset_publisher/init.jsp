@@ -79,23 +79,15 @@ if (selectionStyle.equals("dynamic")) {
 		ddmStructureFieldValue = portletPreferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
 
 		if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
-			List<Tuple> classTypeFieldNames = assetRendererFactory.getClassTypeFieldNames(classTypeIds[0], locale, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldName(classTypeIds[0], ddmStructureFieldName, locale);
 
-			for (Tuple classTypeFieldName : classTypeFieldNames) {
-				String fieldName = (String)classTypeFieldName.getObject(1);
+			ddmStructureFieldLabel = (String)classTypeFieldName.getObject(0);
 
-				if (fieldName.equals(ddmStructureFieldName)) {
-					ddmStructureFieldLabel = (String)classTypeFieldName.getObject(0);
+			if (subtypeFieldsFilterEnabled) {
+				long ddmStructureId = GetterUtil.getLong(classTypeFieldName.getObject(3));
 
-					if (subtypeFieldsFilterEnabled) {
-						long ddmStructureId = GetterUtil.getLong(classTypeFieldName.getObject(3));
-
-						assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructureId, ddmStructureFieldName, locale));
-						assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
-					}
-
-					break;
-				}
+				assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructureId, ddmStructureFieldName, locale));
+				assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
 			}
 		}
 	}

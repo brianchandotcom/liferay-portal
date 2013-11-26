@@ -22,17 +22,16 @@ body.html-editor {
 	blockquote {
 		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
 		border: 1px solid #777;
-		position: relative;
 		padding: 5px 45px;
 
 		&:after {
 			background: url(../images/message_boards/quoteright.png) no-repeat 50%;
-			bottom: 5px;
 			content: '';
 			display: block;
+			float: right;
+			margin-right: -35px;
+			margin-top: -25px;
 			height: 24px;
-			position: absolute;
-			right: 5px;
 			width: 31px;
 			z-index: 999;
 		}

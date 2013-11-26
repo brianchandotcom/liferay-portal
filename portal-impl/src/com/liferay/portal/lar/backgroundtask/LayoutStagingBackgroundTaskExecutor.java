@@ -166,12 +166,6 @@ public class LayoutStagingBackgroundTaskExecutor
 				Date startDate = (Date)_taskContextMap.get("startDate");
 				Date endDate = (Date)_taskContextMap.get("endDate");
 
-				Date lastPublishDate = endDate;
-
-				if (lastPublishDate == null) {
-					lastPublishDate = new Date();
-				}
-
 				file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 					_sourceGroupId, privateLayout, layoutIds, parameterMap,
 					startDate, endDate);
@@ -202,11 +196,11 @@ public class LayoutStagingBackgroundTaskExecutor
 
 					if (!sourceGroup.hasStagingGroup()) {
 						StagingUtil.updateLastPublishDate(
-							_sourceGroupId, privateLayout, lastPublishDate);
+							_sourceGroupId, privateLayout, endDate);
 					}
 					else {
 						StagingUtil.updateLastPublishDate(
-							_targetGroupId, privateLayout, lastPublishDate);
+							_targetGroupId, privateLayout, endDate);
 					}
 				}
 			}

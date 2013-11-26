@@ -229,7 +229,11 @@ public class PortletExporter {
 
 		Date endDate = portletDataContext.getEndDate();
 
-		if (endDate != null) {
+		boolean updateLastPublishDate = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
+
+		if (updateLastPublishDate) {
 			StagingUtil.updateLastPublishDate(
 				portletId, jxPortletPreferences, endDate);
 		}

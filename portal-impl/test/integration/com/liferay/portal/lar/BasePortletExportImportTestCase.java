@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -35,6 +36,7 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -43,6 +45,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -192,6 +195,44 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 			false);
 	}
 
+	@Test
+	public void testUpdateLastPublishDate() throws Exception {
+		StagedModel stagedModel = addStagedModel(group.getGroupId());
+
+		if (stagedModel == null) {
+			return;
+		}
+
+		LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), layout, getPortletId(), "column-1",
+			new HashMap<String, String[]>());
+
+		Map<String, String[]> exportParameterMap =
+			new LinkedHashMap<String, String[]>();
+		Map<String, String[]> importParameterMap =
+			new LinkedHashMap<String, String[]>();
+
+		exportParameterMap.put(
+			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
+			new String[] {String.valueOf(true)});
+
+		Date startDate = new Date(System.currentTimeMillis() - Time.HOUR);
+		Date endDate = new Date();
+
+		exportImportPortlet(
+			getPortletId(), exportParameterMap, importParameterMap, startDate,
+			endDate);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, getPortletId());
+
+		long lastPublishDate = GetterUtil.getLong(
+			portletPreferences.getValue("last-publish-date", StringPool.BLANK));
+
+		Assert.assertEquals(endDate.getTime(), lastPublishDate);
+	}
+
 	protected AssetLink addAssetLink(
 			long groupId, String sourceStagedModelUuid,
 			String targetStagedModelUuid, int weight)
@@ -220,14 +261,25 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 	}
 
 	protected void exportImportPortlet(
-		String portletId, Map<String, String[]> exportParameterMap,
-		Map<String, String[]> importParameterMap) throws Exception {
+			String portletId, Map<String, String[]> exportParameterMap,
+			Map<String, String[]> importParameterMap)
+		throws Exception {
+
+		exportImportPortlet(
+			portletId, exportParameterMap, importParameterMap, null, null);
+	}
+
+	protected void exportImportPortlet(
+			String portletId, Map<String, String[]> exportParameterMap,
+			Map<String, String[]> importParameterMap, Date startDate,
+			Date endDate)
+		throws Exception {
 
 		MapUtil.merge(getExportParameterMap(), exportParameterMap);
 
 		larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
 			layout.getPlid(), layout.getGroupId(), portletId,
-			exportParameterMap, null, null);
+			exportParameterMap, startDate, endDate);
 
 		importedLayout = LayoutTestUtil.addLayout(
 			importedGroup.getGroupId(), ServiceTestUtil.randomString());

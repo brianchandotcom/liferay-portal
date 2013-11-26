@@ -227,8 +227,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 				PortletPreferences preferences =
-					PortletPreferencesFactoryUtil.getPortletSetup(
-						layout, portletId, StringPool.BLANK);
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						layout, portletId);
 
 				lastPublishDate = GetterUtil.getLong(
 					preferences.getValue(

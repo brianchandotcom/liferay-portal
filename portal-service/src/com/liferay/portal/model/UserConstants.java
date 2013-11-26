@@ -14,9 +14,14 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 /**
@@ -38,10 +43,42 @@ public class UserConstants {
 	public static final String USERS_EMAIL_ADDRESS_AUTO_SUFFIX = PropsUtil.get(
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 
+	/**
+	 * @deprecated As of 7.0.0 replaced by {@link
+	 * #getPortraitURL(String, boolean, long, long, String)}
+	 */
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId) {
 
-		StringBundler sb = new StringBundler(7);
+		if (portraitId <= 0) {
+			return getPortraitURL(imagePath, male, 0, 0, StringPool.BLANK);
+		}
+
+		try {
+			User user = UserLocalServiceUtil.fetchUserByPortraitId(portraitId);
+
+			if (user == null) {
+				return getPortraitURL(imagePath, male, 0, 0, StringPool.BLANK);
+			}
+
+			return getPortraitURL(
+				imagePath, male, portraitId, user.getCompanyId(),
+				user.getScreenName());
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public static String getPortraitURL(
+		String imagePath, boolean male, long portraitId, long companyId,
+		String screenName) {
+
+		StringBundler sb = new StringBundler(9);
 
 		sb.append(imagePath);
 		sb.append("/user_");
@@ -53,12 +90,22 @@ public class UserConstants {
 			sb.append("female");
 		}
 
-		sb.append("_portrait?img_id=");
-		sb.append(portraitId);
-		sb.append("&t=");
+		if ((companyId > 0) && Validator.isNotNull(screenName)) {
+			sb.append("_portrait?screenName=");
+			sb.append(screenName);
+			sb.append("&companyId=");
+			sb.append(companyId);
+			sb.append("&t=");
+		}
+		else {
+			sb.append("_portrait?t=");
+		}
+
 		sb.append(WebServerServletTokenUtil.getToken(portraitId));
 
 		return sb.toString();
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(UserConstants.class);
 
 }

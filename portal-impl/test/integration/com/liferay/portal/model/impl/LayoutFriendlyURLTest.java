@@ -130,6 +130,32 @@ public class LayoutFriendlyURLTest {
 		}
 	}
 
+	@Test(expected = LayoutFriendlyURLsException.class)
+	@Transactional
+	public void testInvalidFriendlyURLLanguageId() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/es");
+
+		addLayout(group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test(expected = LayoutFriendlyURLsException.class)
+	@Transactional
+	public void testInvalidFriendlyURLLanguageIdAndCountryId()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/es_ES");
+
+		addLayout(group.getGroupId(), false, friendlyURLMap);
+	}
+
 	@Test
 	@Transactional
 	public void testInvalidFriendlyURLMapperURLInDefaultLocale()
@@ -245,6 +271,48 @@ public class LayoutFriendlyURLTest {
 
 		friendlyURLMap.put(LocaleUtil.SPAIN, "/tags/two");
 		friendlyURLMap.put(LocaleUtil.US, "/two");
+
+		addLayout(group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test(expected = LayoutFriendlyURLsException.class)
+	@Transactional
+	public void testInvalidFriendlyURLStartingWithLanguageId()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/es/home");
+
+		addLayout(group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test(expected = LayoutFriendlyURLsException.class)
+	@Transactional
+	public void testInvalidFriendlyURLStartingWithLanguageIdAndCountryId()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/es_ES/home");
+
+		addLayout(group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test(expected = LayoutFriendlyURLsException.class)
+	@Transactional
+	public void testInvalidFriendlyURLStartingWithLowerCaseLanguageIdAndCountryId()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/es_es/home");
 
 		addLayout(group.getGroupId(), false, friendlyURLMap);
 	}
@@ -474,6 +542,23 @@ public class LayoutFriendlyURLTest {
 
 		friendlyURLMap.put(LocaleUtil.SPAIN, "/blogs/two");
 		friendlyURLMap.put(LocaleUtil.US, "/two");
+
+		try {
+			addLayout(group.getGroupId(), false, friendlyURLMap);
+		}
+		catch (LayoutFriendlyURLsException lfurle) {
+			Assert.fail();
+		}
+	}
+
+	@Test
+	@Transactional
+	public void testValidFriendlyURLStartingWithLanguageId() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/eshome");
 
 		try {
 			addLayout(group.getGroupId(), false, friendlyURLMap);

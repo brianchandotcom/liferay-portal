@@ -317,19 +317,19 @@ public class SeleniumBuilderContext {
 	}
 
 	public Set<Element> getMacroCommandElements(String macroName) {
-		Element currentRootElement = getMacroRootElement(macroName);
-
-		List<Element> currentCommandElements = currentRootElement.elements(
-			"command");
-
-		String parentMacroName = currentRootElement.attributeValue("extends");
-
 		Set<Element> commandElementsSet = new HashSet<Element>();
 
-		if (parentMacroName != null) {
-			Element parentRootElement = getMacroRootElement(parentMacroName);
+		Element macroRootElement = getMacroRootElement(macroName);
 
-			List<Element> parentCommandElements = parentRootElement.elements(
+		List<Element> macroCommandElements = macroRootElement.elements(
+			"command");
+
+		String extendsName = macroRootElement.attributeValue("extends");
+
+		if (extendsName != null) {
+			Element extendsRootElement = getMacroRootElement(extendsName);
+
+			List<Element> extendsCommandElements = extendsRootElement.elements(
 				"command");
 
 			Set<String> commandNames = getMacroCommandNames(macroName);
@@ -337,12 +337,12 @@ public class SeleniumBuilderContext {
 			for (String commandName : commandNames) {
 				boolean macroElementFound = false;
 
-				for (Element currentCommandElement : currentCommandElements) {
-					String currentCommandName =
-						currentCommandElement.attributeValue("name");
+				for (Element macroCommandElement : macroCommandElements) {
+					String macroCommandName =
+						macroCommandElement.attributeValue("name");
 
-					if (commandName.equals(currentCommandName)) {
-						commandElementsSet.add(currentCommandElement);
+					if (commandName.equals(macroCommandName)) {
+						commandElementsSet.add(macroCommandElement);
 
 						macroElementFound = true;
 
@@ -350,62 +350,51 @@ public class SeleniumBuilderContext {
 					}
 				}
 
-				if (!macroElementFound) {
-					for (Element parentCommandElement : parentCommandElements) {
-						String parentCommandName =
-							parentCommandElement.attributeValue("name");
+				if (macroElementFound) {
+					continue;
+				}
 
-						if (commandName.equals(parentCommandName)) {
-							commandElementsSet.add(parentCommandElement);
+				for (Element extendsCommandElement : extendsCommandElements) {
+					String extendsCommandName =
+						extendsCommandElement.attributeValue("name");
 
-							break;
-						}
+					if (commandName.equals(extendsCommandName)) {
+						commandElementsSet.add(extendsCommandElement);
+
+						break;
 					}
 				}
 			}
 		}
 		else {
-			commandElementsSet.addAll(currentCommandElements);
+			commandElementsSet.addAll(macroCommandElements);
 		}
 
 		return commandElementsSet;
 	}
 
 	public Set<String> getMacroCommandNames(String macroName) {
-		Element currentRootElement = getMacroRootElement(macroName);
+		Set<String> commandNames = new TreeSet<String>();
 
-		String parentMacroName = currentRootElement.attributeValue("extends");
+		Element macroRootElement = getMacroRootElement(macroName);
 
-		List<Element> currentCommandElements = currentRootElement.elements(
+		List<Element> macroCommandElements = macroRootElement.elements(
 			"command");
 
-		Set<String> commandNames = new HashSet<String>();
+		for (Element macroCommandElement : macroCommandElements) {
+			commandNames.add(macroCommandElement.attributeValue("name"));
+		}
 
-		if (parentMacroName != null) {
-			Element parentRootElement = getMacroRootElement(parentMacroName);
+		String extendsName = macroRootElement.attributeValue("extends");
 
-			List<Element> parentCommandElements = parentRootElement.elements(
+		if (extendsName != null) {
+			Element extendsRootElement = getMacroRootElement(extendsName);
+
+			List<Element> extendsCommandElements = extendsRootElement.elements(
 				"command");
 
-			for (Element parentCommandElement : parentCommandElements) {
-				String parentCommandName = parentCommandElement.attributeValue(
-					"name");
-
-				commandNames.add(parentCommandName);
-			}
-
-			for (Element currentCommandElement : currentCommandElements) {
-				String currentCommandName =
-					currentCommandElement.attributeValue("name");
-
-				commandNames.add(currentCommandName);
-			}
-		}
-		else {
-			for (Element commandElement : currentCommandElements) {
-				String commandName = commandElement.attributeValue("name");
-
-				commandNames.add(commandName);
+			for (Element extendsCommandElement : extendsCommandElements) {
+				commandNames.add(extendsCommandElement.attributeValue("name"));
 			}
 		}
 
@@ -725,26 +714,24 @@ public class SeleniumBuilderContext {
 
 		String macroFileName = getMacroFileName(macroName);
 
-		String extendedMacro = rootElement.attributeValue("extends");
+		String extendsName = rootElement.attributeValue("extends");
 
-		if (extendedMacro != null) {
-			if (!_macroNames.contains(extendedMacro) ||
-				macroName.equals(extendedMacro)) {
-
+		if (extendsName != null) {
+			if (!_macroNames.contains(extendsName)) {
 				_seleniumBuilderFileUtil.throwValidationException(
 					1006, macroFileName, rootElement, "extends");
 			}
-			else {
-				Element extendedMacroRootElement = getMacroRootElement(
-					extendedMacro);
 
-				String extendedExtendedMacro =
-					extendedMacroRootElement.attributeValue("extends");
+			if (macroName.equals(extendsName)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1006, macroFileName, rootElement, "extends");
+			}
 
-				if (extendedExtendedMacro != null) {
-					_seleniumBuilderFileUtil.throwValidationException(
-						1006, macroFileName, rootElement, "extends");
-				}
+			Element extendsRootElement = getMacroRootElement(extendsName);
+
+			if (extendsRootElement.attributeValue("extends") != null) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1006, macroFileName, rootElement, "extends");
 			}
 		}
 
@@ -987,13 +974,12 @@ public class SeleniumBuilderContext {
 			return false;
 		}
 
-		Set<Element> macroCommandElements = getMacroCommandElements(name);
+		Set<Element> commandElements = getMacroCommandElements(name);
 
-		for (Element macroCommandElement : macroCommandElements) {
-			String macroCommandName = macroCommandElement.attributeValue(
-				"name");
+		for (Element commandElement : commandElements) {
+			String commandName = commandElement.attributeValue("name");
 
-			if (macroCommandName.equals(command)) {
+			if (commandName.equals(command)) {
 				return true;
 			}
 		}

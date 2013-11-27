@@ -1177,14 +1177,14 @@ public class SeleniumBuilderFileUtil {
 
 		List<Element> elements = rootElement.elements();
 
-		String extendedMacroName = rootElement.attributeValue("extends");
+		String extendsName = rootElement.attributeValue("extends");
 
-		if (elements.isEmpty() && (extendedMacroName == null)) {
+		if (elements.isEmpty() && (extendsName == null)) {
 			throwValidationException(
 				1001, fileName, rootElement, new String[] {"command", "var"});
 		}
-		else if (extendedMacroName != null) {
-			if (Validator.isNull(extendedMacroName)) {
+		else if (extendsName != null) {
+			if (Validator.isNull(extendsName)) {
 				throwValidationException(
 					1006, fileName, rootElement, "extends");
 			}

@@ -5,16 +5,6 @@
 
 	<target name="deploy-simple-server-plugins">
 		<if>
-			<not>
-				<equals arg1="${plugins.deployed}" arg2="true" />
-			</not>
-			<then>
-				<delete dir="${liferay.home}/data" />
-				<delete dir="${liferay.home}/logs" />
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
 				<echo file="${lp.plugins.dir}/build.${user.name}.properties">app.server.type=websphere

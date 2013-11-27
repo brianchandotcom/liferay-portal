@@ -1,3 +1,5 @@
+@import "compass";
+
 .portlet-quick-note {
 	margin: 2px;
 	padding: 5px;
@@ -46,6 +48,10 @@
 
 	a.close-note {
 		float: right;
+	}
+
+	.note-content {
+		@include word-break(break-all);
 	}
 }
 

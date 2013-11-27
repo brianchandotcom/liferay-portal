@@ -60,155 +60,119 @@ public class MBStatsUserLocalServiceTest {
 
 	@Test
 	public void testUpdateStatsUserWhenAddingDraftMessage() throws Exception {
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		Assert.assertEquals(initialMessageCount, statsUser.getMessageCount());
+		Assert.assertEquals(
+			initialStatsUserMessageCount, getStatsUserMessageCount());
 	}
 
 	@Test
 	public void testUpdateStatsUserWhenAddingPublishedMessage()
 		throws Exception {
 
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_PUBLISH);
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
 		Assert.assertEquals(
-			initialMessageCount + 1, statsUser.getMessageCount());
+			initialStatsUserMessageCount + 1, getStatsUserMessageCount());
 	}
 
 	@Test
 	public void testUpdateStatsUserWhenDeletingDraftMessage() throws Exception {
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		MBMessageLocalServiceUtil.deleteMessage(_message.getMessageId());
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		Assert.assertEquals(initialMessageCount, statsUser.getMessageCount());
+		Assert.assertEquals(
+			initialStatsUserMessageCount, getStatsUserMessageCount());
 	}
 
 	@Test
 	public void testUpdateStatsUserWhenDeletingPublishedMessage()
 		throws Exception {
 
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_PUBLISH);
 
 		MBMessageLocalServiceUtil.deleteMessage(_message.getMessageId());
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		Assert.assertEquals(initialMessageCount, statsUser.getMessageCount());
+		Assert.assertEquals(
+			initialStatsUserMessageCount, getStatsUserMessageCount());
 	}
 
 	@Test
 	public void testUpdateStatsUserWhenPublishingDraftMessage()
 		throws Exception {
 
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		updateMessage(WorkflowConstants.ACTION_PUBLISH);
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
 		Assert.assertEquals(
-			initialMessageCount + 1, statsUser.getMessageCount());
+			initialStatsUserMessageCount + 1, getStatsUserMessageCount());
 	}
 
 	@Test
 	public void testUpdateStatsUserWhenPublishingPublishedMessage()
 		throws Exception {
 
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_PUBLISH);
 
 		updateMessage(WorkflowConstants.ACTION_PUBLISH);
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
 		Assert.assertEquals(
-			initialMessageCount + 1, statsUser.getMessageCount());
+			initialStatsUserMessageCount + 1, getStatsUserMessageCount());
 	}
 
 	@Test
 	public void testUpdateStatsUserWhenSavingDraftMessageAsDraft()
 		throws Exception {
 
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		updateMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		Assert.assertEquals(initialMessageCount, statsUser.getMessageCount());
+		Assert.assertEquals(
+			initialStatsUserMessageCount, getStatsUserMessageCount());
 	}
 
 	@Test
 	public void testUpdateStatsUserWhenSavingPublishedMessageAsDraft()
 		throws Exception {
 
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
+		int initialStatsUserMessageCount = getStatsUserMessageCount();
 
 		addMessage(WorkflowConstants.ACTION_PUBLISH);
 
 		updateMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		Assert.assertEquals(initialMessageCount, statsUser.getMessageCount());
+		Assert.assertEquals(
+			initialStatsUserMessageCount, getStatsUserMessageCount());
 	}
 
 	protected void addMessage(int workflowAction) throws Exception {
 		_message = MBTestUtil.addMessageWithWorkflow(
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			workflowAction == WorkflowConstants.ACTION_PUBLISH);
+	}
+
+	protected int getStatsUserMessageCount() throws Exception {
+		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		return statsUser.getMessageCount();
 	}
 
 	protected void updateMessage(int workflowAction) throws Exception {

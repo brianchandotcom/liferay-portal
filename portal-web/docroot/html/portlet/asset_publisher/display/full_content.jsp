@@ -56,10 +56,14 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	/>
 </c:if>
 
-<div class="asset-full-content <%= defaultAssetPublisher ? "default-asset-publisher" : StringPool.BLANK %> <%= showAssetTitle ? "show-asset-title" : "no-title" %>">
+<div class="asset-full-content <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource) ? "default-asset-publisher" : StringPool.BLANK %> <%= showAssetTitle ? "show-asset-title" : "no-title" %>">
 	<c:if test="<%= !print %>">
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 	</c:if>
+
+	<%
+	boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);
+	%>
 
 	<c:if test="<%= (enableConversions && assetRenderer.isConvertible()) || (enablePrint && assetRenderer.isPrintable()) || (showAvailableLocales && assetRenderer.isLocalizable()) %>">
 		<div class="asset-user-actions">
@@ -105,7 +109,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	if (!assetEntry.isNew() && assetEntry.isVisible()) {
 		AssetEntry incrementAssetEntry = null;
 
-		if (assetEntryQuery.isEnablePermissions()) {
+		if (AssetUtil.isEnablePermissions(portletPreferences, portletName)) {
 			incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 		else {
@@ -140,6 +144,18 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	String viewFullContentURLString = viewFullContentURL.toString();
 
 	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+
+	boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
+
+	String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", null);
+
+	if (Validator.isNull(socialBookmarksDisplayStyle)) {
+		String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+
+		socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
+	}
+
+	String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
 	%>
 
 	<div class="asset-content" id="<portlet:namespace /><%= assetEntry.getEntryId() %>">

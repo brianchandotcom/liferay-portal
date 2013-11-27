@@ -77,6 +77,13 @@ public class AssetRendererFactoryRegistryUtil {
 		return getAssetRendererFactoryRegistry().getClassNameIds(companyId);
 	}
 
+	public static long[] getClassNameIds(
+		long companyId, boolean filterSelectable) {
+
+		return getAssetRendererFactoryRegistry().getClassNameIds(
+			companyId, filterSelectable);
+	}
+
 	public static void register(AssetRendererFactory assetRendererFactory) {
 		getAssetRendererFactoryRegistry().register(assetRendererFactory);
 	}

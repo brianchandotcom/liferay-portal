@@ -47,6 +47,10 @@
 
 	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= showContextLink %>" />
 
+	<%
+	String assetLinkBehavior = GetterUtil.getString(portletPreferences.getValue("assetLinkBehavior", "showFullContent"));
+	%>
+
 	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
 		<aui:option label="show-full-content" selected='<%= assetLinkBehavior.equals("showFullContent") %>' value="showFullContent" />
 		<aui:option label="view-in-context" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
@@ -89,12 +93,14 @@
 
 	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
 
-	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= defaultAssetPublisher %>" />
+	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource) %>" />
 
 	<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
 		<div class="field-row">
 
 			<%
+			String[] conversions = DocumentConversionUtil.getConversions("html");
+
 			for (String conversion : conversions) {
 			%>
 
@@ -114,7 +120,7 @@
 	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
 
 	<c:if test="<%= rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) || rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) || !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
-		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= enablePermissions %>" />
+		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= AssetUtil.isEnablePermissions(portletPreferences, portletName) %>" />
 	</c:if>
 
 	<c:choose>
@@ -131,6 +137,20 @@
 	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
 
 	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+
+	<%
+	boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
+
+	String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", null);
+
+	if (Validator.isNull(socialBookmarksDisplayStyle)) {
+		String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+
+		socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
+	}
+
+	String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
+	%>
 
 	<liferay-ui:social-bookmarks-settings
 		displayPosition="<%= socialBookmarksDisplayPosition %>"
@@ -151,7 +171,9 @@
 	<aui:field-wrapper label="metadata-fields">
 
 		<%
-		Set<String> availableMetadataFields = SetUtil.fromArray(StringUtil.split(allMetadataFields));
+		String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
+
+		Set<String> availableMetadataFields = SetUtil.fromArray(allMetadataFields);
 
 		// Left list
 

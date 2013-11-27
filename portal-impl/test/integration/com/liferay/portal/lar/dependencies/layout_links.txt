@@ -2,9 +2,15 @@
 
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element name="link_to_page1" type="link_to_layout" index-type="keyword">
-		<dynamic-content language-id="en_US"><![CDATA[[$FIRST_LAYOUT_ID$]@public]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PUBLIC$]@public]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element name="link_to_page2" type="link_to_layout" index-type="keyword">
-		<dynamic-content language-id="en_US"><![CDATA[[$SECOND_LAYOUT_ID$]@private]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PRIVATE$]@private]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="link_to_page3" type="link_to_layout" index-type="keyword">
+		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PUBLIC$]@public@[$GROUP_ID_PUBLIC$]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="link_to_page4" type="link_to_layout" index-type="keyword">
+		<dynamic-content language-id="en_US"><![CDATA[[$LAYOUT_ID_PRIVATE$]@private@[$GROUP_ID_PRIVATE$]]></dynamic-content>
 	</dynamic-element>
 </root>

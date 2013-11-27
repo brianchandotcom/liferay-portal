@@ -16,26 +16,28 @@
 
 <aui:fieldset cssClass="general-display-settings">
 	<c:if test="<%= !rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) %>">
-		<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="checkbox" value="<%= showAddContentButton %>" />
+		<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAddContentButton() %>" />
 	</c:if>
 
 	<div class="display-template">
 
 		<%
 		TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(AssetEntry.class.getName());
-
-		long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 		%>
 
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-			displayStyle="<%= displayStyle %>"
-			displayStyleGroupId="<%= displayStyleGroupId %>"
+			displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+			displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
 			displayStyles="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) %>"
 			label="display-template"
 			refreshURL="<%= configurationRenderURL.toString() %>"
 		/>
 	</div>
+
+	<%
+	int abstractLength = assetPublisherDisplayContext.getAbstractLength();
+	%>
 
 	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--">
 		<aui:option label="100" selected="<%= abstractLength == 100 %>" />
@@ -45,18 +47,12 @@
 		<aui:option label="500" selected="<%= abstractLength == 500 %>" />
 	</aui:select>
 
-	<%
-	boolean showAssetTitle = GetterUtil.getBoolean(portletPreferences.getValue("showAssetTitle", null), true);
+	<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAssetTitle() %>" />
 
-	boolean showContextLink = GetterUtil.getBoolean(portletPreferences.getValue("showContextLink", null), true);
-	%>
-
-	<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="checkbox" value="<%= showAssetTitle %>" />
-
-	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= showContextLink %>" />
+	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowContextLink() %>" />
 
 	<%
-	String assetLinkBehavior = GetterUtil.getString(portletPreferences.getValue("assetLinkBehavior", "showFullContent"));
+	String assetLinkBehavior = assetPublisherDisplayContext.getAssetLinkBehavior();
 	%>
 
 	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
@@ -72,7 +68,7 @@
 		for (int currentDelta: deltas) {
 		%>
 
-			<aui:option label="<%= currentDelta %>" selected="<%= (delta == currentDelta) %>" />
+			<aui:option label="<%= currentDelta %>" selected="<%= (assetPublisherDisplayContext.getDelta() == currentDelta) %>" />
 
 		<%
 		}
@@ -80,15 +76,23 @@
 
 	</aui:select>
 
+	<%
+	String paginationType = assetPublisherDisplayContext.getPaginationType();
+	%>
+
 	<aui:select name="preferences--paginationType--">
 		<aui:option label="none" selected='<%= paginationType.equals("none") %>' />
 		<aui:option label="simple" selected='<%= paginationType.equals("simple") %>' />
 		<aui:option label="regular" selected='<%= paginationType.equals("regular") %>' />
 	</aui:select>
 
+	<%
+	String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
+	%>
+
 	<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
 		<c:if test='<%= selectionStyle.equals("dynamic") %>'>
-			<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="checkbox" value="<%= excludeZeroViewCount %>" />
+			<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="checkbox" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
 		</c:if>
 	</c:if>
 
@@ -97,17 +101,13 @@
 	String helpMessage2 = "<em>" + LanguageUtil.format(pageContext, "content-with-tag-x", StringPool.DOUBLE_PERIOD) + "</em>";
 	%>
 
-	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= showMetadataDescriptions %>" />
+	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
 
-	<%
-	boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", null));
-	%>
-
-	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />
+	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>" />
 
 	<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="checkbox" value="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource) %>" />
 
-	<aui:field-wrapper helpMessage='<%= !openOfficeServerEnabled ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
+	<aui:field-wrapper helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
 		<div class="field-row">
 
 			<%
@@ -117,7 +117,7 @@
 			%>
 
 			<aui:field-wrapper inlineField="<%= true %>" inlineLabel="left" label="<%= StringUtil.toUpperCase(conversion) %>" name='<%= "extensions" + conversion %>'>
-				<input <%= ArrayUtil.contains(extensions, conversion) ? "checked": "" %> <%= !openOfficeServerEnabled ? "disabled" : "" %> id="<portlet:namespace />extensions<%= conversion %>" name="<portlet:namespace />extensions" type="checkbox" value="<%= conversion %>" />
+				<input <%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) ? "checked": "" %> <%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "disabled" : "" %> id="<portlet:namespace />extensions<%= conversion %>" name="<portlet:namespace />extensions" type="checkbox" value="<%= conversion %>" />
 			</aui:field-wrapper>
 
 			<%
@@ -127,9 +127,9 @@
 		</div>
 	</aui:field-wrapper>
 
-	<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= enablePrint %>" />
+	<aui:input name="preferences--enablePrint--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnablePrint() %>" />
 
-	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
+	<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableFlags() %>" />
 
 	<c:if test="<%= rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) || rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) || !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
 		<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= AssetUtil.isEnablePermissions(portletPreferences, portletName) %>" />
@@ -137,41 +137,27 @@
 
 	<c:choose>
 		<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
-			<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= enableRelatedAssets %>" />
+			<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
 		</c:when>
 		<c:otherwise>
-			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
 		</c:otherwise>
 	</c:choose>
 
-	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
+	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableRatings() %>" />
 
-	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
+	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableComments() %>" />
 
-	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
-
-	<%
-	boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
-
-	String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", null);
-
-	if (Validator.isNull(socialBookmarksDisplayStyle)) {
-		String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
-
-		socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
-	}
-
-	String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
-	%>
+	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>" />
 
 	<liferay-ui:social-bookmarks-settings
-		displayPosition="<%= socialBookmarksDisplayPosition %>"
-		displayStyle="<%= socialBookmarksDisplayStyle %>"
-		enabled="<%= enableSocialBookmarks %>"
+		displayPosition="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayPosition() %>"
+		displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
+		enabled="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() %>"
 	/>
 
 	<c:if test='<%= selectionStyle.equals("manual") %>'>
-		<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= enableTagBasedNavigation %>" />
+		<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />
 	</c:if>
 </aui:fieldset>
 
@@ -183,6 +169,8 @@
 	<aui:field-wrapper label="metadata-fields">
 
 		<%
+		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+
 		String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
 
 		Set<String> availableMetadataFields = SetUtil.fromArray(allMetadataFields);

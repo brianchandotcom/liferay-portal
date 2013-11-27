@@ -80,6 +80,11 @@ viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL,
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 
 		<div class="asset-metadata">
+
+			<%
+			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+			%>
+
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
 		</div>
 	</li>

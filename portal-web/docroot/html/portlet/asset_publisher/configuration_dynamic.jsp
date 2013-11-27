@@ -17,25 +17,20 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
-
-long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
-
-long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
-
 String ddmStructureDisplayFieldValue = StringPool.BLANK;
 String ddmStructureFieldLabel = StringPool.BLANK;
 String ddmStructureFieldName = StringPool.BLANK;
 Serializable ddmStructureFieldValue = null;
 
-boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(portletPreferences.getValue("subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
+long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
+long[] classTypeIds = assetPublisherDisplayContext.getClassTypeIds();
 
-if (subtypeFieldsFilterEnabled && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
+if (assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameIds[0]));
 
-	ddmStructureDisplayFieldValue = GetterUtil.getString(portletPreferences.getValue("ddmStructureDisplayFieldValue", StringPool.BLANK));
-	ddmStructureFieldName = GetterUtil.getString(portletPreferences.getValue("ddmStructureFieldName", StringPool.BLANK));
-	ddmStructureFieldValue = portletPreferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
+	ddmStructureDisplayFieldValue = assetPublisherDisplayContext.getDDMStructureDisplayFieldValue();
+	ddmStructureFieldName = assetPublisherDisplayContext.getDDMStructureFieldName();
+	ddmStructureFieldValue = assetPublisherDisplayContext.getDDMStructureFieldValue();
 
 	if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
 		Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldName(classTypeIds[0], ddmStructureFieldName, locale);
@@ -72,7 +67,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				<aui:fieldset label="asset-entry-type">
 
 					<%
-					Set<Long> availableClassNameIdsSet = SetUtil.fromArray(availableClassNameIds);
+					Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetPublisherDisplayContext.getAvailableClassNameIds());
 
 					// Left list
 
@@ -92,8 +87,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					%>
 
 					<aui:select label="" name="preferences--anyAssetType--">
-						<aui:option label="any" selected="<%= anyAssetType %>" value="<%= true %>" />
-						<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetType && (classNameIds.length > 1) %>" value="<%= false %>" />
+						<aui:option label="any" selected="<%= assetPublisherDisplayContext.isAnyAssetType() %>" value="<%= true %>" />
+						<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !assetPublisherDisplayContext.isAnyAssetType() && (classNameIds.length > 1) %>" value="<%= false %>" />
 
 						<optgroup label="<liferay-ui:message key="asset-type" />">
 
@@ -121,7 +116,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
 					%>
 
-					<div class="<%= anyAssetType ? "hide" : "" %>" id="<portlet:namespace />classNamesBoxes">
+					<div class="<%= assetPublisherDisplayContext.isAnyAssetType() ? "hide" : "" %>" id="<portlet:namespace />classNamesBoxes">
 						<liferay-ui:input-move-boxes
 							leftBoxName="currentClassNameIds"
 							leftList="<%= typesLeftList %>"
@@ -194,7 +189,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							<aui:input name='<%= "preferences--classTypeIds" + className + "--" %>' type="hidden" />
 
 							<div class="asset-subtypefields-wrapper-enable hide" id="<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper">
-								<aui:input checked="<%= subtypeFieldsFilterEnabled %>" label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="checkbox" value="<%= subtypeFieldsFilterEnabled %>" />
+								<aui:input checked="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="checkbox" value="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" />
 							</div>
 
 							<span class="asset-subtypefields-message" id="<portlet:namespace /><%= className %>ddmStructureFieldMessage">
@@ -221,7 +216,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 										</portlet:renderURL>
 
 										<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= assetAvailableClassTypeId %>_<%= className %>PopUpButton">
-											<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !subtypeFieldsFilterEnabled %>" value="select" />
+											<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
 										</span>
 									</span>
 
@@ -318,7 +313,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							String categoryIds = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);
 
 							if (Validator.isNotNull(tagNames) || Validator.isNotNull(categoryIds) || (queryLogicIndexes.length == 1)) {
-								request.setAttribute("configuration.jsp-categorizableGroupIds", _getCategorizableGroupIds(groupIds));
+								request.setAttribute("configuration.jsp-categorizableGroupIds", _getCategorizableGroupIds(assetPublisherDisplayContext.getGroupIds()));
 								request.setAttribute("configuration.jsp-index", String.valueOf(index));
 								request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
 
@@ -353,11 +348,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					</aui:fieldset>
 				</div>
 
-				<aui:input label='<%= LanguageUtil.format(pageContext, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= showOnlyLayoutAssets %>" />
+				<aui:input label='<%= LanguageUtil.format(pageContext, "show-only-assets-with-x-as-its-display-page", HtmlUtil.escape(layout.getName(locale)), false) %>' name="preferences--showOnlyLayoutAssets--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowOnlyLayoutAssets() %>" />
 
-				<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= mergeUrlTags %>" />
+				<aui:input label="include-tags-specified-in-the-url" name="preferences--mergeUrlTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeUrlTags() %>" />
 
-				<aui:input helpMessage="include-tags-set-by-other-applications-help" label="include-tags-set-by-other-applications" name="preferences--mergeLayoutTags--" type="checkbox" value="<%= mergeLayoutTags %>" />
+				<aui:input helpMessage="include-tags-set-by-other-applications-help" label="include-tags-set-by-other-applications" name="preferences--mergeLayoutTags--" type="checkbox" value="<%= assetPublisherDisplayContext.isMergeLayoutTags() %>" />
 
 				<aui:script use="liferay-auto-fields">
 					var autoFields = new Liferay.AutoFields(
@@ -390,6 +385,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherOrderingAndGroupingPanel" persistState="<%= true %>" title="ordering-and-grouping">
 					<aui:fieldset>
 						<span class="field-row">
+
+							<%
+							String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
+							%>
+
 							<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="preferences--orderByColumn1--">
 								<aui:option label="title" selected='<%= orderByColumn1.equals("title") %>' />
 								<aui:option label="create-date" selected='<%= orderByColumn1.equals("createDate") %>' value="createDate" />
@@ -404,6 +404,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								</c:if>
 							</aui:select>
 
+							<%
+							String orderByType1 = assetPublisherDisplayContext.getOrderByType1();
+							%>
+
 							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--">
 								<aui:option label="ascending" selected='<%= orderByType1.equals("ASC") %>' value="ASC" />
 								<aui:option label="descending" selected='<%= orderByType1.equals("DESC") %>' value="DESC" />
@@ -411,6 +415,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						</span>
 
 						<span class="field-row">
+
+							<%
+							String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
+							%>
+
 							<aui:select inlineField="<%= true %>" inlineLabel="left" label="and-then-by" name="preferences--orderByColumn2--">
 								<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
 								<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
@@ -424,6 +433,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 									<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
 								</c:if>
 							</aui:select>
+
+							<%
+							String orderByType2 = assetPublisherDisplayContext.getOrderByType2();
+							%>
 
 							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType2--">
 								<aui:option label="ascending" selected='<%= orderByType2.equals("ASC") %>' value="ASC" />
@@ -513,23 +526,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
 
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-
-			<%
-			boolean enableRSS = GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null));
-
-			int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-			String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
-			String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
-			String rssName = portletPreferences.getValue("rssName", portletDisplay.getTitle());
-			%>
-
 			<liferay-ui:rss-settings
-				delta="<%= rssDelta %>"
-				displayStyle="<%= rssDisplayStyle %>"
+				delta="<%= assetPublisherDisplayContext.getRSSDelta() %>"
+				displayStyle="<%= assetPublisherDisplayContext.getRSSDisplayStyle() %>"
 				displayStyles="<%= new String[] {RSSUtil.DISPLAY_STYLE_ABSTRACT, RSSUtil.DISPLAY_STYLE_TITLE} %>"
-				enabled="<%= enableRSS %>"
-				feedType="<%= rssFeedType %>"
-				name="<%= rssName %>"
+				enabled="<%= assetPublisherDisplayContext.isEnableRSS() %>"
+				feedType="<%= assetPublisherDisplayContext.getRSSFeedType() %>"
+				name="<%= assetPublisherDisplayContext.getRSSName() %>"
 				nameEnabled="<%= true %>"
 			/>
 		</c:if>
@@ -614,6 +617,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			var columnBuffer2 = [optgroupOpen];
 
 			<%
+			String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
+			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
+
 			for (Tuple classTypeFieldName : classTypeFieldNames) {
 				String value = DDMIndexerUtil.encodeName((Long)classTypeFieldName.getObject(3), (String)classTypeFieldName.getObject(1));
 				String selectedOrderByColumn1 = StringPool.BLANK;

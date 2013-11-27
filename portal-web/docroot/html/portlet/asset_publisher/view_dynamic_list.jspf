@@ -17,22 +17,23 @@
 <%
 AssetEntryQuery assetEntryQuery = null;
 
-if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
-	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, ArrayUtil.append(groupIds, scopeGroupId));
+if (!ArrayUtil.contains(assetPublisherDisplayContext.getGroupIds(), scopeGroupId)) {
+	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, ArrayUtil.append(assetPublisherDisplayContext.getGroupIds(), scopeGroupId));
 }
 else {
-	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, groupIds);
+	assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(portletPreferences, assetPublisherDisplayContext.getGroupIds());
 }
+
+long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
+long[] classTypeIds = assetPublisherDisplayContext.getClassTypeIds();
 
 assetEntryQuery.setClassTypeIds(classTypeIds);
 
-boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(portletPreferences.getValue("subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
-
-if (subtypeFieldsFilterEnabled && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
+if (assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameIds[0]));
 
-	String ddmStructureFieldName = GetterUtil.getString(portletPreferences.getValue("ddmStructureFieldName", StringPool.BLANK));
-	Serializable ddmStructureFieldValue = portletPreferences.getValue("ddmStructureFieldValue", StringPool.BLANK);
+	String ddmStructureFieldName = assetPublisherDisplayContext.getDDMStructureFieldName();
+	Serializable ddmStructureFieldValue = assetPublisherDisplayContext.getDDMStructureFieldValue();
 
 	if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
 		Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldName(classTypeIds[0], ddmStructureFieldName, locale);
@@ -56,13 +57,13 @@ if (assetCategoryId > 0) {
 
 if (Validator.isNotNull(assetTagName)) {
 	if (!ArrayUtil.contains(allAssetTagNames, assetTagName)) {
-		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(groupIds, ArrayUtil.append(allAssetTagNames, assetTagName));
+		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(assetPublisherDisplayContext.getGroupIds(), ArrayUtil.append(allAssetTagNames, assetTagName));
 
 		assetEntryQuery.setAllTagIds(assetTagIds);
 	}
 }
 
-if (showOnlyLayoutAssets) {
+if (assetPublisherDisplayContext.isShowOnlyLayoutAssets()) {
 	assetEntryQuery.setLayout(layout);
 }
 
@@ -74,17 +75,17 @@ if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 	}
 }
 
-assetEntryQuery.setPaginationType(paginationType);
+assetEntryQuery.setPaginationType(assetPublisherDisplayContext.getPaginationType());
 assetEntryQuery.setEnablePermissions(AssetUtil.isEnablePermissions(portletPreferences, portletName));
 
-if (mergeUrlTags || mergeLayoutTags) {
+if (assetPublisherDisplayContext.isMergeUrlTags() || assetPublisherDisplayContext.isMergeLayoutTags()) {
 	String[] compilerTagNames = new String[0];
 
-	if (mergeUrlTags) {
+	if (assetPublisherDisplayContext.isMergeUrlTags()) {
 		compilerTagNames = ParamUtil.getParameterValues(request, "tags");
 	}
 
-	if (mergeLayoutTags) {
+	if (assetPublisherDisplayContext.isMergeLayoutTags()) {
 		Set<String> layoutTagNames = AssetUtil.getLayoutTagNames(request);
 
 		if (!layoutTagNames.isEmpty()) {
@@ -105,14 +106,14 @@ int end = searchContainer.getEnd();
 int start = searchContainer.getStart();
 
 if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
-	assetEntryQuery.setGroupIds(groupIds);
+	assetEntryQuery.setGroupIds(assetPublisherDisplayContext.getGroupIds());
 }
 
-assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-assetEntryQuery.setOrderByCol1(orderByColumn1);
-assetEntryQuery.setOrderByCol2(orderByColumn2);
-assetEntryQuery.setOrderByType1(orderByType1);
-assetEntryQuery.setOrderByType2(orderByType2);
+assetEntryQuery.setExcludeZeroViewCount(assetPublisherDisplayContext.isExcludeZeroViewCount());
+assetEntryQuery.setOrderByCol1(assetPublisherDisplayContext.getOrderByColumn1());
+assetEntryQuery.setOrderByCol2(assetPublisherDisplayContext.getOrderByColumn2());
+assetEntryQuery.setOrderByType1(assetPublisherDisplayContext.getOrderByType1());
+assetEntryQuery.setOrderByType2(assetPublisherDisplayContext.getOrderByType2());
 
 List<AssetEntry> results = new ArrayList<AssetEntry>();
 int total = 0;

@@ -71,6 +71,8 @@ else {
 viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 
 request.setAttribute("view.jsp-showIconLabel", false);
+
+String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 %>
 
 <c:if test="<%= assetEntryIndex == 0 %>">

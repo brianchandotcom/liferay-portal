@@ -62,6 +62,8 @@ public interface TemplateHandler {
 
 	public String[] getRestrictedVariables(String language);
 
+	public String getTemplatesHelpContent(String language);
+
 	/**
 	 * Returns the path to the help template.
 	 *

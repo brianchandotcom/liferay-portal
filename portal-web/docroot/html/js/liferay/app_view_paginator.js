@@ -12,6 +12,8 @@ AUI.add(
 
 		var FOLDER_ROWS_PER_PAGE = 'folderRowsPerPage';
 
+		var ITEMS_PER_PAGE = 'itemsPerPage';
+
 		var PAIR_SEPARATOR = History.PAIR_SEPARATOR;
 
 		var SEARCH_TYPE = 'searchType';
@@ -381,9 +383,9 @@ AUI.add(
 
 						var customParams = {};
 
-						var entryRowsPerPage = instance.get(ENTRY_ROWS_PER_PAGE);
+						var entryRowsPerPage = instance._entryPagination.get(ITEMS_PER_PAGE);
 
-						var folderRowsPerPage = instance.get(FOLDER_ROWS_PER_PAGE);
+						var folderRowsPerPage = instance._folderPagination.get(ITEMS_PER_PAGE);
 
 						if (resetPagination) {
 							customParams[instance.ns(STR_ENTRY_START)] = 0;

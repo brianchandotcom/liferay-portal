@@ -332,15 +332,14 @@ if (Validator.isNotNull(content)) {
 										Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 										for (int i = 0; i < locales.length; i++) {
-											if (ArrayUtil.contains(article.getAvailableLanguageIds(), LocaleUtil.toLanguageId(locales[i]))) {
-												continue;
-											}
-
 											String taglibEditArticleURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", LocaleUtil.toLanguageId(locales[i]));
 											String taglibEditURL = "javascript:Liferay.Util.openWindow({cache: false, id: '" + renderResponse.getNamespace() + LocaleUtil.toLanguageId(locales[i]) + "', title: '" + UnicodeLanguageUtil.get(pageContext, "web-content-translation") + "', uri: '" + taglibEditArticleURL + "'});";
+											String taglibId = renderResponse.getNamespace() + "languageId" + LocaleUtil.toLanguageId(locales[i]);
 										%>
 
 											<liferay-ui:icon
+												cssClass='<%= ArrayUtil.contains(article.getAvailableLanguageIds(), LocaleUtil.toLanguageId(locales[i])) ? "hide" : StringPool.BLANK %>'
+												id="<%= taglibId %>"
 												image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
 												message="<%= locales[i].getDisplayName(locale) %>"
 												url="<%= taglibEditURL %>"
@@ -535,6 +534,17 @@ if (Validator.isNotNull(content)) {
 				if (translationLink) {
 					translationLink.remove();
 				}
+
+				A.one('#<portlet:namespace />languageId' + newLanguageId).ancestor('li').show();
+
+				var availableLocales = availableTranslationContainer.all('a.lfr-token');
+
+				if (availableLocales.size() == 0) {
+					availableTranslationContainer.removeClass('contains-translations');
+
+					A.one('#<portlet:namespace />availableTranslationsLinks').hide();
+					A.one('#<portlet:namespace />translationsMessage').hide();
+				}
 			}
 			else if (!translationLink) {
 				var availableTranslationsLinks = A.one('#<portlet:namespace />availableTranslationsLinks');
@@ -577,6 +587,8 @@ if (Validator.isNotNull(content)) {
 				);
 
 				availableTranslationsLinks.append(translationLink);
+
+				A.one('#<portlet:namespace />languageId' + newLanguageId).ancestor('li').hide();
 
 				var languageInput = A.Node.create('<input name="<portlet:namespace />available_locales" type="hidden" value="' + newLanguageId + '" />');
 

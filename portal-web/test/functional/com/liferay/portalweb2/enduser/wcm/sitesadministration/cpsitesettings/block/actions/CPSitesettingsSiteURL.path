@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL</td>
-	<td>//div[@class='control-group success']/label[contains(@for,'privateVirtualHost')]</td>
+	<td>//div[@class='control-group']/label[contains(@for,'privateVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>

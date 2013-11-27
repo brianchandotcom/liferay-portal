@@ -115,7 +115,9 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateStatsUserWhenPublishingNewMessage() throws Exception {
+	public void testUpdateStatsUserWhenAddingPublishedMessage()
+		throws Exception {
+
 		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
@@ -131,7 +133,9 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateStatsUserWhenRepublishingMessage() throws Exception {
+	public void testUpdateStatsUserWhenPublishingPublishedMessage()
+		throws Exception {
+
 		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
@@ -149,7 +153,7 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateStatsUserWhenSavingAsDraftDraftMessage()
+	public void testUpdateStatsUserWhenSavingDraftMessageAsDraft()
 		throws Exception {
 
 		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
@@ -168,7 +172,7 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateStatsUserWhenSavingAsDraftNewMessage()
+	public void testUpdateStatsUserWhenAddingDraftMessage()
 		throws Exception {
 
 		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
@@ -185,7 +189,7 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateStatsUserWhenSavingAsDraftPublishedMessage()
+	public void testUpdateStatsUserWhenSavingPublishedMessageAsDraft()
 		throws Exception {
 
 		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(

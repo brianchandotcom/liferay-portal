@@ -3,4 +3,5 @@ Import-Package: *
 Include-Resource: classes
 Private-Package: com.liferay.*
 
+-baseline:
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)

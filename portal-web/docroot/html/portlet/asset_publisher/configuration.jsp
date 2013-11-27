@@ -31,6 +31,8 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 String emailSubjectParam = emailParam + "Subject_" + currentLanguageId;
 String emailBodyParam = emailParam + "Body_" + currentLanguageId;
+
+String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -78,7 +80,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 			availableGroups.add(layout.getScopeGroup());
 		}
 
-		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
+		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDisplayContext.getGroupIds());
 		%>
 
 		<div id="<portlet:namespace />scopesBoxes">
@@ -136,7 +138,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					for (Group group : availableGroups) {
-						if (ArrayUtil.contains(groupIds, group.getGroupId())) {
+						if (ArrayUtil.contains(assetPublisherDisplayContext.getGroupIds(), group.getGroupId())) {
 							continue;
 						}
 					%>
@@ -166,7 +168,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						layoutSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
 						layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
+						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						layoutSiteBrowserURL.setParameter("type", "layoutScopes");
 						layoutSiteBrowserURL.setParameter("eventName", eventName);
 						layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
@@ -216,7 +218,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						siteBrowserURL.setParameter("struts_action", "/site_browser/view");
 						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
+						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
 						siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
 						siteBrowserURL.setParameter("eventName", eventName);

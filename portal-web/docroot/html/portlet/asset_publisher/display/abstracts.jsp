@@ -46,7 +46,7 @@ if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 	viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 }
 
-String summary = StringUtil.shorten(assetRenderer.getSummary(locale), abstractLength);
+String summary = StringUtil.shorten(assetRenderer.getSummary(locale), assetPublisherDisplayContext.getAbstractLength());
 
 String viewURL = null;
 
@@ -94,7 +94,7 @@ viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL,
 				String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
 
 				request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-				request.setAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH, abstractLength);
+				request.setAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
 				request.setAttribute(WebKeys.ASSET_PUBLISHER_VIEW_URL, viewURL);
 				%>
 
@@ -116,6 +116,11 @@ viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL,
 		</div>
 
 		<div class="asset-metadata">
+
+			<%
+			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+			%>
+
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
 		</div>
 	</div>

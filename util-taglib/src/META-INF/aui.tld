@@ -1541,6 +1541,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>includeHiddenField</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>inlineField</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

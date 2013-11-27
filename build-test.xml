@@ -886,10 +886,40 @@ tck.url=true</echo>
 			</then>
 		</if>
 
-		<copy
-			file="portal-impl/src/portal-ext.properties"
-			tofile="${app.server.classes.portal.dir}/portal-ext.properties"
-		/>
+		<if>
+			<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
+			<then>
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<mkdir dir="${tstamp.value}" />
+
+				<unzip
+					dest="${tstamp.value}"
+					src="${app.server.portal.dir}"
+				/>
+
+				<copy
+					file="portal-impl/src/portal-ext.properties"
+					tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
+				/>
+
+				<zip
+					basedir="${tstamp.value}"
+					destfile="${app.server.portal.dir}"
+					update="yes"
+				/>
+
+				<delete dir="${tstamp.value}" />
+			</then>
+			<else>
+				<copy
+					file="portal-impl/src/portal-ext.properties"
+					tofile="${app.server.classes.portal.dir}/portal-ext.properties"
+				/>
+			</else>
+		</if>
 	</target>
 
 	<target name="prepare-portal-properties">
@@ -1332,6 +1362,21 @@ tck.url=true</echo>
 						<include name="*.sh" />
 					</fileset>
 				</chmod>
+
+				<if>
+					<equals arg1="${app.server.type}" arg2="jboss" />
+					<then>
+						<replace file="${app.server.jboss.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="jtds.jar" />]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									<resource-root path="jtds.jar" />
+									<resource-root path="mysql.jar" />
+								]]>
+							</replacevalue>
+						</replace>
+					</then>
+				</if>
 
 				<delete file="${tstamp.value}.zip" />
 			</else>

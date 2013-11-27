@@ -18,6 +18,7 @@
 			<param name="simple.server.start.executable.arg.line" value="" />
 			<param name="simple.server.stop.executable" value="jboss-cli${file.suffix.bat}" />
 			<param name="simple.server.stop.executable.arg.line" value="--connect command=:shutdown" />
+			<param name="simple.server.type" value="jboss" />
 		</antcall>
 
 		<record action="stop" name="log" />

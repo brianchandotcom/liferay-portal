@@ -38,7 +38,7 @@
 	}
 
 	&.autosize {
-		border: 0;
+		border-width: 0;
 	}
 
 	.lfr-device-size-status {

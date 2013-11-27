@@ -688,15 +688,15 @@ $editLayoutPanelWidth: 460px;
 			background: #F5AF45;
 		}
 
-		&.lfr-has-add-content .nav-add-controls {
+		&.lfr-has-add-content .nav-add-controls ul.dropdown-menu {
 			left: $addContentPanelWidth;
 		}
 
-		&.lfr-has-device-preview .nav-add-controls {
+		&.lfr-has-device-preview .nav-add-controls ul.dropdown-menu {
 			left: $devicePreviewPanelWidth;
 		}
 
-		&.lfr-has-edit-layout .nav-add-controls {
+		&.lfr-has-edit-layout .nav-add-controls ul.dropdown-menu {
 			left: $editLayoutPanelWidth;
 		}
 	}

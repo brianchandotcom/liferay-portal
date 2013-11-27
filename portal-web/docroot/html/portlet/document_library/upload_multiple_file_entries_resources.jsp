@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
 long repositoryId = BeanParamUtil.getLong(fileEntry, request, "repositoryId");
@@ -79,11 +81,12 @@ if (fileEntryTypeId > 0) {
 long assetClassPK = 0;
 %>
 
-<portlet:actionURL var="editMultipleFileEntriesURL">
-	<portlet:param name="struts_action" value="document_library/edit_file_entry" />
+<portlet:actionURL var="uploadMultipleFileEntriesURL">
+	<portlet:param name="struts_action" value="document_library/upload_multiple_file_entries" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'>
+<aui:form action="<%= uploadMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
 	<aui:input name="repositoryId" type="hidden" value="<%= String.valueOf(repositoryId) %>" />
 	<aui:input name="folderId" type="hidden" value="<%= String.valueOf(folderId) %>" />
@@ -116,7 +119,7 @@ long assetClassPK = 0;
 							%>
 
 								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewFileEntryTypeURL">
-									<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+									<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
 									<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 									<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(curFileEntryType.getFileEntryTypeId()) %>" />

@@ -393,6 +393,10 @@ public class LiferayVideoConverter extends LiferayConverter {
 				"Unable to determine height for " + _inputURL);
 		}
 
+		if (_height == 0) {
+			_height = inputIStreamCoder.getHeight();
+		}
+
 		outputIStreamCoder.setHeight(_height);
 
 		outputIStreamCoder.setPixelType(Type.YUV420P);
@@ -403,6 +407,10 @@ public class LiferayVideoConverter extends LiferayConverter {
 		if (inputIStreamCoder.getWidth() <= 0) {
 			throw new RuntimeException(
 				"Unable to determine width for " + _inputURL);
+		}
+
+		if (_width == 0) {
+			_width = inputIStreamCoder.getWidth();
 		}
 
 		outputIStreamCoder.setWidth(_width);
@@ -432,7 +440,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		LiferayVideoConverter.class);
 
 	private Properties _ffpresetProperties;
-	private int _height = 240;
+	private int _height = 0;
 	private IContainer _inputIContainer;
 	private String _inputURL;
 	private IContainer _outputIContainer;
@@ -440,6 +448,6 @@ public class LiferayVideoConverter extends LiferayConverter {
 	private int _videoBitRate;
 	private String _videoContainer;
 	private IRational _videoFrameRate;
-	private int _width = 320;
+	private int _width = 0;
 
 }

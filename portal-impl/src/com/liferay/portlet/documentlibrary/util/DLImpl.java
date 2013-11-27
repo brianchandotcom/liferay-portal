@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
@@ -1039,7 +1040,7 @@ public class DLImpl implements DL {
 			}
 		}
 
-		Group group = themeDisplay.getScopeGroup();
+		Group group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
 
 		webDavURL.append(group.getFriendlyURL());
 		webDavURL.append("/document_library");

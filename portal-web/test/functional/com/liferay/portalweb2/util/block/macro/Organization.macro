@@ -80,15 +80,17 @@
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="AVAILABLE" value1="Available" />
 		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
-		<execute action="CPUsersandorganizationsAssignmembers#check" locator-key1="USER_TABLE_CHECKBOX_1" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#check" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_USER_NAME_1" value1="${userFirstName} ${userLastName}" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="addSiteCP">
@@ -250,8 +252,8 @@
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
 		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
-		<execute action="CPUsersandorganizationsAssignmembers#uncheck" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsAssignmembers#uncheck" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />

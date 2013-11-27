@@ -59,6 +59,39 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateStatsUserWhenAddingDraftMessage() throws Exception {
+		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		int initialMessageCount = statsUser.getMessageCount();
+
+		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(initialMessageCount, statsUser.getMessageCount());
+	}
+
+	@Test
+	public void testUpdateStatsUserWhenAddingPublishedMessage()
+		throws Exception {
+
+		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		int initialMessageCount = statsUser.getMessageCount();
+
+		addMessage(WorkflowConstants.ACTION_PUBLISH);
+
+		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(
+			initialMessageCount + 1, statsUser.getMessageCount());
+	}
+
+	@Test
 	public void testUpdateStatsUserWhenDeletingDraftMessage() throws Exception {
 		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
 			_group.getGroupId(), TestPropsValues.getUserId());
@@ -115,24 +148,6 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateStatsUserWhenAddingPublishedMessage()
-		throws Exception {
-
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
-
-		addMessage(WorkflowConstants.ACTION_PUBLISH);
-
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		Assert.assertEquals(
-			initialMessageCount + 1, statsUser.getMessageCount());
-	}
-
-	@Test
 	public void testUpdateStatsUserWhenPublishingPublishedMessage()
 		throws Exception {
 
@@ -164,23 +179,6 @@ public class MBStatsUserLocalServiceTest {
 		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		updateMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		Assert.assertEquals(initialMessageCount, statsUser.getMessageCount());
-	}
-
-	@Test
-	public void testUpdateStatsUserWhenAddingDraftMessage()
-		throws Exception {
-
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
-			_group.getGroupId(), TestPropsValues.getUserId());
-
-		int initialMessageCount = statsUser.getMessageCount();
-
-		addMessage(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
 			_group.getGroupId(), TestPropsValues.getUserId());

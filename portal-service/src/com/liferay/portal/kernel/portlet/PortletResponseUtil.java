@@ -278,20 +278,28 @@ public class PortletResponseUtil {
 			int contentLength)
 		throws IOException {
 
-		if (mimeResponse.isCommitted()) {
-			return;
-		}
+		OutputStream outputStream = null;
 
-		if (contentLength > 0) {
-			if (mimeResponse instanceof ResourceResponse) {
-				ResourceResponse resourceResponse =
-					(ResourceResponse)mimeResponse;
-
-				resourceResponse.setContentLength(contentLength);
+		try {
+			if (mimeResponse.isCommitted()) {
+				return;
 			}
-		}
 
-		StreamUtil.transfer(inputStream, mimeResponse.getPortletOutputStream());
+			if (contentLength > 0) {
+				if (mimeResponse instanceof ResourceResponse) {
+					ResourceResponse resourceResponse =
+						(ResourceResponse)mimeResponse;
+
+					resourceResponse.setContentLength(contentLength);
+				}
+			}
+
+			StreamUtil.transfer(
+				inputStream, mimeResponse.getPortletOutputStream(), false);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream, outputStream);
+		}
 	}
 
 	public static void write(MimeResponse mimeResponse, String s)

@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
 long repositoryId = BeanParamUtil.getLong(fileEntry, request, "repositoryId");
@@ -81,6 +83,7 @@ long assetClassPK = 0;
 
 <portlet:actionURL var="uploadMultipleFileEntriesURL">
 	<portlet:param name="struts_action" value="document_library/upload_multiple_file_entries" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= uploadMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'>

@@ -4,6 +4,7 @@
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO_ADD_SITE_BUTTON" />
 
+		<execute action="SOUserBarAddSite#pause" value1="1000" />
 		<execute action="SOUserBarAddSite#type" locator-key1="NAME_FIELD" value1="${siteName}" />
 		<execute action="SOUserBarAddSite#type" locator-key1="DESCRIPTION_FIELD" value1="${siteDescription}" />
 		<execute action="SOUserBarAddSite#click" locator-key1="NEXT_BUTTON" />

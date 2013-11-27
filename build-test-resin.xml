@@ -37,6 +37,26 @@
 			</then>
 		</if>
 
+		<copy
+			file="${app.server.resin.bin.dir}/run.sh"
+			tofile="${app.server.resin.bin.dir}/start.sh"
+		/>
+
+		<replace file="${app.server.resin.bin.dir}/start.sh">
+			<replacetoken>$@</replacetoken>
+			<replacevalue>start</replacevalue>
+		</replace>
+
+		<copy
+			file="${app.server.resin.bin.dir}/run.sh"
+			tofile="${app.server.resin.bin.dir}/stop.sh"
+		/>
+
+		<replace file="${app.server.resin.bin.dir}/stop.sh">
+			<replacetoken>$@</replacetoken>
+			<replacevalue>stop</replacevalue>
+		</replace>
+
 		<antcall target="revert-test-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

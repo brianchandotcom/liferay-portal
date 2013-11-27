@@ -40,14 +40,29 @@
 			<replacevalue>set "JAVA_OPTS=-DSTOP.PORT=8079 -DSTOP.KEY=secret -D</replacevalue>
 		</replace>
 
+		<replace file="${app.server.jetty.bin.dir}/run.sh">
+			<replacetoken>export JAVA_OPTS="-D</replacetoken>
+			<replacevalue>export JAVA_OPTS="-DSTOP.PORT=8079 -DSTOP.KEY=secret -D</replacevalue>
+		</replace>
+
 		<copy
 			file="${app.server.jetty.bin.dir}/run.bat"
 			tofile="${app.server.jetty.bin.dir}/shutdown.bat"
 		/>
 
+		<copy
+			file="${app.server.jetty.bin.dir}/run.sh"
+			tofile="${app.server.jetty.bin.dir}/shutdown.sh"
+		/>
+
 		<replace file="${app.server.jetty.bin.dir}/shutdown.bat">
 			<replacetoken>"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar</replacetoken>
 			<replacevalue>"%JAVA_HOME%/bin/java" %JAVA_OPTS% -jar ../start.jar --stop</replacevalue>
+		</replace>
+
+		<replace file="${app.server.jetty.bin.dir}/shutdown.sh">
+			<replacetoken>$JAVA_HOME/bin/java $JAVA_OPTS -jar ../start.jar</replacetoken>
+			<replacevalue>$JAVA_HOME/bin/java $JAVA_OPTS -jar ../start.jar --stop</replacevalue>
 		</replace>
 
 		<antcall target="revert-test-properties" />

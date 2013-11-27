@@ -67,11 +67,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.lfr-nav-item {
 			span, a {
-				display: inline-block;
+				@include ellipsis;
+
 				max-width: 300px;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
 			}
 		}
 	}

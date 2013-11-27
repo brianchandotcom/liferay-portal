@@ -164,11 +164,10 @@
 				}
 
 				&.toggler-header-collapsed .lfr-page-template-description {
+					@include ellipsis;
+
 					height: 1.6em;
-					overflow: hidden;
 					padding-left: 26px;
-					text-overflow: ellipsis;
-					white-space: nowrap;
 					width: 285px;
 				}
 
@@ -194,9 +193,8 @@
 
 			.add-content-details {
 				.add-content-title, .add-content-description {
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
+					@include ellipsis;
+
 					width: 100%;
 				}
 			}
@@ -279,10 +277,6 @@
 		@include ellipsis;
 
 		margin-bottom: 5px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		width: 100%;
 	}
 }
 

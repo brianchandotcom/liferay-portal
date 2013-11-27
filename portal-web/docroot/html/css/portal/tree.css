@@ -1,3 +1,5 @@
+@import "compass";
+
 .lfr-tree {
 	.tree-label {
 		display: inline-block;
@@ -12,10 +14,7 @@
 		}
 
 		&.tree-node .tree-node-content {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			width: 100%;
+			@include ellipsis;
 
 			.tree-label {
 				display: inline;

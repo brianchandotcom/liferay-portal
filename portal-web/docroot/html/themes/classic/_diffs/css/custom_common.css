@@ -487,11 +487,9 @@
 	/* ---------- Breadcrumbs ---------- */
 
 	.breadcrumb {
-		padding: 3px 15px 2px;
+		@include ellipsis;
 
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		padding: 3px 15px 2px;
 
 		li {
 			display: inline;

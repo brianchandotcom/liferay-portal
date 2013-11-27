@@ -4,14 +4,6 @@
 
 	.header-title {
 		margin: 0.1em;
-
-		.lfr-nav-item {
-			display: inline-block;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			width: 100%;
-		}
 	}
 
 	.header-back-to a {

@@ -311,7 +311,7 @@ public class DLFileEntryTypeLocalServiceImpl
 				getFileEntryTypes(groupIds));
 
 			DLFileEntryType dlFileEntryType =
-				dlFileEntryTypePersistence.fetchByPrimaryKey(
+				dlFileEntryTypePersistence.findByPrimaryKey(
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 			dlFileEntryTypes.add(0, dlFileEntryType);

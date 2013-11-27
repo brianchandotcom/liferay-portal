@@ -223,9 +223,9 @@ public class MBStatsUserLocalServiceTest {
 		serviceContext.setWorkflowAction(workflowAction);
 
 		_message = MBMessageLocalServiceUtil.updateMessage(
-			TestPropsValues.getUserId(), _message.getMessageId(), _message.getSubject(),
-			_message.getBody(), inputStreamOVPs, existingFiles,
-			_message.getPriority(), _message.getAllowPingbacks(),
+			TestPropsValues.getUserId(), _message.getMessageId(),
+			_message.getSubject(), _message.getBody(), inputStreamOVPs,
+			existingFiles, _message.getPriority(), _message.getAllowPingbacks(),
 			serviceContext);
 	}
 

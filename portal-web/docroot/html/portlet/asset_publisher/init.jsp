@@ -19,7 +19,6 @@
 <%@ page import="com.liferay.portal.NoSuchModelException" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@
-page import="com.liferay.portal.kernel.util.PredicateFilter" %><%@
 page import="com.liferay.portlet.asset.DuplicateQueryRuleException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagPropertyException" %><%@
@@ -42,21 +41,7 @@ String selectionStyle = GetterUtil.getString(portletPreferences.getValue("select
 
 long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupId, layout);
 
-long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
-
-availableClassNameIds = ArrayUtil.filter(
-	availableClassNameIds,
-	new PredicateFilter<Long>() {
-
-		public boolean filter(Long classNameId) {
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
-
-			return assetRendererFactory.isSelectable();
-		}
-
-	});
-
-boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
+long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId(), true);
 
 long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, availableClassNameIds);
 
@@ -118,12 +103,7 @@ if (selectionStyle.equals("dynamic")) {
 	AssetPublisherUtil.processAssetEntryQuery(user, portletPreferences, assetEntryQuery);
 }
 
-long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", StringPool.BLANK));
-
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
-
-String assetCategoryTitle = null;
-String assetVocabularyTitle = null;
 
 if (assetCategoryId > 0) {
 	if (selectionStyle.equals("dynamic")) {
@@ -141,15 +121,7 @@ if (assetCategoryId > 0) {
 
 	assetCategory = assetCategory.toEscapedModel();
 
-	assetCategoryTitle = assetCategory.getTitle(locale);
-
-	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
-
-	assetVocabulary = assetVocabulary.toEscapedModel();
-
-	assetVocabularyTitle = assetVocabulary.getTitle(locale);
-
-	PortalUtil.setPageKeywords(assetCategoryTitle, request);
+	PortalUtil.setPageKeywords(assetCategory.getTitle(locale), request);
 }
 
 String assetTagName = ParamUtil.getString(request, "tag");
@@ -188,7 +160,6 @@ boolean showAddContentButton = GetterUtil.getBoolean(portletPreferences.getValue
 boolean showAssetTitle = GetterUtil.getBoolean(portletPreferences.getValue("showAssetTitle", null), true);
 boolean showContextLink = GetterUtil.getBoolean(portletPreferences.getValue("showContextLink", null), true);
 int abstractLength = GetterUtil.getInteger(portletPreferences.getValue("abstractLength", null), 200);
-String assetLinkBehavior = GetterUtil.getString(portletPreferences.getValue("assetLinkBehavior", "showFullContent"));
 String orderByColumn1 = GetterUtil.getString(portletPreferences.getValue("orderByColumn1", "modifiedDate"));
 String orderByColumn2 = GetterUtil.getString(portletPreferences.getValue("orderByColumn2", "title"));
 String orderByType1 = GetterUtil.getString(portletPreferences.getValue("orderByType1", "DESC"));
@@ -208,19 +179,7 @@ assetEntryQuery.setPaginationType(paginationType);
 boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", null));
 boolean showMetadataDescriptions = GetterUtil.getBoolean(portletPreferences.getValue("showMetadataDescriptions", null), true);
 
-boolean defaultAssetPublisher = false;
-
-UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-
-String defaultAssetPublisherPortletId = typeSettingsProperties.getProperty(LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID, StringPool.BLANK);
-
-if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.isNotNull(defaultAssetPublisherPortletId) && defaultAssetPublisherPortletId.equals(portletResource))) {
-	defaultAssetPublisher = true;
-}
-
-boolean enablePermissions = (!portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) ? true : GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
-
-assetEntryQuery.setEnablePermissions(enablePermissions);
+assetEntryQuery.setEnablePermissions(AssetUtil.isEnablePermissions(portletPreferences, portletName));
 
 boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);
 boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null));
@@ -228,63 +187,14 @@ boolean enableComments = GetterUtil.getBoolean(portletPreferences.getValue("enab
 boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null));
 boolean enableTagBasedNavigation = GetterUtil.getBoolean(portletPreferences.getValue("enableTagBasedNavigation", null));
 
-String[] conversions = DocumentConversionUtil.getConversions("html");
 String[] extensions = portletPreferences.getValues("extensions", new String[0]);
 boolean openOfficeServerEnabled = PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED);
-boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);
 boolean enablePrint = GetterUtil.getBoolean(portletPreferences.getValue("enablePrint", null));
 boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableFlags", null));
-boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null), true);
 
-String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", null);
-
-if (Validator.isNull(socialBookmarksDisplayStyle)) {
-	String[] socialBookmarksDisplayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
-
-	socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
-}
-
-String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
-
-String defaultMetadataFields = StringPool.BLANK;
-String allMetadataFields = "create-date,modified-date,publish-date,expiration-date,priority,author,view-count,categories,tags";
-
-String[] metadataFields = StringUtil.split(portletPreferences.getValue("metadataFields", defaultMetadataFields));
-
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null));
-int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
-String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
-String rssName = portletPreferences.getValue("rssName", portletDisplay.getTitle());
-
-String[] assetEntryXmls = portletPreferences.getValues("assetEntryXml", new String[0]);
-
-boolean viewInContext = assetLinkBehavior.equals("viewInPortlet");
-
-boolean showPortletWithNoResults = false;
-boolean groupByClass = (assetVocabularyId == -1);
-
-Map<String, PortletURL> addPortletURLs = null;
+String[] metadataFields = StringUtil.split(portletPreferences.getValue("metadataFields", StringPool.BLANK));
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 
 <%@ include file="/html/portlet/asset_publisher/init-ext.jsp" %>
-
-<%!
-private String _checkViewURL(AssetEntry assetEntry, boolean viewInContext, String viewURL, String currentURL, ThemeDisplay themeDisplay) {
-	if (Validator.isNotNull(viewURL)) {
-		viewURL = HttpUtil.setParameter(viewURL, "inheritRedirect", viewInContext);
-
-		Layout layout = themeDisplay.getLayout();
-
-		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
-
-		if (!viewInContext || (Validator.isNotNull(assetEntryLayoutUuid) && !assetEntryLayoutUuid.equals(layout.getUuid()))) {
-			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
-		}
-	}
-
-	return viewURL;
-}
-%>

@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
+boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
+
 List<AssetRendererFactory> classTypesAssetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
@@ -405,6 +407,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						</span>
 
 						<span class="field-row">
+
+							<%
+							long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
+							%>
+
 							<aui:select inlineField="<%= true %>" inlineLabel="left" label="group-by" name="preferences--assetVocabularyId--">
 								<aui:option value="" />
 								<aui:option label="asset-types" selected="<%= assetVocabularyId == -1 %>" value="-1" />
@@ -481,6 +488,16 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<liferay-ui:error-marker key="errorSection" value="subscriptions" />
 
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+
+			<%
+			boolean enableRSS = GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null));
+
+			int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
+			String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
+			String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+			String rssName = portletPreferences.getValue("rssName", portletDisplay.getTitle());
+			%>
+
 			<liferay-ui:rss-settings
 				delta="<%= rssDelta %>"
 				displayStyle="<%= rssDisplayStyle %>"

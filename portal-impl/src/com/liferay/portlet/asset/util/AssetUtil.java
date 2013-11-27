@@ -33,13 +33,16 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -48,6 +51,8 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
@@ -86,6 +91,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.portlet.PortletMode;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -148,6 +154,31 @@ public class AssetUtil {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, assetCategory.getTitleCurrentValue(),
 			portletURL.toString());
+	}
+
+	public static String checkViewURL(
+		AssetEntry assetEntry, boolean viewInContext, String viewURL,
+		String currentURL, ThemeDisplay themeDisplay) {
+
+		if (Validator.isNull(viewURL)) {
+			return viewURL;
+		}
+
+		viewURL = HttpUtil.setParameter(
+			viewURL, "inheritRedirect", viewInContext);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
+
+		if (!viewInContext ||
+			(Validator.isNotNull(assetEntryLayoutUuid) &&
+		 	!assetEntryLayoutUuid.equals(layout.getUuid()))) {
+
+			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		}
+
+		return viewURL;
 	}
 
 	public static long[] filterCategoryIds(
@@ -499,6 +530,47 @@ public class AssetUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isDefaultAssetPublisher(
+		Layout layout, String portletId, String portletResource) {
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		String defaultAssetPublisherPortletId =
+			typeSettingsProperties.getProperty(
+				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
+				StringPool.BLANK);
+
+		if (Validator.isNull(defaultAssetPublisherPortletId)) {
+			return false;
+		}
+
+		if (defaultAssetPublisherPortletId.equals(portletId) ||
+			defaultAssetPublisherPortletId.equals(portletResource)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEnablePermissions(
+		PortletPreferences portletPreferences, String portletName) {
+
+		if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+			return false;
+		}
+
+		if (portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
+			portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
+
+			return false;
+		}
+
+		return GetterUtil.getBoolean(
+			portletPreferences.getValue("enablePermissions", null));
 	}
 
 	public static boolean isValidWord(String word) {

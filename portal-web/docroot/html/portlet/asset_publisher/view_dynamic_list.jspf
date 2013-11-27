@@ -32,6 +32,8 @@ List<AssetEntry> results = new ArrayList<AssetEntry>();
 int total = 0;
 
 if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinkedAssetEntryId() > 0)) {
+	long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
+
 	if (assetVocabularyId > 0) {
 		AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
 
@@ -113,7 +115,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		searchContainer.setTotal(total);
 	}
-	else if (!groupByClass) {
+	else if (assetVocabularyId != -1) {
 		assetEntryQuery.setClassNameIds(classNameIds);
 
 		if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
@@ -235,7 +237,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 }
 
 if ((total == 0) && (portletDisplayDDMTemplateId == 0)) {
-	if (!showPortletWithNoResults && ((addPortletURLs == null) || addPortletURLs.isEmpty()) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
+	if (((addPortletURLs == null) || addPortletURLs.isEmpty()) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
 		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 	}
 %>

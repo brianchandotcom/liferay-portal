@@ -100,6 +100,38 @@ public class AssetPublisherUtil {
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		return getAssetPublisher().getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			deleteMissingAssetEntries, checkPermission);
+	}
+
+	public static List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			long[] allCategoryIds, String[] allTagNames,
+			boolean deleteMissingAssetEntries, boolean checkPermission)
+		throws Exception {
+
+		return getAssetPublisher().getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			allCategoryIds, allTagNames, deleteMissingAssetEntries,
+			checkPermission);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherUtil#getAssetEntries( PortletRequest,
+	 *             PortletPreferences, PermissionChecker, long[], long[],
+	 *             String[], boolean , boolean)}
+	 */
+	public static List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
 			long[] assetCategoryIds, String[] assetEntryXmls,
 			String[] assetTagNames, boolean deleteMissingAssetEntries,
 			boolean checkPermission)
@@ -111,6 +143,12 @@ public class AssetPublisherUtil {
 			deleteMissingAssetEntries, checkPermission);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             AssetPublisherUtil#getAssetEntries( PortletRequest,
+	 *             PortletPreferences, PermissionChecker, long[], boolean,
+	 *             boolean)}
+	 */
 	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,

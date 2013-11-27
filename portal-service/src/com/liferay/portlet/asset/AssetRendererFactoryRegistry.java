@@ -47,6 +47,8 @@ public interface AssetRendererFactoryRegistry {
 
 	public long[] getClassNameIds(long companyId);
 
+	public long[] getClassNameIds(long companyId, boolean filterSelectable);
+
 	public void register(AssetRendererFactory assetRendererFactory);
 
 	public void unregister(AssetRendererFactory assetRendererFactory);

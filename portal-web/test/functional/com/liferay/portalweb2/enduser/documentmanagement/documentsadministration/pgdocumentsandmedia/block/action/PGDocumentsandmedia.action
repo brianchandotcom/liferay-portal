@@ -21,6 +21,9 @@
 	</command>
 
 	<command name="assertElementNotPresent">
+		<case locator-key1="ENTRIES_DOCUMENT">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
 		<case locator-key1="FOLDER_MENULIST_DELETE">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>

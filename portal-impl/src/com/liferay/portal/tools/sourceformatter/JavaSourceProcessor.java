@@ -1258,6 +1258,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
+			if (trimmedLine.startsWith("* @see ") &&
+				(StringUtil.count(trimmedLine, StringPool.AT) > 1)) {
+
+				processErrorMessage(
+					fileName,
+					"Do not use @see with another annotation: " + fileName +
+						" " + lineCount);
+			}
+
 			checkInefficientStringMethods(line, fileName, lineCount);
 
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {

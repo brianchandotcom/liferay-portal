@@ -538,7 +538,7 @@ if (Validator.isNotNull(content)) {
 
 				var availableLocales = availableTranslationContainer.all('a.lfr-token');
 
-				if (availableLocales.size() == 0) {
+				if (availableLocales.size() === 0) {
 					availableTranslationContainer.removeClass('contains-translations');
 
 					A.one('#<portlet:namespace />availableTranslationsLinks').hide();

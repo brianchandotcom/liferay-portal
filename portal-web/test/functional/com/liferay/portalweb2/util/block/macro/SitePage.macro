@@ -130,6 +130,11 @@
 		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
 	</command>
 
+	<command name="viewFriendlyURLCP">
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="DETAILS_FRIENDLY_BASE_URL" value1="http://localhost:8080/web${siteFriendlyURL}" />
+	</command>
+
 	<command name="viewPageTemplatePG">
 		<execute action="Dockbar#assertTextEquals" locator-key1="PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 		<execute action="Dockbar#click" locator-key1="EDIT" />

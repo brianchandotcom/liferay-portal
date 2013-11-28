@@ -258,6 +258,26 @@
 		<execute action="CPSitesettings#assertTextEquals" locator-key1="NAME_FIELD" value1="${siteNameEdit}" />
 	</command>
 
+	<command name="editFriendlyURLCP">
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+
+		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
+		<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLInvalid}" />
+		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<if>
+			<isset var="friendlyURLInvalid" />
+			<then>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_ERROR_MESSAGE" value1="The friendly URL has too many slashes." />
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURL}" />
+			</then>
+			<else>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
+	</command>
+
 	<command name="joinViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 
@@ -538,6 +558,13 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_LEAVE" value1="Leave" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_MENULIST_DELETE" value1="Delete" />
+	</command>
+
+	<command name="viewSiteFriendlyURLPG">
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
+		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
 	</command>
 
 	<command name="viewSitePG">

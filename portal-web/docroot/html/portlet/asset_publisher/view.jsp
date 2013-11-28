@@ -17,21 +17,9 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-long[] allAssetCategoryIds = new long[0];
-
-String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
-
-if (selectionStyle.equals("dynamic")) {
-	allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(portletPreferences);
-}
-
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
 if (assetCategoryId > 0) {
-	if (selectionStyle.equals("manual")) {
-		allAssetCategoryIds = ArrayUtil.append(allAssetCategoryIds, assetCategoryId);
-	}
-
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
 
 	assetCategory = assetCategory.toEscapedModel();
@@ -75,7 +63,9 @@ for (String curAssetTagName : assetPublisherDisplayContext.getAllAssetTagNames()
 	}
 }
 
-if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && selectionStyle.equals("manual") && ((allAssetCategoryIds.length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
+String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
+
+if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && selectionStyle.equals("manual") && ((assetPublisherDisplayContext.getAllAssetCategoryIds().length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
 	assetPublisherDisplayContext.setSelectionStyle("dynamic");
 }
 
@@ -89,7 +79,7 @@ Map<String, PortletURL> addPortletURLs = null;
 	<%
 	boolean defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource);
 
-	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), allAssetCategoryIds, assetPublisherDisplayContext.getAllAssetTagNames(), null);
+	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), null);
 
 	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 

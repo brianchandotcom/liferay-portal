@@ -47,13 +47,7 @@ if (assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() && (classNameIds
 
 AssetPublisherUtil.processAssetEntryQuery(user, portletPreferences, assetEntryQuery);
 
-if (assetCategoryId > 0) {
-	allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
-
-	if (!ArrayUtil.contains(allAssetCategoryIds, assetCategoryId)) {
-		assetEntryQuery.setAllCategoryIds(ArrayUtil.append(allAssetCategoryIds, assetCategoryId));
-	}
-}
+assetEntryQuery.setAllCategoryIds(assetPublisherDisplayContext.getAllAssetCategoryIds());
 
 if (assetPublisherDisplayContext.isShowOnlyLayoutAssets()) {
 	assetEntryQuery.setLayout(layout);

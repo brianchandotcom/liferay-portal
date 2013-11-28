@@ -16,11 +16,14 @@ package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,7 +33,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.util.RSSUtil;
+
+import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -106,6 +112,47 @@ public class AssetPublisherDisplayContext {
 		return _abstractLength;
 	}
 
+	public String[] getAllAssetTagNames() throws Exception {
+		if (_allAssetTagNames == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_allAssetTagNames = new String[0];
+
+			if (getSelectionStyle().equals("dynamic")) {
+				_allAssetTagNames = AssetPublisherUtil.getAssetTagNames(
+					_portletPreferences, themeDisplay.getScopeGroupId());
+			}
+
+			String assetTagName = ParamUtil.getString(_request, "tag");
+
+			if (Validator.isNotNull(assetTagName)) {
+				if (getSelectionStyle().equals("manual")) {
+					_allAssetTagNames = ArrayUtil.append(
+						_allAssetTagNames, assetTagName);
+				}
+			}
+
+			if (isMergeUrlTags() || isMergeLayoutTags()) {
+				String[] compilerTagNames = getCompilerTagNames();
+
+				if (ArrayUtil.isNotEmpty(compilerTagNames)) {
+					String[] newAssetTagNames = ArrayUtil.append(
+						_allAssetTagNames, compilerTagNames);
+
+					_allAssetTagNames = ArrayUtil.distinct(
+						newAssetTagNames, new StringComparator());
+				}
+			}
+			else {
+				_allAssetTagNames = ArrayUtil.distinct(
+					_allAssetTagNames, new StringComparator());
+			}
+		}
+
+		return _allAssetTagNames;
+	}
+
 	public String getAssetLinkBehavior() {
 		if (_assetLinkBehavior == null) {
 			_assetLinkBehavior = GetterUtil.getString(
@@ -145,6 +192,31 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _classTypeIds;
+	}
+
+	public String[] getCompilerTagNames() {
+		if (_compilerTagNames == null) {
+			_compilerTagNames = new String[0];
+
+			if (isMergeUrlTags()) {
+				_compilerTagNames = ParamUtil.getParameterValues(
+					_request, "tags");
+			}
+
+			if (isMergeLayoutTags()) {
+				Set<String> layoutTagNames = AssetUtil.getLayoutTagNames(
+					_request);
+
+				if (!layoutTagNames.isEmpty()) {
+					_compilerTagNames = ArrayUtil.append(
+						_compilerTagNames,
+						layoutTagNames.toArray(
+							new String[layoutTagNames.size()]));
+				}
+			}
+		}
+
+		return _compilerTagNames;
 	}
 
 	public String getDDMStructureDisplayFieldValue() {
@@ -609,11 +681,13 @@ public class AssetPublisherDisplayContext {
 	}
 
 	private Integer _abstractLength;
+	private String[] _allAssetTagNames;
 	private Boolean _anyAssetType;
 	private String _assetLinkBehavior;
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;
 	private long[] _classTypeIds;
+	private String[] _compilerTagNames;
 	private String _ddmStructureDisplayFieldValue;
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;

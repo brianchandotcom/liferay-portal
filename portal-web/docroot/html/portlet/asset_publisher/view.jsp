@@ -18,14 +18,11 @@
 
 <%
 long[] allAssetCategoryIds = new long[0];
-String[] allAssetTagNames = new String[0];
 
 String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
 
 if (selectionStyle.equals("dynamic")) {
 	allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(portletPreferences);
-
-	allAssetTagNames = AssetPublisherUtil.getAssetTagNames(portletPreferences, scopeGroupId);
 }
 
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
@@ -45,37 +42,13 @@ if (assetCategoryId > 0) {
 String assetTagName = ParamUtil.getString(request, "tag");
 
 if (Validator.isNotNull(assetTagName)) {
-	if (selectionStyle.equals("manual")) {
-		allAssetTagNames = ArrayUtil.append(allAssetTagNames, assetTagName);
-	}
-
 	PortalUtil.setPageKeywords(assetTagName, request);
 }
 
 if (assetPublisherDisplayContext.isMergeUrlTags() || assetPublisherDisplayContext.isMergeLayoutTags()) {
-	String[] compilerTagNames = new String[0];
+	String[] compilerTagNames = assetPublisherDisplayContext.getCompilerTagNames();
 
-	if (assetPublisherDisplayContext.isMergeUrlTags()) {
-		compilerTagNames = ParamUtil.getParameterValues(request, "tags");
-	}
-
-	if (assetPublisherDisplayContext.isMergeLayoutTags()) {
-		Set<String> layoutTagNames = AssetUtil.getLayoutTagNames(request);
-
-		if (!layoutTagNames.isEmpty()) {
-			compilerTagNames = ArrayUtil.append(compilerTagNames, layoutTagNames.toArray(new String[layoutTagNames.size()]));
-		}
-	}
-
-	String titleEntry = null;
-
-	if (ArrayUtil.isNotEmpty(compilerTagNames)) {
-		String[] newAssetTagNames = ArrayUtil.append(allAssetTagNames, compilerTagNames);
-
-		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());
-
-		titleEntry = compilerTagNames[compilerTagNames.length - 1];
-	}
+	String titleEntry = ArrayUtil.isNotEmpty(compilerTagNames) ? compilerTagNames[compilerTagNames.length - 1] : null;
 
 	String portletTitle = HtmlUtil.unescape(portletDisplay.getTitle());
 
@@ -83,11 +56,8 @@ if (assetPublisherDisplayContext.isMergeUrlTags() || assetPublisherDisplayContex
 
 	renderResponse.setTitle(portletTitle);
 }
-else {
-	allAssetTagNames = ArrayUtil.distinct(allAssetTagNames, new StringComparator());
-}
 
-for (String curAssetTagName : allAssetTagNames) {
+for (String curAssetTagName : assetPublisherDisplayContext.getAllAssetTagNames()) {
 	try {
 		AssetTag assetTag = AssetTagLocalServiceUtil.getTag(scopeGroupId, curAssetTagName);
 
@@ -105,7 +75,7 @@ for (String curAssetTagName : allAssetTagNames) {
 	}
 }
 
-if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && selectionStyle.equals("manual") && ((allAssetCategoryIds.length > 0) || (allAssetTagNames.length > 0))) {
+if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && selectionStyle.equals("manual") && ((allAssetCategoryIds.length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
 	assetPublisherDisplayContext.setSelectionStyle("dynamic");
 }
 
@@ -119,7 +89,7 @@ Map<String, PortletURL> addPortletURLs = null;
 	<%
 	boolean defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource);
 
-	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), allAssetCategoryIds, allAssetTagNames, null);
+	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), allAssetCategoryIds, assetPublisherDisplayContext.getAllAssetTagNames(), null);
 
 	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 

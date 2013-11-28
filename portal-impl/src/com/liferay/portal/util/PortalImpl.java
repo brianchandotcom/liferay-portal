@@ -3048,7 +3048,9 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		if (Validator.isNotNull(virtualHostname)) {
+		if (Validator.isNotNull(virtualHostname) &&
+			!virtualHostname.equals(_LOCALHOST)) {
+
 			String portalURL = getPortalURL(
 				virtualHostname, themeDisplay.getServerPort(),
 				themeDisplay.isSecure());

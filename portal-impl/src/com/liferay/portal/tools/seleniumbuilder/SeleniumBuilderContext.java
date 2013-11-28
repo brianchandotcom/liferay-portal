@@ -316,6 +316,91 @@ public class SeleniumBuilderContext {
 		return _macroClassNames.get(macroName);
 	}
 
+	public Set<Element> getMacroCommandElements(String macroName) {
+		Set<Element> commandElementsSet = new HashSet<Element>();
+
+		Element macroRootElement = getMacroRootElement(macroName);
+
+		List<Element> macroCommandElements = macroRootElement.elements(
+			"command");
+
+		String extendsName = macroRootElement.attributeValue("extends");
+
+		if (extendsName != null) {
+			Element extendsRootElement = getMacroRootElement(extendsName);
+
+			List<Element> extendsCommandElements = extendsRootElement.elements(
+				"command");
+
+			Set<String> commandNames = getMacroCommandNames(macroName);
+
+			for (String commandName : commandNames) {
+				boolean macroElementFound = false;
+
+				for (Element macroCommandElement : macroCommandElements) {
+					String macroCommandName =
+						macroCommandElement.attributeValue("name");
+
+					if (commandName.equals(macroCommandName)) {
+						commandElementsSet.add(macroCommandElement);
+
+						macroElementFound = true;
+
+						break;
+					}
+				}
+
+				if (macroElementFound) {
+					continue;
+				}
+
+				for (Element extendsCommandElement : extendsCommandElements) {
+					String extendsCommandName =
+						extendsCommandElement.attributeValue("name");
+
+					if (commandName.equals(extendsCommandName)) {
+						commandElementsSet.add(extendsCommandElement);
+
+						break;
+					}
+				}
+			}
+		}
+		else {
+			commandElementsSet.addAll(macroCommandElements);
+		}
+
+		return commandElementsSet;
+	}
+
+	public Set<String> getMacroCommandNames(String macroName) {
+		Set<String> commandNames = new TreeSet<String>();
+
+		Element macroRootElement = getMacroRootElement(macroName);
+
+		List<Element> macroCommandElements = macroRootElement.elements(
+			"command");
+
+		for (Element macroCommandElement : macroCommandElements) {
+			commandNames.add(macroCommandElement.attributeValue("name"));
+		}
+
+		String extendsName = macroRootElement.attributeValue("extends");
+
+		if (extendsName != null) {
+			Element extendsRootElement = getMacroRootElement(extendsName);
+
+			List<Element> extendsCommandElements = extendsRootElement.elements(
+				"command");
+
+			for (Element extendsCommandElement : extendsCommandElements) {
+				commandNames.add(extendsCommandElement.attributeValue("name"));
+			}
+		}
+
+		return commandNames;
+	}
+
 	public String getMacroFileName(String macroName) {
 		return _macroFileNames.get(macroName);
 	}
@@ -629,6 +714,27 @@ public class SeleniumBuilderContext {
 
 		String macroFileName = getMacroFileName(macroName);
 
+		String extendsName = rootElement.attributeValue("extends");
+
+		if (extendsName != null) {
+			if (!_macroNames.contains(extendsName)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1006, macroFileName, rootElement, "extends");
+			}
+
+			if (macroName.equals(extendsName)) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1006, macroFileName, rootElement, "extends");
+			}
+
+			Element extendsRootElement = getMacroRootElement(extendsName);
+
+			if (extendsRootElement.attributeValue("extends") != null) {
+				_seleniumBuilderFileUtil.throwValidationException(
+					1006, macroFileName, rootElement, "extends");
+			}
+		}
+
 		validateVarElements(rootElement, macroFileName);
 
 		List<Element> commandElements =
@@ -868,11 +974,7 @@ public class SeleniumBuilderContext {
 			return false;
 		}
 
-		Element rootElement = getMacroRootElement(name);
-
-		List<Element> commandElements =
-			_seleniumBuilderFileUtil.getAllChildElements(
-				rootElement, "command");
+		Set<Element> commandElements = getMacroCommandElements(name);
 
 		for (Element commandElement : commandElements) {
 			String commandName = commandElement.attributeValue("name");

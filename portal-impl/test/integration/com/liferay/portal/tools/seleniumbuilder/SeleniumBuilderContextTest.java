@@ -338,6 +338,30 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testMacroDefinitionElement1006_2() throws Exception {
+		test(
+			"MacroDefinitionElement1006_2.macro",
+			"Error 1006: Invalid extends attribute value in " + _DIR_NAME +
+				"/MacroDefinitionElement1006_2.macro:1");
+	}
+
+	@Test
+	public void testMacroDefinitionElement1006_3() throws Exception {
+		test(
+			"MacroDefinitionElement1006_3.macro",
+			"Error 1006: Invalid extends attribute value in " + _DIR_NAME +
+				"/MacroDefinitionElement1006_3.macro:1");
+	}
+
+	@Test
+	public void testMacroDefinitionElement1006_4() throws Exception {
+		test(
+			"MacroDefinitionElement1006_4.macro",
+			"Error 1006: Invalid extends attribute value in " + _DIR_NAME +
+				"/MacroDefinitionElement1006_4.macro:1");
+	}
+
+	@Test
 	public void testMacroExecuteElement1006_3() throws Exception {
 		test(
 			"MacroExecuteElement1006_3.macro",

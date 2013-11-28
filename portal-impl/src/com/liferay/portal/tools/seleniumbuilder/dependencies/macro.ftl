@@ -6,6 +6,12 @@ import com.liferay.portalweb2.util.block.macro.BaseMacro;
 
 <#assign rootElement = seleniumBuilderContext.getMacroRootElement(macroName)>
 
+<#if rootElement.attributeValue("extends")??>
+	<#assign extendsName = rootElement.attributeValue("extends")>
+
+	import ${seleniumBuilderContext.getMacroClassName(extendsName)};
+</#if>
+
 <#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(rootElement, "action")>
 
 <#list childElementAttributeValues as childElementAttributeValue>
@@ -21,7 +27,13 @@ import com.liferay.portalweb2.util.block.macro.BaseMacro;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)} extends BaseMacro {
+public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)}
+
+<#if extendsName??>
+	extends ${extendsName}Macro {
+<#else>
+	extends BaseMacro {
+</#if>
 
 	public ${seleniumBuilderContext.getMacroSimpleClassName(macroName)}(LiferaySelenium liferaySelenium) {
 		super(liferaySelenium);

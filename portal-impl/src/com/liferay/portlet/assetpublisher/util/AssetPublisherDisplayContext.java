@@ -112,6 +112,28 @@ public class AssetPublisherDisplayContext {
 		return _abstractLength;
 	}
 
+	public long[] getAllAssetCategoryIds() throws Exception {
+		if (_allAssetCategoryIds == null) {
+			_allAssetCategoryIds = new long[0];
+
+			if (getSelectionStyle().equals("dynamic")) {
+				_allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
+					_portletPreferences);
+			}
+
+			long assetCategoryId = ParamUtil.getLong(_request, "categoryId");
+
+			if (assetCategoryId > 0) {
+				if (getSelectionStyle().equals("manual")) {
+					_allAssetCategoryIds = ArrayUtil.append(
+						_allAssetCategoryIds, assetCategoryId);
+				}
+			}
+		}
+
+		return _allAssetCategoryIds;
+	}
+
 	public String[] getAllAssetTagNames() throws Exception {
 		if (_allAssetTagNames == null) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -673,6 +695,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	private Integer _abstractLength;
+	private long[] _allAssetCategoryIds;
 	private String[] _allAssetTagNames;
 	private Boolean _anyAssetType;
 	private String _assetLinkBehavior;

@@ -31,6 +31,10 @@ portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 %>
 
+<div class="alert alert-error hide" id="<portlet:namespace />message">
+	<span class="error-message"><%= UnicodeLanguageUtil.get(locale, "the-field-value-cannot-be-empty") %></span>
+</div>
+
 <div id="<portlet:namespace />selectDDMStructureFieldForm">
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
@@ -144,13 +148,22 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					success: function(event, id, obj) {
 						var respondData = this.get('responseData');
 
-						result.className = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
-						result.displayValue = respondData.displayValue;
-						result.value = respondData.value;
+						var message = A.one('#<portlet:namespace />message');
 
-						Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+						if (respondData.success) {
+							result.className = '<%= AssetPublisherUtil.getClassName(assetRendererFactory) %>';
+							result.displayValue = respondData.displayValue;
+							result.value = respondData.value;
 
-						Util.getWindow().hide();
+							message.hide();
+
+							Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+							Util.getWindow().hide();
+						}
+						else {
+							message.show();
+						}
 					}
 				}
 			}

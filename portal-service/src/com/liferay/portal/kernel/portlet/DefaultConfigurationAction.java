@@ -55,6 +55,7 @@ import javax.servlet.ServletContext;
  * @author Raymond Augé
  */
 public class DefaultConfigurationAction
+	extends LiferayPortlet
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
 	public static final String PREFERENCES_PREFIX = "preferences--";

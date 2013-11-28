@@ -138,26 +138,6 @@
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="addFriendlyURLCP">
-		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
-
-		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
-		<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
-		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<if>
-			<isset var="friendlyURLSlashes" />
-			<then>
-				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
-				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_ERROR_MESSAGE" value1="The friendly URL has too many slashes." />
-				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="/site-name" />
-			</then>
-			<else>
-				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-			</else>
-		</if>
-	</command>
-
 	<command name="addSiteTemplateCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Site Template" />
@@ -238,6 +218,26 @@
 
 		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPSitesettings#assertTextEquals" locator-key1="NAME_FIELD" value1="${siteNameEdit}" />
+	</command>
+
+	<command name="editFriendlyURLCP">
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+
+		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
+		<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLInvalid}" />
+		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<if>
+			<isset var="friendlyURLInvalid" />
+			<then>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Your request failed to complete." />
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_ERROR_MESSAGE" value1="The friendly URL has too many slashes." />
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURL}" />
+			</then>
+			<else>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
 	</command>
 
 	<command name="joinViaMySitesPG">

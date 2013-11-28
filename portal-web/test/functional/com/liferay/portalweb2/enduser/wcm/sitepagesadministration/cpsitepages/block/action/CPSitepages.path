@@ -199,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_FRIENDLY_BASE_URL</td>
+	<td>//span[@id='_156_urlBase']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_FRIENDLY_URL_FIELD</td>
 	<td>//input[@id='_156_friendlyURL']</td>
 	<td></td>

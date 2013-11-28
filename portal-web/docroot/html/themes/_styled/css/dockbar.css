@@ -458,7 +458,6 @@ $editLayoutPanelWidth: 460px;
 
 				.container .nav-collapse {
 					z-index: 400;
-					-webkit-transform: none;
 
 					&.open {
 						overflow: visible;
@@ -1047,4 +1046,10 @@ $editLayoutPanelWidth: 460px;
 			width: 515px;
 		}
 	}
+
+	/* LPS-42547 */
+
+	.dockbar-split .dockbar .nav-collapse {
+		-webkit-transform: none;
+    }
 }

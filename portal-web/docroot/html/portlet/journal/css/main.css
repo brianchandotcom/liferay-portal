@@ -146,12 +146,15 @@
 			&[data-repeatable="true"], .field-wrapper {
 				border: 1px solid #D0D0D0;
 				border-left-width: 10px;
-				margin: 7px 0 15px 5px;
 				padding: 7px 10px 10px;
 			}
 
 			&[data-repeatable="true"]:nth-of-type(even) {
 				background-color: #F5F5F5;
+			}
+
+			.field-wrapper {
+				margin: 7px 0 0 5px;
 			}
 		}
 

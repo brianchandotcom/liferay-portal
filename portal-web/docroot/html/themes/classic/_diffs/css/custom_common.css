@@ -487,9 +487,13 @@
 	/* ---------- Breadcrumbs ---------- */
 
 	.breadcrumb {
+		@include ellipsis;
+
 		padding: 3px 15px 2px;
 
 		li {
+			display: inline;
+
 			span.divider {
 				color: #999;
 				font-weight: bold;

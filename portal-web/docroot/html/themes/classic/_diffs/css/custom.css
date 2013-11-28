@@ -64,6 +64,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.site-navigation {
 		margin-bottom: 6px;
+
+		.lfr-nav-item {
+			span, a {
+				@include ellipsis;
+
+				max-width: 300px;
+			}
+		}
 	}
 
 	.taglib-portal-message {

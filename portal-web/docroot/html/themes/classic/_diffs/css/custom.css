@@ -223,7 +223,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 							}
 
 							&.toggle-controls-link {
-								background: #92F545;
+								background: #80e000;
 
 								@include respond-to(phone, tablet) {
 									background: transparent;

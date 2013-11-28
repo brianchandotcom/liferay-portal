@@ -28,6 +28,10 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 
+		<case locator-key1="USER_NAME">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
 		<case comparator="startsWith" locator-key1="ADMIN_SITE_ADMINISTRATION">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

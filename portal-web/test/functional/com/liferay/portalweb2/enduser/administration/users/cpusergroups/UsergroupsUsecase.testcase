@@ -1,0 +1,432 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="UserGroup#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="UserGroupPrivatePageInheritance" priority="5">
+		<property name="custom.properties" value="layout.user.private.layouts.auto.create=false" />
+		<property name="custom.properties" value="user.groups.copy.layouts.to.user.personal.site=true" />
+
+		<var name="sitePageName" value="Test User Group Page 1" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userGroupName" value="UG UserGroup Name" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addPageCP">
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePageType" value="Private" />
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userFirstName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_MANAGE_PAGES" value1="Manage Pages" />
+
+		<execute action="CPUsersandorganizationsManagepages#assertClick" locator-key1="NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
+		<execute action="CPUsersandorganizationsManagepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
+		<execute action="CPUsersandorganizationsManagepages#assertElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute action="Home#click" locator-key1="PAGE_NAVIGATION_BAR" />
+		<execute action="Home#assertTextEquals" locator-key1="PAGE_1" value1="${sitePageName}" />
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
+	<command name="UserGroupSiteOwnerPermissions" priority="5">
+		<var name="permissionDefinitionKey1" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionValue1" value="Go to Control Panel" />
+		<var name="permissionDefinitionValue2" value="Access in Site Administration" />
+		<var name="permissionNavigationKey1" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
+		<var name="permissionNavigationKey2" value="SITE_ADMIN_CONTENT_BOOKMARKS" />
+		<var name="permissionNavigationValue1" value="General Permissions" />
+		<var name="permissionNavigationValue2" value="Bookmarks" />
+		<var name="roleName1" value="Authenticated" />
+		<var name="roleName2" value="Test UserGroup Role" />
+		<var name="roleType" value="Regular" />
+		<var name="siteScopeName" value="Site Name" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress1" value="userea1@liferay.com" />
+		<var name="userEmailAddress2" value="userea2@liferay.com" />
+		<var name="userEmailAddress3" value="userea3@liferay.com" />
+		<var name="userEmailAddress4" value="userea4@liferay.com" />
+		<var name="userEmailAddress5" value="userea5@liferay.com" />
+		<var name="userFirstName1" value="userfn1" />
+		<var name="userFirstName2" value="userfn2" />
+		<var name="userFirstName3" value="userfn3" />
+		<var name="userFirstName4" value="userfn4" />
+		<var name="userFirstName5" value="userfn5" />
+		<var name="userGroupName" value="UG UserGroup Name" />
+		<var name="userLastName1" value="userln1" />
+		<var name="userLastName2" value="userln2" />
+		<var name="userLastName3" value="userln3" />
+		<var name="userLastName4" value="userln4" />
+		<var name="userLastName5" value="userln5" />
+		<var name="userScreenName1" value="usersn1" />
+		<var name="userScreenName2" value="usersn2" />
+		<var name="userScreenName3" value="usersn3" />
+		<var name="userScreenName4" value="usersn4" />
+		<var name="userScreenName5" value="usersn5" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue1}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey1}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue1}" />
+			<var name="roleName" value="${roleName1}" />
+			<var name="roleUser" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userFirstName" value="${userFirstName1}" />
+			<var name="userLastName" value="${userLastName1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="userScreenName" value="${userScreenName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userFirstName" value="${userFirstName2}" />
+			<var name="userLastName" value="${userLastName2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress2}" />
+			<var name="userScreenName" value="${userScreenName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userFirstName" value="${userFirstName3}" />
+			<var name="userLastName" value="${userLastName3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="userScreenName" value="${userScreenName3}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress4}" />
+			<var name="userFirstName" value="${userFirstName4}" />
+			<var name="userLastName" value="${userLastName4}" />
+			<var name="userScreenName" value="${userScreenName4}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress4}" />
+			<var name="userScreenName" value="${userScreenName4}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress5}" />
+			<var name="userFirstName" value="${userFirstName5}" />
+			<var name="userLastName" value="${userLastName5}" />
+			<var name="userScreenName" value="${userScreenName5}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress5}" />
+			<var name="userScreenName" value="${userScreenName5}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignAllMembersCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
+
+		<execute macro="Site#addAllMembersCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
+
+		<execute macro="Site#addMemberUserGroupCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
+
+		<execute macro="Site#assignSiteRolesSiteOwnerUserGroupsCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="userEmailAddress" value="${userEmailAddress3}" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
+
+		<var name="key_userScreenName" value="${userScreenName3}" />
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName3} ${userLastName3}" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName3}" />
+		<execute action="CPSitememberships#assertClick" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
+
+		<execute macro="Site#removeSiteRolesSiteOwnerUserGroupsCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="userEmailAddress" value="${userEmailAddress5}" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue2}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey2}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue2}" />
+			<var name="roleName" value="${roleName2}" />
+			<var name="roleUser" value="${roleName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignMembersUserGroupsCP">
+			<var name="roleName" value="${roleName2}" />
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="userEmailAddress" value="${userEmailAddress1}" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP" />
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#removeMemberCP">
+			<var name="userGroupName" value="${userGroupName}" />
+			<var name="userScreenName" value="test" />
+		</execute>
+	</command>
+</definition>

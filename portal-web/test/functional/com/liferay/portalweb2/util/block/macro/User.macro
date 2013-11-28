@@ -443,6 +443,18 @@
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="expandRootCP">
+		<execute action="CPUsersandorganizationsManagepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
+		<execute action="CPUsersandorganizationsManagepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+
+		<if>
+			<condition action="CPUsersandorganizationsManagepages#isElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<then>
+				<execute action="CPUsersandorganizationsManagepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
+			</then>
+		</if>
+	</command>
+
 	<command name="firstLoginPG">
 		<execute macro="Page#openURL" />
 

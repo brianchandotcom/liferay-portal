@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_USER_GROUP_FIELD</td>
+	<td>//input[@id='toggle_id_users_groups_admin_group_searchkeywords']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_BUTTON</td>
 	<td>//button[contains(.,'Search')]</td>
 	<td></td>
@@ -80,7 +85,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--USER_TABLE-->
+<!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
 	<td>//input[@name='_174_allRowIds']</td>
@@ -94,6 +99,27 @@
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
 	<td>//div[contains(@id,'organizationsSearchContainerSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_TABLE-->
+<tr>
+	<td>USER_GROUP_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_174_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]/input[@name='_174_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_NAME</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
 	<td></td>
 </tr>
 </tbody>

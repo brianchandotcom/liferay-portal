@@ -64,6 +64,58 @@
 		</if>
 	</command>
 
+	<command name="addPageCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_MANAGE_SITE_PAGES" value1="Manage Site Pages" />
+
+		<if>
+			<equals arg1="${sitePageType}" arg2="Private" />
+			<then>
+				<execute action="CPUsergroupsSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
+			</then>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Public" />
+				<then>
+					<execute action="CPUsergroupsSitepages#assertClick" locator-key1="NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var sitePageType. Must be (Private|Public)." />
+			</else>
+		</if>
+
+		<execute action="CPUsergroupsSitepages#assertClick" locator-key1="TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute action="CPUsergroupsSitepages#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
+		<execute action="CPUsergroupsSitepages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="CPUsergroupsSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="UserGroup#expandRootCP" />
+
+		<execute action="CPUsergroupsSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
+	</command>
+
+	<command name="assignAllMembersCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="AVAILABLE" value1="Available" />
+		<execute action="CPUsergroupsAssignmembers#check" locator-key1="USER_TABLE_ALL_CHECKBOX" />
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute action="CPUsergroupsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
+		<execute action="CPUsergroupsAssignmembers#assertChecked" locator-key1="USER_TABLE_ALL_CHECKBOX" />
+	</command>
+
 	<command name="assignMemberCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -127,6 +179,18 @@
 
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupNameEdit}" />
+	</command>
+
+	<command name="expandRootCP">
+		<execute action="CPUsergroupsSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
+		<execute action="CPUsergroupsSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+
+		<if>
+			<condition action="CPUsergroupsSitepages#isElementNotPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
+			<then>
+				<execute action="CPUsergroupsSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
+			</then>
+		</if>
 	</command>
 
 	<command name="removeMemberCP">

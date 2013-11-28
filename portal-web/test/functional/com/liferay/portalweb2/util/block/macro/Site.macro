@@ -2,6 +2,14 @@
 	<var name="siteMember" value="User" />
 	<var name="siteType" value="Open" />
 
+	<command name="addAllMembersCP">
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_ADD_MEMBERS" value1="Add Members" />
+		<execute action="CPSitememberships#assertClick" locator-key1="ADD_MEMBERS_MENULIST_USER" value1="User" />
+		<execute action="CPSitemembershipsAddmembers#check" locator-key1="USER_TABLE_ALL_CHECKBOX" />
+		<execute action="CPSitemembershipsAddmembers#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addBlankCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Blank" />
@@ -138,6 +146,19 @@
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addMemberUserGroupCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_ADD_MEMBERS" value1="Add Members" />
+		<execute action="CPSitememberships#assertClick" locator-key1="ADD_MEMBERS_MENULIST_USER_GROUPS" value1="User Group" />
+		<execute action="CPSitemembershipsAddmembers#type" locator-key1="SEARCH_USER_GROUP_FIELD" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsAddmembers#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsAddmembers#check" locator-key1="USER_GROUP_TABLE_CHECKBOX" />
+		<execute action="CPSitemembershipsAddmembers#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addSiteTemplateCP">
 		<execute macro="Site#addCP">
 			<var name="siteType" value="Site Template" />
@@ -194,6 +215,23 @@
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+	</command>
+
+	<command name="assignSiteRolesSiteOwnerUserGroupsCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPSitememberships#assertClick" locator-key1="NAVIGATION_USER_GROUPS" value1="User Groups" />
+		<execute action="CPSitemembershipsUsergroups#type" locator-key1="SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions"/>
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+
+		<execute action="CPSitemembershipsUsergroups#check" locator-key1="SITE_OWNER_CHECKBOX" />
+		<execute action="CPSitemembershipsUsergroups#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
+		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitemembershipsUsergroups#assertChecked" locator-key1="SITE_OWNER_CHECKBOX" />
 	</command>
 
 	<command name="deleteCP">
@@ -303,6 +341,23 @@
 		<execute action="CPSitememberships#assertClick" locator-key1="USER_MENULIST_REMOVE_MEMBERSHIP" value1="Remove Membership" />
 
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="removeSiteRolesSiteOwnerUserGroupsCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPSitememberships#assertClick" locator-key1="NAVIGATION_USER_GROUPS" value1="User Groups" />
+		<execute action="CPSitemembershipsUsergroups#type" locator-key1="SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+
+		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions"/>
+		<execute action="CPSitemembershipsUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+
+		<execute action="CPSitemembershipsUsergroups#uncheck" locator-key1="SITE_OWNER_CHECKBOX" />
+		<execute action="CPSitemembershipsUsergroups#click" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" />
+		<execute action="CPSitemembershipsUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitemembershipsUsergroups#assertNotChecked" locator-key1="SITE_OWNER_CHECKBOX" />
 	</command>
 
 	<command name="searchCP">

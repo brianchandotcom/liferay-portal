@@ -22,6 +22,7 @@ PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getA
 ManifestSummary manifestSummary = (ManifestSummary)request.getAttribute("render_controls.jsp-manifestSummary");
 String portletId =(String)request.getAttribute("render_controls.jsp-portletId");
 
+controlsLoop:
 for (int i = 0; i < controls.length; i++) {
 %>
 
@@ -45,7 +46,7 @@ for (int i = 0; i < controls.length; i++) {
 						controlLabel += modelAdditionCount > 0 ? " (" + modelAdditionCount + ")" : StringPool.BLANK;
 					}
 					else {
-						continue;
+						continue controlsLoop;
 					}
 				}
 

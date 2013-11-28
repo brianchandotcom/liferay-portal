@@ -55,14 +55,6 @@ if (assetCategoryId > 0) {
 	}
 }
 
-if (Validator.isNotNull(assetTagName)) {
-	if (!ArrayUtil.contains(allAssetTagNames, assetTagName)) {
-		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(assetPublisherDisplayContext.getGroupIds(), ArrayUtil.append(allAssetTagNames, assetTagName));
-
-		assetEntryQuery.setAllTagIds(assetTagIds);
-	}
-}
-
 if (assetPublisherDisplayContext.isShowOnlyLayoutAssets()) {
 	assetEntryQuery.setLayout(layout);
 }
@@ -77,30 +69,7 @@ if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 
 assetEntryQuery.setPaginationType(assetPublisherDisplayContext.getPaginationType());
 assetEntryQuery.setEnablePermissions(assetPublisherDisplayContext.isEnablePermissions());
-
-if (assetPublisherDisplayContext.isMergeUrlTags() || assetPublisherDisplayContext.isMergeLayoutTags()) {
-	String[] compilerTagNames = new String[0];
-
-	if (assetPublisherDisplayContext.isMergeUrlTags()) {
-		compilerTagNames = ParamUtil.getParameterValues(request, "tags");
-	}
-
-	if (assetPublisherDisplayContext.isMergeLayoutTags()) {
-		Set<String> layoutTagNames = AssetUtil.getLayoutTagNames(request);
-
-		if (!layoutTagNames.isEmpty()) {
-			compilerTagNames = ArrayUtil.append(compilerTagNames, layoutTagNames.toArray(new String[layoutTagNames.size()]));
-		}
-	}
-
-	if (ArrayUtil.isNotEmpty(compilerTagNames)) {
-		String[] newAssetTagNames = ArrayUtil.append(allAssetTagNames, compilerTagNames);
-
-		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());
-
-		assetEntryQuery.setAllTagIds(AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames));
-	}
-}
+assetEntryQuery.setAllTagIds(AssetTagLocalServiceUtil.getTagIds(scopeGroupId, assetPublisherDisplayContext.getAllAssetTagNames()));
 
 int end = searchContainer.getEnd();
 int start = searchContainer.getStart();

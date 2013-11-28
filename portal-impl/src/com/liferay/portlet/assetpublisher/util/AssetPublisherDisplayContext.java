@@ -134,20 +134,12 @@ public class AssetPublisherDisplayContext {
 			}
 
 			if (isMergeUrlTags() || isMergeLayoutTags()) {
-				String[] compilerTagNames = getCompilerTagNames();
-
-				if (ArrayUtil.isNotEmpty(compilerTagNames)) {
-					String[] newAssetTagNames = ArrayUtil.append(
-						_allAssetTagNames, compilerTagNames);
-
-					_allAssetTagNames = ArrayUtil.distinct(
-						newAssetTagNames, new StringComparator());
-				}
+				_allAssetTagNames = ArrayUtil.append(
+					_allAssetTagNames, getCompilerTagNames());
 			}
-			else {
-				_allAssetTagNames = ArrayUtil.distinct(
-					_allAssetTagNames, new StringComparator());
-			}
+
+			_allAssetTagNames = ArrayUtil.distinct(
+				_allAssetTagNames, new StringComparator());
 		}
 
 		return _allAssetTagNames;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.Map;
 /**
  * @author Juan Fernández
  */
+@ProviderType
 public interface TemplateHandler {
 
 	/**

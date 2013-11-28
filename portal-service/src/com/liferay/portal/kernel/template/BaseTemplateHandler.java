@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -33,6 +35,7 @@ import java.util.List;
 /**
  * @author Jorge Ferrer
  */
+@ProviderType
 public abstract class BaseTemplateHandler implements TemplateHandler {
 
 	@Override

@@ -111,7 +111,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	if (!assetEntry.isNew() && assetEntry.isVisible()) {
 		AssetEntry incrementAssetEntry = null;
 
-		if (AssetUtil.isEnablePermissions(portletPreferences, portletName)) {
+		if (assetPublisherDisplayContext.isEnablePermissions()) {
 			incrementAssetEntry = AssetEntryServiceUtil.incrementViewCounter(assetEntry.getClassName(), assetEntry.getClassPK());
 		}
 		else {

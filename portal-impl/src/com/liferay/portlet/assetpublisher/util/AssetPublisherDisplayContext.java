@@ -411,6 +411,36 @@ public class AssetPublisherDisplayContext {
 		return _enableFlags;
 	}
 
+	public Boolean isEnablePermissions() {
+		if (_enablePermissions == null) {
+			if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
+				_enablePermissions = false;
+
+				return _enablePermissions;
+			}
+
+			PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			if (portletConfig != null) {
+				String portletName = portletConfig.getPortletName();
+
+				if (portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
+					portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
+
+					_enablePermissions = false;
+
+					return _enablePermissions;
+				}
+			}
+
+			_enablePermissions = GetterUtil.getBoolean(
+				_portletPreferences.getValue("enablePermissions", null));
+		}
+
+		return _enablePermissions;
+	}
+
 	public boolean isEnablePrint() {
 		if (_enablePrint == null) {
 			_enablePrint = GetterUtil.getBoolean(
@@ -593,6 +623,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
 	private Boolean _enableFlags;
+	private Boolean _enablePermissions;
 	private Boolean _enablePrint;
 	private Boolean _enableRatings;
 	private Boolean _enableRelatedAssets;

@@ -51,8 +51,6 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchTagException;
@@ -91,7 +89,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -554,23 +551,6 @@ public class AssetUtil {
 		}
 
 		return false;
-	}
-
-	public static boolean isEnablePermissions(
-		PortletPreferences portletPreferences, String portletName) {
-
-		if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
-			return false;
-		}
-
-		if (portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
-			portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
-
-			return false;
-		}
-
-		return GetterUtil.getBoolean(
-			portletPreferences.getValue("enablePermissions", null));
 	}
 
 	public static boolean isValidWord(String word) {

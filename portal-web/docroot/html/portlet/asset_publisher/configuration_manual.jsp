@@ -42,9 +42,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 		<aui:fieldset label="model.resource.com.liferay.portlet.asset">
 
 			<%
-			boolean enablePermissions = AssetUtil.isEnablePermissions(portletPreferences, portletName);
-
-			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, enablePermissions);
+			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions());
 			%>
 
 			<liferay-ui:search-container

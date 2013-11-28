@@ -1,8 +1,12 @@
+@import "compass";
+
 .taglib-header {
 	border-bottom: 1px solid transparent;
 	margin-bottom: 1em;
 
 	.header-title {
+		@include ellipsis;
+
 		margin: 0.1em;
 	}
 

@@ -44,6 +44,10 @@ import java.util.Map;
 
 import org.apache.tools.ant.DirectoryScanner;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.ScriptableObject;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -52,16 +56,23 @@ import org.apache.tools.ant.DirectoryScanner;
 public class SassToCssBuilder {
 
 	public static File getCacheFile(String fileName) {
-		fileName = StringUtil.replace(
+		return getCacheFile(fileName, StringPool.BLANK);
+	}
+
+	public static File getCacheFile(String fileName, String suffix) {
+		return new File(getCacheFileName(fileName, suffix));
+	}
+
+	public static String getCacheFileName(String fileName, String suffix) {
+		String cacheFileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int pos = fileName.lastIndexOf(StringPool.SLASH);
+		int pos1 = cacheFileName.lastIndexOf(StringPool.SLASH);
+		int pos2 = cacheFileName.lastIndexOf(StringPool.PERIOD);
 
-		String cacheFileName =
-			fileName.substring(0, pos + 1) + ".sass-cache/" +
-				fileName.substring(pos + 1);
-
-		return new File(cacheFileName);
+		return cacheFileName.substring(0, pos1 + 1) + ".sass-cache/" +
+			cacheFileName.substring(pos1 + 1, pos2) + suffix +
+				cacheFileName.substring(pos2);
 	}
 
 	public static void main(String[] args) {
@@ -126,6 +137,9 @@ public class SassToCssBuilder {
 
 		_initUtil(classLoader);
 
+		_jsScript = StringUtil.read(
+			classLoader, "com/liferay/portal/servlet/filters/dynamiccss/r2.js");
+
 		_rubyScript = StringUtil.read(
 			classLoader,
 			"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
@@ -162,6 +176,35 @@ public class SassToCssBuilder {
 		int pos = fileName.lastIndexOf("/css/");
 
 		return fileName.substring(0, pos + 4);
+	}
+
+	private String _getRtlCss(String fileName, String css) throws Exception {
+		Context context = Context.enter();
+
+		String rtlCss = css;
+
+		try {
+			ScriptableObject scope = context.initStandardObjects();
+
+			context.evaluateString(scope, _jsScript, "script", 1, null);
+
+			Function function = (Function)scope.get("r2", scope);
+
+			Object result = function.call(
+				context, scope, scope, new Object[] {css});
+
+			rtlCss = (String)Context.jsToJava(result, String.class);
+		}
+		catch (Exception e) {
+			System.out.println("Unable to parse " + fileName + " to rtl");
+
+			e.printStackTrace();
+		}
+		finally {
+			Context.exit();
+		}
+
+		return rtlCss;
 	}
 
 	private void _initUtil(ClassLoader classLoader) {
@@ -295,8 +338,17 @@ public class SassToCssBuilder {
 		FileUtil.write(cacheFile, parsedContent);
 
 		cacheFile.setLastModified(file.lastModified());
+
+		// Generate rtl cache
+
+		File rtlCacheFile = getCacheFile(filePath, "_rtl");
+
+		FileUtil.write(rtlCacheFile, _getRtlCss(fileName, parsedContent));
+
+		rtlCacheFile.setLastModified(file.lastModified());
 	}
 
+	private String _jsScript;
 	private RubyExecutor _rubyExecutor;
 	private String _rubyScript;
 	private String _tempDir;

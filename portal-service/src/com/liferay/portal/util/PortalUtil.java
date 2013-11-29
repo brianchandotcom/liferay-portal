@@ -1802,6 +1802,10 @@ public class PortalUtil {
 		return getPortal().isReservedParameter(name);
 	}
 
+	public static boolean isRightToLeft(HttpServletRequest request) {
+		return getPortal().isRightToLeft(request);
+	}
+
 	public static boolean isRSSFeedsEnabled() {
 		return getPortal().isRSSFeedsEnabled();
 	}

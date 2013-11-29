@@ -56,6 +56,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.ScriptableObject;
+
 /**
  * @author Raymond Augé
  * @author Sergio Sánchez
@@ -64,6 +68,9 @@ public class DynamicCSSUtil {
 
 	public static void init() {
 		try {
+			_jsScript = StringUtil.read(
+				ClassLoaderUtil.getPortalClassLoader(),
+				"com/liferay/portal/servlet/filters/dynamiccss/r2.js");
 			_rubyScript = StringUtil.read(
 				ClassLoaderUtil.getPortalClassLoader(),
 				"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
@@ -129,7 +136,8 @@ public class DynamicCSSUtil {
 
 		URLConnection cacheResourceURLConnection = null;
 
-		URL cacheResourceURL = _getCacheResource(servletContext, resourcePath);
+		URL cacheResourceURL = _getCacheResource(
+			servletContext, request, resourcePath);
 
 		if (cacheResourceURL != null) {
 			cacheResourceURLConnection = cacheResourceURL.openConnection();
@@ -161,6 +169,10 @@ public class DynamicCSSUtil {
 			parsedContent = _parseSass(
 				servletContext, request, themeDisplay, theme, resourcePath,
 				content);
+
+			if (PortalUtil.isRightToLeft(request)) {
+				parsedContent = _getRtlCss(resourcePath, parsedContent);
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -202,16 +214,18 @@ public class DynamicCSSUtil {
 	}
 
 	private static URL _getCacheResource(
-			ServletContext servletContext, String resourcePath)
+			ServletContext servletContext, HttpServletRequest request,
+			String resourcePath)
 		throws Exception {
 
-		int pos = resourcePath.lastIndexOf(StringPool.SLASH);
+		String cacheFileSuffix = StringPool.BLANK;
 
-		String cacheFileName =
-			resourcePath.substring(0, pos + 1) + ".sass-cache/" +
-				resourcePath.substring(pos + 1);
+		if (PortalUtil.isRightToLeft(request)) {
+			cacheFileSuffix = "_rtl";
+		}
 
-		return servletContext.getResource(cacheFileName);
+		return servletContext.getResource(
+			SassToCssBuilder.getCacheFileName(resourcePath, cacheFileSuffix));
 	}
 
 	private static String _getCssThemePath(
@@ -233,6 +247,37 @@ public class DynamicCSSUtil {
 		}
 
 		return servletContext.getRealPath(theme.getCssPath());
+	}
+
+	private static String _getRtlCss(String resourcePath, String css)
+		throws Exception {
+
+		Context context = Context.enter();
+
+		String rtlCss = css;
+
+		try {
+			ScriptableObject scope = context.initStandardObjects();
+
+			context.evaluateString(scope, _jsScript, "script", 1, null);
+
+			Function function = (Function)scope.get("r2", scope);
+
+			Object result = function.call(
+				context, scope, scope, new Object[] {css});
+
+			rtlCss = (String)Context.jsToJava(result, String.class);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Cannot transform " + resourcePath + " to RTL");
+			}
+		}
+		finally {
+			Context.exit();
+		}
+
+		return rtlCss;
 	}
 
 	private static File _getSassTempDir(ServletContext servletContext) {
@@ -441,6 +486,7 @@ public class DynamicCSSUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSUtil.class);
 
+	private static String _jsScript;
 	private static Pattern _pluginThemePattern = Pattern.compile(
 		"\\/([^\\/]+)-theme\\/", Pattern.CASE_INSENSITIVE);
 	private static Pattern _portalThemePattern = Pattern.compile(

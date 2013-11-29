@@ -2051,7 +2051,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		"\\[([\\d]+)@(public|private)(@([\\d]+))?\\]");
 	private Pattern _importLinksToLayoutPattern = Pattern.compile(
 		"\\[([\\d]+)@(public|private)@(\\p{XDigit}{8}\\-(?:\\p{XDigit}{4}\\-)" +
-		"{3}\\p{XDigit}{12})@(\\/[\\w]*)(@([\\d]+))?\\]");
+			"{3}\\p{XDigit}{12})@(\\/[\\w]*)(@([\\d]+))?\\]");
 
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 

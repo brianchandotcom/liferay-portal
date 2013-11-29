@@ -48,7 +48,7 @@ public class AssertTextTestCase extends BaseSeleniumTestCase {
 			expectedException =
 				"Command failure \"assertText\" with parameters " +
 					"\"//html/body/h1\" \"This is Site 2\" : " +
-					expectedException;
+						expectedException;
 		}
 
 		try {

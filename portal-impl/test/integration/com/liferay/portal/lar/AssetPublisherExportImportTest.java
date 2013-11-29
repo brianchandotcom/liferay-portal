@@ -235,7 +235,7 @@ public class AssetPublisherExportImportTest
 
 		Assert.assertEquals(
 			AssetPublisher.SCOPE_ID_LAYOUT_UUID_PREFIX +
-			importedLayout.getUuid(),
+				importedLayout.getUuid(),
 			portletPreferences.getValue("scopeIds", null));
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 	}

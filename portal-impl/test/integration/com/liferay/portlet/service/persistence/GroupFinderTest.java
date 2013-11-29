@@ -138,7 +138,7 @@ public class GroupFinderTest {
 
 		Assert.fail(
 			"The method findByC_C_N_D should have returned the group " +
-			_group.getGroupId());
+				_group.getGroupId());
 	}
 
 	@Test

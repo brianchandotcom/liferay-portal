@@ -132,7 +132,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 			_log.debug(
 				"Validating user information for " + firstName + " " +
 					lastName + " with screen name " + screenName +
-					" and email address " + emailAddress);
+						" and email address " + emailAddress);
 		}
 
 		User user = null;

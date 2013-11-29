@@ -50,7 +50,7 @@ public class AssertPartialTextTestCase extends BaseSeleniumTestCase {
 			expectedException =
 				"Command failure \"assertPartialText\" with parameters " +
 					"\"//html/body/h1\" \"Blah Blah Blah\" : " +
-					expectedException;
+						expectedException;
 		}
 
 		try {

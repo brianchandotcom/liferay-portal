@@ -304,7 +304,8 @@ public class CMISRepository extends BaseCmisRepository {
 		catch (Exception e) {
 			_log.error(
 				"Unable to check in file entry with {fileEntryId=" +
-				fileEntryId + "}", e);
+					fileEntryId + "}",
+				e);
 		}
 	}
 

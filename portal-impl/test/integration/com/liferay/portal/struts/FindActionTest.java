@@ -136,7 +136,7 @@ public class FindActionTest {
 
 		_assetPublisherPortletId =
 			PortletKeys.ASSET_PUBLISHER + PortletConstants.INSTANCE_SEPARATOR +
-			ServiceTestUtil.randomString();
+				ServiceTestUtil.randomString();
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _assetLayout, _assetPublisherPortletId,

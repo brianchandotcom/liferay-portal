@@ -332,7 +332,7 @@ public class QueryUtilTest {
 
 	private static final String _SQL_CREATE_TABLE =
 		"CREATE TABLE QueryUtilTest (id INTEGER NOT NULL PRIMARY KEY, " +
-		"value INTEGER)";
+			"value INTEGER)";
 
 	private static final String _SQL_DROP_TABLE = "DROP TABLE QueryUtilTest";
 

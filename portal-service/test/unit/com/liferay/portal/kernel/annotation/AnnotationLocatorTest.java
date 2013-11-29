@@ -567,8 +567,8 @@ public class AnnotationLocatorTest {
 
 						Assert.assertEquals(
 							"@Type : " + method.getName() + "()@" +
-							clazz.getName(), expectedType.value(),
-							actualType.value());
+								clazz.getName(),
+							expectedType.value(), actualType.value());
 					}
 				}
 			}

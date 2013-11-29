@@ -29,10 +29,21 @@ if (publicLayoutSetId != 0) {
 }
 %>
 
+<portlet:resourceURL var="previewURL">
+	<portlet:param name="struts_action" value="/users_admin/edit_organization_logo" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+</portlet:resourceURL>
+
 <c:choose>
-	<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
+	<c:when test='<%= SessionMessages.contains(renderRequest, "imageUploaded") %>'>
+
+		<%
+		FileEntry fileEntry = (FileEntry)SessionMessages.get(renderRequest, "imageUploaded");
+		%>
+
 		<aui:script>
-			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= logoURL %>');
+			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
 
 			Liferay.Util.getWindow().hide();
 		</aui:script>
@@ -70,7 +81,7 @@ if (publicLayoutSetId != 0) {
 				{
 					maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>',
 					namespace: '<portlet:namespace />',
-					previewURL: '<portlet:resourceURL><portlet:param name="struts_action" value="/users_admin/edit_organization_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:resourceURL>',
+					previewURL: '<%= previewURL %>',
 					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:actionURL>'
 				}
 			);

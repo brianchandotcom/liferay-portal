@@ -31,10 +31,21 @@ else {
 }
 %>
 
+<portlet:resourceURL var="previewURL">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_icon_image" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
+	<portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+</portlet:resourceURL>
+
 <c:choose>
-	<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
+	<c:when test='<%= SessionMessages.contains(renderRequest, "imageUploaded") %>'>
+
+		<%
+		FileEntry fileEntry = (FileEntry)SessionMessages.get(renderRequest, "imageUploaded");
+		%>
+
 		<aui:script>
-			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= iconImageURL %>');
+			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
 
 			Liferay.Util.getWindow().hide();
 		</aui:script>
@@ -71,7 +82,7 @@ else {
 				{
 					maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>',
 					namespace: '<portlet:namespace />',
-					previewURL: '<portlet:resourceURL><portlet:param name="struts_action" value="/layouts_admin/edit_layout_icon_image" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /><portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" /></portlet:resourceURL>',
+					previewURL: '<%= previewURL %>',
 					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/layouts_admin/edit_layout_icon_image" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="plid" value="<%= String.valueOf(selLayout.getPlid()) %>" /></portlet:actionURL>'
 				}
 			);

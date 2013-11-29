@@ -20,10 +20,20 @@
 String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId());
 %>
 
+<portlet:resourceURL var="previewURL">
+	<portlet:param name="struts_action" value="/users_admin/edit_company_logo" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
+</portlet:resourceURL>
+
 <c:choose>
-	<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
+	<c:when test='<%= SessionMessages.contains(renderRequest, "imageUploaded") %>'>
+
+		<%
+		FileEntry fileEntry = (FileEntry)SessionMessages.get(renderRequest, "imageUploaded");
+		%>
+
 		<aui:script>
-			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= logoURL %>');
+			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
 
 			Liferay.Util.getWindow().hide();
 		</aui:script>
@@ -59,7 +69,7 @@ String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company
 				{
 					maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>',
 					namespace: '<portlet:namespace />',
-					previewURL: '<portlet:resourceURL><portlet:param name="struts_action" value="/users_admin/edit_company_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /></portlet:resourceURL>',
+					previewURL: '<%= previewURL %>',
 					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_company_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>'
 				}
 			);

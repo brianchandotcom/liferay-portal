@@ -20,12 +20,13 @@ import com.liferay.portal.UserPortraitSizeException;
 import com.liferay.portal.UserPortraitTypeException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.portalsettings.action.EditLogoAction;
@@ -60,7 +61,9 @@ public class EditUserPortraitAction extends EditLogoAction {
 				addTempImageFile(actionRequest);
 			}
 			else {
-				saveTempImageFile(actionRequest);
+				FileEntry fileEntry = saveTempImageFile(actionRequest);
+
+				SessionMessages.add(actionRequest, "imageUploaded", fileEntry);
 
 				sendRedirect(actionRequest, actionResponse);
 			}
@@ -110,16 +113,6 @@ public class EditUserPortraitAction extends EditLogoAction {
 	@Override
 	protected String getTempImageFileName(PortletRequest portletRequest) {
 		return ParamUtil.getString(portletRequest, "p_u_i_d");
-	}
-
-	@Override
-	protected void saveTempImageFile(
-			PortletRequest portletRequest, byte[] bytes)
-		throws Exception {
-
-		long userId = ParamUtil.getLong(portletRequest, "p_u_i_d");
-
-		UserServiceUtil.updatePortrait(userId, bytes);
 	}
 
 }

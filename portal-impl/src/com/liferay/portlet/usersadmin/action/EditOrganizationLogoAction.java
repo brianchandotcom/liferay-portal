@@ -18,19 +18,16 @@ import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.portalsettings.action.EditLogoAction;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,7 +60,9 @@ public class EditOrganizationLogoAction extends EditLogoAction {
 				addTempImageFile(actionRequest);
 			}
 			else {
-				saveTempImageFile(actionRequest);
+				FileEntry fileEntry = saveTempImageFile(actionRequest);
+
+				SessionMessages.add(actionRequest, "imageUploaded", fileEntry);
 
 				sendRedirect(actionRequest, actionResponse);
 			}
@@ -111,31 +110,6 @@ public class EditOrganizationLogoAction extends EditLogoAction {
 	@Override
 	protected String getTempImageFileName(PortletRequest portletRequest) {
 		return ParamUtil.getString(portletRequest, "groupId");
-	}
-
-	@Override
-	protected void saveTempImageFile(
-			PortletRequest portletRequest, byte[] bytes)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = new ByteArrayInputStream(bytes);
-
-			LayoutSetServiceUtil.updateLogo(
-				groupId, true, true, inputStream, false);
-
-			inputStream.reset();
-
-			LayoutSetServiceUtil.updateLogo(
-				groupId, false, true, inputStream, false);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
 	}
 
 }

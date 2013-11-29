@@ -74,6 +74,7 @@ AUI.add(
 						instance._avatar = contentBox.one('#' + randomNamespace + 'avatar');
 						instance._deleteLogoButton = contentBox.one('.delete-logo');
 						instance._deleteLogoInput = contentBox.one('#' + portletNamespace + 'deleteLogo');
+						instance._fileEntryIdInput = contentBox.one('#' + portletNamespace + 'fileEntryId');
 					},
 
 					bindUI: function() {
@@ -83,10 +84,14 @@ AUI.add(
 						instance.get('contentBox').delegate('click', instance._onDeleteLogoClick, '.delete-logo', instance);
 					},
 
-					_changeLogo: function(url) {
+					_changeLogo: function(url, fileEntryId) {
 						var instance = this;
 
 						instance.set('logoURL', url);
+
+						if (fileEntryId) {
+							instance._fileEntryIdInput.val(fileEntryId);
+						}
 					},
 
 					_onDeleteLogoClick: function(event) {

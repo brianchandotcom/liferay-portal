@@ -51,6 +51,8 @@ else {
 			</div>
 
 			<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />
+
+			<aui:input name="fileEntryId" type="hidden" />
 		</div>
 	</div>
 </div>

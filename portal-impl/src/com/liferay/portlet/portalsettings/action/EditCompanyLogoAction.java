@@ -17,13 +17,13 @@ package com.liferay.portlet.portalsettings.action;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -59,7 +59,9 @@ public class EditCompanyLogoAction extends EditLogoAction {
 				addTempImageFile(actionRequest);
 			}
 			else {
-				saveTempImageFile(actionRequest);
+				FileEntry fileEntry = saveTempImageFile(actionRequest);
+
+				SessionMessages.add(actionRequest, "imageUploaded", fileEntry);
 
 				sendRedirect(actionRequest, actionResponse);
 			}
@@ -108,20 +110,6 @@ public class EditCompanyLogoAction extends EditLogoAction {
 			WebKeys.THEME_DISPLAY);
 
 		return String.valueOf(themeDisplay.getCompanyId());
-	}
-
-	@Override
-	protected void saveTempImageFile(
-			PortletRequest portletRequest, byte[] bytes)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Company company = CompanyServiceUtil.updateLogo(
-			themeDisplay.getCompanyId(), bytes);
-
-		themeDisplay.setCompany(company);
 	}
 
 }

@@ -45,11 +45,15 @@ import com.liferay.portal.UserSmsException;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -86,6 +90,7 @@ import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
@@ -536,12 +541,6 @@ public class EditUserAction extends PortletAction {
 
 		User user = PortalUtil.getSelectedUser(actionRequest);
 
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-
-		if (deleteLogo) {
-			UserServiceUtil.deletePortrait(user.getUserId());
-		}
-
 		Contact contact = user.getContact();
 
 		String oldPassword = AdminUtil.getUpdateUserPassword(
@@ -645,20 +644,32 @@ public class EditUserAction extends PortletAction {
 		List<AnnouncementsDelivery> announcementsDeliveries =
 			getAnnouncementsDeliveries(actionRequest, user);
 
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] portraitBytes = null;
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			portraitBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		user = UserServiceUtil.updateUser(
 			user.getUserId(), oldPassword, newPassword1, newPassword2,
 			passwordReset, reminderQueryQuestion, reminderQueryAnswer,
-			screenName, emailAddress, facebookId, openId, true, null,
-			languageId, timeZoneId, greeting, comments, firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
-			mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupRoles, userGroupIds, addresses,
-			emailAddresses, phones, websites, announcementsDeliveries,
-			serviceContext);
+			screenName, emailAddress, facebookId, openId, !deleteLogo,
+			portraitBytes, languageId, timeZoneId, greeting, comments,
+			firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
+			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
+			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
+			userGroupIds, addresses, emailAddresses, phones, websites,
+			announcementsDeliveries, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;
@@ -730,5 +741,7 @@ public class EditUserAction extends PortletAction {
 
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(EditUserAction.class);
 
 }

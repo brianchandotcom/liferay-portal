@@ -304,12 +304,6 @@ JSONObject advancedData = jsonObject.getJSONObject("advancedData");
 
 String customCSS = advancedData.getString("customCSS");
 
-customCSS = StringUtil.replace(
-	customCSS,
-	new String[] {"<", ">", "expression("},
-	new String[] {"&lt;", "&gt;", ""}
-);
-
 // Portlet data
 
 JSONObject portletData = jsonObject.getJSONObject("portletData");
@@ -333,14 +327,14 @@ String[] finalCSSArray = (String[])finalCSS.toArray(new String[0]);
 
 String finalCSSString = StringUtil.merge(finalCSSArray, ";\n");
 
-out.print(finalCSSString);
+out.print(_escapeCssBlock(finalCSSString));
 
 out.print("\n}\n");
 
 // Advanced CSS
 
 if (Validator.isNotNull(customCSS)) {
-	out.print(customCSS);
+	out.print(_escapeCssBlock(customCSS));
 }
 %>
 

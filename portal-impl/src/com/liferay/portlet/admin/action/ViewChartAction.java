@@ -90,7 +90,7 @@ public class ViewChartAction extends PortletAction {
 
 		JFreeChart jFreeChart = getJFreeChart(sb.toString(), meterPlot);
 
-		resourceResponse.setContentType(ContentTypes.IMAGE_JPEG);
+		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
 
 		OutputStream outputStream = resourceResponse.getPortletOutputStream();
 

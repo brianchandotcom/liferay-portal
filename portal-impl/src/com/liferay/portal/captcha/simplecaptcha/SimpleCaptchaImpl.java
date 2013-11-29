@@ -142,7 +142,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		session.setAttribute(WebKeys.CAPTCHA_TEXT, simpleCaptcha.getAnswer());
 
-		response.setContentType(ContentTypes.IMAGE_JPEG);
+		response.setContentType(ContentTypes.IMAGE_PNG);
 
 		CaptchaServletUtil.writeImage(
 			response.getOutputStream(), simpleCaptcha.getImage());

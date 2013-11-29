@@ -53,54 +53,6 @@ public class AssetPublisherDisplayContext {
 
 		_request = request;
 		_portletPreferences = portletPreferences;
-
-		_abstractLength = null;
-		_anyAssetType = null;
-		_assetLinkBehavior = null;
-		_availableClassNameIds = null;
-		_classNameIds = null;
-		_classTypeIds = null;
-		_ddmStructureDisplayFieldValue = null;
-		_ddmStructureFieldName = null;
-		_ddmStructureFieldValue = null;
-		_delta = null;
-		_displayStyle = null;
-		_displayStyleGroupId = null;
-		_enableCommentRatings = null;
-		_enableComments = null;
-		_enableFlags = null;
-		_enablePrint = null;
-		_enableRatings = null;
-		_enableRelatedAssets = null;
-		_enableRSS = null;
-		_enableSocialBookmarks = null;
-		_enableTagBasedNavigation = null;
-		_excludeZeroViewCount = null;
-		_extensions = null;
-		_groupIds = null;
-		_mergeLayoutTags = null;
-		_mergeUrlTags = null;
-		_metadataFields = null;
-		_openOfficeServerEnabled = null;
-		_orderByColumn1 = null;
-		_orderByColumn2 = null;
-		_orderByType1 = null;
-		_orderByType2 = null;
-		_paginationType = null;
-		_rssDelta = null;
-		_rssDisplayStyle = null;
-		_rssFeedType = null;
-		_rssName = null;
-		_selectionStyle = null;
-		_showAddContentButton = null;
-		_showAssetTitle = null;
-		_showAvailableLocales = null;
-		_showContextLink = null;
-		_showMetadataDescriptions = null;
-		_showOnlyLayoutAssets = null;
-		_socialBookmarksDisplayPosition = null;
-		_socialBookmarksDisplayStyle = null;
-		_subtypeFieldsFilterEnabled = null;
 	}
 
 	public int getAbstractLength() {

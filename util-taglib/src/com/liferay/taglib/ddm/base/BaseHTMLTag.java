@@ -30,6 +30,10 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
+	public boolean getCheckRequired() {
+		return _checkRequired;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -56,6 +60,12 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	public java.util.Locale getRequestedLocale() {
 		return _requestedLocale;
+	}
+
+	public void setCheckRequired(boolean checkRequired) {
+		_checkRequired = checkRequired;
+
+		setScopedAttribute("checkRequired", checkRequired);
 	}
 
 	public void setClassNameId(long classNameId) {
@@ -102,6 +112,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_checkRequired = true;
 		_classNameId = 0;
 		_classPK = 0;
 		_fields = null;
@@ -123,6 +134,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "checkRequired", _checkRequired);
 		setNamespacedAttribute(request, "classNameId", _classNameId);
 		setNamespacedAttribute(request, "classPK", _classPK);
 		setNamespacedAttribute(request, "fields", _fields);
@@ -140,6 +152,7 @@ public class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/ddm/html/start.jsp";
 
+	private boolean _checkRequired = true;
 	private long _classNameId = 0;
 	private long _classPK = 0;
 	private com.liferay.portlet.dynamicdatamapping.storage.Fields _fields = null;

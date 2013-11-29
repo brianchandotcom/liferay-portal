@@ -15,6 +15,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>checkRequired</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>classNameId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

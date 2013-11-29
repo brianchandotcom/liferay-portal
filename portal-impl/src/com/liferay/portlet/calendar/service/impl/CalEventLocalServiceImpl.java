@@ -1427,7 +1427,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		ProdId prodId = new ProdId(
 			"-//Liferay Inc//Liferay Portal " + ReleaseInfo.getVersion() +
-			"//EN");
+				"//EN");
 
 		PropertyList propertiesList = iCal.getProperties();
 

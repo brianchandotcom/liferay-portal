@@ -271,7 +271,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 		assertQueryEquals(
 			"(cmis:name = 'My test document.jpg') OR " +
-			"(cmis:createdBy = 'My test document.jpg')", cmisQuery);
+				"(cmis:createdBy = 'My test document.jpg')",
+			cmisQuery);
 	}
 
 	@Test
@@ -305,7 +306,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 		assertQueryEquals(
 			"(cmis:name = 'test document') OR " +
-			"(cmis:createdBy = 'test document')", cmisQuery);
+				"(cmis:createdBy = 'test document')",
+			cmisQuery);
 	}
 
 	@Test
@@ -323,7 +325,8 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 		assertQueryEquals(
 			"(cmis:creationDate >= 2009-10-11T00:00:00.000Z AND " +
-			"cmis:creationDate <= 2009-11-10T23:59:59.000Z)", cmisQuery);
+				"cmis:creationDate <= 2009-11-10T23:59:59.000Z)",
+			cmisQuery);
 	}
 
 	@Test

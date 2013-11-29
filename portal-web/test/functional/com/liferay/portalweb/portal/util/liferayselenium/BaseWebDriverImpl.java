@@ -557,7 +557,7 @@ public abstract class BaseWebDriverImpl
 			new File(
 				getProjectDir() + "portal-web\\test-results\\functional\\" +
 					_screenshotFileName + "/" + _screenshotFileName +
-					_screenshotCount + ".jpg"));
+						_screenshotCount + ".jpg"));
 	}
 
 	@Override

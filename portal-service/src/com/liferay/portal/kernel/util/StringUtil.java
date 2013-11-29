@@ -4409,8 +4409,8 @@ public class StringUtil {
 
 				do {
 					matcher.appendReplacement(
-						hightlighted, highlight1 + matcher.group() +
-						highlight2);
+						hightlighted,
+						highlight1 + matcher.group() + highlight2);
 				}
 				while (matcher.find());
 

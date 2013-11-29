@@ -74,7 +74,7 @@ public class ServletResponseUtil {
 		if (!rangeString.matches(_RANGE_REGEX)) {
 			throw new IOException(
 				"Range header does not match regular expression " +
-				rangeString);
+					rangeString);
 		}
 
 		List<Range> ranges = new ArrayList<Range>();

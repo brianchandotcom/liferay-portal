@@ -224,8 +224,8 @@ public class EditCompanyAction extends PortletAction {
 		String casServiceURL = ParamUtil.getString(
 			actionRequest, "settings--" + PropsKeys.CAS_SERVICE_URL + "--");
 		String casNoSuchUserRedirectURL = ParamUtil.getString(
-			actionRequest, "settings--" +
-			PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL + "--");
+			actionRequest,
+			"settings--" + PropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL + "--");
 
 		if (!Validator.isUrl(casLoginURL)) {
 			SessionErrors.add(actionRequest, "casLoginURLInvalid");

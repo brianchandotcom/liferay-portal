@@ -759,7 +759,7 @@ public class ShoppingItemLocalServiceImpl
 
 		String publisher =
 			amazonRankings.getManufacturer() + "; (" +
-			amazonRankings.getReleaseDateAsString() + ")";
+				amazonRankings.getReleaseDateAsString() + ")";
 
 		String properties =
 			"ISBN=" + isbn + "\nAuthor=" + authors + "\nPublisher=" + publisher;

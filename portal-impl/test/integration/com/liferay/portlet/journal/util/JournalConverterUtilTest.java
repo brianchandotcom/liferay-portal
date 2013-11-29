@@ -264,7 +264,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		Field fieldsDisplayField = getFieldsDisplayField(
 			_ddmStructure.getStructureId(),
 			"text_box_INSTANCE_ND057krU,text_box_INSTANCE_HvemvQgl," +
-			"text_box_INSTANCE_enAnbvq6");
+				"text_box_INSTANCE_enAnbvq6");
 
 		fields.put(fieldsDisplayField);
 

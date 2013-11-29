@@ -69,7 +69,7 @@ public class JSONFactoryTest {
 
 		Assert.assertEquals(
 			"{class:com.liferay.portal.json.FooBean1,collection:[element]," +
-			"value:173}",
+				"value:173}",
 			json);
 	}
 

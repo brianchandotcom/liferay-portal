@@ -263,7 +263,7 @@ public class Logger {
 			_webDriver.get(
 				"file:///" + _TEST_BASEDIR + "/test/functional/com/liferay/" +
 					"portalweb/portal/util/liferayselenium/dependencies/" +
-					"Logger.html");
+						"Logger.html");
 		}
 
 		_loggerStarted = true;

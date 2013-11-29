@@ -193,7 +193,7 @@ public class ProjectDataUtil {
 
 		throw new IllegalStateException(
 			"Unable to load project data after retry for " + _RETRY_TIMES +
-			" times");
+				" times");
 	}
 
 	private static void _unlockFile(FileLock fileLock) {

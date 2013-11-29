@@ -414,7 +414,7 @@ for (String analyticsType : analyticsTypes) {
 				<script type="text/javascript">
 					var _gaq = _gaq || [];
 
-					_gaq.push(['_setAccount', '<%= googleAnalyticsId %>']);
+					_gaq.push(['_setAccount', '<%= HtmlUtil.escapeJS(googleAnalyticsId) %>']);
 					_gaq.push(['_trackPageview']);
 
 					(function() {

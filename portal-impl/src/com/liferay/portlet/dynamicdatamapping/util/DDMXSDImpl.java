@@ -641,6 +641,17 @@ public class DDMXSDImpl implements DDMXSD {
 
 		fieldContext.put("fieldNamespace", StringUtil.randomId());
 
+		boolean checkRequired = GetterUtil.getBoolean(
+			pageContext.getAttribute("checkRequired"), true);
+
+		if (!checkRequired) {
+			if (fieldContext.containsKey("required")) {
+				fieldContext.remove("required");
+			}
+
+			fieldContext.put("required", Boolean.FALSE.toString());
+		}
+
 		fieldsContext.put(name, fieldContext);
 
 		return fieldContext;

@@ -16,8 +16,6 @@ package com.liferay.portlet.usersadmin.action;
 
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.UserPortraitSizeException;
-import com.liferay.portal.UserPortraitTypeException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -77,8 +75,7 @@ public class EditUserPortraitAction extends EditLogoAction {
 				setForward(actionRequest, "portlet.users_admin.error");
 			}
 			else if (e instanceof FileSizeException ||
-					 e instanceof ImageTypeException ||
-					 e instanceof UserPortraitTypeException) {
+					 e instanceof ImageTypeException) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -87,7 +84,6 @@ public class EditUserPortraitAction extends EditLogoAction {
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 			else if (e instanceof NoSuchFileException ||
-					 e instanceof UserPortraitSizeException ||
 					 e instanceof UploadException) {
 
 				SessionErrors.add(actionRequest, e.getClass());

@@ -46,7 +46,7 @@ public class AssetRendererFactoryRegistryImpl
 
 		return ListUtil.fromMapValues(
 			filterAssetRendererFactories(
-				companyId, _assetRenderFactoriesMapByClassName));
+				companyId, _assetRenderFactoriesMapByClassName, false));
 	}
 
 	@Override
@@ -71,12 +71,18 @@ public class AssetRendererFactoryRegistryImpl
 
 	@Override
 	public long[] getClassNameIds(long companyId) {
+		return getClassNameIds(companyId, false);
+	}
+
+	@Override
+	public long[] getClassNameIds(long companyId, boolean filterSelectable) {
 		Map<String, AssetRendererFactory> assetRenderFactories =
 			_assetRenderFactoriesMapByClassName;
 
 		if (companyId > 0) {
 			assetRenderFactories = filterAssetRendererFactories(
-				companyId, _assetRenderFactoriesMapByClassName);
+				companyId, _assetRenderFactoriesMapByClassName,
+				filterSelectable);
 		}
 
 		long[] classNameIds = new long[assetRenderFactories.size()];
@@ -129,9 +135,10 @@ public class AssetRendererFactoryRegistryImpl
 			assetRendererFactory.getType());
 	}
 
-	private Map<String, AssetRendererFactory> filterAssetRendererFactories(
+	protected Map<String, AssetRendererFactory> filterAssetRendererFactories(
 		long companyId,
-		Map<String, AssetRendererFactory> assetRendererFactories) {
+		Map<String, AssetRendererFactory> assetRendererFactories,
+		boolean filterSelectable) {
 
 		Map<String, AssetRendererFactory> filteredAssetRendererFactories =
 			new ConcurrentHashMap<String, AssetRendererFactory>();
@@ -140,7 +147,9 @@ public class AssetRendererFactoryRegistryImpl
 			AssetRendererFactory assetRendererFactory =
 				assetRendererFactories.get(className);
 
-			if (assetRendererFactory.isActive(companyId)) {
+			if (assetRendererFactory.isActive(companyId) &&
+				(!filterSelectable || assetRendererFactory.isSelectable())) {
+
 				filteredAssetRendererFactories.put(
 					className, assetRendererFactory);
 			}

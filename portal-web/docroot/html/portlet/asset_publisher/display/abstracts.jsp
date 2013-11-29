@@ -17,10 +17,6 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-List results = (List)request.getAttribute("view.jsp-results");
-
-int assetEntryIndex = ((Integer)request.getAttribute("view.jsp-assetEntryIndex")).intValue();
-
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
@@ -50,9 +46,11 @@ if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 	viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 }
 
-String summary = StringUtil.shorten(assetRenderer.getSummary(locale), abstractLength);
+String summary = StringUtil.shorten(assetRenderer.getSummary(locale), assetPublisherDisplayContext.getAbstractLength());
 
 String viewURL = null;
+
+boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
 if (viewInContext) {
 	String viewFullContentURLString = viewFullContentURL.toString();
@@ -71,11 +69,11 @@ if (Validator.isNull(viewURL)) {
 
 String viewURLMessage = viewInContext ? assetRenderer.getViewInContextMessage() : "read-more-x-about-x";
 
-viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 %>
 
 <c:if test="<%= show %>">
-	<div class="asset-abstract <%= defaultAssetPublisher ? "default-asset-publisher" : StringPool.BLANK %>">
+	<div class="asset-abstract <%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource) ? "default-asset-publisher" : StringPool.BLANK %>">
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 
 		<h3 class="asset-title">
@@ -96,7 +94,7 @@ viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDis
 				String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
 
 				request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-				request.setAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH, abstractLength);
+				request.setAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
 				request.setAttribute(WebKeys.ASSET_PUBLISHER_VIEW_URL, viewURL);
 				%>
 
@@ -118,6 +116,11 @@ viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDis
 		</div>
 
 		<div class="asset-metadata">
+
+			<%
+			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+			%>
+
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
 		</div>
 	</div>

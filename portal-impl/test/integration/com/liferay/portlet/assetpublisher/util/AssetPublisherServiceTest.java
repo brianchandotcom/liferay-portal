@@ -38,6 +38,8 @@ import com.liferay.portlet.journal.util.JournalTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,10 +70,13 @@ public class AssetPublisherServiceTest {
 	@Test
 	@Transactional
 	public void testGetAssetEntries() throws Exception {
+		PortletPreferences portletPreferences =
+			getAssetPublisherPortletPreferences();
+
 		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
-			new MockPortletRequest(), new MockPortletPreferences(),
-			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-			_assetEntryXmls, false, false);
+			new MockPortletRequest(), portletPreferences, _permissionChecker,
+			new long[] {TestPropsValues.getGroupId()},
+			false, false);
 
 		Assert.assertEquals(_assetEntries, assetEntries);
 	}
@@ -89,10 +94,13 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
 			allAssetCategoryIds, _NO_ASSET_TAG_NAMES, 2, true);
 
+		PortletPreferences portletPreferences =
+			getAssetPublisherPortletPreferences();
+
 		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
-			new MockPortletRequest(), new MockPortletPreferences(),
-			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-			_assetEntryXmls, false, false);
+			new MockPortletRequest(), portletPreferences, _permissionChecker,
+			new long[] {TestPropsValues.getGroupId()},
+			false, false);
 
 		Assert.assertEquals(
 			_assetEntries.size() + expectedAssetEntries.size(),
@@ -100,10 +108,9 @@ public class AssetPublisherServiceTest {
 
 		List<AssetEntry> filteredAsssetEntries =
 			AssetPublisherUtil.getAssetEntries(
-				new MockPortletRequest(), new MockPortletPreferences(),
+				new MockPortletRequest(), portletPreferences,
 				_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-				allAssetCategoryIds, _assetEntryXmls, _NO_ASSET_TAG_NAMES,
-				false, false);
+				allAssetCategoryIds, _NO_ASSET_TAG_NAMES, false, false);
 
 		Assert.assertEquals(expectedAssetEntries, filteredAsssetEntries);
 	}
@@ -124,10 +131,13 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
 			allCategoyIds, allAssetTagNames, 2, true);
 
+		PortletPreferences portletPreferences =
+			getAssetPublisherPortletPreferences();
+
 		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
-			new MockPortletRequest(), new MockPortletPreferences(),
-			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-			_assetEntryXmls, false, false);
+			new MockPortletRequest(), portletPreferences, _permissionChecker,
+			new long[] {TestPropsValues.getGroupId()},
+			false, false);
 
 		Assert.assertEquals(
 			_assetEntries.size() + expectedAssetEntries.size(),
@@ -135,9 +145,9 @@ public class AssetPublisherServiceTest {
 
 		List<AssetEntry> filteredAssetEntries =
 			AssetPublisherUtil.getAssetEntries(
-				new MockPortletRequest(), new MockPortletPreferences(),
+				new MockPortletRequest(), portletPreferences,
 				_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-				allCategoyIds, _assetEntryXmls, allAssetTagNames, false, false);
+				allCategoyIds, allAssetTagNames, false, false);
 
 		Assert.assertEquals(expectedAssetEntries, filteredAssetEntries);
 	}
@@ -150,10 +160,13 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> expectedAssetEntries = addAssetEntries(
 			_NO_ASSET_CATEGORY_IDS, allAssetTagNames, 2, true);
 
+		PortletPreferences portletPreferences =
+			getAssetPublisherPortletPreferences();
+
 		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
-			new MockPortletRequest(), new MockPortletPreferences(),
-			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-			_assetEntryXmls, false, false);
+			new MockPortletRequest(), portletPreferences, _permissionChecker,
+			new long[] {TestPropsValues.getGroupId()},
+			false, false);
 
 		Assert.assertEquals(
 			_assetEntries.size() + expectedAssetEntries.size(),
@@ -161,10 +174,9 @@ public class AssetPublisherServiceTest {
 
 		List<AssetEntry> filteredAssetEntries =
 			AssetPublisherUtil.getAssetEntries(
-				new MockPortletRequest(), new MockPortletPreferences(),
+				new MockPortletRequest(), portletPreferences,
 				_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-				_NO_ASSET_CATEGORY_IDS, _assetEntryXmls, allAssetTagNames,
-				false, false);
+				_NO_ASSET_CATEGORY_IDS, allAssetTagNames, false, false);
 
 		Assert.assertEquals(expectedAssetEntries, filteredAssetEntries);
 	}
@@ -234,6 +246,16 @@ public class AssetPublisherServiceTest {
 					TestPropsValues.getGroupId()));
 
 		addAssetCategories(assetVocabulary.getVocabularyId());
+	}
+
+	protected PortletPreferences getAssetPublisherPortletPreferences()
+		throws Exception {
+
+		PortletPreferences portletPreferences = new MockPortletPreferences();
+
+		portletPreferences.setValues("assetEntryXml", _assetEntryXmls);
+
+		return portletPreferences;
 	}
 
 	private static final String[] _ASSET_CATEGORY_NAMES =

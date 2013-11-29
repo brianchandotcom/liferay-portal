@@ -17,34 +17,26 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-if (mergeUrlTags || mergeLayoutTags) {
-	String[] compilerTagNames = new String[0];
+long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 
-	if (mergeUrlTags) {
-		compilerTagNames = ParamUtil.getParameterValues(request, "tags");
-	}
+if (assetCategoryId > 0) {
+	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
 
-	if (mergeLayoutTags) {
-		Set<String> layoutTagNames = AssetUtil.getLayoutTagNames(request);
+	assetCategory = assetCategory.toEscapedModel();
 
-		if (!layoutTagNames.isEmpty()) {
-			compilerTagNames = ArrayUtil.append(compilerTagNames, layoutTagNames.toArray(new String[layoutTagNames.size()]));
-		}
-	}
+	PortalUtil.setPageKeywords(assetCategory.getTitle(locale), request);
+}
 
-	String titleEntry = null;
+String assetTagName = ParamUtil.getString(request, "tag");
 
-	if (ArrayUtil.isNotEmpty(compilerTagNames)) {
-		String[] newAssetTagNames = ArrayUtil.append(allAssetTagNames, compilerTagNames);
+if (Validator.isNotNull(assetTagName)) {
+	PortalUtil.setPageKeywords(assetTagName, request);
+}
 
-		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());
+if (assetPublisherDisplayContext.isMergeUrlTags() || assetPublisherDisplayContext.isMergeLayoutTags()) {
+	String[] compilerTagNames = assetPublisherDisplayContext.getCompilerTagNames();
 
-		long[] allAssetTagIds = AssetTagLocalServiceUtil.getTagIds(scopeGroupId, allAssetTagNames);
-
-		assetEntryQuery.setAllTagIds(allAssetTagIds);
-
-		titleEntry = compilerTagNames[compilerTagNames.length - 1];
-	}
+	String titleEntry = ArrayUtil.isNotEmpty(compilerTagNames) ? compilerTagNames[compilerTagNames.length - 1] : null;
 
 	String portletTitle = HtmlUtil.unescape(portletDisplay.getTitle());
 
@@ -52,11 +44,8 @@ if (mergeUrlTags || mergeLayoutTags) {
 
 	renderResponse.setTitle(portletTitle);
 }
-else {
-	allAssetTagNames = ArrayUtil.distinct(allAssetTagNames, new StringComparator());
-}
 
-for (String curAssetTagName : allAssetTagNames) {
+for (String curAssetTagName : assetPublisherDisplayContext.getAllAssetTagNames()) {
 	try {
 		AssetTag assetTag = AssetTagLocalServiceUtil.getTag(scopeGroupId, curAssetTagName);
 
@@ -74,17 +63,25 @@ for (String curAssetTagName : allAssetTagNames) {
 	}
 }
 
-if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQuery.getAllCategoryIds().length > 0) || (assetEntryQuery.getAllTagIds().length > 0))) {
-	selectionStyle = "dynamic";
+String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
+
+if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && selectionStyle.equals("manual") && ((assetPublisherDisplayContext.getAllAssetCategoryIds().length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
+	assetPublisherDisplayContext.setSelectionStyle("dynamic");
 }
 
 Group scopeGroup = themeDisplay.getScopeGroup();
+
+Map<String, PortletURL> addPortletURLs = null;
 %>
 
-<c:if test="<%= showAddContentButton && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
+<c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 
 	<%
-	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, null);
+	boolean defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), portletResource);
+
+	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, assetPublisherDisplayContext.getClassNameIds(), assetPublisherDisplayContext.getClassTypeIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), null);
+
+	long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 
 	for (long groupId : groupIds) {
 	%>
@@ -131,6 +128,10 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		</c:choose>
 	</c:if>
 
+	<%
+	boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : assetPublisherDisplayContext.isEnableRSS();
+	%>
+
 	<c:if test="<%= enableRSS %>">
 		<liferay-portlet:resourceURL varImpl="rssURL">
 			<portlet:param name="struts_action" value="/asset_publisher/rss" />
@@ -143,15 +144,17 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, delta, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, assetPublisherDisplayContext.getDelta(), portletURL, null, null);
+
+String paginationType = assetPublisherDisplayContext.getPaginationType();
 
 if (!paginationType.equals("none")) {
-	searchContainer.setDelta(delta);
+	searchContainer.setDelta(assetPublisherDisplayContext.getDelta());
 	searchContainer.setDeltaConfigurable(false);
 }
 %>
 
-<c:if test="<%= showMetadataDescriptions %>">
+<c:if test="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>">
 	<liferay-ui:categorization-filter
 		assetType="content"
 		portletURL="<%= portletURL %>"
@@ -159,11 +162,15 @@ if (!paginationType.equals("none")) {
 </c:if>
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(assetPublisherDisplayContext.getDisplayStyleGroupId(), assetPublisherDisplayContext.getDisplayStyle());
 
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put(PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER, AssetPublisherHelperUtil.getAssetPublisherHelper());
+
+String assetLinkBehavior =assetPublisherDisplayContext.getAssetLinkBehavior();
+
+request.setAttribute("view.jsp-viewInContext", new Boolean(assetLinkBehavior.equals("viewInPortlet")));
 %>
 
 <c:choose>
@@ -176,7 +183,7 @@ contextObjects.put(PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER, Asset
 </c:choose>
 
 <c:if test='<%= !paginationType.equals("none") && (searchContainer.getTotal() > searchContainer.getResults().size()) %>'>
-	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= paginationType %>" />
+	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= assetPublisherDisplayContext.getPaginationType() %>" />
 </c:if>
 
 <%!

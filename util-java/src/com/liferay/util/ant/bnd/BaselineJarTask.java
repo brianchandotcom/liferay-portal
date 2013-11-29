@@ -210,16 +210,7 @@ public class BaselineJarTask extends BaseBndTask {
 			throw new BuildException("file is invalid");
 		}
 
-		if ((_outputPath == null) || !_outputPath.exists() ||
-			!_outputPath.isDirectory()) {
-
-			if (_outputPath != null) {
-				project.log(
-					"outputPath is either missing or is not a directory " +
-						_outputPath.getAbsolutePath(),
-					Project.MSG_ERR);
-			}
-
+		if (_outputPath == null) {
 			throw new BuildException("outputPath is invalid");
 		}
 
@@ -347,13 +338,15 @@ public class BaselineJarTask extends BaseBndTask {
 
 			File outputFile = _outputPath;
 
-			String path = builder.getProperty("-output");
+			if (_outputPath.isDirectory()) {
+				String path = builder.getProperty("-output");
 
-			if (path == null) {
-				outputFile = getFile(_outputPath, bsn + ".jar");
-			}
-			else {
-				outputFile = getFile(_outputPath, path);
+				if (path != null) {
+					outputFile = getFile(_outputPath, path);
+				}
+				else {
+					outputFile = getFile(_outputPath, bsn + ".jar");
+				}
 			}
 
 			if (!outputFile.exists() ||

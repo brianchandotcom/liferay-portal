@@ -54,7 +54,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			editLogoFn='<%= liferayPortletResponse.getNamespace() + "editLayoutLogo" %>'
 			imageId="<%= selLayout.isIconImage() ? selLayout.getIconImageId() : 0 %>"
 			logoDisplaySelector='<%= ".layout-logo-" + selLayout.getPlid() %>'
-			maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>"
 			tempImageFileName="<%= String.valueOf(selLayout.getPlid()) %>"
 		/>
 	</aui:field-wrapper>

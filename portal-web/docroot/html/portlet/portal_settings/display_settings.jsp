@@ -115,7 +115,6 @@
 		defaultLogoURL='<%= themeDisplay.getPathImage() + "/company_logo?img_id=0" %>'
 		imageId="<%= company.getLogoId() %>"
 		logoDisplaySelector=".company-logo"
-		maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>"
 		tempImageFileName="<%= String.valueOf(themeDisplay.getCompanyId()) %>"
 	/>
 </aui:fieldset>

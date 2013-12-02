@@ -302,7 +302,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			Organization organization = itr.next();
 
 			if (!OrganizationPermissionUtil.contains(
-					permissionChecker, organization.getOrganizationId(),
+					permissionChecker, organization,
 					ActionKeys.ASSIGN_MEMBERS)) {
 
 				itr.remove();

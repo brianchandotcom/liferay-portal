@@ -452,10 +452,13 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	public Organization getOrganization(long organizationId)
 		throws PortalException, SystemException {
 
-		OrganizationPermissionUtil.check(
-			getPermissionChecker(), organizationId, ActionKeys.VIEW);
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
 
-		return organizationLocalService.getOrganization(organizationId);
+		OrganizationPermissionUtil.check(
+			getPermissionChecker(), organization, ActionKeys.VIEW);
+
+		return organization;
 	}
 
 	/**

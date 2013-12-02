@@ -2297,7 +2297,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				if (!ArrayUtil.contains(
 						organizationIds, organization.getOrganizationId()) &&
 					(!OrganizationPermissionUtil.contains(
-						permissionChecker, organization.getOrganizationId(),
+						permissionChecker, organization,
 						ActionKeys.ASSIGN_MEMBERS) ||
 					 OrganizationMembershipPolicyUtil.isMembershipProtected(
 						permissionChecker, userId,

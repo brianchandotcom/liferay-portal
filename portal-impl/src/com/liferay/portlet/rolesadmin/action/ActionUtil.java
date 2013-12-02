@@ -70,7 +70,7 @@ public class ActionUtil {
 						permissionChecker, organizationGroupId,
 						ActionKeys.ASSIGN_USER_ROLES) ||
 					OrganizationPermissionUtil.contains(
-						permissionChecker, organizationId,
+						permissionChecker, organization,
 						ActionKeys.ASSIGN_USER_ROLES) ||
 					UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 						themeDisplay.getUserId(), organizationGroupId,

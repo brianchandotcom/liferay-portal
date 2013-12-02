@@ -133,17 +133,17 @@ public class UserPermissionImpl implements UserPermission {
 			}
 
 			for (long organizationId : organizationIds) {
+				Organization organization =
+					OrganizationLocalServiceUtil.getOrganization(
+						organizationId);
+
 				if (OrganizationPermissionUtil.contains(
-						permissionChecker, organizationId,
+						permissionChecker, organization,
 						ActionKeys.MANAGE_USERS)) {
 
 					if (permissionChecker.getUserId() == user.getUserId()) {
 						return true;
 					}
-
-					Organization organization =
-						OrganizationLocalServiceUtil.getOrganization(
-							organizationId);
 
 					Group organizationGroup = organization.getGroup();
 

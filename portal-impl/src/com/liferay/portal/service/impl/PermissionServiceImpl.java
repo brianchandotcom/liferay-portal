@@ -315,8 +315,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 				Team team = teamPersistence.findByPrimaryKey(role.getClassPK());
 
 				TeamPermissionUtil.check(
-					permissionChecker, team.getTeamId(),
-					ActionKeys.PERMISSIONS);
+					permissionChecker, team, ActionKeys.PERMISSIONS);
 			}
 			else {
 				List<String> resourceActions =

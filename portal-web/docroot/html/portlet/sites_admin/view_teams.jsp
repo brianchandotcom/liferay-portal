@@ -86,7 +86,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		PortletURL rowURL = null;
 
-		if (TeamPermissionUtil.contains(permissionChecker, team.getTeamId(), ActionKeys.UPDATE)) {
+		if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE)) {
 			rowURL = renderResponse.createRenderURL();
 
 			rowURL.setParameter("struts_action", "/sites_admin/edit_team");

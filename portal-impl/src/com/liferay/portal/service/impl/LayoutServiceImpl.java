@@ -1778,8 +1778,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			if (LayoutPermissionUtil.contains(
-					getPermissionChecker(), layout.getPlid(),
-					ActionKeys.VIEW)) {
+					getPermissionChecker(), layout, ActionKeys.VIEW)) {
 
 				filteredLayouts.add(layout);
 			}

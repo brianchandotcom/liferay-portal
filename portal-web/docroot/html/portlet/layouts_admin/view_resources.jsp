@@ -36,7 +36,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 <c:if test="<%= viewLayout %>">
 	<div id="<portlet:namespace />viewLayout">
 		<c:choose>
-			<c:when test="<%= (selPlid > 0) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.VIEW) %>">
+			<c:when test="<%= (selLayout != null) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.VIEW) %>">
 				<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp">
 					<c:if test="<%= !SitesUtil.isLayoutDeleteable(selLayout) || !SitesUtil.isLayoutUpdateable(selLayout) %>">
 						<liferay-util:param name="showAddAction" value="<%= Boolean.FALSE.toString() %>" />

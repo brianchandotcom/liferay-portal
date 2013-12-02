@@ -377,7 +377,7 @@ if (organization != null) {
 									</liferay-portlet:renderURL>
 
 									<%
-									if (!OrganizationPermissionUtil.contains(permissionChecker, curOrganization.getOrganizationId(), ActionKeys.VIEW)) {
+									if (!OrganizationPermissionUtil.contains(permissionChecker, curOrganization, ActionKeys.VIEW)) {
 										rowURL = null;
 									}
 									%>

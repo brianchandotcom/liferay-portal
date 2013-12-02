@@ -129,7 +129,7 @@ if (filterManageableOrganizations) {
 				</liferay-portlet:renderURL>
 
 				<%
-				if (!OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.VIEW)) {
+				if (!OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.VIEW)) {
 					rowURL = null;
 				}
 				%>

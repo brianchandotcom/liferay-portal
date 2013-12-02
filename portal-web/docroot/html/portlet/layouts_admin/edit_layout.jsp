@@ -117,13 +117,13 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && showAddAction && PortalUtil.isLayoutParentable(selLayout) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) && showAddAction && PortalUtil.isLayoutParentable(selLayout) %>">
 			<aui:nav-item data-value="add-child-page" iconCssClass="icon-plus" label="add-child-page" />
 		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.PERMISSIONS) %>">
 			<aui:nav-item data-value="permissions" iconCssClass="icon-lock" label="permissions" />
 		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.DELETE) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
 			<aui:nav-item data-value="delete" iconCssClass="icon-remove" label="delete" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
@@ -329,7 +329,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 				categorySections="<%= categorySections %>"
 				displayStyle="<%= displayStyle %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
-				showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) %>"
+				showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
 			/>
 		</c:otherwise>
 	</c:choose>

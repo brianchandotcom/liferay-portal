@@ -56,7 +56,7 @@ if (row == null) {
 <liferay-ui:icon-menu cssClass="<%= cssClass %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
 
 	<%
-	boolean hasUpdatePermission = OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.UPDATE);
+	boolean hasUpdatePermission = OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.UPDATE);
 	%>
 
 	<c:if test="<%= hasUpdatePermission %>">
@@ -72,7 +72,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<%--<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.PERMISSIONS) %>">
+	<%--<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Organization.class.getName() %>"
 			modelResourceDescription="<%= HtmlUtil.escape(organization.getName()) %>"
@@ -102,7 +102,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= permissionChecker.isGroupOwner(organizationGroupId) || OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.ASSIGN_USER_ROLES) %>">
+	<c:if test="<%= permissionChecker.isGroupOwner(organizationGroupId) || OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_USER_ROLES) %>">
 		<portlet:renderURL var="assignUserRolesURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_user_roles" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -117,7 +117,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.ASSIGN_MEMBERS) %>">
+	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_organization_assignments" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -131,7 +131,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.MANAGE_USERS) %>">
+	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.MANAGE_USERS) %>">
 		<portlet:renderURL var="addUserURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_user" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -153,7 +153,7 @@ if (row == null) {
 		for (String childrenType : childrenTypes) {
 		%>
 
-			<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.ADD_ORGANIZATION) %>">
+			<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ADD_ORGANIZATION) %>">
 				<portlet:renderURL var="addSuborganizationURL">
 					<portlet:param name="struts_action" value="/users_admin/edit_organization" />
 					<portlet:param name="redirect" value="<%= redirect %>" />
@@ -174,7 +174,7 @@ if (row == null) {
 
 	</c:if>
 
-	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organizationId, ActionKeys.DELETE) %>">
+	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.DELETE) %>">
 
 		<%
 		String taglibDeleteURL = "javascript:" + renderResponse.getNamespace() + "deleteOrganization('" + organizationId + "');";

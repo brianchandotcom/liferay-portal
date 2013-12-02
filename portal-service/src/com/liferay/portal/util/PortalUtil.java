@@ -886,6 +886,13 @@ public class PortalUtil {
 		return getPortal().getLayoutURL(layout, themeDisplay, doAsUser);
 	}
 
+	public static String getLayoutURL(
+			Layout layout, ThemeDisplay themeDisplay, Locale locale)
+		throws PortalException, SystemException {
+
+		return getPortal().getLayoutURL(layout, themeDisplay, locale);
+	}
+
 	public static String getLayoutURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 

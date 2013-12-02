@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>SOBlogs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOBlogs</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SOBlogs</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_SITE_NAME_BLOGS_RSS_URL</td>
+	<td>/web/open-site-name/blogs/-/blogs/rss</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECENT_BLOGS-->
+<tr>
+	<td>RECENT_BLOGS_ENTRY_TITLE</td>
+	<td>//span[@class='entry-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_BLOGS_ENTRY_AUTHOR</td>
+	<td>//span[@class='entry-author']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_BLOGS_ENTRY_DATE</td>
+	<td>//span[@class='entry-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_BLOGS_ENTRY_READ_MORE_LINK</td>
+	<td>//div[@class='comments']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

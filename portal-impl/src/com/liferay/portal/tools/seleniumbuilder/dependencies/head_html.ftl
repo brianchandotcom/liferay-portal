@@ -1,13 +1,38 @@
 <head>
 	<script type='text/javascript'>
 		function radioCheck () {
-			if (document.getElementById("actionCommandLogButton").checked){
-				document.getElementById("actionCommandLog").style.display = "block";
-				document.getElementById("seleniumCommandLog").style.display = "none";
+			var actionCommandLogButtonChecked = document.getElementById("actionCommandLogButton").checked;
+			var disableActionScreenShotButtonChecked = document.getElementById("disableActionScreenShotButton").checked;
+			var enableActionScreenShotButtonChecked = document.getElementById("enableActionScreenShotButton").checked;
+			var xmlLogButtonChecked = document.getElementById("xmlLogButton").checked;
+
+			var actionCommandLog = document.getElementById("actionCommandLog");
+			var actionScreenShotLog = document.getElementById("actionScreenShotLog");
+			var pageObjectXMLLog = document.getElementById("pageObjectXMLLog");
+
+			if ((actionCommandLogButtonChecked) && (disableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "block";
+				actionCommandLog.style.width = "99%";
+				actionScreenShotLog.style.display = "none";
+				pageObjectXMLLog.style.display = "none";
 			}
-			else if (document.getElementById("seleniumCommandLogButton").checked){
-				document.getElementById("actionCommandLog").style.display = "none";
-				document.getElementById("seleniumCommandLog").style.display = "block";
+			else if ((actionCommandLogButtonChecked) && (enableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "block";
+				actionCommandLog.style.width = "46%";
+				actionScreenShotLog.style.display = "block";
+				pageObjectXMLLog.style.display = "none";
+			}
+			else if ((xmlLogButtonChecked) && (disableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "none";
+				actionScreenShotLog.style.display = "none";
+				pageObjectXMLLog.style.width = "99%";
+				pageObjectXMLLog.style.display = "block";
+			}
+			else if ((xmlLogButtonChecked) && (enableActionScreenShotButtonChecked)) {
+				actionCommandLog.style.display = "none";
+				actionScreenShotLog.style.display = "block";
+				pageObjectXMLLog.style.width = "46%";
+				pageObjectXMLLog.style.display = "block";
 			}
 		}
 
@@ -76,10 +101,20 @@
 
 		#actionCommandLog {
 			border: 1px solid #CCC;
-			height: 30%;
+			float: left;
+			height: 75%;
 			overflow: auto;
 			white-space: nowrap;
-			width: 100%;
+			width: 99%;
+		}
+
+		#actionScreenShotLog {
+			border: 1px solid #CCC;
+			float: left;
+			height: 75%;
+			overflow: auto;
+			white-space: nowrap;
+			width: 53%;
 		}
 
 		#errorLog {
@@ -87,23 +122,16 @@
 			height: 12%;
 			overflow: auto;
 			white-space: nowrap;
-			width: 100%;
+			width: 99%;
 		}
 
 		#pageObjectXMLLog {
-			height: 64%;
-			margin: 0px;
-			overflow: auto;
-			padding: 0px;
-			width: 100%;
-		}
-
-		#seleniumCommandLog {
 			border: 1px solid #CCC;
-			height: 30%;
+			float: left;
+			height: 75%;
 			overflow: auto;
 			white-space: nowrap;
-			width: 100%;
+			width: 99%;
 		}
 
 		#title {
@@ -146,6 +174,13 @@
 			float: right;
 			margin-left: 5px;
 			margin-right: 5px;
+		}
+
+		.options {
+			display: table-cell;
+			min-width: 800px;
+			padding-right: 10px;
+			text-align: left;
 		}
 
 		.parameter-border {

@@ -529,10 +529,6 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void saveScreenshot(String fileName) throws Exception {
-		if (!TestPropsValues.SAVE_SCREENSHOT) {
-			return;
-		}
-
 		if (_screenshotFileName.equals(fileName)) {
 			_screenshotCount++;
 		}
@@ -556,8 +552,8 @@ public abstract class BaseWebDriverImpl
 			file,
 			new File(
 				getProjectDir() + "portal-web\\test-results\\functional\\" +
-					_screenshotFileName + "/" + _screenshotFileName +
-						_screenshotCount + ".jpg"));
+					_screenshotFileName + "\\" + _screenshotFileName +
+					_screenshotCount + ".jpg"));
 	}
 
 	@Override

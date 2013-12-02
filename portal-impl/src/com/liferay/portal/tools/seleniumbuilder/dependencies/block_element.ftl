@@ -53,6 +53,16 @@
 
 			<#include "action_log_element.ftl">
 
+			<#if !(action?contains("#confirm")) && !(action?contains("#is"))>
+				<#if testCaseName??>
+					selenium
+				<#else>
+					liferaySelenium
+				</#if>
+
+				.saveScreenshot(commandScopeVariables.get("testCaseName"));
+			</#if>
+
 			<#include "action_element.ftl">
 
 			<#if action?contains("#is")>

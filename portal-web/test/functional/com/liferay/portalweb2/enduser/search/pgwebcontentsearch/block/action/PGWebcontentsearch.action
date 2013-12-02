@@ -1,4 +1,4 @@
-<definition>
+<definition extends="BasePortlet">
 	<command name="click">
 		<case locator-key1="SEARCH_ICON">
 			<execute function="Click#clickAtAndWait" />

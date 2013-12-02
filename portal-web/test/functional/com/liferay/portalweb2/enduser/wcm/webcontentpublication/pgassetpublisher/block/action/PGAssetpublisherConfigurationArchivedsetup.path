@@ -19,16 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>PGAssetpublisherConfiguration</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ARCHIVE_NAME_FIELD</td>
 	<td>//input[@id='_86_name']</td>
 	<td></td>

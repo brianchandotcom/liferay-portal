@@ -24,7 +24,7 @@
 	<header id="banner" role="banner">
 		<hgroup id="heading">
 			<h1 class="site-title">
-				<a class="logo" href="<%= jsonWSContextPath %>" title="JSONWS API">
+				<a class="logo" href="<%= HtmlUtil.escapeAttribute(jsonWSContextPath) %>" title="JSONWS API">
 					<img alt="JSONWS API" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
 				</a>
 

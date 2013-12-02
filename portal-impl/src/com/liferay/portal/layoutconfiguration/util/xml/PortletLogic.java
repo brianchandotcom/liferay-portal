@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletParameterUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -31,6 +33,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -84,8 +88,21 @@ public class PortletLogic extends RuntimeLogic {
 
 		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
 
-		HttpServletRequest request = DynamicServletRequest.addQueryString(
-			_request, queryString);
+		HttpServletRequest request = null;
+		String ppid = _request.getParameter("p_p_id");
+
+		if ((portletId != null) && portletId.equals(ppid)) {
+			request = DynamicServletRequest.addQueryString(
+				_request, queryString);
+		}
+		else {
+			Map<String, String[]> parameterMap = MapUtil.filter(
+				_request.getParameterMap(),
+				new PrefixPredicateFilter("p_p_", true));
+
+			request = DynamicServletRequest.addQueryString(
+				_request, queryString, parameterMap, false);
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

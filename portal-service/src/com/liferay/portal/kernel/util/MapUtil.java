@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Constructor;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 import java.util.Map;
 
 /**
@@ -34,6 +36,31 @@ public class MapUtil {
 		copy.clear();
 
 		merge(master, copy);
+	}
+
+	/**
+	 * Returns filtered map.
+	 *
+	 * @param	map to be filtered
+	 * @param	keyFilter PredicateFilter interface to define filter
+	 * @return	Map This new map instance and supports add and
+	 * 			remove operations.
+	 */
+	public static <K, V> Map<K, V> filter(
+		Map<K, V> inputMap, PredicateFilter<K> keyFilter) {
+
+		Map<K, V> outputMap = new HashMap<K, V>();
+
+		for (Entry<K, V> entry : inputMap.entrySet()) {
+			K key = entry.getKey();
+			V value = entry.getValue();
+
+			if (keyFilter.filter(key)) {
+				outputMap.put(key, value);
+			}
+		}
+
+		return outputMap;
 	}
 
 	public static boolean getBoolean(Map<String, ?> map, String key) {
@@ -364,6 +391,10 @@ public class MapUtil {
 
 		return sb.toString();
 	}
+
+	public interface Filter<K, V> {
+		public boolean filter(K key, V value);
+	};
 
 	private static Log _log = LogFactoryUtil.getLog(MapUtil.class);
 

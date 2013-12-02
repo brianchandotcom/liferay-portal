@@ -70,13 +70,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			</c:if>
 
 			<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) && !print %>">
-
-				<%
-				PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
-
-				String[] extensions = assetPublisherDisplayContext.getExtensions();
-				%>
-
 				<div class="export-actions">
 					<%@ include file="/html/portlet/asset_publisher/asset_export.jspf" %>
 				</div>

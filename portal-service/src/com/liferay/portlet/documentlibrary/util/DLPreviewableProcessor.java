@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
@@ -741,8 +742,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			sb.append(index - 1);
 		}
 
-		sb.append(StringPool.PERIOD);
-		sb.append(type);
+		if (Validator.isNotNull(type)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(type);
+		}
 
 		return sb.toString();
 	}
@@ -786,8 +789,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		sb.append(tempFileId);
 		sb.append(StringPool.DASH);
 		sb.append("(.*)");
-		sb.append(StringPool.PERIOD);
-		sb.append(type);
+
+		if (Validator.isNotNull(type)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(type);
+		}
 
 		File dir = new File(PREVIEW_TMP_PATH);
 
@@ -831,8 +837,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			sb.append("-%d");
 		}
 
-		sb.append(StringPool.PERIOD);
-		sb.append(type);
+		if (Validator.isNotNull(type)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(type);
+		}
 
 		return sb.toString();
 	}
@@ -887,7 +895,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			sb.append(index);
 		}
 
-		if (fileVersionId > 0) {
+		if ((fileVersionId > 0) && Validator.isNotNull(thumbnailType)) {
 			sb.append(StringPool.PERIOD);
 			sb.append(thumbnailType);
 		}
@@ -914,8 +922,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		sb.append(THUMBNAIL_TMP_PATH);
 		sb.append(id);
-		sb.append(StringPool.PERIOD);
-		sb.append(type);
+
+		if (Validator.isNotNull(type)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(type);
+		}
 
 		return sb.toString();
 	}

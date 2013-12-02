@@ -29,20 +29,15 @@ long[] classTypeIds = assetPublisherDisplayContext.getClassTypeIds();
 
 assetEntryQuery.setClassTypeIds(classTypeIds);
 
-if (assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
+if (assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() && (classNameIds.length == 1) && (classTypeIds.length == 1) && Validator.isNotNull(assetPublisherDisplayContext.getDDMStructureFieldName()) && Validator.isNotNull(assetPublisherDisplayContext.getDDMStructureFieldValue())) {
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameIds[0]));
 
-	String ddmStructureFieldName = assetPublisherDisplayContext.getDDMStructureFieldName();
-	Serializable ddmStructureFieldValue = assetPublisherDisplayContext.getDDMStructureFieldValue();
+	Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldName(classTypeIds[0], assetPublisherDisplayContext.getDDMStructureFieldName(), locale);
 
-	if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
-		Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldName(classTypeIds[0], ddmStructureFieldName, locale);
+	long ddmStructureId = GetterUtil.getLong(classTypeFieldName.getObject(3));
 
-		long ddmStructureId = GetterUtil.getLong(classTypeFieldName.getObject(3));
-
-		assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructureId, ddmStructureFieldName, locale));
-		assetEntryQuery.setAttribute("ddmStructureFieldValue", ddmStructureFieldValue);
-	}
+	assetEntryQuery.setAttribute("ddmStructureFieldName", DDMIndexerUtil.encodeName(ddmStructureId, assetPublisherDisplayContext.getDDMStructureFieldName(), locale));
+	assetEntryQuery.setAttribute("ddmStructureFieldValue", assetPublisherDisplayContext.getDDMStructureFieldValue());
 }
 
 AssetPublisherUtil.processAssetEntryQuery(user, portletPreferences, assetEntryQuery);

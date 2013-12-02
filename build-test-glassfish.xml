@@ -35,6 +35,17 @@
 			</then>
 		</if>
 
+		<copy
+			file="${app.server.glassfish.bin.dir}/asadmin"
+			tofile="${app.server.glassfish.bin.dir}/asadmin.sh"
+		/>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.glassfish.bin.dir}">
+				<include name="*.sh" />
+			</fileset>
+		</chmod>
+
 		<antcall target="revert-test-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

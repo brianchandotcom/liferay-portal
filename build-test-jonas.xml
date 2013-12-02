@@ -35,6 +35,17 @@
 			</then>
 		</if>
 
+		<copy
+			file="${app.server.jonas.bin.dir}/jonas"
+			tofile="${app.server.jonas.bin.dir}/jonas.sh"
+		/>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.jonas.bin.dir}">
+				<include name="*.sh" />
+			</fileset>
+		</chmod>
+
 		<antcall target="revert-test-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

@@ -57,6 +57,12 @@
 			<replacevalue>stop</replacevalue>
 		</replace>
 
+		<chmod perm="a+x">
+			<fileset dir="${app.server.resin.bin.dir}">
+				<include name="*.sh" />
+			</fileset>
+		</chmod>
+
 		<antcall target="revert-test-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

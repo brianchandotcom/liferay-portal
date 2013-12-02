@@ -65,6 +65,12 @@
 			<replacevalue>$JAVA_HOME/bin/java $JAVA_OPTS -jar ../start.jar --stop</replacevalue>
 		</replace>
 
+		<chmod perm="a+x">
+			<fileset dir="${app.server.jetty.bin.dir}">
+				<include name="*.sh" />
+			</fileset>
+		</chmod>
+
 		<antcall target="revert-test-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

@@ -42,17 +42,19 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			new ArrayList<UserGroupRole>();
 		List<UserGroupRole> siteUserGroupRoles = new ArrayList<UserGroupRole>();
 
+		Group group = groupLocalService.getGroup(groupId);
+
 		for (long roleId : roleIds) {
+			Role role = rolePersistence.findByPrimaryKey(roleId);
+
 			UserGroupRolePermissionUtil.check(
-				getPermissionChecker(), groupId, roleId);
+				getPermissionChecker(), group, role);
 
 			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 				userId, groupId, roleId);
 
 			UserGroupRole userGroupRole = userGroupRolePersistence.create(
 				userGroupRolePK);
-
-			Role role = rolePersistence.findByPrimaryKey(roleId);
 
 			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 				organizationUserGroupRoles.add(userGroupRole);
@@ -135,11 +137,13 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		List<UserGroupRole> filteredSiteUserGroupRoles =
 			new ArrayList<UserGroupRole>();
 
-		for (long roleId : roleIds) {
-			UserGroupRolePermissionUtil.check(
-				getPermissionChecker(), groupId, roleId);
+		Group group = groupLocalService.getGroup(groupId);
 
+		for (long roleId : roleIds) {
 			Role role = roleLocalService.getRole(roleId);
+
+			UserGroupRolePermissionUtil.check(
+				getPermissionChecker(), group, role);
 
 			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 				userId, groupId, roleId);
@@ -148,8 +152,6 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 				userGroupRolePK);
 
 			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
-				Group group = groupPersistence.findByPrimaryKey(groupId);
-
 				if (!OrganizationMembershipPolicyUtil.isRoleProtected(
 						getPermissionChecker(), userId,
 						group.getOrganizationId(), roleId)) {

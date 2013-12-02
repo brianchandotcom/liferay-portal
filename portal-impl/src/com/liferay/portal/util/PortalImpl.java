@@ -3153,6 +3153,26 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getLayoutURL(
+			Layout layout, ThemeDisplay themeDisplay, Locale locale)
+		throws PortalException, SystemException {
+
+		String i18nLanguageId = themeDisplay.getI18nLanguageId();
+		String i18nPath = themeDisplay.getI18nPath();
+		Locale originalLocale = themeDisplay.getLocale();
+
+		try {
+			setThemeDisplayI18n(themeDisplay, locale);
+
+			return getLayoutURL(layout, themeDisplay, true);
+		}
+		finally {
+			resetThemeDisplayI18n(
+				themeDisplay, i18nLanguageId, i18nPath, originalLocale);
+		}
+	}
+
+	@Override
 	public String getLayoutURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 

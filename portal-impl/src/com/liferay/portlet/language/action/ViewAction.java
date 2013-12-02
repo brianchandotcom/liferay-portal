@@ -143,7 +143,8 @@ public class ViewAction extends PortletAction {
 					redirect = layout.getFriendlyURL(locale);
 				}
 				else {
-					redirect = PortalUtil.getLayoutURL(layout, themeDisplay);
+					redirect = PortalUtil.getLayoutURL(
+						layout, themeDisplay, locale);
 				}
 			}
 			else {

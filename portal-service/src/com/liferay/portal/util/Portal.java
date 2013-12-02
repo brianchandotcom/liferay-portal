@@ -808,6 +808,10 @@ public interface Portal {
 			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
 		throws PortalException, SystemException;
 
+	public String getLayoutURL(
+			Layout layout, ThemeDisplay themeDisplay, Locale locale)
+		throws PortalException, SystemException;
+
 	public String getLayoutURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 

@@ -93,9 +93,6 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
 		for (long userId : userIds) {
-			UserGroupRolePermissionUtil.check(
-				getPermissionChecker(), groupId, roleId);
-
 			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
 				userId, groupId, roleId);
 

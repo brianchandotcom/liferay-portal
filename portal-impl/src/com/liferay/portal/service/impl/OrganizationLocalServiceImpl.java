@@ -1643,7 +1643,7 @@ public class OrganizationLocalServiceImpl
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	 *             long, long, String, String, long, long, int, String, boolean,
-	 *             ServiceContext)}
+	 *             boolean, byte[], ServiceContext)}
 	 */
 	@Override
 	public Organization updateOrganization(
@@ -1655,7 +1655,8 @@ public class OrganizationLocalServiceImpl
 
 		return updateOrganization(
 			companyId, organizationId, parentOrganizationId, name, type,
-			regionId, countryId, statusId, comments, site, serviceContext);
+			regionId, countryId, statusId, comments, site, true, null,
+			serviceContext);
 	}
 
 	/**
@@ -1673,6 +1674,8 @@ public class OrganizationLocalServiceImpl
 	 * @param  comments the comments about the organization
 	 * @param  site whether the organization is to be associated with a main
 	 *         site
+	 * @param  logo if the organization has a custom logo
+	 * @param  logoBytes the new logo image data
 	 * @param  serviceContext the service context to be applied (optionally
 	 *         <code>null</code>). Can set asset category IDs and asset tag
 	 *         names for the organization, and merge expando bridge attributes
@@ -1687,8 +1690,8 @@ public class OrganizationLocalServiceImpl
 	public Organization updateOrganization(
 			long companyId, long organizationId, long parentOrganizationId,
 			String name, String type, long regionId, long countryId,
-			int statusId, String comments, boolean site,
-			ServiceContext serviceContext)
+			int statusId, String comments, boolean site, boolean logo,
+			byte[] logoBytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Organization
@@ -1763,6 +1766,17 @@ public class OrganizationLocalServiceImpl
 			groupLocalService.updateSite(group.getGroupId(), site);
 		}
 
+		// Logo
+
+		if (logo) {
+			if (ArrayUtil.isNotEmpty(logoBytes)) {
+				updateLogo(group, logoBytes);
+			}
+		}
+		else if (organization.getLogoId() > 0) {
+			deleteLogo(organizationId);
+		}
+
 		// Asset
 
 		if (serviceContext != null) {
@@ -1787,6 +1801,48 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return organization;
+	}
+
+	/**
+	 * Updates the organization.
+	 *
+	 * @param  companyId the primary key of the organization's company
+	 * @param  organizationId the primary key of the organization
+	 * @param  parentOrganizationId the primary key of organization's parent
+	 *         organization
+	 * @param  name the organization's name
+	 * @param  type the organization's type
+	 * @param  regionId the primary key of the organization's region
+	 * @param  countryId the primary key of the organization's country
+	 * @param  statusId the organization's workflow status
+	 * @param  comments the comments about the organization
+	 * @param  site whether the organization is to be associated with a main
+	 *         site
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set asset category IDs and asset tag
+	 *         names for the organization, and merge expando bridge attributes
+	 *         for the organization.
+	 * @return the organization
+	 * @throws PortalException if an organization or parent organization with
+	 *         the primary key could not be found or if the new information was
+	 *         invalid
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
+	 *         long, long, String, String, long, long, int, String, boolean,
+	 *         boolean, byte[], ServiceContext)}
+	 *
+	 */
+	@Override
+	public Organization updateOrganization(
+			long companyId, long organizationId, long parentOrganizationId,
+			String name, String type, long regionId, long countryId,
+			int statusId, String comments, boolean site,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateOrganization(
+			companyId, organizationId, parentOrganizationId, name, type,
+			regionId, countryId, statusId, comments, site, serviceContext);
 	}
 
 	protected void addSuborganizations(
@@ -1913,6 +1969,14 @@ public class OrganizationLocalServiceImpl
 		else {
 			return false;
 		}
+	}
+
+	protected void updateLogo(Group group, byte[] bytes)
+		throws PortalException, SystemException {
+
+		layoutSetService.updateLogo(group.getGroupId(), true, true, bytes);
+
+		layoutSetService.updateLogo(group.getGroupId(), false, true, bytes);
 	}
 
 	protected void validate(

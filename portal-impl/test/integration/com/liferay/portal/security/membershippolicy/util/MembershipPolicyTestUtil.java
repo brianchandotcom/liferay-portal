@@ -211,7 +211,7 @@ public class MembershipPolicyTestUtil {
 			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
 			jobTitle, siteIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, addresses, emailAddresses, phones, websites,
-			announcementsDelivers, serviceContext);
+			announcementsDelivers, false, null, serviceContext);
 	}
 
 	protected static Map<String, Serializable> addExpandoMap(Class<?> clazz)

@@ -28,15 +28,16 @@ import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Website;
@@ -45,6 +46,7 @@ import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.List;
@@ -85,7 +87,6 @@ public class EditCompanyAction extends PortletAction {
 				}
 				else {
 					updateCompany(actionRequest);
-					updateDisplay(actionRequest);
 
 					sendRedirect(actionRequest, actionResponse);
 				}
@@ -170,39 +171,25 @@ public class EditCompanyAction extends PortletAction {
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
 		CompanyServiceUtil.updateCompany(
 			companyId, virtualHostname, mx, homeURL, name, legalName, legalId,
 			legalType, sicCode, tickerSymbol, industry, type, size, languageId,
-			timeZoneId, addresses, emailAddresses, phones, websites,
-			properties);
+			timeZoneId, addresses, emailAddresses, phones, websites, properties,
+			!deleteLogo, logoBytes);
 
 		PortalUtil.resetCDNHosts();
-	}
-
-	protected void updateDisplay(ActionRequest actionRequest) throws Exception {
-		Company company = PortalUtil.getCompany(actionRequest);
-
-		String languageId = ParamUtil.getString(actionRequest, "languageId");
-		String timeZoneId = ParamUtil.getString(actionRequest, "timeZoneId");
-
-		CompanyServiceUtil.updateDisplay(
-			company.getCompanyId(), languageId, timeZoneId);
-
-		boolean siteLogo = ParamUtil.getBoolean(
-			actionRequest,
-			"settings--" + PropsKeys.COMPANY_SECURITY_SITE_LOGO + "--");
-
-		CompanyServiceUtil.updateSecurity(
-			company.getCompanyId(), company.getAuthType(),
-			company.isAutoLogin(), company.isSendPassword(),
-			company.isStrangers(), company.isStrangersWithMx(),
-			company.isStrangersVerify(), siteLogo);
-
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-
-		if (deleteLogo) {
-			CompanyServiceUtil.deleteLogo(company.getCompanyId());
-		}
 	}
 
 	protected void validateCAS(ActionRequest actionRequest) throws Exception {

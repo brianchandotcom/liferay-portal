@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -89,6 +90,7 @@ import com.liferay.portal.util.LayoutSettings;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
@@ -868,7 +870,22 @@ public class EditLayoutsAction extends PortletAction {
 			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 		boolean iconImage = ParamUtil.getBoolean(
 			uploadPortletRequest, "iconImage");
-		byte[] iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");
+
+		long fileEntryId = ParamUtil.getLong(
+			uploadPortletRequest, "fileEntryId");
+
+		byte[] iconBytes = null;
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			iconBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+		else {
+			iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");
+		}
+
 		long layoutPrototypeId = ParamUtil.getLong(
 			uploadPortletRequest, "layoutPrototypeId");
 

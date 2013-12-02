@@ -342,7 +342,7 @@ public class FacebookConnectAction extends PortletAction {
 			contact.getMsnSn(), contact.getMySpaceSn(), contact.getSkypeSn(),
 			contact.getTwitterSn(), contact.getYmSn(), contact.getJobTitle(),
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
-			serviceContext);
+			true, null, serviceContext);
 	}
 
 }

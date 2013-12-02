@@ -1,0 +1,49 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="AddSitepageXSS" priority="5">
+		<var name="sitePageName1" value="Site Page 1" />
+		<var name="sitePageName2" value="Site Page 2" />
+		<var name="sitePageName3"><![CDATA[<script>alert("Site Page 3")</script> />]]></var>
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${sitePageName1}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${sitePageName2}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${sitePageName3}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName3}" />
+			<var name="sitePageXSS" value="${pageName}" />
+		</execute>
+	</command>
+</definition>

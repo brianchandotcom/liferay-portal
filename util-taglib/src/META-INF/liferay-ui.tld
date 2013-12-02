@@ -2362,11 +2362,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>editLogoURL</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>imageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

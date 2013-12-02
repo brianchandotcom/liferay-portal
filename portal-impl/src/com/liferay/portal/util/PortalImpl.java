@@ -3049,7 +3049,7 @@ public class PortalImpl implements Portal {
 		}
 
 		if (Validator.isNotNull(virtualHostname) &&
-			!virtualHostname.equals(_LOCALHOST)) {
+			!StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) {
 
 			String portalURL = getPortalURL(
 				virtualHostname, themeDisplay.getServerPort(),
@@ -7337,7 +7337,10 @@ public class PortalImpl implements Portal {
 
 		String portalURL = themeDisplay.getPortalURL();
 
-		if (canonicalURL || !themeDisplay.getServerName().equals(_LOCALHOST)) {
+		if (canonicalURL ||
+			!StringUtil.equalsIgnoreCase(
+				themeDisplay.getServerName(), _LOCALHOST)) {
+
 			String virtualHostname = layoutSet.getVirtualHostname();
 
 			if (Validator.isNull(virtualHostname) &&

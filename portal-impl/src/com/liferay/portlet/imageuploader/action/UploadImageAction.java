@@ -56,16 +56,19 @@ import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class EditLogoAction extends PortletAction {
+public class UploadImageAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -188,8 +191,9 @@ public abstract class EditLogoAction extends PortletAction {
 			getTempImageFileName(portletRequest), getTempImageFolderName());
 	}
 
-	protected abstract String getTempImageFileName(
-		PortletRequest portletRequest);
+	protected String getTempImageFileName(PortletRequest portletRequest) {
+		return ParamUtil.getString(portletRequest, "tempImageFileName");
+	}
 
 	protected String getTempImageFolderName() {
 		Class<?> clazz = getClass();
@@ -279,6 +283,17 @@ public abstract class EditLogoAction extends PortletAction {
 		PortletResponseUtil.write(mimeResponse, bytes);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EditLogoAction.class);
+	@Override
+		public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		return actionMapping.findForward(
+			getForward(renderRequest, "portlet.image_uploader.view"));
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(UploadImageAction.class);
 
 }

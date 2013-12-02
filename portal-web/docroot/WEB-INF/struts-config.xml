@@ -828,6 +828,12 @@
 			<forward name="portlet.image_gallery_display.view_slide_show" path="portlet.image_gallery_display.view_slide_show" />
 		</action>
 
+		<!-- Image Uploader -->
+
+		<action path="/image_uploader/view" type="com.liferay.portlet.imageuploader.action.UploadImageAction">
+			<forward name="portlet.image_uploader.view" path="portlet.image_uploader.view" />
+		</action>
+
 		<!-- Invitation -->
 
 		<action path="/invitation/view" type="com.liferay.portlet.invitation.action.ViewAction">

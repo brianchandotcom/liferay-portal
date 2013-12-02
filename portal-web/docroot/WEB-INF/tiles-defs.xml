@@ -692,6 +692,14 @@
 		<put name="portlet_content" value="/portlet/image_gallery_display/view_slide_show.jsp" />
 	</definition>
 
+	<!-- Image Uploader -->
+
+	<definition name="portlet.image_uploader" extends="portlet" />
+
+	<definition name="portlet.image_uploader.view" extends="portlet.image_uploader">
+		<put name="portlet_content" value="/portlet/image_uploader/view.jsp" />
+	</definition>
+
 	<!-- Invitation -->
 
 	<definition name="portlet.invitation" extends="portlet" />

@@ -47,8 +47,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 	<aui:input label="target" name="TypeSettingsProperties--target--" size="15" type="text" value="<%= HtmlUtil.escapeAttribute(curTarget) %>" />
 
-	<aui:input name="iconImage" type="hidden" value="<%= selLayout.isIconImage() %>" />
-
 	<aui:field-wrapper helpMessage="this-icon-will-be-shown-in-the-navigation-menu" label="icon" name="iconFileName">
 		<liferay-ui:logo-selector
 			currentLogoURL='<%= themeDisplay.getPathThemeImages() + (selLayout.getIconImageId() == 0 ? "/spacer.png" : "/logo?img_id=" + selLayout.getIconImageId() + "&t=" + WebServerServletTokenUtil.getToken(selLayout.getIconImageId())) %>'
@@ -68,10 +66,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		'<portlet:namespace />editLayoutLogo',
 		function(logoURL, deleteLogo) {
 			var A = AUI();
-
-			var layoutLogoInput = A.one('#<portlet:namespace />iconImage');
-
-			layoutLogoInput.val(!deleteLogo);
 
 			var layoutLogo = A.one('.layout-logo-<%= selLayout.getPlid() %>');
 

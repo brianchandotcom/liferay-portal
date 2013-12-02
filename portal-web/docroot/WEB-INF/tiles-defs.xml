@@ -864,10 +864,6 @@
 
 	<definition name="portlet.layouts_admin" extends="portlet" />
 
-	<definition name="portlet.layouts_admin.edit_layout_icon_image" extends="portlet.layouts_admin">
-		<put name="portlet_content" value="/portlet/layouts_admin/edit_layout_icon_image.jsp" />
-	</definition>
-
 	<definition name="portlet.layouts_admin.edit_layouts" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/view.jsp" />
 	</definition>
@@ -1204,10 +1200,6 @@
 
 	<definition name="portlet.portal_settings.edit_company" extends="portlet.portal_settings">
 		<put name="portlet_content" value="/portlet/portal_settings/edit_company.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.edit_company_logo" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/edit_company_logo.jsp" />
 	</definition>
 
 	<definition name="portlet.portal_settings.edit_ldap_server" extends="portlet.portal_settings">
@@ -1683,16 +1675,8 @@
 		<put name="portlet_content" value="/portlet/users_admin/edit_organization_assignments.jsp" />
 	</definition>
 
-	<definition name="portlet.users_admin.edit_organization_logo" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_organization_logo.jsp" />
-	</definition>
-
 	<definition name="portlet.users_admin.edit_user" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/edit_user.jsp" />
-	</definition>
-
-	<definition name="portlet.users_admin.edit_user_portrait" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/edit_user_portrait.jsp" />
 	</definition>
 
 	<definition name="portlet.users_admin.error" extends="portlet.users_admin">

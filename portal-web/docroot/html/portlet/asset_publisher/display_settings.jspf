@@ -35,16 +35,12 @@
 		/>
 	</div>
 
-	<%
-	int abstractLength = assetPublisherDisplayContext.getAbstractLength();
-	%>
-
 	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--">
-		<aui:option label="100" selected="<%= abstractLength == 100 %>" />
-		<aui:option label="200" selected="<%= abstractLength == 200 %>" />
-		<aui:option label="300" selected="<%= abstractLength == 300 %>" />
-		<aui:option label="400" selected="<%= abstractLength == 400 %>" />
-		<aui:option label="500" selected="<%= abstractLength == 500 %>" />
+		<aui:option label="100" selected="<%= assetPublisherDisplayContext.getAbstractLength() == 100 %>" />
+		<aui:option label="200" selected="<%= assetPublisherDisplayContext.getAbstractLength() == 200 %>" />
+		<aui:option label="300" selected="<%= assetPublisherDisplayContext.getAbstractLength() == 300 %>" />
+		<aui:option label="400" selected="<%= assetPublisherDisplayContext.getAbstractLength() == 400 %>" />
+		<aui:option label="500" selected="<%= assetPublisherDisplayContext.getAbstractLength() == 500 %>" />
 	</aui:select>
 
 	<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAssetTitle() %>" />

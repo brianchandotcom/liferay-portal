@@ -358,7 +358,7 @@
 
 				// Add cke_show_border class to table start tag to keep CKEditor's formatting
 
-				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "\\t\\ttable: { tag: 'table', capture: 0,\\n\\t\\tattrs: { 'class': 'cke_show_border' },\\n\\t\\t");
+				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
 
 				// Register Creole parser
 

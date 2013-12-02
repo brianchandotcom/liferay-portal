@@ -32,4 +32,8 @@
 		border-top: 1px solid #BFBFBF;
 		padding: 10px;
 	}
+
+	.signed-in-as {
+		word-wrap: break-word;
+	}
 }

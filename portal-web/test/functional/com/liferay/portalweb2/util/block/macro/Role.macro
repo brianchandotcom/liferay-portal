@@ -66,6 +66,21 @@
 	</command>
 
 	<command name="definePermissionCP">
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+		</execute>
+	</command>
+
+	<command name="definePermissionCmdCP">
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="${roleName}" />
@@ -105,21 +120,7 @@
 			</elseif>
 		</if>
 
-		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
-		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
-
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
-
-		<while>
-			<condition action="CPRoles#isElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" />
-			<then>
-				<execute action="CPRoles#assertClick" locator-key1="PAGINATION_NEXT_BUTTON" value1="Next" />
-			</then>
-		</while>
-
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
 	</command>
 
 	<command name="definePermissionPG">
@@ -220,5 +221,6 @@
 
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
 	</command>
 </definition>

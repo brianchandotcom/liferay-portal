@@ -1,0 +1,661 @@
+<definition>
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="chat-portlet,contacts-portlet,events-display-portlet,microblogs-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-theme" />
+
+	<var name="key_siteName" value="${siteName}" />
+	<var name="pageName" value="Blogs" />
+	<var name="roleName" value="Blogs Site Role Name" />
+	<var name="siteName" value="Open Site Name" />
+	<var name="siteDescription" value="Open Site Description" />
+	<var name="siteType" value="Open" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+	</set-up>
+
+	<var name="entryTitle" value="Blogs Entry Title" />
+	<var name="entryContent" value="Blogs Entry Content" />
+	<var name="entryAuthorFirstName" value="Test" />
+	<var name="entryAuthorLastName" value="Test" />
+	<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+	<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
+	<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+
+	<command name="AddSOBlogsEntry" priority="5">
+		<var name="siteName" value="${siteName}" />
+		<var name="entryTitle" value="${entryTitle}" />
+		<var name="entryContent" value="${entryContent}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+
+		<execute macro="BlogsEntry#viewPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#viewPGDetails" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="AVERAGE" value1="Average (0 Votes)" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#viewPGDetails" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="2 Views," />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#viewPGDetails" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="3 Views," />
+
+		<execute action="SOBlogs#open" locator-key1="OPEN_SITE_NAME_BLOGS_RSS_URL" />
+
+		<execute action="PGBlogs#assertTextPresent" value1="${siteName}" />
+		<execute action="PGBlogs#assertTextPresent" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextPresent" value1="${entryContent}" />
+		<execute action="PGBlogs#click" locator-key1="RSS_ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="AddSOBlogsEntrySOUser" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="entryTitle" value="${entryTitle}" />
+		<var name="entryContent" value="${entryContent}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+		<var name="password" value="test" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="roleName" value="Blogs Site Role Name" />
+		<var name="roleType" value="Site" />
+		<var name="siteName" value="${siteName}" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userLastName" value="User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Subscribe" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOSite#joinSitePG">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryAuthorFirstName" value="${userFirstName}" />
+			<var name="entryAuthorLastName" value="${userLastName}" />
+			<var name="entryAuthorMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+
+		<execute macro="BlogsEntry#viewPGDetails">
+			<var name="entryAuthorFirstName" value="${userFirstName}" />
+			<var name="entryAuthorLastName" value="${userLastName}" />
+			<var name="entryAuthorMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="AVERAGE" value1="Average (0 Votes)" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryAuthorFirstName" value="${userFirstName}" />
+			<var name="entryAuthorLastName" value="${userLastName}" />
+			<var name="entryAuthorMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_COMMENT_1" value1="0 Comments" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+
+		<execute macro="BlogsEntry#viewPGDetails">
+			<var name="entryAuthorFirstName" value="${userFirstName}" />
+			<var name="entryAuthorLastName" value="${userLastName}" />
+			<var name="entryAuthorMiddleName" value="${userMiddleName}" />
+		</execute>
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="AVERAGE" value1="Average (0 Votes)" />
+	</command>
+
+	<command name="EditSOBlogsEntry" priority="5">
+		<var name="siteName" value="${siteName}" />
+		<var name="entryTitle" value="${entryTitle}" />
+		<var name="entryContent" value="${entryContent}" />
+		<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		<var name="entryContentEdit" value="${entryContentEdit}" />
+		<var name="key_siteName" value="${key_siteName}" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="BlogsEntry#editPG" />
+	</command>
+
+	<command name="EditSOBlogsEntrySOUser" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="entryTitle" value="${entryTitle}" />
+		<var name="entryContent" value="${entryContent}" />
+		<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		<var name="entryContentEdit" value="${entryContentEdit}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+		<var name="password" value="test" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="roleName" value="${roleName}" />
+		<var name="roleType" value="Site" />
+		<var name="siteName" value="${siteName}" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userLastName" value="User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Subscribe" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOSite#joinSitePG">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="BlogsEntry#editPG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryAuthorFirstName" value="${userFirstName}" />
+			<var name="entryAuthorLastName" value="${userLastName}" />
+			<var name="entryAuthorMiddleName" value="${userMiddleName}" />
+			<var name="entryTitle" value="${entryTitleEdit}" />
+			<var name="entryContent" value="${entryContentEdit}" />
+		</execute>
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
+	</command>
+
+	<command name="MoveToRecycleSOBlogsEntry" priority="5">
+		<var name="assetType" value="Blogs Entry" />
+		<var name="siteName" value="${siteName}" />
+		<var name="entryTitle" value="${entryTitle}" />
+		<var name="entryContent" value="${entryContent}" />
+		<var name="key_siteName" value="${key_siteName}" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="BlogsEntry#moveToRecycleBinPG" />
+	</command>
+
+	<command name="DeleteSOBlogsEntrySOUser" priority="5">
+		<var name="adminEmailAddress" value="test@liferay.com" />
+		<var name="entryTitle" value="${entryTitle}" />
+		<var name="entryContent" value="${entryContent}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+		<var name="password" value="test" />
+		<var name="permissionDefinitionKey1" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX" />
+		<var name="permissionDefinitionKey2" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="roleName" value="${roleName}" />
+		<var name="roleType" value="Site" />
+		<var name="siteName" value="${siteName}" />
+		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+		<var name="userFirstName" value="Social01" />
+		<var name="userMiddleName" value="Office01" />
+		<var name="userLastName" value="User01" />
+		<var name="userScreenName" value="socialoffice01" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="${adminEmailAddress}" />
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Entry" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Subscribe" />
+			<var name="permissionNavigationValue" value="Blog Entries" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Add Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Delete Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Permissions" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="Update Discussion" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Role#viewPermissionCP">
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationValue" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOSite#joinSitePG">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute action="PGBlogs#assertElementPresent" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute action="PGBlogs#assertElementPresent" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_TITLE_1" />
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_CONTENT_1" />
+	</command>
+
+	<command name="ViewSOBlogsEntryRecentBlogs" priority="5">
+		<var name="siteName" value="${siteName}" />
+		<var name="entryTitle" value="${entryTitle}" />
+		<var name="entryContent" value="${entryContent}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="BlogsEntry#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="SOBlogs#viewBlogsEntryRecentBlogs" />
+	</command>
+
+	<tear-down>
+		<execute macro="SOUserBar#tearDownSites" />
+
+		<execute macro="SOUser#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
+	</tear-down>
+</definition>

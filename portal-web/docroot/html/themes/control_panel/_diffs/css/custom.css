@@ -227,6 +227,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					a {
 						text-decoration: none;
+
+						.lfr-icon-menu-text {
+							&:hover, &:focus {
+								text-decoration: underline;
+							}
+						}
 					}
 
 					.caret {

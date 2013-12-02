@@ -786,9 +786,25 @@ public class EditFileEntryAction extends PortletAction {
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
-			if (!cmd.equals(Constants.ADD_DYNAMIC) &&
-				!cmd.equals(Constants.ADD_MULTIPLE) &&
-				!cmd.equals(Constants.ADD_TEMP)) {
+			if (Validator.isNull(cmd)) {
+				UploadException uploadException =
+					(UploadException)actionRequest.getAttribute(
+						WebKeys.UPLOAD_EXCEPTION);
+
+				if (uploadException != null) {
+					String uploadServletErrorRedirect = ParamUtil.getString(
+						actionRequest, "uploadServletErrorRedirect");
+
+					actionResponse.sendRedirect(uploadServletErrorRedirect);
+				}
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				return;
+			}
+			else if (!cmd.equals(Constants.ADD_DYNAMIC) &&
+					 !cmd.equals(Constants.ADD_MULTIPLE) &&
+					 !cmd.equals(Constants.ADD_TEMP)) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 

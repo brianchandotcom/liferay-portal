@@ -42,10 +42,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_editLogoURL = editLogoURL;
 	}
 
-	public void setHasUpdateLogoPermission(boolean hasUpdateLogoPermission) {
-		_hasUpdateLogoPermission = hasUpdateLogoPermission;
-	}
-
 	public void setImageId(long imageId) {
 		_imageId = imageId;
 	}
@@ -72,7 +68,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_defaultLogoURL = null;
 		_editLogoFn = null;
 		_editLogoURL = null;
-		_hasUpdateLogoPermission = true;
 		_imageId = 0;
 		_logoDisplaySelector = null;
 		_maxFileSize = 0;
@@ -96,9 +91,6 @@ public class LogoSelectorTag extends IncludeTag {
 			"liferay-ui:logo-selector:editLogoFn", _editLogoFn);
 		request.setAttribute(
 			"liferay-ui:logo-selector:editLogoURL", _editLogoURL);
-		request.setAttribute(
-			"liferay-ui:logo-selector:hasUpdateLogoPermission",
-			String.valueOf(_hasUpdateLogoPermission));
 		request.setAttribute(
 			"liferay-ui:logo-selector:imageId", String.valueOf(_imageId));
 		request.setAttribute(
@@ -132,7 +124,6 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _defaultLogoURL;
 	private String _editLogoFn;
 	private String _editLogoURL;
-	private boolean _hasUpdateLogoPermission = true;
 	private long _imageId;
 	private String _logoDisplaySelector;
 	private long _maxFileSize;

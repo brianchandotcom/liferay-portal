@@ -18,7 +18,6 @@
 
 <%
 String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
-boolean hasUpdateImagePermission = ParamUtil.getBoolean(request, "hasUpdateLogoPermission", true);
 long maxFileSize = ParamUtil.getLong(request, "maxFileSize");
 String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 String randomNamespace = ParamUtil.getString(request, "randomNamespace");
@@ -43,9 +42,6 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			Liferay.Util.getWindow().hide();
 		</aui:script>
 	</c:when>
-	<c:when test="<%= !hasUpdateImagePermission %>">
-		<img src="<%= currentImageURL %>" />
-	</c:when>
 	<c:otherwise>
 		<portlet:actionURL var="uploadImageURL">
 			<portlet:param name="struts_action" value="/image_uploader/view" />
@@ -54,7 +50,6 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="cropRegion" type="hidden" />
 			<aui:input name="currentLogoURL" type="hidden" value="<%= currentImageURL %>" />
-			<aui:input name="hasUpdateLogoPermission" type="hidden" value="<%= hasUpdateImagePermission %>" />
 			<aui:input name="maxFileSize" type="hidden" value="<%= String.valueOf(maxFileSize) %>" />
 			<aui:input name="previewURL" type="hidden" value="<%= previewURL %>" />
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />

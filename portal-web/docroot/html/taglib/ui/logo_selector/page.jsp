@@ -22,7 +22,6 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_logo_s
 String currentLogoURL = (String)request.getAttribute("liferay-ui:logo-selector:currentLogoURL");
 String defaultLogoURL = (String)request.getAttribute("liferay-ui:logo-selector:defaultLogoURL");
 String editLogoFn = (String)request.getAttribute("liferay-ui:logo-selector:editLogoFn");
-boolean hasUpdateLogoPermission = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:logo-selector:hasUpdateLogoPermission"));
 long imageId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:logo-selector:imageId"));
 String logoDisplaySelector = (String)request.getAttribute("liferay-ui:logo-selector:logoDisplaySelector");
 long maxFileSize = GetterUtil.getLong((String)request.getAttribute("liferay-ui:logo-selector:maxFileSize"));
@@ -63,7 +62,6 @@ else {
 <liferay-portlet:renderURL portletName="<%= PortletKeys.IMAGE_UPLOADER %>" var="uploadImageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<liferay-portlet:param name="struts_action" value="/image_uploader/view" />
 	<liferay-portlet:param name="currentLogoURL" value="<%= currentLogoURL %>" />
-	<liferay-portlet:param name="hasUpdateLogoPermission" value="<%= String.valueOf(hasUpdateLogoPermission) %>" />
 	<liferay-portlet:param name="maxFileSize" value="<%= String.valueOf(maxFileSize) %>" />
 	<liferay-portlet:param name="randomNamespace" value="<%= randomNamespace %>" />
 	<liferay-portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />

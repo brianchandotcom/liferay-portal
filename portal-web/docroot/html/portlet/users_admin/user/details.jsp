@@ -131,7 +131,6 @@ if (selContact != null) {
 						<liferay-ui:logo-selector
 							currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-							hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
 							imageId="<%= selUser.getPortraitId() %>"
 							logoDisplaySelector=".user-logo"
 							maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"

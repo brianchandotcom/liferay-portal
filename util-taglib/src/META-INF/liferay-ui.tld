@@ -2367,11 +2367,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>hasUpdateLogoPermission</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>imageId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

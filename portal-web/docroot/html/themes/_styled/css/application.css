@@ -15,23 +15,6 @@
 	background: #FFC;
 }
 
-.hsv-palette {
-	.hsv-view-container {
-		.hsv-label-value-hex .hsv-value {
-			width: 95px;
-		}
-
-		.hsv-label {
-			display: inline;
-			margin-left: 5px;
-		}
-
-		.hsv-value {
-			width: 30px;
-		}
-	}
-}
-
 .portlet-boundary.yui3-dd-dragging {
 	@include opacity(0.6);
 
@@ -246,6 +229,23 @@
 }
 
 /* ---------- Miscellaneous ---------- */
+
+.hsv-palette {
+	.hsv-view-container {
+		.hsv-label-value-hex .hsv-value {
+			width: 95px;
+		}
+
+		.hsv-label {
+			display: inline;
+			margin-left: 5px;
+		}
+
+		.hsv-value {
+			width: 30px;
+		}
+	}
+}
 
 .lfr-panel-container {
 	background: #FFF;

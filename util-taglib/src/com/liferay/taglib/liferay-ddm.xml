@@ -7,6 +7,12 @@
 	<component name="HTML" bodyContent="true" writeJSP="true">
 		<attributes>
 			<attribute>
+				<name>checkRequired</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<name>classNameId</name>
 				<inputType>long</inputType>
 				<outputType>long</outputType>

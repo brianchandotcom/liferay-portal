@@ -20,17 +20,17 @@ package com.liferay.portal.kernel.util;
 public class PrefixPredicateFilter implements PredicateFilter<String> {
 
 	/**
-	 * @param prefix prefix to be filtered in our out
-	 * @param isFilterOut true to filter out false to filter in
+	 * @param prefix prefix to match for filtering
+	 * @param exclude true to exclude matches, false to include matches
 	 */
-	public PrefixPredicateFilter(String prefix, boolean isFilterOut) {
+	public PrefixPredicateFilter(String prefix, boolean exclude) {
 		_prefix = prefix;
-		_isFilterOut = isFilterOut;
+		_exclude = exclude;
 	}
 
 	@Override
 	public boolean filter(String t) {
-		if (_isFilterOut) {
+		if (_exclude) {
 			return !t.startsWith(_prefix);
 		}
 		else {
@@ -38,7 +38,7 @@ public class PrefixPredicateFilter implements PredicateFilter<String> {
 		}
 	}
 
-	private boolean _isFilterOut;
+	private boolean _exclude;
 	private String _prefix;
 
 }

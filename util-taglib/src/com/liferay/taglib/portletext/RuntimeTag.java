@@ -90,10 +90,9 @@ public class RuntimeTag extends TagSupport {
 
 		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
 
-		if ((portletId!= null) &&
-			portletId.equals(
-				restrictPortletServletRequest.getParameter("p_p_id"))) {
+		String ppid = restrictPortletServletRequest.getParameter("p_p_id");
 
+		if ((portletId != null) && portletId.equals(ppid)) {
 			request = DynamicServletRequest.addQueryString(
 				restrictPortletServletRequest, queryString);
 		}

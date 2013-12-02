@@ -15,13 +15,15 @@
 --%>
 
 <%
+PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
+
 exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 %>
 
 <liferay-ui:icon-list>
 
 	<%
-	for (String extension : extensions) {
+	for (String extension : assetPublisherDisplayContext.getExtensions()) {
 		exportAssetURL.setParameter("targetExtension", extension);
 	%>
 

@@ -31,8 +31,6 @@ String currentLanguageId = LanguageUtil.getLanguageId(request);
 
 String emailSubjectParam = emailParam + "Subject_" + currentLanguageId;
 String emailBodyParam = emailParam + "Body_" + currentLanguageId;
-
-String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
@@ -60,9 +58,9 @@ String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
 			</c:when>
 			<c:otherwise>
 				<aui:fieldset label="asset-selection">
-					<aui:input checked='<%= selectionStyle.equals("dynamic") %>' id="selectionStyleDynamic" label="dynamic" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="dynamic" />
+					<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>" id="selectionStyleDynamic" label="dynamic" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="dynamic" />
 
-					<aui:input checked='<%= selectionStyle.equals("manual") %>' id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="manual" />
+					<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>" id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="manual" />
 				</aui:fieldset>
 			</c:otherwise>
 		</c:choose>
@@ -261,10 +259,10 @@ String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
 	%>
 
 	<c:choose>
-		<c:when test='<%= selectionStyle.equals("manual") %>'>
+		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 			<liferay-util:include page="/html/portlet/asset_publisher/configuration_manual.jsp" />
 		</c:when>
-		<c:when test='<%= selectionStyle.equals("dynamic") %>'>
+		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
 			<liferay-util:include page="/html/portlet/asset_publisher/configuration_dynamic.jsp" />
 		</c:when>
 	</c:choose>

@@ -131,8 +131,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				<h3 class="asset-entries-group-label"><%= assetCategory.getTitle(locale) %></h3>
 
 				<c:choose>
-					<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
+					<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -194,8 +194,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 %>
 
 		<c:choose>
-			<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-				<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
+			<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
+				<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 			</c:when>
 			<c:otherwise>
 				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -248,8 +248,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				<h3 class="asset-entries-group-label"><%= ResourceActionsUtil.getModelResource(locale, groupAssetRendererFactory.getClassName()) %></h3>
 
 				<c:choose>
-					<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
+					<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -286,7 +286,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 	}
 }
 
-if ((total == 0) && (portletDisplayDDMTemplateId == 0)) {
+if ((total == 0) && (assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() == 0)) {
 	if (((addPortletURLs == null) || addPortletURLs.isEmpty()) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
 		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 	}

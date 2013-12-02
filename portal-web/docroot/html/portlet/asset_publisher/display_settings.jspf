@@ -51,13 +51,9 @@
 
 	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowContextLink() %>" />
 
-	<%
-	String assetLinkBehavior = assetPublisherDisplayContext.getAssetLinkBehavior();
-	%>
-
 	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
-		<aui:option label="show-full-content" selected='<%= assetLinkBehavior.equals("showFullContent") %>' value="showFullContent" />
-		<aui:option label="view-in-context" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
+		<aui:option label="show-full-content" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>" value="showFullContent" />
+		<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
 	</aui:select>
 
 	<aui:select helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--">
@@ -76,22 +72,14 @@
 
 	</aui:select>
 
-	<%
-	String paginationType = assetPublisherDisplayContext.getPaginationType();
-	%>
-
 	<aui:select name="preferences--paginationType--">
-		<aui:option label="none" selected='<%= paginationType.equals("none") %>' />
-		<aui:option label="simple" selected='<%= paginationType.equals("simple") %>' />
-		<aui:option label="regular" selected='<%= paginationType.equals("regular") %>' />
+		<aui:option label="none" selected="<%= assetPublisherDisplayContext.isPaginationTypeNone() %>" />
+		<aui:option label="simple" selected="<%= assetPublisherDisplayContext.isPaginationTypeSimple() %>" />
+		<aui:option label="regular" selected="<%= assetPublisherDisplayContext.isPaginationTypeRegular() %>" />
 	</aui:select>
 
-	<%
-	String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
-	%>
-
 	<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
-		<c:if test='<%= selectionStyle.equals("dynamic") %>'>
+		<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
 			<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="checkbox" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
 		</c:if>
 	</c:if>
@@ -156,7 +144,7 @@
 		enabled="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() %>"
 	/>
 
-	<c:if test='<%= selectionStyle.equals("manual") %>'>
+	<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 		<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="checkbox" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />
 	</c:if>
 </aui:fieldset>

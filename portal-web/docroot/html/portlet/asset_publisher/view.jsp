@@ -63,9 +63,7 @@ for (String curAssetTagName : assetPublisherDisplayContext.getAllAssetTagNames()
 	}
 }
 
-String selectionStyle = assetPublisherDisplayContext.getSelectionStyle();
-
-if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && selectionStyle.equals("manual") && ((assetPublisherDisplayContext.getAllAssetCategoryIds().length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
+if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherDisplayContext.isSelectionStyleManual() && ((assetPublisherDisplayContext.getAllAssetCategoryIds().length > 0) || (assetPublisherDisplayContext.getAllAssetTagNames().length > 0))) {
 	assetPublisherDisplayContext.setSelectionStyle("dynamic");
 }
 
@@ -146,9 +144,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, assetPublisherDisplayContext.getDelta(), portletURL, null, null);
 
-String paginationType = assetPublisherDisplayContext.getPaginationType();
-
-if (!paginationType.equals("none")) {
+if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 	searchContainer.setDelta(assetPublisherDisplayContext.getDelta());
 	searchContainer.setDeltaConfigurable(false);
 }
@@ -162,27 +158,23 @@ if (!paginationType.equals("none")) {
 </c:if>
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(assetPublisherDisplayContext.getDisplayStyleGroupId(), assetPublisherDisplayContext.getDisplayStyle());
-
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put(PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER, AssetPublisherHelperUtil.getAssetPublisherHelper());
 
-String assetLinkBehavior =assetPublisherDisplayContext.getAssetLinkBehavior();
-
-request.setAttribute("view.jsp-viewInContext", new Boolean(assetLinkBehavior.equals("viewInPortlet")));
+request.setAttribute("view.jsp-viewInContext", new Boolean(assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet()));
 %>
 
 <c:choose>
-	<c:when test='<%= selectionStyle.equals("dynamic") %>'>
+	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
 		<%@ include file="/html/portlet/asset_publisher/view_dynamic_list.jspf" %>
 	</c:when>
-	<c:when test='<%= selectionStyle.equals("manual") %>'>
+	<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 		<%@ include file="/html/portlet/asset_publisher/view_manual.jspf" %>
 	</c:when>
 </c:choose>
 
-<c:if test='<%= !paginationType.equals("none") && (searchContainer.getTotal() > searchContainer.getResults().size()) %>'>
+<c:if test="<%= !assetPublisherDisplayContext.isPaginationTypeNone() && (searchContainer.getTotal() > searchContainer.getResults().size()) %>">
 	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= assetPublisherDisplayContext.getPaginationType() %>" />
 </c:if>
 

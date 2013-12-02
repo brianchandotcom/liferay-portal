@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portalsettings.action;
+package com.liferay.portlet.imageuploader.action;
 
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchRepositoryException;

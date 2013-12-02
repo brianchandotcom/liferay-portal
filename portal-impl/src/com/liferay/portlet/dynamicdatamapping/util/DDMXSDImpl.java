@@ -645,10 +645,6 @@ public class DDMXSDImpl implements DDMXSD {
 			pageContext.getAttribute("checkRequired"), true);
 
 		if (!checkRequired) {
-			if (fieldContext.containsKey("required")) {
-				fieldContext.remove("required");
-			}
-
 			fieldContext.put("required", Boolean.FALSE.toString());
 		}
 

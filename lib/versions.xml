@@ -197,6 +197,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/error-prone-ant.jar</file-name>
+		<version>1.0.8</version>
+		<project-name>Google Error-Prone Java compiler</project-name>
+		<project-url>https://code.google.com/p/error-prone</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/firebird.jar</file-name>
 		<version></version>
 		<project-name>Firebird</project-name>

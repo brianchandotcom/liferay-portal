@@ -128,18 +128,14 @@ if (selContact != null) {
 			<c:if test="<%= selUser != null %>">
 				<c:choose>
 					<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'>
-						<portlet:renderURL var="editUserPortraitURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
-							<portlet:param name="portrait_id" value="<%= String.valueOf(selUser.getPortraitId()) %>" />
-						</portlet:renderURL>
-
 						<liferay-ui:logo-selector
+							currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-							editLogoURL="<%= editUserPortraitURL %>"
+							hasUpdateLogoPermission='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'
 							imageId="<%= selUser.getPortraitId() %>"
 							logoDisplaySelector=".user-logo"
+							maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
+							tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
 						/>
 					</c:when>
 					<c:otherwise>

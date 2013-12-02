@@ -134,18 +134,13 @@ User selUser = (User)request.getAttribute("user.selUser");
 				}
 				%>
 
-				<portlet:renderURL var="editOrganizationLogoURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/users_admin/edit_organization_logo" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="publicLayoutSetId" value="<%= String.valueOf(publicLayoutSet.getLayoutSetId()) %>" />
-				</portlet:renderURL>
-
 				<liferay-ui:logo-selector
+					currentLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=" + logoId + "&t=" + WebServerServletTokenUtil.getToken(logoId) %>'
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-					editLogoURL="<%= editOrganizationLogoURL %>"
 					imageId="<%= logoId %>"
 					logoDisplaySelector=".organization-logo"
+					maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
+					tempImageFileName="<%= String.valueOf(groupId) %>"
 				/>
 			</c:if>
 		</div>

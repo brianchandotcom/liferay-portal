@@ -72,27 +72,6 @@
 	margin-bottom: 1.5em;
 }
 
-.lfr-change-logo {
-	display: block;
-	margin-bottom: 10px;
-}
-
-.lfr-portrait-preview {
-	&:after {
-		clear: both;
-		content: ".";
-		display: block;
-		height: 0;
-		visibility: hidden;
-	}
-
-	.lfr-portrait-preview-img.loading {
-		border: 1px solid transparent;
-		min-height: 50px;
-		min-width: 50px;
-	}
-}
-
 .ie .float-container {
 	height: 1%;
 }
@@ -117,15 +96,6 @@
 
 .lfr-checkbox-preselected, .lfr-configurator-visibility {
 	@include opacity(0.5);
-}
-
-.lfr-change-logo {
-	background: url(@theme_image_path@/common/checkerboard.png) repeat 50%;
-}
-
-.lfr-portrait-preview .lfr-portrait-preview-img.loading {
-	background: #FFF url(@theme_image_path@/application/loading_indicator.gif) no-repeat 50%;
-	border-color: #ccc;
 }
 
 .ie {

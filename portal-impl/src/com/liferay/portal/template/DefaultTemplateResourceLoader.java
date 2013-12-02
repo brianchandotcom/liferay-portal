@@ -92,6 +92,9 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			cacheListener, CacheListenerScope.ALL);
 
 		_singleVMPortalCache = SingleVMPoolUtil.getCache(cacheName);
+
+		_singleVMPortalCache.registerCacheListener(
+			cacheListener, CacheListenerScope.ALL);
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.Set;
@@ -336,6 +337,17 @@ public class AssetPublisherDisplayContext {
 		return _paginationType;
 	}
 
+	public Long getPortletDisplayDDMTemplateId() {
+		if (_portletDisplayDDMTemplateId == null) {
+			_portletDisplayDDMTemplateId =
+				PortletDisplayTemplateUtil.
+					getPortletDisplayTemplateDDMTemplateId(
+						getDisplayStyleGroupId(), getDisplayStyle());
+		}
+
+		return _portletDisplayDDMTemplateId;
+	}
+
 	public int getRSSDelta() {
 		if (_rssDelta == null) {
 			_rssDelta = GetterUtil.getInteger(
@@ -422,6 +434,14 @@ public class AssetPublisherDisplayContext {
 		return _anyAssetType;
 	}
 
+	public boolean isAssetLinkBehaviorShowFullContent() {
+		return getAssetLinkBehavior().equals("showFullContent");
+	}
+
+	public boolean isAssetLinkBehaviorViewInPortlet() {
+		return getAssetLinkBehavior().equals("viewInPortlet");
+	}
+
 	public boolean isEnableCommentRatings() {
 		if (_enableCommentRatings == null) {
 			_enableCommentRatings = GetterUtil.getBoolean(
@@ -438,6 +458,16 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _enableComments;
+	}
+
+	public Boolean isEnableConversions() throws Exception {
+		if (_enableConversions == null) {
+			_enableConversions =
+				isOpenOfficeServerEnabled() &&
+					ArrayUtil.isNotEmpty(getExtensions());
+		}
+
+		return _enableConversions;
 	}
 
 	public boolean isEnableFlags() {
@@ -572,6 +602,26 @@ public class AssetPublisherDisplayContext {
 		return _openOfficeServerEnabled;
 	}
 
+	public boolean isPaginationTypeNone() {
+		return getPaginationType().equals("none");
+	}
+
+	public boolean isPaginationTypeRegular() {
+		return getPaginationType().equals("regular");
+	}
+
+	public boolean isPaginationTypeSimple() {
+		return getPaginationType().equals("simple");
+	}
+
+	public boolean isSelectionStyleDynamic() {
+		return getSelectionStyle().equals("dynamic");
+	}
+
+	public boolean isSelectionStyleManual() {
+		return getSelectionStyle().equals("manual");
+	}
+
 	public boolean isShowAddContentButton() {
 		if (_showAddContentButton == null) {
 			_showAddContentButton = GetterUtil.getBoolean(
@@ -663,6 +713,7 @@ public class AssetPublisherDisplayContext {
 	private Long _displayStyleGroupId;
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
+	private Boolean _enableConversions;
 	private Boolean _enableFlags;
 	private Boolean _enablePermissions;
 	private Boolean _enablePrint;
@@ -683,6 +734,7 @@ public class AssetPublisherDisplayContext {
 	private String _orderByType1;
 	private String _orderByType2;
 	private String _paginationType;
+	private Long _portletDisplayDDMTemplateId;
 	private PortletPreferences _portletPreferences;
 	private HttpServletRequest _request;
 	private Integer _rssDelta;

@@ -61,11 +61,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		<liferay-util:include page="/html/portlet/asset_publisher/asset_actions.jsp" />
 	</c:if>
 
-	<%
-	boolean enableConversions = assetPublisherDisplayContext.isOpenOfficeServerEnabled() && ArrayUtil.isNotEmpty(assetPublisherDisplayContext.getExtensions());
-	%>
-
-	<c:if test="<%= (enableConversions && assetRenderer.isConvertible()) || (assetPublisherDisplayContext.isEnablePrint() && assetRenderer.isPrintable()) || (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) %>">
+	<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) || (assetPublisherDisplayContext.isEnablePrint() && assetRenderer.isPrintable()) || (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) %>">
 		<div class="asset-user-actions">
 			<c:if test="<%= assetPublisherDisplayContext.isEnablePrint() %>">
 				<div class="print-action">
@@ -73,7 +69,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				</div>
 			</c:if>
 
-			<c:if test="<%= (enableConversions && assetRenderer.isConvertible()) && !print %>">
+			<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) && !print %>">
 
 				<%
 				PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
@@ -92,7 +88,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				%>
 
 				<c:if test="<%= availableLanguageIds.length > 1 %>">
-					<c:if test="<%= enableConversions || assetPublisherDisplayContext.isEnablePrint() %>">
+					<c:if test="<%= assetPublisherDisplayContext.isEnableConversions() || assetPublisherDisplayContext.isEnablePrint() %>">
 						<div class="locale-separator"> </div>
 					</c:if>
 

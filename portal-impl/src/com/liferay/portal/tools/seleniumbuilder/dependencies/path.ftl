@@ -16,14 +16,16 @@ import java.util.Map;
 <#assign extendedPath = "">
 
 <#list trElements as trElement>
-	<#assign tdElements = trElement.elements("td")>
+	<#if seleniumBuilderContext.getActionRootElement(pathName)??>
+		<#assign actionRootElement = seleniumBuilderContext.getActionRootElement(pathName)>
 
-	<#if tdElements[0].getText() = "EXTEND_ACTION_PATH">
-		<#assign extendedPath = tdElements[1].getText()>
+		<#if actionRootElement.attributeValue("extends")??>
+			<#assign extendedPath = actionRootElement.attributeValue("extends")>
 
-		import ${seleniumBuilderContext.getPathClassName(extendedPath)};
+			import ${seleniumBuilderContext.getPathClassName(extendedPath)};
 
-		<#break>
+			<#break>
+		</#if>
 	</#if>
 </#list>
 
@@ -40,10 +42,7 @@ public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 		<#list trElements as trElement>
 			<#assign tdElements = trElement.elements("td")>
 
-			<#if
-				(tdElements[0].getText() != "") &&
-				(tdElements[0].getText() != "EXTEND_ACTION_PATH")
-			>
+			<#if tdElements[0].getText() != "">
 				paths.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[1].getText())}");
 			</#if>
 		</#list>

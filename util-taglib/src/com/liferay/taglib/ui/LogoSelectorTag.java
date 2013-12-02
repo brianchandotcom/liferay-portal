@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LogoSelectorTag extends IncludeTag {
 
+	public void setCurrentLogoURL(String currentLogoURL) {
+		_currentLogoURL = currentLogoURL;
+	}
+
 	public void setDefaultLogoURL(String defaultLogoURL) {
 		_defaultLogoURL = defaultLogoURL;
 	}
@@ -35,6 +39,10 @@ public class LogoSelectorTag extends IncludeTag {
 		_editLogoURL = editLogoURL;
 	}
 
+	public void setHasUpdateLogoPermission(boolean hasUpdateLogoPermission) {
+		_hasUpdateLogoPermission = hasUpdateLogoPermission;
+	}
+
 	public void setImageId(long imageId) {
 		_imageId = imageId;
 	}
@@ -43,18 +51,30 @@ public class LogoSelectorTag extends IncludeTag {
 		_logoDisplaySelector = logoDisplaySelector;
 	}
 
+	public void setMaxFileSize(long maxFileSize) {
+		_maxFileSize = maxFileSize;
+	}
+
 	public void setShowBackground(boolean showBackground) {
 		_showBackground = showBackground;
 	}
 
+	public void setTempImageFileName(String tempImageFileName) {
+		_tempImageFileName = tempImageFileName;
+	}
+
 	@Override
 	protected void cleanUp() {
+		_currentLogoURL = null;
 		_defaultLogoURL = null;
 		_editLogoFn = null;
 		_editLogoURL = null;
+		_hasUpdateLogoPermission = true;
 		_imageId = 0;
 		_logoDisplaySelector = null;
+		_maxFileSize = 0;
 		_showBackground = true;
+		_tempImageFileName = null;
 	}
 
 	@Override
@@ -64,6 +84,9 @@ public class LogoSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+
+		request.setAttribute(
+			"liferay-ui:logo-selector:currentLogoURL", _currentLogoURL);
 		request.setAttribute(
 			"liferay-ui:logo-selector:defaultLogoURL", _defaultLogoURL);
 		request.setAttribute(
@@ -71,23 +94,35 @@ public class LogoSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:logo-selector:editLogoURL", _editLogoURL);
 		request.setAttribute(
+			"liferay-ui:logo-selector:hasUpdateLogoPermission",
+			String.valueOf(_hasUpdateLogoPermission));
+		request.setAttribute(
 			"liferay-ui:logo-selector:imageId", String.valueOf(_imageId));
 		request.setAttribute(
 			"liferay-ui:logo-selector:logoDisplaySelector",
 			_logoDisplaySelector);
 		request.setAttribute(
+			"liferay-ui:logo-selector:maxFileSize",
+			String.valueOf(_maxFileSize));
+		request.setAttribute(
 			"liferay-ui:logo-selector:showBackground",
 			String.valueOf(_showBackground));
+		request.setAttribute(
+			"liferay-ui:logo-selector:tempImageFileName", _tempImageFileName);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/logo_selector/page.jsp";
 
+	private String _currentLogoURL;
 	private String _defaultLogoURL;
 	private String _editLogoFn;
 	private String _editLogoURL;
+	private boolean _hasUpdateLogoPermission = true;
 	private long _imageId;
 	private String _logoDisplaySelector;
+	private long _maxFileSize;
 	private boolean _showBackground = true;
+	private String _tempImageFileName;
 
 }

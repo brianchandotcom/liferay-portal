@@ -14,18 +14,20 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/html/portlet/init.jsp" %>
 
 <%
-User selUser = PortalUtil.getSelectedUser(request);
-
-long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024;
+String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
+boolean hasUpdateImagePermission = ParamUtil.getBoolean(request, "hasUpdateLogoPermission", true);
+long maxFileSize = ParamUtil.getLong(request, "maxFileSize");
+String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
+String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 %>
 
 <portlet:resourceURL var="previewURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
+	<portlet:param name="struts_action" value="/image_uploader/view" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" />
-	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
+	<portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />
 </portlet:resourceURL>
 
 <c:choose>
@@ -36,36 +38,40 @@ long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_
 		%>
 
 		<aui:script>
-			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
+			Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
 
 			Liferay.Util.getWindow().hide();
 		</aui:script>
 	</c:when>
-	<c:when test='<%= !UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'>
-		<img src="<%= selUser.getPortraitURL(themeDisplay) %>" />
+	<c:when test="<%= !hasUpdateImagePermission %>">
+		<img src="<%= currentImageURL %>" />
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL var="editUserPortraitURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user_portrait" />
+		<portlet:actionURL var="uploadImageURL">
+			<portlet:param name="struts_action" value="/image_uploader/view" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= editUserPortraitURL %>" enctype="multipart/form-data" method="post" name="fm">
-			<aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
+		<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="cropRegion" type="hidden" />
+			<aui:input name="currentLogoURL" type="hidden" value="<%= currentImageURL %>" />
+			<aui:input name="hasUpdateLogoPermission" type="hidden" value="<%= hasUpdateImagePermission %>" />
+			<aui:input name="maxFileSize" type="hidden" value="<%= String.valueOf(maxFileSize) %>" />
+			<aui:input name="previewURL" type="hidden" value="<%= previewURL %>" />
+			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
+			<aui:input name="tempImageFileName" type="hidden" value="<%= tempImageFileName %>" />
 
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 			<liferay-ui:error exception="<%= FileSizeException.class %>">
-
-				<liferay-ui:message arguments="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
+				<liferay-ui:message arguments="<%= maxFileSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
 			</liferay-ui:error>
 
 			<aui:fieldset cssClass="lfr-portrait-editor">
 				<aui:input autoFocus="<= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= LanguageUtil.format(pageContext, "upload-images-no-larger-than-x-k", maxFileSize, false) %>' name="fileName" size="50" type="file" />
 
 				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
-					<img class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(selUser.getPortraitURL(themeDisplay)) %>" />
+					<img class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />
 				</div>
 
 				<aui:button-row>
@@ -77,12 +83,18 @@ long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_
 		</aui:form>
 
 		<aui:script use="liferay-logo-editor">
+			<portlet:actionURL var="addTempImageURL">
+				<portlet:param name="struts_action" value="/image_uploader/view" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" />
+				<portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />
+			</portlet:actionURL>
+
 			var logoEditor = new Liferay.LogoEditor(
 				{
 					maxFileSize: '<%= maxFileSize %>',
 					namespace: '<portlet:namespace />',
 					previewURL: '<%= previewURL %>',
-					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:actionURL>'
+					uploadURL: '<%= addTempImageURL %>'
 				}
 			);
 

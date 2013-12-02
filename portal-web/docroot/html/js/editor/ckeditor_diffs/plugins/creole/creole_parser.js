@@ -222,6 +222,7 @@ Parse.Simple.Creole = function(options) {
             replaceRegex: /(^|\n)[ \t]*[*#]/g, replaceString: '$1' },
 
         table: { tag: 'table', capture: 0,
+            attrs: { 'class': 'cke_show_border' },
             regex: /(^|\n)(\|.*?[ \t]*(\n|$))+/ },
         tr: { tag: 'tr', capture: 2, regex: /(^|\n)(\|.*?)\|?[ \t]*(\n|$)/ },
         th: { tag: 'th', regex: /\|+=([^|]*)/, capture: 1 },

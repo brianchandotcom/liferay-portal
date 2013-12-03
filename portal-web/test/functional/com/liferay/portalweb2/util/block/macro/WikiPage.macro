@@ -139,6 +139,21 @@
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="FRONTPAGE_BODY" value1="${wikiFrontPageContent}" />
 	</command>
 
+	<command name="addFrontPageDraftPG">
+		<execute action="PGWiki#assertTextEquals" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute action="PGWiki#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute action="PGWiki#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
+
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Draft" />
+		<execute action="PGWikiAddpage#selectFrame" locator-key1="BODY_FIELD" />
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="VIEW_BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="PGWikiAddpage#selectFrameTop" />
+		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE"  value1="Your request completed successfully." />
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="addFrontPagePG">
 		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
@@ -349,6 +364,17 @@
 		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="editFrontPagePG">
+		<execute action="PGWiki#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
+
+		<execute action="PGWikiEditpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContentEdit}" />
+		<execute action="PGWikiEditpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContentEdit}" />
+
+		<execute action="PGWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="moveToRecycleBinCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
@@ -358,6 +384,18 @@
 		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
+	</command>
+
+	<command name="saveAsDraftFrontPagePG">
+		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+
+		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="PGWikiAddpage#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="SUCCESS_MESSAGE"  value1="Your request completed successfully." />
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Draft" />
+		<execute action="PGWikiAddpage#selectFrame" locator-key1="BODY_FIELD" />
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="VIEW_BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="PGWikiAddpage#selectFrameTop" />
 	</command>
 
 	<command name="tearDownCP">
@@ -494,5 +532,17 @@
 		<execute action="PGWikidisplayDraftpages#assertTextEquals" locator-key1="PENDING_APPROVAL_TABLE_REVISION" value1="1.0" />
 		<execute action="PGWikidisplayDraftpages#assertTextEquals" locator-key1="PENDING_APPROVAL_TABLE_USER" value1="${wikiPageUsername}" />
 		<execute action="PGWikidisplayDraftpages#assertElementPresent" locator-key1="PENDING_APPROVAL_TABLE_DATE" />
+	</command>
+
+	<command name="viewSaveAsDraftFrontPagePG">
+		<execute action="PGWiki#assertTextEquals" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute action="PGWiki#assertElementNotPresent" locator-key1="WIKI_PAGE_BODY" />
+		<execute action="PGWiki#assertTextNotPresent" value1="${wikiPageContent}" />
+		<execute action="PGWiki#assertClick" locator-key1="EDIT_BUTTON" value1="Edit" />
+
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="WORKFLOW_STATUS" value1="Draft" />
+		<execute action="PGWikiAddpage#selectFrame" locator-key1="BODY_FIELD" />
+		<execute action="PGWikiAddpage#assertTextEquals" locator-key1="VIEW_BODY_FIELD" value1="${wikiPageContent}" />
+		<execute action="PGWikiAddpage#selectFrameTop" />
 	</command>
 </definition>

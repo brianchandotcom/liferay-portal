@@ -45,7 +45,7 @@
 				liferaySelenium
 			</#if>
 
-			.assertPausePlay();
+			.pauseLoggerCheck();
 
 			<#if action?contains("#is")>
 				try {

@@ -42,8 +42,8 @@
 
 		<div>
 			<form>
-				<input id="pausePlayButton" name="log" onchange="pausePlayCheck()" type="checkbox">
-					<label for="pausePlayButton" id="pausePlay">Playing </label>
+				<input id="pauseButton" name="log" onchange="pauseButtonCheck()" type="checkbox">
+					<label for="pauseButton" id="pause">&nbsp;&nbsp;Pause&nbsp;&nbsp;&nbsp;</label>
 				</input>
 			</form>
 		</div>

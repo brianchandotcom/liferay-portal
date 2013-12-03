@@ -1,5 +1,14 @@
 <head>
 	<script type='text/javascript'>
+		function pauseButtonCheck() {
+			if (document.getElementById("pauseButton").checked) {
+				document.getElementById("pause").innerHTML = "Paused...";
+			}
+			else {
+				document.getElementById("pause").innerHTML = "&nbsp;&nbsp;Pause&nbsp;&nbsp;&nbsp;";
+			}
+		}
+
 		function radioCheck () {
 			var actionCommandLogButtonChecked = document.getElementById("actionCommandLogButton").checked;
 			var disableActionScreenShotButtonChecked = document.getElementById("disableActionScreenShotButton").checked;
@@ -34,15 +43,6 @@
 				pageObjectXMLLog.style.width = "46%";
 				pageObjectXMLLog.style.display = "block";
 			}
-		}
-
-		function pausePlayCheck(){
-			if (document.getElementById("pausePlayButton").checked)
-			{
-				document.getElementById("pausePlay").innerHTML = "Paused";
-			}
-			else
-				document.getElementById("pausePlay").innerHTML = "Playing";
 		}
 
 		function toggle(event) {

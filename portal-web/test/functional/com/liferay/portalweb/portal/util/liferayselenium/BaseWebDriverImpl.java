@@ -209,11 +209,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public boolean assertPausePlay() throws Exception {
-		return true;
-	}
-
-	@Override
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
@@ -519,6 +514,10 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void pause(String waitTime) throws Exception {
 		LiferaySeleniumHelper.pause(waitTime);
+	}
+
+	@Override
+	public void pauseLoggerCheck() throws Exception {
 	}
 
 	@Override

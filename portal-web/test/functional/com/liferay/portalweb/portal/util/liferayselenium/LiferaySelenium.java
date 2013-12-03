@@ -62,8 +62,6 @@ public interface LiferaySelenium extends Selenium {
 	public void assertPartialText(String locator, String pattern)
 		throws Exception;
 
-	public boolean assertPausePlay() throws Exception;
-
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception;
 
@@ -155,6 +153,8 @@ public interface LiferaySelenium extends Selenium {
 	public void paste(String locator);
 
 	public void pause(String waitTime) throws Exception;
+
+	public void pauseLoggerCheck() throws Exception;
 
 	public void refreshAndWait();
 

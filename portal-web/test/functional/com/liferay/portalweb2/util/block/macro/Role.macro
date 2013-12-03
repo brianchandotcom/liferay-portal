@@ -219,6 +219,13 @@
 		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
 		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
 
+		<while>
+			<condition action="CPRoles#isElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" />
+			<then>
+				<execute action="CPRoles#assertClick" locator-key1="PAGINATION_NEXT_BUTTON" value1="Next" />
+			</then>
+		</while>
+
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />

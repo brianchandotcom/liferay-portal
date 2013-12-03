@@ -1,6 +1,7 @@
 <definition>
 	<command name="viewBlogsEntryRecentBlogs">
 		<execute action="SOBlogs#assertTextEquals" locator-key1="RECENT_BLOGS_ENTRY_TITLE" value1="${entryTitle}" />
+
 		<if>
 			<isset var="entryAuthorMiddleName" />
 			<then>

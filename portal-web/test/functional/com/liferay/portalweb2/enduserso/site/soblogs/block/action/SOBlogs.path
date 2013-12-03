@@ -18,16 +18,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<tr>
-	<td>OPEN_SITE_NAME_BLOGS_RSS_URL</td>
-	<td>/web/open-site-name/blogs/-/blogs/rss</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RECENT_BLOGS-->
 <tr>
 	<td>RECENT_BLOGS_ENTRY_TITLE</td>

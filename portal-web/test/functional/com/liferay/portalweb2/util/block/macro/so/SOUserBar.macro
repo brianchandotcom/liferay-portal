@@ -168,12 +168,4 @@
 			</then>
 		</while>
 	</command>
-
-	<command name="tearDownSites">
-		<execute macro="SOUser#firstLoginPG" />
-
-		<execute macro="Site#tearDownCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-	</command>
 </definition>

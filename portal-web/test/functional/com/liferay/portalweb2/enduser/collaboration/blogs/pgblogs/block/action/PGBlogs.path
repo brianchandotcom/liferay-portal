@@ -270,42 +270,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--RSS-->
-<tr>
-	<td>RSS_SITE_NAME</td>
-	<td>//h1[@id='feedTitleText']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RSS_SITE_NAME_SUBTITLE</td>
-	<td>//h2[@id='feedSubtitleText']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RSS_ENTRY_TITLE</td>
-	<td>link=${entryTitle}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RSS_ENTRY_CONTENT</td>
-	<td>//div[@id='feedContent']/div[1]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RSS_ENTRY_TITLE_DETAILS</td>
-	<td>//h1[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RSS_ENTRY_CONTENT_DETAILS</td>
-	<td>//div[@class='entry-body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_NULL_WINDOW</td>
-	<td>null</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

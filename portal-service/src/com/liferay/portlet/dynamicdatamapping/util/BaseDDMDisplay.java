@@ -270,8 +270,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 		if (structure != null) {
 			return LanguageUtil.format(
-				locale, "templates-for-structure-x", structure.getName(locale),
-				false);
+				locale, "templates-for-structure-x", structure.getName(locale));
 		}
 
 		return getDefaultViewTemplateTitle(locale);

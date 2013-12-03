@@ -312,7 +312,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			var cancelButton = A.one('#<portlet:namespace />cancelButton');
 
 			var saveStatus = A.one('#<portlet:namespace />saveStatus');
-			var saveText = '<%= UnicodeLanguageUtil.format(pageContext, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>';
+			var saveText = '<%= UnicodeLanguageUtil.format(pageContext, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]") %>';
 
 			if (draft && ajax) {
 				if ((title == '') || (content == '')) {

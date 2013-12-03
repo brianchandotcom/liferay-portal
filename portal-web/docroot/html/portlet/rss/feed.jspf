@@ -222,7 +222,7 @@ catch (Exception e) {
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-error">
-			<%= LanguageUtil.format(pageContext, "cannot-be-found", HtmlUtil.escape(urls[i]), false) %>
+			<%= LanguageUtil.format(pageContext, "cannot-be-found", HtmlUtil.escape(urls[i])) %>
 		</div>
 	</c:otherwise>
 </c:choose>

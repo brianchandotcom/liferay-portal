@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
-<%= LanguageUtil.format(pageContext, "this-page-displays-the-last-x-web-content,-structures,-and-templates-that-you-accessed", String.valueOf(JournalUtil.MAX_STACK_SIZE), false) %>
+<%= LanguageUtil.format(pageContext, "this-page-displays-the-last-x-web-content,-structures,-and-templates-that-you-accessed", String.valueOf(JournalUtil.MAX_STACK_SIZE)) %>
 
 <table class="lfr-table" width="100%">
 <tr>
@@ -25,7 +25,7 @@
 			<thead class="table-columns">
 			<tr>
 				<td class="table-cell" colspan="2">
-					<%= LanguageUtil.format(pageContext, "last-x-web-content", String.valueOf(JournalUtil.MAX_STACK_SIZE), false) %>
+					<%= LanguageUtil.format(pageContext, "last-x-web-content", String.valueOf(JournalUtil.MAX_STACK_SIZE)) %>
 				</td>
 			</tr>
 			</thead>
@@ -72,7 +72,7 @@
 			<thead class="table-columns">
 				<tr>
 					<td class="table-cell" colspan="2">
-						<%= LanguageUtil.format(pageContext, "last-x-structures", String.valueOf(JournalUtil.MAX_STACK_SIZE), false) %>
+						<%= LanguageUtil.format(pageContext, "last-x-structures", String.valueOf(JournalUtil.MAX_STACK_SIZE)) %>
 					</td>
 				</tr>
 			</thead>
@@ -108,7 +108,7 @@
 			<thead class="table-columns">
 				<tr>
 					<td class="table-cell" colspan="2">
-						<%= LanguageUtil.format(pageContext, "last-x-templates", String.valueOf(JournalUtil.MAX_STACK_SIZE), false) %>
+						<%= LanguageUtil.format(pageContext, "last-x-templates", String.valueOf(JournalUtil.MAX_STACK_SIZE)) %>
 					</td>
 				</tr>
 			</thead>

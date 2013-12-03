@@ -36,7 +36,7 @@ if (Validator.isNull(body)) {
 		sb.append(MBThreadConstants.NEW_THREAD_URL);
 		sb.append("</a>");
 
-		body = LanguageUtil.format(pageContext, "the-new-thread-can-be-found-at-x", sb.toString(), false);
+		body = LanguageUtil.format(pageContext, "the-new-thread-can-be-found-at-x", sb.toString());
 	}
 }
 %>

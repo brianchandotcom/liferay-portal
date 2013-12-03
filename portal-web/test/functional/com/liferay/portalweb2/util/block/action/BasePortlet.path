@@ -79,6 +79,11 @@
 	<td>//a[contains(@id,'_menu_export-import')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OPTION_MENULIST_REMOVE</td>
+	<td>//a[contains(@id,'_menu_remove')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

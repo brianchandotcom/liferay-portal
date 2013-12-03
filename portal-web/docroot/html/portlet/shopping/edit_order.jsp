@@ -299,7 +299,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 							String payPalLinkClose = "</u></strong></a>";
 							%>
 
-							<liferay-ui:message arguments="<%= new Object[] {payPalLinkOpen, payPalLinkClose} %>" key="please-complete-your-order" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= new Object[] {payPalLinkOpen, payPalLinkClose} %>" key="please-complete-your-order" />
 						</aui:field-wrapper>
 					</c:if>
 				</aui:fieldset>

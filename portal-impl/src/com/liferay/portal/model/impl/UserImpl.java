@@ -497,7 +497,8 @@ public class UserImpl extends UserBaseImpl {
 		throws PortalException, SystemException {
 
 		return UserConstants.getPortraitURL(
-			themeDisplay.getPathImage(), isMale(), getPortraitId());
+			themeDisplay.getPathImage(), isMale(), getPortraitId(),
+			getUserUuid());
 	}
 
 	@Override

@@ -123,7 +123,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 
 <span class="asset-entry">
 	<span class="asset-entry-type">
-		<%= ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), className) %>
+		<%= ResourceActionsUtil.getModelResource(locale, className) %>
 	</span>
 
 	<span class="asset-entry-title">

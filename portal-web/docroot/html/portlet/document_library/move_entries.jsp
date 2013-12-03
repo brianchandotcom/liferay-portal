@@ -252,7 +252,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 					<li class="move-file">
 						<span class="file-title">
-							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
+							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(locale, "shortcut") + ")" %>
 						</span>
 					</li>
 
@@ -278,7 +278,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 					<li class="move-file move-error">
 						<span class="file-title">
-							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(themeDisplay.getLocale(), "shortcut") + ")" %>
+							<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(locale, "shortcut") + ")" %>
 						</span>
 
 						<span class="error-message">

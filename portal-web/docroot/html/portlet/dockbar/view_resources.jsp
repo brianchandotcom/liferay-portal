@@ -111,7 +111,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 							continue;
 						}
 
-						String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(themeDisplay.getLocale()), 60));
+						String title = HtmlUtil.escape(StringUtil.shorten(assetRenderer.getTitle(locale), 60));
 
 						Map<String, Object> data = new HashMap<String, Object>();
 
@@ -147,7 +147,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 										</div>
 
 										<div class="add-content-description">
-											<%= StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 120) %>
+											<%= StringUtil.shorten(assetRenderer.getSummary(locale), 120) %>
 										</div>
 									</div>
 								</c:when>

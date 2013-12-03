@@ -58,7 +58,7 @@ List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(Po
 				<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= addArticleURL %>" label="<%= HtmlUtil.escape(ddmStructure.getName(themeDisplay.getLocale())) %>" />
+			<aui:nav-item href="<%= addArticleURL %>" label="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>" />
 
 		<%
 		}

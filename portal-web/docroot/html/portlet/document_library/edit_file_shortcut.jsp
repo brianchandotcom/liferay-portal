@@ -159,7 +159,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 						width: 680
 					},
 					id: '<portlet:namespace />selectGroup',
-					title: '<liferay-ui:message arguments="site" key="select-x" />',
+					title: '<liferay-ui:message arguments="site" key="select-x" translateArguments="<%= true %>" />',
 					uri: '<%= selectGroupURL.toString() %>'
 				},
 				function(event) {
@@ -191,7 +191,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 						width: 680
 					},
 					id: <portlet:namespace />createSelectFileEntryId(),
-					title: '<liferay-ui:message arguments="file" key="select-x" />',
+					title: '<liferay-ui:message arguments="file" key="select-x" translateArguments="<%= true %>" />',
 					uri: <portlet:namespace />createSelectFileEntryURL('<%= selectFileEntryURL.toString() %>')
 				},
 				function(event) {

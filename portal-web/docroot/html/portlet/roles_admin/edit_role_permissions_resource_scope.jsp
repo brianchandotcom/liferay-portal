@@ -95,7 +95,7 @@ List groupNames = (List)objArray[8];
 								width: 600
 							},
 							id: '<portlet:namespace />selectGroup<%= targetId %>',
-							title: '<liferay-ui:message arguments="site" key="select-x" />',
+							title: '<liferay-ui:message arguments="site" key="select-x" translateArguments="<%= true %>" />',
 							uri: '<%= selectCommunityURL.toString() %>'
 						}
 					);

@@ -94,7 +94,7 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 							width: 680
 						},
 						id: '<portlet:namespace />selectUserGroup',
-						title: '<liferay-ui:message arguments="user-group" key="select-x" />',
+						title: '<liferay-ui:message arguments="user-group" key="select-x" translateArguments="<%= true %>" />',
 						uri: '<%= selectUserGroupURL.toString() %>'
 					},
 					function(event) {

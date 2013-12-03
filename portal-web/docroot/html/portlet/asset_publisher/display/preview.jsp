@@ -29,12 +29,12 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 
 	<c:if test="<%= Validator.isNotNull(imagePreviewURL) %>">
 		<div class="asset-image-preview">
-			<img alt="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(themeDisplay.getLocale())) %>" src="<%= imagePreviewURL %>" />
+			<img alt="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>" src="<%= imagePreviewURL %>" />
 		</div>
 	</c:if>
 
 	<div class="asset-title">
-		<%= HtmlUtil.escape(assetRenderer.getTitle(themeDisplay.getLocale())) %>
+		<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 	</div>
 
 	<%
@@ -52,7 +52,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 	</div>
 
 	<div class="asset-summary">
-		<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(themeDisplay.getLocale()), 320)) %>
+		<%= HtmlUtil.escape(StringUtil.shorten(assetRenderer.getSummary(locale), 320)) %>
 	</div>
 
 	<div class="asset-metadata">

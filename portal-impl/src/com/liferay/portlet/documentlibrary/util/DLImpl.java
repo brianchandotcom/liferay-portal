@@ -1026,6 +1026,8 @@ public class DLImpl implements DL {
 
 		String fileEntryTitle = null;
 
+		Group group = null;
+
 		if (fileEntry != null) {
 			String extension = fileEntry.getExtension();
 
@@ -1038,9 +1040,12 @@ public class DLImpl implements DL {
 
 				fileEntryTitle += StringPool.PERIOD + extension;
 			}
-		}
 
-		Group group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
+			group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
+		}
+		else {
+			group = themeDisplay.getScopeGroup();
+		}
 
 		webDavURL.append(group.getFriendlyURL());
 		webDavURL.append("/document_library");

@@ -108,6 +108,12 @@ public interface ExportImportHelper {
 			Map<String, String[]> parameterMap, Element portletDataElement)
 		throws Exception;
 
+	public boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception;
+
 	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
 		throws Exception;
 

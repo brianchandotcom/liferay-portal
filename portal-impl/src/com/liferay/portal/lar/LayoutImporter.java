@@ -600,7 +600,8 @@ public class LayoutImporter {
 
 			boolean[] importPortletControls =
 				ExportImportHelperUtil.getImportPortletControls(
-					companyId, portletId, parameterMap, portletDataElement);
+					companyId, portletId, parameterMap, portletDataElement,
+					manifestSummary);
 
 			try {
 				if (layout != null) {

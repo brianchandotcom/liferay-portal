@@ -1886,6 +1886,8 @@ public class PropsValues {
 
 	public static final String USERS_FULL_NAME_VALIDATOR = PropsUtil.get(PropsKeys.USERS_FULL_NAME_VALIDATOR);
 
+	public static final boolean USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK));
+
 	public static int USERS_IMAGE_MAX_HEIGHT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.USERS_IMAGE_MAX_HEIGHT));
 
 	public static int USERS_IMAGE_MAX_WIDTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.USERS_IMAGE_MAX_WIDTH));

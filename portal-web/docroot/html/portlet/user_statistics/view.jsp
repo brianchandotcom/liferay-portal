@@ -74,7 +74,7 @@ if (!rankingNamesList.isEmpty()) {
 	String rankingNamesMessage = LanguageUtil.format(pageContext, rankingNames[0], StringPool.BLANK);
 
 	for (int i = 1; i < rankingNames.length; i++) {
-		rankingNamesMessage = LanguageUtil.format(pageContext, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]});
+		rankingNamesMessage = LanguageUtil.format(pageContext, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]}, true);
 	}
 	%>
 

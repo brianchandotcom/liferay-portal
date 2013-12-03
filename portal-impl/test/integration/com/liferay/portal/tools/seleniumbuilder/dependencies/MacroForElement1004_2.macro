@@ -1,0 +1,7 @@
+<definition>
+	<command name="name" priority="5">
+		<for list="1,2">
+			<echo message="${test}" />
+		</for>
+	</command>
+</definition>

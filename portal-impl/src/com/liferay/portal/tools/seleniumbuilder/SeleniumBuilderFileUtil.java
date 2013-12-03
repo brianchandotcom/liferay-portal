@@ -736,6 +736,13 @@ public class SeleniumBuilderFileUtil {
 					fileName, element, allowedExecuteAttributeNames, ".+",
 					allowedExecuteChildElementNames);
 			}
+			else if (elementName.equals("for")) {
+				validateForElement(
+					fileName, element, new String[] {"list", "param"},
+					allowedBlockChildElementNames, allowedExecuteAttributeNames,
+					allowedExecuteChildElementNames,
+					allowedIfConditionElementNames);
+			}
 			else if (elementName.equals("if") || elementName.equals("while")) {
 				validateIfElement(
 					fileName, element, allowedBlockChildElementNames,
@@ -1027,6 +1034,58 @@ public class SeleniumBuilderFileUtil {
 		}
 	}
 
+	protected void validateForElement(
+		String fileName, Element forElement, String[] neededAttributes,
+		String[] allowedBlockChildElementNames,
+		String[] allowedExecuteAttributeNames,
+		String[] allowedExecuteChildElementNames,
+		String[] allowedIfConditionElementNames) {
+
+		Map<String, Boolean> hasNeededAttributes =
+			new HashMap<String, Boolean>();
+
+		for (String neededAttribute : neededAttributes) {
+			hasNeededAttributes.put(neededAttribute, false);
+		}
+
+		List<Attribute> attributes = forElement.attributes();
+
+		for (Attribute attribute : attributes) {
+			String attributeName = attribute.getName();
+			String attributeValue = attribute.getValue();
+
+			if (!_allowedNullAttributes.contains(attributeName) &&
+				Validator.isNull(attributeValue)) {
+
+				throwValidationException(
+					1006, fileName, forElement, attributeName);
+			}
+
+			if (hasNeededAttributes.containsKey(attributeName)) {
+				hasNeededAttributes.put(attributeName, true);
+			}
+
+			if (!attributeName.equals("line-number") &&
+				!hasNeededAttributes.containsKey(attributeName)) {
+
+				throwValidationException(
+					1005, fileName, forElement, attributeName);
+			}
+		}
+
+		for (String neededAttribute : neededAttributes) {
+			if (!hasNeededAttributes.get(neededAttribute)) {
+				throwValidationException(
+					1004, fileName, forElement, neededAttributes);
+			}
+		}
+
+		validateBlockElement(
+			fileName, forElement, allowedBlockChildElementNames,
+			allowedExecuteAttributeNames, allowedExecuteChildElementNames,
+			allowedIfConditionElementNames);
+	}
+
 	protected void validateFunctionDocument(
 		String fileName, Element rootElement) {
 
@@ -1206,7 +1265,7 @@ public class SeleniumBuilderFileUtil {
 				validateBlockElement(
 					fileName, element,
 					new String[] {
-						"echo", "execute", "fail", "if", "var", "while"
+						"echo", "execute", "fail", "for", "if", "var", "while"
 					},
 					new String[] {"action", "macro"}, new String[] {"var"},
 					new String[] {
@@ -1426,8 +1485,8 @@ public class SeleniumBuilderFileUtil {
 				validateBlockElement(
 					fileName, element,
 					new String[] {
-						"echo", "execute", "fail", "if", "property", "var",
-						"while"
+						"echo", "execute", "fail", "for", "if", "property",
+						"var", "while"
 					},
 					new String[] {"action", "macro", "test-case"},
 					new String[] {"var"},

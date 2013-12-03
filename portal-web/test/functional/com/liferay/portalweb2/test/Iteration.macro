@@ -1,0 +1,59 @@
+<definition>
+	<command name="loopOnEmptyList" priority="5">
+		<echo message="Test loops: loop on empty list" />
+
+		<var name="list" value="" />
+
+		<for list="${list}" param="param">
+			<execute macro="TestUtils#fail" />
+		</for>
+
+		<execute macro="TestUtils#pass" />
+	</command>
+
+	<command name="loopContainingEchoStatement" priority="5">
+		<echo message="Test loops: loop containing echo statement" />
+
+		<var name="list" value="4,5" />
+
+		<for list="1,2,3,${list}" param="param">
+			<echo message="${param}" />
+		</for>
+
+		<execute macro="TestUtils#pass" />
+	</command>
+
+	<command name="loopContainingEqualsIfConditional" priority="5">
+		<echo message="Test loops: loop containing equals if conditional" />
+
+		<var name="numberToMatch" value="4" />
+
+		<for list="1,2,3,4,5" param="number">
+			<if>
+				<equals arg1="${number}" arg2="${numberToMatch}" />
+				<then>
+					<execute macro="Page#addPG">
+						<var name="pageName" value="Test Page${number}" />
+					</execute>
+
+					<execute macro="TestUtils#pass" />
+				</then>
+			</if>
+		</for>
+	</command>
+
+	<command name="loopContainingContainsIfConditional" priority="5">
+		<echo message="Test loops: loop containing contains if conditional" />
+
+		<var name="letter" value="a" />
+
+		<for list="abc,def,ghi,jkl" param="letters">
+			<if>
+				<contains string="${letters}" substring="${letter}" />
+				<then>
+					<execute macro="TestUtils#pass" />
+				</then>
+			</if>
+		</for>
+	</command>
+</definition>

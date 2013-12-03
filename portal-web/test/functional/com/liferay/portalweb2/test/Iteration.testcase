@@ -1,0 +1,35 @@
+<definition>
+	<var name="commitMessage" value="LPS-41203" />
+	<var name="ticketSummary" value="LIFERAYQA-5879: Enable looping on a list" />
+	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5879" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="LoopAtTestCaseLevel" priority="5">
+		<for list="1,2,3,4,5" param="number">
+			<echo message="${number}" />
+		</for>
+	</command>
+
+	<command name="LoopContainingContainsIfConditional" priority="5">
+		<execute macro="Iteration#loopContainingContainsIfConditional" />
+	</command>
+
+	<command name="LoopContainingEchoStatement" priority="5">
+		<execute macro="Iteration#loopContainingEchoStatement" />
+	</command>
+
+	<command name="LoopContainingEqualsIfConditional" priority="5">
+		<execute macro="Iteration#loopContainingEqualsIfConditional" />
+	</command>
+
+	<command name="LoopOnEmptyList" priority="5">
+		<execute macro="Iteration#loopOnEmptyList" />
+	</command>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+</definition>

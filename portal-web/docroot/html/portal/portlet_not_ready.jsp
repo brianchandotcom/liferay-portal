@@ -27,5 +27,5 @@ if (portletTitle == null) {
 %>
 
 <div class="alert alert-error">
-	<%= LanguageUtil.format(pageContext, "is-not-ready", portletTitle) %>
+	<%= LanguageUtil.format(pageContext, "x-is-not-ready", portletTitle) %>
 </div>

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -514,7 +515,8 @@ public class WebServerServlet extends HttpServlet {
 		return image.getTextObj();
 	}
 
-	protected long getImageId(HttpServletRequest request) {
+	protected long getImageId(HttpServletRequest request)
+		throws SystemException {
 
 		// The image id may be passed in as image_id, img_id, or i_id
 
@@ -528,19 +530,35 @@ public class WebServerServlet extends HttpServlet {
 			imageId = ParamUtil.getLong(request, "i_id");
 		}
 
+		User user = null;
+
 		if (imageId <= 0) {
 			long companyId = ParamUtil.getLong(request, "companyId");
 			String screenName = ParamUtil.getString(request, "screenName");
 
-			try {
-				if ((companyId > 0) && Validator.isNotNull(screenName)) {
-					User user = UserLocalServiceUtil.getUserByScreenName(
-						companyId, screenName);
+			if ((companyId > 0) && Validator.isNotNull(screenName)) {
+				user = UserLocalServiceUtil.fetchUserByScreenName(
+					companyId, screenName);
 
+				if (user != null) {
 					imageId = user.getPortraitId();
 				}
 			}
-			catch (Exception e) {
+		}
+
+		if (PropsValues.USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK &&
+			(imageId > 0)) {
+
+			String uipec = ParamUtil.get(request, "uipec", StringPool.BLANK);
+
+			if (user == null) {
+				user = UserLocalServiceUtil.fetchUserByPortraitId(imageId);
+			}
+
+			String uuidDigest = DigesterUtil.digest(user.getUserUuid());
+
+			if (!uipec.equals(uuidDigest)) {
+				return 0;
 			}
 		}
 

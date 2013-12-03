@@ -78,7 +78,7 @@
 					portraitUrl = user2.getPortraitURL(themeDisplay);
 				}
 				else {
-					portraitUrl = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0);
+					portraitUrl = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null);
 				}
 				%>
 

@@ -63,23 +63,11 @@ public class BaseExportImportTestCase {
 	@After
 	public void tearDown() throws Exception {
 		try {
-			if (group != null) {
-				GroupLocalServiceUtil.deleteGroup(group);
-			}
+			GroupLocalServiceUtil.deleteGroup(group);
 
-			if (importedGroup != null) {
-				GroupLocalServiceUtil.deleteGroup(importedGroup);
-			}
+			GroupLocalServiceUtil.deleteGroup(importedGroup);
 		}
 		catch (RequiredGroupException rge) {
-		}
-
-		if (layout != null) {
-			LayoutLocalServiceUtil.deleteLayout(layout);
-		}
-
-		if (importedLayout != null) {
-			LayoutLocalServiceUtil.deleteLayout(importedLayout);
 		}
 
 		if ((larFile != null) && larFile.exists()) {

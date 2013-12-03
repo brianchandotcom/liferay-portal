@@ -1,5 +1,14 @@
 <head>
 	<script type='text/javascript'>
+		function pauseButtonCheck() {
+			if (document.getElementById("pauseButton").checked) {
+				document.getElementById("pause").innerHTML = "Paused...";
+			}
+			else {
+				document.getElementById("pause").innerHTML = "&nbsp;&nbsp;Pause&nbsp;&nbsp;&nbsp;";
+			}
+		}
+
 		function radioCheck () {
 			var actionCommandLogButtonChecked = document.getElementById("actionCommandLogButton").checked;
 			var disableActionScreenShotButtonChecked = document.getElementById("disableActionScreenShotButton").checked;
@@ -74,6 +83,20 @@
 			line-height: 1.75em;
 			margin-bottom: 0px;
 			padding: 0px;
+		}
+
+		input[type=checkbox] {
+			display: none;
+		}
+
+		input[type=checkbox] + label {
+			background-color: #e7e7e7;
+			display: inline-block;
+			padding: 4px 12px;
+		}
+
+		input[type=checkbox]:checked + label {
+			background-color: #d0d0d0;
 		}
 
 		input[type=radio] {

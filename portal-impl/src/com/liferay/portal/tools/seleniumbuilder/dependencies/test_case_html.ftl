@@ -40,6 +40,13 @@
 			</form>
 		</div>
 
+		<div>
+			<form>
+				<input id="pauseButton" name="log" onchange="pauseButtonCheck()" type="checkbox">
+					<label for="pauseButton" id="pause">&nbsp;&nbsp;Pause&nbsp;&nbsp;&nbsp;</label>
+				</input>
+			</form>
+		</div>
 
 		<div id="actionCommandLog" style="display: none;">
 		</div>

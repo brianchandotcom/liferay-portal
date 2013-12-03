@@ -154,6 +154,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void pause(String waitTime) throws Exception;
 
+	public void pauseLoggerCheck() throws Exception;
+
 	public void refreshAndWait();
 
 	public void replyToEmail(String to, String body) throws Exception;

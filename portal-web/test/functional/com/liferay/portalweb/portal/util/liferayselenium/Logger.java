@@ -256,6 +256,20 @@ public class Logger {
 		log("actionCommandLog", sb.toString(), "selenium");
 	}
 
+	public void pauseLoggerCheck() throws Exception {
+		WebElement webElement = _webDriver.findElement(By.id("pause"));
+
+		String webElementText = webElement.getText();
+
+		while (webElementText.equals("Paused...")) {
+			webElement = _webDriver.findElement(By.id("pause"));
+
+			webElementText = webElement.getText();
+
+			Thread.sleep(1000);
+		}
+	}
+
 	public void send(Object[] arguments) {
 		String id = (String)arguments[0];
 		String status = (String)arguments[1];

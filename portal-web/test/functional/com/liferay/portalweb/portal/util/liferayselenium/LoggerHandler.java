@@ -39,6 +39,9 @@ public class LoggerHandler implements InvocationHandler {
 			if (methodName.equals("getPrimaryTestSuiteName") ||
 				methodName.equals("setPrimaryTestSuiteName")) {
 			}
+			else if (methodName.equals("pauseLoggerCheck")) {
+				_logger.pauseLoggerCheck();
+			}
 			else if (methodName.equals("saveScreenshot")) {
 				_logger.logScreenShots(arguments);
 			}

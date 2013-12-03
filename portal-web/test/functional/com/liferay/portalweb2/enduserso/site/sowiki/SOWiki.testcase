@@ -1,0 +1,92 @@
+<definition>
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="chat-portlet,contacts-portlet,events-display-portlet,microblogs-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-theme" />
+
+	<var name="key_siteName" value="${siteName}" />
+	<var name="pageName" value="Wiki" />
+	<var name="pageType" value="Open Site" />
+	<var name="siteName" value="Open Site Name" />
+	<var name="siteDescription" value="Open Site Description" />
+	<var name="siteType" value="Open" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+	</set-up>
+
+	<var name="wikiPageContent" value="Wiki FrontPage Content" />
+	<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
+	<var name="wikiPageAttachmentName" value="Document_1.jpg" />
+	<var name="wikiPageAttachmentSize" value="12.9k" />
+	<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+	<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+
+	<command name="AddSOWikiFrontPage" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+	</command>
+
+	<command name="AddSOWikiFrontPageChildPage" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiPageTitle" value="FrontPage" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddSOWikiFrontPageDraft" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#saveAsDraftFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#viewSaveAsDraftFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#addFrontPageDraftPG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+	</command>
+
+	<command name="EditSOWikiFrontPage" priority="5">
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="WikiPage#editFrontPagePG">
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="SOSite#tearDownCP" />
+	</tear-down>
+</definition>

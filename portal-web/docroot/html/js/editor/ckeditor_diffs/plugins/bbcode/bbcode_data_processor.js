@@ -341,19 +341,6 @@
 			return index;
 		},
 
-		_isAllWS: function(node) {
-			return node.isElementContentWhitespace || !(REGEX_NOT_WHITESPACE.test(node.data));
-		},
-
-		_isIgnorable: function(node) {
-			var instance = this;
-
-			var nodeType = node.nodeType;
-
-			return (node.isElementContentWhitespace || nodeType == 8) ||
-				((nodeType == 3) && instance._isAllWS(node));
-		},
-
 		_isLastItemNewLine: function() {
 			var instance = this;
 
@@ -384,20 +371,18 @@
 
 				var child = children[i];
 
-				if (instance._inPRE || !instance._isIgnorable(child)) {
-					instance._handleElementStart(child, listTagsIn, listTagsOut);
-					instance._handleStyles(child, stylesTagsIn, stylesTagsOut);
+				instance._handleElementStart(child, listTagsIn, listTagsOut);
+				instance._handleStyles(child, stylesTagsIn, stylesTagsOut);
 
-					pushTagList.call(instance, listTagsIn);
-					pushTagList.call(instance, stylesTagsIn);
+				pushTagList.call(instance, listTagsIn);
+				pushTagList.call(instance, stylesTagsIn);
 
-					instance._handle(child);
+				instance._handle(child);
 
-					instance._handleElementEnd(child, listTagsIn, listTagsOut);
+				instance._handleElementEnd(child, listTagsIn, listTagsOut);
 
-					pushTagList.call(instance, stylesTagsOut.reverse());
-					pushTagList.call(instance, listTagsOut);
-				}
+				pushTagList.call(instance, stylesTagsOut.reverse());
+				pushTagList.call(instance, listTagsOut);
 			}
 
 			instance._handleData(node.data, node);

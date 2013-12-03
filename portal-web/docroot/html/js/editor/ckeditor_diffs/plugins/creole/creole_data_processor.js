@@ -352,23 +352,25 @@
 		},
 
 		_handleLink: function(element, listTagsIn, listTagsOut) {
-			var hrefAttribute = element.getAttribute('href') || '';
+			var hrefAttribute = element.getAttribute('href');
 
-			if (CKEDITOR.env.ie && (CKEDITOR.env.version < 8)) {
-				var ckeSavedHref = element.getAttribute('data-cke-saved-href');
+			if (hrefAttribute != null) {
+				if (CKEDITOR.env.ie && (CKEDITOR.env.version < 8)) {
+					var ckeSavedHref = element.getAttribute('data-cke-saved-href');
 
-				if (ckeSavedHref) {
-					hrefAttribute = ckeSavedHref;
+					if (ckeSavedHref) {
+						hrefAttribute = ckeSavedHref;
+					}
 				}
+
+				if (!REGEX_URL_PREFIX.test(hrefAttribute)) {
+					hrefAttribute = decodeURIComponent(hrefAttribute);
+				}
+
+				listTagsIn.push('[[', hrefAttribute, STR_PIPE);
+
+				listTagsOut.push(']]');
 			}
-
-			if (!REGEX_URL_PREFIX.test(hrefAttribute)) {
-				hrefAttribute = decodeURIComponent(hrefAttribute);
-			}
-
-			listTagsIn.push('[[', hrefAttribute, STR_PIPE);
-
-			listTagsOut.push(']]');
 		},
 
 		_handleListItem: function(element, listTagsIn, listTagsOut) {

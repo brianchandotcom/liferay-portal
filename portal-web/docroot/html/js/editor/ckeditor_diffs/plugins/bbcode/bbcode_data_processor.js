@@ -530,19 +530,21 @@
 		},
 
 		_handleLink: function(element, listTagsIn, listTagsOut) {
-			var hrefAttribute = element.getAttribute('href') || '';
+			var hrefAttribute = element.getAttribute('href');
 
-			var decodedLink = decodeURIComponent(hrefAttribute);
+		if (hrefAttribute != null) {
+				var decodedLink = decodeURIComponent(hrefAttribute);
 
-			if (decodedLink.indexOf(NEW_THREAD_URL) >= 0) {
-				hrefAttribute = NEW_THREAD_URL;
+				if (decodedLink.indexOf(NEW_THREAD_URL) >= 0) {
+					hrefAttribute = NEW_THREAD_URL;
+				}
+
+				var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';
+
+				listTagsIn.push('[' + linkHandler + '=', hrefAttribute, ']');
+
+				listTagsOut.push('[/' + linkHandler + ']');
 			}
-
-			var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';
-
-			listTagsIn.push('[' + linkHandler + '=', hrefAttribute, ']');
-
-			listTagsOut.push('[/' + linkHandler + ']');
 		},
 
 		_handleListItem: function(element, listTagsIn, listTagsOut) {

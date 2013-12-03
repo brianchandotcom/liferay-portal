@@ -31,49 +31,55 @@
 <#elseif ifConditionalElement.getName() == "contains">
 	<#assign string = ifConditionalElement.attributeValue("string")>
 
-	<#if string?contains("${") && string?contains("}")>
-		<#assign string = string?replace("${", "\" + commandScopeVariables.get(\"")>
-
-		<#assign string = string?replace("}", "\") + \"")>
-	</#if>
-
 	<#assign substring = ifConditionalElement.attributeValue("substring")>
 
-	<#if substring?contains("${") && substring?contains("}")>
-		<#assign substring = substring?replace("${", "\" + commandScopeVariables.get(\"")>
-
-		<#assign substring = substring?replace("}", "\") + \"")>
+	(
+	<#if string?contains("${") && string?contains("}")>
+		RuntimeVariables.evaluateVariable("${string}", commandScopeVariables)
+	<#else>
+		"${string}"
 	</#if>
+	)
 
-	("${string}").contains("${substring}")
+	.contains
+
+	(
+	<#if substring?contains("${") && substring?contains("}")>
+		RuntimeVariables.evaluateVariable("${substring}", commandScopeVariables)
+	<#else>
+		"${substring}"
+	</#if>
+	)
 <#elseif ifConditionalElement.getName() == "equals">
 	<#assign arg1 = ifConditionalElement.attributeValue("arg1")>
 
-	<#if arg1?contains("${") && arg1?contains("}")>
-		<#assign arg1 = arg1?replace("${", "\" + commandScopeVariables.get(\"")>
-
-		<#assign arg1 = arg1?replace("}", "\") + \"")>
-	</#if>
-
 	<#assign arg2 = ifConditionalElement.attributeValue("arg2")>
 
-	<#if arg2?contains("${") && arg2?contains("}")>
-		<#assign arg2 = arg2?replace("${", "\" + commandScopeVariables.get(\"")>
-
-		<#assign arg2 = arg2?replace("}", "\") + \"")>
+	(
+	<#if arg1?contains("${") && arg1?contains("}")>
+		RuntimeVariables.evaluateVariable("${arg1}", commandScopeVariables)
+	<#else>
+		"${arg1}"
 	</#if>
+	)
 
-	("${arg1}").equals("${arg2}")
+	.equals
+
+	(
+	<#if arg2?contains("${") && arg2?contains("}")>
+		RuntimeVariables.evaluateVariable("${arg2}", commandScopeVariables)
+	<#else>
+		"${arg2}"
+	</#if>
+	)
 <#elseif ifConditionalElement.getName() == "isset">
 	<#assign var = ifConditionalElement.attributeValue("var")>
 
 	<#if var?contains("${") && var?contains("}")>
-		<#assign var = var?replace("${", "\" + commandScopeVariables.get(\"")>
-
-		<#assign var = var?replace("}", "\") + \"")>
+		RuntimeVariables.variableExists(RuntimeVariables.evaluateVariable("${var}", commandScopeVariables))
 	</#if>
 
-	commandScopeVariables.containsKey("${var}")
+	RuntimeVariables.variableExists("${var}", commandScopeVariables)
 <#elseif ifConditionalElement.getName() == "not">
 	!(
 		<#if ifConditionalElement.element("and")??>

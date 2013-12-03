@@ -34,6 +34,10 @@
 
 				<#assign void = testCaseNameStack.pop()>
 			</#if>
+		<#elseif element.getName() == "for">
+			<#assign forElement = element>
+
+			<#include "for_element_html.ftl">
 		<#elseif element.getName() == "if">
 			<#assign displayElement = element>
 

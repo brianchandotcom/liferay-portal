@@ -31,11 +31,58 @@
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
 	</command>
 
+	<command name="addPG">
+		<if>
+			<equals arg1="${bookmarkFolder}" arg2="True" />
+			<then>
+				<var name="key_folderName" value="${folderName}" />
+
+				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+			</then>
+		</if>
+
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+
+		<execute action="PGBookmarksAddBookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
+		<execute action="PGBookmarksAddBookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURL}" />
+		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="FOLDER_NAME" value1="${folderName}" />
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
+	</command>
+
+	<command name="addInvalidURLPG">
+		<if>
+			<equals arg1="${bookmarkFolder}" arg2="True" />
+			<then>
+				<var name="key_folderName" value="${folderName}" />
+
+				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+			</then>
+		</if>
+
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+
+		<execute action="PGBookmarksAddBookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
+		<execute action="PGBookmarksAddBookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURLInvalid}" />
+		<execute action="PGBookmarksAddBookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGBookmarksAddBookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL (Required) Please enter a valid URL." />
+	</command>
+
 	<command name="addIncorrectURLCP">
 		<execute action="CPBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
 
 		<execute action="CPBookmarksAddbookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName}" />
-		<execute action="CPBookmarksAddbookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURL}" />
+		<execute action="CPBookmarksAddbookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURLInvalid}" />
 		<execute action="CPBookmarksAddbookmark#type" locator-key1="DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
 		<execute action="CPBookmarksAddbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPBookmarksAddbookmark#assertTextEquals" locator-key1="URL_FIELD_REQUIRED" value1="URL" />
@@ -90,6 +137,23 @@
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
 	</command>
 
+	<command name="deletePG">
+		<if>
+			<equals arg1="${bookmarkFolder}" arg2="True" />
+			<then>
+				<var name="key_folderName" value="${folderName}" />
+
+				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+			</then>
+		</if>
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+	</command>
+
 	<command name="editCP">
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
@@ -114,6 +178,66 @@
 
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${editBookmarkName}" />
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${editBookmarkURL}" />
+	</command>
+
+	<command name="editPG">
+		<if>
+			<equals arg1="${bookmarkFolder}" arg2="True" />
+			<then>
+				<var name="key_folderName" value="${folderName}" />
+
+				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+			</then>
+		</if>
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="PGBookmarksEditBookmark#type" locator-key1="NAME_FIELD" value1="${bookmarkName} Edit" />
+		<execute action="PGBookmarksEditBookmark#type" locator-key1="URL_FIELD" value1="${bookmarkURLEdit}" />
+
+		<execute action="CPBookmarksEditbookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName} Edit" />
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURLEdit}" />
+	</command>
+
+	<command name="moveToFolderPG">
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARKS_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="PGBookmarksFolder#assertClick" locator-key1="BOOKMARK_ACTION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="PGBookmarksEditBookmark#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
+
+		<execute action="PGBookmarksSelectFolder#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_folderName" value="${folderName2}" />
+
+		<execute action="PGBookmarksSelectFolder#assertClick" locator-key1="FOLDERS_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="CPBookmarksEditbookmark#selectFrame" value1="relative=top" />
+
+		<execute action="PGBookmarksEditBookmark#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no bookmarks in this folder." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName2}" />
+
+		<var name="key_bookmarkName" value="${bookmarkName}" />
+
+		<execute action="PGBookmarksFolder#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 	</command>
 
 	<command name="moveToHomeCP">
@@ -180,6 +304,13 @@
 		<execute action="CPBookmarks#assertTextNotPresent" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
 	</command>
 
+	<command name="removeBookmarkPortletPG">
+		<execute action="PGBookmarks#click" locator-key1="OPTIONS_ICON" />
+		<execute action="PGBookmarks#assertClick" locator-key1="OPTION_MENULIST_REMOVE" value1="Remove" />
+		<execute action="PGBookmarks#confirm" locator-key1="PORTLET_CONFIRM" value1="Are you sure you want to remove this component?" />
+		<execute action="PGBookmarks#assertElementNotPresent" locator-key1="TITLE" value1="Bookmarks" />
+	</command>
+
 	<command name="searchCP">
 		<execute action="CPBookmarks#type" locator-key1="SEARCH_FIELD" value1="${bookmarkName}" />
 		<execute action="CPBookmarks#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
@@ -197,6 +328,11 @@
 
 		<execute action="CPBookmarksSearch#assertTextNotPresent" locator-key1="ENTRY_TABLE_BOOKMARK_ENTRY" value1="${bookmarkName}" />
 		<execute action="CPBookmarksSearch#assertTextNotPresent" locator-key1="ENTRY_TABLE_BOOKMARK_ENTRY" value1="${bookmar2Name}" />
+	</command>
+
+	<command name="searchPG">
+		<execute action="PGBookmarks#type" locator-key1="SEARCH_FIELD" value1="${searchEntry}" />
+		<execute action="PGBookmarks#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="tearDownCP">
@@ -225,5 +361,20 @@
 
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />
+	</command>
+
+	<command name="viewSearchPG">
+		<var name="key_entryName" value="${entryName}" />
+
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="SEARCH_TABLE_ENTRY_NAME" value1="${entryName}" />
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="SEARCH_TABLE_ENTRY_TYPE" value1="${entryType}" />
+
+		<var name="key_entryFolderName" value="${entryFolderName}" />
+
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="SEARCH_TABLE_ENTRY_FOLDER" value1="${entryFolderName}" />
+	</command>
+
+	<command name="viewSearchNullPG">
+		<execute action="PGBookmarks#assertTextEquals" locator-key1="SEARCH_TABLE_INFO_MESSAGE" value1="No entries were found that matched the keywords: ${searchEntry}." />
 	</command>
 </definition>

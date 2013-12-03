@@ -150,14 +150,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 											</c:if>
 
 											<h1 class="site-title">
-												<c:choose>
-													<c:when test="<%= showControlPanelMenu && Validator.isNotNull(controlPanelCategory) %>">
-														<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
-													</c:when>
-													<c:otherwise>
-														<%= group.getDescriptiveName(themeDisplay.getLocale()) %>
-													</c:otherwise>
-												</c:choose>
+												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
 											</h1>
 
 											<c:if test="<%= group.hasPrivateLayouts() || group.hasPublicLayouts() %>">

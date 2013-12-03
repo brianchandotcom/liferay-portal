@@ -75,7 +75,7 @@ else {
 		</c:if>
 
 		<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
-			<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" />
+			<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" translateArguments="<%= true %>" />
 		</c:if>
 	</liferay-ui:error>
 

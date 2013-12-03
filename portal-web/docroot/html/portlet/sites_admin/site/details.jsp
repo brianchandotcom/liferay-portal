@@ -610,7 +610,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							width: 600
 						},
 						id: '<portlet:namespace />selectGroup',
-						title: '<liferay-ui:message arguments="site" key="select-x" />',
+						title: '<liferay-ui:message arguments="site" key="select-x" translateArguments="<%= true %>" />',
 						uri: '<%= groupSelectorURL.toString() %>'
 					},
 					function(event) {

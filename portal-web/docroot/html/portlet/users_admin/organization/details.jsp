@@ -285,7 +285,7 @@ if (parentOrganization != null) {
 							modal: true
 						},
 						id: '<portlet:namespace />selectOrganization',
-						title: '<liferay-ui:message arguments="organization" key="select-x" />',
+						title: '<liferay-ui:message arguments="organization" key="select-x" translateArguments="<%= true %>" />',
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
 					function(event) {

@@ -107,7 +107,7 @@ if (category != null) {
 						width: 680
 					},
 					id: '<portlet:namespace />selectCategory',
-					title: '<liferay-ui:message arguments="category" key="select-x" />',
+					title: '<liferay-ui:message arguments="category" key="select-x" translateArguments="<%= true %>" />',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf((category == null) ? MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID : category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event) {

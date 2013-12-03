@@ -97,7 +97,7 @@ if (organizationId > 0) {
 						modal: true
 					},
 					id: '<portlet:namespace />selectOrganization',
-					title: '<liferay-ui:message arguments="organization" key="select-x" />',
+					title: '<liferay-ui:message arguments="organization" key="select-x" translateArguments="<%= true %>" />',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/select_organization" /><portlet:param name="tabs1" value="organizations" /></portlet:renderURL>'
 				},
 				function(event) {

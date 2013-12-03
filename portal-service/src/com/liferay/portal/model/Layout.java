@@ -88,6 +88,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId);
 
+	public boolean getIconImage();
+
 	public com.liferay.portal.model.LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -162,6 +164,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean isFirstChild();
 
 	public boolean isFirstParent();
+
+	public boolean isIconImage();
 
 	public boolean isInheritLookAndFeel();
 

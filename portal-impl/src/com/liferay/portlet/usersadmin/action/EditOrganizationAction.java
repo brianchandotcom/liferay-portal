@@ -28,8 +28,10 @@ import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.RequiredOrganizationException;
 import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,6 +55,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -227,6 +230,18 @@ public class EditOrganizationAction extends PortletAction {
 		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
 		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
 
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Organization.class.getName(), actionRequest);
 
@@ -248,15 +263,8 @@ public class EditOrganizationAction extends PortletAction {
 			organization = OrganizationServiceUtil.updateOrganization(
 				organizationId, parentOrganizationId, name, type, regionId,
 				countryId, statusId, comments, site, addresses, emailAddresses,
-				orgLabors, phones, websites, serviceContext);
-
-			boolean deleteLogo = ParamUtil.getBoolean(
-				actionRequest, "deleteLogo");
-
-			if (deleteLogo) {
-				OrganizationServiceUtil.deleteLogo(
-					organization.getOrganizationId());
-			}
+				orgLabors, phones, websites, !deleteLogo, logoBytes,
+				serviceContext);
 		}
 
 		// Layout set prototypes

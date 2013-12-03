@@ -1970,6 +1970,16 @@ public class PortalUtil {
 		return getPortal().transformSQL(sql);
 	}
 
+	public static void updateImageId(
+			BaseModel baseModel, boolean image, byte[] bytes, String fieldName,
+			long imageMaxSize, int maxHeight, int maxWidht)
+		throws PortalException, SystemException {
+
+		getPortal().updateImageId(
+			baseModel, image, bytes, fieldName, imageMaxSize, maxHeight,
+			maxWidht);
+	}
+
 	public static PortletMode updatePortletMode(
 		String portletId, User user, Layout layout, PortletMode portletMode,
 		HttpServletRequest request) {

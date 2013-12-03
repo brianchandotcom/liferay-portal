@@ -127,6 +127,10 @@ public class LDAPUser {
 		return _portraitBytes;
 	}
 
+	public long getPortraitId() {
+		return _user.getPortraitId();
+	}
+
 	public int getPrefixId() {
 		return _contact.getPrefixId();
 	}

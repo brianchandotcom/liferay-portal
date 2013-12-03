@@ -1815,7 +1815,7 @@ public class LayoutServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		java.lang.Boolean iconImage, byte[] iconBytes,
+		boolean iconImage, byte[] iconBytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2606,8 +2606,8 @@ public class LayoutServiceHttp {
 			long.class, boolean.class, long.class, long.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.lang.String.class,
-			boolean.class, java.util.Map.class, java.lang.Boolean.class,
-			byte[].class, com.liferay.portal.service.ServiceContext.class
+			boolean.class, java.util.Map.class, boolean.class, byte[].class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateLayoutParameterTypes47 = new Class[] {
 			long.class, boolean.class, long.class, long.class,

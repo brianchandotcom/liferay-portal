@@ -341,6 +341,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean getIconImage() {
+		if (getIconImageId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public LayoutSet getLayoutSet() throws PortalException, SystemException {
 		if (_layoutSet == null) {
 			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
@@ -602,6 +611,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isIconImage() {
+		return getIconImage();
 	}
 
 	@Override

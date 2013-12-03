@@ -92,7 +92,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "typeSettings", Types.CLOB },
 			{ "hidden_", Types.BOOLEAN },
 			{ "friendlyURL", Types.VARCHAR },
-			{ "iconImage", Types.BOOLEAN },
 			{ "iconImageId", Types.BIGINT },
 			{ "themeId", Types.VARCHAR },
 			{ "colorSchemeId", Types.VARCHAR },
@@ -104,7 +103,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN },
 			{ "sourcePrototypeLayoutUuid", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -166,7 +165,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setHidden(soapModel.getHidden());
 		model.setFriendlyURL(soapModel.getFriendlyURL());
-		model.setIconImage(soapModel.getIconImage());
 		model.setIconImageId(soapModel.getIconImageId());
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
@@ -261,7 +259,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("hidden", getHidden());
 		attributes.put("friendlyURL", getFriendlyURL());
-		attributes.put("iconImage", getIconImage());
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -398,12 +395,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		if (friendlyURL != null) {
 			setFriendlyURL(friendlyURL);
-		}
-
-		Boolean iconImage = (Boolean)attributes.get("iconImage");
-
-		if (iconImage != null) {
-			setIconImage(iconImage);
 		}
 
 		Long iconImageId = (Long)attributes.get("iconImageId");
@@ -1271,22 +1262,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@JSON
 	@Override
-	public boolean getIconImage() {
-		return _iconImage;
-	}
-
-	@Override
-	public boolean isIconImage() {
-		return _iconImage;
-	}
-
-	@Override
-	public void setIconImage(boolean iconImage) {
-		_iconImage = iconImage;
-	}
-
-	@JSON
-	@Override
 	public long getIconImageId() {
 		return _iconImageId;
 	}
@@ -1660,7 +1635,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setTypeSettings(getTypeSettings());
 		layoutImpl.setHidden(getHidden());
 		layoutImpl.setFriendlyURL(getFriendlyURL());
-		layoutImpl.setIconImage(getIconImage());
 		layoutImpl.setIconImageId(getIconImageId());
 		layoutImpl.setThemeId(getThemeId());
 		layoutImpl.setColorSchemeId(getColorSchemeId());
@@ -1898,8 +1872,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			layoutCacheModel.friendlyURL = null;
 		}
 
-		layoutCacheModel.iconImage = getIconImage();
-
 		layoutCacheModel.iconImageId = getIconImageId();
 
 		layoutCacheModel.themeId = getThemeId();
@@ -1969,7 +1941,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -2011,8 +1983,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getHidden());
 		sb.append(", friendlyURL=");
 		sb.append(getFriendlyURL());
-		sb.append(", iconImage=");
-		sb.append(getIconImage());
 		sb.append(", iconImageId=");
 		sb.append(getIconImageId());
 		sb.append(", themeId=");
@@ -2040,7 +2010,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(97);
+		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Layout");
@@ -2125,10 +2095,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(
 			"<column><column-name>friendlyURL</column-name><column-value><![CDATA[");
 		sb.append(getFriendlyURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>iconImage</column-name><column-value><![CDATA[");
-		sb.append(getIconImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>iconImageId</column-name><column-value><![CDATA[");
@@ -2217,7 +2183,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private boolean _hidden;
 	private String _friendlyURL;
 	private String _originalFriendlyURL;
-	private boolean _iconImage;
 	private long _iconImageId;
 	private long _originalIconImageId;
 	private boolean _setOriginalIconImageId;

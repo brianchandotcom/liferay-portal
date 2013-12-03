@@ -1,5 +1,7 @@
 <definition>
 	<set-up>
+		<execute macro="User#firstLoginPG" />
+
 		<var name="parentSetUpVar" value="parent test case set-up var value" />
 	</set-up>
 

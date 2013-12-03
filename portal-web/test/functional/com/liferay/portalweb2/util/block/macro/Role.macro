@@ -74,10 +74,7 @@
 		<if>
 			<isset var="roleUser" />
 			<then>
-				<var name="key_roleName" value="${roleName}" />
-				<var name="key_roleUser" value="${roleUser}" />
-
-				<execute action="CPRoles#assertTextEquals" locator-key1="ROLE_TABLE_TITLE" value1="${roleUser}" />
+				<execute action="CPRoles#assertTextEquals" locator1="//tr[contains(.,'${roleName}') and contains(.,'${roleUser}')]/td[1]/a" value1="${roleUser}" />
 				<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS" value1="Actions" />
 			</then>
 			<else>

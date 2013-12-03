@@ -2372,11 +2372,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>portraitUser</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>showBackground</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

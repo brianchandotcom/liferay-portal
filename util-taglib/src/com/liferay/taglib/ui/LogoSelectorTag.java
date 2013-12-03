@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.model.User;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,10 +43,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_logoDisplaySelector = logoDisplaySelector;
 	}
 
-	public void setPortraitUser(User portraitUser) {
-		_portraitUser = portraitUser;
-	}
-
 	public void setShowBackground(boolean showBackground) {
 		_showBackground = showBackground;
 	}
@@ -59,7 +54,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_editLogoURL = null;
 		_imageId = 0;
 		_logoDisplaySelector = null;
-		_portraitUser = null;
 		_showBackground = true;
 	}
 
@@ -82,8 +76,6 @@ public class LogoSelectorTag extends IncludeTag {
 			"liferay-ui:logo-selector:logoDisplaySelector",
 			_logoDisplaySelector);
 		request.setAttribute(
-			"liferay-ui:logo-selector:portraitUser", _portraitUser);
-		request.setAttribute(
 			"liferay-ui:logo-selector:showBackground",
 			String.valueOf(_showBackground));
 	}
@@ -96,7 +88,6 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _editLogoURL;
 	private long _imageId;
 	private String _logoDisplaySelector;
-	private User _portraitUser;
 	private boolean _showBackground = true;
 
 }

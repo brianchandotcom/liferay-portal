@@ -136,10 +136,10 @@ if (selContact != null) {
 						</portlet:renderURL>
 
 						<liferay-ui:logo-selector
-							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0, null) %>"
+							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
 							editLogoURL="<%= editUserPortraitURL %>"
+							imageId="<%= selUser.getPortraitId() %>"
 							logoDisplaySelector=".user-logo"
-							portraitUser="<%= selUser %>"
 						/>
 					</c:when>
 					<c:otherwise>

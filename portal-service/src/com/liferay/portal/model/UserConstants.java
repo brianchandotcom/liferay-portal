@@ -14,15 +14,9 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 
 /**
@@ -44,46 +38,10 @@ public class UserConstants {
 	public static final String USERS_EMAIL_ADDRESS_AUTO_SUFFIX = PropsUtil.get(
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 
-	/**
-	 * @deprecated As of 7.0.0 replaced by {@link #getPortraitURL(String,
-	 *             boolean, long, String)}
-	 */
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId) {
 
-		if (!GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
-
-			return getPortraitURL(imagePath, male, portraitId, null);
-		}
-
-		if (portraitId <= 0) {
-			return getPortraitURL(imagePath, male, 0, StringPool.BLANK);
-		}
-
-		try {
-			User user = UserLocalServiceUtil.fetchUserByPortraitId(portraitId);
-
-			if (user == null) {
-				return getPortraitURL(imagePath, male, 0, StringPool.BLANK);
-			}
-
-			return getPortraitURL(
-				imagePath, male, portraitId, user.getUserUuid());
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
-	public static String getPortraitURL(
-		String imagePath, boolean male, long portraitId, String userUuid) {
-
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(imagePath);
 		sb.append("/user_");
@@ -97,20 +55,10 @@ public class UserConstants {
 
 		sb.append("_portrait?img_id=");
 		sb.append(portraitId);
-
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
-
-			sb.append("&img_id_token=");
-			sb.append(DigesterUtil.digest(userUuid));
-		}
-
 		sb.append("&t=");
 		sb.append(WebServerServletTokenUtil.getToken(portraitId));
 
 		return sb.toString();
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(UserConstants.class);
 
 }

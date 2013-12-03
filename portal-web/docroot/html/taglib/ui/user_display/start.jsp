@@ -33,7 +33,7 @@ if (Validator.isNull(url) && (userDisplay != null)) {
 		taglibSrc = userDisplay.getPortraitURL(themeDisplay);
 	}
 	else {
-		taglibSrc = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null);
+		taglibSrc = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0);
 	}
 	%>
 

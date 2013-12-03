@@ -36,7 +36,7 @@ import java.util.Date;
 public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -78,8 +78,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		sb.append(hidden);
 		sb.append(", friendlyURL=");
 		sb.append(friendlyURL);
-		sb.append(", iconImage=");
-		sb.append(iconImage);
 		sb.append(", iconImageId=");
 		sb.append(iconImageId);
 		sb.append(", themeId=");
@@ -204,7 +202,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 			layoutImpl.setFriendlyURL(friendlyURL);
 		}
 
-		layoutImpl.setIconImage(iconImage);
 		layoutImpl.setIconImageId(iconImageId);
 
 		if (themeId == null) {
@@ -287,7 +284,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		typeSettings = objectInput.readUTF();
 		hidden = objectInput.readBoolean();
 		friendlyURL = objectInput.readUTF();
-		iconImage = objectInput.readBoolean();
 		iconImageId = objectInput.readLong();
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
@@ -386,7 +382,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 			objectOutput.writeUTF(friendlyURL);
 		}
 
-		objectOutput.writeBoolean(iconImage);
 		objectOutput.writeLong(iconImageId);
 
 		if (themeId == null) {
@@ -463,7 +458,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 	public String typeSettings;
 	public boolean hidden;
 	public String friendlyURL;
-	public boolean iconImage;
 	public long iconImageId;
 	public String themeId;
 	public String colorSchemeId;

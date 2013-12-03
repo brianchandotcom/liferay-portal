@@ -304,7 +304,7 @@ public class CompanyLocalServiceTest {
 					account.getLegalName(), account.getLegalId(),
 					account.getLegalType(), account.getSicCode(),
 					account.getTickerSymbol(), account.getIndustry(),
-					account.getType(), account.getSize());
+					account.getType(), account.getSize(), true, null);
 
 				if (expectFailure) {
 					Assert.fail();

@@ -949,7 +949,6 @@ create table Layout (
 	typeSettings TEXT null,
 	hidden_ BOOLEAN,
 	friendlyURL VARCHAR(255) null,
-	iconImage BOOLEAN,
 	iconImageId LONG,
 	themeId VARCHAR(75) null,
 	colorSchemeId VARCHAR(75) null,

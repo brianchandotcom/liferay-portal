@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchUserException;
@@ -26,6 +28,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -134,6 +138,7 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -182,6 +187,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.calendar.model.CalEvent;
+import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.expando.ValueDataException;
@@ -202,6 +208,8 @@ import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
+
+import java.awt.image.RenderedImage;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -6735,6 +6743,61 @@ public class PortalImpl implements Portal {
 	@Override
 	public String transformSQL(String sql) {
 		return SQLTransformer.transform(sql);
+	}
+
+	@Override
+	public void updateImageId(
+			BaseModel baseModel, boolean image, byte[] bytes, String fieldName,
+			long imageMaxSize, int maxHeight, int maxWidht)
+		throws PortalException, SystemException {
+
+		long imageId = BeanPropertiesUtil.getLong(baseModel, fieldName);
+
+		if (image) {
+			if (ArrayUtil.isNotEmpty(bytes)) {
+				if ((imageMaxSize > 0) &&
+					((bytes == null) || (bytes.length > imageMaxSize))) {
+
+					throw new ImageSizeException();
+				}
+
+				if (imageId <= 0) {
+					imageId = CounterLocalServiceUtil.increment();
+
+					BeanPropertiesUtil.setProperty(
+						baseModel, fieldName, imageId);
+				}
+
+				if ((maxHeight > 0) || (maxWidht > 0)) {
+					try {
+						ImageBag imageBag = ImageToolUtil.read(bytes);
+
+						RenderedImage renderedImage =
+							imageBag.getRenderedImage();
+
+						if (renderedImage == null) {
+							throw new ImageTypeException();
+						}
+
+						renderedImage = ImageToolUtil.scale(
+							renderedImage, maxHeight, maxWidht);
+
+						bytes = ImageToolUtil.getBytes(
+							renderedImage, imageBag.getType());
+					}
+					catch (IOException ioe) {
+						throw new ImageSizeException(ioe);
+					}
+				}
+
+				ImageLocalServiceUtil.updateImage(imageId, bytes);
+			}
+		}
+		else if (imageId > 0) {
+			ImageLocalServiceUtil.deleteImage(imageId);
+
+			BeanPropertiesUtil.setProperty(baseModel, fieldName, 0);
+		}
 	}
 
 	@Override

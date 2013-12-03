@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SUBCATEGORY_CHECKBOX</td>
-	<td>xpath=(//i[contains(@class,'tree-node-checkbox-container') and contains(@class,'icon-check')])[2]</td>
+	<td>//ul[@class='tree-container']/li[contains(.,'${key_subcategoryName}')]/div/i[@class='tree-node-checkbox-container icon-check']</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,12 +122,12 @@
 </tr>
 <tr>
 	<td>CATEGORY_DETAILS_PROPERTY_KEY_2</td>
-	<td>xpath=(//span[@class='property-key'])[2]</td>
+	<td>//div[@class='category-field']/span[contains(.,'${propertiesKeyField} ${i} Key')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_DETAILS_PROPERTY_VALUE_2</td>
-	<td>xpath=(//span[@class='property-value'])[2]</td>
+	<td>//div[@class='category-field']/span[contains(.,'${propertiesKeyField} ${i} Value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,12 +180,12 @@
 <!--VOCABULARY_CATEGORY-->
 <tr>
 	<td>VOCABULARY_CATEGORY</td>
-	<td>//li[contains(.,'${key_categoryName}')]/div</td>
+	<td>//div[@id='categoriesTreeContainer']/ul/li[contains(.,'${key_categoryName}')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VOCABULARY_CATEGORY_SUBCATEGORY</td>
-	<td>//ul[@class='tree-container']/li/div/span[contains(.,'${key_subCategoryName}')]</td>
+	<td>//ul[@class='tree-container']/li/div/span[contains(.,'${key_subcategoryName}')]</td>
 	<td></td>
 </tr>
 </tbody>

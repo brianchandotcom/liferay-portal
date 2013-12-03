@@ -769,7 +769,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			firstName, middleName, lastName);
 
 		String greeting = LanguageUtil.format(
-			locale, "welcome-x", " " + fullName, false);
+			locale, "welcome-x", " " + fullName);
 
 		User user = userPersistence.create(userId);
 
@@ -4162,7 +4162,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				firstName, middleName, lastName);
 
 			String greeting = LanguageUtil.format(
-				locale, "welcome-x", " " + fullName, false);
+				locale, "welcome-x", " " + fullName);
 
 			if (Validator.isNotNull(password1)) {
 				user.setPassword(PasswordEncryptorUtil.encrypt(password1));

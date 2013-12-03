@@ -36,7 +36,7 @@
 		}
 		%>
 
-		<%= LanguageUtil.format(pageContext, "you-are-signed-in-as-x", signedInAs, false) %>
+		<%= LanguageUtil.format(pageContext, "you-are-signed-in-as-x", signedInAs) %>
 	</c:when>
 	<c:otherwise>
 
@@ -79,7 +79,7 @@
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-your-password-is-x", userPassword, false) %>
+								<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-your-password-is-x", userPassword) %>
 							</c:otherwise>
 						</c:choose>
 

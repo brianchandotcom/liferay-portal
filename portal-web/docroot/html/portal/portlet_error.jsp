@@ -27,5 +27,5 @@ if (portletTitle == null) {
 %>
 
 <div class="alert alert-error">
-	<%= LanguageUtil.format(pageContext, "is-temporarily-unavailable", portletTitle, false) %>
+	<%= LanguageUtil.format(pageContext, "is-temporarily-unavailable", portletTitle) %>
 </div>

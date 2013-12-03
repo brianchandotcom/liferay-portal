@@ -22,11 +22,7 @@ new String[] {
 	<#if actionElement.attributeValue("locator${i}")??>
 		<#assign actionLocator = actionElement.attributeValue("locator${i}")>
 
-		<#if actionLocator?contains("${") && actionLocator?contains("}")>
-			RuntimeVariables.evaluateVariable("${actionLocator}", commandScopeVariables)
-		<#else>
-			"${actionLocator}"
-		</#if>
+		RuntimeVariables.evaluateVariable("${actionLocator}", commandScopeVariables)
 	<#else>
 		""
 	</#if>
@@ -36,11 +32,7 @@ new String[] {
 	<#if actionElement.attributeValue("locator-key${i}")??>
 		<#assign actionLocatorKey = actionElement.attributeValue("locator-key${i}")>
 
-		<#if actionLocatorKey?contains("${") && actionLocatorKey?contains("}")>
-			RuntimeVariables.evaluateVariable("${actionLocatorKey}", commandScopeVariables)
-		<#else>
-			"${actionLocatorKey}"
-		</#if>
+		RuntimeVariables.evaluateVariable("${actionLocatorKey}", commandScopeVariables)
 	<#else>
 		""
 	</#if>
@@ -50,11 +42,7 @@ new String[] {
 	<#if actionElement.attributeValue("value${i}")??>
 		<#assign actionValue = actionElement.attributeValue("value${i}")>
 
-		<#if actionValue?contains("${") && actionValue?contains("}")>
-			RuntimeVariables.evaluateVariable("${actionValue}", commandScopeVariables)
-		<#else>
-			"${actionValue}"
-		</#if>
+		RuntimeVariables.evaluateVariable("${actionValue}", commandScopeVariables)
 	<#else>
 		""
 	</#if>

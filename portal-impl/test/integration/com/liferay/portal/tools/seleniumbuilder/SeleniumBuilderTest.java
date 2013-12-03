@@ -1244,6 +1244,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroFailElement1005() throws Exception {
+		test(
+			"MacroFailElement1005.macro",
+			"Error 1005: Invalid message-fail attribute in " + _DIR_NAME +
+				"/MacroFailElement1005.macro:3");
+	}
+
+	@Test
 	public void testMacroForElement1004_1() throws Exception {
 		test(
 			"MacroForElement1004_1.macro",

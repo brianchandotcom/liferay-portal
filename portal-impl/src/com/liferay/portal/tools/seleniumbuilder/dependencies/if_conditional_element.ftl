@@ -33,53 +33,17 @@
 
 	<#assign substring = ifConditionalElement.attributeValue("substring")>
 
-	(
-	<#if string?contains("${") && string?contains("}")>
-		RuntimeVariables.evaluateVariable("${string}", commandScopeVariables)
-	<#else>
-		"${string}"
-	</#if>
-	)
-
-	.contains
-
-	(
-	<#if substring?contains("${") && substring?contains("}")>
-		RuntimeVariables.evaluateVariable("${substring}", commandScopeVariables)
-	<#else>
-		"${substring}"
-	</#if>
-	)
+	(RuntimeVariables.evaluateVariable("${string}", commandScopeVariables)).contains(RuntimeVariables.evaluateVariable("${substring}", commandScopeVariables))
 <#elseif ifConditionalElement.getName() == "equals">
 	<#assign arg1 = ifConditionalElement.attributeValue("arg1")>
 
 	<#assign arg2 = ifConditionalElement.attributeValue("arg2")>
 
-	(
-	<#if arg1?contains("${") && arg1?contains("}")>
-		RuntimeVariables.evaluateVariable("${arg1}", commandScopeVariables)
-	<#else>
-		"${arg1}"
-	</#if>
-	)
-
-	.equals
-
-	(
-	<#if arg2?contains("${") && arg2?contains("}")>
-		RuntimeVariables.evaluateVariable("${arg2}", commandScopeVariables)
-	<#else>
-		"${arg2}"
-	</#if>
-	)
+	(RuntimeVariables.evaluateVariable("${arg1}", commandScopeVariables)).equals(RuntimeVariables.evaluateVariable("${arg2}", commandScopeVariables))
 <#elseif ifConditionalElement.getName() == "isset">
 	<#assign var = ifConditionalElement.attributeValue("var")>
 
-	<#if var?contains("${") && var?contains("}")>
-		RuntimeVariables.variableExists(RuntimeVariables.evaluateVariable("${var}", commandScopeVariables))
-	</#if>
-
-	RuntimeVariables.variableExists("${var}", commandScopeVariables)
+	RuntimeVariables.variableExists(RuntimeVariables.evaluateVariable("${var}", commandScopeVariables), commandScopeVariables)
 <#elseif ifConditionalElement.getName() == "not">
 	!(
 		<#if ifConditionalElement.element("and")??>

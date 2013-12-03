@@ -45,13 +45,15 @@ public class UserConstants {
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 
 	/**
-	 * @deprecated As of 7.0.0 replaced by {@link
-	 * #getPortraitURL(String, boolean, long, String)}
+	 * @deprecated As of 7.0.0 replaced by {@link #getPortraitURL(String,
+	 *             boolean, long, String)}
 	 */
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId) {
 
-		if (!_USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK) {
+		if (!GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
+
 			return getPortraitURL(imagePath, male, portraitId, null);
 		}
 
@@ -70,8 +72,8 @@ public class UserConstants {
 				imagePath, male, portraitId, user.getUserUuid());
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
 			}
 		}
 
@@ -96,8 +98,10 @@ public class UserConstants {
 		sb.append("_portrait?img_id=");
 		sb.append(portraitId);
 
-		if (_USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK) {
-			sb.append("&uipec=");
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
+
+			sb.append("&img_id_token=");
 			sb.append(DigesterUtil.digest(userUuid));
 		}
 
@@ -106,10 +110,6 @@ public class UserConstants {
 
 		return sb.toString();
 	}
-
-	private static final boolean _USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK));
 
 	private static Log _log = LogFactoryUtil.getLog(UserConstants.class);
 

@@ -279,10 +279,10 @@ public class HookHotDeployListener
 		"users.form.my.account.miscellaneous",
 		"users.form.update.identification", "users.form.update.main",
 		"users.form.update.miscellaneous", "users.full.name.generator",
-		"users.full.name.validator", "users.image.max.height",
-		"users.image.max.width", "users.screen.name.always.autogenerate",
-		"users.screen.name.generator", "users.screen.name.validator",
-		"value.object.listener.*"
+		"users.full.name.validator", "users.image.check.token",
+		"users.image.max.height", "users.image.max.width",
+		"users.screen.name.always.autogenerate", "users.screen.name.generator",
+		"users.screen.name.validator", "value.object.listener.*"
 	};
 
 	public HookHotDeployListener() {
@@ -2772,7 +2772,8 @@ public class HookHotDeployListener
 		"theme.jsp.override.enabled", "theme.loader.new.theme.id.on.import",
 		"theme.portlet.decorate.default", "theme.portlet.sharing.default",
 		"user.notification.event.confirmation.enabled",
-		"users.email.address.required", "users.screen.name.always.autogenerate"
+		"users.email.address.required", "users.image.check.token",
+		"users.screen.name.always.autogenerate"
 	};
 
 	private static final String[] _PROPS_VALUES_INTEGER = {

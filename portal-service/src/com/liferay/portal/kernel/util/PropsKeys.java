@@ -2511,13 +2511,13 @@ public interface PropsKeys {
 
 	public static final String USERS_FULL_NAME_VALIDATOR = "users.full.name.validator";
 
+	public static final String USERS_IMAGE_CHECK_TOKEN = "users.image.check.token";
+
 	public static final String USERS_IMAGE_MAX_HEIGHT = "users.image.max.height";
 
 	public static final String USERS_IMAGE_MAX_SIZE = "users.image.max.size";
 
 	public static final String USERS_IMAGE_MAX_WIDTH = "users.image.max.width";
-
-	public static final String USERS_IMAGE_PORTRAIT_ENUMERATION_CHECK = "users.image.portrait.enumeration.check";
 
 	public static final String USERS_INDEXER_ENABLED = "users.indexer.enabled";
 

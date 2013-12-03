@@ -217,6 +217,30 @@
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
+	<command name="addVirtualHostsURLCP">
+		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+
+		<if>
+			<isset var="publicVirtualHosts" />
+			<then>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL" value1="Public Pages" />
+				<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD" value1="${publicPageVirtualHostURL}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="privateVirtualHosts" />
+			<then>
+				<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL" value1="Private Pages" />
+				<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD" value1="${privatePageVirtualHostURL}" />
+			</then>
+		</if>
+
+		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="assignSiteRolesSiteOwnerUserGroupsCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -580,19 +604,13 @@
 	</command>
 
 	<command name="viewVirtualHostsURLPG">
+		<var name="key_pageName" value="${sitePageName}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${sitePageName}" />
         <execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
         <execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
-        <execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+
         <execute action="Home#assertLocation" value1="${sitePageURL}"/>
-        </command>
-
-	<command name="virtualHostsURLCP">
-		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
-
-		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL" value1="Public Pages" />
-		<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD" value1="${publicPageHostURL}" />
-		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL" value1="Private Pages" />
-		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
+    </command>
 </definition>

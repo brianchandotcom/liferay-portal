@@ -7,6 +7,52 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
+	<command name="AddPublicVirtualHostsSiteURL" priority="4">
+		<var name="publicPageVirtualHostURL" value="www.able.com" />
+		<var name="publicSitePage" value="Public Page" />
+		<var name="publicSitePageURL" value="http://www.able.com:8080/public-page" />
+		<var name="publicVirtualHosts" value="true" />
+		<var name="siteName" value="Site Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteScopeSelected" value="true" />
+			<var name="sitePageName" value="${publicSitePage}" />
+			<var name="sitePageType" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addVirtualHostsURLCP">
+			<var name="publicPageVirtualHostURL" value="${publicPageVirtualHostURL}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="portletName" value="Site Settings" />
+			<var name="virtualHostsURL" value="${publicSitePageURL}" />
+		</execute>
+
+		<execute macro="Site#viewVirtualHostsURLPG">
+			<var name="sitePageName" value="${publicSitePage}" />
+			<var name="sitePageURL" value="${publicSitePageURL}" />
+		</execute>
+	</command>
+
 	<command name="AddChildChildSite" priority="5">
 		<var name="childChildSiteName" value="Child Child SiteName" />
 		<var name="childSiteName" value="Child SiteName" />
@@ -253,51 +299,6 @@
 		<execute macro="SitePage#viewFriendlyURLCP">
 			<var name="siteFriendlyURL" value="${siteFriendlyURL}" />
 			<var name="sitePageName" value="${sitePageName}" />
-		</execute>
-	</command>
-
-	<command name="PublicVirtualHostSiteURL" priority="4">
-		<var name="publicSitePage" value="Public Page" />
-		<var name="publicPageHostURL" value="www.able.com" />
-		<var name="publicSitePageURL" value="http://www.able.com:8080/public-page" />
-		<var name="siteName" value="Site Name" />
-		
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#gotoPagesCP">
-			<var name="siteScopeName" value="${siteName}" />
-			<var name="portletName" value="Site Pages" />
-		</execute>
-
-		<execute macro="SitePage#addCP">
-			<var name="siteScopeSelected" value="true" />
-			<var name="sitePageName" value="${publicSitePage}" />
-			<var name="sitePageType" value="Public" />
-		</execute>
-
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteScopeName" value="${siteName}" />
-			<var name="portletName" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#virtualHostsURLCP">
-			<var name="publicPageHostURL" value="${publicPageHostURL}" />
-		</execute>
-
-		<execute macro="Page#openURL">
-			<var name="virtualHostsURL" value="${publicSitePageURL}" />
-			<var name="siteName" value="${publicSitePageURL}" />
-		</execute>
-
-		<execute macro="Site#viewVirtualHostsURLPG">
-			<var name="sitePageName" value="${publicSitePage}" />
-			<var name="sitePageURL" value="${publicSitePageURL}" />
 		</execute>
 	</command>
 

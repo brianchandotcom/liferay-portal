@@ -133,14 +133,19 @@ public class ConvertDocumentLibraryTest {
 	public void testMigrateImages() throws Exception {
 		Image image = addImage();
 
-		_convertProcess.convert();
-
 		try {
-			DLContentLocalServiceUtil.getContent(
-				0, 0, image.getImageId() + ".jpg");
+			_convertProcess.convert();
+
+			try {
+				DLContentLocalServiceUtil.getContent(
+					0, 0, image.getImageId() + ".jpg");
+			}
+			catch (NoSuchContentException nsce) {
+				Assert.fail();
+			}
 		}
-		catch (NoSuchContentException nsce) {
-			Assert.fail();
+		finally {
+			ImageLocalServiceUtil.deleteImage(image);
 		}
 	}
 

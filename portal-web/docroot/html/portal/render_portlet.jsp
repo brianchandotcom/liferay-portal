@@ -771,11 +771,11 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		Properties freeformStyleProps = PropertiesUtil.load(portletSetup.getValue("portlet-freeform-styles", StringPool.BLANK));
 
 		sb.append("style=\"left: ");
-		sb.append(GetterUtil.getString(freeformStyleProps.getProperty("left"), "0"));
+		sb.append(GetterUtil.getString(HtmlUtil.escapeAttribute(freeformStyleProps.getProperty("left")), "0"));
 		sb.append("; position: absolute; top: ");
-		sb.append(GetterUtil.getString(freeformStyleProps.getProperty("top"), "0"));
+		sb.append(GetterUtil.getString(HtmlUtil.escapeAttribute(freeformStyleProps.getProperty("top")), "0"));
 		sb.append("; width: ");
-		sb.append(GetterUtil.getString(freeformStyleProps.getProperty("width"), "400px"));
+		sb.append(GetterUtil.getString(HtmlUtil.escapeAttribute(freeformStyleProps.getProperty("width")), "400px"));
 		sb.append(";\"");
 
 		freeformStyles = sb.toString();

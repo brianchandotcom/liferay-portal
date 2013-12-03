@@ -5952,7 +5952,11 @@ public class JournalArticleLocalServiceImpl
 				"/image/journal/article?img_id=" + imageId + "&t=" +
 					WebServerServletTokenUtil.getToken(imageId);
 
-			byte[] bytes = images.get(elInstanceId + "_" + elName + elLanguage);
+			byte[] bytes = null;
+
+			if (images != null) {
+				bytes = images.get(elInstanceId + "_" + elName + elLanguage);
+			}
 
 			if (ArrayUtil.isNotEmpty(bytes)) {
 				dynamicContent.setText(elContent);

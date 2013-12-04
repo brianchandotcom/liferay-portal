@@ -116,7 +116,7 @@ public class DDMStructureStagedModelDataHandler
 		DDMStructure existingStructure = null;
 
 		try {
-			existingStructure = getExistingStructure(
+			existingStructure = fetchExistingStructure(
 				uuid, portletDataContext.getCompanyGroupId(), classNameId,
 				structureKey, preloaded);
 		}
@@ -152,12 +152,12 @@ public class DDMStructureStagedModelDataHandler
 			referenceElement.attributeValue("preloaded"));
 
 		try {
-			DDMStructure existingStructure = getExistingStructure(
+			DDMStructure existingStructure = fetchExistingStructure(
 				uuid, portletDataContext.getScopeGroupId(), classNameId,
 				structureKey, preloaded);
 
 			if (existingStructure == null) {
-				existingStructure = getExistingStructure(
+				existingStructure = fetchExistingStructure(
 					uuid, portletDataContext.getCompanyGroupId(), classNameId,
 					structureKey, preloaded);
 			}
@@ -246,7 +246,7 @@ public class DDMStructureStagedModelDataHandler
 			boolean preloaded = GetterUtil.getBoolean(
 				element.attributeValue("preloaded"));
 
-			DDMStructure existingStructure = getExistingStructure(
+			DDMStructure existingStructure = fetchExistingStructure(
 				structure.getUuid(), portletDataContext.getScopeGroupId(),
 				structure.getClassNameId(), structure.getStructureKey(),
 				preloaded);
@@ -285,7 +285,7 @@ public class DDMStructureStagedModelDataHandler
 			structure.getStructureKey(), importedStructure.getStructureKey());
 	}
 
-	protected DDMStructure getExistingStructure(
+	protected DDMStructure fetchExistingStructure(
 			String uuid, long groupId, long classNameId, String structureKey,
 			boolean preloaded)
 		throws Exception {

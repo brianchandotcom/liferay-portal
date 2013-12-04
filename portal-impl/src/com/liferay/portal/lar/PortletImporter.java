@@ -393,14 +393,16 @@ public class PortletImporter {
 
 		validateFile(portletDataContext, portletId);
 
-		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			ManifestSummary manifestSummary =
-				ExportImportHelperUtil.getManifestSummary(
-					userId, groupId, parameterMap, file);
+		ManifestSummary manifestSummary =
+			ExportImportHelperUtil.getManifestSummary(
+				userId, groupId, parameterMap, file);
 
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"portlet", portletId, manifestSummary);
 		}
+
+		portletDataContext.setManifestSummary(manifestSummary);
 
 		// Company id
 
@@ -482,7 +484,7 @@ public class PortletImporter {
 		boolean[] importPortletControls =
 			ExportImportHelperUtil.getImportPortletControls(
 				layout.getCompanyId(), portletId, parameterMap,
-				portletDataElement);
+				portletDataElement, manifestSummary);
 
 		try {
 

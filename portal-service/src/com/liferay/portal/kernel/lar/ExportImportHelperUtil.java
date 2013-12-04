@@ -109,6 +109,17 @@ public class ExportImportHelperUtil {
 			companyId, portletId, parameterMap, portletDataElement);
 	}
 
+	public static boolean[] getImportPortletControls(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Element portletDataElement,
+			ManifestSummary manifestSummary)
+		throws Exception {
+
+		return getExportImportHelper().getImportPortletControls(
+			companyId, portletId, parameterMap, portletDataElement,
+			manifestSummary);
+	}
+
 	public static Map<Long, Boolean> getLayoutIdMap(
 			PortletRequest portletRequest)
 		throws Exception {

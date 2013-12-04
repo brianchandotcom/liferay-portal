@@ -110,6 +110,9 @@ if (choiceName > 0) {
 				if ((question != null) && ((i - 1) < choices.size())) {
 					choice = (PollsChoice)choices.get(i - 1);
 				}
+				else {
+					choice = new PollsChoiceImpl();
+				}
 			%>
 
 				<div class="choice <%= (i == choicesCount) ? "last-choice" : StringPool.BLANK %>">

@@ -625,6 +625,22 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								</c:when>
 							</c:choose>
 						</c:when>
+						<c:when test="<%= type == ExpandoColumnConstants.STRING_LOCALIZED %>">
+
+							<%
+							String xml = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--");
+
+							if (Validator.isNull(xml) && (value != null)) {
+								xml = LocalizationUtil.updateLocalization((Map<Locale,String>)value, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
+							}
+
+							if (Validator.isNull(xml) && (defaultValue != null)) {
+								xml = LocalizationUtil.updateLocalization((Map<Locale,String>)defaultValue, StringPool.BLANK, "Data", LocaleUtil.toLanguageId(locale));
+							}
+							%>
+
+							<liferay-ui:input-localized cssClass="lfr-input-text" id="<%= randomNamespace + escapedName %>" name='<%= "ExpandoAttribute--" + escapedName + "--" %>' xml="<%= xml %>" />
+						</c:when>
 						<c:otherwise>
 
 							<%
@@ -733,6 +749,11 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 				}
 				else if (type == ExpandoColumnConstants.STRING_ARRAY) {
 					sb.append(StringUtil.merge((String[])value));
+				}
+				else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+					Map<Locale, String> values = (Map<Locale, String>)value;
+
+					sb.append(values.get(locale));
 				}
 				else {
 					sb.append((String)value);

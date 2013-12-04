@@ -109,7 +109,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		DLFileEntryType existingFileEntryType = null;
 
 		try {
-			existingFileEntryType = getExistingFileEntryType(
+			existingFileEntryType = fetchExistingFileEntryType(
 				uuid, portletDataContext.getCompanyGroupId(), fileEntryTypeKey,
 				preloaded);
 		}
@@ -140,12 +140,12 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		try {
 			DLFileEntryType existingFileEntryType =
-				getExistingFileEntryType(
+				fetchExistingFileEntryType(
 					uuid, portletDataContext.getScopeGroupId(),
 					fileEntryTypeKey, preloaded);
 
 			if (existingFileEntryType == null) {
-				existingFileEntryType = getExistingFileEntryType(
+				existingFileEntryType = fetchExistingFileEntryType(
 					uuid, portletDataContext.getCompanyGroupId(),
 					fileEntryTypeKey, preloaded);
 			}
@@ -241,7 +241,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			DLFileEntryType existingDLFileEntryType =
-				getExistingFileEntryType(
+				fetchExistingFileEntryType(
 					fileEntryType.getUuid(),
 					portletDataContext.getScopeGroupId(),
 					fileEntryType.getFileEntryTypeKey(), preloaded);
@@ -313,7 +313,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		}
 	}
 
-	protected DLFileEntryType getExistingFileEntryType(
+	protected DLFileEntryType fetchExistingFileEntryType(
 			String uuid, long groupId, String fileEntryTypeKey,
 			boolean preloaded)
 		throws Exception {

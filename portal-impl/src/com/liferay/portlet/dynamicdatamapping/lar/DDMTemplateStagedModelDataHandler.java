@@ -126,7 +126,7 @@ public class DDMTemplateStagedModelDataHandler
 		DDMTemplate existingTemplate = null;
 
 		try {
-			existingTemplate = getExistingTemplate(
+			existingTemplate = fetchExistingTemplate(
 				uuid, portletDataContext.getCompanyGroupId(), classNameId,
 				templateKey, preloaded);
 		}
@@ -162,12 +162,12 @@ public class DDMTemplateStagedModelDataHandler
 			referenceElement.attributeValue("preloaded"));
 
 		try {
-			DDMTemplate existingTemplate = getExistingTemplate(
+			DDMTemplate existingTemplate = fetchExistingTemplate(
 				uuid, portletDataContext.getScopeGroupId(), classNameId,
 				templateKey, preloaded);
 
 			if (existingTemplate == null) {
-				existingTemplate = getExistingTemplate(
+				existingTemplate = fetchExistingTemplate(
 					uuid, portletDataContext.getCompanyGroupId(), classNameId,
 					templateKey, preloaded);
 			}
@@ -358,7 +358,7 @@ public class DDMTemplateStagedModelDataHandler
 				boolean preloaded = GetterUtil.getBoolean(
 					element.attributeValue("preloaded"));
 
-				DDMTemplate existingTemplate = getExistingTemplate(
+				DDMTemplate existingTemplate = fetchExistingTemplate(
 					template.getUuid(), portletDataContext.getScopeGroupId(),
 					template.getClassNameId(), template.getTemplateKey(),
 					preloaded);
@@ -405,7 +405,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 	}
 
-	protected DDMTemplate getExistingTemplate(
+	protected DDMTemplate fetchExistingTemplate(
 			String uuid, long groupId, long classNameId, String templateKey,
 			boolean preloaded)
 		throws Exception {

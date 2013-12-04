@@ -256,7 +256,7 @@
 </tr>
 <tr>
 	<td>AVERAGE_STAR_4</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[1][@class='rating-element icon-star-empty']</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[4][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>

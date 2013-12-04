@@ -20,13 +20,92 @@
 
 	<tear-down>
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
 	</tear-down>
 
-	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
-		<var name="selectedAsset" value="Web Content Article" />
+	<command name="AddAPMultiplePortlet" priority="4">
+		<var name="pageName" value="Asset Publisher Page" />
+		<var name="portletCount" value="3" />
+		<var name="portletName" value="Asset Publisher" />
+		<var name="totalPortletCount" value="4" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addDuplicatePG">
+			<var name="portletCount" value="${portletCount}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#viewDuplicatePG">
+			<var name="totalPortletCount" value="${totalPortletCount}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletDisplayPage" priority="5">
+		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
+	</command>
+
+	<command name="ConfigureAPPortletEnableRatings" priority="4">
+		<var name="assetTitle" value="WC WebContent Title" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="enableRatings" value="True" />
+		
+		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
+			<var name="enableRatings" value="${enableRatings}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureFlaggableDisplaySettingsPG">
+			<var name="enableRatings" value="${enableRatings}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayFullContentPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#rate4StarsPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewRate4StarsPG" />
+	</command>
+
+	<command name="ConfigureAPPortletSelectedBlogsEntry" priority="4">
+		<var name="selectedAsset" value="Blogs Entry" />
 
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
-				<var name="selectedAsset" value="${selectedAsset}" />
+			<var name="selectedAsset" value="${selectedAsset}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -38,7 +117,115 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureAPPortletDisplayPage" priority="5">
-		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
+	<command name="ConfigureAPPortletSelectedBookmarksEntry" priority="4">
+		<var name="selectedAsset" value="Bookmarks Entry" />
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletSelectedDocument" priority="4">
+		<var name="selectedAsset" value="Document" />
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
+		<var name="selectedAsset" value="Web Content Article" />
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletSetAsDefault" priority="4">
+		<var name="setAsDefaultPage" value="True" />
+
+		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
+			<var name="setAsDefaultPage" value="${setAsDefaultPage}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureFlaggableDisplaySettingsPG">
+			<var name="setAsDefaultPage" value="${setAsDefaultPage}" />
+		</execute>
+	</command>
+
+	<command name="RestoreAPArchivedSetup" priority="4">
+		<var name="archiveName" value="AP Archive Name" />
+
+		<execute macro="AssetPublisherPortlet#saveArchivedSetupPG">
+			<var name="archiveName" value="${archiveName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#restoreArchivedSetupPG">
+			<var name="archiveName" value="${archiveName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewRestoredSetupPG">
+			<var name="archiveName" value="${archiveName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#deleteArchivedSetupPG">
+			<var name="archiveName" value="${archiveName}" />
+		</execute>
+	</command>
+
+	<command name="SaveAPArchivedSetup" priority="4">
+		<var name="archiveName" value="AP Archive Name" />
+
+		<execute macro="AssetPublisherPortlet#saveArchivedSetupPG">
+			<var name="archiveName" value="${archiveName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#deleteArchivedSetupPG">
+			<var name="archiveName" value="${archiveName}" />
+		</execute> 
 	</command>
 </definition>

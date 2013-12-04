@@ -44,6 +44,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_NEW_DROPDOWN_SITE_NAME</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in ${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_DROPDOWN_CHILD_SITENAME</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//span[contains(.,'Add New in ${key_childSiteName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_NEW_DROPDOWN_IN_SCOPED_SITE</td>
 	<td>//div[contains(@class,'lfr-meta-actions') and contains(@class,'add-asset-selector')]//span[contains(.,'Add New in ${key_siteScope}')]</td>
 	<td></td>
@@ -134,7 +144,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_EDIT</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[@class='taglib-text' and contains(.,'Edit')]</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,7 +180,7 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_1</td>
-	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingStar')]//a[1][@class='rating-element icon-star']</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(@class, 'taglib-text') and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

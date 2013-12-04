@@ -142,7 +142,7 @@
 			<var name="portletCategoryName" value="Pages" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
-     </command>
+	</command>
 
 	<command name="gotoPG">
 		<execute macro="Page#openURL" />

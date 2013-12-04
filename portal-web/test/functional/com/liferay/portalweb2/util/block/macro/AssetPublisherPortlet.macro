@@ -49,6 +49,22 @@
 		<execute action="PGAssetpublisherConfiguration#assertElementPresent" locator-key1="SOURCE_SCOPE_DELETE" />
 	</command>
 
+	<command name="viewEditLinkPG">
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_EDIT" />
+	</command>
+
+	<command name="viewNoEditLinkPG">
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${entryContent}" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_EDIT" />
+	</command>
+
 	<command name="viewConfigureSiteScopeContentSharingPG">
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />

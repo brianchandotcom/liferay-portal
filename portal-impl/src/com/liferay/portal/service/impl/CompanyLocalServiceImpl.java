@@ -492,7 +492,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteLogo(long companyId)
+	public Company deleteLogo(long companyId)
 		throws PortalException, SystemException {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
@@ -502,10 +502,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (logoId > 0) {
 			company.setLogoId(0);
 
-			companyPersistence.update(company);
+			company = companyPersistence.update(company);
 
 			imageLocalService.deleteImage(logoId);
 		}
+
+		return company;
 	}
 
 	/**
@@ -927,9 +929,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Override
 	public Company updateCompany(
 			long companyId, String virtualHostname, String mx, String homeURL,
-			String name, String legalName, String legalId, String legalType,
-			String sicCode, String tickerSymbol, String industry, String type,
-			String size)
+			boolean logo, byte[] logoBytes, String name, String legalName,
+			String legalId, String legalType, String sicCode,
+			String tickerSymbol, String industry, String type, String size)
 		throws PortalException, SystemException {
 
 		// Company
@@ -952,6 +954,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		company.setHomeURL(homeURL);
 
+		PortalUtil.updateImageId(company, logo, logoBytes, "logoId",0 ,0, 0);
+
 		companyPersistence.update(company);
 
 		// Account
@@ -965,6 +969,47 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		updateVirtualHostname(companyId, virtualHostname);
 
 		return company;
+	}
+
+	/**
+	 * Update the company with additional account information.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  virtualHostname the company's virtual host name
+	 * @param  mx the company's mail domain
+	 * @param  homeURL the company's home URL (optionally <code>null</code>)
+	 * @param  name the company's account name(optionally <code>null</code>)
+	 * @param  legalName the company's account legal name (optionally
+	 *         <code>null</code>)
+	 * @param  legalId the company's account legal ID (optionally
+	 *         <code>null</code>)
+	 * @param  legalType the company's account legal type (optionally
+	 *         <code>null</code>)
+	 * @param  sicCode the company's account SIC code (optionally
+	 *         <code>null</code>)
+	 * @param  tickerSymbol the company's account ticker symbol (optionally
+	 *         <code>null</code>)
+	 * @param  industry the company's account industry (optionally
+	 *         <code>null</code>)
+	 * @param  type the company's account type (optionally <code>null</code>)
+	 * @param  size the company's account size (optionally <code>null</code>)
+	 * @return the company with the primary key
+	 * @throws PortalException if a company with the primary key could not be
+	 *         found or if the new information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Company updateCompany(
+			long companyId, String virtualHostname, String mx, String homeURL,
+			String name, String legalName, String legalId, String legalType,
+			String sicCode, String tickerSymbol, String industry, String type,
+			String size)
+		throws PortalException, SystemException {
+
+		return updateCompany(
+			companyId, virtualHostname, mx, homeURL, true, null, name,
+			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
+			type, size);
 	}
 
 	/**

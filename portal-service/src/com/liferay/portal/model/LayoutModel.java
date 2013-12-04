@@ -823,27 +823,6 @@ public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel {
 	public void setFriendlyURL(String friendlyURL);
 
 	/**
-	 * Returns the icon image of this layout.
-	 *
-	 * @return the icon image of this layout
-	 */
-	public boolean getIconImage();
-
-	/**
-	 * Returns <code>true</code> if this layout is icon image.
-	 *
-	 * @return <code>true</code> if this layout is icon image; <code>false</code> otherwise
-	 */
-	public boolean isIconImage();
-
-	/**
-	 * Sets whether this layout is icon image.
-	 *
-	 * @param iconImage the icon image of this layout
-	 */
-	public void setIconImage(boolean iconImage);
-
-	/**
 	 * Returns the icon image ID of this layout.
 	 *
 	 * @return the icon image ID of this layout

@@ -46,7 +46,6 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -164,12 +163,6 @@ public class ServiceTestUtil {
 	}
 
 	public static void initPermissions() {
-		if (System.getProperty("external-properties") == null) {
-			System.setProperty("external-properties", "portal-test.properties");
-		}
-
-		InitUtil.initWithSpring();
-
 		try {
 			PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
 
@@ -181,7 +174,6 @@ public class ServiceTestUtil {
 	}
 
 	public static void initServices() {
-		InitUtil.initWithSpring();
 
 		// JCR
 

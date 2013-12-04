@@ -28,6 +28,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
@@ -589,6 +590,11 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void sendLogger(String id, String status) {
+	}
+
+	@Override
+	public void sendLogger(
+		String id, String status, Map<String, String> context) {
 	}
 
 	@Override

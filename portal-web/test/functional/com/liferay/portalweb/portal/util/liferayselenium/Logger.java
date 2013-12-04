@@ -25,7 +25,9 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -114,7 +116,7 @@ public class Logger {
 	public void logError(
 		Method method, Object[] arguments, Throwable throwable) {
 
-		send("", "fail");
+		send("", "fail", null);
 
 		_errorCount++;
 
@@ -250,7 +252,7 @@ public class Logger {
 				sb.append("<b>");
 				sb.append(String.valueOf(argument));
 				sb.append("</b> ");
-			}
+				}
 		}
 
 		log("actionCommandLog", sb.toString(), "selenium");
@@ -271,13 +273,28 @@ public class Logger {
 	}
 
 	public void send(Object[] arguments) {
-		String id = (String)arguments[0];
-		String status = (String)arguments[1];
+		String id;
+		String status;
+		Map<String, String> context = new HashMap<String, String>();
 
-		send(id, status);
+		if (arguments.length == 3) {
+			id = (String)arguments[0];
+			status = (String)arguments[1];
+			context = (HashMap)arguments[2];
+			send(id, status, context);
+		}
+		else {
+			id = (String)arguments[0];
+			status = (String)arguments[1];
+			send(id, status, null);
+		}
 	}
 
-	public void send(String id, String status) {
+	public void send(String id, String status, Map<String, String> context) {
+		if (context == null) {
+			context = new HashMap<String, String>();
+		}
+
 		if (status.equals("pending")) {
 			_xpathIdStack.push(id);
 		}
@@ -288,8 +305,11 @@ public class Logger {
 		}
 
 		String xpath = generateXpath(_xpathIdStack);
+		String xpath2 = xpath  + "//span[@class='quote']";
 
 		List<WebElement> webElements = _webDriver.findElements(By.xpath(xpath));
+		List<WebElement> webElements2 = _webDriver.findElements(
+			By.xpath(xpath2));
 
 		if (status.equals("pass")) {
 			_xpathIdStack.pop();
@@ -304,6 +324,28 @@ public class Logger {
 
 		for (WebElement webElement : webElements) {
 			_javascriptExecutor.executeScript(sb.toString(), webElement);
+		}
+
+		sb.append("var element = arguments[0];");
+		sb.append("var inHTML = element.innerHTML;");
+		sb.append("return inHTML;");
+
+		for (WebElement webElement2 : webElements2 ) {
+			String val = (String)_javascriptExecutor.executeScript(
+				sb.toString(), webElement2);
+
+			StringBundler sb2 = new StringBundler();
+
+			sb2.append("var element = arguments[0];");
+			sb2.append("element.title = \"");
+
+			String contentContext = val;
+
+			val = getContextKey(val, context);
+
+			sb2.append(val);
+			sb2.append("\";");
+			_javascriptExecutor.executeScript(sb2.toString(), webElement2);
 		}
 	}
 
@@ -330,6 +372,8 @@ public class Logger {
 		}
 
 		_loggerStarted = true;
+
+		initializeTooltips();
 	}
 
 	public void stop() {
@@ -558,6 +602,78 @@ public class Logger {
 		_javascriptExecutor.executeScript(sb.toString());
 	}
 
+	private String getContextKey(String baseKey, Map<String, String> context) {
+		if (!baseKey.contains("{")) {
+			baseKey = StringEscapeUtils.escapeEcmaScript(baseKey);
+
+			return baseKey;
+		}
+
+		int closeBrace = 0;
+		int countBraces = 0;
+		int openBrace = 0;
+
+		String contextKey = "";
+
+		for (int i = 0; i < baseKey.length(); i++) {
+			if (baseKey.charAt(i) == '{') {
+				openBrace = i;
+			}
+			else if (baseKey.charAt(i) == '}') {
+				closeBrace = i;
+				contextKey += context.get(
+					baseKey.substring(openBrace + 1, closeBrace));
+			}
+			else {
+				continue;
+			}
+		}
+
+		if (baseKey.charAt(1) == '$') {
+			return contextKey;
+		}
+		else {
+			String stringToBeReplaced = baseKey.substring(
+				openBrace-1, closeBrace+1);
+
+			baseKey = baseKey.replace(stringToBeReplaced, contextKey);
+
+			return StringEscapeUtils.escapeEcmaScript(baseKey);
+		}
+	}
+
+	private void initializeTooltips() {
+		String xpath = "//div/span[@class='quote']";
+
+		List<WebElement> webElements = _webDriver.findElements(By.xpath(xpath));
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("var element = arguments[0];");
+		sb.append("var value = element.innerHTML;");
+		sb.append("console.log(\"value: \" + value);");
+		sb.append("return value;");
+
+		StringBundler sb2 = new StringBundler();
+
+		for (WebElement webElement : webElements) {
+			String val =(String) _javascriptExecutor.executeScript(
+				sb.toString(), webElement);
+
+			sb2.append("var element = arguments[0];");
+			sb2.append("element.title = \"");
+			sb2.append(StringEscapeUtils.escapeEcmaScript(val));
+			sb2.append("\";");
+
+			try {
+				_javascriptExecutor.executeScript(sb2.toString(), webElement);
+			}
+			catch (Exception e) {
+				System.out.println("Error with: \n" + sb2.toString());
+			}
+		}
+	}
+
 	private static final String _TEST_BASEDIR = TestPropsValues.TEST_BASEDIR;
 
 	private int _actionCount;
@@ -570,5 +686,4 @@ public class Logger {
 	private int _seleniumCount = 1;
 	private WebDriver _webDriver = new FirefoxDriver();
 	private Stack<String> _xpathIdStack = new Stack<String>();
-
 }

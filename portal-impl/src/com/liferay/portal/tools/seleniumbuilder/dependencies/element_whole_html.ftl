@@ -7,9 +7,10 @@
 
 		<#list displayElementAttributes as displayElementAttribute>
 			<#if displayElementAttribute.getName() != "line-number">
+				<#assign elementAttribute = displayElementAttribute.getName() >
 				<span class="attribute">${displayElementAttribute.getName()}</span>
 				<span class="arrow">=</span>
-				<span class="quote">&quot;${seleniumBuilderFileUtil.escapeHtml(displayElementAttribute.getValue())}&quot;</span>
+				<span id=${elementAttribute + lineNumber} class="quote" title="testingthis">&quot;${seleniumBuilderFileUtil.escapeHtml(displayElementAttribute.getValue())}&quot;</span>
 			</#if>
 		</#list>
 

@@ -58,11 +58,11 @@ public class PACLIntegrationJUnitTestRunner
 			System.setProperty("external-properties", resource.getPath());
 		}
 
-		System.setProperty("catalina.base", ".");
-
 		System.setProperty(
 			Context.INITIAL_CONTEXT_FACTORY,
 			"org.apache.naming.java.javaURLContextFactory");
+
+		super.initApplicationContext();
 
 		ServiceTestUtil.initServices();
 		ServiceTestUtil.initPermissions();

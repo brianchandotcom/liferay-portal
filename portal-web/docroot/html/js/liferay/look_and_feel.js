@@ -113,7 +113,10 @@ AUI.add(
 
 				if (obj) {
 					instance._portletId = portletId;
-					instance._curPortlet = obj.one('.portlet');
+
+					if (!obj.hasClass('portlet-borderless')) {
+						instance._curPortlet = obj.one('.portlet');
+					}
 
 					instance._portletBoundary = obj;
 
@@ -1283,7 +1286,14 @@ AUI.add(
 					CLICK,
 					function(event) {
 						var title;
-						var portletTitleText = instance._curPortlet.one('.portlet-title-text');
+						var portletTitleText;
+
+						if (showBorders.get("value") == "" || showBorders.get("value") == true) {
+							portletTitleText = instance._curPortlet.one('.portlet-title-text');
+						}
+						else {
+							portletTitleText = instance._curPortlet.one('.portlet-title-default');
+						}
 
 						var checked = event.currentTarget.get(CHECKED);
 

@@ -1,4 +1,8 @@
 <definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
 	<command name="TestCaseElseClauseEvaluated" priority="5">
 		<var name="switch" value="5" />
 		

@@ -4,6 +4,8 @@
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-6190" />
 
 	<set-up>
+		<execute macro="User#firstLoginPG" />
+		
 		<execute test-case="super#set-up" />
 
 		<if>

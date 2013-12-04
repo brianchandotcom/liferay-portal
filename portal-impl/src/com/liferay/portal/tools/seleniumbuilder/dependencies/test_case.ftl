@@ -51,7 +51,13 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 			<#assign context = "definitionScopeVariables">
 
 			<#list varElements as varElement>
+				<#assign lineNumber = varElement.attributeValue("line-number")>
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pending", ${context});
+
 				<#include "var_element.ftl">
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass", ${context});
 			</#list>
 		</#if>
 	}

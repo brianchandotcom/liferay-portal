@@ -148,33 +148,17 @@ public class JournalArticleStagedModelDataHandler
 			PortletDataContext portletDataContext, Element element)
 		throws PortletDataException {
 
+		String articleArticleId = element.attributeValue("article-id");
 		String articleResourceUuid = element.attributeValue(
 			"article-resource-uuid");
 
 		JournalArticleResource existingArticleResource = null;
 
-		try {
-			existingArticleResource =
-				JournalArticleResourceLocalServiceUtil.
-					fetchJournalArticleResourceByUuidAndGroupId(
-						articleResourceUuid,
-						portletDataContext.getCompanyGroupId());
-		}
-		catch (SystemException se) {
-			throw new PortletDataException(se);
-		}
-
-		if (existingArticleResource == null) {
-			return;
-		}
-
 		JournalArticle existingArticle = null;
 
 		try {
-			existingArticle =
-				JournalArticleLocalServiceUtil.getLatestArticle(
-					existingArticleResource.getResourcePrimKey(),
-					WorkflowConstants.STATUS_ANY, false);
+			existingArticle = getExistingArticle(
+				articleResourceUuid, portletDataContext.getCompanyGroupId());
 		}
 		catch (Exception e) {
 			if (e instanceof SystemException) {
@@ -196,7 +180,6 @@ public class JournalArticleStagedModelDataHandler
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 				JournalArticle.class + ".articleId");
 
-		String articleArticleId = element.attributeValue("article-id");
 
 		articleArticleIds.put(articleArticleId, existingArticle.getArticleId());
 	}
@@ -675,19 +658,8 @@ public class JournalArticleStagedModelDataHandler
 		String articleResourceUuid = articleElement.attributeValue(
 			"article-resource-uuid");
 
-		JournalArticleResource existingArticleResource =
-			JournalArticleResourceLocalServiceUtil.
-				fetchJournalArticleResourceByUuidAndGroupId(
-					articleResourceUuid, portletDataContext.getScopeGroupId());
-
-		if (existingArticleResource == null) {
-			return;
-		}
-
-		JournalArticle existingArticle =
-			JournalArticleLocalServiceUtil.fetchLatestArticle(
-				existingArticleResource.getResourcePrimKey(),
-				WorkflowConstants.STATUS_ANY, false);
+		JournalArticle existingArticle = getExistingArticle(
+			articleResourceUuid, portletDataContext.getScopeGroupId());
 
 		if ((existingArticle == null) || !existingArticle.isInTrash()) {
 			return;
@@ -743,6 +715,31 @@ public class JournalArticleStagedModelDataHandler
 		portletDataContext.addReferenceElement(
 			article, articleElement, image, articleImagePath,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+	}
+
+	protected JournalArticle getExistingArticle(
+				String articleResourceUuid, long groupId)
+			throws Exception {
+
+		JournalArticleResource existingArticleResource = null;
+
+		try {
+			existingArticleResource =
+				JournalArticleResourceLocalServiceUtil.
+					fetchJournalArticleResourceByUuidAndGroupId(
+						articleResourceUuid, groupId);
+		}
+		catch (SystemException se) {
+			throw new PortletDataException(se);
+		}
+
+		if (existingArticleResource == null) {
+			return null;
+		}
+
+		return JournalArticleLocalServiceUtil.getLatestArticle(
+			existingArticleResource.getResourcePrimKey(),
+			WorkflowConstants.STATUS_ANY, false);
 	}
 
 	protected void prepareLanguagesForImport(JournalArticle article)

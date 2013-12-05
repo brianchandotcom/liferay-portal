@@ -19,13 +19,16 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -273,11 +276,20 @@ public class Logger {
 	public void send(Object[] arguments) {
 		String id = (String)arguments[0];
 		String status = (String)arguments[1];
+		Map<String, String> context = new HashMap<String, String>();
 
-		send(id, status);
+		if (arguments.length > 2) {
+			context = (HashMap)arguments[2];
+		}
+
+		send(id, status, context);
 	}
 
 	public void send(String id, String status) {
+		send(id, status, new HashMap<String, String>());
+	}
+
+	public void send(String id, String status, Map<String, String> context) {
 		if (status.equals("pending")) {
 			_xpathIdStack.push(id);
 		}
@@ -303,6 +315,33 @@ public class Logger {
 		sb.append("\";");
 
 		for (WebElement webElement : webElements) {
+			_javascriptExecutor.executeScript(sb.toString(), webElement);
+		}
+
+		webElements = _webDriver.findElements(
+			By.xpath(xpath + "//span[@class='quote']"));
+
+		sb = new StringBundler();
+
+		sb.append("var element = arguments[0];");
+		sb.append("return element.innerHTML;");
+
+		String innerHTMLJavascript = sb.toString();
+
+		for (WebElement webElement : webElements) {
+			String value = (String)_javascriptExecutor.executeScript(
+				innerHTMLJavascript, webElement);
+
+			value = RuntimeVariables.evaluateVariable(value, context);
+			value = StringEscapeUtils.escapeEcmaScript(value);
+
+			sb = new StringBundler();
+
+			sb.append("var element = arguments[0];");
+			sb.append("element.title = \"");
+			sb.append(value);
+			sb.append("\";");
+
 			_javascriptExecutor.executeScript(sb.toString(), webElement);
 		}
 	}

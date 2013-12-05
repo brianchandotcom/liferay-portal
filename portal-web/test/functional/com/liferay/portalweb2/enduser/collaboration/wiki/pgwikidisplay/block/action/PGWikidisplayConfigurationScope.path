@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>PGWikidisplayConfiguration</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCOPE_SELECT</td>
 	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
 	<td></td>

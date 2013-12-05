@@ -1,4 +1,4 @@
-<definition>
+<definition extends="BasePortlet">
 	<command name="assertClick">
 		<case locator-key1="ADD_WEB_CONTENT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />

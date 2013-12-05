@@ -19,16 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>PGAssetpublisherConfiguration</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SHOW_ADD_CONTENT_BUTTON_CHECKBOX</td>
 	<td>//input[@id='_86_showAddContentButtonCheckbox']</td>
 	<td></td>

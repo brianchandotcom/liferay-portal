@@ -1,4 +1,4 @@
-<definition>
+<definition extends="ActionCaseElement1010_3">
 	<command name="click">
 		<case comparator="endsWith" locator-key1="LOCATOR_KEY">
 			<execute function="Click#Function" />

@@ -16,27 +16,17 @@ import com.liferay.portalweb2.util.block.action.BaseLiferayAction;
 
 import java.util.Map;
 
-<#assign rootElement = seleniumBuilderContext.getPathRootElement(actionName)>
-
-<#assign bodyElement = rootElement.element("body")>
-
-<#assign tableElement = bodyElement.element("table")>
-
-<#assign tbodyElement = tableElement.element("tbody")>
-
-<#assign trElements = tbodyElement.elements("tr")>
-
 <#assign extendedPath = "">
 
-<#list trElements as trElement>
-	<#assign tdElements = trElement.elements("td")>
+<#if seleniumBuilderContext.getActionRootElement(actionName)??>
+	<#assign rootElement = seleniumBuilderContext.getActionRootElement(actionName)>
 
-	<#if tdElements[0].getText() = "EXTEND_ACTION_PATH">
-		<#assign extendedPath = tdElements[1].getText()>
-			import ${seleniumBuilderContext.getActionClassName(extendedPath)};
-		<#break>
+	<#if rootElement.attributeValue("extends")??>
+		<#assign extendedPath = rootElement.attributeValue("extends")>
+
+		import ${seleniumBuilderContext.getActionClassName(extendedPath)};
 	</#if>
-</#list>
+</#if>
 
 <#assign actionSimpleClassName = seleniumBuilderContext.getActionSimpleClassName(actionName)>
 

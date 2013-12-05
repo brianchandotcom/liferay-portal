@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>PGWikiAddpage</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FORMAT_DROPDOWN</td>
 	<td>//select[@class='aui-field-select']</td>
 	<td></td>

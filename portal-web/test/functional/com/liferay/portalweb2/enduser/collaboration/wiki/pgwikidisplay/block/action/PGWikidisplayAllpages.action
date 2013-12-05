@@ -1,4 +1,4 @@
-<definition>
+<definition extends="PGWikiAllpages">
 	<command name="assertClick">
 		<case comparator="startsWith" locator-key1="WIKI_PAGE_TABLE_PAGE_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />

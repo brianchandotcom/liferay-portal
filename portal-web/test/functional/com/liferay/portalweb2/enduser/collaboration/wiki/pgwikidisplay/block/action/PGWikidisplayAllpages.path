@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>PGWikiAllpages</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
 	<td>//div[@class='alert alert-success taglib-trash-undo']/form</td>
 	<td></td>

@@ -26,7 +26,7 @@
 			</then>
 		</if>
 
-		<echo message="${message}\n" />
+		<echo message="${message}" />
 
 		<fail message="${message}" />
 	</command>
@@ -41,7 +41,7 @@
 			</then>
 		</if>
 
-		<echo message="${message}\n" />
+		<echo message="${message}" />
 	</command>
 
 	<command name="typeIntoField">

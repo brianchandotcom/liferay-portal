@@ -35,7 +35,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 		<#if actionElement.attributeValue("value${i}")??>
 			<#assign actionValue = actionElement.attributeValue("value${i}")>
 
-			RuntimeVariables.evaluateVariable("${actionValue}", commandScopeVariables)
+			RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(actionValue)}", commandScopeVariables)
 		<#else>
 			""
 		</#if>

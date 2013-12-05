@@ -213,7 +213,17 @@
 
 		<execute action="CPSitemembershipsAssignuserrolesUser#click" locator-key1="CURRENT" />
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
-		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
+
+		<if>
+			<isset var="userMiddleName" />
+			<then>
+				<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+			</then>
+			<else>
+				<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
+			</else>
+		</if>
+
 		<execute action="CPSitemembershipsAssignuserrolesUser#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 

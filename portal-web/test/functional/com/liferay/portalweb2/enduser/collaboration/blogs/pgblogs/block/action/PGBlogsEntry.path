@@ -192,12 +192,22 @@
 </tr>
 <tr>
 	<td>PREVIOUS</td>
+	<td>//div[@class='entry-navigation' and contains(.,'Previous')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS_LINK</td>
 	<td>//div[@class='entry-navigation' and contains(.,'Previous')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEXT</td>
-	<td>//div[@class='entry-navigation' and contains(.,'Next')]/span</td>
+	<td>//div[@class='entry-navigation' and contains(.,'Next')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_LINK</td>
+	<td>//div[@class='entry-navigation' and contains(.,'Next')]/a[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -208,7 +218,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS</td>
-	<td>//div[@id='blogsCommentsPanel']</td>
+	<td>//div[@id='blogsCommentsPanel']//span</td>
 	<td></td>
 </tr>
 <tr>

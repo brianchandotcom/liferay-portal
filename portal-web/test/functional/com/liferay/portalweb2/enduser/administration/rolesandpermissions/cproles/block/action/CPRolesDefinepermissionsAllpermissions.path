@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PERMISSION_HEADER</td>
-	<td>//h3[contains(.,'${permissionNavigationValue}')]</td>
+	<td>//form/h3[contains(.,'${permissionNavigationValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -344,7 +344,7 @@
 <!--SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
 	<td></td>
 </tr>
 <tr>

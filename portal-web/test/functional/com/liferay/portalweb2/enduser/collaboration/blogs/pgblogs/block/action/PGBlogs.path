@@ -255,6 +255,21 @@
 	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Move to the Recycle Bin'])[3]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_YOUR_RATING</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'ratingStar')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_AVERAGE_RATING</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[contains(@class,'liferay-rating-score')]//div[@class='rating-label']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

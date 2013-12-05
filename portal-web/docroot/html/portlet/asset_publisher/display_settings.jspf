@@ -153,13 +153,12 @@
 	<aui:field-wrapper label="metadata-fields">
 
 		<%
-		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-
-		String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
 
 		// Left list
 
 		List leftList = new ArrayList();
+
+		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 
 		for (int i = 0; i < metadataFields.length; i++) {
 			String folderColumn = metadataFields[i];
@@ -172,6 +171,8 @@
 		List rightList = new ArrayList();
 
 		Arrays.sort(metadataFields);
+
+		String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
 
 		for (String folderColumn : allMetadataFields) {
 			if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {

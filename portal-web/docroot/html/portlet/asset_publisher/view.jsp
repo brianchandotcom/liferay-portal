@@ -33,7 +33,7 @@ if (Validator.isNotNull(assetTagName)) {
 	PortalUtil.setPageKeywords(assetTagName, request);
 }
 
-if (assetPublisherDisplayContext.isMergeUrlTags() || assetPublisherDisplayContext.isMergeLayoutTags()) {
+if (assetPublisherDisplayContext.isMergeURLTags() || assetPublisherDisplayContext.isMergeLayoutTags()) {
 	String[] compilerTagNames = assetPublisherDisplayContext.getCompilerTagNames();
 
 	String titleEntry = ArrayUtil.isNotEmpty(compilerTagNames) ? compilerTagNames[compilerTagNames.length - 1] : null;

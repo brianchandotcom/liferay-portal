@@ -71,8 +71,6 @@ else {
 viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
 
 request.setAttribute("view.jsp-showIconLabel", false);
-
-String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 %>
 
 <c:if test="<%= assetEntryIndex == 0 %>">
@@ -84,6 +82,8 @@ String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 		</th>
 
 		<%
+		String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+
 		for (int m = 0; m < metadataFields.length; m++) {
 		%>
 
@@ -117,6 +117,8 @@ String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 	</td>
 
 	<%
+	String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
+
 	for (int m = 0; m < metadataFields.length; m++) {
 		String value = null;
 

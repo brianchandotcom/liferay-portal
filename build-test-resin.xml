@@ -18,11 +18,7 @@
 			<param name="simple.server.stop.executable.arg.line" value="" />
 		</antcall>
 
-		<tstamp>
-			<format property="log.tstamp.value" pattern="yyyy-MM-dd" />
-		</tstamp>
-
-		<copy file="${liferay.home}/logs/liferay.${log.tstamp.value}.log" tofile="log" />
+		<antcall target="copy-log-file" />
 
 		<antcall target="evaluate-logs" />
 	</target>

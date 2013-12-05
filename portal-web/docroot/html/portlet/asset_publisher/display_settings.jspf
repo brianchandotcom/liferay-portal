@@ -157,8 +157,6 @@
 
 		String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
 
-		Set<String> availableMetadataFields = SetUtil.fromArray(allMetadataFields);
-
 		// Left list
 
 		List leftList = new ArrayList();
@@ -175,7 +173,7 @@
 
 		Arrays.sort(metadataFields);
 
-		for (String folderColumn : availableMetadataFields) {
+		for (String folderColumn : allMetadataFields) {
 			if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {
 				rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 			}

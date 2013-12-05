@@ -296,8 +296,20 @@
 		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
 
 		<execute action="CPSitesettingsSiteURL#assertTextEquals" locator-key1="SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
-		<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLInvalid}" />
-		<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<if>
+			<isset var="siteFriendlyURLInvalid" />
+			<then>
+				<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLInvalid}" />
+				<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</then>
+			<elseif>
+	   			<isset var="siteFriendlyURL" />
+				<then>
+					<execute action="CPSitesettingsSiteURL#type" locator-key1="SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURL}" />
+					<execute action="CPSitesettingsSiteURL#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				</then>
+			</elseif>
+		</if>
 
 		<if>
 			<isset var="friendlyURLInvalid" />

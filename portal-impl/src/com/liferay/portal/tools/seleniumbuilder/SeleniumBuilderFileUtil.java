@@ -676,14 +676,10 @@ public class SeleniumBuilderFileUtil {
 
 		List<Element> elements = rootElement.elements();
 
-		if (rootElement.getName().equals("definition")) {
-			String attributeValue = rootElement.attributeValue("extends");
-
-			if (Validator.isNull(attributeValue)) {
-				if (elements.isEmpty()) {
-					throwValidationException(
-						1001, fileName, rootElement, new String[] {"command"});
-				}
+		if (Validator.isNull(rootElement.attributeValue("extends"))) {
+			if (elements.isEmpty()) {
+				throwValidationException(
+					1001, fileName, rootElement, new String[] {"command"});
 			}
 		}
 

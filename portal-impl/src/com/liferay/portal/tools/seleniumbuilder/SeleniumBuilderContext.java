@@ -426,12 +426,6 @@ public class SeleniumBuilderContext {
 	}
 
 	public String getPath(Element rootElement, String locatorKey) {
-		String pathName = "";
-
-		Element headElement = rootElement.element("head");
-
-		List<Element> titleElements = headElement.elements("title");
-
 		Element bodyElement = rootElement.element("body");
 
 		Element tableElement = bodyElement.element("table");
@@ -439,12 +433,6 @@ public class SeleniumBuilderContext {
 		Element tbodyElement = tableElement.element("tbody");
 
 		List<Element> trElements = tbodyElement.elements();
-
-		Element actionElement = titleElements.get(0);
-
-		String actionName = actionElement.getText();
-
-		Element actionRootElement = getActionRootElement(actionName);
 
 		for (Element trElement : trElements) {
 			List<Element> tdElements = trElement.elements("td");
@@ -458,16 +446,12 @@ public class SeleniumBuilderContext {
 			if (pathLocatorKey.equals(locatorKey)) {
 				return pathLocatorElement.getText();
 			}
-
-			if ((actionRootElement != null) &&
-				(actionRootElement.attributeValue("extends") != null)) {
-
-				pathName = actionRootElement.attributeValue("extends");
-			}
 		}
 
-		if (Validator.isNotNull(pathName)) {
-			Element pathRootElement = getPathRootElement(pathName);
+		String pathNameExtends = getPathNameExtends(rootElement);
+
+		if (Validator.isNotNull(pathNameExtends)) {
+			Element pathRootElement = getPathRootElement(pathNameExtends);
 
 			return getPath(pathRootElement, locatorKey);
 		}
@@ -490,9 +474,13 @@ public class SeleniumBuilderContext {
 	public Set<String> getPathLocatorKeys(Element rootElement) {
 		Set<String> pathLocatorKeys = new HashSet<String>();
 
-		Element headElement = rootElement.element("head");
+		String pathNameExtends = getPathNameExtends(rootElement);
 
-		List<Element> titleElements = headElement.elements("title");
+		if (Validator.isNotNull(pathNameExtends)) {
+			Element pathRootElement = getPathRootElement(pathNameExtends);
+
+			pathLocatorKeys.addAll(getPathLocatorKeys(pathRootElement));
+		}
 
 		Element bodyElement = rootElement.element("body");
 
@@ -501,22 +489,6 @@ public class SeleniumBuilderContext {
 		Element tbodyElement = tableElement.element("tbody");
 
 		List<Element> trElements = tbodyElement.elements();
-
-		Element actionElement = titleElements.get(0);
-
-		String actionName = actionElement.getText();
-
-		Element actionRootElement = getActionRootElement(actionName);
-
-		if ((actionRootElement != null) &&
-			(actionRootElement.attributeValue("extends") != null)) {
-
-			String pathName = actionRootElement.attributeValue("extends");
-
-			Element pathRootElement = getPathRootElement(pathName);
-
-			pathLocatorKeys.addAll(getPathLocatorKeys(pathRootElement));
-		}
 
 		for (Element trElement : trElements) {
 			List<Element> tdElements = trElement.elements("td");
@@ -529,6 +501,24 @@ public class SeleniumBuilderContext {
 		}
 
 		return pathLocatorKeys;
+	}
+
+	public String getPathNameExtends(Element rootElement) {
+		Element headElement = rootElement.element("head");
+
+		Element titleElement = headElement.element("title");
+
+		String actionName = titleElement.getText();
+
+		Element actionRootElement = getActionRootElement(actionName);
+
+		if ((actionRootElement != null) &&
+			(actionRootElement.attributeValue("extends") != null)) {
+
+			return actionRootElement.attributeValue("extends");
+		}
+
+		return "";
 	}
 
 	public Set<String> getPathNames() {

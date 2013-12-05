@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Date;
@@ -190,7 +191,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_showCheckbox = false;
 		_showLinkTitle = true;
 		_status = 0;
-		_thumbnailDivStyle = null;
+		_thumbnailDivStyle = StringPool.BLANK;
 		_thumbnailSrc = null;
 		_thumbnailStyle = null;
 		_title = null;
@@ -299,7 +300,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private boolean _showCheckbox = false;
 	private boolean _showLinkTitle = true;
 	private int _status = 0;
-	private String _thumbnailDivStyle;
+	private String _thumbnailDivStyle = StringPool.BLANK;
 	private String _thumbnailSrc;
 	private String _thumbnailStyle;
 	private String _title;

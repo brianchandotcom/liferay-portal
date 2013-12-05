@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ATTACHMENTS_BUTTON</td>
+	<td>//div[@class='article-actions']/span[contains(.,'Attachments')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_FIELD</td>
 	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
 	<td></td>
@@ -56,6 +61,11 @@
 <tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_BUTTON</td>
+	<td>//div[@class='page-actions top-actions']//a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

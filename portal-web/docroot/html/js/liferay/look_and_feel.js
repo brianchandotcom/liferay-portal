@@ -116,18 +116,14 @@ AUI.add(
 
 					if (!obj.hasClass('portlet-borderless')) {
 						instance._curPortlet = obj.one('.portlet');
+						instance._curPortletWrapperId = instance._curPortlet.attr(ID);
 					}
-
-					instance._portletBoundary = obj;
-
-					if (!instance._curPortlet) {
+					else {
 						instance._curPortlet = obj;
 						instance._curPortletWrapperId = curPortletBoundaryId;
 					}
-					else {
-						instance._curPortletWrapperId = instance._curPortlet.attr(ID);
-					}
 
+					instance._portletBoundary = obj;
 					instance._portletBoundaryId = curPortletBoundaryId;
 					instance._newPanel = A.one('#portlet-set-properties');
 					instance._currentLanguage = themeDisplay.getLanguageId();
@@ -1288,11 +1284,11 @@ AUI.add(
 						var title;
 						var portletTitleText;
 
-						if (showBorders.get("value") == "" || showBorders.get("value") == true) {
-							portletTitleText = instance._curPortlet.one('.portlet-title-text');
+						if (showBorders.get("value") == "false") {
+							portletTitleText = instance._curPortlet.one('.portlet-title-default');
 						}
 						else {
-							portletTitleText = instance._curPortlet.one('.portlet-title-default');
+							portletTitleText = instance._curPortlet.one('.portlet-title-text');
 						}
 
 						var checked = event.currentTarget.get(CHECKED);

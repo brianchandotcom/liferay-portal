@@ -36,7 +36,13 @@ if (minuteInterval < 1) {
 	minuteInterval = 30;
 }
 
-Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourValue, minuteValue);
+int hourOfDayValue = hourValue;
+
+if (amPmValue == Calendar.PM) {
+	hourOfDayValue += 12;
+}
+
+Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourOfDayValue, minuteValue);
 
 String simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_ISO;
 
@@ -52,12 +58,6 @@ String placeholder = _PLACEHOLDER_DEFAULT;
 if (!DateUtil.isFormatAmPm(locale)) {
 	placeholder = _PLACEHOLDER_ISO;
 }
-
-if (amPmValue > 0) {
-	calendar.set(Calendar.AM_PM, Calendar.PM);
-}
-
-calendar.set(Calendar.AM_PM, amPmValue);
 
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
 %>

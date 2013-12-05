@@ -165,8 +165,14 @@ public class JournalFolderLocalServiceImpl
 
 		// Trash
 
-		trashEntryLocalService.deleteEntry(
-			JournalFolder.class.getName(), folder.getFolderId());
+		if (folder.isInTrashExplicitly()) {
+			trashEntryLocalService.deleteEntry(
+				JournalFolder.class.getName(), folder.getFolderId());
+		}
+		else {
+			trashVersionLocalService.deleteTrashVersion(
+				JournalFolder.class.getName(), folder.getFolderId());
+		}
 
 		return folder;
 	}

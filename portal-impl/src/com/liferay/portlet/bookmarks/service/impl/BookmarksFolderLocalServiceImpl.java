@@ -165,8 +165,14 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Trash
 
-		trashEntryLocalService.deleteEntry(
-			BookmarksFolder.class.getName(), folder.getFolderId());
+		if (folder.isInTrashExplicitly()) {
+			trashEntryLocalService.deleteEntry(
+				BookmarksFolder.class.getName(), folder.getFolderId());
+		}
+		else {
+			trashVersionLocalService.deleteTrashVersion(
+				BookmarksFolder.class.getName(), folder.getFolderId());
+		}
 
 		return folder;
 	}
@@ -786,7 +792,7 @@ public class BookmarksFolderLocalServiceImpl
 
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 					trashVersionLocalService.addTrashVersion(
-						trashEntryId, BookmarksEntry.class.getName(),
+						trashEntryId, BookmarksFolder.class.getName(),
 						folder.getFolderId(), oldStatus, null);
 				}
 

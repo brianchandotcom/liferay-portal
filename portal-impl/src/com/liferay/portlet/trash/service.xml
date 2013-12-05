@@ -83,7 +83,7 @@
 			<finder-column name="entryId" />
 			<finder-column name="classNameId" />
 		</finder>
-		<finder name="C_C" return-type="Collection">
+		<finder name="C_C" return-type="TrashVersion" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

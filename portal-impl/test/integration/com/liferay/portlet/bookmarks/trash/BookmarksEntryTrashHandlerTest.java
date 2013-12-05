@@ -16,6 +16,7 @@ package com.liferay.portlet.bookmarks.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -51,12 +52,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
-
-	@Ignore()
-	@Override
-	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
 
 	@Ignore()
 	@Override
@@ -246,6 +241,25 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			entry = BookmarksEntryLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), entry,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		return entry;
 	}
 
 }

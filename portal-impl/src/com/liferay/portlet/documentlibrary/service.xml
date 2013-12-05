@@ -404,6 +404,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
 	<entity name="DLFileVersion" human-name="document library file version" uuid="true" local-service="true" remote-service="true">
 

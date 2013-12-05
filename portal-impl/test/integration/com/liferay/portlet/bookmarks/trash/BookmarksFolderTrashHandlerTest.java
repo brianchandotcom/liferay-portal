@@ -52,12 +52,6 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
 	public void testTrashAndDeleteDraft() throws Exception {
 	}
 
@@ -222,6 +216,25 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		BookmarksFolderServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
+			primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			folder = BookmarksFolderLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), folder,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		return folder;
 	}
 
 }

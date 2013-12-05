@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -24,6 +25,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -47,12 +49,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
-
-	@Ignore()
-	@Override
-	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
 
 	@Ignore()
 	@Override
@@ -221,6 +217,25 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+			primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			folder = JournalFolderLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), folder,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		return folder;
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

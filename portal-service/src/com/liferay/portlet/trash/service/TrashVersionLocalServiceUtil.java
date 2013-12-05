@@ -281,9 +281,10 @@ public class TrashVersionLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.trash.model.TrashVersion deleteTrashVersion(
-		long entryId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteTrashVersion(entryId, className, classPK);
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteTrashVersion(className, classPK);
 	}
 
 	public static com.liferay.portlet.trash.model.TrashVersion fetchVersion(
@@ -302,20 +303,6 @@ public class TrashVersionLocalServiceUtil {
 		long entryId, java.lang.String className)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getVersions(entryId, className);
-	}
-
-	/**
-	* Returns all the trash versions associated with the trash entry.
-	*
-	* @param className the class name of the trash entity
-	* @param classPK the primary key of the trash entity
-	* @return all the trash versions associated with the trash entry
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getVersions(className, classPK);
 	}
 
 	public static TrashVersionLocalService getService() {

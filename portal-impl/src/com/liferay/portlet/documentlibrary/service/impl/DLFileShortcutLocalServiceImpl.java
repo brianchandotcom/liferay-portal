@@ -189,8 +189,16 @@ public class DLFileShortcutLocalServiceImpl
 
 		// Trash
 
-		trashEntryLocalService.deleteEntry(
-			DLFileShortcut.class.getName(), fileShortcut.getFileShortcutId());
+		if (fileShortcut.isInTrashExplicitly()) {
+			trashEntryLocalService.deleteEntry(
+				DLFileShortcut.class.getName(),
+				fileShortcut.getFileShortcutId());
+		}
+		else {
+			trashVersionLocalService.deleteTrashVersion(
+				DLFileShortcut.class.getName(),
+				fileShortcut.getFileShortcutId());
+		}
 	}
 
 	@Override

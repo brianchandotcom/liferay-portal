@@ -896,7 +896,7 @@ create index IX_526A032A on TrashEntry (groupId);
 create index IX_FC4EEA64 on TrashEntry (groupId, classNameId);
 create index IX_6CAAE2E8 on TrashEntry (groupId, createDate);
 
-create index IX_630A643B on TrashVersion (classNameId, classPK);
+create unique index IX_630A643B on TrashVersion (classNameId, classPK);
 create index IX_55D44577 on TrashVersion (entryId);
 create index IX_72D58D37 on TrashVersion (entryId, classNameId);
 create unique index IX_D639348C on TrashVersion (entryId, classNameId, classPK);

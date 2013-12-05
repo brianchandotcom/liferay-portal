@@ -943,8 +943,7 @@ public class JournalArticleLocalServiceImpl
 
 			if (trashEntry != null) {
 				trashVersionLocalService.deleteTrashVersion(
-					trashEntry.getEntryId(), JournalArticle.class.getName(),
-					article.getId());
+					JournalArticle.class.getName(), article.getId());
 			}
 		}
 

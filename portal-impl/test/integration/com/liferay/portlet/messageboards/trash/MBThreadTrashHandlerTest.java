@@ -27,6 +27,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -93,12 +94,6 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount + 2,
 			getMessageCount((Long)parentBaseModel.getPrimaryKeyObj()));
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testDeleteTrashVersions() throws Exception {
 	}
 
 	@Ignore()
@@ -306,6 +301,24 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		return super.searchBaseModelsCount(MBMessage.class, groupId);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			thread = MBThreadLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), primaryKey,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		return thread;
 	}
 
 	private static final String _SUBJECT = "Subject";

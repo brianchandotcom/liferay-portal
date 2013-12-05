@@ -60,12 +60,6 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
 	public void testTrashAndDeleteDraft() throws Exception {
 	}
 
@@ -297,6 +291,25 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
 			getNotInTrashBaseModelsCount(parentBaseModel));
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFileShortcut fileShortcut =
+			DLFileShortcutLocalServiceUtil.getFileShortcut(primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			DLFileShortcutLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), primaryKey,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+		}
+
+		return fileShortcut;
 	}
 
 }

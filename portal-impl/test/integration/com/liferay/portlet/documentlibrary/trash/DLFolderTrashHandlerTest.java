@@ -26,6 +26,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -50,12 +51,6 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
-
-	@Ignore()
-	@Override
-	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
 
 	@Ignore()
 	@Override
@@ -230,6 +225,24 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFolder folder = DLFolderLocalServiceUtil.getFolder(primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			folder = DLFolderLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), primaryKey,
+				WorkflowConstants.STATUS_DRAFT, null, serviceContext);
+		}
+
+		return folder;
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

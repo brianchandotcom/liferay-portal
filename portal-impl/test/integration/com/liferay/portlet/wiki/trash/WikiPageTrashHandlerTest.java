@@ -58,12 +58,6 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
 	public void testTrashAndDeleteDraft() throws Exception {
 	}
 
@@ -590,8 +584,6 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
 
 		serviceContext = (ServiceContext)serviceContext.clone();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return WikiPageLocalServiceUtil.updatePage(
 			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle(),

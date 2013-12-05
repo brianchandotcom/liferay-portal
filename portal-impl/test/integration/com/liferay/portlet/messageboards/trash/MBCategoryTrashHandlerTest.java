@@ -50,12 +50,6 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
 	public void testTrashAndDeleteDraft() throws Exception {
 	}
 
@@ -228,6 +222,25 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		MBCategoryLocalServiceUtil.moveCategoryToTrash(
 			TestPropsValues.getUserId(), primaryKey);
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
+		throws Exception {
+
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
+			primaryKey);
+
+		if (serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+			category = MBCategoryLocalServiceUtil.updateStatus(
+				TestPropsValues.getUserId(), primaryKey,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		return category;
 	}
 
 }

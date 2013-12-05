@@ -53,11 +53,13 @@ public class TrashVersionLocalServiceImpl
 	}
 
 	@Override
-	public TrashVersion deleteTrashVersion(
-			long entryId, String className, long classPK)
+	public TrashVersion deleteTrashVersion(String className, long classPK)
 		throws SystemException {
 
-		TrashVersion trashVersion = fetchVersion(entryId, className, classPK);
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		TrashVersion trashVersion = trashVersionPersistence.fetchByC_C(
+			classNameId, classPK);
 
 		if (trashVersion != null) {
 			return deleteTrashVersion(trashVersion);
@@ -74,7 +76,7 @@ public class TrashVersionLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return trashVersionPersistence.fetchByE_C_C(
-			entryId, classNameId, classPK);
+				entryId, classNameId, classPK);
 	}
 
 	@Override
@@ -93,23 +95,6 @@ public class TrashVersionLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return trashVersionPersistence.findByE_C(entryId, classNameId);
-	}
-
-	/**
-	 * Returns all the trash versions associated with the trash entry.
-	 *
-	 * @param  className the class name of the trash entity
-	 * @param  classPK the primary key of the trash entity
-	 * @return all the trash versions associated with the trash entry
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<TrashVersion> getVersions(String className, long classPK)
-		throws SystemException {
-
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		return trashVersionPersistence.findByC_C(classNameId, classPK);
 	}
 
 }

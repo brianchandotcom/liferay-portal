@@ -198,8 +198,14 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Trash
 
-		trashEntryLocalService.deleteEntry(
-			BookmarksEntry.class.getName(), entry.getEntryId());
+		if (entry.isInTrashExplicitly()) {
+			trashEntryLocalService.deleteEntry(
+				BookmarksEntry.class.getName(), entry.getEntryId());
+		}
+		else {
+			trashVersionLocalService.deleteTrashVersion(
+				BookmarksEntry.class.getName(), entry.getEntryId());
+		}
 
 		return entry;
 	}

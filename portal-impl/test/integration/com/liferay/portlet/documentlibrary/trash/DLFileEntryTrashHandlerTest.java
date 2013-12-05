@@ -71,12 +71,6 @@ import org.junit.runner.RunWith;
 @Sync
 public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
-	@Ignore()
-	@Override
-	@Test
-	public void testDeleteTrashVersions() throws Exception {
-	}
-
 	@Test
 	@Transactional
 	public void testTrashDLFileRank() throws Exception {

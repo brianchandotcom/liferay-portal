@@ -302,6 +302,11 @@ public class TrashVersionPersistenceTest {
 
 		TrashVersionModelImpl existingTrashVersionModelImpl = (TrashVersionModelImpl)_persistence.findByPrimaryKey(newTrashVersion.getPrimaryKey());
 
+		Assert.assertEquals(existingTrashVersionModelImpl.getClassNameId(),
+			existingTrashVersionModelImpl.getOriginalClassNameId());
+		Assert.assertEquals(existingTrashVersionModelImpl.getClassPK(),
+			existingTrashVersionModelImpl.getOriginalClassPK());
+
 		Assert.assertEquals(existingTrashVersionModelImpl.getEntryId(),
 			existingTrashVersionModelImpl.getOriginalEntryId());
 		Assert.assertEquals(existingTrashVersionModelImpl.getClassNameId(),

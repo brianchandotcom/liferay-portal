@@ -255,8 +255,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Trash
 
-		trashEntryLocalService.deleteEntry(
-			MBThread.class.getName(), thread.getThreadId());
+		if (thread.isInTrashExplicitly()) {
+			trashEntryLocalService.deleteEntry(
+				MBThread.class.getName(), thread.getThreadId());
+		}
+		else {
+			trashVersionLocalService.deleteTrashVersion(
+				MBThread.class.getName(), thread.getThreadId());
+		}
 
 		// Indexer
 

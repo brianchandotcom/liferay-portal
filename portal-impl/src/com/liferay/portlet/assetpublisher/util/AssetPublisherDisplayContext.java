@@ -69,7 +69,9 @@ public class AssetPublisherDisplayContext {
 		if (_allAssetCategoryIds == null) {
 			_allAssetCategoryIds = new long[0];
 
-			if (getSelectionStyle().equals("dynamic")) {
+			String selectionStyle = getSelectionStyle();
+
+			if (selectionStyle.equals("dynamic")) {
 				_allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
 					_portletPreferences);
 			}
@@ -77,7 +79,7 @@ public class AssetPublisherDisplayContext {
 			long assetCategoryId = ParamUtil.getLong(_request, "categoryId");
 
 			if (assetCategoryId > 0) {
-				if (getSelectionStyle().equals("manual")) {
+				if (selectionStyle.equals("manual")) {
 					_allAssetCategoryIds = ArrayUtil.append(
 						_allAssetCategoryIds, assetCategoryId);
 				}
@@ -94,7 +96,9 @@ public class AssetPublisherDisplayContext {
 
 			_allAssetTagNames = new String[0];
 
-			if (getSelectionStyle().equals("dynamic")) {
+			String selectionStyle = getSelectionStyle();
+
+			if (selectionStyle.equals("dynamic")) {
 				_allAssetTagNames = AssetPublisherUtil.getAssetTagNames(
 					_portletPreferences, themeDisplay.getScopeGroupId());
 			}
@@ -102,13 +106,13 @@ public class AssetPublisherDisplayContext {
 			String assetTagName = ParamUtil.getString(_request, "tag");
 
 			if (Validator.isNotNull(assetTagName)) {
-				if (getSelectionStyle().equals("manual")) {
+				if (selectionStyle.equals("manual")) {
 					_allAssetTagNames = ArrayUtil.append(
 						_allAssetTagNames, assetTagName);
 				}
 			}
 
-			if (isMergeUrlTags() || isMergeLayoutTags()) {
+			if (isMergeURLTags() || isMergeLayoutTags()) {
 				_allAssetTagNames = ArrayUtil.append(
 					_allAssetTagNames, getCompilerTagNames());
 			}
@@ -165,7 +169,7 @@ public class AssetPublisherDisplayContext {
 		if (_compilerTagNames == null) {
 			_compilerTagNames = new String[0];
 
-			if (isMergeUrlTags()) {
+			if (isMergeURLTags()) {
 				_compilerTagNames = ParamUtil.getParameterValues(
 					_request, "tags");
 			}
@@ -435,11 +439,15 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isAssetLinkBehaviorShowFullContent() {
-		return getAssetLinkBehavior().equals("showFullContent");
+		String assetLinkBehavior = getAssetLinkBehavior();
+
+		return assetLinkBehavior.equals("showFullContent");
 	}
 
 	public boolean isAssetLinkBehaviorViewInPortlet() {
-		return getAssetLinkBehavior().equals("viewInPortlet");
+		String assetLinkBehavior = getAssetLinkBehavior();
+
+		return assetLinkBehavior.equals("viewInPortlet");
 	}
 
 	public boolean isEnableCommentRatings() {
@@ -583,13 +591,13 @@ public class AssetPublisherDisplayContext {
 		return _mergeLayoutTags;
 	}
 
-	public boolean isMergeUrlTags() {
-		if (_mergeUrlTags == null) {
-			_mergeUrlTags = GetterUtil.getBoolean(
+	public boolean isMergeURLTags() {
+		if (_mergeURLTags == null) {
+			_mergeURLTags = GetterUtil.getBoolean(
 				_portletPreferences.getValue("mergeUrlTags", null), true);
 		}
 
-		return _mergeUrlTags;
+		return _mergeURLTags;
 	}
 
 	public boolean isOpenOfficeServerEnabled() throws SystemException {
@@ -603,23 +611,33 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isPaginationTypeNone() {
-		return getPaginationType().equals("none");
+		String paginationType = getPaginationType();
+
+		return paginationType.equals("none");
 	}
 
 	public boolean isPaginationTypeRegular() {
-		return getPaginationType().equals("regular");
+		String paginationType = getPaginationType();
+
+		return paginationType.equals("regular");
 	}
 
 	public boolean isPaginationTypeSimple() {
-		return getPaginationType().equals("simple");
+		String paginationType = getPaginationType();
+
+		return paginationType.equals("simple");
 	}
 
 	public boolean isSelectionStyleDynamic() {
-		return getSelectionStyle().equals("dynamic");
+		String selectionStyle = getSelectionStyle();
+
+		return selectionStyle.equals("dynamic");
 	}
 
 	public boolean isSelectionStyleManual() {
-		return getSelectionStyle().equals("manual");
+		String selectionStyle = getSelectionStyle();
+
+		return selectionStyle.equals("manual");
 	}
 
 	public boolean isShowAddContentButton() {
@@ -726,7 +744,7 @@ public class AssetPublisherDisplayContext {
 	private String[] _extensions;
 	private long[] _groupIds;
 	private Boolean _mergeLayoutTags;
-	private Boolean _mergeUrlTags;
+	private Boolean _mergeURLTags;
 	private String[] _metadataFields;
 	private Boolean _openOfficeServerEnabled;
 	private String _orderByColumn1;

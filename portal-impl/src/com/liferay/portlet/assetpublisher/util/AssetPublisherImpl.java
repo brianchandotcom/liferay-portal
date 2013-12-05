@@ -322,7 +322,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	public long[] getAssetCategoryIds(PortletPreferences portletPreferences)
 		throws Exception {
 
-		long[] allAssetCategoryIds = new long[0];
+		long[] assetCategoryIds = new long[0];
 
 		for (int i = 0; true; i++) {
 			String[] queryValues = portletPreferences.getValues(
@@ -344,11 +344,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 			if (Validator.equals(queryName, "assetCategories") &&
 				queryContains && queryAndOperator) {
 
-				allAssetCategoryIds = GetterUtil.getLongValues(queryValues);
+				assetCategoryIds = GetterUtil.getLongValues(queryValues);
 			}
 		}
 
-		return allAssetCategoryIds;
+		return assetCategoryIds;
 	}
 
 	@Override

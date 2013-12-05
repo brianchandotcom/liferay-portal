@@ -41,7 +41,7 @@
 </tr>
 <!--ENTRY_TABLE-->
 <tr>
-	<td>ENTRY_TABLE_ENTRY</td>
+	<td>ENTRY_TABLE_BOOKMARK_ENTRY</td>
 	<td>//div[@id='_28_objectsSearchContainer']/div/table/tbody/tr[contains(.,'${key_bookmarkName}')]/td/span/a/span</td>
 	<td></td>
 </tr>

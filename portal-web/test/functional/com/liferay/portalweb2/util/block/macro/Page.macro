@@ -148,15 +148,6 @@
 		<execute macro="Page#openURL" />
 
 		<execute action="Home#click" locator1="link=${pageName}" />
-
-		<if>
-   			 <isset var="sitePageXSS" />
-    		<then>
-    			<var name="key_pageName" value="${pageName}" />
-
-     			<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${sitePageXSS}" />
-    		</then>
-   		</if>
 	</command>
 
 	<command name="gotoUsersCP">
@@ -218,7 +209,7 @@
 			<isset var="virtualHostsURL" />
     		<then>
      			<var name="siteNameURL" value="${virtualHostsURL}" />
-     			
+
      			<execute action="Home#open" locator1="${siteNameURL}" />
     		</then>
     		<else>

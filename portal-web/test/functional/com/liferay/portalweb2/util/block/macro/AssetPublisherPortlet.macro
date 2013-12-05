@@ -1,4 +1,17 @@
 <definition>
+	<command name="configureDisplayFullContentPG">
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+
+		<execute action="PGAssetpublisherConfigurationDisplaysettings#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="configureDisplayPagePG">
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
@@ -8,18 +21,6 @@
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGAssetpublisherConfiguration#assertChecked" locator-key1="FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
-	</command>
-
-	<command name="configureDisplayFullContentPG">
-		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_LINK" value1="Display Settings" />
-
-		<execute action="PGAssetpublisherConfigurationDisplaysettings#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureFlaggableDisplaySettingsPG">
@@ -87,13 +88,13 @@
 	</command>
 
 	<command name="deleteArchivedSetupPG">
-		<var name="key_archiveName" value="${archiveName}" />
-
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="ARCHIVE_RESTORE_SETUP_LINK" value1="Archive/Restore Setup" />
+
+		<var name="key_archiveName" value="${archiveName}" />
 
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertClick" locator-key1="ARCHIVED_SETUPS_TABLE_ACTIONS" value1="Actions" />
@@ -110,8 +111,6 @@
 	</command>
 
 	<command name="restoreArchivedSetupPG">
-		<var name="key_archiveName" value="${archiveName}" />
-
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
@@ -120,25 +119,28 @@
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="ARCHIVE_RESTORE_SETUP_LINK" value1="Archive/Restore Setup" />
 
+		<var name="key_archiveName" value="${archiveName}" />
+
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertClick" locator-key1="ARCHIVED_SETUPS_TABLE_ACTIONS" value1="Actions" />
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertClick" locator-key1="ACTIONS_MENULIST_RESTORE" value1="Restore" />
 	</command>
 
 	<command name="saveArchivedSetupPG">
-		<var name="key_archiveName" value="${archiveName}" />
-
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
 		<execute action="PGAssetpublisherConfiguration#click" locator-key1="ASSET_SELECTION_MANUAL" />
-		
+
 		<execute action="PGAssetpublisherConfigurationManual#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfigurationManual#assertClick" locator-key1="ARCHIVE_RESTORE_SETUP_LINK" value1="Archive/Restore Setup" />
 
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no archived setups." />
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#type" locator-key1="ARCHIVE_NAME_FIELD" value1="${archiveName}" />
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<var name="key_archiveName" value="${archiveName}" />
+
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
@@ -259,9 +261,9 @@
 	</command>
 
 	<command name="viewRate4StarsPG">
-		<var name="key_assetTitle" value="${assetTitle}" />
-
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="AVERAGE" value1="Average (1 Vote)" />
+
+		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
 		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
@@ -281,13 +283,11 @@
 	</command>
 
 	<command name="viewRestoredSetupPG">
-		<var name="key_archiveName" value="${archiveName}" />
-
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
-		
+
 		<execute action="PGAssetpublisherConfigurationManual#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No assets selected." />
 	</command>
 
@@ -309,7 +309,7 @@
 				<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 				<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
-				<execute action="PGAssetpublisherConfiguration#assertSelectedLabel" locator-key1="SOURCE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />				
+				<execute action="PGAssetpublisherConfiguration#assertSelectedLabel" locator-key1="SOURCE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 			</else>
 		</if>
 	</command>

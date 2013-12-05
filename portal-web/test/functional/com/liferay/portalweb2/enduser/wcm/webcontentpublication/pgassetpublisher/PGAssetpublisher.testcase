@@ -57,10 +57,10 @@
 
 	<command name="ConfigureAPPortletEnableRatings" priority="4">
 		<var name="assetTitle" value="WC WebContent Title" />
+		<var name="enableRatings" value="True" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="enableRatings" value="True" />
-		
+
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
 			<var name="enableRatings" value="${enableRatings}" />
 		</execute>
@@ -226,6 +226,6 @@
 
 		<execute macro="AssetPublisherPortlet#deleteArchivedSetupPG">
 			<var name="archiveName" value="${archiveName}" />
-		</execute> 
+		</execute>
 	</command>
 </definition>

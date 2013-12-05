@@ -45,21 +45,6 @@
 		</while>
 	</command>
 
-	<command name="viewDuplicatePG">
-		<var name="i" value="0" />
-
-		<while>
-			<not>
-				<equals arg1="${i}" arg2="${totalPortletCount}" />
-			</not>
-			<then>
-				<var name="i" value="${i?increment()}" />
-
-				<execute action="Home#assertElementPresent" locator1="xpath=(//section[header/h1[contains(.,'${portletName}')]])[${i}]" />
-			</then>
-		</while>
-	</command>		
-
 	<command name="addPG">
 		<var name="i" value="1" />
 
@@ -156,5 +141,20 @@
 				<fail message="Invalid var portletOption. Must be (Look and Feel|Configuration|Export / Import)." />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewDuplicatePG">
+		<var name="i" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${i}" arg2="${totalPortletCount}" />
+			</not>
+			<then>
+				<var name="i" value="${i?increment()}" />
+
+				<execute action="Home#assertElementPresent" locator1="xpath=(//section[header/h1[contains(.,'${portletName}')]])[${i}]" />
+			</then>
+		</while>
 	</command>
 </definition>

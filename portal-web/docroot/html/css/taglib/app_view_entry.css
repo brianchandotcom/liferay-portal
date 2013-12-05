@@ -70,7 +70,7 @@
 		}
 
 		.entry-title {
-			word-wrap: normal;
+			@include ellipsis;
 		}
 
 		@include respond-to(phone, tablet) {

@@ -43,6 +43,7 @@ if (assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() && (classNameIds
 AssetPublisherUtil.processAssetEntryQuery(user, portletPreferences, assetEntryQuery);
 
 assetEntryQuery.setAllCategoryIds(assetPublisherDisplayContext.getAllAssetCategoryIds());
+assetEntryQuery.setAllTagIds(AssetTagLocalServiceUtil.getTagIds(scopeGroupId, assetPublisherDisplayContext.getAllAssetTagNames()));
 
 if (assetPublisherDisplayContext.isShowOnlyLayoutAssets()) {
 	assetEntryQuery.setLayout(layout);
@@ -56,9 +57,8 @@ if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 	}
 }
 
-assetEntryQuery.setPaginationType(assetPublisherDisplayContext.getPaginationType());
 assetEntryQuery.setEnablePermissions(assetPublisherDisplayContext.isEnablePermissions());
-assetEntryQuery.setAllTagIds(AssetTagLocalServiceUtil.getTagIds(scopeGroupId, assetPublisherDisplayContext.getAllAssetTagNames()));
+assetEntryQuery.setPaginationType(assetPublisherDisplayContext.getPaginationType());
 
 int end = searchContainer.getEnd();
 int start = searchContainer.getStart();

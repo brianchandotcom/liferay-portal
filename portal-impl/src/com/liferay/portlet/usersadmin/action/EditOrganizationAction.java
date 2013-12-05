@@ -28,8 +28,10 @@ import com.liferay.portal.OrganizationParentException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.RequiredOrganizationException;
 import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,6 +55,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -219,6 +222,19 @@ public class EditOrganizationAction extends PortletAction {
 		long regionId = ParamUtil.getLong(actionRequest, "regionId");
 		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String comments = ParamUtil.getString(actionRequest, "comments");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
 		boolean site = ParamUtil.getBoolean(actionRequest, "site");
 		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
@@ -247,16 +263,9 @@ public class EditOrganizationAction extends PortletAction {
 
 			organization = OrganizationServiceUtil.updateOrganization(
 				organizationId, parentOrganizationId, name, type, regionId,
-				countryId, statusId, comments, true, null, site, addresses,
-				emailAddresses, orgLabors, phones, websites, serviceContext);
-
-			boolean deleteLogo = ParamUtil.getBoolean(
-				actionRequest, "deleteLogo");
-
-			if (deleteLogo) {
-				OrganizationServiceUtil.deleteLogo(
-					organization.getOrganizationId());
-			}
+				countryId, statusId, comments, !deleteLogo, logoBytes, site,
+				addresses, emailAddresses, orgLabors, phones, websites,
+				serviceContext);
 		}
 
 		// Layout set prototypes

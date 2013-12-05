@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portalsettings.action;
+package com.liferay.portlet.imageuploader.action;
 
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchRepositoryException;
@@ -27,9 +27,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -46,6 +48,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.awt.image.RenderedImage;
 
+import java.io.File;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
@@ -53,16 +56,19 @@ import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class EditLogoAction extends PortletAction {
+public class UploadImageAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -78,7 +84,9 @@ public abstract class EditLogoAction extends PortletAction {
 				addTempImageFile(actionRequest);
 			}
 			else {
-				saveTempImageFile(actionRequest);
+				FileEntry fileEntry = saveTempImageFile(actionRequest);
+
+				SessionMessages.add(actionRequest, "imageUploaded", fileEntry);
 
 				sendRedirect(actionRequest, actionResponse);
 			}
@@ -134,7 +142,7 @@ public abstract class EditLogoAction extends PortletAction {
 		}
 	}
 
-	protected void addTempImageFile(PortletRequest portletRequest)
+	protected FileEntry addTempImageFile(PortletRequest portletRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -162,7 +170,7 @@ public abstract class EditLogoAction extends PortletAction {
 		try {
 			inputStream = uploadPortletRequest.getFileAsStream("fileName");
 
-			TempFileUtil.addTempFile(
+			return TempFileUtil.addTempFile(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				getTempImageFileName(portletRequest), getTempImageFolderName(),
 				inputStream, contentType);
@@ -183,8 +191,9 @@ public abstract class EditLogoAction extends PortletAction {
 			getTempImageFileName(portletRequest), getTempImageFolderName());
 	}
 
-	protected abstract String getTempImageFileName(
-		PortletRequest portletRequest);
+	protected String getTempImageFileName(PortletRequest portletRequest) {
+		return ParamUtil.getString(portletRequest, "tempImageFileName");
+	}
 
 	protected String getTempImageFolderName() {
 		Class<?> clazz = getClass();
@@ -192,7 +201,7 @@ public abstract class EditLogoAction extends PortletAction {
 		return clazz.getName();
 	}
 
-	protected void saveTempImageFile(ActionRequest actionRequest)
+	protected FileEntry saveTempImageFile(ActionRequest actionRequest)
 		throws Exception {
 
 		FileEntry tempFileEntry = null;
@@ -227,7 +236,24 @@ public abstract class EditLogoAction extends PortletAction {
 			byte[] bytes = ImageToolUtil.getBytes(
 				renderedImage, imageBag.getType());
 
-			saveTempImageFile(actionRequest, bytes);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			File file = FileUtil.createTempFile(bytes);
+
+			try {
+				TempFileUtil.deleteTempFile(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					getTempImageFileName(actionRequest),
+					getTempImageFolderName());
+			}
+			catch (Exception e) {
+			}
+
+			return TempFileUtil.addTempFile(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				getTempImageFileName(actionRequest), getTempImageFolderName(),
+				file, tempFileEntry.getMimeType());
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			throw new UploadException(nsfee);
@@ -237,16 +263,8 @@ public abstract class EditLogoAction extends PortletAction {
 		}
 		finally {
 			StreamUtil.cleanUp(tempImageStream);
-
-			if (tempFileEntry != null) {
-				TempFileUtil.deleteTempFile(tempFileEntry.getFileEntryId());
-			}
 		}
 	}
-
-	protected abstract void saveTempImageFile(
-			PortletRequest portletRequest, byte[] bytes)
-		throws Exception;
 
 	protected void serveTempImageFile(
 			MimeResponse mimeResponse, InputStream tempImageStream)
@@ -265,6 +283,17 @@ public abstract class EditLogoAction extends PortletAction {
 		PortletResponseUtil.write(mimeResponse, bytes);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(EditLogoAction.class);
+	@Override
+		public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		return actionMapping.findForward(
+			getForward(renderRequest, "portlet.image_uploader.view"));
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(UploadImageAction.class);
 
 }

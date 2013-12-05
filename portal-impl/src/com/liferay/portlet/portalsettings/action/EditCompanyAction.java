@@ -28,8 +28,10 @@ import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -44,6 +46,7 @@ import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.util.List;
@@ -148,6 +151,20 @@ public class EditCompanyAction extends PortletAction {
 			actionRequest, "virtualHostname");
 		String mx = ParamUtil.getString(actionRequest, "mx");
 		String homeURL = ParamUtil.getString(actionRequest, "homeURL");
+
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
 		String name = ParamUtil.getString(actionRequest, "name");
 		String legalName = ParamUtil.getString(actionRequest, "legalName");
 		String legalId = ParamUtil.getString(actionRequest, "legalId");
@@ -169,10 +186,10 @@ public class EditCompanyAction extends PortletAction {
 			actionRequest, "settings--");
 
 		CompanyServiceUtil.updateCompany(
-			companyId, virtualHostname, mx, homeURL, true, null, name,
-			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
-			type, size, languageId, timeZoneId, addresses, emailAddresses,
-			phones, websites, properties);
+			companyId, virtualHostname, mx, homeURL, !deleteLogo, logoBytes,
+			name, legalName, legalId, legalType, sicCode, tickerSymbol,
+			industry, type, size, languageId, timeZoneId, addresses,
+			emailAddresses, phones, websites, properties);
 
 		PortalUtil.resetCDNHosts();
 	}

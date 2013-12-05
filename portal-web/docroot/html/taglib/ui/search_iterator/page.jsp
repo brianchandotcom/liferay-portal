@@ -121,7 +121,7 @@ List<String> primaryKeys = new ArrayList<String>();
 					}
 
 					if (orderCurrentHeader) {
-						cssClass += "table-sorted";
+						cssClass += " table-sorted";
 
 						if (HtmlUtil.escapeAttribute(orderByType).equals("desc")) {
 							cssClass += " table-sorted-desc";

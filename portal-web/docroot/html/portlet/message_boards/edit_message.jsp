@@ -206,7 +206,7 @@ else {
 			<aui:workflow-status status="<%= message.getStatus() %>" />
 		</c:if>
 
-		<aui:input autoFocus="<%= ((windowState.equals(WindowState.MAXIMIZED) || windowState.equals(WindowState.NORMAL)) && !themeDisplay.isFacebook()) %>" name="subject" value="<%= subject %>" />
+		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="subject" value="<%= subject %>" />
 
 		<aui:field-wrapper label="body">
 			<c:choose>

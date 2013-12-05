@@ -1,3 +1,5 @@
+@import "compass";
+
 .portlet-login {
 	.form {
 		fieldset {
@@ -31,5 +33,9 @@
 		background: #eee;
 		border-top: 1px solid #BFBFBF;
 		padding: 10px;
+	}
+
+	.signed-in {
+		@include hyphenation;
 	}
 }

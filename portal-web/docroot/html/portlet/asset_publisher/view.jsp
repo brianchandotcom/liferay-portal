@@ -162,7 +162,7 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put(PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER, AssetPublisherHelperUtil.getAssetPublisherHelper());
 
-request.setAttribute("view.jsp-viewInContext", new Boolean(assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet()));
+request.setAttribute("view.jsp-viewInContext", assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 %>
 
 <c:choose>

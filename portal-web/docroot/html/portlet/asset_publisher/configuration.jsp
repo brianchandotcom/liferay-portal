@@ -58,9 +58,9 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 			</c:when>
 			<c:otherwise>
 				<aui:fieldset label="asset-selection">
-					<aui:input checked='<%= selectionStyle.equals("dynamic") %>' id="selectionStyleDynamic" label="dynamic" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="dynamic" />
+					<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>" id="selectionStyleDynamic" label="dynamic" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="dynamic" />
 
-					<aui:input checked='<%= selectionStyle.equals("manual") %>' id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="manual" />
+					<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>" id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="manual" />
 				</aui:fieldset>
 			</c:otherwise>
 		</c:choose>
@@ -78,7 +78,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 			availableGroups.add(layout.getScopeGroup());
 		}
 
-		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
+		List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDisplayContext.getGroupIds());
 		%>
 
 		<div id="<portlet:namespace />scopesBoxes">
@@ -136,7 +136,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					for (Group group : availableGroups) {
-						if (ArrayUtil.contains(groupIds, group.getGroupId())) {
+						if (ArrayUtil.contains(assetPublisherDisplayContext.getGroupIds(), group.getGroupId())) {
 							continue;
 						}
 					%>
@@ -166,7 +166,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						layoutSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
 						layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
+						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						layoutSiteBrowserURL.setParameter("type", "layoutScopes");
 						layoutSiteBrowserURL.setParameter("eventName", eventName);
 						layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
@@ -216,7 +216,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 						siteBrowserURL.setParameter("struts_action", "/site_browser/view");
 						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
+						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
 						siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
 						siteBrowserURL.setParameter("eventName", eventName);
@@ -259,10 +259,10 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 	%>
 
 	<c:choose>
-		<c:when test='<%= selectionStyle.equals("manual") %>'>
+		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
 			<liferay-util:include page="/html/portlet/asset_publisher/configuration_manual.jsp" />
 		</c:when>
-		<c:when test='<%= selectionStyle.equals("dynamic") %>'>
+		<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
 			<liferay-util:include page="/html/portlet/asset_publisher/configuration_dynamic.jsp" />
 		</c:when>
 	</c:choose>

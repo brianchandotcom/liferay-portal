@@ -26,7 +26,7 @@ if (Validator.isNull(title)) {
 	title = assetRenderer.getTitle(locale);
 }
 
-String summary = StringUtil.shorten(assetRenderer.getSummary(locale), abstractLength);
+String summary = StringUtil.shorten(assetRenderer.getSummary(locale), assetPublisherDisplayContext.getAbstractLength());
 
 PortalUtil.setPageSubtitle(title, request);
 PortalUtil.setPageDescription(summary, request);

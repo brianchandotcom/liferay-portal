@@ -177,4 +177,9 @@ public class JournalArticleImageLocalServiceImpl
 			groupId, articleId, version);
 	}
 
+	@Override
+	public int getArticleImagesCount(long groupId) throws SystemException {
+		return journalArticleImagePersistence.countByGroupId(groupId);
+	}
+
 }

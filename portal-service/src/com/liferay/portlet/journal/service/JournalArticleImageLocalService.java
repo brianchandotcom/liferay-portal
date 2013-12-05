@@ -296,4 +296,8 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> getArticleImages(
 		long groupId, java.lang.String articleId, double version)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticleImagesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

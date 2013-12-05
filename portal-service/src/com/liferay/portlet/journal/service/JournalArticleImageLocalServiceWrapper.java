@@ -367,6 +367,12 @@ public class JournalArticleImageLocalServiceWrapper
 			articleId, version);
 	}
 
+	@Override
+	public int getArticleImagesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleImageLocalService.getArticleImagesCount(groupId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

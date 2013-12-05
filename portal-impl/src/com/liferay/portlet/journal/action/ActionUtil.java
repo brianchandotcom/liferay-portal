@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,7 +25,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -277,14 +280,16 @@ public class ActionUtil {
 	}
 
 	public static Object[] getContentAndImages(
-			DDMStructure ddmStructure, Locale locale,
+			DDMStructure ddmStructure, long id, Locale locale,
+			Locale defaultLocale, boolean inherited,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		Fields fields = DDMUtil.getFields(
 			ddmStructure.getStructureId(), serviceContext);
 
-		Map<String, byte[]> images = getImages(fields, locale);
+		Map<String, byte[]> images = getImages(
+			fields, id, locale, defaultLocale, inherited);
 
 		return new Object[] {
 			JournalConverterUtil.getContent(ddmStructure, fields), images
@@ -433,7 +438,9 @@ public class ActionUtil {
 		JournalUtil.addRecentDDMTemplate(portletRequest, ddmTemplate);
 	}
 
-	protected static Map<String, byte[]> getImages(Fields fields, Locale locale)
+	protected static Map<String, byte[]> getImages(
+			Fields fields, long id, Locale locale, Locale defaultLocale,
+			boolean inherited)
 		throws Exception {
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
@@ -450,7 +457,7 @@ public class ActionUtil {
 			for (int i = 0; i < values.size(); i++) {
 				String content = (String)values.get(i);
 
-				if (content.equals("update")) {
+				if (content.equals("update") && !inherited) {
 					continue;
 				}
 
@@ -463,7 +470,33 @@ public class ActionUtil {
 				sb.append(StringPool.UNDERLINE);
 				sb.append(LanguageUtil.getLanguageId(locale));
 
-				images.put(sb.toString(), UnicodeFormatter.hexToBytes(content));
+				if (inherited) {
+					JournalArticle article =
+						JournalArticleLocalServiceUtil.fetchJournalArticle(id);
+
+					if (article != null) {
+						String elName =
+							field.getName() + StringPool.UNDERLINE + i;
+
+						String elLanguageId =
+							StringPool.UNDERLINE +
+							LocaleUtil.toLanguageId(defaultLocale);
+
+						long articleImageId = article.getArticleImageId(
+							StringPool.BLANK, elName, elLanguageId);
+
+						Image image = ImageLocalServiceUtil.fetchImage(
+							articleImageId);
+
+						if (image != null) {
+							images.put(sb.toString(), image.getTextObj());
+						}
+					}
+				}
+				else {
+					images.put(
+						sb.toString(), UnicodeFormatter.hexToBytes(content));
+				}
 			}
 		}
 

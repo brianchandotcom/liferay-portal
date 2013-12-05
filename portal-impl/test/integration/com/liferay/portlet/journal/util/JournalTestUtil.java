@@ -307,13 +307,13 @@ public class JournalTestUtil {
 
 		return addArticleWithXMLContent(
 			folderId, classNameId, xml, ddmStructureKey, ddmTemplateKey,
-			defaultLocale, serviceContext);
+			defaultLocale, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
 			long folderId, long classNameId, String xml, String ddmStructureKey,
 			String ddmTemplateKey, Locale defaultLocale,
-			ServiceContext serviceContext)
+			Map<String, byte[]> images, ServiceContext serviceContext)
 		throws Exception {
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
@@ -325,7 +325,18 @@ public class JournalTestUtil {
 			folderId, classNameId, 0, StringPool.BLANK, true, 0, titleMap, null,
 			xml, "general", ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965,
 			0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
-			null, null, null, serviceContext);
+			null, images, null, serviceContext);
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
+			long folderId, long classNameId, String xml, String ddmStructureKey,
+			String ddmTemplateKey, Locale defaultLocale,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticleWithXMLContent(
+			folderId, classNameId, xml, ddmStructureKey, ddmTemplateKey,
+			defaultLocale, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -337,6 +348,18 @@ public class JournalTestUtil {
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, xml, ddmStructureKey,
 			ddmTemplateKey, LocaleUtil.getSiteDefault());
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
+			long parentFolderId, String xml, String ddmStructureKey,
+			String ddmTemplateKey, Map<String, byte[]> images,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticleWithXMLContent(
+			parentFolderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT, xml,
+			ddmStructureKey, ddmTemplateKey, LocaleUtil.getSiteDefault(),
+			images, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(

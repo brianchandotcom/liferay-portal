@@ -32,6 +32,7 @@ import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -64,6 +65,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		JournalFolder folder = getFolder();
 
 		return folder.buildTreePath();
+	}
+
+	@Override
+	public long getArticleImageId(
+			String elInstanceId, String elName, String languageId)
+		throws SystemException {
+
+		return JournalArticleImageLocalServiceUtil.getArticleImageId(
+			getGroupId(), getArticleId(), getVersion(), elInstanceId, elName,
+			languageId);
 	}
 
 	@Override

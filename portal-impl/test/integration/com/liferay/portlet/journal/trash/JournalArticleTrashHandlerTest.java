@@ -15,7 +15,12 @@
 package com.liferay.portlet.journal.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
@@ -27,10 +32,15 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
@@ -39,8 +49,14 @@ import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
 
-import java.util.List;
+import java.io.InputStream;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -54,6 +70,58 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
+
+	@Test
+	@Transactional
+	public void testArticleImages() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		int initialArticleImagesCount =
+			JournalArticleImageLocalServiceUtil.getArticleImagesCount(
+				group.getGroupId());
+
+		String xsd = StringUtil.read(
+			getFile("test-ddm-structure-image-field.xml"));
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
+			xsd);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
+
+		String content = StringUtil.read(
+			getFile("test-journal-content-image-field.xml"));
+
+		byte[] fileBytes = FileUtil.getBytes(getFile("liferay.png"));
+
+		Map<String, byte[]> images = new HashMap<String, byte[]>();
+
+		images.put("_image_1_0_en_US", fileBytes);
+
+		baseModel = JournalTestUtil.addArticleWithXMLContent(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, content,
+			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
+			images, serviceContext);
+
+		Assert.assertEquals(
+			initialArticleImagesCount + 1,
+			JournalArticleImageLocalServiceUtil.getArticleImagesCount(
+				group.getGroupId()));
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
+
+		Assert.assertEquals(
+			initialArticleImagesCount,
+			JournalArticleImageLocalServiceUtil.getArticleImagesCount(
+				group.getGroupId()));
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
@@ -143,6 +211,17 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return JournalArticleLocalServiceUtil.getArticles(
 			folder.getGroupId(), folder.getFolderId());
+	}
+
+	protected InputStream getFile(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portlet/journal/dependencies/" + fileName);
+
+		return inputStream;
 	}
 
 	@Override

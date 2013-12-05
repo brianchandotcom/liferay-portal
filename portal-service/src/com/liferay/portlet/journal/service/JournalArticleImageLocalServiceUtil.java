@@ -348,6 +348,11 @@ public class JournalArticleImageLocalServiceUtil {
 		return getService().getArticleImages(groupId, articleId, version);
 	}
 
+	public static int getArticleImagesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticleImagesCount(groupId);
+	}
+
 	public static JournalArticleImageLocalService getService() {
 		if (_service == null) {
 			_service = (JournalArticleImageLocalService)PortalBeanLocatorUtil.locate(JournalArticleImageLocalService.class.getName());

@@ -320,7 +320,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				</liferay-portlet:renderURL>
 
 				<%
-				String taglibEditArticleURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + latestArticle.getTitle(locale) + "', uri:'" + HtmlUtil.escapeURL(editArticleURL.toString()) + "'});";
+				String taglibEditArticleURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(latestArticle.getTitle(locale)) + "', uri:'" + HtmlUtil.escapeURL(editArticleURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon
@@ -343,7 +343,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				</liferay-portlet:renderURL>
 
 				<%
-				String taglibEditTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + ddmTemplate.getName(locale) + "', uri:'" + HtmlUtil.escapeURL(editTemplateURL.toString()) + "'});";
+				String taglibEditTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(ddmTemplate.getName(locale)) + "', uri:'" + HtmlUtil.escapeURL(editTemplateURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon

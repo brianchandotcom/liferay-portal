@@ -1155,8 +1155,7 @@ public class WebDriverToSeleniumBridge
 
 		for (int second = 0;; second++) {
 			if (second >= TestPropsValues.TIMEOUT_IMPLICIT_WAIT) {
-				BaseTestCase.fail(
-					"Timeout: unable to open url \"" + targetURL + "\"");
+				break;
 			}
 
 			try {

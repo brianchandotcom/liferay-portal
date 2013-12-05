@@ -38,16 +38,12 @@ import com.liferay.portal.UserEmailAddressException;
 import com.liferay.portal.UserIdException;
 import com.liferay.portal.UserLockoutException;
 import com.liferay.portal.UserPasswordException;
-import com.liferay.portal.UserPortraitSizeException;
-import com.liferay.portal.UserPortraitTypeException;
 import com.liferay.portal.UserReminderQueryException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.UserSmsException;
 import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -130,16 +126,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 import com.liferay.util.PwdGenerator;
 
-import java.awt.image.RenderedImage;
-
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -4671,7 +4663,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		user = updatePortrait(user, bytes);
+		PortalUtil.updateImageId(
+			user, true, bytes, "portraitId",
+			PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE),
+			PropsValues.USERS_IMAGE_MAX_HEIGHT,
+			PropsValues.USERS_IMAGE_MAX_WIDTH);
 
 		return userPersistence.update(user);
 	}
@@ -4838,13 +4834,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String newPassword2, boolean passwordReset,
 			String reminderQueryQuestion, String reminderQueryAnswer,
 			String screenName, String emailAddress, long facebookId,
-			String openId, String languageId, String timeZoneId,
-			String greeting, String comments, String firstName,
-			String middleName, String lastName, int prefixId, int suffixId,
-			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String aimSn, String facebookSn, String icqSn,
-			String jabberSn, String msnSn, String mySpaceSn, String skypeSn,
-			String twitterSn, String ymSn, String jobTitle, long[] groupIds,
+			String openId, boolean portrait, byte[] portraitBytes,
+			String languageId, String timeZoneId, String greeting,
+			String comments, String firstName, String middleName,
+			String lastName, int prefixId, int suffixId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+			String aimSn, String facebookSn, String icqSn, String jabberSn,
+			String msnSn, String mySpaceSn, String skypeSn, String twitterSn,
+			String ymSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			ServiceContext serviceContext)
@@ -4948,6 +4945,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setOpenId(openId);
+
+		PortalUtil.updateImageId(
+			user, portrait, portraitBytes, "portraitId",
+			PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE),
+			PropsValues.USERS_IMAGE_MAX_HEIGHT,
+			PropsValues.USERS_IMAGE_MAX_WIDTH);
+
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);
 		user.setGreeting(greeting);
@@ -5091,6 +5095,99 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 
 		return user;
+	}
+
+	/**
+	 * Updates the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  oldPassword the user's old password
+	 * @param  newPassword1 the user's new password (optionally
+	 *         <code>null</code>)
+	 * @param  newPassword2 the user's new password confirmation (optionally
+	 *         <code>null</code>)
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they login
+	 * @param  reminderQueryQuestion the user's new password reset question
+	 * @param  reminderQueryAnswer the user's new password reset answer
+	 * @param  screenName the user's new screen name
+	 * @param  emailAddress the user's new email address
+	 * @param  facebookId the user's new Facebook ID
+	 * @param  openId the user's new OpenID
+	 * @param  languageId the user's new language ID
+	 * @param  timeZoneId the user's new time zone ID
+	 * @param  greeting the user's new greeting
+	 * @param  comments the user's new comments
+	 * @param  firstName the user's new first name
+	 * @param  middleName the user's new middle name
+	 * @param  lastName the user's new last name
+	 * @param  prefixId the user's new name prefix ID
+	 * @param  suffixId the user's new name suffix ID
+	 * @param  male whether user is male
+	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
+	 *         for January)
+	 * @param  birthdayDay the user's new birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  smsSn the user's new SMS screen name
+	 * @param  aimSn the user's new AIM screen name
+	 * @param  facebookSn the user's new Facebook screen name
+	 * @param  icqSn the user's new ICQ screen name
+	 * @param  jabberSn the user's new Jabber screen name
+	 * @param  msnSn the user's new MSN screen name
+	 * @param  mySpaceSn the user's new MySpace screen name
+	 * @param  skypeSn the user's new Skype screen name
+	 * @param  twitterSn the user's new Twitter screen name
+	 * @param  ymSn the user's new Yahoo! Messenger screen name
+	 * @param  jobTitle the user's new job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the user's roles
+	 * @param  userGroupRoles the user user's group roles
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the new information was invalid
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #updateUser(long, String, String, String, boolean, String,
+	 *             String, String, String, long, String, String, String, String,
+	 *             String, String, String, String, int, int, boolean, int, int,
+	 *             int, String, String, String, String, String, String, String,
+	 *             String, String, String, String, long[], long[], long[],
+	 *             java.util.List, long[], boolean, byte[], ServiceContext)}
+	 */
+	@Override
+	@SuppressWarnings("deprecation")
+	public User updateUser(
+			long userId, String oldPassword, String newPassword1,
+			String newPassword2, boolean passwordReset,
+			String reminderQueryQuestion, String reminderQueryAnswer,
+			String screenName, String emailAddress, long facebookId,
+			String openId, String languageId, String timeZoneId,
+			String greeting, String comments, String firstName,
+			String middleName, String lastName, int prefixId, int suffixId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String smsSn, String aimSn, String facebookSn, String icqSn,
+			String jabberSn, String msnSn, String mySpaceSn, String skypeSn,
+			String twitterSn, String ymSn, String jobTitle, long[] groupIds,
+			long[] organizationIds, long[] roleIds,
+			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateUser(
+			userId, oldPassword, newPassword1, newPassword2, passwordReset,
+			reminderQueryQuestion, reminderQueryAnswer, screenName,
+			emailAddress, facebookId, openId, true, null, languageId,
+			timeZoneId, greeting, comments, firstName, middleName, lastName,
+			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
+			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupRoles, userGroupIds, serviceContext);
 	}
 
 	/**
@@ -5799,52 +5896,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		PermissionCacheUtil.clearCache();
-	}
-
-	protected User updatePortrait(User user, byte[] bytes)
-		throws PortalException, SystemException {
-
-		long imageMaxSize = PrefsPropsUtil.getLong(
-			PropsKeys.USERS_IMAGE_MAX_SIZE);
-
-		if ((imageMaxSize > 0) &&
-			((bytes == null) || (bytes.length > imageMaxSize))) {
-
-			throw new UserPortraitSizeException();
-		}
-
-		long portraitId = user.getPortraitId();
-
-		if (portraitId <= 0) {
-			portraitId = counterLocalService.increment();
-
-			user.setPortraitId(portraitId);
-		}
-
-		try {
-			ImageBag imageBag = ImageToolUtil.read(bytes);
-
-			RenderedImage renderedImage = imageBag.getRenderedImage();
-
-			if (renderedImage == null) {
-				throw new UserPortraitTypeException();
-			}
-
-			renderedImage = ImageToolUtil.scale(
-				renderedImage, PropsValues.USERS_IMAGE_MAX_HEIGHT,
-				PropsValues.USERS_IMAGE_MAX_WIDTH);
-
-			String contentType = imageBag.getType();
-
-			imageLocalService.updateImage(
-				portraitId,
-				ImageToolUtil.getBytes(renderedImage, contentType));
-		}
-		catch (IOException ioe) {
-			throw new ImageSizeException(ioe);
-		}
-
-		return user;
 	}
 
 	protected void updateUserGroupRoles(

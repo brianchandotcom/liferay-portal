@@ -169,10 +169,10 @@ public class EditCompanyAction extends PortletAction {
 			actionRequest, "settings--");
 
 		CompanyServiceUtil.updateCompany(
-			companyId, virtualHostname, mx, homeURL, name, legalName, legalId,
-			legalType, sicCode, tickerSymbol, industry, type, size, languageId,
-			timeZoneId, addresses, emailAddresses, phones, websites,
-			properties);
+			companyId, virtualHostname, mx, homeURL, true, null, name,
+			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
+			type, size, languageId, timeZoneId, addresses, emailAddresses,
+			phones, websites, properties);
 
 		PortalUtil.resetCDNHosts();
 	}

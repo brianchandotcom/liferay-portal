@@ -535,7 +535,8 @@ public class OrganizationServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
 	java.util.List, java.util.List, java.util.List,
-	java.util.List, java.util.List, ServiceContext)}
+	java.util.List, java.util.List, boolean, byte[],
+	ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
@@ -628,6 +629,60 @@ public class OrganizationServiceUtil {
 	permission to update the organization information, or if the new
 	information was invalid
 	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Organization updateOrganization(
+		long organizationId, long parentOrganizationId, java.lang.String name,
+		java.lang.String type, long regionId, long countryId, int statusId,
+		java.lang.String comments, boolean logo, byte[] logoBytes,
+		boolean site,
+		java.util.List<com.liferay.portal.model.Address> addresses,
+		java.util.List<com.liferay.portal.model.EmailAddress> emailAddresses,
+		java.util.List<com.liferay.portal.model.OrgLabor> orgLabors,
+		java.util.List<com.liferay.portal.model.Phone> phones,
+		java.util.List<com.liferay.portal.model.Website> websites,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateOrganization(organizationId, parentOrganizationId,
+			name, type, regionId, countryId, statusId, comments, logo,
+			logoBytes, site, addresses, emailAddresses, orgLabors, phones,
+			websites, serviceContext);
+	}
+
+	/**
+	* Updates the organization with additional parameters.
+	*
+	* @param organizationId the primary key of the organization
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param name the organization's name
+	* @param type the organization's type
+	* @param regionId the primary key of the organization's region
+	* @param countryId the primary key of the organization's country
+	* @param statusId the organization's workflow status
+	* @param comments the comments about the organization
+	* @param site whether the organization is to be associated with a main
+	site
+	* @param addresses the organization's addresses
+	* @param emailAddresses the organization's email addresses
+	* @param orgLabors the organization's hours of operation
+	* @param phones the organization's phone numbers
+	* @param websites the organization's websites
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the organization, and merge expando bridge attributes
+	for the organization.
+	* @return the organization
+	* @throws PortalException if an organization or parent organization with
+	the primary key could not be found, if the user did not have
+	permission to update the organization information, or if the new
+	information was invalid
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(
+	long, long, String, String, long, long, int, String, boolean,
+	java.util.List, java.util.List, java.util.List, java.util.List,
+	java.util.List, boolean, byte[], ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,

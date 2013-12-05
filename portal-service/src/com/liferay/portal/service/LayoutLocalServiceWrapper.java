@@ -1608,7 +1608,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		java.lang.Boolean iconImage, byte[] iconBytes,
+		boolean iconImage, byte[] iconBytes,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

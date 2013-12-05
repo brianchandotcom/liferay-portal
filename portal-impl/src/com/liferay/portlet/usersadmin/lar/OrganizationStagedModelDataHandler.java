@@ -182,7 +182,8 @@ public class OrganizationStagedModelDataHandler
 					parentOrganizationId, organization.getName(),
 					organization.getType(), organization.getRegionId(),
 					organization.getCountryId(), organization.getStatusId(),
-					organization.getComments(), false, serviceContext);
+					organization.getComments(), true, null, false,
+					serviceContext);
 		}
 
 		importAddresses(portletDataContext, organization, importedOrganization);

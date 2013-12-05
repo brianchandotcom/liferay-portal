@@ -998,8 +998,7 @@ public class EditLayoutsAction extends PortletAction {
 			layout = LayoutServiceUtil.updateLayout(
 				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-				hidden, friendlyURLMap, Boolean.valueOf(iconImage), iconBytes,
-				serviceContext);
+				hidden, friendlyURLMap, iconImage, iconBytes, serviceContext);
 
 			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
 

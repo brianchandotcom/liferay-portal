@@ -293,7 +293,6 @@
 			<hint name="display-width">150</hint>
 			<hint name="max-length">255</hint>
 		</field>
-		<field name="iconImage" type="boolean" />
 		<field name="iconImageId" type="long" />
 		<field name="themeId" type="String" />
 		<field name="colorSchemeId" type="String" />

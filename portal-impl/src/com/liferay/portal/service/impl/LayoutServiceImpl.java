@@ -1399,7 +1399,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
-			Map<Locale, String> friendlyURLMap, Boolean iconImage,
+			Map<Locale, String> friendlyURLMap, boolean iconImage,
 			byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 

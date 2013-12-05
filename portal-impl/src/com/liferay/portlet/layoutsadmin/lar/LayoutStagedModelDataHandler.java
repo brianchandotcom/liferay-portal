@@ -484,13 +484,12 @@ public class LayoutStagedModelDataHandler
 		importedLayout.setFriendlyURL(
 			getUniqueFriendlyURL(
 				portletDataContext, importedLayout, friendlyURL));
-		importedLayout.setIconImage(false);
 
-		if (layout.isIconImage()) {
+		if (layout.getIconImageId() > 0) {
 			importLayoutIconImage(
 				portletDataContext, importedLayout, layoutElement);
 		}
-		else {
+		else if (importedLayout.getIconImageId() > 0) {
 			ImageLocalServiceUtil.deleteImage(importedLayout.getIconImageId());
 		}
 
@@ -838,8 +837,6 @@ public class LayoutStagedModelDataHandler
 			iconImagePath);
 
 		if (ArrayUtil.isNotEmpty(iconBytes)) {
-			importedLayout.setIconImage(true);
-
 			if (importedLayout.getIconImageId() == 0) {
 				long iconImageId = CounterLocalServiceUtil.increment();
 

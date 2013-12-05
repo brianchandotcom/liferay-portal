@@ -205,13 +205,13 @@ public class MembershipPolicyTestUtil {
 		UserServiceUtil.updateUser(
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
-			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
-			comments, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
-			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
-			jobTitle, siteIds, organizationIds, roleIds, userGroupRoles,
-			userGroupIds, addresses, emailAddresses, phones, websites,
-			announcementsDelivers, serviceContext);
+			emailAddress, facebookId, openId, false, null, languageId,
+			timeZoneId, greeting, comments, firstName, middleName, lastName,
+			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
+			skypeSn, twitterSn, ymSn, jobTitle, siteIds, organizationIds,
+			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
+			phones, websites, announcementsDelivers, serviceContext);
 	}
 
 	protected static Map<String, Serializable> addExpandoMap(Class<?> clazz)

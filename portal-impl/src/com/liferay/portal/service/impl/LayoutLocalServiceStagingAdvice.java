@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -39,7 +38,6 @@ import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
@@ -52,6 +50,7 @@ import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -239,7 +238,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
-			Map<Locale, String> friendlyURLMap, Boolean iconImage,
+			Map<Locale, String> friendlyURLMap, boolean iconImage,
 			byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -292,19 +291,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		originalLayout.setHidden(hidden);
 		originalLayout.setFriendlyURL(friendlyURL);
 
-		if (iconImage != null) {
-			layoutRevision.setIconImage(iconImage.booleanValue());
-
-			if (iconImage.booleanValue()) {
-				long iconImageId = layoutRevision.getIconImageId();
-
-				if (iconImageId <= 0) {
-					iconImageId = CounterLocalServiceUtil.increment();
-
-					layoutRevision.setIconImageId(iconImageId);
-				}
-			}
-		}
+		PortalUtil.updateImageId(
+			layoutRevision, iconImage, iconBytes, "iconImageId", 0, 0, 0);
 
 		boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
 			serviceContext, "layoutPrototypeLinkEnabled", true);
@@ -338,15 +326,6 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			layoutRevision.getColorSchemeId(), layoutRevision.getWapThemeId(),
 			layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);
-
-		// Icon
-
-		if (iconImage != null) {
-			if (ArrayUtil.isNotEmpty(iconBytes)) {
-				ImageLocalServiceUtil.updateImage(
-					layoutRevision.getIconImageId(), iconBytes);
-			}
-		}
 
 		return layout;
 	}

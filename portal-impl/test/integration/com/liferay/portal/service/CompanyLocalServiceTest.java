@@ -300,8 +300,8 @@ public class CompanyLocalServiceTest {
 			try {
 				company = CompanyLocalServiceUtil.updateCompany(
 					company.getCompanyId(), company.getVirtualHostname(),
-					company.getMx(), company.getHomeURL(), accountName,
-					account.getLegalName(), account.getLegalId(),
+					company.getMx(), company.getHomeURL(), true, null,
+					accountName, account.getLegalName(), account.getLegalId(),
 					account.getLegalType(), account.getSicCode(),
 					account.getTickerSymbol(), account.getIndustry(),
 					account.getType(), account.getSize());

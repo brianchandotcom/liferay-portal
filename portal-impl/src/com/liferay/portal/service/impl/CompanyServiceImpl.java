@@ -284,9 +284,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	@Override
 	public Company updateCompany(
 			long companyId, String virtualHost, String mx, String homeURL,
-			String name, String legalName, String legalId, String legalType,
-			String sicCode, String tickerSymbol, String industry, String type,
-			String size)
+			boolean logo, byte[] logoBytes, String name, String legalName,
+			String legalId, String legalType, String sicCode,
+			String tickerSymbol, String industry, String type, String size)
 		throws PortalException, SystemException {
 
 		if (!roleLocalService.hasUserRole(
@@ -296,8 +296,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.updateCompany(
-			companyId, virtualHost, mx, homeURL, name, legalName, legalId,
-			legalType, sicCode, tickerSymbol, industry, type, size);
+			companyId, virtualHost, mx, homeURL, logo, logoBytes, name,
+			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
+			type, size);
 	}
 
 	/**
@@ -339,17 +340,18 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	@Override
 	public Company updateCompany(
 			long companyId, String virtualHost, String mx, String homeURL,
-			String name, String legalName, String legalId, String legalType,
-			String sicCode, String tickerSymbol, String industry, String type,
-			String size, String languageId, String timeZoneId,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			UnicodeProperties properties)
+			boolean logo, byte[] logoBytes, String name, String legalName,
+			String legalId, String legalType, String sicCode,
+			String tickerSymbol, String industry, String type, String size,
+			String languageId, String timeZoneId, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<Phone> phones,
+			List<Website> websites, UnicodeProperties properties)
 		throws PortalException, SystemException {
 
 		Company company = updateCompany(
-			companyId, virtualHost, mx, homeURL, name, legalName, legalId,
-			legalType, sicCode, tickerSymbol, industry, type, size);
+			companyId, virtualHost, mx, homeURL, logo, logoBytes, name,
+			legalName, legalId, legalType, sicCode, tickerSymbol, industry,
+			type, size);
 
 		updateDisplay(company.getCompanyId(), languageId, timeZoneId);
 
@@ -368,6 +370,115 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			Account.class.getName(), company.getAccountId(), websites);
 
 		return company;
+	}
+
+	/**
+	 * Updates the company with additional account information.
+	 *
+	 * @param      companyId the primary key of the company
+	 * @param      virtualHost the company's virtual host name
+	 * @param      mx the company's mail domain
+	 * @param      homeURL the company's home URL (optionally <code>null</code>)
+	 * @param      name the company's account name (optionally
+	 *             <code>null</code>)
+	 * @param      legalName the company's account legal name (optionally
+	 *             <code>null</code>)
+	 * @param      legalId the company's account legal ID (optionally
+	 *             <code>null</code>)
+	 * @param      legalType the company's account legal type (optionally
+	 *             <code>null</code>)
+	 * @param      sicCode the company's account SIC code (optionally
+	 *             <code>null</code>)
+	 * @param      tickerSymbol the company's account ticker symbol (optionally
+	 *             <code>null</code>)
+	 * @param      industry the the company's account industry (optionally
+	 *             <code>null</code>)
+	 * @param      type the company's account type (optionally
+	 *             <code>null</code>)
+	 * @param      size the company's account size (optionally
+	 *             <code>null</code>)
+	 * @return     the the company with the primary key
+	 * @throws     PortalException if a company with the primary key could not
+	 *             be found or if the new information was invalid or if the user
+	 *             was not an administrator
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
+	 *             String, String, boolean, byte[], String, String, String,
+	 *             String, String, String, String, String, String)}
+	 */
+	@Override
+	public Company updateCompany(
+			long companyId, String virtualHost, String mx, String homeURL,
+			String name, String legalName, String legalId, String legalType,
+			String sicCode, String tickerSymbol, String industry, String type,
+			String size)
+		throws PortalException, SystemException {
+
+		return updateCompany(
+			companyId, virtualHost, mx, homeURL, true, null, name, legalName,
+			legalId, legalType, sicCode, tickerSymbol, industry, type, size);
+	}
+
+	/**
+	 * Updates the company with addition information.
+	 *
+	 * @param      companyId the primary key of the company
+	 * @param      virtualHost the company's virtual host name
+	 * @param      mx the company's mail domain
+	 * @param      homeURL the company's home URL (optionally <code>null</code>)
+	 * @param      name the company's account name (optionally
+	 *             <code>null</code>)
+	 * @param      legalName the company's account legal name (optionally
+	 *             <code>null</code>)
+	 * @param      legalId the company's accout legal ID (optionally
+	 *             <code>null</code>)
+	 * @param      legalType the company's account legal type (optionally
+	 *             <code>null</code>)
+	 * @param      sicCode the company's account SIC code (optionally
+	 *             <code>null</code>)
+	 * @param      tickerSymbol the company's account ticker symbol (optionally
+	 *             <code>null</code>)
+	 * @param      industry the the company's account industry (optionally
+	 *             <code>null</code>)
+	 * @param      type the company's account type (optionally
+	 *             <code>null</code>)
+	 * @param      size the company's account size (optionally
+	 *             <code>null</code>)
+	 * @param      languageId the ID of the company's default user's language
+	 * @param      timeZoneId the ID of the company's default user's time zone
+	 * @param      addresses the company's addresses
+	 * @param      emailAddresses the company's email addresses
+	 * @param      phones the company's phone numbers
+	 * @param      websites the company's websites
+	 * @param      properties the company's properties
+	 * @return     the company with the primary key
+	 * @throws     PortalException the company with the primary key could not be
+	 *             found or if the new information was invalid or if the user
+	 *             was not an administrator
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
+	 *             String, String, boolean, byte[], String, String, String,
+	 *             String, String, String, String, String, String, String,
+	 *             String, java.util.List, java.util.List, java.util.List,
+	 *             java.util.List, UnicodeProperties)}
+	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public Company updateCompany(
+			long companyId, String virtualHost, String mx, String homeURL,
+			String name, String legalName, String legalId, String legalType,
+			String sicCode, String tickerSymbol, String industry, String type,
+			String size, String languageId, String timeZoneId,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<Phone> phones, List<Website> websites,
+			UnicodeProperties properties)
+		throws PortalException, SystemException {
+
+		return updateCompany(
+			companyId, virtualHost, mx, homeURL, name, legalName, legalId,
+			legalType, sicCode, tickerSymbol, industry, type, size, languageId,
+			timeZoneId, addresses, emailAddresses, phones, websites,
+			properties);
 	}
 
 	/**

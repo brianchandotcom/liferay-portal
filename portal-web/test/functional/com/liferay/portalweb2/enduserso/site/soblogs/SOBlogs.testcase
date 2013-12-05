@@ -52,20 +52,20 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="BlogsEntry#viewPGDetails" />
+		<execute macro="BlogsEntry#viewDetailsPG" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="0 Comments" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="AVERAGE" value1="Average (0 Votes)" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="BlogsEntry#viewPGDetails" />
+		<execute macro="BlogsEntry#viewDetailsPG" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="2 Views," />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="BlogsEntry#viewPGDetails" />
+		<execute macro="BlogsEntry#viewDetailsPG" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="3 Views," />
 
@@ -224,7 +224,7 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_COMMENT_1" value1="0 Comments" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 
-		<execute macro="BlogsEntry#viewPGDetails">
+		<execute macro="BlogsEntry#viewDetailsPG">
 			<var name="entryAuthorFirstName" value="${userFirstName}" />
 			<var name="entryAuthorLastName" value="${userLastName}" />
 			<var name="entryAuthorMiddleName" value="${userMiddleName}" />
@@ -253,7 +253,7 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_COMMENT_1" value1="0 Comments" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_AVERAGE_RATING" value1="Average (0 Votes)" />
 
-		<execute macro="BlogsEntry#viewPGDetails">
+		<execute macro="BlogsEntry#viewDetailsPG">
 			<var name="entryAuthorFirstName" value="${userFirstName}" />
 			<var name="entryAuthorLastName" value="${userLastName}" />
 			<var name="entryAuthorMiddleName" value="${userMiddleName}" />

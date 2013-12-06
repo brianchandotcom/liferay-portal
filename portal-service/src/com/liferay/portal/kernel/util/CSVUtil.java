@@ -28,11 +28,7 @@ public class CSVUtil {
 
 		Object[] array = (Object[])obj;
 
-		if (array.length > 0) {
-			return encode(String.valueOf(array[0]));
-		}
-
-		return null;
+		return encode(StringUtil.merge(array));
 	}
 
 	public static String encode(String s) {

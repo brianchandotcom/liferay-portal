@@ -90,21 +90,27 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#viewPG">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 	</command>
 
@@ -128,11 +134,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#addInvalidURLPG">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURLInvalid" value="${bookmarkURLInvalid}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 	</command>
 
@@ -156,20 +165,26 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#deletePG">
 			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 	</command>
 
@@ -219,15 +234,22 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Bookmark#editPG">
@@ -235,7 +257,6 @@
 			<var name="bookmarkNameEdit" value="${bookmarkNameEdit}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 			<var name="bookmarkURLEdit" value="${bookmarkURLEdit}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 	</command>
 
@@ -285,11 +306,14 @@
 			<var name="folderName" value="${folderName1}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName1}" />
+		</execute>
+
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="folderName" value="${folderName1}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -353,41 +377,53 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkDescription" value="${bookmarkDescription}" />
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Bookmark#searchPG">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkSearch" value="Entry" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Bookmark#searchPG">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkSearch" value="Null" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
 		<execute macro="Bookmark#searchPG">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkSearch" value="Quotes" />
-			<var name="folderName" value="${folderName}" />
 		</execute>
 	</command>
 </definition>

@@ -150,6 +150,12 @@
 		<execute action="CPBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${editSubfolderDescription}" />
 	</command>
 
+	<command name="gotoPG">
+		<var name="key_folderName" value="${folderName}" />
+
+		<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
+	</command>
+
 	<command name="mergeSubfolderToFolderCP">
 		<var name="key_folderName" value="${folderName}" />
 

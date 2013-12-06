@@ -44,16 +44,6 @@
 	</command>
 
 	<command name="addInvalidURLPG">
-		<if>
-			<isset var="folderName" />
-			<then>
-				<var name="key_folderName" value="${folderName}" />
-
-				<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-			</then>
-		</if>
-
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute action="PGBookmarksFolder#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
@@ -89,16 +79,6 @@
 	</command>
 
 	<command name="addPG">
-		<if>
-			<isset var="folderName" />
-			<then>
-				<var name="key_folderName" value="${folderName}" />
-
-				<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-			</then>
-		</if>
-
 		<execute action="PGBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
 
 		<if>
@@ -155,16 +135,6 @@
 	</command>
 
 	<command name="deletePG">
-		<if>
-			<isset var="folderName" />
-			<then>
-				<var name="key_folderName" value="${folderName}" />
-
-				<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-			</then>
-		</if>
-
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
@@ -206,16 +176,6 @@
 	</command>
 
 	<command name="editPG">
-		<if>
-			<isset var="folderName" />
-			<then>
-				<var name="key_folderName" value="${folderName}" />
-
-				<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-			</then>
-		</if>
-
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
@@ -349,16 +309,6 @@
 
 	<command name="searchPG">
 		<if>
-			<isset var="folderName" />
-			<then>
-				<var name="key_folderName" value="${folderName}" />
-
-				<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${bookmarkSearch}" arg2="Entry" />
 			<then>
 				<var name="key_bookmarkName" value="${bookmarkName}" />
@@ -426,16 +376,6 @@
 	</command>
 
 	<command name="viewPG">
-		<if>
-			<isset var="folderName" />
-			<then>
-				<var name="key_folderName" value="${folderName}" />
-
-				<execute action="PGBookmarks#assertTextEquals" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-				<execute action="PGBookmarks#assertClick" locator-key1="FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-			</then>
-		</if>
-
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute action="PGBookmarks#assertTextEquals" locator-key1="BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />

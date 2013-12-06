@@ -28,10 +28,6 @@ public class CSVUtil {
 
 		Object[] array = (Object[])obj;
 
-		if (array.length == 0) {
-			return null;
-		}
-
 		return encode(StringUtil.merge(array));
 	}
 

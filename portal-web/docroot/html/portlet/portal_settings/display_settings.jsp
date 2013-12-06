@@ -112,8 +112,8 @@
 
 	<liferay-ui:logo-selector
 		currentLogoURL='<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>'
+		defaultLogo="<%= company.getLogoId() == 0 %>"
 		defaultLogoURL='<%= themeDisplay.getPathImage() + "/company_logo?img_id=0" %>'
-		imageId="<%= company.getLogoId() %>"
 		logoDisplaySelector=".company-logo"
 		tempImageFileName="<%= String.valueOf(themeDisplay.getCompanyId()) %>"
 	/>

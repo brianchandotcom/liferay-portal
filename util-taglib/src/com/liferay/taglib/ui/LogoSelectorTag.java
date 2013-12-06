@@ -30,16 +30,16 @@ public class LogoSelectorTag extends IncludeTag {
 		_currentLogoURL = currentLogoURL;
 	}
 
+	public void setDefaultLogo(boolean defaultLogo) {
+		_defaultLogo = defaultLogo;
+	}
+
 	public void setDefaultLogoURL(String defaultLogoURL) {
 		_defaultLogoURL = defaultLogoURL;
 	}
 
 	public void setEditLogoFn(String editLogoFn) {
 		_editLogoFn = editLogoFn;
-	}
-
-	public void setImageId(long imageId) {
-		_imageId = imageId;
 	}
 
 	public void setLogoDisplaySelector(String logoDisplaySelector) {
@@ -61,9 +61,9 @@ public class LogoSelectorTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_currentLogoURL = null;
+		_defaultLogo = false;
 		_defaultLogoURL = null;
 		_editLogoFn = null;
-		_imageId = 0;
 		_logoDisplaySelector = null;
 		_maxFileSize = 0;
 		_showBackground = true;
@@ -80,11 +80,12 @@ public class LogoSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:logo-selector:currentLogoURL", _currentLogoURL);
 		request.setAttribute(
+			"liferay-ui:logo-selector:defaultLogo",
+			String.valueOf(_defaultLogo));
+		request.setAttribute(
 			"liferay-ui:logo-selector:defaultLogoURL", _defaultLogoURL);
 		request.setAttribute(
 			"liferay-ui:logo-selector:editLogoFn", _editLogoFn);
-		request.setAttribute(
-			"liferay-ui:logo-selector:imageId", String.valueOf(_imageId));
 		request.setAttribute(
 			"liferay-ui:logo-selector:logoDisplaySelector",
 			_logoDisplaySelector);
@@ -114,9 +115,9 @@ public class LogoSelectorTag extends IncludeTag {
 		"/html/taglib/ui/logo_selector/page.jsp";
 
 	private String _currentLogoURL;
+	private boolean _defaultLogo;
 	private String _defaultLogoURL;
 	private String _editLogoFn;
-	private long _imageId;
 	private String _logoDisplaySelector;
 	private long _maxFileSize;
 	private boolean _showBackground = true;

@@ -130,8 +130,8 @@ if (selContact != null) {
 					<c:when test='<%= UsersAdminUtil.hasUpdateFieldPermission(selUser, "portrait") %>'>
 						<liferay-ui:logo-selector
 							currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
+							defaultLogo="<%= selUser.getPortraitId() == 0 %>"
 							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0) %>"
-							imageId="<%= selUser.getPortraitId() %>"
 							logoDisplaySelector=".user-logo"
 							maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>"
 							tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"

@@ -49,10 +49,10 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 	<aui:field-wrapper helpMessage="this-icon-will-be-shown-in-the-navigation-menu" label="icon" name="iconFileName">
 		<liferay-ui:logo-selector
-			currentLogoURL='<%= themeDisplay.getPathThemeImages() + (selLayout.getIconImageId() == 0 ? "/spacer.png" : "/logo?img_id=" + selLayout.getIconImageId() + "&t=" + WebServerServletTokenUtil.getToken(selLayout.getIconImageId())) %>'
+			currentLogoURL='<%= themeDisplay.getPathImage() + (selLayout.getIconImageId() == 0 ? "/spacer.png" : "/logo?img_id=" + selLayout.getIconImageId() + "&t=" + WebServerServletTokenUtil.getToken(selLayout.getIconImageId())) %>'
+			defaultLogo="<%= selLayout.getIconImageId() == 0 %>"
 			defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/spacer.png" %>'
 			editLogoFn='<%= liferayPortletResponse.getNamespace() + "editLayoutLogo" %>'
-			imageId="<%= selLayout.isIconImage() ? selLayout.getIconImageId() : 0 %>"
 			logoDisplaySelector='<%= ".layout-logo-" + selLayout.getPlid() %>'
 			tempImageFileName="<%= String.valueOf(selLayout.getPlid()) %>"
 		/>

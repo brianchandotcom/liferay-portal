@@ -147,6 +147,6 @@
 		anchorData.put("redirect", String.valueOf(PortalUtil.isLoginRedirectRequired(request)));
 		%>
 
-		<aui:nav-item anchorData="<%= anchorData %>" cssClass="sign-in" href="<%= themeDisplay.getURLSignIn() %>" label="sign-in" />
+		<aui:nav-item anchorData="<%= anchorData %>" cssClass="sign-in" href="<%= themeDisplay.getURLSignIn() %>" iconCssClass="icon-user" label="sign-in" />
 	</c:otherwise>
 </c:choose>

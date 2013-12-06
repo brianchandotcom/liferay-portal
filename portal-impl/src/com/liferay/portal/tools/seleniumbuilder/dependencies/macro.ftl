@@ -92,5 +92,7 @@ public class ${seleniumBuilderContext.getMacroSimpleClassName(macroName)}
 			<#include "block_element.ftl">
 		}
 	</#list>
-	private int _counter;
+
+	private int _whileCounter;
+
 }

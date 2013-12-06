@@ -265,7 +265,7 @@ public interface OrganizationService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the logo of the organization.
+	* Deletes the organization's logo.
 	*
 	* @param organizationId the primary key of the organization
 	* @throws PortalException if an organization with the primary key could not
@@ -554,6 +554,8 @@ public interface OrganizationService extends BaseService {
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
 	* @param comments the comments about the organization
+	* @param logo whether to update the ogranization's logo
+	* @param logoBytes the new logo image data
 	* @param site whether the organization is to be associated with a main
 	site
 	* @param addresses the organization's addresses

@@ -309,6 +309,8 @@ public class CompanyServiceSoap {
 	* @param virtualHost the company's virtual host name
 	* @param mx the company's mail domain
 	* @param homeURL the company's home URL (optionally <code>null</code>)
+	* @param logo whether to update the company's logo
+	* @param logoBytes the new logo image data
 	* @param name the company's account name (optionally <code>null</code>)
 	* @param legalName the company's account legal name (optionally
 	<code>null</code>)

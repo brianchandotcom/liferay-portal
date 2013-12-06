@@ -635,7 +635,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the logo of the organization.
+	* Deletes the organization's logo.
 	*
 	* @param organizationId the primary key of the organization
 	* @throws PortalException if an organization or parent organization with
@@ -1397,6 +1397,8 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param countryId the primary key of the organization's country
 	* @param statusId the organization's workflow status
 	* @param comments the comments about the organization
+	* @param logo whether to update the ogranization's logo
+	* @param logoBytes the new logo image data
 	* @param site whether the organization is to be associated with a main
 	site
 	* @param serviceContext the service context to be applied (optionally

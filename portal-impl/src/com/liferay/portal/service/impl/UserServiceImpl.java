@@ -1707,7 +1707,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  emailAddress the user's new email address
 	 * @param  facebookId the user's new Facebook ID
 	 * @param  openId the user's new OpenID
-	 * @param  portrait if the user has a custom portrait image
+	 * @param  portrait whether to update the user's portrait image
 	 * @param  portraitBytes the new portrait image data
 	 * @param  languageId the user's new language ID
 	 * @param  timeZoneId the user's new time zone ID

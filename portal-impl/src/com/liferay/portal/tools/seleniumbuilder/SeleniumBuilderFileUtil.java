@@ -46,7 +46,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -1364,27 +1363,26 @@ public class SeleniumBuilderFileUtil {
 
 		Element element = elements.get(1);
 
-		String processedString = element.getText();
+		String text = element.getText();
 
-		processedString = processedString.replace("${","");
-		processedString = processedString.replace("}","");
+		text = text.replace("${","");
+		text = text.replace("}","");
+		text = text.replace("/-/","/");
 
-		if (processedString.endsWith("/")) {
-			processedString = processedString.substring(
-				0, processedString.length()-1);
+		if (text.endsWith("/")) {
+			text = text.substring(0, text.length() - 1);
 		}
 
-		if (!processedString.equals("") && !processedString.contains("link=")) {
+		if (!text.equals("") && !text.startsWith("link=")) {
 			try {
-				XPathFactory factory = XPathFactory.newInstance();
+				XPathFactory xPathFactory = XPathFactory.newInstance();
 
-				XPath xpathToBeChecked = factory.newXPath();
+				XPath xPath = xPathFactory.newXPath();
 
-				XPathExpression expr = xpathToBeChecked.compile(
-					processedString);
+				xPath.compile(text);
 			}
 			catch (Exception e) {
-				throwValidationException(2003, fileName, processedString);
+				throwValidationException(2003, fileName, text);
 			}
 		}
 	}

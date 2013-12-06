@@ -56,10 +56,6 @@ public class CSVUtil {
 	}
 
 	public static String toString(Object[] array, String delimiter) {
-		if (ArrayUtil.isEmpty(array)) {
-			return StringPool.BLANK;
-		}
-
 		StringBundler sb = new StringBundler(2 * array.length - 1);
 
 		for (int i = 0; i < array.length; i++) {

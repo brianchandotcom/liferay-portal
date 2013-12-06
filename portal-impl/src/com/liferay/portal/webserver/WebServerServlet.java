@@ -553,7 +553,7 @@ public class WebServerServlet extends HttpServlet {
 				user = UserLocalServiceUtil.fetchUserByPortraitId(imageId);
 			}
 
-			if (user != null &&
+			if ((user != null) &&
 				!imageIdToken.equals(DigesterUtil.digest(user.getUserUuid()))) {
 
 				return 0;

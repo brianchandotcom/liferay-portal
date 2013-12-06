@@ -24,7 +24,7 @@
 	<#if name == "echo">
 		<#assign message = element.attributeValue("message")>
 
-		${selenium}.echo(RuntimeVariables.evaluateVariable("${message}", commandScopeVariables));
+		${selenium}.echo(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(message)}", commandScopeVariables));
 
 		<#assign lineNumber = element.attributeValue("line-number")>
 

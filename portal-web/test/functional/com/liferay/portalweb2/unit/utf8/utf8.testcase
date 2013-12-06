@@ -1,0 +1,86 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ContainsConditionalWithUTF8Characters" priority="5">
+		<echo message="Test UTF8 Characters: 'contains' conditional clause values" />
+
+		<if>
+			<contains string="りんご" substring="りんご" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+		</if>
+	</command>
+
+	<command name="EchoUTF8Characters" priority="5">
+		<echo message="Test UTF8 Characters: echo message" />
+
+		<echo message="りんご" />
+	</command>
+
+	<command name="EqualsConditionalWithUTF8Characters" priority="5">
+		<echo message="Test UTF8 Characters: 'equals' conditional clause values" />
+
+		<if>
+			<equals arg1="りんご" arg2="りんご" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+		</if>
+	</command>
+
+	<command name="IssetConditionalWithUTF8Characters" priority="5">
+		<echo message="Test UTF8 Characters: 'isset' conditional clause values" />
+
+		<if>
+			<isset var="りんご" />
+			<then>
+				<execute macro="TestUtils#pass" />
+			</then>
+		</if>
+
+		<execute macro="TestUtils#pass" />
+	</command>
+
+	<command name="TypeAndAssertInlineUTF8Characters" priority="5">
+		<echo message="Test UTF8 Characters: typing and asserting inline values" />
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="りんご" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<var name="key_pageName" value="りんご" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE" value1="りんご" />
+
+		<execute macro="TestUtils#pass" />
+	</command>
+
+	<command name="TypeAndAssertUTF8CharactersSavedInVariable" priority="5">
+		<echo message="Test UTF8 Characters: typing and asserting a variable value" />
+
+		<var name="test" value="りんご" />
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${test}" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<var name="key_pageName" value="${test}" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE" value1="${test}" />
+
+		<execute macro="TestUtils#pass" />
+	</command>
+</definition>

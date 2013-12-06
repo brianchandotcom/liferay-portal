@@ -43,36 +43,19 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 		<liferay-ui:message arguments="<%= fileMaxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
 	</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
-	<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
-
-	<aui:input name="useLogo" type="hidden" value="<%= selLayoutSet.isLogo() %>" />
-
 	<p><%= LanguageUtil.get(pageContext, "upload-a-logo-for-the-" + (privateLayout ? "private" : "public") + "-pages-that-will-be-used-instead-of-the-default-enterprise-logo") %></p>
 
-	<aui:input inlineField="<%= true %>" label="" name="logoFileName" type="file" />
+	<%
+	String companyLogoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId());
+	%>
 
-	<c:if test="<%= selLayoutSet.getLogo() %>">
-		<liferay-ui:icon
-			cssClass="modify-link"
-			id="deleteLogoLink"
-			image="delete"
-			label="<%= true %>"
-			url="javascript:;"
-		/>
-
-		<%
-		long logoId = selLayoutSet.getLogoId();
-
-		if (logoId == 0) {
-			logoId = selLayoutSet.getLiveLogoId();
-		}
-		%>
-
-		<div class="lfr-change-logo" id="<portlet:namespace />logoContainer">
-			<img alt="<liferay-ui:message key="logo" />" src="<%= themeDisplay.getPathImage() %>/layout_set_logo?img_id=<%= logoId %>&t=<%= WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>" />
-		</div>
-	</c:if>
+	<liferay-ui:logo-selector
+		currentLogoURL='<%= selLayoutSet.getLogoId() == 0 ? companyLogoURL : themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + selLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>'
+		defaultLogo="<%= selLayoutSet.getLogoId() == 0 %>"
+		defaultLogoURL="<%= companyLogoURL %>"
+		logoDisplaySelector=".layoutset-logo"
+		tempImageFileName="<%= String.valueOf(selLayoutSet.getLayoutSetId()) %>"
+	/>
 
 	<%
 	Group guestGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.GUEST);
@@ -91,30 +74,3 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 		<aui:input checked="<%= showSiteName %>" disabled="<%= !showSiteNameSupported %>" helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>' label="show-site-name" name="TypeSettingsProperties--showSiteName--" type="checkbox" />
 	</c:if>
 </aui:fieldset>
-
-<aui:script use="aui-base">
-	var deleteLogoLink = A.one('#<portlet:namespace />deleteLogoLink');
-	var useLogoInput = A.one('#<portlet:namespace />useLogo');
-	var logoContainer = A.one('#<portlet:namespace />logoContainer');
-	var logoFileNameInput = A.one('#<portlet:namespace />logoFileName');
-
-	var changeLogo = function(event) {
-		var changeLogo = (event.type == 'change');
-
-		if (useLogoInput) {
-			useLogoInput.val(changeLogo);
-		}
-
-		if (logoContainer) {
-			logoContainer.hide();
-		}
-	};
-
-	if (deleteLogoLink) {
-		deleteLogoLink.on('click', changeLogo);
-	}
-
-	if (logoFileNameInput) {
-		logoFileNameInput.on('change', changeLogo);
-	}
-</aui:script>

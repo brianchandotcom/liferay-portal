@@ -4,11 +4,11 @@
 
 <#list entities as entity>
 	<#if entity.hasColumns()>
-		<#if entity.isDynamicUpdate()>
-			<class name="${packagePath}.model.impl.${entity.name}Impl" table="${entity.table}" dynamic-update="true">
-		<#else>
-			<class name="${packagePath}.model.impl.${entity.name}Impl" table="${entity.table}">
-		</#if>
+		<class name="${packagePath}.model.impl.${entity.name}Impl" table="${entity.table}"
+			<#if entity.isDynamicUpdate()>
+				dynamic-update="true"
+			</#if>
+		>
 
 			<#if entity.isCacheEnabled()>
 				<cache usage="read-write" />
@@ -115,11 +115,11 @@
 
 		<#list entity.blobList as blobColumn>
 			<#if blobColumn.lazy>
-				<#if entity.isDynamicUpdate()>
-					<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true" dynamic-update="true">
-				<#else>
-					<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true">
-				</#if>
+				<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true"
+					<#if entity.isDynamicUpdate()>
+						dynamic-update="true"
+					</#if>
+				>
 
 					<#assign column = entity.getPKList()?first>
 

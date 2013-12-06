@@ -509,11 +509,6 @@
 		}
 	}
 
-	.taglib-discussion {
-		width: 90%;
-		margin: 0 auto;
-	}
-
 	.taglib-ratings.stars {
 		border: 1px solid transparent;
 		display: inline-block;

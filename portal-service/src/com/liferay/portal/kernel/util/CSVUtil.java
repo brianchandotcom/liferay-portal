@@ -32,9 +32,7 @@ public class CSVUtil {
 			return null;
 		}
 
-		String s = toString(array, StringPool.COMMA);
-
-		return encode(s);
+		return encode(StringUtil.merge(array));
 	}
 
 	public static String encode(String s) {
@@ -53,20 +51,6 @@ public class CSVUtil {
 		s = StringUtil.replace(s, StringPool.QUOTE, StringPool.DOUBLE_QUOTE);
 
 		return StringPool.QUOTE.concat(s.concat(StringPool.QUOTE));
-	}
-
-	public static String toString(Object[] array, String delimiter) {
-		StringBundler sb = new StringBundler(2 * array.length - 1);
-
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-
-			if ((i + 1) != array.length) {
-				sb.append(delimiter);
-			}
-		}
-
-		return sb.toString();
 	}
 
 }

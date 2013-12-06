@@ -33,6 +33,16 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 
 	@Override
 	public void check(
+			PermissionChecker permissionChecker, Group group, Role role)
+		throws PortalException, SystemException {
+
+		if (!contains(permissionChecker, group, role)) {
+			throw new PrincipalException();
+		}
+	}
+
+	@Override
+	public void check(
 			PermissionChecker permissionChecker, long groupId, long roleId)
 		throws PortalException, SystemException {
 
@@ -43,12 +53,11 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, long groupId, long roleId)
+			PermissionChecker permissionChecker, Group group, Role role)
 		throws PortalException, SystemException {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		Role role = RoleLocalServiceUtil.getRole(roleId);
+		long groupId = group.getGroupId();
+		long roleId = role.getRoleId();
 
 		if (role.getType() == RoleConstants.TYPE_REGULAR) {
 			return false;
@@ -89,6 +98,18 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 		else {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean contains(
+			PermissionChecker permissionChecker, long groupId, long roleId)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		return contains(permissionChecker, group, role);
 	}
 
 }

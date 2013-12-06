@@ -28,6 +28,9 @@
 		<case locator-key1="GO_TO_SITES_DIRECTORY_BUTTON">
 			<execute function="Click#pauseClickAt" />
 		</case>
+		<case locator-key1="NOTIFICATION_MENU_ENTRY">
+			<execute function="Click#clickAtAndWait" />
+		</case>
 		<case locator-key1="NOTIFICATION_MENU_VIEW_ALL">
 			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
 		</case>

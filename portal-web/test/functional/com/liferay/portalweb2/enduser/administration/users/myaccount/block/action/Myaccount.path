@@ -90,6 +90,51 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_USER_INFORMATION_ADDRESSES</td>
+	<td>//a[@id='_2_addressesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_PHONE_NUMBERS</td>
+	<td>//a[@id='_2_phoneNumbersLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_ADDITIONAL_EMAIL_ADDRESSES</td>
+	<td>//a[@id='_2_additionalEmailAddressesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_WEBSITES</td>
+	<td>//a[@id='_2_websitesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_INSTANT_MESSENGER</td>
+	<td>//a[@id='_2_instantMessengerLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_SOCIAL_NETWORK</td>
+	<td>//a[@id='_2_socialNetworkLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_SMS</td>
+	<td>//a[@id='_2_smsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_PROJECTS</td>
+	<td>//a[@id='_2_projectsLink']</td>
+	<td>Projects</td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_COMMENTS</td>
+	<td>//a[@id='_2_commentsLink']</td>
+	<td>Projects</td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -207,17 +252,258 @@
 </tr>
 <!--PERSONAL_SITE-->
 <!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_TAGS_FIELD</td>
+	<td>//input[contains(@id, 'TagNames')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_ADD_BUTTON</td>
+	<td>//button[@id='add']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADDRESSES-->
+<tr>
+	<td>ADDRESSES_STREET_1_FIELD</td>
+	<td>//input[contains(@id, 'addressStreet1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_COUNTRY_SELECT</td>
+	<td>//select[contains(@id, 'addressCountry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_REGION_SELECT</td>
+	<td>//select[contains(@id, 'addressRegion')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_POSTAL_CODE_FIELD</td>
+	<td>//input[contains(@id, 'addressZip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_TYPE_SELECT</td>
+	<td>//select[contains(@id, 'addressType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_CITY_FIELD</td>
+	<td>//input[contains(@id, 'addressCity')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[contains(@id, 'addressPrimary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESSES_MAILING_CHECKBOX</td>
+	<td>//input[contains(@id, 'addressMailing0Checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PHONE_NUMBERS-->
+<tr>
+	<td>PHONE_NUMBERS_NUMBER_FIELD</td>
+	<td>//input[contains(@id, 'phoneNumber')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_EXTENSION_FIELD</td>
+	<td>//input[contains(@id, 'phoneExtension')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_TYPE_SELECT</td>
+	<td>//select[contains(@id, 'phoneType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[contains(@id, 'phonePrimary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADDITIONAL_EMAIL_ADDRESSES-->
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_2_emailAddressAddress0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT</td>
+	<td>//select[@id='_2_emailAddressTypeId0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[@id='_2_emailAddressPrimary0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--WEBSITES-->
+<tr>
+	<td>WEBSITES_URL_FIELD</td>
+	<td>//input[contains(@id, 'websiteUrl')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEBSITES_TYPE_SELECT</td>
+	<td>//select[contains(@id, 'websiteType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEBSITES_PRIMARY_RADIO_BUTTON</td>
+	<td>//input[contains(@id, 'websitePrimary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--INSTANT_MESSENGER-->
+<tr>
+	<td>INSTANT_MESSENGER_AIM_FIELD</td>
+	<td>//input[@id='_2_aimSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANT_MESSENGER_ICQ_FIELD</td>
+	<td>//input[@id='_2_icqSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANT_MESSENGER_JABBER_FIELD</td>
+	<td>//input[@id='_2_jabberSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANT_MESSENGER_SKYPE_FIELD</td>
+	<td>//input[@id='_2_skypeSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANT_MESSENGER_WINDOWS_LIVE_MESSENGER_FIELD</td>
+	<td>//input[@id='_2_msnSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANT_MESSENGER_YM_FIELD</td>
+	<td>//input[@id='_2_ymSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SOCIAL_NETWORK-->
+<tr>
+	<td>SOCIAL_NETWORK_FACEBOOK_FIELD</td>
+	<td>//input[@id='_2_facebookSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOCIAL_NETWORK_MYSPACE_FIELD</td>
+	<td>//input[@id='_2_mySpaceSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOCIAL_NETWORK_TWITTER_FIELD</td>
+	<td>//input[@id='_2_twitterSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SMS-->
+<tr>
+	<td>SMS_SMS_FIELD</td>
+	<td>//input[@id='_2_smsSn']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--OPENID-->
+<!--PROJECTS-->
+<tr>
+	<td>PROJECTS_TITLE_FIELD</td>
+	<td>//input[@id='_2_projectsEntryTitle0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_START_DATE_MONTH_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryStartDateMonth0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_START_DATE_YEAR_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryStartDateYear0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_END_DATE_MONTH_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryEndDateMonth0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_END_DATE_YEAR_SELECT</td>
+	<td>//select[contains(@id, '_2_projectsEntryEndDateYear0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_CURRENT_CHECKBOX</td>
+	<td>//input[@id='_2_projectsEntryCurrent0Checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECTS_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_2_projectsEntryDescription0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ANNOUNCEMENTS-->
 <!--DISPLAY_SETTINGS-->
 <!--COMMENTS-->
+<tr>
+	<td>COMMENTS_FIELD</td>
+	<td>//textarea[contains(@id, 'comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CUSTOM_FIELDS-->
 </tbody>
 </table>

@@ -387,6 +387,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_MY_PROFILE</td>
+	<td>//span[contains(.,'My Profile')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_MY_DASHBOARD</td>
 	<td>//span[contains(.,'My Dashboard')]</td>
 	<td></td>

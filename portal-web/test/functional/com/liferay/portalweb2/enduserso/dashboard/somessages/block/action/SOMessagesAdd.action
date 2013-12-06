@@ -1,0 +1,13 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="TO_FIELD_DROPDOWN_LIST">
+			<execute function="AssertClick#pauseAssertPartialTextClickAt" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="TO_FIELD">
+			<execute function="Type#sendKeys" />
+		</case>
+	</command>
+</definition>

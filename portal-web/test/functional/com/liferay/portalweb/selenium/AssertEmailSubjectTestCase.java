@@ -62,7 +62,7 @@ public class AssertEmailSubjectTestCase extends BaseSeleniumTestCase {
 			selenium.assertEmailSubject("A", "Email Test");
 		}
 		catch (Throwable t) {
-			assertEquals(t.getMessage(), "null");
+			assertTrue(t.getMessage() == null);
 		}
 	}
 

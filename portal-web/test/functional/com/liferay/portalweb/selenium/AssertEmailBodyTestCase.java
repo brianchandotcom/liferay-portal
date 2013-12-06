@@ -62,7 +62,7 @@ public class AssertEmailBodyTestCase extends BaseSeleniumTestCase {
 			selenium.assertEmailBody("A", "This is a test message");
 		}
 		catch (Throwable t) {
-			assertEquals(t.getMessage(), "null");
+			assertTrue(t.getMessage() == null);
 		}
 	}
 

@@ -113,6 +113,9 @@ the json-enabled value is true.
 The trash-enabled value specifies whether trash related methods should be
 generated or not.
 
+The dynamic-update value specifies whether or not unmodified properties are
+excluded in the SQL update statement. The default value is false.
+
 The deprecated value specifies whether the entity's services are deprecated.
 -->
 <!ATTLIST entity
@@ -130,6 +133,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	cache-enabled CDATA #IMPLIED
 	json-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
+	dynamic-update CDATA #IMPLIED
 	deprecated CDATA #IMPLIED
 >
 

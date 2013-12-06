@@ -4,7 +4,12 @@
 
 <#list entities as entity>
 	<#if entity.hasColumns()>
-		<class name="${packagePath}.model.impl.${entity.name}Impl" table="${entity.table}">
+		<#if entity.isDynamicUpdate()>
+			<class name="${packagePath}.model.impl.${entity.name}Impl" table="${entity.table}" dynamic-update="true">
+		<#else>
+			<class name="${packagePath}.model.impl.${entity.name}Impl" table="${entity.table}">
+		</#if>
+
 			<#if entity.isCacheEnabled()>
 				<cache usage="read-write" />
 			</#if>
@@ -110,7 +115,12 @@
 
 		<#list entity.blobList as blobColumn>
 			<#if blobColumn.lazy>
-				<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true">
+				<#if entity.isDynamicUpdate()>
+					<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true" dynamic-update="true">
+				<#else>
+					<class name="${packagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}" lazy="true">
+				</#if>
+
 					<#assign column = entity.getPKList()?first>
 
 					<id name="${column.name}" column="${column.name}">

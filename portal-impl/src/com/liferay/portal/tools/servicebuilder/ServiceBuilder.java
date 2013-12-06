@@ -4344,6 +4344,8 @@ public class ServiceBuilder {
 			entityElement.attributeValue("json-enabled"), remoteService);
 		boolean trashEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("trash-enabled"));
+		boolean dynamicUpdate = GetterUtil.getBoolean(
+			entityElement.attributeValue("dynamic-update"));
 		boolean deprecated = GetterUtil.getBoolean(
 			entityElement.attributeValue("deprecated"));
 
@@ -4723,9 +4725,9 @@ public class ServiceBuilder {
 				humanName, table, alias, uuid, uuidAccessor, localService,
 				remoteService, persistenceClass, finderClass, dataSource,
 				sessionFactory, txManager, cacheEnabled, jsonEnabled,
-				trashEnabled, deprecated, pkList, regularColList, blobList,
-				collectionList, columnList, order, finderList, referenceList,
-				txRequiredList));
+				trashEnabled, dynamicUpdate, deprecated, pkList, regularColList,
+				blobList, collectionList, columnList, order, finderList,
+				referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)

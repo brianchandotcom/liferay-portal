@@ -642,7 +642,7 @@ ${custom.properties}</echo>
 		</if>
 
 		<if>
-			<equals arg1="${sql.version}" arg2="5.1.2" />
+			<equals arg1="${portal.version}" arg2="5.1.2" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -729,13 +729,13 @@ message.boards.subscribe.by.default=false</echo>
 			</then>
 			<elseif>
 				<or>
-					<equals arg1="${sql.version}" arg2="5.2.3" />
-					<equals arg1="${sql.version}" arg2="5.2.4" />
-					<equals arg1="${sql.version}" arg2="5.2.5" />
-					<equals arg1="${sql.version}" arg2="5.2.6" />
-					<equals arg1="${sql.version}" arg2="5.2.7" />
-					<equals arg1="${sql.version}" arg2="5.2.8" />
-					<equals arg1="${sql.version}" arg2="5.2.9" />
+					<equals arg1="${portal.version}" arg2="5.2.3" />
+					<equals arg1="${portal.version}" arg2="5.2.4" />
+					<equals arg1="${portal.version}" arg2="5.2.5" />
+					<equals arg1="${portal.version}" arg2="5.2.6" />
+					<equals arg1="${portal.version}" arg2="5.2.7" />
+					<equals arg1="${portal.version}" arg2="5.2.8" />
+					<equals arg1="${portal.version}" arg2="5.2.9" />
 				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
@@ -803,11 +803,11 @@ message.boards.subscribe.by.default=false</echo>
 			</elseif>
 			<elseif>
 				<or>
-					<equals arg1="${sql.version}" arg2="6.0.5" />
-					<equals arg1="${sql.version}" arg2="6.0.6" />
-					<equals arg1="${sql.version}" arg2="6.0.10" />
-					<equals arg1="${sql.version}" arg2="6.0.11" />
-					<equals arg1="${sql.version}" arg2="6.0.12" />
+					<equals arg1="${portal.version}" arg2="6.0.5" />
+					<equals arg1="${portal.version}" arg2="6.0.6" />
+					<equals arg1="${portal.version}" arg2="6.0.10" />
+					<equals arg1="${portal.version}" arg2="6.0.11" />
+					<equals arg1="${portal.version}" arg2="6.0.12" />
 				</or>
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
@@ -844,6 +844,38 @@ dl.store.s3.secret.key=
 dl.store.s3.bucket.name=
 
 message.boards.subscribe.by.default=false</echo>
+				</then>
+			</elseif>
+			<elseif>
+				<or>
+					<equals arg1="${portal.version}" arg2="6.1.2" />
+					<equals arg1="${portal.version}" arg2="6.1.10" />
+					<equals arg1="${portal.version}" arg2="6.1.20" />
+					<equals arg1="${portal.version}" arg2="6.1.30" />
+				</or>
+				<then>
+					<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+##
+## From portal-legacy-6.1.properties
+##
+
+hibernate.cache.use_query_cache=true
+hibernate.cache.use_second_level_cache=true
+
+locale.prepend.friendly.url.style=1
+
+passwords.encryption.algorithm.legacy=SHA
+
+mobile.device.styling.wap.enabled=true
+
+dl.char.blacklist=\\\\,//,:,*,?,\",&lt;,&gt;,|,[,],../,/..
+
+dl.char.last.blacklist=
+
+dl.name.blacklist=
+
+journal.articles.search.with.index=false</echo>
 				</then>
 			</elseif>
 		</if>
@@ -1745,10 +1777,42 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 	</target>
 
+	<target name="rebuild-legacy-database">
+		<antcall target="rebuild-database">
+			<param name="database" value="${database}" />
+			<param name="sql.dir" value="sql/create-bare/" />
+			<param name="sql.file" value="create-bare-${database}.sql" />
+		</antcall>
+
+		<unzip
+			dest="${liferay.home}"
+			src="${portal.legacy.dir}/${portal.version}/data-archive/data-archive-${database}.zip"
+		/>
+
+		<if>
+			<equals arg1="${database}" arg2="mysql" />
+			<then>
+				<exec executable="mysql" input="${liferay.home}/${database}.sql">
+					<arg value="--password=" />
+					<arg value="--user=" />
+					<arg value="--database=lportal" />
+				</exec>
+			</then>
+		</if>
+	</target>
+
 	<target name="run-simple-server" depends="generate-test-properties">
 		<antcall target="clean-up-java-processes" inheritAll="false" />
 
-		<antcall target="rebuild-database" inheritAll="false" />
+		<if>
+			<isset property="portal.version" />
+			<then>
+				<antcall target="rebuild-legacy-database" />
+			</then>
+			<else>
+				<antcall target="rebuild-database" inheritAll="false" />
+			</else>
+		</if>
 
 		<antcall target="copy-optional-jars" inheritAll="false">
 			<param name="todir" value="${app.server.lib.global.dir}" />
@@ -1805,14 +1869,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<property name="plugins.includes" value="marketplace-portlet" />
 		</ant>
 
-		<property name="plugins.deployed" value="true" />
-
 		<if>
 			<isset property="hook.plugins.includes" />
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="hooks" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
 					<property name="plugins.includes" value="${hook.plugins.includes}" />
 				</ant>
 			</then>
@@ -1823,7 +1884,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="layouttpl" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
 					<property name="plugins.includes" value="${layouttpl.plugins.includes}" />
 				</ant>
 			</then>
@@ -1834,7 +1894,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="portlets" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
 					<property name="plugins.includes" value="${portlet.plugins.includes}" />
 				</ant>
 			</then>
@@ -1845,7 +1904,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="portlets" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
 					<property name="plugins.includes" value="chat-portlet,flash-portlet,portal-compat-hook,sample-service-builder-portlet,test-pacl-portlet" />
 				</ant>
 			</then>
@@ -1856,7 +1914,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="themes" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
 					<property name="plugins.includes" value="${theme.plugins.includes}" />
 				</ant>
 			</then>
@@ -1867,7 +1924,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="webs" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
 					<property name="plugins.includes" value="${web.plugins.includes}" />
 				</ant>
 			</then>
@@ -1882,7 +1938,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
 					<property name="plugin.types" value="hooks" />
-					<property name="plugins.deployed" value="${plugins.deployed}" />
 					<property name="plugins.includes" value="portal-compat-hook" />
 				</ant>
 			</then>

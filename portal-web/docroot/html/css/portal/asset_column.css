@@ -135,6 +135,8 @@
 	.lfr-asset-description {
 		color: #444;
 		font-style: italic;
+
+		@include hyphenation;
 	}
 
 	.lfr-asset-icon {

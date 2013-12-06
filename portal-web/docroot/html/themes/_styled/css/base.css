@@ -17,6 +17,7 @@ body.html-editor {
 
 .html-editor.portlet-message-boards {
 	@include hyphenation;
+
 	word-wrap: break-word;
 
 	blockquote {

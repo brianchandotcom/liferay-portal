@@ -23,13 +23,14 @@
 	buffer.append("<a href=\"");
 	buffer.append(rowURL);
 	buffer.append("\">");
-	buffer.append("<strong>");
+	buffer.append("<span class=\"category-title\">");
 	buffer.append(curCategory.getName());
-	buffer.append("</strong>");
+	buffer.append("</span>");
 
 	if (Validator.isNotNull(curCategory.getDescription())) {
-		buffer.append("<br />");
+		buffer.append("<div class=\"category-description\">");
 		buffer.append(curCategory.getDescription());
+		buffer.append("</div>");
 	}
 
 	buffer.append("</a>");
@@ -39,7 +40,7 @@
 	int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, curCategory.getCategoryId(), WorkflowConstants.STATUS_APPROVED);
 
 	if (subcategoriesCount > 0) {
-		buffer.append("<br /><span class=\"subcategories\">");
+		buffer.append("<span class=\"subcategories\">");
 		buffer.append(LanguageUtil.get(pageContext, "subcategories[message-board]"));
 		buffer.append("</span>: ");
 

@@ -38,11 +38,13 @@
 
 	.document-container .search-info {
 		background-color: #D3E8F1;
+
+		@include hyphenation;
+
 		margin-bottom: 0.5em;
 		padding: 0.5em 0.75em;
 		padding-right: 30px;
 		position: relative;
-		word-wrap: break-word;
 
 		.keywords {
 			float: none;
@@ -449,6 +451,8 @@
 		}
 
 		.document-description {
+			@include hyphenation;
+
 			margin: 8px 0;
 			display: block;
 		}
@@ -498,6 +502,10 @@
 			.lfr-asset-ratings {
 				margin: 0 0 1em;
 			}
+		}
+
+		.lfr-asset-description {
+			@include hyphenation;
 		}
 	}
 

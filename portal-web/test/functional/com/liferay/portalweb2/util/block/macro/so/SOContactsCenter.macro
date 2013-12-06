@@ -22,11 +22,9 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="password" value="test" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
@@ -61,11 +59,9 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="password" value="test" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="SOContactsCenter#followUser">
@@ -78,7 +74,7 @@
 	<command name="confirmRequestToConnect">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1"/>
-		<execute action="SOUserBar#mouseOver" locator-key1="NOTIFICATION_MENU_COUNT" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}"/>
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection."/>
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_CONFIRM" value1="Confirm" />
@@ -128,6 +124,22 @@
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 	</command>
 
+	<command name="ignoreRequestToConnect">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1"/>
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}"/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection."/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_IGNORE" value1="Ignore" />
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_IGNORE" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0"/>
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 0 connections."/>
+	</command>
+
 	<command name="requestToConnect">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -141,6 +153,50 @@
 		<execute action="SOContactscenter#assertClick" locator-key1="CONNECT_BUTTON" value1="Connect" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONNECTION_REQUESTED_MESSAGE" value1="Connection Requested" />
 		<execute action="SOContactscenter#assertElementNotPresent" locator-key1="CONNECT_BUTTON" value1="Connect" />
+	</command>
+
+	<command name="sendMessage">
+		<var name="connectionName" value="${userName}" />
+		<var name="key_recipientName" value="${userName}" />
+		<var name="recipientName" value="${userName}" />
+		<var name="recipientScreenName" value="${userScreenName}" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="MESSAGE_BUTTON" value1="Message" />
+
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;," />
+
+		<if>
+			<isset var="number" />
+			<then>
+				<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}${number}" />
+				<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}${number}" />
+			</then>
+			<else>
+				<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
+				<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesAdd#uploadCommonFile" locator-key1="ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+
+		<execute macro="SOMessages#viewMessageList" />
 	</command>
 
 	<command name="tearDownContacts">

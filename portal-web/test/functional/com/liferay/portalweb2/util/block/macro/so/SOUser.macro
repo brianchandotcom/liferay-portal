@@ -35,6 +35,8 @@
 	</command>
 
 	<command name="firstLoginPG">
+		<execute action="SOUserBar#selectFrame" value1="relative=top" />
+
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
 

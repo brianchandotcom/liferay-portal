@@ -391,7 +391,9 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		for (Field field : fields) {
 			String dataType = field.getDataType();
 
-			if (!dataType.equals("file-upload") || (field.getValue() == null)) {
+			if (!dataType.equals("file-upload") ||
+				Validator.isNull(field.getValue())) {
+
 				continue;
 			}
 

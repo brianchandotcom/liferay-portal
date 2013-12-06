@@ -1854,7 +1854,7 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.portlet.expando.model.impl.ExpandoValueImpl" table="ExpandoValue">
+	<class name="com.liferay.portlet.expando.model.impl.ExpandoValueImpl" table="ExpandoValue" dynamic-update="true">
 		<cache usage="read-write" />
 		<id name="valueId" type="long">
 			<generator class="assigned" />
@@ -2487,7 +2487,7 @@
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="shippedDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.portlet.social.model.impl.SocialActivityImpl" table="SocialActivity">
+	<class name="com.liferay.portlet.social.model.impl.SocialActivityImpl" table="SocialActivity" dynamic-update="true">
 		<cache usage="read-write" />
 		<id name="activityId" type="long">
 			<generator class="assigned" />

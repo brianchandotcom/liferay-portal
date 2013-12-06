@@ -1,0 +1,52 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="AddSitePageXSS" priority="5">
+		<var name="sitePage1Name" value="Site Page 1" />
+		<var name="sitePage2Name" value="Site Page 2" />
+		<var name="sitePage3Name"><![CDATA[<script>alert("Site Page 3")</script> />]]></var>
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${sitePage1Name}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${sitePage2Name}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${sitePage3Name}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePage2Name}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePage3Name}" />
+		</execute>
+
+		<var name="key_pageName" value="${sitePage3Name}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${sitePage3Name}" />
+	</command>
+</definition>

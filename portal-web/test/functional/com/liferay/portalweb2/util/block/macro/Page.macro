@@ -209,7 +209,7 @@
 			<isset var="virtualHostsURL" />
     		<then>
      			<var name="siteNameURL" value="${virtualHostsURL}" />
-     			
+
      			<execute action="Home#open" locator1="${siteNameURL}" />
     		</then>
     		<else>

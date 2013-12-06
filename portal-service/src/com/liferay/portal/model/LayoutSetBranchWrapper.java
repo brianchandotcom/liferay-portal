@@ -63,7 +63,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("master", getMaster());
-		attributes.put("logo", getLogo());
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -144,12 +143,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 
 		if (master != null) {
 			setMaster(master);
-		}
-
-		Boolean logo = (Boolean)attributes.get("logo");
-
-		if (logo != null) {
-			setLogo(logo);
 		}
 
 		Long logoId = (Long)attributes.get("logoId");
@@ -492,36 +485,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	/**
-	* Returns the logo of this layout set branch.
-	*
-	* @return the logo of this layout set branch
-	*/
-	@Override
-	public boolean getLogo() {
-		return _layoutSetBranch.getLogo();
-	}
-
-	/**
-	* Returns <code>true</code> if this layout set branch is logo.
-	*
-	* @return <code>true</code> if this layout set branch is logo; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isLogo() {
-		return _layoutSetBranch.isLogo();
-	}
-
-	/**
-	* Sets whether this layout set branch is logo.
-	*
-	* @param logo the logo of this layout set branch
-	*/
-	@Override
-	public void setLogo(boolean logo) {
-		_layoutSetBranch.setLogo(logo);
-	}
-
-	/**
 	* Returns the logo ID of this layout set branch.
 	*
 	* @return the logo ID of this layout set branch
@@ -842,6 +805,11 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	@Override
+	public boolean getLogo() {
+		return _layoutSetBranch.getLogo();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _layoutSetBranch.getSettingsProperties();
 	}
@@ -879,6 +847,11 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	@Override
 	public boolean isLayoutSetPrototypeLinkActive() {
 		return _layoutSetBranch.isLayoutSetPrototypeLinkActive();
+	}
+
+	@Override
+	public boolean isLogo() {
+		return _layoutSetBranch.isLogo();
 	}
 
 	@Override

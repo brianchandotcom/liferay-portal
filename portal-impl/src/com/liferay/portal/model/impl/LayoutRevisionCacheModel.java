@@ -37,7 +37,7 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{layoutRevisionId=");
 		sb.append(layoutRevisionId);
@@ -79,8 +79,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		sb.append(robots);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
-		sb.append(", iconImage=");
-		sb.append(iconImage);
 		sb.append(", iconImageId=");
 		sb.append(iconImageId);
 		sb.append(", themeId=");
@@ -186,7 +184,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 			layoutRevisionImpl.setTypeSettings(typeSettings);
 		}
 
-		layoutRevisionImpl.setIconImage(iconImage);
 		layoutRevisionImpl.setIconImageId(iconImageId);
 
 		if (themeId == null) {
@@ -268,7 +265,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		keywords = objectInput.readUTF();
 		robots = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
-		iconImage = objectInput.readBoolean();
 		iconImageId = objectInput.readLong();
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
@@ -348,7 +344,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 			objectOutput.writeUTF(typeSettings);
 		}
 
-		objectOutput.writeBoolean(iconImage);
 		objectOutput.writeLong(iconImageId);
 
 		if (themeId == null) {
@@ -419,7 +414,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	public String keywords;
 	public String robots;
 	public String typeSettings;
-	public boolean iconImage;
 	public long iconImageId;
 	public String themeId;
 	public String colorSchemeId;

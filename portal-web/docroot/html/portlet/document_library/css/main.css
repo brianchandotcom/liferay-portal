@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 .portlet-document-library, .portlet-document-library-display {
 	.select-all-entries {
@@ -507,6 +508,15 @@
 		.lfr-asset-description {
 			@include hyphenation;
 		}
+	}
+
+	.taglib-discussion {
+		width: 90%;
+		margin: 0 auto;
+
+			@include respond-to(phone) {
+				width: auto;
+			}
 	}
 
 	.taglib-ratings.stars {

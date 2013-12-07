@@ -446,7 +446,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (Validator.isNull(company.getKey()) &&
+		if (Validator.isNull(company.getKey()) ||
 			(company.getKeyObj() == null)) {
 
 			try {

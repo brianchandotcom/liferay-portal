@@ -102,7 +102,6 @@
 				position: absolute;
 
 				@include respond-to(phone, tablet) {
-					clip: rect(auto auto auto auto);
 					position: static;
 				}
 			}

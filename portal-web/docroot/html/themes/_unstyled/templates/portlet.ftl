@@ -2,7 +2,7 @@
 
 <#assign portlet_id = htmlUtil.escapeAttribute(portlet_display.getId()) />
 <#assign portlet_title = portlet_display.getTitle() />
-<#assign portlet_back_url = $htmlUtil.escapeHREF(portlet_display.getURLBack()) />
+<#assign portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack()) />
 
 <section class="portlet" id="portlet_${portlet_id}">
 	<header class="portlet-topper">

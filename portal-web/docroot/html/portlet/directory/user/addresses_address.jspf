@@ -29,7 +29,7 @@
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(zipCode) %>">
-	<%= zipCode %>,
+	<%= HtmlUtil.escape(zipCode) %>,
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(city) %>">

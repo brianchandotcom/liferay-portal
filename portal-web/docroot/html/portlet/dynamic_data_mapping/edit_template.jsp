@@ -132,7 +132,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
 
 	<aui:fieldset>
-		<aui:input name="name" />
+		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP)) %>" name="name" />
 
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">

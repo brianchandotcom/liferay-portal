@@ -96,7 +96,7 @@ if (workflowEnabled) {
 				</aui:field-wrapper>
 			</c:if>
 
-			<aui:input name="name" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
 			<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
 				<aui:input name="description" />

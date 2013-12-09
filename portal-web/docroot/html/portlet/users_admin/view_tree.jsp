@@ -146,25 +146,7 @@ if (organization != null) {
 				<liferay-ui:panel-container extended="<%= false %>" id="usersAdminOrganizationPanelContainer" persistState="<%= true %>">
 					<c:if test="<%= organization != null %>">
 
-						<%
-						int teamsCount = TeamLocalServiceUtil.searchCount(organizationGroupId, null, null, null);
-						%>
-
 						<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
-
-						<c:if test="<%= teamsCount > 0 %>">
-							<div class="lfr-asset-metadata">
-								<div class="lfr-asset-icon lfr-asset-teams">
-									<portlet:renderURL var="manageTeamsURL">
-										<portlet:param name="struts_action" value="/users_admin/view_teams" />
-										<portlet:param name="redirect" value="<%= currentURL %>" />
-										<portlet:param name="groupId" value="<%= String.valueOf(organizationGroupId) %>" />
-									</portlet:renderURL>
-
-									<aui:a href="<%= manageTeamsURL %>"> <%= teamsCount %> <liferay-ui:message key='<%= (teamsCount == 1) ? "team" : "teams" %>' /></aui:a>
-								</div>
-							</div>
-						</c:if>
 
 						<span class="entry-categories">
 							<liferay-ui:asset-categories-summary

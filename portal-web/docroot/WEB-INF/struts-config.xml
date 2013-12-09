@@ -2065,8 +2065,6 @@
 
 		<action path="/users_admin/view" forward="portlet.users_admin.view" />
 
-		<action path="/users_admin/view_teams" forward="portlet.sites_admin.view_teams" />
-
 		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
 
 		<!-- Wiki -->

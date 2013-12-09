@@ -224,6 +224,8 @@ public class PortletKeys {
 
 	public static final String SITE_SETTINGS = "165";
 
+	public static final String SITE_TEAMS_ADMIN = "191";
+
 	public static final String SITE_TEMPLATE_SETTINGS = "192";
 
 	public static final String SITES_ADMIN = "134";

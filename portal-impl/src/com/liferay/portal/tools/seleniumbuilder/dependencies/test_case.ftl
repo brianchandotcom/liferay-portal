@@ -188,4 +188,6 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 	private static String testCaseName;
 
+	private int _whileCounter;
+
 }

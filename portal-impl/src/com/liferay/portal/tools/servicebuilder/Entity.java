@@ -88,8 +88,8 @@ public class Entity {
 	public Entity(String name) {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
-			null, null, null, null, null, true, false, false, false, null, null,
-			null, null, null, null, null, null, null);
+			null, null, null, null, null, true, false, false, false, false,
+			null, null, null, null, null, null, null, null, null);
 	}
 
 	public Entity(
@@ -98,12 +98,12 @@ public class Entity {
 		boolean uuidAccessor, boolean localService, boolean remoteService,
 		String persistenceClass, String finderClass, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
-		boolean jsonEnabled, boolean trashEnabled, boolean deprecated,
-		List<EntityColumn> pkList, List<EntityColumn> regularColList,
-		List<EntityColumn> blobList, List<EntityColumn> collectionList,
-		List<EntityColumn> columnList, EntityOrder order,
-		List<EntityFinder> finderList, List<Entity> referenceList,
-		List<String> txRequiredList) {
+		boolean jsonEnabled, boolean trashEnabled, boolean dynamicUpdate,
+		boolean deprecated, List<EntityColumn> pkList,
+		List<EntityColumn> regularColList, List<EntityColumn> blobList,
+		List<EntityColumn> collectionList, List<EntityColumn> columnList,
+		EntityOrder order, List<EntityFinder> finderList,
+		List<Entity> referenceList, List<String> txRequiredList) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -126,6 +126,7 @@ public class Entity {
 		_cacheEnabled = cacheEnabled;
 		_jsonEnabled = jsonEnabled;
 		_trashEnabled = trashEnabled;
+		_dynamicUpdate = dynamicUpdate;
 		_deprecated = deprecated;
 		_pkList = pkList;
 		_regularColList = regularColList;
@@ -642,6 +643,10 @@ public class Entity {
 		return _deprecated;
 	}
 
+	public boolean isDynamicUpdate() {
+		return _dynamicUpdate;
+	}
+
 	public boolean isGroupedModel() {
 		String pkVarName = getPKVarName();
 
@@ -835,6 +840,7 @@ public class Entity {
 	private boolean _containerModel;
 	private String _dataSource;
 	private boolean _deprecated;
+	private boolean _dynamicUpdate;
 	private String _finderClass;
 	private List<EntityColumn> _finderColumnsList;
 	private List<EntityFinder> _finderList;

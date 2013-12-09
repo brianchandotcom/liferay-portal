@@ -93,7 +93,7 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
-	<entity name="ExpandoValue" local-service="true" remote-service="true">
+	<entity name="ExpandoValue" local-service="true" remote-service="true" dynamic-update="true">
 
 		<!-- PK fields -->
 

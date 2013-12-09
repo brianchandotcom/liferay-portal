@@ -94,6 +94,10 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 			LayoutSet layoutSet = layout.getLayoutSet();
 
+			if (!SitesUtil.isLayoutSetMergeable(group, layoutSet)) {
+				return methodInvocation.proceed();
+			}
+
 			try {
 				MergeLayoutPrototypesThreadLocal.setInProgress(true);
 				WorkflowThreadLocal.setEnabled(false);

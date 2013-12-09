@@ -107,6 +107,15 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	@Override
+	public boolean getLogo() {
+		if (getLogoId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public String getSettings() {
 		if (_settingsProperties == null) {
 			return super.getSettings();
@@ -212,6 +221,16 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isLogo() {
+		return getLogo();
+	}
+
+	@Override
+	public void persist() throws SystemException {
+		super.persist();
 	}
 
 	@Override

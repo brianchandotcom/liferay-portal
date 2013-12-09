@@ -57,7 +57,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("privateLayout", getPrivateLayout());
-		attributes.put("logo", getLogo());
 		attributes.put("logoId", getLogoId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -109,12 +108,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 
 		if (privateLayout != null) {
 			setPrivateLayout(privateLayout);
-		}
-
-		Boolean logo = (Boolean)attributes.get("logo");
-
-		if (logo != null) {
-			setLogo(logo);
 		}
 
 		Long logoId = (Long)attributes.get("logoId");
@@ -328,36 +321,6 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		_layoutSet.setPrivateLayout(privateLayout);
-	}
-
-	/**
-	* Returns the logo of this layout set.
-	*
-	* @return the logo of this layout set
-	*/
-	@Override
-	public boolean getLogo() {
-		return _layoutSet.getLogo();
-	}
-
-	/**
-	* Returns <code>true</code> if this layout set is logo.
-	*
-	* @return <code>true</code> if this layout set is logo; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isLogo() {
-		return _layoutSet.isLogo();
-	}
-
-	/**
-	* Sets whether this layout set is logo.
-	*
-	* @param logo the logo of this layout set
-	*/
-	@Override
-	public void setLogo(boolean logo) {
-		_layoutSet.setLogo(logo);
 	}
 
 	/**
@@ -702,6 +665,11 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
+	public boolean getLogo() {
+		return _layoutSet.getLogo();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _layoutSet.getSettingsProperties();
 	}
@@ -744,6 +712,11 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	@Override
 	public boolean isLayoutSetPrototypeLinkActive() {
 		return _layoutSet.isLayoutSetPrototypeLinkActive();
+	}
+
+	@Override
+	public boolean isLogo() {
+		return _layoutSet.isLogo();
 	}
 
 	@Override

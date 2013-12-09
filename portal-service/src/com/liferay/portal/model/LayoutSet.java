@@ -45,6 +45,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public long getLiveLogoId();
 
+	public boolean getLogo();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
 	public java.lang.String getSettingsProperty(java.lang.String key);
@@ -65,6 +67,11 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isLayoutSetPrototypeLinkActive();
+
+	public boolean isLogo();
+
+	public void persist()
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);

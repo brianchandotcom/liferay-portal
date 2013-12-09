@@ -129,7 +129,7 @@
 <!--SOURCE_SCOPE_MENULIST-->
 <tr>
 	<td>SOURCE_SCOPE_MENULIST_GLOBAL</td>
-	<td>//a[@role='menuitem' and contains(.,Global')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Global')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -263,27 +263,6 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	public void setMaster(boolean master);
 
 	/**
-	 * Returns the logo of this layout set branch.
-	 *
-	 * @return the logo of this layout set branch
-	 */
-	public boolean getLogo();
-
-	/**
-	 * Returns <code>true</code> if this layout set branch is logo.
-	 *
-	 * @return <code>true</code> if this layout set branch is logo; <code>false</code> otherwise
-	 */
-	public boolean isLogo();
-
-	/**
-	 * Sets whether this layout set branch is logo.
-	 *
-	 * @param logo the logo of this layout set branch
-	 */
-	public void setLogo(boolean logo);
-
-	/**
 	 * Returns the logo ID of this layout set branch.
 	 *
 	 * @return the logo ID of this layout set branch

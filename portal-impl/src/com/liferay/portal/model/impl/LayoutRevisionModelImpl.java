@@ -93,7 +93,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			{ "keywords", Types.VARCHAR },
 			{ "robots", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
-			{ "iconImage", Types.BOOLEAN },
 			{ "iconImageId", Types.BIGINT },
 			{ "themeId", Types.VARCHAR },
 			{ "colorSchemeId", Types.VARCHAR },
@@ -105,7 +104,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImage BOOLEAN,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutRevision (layoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,layoutSetBranchId LONG,layoutBranchId LONG,parentLayoutRevisionId LONG,head BOOLEAN,major BOOLEAN,plid LONG,privateLayout BOOLEAN,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,typeSettings TEXT null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutRevision";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutRevision.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutRevision.modifiedDate DESC";
@@ -162,7 +161,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		model.setKeywords(soapModel.getKeywords());
 		model.setRobots(soapModel.getRobots());
 		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setIconImage(soapModel.getIconImage());
 		model.setIconImageId(soapModel.getIconImageId());
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
@@ -257,7 +255,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		attributes.put("keywords", getKeywords());
 		attributes.put("robots", getRobots());
 		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("iconImage", getIconImage());
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
@@ -393,12 +390,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
-		}
-
-		Boolean iconImage = (Boolean)attributes.get("iconImage");
-
-		if (iconImage != null) {
-			setIconImage(iconImage);
 		}
 
 		Long iconImageId = (Long)attributes.get("iconImageId");
@@ -1227,22 +1218,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@JSON
 	@Override
-	public boolean getIconImage() {
-		return _iconImage;
-	}
-
-	@Override
-	public boolean isIconImage() {
-		return _iconImage;
-	}
-
-	@Override
-	public void setIconImage(boolean iconImage) {
-		_iconImage = iconImage;
-	}
-
-	@JSON
-	@Override
 	public long getIconImageId() {
 		return _iconImageId;
 	}
@@ -1676,7 +1651,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		layoutRevisionImpl.setKeywords(getKeywords());
 		layoutRevisionImpl.setRobots(getRobots());
 		layoutRevisionImpl.setTypeSettings(getTypeSettings());
-		layoutRevisionImpl.setIconImage(getIconImage());
 		layoutRevisionImpl.setIconImageId(getIconImageId());
 		layoutRevisionImpl.setThemeId(getThemeId());
 		layoutRevisionImpl.setColorSchemeId(getColorSchemeId());
@@ -1867,8 +1841,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 			layoutRevisionCacheModel.typeSettings = null;
 		}
 
-		layoutRevisionCacheModel.iconImage = getIconImage();
-
 		layoutRevisionCacheModel.iconImageId = getIconImageId();
 
 		layoutRevisionCacheModel.themeId = getThemeId();
@@ -1937,7 +1909,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{layoutRevisionId=");
 		sb.append(getLayoutRevisionId());
@@ -1979,8 +1951,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		sb.append(getRobots());
 		sb.append(", typeSettings=");
 		sb.append(getTypeSettings());
-		sb.append(", iconImage=");
-		sb.append(getIconImage());
 		sb.append(", iconImageId=");
 		sb.append(getIconImageId());
 		sb.append(", themeId=");
@@ -2008,7 +1978,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(97);
+		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutRevision");
@@ -2093,10 +2063,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		sb.append(
 			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
 		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>iconImage</column-name><column-value><![CDATA[");
-		sb.append(getIconImage());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>iconImageId</column-name><column-value><![CDATA[");
@@ -2184,7 +2150,6 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private String _robots;
 	private String _robotsCurrentLanguageId;
 	private String _typeSettings;
-	private boolean _iconImage;
 	private long _iconImageId;
 	private String _themeId;
 	private String _colorSchemeId;

@@ -151,8 +151,6 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setTypeSettings(ServiceTestUtil.randomString());
 
-		newLayoutRevision.setIconImage(ServiceTestUtil.randomBoolean());
-
 		newLayoutRevision.setIconImageId(ServiceTestUtil.nextLong());
 
 		newLayoutRevision.setThemeId(ServiceTestUtil.randomString());
@@ -219,8 +217,6 @@ public class LayoutRevisionPersistenceTest {
 			newLayoutRevision.getRobots());
 		Assert.assertEquals(existingLayoutRevision.getTypeSettings(),
 			newLayoutRevision.getTypeSettings());
-		Assert.assertEquals(existingLayoutRevision.getIconImage(),
-			newLayoutRevision.getIconImage());
 		Assert.assertEquals(existingLayoutRevision.getIconImageId(),
 			newLayoutRevision.getIconImageId());
 		Assert.assertEquals(existingLayoutRevision.getThemeId(),
@@ -286,10 +282,10 @@ public class LayoutRevisionPersistenceTest {
 			true, "parentLayoutRevisionId", true, "head", true, "major", true,
 			"plid", true, "privateLayout", true, "name", true, "title", true,
 			"description", true, "keywords", true, "robots", true,
-			"typeSettings", true, "iconImage", true, "iconImageId", true,
-			"themeId", true, "colorSchemeId", true, "wapThemeId", true,
-			"wapColorSchemeId", true, "css", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"typeSettings", true, "iconImageId", true, "themeId", true,
+			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
+			true, "css", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -466,8 +462,6 @@ public class LayoutRevisionPersistenceTest {
 		layoutRevision.setRobots(ServiceTestUtil.randomString());
 
 		layoutRevision.setTypeSettings(ServiceTestUtil.randomString());
-
-		layoutRevision.setIconImage(ServiceTestUtil.randomBoolean());
 
 		layoutRevision.setIconImageId(ServiceTestUtil.nextLong());
 

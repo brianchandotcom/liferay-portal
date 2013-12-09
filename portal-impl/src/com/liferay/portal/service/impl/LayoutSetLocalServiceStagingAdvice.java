@@ -29,8 +29,7 @@ import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 import com.liferay.portal.util.ClassLoaderUtil;
-
-import java.io.InputStream;
+import com.liferay.portal.util.PortalUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -81,11 +80,11 @@ public class LayoutSetLocalServiceStagingAdvice
 				(Boolean)arguments[1], (Boolean)arguments[2],
 				(String)arguments[3]);
 		}
-		else if (methodName.equals("updateLogo") && (arguments.length == 5)) {
+		else if (methodName.equals("updateLogo") && (arguments.length == 4)) {
 			updateLogo(
 				(LayoutSetLocalService)thisObject, (Long)arguments[0],
 				(Boolean)arguments[1], (Boolean)arguments[2],
-				(InputStream)arguments[3], (Boolean)arguments[4]);
+				(byte[])arguments[3]);
 		}
 		else if (methodName.equals("updateLookAndFeel") &&
 				 (arguments.length == 6)) {
@@ -173,8 +172,7 @@ public class LayoutSetLocalServiceStagingAdvice
 
 	public LayoutSet updateLogo(
 			LayoutSetLocalService layoutSetLocalService, long groupId,
-			boolean privateLayout, boolean logo, InputStream is,
-			boolean cleanUpStream)
+			boolean privateLayout, boolean logo, byte[] logoBytes)
 		throws PortalException, SystemException {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
@@ -187,34 +185,13 @@ public class LayoutSetLocalServiceStagingAdvice
 
 		if (layoutSetBranch == null) {
 			return layoutSetLocalService.updateLogo(
-				groupId, privateLayout, logo, is, cleanUpStream);
+				groupId, privateLayout, logo, logoBytes);
 		}
 
 		layoutSetBranch.setModifiedDate(new Date());
-		layoutSetBranch.setLogo(logo);
 
-		if (logo) {
-			long logoId = layoutSetBranch.getLogoId();
-
-			if (logoId <= 0) {
-				logoId = counterLocalService.increment();
-
-				layoutSet.setLogoId(logoId);
-			}
-		}
-		else {
-			layoutSet.setLogoId(0);
-		}
-
-		layoutSetBranchPersistence.update(layoutSetBranch);
-
-		if (logo) {
-			imageLocalService.updateImage(
-				layoutSetBranch.getLogoId(), is, cleanUpStream);
-		}
-		else {
-			imageLocalService.deleteImage(layoutSetBranch.getLogoId());
-		}
+		PortalUtil.updateImageId(
+			layoutSetBranch, logo, logoBytes, "logoId", 0, 0, 0);
 
 		return layoutSet;
 	}

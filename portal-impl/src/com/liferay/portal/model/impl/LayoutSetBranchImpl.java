@@ -95,6 +95,15 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 	}
 
 	@Override
+	public boolean getLogo() {
+		if (getLogoId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public String getSettings() {
 		if (_settingsProperties == null) {
 			return super.getSettings();
@@ -200,6 +209,11 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isLogo() {
+		return getLogo();
 	}
 
 	@Override

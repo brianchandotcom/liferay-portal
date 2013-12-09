@@ -123,8 +123,6 @@ public class LayoutSetPersistenceTest {
 
 		newLayoutSet.setPrivateLayout(ServiceTestUtil.randomBoolean());
 
-		newLayoutSet.setLogo(ServiceTestUtil.randomBoolean());
-
 		newLayoutSet.setLogoId(ServiceTestUtil.nextLong());
 
 		newLayoutSet.setThemeId(ServiceTestUtil.randomString());
@@ -163,7 +161,6 @@ public class LayoutSetPersistenceTest {
 			Time.getShortTimestamp(newLayoutSet.getModifiedDate()));
 		Assert.assertEquals(existingLayoutSet.getPrivateLayout(),
 			newLayoutSet.getPrivateLayout());
-		Assert.assertEquals(existingLayoutSet.getLogo(), newLayoutSet.getLogo());
 		Assert.assertEquals(existingLayoutSet.getLogoId(),
 			newLayoutSet.getLogoId());
 		Assert.assertEquals(existingLayoutSet.getThemeId(),
@@ -221,11 +218,11 @@ public class LayoutSetPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutSet", "layoutSetId",
 			true, "groupId", true, "companyId", true, "createDate", true,
-			"modifiedDate", true, "privateLayout", true, "logo", true,
-			"logoId", true, "themeId", true, "colorSchemeId", true,
-			"wapThemeId", true, "wapColorSchemeId", true, "css", true,
-			"pageCount", true, "settings", true, "layoutSetPrototypeUuid",
-			true, "layoutSetPrototypeLinkEnabled", true);
+			"modifiedDate", true, "privateLayout", true, "logoId", true,
+			"themeId", true, "colorSchemeId", true, "wapThemeId", true,
+			"wapColorSchemeId", true, "css", true, "pageCount", true,
+			"settings", true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test
@@ -370,8 +367,6 @@ public class LayoutSetPersistenceTest {
 		layoutSet.setModifiedDate(ServiceTestUtil.nextDate());
 
 		layoutSet.setPrivateLayout(ServiceTestUtil.randomBoolean());
-
-		layoutSet.setLogo(ServiceTestUtil.randomBoolean());
 
 		layoutSet.setLogoId(ServiceTestUtil.nextLong());
 

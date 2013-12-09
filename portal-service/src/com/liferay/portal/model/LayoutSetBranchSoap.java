@@ -42,7 +42,6 @@ public class LayoutSetBranchSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMaster(model.getMaster());
-		soapModel.setLogo(model.getLogo());
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setThemeId(model.getThemeId());
 		soapModel.setColorSchemeId(model.getColorSchemeId());
@@ -202,18 +201,6 @@ public class LayoutSetBranchSoap implements Serializable {
 		_master = master;
 	}
 
-	public boolean getLogo() {
-		return _logo;
-	}
-
-	public boolean isLogo() {
-		return _logo;
-	}
-
-	public void setLogo(boolean logo) {
-		_logo = logo;
-	}
-
 	public long getLogoId() {
 		return _logoId;
 	}
@@ -302,7 +289,6 @@ public class LayoutSetBranchSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _master;
-	private boolean _logo;
 	private long _logoId;
 	private String _themeId;
 	private String _colorSchemeId;

@@ -50,7 +50,7 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 	%>
 
 	<liferay-ui:logo-selector
-		currentLogoURL='<%= selLayoutSet.getLogoId() == 0 ? companyLogoURL : themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + selLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>'
+		currentLogoURL='<%= (selLayoutSet.getLogoId() == 0) ? companyLogoURL : themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + selLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>'
 		defaultLogo="<%= selLayoutSet.getLogoId() == 0 %>"
 		defaultLogoURL="<%= companyLogoURL %>"
 		logoDisplaySelector=".layoutset-logo"

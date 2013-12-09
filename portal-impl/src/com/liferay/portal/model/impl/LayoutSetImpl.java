@@ -229,11 +229,6 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	@Override
-	public void persist() throws SystemException {
-		super.persist();
-	}
-
-	@Override
 	public void setSettings(String settings) {
 		_settingsProperties = null;
 

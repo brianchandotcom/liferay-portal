@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 .taglib-discussion {
 	table.tree-walker {
@@ -99,6 +100,10 @@
 			a {
 				clip: rect(0 0 0 0);
 				position: absolute;
+
+				@include respond-to(phone, tablet) {
+					position: static;
+				}
 			}
 		}
 

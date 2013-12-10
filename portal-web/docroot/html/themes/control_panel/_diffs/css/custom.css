@@ -197,7 +197,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.nav > li > a {
 			margin: 3px 0;
-			padding: 2px 15px;
+			padding: 3px 15px;
 		}
 
 		.navbar-inner {
@@ -257,10 +257,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 					> li.open > .dropdown-toggle {
 						background-color: $dockbarOpenGradientEnd;
 						margin: 0;
-						padding: 5px 15px;
+						padding: 6px 15px;
 
 						@include respond-to(phone, tablet) {
-							margin: 5px 0 5px 10px;
+							margin: 5px 0 3px 5px;
 							padding: 12px 15px;
 						}
 					}

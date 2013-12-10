@@ -29,6 +29,10 @@
 			.btn-navbar {
 				float: right;
 			}
+
+			.nav-account-controls > li:hover {
+				background-color: transparent;
+			}
 		}
 	}
 }

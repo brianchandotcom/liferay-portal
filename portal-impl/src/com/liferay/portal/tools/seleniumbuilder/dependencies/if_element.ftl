@@ -9,14 +9,14 @@
 </#if>
 
 <#if ifElement.getName() == "elseif">
-	<#assign ifType = "else if">
+	<#assign void = ifTypeStack.push("else if")>
 <#elseif ifElement.getName() == "while">
-	<#assign ifType = "while">
+	<#assign void = ifTypeStack.push("while")>
 <#else>
-	<#assign ifType = "if">
+	<#assign void = ifTypeStack.push("if")>
 </#if>
 
-${ifType} (
+${ifTypeStack.peek()} (
 	<#if ifElement.element("and")??>
 		<#assign conditionalElement = ifElement.element("and")>
 	<#elseif ifElement.element("condition")??>
@@ -38,7 +38,7 @@ ${ifType} (
 	<#include "if_conditional_element.ftl">
 ) {
 
-	<#if ifType == "else if">
+	<#if ifTypeStack.peek() == "else if">
 		<#assign lineNumber = ifElement.attributeValue("line-number")>
 
 		 ${selenium}.sendLogger(${lineId} + "${lineNumber}", "pending", commandScopeVariables);
@@ -72,13 +72,13 @@ ${ifType} (
 
 	${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", commandScopeVariables);
 
-	<#if ifType == "else if">
+	<#if ifTypeStack.peek() == "else if">
 		<#assign lineNumber = ifElement.attributeValue("line-number")>
 
 		${selenium}.sendLogger(${lineId} + "${lineNumber}", "pass", commandScopeVariables);
 	</#if>
 
-	<#if ifType == "while">
+	<#if ifTypeStack.peek() == "while">
 		if(_whileCount == 15){
 			break;
 		}
@@ -88,3 +88,5 @@ ${ifType} (
 		_whileCount++;
 	</#if>
 }
+
+<#assign void = ifTypeStack.pop()>

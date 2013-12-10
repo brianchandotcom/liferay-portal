@@ -29,6 +29,7 @@ public class MacroConverter extends BaseConverter {
 		Map<String, Object> context = getContext();
 
 		context.put("elementsStack", new FreeMarkerStack());
+		context.put("ifTypeStack", new FreeMarkerStack());
 		context.put("macroNameStack", new FreeMarkerStack());
 		context.put("macroName", macroName);
 

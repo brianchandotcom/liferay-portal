@@ -17,28 +17,6 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
-String ddmStructureDisplayFieldValue = StringPool.BLANK;
-String ddmStructureFieldLabel = StringPool.BLANK;
-String ddmStructureFieldName = StringPool.BLANK;
-Serializable ddmStructureFieldValue = null;
-
-long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
-long[] classTypeIds = assetPublisherDisplayContext.getClassTypeIds();
-
-if (assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() && (classNameIds.length == 1) && (classTypeIds.length == 1)) {
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameIds[0]));
-
-	ddmStructureDisplayFieldValue = assetPublisherDisplayContext.getDDMStructureDisplayFieldValue();
-	ddmStructureFieldName = assetPublisherDisplayContext.getDDMStructureFieldName();
-	ddmStructureFieldValue = assetPublisherDisplayContext.getDDMStructureFieldValue();
-
-	if (Validator.isNotNull(ddmStructureFieldName) && Validator.isNotNull(ddmStructureFieldValue)) {
-		Tuple classTypeFieldName = assetRendererFactory.getClassTypeFieldName(classTypeIds[0], ddmStructureFieldName, locale);
-
-		ddmStructureFieldLabel = (String)classTypeFieldName.getObject(0);
-	}
-}
-
 List<AssetRendererFactory> classTypesAssetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
@@ -72,6 +50,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					// Left list
 
 					List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
+
+					long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
 
 					for (long classNameId : classNameIds) {
 						String className = PortalUtil.getClassName(classNameId);
@@ -193,8 +173,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							</div>
 
 							<span class="asset-subtypefields-message" id="<portlet:namespace /><%= className %>ddmStructureFieldMessage">
-								<c:if test="<%= (Validator.isNotNull(ddmStructureFieldLabel) && (classNameIds[0] == PortalUtil.getClassNameId(assetRendererFactory.getClassName()))) %>">
-									<%= HtmlUtil.escape(ddmStructureFieldLabel) + ": " + HtmlUtil.escape(ddmStructureDisplayFieldValue) %>
+								<c:if test="<%= (Validator.isNotNull(assetPublisherDisplayContext.getDDMStructureFieldLabel()) && (classNameIds[0] == PortalUtil.getClassNameId(assetRendererFactory.getClassName()))) %>">
+									<%= HtmlUtil.escape(assetPublisherDisplayContext.getDDMStructureFieldLabel()) + ": " + HtmlUtil.escape(assetPublisherDisplayContext.getDDMStructureDisplayFieldValue()) %>
 								</c:if>
 							</span>
 
@@ -245,12 +225,12 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					}
 					%>
 
-					<div class="asset-subtypefield-selected <%= Validator.isNull(ddmStructureFieldName) ? "hide" : StringPool.BLANK %>">
-						<aui:input name='<%= "preferences--ddmStructureFieldName--" %>' type="hidden" value="<%= ddmStructureFieldName %>" />
+					<div class="asset-subtypefield-selected <%= Validator.isNull(assetPublisherDisplayContext.getDDMStructureFieldName()) ? "hide" : StringPool.BLANK %>">
+						<aui:input name='<%= "preferences--ddmStructureFieldName--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldName() %>" />
 
-						<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= ddmStructureFieldValue %>" />
+						<aui:input name='<%= "preferences--ddmStructureFieldValue--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureFieldValue() %>" />
 
-						<aui:input name='<%= "preferences--ddmStructureDisplayFieldValue--" %>' type="hidden" value="<%= ddmStructureDisplayFieldValue %>" />
+						<aui:input name='<%= "preferences--ddmStructureDisplayFieldValue--" %>' type="hidden" value="<%= assetPublisherDisplayContext.getDDMStructureDisplayFieldValue() %>" />
 					</div>
 				</aui:fieldset>
 			</liferay-ui:panel>

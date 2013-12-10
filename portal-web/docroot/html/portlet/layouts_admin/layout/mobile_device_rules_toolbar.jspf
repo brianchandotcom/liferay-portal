@@ -41,26 +41,10 @@
 </liferay-portlet:renderURL>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />processDialog',
-		function(dialog) {
-			var A = AUI();
-
-			if (dialog) {
-				if (Liferay.Util.getTop() == window) {
-					dialog.plug(A.LoadingMask).render();
-				}
-				else {
-					dialog.hide();
-				}
-			}
-		},
-		['aui-loading-mask-deprecated']
-	);
-
 	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
-		<portlet:namespace />processDialog(dialog);
+		dialog.hide();
+
+		<portlet:namespace />updateRuleGroupInstances();
 	}
 
 	Liferay.provide(
@@ -102,7 +86,7 @@
 					<portlet:param name="struts_action" value="/layouts_admin/mobile_device_rules" />
 					<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 					<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
-                    <portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="className" value="<%= className %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 				</liferay-portlet:resourceURL>

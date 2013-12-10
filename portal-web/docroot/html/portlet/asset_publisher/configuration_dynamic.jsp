@@ -172,7 +172,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 							<span class="asset-subtypefields-message" id="<portlet:namespace /><%= className %>ddmStructureFieldMessage">
 								<c:if test="<%= (Validator.isNotNull(ddmStructureFieldLabel) && (classNameIds[0] == PortalUtil.getClassNameId(assetRendererFactory.getClassName()))) %>">
-									<%= ddmStructureFieldLabel + ": " + ddmStructureDisplayFieldValue %>
+									<%= HtmlUtil.escape(ddmStructureFieldLabel) + ": " + HtmlUtil.escape(ddmStructureDisplayFieldValue) %>
 								</c:if>
 							</span>
 
@@ -586,8 +586,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 			%>
 
-				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
-				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= (String)classTypeFieldName.getObject(0) %></option>');
+				columnBuffer1.push('<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS((String)classTypeFieldName.getObject(0)) %></option>');
+				columnBuffer2.push('<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS((String)classTypeFieldName.getObject(0)) %></option>');
 
 			<%
 			}
@@ -759,7 +759,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 		var ddmStructureFieldMessage = A.one('#<portlet:namespace />' + className + 'ddmStructureFieldMessage');
 
-		ddmStructureFieldMessage.html(message);
+		ddmStructureFieldMessage.html(Liferay.Util.escapeHTML(message));
 	}
 </aui:script>
 

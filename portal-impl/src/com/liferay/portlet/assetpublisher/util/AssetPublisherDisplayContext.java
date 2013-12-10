@@ -178,24 +178,18 @@ public class AssetPublisherDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AssetEntryQuery assetEntryQuery = null;
+		long[] groupIds = getGroupIds();
 
-		if (!ArrayUtil.contains(
-				getGroupIds(), themeDisplay.getScopeGroupId())) {
+		if (!ArrayUtil.contains(groupIds, themeDisplay.getScopeGroupId())) {
+			groupIds = ArrayUtil.append(
+				groupIds, themeDisplay.getScopeGroupId());
+		}
 
-			assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-				_portletPreferences, ArrayUtil.append(getGroupIds(),
-				themeDisplay.getScopeGroupId()));
-		}
-		else {
-			assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-				_portletPreferences, getGroupIds());
-		}
+		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			_portletPreferences, groupIds);
 
 		long[] classNameIds = getClassNameIds();
 		long[] classTypeIds = getClassTypeIds();
-
-		assetEntryQuery.setClassTypeIds(classTypeIds);
 
 		if (isSubtypeFieldsFilterEnabled() && (classNameIds.length == 1) &&
 			(classTypeIds.length == 1) &&
@@ -231,12 +225,19 @@ public class AssetPublisherDisplayContext {
 		assetEntryQuery.setAllTagIds(
 			AssetTagLocalServiceUtil.getTagIds(
 				themeDisplay.getScopeGroupId(), getAllAssetTagNames()));
+		assetEntryQuery.setClassTypeIds(classTypeIds);
+		assetEntryQuery.setEnablePermissions(isEnablePermissions());
+		assetEntryQuery.setExcludeZeroViewCount(isExcludeZeroViewCount());
+
+		String portletName = getPortletName();
+
+		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
+			assetEntryQuery.setGroupIds(getGroupIds());
+		}
 
 		if (isShowOnlyLayoutAssets()) {
 			assetEntryQuery.setLayout(themeDisplay.getLayout());
 		}
-
-		String portletName = getPortletName();
 
 		if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 			AssetEntry layoutAssetEntry = (AssetEntry)_request.getAttribute(
@@ -248,14 +249,7 @@ public class AssetPublisherDisplayContext {
 			}
 		}
 
-		assetEntryQuery.setEnablePermissions(isEnablePermissions());
 		assetEntryQuery.setPaginationType(getPaginationType());
-
-		if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
-			assetEntryQuery.setGroupIds(getGroupIds());
-		}
-
-		assetEntryQuery.setExcludeZeroViewCount(isExcludeZeroViewCount());
 		assetEntryQuery.setOrderByCol1(getOrderByColumn1());
 		assetEntryQuery.setOrderByCol2(getOrderByColumn2());
 		assetEntryQuery.setOrderByType1(getOrderByType1());

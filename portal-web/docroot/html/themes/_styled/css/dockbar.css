@@ -38,7 +38,7 @@ $editLayoutPanelWidth: 460px;
 		position: relative;
 		right: 0;
 		top: 0;
-		z-index: 401;
+		z-index: 450;
 
 		@include respond-to(phone, tablet) {
 			#_145_navSiteNavigationNavbarBtn {

@@ -58,16 +58,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules.js
 
 <aui:script>
 	function <portlet:namespace />mobileDeviceActionHandler(href) {
-		if (<%= themeDisplay.isStateExclusive() %>) {
-			<portlet:namespace />mobileDeviceOpenWindow(
-				{
-					uri: href
-				}
-			);
-		}
-		else {
-			location.href = href;
-		}
+		<portlet:namespace />mobileDeviceOpenWindow(
+			{
+				uri: href
+			}
+		);
 	}
 
 	function <portlet:namespace />mobileDeviceOpenWindow(config) {
@@ -75,7 +70,12 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules.js
 			config,
 			{
 				dialog: {
-					width: 1024
+					width: 1024,
+					on: {
+						visibleChange: function(event) {
+							<portlet:namespace />updateRuleGroupInstances();
+						}
+					}
 				},
 				title: Liferay.Language.get('javax.portlet.title.178')
 			}

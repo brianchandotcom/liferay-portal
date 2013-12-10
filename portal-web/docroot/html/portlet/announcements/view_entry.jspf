@@ -46,7 +46,7 @@ if (entry.getPriority() > 0) {
 	<h3 class="entry-title">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">
-				<a class="entry-url" href="<%= entry.getUrl() %>"><%= HtmlUtil.escape(entry.getTitle()) %></a>
+				<a class="entry-url" href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>"><%= HtmlUtil.escape(entry.getTitle()) %></a>
 			</c:when>
 			<c:when test="<%= Validator.isNull(entry.getUrl()) %>">
 				<%= HtmlUtil.escape(entry.getTitle()) %>
@@ -62,7 +62,7 @@ if (entry.getPriority() > 0) {
 	boolean showScopeName = false;
 	%>
 
-	<div class="<%= hiddenEntry ? "hide" : "" %> entry-content entry-type-<%= entry.getType() %>">
+	<div class="<%= hiddenEntry ? "hide" : "" %> entry-content entry-type-<%= HtmlUtil.escapeAttribute(entry.getType()) %>">
 		<%@ include file="/html/portlet/announcements/entry_scope.jspf" %>
 
 		<%= entry.getContent() %>

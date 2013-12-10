@@ -57,7 +57,7 @@ else {
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(viewURL) %>">
 				<a href="<%= viewURL %>">
-					<img alt="<%= articleDisplay.getTitle() %>" class="asset-small-image" src="<%= HtmlUtil.escape(src) %>" width="150" />
+					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image" src="<%= HtmlUtil.escapeAttribute(src) %>" width="150" />
 				</a>
 			</c:when>
 			<c:otherwise>

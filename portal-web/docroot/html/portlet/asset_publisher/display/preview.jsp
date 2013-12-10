@@ -29,7 +29,7 @@ AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("add_panel.jsp
 
 	<c:if test="<%= Validator.isNotNull(imagePreviewURL) %>">
 		<div class="asset-image-preview">
-			<img alt="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(themeDisplay.getLocale())) %>" src="<%= imagePreviewURL %>" />
+			<img alt="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(themeDisplay.getLocale())) %>" src="<%= HtmlUtil.escapeAttribute(imagePreviewURL) %>" />
 		</div>
 	</c:if>
 

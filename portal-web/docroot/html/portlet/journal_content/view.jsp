@@ -229,7 +229,7 @@ boolean expired = true;
 								%>
 
 									<div class="alert alert-block">
-										<%= LanguageUtil.format(pageContext, "x-is-expired", title) %>
+										<%= LanguageUtil.format(pageContext, "x-is-expired", HtmlUtil.escape(title)) %>
 									</div>
 
 								<%
@@ -320,7 +320,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				</liferay-portlet:renderURL>
 
 				<%
-				String taglibEditArticleURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(latestArticle.getTitle(locale)) + "', uri:'" + HtmlUtil.escapeURL(editArticleURL.toString()) + "'});";
+				String taglibEditArticleURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escape(latestArticle.getTitle(locale)) + "', uri:'" + HtmlUtil.escapeURL(editArticleURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon

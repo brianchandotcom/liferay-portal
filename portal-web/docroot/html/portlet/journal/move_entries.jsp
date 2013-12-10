@@ -153,8 +153,8 @@ for (JournalArticle curArticle : articles) {
 				%>
 
 					<li class="move-article">
-						<span class="article-title" title="<%= validMoveArticle.getTitle(locale) %>">
-							<%= validMoveArticle.getTitle(locale) %>
+						<span class="article-title" title="<%= HtmlUtil.escapeAttribute(validMoveArticle.getTitle(locale)) %>">
+							<%= HtmlUtil.escape(validMoveArticle.getTitle(locale)) %>
 						</span>
 					</li>
 
@@ -179,8 +179,8 @@ for (JournalArticle curArticle : articles) {
 				%>
 
 					<li class="move-article move-error">
-						<span class="article-title" title="<%= invalidMoveArticle.getTitle() %>">
-							<%= invalidMoveArticle.getTitle() %>
+						<span class="article-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveArticle.getTitle()) %>">
+							<%= HtmlUtil.escape(invalidMoveArticle.getTitle()) %>
 						</span>
 
 						<span class="error-message">

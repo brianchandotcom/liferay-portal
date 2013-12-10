@@ -26,14 +26,21 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.util.RSSUtil;
 
@@ -225,15 +232,10 @@ public class AssetPublisherDisplayContext {
 				_portletPreferences.getValue("delta", null),
 				SearchContainer.DEFAULT_DELTA);
 
-			PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
+			String portletName = getPortletName();
 
-			if (portletConfig != null) {
-				String portletName = portletConfig.getPortletName();
-
-				if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
-					_delta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
-				}
+			if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
+				_delta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
 			}
 		}
 
@@ -495,19 +497,14 @@ public class AssetPublisherDisplayContext {
 				return _enablePermissions;
 			}
 
-			PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
+			String portletName = getPortletName();
 
-			if (portletConfig != null) {
-				String portletName = portletConfig.getPortletName();
+			if (portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
+				portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
 
-				if (portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
-					portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
+				_enablePermissions = false;
 
-					_enablePermissions = false;
-
-					return _enablePermissions;
-				}
+				return _enablePermissions;
 			}
 
 			_enablePermissions = GetterUtil.getBoolean(
@@ -712,6 +709,17 @@ public class AssetPublisherDisplayContext {
 
 	public void setShowContextLink(Boolean showContextLink) {
 		_showContextLink = showContextLink;
+	}
+
+	protected String getPortletName() {
+		PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		if (portletConfig == null) {
+			return StringPool.BLANK;
+		}
+
+		return portletConfig.getPortletName();
 	}
 
 	private Integer _abstractLength;

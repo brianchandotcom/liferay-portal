@@ -12,7 +12,7 @@
 	</#if>
 
 	<li id="${lineId}${lineNumber}">
-		<#if element.getName() == "echo" || element.getName() == "fail" || element.getName() == "var">
+		<#if element.getName() == "echo" || element.getName() == "fail" || element.getName() == "property" || element.getName() == "var">
 			<#assign displayElement = element>
 
 			<#include "element_whole_html.ftl">

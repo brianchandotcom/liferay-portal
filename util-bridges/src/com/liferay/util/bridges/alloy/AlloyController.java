@@ -40,6 +40,7 @@ public interface AlloyController {
 
 	public void setPageContext(PageContext pageContext);
 
-	public void updateModel(BaseModel<?> baseModel) throws Exception;
+	public void updateModel(BaseModel<?> baseModel, Object... properties)
+		throws Exception;
 
 }

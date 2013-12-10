@@ -187,7 +187,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	}
 
 	@Override
-	public void updateModel(BaseModel<?> baseModel) throws Exception {
+	public void updateModel(BaseModel<?> baseModel, Object... properties)
+		throws Exception {
+
 		BeanPropertiesUtil.setProperties(baseModel, request);
 
 		if (baseModel.isNew()) {
@@ -197,6 +199,19 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		updateAuditedModel(baseModel);
 		updateGroupedModel(baseModel);
 		updateAttachedModel(baseModel);
+
+		if ((properties.length % 2) != 0) {
+			throw new IllegalArgumentException(
+				"Properties length is not an even number");
+		}
+
+		for (int i = 0; i < properties.length; i += 2) {
+			String propertyName = String.valueOf(properties[i]);
+			Object propertyValue = properties[i + 1];
+
+			BeanPropertiesUtil.setProperty(
+				baseModel, propertyName, propertyValue);
+		}
 
 		if (baseModel instanceof PersistedModel) {
 			PersistedModel persistedModel = (PersistedModel)baseModel;

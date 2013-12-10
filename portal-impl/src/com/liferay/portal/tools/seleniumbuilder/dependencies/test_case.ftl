@@ -48,16 +48,12 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 		<#if rootElement.element("var")??>
 			<#assign varElements = rootElement.elements("var")>
 
+			definitionScopeVariables = new HashMap<String, String>();
+
 			<#assign context = "definitionScopeVariables">
 
 			<#list varElements as varElement>
-				<#assign lineNumber = varElement.attributeValue("line-number")>
-
-				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pending", ${context});
-
 				<#include "var_element.ftl">
-
-				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass", ${context});
 			</#list>
 		</#if>
 	}
@@ -71,6 +67,18 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 		}
 
 		selenium.startLogger();
+
+		<#if rootElement.element("var")??>
+			<#assign varElements = rootElement.elements("var")>
+
+			<#list varElements as varElement>
+				<#assign lineNumber = varElement.attributeValue("line-number")>
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pending", ${context});
+
+				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass", ${context});
+			</#list>
+		</#if>
 	}
 
 	<#assign methodNames = ["command", "set-up", "tear-down"]>

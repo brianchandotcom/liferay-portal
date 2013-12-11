@@ -1352,7 +1352,8 @@ create table Organization_ (
 	regionId LONG,
 	countryId LONG,
 	statusId INTEGER,
-	comments STRING null
+	comments STRING null,
+	logoId LONG
 );
 
 create table OrgGroupRole (

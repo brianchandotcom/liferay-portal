@@ -60,8 +60,6 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public long getGroupId();
 
-	public long getLogoId();
-
 	public com.liferay.portal.model.Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

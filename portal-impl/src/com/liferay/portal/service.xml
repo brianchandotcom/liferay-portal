@@ -1175,6 +1175,7 @@
 		<column name="countryId" type="long" />
 		<column name="statusId" type="int" />
 		<column name="comments" type="String" />
+		<column name="logoId" type="long" />
 
 		<!-- Relationships -->
 

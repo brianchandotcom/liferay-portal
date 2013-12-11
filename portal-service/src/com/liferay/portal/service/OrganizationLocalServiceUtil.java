@@ -1543,7 +1543,7 @@ public class OrganizationLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	long, long, String, String, long, long, int, String, boolean,
-	boolean, byte[], ServiceContext)}
+	byte[], boolean, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long companyId, long organizationId, long parentOrganizationId,

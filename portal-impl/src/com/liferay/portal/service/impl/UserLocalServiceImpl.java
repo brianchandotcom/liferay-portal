@@ -1749,15 +1749,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		long portraitId = user.getPortraitId();
-
-		if (portraitId > 0) {
-			user.setPortraitId(0);
-
-			userPersistence.update(user);
-
-			imageLocalService.deleteImage(portraitId);
-		}
+		PortalUtil.updateImageId(user, false, null, "portraitId", 0, 0, 0);
 	}
 
 	/**

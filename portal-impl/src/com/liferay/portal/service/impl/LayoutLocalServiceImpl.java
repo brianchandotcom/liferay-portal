@@ -2235,15 +2235,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return null;
 		}
 
-		long iconImageId = layout.getIconImageId();
-
-		if (iconImageId <= 0) {
-			iconImageId = counterLocalService.increment();
-		}
-
-		imageLocalService.updateImage(iconImageId, bytes);
-
-		layout.setIconImageId(iconImageId);
+		PortalUtil.updateImageId(layout, true, bytes, "iconImageId", 0, 0, 0);
 
 		layoutPersistence.update(layout);
 

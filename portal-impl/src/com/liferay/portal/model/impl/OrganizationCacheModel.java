@@ -37,7 +37,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -71,6 +71,8 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		sb.append(statusId);
 		sb.append(", comments=");
 		sb.append(comments);
+		sb.append(", logoId=");
+		sb.append(logoId);
 		sb.append("}");
 
 		return sb.toString();
@@ -147,6 +149,8 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 			organizationImpl.setComments(comments);
 		}
 
+		organizationImpl.setLogoId(logoId);
+
 		organizationImpl.resetOriginalValues();
 
 		return organizationImpl;
@@ -170,6 +174,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		countryId = objectInput.readLong();
 		statusId = objectInput.readInt();
 		comments = objectInput.readUTF();
+		logoId = objectInput.readLong();
 	}
 
 	@Override
@@ -229,6 +234,8 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		else {
 			objectOutput.writeUTF(comments);
 		}
+
+		objectOutput.writeLong(logoId);
 	}
 
 	public String uuid;
@@ -247,4 +254,5 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	public long countryId;
 	public int statusId;
 	public String comments;
+	public long logoId;
 }

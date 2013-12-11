@@ -327,6 +327,20 @@ public interface OrganizationModel extends BaseModel<Organization>,
 	 */
 	public void setComments(String comments);
 
+	/**
+	 * Returns the logo ID of this organization.
+	 *
+	 * @return the logo ID of this organization
+	 */
+	public long getLogoId();
+
+	/**
+	 * Sets the logo ID of this organization.
+	 *
+	 * @param logoId the logo ID of this organization
+	 */
+	public void setLogoId(long logoId);
+
 	@Override
 	public boolean isNew();
 

@@ -6948,6 +6948,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		organizationImpl.setCountryId(organization.getCountryId());
 		organizationImpl.setStatusId(organization.getStatusId());
 		organizationImpl.setComments(organization.getComments());
+		organizationImpl.setLogoId(organization.getLogoId());
 
 		return organizationImpl;
 	}

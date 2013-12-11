@@ -497,15 +497,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		long logoId = company.getLogoId();
-
-		if (logoId > 0) {
-			company.setLogoId(0);
-
-			company = companyPersistence.update(company);
-
-			imageLocalService.deleteImage(logoId);
-		}
+		PortalUtil.updateImageId(company, false, null, "logoId", 0, 0, 0);
 
 		return company;
 	}

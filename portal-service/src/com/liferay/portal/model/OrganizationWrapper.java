@@ -69,6 +69,7 @@ public class OrganizationWrapper implements Organization,
 		attributes.put("countryId", getCountryId());
 		attributes.put("statusId", getStatusId());
 		attributes.put("comments", getComments());
+		attributes.put("logoId", getLogoId());
 
 		return attributes;
 	}
@@ -169,6 +170,12 @@ public class OrganizationWrapper implements Organization,
 
 		if (comments != null) {
 			setComments(comments);
+		}
+
+		Long logoId = (Long)attributes.get("logoId");
+
+		if (logoId != null) {
+			setLogoId(logoId);
 		}
 	}
 
@@ -544,6 +551,26 @@ public class OrganizationWrapper implements Organization,
 		_organization.setComments(comments);
 	}
 
+	/**
+	* Returns the logo ID of this organization.
+	*
+	* @return the logo ID of this organization
+	*/
+	@Override
+	public long getLogoId() {
+		return _organization.getLogoId();
+	}
+
+	/**
+	* Sets the logo ID of this organization.
+	*
+	* @param logoId the logo ID of this organization
+	*/
+	@Override
+	public void setLogoId(long logoId) {
+		_organization.setLogoId(logoId);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _organization.isNew();
@@ -698,11 +725,6 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public long getGroupId() {
 		return _organization.getGroupId();
-	}
-
-	@Override
-	public long getLogoId() {
-		return _organization.getLogoId();
 	}
 
 	@Override

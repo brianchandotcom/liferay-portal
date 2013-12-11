@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
@@ -56,6 +55,8 @@ import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.OrganizationIdComparator;
@@ -381,35 +382,7 @@ public class OrganizationLocalServiceImpl
 
 		Organization organization = getOrganization(organizationId);
 
-		Group group = organization.getGroup();
-
-		LayoutSet publicLayoutSet = layoutSetLocalService.getLayoutSet(
-			group.getGroupId(), false);
-
-		if (publicLayoutSet.isLogo()) {
-			long logoId = publicLayoutSet.getLogoId();
-
-			publicLayoutSet.setLogoId(0);
-
-			layoutSetPersistence.update(publicLayoutSet);
-
-			imageLocalService.deleteImage(logoId);
-		}
-
-		LayoutSet privateLayoutSet = layoutSetLocalService.getLayoutSet(
-			group.getGroupId(), true);
-
-		if (privateLayoutSet.isLogo()) {
-			long logoId = privateLayoutSet.getLogoId();
-
-			privateLayoutSet.setLogoId(0);
-
-			layoutSetPersistence.update(privateLayoutSet);
-
-			if (imageLocalService.getImage(logoId) != null) {
-				imageLocalService.deleteImage(logoId);
-			}
-		}
+		PortalUtil.updateImageId(organization, false, null, "logoId", 0, 0, 0);
 	}
 
 	/**
@@ -1718,19 +1691,11 @@ public class OrganizationLocalServiceImpl
 		organization.setStatusId(statusId);
 		organization.setComments(comments);
 
-		if (logo) {
-			if (ArrayUtil.isNotEmpty(logoBytes)) {
-				Group group = organization.getGroup();
-
-				layoutSetLocalService.updateLogo(
-					group.getGroupId(), true, true, logoBytes);
-				layoutSetLocalService.updateLogo(
-					group.getGroupId(), false, true, logoBytes);
-			}
-		}
-		else if (organization.getLogoId() > 0) {
-			deleteLogo(organizationId);
-		}
+		PortalUtil.updateImageId(
+			organization, logo, logoBytes, "logoId",
+			PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE),
+			PropsValues.USERS_IMAGE_MAX_HEIGHT,
+			PropsValues.USERS_IMAGE_MAX_WIDTH);
 
 		organization.setExpandoBridgeAttributes(serviceContext);
 

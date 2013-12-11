@@ -622,6 +622,7 @@
 		<property name="countryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.OrgGroupRoleImpl" table="OrgGroupRole">
 		<cache usage="read-write" />

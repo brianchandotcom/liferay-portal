@@ -70,9 +70,6 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public boolean isLogo();
 
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
 

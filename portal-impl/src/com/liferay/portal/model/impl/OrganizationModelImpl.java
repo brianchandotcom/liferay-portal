@@ -80,9 +80,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			{ "regionId", Types.BIGINT },
 			{ "countryId", Types.BIGINT },
 			{ "statusId", Types.INTEGER },
-			{ "comments", Types.VARCHAR }
+			{ "comments", Types.VARCHAR },
+			{ "logoId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Organization_ (uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table Organization_ (uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null,logoId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 	public static final String ORDER_BY_JPQL = " ORDER BY organization.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Organization_.name ASC";
@@ -134,6 +135,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		model.setCountryId(soapModel.getCountryId());
 		model.setStatusId(soapModel.getStatusId());
 		model.setComments(soapModel.getComments());
+		model.setLogoId(soapModel.getLogoId());
 
 		return model;
 	}
@@ -230,6 +232,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		attributes.put("countryId", getCountryId());
 		attributes.put("statusId", getStatusId());
 		attributes.put("comments", getComments());
+		attributes.put("logoId", getLogoId());
 
 		return attributes;
 	}
@@ -330,6 +333,12 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		if (comments != null) {
 			setComments(comments);
+		}
+
+		Long logoId = (Long)attributes.get("logoId");
+
+		if (logoId != null) {
+			setLogoId(logoId);
 		}
 	}
 
@@ -618,6 +627,17 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_comments = comments;
 	}
 
+	@JSON
+	@Override
+	public long getLogoId() {
+		return _logoId;
+	}
+
+	@Override
+	public void setLogoId(long logoId) {
+		_logoId = logoId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -671,6 +691,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationImpl.setCountryId(getCountryId());
 		organizationImpl.setStatusId(getStatusId());
 		organizationImpl.setComments(getComments());
+		organizationImpl.setLogoId(getLogoId());
 
 		organizationImpl.resetOriginalValues();
 
@@ -828,12 +849,14 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			organizationCacheModel.comments = null;
 		}
 
+		organizationCacheModel.logoId = getLogoId();
+
 		return organizationCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -867,6 +890,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		sb.append(getStatusId());
 		sb.append(", comments=");
 		sb.append(getComments());
+		sb.append(", logoId=");
+		sb.append(getLogoId());
 		sb.append("}");
 
 		return sb.toString();
@@ -874,7 +899,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Organization");
@@ -944,6 +969,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			"<column><column-name>comments</column-name><column-value><![CDATA[");
 		sb.append(getComments());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>logoId</column-name><column-value><![CDATA[");
+		sb.append(getLogoId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -980,6 +1009,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private long _countryId;
 	private int _statusId;
 	private String _comments;
+	private long _logoId;
 	private long _columnBitmask;
 	private Organization _escapedModel;
 }

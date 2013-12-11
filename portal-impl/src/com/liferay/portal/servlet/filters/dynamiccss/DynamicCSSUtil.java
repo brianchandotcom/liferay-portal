@@ -56,6 +56,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.ScriptableObject;
+
 /**
  * @author Raymond Augé
  * @author Sergio Sánchez
@@ -64,6 +68,10 @@ public class DynamicCSSUtil {
 
 	public static void init() {
 		try {
+			_jsScript = StringUtil.read(
+				ClassLoaderUtil.getPortalClassLoader(),
+				"com/liferay/portal/servlet/filters/dynamiccss/" +
+					"dependencies/r2.js");
 			_rubyScript = StringUtil.read(
 				ClassLoaderUtil.getPortalClassLoader(),
 				"com/liferay/portal/servlet/filters/dynamiccss/" +
@@ -164,6 +172,10 @@ public class DynamicCSSUtil {
 				servletContext, request, themeDisplay, theme, resourcePath,
 				content);
 
+			if (PortalUtil.isRightToLeft(request)) {
+				parsedContent = _getRtlCss(resourcePath, parsedContent);
+			}
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Parsing SASS for " + resourcePath + " takes " +
@@ -237,6 +249,47 @@ public class DynamicCSSUtil {
 		}
 
 		return servletContext.getRealPath(theme.getCssPath());
+	}
+
+	private static String _getRtlCss(String resourcePath, String css)
+		throws Exception {
+
+		Context context = Context.enter();
+
+		String rtlCss = css;
+
+		try {
+			ScriptableObject scope = context.initStandardObjects();
+
+			// Prepare the context to execute r2 script with Rhino 1.7
+
+			context.evaluateString(
+				scope, "var module = {exports: {}};", "module", 1, null);
+			context.evaluateString(
+				scope, "function require() {}", "require", 1, null);
+			context.evaluateString(
+				scope, "String.prototype.trim = function() {" +
+					"return this.replace(/^\\s+|\\s+$/g, '');}",
+				"trim", 1, null);
+			context.evaluateString(scope, _jsScript, "script", 1, null);
+
+			Function function = (Function)scope.get("r2", scope);
+
+			Object result = function.call(
+				context, scope, scope, new Object[] {css});
+
+			rtlCss = (String)Context.jsToJava(result, String.class);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Cannot transform " + resourcePath + " to RTL");
+			}
+		}
+		finally {
+			Context.exit();
+		}
+
+		return rtlCss;
 	}
 
 	private static File _getSassTempDir(ServletContext servletContext) {
@@ -445,6 +498,7 @@ public class DynamicCSSUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSUtil.class);
 
+	private static String _jsScript;
 	private static Pattern _pluginThemePattern = Pattern.compile(
 		"\\/([^\\/]+)-theme\\/", Pattern.CASE_INSENSITIVE);
 	private static Pattern _portalThemePattern = Pattern.compile(

@@ -122,7 +122,6 @@ public class LayoutSetBranchLocalServiceImpl
 		layoutSetBranch.setName(name);
 		layoutSetBranch.setDescription(description);
 		layoutSetBranch.setMaster(master);
-		layoutSetBranch.setLogo(logo);
 		layoutSetBranch.setLogoId(logoId);
 
 		if (logo) {

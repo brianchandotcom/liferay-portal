@@ -389,7 +389,6 @@ public class OrganizationLocalServiceImpl
 		if (publicLayoutSet.isLogo()) {
 			long logoId = publicLayoutSet.getLogoId();
 
-			publicLayoutSet.setLogo(false);
 			publicLayoutSet.setLogoId(0);
 
 			layoutSetPersistence.update(publicLayoutSet);
@@ -403,7 +402,6 @@ public class OrganizationLocalServiceImpl
 		if (privateLayoutSet.isLogo()) {
 			long logoId = privateLayoutSet.getLogoId();
 
-			privateLayoutSet.setLogo(false);
 			privateLayoutSet.setLogoId(0);
 
 			layoutSetPersistence.update(privateLayoutSet);
@@ -1642,8 +1640,8 @@ public class OrganizationLocalServiceImpl
 	 *             information was invalid
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
-	 *             long, long, String, String, long, long, int, String, boolean,
-	 *             boolean, byte[], ServiceContext)}
+	 *             long, long, String, String, long, long, int, String,
+	 *             boolean, byte[], boolean, ServiceContext)}
 	 */
 	@Override
 	public Organization updateOrganization(

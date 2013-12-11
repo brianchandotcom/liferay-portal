@@ -2002,6 +2002,8 @@ public class StagingImpl implements Staging {
 			groupName);
 
 		try {
+			serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);
+
 			LayoutSetBranch layoutSetBranch =
 				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
 					userId, groupId, privateLayout,

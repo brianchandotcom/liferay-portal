@@ -130,7 +130,8 @@ public class DynamicCSSUtil {
 
 		URLConnection cacheResourceURLConnection = null;
 
-		URL cacheResourceURL = _getCacheResource(servletContext, resourcePath);
+		URL cacheResourceURL = _getCacheResource(
+			servletContext, request, resourcePath);
 
 		if (cacheResourceURL != null) {
 			cacheResourceURLConnection = cacheResourceURL.openConnection();
@@ -203,11 +204,18 @@ public class DynamicCSSUtil {
 	}
 
 	private static URL _getCacheResource(
-			ServletContext servletContext, String resourcePath)
+			ServletContext servletContext, HttpServletRequest request,
+			String resourcePath)
 		throws Exception {
 
+		String cacheFileSuffix = StringPool.BLANK;
+
+		if (PortalUtil.isRightToLeft(request)) {
+			cacheFileSuffix = "_rtl";
+		}
+
 		return servletContext.getResource(
-			SassToCssBuilder.getCacheFileName(resourcePath, StringPool.BLANK));
+			SassToCssBuilder.getCacheFileName(resourcePath, cacheFileSuffix));
 	}
 
 	private static String _getCssThemePath(

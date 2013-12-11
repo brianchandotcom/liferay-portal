@@ -165,6 +165,10 @@ public class SassToCssBuilder {
 			String docrootDirName, String portalCommonDirName, String fileName)
 		throws Exception {
 
+		if (fileName.contains("_rtl")) {
+			return;
+		}
+
 		String filePath = docrootDirName.concat(fileName);
 
 		File file = new File(filePath);
@@ -181,7 +185,25 @@ public class SassToCssBuilder {
 
 		File rtlCacheFile = getCacheFile(filePath, "_rtl");
 
-		FileUtil.write(rtlCacheFile, _getRtlCss(fileName, parsedContent));
+		String rtlCss = _getRtlCss(fileName, parsedContent);
+
+		// Append custom css for rtl
+
+		int pos = fileName.lastIndexOf(StringPool.PERIOD);
+
+		String rtlCustomFileName =
+			fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
+
+		String rtlCustomFilePath = docrootDirName.concat(rtlCustomFileName);
+
+		if (FileUtil.exists(rtlCustomFilePath)) {
+			String rtlCustomCss = _parseSassFile(
+				docrootDirName, portalCommonDirName, rtlCustomFileName);
+
+			rtlCss += rtlCustomCss;
+		}
+
+		FileUtil.write(rtlCacheFile, rtlCss);
 
 		rtlCacheFile.setLastModified(file.lastModified());
 	}

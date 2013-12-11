@@ -246,7 +246,7 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//section[header/h1[contains(.,'${key_portletName}')]]</td>
+	<td>//section[header/h1[contains(.,&quot;${key_portletName}&quot;)]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -262,6 +262,11 @@
 <tr>
 	<td>PORTLET_3</td>
 	<td>xpath=(//section)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_BORDERLESS</td>
+	<td>//div[contains(@class,'portlet-borderless')]/span[contains(.,&quot;${key_portletName}&quot;)]</td>
 	<td></td>
 </tr>
 <tr>

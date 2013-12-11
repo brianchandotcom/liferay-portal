@@ -33,13 +33,16 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -148,6 +151,31 @@ public class AssetUtil {
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, assetCategory.getTitleCurrentValue(),
 			portletURL.toString());
+	}
+
+	public static String checkViewURL(
+		AssetEntry assetEntry, boolean viewInContext, String viewURL,
+		String currentURL, ThemeDisplay themeDisplay) {
+
+		if (Validator.isNull(viewURL)) {
+			return viewURL;
+		}
+
+		viewURL = HttpUtil.setParameter(
+			viewURL, "inheritRedirect", viewInContext);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
+
+		if (!viewInContext ||
+			(Validator.isNotNull(assetEntryLayoutUuid) &&
+		 	!assetEntryLayoutUuid.equals(layout.getUuid()))) {
+
+			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		}
+
+		return viewURL;
 	}
 
 	public static long[] filterCategoryIds(
@@ -496,6 +524,30 @@ public class AssetUtil {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public static boolean isDefaultAssetPublisher(
+		Layout layout, String portletId, String portletResource) {
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		String defaultAssetPublisherPortletId =
+			typeSettingsProperties.getProperty(
+				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
+				StringPool.BLANK);
+
+		if (Validator.isNull(defaultAssetPublisherPortletId)) {
+			return false;
+		}
+
+		if (defaultAssetPublisherPortletId.equals(portletId) ||
+			defaultAssetPublisherPortletId.equals(portletResource)) {
+
+			return true;
 		}
 
 		return false;

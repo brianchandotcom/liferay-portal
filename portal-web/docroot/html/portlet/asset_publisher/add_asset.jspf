@@ -15,35 +15,6 @@
 --%>
 
 <c:if test="<%= !addPortletURLs.isEmpty() %>">
-
-	<%
-	String taglibId = "addNew";
-
-	if (groupIds.length > 1) {
-		taglibId = taglibId.concat("In");
-
-		if (themeDisplay.getCompanyGroupId() == groupId) {
-			taglibId = taglibId.concat("Global");
-		}
-		else {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if (group.isLayout()) {
-				Layout scopeLayout = LayoutLocalServiceUtil.getLayout(group.getClassPK());
-
-				String friendlyURL = scopeLayout.getFriendlyURL();
-
-				taglibId = taglibId.concat(friendlyURL.substring(1));
-			}
-			else {
-				String friendlyURL = group.getFriendlyURL();
-
-				taglibId = taglibId.concat(friendlyURL.substring(1));
-			}
-		}
-	}
-	%>
-
 	<aui:nav-bar>
 		<aui:nav>
 			<c:choose>

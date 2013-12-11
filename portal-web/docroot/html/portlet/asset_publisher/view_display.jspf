@@ -15,16 +15,16 @@
 --%>
 
 <%
-if (!ArrayUtil.contains(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES, displayStyle)) {
+if (!ArrayUtil.contains(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES, assetPublisherDisplayContext.getDisplayStyle())) {
 %>
 
-	<%= HtmlUtil.escape(LanguageUtil.format(pageContext, "x-is-not-a-display-type", displayStyle)) %>
+	<%= HtmlUtil.escape(LanguageUtil.format(pageContext, "x-is-not-a-display-type", assetPublisherDisplayContext.getDisplayStyle())) %>
 
 <%
 }
 else {
 	for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {
-		if (displayStyle.equals(curDisplayStyle)) {
+		if (assetPublisherDisplayContext.getDisplayStyle().equals(curDisplayStyle)) {
 			String displayStyleJsp = "/html/portlet/asset_publisher/display/" + TextFormatter.format(curDisplayStyle, TextFormatter.N) + ".jsp";
 %>
 

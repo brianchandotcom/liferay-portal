@@ -15,29 +15,23 @@
 --%>
 
 <%
+AssetEntryQuery assetEntryQuery = assetPublisherDisplayContext.getAssetEntryQuery();
+
 int end = searchContainer.getEnd();
 int start = searchContainer.getStart();
-
-if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
-	assetEntryQuery.setGroupIds(groupIds);
-}
-
-assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
-assetEntryQuery.setOrderByCol1(orderByColumn1);
-assetEntryQuery.setOrderByCol2(orderByColumn2);
-assetEntryQuery.setOrderByType1(orderByType1);
-assetEntryQuery.setOrderByType2(orderByType2);
 
 List<AssetEntry> results = new ArrayList<AssetEntry>();
 int total = 0;
 
 if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinkedAssetEntryId() > 0)) {
+	long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", null));
+
 	if (assetVocabularyId > 0) {
 		AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(assetVocabularyId);
 
 		List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		assetEntryQuery.setClassNameIds(classNameIds);
+		assetEntryQuery.setClassNameIds(assetPublisherDisplayContext.getClassNameIds());
 
 		for (AssetCategory assetCategory : assetCategories) {
 			assetCategory = assetCategory.toEscapedModel();
@@ -79,8 +73,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				<h3 class="asset-entries-group-label"><%= assetCategory.getTitle(locale) %></h3>
 
 				<c:choose>
-					<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
+					<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -113,8 +107,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		searchContainer.setTotal(total);
 	}
-	else if (!groupByClass) {
-		assetEntryQuery.setClassNameIds(classNameIds);
+	else if (assetVocabularyId != -1) {
+		assetEntryQuery.setClassNameIds(assetPublisherDisplayContext.getClassNameIds());
 
 		if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
 			Hits hits = AssetUtil.search(request, assetEntryQuery, start, end);
@@ -142,8 +136,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 %>
 
 		<c:choose>
-			<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-				<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
+			<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
+				<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 			</c:when>
 			<c:otherwise>
 				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -153,7 +147,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 <%
 	}
 	else {
-		for (long classNameId : classNameIds) {
+		for (long classNameId : assetPublisherDisplayContext.getClassNameIds()) {
 			long[] oldGroupClassNameIds = assetEntryQuery.getClassNameIds();
 
 			long[] groupClassNameIds = {classNameId};
@@ -196,8 +190,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				<h3 class="asset-entries-group-label"><%= ResourceActionsUtil.getModelResource(locale, groupAssetRendererFactory.getClassName()) %></h3>
 
 				<c:choose>
-					<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
+					<c:when test="<%= assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() > 0 %>">
+						<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, assetPublisherDisplayContext.getPortletDisplayDDMTemplateId(), results, contextObjects) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -234,8 +228,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 	}
 }
 
-if ((total == 0) && (portletDisplayDDMTemplateId == 0)) {
-	if (!showPortletWithNoResults && ((addPortletURLs == null) || addPortletURLs.isEmpty()) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
+if ((total == 0) && (assetPublisherDisplayContext.getPortletDisplayDDMTemplateId() == 0)) {
+	if (((addPortletURLs == null) || addPortletURLs.isEmpty()) && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
 		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 	}
 %>

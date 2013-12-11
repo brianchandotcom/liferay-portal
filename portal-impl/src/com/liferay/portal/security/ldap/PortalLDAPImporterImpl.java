@@ -1105,6 +1105,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 
+		if (serializedExpandoAttributes.isEmpty()) {
+			return;
+		}
+
 		try {
 			ExpandoValueLocalServiceUtil.addValues(
 				expandoBridge.getCompanyId(), expandoBridge.getClassName(),

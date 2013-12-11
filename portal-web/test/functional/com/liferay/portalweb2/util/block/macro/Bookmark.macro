@@ -249,7 +249,6 @@
 			<then>
 				<execute action="CPBookmarksEditbookmark#assertTextEquals" locator-key1="FOLDER_NAME" value1="${subfolderName}" />
 			</then>
-
 			<else>
 				<execute action="CPBookmarksEditbookmark#assertTextEquals" locator-key1="FOLDER_NAME" value1="${folderName}" />
 			</else>

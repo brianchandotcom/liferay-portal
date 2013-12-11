@@ -3,15 +3,19 @@
 		<case locator-key1="AVAILABLE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="BACK">
 			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="BASIC_SEARCH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="CURRENT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="UPDATE_ASSOCIATIONS_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

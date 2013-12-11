@@ -15,7 +15,7 @@
 		<execute action="Home#open" locator-key1="API_JSON_URL" />
 
 		<execute action="Jsonwebservices#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please select a method on the left." />
-		<execute action="Jsonwebservices#assertTextEquals" locator-key1="SITE_NAME" value1="JSONWS API"/>
+		<execute action="Jsonwebservices#assertTextEquals" locator-key1="SITE_NAME" value1="JSONWS API" />
 		<execute action="Jsonwebservices#assertElementPresent" locator-key1="SEARCH" />
 		<execute action="Jsonwebservices#assertElementPresent" locator-key1="ADDRESS" />
 		<execute action="Jsonwebservices#assertElementPresent" locator-key1="WIKI_PAGE" />

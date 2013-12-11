@@ -52,7 +52,7 @@
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
 
-		<execute action="PGApplicationdisplaytemplatesAdd#type" locator-key1="NAME_FIELD" value1="${adtType} Test ADT"/>
+		<execute action="PGApplicationdisplaytemplatesAdd#type" locator-key1="NAME_FIELD" value1="${adtType} Test ADT" />
 		<execute action="PGApplicationdisplaytemplatesAdd#uploadCommonFile" locator-key1="SCRIPT_FIELD" value1="${adtFile}" />
 		<execute action="PGApplicationdisplaytemplatesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
@@ -71,6 +71,7 @@
 				<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</if>
+
 		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
 	</command>
 
@@ -109,6 +110,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
 		<if>
 			<condition action="BasePortlet#isElementPresent" locator-key1="OPTIONS_ICON" />
 			<then>

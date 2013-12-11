@@ -326,7 +326,7 @@
 				<then>
 					<var name="key_userScreenName" value="${userScreenName}" />
 
-					<execute action="CPUsersandorganizationsViewusers#check" locator-key1="USER_TABLE_ALL_CHECKBOX"/>
+					<execute action="CPUsersandorganizationsViewusers#check" locator-key1="USER_TABLE_ALL_CHECKBOX" />
 					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="DEACTIVATE" value1="Deactivate" />
 					<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate the selected users?" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -335,7 +335,7 @@
 			<elseif>
 				<condition action="CPUsersandorganizationsViewusers#isElementPresent" locator-key1="USER_TABLE_ALL_CHECKBOX" />
 				<then>
-					<execute action="CPUsersandorganizationsViewusers#check" locator-key1="USER_TABLE_ALL_CHECKBOX"/>
+					<execute action="CPUsersandorganizationsViewusers#check" locator-key1="USER_TABLE_ALL_CHECKBOX" />
 					<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="DEACTIVATE" value1="Deactivate" />
 					<execute action="CPUsersandorganizationsViewusers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate the selected users?" />
 					<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

@@ -15,6 +15,7 @@
 		<case comparator="contains" locator1="/input">
 			<execute function="AssertClick#assertValueClickAt" />
 		</case>
+
 		<default>
 			<execute function="AssertClick#assertTextClickAt" />
 		</default>
@@ -54,6 +55,7 @@
 		<case comparator="contains" locator1="/input">
 			<execute function="AssertTextEquals#assertValue" />
 		</case>
+
 		<default>
 			<execute function="AssertTextEquals#assertText" />
 		</default>
@@ -63,6 +65,7 @@
 		<case comparator="contains" locator1="/input">
 			<execute function="AssertTextNotEquals#assertNotValue" />
 		</case>
+
 		<default>
 			<execute function="AssertTextNotEquals#assertNotText" />
 		</default>
@@ -108,6 +111,7 @@
 		<case comparator="contains" locator1="/input">
 			<execute function="Copy#valueCopy" />
 		</case>
+
 		<default>
 			<execute function="Copy#textCopy" />
 		</default>
@@ -147,6 +151,7 @@
 		<case comparator="contains" locator1="/input">
 			<execute function="IsTextEqual#isValue" />
 		</case>
+
 		<default>
 			<execute function="IsTextEqual#isText" />
 		</default>
@@ -156,6 +161,7 @@
 		<case comparator="contains" locator1="/input">
 			<execute function="IsTextNotEqual#isNotValue" />
 		</case>
+
 		<default>
 			<execute function="IsTextNotEqual#isNotText" />
 		</default>
@@ -213,6 +219,7 @@
 		<case comparator="contains" locator1="/iframe">
 			<execute function="SelectFrame#selectFrame" />
 		</case>
+
 		<default>
 			<execute function="SelectFrame#selectFrameTop" />
 		</default>

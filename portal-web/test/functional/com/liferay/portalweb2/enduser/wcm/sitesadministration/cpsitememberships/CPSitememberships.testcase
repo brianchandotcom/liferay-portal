@@ -272,7 +272,7 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="Liferay" />
-		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search"/>
+		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
 		<execute action="CPSites#assertElementPresent" locator-key1="SITE_TABLE_CHECKBOX_DISABLED" />

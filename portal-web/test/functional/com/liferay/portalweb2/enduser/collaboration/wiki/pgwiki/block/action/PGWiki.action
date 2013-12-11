@@ -3,12 +3,15 @@
 		<case locator-key1="ADD_CHILD_PAGE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="ADD_FRONTPAGE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="NAVIGATION_ALL_PAGES">
-			<execute function="AssertClick#assertTextClickAtAndWait"/>
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="NAVIGATION_DRAFT_PAGES">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

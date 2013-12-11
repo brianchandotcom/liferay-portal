@@ -130,18 +130,16 @@ public class EditFileEntryAction extends PortletAction {
 		FileEntry fileEntry = null;
 
 		try {
-			if (Validator.isNull(cmd)) {
-				UploadException uploadException =
-					(UploadException)actionRequest.getAttribute(
-						WebKeys.UPLOAD_EXCEPTION);
+			UploadException uploadException =
+				(UploadException)actionRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
 
-				if (uploadException != null) {
-					if (uploadException.isExceededSizeLimit()) {
-						throw new FileSizeException(uploadException.getCause());
-					}
-
-					throw new PortalException(uploadException.getCause());
+			if (uploadException != null) {
+				if (uploadException.isExceededSizeLimit()) {
+					throw new FileSizeException(uploadException.getCause());
 				}
+
+				throw new PortalException(uploadException.getCause());
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.ADD_DYNAMIC) ||

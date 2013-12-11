@@ -222,7 +222,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public String createTempFileName(String prefix, String extension) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
 		sb.append(StringPool.SLASH);

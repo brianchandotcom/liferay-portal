@@ -72,7 +72,7 @@ public class LayoutRevisionAssetRendererFactory
 			PortalUtil.getClassNameId(LayoutRevision.class.getName()));
 		assetEntry.setClassPK(layoutRevision.getLayoutRevisionId());
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(layoutRevision.getHTMLTitle(LocaleUtil.getSiteDefault()));
 		sb.append(" [");

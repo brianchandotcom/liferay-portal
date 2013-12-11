@@ -183,7 +183,7 @@ public class UpgradePermission extends UpgradeProcess {
 			long portalContentReviewerRoleId = getRoleId(
 				companyId, _ROLE_PORTAL_CONTENT_REVIEWER);
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("(select User_.* from User_, Users_Roles where ");
 			sb.append("User_.userId = Users_Roles.userId and ");
@@ -328,7 +328,7 @@ public class UpgradePermission extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(11);
 
 			sb.append("select ResourcePermission.companyId, ");
 			sb.append("ResourcePermission.roleId, ResourcePermission.primKey ");

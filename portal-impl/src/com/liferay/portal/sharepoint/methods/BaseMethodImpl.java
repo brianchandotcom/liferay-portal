@@ -65,7 +65,9 @@ public abstract class BaseMethodImpl implements Method {
 			SharepointRequest sharepointRequest, boolean appendNewline)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		List<ResponseElement> elements = getElements(sharepointRequest);
+
+		StringBundler sb = new StringBundler(elements.size() + 9);
 
 		sb.append("<html><head><title>vermeer RPC packet</title></head>");
 		sb.append(StringPool.NEW_LINE);
@@ -76,8 +78,6 @@ public abstract class BaseMethodImpl implements Method {
 			"method", getMethodName() + ":" + SharepointUtil.VERSION);
 
 		sb.append(property.parse());
-
-		List<ResponseElement> elements = getElements(sharepointRequest);
 
 		for (ResponseElement element : elements) {
 			sb.append(element.parse());

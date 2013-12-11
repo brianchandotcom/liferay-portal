@@ -274,7 +274,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 	}
 
 	private String _toXPath(Condition condition) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(3);
 
 		if (condition.isJunction()) {
 			sb.append(StringPool.OPEN_PARENTHESIS);

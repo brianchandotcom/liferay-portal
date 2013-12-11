@@ -260,7 +260,7 @@ public class JournalContentImpl implements JournalContent {
 		long layoutSetId, String viewMode, String languageId, int page,
 		boolean secure) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(17);
 
 		sb.append(StringUtil.toHexString(groupId));
 		sb.append(ARTICLE_SEPARATOR);

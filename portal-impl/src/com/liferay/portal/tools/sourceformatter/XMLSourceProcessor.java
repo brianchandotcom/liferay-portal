@@ -611,7 +611,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			urlPatterns.add(locale);
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6 * urlPatterns.size());
 
 		for (String urlPattern : urlPatterns) {
 			sb.append("\t<servlet-mapping>\n");
@@ -647,7 +647,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		y = newContent.lastIndexOf("</url-pattern>", y) + 15;
 
-		sb = new StringBundler();
+		sb = new StringBundler(3 * urlPatterns.size() + 1);
 
 		sb.append("\t\t\t<url-pattern>/c/portal/protected</url-pattern>\n");
 

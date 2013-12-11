@@ -50,16 +50,15 @@ public class CyrusHook implements Hook {
 				if ((filters.size() > 0) || (emailAddresses.size() > 0) ||
 					leaveCopy) {
 
-					StringBundler sb = new StringBundler();
+					StringBundler sb = new StringBundler(
+						5 * filters.size() + 2 * emailAddresses.size() + 4);
 
 					for (int i = 0; i < filters.size(); i++) {
 						Filter filter = filters.get(i);
 
-						sb.append(":0\n");
-						sb.append("* ^(From|Cc|To).*");
+						sb.append(":0\n* ^(From|Cc|To).*");
 						sb.append(filter.getEmailAddress());
-						sb.append("\n");
-						sb.append("| $DELIVER -e -a $USER -m user.$USER.");
+						sb.append("\n| $DELIVER -e -a $USER -m user.$USER.");
 						sb.append(filter.getFolder());
 						sb.append("\n\n");
 					}

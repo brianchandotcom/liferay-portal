@@ -28,7 +28,7 @@ public class UpgradeWorkflow extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("update WorkflowDefinitionLink set classNameId = ");
 

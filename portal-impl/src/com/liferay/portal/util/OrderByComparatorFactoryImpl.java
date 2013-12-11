@@ -117,7 +117,7 @@ public class OrderByComparatorFactoryImpl implements OrderByComparatorFactory {
 
 		@Override
 		public String getOrderBy() {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5 * _columns.length - 1);
 
 			for (int i = 0; i < _columns.length; i += 2) {
 				if (i != 0) {

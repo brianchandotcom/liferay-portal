@@ -136,7 +136,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public String getHumanCondition(boolean arrayable) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_name);
 		sb.append(" ");

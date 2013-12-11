@@ -305,7 +305,7 @@ public class JournalConverterImpl implements JournalConverter {
 	protected Element fetchMetadataEntry(
 		Element parentElement, String attributeName, String attributeValue) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("entry[@");
 		sb.append(attributeName);

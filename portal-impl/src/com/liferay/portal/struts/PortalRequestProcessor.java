@@ -388,7 +388,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			portalURL = PortalUtil.getPortalURL(request);
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(portalURL);
 		sb.append(themeDisplay.getPathMain());

@@ -522,7 +522,7 @@ public class GroupFinderImpl
 						" OR Group_.classNameId = ")));
 			findByC_C_SQL = replaceOrderBy(findByC_C_SQL, obc);
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(12);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(replaceJoinAndWhere(findByC_C_SQL, params1));
@@ -766,7 +766,7 @@ public class GroupFinderImpl
 
 			findByC_PG_N_D_SQL = replaceOrderBy(findByC_PG_N_D_SQL, obc);
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(12);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params1));

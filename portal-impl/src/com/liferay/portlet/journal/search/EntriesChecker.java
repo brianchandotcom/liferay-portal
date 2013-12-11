@@ -128,7 +128,7 @@ public class EntriesChecker extends RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());

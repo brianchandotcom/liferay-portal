@@ -1,0 +1,148 @@
+<definition>
+	<var name="password" value="test" />
+
+	<command name="sendMessage">
+		<execute action="SOMessages#assertClick" locator-key1="NEW_MESSAGE_BUTTON" value1="New Message" />
+
+		<execute action="SOMessagesAdd#type" locator-key1="TO_FIELD" value1="${recipientName}" />
+		<execute action="SOMessagesAdd#assertClick" locator-key1="TO_FIELD_DROPDOWN_LIST" value1="${key_recipientName}" />
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="TO_FIELD" value1="${recipientName} &lt;${recipientScreenName}&gt;, " />
+
+		<if>
+			<isset var="number" />
+			<then>
+				<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}${number}" />
+				<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}${number}" />
+			</then>
+			<else>
+				<execute action="SOMessagesAdd#type" locator-key1="SUBJECT_FIELD" value1="${messageSubject}" />
+				<execute action="SOMessagesAdd#type" locator-key1="BODY_FIELD" value1="${messageBody}" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesAdd#uploadCommonFile" locator-key1="ATTACHMENTS_FIELD" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="SOMessagesAdd#click" locator-key1="SEND_BUTTON" />
+
+		<execute action="SOMessagesAdd#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="sendReplyMessage">
+		<execute action="SOMessagesMessage#type" locator-key1="PRIVATE_MESSAGE_REPLY_BODY_FIELD" value1="${messageReplyBody}" />
+
+		<if>
+			<isset var="messageReplyAttachmentFile" />
+			<then>
+				<execute action="SOMessagesMessage#uploadCommonFile" locator-key1="PRIVATE_MESSAGE_REPLY_ATTACHMENT_FIELD" value1="${messageReplyAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="SOMessagesMessage#click" locator-key1="PRIVATE_MESSAGE_SEND_BUTTON" />
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="viewMessage">
+		<execute macro="SOMessages#viewMessageList" />	
+		<if>
+			<isset var="number" />
+			<then>
+				<execute action="SOMessages#click" locator-key1="MESSAGE_SUBJECT_INCREMENT" />
+
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}${number}" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} And You" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_BODY" value1="${messageBody}${number}" />
+			</then>
+			<else>
+				<execute action="SOMessages#click" locator-key1="MESSAGE_SUBJECT" />
+
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} And You" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_BODY" value1="${messageBody}" />				
+			</else>
+		</if>
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_ATTACHMENT" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewMessageList">
+		<if>
+			<isset var="number" />
+			<then>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER_INCREMENT" value1="${connectionName}" />
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT_INCREMENT" value1="${messageSubject}${number}" />
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY_INCREMENT" value1="${messageBody}${number}" />
+			</then>
+			<else>
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
+				<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageBody}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewReplyMessage">
+		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SENDER" value1="${connectionName}" />
+		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute action="SOMessages#assertTextEquals" locator-key1="MESSAGE_BODY" value1="${messageReplyBody}" />
+		<execute action="SOMessages#click" locator-key1="MESSAGE_SUBJECT" />
+
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SUBJECT" value1="${messageSubject}" />
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_USERS" value1="Between ${connectionName} And You" />
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_SENDER" value1="${senderName}" />
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_BODY" value1="${messageBody}" />
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_ATTACHMENT" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_REPLY_SENDER" value1="${replySenderName}" />
+		<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_REPLY_BODY" value1="${messageReplyBody}" />
+
+		<if>
+			<isset var="messageAttachmentFile" />
+			<then>
+				<execute action="SOMessagesMessage#assertElementPresent" locator-key1="PRIVATE_MESSAGE_REPLY_ATTACHMENT" />
+				<execute action="SOMessagesMessage#assertTextEquals" locator-key1="PRIVATE_MESSAGE_REPLY_ATTACHMENT_LINK" value1="${messageAttachmentFile}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewMessageNotification">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1"/>
+		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SUBCONTENT" value1="${messageBody}"/>
+		<execute action="SOUserBar#assertClick" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="${senderName} sent you a message." />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0"/>
+	</command>
+
+	<command name="tearDownPG">
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_MESSAGES" />
+		<execute action="SOMessages#check" locator-key1="SELECT_ALL_CHECKBOX" />
+		<execute action="SOMessages#click" locator-key1="DELETE_BUTTON" />
+		<execute action="SOMessages#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No messages found." />
+	</command>
+</definition>

@@ -155,16 +155,12 @@
 	<command name="tearDownNotifications">
 		<execute macro="SOUser#firstLoginPG" />
 
-		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-
-		<execute action="SOUserBar#mouseOver" locator-key1="NOTIFICATION_MENU_COUNT" />
-		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_VIEW_ALL" value1="View All" />
-
 		<while>
-			<condition action="SONotifications#isElementPresent" locator-key1="NOTIFICATIONS_CHECKBOX" />
+			<condition action="SOUserBar#isTextNotEqual" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 			<then>
-				<execute action="SONotifications#check" locator-key1="NOTIFICATIONS_CHECKBOX" />
-				<execute action="SONotifications#click" locator-key1="DELETE_BUTTON" />
+				<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+				<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
+				<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_ENTRY" />
 			</then>
 		</while>
 	</command>

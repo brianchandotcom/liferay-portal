@@ -144,6 +144,12 @@
 		<execute function="AssertClick#assertValueClickAtAndWait" />
 	</command>
 
+	<command name="pauseAssertPartialTextClickAt">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" />
+	</command>
+
 	<command name="pauseAssertTextClickAt">
 		<execute selenium="pause" argument1="1000" />
 

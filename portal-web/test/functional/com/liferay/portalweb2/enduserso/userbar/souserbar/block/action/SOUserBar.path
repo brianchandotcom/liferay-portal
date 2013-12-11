@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION</td>
+	<td>//li[contains(@class,'user-notifications')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOGGLE_DOCKBAR</td>
 	<td>//a[contains(@id,'toggleDockbar')]</td>
 	<td></td>
@@ -107,6 +112,11 @@
 <tr>
 	<td>NOTIFICATION_MENU_COUNT</td>
 	<td>//span[contains(@class,'user-notifications-count')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_MENU_ENTRY</td>
+	<td>//div[contains(@class,'user-notification')]</td>
 	<td></td>
 </tr>
 <tr>

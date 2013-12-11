@@ -19,13 +19,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_CHECKBOX</td>
-	<td>//td[@id='_6_WAR_soportlet_userNotificationEventsSearchContainer_col-rowChecker_row-1']/input[@type='checkbox']</td>
+	<td>NOTIFICATIONS_ENTRY</td>
+	<td>//li[@class='user-notification unread']//div[@class='title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_BUTTON</td>
-	<td>//input[@value='Delete']</td>
+	<td>NOTIFICATIONS_ENTRY_INCREMENT</td>
+	<td>xPath=(//li[@class='user-notification unread']//div[@class='title'])[${key_row}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS</td>
+	<td>//span[contains(.,'results')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_BUTTON</td>
+	<td>//a[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 <tr>

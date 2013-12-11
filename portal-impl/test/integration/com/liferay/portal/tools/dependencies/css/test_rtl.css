@@ -1,0 +1,6 @@
+@import "compass";
+
+.test-custom-rtl {
+	border-left: 2px;
+	border-right: 3px;
+}

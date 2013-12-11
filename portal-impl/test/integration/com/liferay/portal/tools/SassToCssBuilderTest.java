@@ -1,0 +1,75 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.tools;
+
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
+
+/**
+ * @author Eduardo Garcia
+ */
+public class SassToCssBuilderTest {
+
+	@After
+	public void tearDown() throws Exception {
+		FileUtil.deltree(_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME);
+	}
+
+	@Test
+	public void testSassToCssBuilder() throws Exception {
+		List<String> dirNames = ListUtil.fromArray(new String[]{_DIR_NAME});
+		String docrootDirName = _DOCROOT_DIR_NAME;
+		String portalCommonDirName = _DOCROOT_DIR_NAME;
+
+		new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
+
+		// Compare generated with expected
+
+		String cacheContent = FileUtil.read(
+			_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME + _FILE_NAME);
+		String expectedCacheContent = FileUtil.read(
+			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _FILE_NAME);
+
+		Assert.assertEquals(cacheContent, expectedCacheContent);
+
+		String rtlCacheContent = FileUtil.read(
+			_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME +
+				_RTL_FILE_NAME);
+		String rtlExpectedCacheContent = FileUtil.read(
+			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _RTL_FILE_NAME);
+
+		Assert.assertEquals(rtlCacheContent, rtlExpectedCacheContent);
+	}
+
+	private static final String _DIR_NAME = "/css";
+
+	private static final String _DOCROOT_DIR_NAME =
+		"portal-impl/test/integration/com/liferay/portal/tools/dependencies";
+
+	private static final String _EXPECTED_DIR_NAME = "/expected";
+
+	private static final String _FILE_NAME = "/test.css";
+
+	private static final String _RTL_FILE_NAME = "/test_rtl.css";
+
+	private static final String _SASS_CACHE_DIR_NAME = "/.sass-cache";
+
+}

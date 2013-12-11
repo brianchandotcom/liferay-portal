@@ -75,9 +75,9 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 		<h3><%= LanguageUtil.format(pageContext, "users-of-x", HtmlUtil.escape(userGroup.getName())) %></h3>
 	</c:if>
 
-	<liferay-ui:search-form
-		page="/html/portlet/directory/user_search.jsp"
-	/>
+	<aui:nav-bar>
+		<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/directory/user_search.jsp" searchContainer="<%= userSearchContainer %>" />
+	</aui:nav-bar>
 
 	<%
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();

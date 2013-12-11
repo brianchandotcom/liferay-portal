@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-logo-selector',
 	function(A) {
+		var Lang = A.Lang;
+
 		var DELETE_LOGO = 'DELETE_LOGO';
 
 		var MAP_DELETE_LOGO = {
@@ -18,7 +20,7 @@ AUI.add(
 						setter: function(value) {
 							var fn = function() {};
 
-							if (value && value !== '') {
+							if (Lang.isFunction(window[value])) {
 								fn = window[value] || fn;
 							}
 
@@ -29,7 +31,7 @@ AUI.add(
 					},
 
 					editLogoURL: {
-						value: '',
+						value: ''
 					},
 
 					logoDisplaySelector: {

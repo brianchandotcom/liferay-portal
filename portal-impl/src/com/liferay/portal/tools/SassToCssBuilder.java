@@ -72,6 +72,25 @@ public class SassToCssBuilder {
 				cacheFileName.substring(pos2);
 	}
 
+	public static String getContent(String docrootDirName, String fileName)
+		throws Exception {
+
+		File file = new File(docrootDirName.concat(fileName));
+
+		String content = FileUtil.read(file);
+
+		content = AggregateFilter.aggregateCss(
+			new FileAggregateContext(docrootDirName, fileName), content);
+
+		return parseStaticTokens(content);
+	}
+
+	public static String getRtlCustomFileName(String fileName) {
+		int pos = fileName.lastIndexOf(StringPool.PERIOD);
+
+		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
+	}
+
 	public static void main(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
@@ -182,11 +201,7 @@ public class SassToCssBuilder {
 
 		// Append custom css for rtl
 
-		int pos = fileName.lastIndexOf(StringPool.PERIOD);
-
-		String rtlCustomFileName =
-			fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
-
+		String rtlCustomFileName = getRtlCustomFileName(fileName);
 		String rtlCustomFilePath = docrootDirName.concat(rtlCustomFileName);
 
 		if (FileUtil.exists(rtlCustomFilePath)) {
@@ -199,19 +214,6 @@ public class SassToCssBuilder {
 		FileUtil.write(rtlCacheFile, rtlCss);
 
 		rtlCacheFile.setLastModified(file.lastModified());
-	}
-
-	private String _getContent(String docrootDirName, String fileName)
-		throws Exception {
-
-		File file = new File(docrootDirName.concat(fileName));
-
-		String content = FileUtil.read(file);
-
-		content = AggregateFilter.aggregateCss(
-			new FileAggregateContext(docrootDirName, fileName), content);
-
-		return parseStaticTokens(content);
 	}
 
 	private String _getCssThemePath(String fileName) {
@@ -328,7 +330,7 @@ public class SassToCssBuilder {
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
 		inputObjects.put("commonSassPath", portalCommonDirName);
-		inputObjects.put("content", _getContent(docrootDirName, fileName));
+		inputObjects.put("content", getContent(docrootDirName, fileName));
 		inputObjects.put("cssRealPath", filePath);
 		inputObjects.put("cssThemePath", _getCssThemePath(filePath));
 		inputObjects.put("sassCachePath", _tempDir);

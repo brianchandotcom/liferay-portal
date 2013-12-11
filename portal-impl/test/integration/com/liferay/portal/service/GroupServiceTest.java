@@ -31,6 +31,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -46,6 +47,7 @@ import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.RoleTestUtil;
 import com.liferay.portal.util.TestPropsValues;
@@ -336,6 +338,31 @@ public class GroupServiceTest {
 			0,
 			GroupLocalServiceUtil.searchCount(
 				TestPropsValues.getCompanyId(), null, "cabina14", groupParams));
+	}
+
+	@Test
+	public void testGetUserSitesGroups() throws Exception {
+		Organization parentOrganization = OrganizationTestUtil.addOrganization(
+			true);
+
+		Group parentOrganizationGroup = parentOrganization.getGroup();
+
+		LayoutTestUtil.addLayout(
+			parentOrganizationGroup.getGroupId(),
+			ServiceTestUtil.randomString(), false);
+
+		Organization childOrganization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			ServiceTestUtil.randomString(), false);
+
+		UserLocalServiceUtil.addOrganizationUsers(
+			childOrganization.getOrganizationId(),
+			new long[] {TestPropsValues.getUserId()});
+
+		List<Group> groups = GroupServiceUtil.getUserSitesGroups(
+			TestPropsValues.getUserId(), null, false, QueryUtil.ALL_POS);
+
+		Assert.assertTrue(groups.contains(parentOrganizationGroup));
 	}
 
 	@Test

@@ -23,8 +23,8 @@
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -237,8 +237,8 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Site#editCP">
@@ -256,11 +256,11 @@
 	</command>
 
 	<command name="EditSiteFriendlyURL" priority="4">
-		<var name="siteFriendlyURLEdit" value="alpha" />
 		<var name="privateSitePage" value="Private Page" />
 		<var name="privateSitePageURL" value="http://localhost:8080/group/alpha" />
 		<var name="publicSitePage" value="Public Page" />
 		<var name="publicSitePageURL" value="http://localhost:8080/web/alpha" />
+		<var name="siteFriendlyURLEdit" value="alpha" />
 		<var name="siteName" value="Site Name" />
 
 		<execute macro="Page#gotoCP">
@@ -272,8 +272,8 @@
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -289,8 +289,8 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Site#editFriendlyURLCP">

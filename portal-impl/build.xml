@@ -495,6 +495,13 @@ public class Creole10Parser]]></replacevalue>
 		<copy file="${liferay.doclet.dir}/liferay-doclet.jar" todir="${project.dir}/lib/development" />
 	</target>
 
+	<target name="build-r2-js">
+		<get
+			dest="${project.dir}/portal-impl/src/com/liferay/portal/servlet/filters/dynamiccss/dependencies/r2.js"
+			src="https://raw.github.com/ded/R2/1.3.1/r2.js"
+		/>
+	</target>
+
 	<target name="build-releaseinfo" if="release.info">
 		<java
 			classname="com.liferay.portal.tools.ReleaseInfoBuilder"

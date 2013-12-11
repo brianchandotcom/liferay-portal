@@ -169,6 +169,25 @@ public class DynamicCSSUtil {
 			if (PortalUtil.isRightToLeft(request)) {
 				parsedContent = RTLCSSUtil.getRtlCss(
 						resourcePath, parsedContent);
+
+				// Append custom css for rtl
+
+				URL rtlCustomResourceURL = _getRtlCustomResource(
+					servletContext, resourcePath);
+
+				if (rtlCustomResourceURL != null) {
+					URLConnection rtlCustomResourceURLConnection =
+						rtlCustomResourceURL.openConnection();
+
+					String rtlCustomContent = StringUtil.read(
+						rtlCustomResourceURLConnection.getInputStream());
+
+					String rtlCustomParsedContent = _parseSass(
+						servletContext, request, themeDisplay, theme,
+						resourcePath, rtlCustomContent);
+
+					parsedContent += rtlCustomParsedContent;
+				}
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -244,6 +263,14 @@ public class DynamicCSSUtil {
 		}
 
 		return servletContext.getRealPath(theme.getCssPath());
+	}
+
+	private static URL _getRtlCustomResource(
+			ServletContext servletContext, String resourcePath)
+		throws Exception {
+
+		return servletContext.getResource(
+			SassToCssBuilder.getRtlCustomFileName(resourcePath));
 	}
 
 	private static File _getSassTempDir(ServletContext servletContext) {

@@ -1263,6 +1263,8 @@ public interface Portal {
 
 	public boolean isReservedParameter(String name);
 
+	public boolean isRightToLeft(HttpServletRequest request);
+
 	public boolean isRSSFeedsEnabled();
 
 	public boolean isSecure(HttpServletRequest request);

@@ -17,8 +17,12 @@ package com.liferay.portlet.asset.lar;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
+import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 /**
  * @author Zsolt Berentey
@@ -57,12 +61,46 @@ public class AssetCategoryStagedModelDataHandler
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, AssetCategory category)
 		throws Exception {
+
+		if (category.getParentCategoryId() !=
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+			AssetCategory parentCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					category.getParentCategoryId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, category, parentCategory,
+				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
+		else {
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+					category.getVocabularyId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, category, assetVocabulary,
+				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
 	}
 
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, AssetCategory category)
 		throws Exception {
+
+		if (category.getParentCategoryId() !=
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, category, AssetCategory.class,
+				category.getParentCategoryId());
+		}
+		else {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, category, AssetVocabulary.class,
+				category.getVocabularyId());
+		}
 	}
 
 	@Override

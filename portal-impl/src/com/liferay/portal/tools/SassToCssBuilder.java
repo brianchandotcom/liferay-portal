@@ -60,18 +60,19 @@ public class SassToCssBuilder {
 	}
 
 	public static File getCacheFile(String fileName, String suffix) {
-		fileName = StringUtil.replace(
+		return new File(getCacheFileName(fileName, suffix));
+	}
+
+	public static String getCacheFileName(String fileName, String suffix) {
+		String cacheFileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int pos1 = fileName.lastIndexOf(StringPool.SLASH);
-		int pos2 = fileName.lastIndexOf(StringPool.PERIOD);
+		int pos1 = cacheFileName.lastIndexOf(StringPool.SLASH);
+		int pos2 = cacheFileName.lastIndexOf(StringPool.PERIOD);
 
-		String cacheFileName =
-			fileName.substring(0, pos1 + 1) + ".sass-cache/" +
-				fileName.substring(pos1 + 1, pos2) + suffix +
-					fileName.substring(pos2);
-
-		return new File(cacheFileName);
+		return cacheFileName.substring(0, pos1 + 1) + ".sass-cache/" +
+			cacheFileName.substring(pos1 + 1, pos2) + suffix +
+				cacheFileName.substring(pos2);
 	}
 
 	public static void main(String[] args) {

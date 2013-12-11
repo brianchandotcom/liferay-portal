@@ -206,13 +206,8 @@ public class DynamicCSSUtil {
 			ServletContext servletContext, String resourcePath)
 		throws Exception {
 
-		int pos = resourcePath.lastIndexOf(StringPool.SLASH);
-
-		String cacheFileName =
-			resourcePath.substring(0, pos + 1) + ".sass-cache/" +
-				resourcePath.substring(pos + 1);
-
-		return servletContext.getResource(cacheFileName);
+		return servletContext.getResource(
+			SassToCssBuilder.getCacheFileName(resourcePath, StringPool.BLANK));
 	}
 
 	private static String _getCssThemePath(

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -807,6 +808,12 @@ public class EditFileEntryAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				return;
+			}
+			else if (cmd.equals(Constants.ADD_TEMP)) {
+				SessionMessages.add(
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 			}
 
 			if (e instanceof DuplicateFileException ||

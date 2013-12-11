@@ -66,7 +66,8 @@ public class DynamicCSSUtil {
 		try {
 			_rubyScript = StringUtil.read(
 				ClassLoaderUtil.getPortalClassLoader(),
-				"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
+				"com/liferay/portal/servlet/filters/dynamiccss/" +
+					"dependencies/main.rb");
 		}
 		catch (Exception e) {
 			_log.error(e, e);

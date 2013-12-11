@@ -128,7 +128,8 @@ public class SassToCssBuilder {
 
 		_rubyScript = StringUtil.read(
 			classLoader,
-			"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
+			"com/liferay/portal/servlet/filters/dynamiccss/" +
+				"dependencies/main.rb");
 
 		_tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
 

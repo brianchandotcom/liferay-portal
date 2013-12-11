@@ -103,7 +103,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		// SKU and small image
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(10);
 
 		if (item.isSmallImage()) {
 			sb.append("<br />");

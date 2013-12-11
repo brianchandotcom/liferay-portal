@@ -412,15 +412,17 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 <%!
 public String marshallParams(Map<String, String> params) {
-	StringBundler sb = new StringBundler();
+	if (params == null) {
+		return StringPool.BLANK;
+	}
 
-	if (params != null) {
-		for (Map.Entry<String, String> configParam : params.entrySet()) {
-			sb.append(StringPool.AMPERSAND);
-			sb.append(configParam.getKey());
-			sb.append(StringPool.EQUAL);
-			sb.append(HttpUtil.encodeURL(configParam.getValue()));
-		}
+	StringBundler sb = new StringBundler(4 * params.size());
+
+	for (Map.Entry<String, String> configParam : params.entrySet()) {
+		sb.append(StringPool.AMPERSAND);
+		sb.append(configParam.getKey());
+		sb.append(StringPool.EQUAL);
+		sb.append(HttpUtil.encodeURL(configParam.getValue()));
 	}
 
 	return sb.toString();

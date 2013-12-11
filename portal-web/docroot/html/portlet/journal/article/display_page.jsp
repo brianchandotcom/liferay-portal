@@ -586,7 +586,9 @@ Group parentGroup = themeDisplay.getSiteGroup();
 
 <%!
 private String _getLayoutBreadcrumb(Layout layout, Locale locale) throws Exception {
-	StringBundler sb = new StringBundler();
+	List<Layout> ancestors = layout.getAncestors();
+
+	StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
 
 	layout = layout.toEscapedModel();
 
@@ -600,8 +602,6 @@ private String _getLayoutBreadcrumb(Layout layout, Locale locale) throws Excepti
 	sb.append(StringPool.SPACE);
 	sb.append(StringPool.GREATER_THAN);
 	sb.append(StringPool.SPACE);
-
-	List<Layout> ancestors = layout.getAncestors();
 
 	Collections.reverse(ancestors);
 

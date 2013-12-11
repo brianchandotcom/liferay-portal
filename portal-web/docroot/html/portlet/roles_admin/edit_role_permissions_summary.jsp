@@ -182,7 +182,7 @@ for (int i = 0; i < results.size(); i++) {
 	editPermissionsURL.setParameter("redirect", permissionsAllURL.toString());
 	editPermissionsURL.setParameter("portletResource", curPortletName);
 
-	StringBundler sb = new StringBundler();
+	StringBundler sb = new StringBundler(17);
 
 	sb.append("<a class=\"permission-navigation-link\" data-resource-href=\"");
 	sb.append(editPermissionsResourceURL);

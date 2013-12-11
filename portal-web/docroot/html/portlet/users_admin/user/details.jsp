@@ -61,9 +61,9 @@ if (selContact != null) {
 			<%
 			UserFieldException ufe = (UserFieldException)errorException;
 
-			StringBundler sb = new StringBundler();
-
 			List<String> fields = ufe.getFields();
+
+			StringBundler sb = new StringBundler(2 * fields.size() - 1);
 
 			for (int i = 0; i < fields.size(); i++) {
 				String field = fields.get(i);

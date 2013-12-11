@@ -170,5 +170,11 @@
 			height: auto;
 			line-height: normal;
 		}
+
+		@include respond-to(phone) {
+			input[type=file] {
+				width: 220px;
+			}
+		}
 	}
 }

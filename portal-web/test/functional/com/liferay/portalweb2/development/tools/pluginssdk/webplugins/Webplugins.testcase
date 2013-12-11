@@ -49,7 +49,7 @@
 	</command>
 
 	<command name="ResourcesImporterWebSmoke" priority="5">
-		<property name="web.plugins.includes" value="resource-importer-web" />
+		<property name="web.plugins.includes" value="resources-importer-web" />
 
 		<var name="appName" value="Resources Importer" />
 

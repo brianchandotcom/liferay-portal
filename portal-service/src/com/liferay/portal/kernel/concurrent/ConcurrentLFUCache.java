@@ -148,7 +148,7 @@ public class ConcurrentLFUCache<K, V> {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{evictCount=");
 		sb.append(_evictCount.get());

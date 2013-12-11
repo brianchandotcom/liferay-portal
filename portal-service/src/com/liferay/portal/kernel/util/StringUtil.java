@@ -123,7 +123,7 @@ public class StringUtil {
 		}
 
 		if (allowDuplicates || !contains(s, add, delimiter)) {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(s);
 

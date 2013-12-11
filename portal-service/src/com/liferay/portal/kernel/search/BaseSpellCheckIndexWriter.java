@@ -183,7 +183,7 @@ public abstract class BaseSpellCheckIndexWriter
 	protected String getUID(
 		long companyId, String languageId, String word, String... parameters) {
 
-		StringBundler uidSB = new StringBundler();
+		StringBundler uidSB = new StringBundler(5);
 
 		uidSB.append(String.valueOf(companyId));
 		uidSB.append(StringPool.UNDERLINE);

@@ -317,7 +317,7 @@ public class Version implements Comparable<Version>, Serializable {
 	private static String _toString(
 		String major, String minor, String bugFix, String buildNumber) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(major);
 

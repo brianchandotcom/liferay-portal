@@ -182,7 +182,7 @@ public class RowChecker {
 		String checkBoxRowIds, String checkBoxAllRowIds,
 		String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(20);
 
 		sb.append("<input ");
 

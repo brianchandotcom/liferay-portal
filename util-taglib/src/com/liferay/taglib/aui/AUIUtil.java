@@ -54,7 +54,7 @@ public class AUIUtil {
 		String prefix, boolean disabled, boolean first, boolean last,
 		String cssClass) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(prefix);
 

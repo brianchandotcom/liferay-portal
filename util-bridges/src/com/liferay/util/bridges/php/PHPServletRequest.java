@@ -47,7 +47,7 @@ public class PHPServletRequest extends HttpServletRequestWrapper {
 		_renderResponse = renderResponse;
 		_portletConfig = portletConfig;
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(9);
 
 		int pos = phpURI.indexOf(CharPool.QUESTION);
 

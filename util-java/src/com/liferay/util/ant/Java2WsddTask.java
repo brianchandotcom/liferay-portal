@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import java.io.File;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -169,14 +170,16 @@ public class Java2WsddTask {
 			else if (elementName.equals("operation")) {
 				element.detach();
 
-				StringBundler sb = new StringBundler();
+				List<Element> parameters = element.elements("parameter");
+
+				StringBundler sb = new StringBundler(2 * parameters.size() + 2);
 
 				String name = element.attributeValue("name");
 
 				sb.append(name);
 				sb.append("_METHOD_");
 
-				for (Element parameterElement : element.elements("parameter")) {
+				for (Element parameterElement : parameters) {
 					String type = parameterElement.attributeValue("type");
 
 					sb.append(type);

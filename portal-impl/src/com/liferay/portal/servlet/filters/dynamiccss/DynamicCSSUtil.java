@@ -68,6 +68,8 @@ public class DynamicCSSUtil {
 				ClassLoaderUtil.getPortalClassLoader(),
 				"com/liferay/portal/servlet/filters/dynamiccss" +
 					"/dependencies/main.rb");
+
+			RTLCSSUtil.init();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -163,6 +165,11 @@ public class DynamicCSSUtil {
 			parsedContent = _parseSass(
 				servletContext, request, themeDisplay, theme, resourcePath,
 				content);
+
+			if (PortalUtil.isRightToLeft(request)) {
+				parsedContent = RTLCSSUtil.getRtlCss(
+						resourcePath, parsedContent);
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

@@ -15,7 +15,7 @@
 		<execute macro="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#showDetails" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#select" locator-key1="DETAILS_LANGUAGE_SELECT" value1="${displayTemplateLanguageSelect}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#assertClick" locator-key1="DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#assertClick" locator-key1="DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -126,7 +126,7 @@
 		<execute macro="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#showDetails" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#select" locator-key1="DETAILS_LANGUAGE_SELECT" value1="${displayTemplateLanguageSelect}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#assertClick" locator-key1="DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#assertClick" locator-key1="DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -226,8 +226,3 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 </definition>
-
-
-
-
-

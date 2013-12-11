@@ -3,6 +3,7 @@
 		<case locator-key1="PORTLET_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" value1="You are signed in as" />
 		</case>
+
 		<case locator-key1="PORTLET_TITLE">
 			<execute function="AssertTextEquals#assertText" value1="Sign In" />
 		</case>

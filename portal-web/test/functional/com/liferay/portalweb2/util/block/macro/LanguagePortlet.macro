@@ -46,7 +46,6 @@
 			<fail message="Invalid var language. Must be (Chinese|English|French|German|Hungarian|Portuguese|Spanish)." />
 		</else>
 	</if>
-
 	</command>
 
 	<command name="tearDownLanguagePG">

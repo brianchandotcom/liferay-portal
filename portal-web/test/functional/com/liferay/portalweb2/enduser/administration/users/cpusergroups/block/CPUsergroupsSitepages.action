@@ -3,9 +3,11 @@
 		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
 			<execute function="AssertElementPresent#assertElementPresent" />
 		</case>
+
 		<case locator-key1="PAGE_TREE_PAGE_LINK_2">
 			<execute function="AssertElementPresent#assertElementPresent" />
 		</case>
+
 		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
 			<execute function="AssertElementPresent#assertElementPresent" />
 		</case>
@@ -15,9 +17,11 @@
 		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
 			<execute function="IsElementNotPresent#isNotVisible" />
 		</case>
+
 		<case locator-key1="PAGE_TREE_PAGE_LINK_2">
 			<execute function="IsElementNotPresent#isNotVisible" />
 		</case>
+
 		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
 			<execute function="IsElementNotPresent#isNotVisible" />
 		</case>
@@ -27,9 +31,11 @@
 		<case locator-key1="PAGE_TREE_PAGE_LINK_1">
 			<execute function="IsElementPresent#isVisible" />
 		</case>
+
 		<case locator-key1="PAGE_TREE_PAGE_LINK_2">
 			<execute function="IsElementPresent#isVisible" />
 		</case>
+
 		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
 			<execute function="IsElementPresent#isVisible" />
 		</case>

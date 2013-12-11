@@ -3,12 +3,15 @@
 		<case locator-key1="SETUP">
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
+
 		<case locator-key1="DISPLAY_SETTINGS">
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
+
 		<case locator-key1="MANAGE_DISPLAY_TEMPLATES_LINK">
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
+
 		<case locator-key1="SAVE_BUTTON">
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>

@@ -405,12 +405,12 @@
 
 		<var name="key_wikiNodeName" value="Main" />
 
-		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="Main"/>
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="Main" />
 
 		<while>
 			<condition action="CPWikiAllpages#isElementPresent" locator1="//a[@title='Actions']" />
 			<then>
-				<execute action="CPWikiAllpages#assertClick" locator1="//a[@title='Actions']" value1="Actions"/>
+				<execute action="CPWikiAllpages#assertClick" locator1="//a[@title='Actions']" value1="Actions" />
 				<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 				<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>

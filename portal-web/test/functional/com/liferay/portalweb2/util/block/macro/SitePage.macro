@@ -127,7 +127,7 @@
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${siteChildPageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
-		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
+		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 
 	<command name="viewFriendlyURLCP">
@@ -150,6 +150,6 @@
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
-		<execute action="Home#assertLocation" value1="${sitePageURL}"/>
+		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 </definition>

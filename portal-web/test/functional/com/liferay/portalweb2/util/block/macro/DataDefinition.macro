@@ -109,7 +109,6 @@
 			<then>
 				<var name="fieldName" value="${fieldName?lowercase()}" />
 			</then>
-
 			<elseif>
 				<equals arg1="${settingsFieldKey}" arg2="SETTINGS_TIP" />
 				<then>
@@ -152,7 +151,6 @@
 				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="Yes" />
 			</then>
-
 			<else>
 				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertChecked" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
 				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertNotChecked" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
@@ -223,7 +221,6 @@
 			<then>
 				<execute action="CPDynamicdatalistsDatadefinitionsEdit#click" locator-key1="${formFieldKey}" />
 			</then>
-
 			<else>
 				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="${formFieldKey}" value1="${fieldName}" />
 			</else>

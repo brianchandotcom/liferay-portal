@@ -275,6 +275,7 @@
 
 		<execute action="CPDynamicdatalists#selectFrameTop" />
 	</command>
+
 	<command name="viewPG">
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="HEADER_TITLE" value1="${listName}" />
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="RECORD_TABLE_COLUMN_ONE_NAME" value1="Text" />

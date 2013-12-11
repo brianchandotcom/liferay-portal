@@ -21,7 +21,7 @@
 
 	<command name="type">
 		<case locator-key1="SEARCH_FIELD">
-			<execute function="Type#sendKeys"/>
+			<execute function="Type#sendKeys" />
 		</case>
 	</command>
 </definition>

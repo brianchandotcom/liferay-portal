@@ -3,9 +3,11 @@
 		<case locator-key1="ADD">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="SITE_TEMPLATE_TABLE_ACTIONS">
 			<execute function="AssertClick#assertTextClickAt" />
 		</case>
+
 		<case locator-key1="SITE_TEMPLATE_MENULIST_MANAGE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

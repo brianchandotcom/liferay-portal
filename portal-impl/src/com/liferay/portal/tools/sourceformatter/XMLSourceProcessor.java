@@ -40,6 +40,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author Hugo Huijser
  */
@@ -132,10 +134,98 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String fixPoshiXMLElementWithNoChild(String content) {
+		Pattern pattern = Pattern.compile(
+			"\\\"[\\s]*\\>[\\n\\s\\t]*\\</[a-z\\-]+>");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			content = StringUtil.replace(content, matcher.group(), "\" />");
+		}
+
+		return content;
+	}
+
+	protected String fixPoshiXMLEndLines(String content) {
+		Pattern pattern = Pattern.compile("\\>\\n\\n\\n+(\\t*\\<)");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String statement = matcher.group();
+
+			String newStatement = StringUtil.replace(
+				statement, matcher.group(), ">\n\n" + matcher.group(1));
+
+			content = StringUtil.replace(content, statement, newStatement);
+		}
+
+		return content;
+	}
+
+	protected String fixPoshiXMLEndLinesAfterClosingElement(String content) {
+		Pattern pattern = Pattern.compile(
+			"(\\</[a-z\\-]+>)(\\n+)\\t*\\<[a-z]+");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String statement = matcher.group();
+
+			String closingElement = matcher.group(1);
+
+			if (StringUtils.equals("</and>", matcher.group(1)) ||
+				StringUtils.equals("</elseif>", matcher.group(1)) ||
+				StringUtils.equals("</not>", matcher.group(1)) ||
+				StringUtils.equals("</or>", matcher.group(1)) ||
+				StringUtils.equals("</then>", matcher.group(1))) {
+
+				String newStatement = StringUtil.replace(
+					statement, matcher.group(2), "\n");
+
+				content = StringUtil.replace(content, statement, newStatement);
+			}
+			else if (!StringUtils.equals("</var>", matcher.group(1))) {
+				String newStatement =
+					StringUtil.replace(statement, matcher.group(2), "\n\n");
+
+				content = StringUtil.replace(content, statement, newStatement);
+			}
+		}
+
+		return content;
+	}
+
+	protected String fixPoshiXMLEndLinesBeforeClosingElement(String content) {
+		Pattern pattern = Pattern.compile("(\\n+)(\\t*</[a-z\\-]+>)");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String statement = matcher.group();
+
+			String newStatement = StringUtil.replace(
+				statement, matcher.group(1), "\n");
+
+			content = StringUtil.replace(content, statement, newStatement);
+		}
+
+		return content;
+	}
+
 	@Override
 	protected void format() throws Exception {
-		String[] excludes = new String[] {"**\\.bnd\\**", "**\\.idea\\**"};
-		String[] includes = new String[] {"**\\*.xml"};
+		String[] excludes = new String[] {
+			"**\\.bnd\\**", "**\\.idea\\**", "portal-impl\\**\\*.action",
+			"portal-impl\\**\\*.function", "portal-impl\\**\\*.macro",
+			"portal-impl\\**\\*.testcase"
+		};
+
+		String[] includes = new String[] {
+			"**\\*.action","**\\*.function","**\\*.macro","**\\*.testcase",
+			"**\\*.xml"
+		};
 
 		Properties exclusions = getExclusionsProperties(
 			"source_formatter_xml_exclusions.properties");
@@ -176,6 +266,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					 (!portalSource && fileName.endsWith("/portlet.xml"))) {
 
 				newContent = formatPortletXML(newContent);
+			}
+			else if (portalSource && fileName.endsWith(".action") ||
+					 portalSource && fileName.endsWith(".function") ||
+					 portalSource && fileName.endsWith(".macro") ||
+					 portalSource && fileName.endsWith(".testcase")) {
+
+				newContent = formatPoshiXML(fileName, content);
 			}
 			else if (portalSource && fileName.endsWith("/service.xml")) {
 				formatServiceXML(fileName, newContent);
@@ -439,6 +536,22 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return document.formattedString();
+	}
+
+	protected String formatPoshiXML(String fileName, String content)
+		throws DocumentException, IOException {
+
+		String newContent = content;
+
+		newContent = fixPoshiXMLElementWithNoChild(newContent);
+
+		newContent = fixPoshiXMLEndLinesAfterClosingElement(newContent);
+
+		newContent = fixPoshiXMLEndLinesBeforeClosingElement(newContent);
+
+		newContent = fixPoshiXMLEndLines(newContent);
+
+		return newContent.trim();
 	}
 
 	protected void formatServiceXML(String fileName, String content)

@@ -701,7 +701,7 @@ $editLayoutPanelWidth: 460px;
 		}
 	}
 
-	&.dialog-iframe-root-node .dockbar .nav-add-controls .page-preview-controls {
+	&.dialog-iframe-root-node .dockbar .navbar-inner .container .nav-collapse > .nav.nav-add-controls .dropdown-menu .page-preview-controls {
 		display: none;
 	}
 

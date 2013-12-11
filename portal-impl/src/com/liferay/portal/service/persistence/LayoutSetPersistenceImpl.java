@@ -1705,7 +1705,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSetImpl.setCreateDate(layoutSet.getCreateDate());
 		layoutSetImpl.setModifiedDate(layoutSet.getModifiedDate());
 		layoutSetImpl.setPrivateLayout(layoutSet.isPrivateLayout());
-		layoutSetImpl.setLogo(layoutSet.isLogo());
 		layoutSetImpl.setLogoId(layoutSet.getLogoId());
 		layoutSetImpl.setThemeId(layoutSet.getThemeId());
 		layoutSetImpl.setColorSchemeId(layoutSet.getColorSchemeId());

@@ -826,27 +826,6 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public void setTypeSettings(String typeSettings);
 
 	/**
-	 * Returns the icon image of this layout revision.
-	 *
-	 * @return the icon image of this layout revision
-	 */
-	public boolean getIconImage();
-
-	/**
-	 * Returns <code>true</code> if this layout revision is icon image.
-	 *
-	 * @return <code>true</code> if this layout revision is icon image; <code>false</code> otherwise
-	 */
-	public boolean isIconImage();
-
-	/**
-	 * Sets whether this layout revision is icon image.
-	 *
-	 * @param iconImage the icon image of this layout revision
-	 */
-	public void setIconImage(boolean iconImage);
-
-	/**
 	 * Returns the icon image ID of this layout revision.
 	 *
 	 * @return the icon image ID of this layout revision

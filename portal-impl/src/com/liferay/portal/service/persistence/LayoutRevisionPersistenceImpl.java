@@ -6224,7 +6224,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevisionImpl.setKeywords(layoutRevision.getKeywords());
 		layoutRevisionImpl.setRobots(layoutRevision.getRobots());
 		layoutRevisionImpl.setTypeSettings(layoutRevision.getTypeSettings());
-		layoutRevisionImpl.setIconImage(layoutRevision.isIconImage());
 		layoutRevisionImpl.setIconImageId(layoutRevision.getIconImageId());
 		layoutRevisionImpl.setThemeId(layoutRevision.getThemeId());
 		layoutRevisionImpl.setColorSchemeId(layoutRevision.getColorSchemeId());

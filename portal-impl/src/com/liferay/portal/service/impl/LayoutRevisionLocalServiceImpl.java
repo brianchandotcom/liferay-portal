@@ -88,12 +88,7 @@ public class LayoutRevisionLocalServiceImpl
 		layoutRevision.setKeywords(keywords);
 		layoutRevision.setRobots(robots);
 		layoutRevision.setTypeSettings(typeSettings);
-
-		if (iconImage) {
-			layoutRevision.setIconImage(iconImage);
-			layoutRevision.setIconImageId(iconImageId);
-		}
-
+		layoutRevision.setIconImageId(iconImageId);
 		layoutRevision.setThemeId(themeId);
 		layoutRevision.setColorSchemeId(colorSchemeId);
 		layoutRevision.setWapThemeId(wapThemeId);
@@ -433,12 +428,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setKeywords(keywords);
 			layoutRevision.setRobots(robots);
 			layoutRevision.setTypeSettings(typeSettings);
-
-			if (iconImage) {
-				layoutRevision.setIconImage(iconImage);
-				layoutRevision.setIconImageId(iconImageId);
-			}
-
+			layoutRevision.setIconImageId(iconImageId);
 			layoutRevision.setThemeId(themeId);
 			layoutRevision.setColorSchemeId(colorSchemeId);
 			layoutRevision.setWapThemeId(wapThemeId);
@@ -476,12 +466,7 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setKeywords(keywords);
 			layoutRevision.setRobots(robots);
 			layoutRevision.setTypeSettings(typeSettings);
-
-			if (iconImage) {
-				layoutRevision.setIconImage(iconImage);
-				layoutRevision.setIconImageId(iconImageId);
-			}
-
+			layoutRevision.setIconImageId(iconImageId);
 			layoutRevision.setThemeId(themeId);
 			layoutRevision.setColorSchemeId(colorSchemeId);
 			layoutRevision.setWapThemeId(wapThemeId);

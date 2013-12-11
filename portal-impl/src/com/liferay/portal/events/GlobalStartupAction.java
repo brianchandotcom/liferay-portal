@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.POPServerUtil;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.BrowserLauncher;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -310,8 +311,11 @@ public class GlobalStartupAction extends SimpleAction {
 
 		// JSON web service
 
+		String portalContextPath = PortalContextLoaderListener
+			.getPortalServletContextPath();
+
 		JSONWebServiceActionsManagerUtil.registerServletContext(
-			StringPool.BLANK);
+			portalContextPath);
 
 		// Plugins
 

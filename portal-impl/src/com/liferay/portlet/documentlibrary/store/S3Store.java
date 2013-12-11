@@ -558,13 +558,7 @@ public class S3Store extends BaseStore {
 	}
 
 	protected String getKey(long companyId, long repositoryId) {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(companyId);
-		sb.append(StringPool.SLASH);
-		sb.append(repositoryId);
-
-		return sb.toString();
+		return companyId + StringPool.SLASH + repositoryId;
 	}
 
 	protected String getKey(

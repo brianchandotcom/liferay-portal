@@ -1006,6 +1006,10 @@
 		<put name="portlet_content" value="/portlet/mobile_device_rules/edit_rule_group_instance_priorities.jsp" />
 	</definition>
 
+	<definition name="portlet.mobile_device_rules.select_rule_group" extends="portlet.mobile_device_rules">
+		<put name="portlet_content" value="/portlet/mobile_device_rules/select_rule_group.jsp" />
+	</definition>
+
 	<definition name="portlet.mobile_device_rules.view" extends="portlet.mobile_device_rules">
 		<put name="portlet_content" value="/portlet/mobile_device_rules/view.jsp" />
 	</definition>

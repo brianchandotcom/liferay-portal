@@ -19,13 +19,11 @@
 <%
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
-String chooseCallback = ParamUtil.getString(request, "chooseCallback");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/mobile_device_rules/view");
 portletURL.setParameter("groupId", String.valueOf(groupId));
-portletURL.setParameter("chooseCallback", chooseCallback);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -36,11 +34,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 	<%
 	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
 
-	RowChecker rowChecker = null;
-
-	if (Validator.isNull(chooseCallback)) {
-		rowChecker = new RuleGroupChecker(renderResponse);
-	}
+	RowChecker rowChecker = new RuleGroupChecker(renderResponse);
 	%>
 
 	<liferay-ui:search-container
@@ -54,7 +48,6 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="className" value="<%= className %>" />
 					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-					<portlet:param name="chooseCallback" value="<%= chooseCallback %>" />
 				</portlet:renderURL>
 
 				<liferay-portlet:renderURL var="addRuleGroupURL">
@@ -95,47 +88,25 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 
 			<%
 			String rowHREF = null;
-			String taglibOnClick = null;
 
-			if (Validator.isNull(chooseCallback)) {
-				if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
+			if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
 			%>
 
-					<liferay-portlet:renderURL var="editURL">
-						<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
-						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-						<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
-					</liferay-portlet:renderURL>
+				<liferay-portlet:renderURL var="editURL">
+					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+					<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
+				</liferay-portlet:renderURL>
 
 			<%
-					rowHREF = editURL;
-				}
-			}
-			else {
-				MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
-
-				if (ruleGroupInstance == null) {
-					StringBundler sb = new StringBundler(7);
-
-					sb.append("javascript:Liferay.Util.getOpener()['");
-					sb.append(HtmlUtil.escapeJS(chooseCallback));
-					sb.append("'](");
-					sb.append(ruleGroup.getRuleGroupId());
-					sb.append(",'");
-					sb.append(ruleGroup.getName(locale));
-					sb.append("', Liferay.Util.getWindow());");
-
-					rowHREF = sb.toString();
-
-					taglibOnClick = StringUtil.replaceFirst(sb.toString(), "javascript:", StringPool.BLANK);
-				}
+				rowHREF = editURL;
 			}
 			%>
 
 			<%@ include file="/html/portlet/mobile_device_rules/rule_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= ((total > 0) && (Validator.isNull(chooseCallback))) %>">
+		<c:if test="<%= total > 0 %>">
 			<aui:button-row>
 				<aui:button cssClass="delete-rules-button" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteRules();" %>' value="delete" />
 			</aui:button-row>

@@ -42,16 +42,7 @@ Group group = GroupLocalServiceUtil.getGroup(ruleGroup.getGroupId());
 	value="<%= ruleGroup.getModifiedDate() %>"
 />
 
-<c:choose>
-	<c:when test="<%= Validator.isNull(chooseCallback) %>">
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			path="/html/portlet/mobile_device_rules/rule_group_actions.jsp"
-		/>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:search-container-column-text>
-			<aui:button disabled="<%= Validator.isNull(taglibOnClick) %>" onClick="<%= taglibOnClick %>" value="choose" />
-		</liferay-ui:search-container-column-text>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:search-container-column-jsp
+	align="right"
+	path="/html/portlet/mobile_device_rules/rule_group_actions.jsp"
+/>

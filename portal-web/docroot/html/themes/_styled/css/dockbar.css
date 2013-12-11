@@ -868,11 +868,10 @@ $editLayoutPanelWidth: 460px;
 
 	/* ---------- Menus ---------- */
 
-	.dropdown-menu > li > a:focus > [class^="icon-"],
-	.dropdown-menu > li > a:focus > [class*=" icon-"],
-	.dropdown-submenu:focus > a > [class^="icon-"],
-	.dropdown-submenu:focus > a > [class*=" icon-"] {
-		background-image: none;
+	.dropdown-menu > li > a:focus, .dropdown-submenu:focus > a {
+		> [class^="icon-"], > [class*=" icon-"] {
+			background-image: none;
+		}
 	}
 
 	.my-sites-menu {

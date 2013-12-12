@@ -95,7 +95,10 @@ public class UpdateReminderQueryAction extends Action {
 				request, "reminderQueryCustomQuestion");
 		}
 
-		UserServiceUtil.updateReminderQuery(userId, question, answer);
+		long companyId = PortalUtil.getCompanyId(request);
+
+		UserServiceUtil.updateReminderQuery(
+			companyId, userId, question, answer);
 	}
 
 }

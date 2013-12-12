@@ -37,9 +37,11 @@ public class UpdateTermsOfUseAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		long companyId = PortalUtil.getCompanyId(request);
+
 		long userId = PortalUtil.getUserId(request);
 
-		UserServiceUtil.updateAgreedToTermsOfUse(userId, true);
+		UserServiceUtil.updateAgreedToTermsOfUse(companyId, userId, true);
 
 		return actionMapping.findForward(ActionConstants.COMMON_REFERER_JSP);
 	}

@@ -990,11 +990,11 @@ public class MainServlet extends ActionServlet {
 			PropsKeys.LOGIN_EVENTS_PRE, PropsValues.LOGIN_EVENTS_PRE, request,
 			response);
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = UserLocalServiceUtil.getUserById(companyId, userId);
 
 		if (PropsValues.USERS_UPDATE_LAST_LOGIN) {
 			UserLocalServiceUtil.updateLastLogin(
-				userId, request.getRemoteAddr());
+				companyId, userId, request.getRemoteAddr());
 		}
 
 		HttpSession session = request.getSession();

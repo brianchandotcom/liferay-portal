@@ -223,6 +223,16 @@ public class JournalFeedWrapper implements JournalFeed,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _journalFeed.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _journalFeed.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this journal feed.
 	*

@@ -102,6 +102,16 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _resourceTypePermission.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _resourceTypePermission.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this resource type permission.
 	*

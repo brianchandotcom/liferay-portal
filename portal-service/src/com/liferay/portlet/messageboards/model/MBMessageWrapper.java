@@ -235,6 +235,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mbMessage.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mbMessage.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this message-boards message.
 	*

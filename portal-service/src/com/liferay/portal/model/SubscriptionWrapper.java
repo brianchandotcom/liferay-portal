@@ -122,6 +122,16 @@ public class SubscriptionWrapper implements Subscription,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _subscription.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _subscription.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this subscription.
 	*

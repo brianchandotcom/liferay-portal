@@ -133,6 +133,16 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
+	}
+
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;

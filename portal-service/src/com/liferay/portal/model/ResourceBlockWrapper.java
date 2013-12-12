@@ -100,6 +100,16 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _resourceBlock.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _resourceBlock.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this resource block.
 	*

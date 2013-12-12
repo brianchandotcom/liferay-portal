@@ -101,6 +101,16 @@ public class TrashVersionWrapper implements TrashVersion,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _trashVersion.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _trashVersion.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this trash version.
 	*

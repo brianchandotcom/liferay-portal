@@ -180,6 +180,16 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _announcementsEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _announcementsEntry.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this announcements entry.
 	*

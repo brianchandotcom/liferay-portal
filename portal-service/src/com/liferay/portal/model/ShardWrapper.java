@@ -85,6 +85,16 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _shard.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _shard.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this shard.
 	*

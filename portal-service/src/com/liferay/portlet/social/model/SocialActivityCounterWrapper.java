@@ -151,6 +151,16 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _socialActivityCounter.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _socialActivityCounter.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this social activity counter.
 	*

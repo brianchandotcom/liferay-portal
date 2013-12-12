@@ -143,6 +143,16 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _website.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _website.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this website.
 	*

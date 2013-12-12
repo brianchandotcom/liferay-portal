@@ -127,6 +127,16 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _company.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _company.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this company.
 	*

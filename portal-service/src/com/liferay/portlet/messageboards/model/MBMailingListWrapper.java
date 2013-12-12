@@ -243,6 +243,16 @@ public class MBMailingListWrapper implements MBMailingList,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mbMailingList.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mbMailingList.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this message boards mailing list.
 	*

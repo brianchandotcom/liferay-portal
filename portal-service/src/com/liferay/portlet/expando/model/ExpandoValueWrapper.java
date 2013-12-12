@@ -115,6 +115,16 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _expandoValue.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _expandoValue.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this expando value.
 	*

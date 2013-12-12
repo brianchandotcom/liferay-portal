@@ -289,6 +289,16 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _contact.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _contact.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this contact.
 	*

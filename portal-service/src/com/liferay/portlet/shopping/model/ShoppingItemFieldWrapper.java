@@ -94,6 +94,16 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _shoppingItemField.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _shoppingItemField.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this shopping item field.
 	*

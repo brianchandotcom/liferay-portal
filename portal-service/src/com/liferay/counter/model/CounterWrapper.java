@@ -72,6 +72,16 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _counter.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _counter.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this counter.
 	*

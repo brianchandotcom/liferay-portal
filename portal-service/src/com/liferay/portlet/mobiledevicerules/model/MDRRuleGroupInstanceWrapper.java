@@ -146,6 +146,16 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mdrRuleGroupInstance.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mdrRuleGroupInstance.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this m d r rule group instance.
 	*

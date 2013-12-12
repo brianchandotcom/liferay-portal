@@ -108,6 +108,16 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _scProductScreenshot.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _scProductScreenshot.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this s c product screenshot.
 	*

@@ -124,6 +124,16 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _assetCategoryProperty.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _assetCategoryProperty.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this asset category property.
 	*

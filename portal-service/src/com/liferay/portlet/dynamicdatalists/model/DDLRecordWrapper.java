@@ -158,6 +158,16 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ddlRecord.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ddlRecord.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d d l record.
 	*

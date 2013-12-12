@@ -157,6 +157,16 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _role.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _role.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this role.
 	*

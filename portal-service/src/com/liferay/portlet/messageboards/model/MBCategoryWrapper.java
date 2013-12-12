@@ -193,6 +193,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mbCategory.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mbCategory.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this message boards category.
 	*

@@ -94,6 +94,16 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ddmStorageLink.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ddmStorageLink.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d d m storage link.
 	*

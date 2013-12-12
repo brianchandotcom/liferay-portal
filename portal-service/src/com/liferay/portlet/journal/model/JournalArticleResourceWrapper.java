@@ -88,6 +88,16 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _journalArticleResource.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _journalArticleResource.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this journal article resource.
 	*

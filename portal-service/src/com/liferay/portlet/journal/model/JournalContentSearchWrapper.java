@@ -109,6 +109,16 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _journalContentSearch.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _journalContentSearch.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this journal content search.
 	*

@@ -131,6 +131,16 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _workflowInstanceLink.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _workflowInstanceLink.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this workflow instance link.
 	*

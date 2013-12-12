@@ -173,6 +173,16 @@ public class DDMStructureWrapper implements DDMStructure,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ddmStructure.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ddmStructure.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d d m structure.
 	*

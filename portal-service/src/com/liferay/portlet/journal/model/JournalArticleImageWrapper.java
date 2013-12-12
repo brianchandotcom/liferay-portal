@@ -115,6 +115,16 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _journalArticleImage.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _journalArticleImage.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this journal article image.
 	*

@@ -145,6 +145,16 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _pollsQuestion.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _pollsQuestion.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this polls question.
 	*

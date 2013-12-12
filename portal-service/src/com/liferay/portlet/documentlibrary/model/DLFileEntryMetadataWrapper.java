@@ -108,6 +108,16 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _dlFileEntryMetadata.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _dlFileEntryMetadata.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this document library file entry metadata.
 	*

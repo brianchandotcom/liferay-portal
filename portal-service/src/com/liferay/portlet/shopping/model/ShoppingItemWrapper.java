@@ -299,6 +299,16 @@ public class ShoppingItemWrapper implements ShoppingItem,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _shoppingItem.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _shoppingItem.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this shopping item.
 	*

@@ -299,6 +299,16 @@ public class JournalArticleWrapper implements JournalArticle,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _journalArticle.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _journalArticle.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this journal article.
 	*

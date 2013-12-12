@@ -125,6 +125,16 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _blogsStatsUser.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _blogsStatsUser.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this blogs stats user.
 	*

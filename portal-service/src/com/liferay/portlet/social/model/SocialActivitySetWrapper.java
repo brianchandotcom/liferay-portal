@@ -136,6 +136,16 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _socialActivitySet.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _socialActivitySet.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this social activity set.
 	*

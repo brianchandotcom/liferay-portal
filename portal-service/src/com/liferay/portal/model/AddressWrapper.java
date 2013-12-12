@@ -192,6 +192,16 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _address.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _address.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this address.
 	*

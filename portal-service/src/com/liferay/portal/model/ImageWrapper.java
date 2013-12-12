@@ -100,6 +100,16 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _image.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _image.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this image.
 	*

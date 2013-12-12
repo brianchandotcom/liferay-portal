@@ -79,6 +79,16 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _orgGroupRole.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _orgGroupRole.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this org group role.
 	*

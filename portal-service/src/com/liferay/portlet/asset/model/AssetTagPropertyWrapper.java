@@ -123,6 +123,16 @@ public class AssetTagPropertyWrapper implements AssetTagProperty,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _assetTagProperty.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _assetTagProperty.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this asset tag property.
 	*

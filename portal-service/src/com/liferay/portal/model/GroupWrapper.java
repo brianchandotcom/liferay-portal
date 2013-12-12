@@ -192,6 +192,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _group.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _group.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this group.
 	*

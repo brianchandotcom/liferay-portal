@@ -86,6 +86,16 @@ public class ResourceActionWrapper implements ResourceAction,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _resourceAction.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _resourceAction.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this resource action.
 	*

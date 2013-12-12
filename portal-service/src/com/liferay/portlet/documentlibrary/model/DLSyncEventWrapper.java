@@ -94,6 +94,16 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _dlSyncEvent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _dlSyncEvent.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d l sync event.
 	*

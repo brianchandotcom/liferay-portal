@@ -108,6 +108,16 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _expandoColumn.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _expandoColumn.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this expando column.
 	*

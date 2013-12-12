@@ -165,6 +165,16 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _wikiNode.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _wikiNode.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this wiki node.
 	*

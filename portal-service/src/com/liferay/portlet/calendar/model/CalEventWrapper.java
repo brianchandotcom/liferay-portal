@@ -221,6 +221,16 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _calEvent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _calEvent.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this cal event.
 	*

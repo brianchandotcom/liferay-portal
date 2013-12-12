@@ -123,6 +123,16 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _socialActivityLimit.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _socialActivityLimit.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this social activity limit.
 	*

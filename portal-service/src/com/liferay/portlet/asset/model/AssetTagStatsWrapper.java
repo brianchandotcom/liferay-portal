@@ -87,6 +87,16 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _assetTagStats.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _assetTagStats.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this asset tag stats.
 	*

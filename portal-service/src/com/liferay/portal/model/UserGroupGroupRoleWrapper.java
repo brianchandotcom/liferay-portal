@@ -79,6 +79,16 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _userGroupGroupRole.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _userGroupGroupRole.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this user group group role.
 	*

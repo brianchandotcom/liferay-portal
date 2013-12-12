@@ -100,6 +100,16 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _scLicense.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _scLicense.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this s c license.
 	*

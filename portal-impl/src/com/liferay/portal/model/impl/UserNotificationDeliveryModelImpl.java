@@ -196,6 +196,16 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
+	}
+
+	@Override
 	public long getUserNotificationDeliveryId() {
 		return _userNotificationDeliveryId;
 	}

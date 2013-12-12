@@ -108,6 +108,16 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _dlFileRank.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _dlFileRank.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this document library file rank.
 	*

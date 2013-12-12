@@ -122,6 +122,16 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _assetLink.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _assetLink.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this asset link.
 	*

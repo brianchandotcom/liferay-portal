@@ -130,6 +130,16 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _userNotificationEvent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _userNotificationEvent.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this user notification event.
 	*

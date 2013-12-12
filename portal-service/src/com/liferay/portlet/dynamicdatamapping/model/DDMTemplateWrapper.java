@@ -208,6 +208,16 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ddmTemplate.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ddmTemplate.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d d m template.
 	*

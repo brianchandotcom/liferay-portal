@@ -100,6 +100,16 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _portletPreferences.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _portletPreferences.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this portlet preferences.
 	*

@@ -145,6 +145,16 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _assetVocabulary.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _assetVocabulary.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this asset vocabulary.
 	*

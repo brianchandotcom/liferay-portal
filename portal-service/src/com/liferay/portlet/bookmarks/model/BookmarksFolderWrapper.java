@@ -180,6 +180,16 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _bookmarksFolder.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _bookmarksFolder.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this bookmarks folder.
 	*

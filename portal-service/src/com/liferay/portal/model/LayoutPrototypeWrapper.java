@@ -137,6 +137,16 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _layoutPrototype.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _layoutPrototype.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this layout prototype.
 	*

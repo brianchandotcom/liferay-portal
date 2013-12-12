@@ -116,6 +116,16 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _dlContent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _dlContent.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this document library content.
 	*

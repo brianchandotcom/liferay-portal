@@ -86,6 +86,16 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _passwordPolicyRel.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _passwordPolicyRel.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this password policy rel.
 	*

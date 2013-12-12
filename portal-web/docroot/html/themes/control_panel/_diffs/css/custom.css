@@ -207,22 +207,39 @@ $dockbarOpenGradientStart: #0EA6F9;
 					color: #FFF;
 					font-weight: 100;
 					text-shadow: none;
+
+					@include respond-to(phone) {
+						letter-spacing: 0px;
+					}
+				}
+
+				h1 {
+					position: relative;
 				}
 
 				.control-panel-site-selector {
 					font-size: inherit;
+					font-weight: 200;
 					margin-bottom: 0;
 					margin-top: 0;
 					vertical-align: baseline;
 
-					@include respond-to(phone) {
-						display: none;
+
+					position: static;
+
+					i {
+						bottom: -22%;
+						left: 100%;
+						position: absolute;
 					}
 
 					a {
 						text-decoration: none;
 
 						.lfr-icon-menu-text {
+							line-height: 22px;
+							font-weight: 200;
+
 							&:hover, &:focus {
 								text-decoration: underline;
 							}
@@ -236,7 +253,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				.control-panel-back-link {
-					margin: 0 15px;
+					margin: 0 10px;
+
+					@include respond-to(phone) {
+						margin: 0 8px;
+					}
 
 					&:hover, &:focus {
 						text-decoration: none;

@@ -140,14 +140,12 @@ $editLayoutPanelWidth: 460px;
 				padding: 0;
 			}
 
-			.brand {
-				h1 {
-					display: inline-block;
-					font-size: inherit;
-					line-height: 1;
-					margin-bottom: 0;
-					margin-top: 0;
-				}
+			.brand h1 {
+				display: inline-block;
+				font-size: inherit;
+				line-height: 16px;
+				margin-bottom: 0;
+				margin-top: 0;
 			}
 
 			.btn-navbar {
@@ -168,7 +166,7 @@ $editLayoutPanelWidth: 460px;
 					@include respond-to(phone, tablet) {
 						clear: none;
 						display: inline-block;
-						float: left;
+						float: right;
 						height: auto;
 						overflow: visible;
 						position: static;
@@ -212,7 +210,7 @@ $editLayoutPanelWidth: 460px;
 									display: inline-block;
 									margin-left: 5px;
 									margin-top: 5px;
-									padding: 12px 15px;
+									padding: 0;
 
 									> .nav-item-icon {
 										margin-top: 3px;

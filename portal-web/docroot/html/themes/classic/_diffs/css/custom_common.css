@@ -305,6 +305,10 @@
 							}
 						}
 
+						&.nav-account-controls > li > a .nav-item-icon {
+							margin-top: 0;
+						}
+
 						> li {
 							> a {
 								color: #FFF;
@@ -318,7 +322,7 @@
 									color: #FFF;
 								}
 
-																[class^="icon-"], [class*=" icon-"] {
+								[class^="icon-"], [class*=" icon-"] {
 									margin-top: 3px;
 								}
 							}

@@ -47,12 +47,19 @@
 
 	<command name="addPG">
 		<var name="i" value="1" />
+		<var name="portletTypeKey" value="PORTLET" />
 
 		<if>
 			<equals arg1="${portletName}" arg2="Map" />
 			<then>
 				<var name="portletName" value="Where are the Liferay members?" />
 			</then>
+			<elseif>
+				<equals arg1="${portletName}" arg2="Requests" />
+				<then>
+					<var name="portletTypeKey" value="PORTLET_BORDERLESS" />
+				</then>
+			</elseif>
 		</if>
 
 		<while>
@@ -69,8 +76,7 @@
 
 				<if>
 					<and>
-						<condition action="Home#isElementNotPresent" locator-key1="PORTLET" />
-						<condition action="Home#isElementNotPresent" locator-key1="PORTLET_BORDERLESS" />
+						<condition action="Home#isElementNotPresent" locator-key1="${portletTypeKey}" />
 					</and>
 					<then>
 						<execute macro="Portlet#addPGCmd">
@@ -84,15 +90,7 @@
 			</then>
 		</while>
 
-		<if>
-			<equals arg1="${portletName}" arg2="Requests" />
-				<then>
-					<execute action="Home#assertElementPresent" locator-key1="PORTLET_BORDERLESS" />
-				</then>
-			<else>
-				<execute action="Home#assertElementPresent" locator-key1="PORTLET" />
-			</else>
-		</if>
+		<execute action="Home#assertElementPresent" locator-key1="${portletTypeKey}" />
 	</command>
 
 	<command name="addPGCmd">

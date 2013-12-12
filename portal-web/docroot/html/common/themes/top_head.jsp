@@ -71,7 +71,12 @@ if (layout != null) {
 	String ppid = ParamUtil.getString(request, "p_p_id");
 
 	if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-		portlets = new ArrayList<Portlet>();
+		if (themeDisplay.isStatePopUp()) {
+			portlets = new ArrayList<Portlet>();
+		}
+		else {
+			portlets = layoutTypePortlet.getAllPortlets();
+		}
 
 		portlets.add(PortletLocalServiceUtil.getPortletById(company.getCompanyId(), PortletKeys.PORTLET_CONFIGURATION));
 
@@ -80,7 +85,7 @@ if (layout != null) {
 		if (Validator.isNotNull(ppid)) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);
 
-			if (portlet != null) {
+			if ((portlet != null) && !portlets.contains(portlet)) {
 				portlets.add(portlet);
 			}
 		}

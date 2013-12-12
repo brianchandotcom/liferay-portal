@@ -40,8 +40,6 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * @author Hugo Huijser
  */
@@ -175,18 +173,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			String closingElement = matcher.group(1);
 
-			if (StringUtils.equals("</and>", matcher.group(1)) ||
-				StringUtils.equals("</elseif>", matcher.group(1)) ||
-				StringUtils.equals("</not>", matcher.group(1)) ||
-				StringUtils.equals("</or>", matcher.group(1)) ||
-				StringUtils.equals("</then>", matcher.group(1))) {
+			if (StringUtil.equalsIgnoreCase("</and>", matcher.group(1)) ||
+				StringUtil.equalsIgnoreCase("</elseif>", matcher.group(1)) ||
+				StringUtil.equalsIgnoreCase("</not>", matcher.group(1)) ||
+				StringUtil.equalsIgnoreCase("</or>", matcher.group(1)) ||
+				StringUtil.equalsIgnoreCase("</then>", matcher.group(1))) {
 
 				String newStatement = StringUtil.replace(
 					statement, matcher.group(2), "\n");
 
 				content = StringUtil.replace(content, statement, newStatement);
 			}
-			else if (!StringUtils.equals("</var>", matcher.group(1))) {
+			else if (!StringUtil.equalsIgnoreCase("</var>", matcher.group(1))) {
 				String newStatement =
 					StringUtil.replace(statement, matcher.group(2), "\n\n");
 

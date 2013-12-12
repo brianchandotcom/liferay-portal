@@ -73,17 +73,17 @@
 
 	<command name="confirmRequestToConnect">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1"/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_COUNT" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}"/>
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection."/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection." />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_CONFIRM" value1="Confirm" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_CONFIRM" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0"/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
 
-		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 1 connections."/>
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 1 connections." />
 	</command>
 
 	<command name="disconnectFromConnection">
@@ -127,17 +127,17 @@
 	<command name="ignoreRequestToConnect">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#assertElementPresent" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1"/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="1" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}"/>
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection."/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_SENDER" value1="${senderName}" />
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_ENTRY_CONTENT" value1="would like to add you as a connection." />
 		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_IGNORE" value1="Ignore" />
 		<execute action="SOUserBar#click" locator-key1="NOTIFICATION_MENU_IGNORE" />
-		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0"/>
+		<execute action="SOUserBar#assertTextEquals" locator-key1="NOTIFICATION_MENU_COUNT" value1="0" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
 
-		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 0 connections."/>
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 0 connections." />
 	</command>
 
 	<command name="requestToConnect">

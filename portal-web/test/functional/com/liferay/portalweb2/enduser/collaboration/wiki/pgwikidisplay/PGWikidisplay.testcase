@@ -238,8 +238,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#viewNoChildPagePGViaWD">
-		</execute>
+		<execute macro="WikiPage#viewNoChildPagePGViaWD" />
 	</command>
 
 	<command name="DeleteWikiFrontPage" priority="5">

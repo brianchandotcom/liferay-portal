@@ -521,7 +521,7 @@
 	</command>
 
 	<command name="disconnectFromConnection">
-		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="${filterType}"/>
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="${filterType}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 
@@ -561,7 +561,7 @@
 
 	<command name="viewConnectionProfile">
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have ${filterTypeCount} connections." />
-		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Connections"/>
+		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Connections" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
@@ -617,9 +617,9 @@
 
 	<command name="viewNoConnection">
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have ${filterTypeCount} connections." />
-		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Connections"/>
+		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Connections" />
 		<execute action="SOContactscenter#assertTextNotPresent" locator-key1="CONTACTS_LIST_EMAIL" value1="${adminEmailAddress}" />
-		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All"/>
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
 		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${adminName}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
 		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${adminName}" />

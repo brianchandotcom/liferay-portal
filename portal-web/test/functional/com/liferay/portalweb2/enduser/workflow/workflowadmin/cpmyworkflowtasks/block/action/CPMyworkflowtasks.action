@@ -3,14 +3,17 @@
 		<case locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
+
 	<command name="assertTextEquals">
 		<case locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
 		<case locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

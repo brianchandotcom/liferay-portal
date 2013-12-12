@@ -65,7 +65,7 @@
 
 		<execute action="CKEditor#selectFrame" value1="relative=top" />
 
-		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text."/>
+		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
 
 		<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
 		<execute action="CKEditor#assertTextEquals" locator-key1="CKEDITOR_TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />

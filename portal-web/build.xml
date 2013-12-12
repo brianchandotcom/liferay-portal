@@ -821,6 +821,8 @@
 	</target>
 
 	<target name="build-selenium-new">
+		<ant dir="../portal-impl" target="format-source" />
+
 		<delete dir="${basedir.unix}/test/functional-generated" />
 
 		<if>

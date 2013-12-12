@@ -2,7 +2,7 @@
 	<command name="addPG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}"/>
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
@@ -37,7 +37,7 @@
 	</command>
 
 	<command name="deletePGViaMG">
-		<execute action="PGMediagalleryFolder#assertClick" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle}"/>
+		<execute action="PGMediagalleryFolder#assertClick" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle}" />
 
 		<execute action="PGMediagalleryMedia#click" locator-key1="MOVE_TO_THE_RECYCLE_BIN" />
 
@@ -46,7 +46,7 @@
 	</command>
 
 	<command name="editPGViaMG">
-		<execute action="PGMediagalleryFolder#assertClick" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle}"/>
+		<execute action="PGMediagalleryFolder#assertClick" locator-key1="MEDIA_TITLE" value1="${mgDocumentTitle}" />
 
 		<execute action="PGMediagalleryMedia#assertTextEquals" locator-key1="MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
 		<execute action="PGMediagalleryMedia#click" locator-key1="EDIT" />

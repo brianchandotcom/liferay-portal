@@ -25,7 +25,6 @@
 		</execute>
 	</command>
 
-
 	<command name="KaleoWebSmoke" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
@@ -157,7 +156,6 @@
 			<var name="appName" value="${appName}" />
 		</execute>
 	</command>
-
 
 	<command name="WurflWebSmoke" priority="5">
 		<property name="web.plugins.includes" value="wurfl-web" />

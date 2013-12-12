@@ -73,7 +73,7 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="0" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions"/>
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />

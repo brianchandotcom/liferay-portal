@@ -3,12 +3,15 @@
 		<case locator-key1="ADD_WIKI_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="WIKI_NODE_MENULIST_EDIT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="WIKI_NODE_TABLE_WIKI">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

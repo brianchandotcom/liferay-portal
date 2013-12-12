@@ -1,4 +1,3 @@
-
 <definition>
 	<command name="mouseOver">
 		<execute selenium="waitForVisible" />

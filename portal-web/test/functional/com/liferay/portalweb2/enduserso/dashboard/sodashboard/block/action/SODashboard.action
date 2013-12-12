@@ -9,6 +9,7 @@
 		<case locator-key1="ANNOUNCEMENTS_ENTRY_ACTION">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
 		<case locator-key1="ANNOUNCEMENTS_ENTRY_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
@@ -58,6 +59,7 @@
 		<case locator-key1="ANNOUNCEMENTS_ENTRY_DELETE_LINK">
 			<execute function="IsElementPresent#pauseIsElementPresent" />
 		</case>
+
 		<case locator-key1="NAVIGATION_PAGE">
 			<execute function="IsElementPresent#isElementPresentClickNavigation" />
 		</case>

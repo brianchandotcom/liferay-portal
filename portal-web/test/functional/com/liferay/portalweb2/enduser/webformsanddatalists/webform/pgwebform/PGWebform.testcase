@@ -36,7 +36,6 @@
 		<var name="formTextboxTitleDefault" value="Comments" />
 		<var name="formTextboxTitleEdit" value="Additional Comments" />
 
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

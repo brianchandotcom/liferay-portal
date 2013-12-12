@@ -4,13 +4,13 @@
 			<equals arg1="${calendarType}" arg2="My Calendars" />
 			<then>
 					<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_MENULIST_ARROW" />
-					<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar"/>
+					<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Site Calendars" />
 				<then>
 					<execute action="PGCalendar#click" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
-					<execute action="PGCalendar#assertClick" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar"/>
+					<execute action="PGCalendar#assertClick" locator-key1="CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 				</then>
 			</elseif>
 		</if>		
@@ -37,7 +37,7 @@
 		<execute action="PGCalendar#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute action="PGCalendarAgendaView#assertElementNotPresent" locator-key1="MY_CALENDARS_CALENDAR_ADDITIONAL" />
-		<execute action="PGCalendar#assertTextNotPresent" value1="${user} - ${calendarName}"/>
+		<execute action="PGCalendar#assertTextNotPresent" value1="${user} - ${calendarName}" />
 	</command>
 
 	<command name="viewDefaultPG">
@@ -45,7 +45,7 @@
 		<var name="key_user" value="${user}" />
 
 		<execute action="PGCalendar#assertElementNotPresent" locator-key1="MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
-		<execute action="PGCalendar#assertTextNotPresent" value1="${user} - ${calendarName}"/>
+		<execute action="PGCalendar#assertTextNotPresent" value1="${user} - ${calendarName}" />
 	</command>
 
 	<command name="viewPG">

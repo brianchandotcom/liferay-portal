@@ -584,7 +584,6 @@
 						<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_AUTHOR" value1="By ${entryAuthorFirstName} ${entryAuthorLastName}" />
 					</else>
 				</if>
-
 			</else>
 		</if>
 
@@ -789,9 +788,9 @@
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="1 Comment"/>
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_1" value1="[...] ${entryContent2} [...] Read More"/>
-		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_READ_MORE_1" value1="Read More"/>
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="1 Comment" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_1" value1="[...] ${entryContent2} [...] Read More" />
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_READ_MORE_1" value1="Read More" />
 
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle2}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent2}" />

@@ -36,6 +36,18 @@ public class MapUtil {
 		merge(master, copy);
 	}
 
+	public static <K, V> Map<K, V> filter(
+		Map<K, V> inputMap, Map<K, V> outputMap, PredicateFilter<K> keyFilter) {
+
+		for (Map.Entry<K, V> entry : inputMap.entrySet()) {
+			if (keyFilter.filter(entry.getKey())) {
+				outputMap.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return outputMap;
+	}
+
 	public static boolean getBoolean(Map<String, ?> map, String key) {
 		return getBoolean(map, key, GetterUtil.DEFAULT_BOOLEAN);
 	}

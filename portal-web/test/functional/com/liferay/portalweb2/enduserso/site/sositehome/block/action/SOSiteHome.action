@@ -29,6 +29,7 @@
 		<case locator-key1="BOOKMARKS_NO_ENTRIES_MESSAGE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
 		<case locator-key1="RSS_FEED_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
@@ -38,6 +39,7 @@
 		<case locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS">
 			<execute function="AssertTextNotEquals#assertNotPartialText" />
 		</case>
+
 		<case locator-key1="EVENTS_DISPLAY_UPCOMING_EVENTS">
 			<execute function="AssertTextNotEquals#assertNotPartialText" />
 		</case>

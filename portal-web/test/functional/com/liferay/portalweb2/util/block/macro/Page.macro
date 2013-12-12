@@ -74,7 +74,6 @@
 			</then>
 		</if>
 
-
 		<if>
 			<not>
 				<contains string="${portletName}" substring="{portletName}" />
@@ -216,7 +215,6 @@
 				<execute action="Home#open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
 			</else>
 		</if>
-
 	</command>
 
 	<command name="tearDownPG">

@@ -105,7 +105,6 @@
 			<var name="calendarType" value="${calendarType}" />
 		</execute>
 
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

@@ -3,18 +3,23 @@
 		<case comparator="startsWith" locator-key1="ACTIONS_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="startsWith" locator-key1="ADD_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="startsWith" locator-key1="DOCUMENT_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="startsWith" locator-key1="FOLDER_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="startsWith" locator-key1="MANAGE_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case comparator="startsWith" locator-key1="SORT_BY_MENULIST_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
@@ -24,6 +29,7 @@
 		<case locator-key1="ENTRIES_DOCUMENT">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
+
 		<case locator-key1="FOLDER_MENULIST_DELETE">
 			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>

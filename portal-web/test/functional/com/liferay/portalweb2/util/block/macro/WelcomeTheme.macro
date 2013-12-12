@@ -41,6 +41,5 @@
 
 		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_ENTERPRISE_LEVEL_OPTIONS_HEADER" value1="Services" />
 		<execute action="PGWelcome#assertTextEquals" locator-key1="WELCOME_ENTERPRISE_LEVEL_OPTIONS_SUBHEADER" value1="Access our team and network of experts anywhere around the world." />
-
 	</command>
 </definition>

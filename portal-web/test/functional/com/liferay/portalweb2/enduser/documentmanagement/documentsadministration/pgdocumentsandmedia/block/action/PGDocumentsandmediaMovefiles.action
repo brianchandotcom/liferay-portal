@@ -3,6 +3,7 @@
 		<case locator-key1="MOVE_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="SELECT_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

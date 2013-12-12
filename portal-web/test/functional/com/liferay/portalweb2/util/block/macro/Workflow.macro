@@ -347,7 +347,7 @@
 		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_END_DATE" />
 		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
-		<execute action="CPMysubmissions#assertClick" locator-key1="PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}"/>
+		<execute action="CPMysubmissions#assertClick" locator-key1="PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 
 		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW" value1="Preview of ${workflowAssetType}" />
 		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW_TITLE" value1="${workflowAssetTitle}" />
@@ -385,7 +385,7 @@
 		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_STATUS" value1="${workflowTask}" />
 		<execute action="CPMysubmissionsCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="CPMysubmissionsCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_END_DATE" />
-		<execute action="CPMysubmissionsCompleted#assertClick" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}"/>
+		<execute action="CPMysubmissionsCompleted#assertClick" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 
 		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW" value1="Preview of ${workflowAssetType}" />
 		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW_TITLE" value1="${workflowAssetTitle}" />

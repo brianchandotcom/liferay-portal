@@ -3,9 +3,11 @@
 		<case locator-key1="PUBLISH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtCKEditor" />
 		</case>
+
 		<case locator-key1="SAVE_AS_DRAFT_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
+
 		<case locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
@@ -21,6 +23,7 @@
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Type#typeFrameWaitForCKEditor" />
 		</case>
+
 		<case locator-key1="TITLE_FIELD">
 			<execute function="Type#typeWaitForCKEditor" />
 		</case>

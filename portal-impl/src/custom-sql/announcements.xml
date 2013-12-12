@@ -4,7 +4,7 @@
 	<sql id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder.countByHidden">
 		<![CDATA[
 			SELECT
-				DISTINCT COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT AnnouncementsEntry.entryId) AS COUNT_VALUE
 			FROM
 				AnnouncementsEntry
 			LEFT JOIN
@@ -22,7 +22,7 @@
 	<sql id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder.countByNotHidden">
 		<![CDATA[
 			SELECT
-				DISTINCT COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT AnnouncementsEntry.entryId) AS COUNT_VALUE
 			FROM
 				AnnouncementsEntry
 			WHERE
@@ -58,7 +58,7 @@
 	<sql id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder.findByHidden">
 		<![CDATA[
 			SELECT
-				DISTINCT {AnnouncementsEntry.*}
+				{AnnouncementsEntry.*}
 			FROM
 				AnnouncementsEntry
 			LEFT JOIN
@@ -79,7 +79,7 @@
 	<sql id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder.findByNotHidden">
 		<![CDATA[
 			SELECT
-				DISTINCT {AnnouncementsEntry.*}
+				{AnnouncementsEntry.*}
 			FROM
 				AnnouncementsEntry
 			WHERE

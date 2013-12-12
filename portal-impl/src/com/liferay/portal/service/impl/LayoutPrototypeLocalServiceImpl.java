@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.ResourceConstants;
@@ -255,18 +256,27 @@ public class LayoutPrototypeLocalServiceImpl
 			String description, boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		Date modifiedDate = serviceContext.getModifiedDate(new Date());
+
 		// Layout prototype
 
 		LayoutPrototype layoutPrototype =
 			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
 
-		layoutPrototype.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
+		layoutPrototype.setModifiedDate(modifiedDate);
 		layoutPrototype.setNameMap(nameMap);
 		layoutPrototype.setDescription(description);
 		layoutPrototype.setActive(active);
 
 		layoutPrototypePersistence.update(layoutPrototype);
+
+		// Layout
+
+		Layout layout = layoutPrototype.getLayout();
+		layout.setNameMap(nameMap);
+		layout.setModifiedDate(modifiedDate);
+
+		layoutPersistence.update(layout);
 
 		// Group
 

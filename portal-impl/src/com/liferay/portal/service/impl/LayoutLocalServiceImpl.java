@@ -2552,6 +2552,20 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutPersistence.update(layout);
 
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype()) {
+			LayoutPrototype layoutPrototype =
+				layoutPrototypeLocalService.getLayoutPrototype(
+					group.getClassPK());
+
+			layoutPrototype.setModifiedDate(now);
+			layoutPrototype.setName(
+				name, LocaleUtil.fromLanguageId(languageId));
+
+			layoutPrototypePersistence.update(layoutPrototype);
+		}
+
 		return layout;
 	}
 

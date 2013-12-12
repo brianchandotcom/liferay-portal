@@ -38,32 +38,19 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 
 	public static final String DYNAMIC_QUERY_STRING = "DYNAMIC_QUERY_STRING";
 
-	public static HttpServletRequest addQueryString(
-		HttpServletRequest request, String queryString) {
+	public static HttpServletRequest addParametersAndQueryString(
+		HttpServletRequest request, Map<String, String[]> parameterMap,
+		String queryString) {
 
-		return addQueryString(request, queryString, true);
+		return addParametersAndQueryString(
+			request, parameterMap, queryString, true);
 	}
 
-	public static HttpServletRequest addQueryString(
-		HttpServletRequest request, String queryString, boolean inherit) {
+	public static HttpServletRequest addParametersAndQueryString(
+		HttpServletRequest request, Map<String, String[]> parameterMap,
+		String queryString, boolean inherit) {
 
-		Map<String, String[]> parameterMap = new HashMap<String, String[]>();
-
-		addQueryStringToParameterMap(parameterMap, queryString);
-
-		if (parameterMap.size() == 0) {
-			return request;
-		}
-
-		request = new DynamicServletRequest(request, parameterMap, inherit);
-
-		request.setAttribute(DYNAMIC_QUERY_STRING, queryString);
-
-		return request;
-	}
-
-	public static void addQueryStringToParameterMap(
-			Map<String, String[]> parameterMap, String queryString) {
+		parameterMap = new HashMap<String, String[]>(parameterMap);
 
 		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
 
@@ -93,6 +80,26 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 				parameterMap.put(name, newValues);
 			}
 		}
+
+		request = new DynamicServletRequest(request, parameterMap, inherit);
+
+		request.setAttribute(DYNAMIC_QUERY_STRING, queryString);
+
+		return request;
+	}
+
+	public static HttpServletRequest addQueryString(
+		HttpServletRequest request, String queryString) {
+
+		return addParametersAndQueryString(
+			request, new HashMap<String, String[]>(), queryString, true);
+	}
+
+	public static HttpServletRequest addQueryString(
+		HttpServletRequest request, String queryString, boolean inherit) {
+
+		return addParametersAndQueryString(
+			request, new HashMap<String, String[]>(), queryString, inherit);
 	}
 
 	public DynamicServletRequest(HttpServletRequest request) {

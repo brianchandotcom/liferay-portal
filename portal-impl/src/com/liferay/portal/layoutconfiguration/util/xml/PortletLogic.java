@@ -34,6 +34,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,27 +89,17 @@ public class PortletLogic extends RuntimeLogic {
 
 		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
 
-		HttpServletRequest request;
+		Map<String, String[]> parameterMap = _request.getParameterMap();
 
-		if ((portletId != null) &&
-			portletId.equals(_request.getParameter("p_p_id"))) {
-
-			request = DynamicServletRequest.addQueryString(
-				_request, queryString);
+		if (!portletId.equals(_request.getParameter("p_p_id"))) {
+			parameterMap = MapUtil.filter(
+				parameterMap, new HashMap<String, String[]>(),
+				new PrefixPredicateFilter("p_p_"));
 		}
-		else {
-			Map<String, String[]> parameterMap = MapUtil.filter(
-				_request.getParameterMap(),
-				new PrefixPredicateFilter("p_p_", true));
 
-			DynamicServletRequest.addQueryStringToParameterMap(
-				parameterMap, queryString);
-
-			request = new DynamicServletRequest(_request, parameterMap, false);
-
-			request.setAttribute(
-				DynamicServletRequest.DYNAMIC_QUERY_STRING, queryString);
-		}
+		HttpServletRequest request =
+			DynamicServletRequest.addParametersAndQueryString(
+				_request, parameterMap, queryString, false);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

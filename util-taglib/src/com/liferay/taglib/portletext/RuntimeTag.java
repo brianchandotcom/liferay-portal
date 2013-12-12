@@ -43,6 +43,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,27 +91,16 @@ public class RuntimeTag extends TagSupport {
 
 		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
 
-		if ((portletId != null) &&
-			portletId.equals(
-				restrictPortletServletRequest.getParameter("p_p_id"))) {
+		Map<String, String[]> parameterMap = request.getParameterMap();
 
-			request = DynamicServletRequest.addQueryString(
-				restrictPortletServletRequest, queryString);
+		if (!portletId.equals(request.getParameter("p_p_id"))) {
+			parameterMap = MapUtil.filter(
+				parameterMap, new HashMap<String, String[]>(),
+				new PrefixPredicateFilter("p_p_"));
 		}
-		else {
-			Map<String, String[]> parameterMap = MapUtil.filter(
-				restrictPortletServletRequest.getParameterMap(),
-				new PrefixPredicateFilter("p_p_", true));
 
-			DynamicServletRequest.addQueryStringToParameterMap(
-				parameterMap, queryString);
-
-			request = new DynamicServletRequest(
-				restrictPortletServletRequest, parameterMap, false);
-
-			request.setAttribute(
-				DynamicServletRequest.DYNAMIC_QUERY_STRING, queryString);
-		}
+		request = DynamicServletRequest.addParametersAndQueryString(
+			restrictPortletServletRequest, parameterMap, queryString, false);
 
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);

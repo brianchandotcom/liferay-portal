@@ -19,26 +19,26 @@ package com.liferay.portal.kernel.util;
  */
 public class PrefixPredicateFilter implements PredicateFilter<String> {
 
-	/**
-	 * @param prefix prefix to be filtered in our out
-	 * @param isFilterOut true to filter out false to filter in
-	 */
-	public PrefixPredicateFilter(String prefix, boolean isFilterOut) {
+	public PrefixPredicateFilter(String prefix) {
+		this(prefix, false);
+	}
+
+	public PrefixPredicateFilter(String prefix, boolean include) {
 		_prefix = prefix;
-		_isFilterOut = isFilterOut;
+		_include = include;
 	}
 
 	@Override
 	public boolean filter(String t) {
-		if (_isFilterOut) {
-			return !t.startsWith(_prefix);
+		if (_include) {
+			return t.startsWith(_prefix);
 		}
 		else {
-			return t.startsWith(_prefix);
+			return !t.startsWith(_prefix);
 		}
 	}
 
-	private boolean _isFilterOut;
+	private boolean _include;
 	private String _prefix;
 
 }

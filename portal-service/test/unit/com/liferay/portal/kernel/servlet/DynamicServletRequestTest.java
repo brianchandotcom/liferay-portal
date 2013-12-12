@@ -15,15 +15,17 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.portlet.PortletParameterUtil;
-import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Sampsa Sohlman
@@ -32,51 +34,42 @@ public class DynamicServletRequestTest {
 
 	@Test
 	public void testAddQueryStringToParameterMapWithEmptyMap1() {
-		Map<String, String[]> map = new HashMap<String, String[]>();
+		String queryString = PortletParameterUtil.addNamespace(
+			"15", StringPool.BLANK);
 
-		String queryString = PortletParameterUtil.addNamespace("15", "");
+		HttpServletRequest request =
+			DynamicServletRequest.addParametersAndQueryString(
+				new MockHttpServletRequest(),
+				Collections.<String, String[]>emptyMap(), queryString, false);
 
-		DynamicServletRequest.addQueryStringToParameterMap(map, queryString);
+		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		Map<String, String[]> expected = createMap("p_p_id=15");
-
-		AssertUtils.assertEquals(expected, map);
+		Assert.assertEquals(1, parameterMap.size());
+		Assert.assertArrayEquals(
+			new String[] {"15"}, parameterMap.get("p_p_id"));
 	}
 
 	@Test
 	public void testAddQueryStringToParameterMapWithEmptyMap2() {
-		Map<String, String[]> map = new HashMap<String, String[]>();
-
 		String queryString = PortletParameterUtil.addNamespace(
 			"15", "param1=value1&param2=value2&param3=value3");
 
-		DynamicServletRequest.addQueryStringToParameterMap(map, queryString);
+		HttpServletRequest request =
+			DynamicServletRequest.addParametersAndQueryString(
+				new MockHttpServletRequest(),
+				Collections.<String, String[]>emptyMap(), queryString, false);
 
-		Map<String, String[]> expected = createMap(
-			"p_p_id=15&_15_param1=value1&_15_param2=value2&_15_param3=value3");
+		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		AssertUtils.assertEquals(expected, map);
-	}
-
-	protected void assertNames(Set names, boolean exist) {
-		Assert.assertEquals(exist, names.contains("p_p_mode"));
-		Assert.assertEquals(exist, names.contains("p_p_state"));
-		Assert.assertEquals(exist, names.contains("p_p_lifecycle"));
-		Assert.assertEquals(exist, names.contains("p_p_anything"));
-		Assert.assertEquals(exist, names.contains("other"));
-	}
-
-	protected Map<String, String[]> createMap(String parameters) {
-		Map<String, String[]> map = new HashMap<String, String[]>();
-
-		String[] keysAndValues = StringUtil.split(parameters, "&");
-
-		for (String keyAndValue : keysAndValues) {
-			String[] strings = StringUtil.split(keyAndValue, '=');
-			map.put(strings[0], new String[] {strings[1]});
-		}
-
-		return map;
+		Assert.assertEquals(4, parameterMap.size());
+		Assert.assertArrayEquals(
+			new String[] {"15"}, parameterMap.get("p_p_id"));
+		Assert.assertArrayEquals(
+			new String[] {"value1"}, parameterMap.get("_15_param1"));
+		Assert.assertArrayEquals(
+			new String[] {"value2"}, parameterMap.get("_15_param2"));
+		Assert.assertArrayEquals(
+			new String[] {"value3"}, parameterMap.get("_15_param3"));
 	}
 
 }

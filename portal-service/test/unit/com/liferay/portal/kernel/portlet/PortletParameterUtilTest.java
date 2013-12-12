@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,13 +26,16 @@ public class PortletParameterUtilTest {
 
 	@Test
 	public void testAddNamespaceNoParameters() {
-		String query = PortletParameterUtil.addNamespace("15", "");
+		String query = PortletParameterUtil.addNamespace(
+			"15", StringPool.BLANK);
+
 		Assert.assertEquals("p_p_id=15", query);
 	}
 
 	@Test
 	public void testAddNamespaceOneParameter() {
 		String query = PortletParameterUtil.addNamespace("15", "param1=value1");
+
 		Assert.assertEquals("p_p_id=15&_15_param1=value1", query);
 	}
 
@@ -38,6 +43,7 @@ public class PortletParameterUtilTest {
 	public void testAddNamespaceThreeParameters() {
 		String query = PortletParameterUtil.addNamespace(
 			"15", "param1=value1&param2=value2&param3=value3");
+
 		Assert.assertEquals(
 			"p_p_id=15&_15_param1=value1&_15_param2=value2&_15_param3=value3",
 			query);

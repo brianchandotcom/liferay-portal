@@ -36,11 +36,20 @@ public class MapUtilTest {
 		inputMap.put("5", "five");
 
 		Map<String, String> outputMap = MapUtil.filter(
-			inputMap, new PredicateFilter<String>() {
+			inputMap, new HashMap<String, String>(),
+			new PredicateFilter<String>() {
+
 				@Override
 				public boolean filter(String key) {
-					return (Integer.valueOf(key).intValue() % 2) == 0;
+					int value = Integer.parseInt(key);
+
+					if ((value % 2) == 0) {
+						return true;
+					}
+
+					return false;
 				}
+
 		});
 
 		Assert.assertEquals(2, outputMap.size());
@@ -59,7 +68,8 @@ public class MapUtilTest {
 		inputMap.put("x5", "five");
 
 		Map<String, String> outputMap = MapUtil.filter(
-			inputMap, new PrefixPredicateFilter("x", true));
+			inputMap, new HashMap<String, String>(),
+			new PrefixPredicateFilter("x"));
 
 		Assert.assertEquals(2, outputMap.size());
 		Assert.assertEquals("two", outputMap.get("2"));

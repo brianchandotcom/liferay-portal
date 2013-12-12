@@ -323,6 +323,9 @@ out.print("#p_p_id_" + portlet.getPortletId() + "_");
 if (showBorders) {
 	out.print(" .portlet");
 }
+else {
+	out.print(" .portlet-borderless-container");
+}
 
 out.print(" {\n");
 

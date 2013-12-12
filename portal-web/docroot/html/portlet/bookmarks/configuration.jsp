@@ -144,8 +144,10 @@ catch (NoSuchFolderException nsfe) {
 				</aui:field-wrapper>
 			</aui:fieldset>
 
-			<div class="definition-of-terms">
-				<h4><liferay-ui:message key="definition-of-terms" /></h4>
+			<aui:fieldset cssClass="definition-of-terms">
+				<legend>
+					<liferay-ui:message key="definition-of-terms" />
+				</legend>
 
 				<dl>
 					<dt>
@@ -203,7 +205,7 @@ catch (NoSuchFolderException nsfe) {
 						<liferay-ui:message key="the-name-of-the-email-recipient" />
 					</dd>
 				</dl>
-			</div>
+			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.equals("display-settings") %>'>
 			<%@ include file="/html/portlet/bookmarks/display_settings.jspf" %>

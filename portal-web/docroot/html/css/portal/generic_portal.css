@@ -1,5 +1,6 @@
 @import "compass";
 @import "compass/css3/user-interface";
+@import "mixins";
 
 td {
 	&.lfr-center {
@@ -19,7 +20,15 @@ td {
 	margin-bottom: 2em;
 
 	dd {
-		margin-left: 20em;
+		margin-left: 16em;
+
+		&:after {
+			content: '';
+			clear: both;
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
 	}
 
 	dl {
@@ -28,6 +37,8 @@ td {
 
 	dt {
 		float: left;
+		width: 14em;
+		word-break: break-word;
 	}
 }
 
@@ -152,7 +163,8 @@ img.icon {
 /* Skin */
 
 .definition-of-terms dt {
-	font-weight: bold;
+	color: #333;
+	font-weight: normal;
 }
 
 .lfr-code {
@@ -195,4 +207,17 @@ img.icon {
 
 .lfr-token-close:hover {
 	text-decoration: none;
+}
+
+@include respond-to(phone) {
+	.definition-of-terms {
+		dd {
+			margin-left: 10px;
+		}
+
+		dt {
+			float: none;
+			width: auto;
+		}
+	}
 }

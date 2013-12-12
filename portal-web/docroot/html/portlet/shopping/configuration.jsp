@@ -269,7 +269,9 @@ else if (tabs3.equals("shipping-email")) {
 						</aui:field-wrapper>
 
 						<div class="definition-of-terms">
-							<h4><liferay-ui:message key="definition-of-terms" /></h4>
+							<legend>
+								<liferay-ui:message key="definition-of-terms" />
+							</legend>
 
 							<dl>
 								<dt>

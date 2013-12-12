@@ -37,7 +37,7 @@ if (selLayout != null) {
 <h4><liferay-ui:message key="meta-tags" /></h4>
 
 <aui:fieldset>
-	<aui:input name="description" />
+	<aui:input id="descriptionSEO" name="description" />
 
 	<aui:input name="keywords" />
 

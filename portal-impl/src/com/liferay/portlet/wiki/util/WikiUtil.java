@@ -412,7 +412,7 @@ public class WikiUtil {
 		PortletURL curEditPageURL = PortletURLUtil.clone(
 			editPageURL, renderResponse);
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(themeDisplay.getPathMain());
 		sb.append("/wiki/get_page_attachment?p_l_id=");

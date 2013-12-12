@@ -76,7 +76,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Name and description
 
-	StringBundler sb = new StringBundler();
+	StringBundler sb = new StringBundler(14);
 
 	String displayName = portlet.getDisplayName();
 

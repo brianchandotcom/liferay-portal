@@ -537,7 +537,7 @@ public class CustomSQL {
 				sql = sql.concat(_GROUP_BY_CLAUSE).concat(groupBy);
 			}
 			else {
-				StringBundler sb = new StringBundler();
+				StringBundler sb = new StringBundler(4);
 
 				sb.append(sql.substring(0, y));
 				sb.append(_GROUP_BY_CLAUSE);

@@ -45,21 +45,18 @@
 <c:if test="<%= enableRSS %>">
 
 	<%
-	StringBundler rssURLParams = new StringBundler();
+	String rssURLParams = null;
 
 	if (selectionMethod.equals("users")) {
 		if (organizationId > 0) {
-			rssURLParams.append("&organizationId=");
-			rssURLParams.append(organizationId);
+			rssURLParams = "&organizationId=".concat(organizationId);
 		}
 		else {
-			rssURLParams.append("&companyId=");
-			rssURLParams.append(company.getCompanyId());
+			rssURLParams = "&companyId=".concat(company.getCompanyId());
 		}
 	}
 	else {
-		rssURLParams.append("&groupId=");
-		rssURLParams.append(themeDisplay.getScopeGroupId());
+		rssURLParams = "&groupId=".concat(themeDisplay.getScopeGroupId());
 	}
 	%>
 

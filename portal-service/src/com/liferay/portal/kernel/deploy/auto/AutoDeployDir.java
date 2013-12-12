@@ -59,7 +59,7 @@ public class AutoDeployDir {
 		}
 
 		if (duplicateApplicableAutoDeployListenerClassNames.size() > 1) {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("The auto deploy listeners ");
 			sb.append(

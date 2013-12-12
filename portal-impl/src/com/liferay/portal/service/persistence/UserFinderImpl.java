@@ -752,7 +752,7 @@ public class UserFinderImpl
 				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
 			}
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(14);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(replaceJoinAndWhere(sql, params1));

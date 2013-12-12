@@ -116,7 +116,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		importPackages = ListUtil.sort(importPackages);
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(3 * importPackages.size());
 
 		String temp = null;
 

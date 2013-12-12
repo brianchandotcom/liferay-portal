@@ -45,14 +45,12 @@ public abstract class BaseSandboxHandler implements SandboxHandler {
 
 		File contextXml = new File(_engineHostDir, displayName + ".xml");
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("<?xml version=\"1.0\"?>\n");
-
 		sb.append("<Context crossContext=\"true\" docBase=\"");
 		sb.append(dir.getAbsolutePath());
-		sb.append("\" ");
-		sb.append("path=\"");
+		sb.append("\" path=\"");
 		sb.append(displayName);
 		sb.append("\" />");
 

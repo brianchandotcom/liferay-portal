@@ -184,7 +184,7 @@ public class OrganizationFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			boolean doUnion = false;
 
@@ -431,7 +431,7 @@ public class OrganizationFinderImpl
 			params = new LinkedHashMap<String, Object>();
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 

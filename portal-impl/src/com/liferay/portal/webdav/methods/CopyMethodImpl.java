@@ -42,9 +42,11 @@ public class CopyMethodImpl implements Method {
 		String destination = WebDAVUtil.getDestination(
 			request, storage.getRootPath());
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = null;
 
 		if (_log.isInfoEnabled()) {
+			sb = new StringBundler(6);
+
 			sb.append("Destination is ");
 			sb.append(destination);
 		}

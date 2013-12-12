@@ -3950,7 +3950,7 @@ public class PortalImpl implements Portal {
 	public String getPortalURL(
 		String serverName, int serverPort, boolean secure) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		boolean https =
 			(secure ||
@@ -4991,7 +4991,7 @@ public class PortalImpl implements Portal {
 			parameterMap = HttpUtil.getParameterMap(queryString);
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(18);
 
 		// URI
 
@@ -7603,7 +7603,7 @@ public class PortalImpl implements Portal {
 
 		Layout layout = themeDisplay.getLayout();
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(9);
 
 		sb.append(themeDisplay.getPortalURL());
 

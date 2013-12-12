@@ -132,7 +132,7 @@ public abstract class AbstractMessagingConfigurator
 								destinationName));
 					}
 					catch (Exception e) {
-						StringBundler sb = new StringBundler();
+						StringBundler sb = new StringBundler(4);
 
 						sb.append("Unable to install ");
 						sb.append(

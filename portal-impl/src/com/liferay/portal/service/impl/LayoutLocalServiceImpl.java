@@ -121,7 +121,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @return the object counter's name
 	 */
 	public static String getCounterName(long groupId, boolean privateLayout) {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(Layout.class.getName());
 		sb.append(StringPool.POUND);

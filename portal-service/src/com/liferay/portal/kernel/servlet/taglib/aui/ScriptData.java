@@ -82,7 +82,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
 
-		StringBundler callbackSB = new StringBundler();
+		StringBundler callbackSB = new StringBundler(_portletDataMap.size());
 
 		for (PortletData portletData : _portletDataMap.values()) {
 			portletData._rawSB.writeTo(writer);

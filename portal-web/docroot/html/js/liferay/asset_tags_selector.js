@@ -539,6 +539,12 @@ AUI.add(
 
 						var query = Lang.sub(TPL_SUGGESTIONS_QUERY, [context]);
 
+						var protocol = 'http';
+
+						if (A.UA.secure) {
+							protocol = 'https';
+						}
+
 						A.YQL(
 							query,
 							function(response) {
@@ -565,7 +571,7 @@ AUI.add(
 								 */
 							},
 							{
-								proto: 'https'
+								proto: protocol
 							}
 						);
 					},

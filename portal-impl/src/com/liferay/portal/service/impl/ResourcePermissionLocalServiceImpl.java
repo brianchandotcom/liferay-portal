@@ -786,6 +786,8 @@ public class ResourcePermissionLocalServiceImpl
 				for (int i = 0; i < roleIds.length; i++) {
 					if (roleIds[i] == roleId) {
 						hasResourcePermissions[i] = true;
+
+						break;
 					}
 				}
 			}

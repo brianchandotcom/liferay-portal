@@ -1282,14 +1282,14 @@ AUI.add(
 					CLICK,
 					function(event) {
 						var title;
-						var portletTitleText;
 
-						if (showBorders.get("value") == "false") {
-							portletTitleText = instance._curPortlet.one('.portlet-title-default');
+						var portletTitleSelector = '.portlet-title-default';
+
+						if (showBorders.get("value") != "false") {
+							portletTitleSelector = '.portlet-title-text';
 						}
-						else {
-							portletTitleText = instance._curPortlet.one('.portlet-title-text');
-						}
+
+						var portletTitleText = instance._curPortlet.one(portletTitleSelector);
 
 						var checked = event.currentTarget.get(CHECKED);
 

@@ -526,7 +526,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
-		indexSearcher.setDefaultFieldSortScoring(true, true);
+		indexSearcher.setDefaultFieldSortScoring(true, false);
 		indexSearcher.setSimilarity(new FieldWeightSimilarity());
 
 		return indexSearcher;

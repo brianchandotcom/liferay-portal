@@ -29,6 +29,7 @@ import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
 import com.liferay.portal.servlet.filters.aggregate.AggregateFilter;
 import com.liferay.portal.servlet.filters.aggregate.FileAggregateContext;
+import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
@@ -43,10 +44,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.tools.ant.DirectoryScanner;
-
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Function;
-import org.mozilla.javascript.ScriptableObject;
 
 /**
  * @author Brian Wing Shun Chan
@@ -137,10 +134,6 @@ public class SassToCssBuilder {
 
 		_initUtil(classLoader);
 
-		_jsScript = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/servlet/filters/dynamiccss/dependencies/r2.js");
-
 		_rubyScript = StringUtil.read(
 			classLoader,
 			"com/liferay/portal/servlet/filters/dynamiccss" +
@@ -180,45 +173,6 @@ public class SassToCssBuilder {
 		return fileName.substring(0, pos + 4);
 	}
 
-	private String _getRtlCss(String fileName, String css) throws Exception {
-		Context context = Context.enter();
-
-		String rtlCss = css;
-
-		try {
-			ScriptableObject scope = context.initStandardObjects();
-
-			// Prepare the context to execute r2 script with Rhino 1.7
-
-			context.evaluateString(
-				scope, "var module = {exports: {}};", "module", 1, null);
-			context.evaluateString(
-				scope, "function require() {}", "require", 1, null);
-			context.evaluateString(
-				scope, "String.prototype.trim = function() {" +
-					"return this.replace(/^\\s+|\\s+$/g, '');}",
-				"trim", 1, null);
-			context.evaluateString(scope, _jsScript, "script", 1, null);
-
-			Function function = (Function)scope.get("r2", scope);
-
-			Object result = function.call(
-				context, scope, scope, new Object[] {css});
-
-			rtlCss = (String)Context.jsToJava(result, String.class);
-		}
-		catch (Exception e) {
-			System.out.println("Unable to parse " + fileName + " to rtl");
-
-			e.printStackTrace();
-		}
-		finally {
-			Context.exit();
-		}
-
-		return rtlCss;
-	}
-
 	private void _initUtil(ClassLoader classLoader) {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
@@ -237,6 +191,8 @@ public class SassToCssBuilder {
 		portalUtil.setPortal(new PortalImpl());
 
 		PropsUtil.setProps(new PropsImpl());
+
+		RTLCSSUtil.init();
 	}
 
 	private boolean _isModified(String dirName, String[] fileNames)
@@ -355,12 +311,12 @@ public class SassToCssBuilder {
 
 		File rtlCacheFile = getCacheFile(filePath, "_rtl");
 
-		FileUtil.write(rtlCacheFile, _getRtlCss(fileName, parsedContent));
+		FileUtil.write(
+			rtlCacheFile, RTLCSSUtil.getRtlCss(fileName, parsedContent));
 
 		rtlCacheFile.setLastModified(file.lastModified());
 	}
 
-	private String _jsScript;
 	private RubyExecutor _rubyExecutor;
 	private String _rubyScript;
 	private String _tempDir;

@@ -63,8 +63,9 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void format() throws Exception {
 		String[] excludes = {
-			"**\\.sass-cache\\**", "**\\aui_deprecated.css", "**\\js\\aui\\**",
-			"**\\js\\editor\\**", "**\\js\\misc\\**", "**\\VAADIN\\**"
+			"**\\.sass-cache\\**", "**\\aui_deprecated.css", "**\\expected\\**",
+			"**\\js\\aui\\**", "**\\js\\editor\\**", "**\\js\\misc\\**",
+			"**\\VAADIN\\**"
 		};
 		String[] includes = {"**\\*.css"};
 

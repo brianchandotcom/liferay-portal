@@ -6333,6 +6333,21 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isRightToLeft(HttpServletRequest request) {
+		String languageId = LanguageUtil.getLanguageId(request);
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		String langDir = LanguageUtil.get(locale, "lang.dir");
+
+		if (langDir.equals("rtl")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRSSFeedsEnabled() {
 		return PropsValues.RSS_FEEDS_ENABLED;
 	}

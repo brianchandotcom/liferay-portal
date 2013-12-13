@@ -44,6 +44,10 @@ import java.util.Map;
 
 import org.apache.tools.ant.DirectoryScanner;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.ScriptableObject;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -52,16 +56,42 @@ import org.apache.tools.ant.DirectoryScanner;
 public class SassToCssBuilder {
 
 	public static File getCacheFile(String fileName) {
-		fileName = StringUtil.replace(
+		return getCacheFile(fileName, StringPool.BLANK);
+	}
+
+	public static File getCacheFile(String fileName, String suffix) {
+		return new File(getCacheFileName(fileName, suffix));
+	}
+
+	public static String getCacheFileName(String fileName, String suffix) {
+		String cacheFileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int pos = fileName.lastIndexOf(StringPool.SLASH);
+		int pos1 = cacheFileName.lastIndexOf(StringPool.SLASH);
+		int pos2 = cacheFileName.lastIndexOf(StringPool.PERIOD);
 
-		String cacheFileName =
-			fileName.substring(0, pos + 1) + ".sass-cache/" +
-				fileName.substring(pos + 1);
+		return cacheFileName.substring(0, pos1 + 1) + ".sass-cache/" +
+			cacheFileName.substring(pos1 + 1, pos2) + suffix +
+				cacheFileName.substring(pos2);
+	}
 
-		return new File(cacheFileName);
+	public static String getContent(String docrootDirName, String fileName)
+		throws Exception {
+
+		File file = new File(docrootDirName.concat(fileName));
+
+		String content = FileUtil.read(file);
+
+		content = AggregateFilter.aggregateCss(
+			new FileAggregateContext(docrootDirName, fileName), content);
+
+		return parseStaticTokens(content);
+	}
+
+	public static String getRtlCustomFileName(String fileName) {
+		int pos = fileName.lastIndexOf(StringPool.PERIOD);
+
+		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
 	}
 
 	public static void main(String[] args) {
@@ -126,9 +156,14 @@ public class SassToCssBuilder {
 
 		_initUtil(classLoader);
 
+		_jsScript = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/servlet/filters/dynamiccss/dependencies/r2.js");
+
 		_rubyScript = StringUtil.read(
 			classLoader,
-			"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
+			"com/liferay/portal/servlet/filters/dynamiccss/" +
+				"dependencies/main.rb");
 
 		_tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
 
@@ -145,23 +180,92 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private String _getContent(String docrootDirName, String fileName)
+	private void _addSassCache(
+			String docrootDirName, String portalCommonDirName, String fileName)
 		throws Exception {
 
-		File file = new File(docrootDirName.concat(fileName));
+		if (fileName.contains("_rtl")) {
+			return;
+		}
 
-		String content = FileUtil.read(file);
+		String filePath = docrootDirName.concat(fileName);
 
-		content = AggregateFilter.aggregateCss(
-			new FileAggregateContext(docrootDirName, fileName), content);
+		File file = new File(filePath);
+		File cacheFile = getCacheFile(filePath);
 
-		return parseStaticTokens(content);
+		String parsedContent = _parseSassFile(
+			docrootDirName, portalCommonDirName, fileName);
+
+		FileUtil.write(cacheFile, parsedContent);
+
+		cacheFile.setLastModified(file.lastModified());
+
+		// Generate rtl cache
+
+		File rtlCacheFile = getCacheFile(filePath, "_rtl");
+
+		String rtlCss = _getRtlCss(fileName, parsedContent);
+
+		// Append custom css for rtl
+
+		String rtlCustomFileName = getRtlCustomFileName(fileName);
+		String rtlCustomFilePath = docrootDirName.concat(rtlCustomFileName);
+
+		if (FileUtil.exists(rtlCustomFilePath)) {
+			String rtlCustomCss = _parseSassFile(
+				docrootDirName, portalCommonDirName, rtlCustomFileName);
+
+			rtlCss += rtlCustomCss;
+		}
+
+		FileUtil.write(rtlCacheFile, rtlCss);
+
+		rtlCacheFile.setLastModified(file.lastModified());
 	}
 
 	private String _getCssThemePath(String fileName) {
 		int pos = fileName.lastIndexOf("/css/");
 
 		return fileName.substring(0, pos + 4);
+	}
+
+	private String _getRtlCss(String fileName, String css) throws Exception {
+		Context context = Context.enter();
+
+		String rtlCss = css;
+
+		try {
+			ScriptableObject scope = context.initStandardObjects();
+
+			// Prepare the context to execute r2 script with Rhino 1.7
+
+			context.evaluateString(
+				scope, "var module = {exports: {}};", "module", 1, null);
+			context.evaluateString(
+				scope, "function require() {}", "require", 1, null);
+			context.evaluateString(
+				scope, "String.prototype.trim = function() {" +
+					"return this.replace(/^\\s+|\\s+$/g, '');}",
+				"trim", 1, null);
+			context.evaluateString(scope, _jsScript, "script", 1, null);
+
+			Function function = (Function)scope.get("r2", scope);
+
+			Object result = function.call(
+				context, scope, scope, new Object[] {css});
+
+			rtlCss = (String)Context.jsToJava(result, String.class);
+		}
+		catch (Exception e) {
+			System.out.println("Unable to parse " + fileName + " to rtl");
+
+			e.printStackTrace();
+		}
+		finally {
+			Context.exit();
+		}
+
+		return rtlCss;
 	}
 
 	private void _initUtil(ClassLoader classLoader) {
@@ -245,7 +349,7 @@ public class SassToCssBuilder {
 			try {
 				long start = System.currentTimeMillis();
 
-				_parseSassFile(docrootDirName, portalCommonDirName, fileName);
+				_addSassCache(docrootDirName, portalCommonDirName, fileName);
 
 				long end = System.currentTimeMillis();
 
@@ -261,19 +365,16 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private void _parseSassFile(
+	private String _parseSassFile(
 			String docrootDirName, String portalCommonDirName, String fileName)
 		throws Exception {
 
 		String filePath = docrootDirName.concat(fileName);
 
-		File file = new File(filePath);
-		File cacheFile = getCacheFile(filePath);
-
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
 		inputObjects.put("commonSassPath", portalCommonDirName);
-		inputObjects.put("content", _getContent(docrootDirName, fileName));
+		inputObjects.put("content", getContent(docrootDirName, fileName));
 		inputObjects.put("cssRealPath", filePath);
 		inputObjects.put("cssThemePath", _getCssThemePath(filePath));
 		inputObjects.put("sassCachePath", _tempDir);
@@ -290,13 +391,10 @@ public class SassToCssBuilder {
 
 		unsyncPrintWriter.flush();
 
-		String parsedContent = unsyncByteArrayOutputStream.toString();
-
-		FileUtil.write(cacheFile, parsedContent);
-
-		cacheFile.setLastModified(file.lastModified());
+		return unsyncByteArrayOutputStream.toString();
 	}
 
+	private String _jsScript;
 	private RubyExecutor _rubyExecutor;
 	private String _rubyScript;
 	private String _tempDir;

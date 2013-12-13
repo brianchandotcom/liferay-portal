@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.service.base.ShardLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -31,7 +30,7 @@ public class ShardLocalServiceImpl extends ShardLocalServiceBaseImpl {
 	public Shard addShard(String className, long classPK, String name)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		if (Validator.isNull(name)) {
 			name = PropsValues.SHARD_DEFAULT_NAME;
@@ -54,7 +53,7 @@ public class ShardLocalServiceImpl extends ShardLocalServiceBaseImpl {
 	public Shard getShard(String className, long classPK)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return shardPersistence.findByC_C(classNameId, classPK);
 	}

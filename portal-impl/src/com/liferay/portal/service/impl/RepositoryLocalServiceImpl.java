@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
@@ -44,7 +45,6 @@ import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.util.RepositoryFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
@@ -315,8 +315,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
-		if (classNameId ==
-				PortalUtil.getClassNameId(LiferayRepository.class.getName())) {
+		if (classNameId == classNameLocalService.getClassNameId(
+				LiferayRepository.class.getName())) {
 
 			repositoryImpl = new LiferayRepository(
 				repositoryLocalService, repositoryService,
@@ -433,8 +433,10 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		try {
 			repository = getRepository(repositoryId);
 
-			String repositoryImplClassName = PortalUtil.getClassName(
+			ClassName className = classNameLocalService.getClassName(
 				classNameId);
+
+			String repositoryImplClassName = className.getValue();
 
 			baseRepository = RepositoryFactoryUtil.getInstance(
 				repositoryImplClassName);
@@ -486,7 +488,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 	protected long getDefaultClassNameId() {
 		if (_defaultClassNameId == 0) {
-			_defaultClassNameId = PortalUtil.getClassNameId(
+			_defaultClassNameId = classNameLocalService.getClassNameId(
 				LiferayRepository.class.getName());
 		}
 
@@ -520,7 +522,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			return repository.getClassNameId();
 		}
 
-		return PortalUtil.getClassNameId(LiferayRepository.class.getName());
+		return classNameLocalService.getClassNameId(
+			LiferayRepository.class.getName());
 	}
 
 	protected long getRepositoryEntryId(

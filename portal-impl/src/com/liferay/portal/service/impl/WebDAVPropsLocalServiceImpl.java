@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.model.WebDAVProps;
 import com.liferay.portal.service.base.WebDAVPropsLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
 
@@ -34,7 +33,7 @@ public class WebDAVPropsLocalServiceImpl
 	public void deleteWebDAVProps(String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		try {
 			webDAVPropsPersistence.removeByC_C(classNameId, classPK);
@@ -48,7 +47,7 @@ public class WebDAVPropsLocalServiceImpl
 			long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		WebDAVProps webDavProps = webDAVPropsPersistence.fetchByC_C(
 			classNameId, classPK);

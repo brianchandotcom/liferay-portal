@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -109,7 +109,7 @@ public class SubscriptionLocalServiceImpl
 		// Subscription
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		long subscriptionId = counterLocalService.increment();
@@ -216,7 +216,7 @@ public class SubscriptionLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		Subscription subscription = subscriptionPersistence.findByC_U_C_C(
 			user.getCompanyId(), userId, classNameId, classPK);
@@ -247,16 +247,18 @@ public class SubscriptionLocalServiceImpl
 			subscription.getClassNameId(), subscription.getClassPK());
 
 		if (assetEntry != null) {
-			String className = PortalUtil.getClassName(
+			ClassName className = classNameLocalService.getClassName(
 				subscription.getClassNameId());
+
+			String subscriptionClassName = className.getValue();
 
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
 			socialActivityLocalService.addActivity(
-				subscription.getUserId(), assetEntry.getGroupId(), className,
-				subscription.getClassPK(),
+				subscription.getUserId(), assetEntry.getGroupId(),
+				subscriptionClassName, subscription.getClassPK(),
 				SocialActivityConstants.TYPE_UNSUBSCRIBE,
 				extraDataJSONObject.toString(), 0);
 		}
@@ -297,7 +299,7 @@ public class SubscriptionLocalServiceImpl
 			long companyId, String className, long classPK)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<Subscription> subscriptions = subscriptionPersistence.findByC_C_C(
 			companyId, classNameId, classPK);
@@ -323,7 +325,7 @@ public class SubscriptionLocalServiceImpl
 			long companyId, long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return subscriptionPersistence.findByC_U_C_C(
 			companyId, userId, classNameId, classPK);
@@ -344,7 +346,7 @@ public class SubscriptionLocalServiceImpl
 			long companyId, long userId, String className, long[] classPKs)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return subscriptionPersistence.findByC_U_C_C(
 			companyId, userId, classNameId, classPKs);
@@ -364,7 +366,7 @@ public class SubscriptionLocalServiceImpl
 			long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return subscriptionPersistence.findByC_C_C(
 			companyId, classNameId, classPK);
@@ -404,7 +406,7 @@ public class SubscriptionLocalServiceImpl
 			long userId, String className)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return subscriptionPersistence.findByU_C(userId, classNameId);
 	}
@@ -437,7 +439,7 @@ public class SubscriptionLocalServiceImpl
 			long companyId, long userId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
 			companyId, userId, classNameId, classPK);
@@ -467,7 +469,7 @@ public class SubscriptionLocalServiceImpl
 			long companyId, long userId, String className, long[] classPKs)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		int count = subscriptionPersistence.countByC_U_C_C(
 			companyId, userId, classNameId, classPKs);

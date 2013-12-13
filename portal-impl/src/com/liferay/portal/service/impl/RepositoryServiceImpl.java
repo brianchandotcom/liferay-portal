@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.util.RepositoryFactoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
@@ -150,8 +150,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			String repositoryImplClassName = PortalUtil.getClassName(
+			ClassName className = classNameLocalService.getClassName(
 				classNameId);
+
+			String repositoryImplClassName = className.getValue();
 
 			BaseRepository baseRepository = RepositoryFactoryUtil.getInstance(
 				repositoryImplClassName);
@@ -169,8 +171,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			String repositoryImplClassName = PortalUtil.getClassName(
+			ClassName className = classNameLocalService.getClassName(
 				classNameId);
+
+			String repositoryImplClassName = className.getValue();
 
 			BaseRepository baseRepository = RepositoryFactoryUtil.getInstance(
 				repositoryImplClassName);

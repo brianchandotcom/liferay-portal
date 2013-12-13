@@ -115,11 +115,11 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 			AggregateClassLoader.getAggregateClassLoader(
 				ClassLoaderUtil.getPortalClassLoader(), classLoaders);
 
-		GroovyShell groovyShell = null;
+		GroovyShell groovyShell = _groovyShells.get(aggregateClassLoader);
 
-		if (!_groovyShells.containsKey(aggregateClassLoader)) {
+		if (groovyShell == null) {
 			synchronized (this) {
-				if (!_groovyShells.containsKey(aggregateClassLoader)) {
+				if (groovyShell == null) {
 					groovyShell = new GroovyShell(aggregateClassLoader);
 
 					_groovyShells.put(aggregateClassLoader, groovyShell);

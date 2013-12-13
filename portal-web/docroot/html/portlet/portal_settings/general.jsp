@@ -67,10 +67,10 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 <aui:row>
 	<aui:col width="<%= 50 %>">
 		<aui:input bean="<%= company %>" helpMessage="home-url-help" label="home-url" model="<%= Company.class %>" name="homeURL" />
+
+		<aui:input helpMessage="default-landing-page-help" label="default-landing-page" name='<%= "settings--" + PropsKeys.DEFAULT_LANDING_PAGE_PATH + "--" %>' type="text" value="<%= defaultLandingPagePath %>" />
 	</aui:col>
 	<aui:col width="<%= 50 %>">
-		<aui:input helpMessage="default-landing-page-help" label="default-landing-page" name='<%= "settings--" + PropsKeys.DEFAULT_LANDING_PAGE_PATH + "--" %>' type="text" value="<%= defaultLandingPagePath %>" />
-
 		<aui:input helpMessage="default-logout-page-help" label="default-logout-page" name='<%= "settings--" + PropsKeys.DEFAULT_LOGOUT_PAGE_PATH + "--" %>' type="text" value="<%= defaultLogoutPagePath %>" />
 	</aui:col>
 </aui:row>
@@ -84,10 +84,10 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 		<aui:input name="legalId" />
 
 		<aui:input name="legalType" />
+
+		<aui:input name="sicCode" />
 	</aui:col>
 	<aui:col width="<%= 50 %>">
-		<aui:input name="sicCode" />
-
 		<aui:input name="tickerSymbol" />
 
 		<aui:input name="industry" />

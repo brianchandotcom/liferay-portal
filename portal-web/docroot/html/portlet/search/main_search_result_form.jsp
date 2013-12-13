@@ -114,10 +114,6 @@ if ((assetRendererFactory == null) && viewInContext) {
 	viewURL = viewFullContentURL.toString();
 }
 
-if (ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), className).equals("User")) {
-	viewURL = user.getDisplayURL(themeDisplay);
-}
-
 viewURL = _checkViewURL(themeDisplay, viewURL, currentURL, inheritRedirect);
 
 String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");

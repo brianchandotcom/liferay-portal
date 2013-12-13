@@ -1604,6 +1604,10 @@ public class PortalUtil {
 		return getPortal().getValidUserId(companyId, userId);
 	}
 
+	public static String getVirtualHostname(LayoutSet layoutSet) {
+		return getPortal().getVirtualHostname(layoutSet);
+	}
+
 	public static String getVirtualLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,

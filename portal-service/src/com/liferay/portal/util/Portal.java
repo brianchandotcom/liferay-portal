@@ -1160,6 +1160,8 @@ public interface Portal {
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException, SystemException;
 
+	public String getVirtualHostname(LayoutSet layoutSet);
+
 	public String getVirtualLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,

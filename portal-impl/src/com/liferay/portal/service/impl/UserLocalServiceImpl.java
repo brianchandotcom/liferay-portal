@@ -56,6 +56,9 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.spring.aop.ShardSelection;
+import com.liferay.portal.kernel.spring.aop.ShardSelectionMethod;
+import com.liferay.portal.kernel.spring.aop.ShardSelectorParam;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
@@ -157,6 +160,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Raymond Augé
  * @author Jorge Ferrer
  * @author Julio Camarero
+ * @author Vilmos Papp
  * @author Wesley Gong
  * @author Zsigmond Rab
  */
@@ -177,6 +181,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User addDefaultAdminUser(
 			long companyId, String screenName, String emailAddress,
 			Locale locale, String firstName, String middleName, String lastName)
@@ -569,13 +574,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User addUser(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, long facebookId,
-			String openId, Locale locale, String firstName, String middleName,
-			String lastName, int prefixId, int suffixId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
+			long creatorUserId, @ShardSelectorParam long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			long facebookId, String openId, Locale locale, String firstName,
+			String middleName, String lastName, int prefixId, int suffixId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail,
 			ServiceContext serviceContext)
@@ -686,14 +692,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	@SuppressWarnings("deprecation")
 	public User addUserWithWorkflow(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, long facebookId,
-			String openId, Locale locale, String firstName, String middleName,
-			String lastName, int prefixId, int suffixId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
+			long creatorUserId, @ShardSelectorParam long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			long facebookId, String openId, Locale locale, String firstName,
+			String middleName, String lastName, int prefixId, int suffixId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, long[] groupIds, long[] organizationIds,
 			long[] roleIds, long[] userGroupIds, boolean sendEmail,
 			ServiceContext serviceContext)
@@ -1018,6 +1025,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.security.auth.AuthPipeline
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public int authenticateByEmailAddress(
 			long companyId, String emailAddress, String password,
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap,
@@ -1054,6 +1062,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.security.auth.AuthPipeline
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public int authenticateByScreenName(
 			long companyId, String screenName, String password,
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap,
@@ -1090,6 +1099,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.security.auth.AuthPipeline
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public int authenticateByUserId(
 			long companyId, long userId, String password,
 			Map<String, String[]> headerMap, Map<String, String[]> parameterMap,
@@ -1142,6 +1152,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long authenticateForBasic(
 			long companyId, String authType, String login, String password)
@@ -1225,6 +1236,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long authenticateForDigest(
 			long companyId, String username, String realm, String nonce,
@@ -1381,6 +1393,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void checkLockout(User user)
 		throws PortalException, SystemException {
 
@@ -1446,6 +1459,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void checkLoginFailure(User user) throws SystemException {
 		Date now = new Date();
 
@@ -1468,6 +1482,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void checkLoginFailureByEmailAddress(
 			long companyId, String emailAddress)
 		throws PortalException, SystemException {
@@ -1504,6 +1519,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void checkLoginFailureByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
@@ -1523,6 +1539,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void checkPasswordExpired(User user)
 		throws PortalException, SystemException {
 
@@ -1606,8 +1623,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void completeUserRegistration(
-			User user, ServiceContext serviceContext)
+			@ShardSelectorParam User user, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		boolean autoPassword = ParamUtil.getBoolean(
@@ -1693,6 +1711,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public KeyValuePair decryptUserId(
 			long companyId, String name, String password)
 		throws PortalException, SystemException {
@@ -1800,6 +1819,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User deleteUser(User user) throws PortalException, SystemException {
 		if (!PropsValues.USERS_DELETE) {
 			throw new RequiredUserException();
@@ -1990,6 +2010,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User fetchUserByEmailAddress(long companyId, String emailAddress)
 		throws SystemException {
 
@@ -2008,6 +2029,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User fetchUserByFacebookId(long companyId, long facebookId)
 		throws SystemException {
 
@@ -2037,6 +2059,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User fetchUserByOpenId(long companyId, String openId)
 		throws SystemException {
 
@@ -2066,12 +2089,30 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User fetchUserByScreenName(long companyId, String screenName)
 		throws SystemException {
 
 		screenName = getLogin(screenName);
 
 		return userPersistence.fetchByC_SN(companyId, screenName);
+	}
+
+	/**
+	 * Returns the user with the primary key.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  userId the primary key of the user
+	 * @return the user with the primary key, or <code>null</code> if a user
+	 *         with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User fetchUserByUserId(long companyId, long userId)
+		throws SystemException {
+
+		return userPersistence.fetchByC_U(companyId, userId);
 	}
 
 	/**
@@ -2094,6 +2135,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public List<User> getCompanyUsers(long companyId, int start, int end)
 		throws SystemException {
 
@@ -2108,6 +2150,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public int getCompanyUsersCount(long companyId) throws SystemException {
 		return userPersistence.countByCompanyId(companyId);
 	}
@@ -2636,6 +2679,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User getUserByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
@@ -2654,6 +2698,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User getUserByFacebookId(long companyId, long facebookId)
 		throws PortalException, SystemException {
 
@@ -2667,6 +2712,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the user with the primary key
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #getUserById(long, long)}
 	 */
 	@Override
 	public User getUserById(long userId)
@@ -2686,6 +2734,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User getUserById(long companyId, long userId)
 		throws PortalException, SystemException {
 
@@ -2702,6 +2751,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User getUserByOpenId(long companyId, String openId)
 		throws PortalException, SystemException {
 
@@ -2733,6 +2783,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User getUserByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
@@ -2775,7 +2826,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public User getUserByUuidAndCompanyId(String uuid, long companyId)
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User getUserByUuidAndCompanyId(
+			String uuid, @ShardSelectorParam long companyId)
 		throws PortalException, SystemException {
 
 		List<User> users = userPersistence.findByUuid_C(uuid, companyId);
@@ -2824,6 +2877,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public long getUserIdByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
@@ -2844,6 +2898,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public long getUserIdByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
@@ -2888,6 +2943,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public boolean hasRoleUser(
 			long companyId, String name, long userId, boolean inherited)
 		throws PortalException, SystemException {
@@ -2990,6 +3046,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User loadGetDefaultUser(long companyId)
 		throws PortalException, SystemException {
 
@@ -3029,6 +3086,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.service.persistence.UserFinder
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public List<User> search(
 			long companyId, String keywords, int status,
 			LinkedHashMap<String, Object> params, int start, int end,
@@ -3071,6 +3129,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public Hits search(
 			long companyId, String keywords, int status,
 			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
@@ -3157,6 +3216,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @see    com.liferay.portal.service.persistence.UserFinder
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public List<User> search(
 			long companyId, String firstName, String middleName,
 			String lastName, String screenName, String emailAddress, int status,
@@ -3209,6 +3269,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public Hits search(
 			long companyId, String firstName, String middleName,
 			String lastName, String screenName, String emailAddress, int status,
@@ -3237,6 +3298,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public int searchCount(
 			long companyId, String keywords, int status,
 			LinkedHashMap<String, Object> params)
@@ -3268,6 +3330,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public int searchCount(
 			long companyId, String firstName, String middleName,
 			String lastName, String screenName, String emailAddress, int status,
@@ -3291,8 +3354,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void sendEmailAddressVerification(
-			User user, String emailAddress, ServiceContext serviceContext)
+			@ShardSelectorParam User user, String emailAddress,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (user.isEmailAddressVerified() &&
@@ -3376,6 +3441,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void sendPassword(
 			long companyId, String emailAddress, String fromName,
 			String fromAddress, String subject, String body,
@@ -3831,6 +3897,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #updateAgreedToTermsOfUse(
+	 *             long, long, boolean)}
 	 */
 	@Override
 	public User updateAgreedToTermsOfUse(
@@ -3838,6 +3908,32 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		user.setAgreedToTermsOfUse(agreedToTermsOfUse);
+
+		userPersistence.update(user);
+
+		return user;
+	}
+
+	/**
+	 * Updates whether the user has agreed to the terms of use.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  agreedToTermsOfUse whether the user has agreet to the terms of
+	 *         use
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updateAgreedToTermsOfUse(
+			long companyId, long userId, boolean agreedToTermsOfUse)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByC_U(companyId, userId);
 
 		user.setAgreedToTermsOfUse(agreedToTermsOfUse);
 
@@ -4094,13 +4190,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateIncompleteUser(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, long facebookId,
-			String openId, Locale locale, String firstName, String middleName,
-			String lastName, int prefixId, int suffixId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
+			long creatorUserId, @ShardSelectorParam long companyId,
+			boolean autoPassword, String password1, String password2,
+			boolean autoScreenName, String screenName, String emailAddress,
+			long facebookId, String openId, Locale locale, String firstName,
+			String middleName, String lastName, int prefixId, int suffixId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String jobTitle, boolean updateUserInformation, boolean sendEmail,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -4284,6 +4381,41 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Updates the user's last login with the current time and the IP address.
 	 *
+	 * @param  companyId
+	 * @param  userId the primary key of the user
+	 * @param  loginIP the IP address the user logged in from
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updateLastLogin(long companyId, long userId, String loginIP)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByC_U(companyId, userId);
+
+		Date lastLoginDate = user.getLoginDate();
+
+		if (lastLoginDate == null) {
+			lastLoginDate = new Date();
+		}
+
+		user.setLoginDate(new Date());
+		user.setLoginIP(loginIP);
+		user.setLastLoginDate(lastLoginDate);
+		user.setLastLoginIP(user.getLoginIP());
+		user.setLastFailedLoginDate(null);
+		user.setFailedLoginAttempts(0);
+
+		userPersistence.update(user);
+
+		return user;
+	}
+
+	/**
+	 * Updates the user's last login with the current time and the IP address.
+	 *
 	 * @param  userId the primary key of the user
 	 * @param  loginIP the IP address the user logged in from
 	 * @return the user
@@ -4324,6 +4456,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateLockout(User user, boolean lockout)
 		throws PortalException, SystemException {
 
@@ -4364,6 +4497,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateLockoutByEmailAddress(
 			long companyId, String emailAddress, boolean lockout)
 		throws PortalException, SystemException {
@@ -4402,6 +4536,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateLockoutByScreenName(
 			long companyId, String screenName, boolean lockout)
 		throws PortalException, SystemException {
@@ -4481,6 +4616,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Updates the user's password without tracking or validation of the change.
 	 *
+	 * @param  companyId the primary key of the company
 	 * @param  userId the primary key of the user
 	 * @param  password1 the user's new password
 	 * @param  password2 the user's new password confirmation
@@ -4489,6 +4625,115 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updatePassword(
+			long companyId, long userId, String password1, String password2,
+			boolean passwordReset)
+		throws PortalException, SystemException {
+
+		return updatePassword(
+			companyId, userId, password1, password2, passwordReset, false);
+	}
+
+	/**
+	 * Updates the user's password, optionally with tracking and validation of
+	 * the change.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  password1 the user's new password
+	 * @param  password2 the user's new password confirmation
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they login
+	 * @param  silentUpdate whether the password should be updated without being
+	 *         tracked, or validated. Primarily used for password imports.
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updatePassword(
+			long companyId, long userId, String password1, String password2,
+			boolean passwordReset, boolean silentUpdate)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByC_U(companyId, userId);
+
+		if (!silentUpdate) {
+			validatePassword(user.getCompanyId(), userId, password1, password2);
+		}
+
+		String oldEncPwd = user.getPassword();
+
+		if (!user.isPasswordEncrypted()) {
+			oldEncPwd = PasswordEncryptorUtil.encrypt(user.getPassword());
+		}
+
+		String newEncPwd = PasswordEncryptorUtil.encrypt(password1);
+
+		if (user.hasCompanyMx()) {
+			mailService.updatePassword(user.getCompanyId(), userId, password1);
+		}
+
+		user.setPassword(newEncPwd);
+		user.setPasswordUnencrypted(password1);
+		user.setPasswordEncrypted(true);
+		user.setPasswordReset(passwordReset);
+		user.setPasswordModifiedDate(new Date());
+		user.setDigest(StringPool.BLANK);
+		user.setGraceLoginCount(0);
+
+		if (!silentUpdate) {
+			user.setPasswordModified(true);
+		}
+
+		try {
+			userPersistence.update(user);
+		}
+		catch (ModelListenerException mle) {
+			String msg = GetterUtil.getString(mle.getCause().getMessage());
+
+			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
+				String passwordHistory = PrefsPropsUtil.getString(
+					user.getCompanyId(), PropsKeys.LDAP_ERROR_PASSWORD_HISTORY);
+
+				if (msg.contains(passwordHistory)) {
+					throw new UserPasswordException(
+						UserPasswordException.PASSWORD_ALREADY_USED);
+				}
+			}
+
+			throw new UserPasswordException(
+				UserPasswordException.PASSWORD_INVALID);
+		}
+
+		if (!silentUpdate) {
+			user.setPasswordModified(false);
+
+			passwordTrackerLocalService.trackPassword(userId, oldEncPwd);
+		}
+
+		return user;
+	}
+
+	/**
+	 * Updates the user's password without tracking or validation of the change.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  password1 the user's new password
+	 * @param  password2 the user's new password confirmation
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they log in
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #updatePassword(
+	 *             long, long, String, String, boolean)}
 	 */
 	@Override
 	public User updatePassword(
@@ -4514,6 +4759,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #updatePassword(
+	 *             long, long, String, String, boolean, boolean)}
 	 */
 	@Override
 	public User updatePassword(
@@ -4625,12 +4874,42 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #updatePasswordReset(long, long, boolean)}
 	 */
 	@Override
 	public User updatePasswordReset(long userId, boolean passwordReset)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		user.setPasswordReset(passwordReset);
+
+		userPersistence.update(user);
+
+		return user;
+	}
+
+	/**
+	 * Updates whether the user should be asked to reset their password the next
+	 * time they login.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they login
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updatePasswordReset(
+			long companyId, long userId, boolean passwordReset)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByC_U(companyId, userId);
 
 		user.setPasswordReset(passwordReset);
 
@@ -4662,6 +4941,39 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			PropsValues.USERS_IMAGE_MAX_WIDTH);
 
 		return userPersistence.update(user);
+	}
+
+	/**
+	 * Updates the user's password reset question and answer.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  question the user's new password reset question
+	 * @param  answer the user's new password reset answer
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the new question or answer were invalid
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #getUserById(long, long)}
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updateReminderQuery(
+			long companyId, long userId, String question, String answer)
+		throws PortalException, SystemException {
+
+		validateReminderQuery(question, answer);
+
+		User user = userPersistence.findByC_U(companyId, userId);
+
+		user.setReminderQueryQuestion(question);
+		user.setReminderQueryAnswer(answer);
+
+		userPersistence.update(user);
+
+		return user;
 	}
 
 	/**
@@ -4822,6 +5134,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	@SuppressWarnings("deprecation")
 	public User updateUser(
 			long userId, String oldPassword, String newPassword1,
@@ -4838,7 +5151,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String ymSn, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-			ServiceContext serviceContext)
+			@ShardSelectorParam ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// User

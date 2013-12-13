@@ -74,13 +74,14 @@ public class UpdatePasswordAction extends Action {
 
 		if (Validator.isNull(cmd)) {
 			if (ticket != null) {
-				User user = UserLocalServiceUtil.getUser(ticket.getClassPK());
+				User user = UserLocalServiceUtil.getUserById(
+					themeDisplay.getCompanyId(), ticket.getClassPK());
 
 				try {
 					UserLocalServiceUtil.checkLockout(user);
 
 					UserLocalServiceUtil.updatePasswordReset(
-						user.getUserId(), true);
+						themeDisplay.getCompanyId(), user.getUserId(), true);
 				}
 				catch (UserLockoutException ule) {
 					SessionErrors.add(request, ule.getClass());
@@ -197,7 +198,8 @@ public class UpdatePasswordAction extends Action {
 			PwdToolkitUtilThreadLocal.setValidate(currentValidate);
 
 			UserLocalServiceUtil.updatePassword(
-				userId, password1, password2, passwordReset);
+				themeDisplay.getCompanyId(), userId, password1, password2,
+				passwordReset);
 		}
 		finally {
 			PwdToolkitUtilThreadLocal.setValidate(previousValidate);
@@ -206,7 +208,8 @@ public class UpdatePasswordAction extends Action {
 		if (ticket != null) {
 			TicketLocalServiceUtil.deleteTicket(ticket);
 
-			User user = UserLocalServiceUtil.getUser(userId);
+			User user = UserLocalServiceUtil.getUserById(
+				themeDisplay.getCompanyId(), userId);
 
 			Company company = CompanyLocalServiceUtil.getCompanyById(
 				user.getCompanyId());
@@ -227,7 +230,8 @@ public class UpdatePasswordAction extends Action {
 
 			LoginUtil.login(request, response, login, password1, false, null);
 
-			UserLocalServiceUtil.updatePasswordReset(userId, false);
+			UserLocalServiceUtil.updatePasswordReset(
+				themeDisplay.getCompanyId(), userId, false);
 		}
 		else if (PropsValues.SESSION_STORE_PASSWORD) {
 			HttpSession session = request.getSession();

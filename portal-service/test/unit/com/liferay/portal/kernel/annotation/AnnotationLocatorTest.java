@@ -189,6 +189,7 @@ import org.junit.Test;
  * </p>
  *
  * @author Shuyang Zhou
+ * @author Vilmos Papp
  */
 public class AnnotationLocatorTest {
 
@@ -348,6 +349,26 @@ public class AnnotationLocatorTest {
 				new Annotation[] {_method(9), _mix(9), _type(9)},
 				new Annotation[0], new Annotation[0], new Annotation[0],
 				new Annotation[0], new Annotation[0]));
+	}
+
+	@Test
+	public void testMethodParameterLocate()
+		throws NoSuchMethodException, SecurityException {
+
+		List<Annotation> expectedAnnotations = new ArrayList<Annotation>();
+		expectedAnnotations.add(_parameterSelector());
+
+		java.lang.reflect.Method method =
+			OriginInterface3.class.getDeclaredMethod(
+				"originMethod", long.class, long.class);
+
+		Annotation[][] actualAnnotations = AnnotationLocator.locate(
+				method, OriginClass2.class,
+				new Object[] {long.class, long.class});
+
+		Assert.assertArrayEquals(actualAnnotations[0], new Annotation[0]);
+
+		Assert.assertEquals(actualAnnotations[1][0], _parameterSelector());
 	}
 
 	@Test
@@ -697,6 +718,19 @@ public class AnnotationLocatorTest {
 		};
 	}
 
+	private ParameterSelector _parameterSelector() {
+
+		return new ParameterSelector() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return ParameterSelector.class;
+			}
+
+		};
+
+	}
+
 	private Type _type(final int value) {
 		return new Type() {
 
@@ -774,6 +808,13 @@ public class AnnotationLocatorTest {
 
 	}
 
+	private class OriginClass2 implements OriginInterface3 {
+
+		public void originMethod(long param1, @ParameterSelector long param2) {
+		}
+
+	}
+
 	@Type(value = 9)
 	private interface OriginInterface1 {
 
@@ -789,6 +830,17 @@ public class AnnotationLocatorTest {
 		@Method(value = 8)
 		public void originMethod2();
 
+	}
+
+	private interface OriginInterface3 {
+
+		public void originMethod(long param1, long param2);
+
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.PARAMETER)
+	private @interface ParameterSelector {
 	}
 
 	@Mix(value = 2)

@@ -1003,9 +1003,11 @@ public class UsersAdminImpl implements UsersAdmin {
 		List<Document> documents = hits.toList();
 
 		for (Document document : documents) {
+			long companyId = GetterUtil.getLong(document.get(Field.COMPANY_ID));
 			long userId = GetterUtil.getLong(document.get(Field.USER_ID));
 
-			User user = UserLocalServiceUtil.fetchUser(userId);
+			User user = UserLocalServiceUtil.fetchUserByUserId(
+				companyId, userId);
 
 			if (user != null) {
 				users.add(user);
@@ -1014,9 +1016,6 @@ public class UsersAdminImpl implements UsersAdmin {
 				corruptIndex = true;
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
-
-				long companyId = GetterUtil.getLong(
-					document.get(Field.COMPANY_ID));
 
 				indexer.delete(companyId, document.getUID());
 			}

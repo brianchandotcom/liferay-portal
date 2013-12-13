@@ -24,6 +24,7 @@ import java.util.Queue;
 
 /**
  * @author Shuyang Zhou
+ * @author Vilmos Papp
  */
 public class AnnotationLocator {
 
@@ -171,6 +172,41 @@ public class AnnotationLocator {
 		return null;
 	}
 
+	public static Annotation[][] locate(
+		Method method, Class<?> targetClass, Object[] arguments) {
+
+		Queue<Class<?>> queue = new LinkedList<Class<?>>();
+
+		if (targetClass == null) {
+			queue.offer(method.getDeclaringClass());
+		}
+		else {
+			queue.offer(targetClass);
+		}
+
+		List<Annotation[]> parameterAnnotations = new ArrayList<Annotation[]>();
+
+		Class<?> clazz = null;
+
+		while ((clazz = queue.poll()) != null) {
+			try {
+				Method specificMethod = clazz.getDeclaredMethod(
+					method.getName(), method.getParameterTypes());
+
+				Annotation[][] annotations =
+					specificMethod.getParameterAnnotations();
+
+				_mergeParameterAnnotations(annotations, parameterAnnotations);
+			}
+			catch (Exception e) {
+			}
+
+			_queueSuperTypes(queue, clazz);
+		}
+
+		return parameterAnnotations.toArray(new Annotation[0][0]);
+	}
+
 	private static void _mergeAnnotations(
 		Annotation[] sourceAnnotations, List<Annotation> targetAnnotationList) {
 
@@ -185,6 +221,20 @@ public class AnnotationLocator {
 			}
 
 			targetAnnotationList.add(sourceAnnotation);
+		}
+	}
+
+	private static void _mergeParameterAnnotations(
+		Annotation[][] sourceParameterAnnotations,
+		List<Annotation[]> targetParameterAnnotations) {
+
+		for (int i = 0; i < sourceParameterAnnotations.length; i++) {
+			List<Annotation> annotationList = new ArrayList<Annotation>();
+
+			_mergeAnnotations(sourceParameterAnnotations[i], annotationList);
+
+			targetParameterAnnotations.add(
+				annotationList.toArray(new Annotation[0]));
 		}
 	}
 

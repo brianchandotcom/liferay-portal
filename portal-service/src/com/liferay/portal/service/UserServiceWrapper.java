@@ -641,15 +641,36 @@ public class UserServiceWrapper implements UserService,
 	*
 	* @param userId the primary key of the user
 	* @return the user with the primary key
-	* @throws PortalException if a user with the primary key could not be found
-	or if the current user did not have permission to view the user
+	* @throws PortalException if a user with the primary key could not be
+	found or if the current user did not have permission to view
+	the user
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0 as shard selection is not possible without
+	companyId or other object which has getCompanyId method.
+	Replaced by {@link #getUserById(long, long)}
 	*/
 	@Override
 	public com.liferay.portal.model.User getUserById(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getUserById(userId);
+	}
+
+	/**
+	* Returns the user with the primary key.
+	*
+	* @param compnayId the primary key of the user's company
+	* @param userId the primary key of the user
+	* @return the user with the primary key
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to view the user
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.User getUserById(long companyId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.getUserById(companyId, userId);
 	}
 
 	/**
@@ -930,11 +951,16 @@ public class UserServiceWrapper implements UserService,
 	* Updates the user's response to the terms of use agreement.
 	*
 	* @param userId the primary key of the user
-	* @param agreedToTermsOfUse whether the user has agree to the terms of use
+	* @param agreedToTermsOfUse whether the user has agree to the terms of
+	use
 	* @return the user
-	* @throws PortalException if the current user did not have permission to
-	update the user's agreement to terms-of-use
+	* @throws PortalException if the current user did not have permission
+	to update the user's agreement to terms-of-use
 	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0 as shard selection is not possible without
+	companyId or other object which has getCompanyId method.
+	Replaced by {@link #updateAgreedToTermsOfUse(
+	long, long, boolean)}
 	*/
 	@Override
 	public com.liferay.portal.model.User updateAgreedToTermsOfUse(long userId,
@@ -942,6 +968,26 @@ public class UserServiceWrapper implements UserService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.updateAgreedToTermsOfUse(userId, agreedToTermsOfUse);
+	}
+
+	/**
+	* Updates the user's response to the terms of use agreement.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param agreedToTermsOfUse whether the user has agree to the terms of use
+	* @return the user
+	* @throws PortalException if the current user did not have permission to
+	update the user's agreement to terms-of-use
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.User updateAgreedToTermsOfUse(
+		long companyId, long userId, boolean agreedToTermsOfUse)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.updateAgreedToTermsOfUse(companyId, userId,
+			agreedToTermsOfUse);
 	}
 
 	/**
@@ -1089,6 +1135,7 @@ public class UserServiceWrapper implements UserService,
 	/**
 	* Updates the user's password without tracking or validation of the change.
 	*
+	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
 	* @param password1 the user's new password
 	* @param password2 the user's new password confirmation
@@ -1098,6 +1145,33 @@ public class UserServiceWrapper implements UserService,
 	* @throws PortalException if a user with the primary key could not be found
 	or if the current user did not have permission to update the user
 	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.User updatePassword(long companyId,
+		long userId, java.lang.String password1, java.lang.String password2,
+		boolean passwordReset)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.updatePassword(companyId, userId, password1,
+			password2, passwordReset);
+	}
+
+	/**
+	* Updates the user's password without tracking or validation of the change.
+	*
+	* @param userId the primary key of the user
+	* @param password1 the user's new password
+	* @param password2 the user's new password confirmation
+	* @param passwordReset whether the user should be asked to reset their
+	password the next time they log in
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the current user did not have permission to update the user
+	* @throws SystemException if a system exception occurred
+	* @deprecated As of 7.0.0 as shard selection is not possible without
+	companyId or other object which has getCompanyId method.
+	Replaced by {{@link #updatePassword(
+	long, long, String, String, boolean)}
 	*/
 	@Override
 	public com.liferay.portal.model.User updatePassword(long userId,
@@ -1126,6 +1200,28 @@ public class UserServiceWrapper implements UserService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.updatePortrait(userId, bytes);
+	}
+
+	/**
+	* Updates the user's password reset question and answer.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param question the user's new password reset question
+	* @param answer the user's new password reset answer
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be
+	found, if the new question or answer were invalid, or if the
+	current user did not have permission to update the user
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.User updateReminderQuery(long companyId,
+		long userId, java.lang.String question, java.lang.String answer)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.updateReminderQuery(companyId, userId, question,
+			answer);
 	}
 
 	/**
@@ -1296,6 +1392,99 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
+	* Updates the user.
+	*
+	* @param userId the primary key of the user
+	* @param oldPassword the user's old password
+	* @param newPassword1 the user's new password (optionally
+	<code>null</code>)
+	* @param newPassword2 the user's new password confirmation (optionally
+	<code>null</code>)
+	* @param passwordReset whether the user should be asked to reset their
+	password the next time they login
+	* @param reminderQueryQuestion the user's new password reset question
+	* @param reminderQueryAnswer the user's new password reset answer
+	* @param screenName the user's new screen name
+	* @param emailAddress the user's new email address
+	* @param facebookId the user's new Facebook ID
+	* @param openId the user's new OpenID
+	* @param languageId the user's new language ID
+	* @param timeZoneId the user's new time zone ID
+	* @param greeting the user's new greeting
+	* @param comments the user's new comments
+	* @param firstName the user's new first name
+	* @param middleName the user's new middle name
+	* @param lastName the user's new last name
+	* @param prefixId the user's new name prefix ID
+	* @param suffixId the user's new name suffix ID
+	* @param male whether user is male
+	* @param birthdayMonth the user's new birthday month (0-based, meaning 0
+	for January)
+	* @param birthdayDay the user's new birthday day
+	* @param birthdayYear the user's birthday year
+	* @param smsSn the user's new SMS screen name
+	* @param aimSn the user's new AIM screen name
+	* @param facebookSn the user's new Facebook screen name
+	* @param icqSn the user's new ICQ screen name
+	* @param jabberSn the user's new Jabber screen name
+	* @param msnSn the user's new MSN screen name
+	* @param mySpaceSn the user's new MySpace screen name
+	* @param skypeSn the user's new Skype screen name
+	* @param twitterSn the user's new Twitter screen name
+	* @param ymSn the user's new Yahoo! Messenger screen name
+	* @param jobTitle the user's new job title
+	* @param groupIds the primary keys of the user's groups
+	* @param organizationIds the primary keys of the user's organizations
+	* @param roleIds the primary keys of the user's roles
+	* @param userGroupRoles the user user's group roles
+	* @param userGroupIds the primary keys of the user's user groups
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set the UUID (with the <code>uuid</code>
+	attribute), asset category IDs, asset tag names, and expando
+	bridge attributes for the user.
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be
+	found, if the new information was invalid, if the current user
+	did not have permission to update the user, or if the operation
+	was not allowed by the membership policy
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portal.model.User updateUser(long userId,
+		java.lang.String oldPassword, java.lang.String newPassword1,
+		java.lang.String newPassword2, boolean passwordReset,
+		java.lang.String reminderQueryQuestion,
+		java.lang.String reminderQueryAnswer, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, java.lang.String languageId,
+		java.lang.String timeZoneId, java.lang.String greeting,
+		java.lang.String comments, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, int prefixId,
+		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
+		java.lang.String facebookSn, java.lang.String icqSn,
+		java.lang.String jabberSn, java.lang.String msnSn,
+		java.lang.String mySpaceSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String ymSn,
+		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
+		long[] roleIds,
+		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
+		long[] userGroupIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.updateUser(userId, oldPassword, newPassword1,
+			newPassword2, passwordReset, reminderQueryQuestion,
+			reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
+			languageId, timeZoneId, greeting, comments, firstName, middleName,
+			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
+			birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
+			mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupRoles, userGroupIds,
+			serviceContext);
+	}
+
+	/**
 	* Updates the user with additional parameters.
 	*
 	* @param userId the primary key of the user
@@ -1405,99 +1594,6 @@ public class UserServiceWrapper implements UserService,
 			mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds, addresses,
 			emailAddresses, phones, websites, announcementsDelivers,
-			serviceContext);
-	}
-
-	/**
-	* Updates the user.
-	*
-	* @param userId the primary key of the user
-	* @param oldPassword the user's old password
-	* @param newPassword1 the user's new password (optionally
-	<code>null</code>)
-	* @param newPassword2 the user's new password confirmation (optionally
-	<code>null</code>)
-	* @param passwordReset whether the user should be asked to reset their
-	password the next time they login
-	* @param reminderQueryQuestion the user's new password reset question
-	* @param reminderQueryAnswer the user's new password reset answer
-	* @param screenName the user's new screen name
-	* @param emailAddress the user's new email address
-	* @param facebookId the user's new Facebook ID
-	* @param openId the user's new OpenID
-	* @param languageId the user's new language ID
-	* @param timeZoneId the user's new time zone ID
-	* @param greeting the user's new greeting
-	* @param comments the user's new comments
-	* @param firstName the user's new first name
-	* @param middleName the user's new middle name
-	* @param lastName the user's new last name
-	* @param prefixId the user's new name prefix ID
-	* @param suffixId the user's new name suffix ID
-	* @param male whether user is male
-	* @param birthdayMonth the user's new birthday month (0-based, meaning 0
-	for January)
-	* @param birthdayDay the user's new birthday day
-	* @param birthdayYear the user's birthday year
-	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
-	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
-	* @param jabberSn the user's new Jabber screen name
-	* @param msnSn the user's new MSN screen name
-	* @param mySpaceSn the user's new MySpace screen name
-	* @param skypeSn the user's new Skype screen name
-	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
-	* @param jobTitle the user's new job title
-	* @param groupIds the primary keys of the user's groups
-	* @param organizationIds the primary keys of the user's organizations
-	* @param roleIds the primary keys of the user's roles
-	* @param userGroupRoles the user user's group roles
-	* @param userGroupIds the primary keys of the user's user groups
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>). Can set the UUID (with the <code>uuid</code>
-	attribute), asset category IDs, asset tag names, and expando
-	bridge attributes for the user.
-	* @return the user
-	* @throws PortalException if a user with the primary key could not be
-	found, if the new information was invalid, if the current user
-	did not have permission to update the user, or if the operation
-	was not allowed by the membership policy
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public com.liferay.portal.model.User updateUser(long userId,
-		java.lang.String oldPassword, java.lang.String newPassword1,
-		java.lang.String newPassword2, boolean passwordReset,
-		java.lang.String reminderQueryQuestion,
-		java.lang.String reminderQueryAnswer, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.lang.String languageId,
-		java.lang.String timeZoneId, java.lang.String greeting,
-		java.lang.String comments, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int prefixId,
-		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String msnSn,
-		java.lang.String mySpaceSn, java.lang.String skypeSn,
-		java.lang.String twitterSn, java.lang.String ymSn,
-		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds,
-		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userService.updateUser(userId, oldPassword, newPassword1,
-			newPassword2, passwordReset, reminderQueryQuestion,
-			reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
-			languageId, timeZoneId, greeting, comments, firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
-			mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);
 	}
 

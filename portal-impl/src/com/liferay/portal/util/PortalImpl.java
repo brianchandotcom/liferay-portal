@@ -4713,16 +4713,18 @@ public class PortalImpl implements Portal {
 			HttpServletRequest request, boolean checkPermission)
 		throws PortalException, SystemException {
 
+		long companyId = getCompanyId(request);
+
 		long userId = ParamUtil.getLong(request, "p_u_i_d");
 
 		User user = null;
 
 		try {
 			if (checkPermission) {
-				user = UserServiceUtil.getUserById(userId);
+				user = UserServiceUtil.getUserById(companyId, userId);
 			}
 			else {
-				user = UserLocalServiceUtil.getUserById(userId);
+				user = UserLocalServiceUtil.getUserById(companyId, userId);
 			}
 		}
 		catch (NoSuchUserException nsue) {
@@ -5337,7 +5339,9 @@ public class PortalImpl implements Portal {
 		}
 
 		if (userId > 0) {
-			user = UserLocalServiceUtil.getUserById(userId);
+			long companyId = getCompanyId(request);
+
+			user = UserLocalServiceUtil.getUserById(companyId, userId);
 
 			request.setAttribute(WebKeys.USER, user);
 		}

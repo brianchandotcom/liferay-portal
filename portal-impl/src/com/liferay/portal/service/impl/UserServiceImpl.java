@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.spring.aop.ShardSelection;
+import com.liferay.portal.kernel.spring.aop.ShardSelectionMethod;
+import com.liferay.portal.kernel.spring.aop.ShardSelectorParam;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -79,6 +82,7 @@ import java.util.Locale;
  * @author Scott Lee
  * @author Jorge Ferrer
  * @author Julio Camarero
+ * @author Vilmos Papp
  */
 public class UserServiceImpl extends UserServiceBaseImpl {
 
@@ -96,8 +100,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void addGroupUsers(
-			long groupId, long[] userIds, ServiceContext serviceContext)
+			long groupId, long[] userIds,
+			@ShardSelectorParam ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (userIds.length == 0) {
@@ -308,6 +314,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User addUser(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -392,6 +399,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User addUser(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -506,6 +514,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User addUserWithWorkflow(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -603,6 +612,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User addUserWithWorkflow(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -720,6 +730,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public List<User> getCompanyUsers(long companyId, int start, int end)
 		throws PortalException, SystemException {
 
@@ -733,6 +744,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public int getCompanyUsersCount(long companyId)
 		throws PortalException, SystemException {
 
@@ -852,6 +864,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User getUserByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
@@ -867,6 +880,32 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	/**
 	 * Returns the user with the primary key.
 	 *
+	 * @param      userId the primary key of the user
+	 * @return     the user with the primary key
+	 * @throws     PortalException if a user with the primary key could not be
+	 *             found or if the current user did not have permission to view
+	 *             the user
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #getUserById(long, long)}
+	 */
+	@Override
+	public User getUserById(long userId)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
+		return user;
+	}
+
+	/**
+	 * Returns the user with the primary key.
+	 *
+	 * @param compnayId the primary key of the user's company
 	 * @param  userId the primary key of the user
 	 * @return the user with the primary key
 	 * @throws PortalException if a user with the primary key could not be found
@@ -874,10 +913,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public User getUserById(long userId)
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User getUserById(long companyId, long userId)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userPersistence.findByC_U(companyId, userId);
 
 		UserPermissionUtil.check(
 			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
@@ -896,6 +936,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User getUserByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
@@ -928,6 +969,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public long getUserIdByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
@@ -949,6 +991,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public long getUserIdByScreenName(long companyId, String screenName)
 		throws PortalException, SystemException {
 
@@ -1030,6 +1073,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public boolean hasRoleUser(
 			long companyId, String name, long userId, boolean inherited)
 		throws PortalException, SystemException {
@@ -1188,8 +1232,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void unsetGroupUsers(
-			long groupId, long[] userIds, ServiceContext serviceContext)
+			long groupId, long[] userIds,
+			@ShardSelectorParam ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		userIds = UsersAdminUtil.filterUnsetGroupUserIds(
@@ -1383,12 +1429,17 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	/**
 	 * Updates the user's response to the terms of use agreement.
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  agreedToTermsOfUse whether the user has agree to the terms of use
-	 * @return the user
-	 * @throws PortalException if the current user did not have permission to
-	 *         update the user's agreement to terms-of-use
-	 * @throws SystemException if a system exception occurred
+	 * @param      userId the primary key of the user
+	 * @param      agreedToTermsOfUse whether the user has agree to the terms of
+	 *             use
+	 * @return     the user
+	 * @throws     PortalException if the current user did not have permission
+	 *             to update the user's agreement to terms-of-use
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {@link #updateAgreedToTermsOfUse(
+	 *             long, long, boolean)}
 	 */
 	@Override
 	public User updateAgreedToTermsOfUse(
@@ -1400,6 +1451,30 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		return userLocalService.updateAgreedToTermsOfUse(
 			userId, agreedToTermsOfUse);
+	}
+
+	/**
+	 * Updates the user's response to the terms of use agreement.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  agreedToTermsOfUse whether the user has agree to the terms of use
+	 * @return the user
+	 * @throws PortalException if the current user did not have permission to
+	 *         update the user's agreement to terms-of-use
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updateAgreedToTermsOfUse(
+			long companyId, long userId, boolean agreedToTermsOfUse)
+		throws PortalException, SystemException {
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.UPDATE);
+
+		return userLocalService.updateAgreedToTermsOfUse(
+			companyId, userId, agreedToTermsOfUse);
 	}
 
 	/**
@@ -1418,9 +1493,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateEmailAddress(
 			long userId, String password, String emailAddress1,
-			String emailAddress2, ServiceContext serviceContext)
+			String emailAddress2,
+			@ShardSelectorParam ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		UserPermissionUtil.check(
@@ -1474,6 +1551,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateIncompleteUser(
 			long companyId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
@@ -1557,8 +1635,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public void updateOrganizations(
-			long userId, long[] organizationIds, ServiceContext serviceContext)
+			long userId, long[] organizationIds,
+			@ShardSelectorParam ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		UserPermissionUtil.check(
@@ -1573,6 +1653,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	/**
 	 * Updates the user's password without tracking or validation of the change.
 	 *
+	 * @param  companyId the primary key of the company
 	 * @param  userId the primary key of the user
 	 * @param  password1 the user's new password
 	 * @param  password2 the user's new password confirmation
@@ -1582,6 +1663,37 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws PortalException if a user with the primary key could not be found
 	 *         or if the current user did not have permission to update the user
 	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updatePassword(
+			long companyId, long userId, String password1, String password2,
+			boolean passwordReset)
+		throws PortalException, SystemException {
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.UPDATE);
+
+		return userLocalService.updatePassword(
+			companyId, userId, password1, password2, passwordReset);
+	}
+
+	/**
+	 * Updates the user's password without tracking or validation of the change.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  password1 the user's new password
+	 * @param  password2 the user's new password confirmation
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they log in
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the current user did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 * @deprecated As of 7.0.0 as shard selection is not possible without
+	 *             companyId or other object which has getCompanyId method.
+	 *             Replaced by {{@link #updatePassword(
+	 *             long, long, String, String, boolean)}
 	 */
 	@Override
 	public User updatePassword(
@@ -1615,6 +1727,32 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			getPermissionChecker(), userId, ActionKeys.UPDATE);
 
 		return userLocalService.updatePortrait(userId, bytes);
+	}
+
+	/**
+	 * Updates the user's password reset question and answer.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  userId the primary key of the user
+	 * @param  question the user's new password reset question
+	 * @param  answer the user's new password reset answer
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the new question or answer were invalid, or if the
+	 *         current user did not have permission to update the user
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updateReminderQuery(
+			long companyId, long userId, String question, String answer)
+		throws PortalException, SystemException {
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.UPDATE);
+
+		return userLocalService.updateReminderQuery(
+			companyId, userId, question, answer);
 	}
 
 	/**
@@ -1756,6 +1894,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateUser(
 			long userId, String oldPassword, String newPassword1,
 			String newPassword2, boolean passwordReset,
@@ -1774,7 +1913,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
 			List<AnnouncementsDelivery> announcementsDelivers,
-			ServiceContext serviceContext)
+			@ShardSelectorParam ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		UserPermissionUtil.check(
@@ -2057,6 +2196,95 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
+	 * Updates the user.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  oldPassword the user's old password
+	 * @param  newPassword1 the user's new password (optionally
+	 *         <code>null</code>)
+	 * @param  newPassword2 the user's new password confirmation (optionally
+	 *         <code>null</code>)
+	 * @param  passwordReset whether the user should be asked to reset their
+	 *         password the next time they login
+	 * @param  reminderQueryQuestion the user's new password reset question
+	 * @param  reminderQueryAnswer the user's new password reset answer
+	 * @param  screenName the user's new screen name
+	 * @param  emailAddress the user's new email address
+	 * @param  facebookId the user's new Facebook ID
+	 * @param  openId the user's new OpenID
+	 * @param  languageId the user's new language ID
+	 * @param  timeZoneId the user's new time zone ID
+	 * @param  greeting the user's new greeting
+	 * @param  comments the user's new comments
+	 * @param  firstName the user's new first name
+	 * @param  middleName the user's new middle name
+	 * @param  lastName the user's new last name
+	 * @param  prefixId the user's new name prefix ID
+	 * @param  suffixId the user's new name suffix ID
+	 * @param  male whether user is male
+	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
+	 *         for January)
+	 * @param  birthdayDay the user's new birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  smsSn the user's new SMS screen name
+	 * @param  aimSn the user's new AIM screen name
+	 * @param  facebookSn the user's new Facebook screen name
+	 * @param  icqSn the user's new ICQ screen name
+	 * @param  jabberSn the user's new Jabber screen name
+	 * @param  msnSn the user's new MSN screen name
+	 * @param  mySpaceSn the user's new MySpace screen name
+	 * @param  skypeSn the user's new Skype screen name
+	 * @param  twitterSn the user's new Twitter screen name
+	 * @param  ymSn the user's new Yahoo! Messenger screen name
+	 * @param  jobTitle the user's new job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the user's roles
+	 * @param  userGroupRoles the user user's group roles
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be
+	 *         found, if the new information was invalid, if the current user
+	 *         did not have permission to update the user, or if the operation
+	 *         was not allowed by the membership policy
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
+	public User updateUser(
+			long userId, String oldPassword, String newPassword1,
+			String newPassword2, boolean passwordReset,
+			String reminderQueryQuestion, String reminderQueryAnswer,
+			String screenName, String emailAddress, long facebookId,
+			String openId, String languageId, String timeZoneId,
+			String greeting, String comments, String firstName,
+			String middleName, String lastName, int prefixId, int suffixId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String smsSn, String aimSn, String facebookSn, String icqSn,
+			String jabberSn, String msnSn, String mySpaceSn, String skypeSn,
+			String twitterSn, String ymSn, String jobTitle, long[] groupIds,
+			long[] organizationIds, long[] roleIds,
+			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
+			@ShardSelectorParam ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return updateUser(
+			userId, oldPassword, newPassword1, newPassword2, passwordReset,
+			reminderQueryQuestion, reminderQueryAnswer, screenName,
+			emailAddress, facebookId, openId, true, null, languageId,
+			timeZoneId, greeting, comments, firstName, middleName, lastName,
+			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
+			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupRoles, userGroupIds, null, null, null, null, null,
+			serviceContext);
+	}
+
+	/**
 	 * Updates the user with additional parameters.
 	 *
 	 * @param      userId the primary key of the user
@@ -2129,6 +2357,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *             com.liferay.portal.service.ServiceContext)}
 	 */
 	@Override
+	@ShardSelection(selectionMethod = ShardSelectionMethod.PARAMETER)
 	public User updateUser(
 			long userId, String oldPassword, String newPassword1,
 			String newPassword2, boolean passwordReset,
@@ -2146,7 +2375,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
 			List<AnnouncementsDelivery> announcementsDelivers,
-			ServiceContext serviceContext)
+			@ShardSelectorParam ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return updateUser(
@@ -2159,94 +2388,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
 			phones, websites, announcementsDelivers, serviceContext);
-	}
-
-	/**
-	 * Updates the user.
-	 *
-	 * @param  userId the primary key of the user
-	 * @param  oldPassword the user's old password
-	 * @param  newPassword1 the user's new password (optionally
-	 *         <code>null</code>)
-	 * @param  newPassword2 the user's new password confirmation (optionally
-	 *         <code>null</code>)
-	 * @param  passwordReset whether the user should be asked to reset their
-	 *         password the next time they login
-	 * @param  reminderQueryQuestion the user's new password reset question
-	 * @param  reminderQueryAnswer the user's new password reset answer
-	 * @param  screenName the user's new screen name
-	 * @param  emailAddress the user's new email address
-	 * @param  facebookId the user's new Facebook ID
-	 * @param  openId the user's new OpenID
-	 * @param  languageId the user's new language ID
-	 * @param  timeZoneId the user's new time zone ID
-	 * @param  greeting the user's new greeting
-	 * @param  comments the user's new comments
-	 * @param  firstName the user's new first name
-	 * @param  middleName the user's new middle name
-	 * @param  lastName the user's new last name
-	 * @param  prefixId the user's new name prefix ID
-	 * @param  suffixId the user's new name suffix ID
-	 * @param  male whether user is male
-	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
-	 *         for January)
-	 * @param  birthdayDay the user's new birthday day
-	 * @param  birthdayYear the user's birthday year
-	 * @param  smsSn the user's new SMS screen name
-	 * @param  aimSn the user's new AIM screen name
-	 * @param  facebookSn the user's new Facebook screen name
-	 * @param  icqSn the user's new ICQ screen name
-	 * @param  jabberSn the user's new Jabber screen name
-	 * @param  msnSn the user's new MSN screen name
-	 * @param  mySpaceSn the user's new MySpace screen name
-	 * @param  skypeSn the user's new Skype screen name
-	 * @param  twitterSn the user's new Twitter screen name
-	 * @param  ymSn the user's new Yahoo! Messenger screen name
-	 * @param  jobTitle the user's new job title
-	 * @param  groupIds the primary keys of the user's groups
-	 * @param  organizationIds the primary keys of the user's organizations
-	 * @param  roleIds the primary keys of the user's roles
-	 * @param  userGroupRoles the user user's group roles
-	 * @param  userGroupIds the primary keys of the user's user groups
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
-	 *         attribute), asset category IDs, asset tag names, and expando
-	 *         bridge attributes for the user.
-	 * @return the user
-	 * @throws PortalException if a user with the primary key could not be
-	 *         found, if the new information was invalid, if the current user
-	 *         did not have permission to update the user, or if the operation
-	 *         was not allowed by the membership policy
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public User updateUser(
-			long userId, String oldPassword, String newPassword1,
-			String newPassword2, boolean passwordReset,
-			String reminderQueryQuestion, String reminderQueryAnswer,
-			String screenName, String emailAddress, long facebookId,
-			String openId, String languageId, String timeZoneId,
-			String greeting, String comments, String firstName,
-			String middleName, String lastName, int prefixId, int suffixId,
-			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String aimSn, String facebookSn, String icqSn,
-			String jabberSn, String msnSn, String mySpaceSn, String skypeSn,
-			String twitterSn, String ymSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
-			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return updateUser(
-			userId, oldPassword, newPassword1, newPassword2, passwordReset,
-			reminderQueryQuestion, reminderQueryAnswer, screenName,
-			emailAddress, facebookId, openId, true, null, languageId,
-			timeZoneId, greeting, comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn, mySpaceSn,
-			skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, null, null, null, null, null,
-			serviceContext);
 	}
 
 	protected void checkAddUserPermission(

@@ -263,7 +263,8 @@ public class LoginUtil {
 
 		String domain = CookieKeys.getDomain(request);
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = UserLocalServiceUtil.getUserById(
+			company.getCompanyId(), userId);
 
 		String userIdString = String.valueOf(userId);
 

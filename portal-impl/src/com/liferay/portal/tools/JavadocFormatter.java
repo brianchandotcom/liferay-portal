@@ -293,7 +293,8 @@ public class JavadocFormatter {
 		}
 
 		if (!comment.contains("* @deprecated ") ||
-			_hasAnnotation(abstractBaseJavaEntity, "Deprecated")) {
+			ServiceBuilder.hasAnnotation(
+				abstractBaseJavaEntity, "Deprecated")) {
 
 			return comment;
 		}
@@ -1385,28 +1386,6 @@ public class JavadocFormatter {
 		return typeValue;
 	}
 
-	private boolean _hasAnnotation(
-		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
-
-		Annotation[] annotations = abstractBaseJavaEntity.getAnnotations();
-
-		if (annotations == null) {
-			return false;
-		}
-
-		for (int i = 0; i < annotations.length; i++) {
-			Type type = annotations[i].getType();
-
-			JavaClass javaClass = type.getJavaClass();
-
-			if (annotationName.equals(javaClass.getName())) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _hasGeneratedTag(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
@@ -1741,7 +1720,7 @@ public class JavadocFormatter {
 
 			// Handle override tag insertion
 
-			if (!_hasAnnotation(javaMethod, "Override")) {
+			if (!ServiceBuilder.hasAnnotation(javaMethod, "Override")) {
 				if (_isOverrideMethod(
 						javaClass, javaMethod, ancestorJavaClassTuples)) {
 

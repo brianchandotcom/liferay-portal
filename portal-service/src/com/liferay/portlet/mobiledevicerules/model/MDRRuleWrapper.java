@@ -151,6 +151,16 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mdrRule.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mdrRule.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this m d r rule.
 	*

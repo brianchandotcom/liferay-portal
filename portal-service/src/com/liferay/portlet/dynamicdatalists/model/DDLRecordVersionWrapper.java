@@ -165,6 +165,16 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ddlRecordVersion.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ddlRecordVersion.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d d l record version.
 	*

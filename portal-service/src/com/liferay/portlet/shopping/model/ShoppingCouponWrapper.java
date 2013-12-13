@@ -186,6 +186,16 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _shoppingCoupon.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _shoppingCoupon.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this shopping coupon.
 	*

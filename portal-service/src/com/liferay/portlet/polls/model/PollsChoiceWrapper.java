@@ -138,6 +138,16 @@ public class PollsChoiceWrapper implements PollsChoice,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _pollsChoice.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _pollsChoice.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this polls choice.
 	*

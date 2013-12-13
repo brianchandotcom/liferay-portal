@@ -117,6 +117,16 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _userNotificationDelivery.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _userNotificationDelivery.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this user notification delivery.
 	*

@@ -87,6 +87,16 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _passwordTracker.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _passwordTracker.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this password tracker.
 	*

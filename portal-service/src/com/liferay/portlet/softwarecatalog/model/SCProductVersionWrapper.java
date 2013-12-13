@@ -144,6 +144,16 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _scProductVersion.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _scProductVersion.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this s c product version.
 	*

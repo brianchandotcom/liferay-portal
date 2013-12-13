@@ -157,6 +157,16 @@ public class SystemEventWrapper implements SystemEvent,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _systemEvent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _systemEvent.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this system event.
 	*

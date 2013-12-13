@@ -121,6 +121,16 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _release.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _release.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this release.
 	*

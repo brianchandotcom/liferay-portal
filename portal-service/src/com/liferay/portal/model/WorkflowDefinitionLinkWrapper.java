@@ -148,6 +148,16 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _workflowDefinitionLink.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _workflowDefinitionLink.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this workflow definition link.
 	*

@@ -121,6 +121,16 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _team.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _team.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this team.
 	*

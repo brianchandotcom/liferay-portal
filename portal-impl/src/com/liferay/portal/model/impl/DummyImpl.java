@@ -53,6 +53,16 @@ public class DummyImpl extends BaseModelImpl<Dummy> implements Dummy {
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return false;
+	}
+
+	@Override
 	public void resetOriginalValues() {
 	}
 

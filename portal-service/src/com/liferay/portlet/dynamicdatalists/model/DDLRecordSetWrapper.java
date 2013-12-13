@@ -159,6 +159,16 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ddlRecordSet.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ddlRecordSet.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d d l record set.
 	*

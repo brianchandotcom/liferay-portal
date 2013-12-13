@@ -180,6 +180,16 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _dlFileShortcut.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _dlFileShortcut.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this document library file shortcut.
 	*

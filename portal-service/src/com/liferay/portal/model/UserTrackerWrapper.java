@@ -115,6 +115,16 @@ public class UserTrackerWrapper implements UserTracker,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _userTracker.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _userTracker.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this user tracker.
 	*

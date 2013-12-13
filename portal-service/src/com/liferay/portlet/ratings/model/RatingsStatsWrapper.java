@@ -101,6 +101,16 @@ public class RatingsStatsWrapper implements RatingsStats,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ratingsStats.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ratingsStats.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this ratings stats.
 	*

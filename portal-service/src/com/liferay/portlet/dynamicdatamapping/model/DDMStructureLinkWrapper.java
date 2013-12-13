@@ -87,6 +87,16 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ddmStructureLink.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ddmStructureLink.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this d d m structure link.
 	*

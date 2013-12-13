@@ -123,6 +123,16 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _ratingsEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ratingsEntry.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this ratings entry.
 	*

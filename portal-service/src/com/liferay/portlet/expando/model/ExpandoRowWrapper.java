@@ -94,6 +94,16 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _expandoRow.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _expandoRow.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this expando row.
 	*

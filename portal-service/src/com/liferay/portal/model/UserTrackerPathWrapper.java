@@ -87,6 +87,16 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _userTrackerPath.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _userTrackerPath.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this user tracker path.
 	*

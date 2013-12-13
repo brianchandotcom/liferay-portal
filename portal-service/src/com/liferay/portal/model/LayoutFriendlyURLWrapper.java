@@ -144,6 +144,16 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _layoutFriendlyURL.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _layoutFriendlyURL.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this layout friendly u r l.
 	*

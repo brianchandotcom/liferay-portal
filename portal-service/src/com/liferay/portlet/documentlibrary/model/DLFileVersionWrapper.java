@@ -243,6 +243,16 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _dlFileVersion.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _dlFileVersion.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this document library file version.
 	*

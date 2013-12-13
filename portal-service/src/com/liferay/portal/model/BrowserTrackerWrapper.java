@@ -79,6 +79,16 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _browserTracker.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _browserTracker.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this browser tracker.
 	*

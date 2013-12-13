@@ -129,6 +129,16 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _membershipRequest.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _membershipRequest.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this membership request.
 	*

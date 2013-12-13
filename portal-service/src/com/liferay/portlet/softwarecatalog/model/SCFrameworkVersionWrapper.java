@@ -137,6 +137,16 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _scFrameworkVersion.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _scFrameworkVersion.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this s c framework version.
 	*

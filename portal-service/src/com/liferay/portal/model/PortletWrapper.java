@@ -92,6 +92,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _portlet.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _portlet.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this portlet.
 	*

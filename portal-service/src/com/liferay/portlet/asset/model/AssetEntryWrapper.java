@@ -241,6 +241,16 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _assetEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _assetEntry.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this asset entry.
 	*

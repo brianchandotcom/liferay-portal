@@ -138,6 +138,16 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _repositoryEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _repositoryEntry.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this repository entry.
 	*

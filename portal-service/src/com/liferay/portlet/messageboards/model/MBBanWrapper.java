@@ -123,6 +123,16 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mbBan.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mbBan.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this message boards ban.
 	*

@@ -92,6 +92,16 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _region.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _region.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this region.
 	*

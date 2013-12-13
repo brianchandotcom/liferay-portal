@@ -137,6 +137,16 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _pollsVote.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _pollsVote.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this polls vote.
 	*

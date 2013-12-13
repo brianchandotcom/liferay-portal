@@ -173,6 +173,16 @@ public class JournalFolderWrapper implements JournalFolder,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _journalFolder.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _journalFolder.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this journal folder.
 	*

@@ -419,6 +419,16 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _shoppingOrder.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _shoppingOrder.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this shopping order.
 	*

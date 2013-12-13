@@ -344,6 +344,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _user.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _user.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this user.
 	*

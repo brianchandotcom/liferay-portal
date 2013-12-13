@@ -170,6 +170,16 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _account.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _account.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this account.
 	*

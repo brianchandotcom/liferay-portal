@@ -113,6 +113,16 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _country.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _country.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this country.
 	*

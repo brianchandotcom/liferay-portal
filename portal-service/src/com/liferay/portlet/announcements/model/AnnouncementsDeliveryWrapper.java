@@ -109,6 +109,16 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _announcementsDelivery.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _announcementsDelivery.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this announcements delivery.
 	*

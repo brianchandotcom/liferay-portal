@@ -221,6 +221,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _blogsEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _blogsEntry.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this blogs entry.
 	*

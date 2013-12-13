@@ -164,6 +164,16 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
+	}
+
+	@Override
 	public long getSyncEventId() {
 		return _syncEventId;
 	}

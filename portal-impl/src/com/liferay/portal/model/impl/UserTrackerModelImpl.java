@@ -192,6 +192,16 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return ENTITY_CACHE_ENABLED;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return FINDER_CACHE_ENABLED;
+	}
+
+	@Override
 	public long getUserTrackerId() {
 		return _userTrackerId;
 	}

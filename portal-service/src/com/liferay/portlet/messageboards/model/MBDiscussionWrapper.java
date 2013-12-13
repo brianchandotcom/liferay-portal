@@ -138,6 +138,16 @@ public class MBDiscussionWrapper implements MBDiscussion,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mbDiscussion.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mbDiscussion.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this message boards discussion.
 	*

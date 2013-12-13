@@ -95,6 +95,16 @@ public class MBStatsUserWrapper implements MBStatsUser,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _mbStatsUser.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _mbStatsUser.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this message boards stats user.
 	*

@@ -201,6 +201,16 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _bookmarksEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _bookmarksEntry.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this bookmarks entry.
 	*

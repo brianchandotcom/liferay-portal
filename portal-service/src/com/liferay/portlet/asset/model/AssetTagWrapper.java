@@ -122,6 +122,16 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _assetTag.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _assetTag.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this asset tag.
 	*

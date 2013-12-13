@@ -129,6 +129,16 @@ public class PortletItemWrapper implements PortletItem,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _portletItem.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _portletItem.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this portlet item.
 	*

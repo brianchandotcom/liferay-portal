@@ -87,6 +87,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _wikiPageResource.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _wikiPageResource.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this wiki page resource.
 	*

@@ -86,6 +86,16 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _clusterGroup.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _clusterGroup.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this cluster group.
 	*

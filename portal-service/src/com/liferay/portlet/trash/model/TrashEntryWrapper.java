@@ -136,6 +136,16 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _trashEntry.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _trashEntry.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this trash entry.
 	*

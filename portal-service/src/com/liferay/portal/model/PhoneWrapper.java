@@ -150,6 +150,16 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _phone.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _phone.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this phone.
 	*

@@ -130,6 +130,16 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _shoppingCategory.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _shoppingCategory.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this shopping category.
 	*

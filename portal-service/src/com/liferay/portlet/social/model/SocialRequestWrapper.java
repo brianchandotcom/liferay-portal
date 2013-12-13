@@ -150,6 +150,16 @@ public class SocialRequestWrapper implements SocialRequest,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _socialRequest.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _socialRequest.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this social request.
 	*

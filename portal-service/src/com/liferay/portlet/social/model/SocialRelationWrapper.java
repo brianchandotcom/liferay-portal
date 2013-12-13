@@ -108,6 +108,16 @@ public class SocialRelationWrapper implements SocialRelation,
 		}
 	}
 
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return _socialRelation.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _socialRelation.isFinderCacheEnabled();
+	}
+
 	/**
 	* Returns the primary key of this social relation.
 	*

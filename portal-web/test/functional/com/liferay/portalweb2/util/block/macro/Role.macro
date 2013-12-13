@@ -216,8 +216,21 @@
 	</command>
 
 	<command name="viewPermissionCP">
-		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
+		<if>
+			<equals arg1="${permissionNavigationValue}" arg2="General Permissions" />
+			<then>
+				<var name="permissionNavigationValue" value="Portal" />
+			</then>
+			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES_SITE" />
+				<then>
+					<var name="permissionNavigationValue" value="Sites" />
+				</then>
+			</elseif>
+		</if>
+
 		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
+		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
 
 		<while>
 			<condition action="CPRoles#isElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" />

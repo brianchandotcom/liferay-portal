@@ -565,11 +565,7 @@ AUI.add(
 
 								instance._updateSelectList(AArray.unique(data));
 							},
-							{
-								/**
-								 * Optional URL Parameters
-								 */
-							},
+							null,
 							{
 								proto: protocol
 							}

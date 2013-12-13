@@ -27,6 +27,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,7 +36,37 @@ import javax.servlet.http.HttpServletResponse;
  * @author Mika Koivisto
  * @author Wesley Gong
  */
-public class SiteMinderAutoLogin extends BaseAutoLogin {
+public class SiteMinderAutoLogin extends BaseAutoLogin implements AuthVerifier {
+
+	@Override
+	public String getAuthType() {
+		return SiteMinderAutoLogin.class.getSimpleName();
+	}
+
+	@Override
+	public AuthVerifierResult verify(
+			AccessControlContext accessControlContext, Properties properties)
+		throws AuthException {
+
+		try {
+			AuthVerifierResult authVerifierResult = new AuthVerifierResult();
+
+			String[] credentials = login(
+				accessControlContext.getRequest(),
+				accessControlContext.getResponse());
+
+			if (credentials != null) {
+				authVerifierResult.setPassword(credentials[1]);
+				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
+				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
+			}
+
+			return authVerifierResult;
+		}
+		catch (AutoLoginException ale) {
+			throw new AuthException(ale);
+		}
+	}
 
 	@Override
 	protected String[] doLogin(

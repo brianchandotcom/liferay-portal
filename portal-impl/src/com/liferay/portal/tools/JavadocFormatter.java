@@ -284,6 +284,23 @@ public class JavadocFormatter {
 		commentElement.addCDATA(comment);
 	}
 
+	private String _addDeprecatedTag(
+		String comment, AbstractBaseJavaEntity abstractBaseJavaEntity,
+		String indent) {
+
+		if (comment == null) {
+			return null;
+		}
+
+		if (!comment.contains("* @deprecated ") ||
+			_hasAnnotation(abstractBaseJavaEntity, "Deprecated")) {
+
+			return comment;
+		}
+
+		return comment + indent + "@Deprecated\n";
+	}
+
 	private void _addDocletElements(
 			Element parentElement, AbstractJavaEntity abstractJavaEntity,
 			String name)
@@ -1194,8 +1211,8 @@ public class JavadocFormatter {
 	}
 
 	private String _getJavaFieldComment(
-		String[] lines, Map<String, Element> fieldElementsMap,
-		JavaField javaField) {
+		Map<String, Element> fieldElementsMap, JavaField javaField,
+		String indent) {
 
 		String fieldKey = _getFieldKey(javaField);
 
@@ -1204,8 +1221,6 @@ public class JavadocFormatter {
 		if (fieldElement == null) {
 			return null;
 		}
-
-		String indent = _getIndent(lines, javaField);
 
 		StringBundler sb = new StringBundler();
 
@@ -1251,8 +1266,8 @@ public class JavadocFormatter {
 	}
 
 	private String _getJavaMethodComment(
-		String[] lines, Map<String, Element> methodElementsMap,
-		JavaMethod javaMethod) {
+		Map<String, Element> methodElementsMap, JavaMethod javaMethod,
+		String indent) {
 
 		String methodKey = _getMethodKey(javaMethod);
 
@@ -1261,8 +1276,6 @@ public class JavadocFormatter {
 		if (methodElement == null) {
 			return null;
 		}
-
-		String indent = _getIndent(lines, javaMethod);
 
 		StringBundler sb = new StringBundler();
 
@@ -1694,9 +1707,12 @@ public class JavadocFormatter {
 
 		Map<Integer, String> commentsMap = new TreeMap<Integer, String>();
 
-		commentsMap.put(
-			_getJavaClassLineNumber(javaClass),
-			_getJavaClassComment(rootElement, javaClass));
+		String javaClassComment = _getJavaClassComment(rootElement, javaClass);
+
+		javaClassComment = _addDeprecatedTag(
+			javaClassComment, javaClass, StringPool.BLANK);
+
+		commentsMap.put(_getJavaClassLineNumber(javaClass), javaClassComment);
 
 		Map<String, Element> methodElementsMap = new HashMap<String, Element>();
 
@@ -1715,8 +1731,13 @@ public class JavadocFormatter {
 				continue;
 			}
 
+			String indent = _getIndent(lines, javaMethod);
+
 			String javaMethodComment = _getJavaMethodComment(
-				lines, methodElementsMap, javaMethod);
+				methodElementsMap, javaMethod, indent);
+
+			javaMethodComment = _addDeprecatedTag(
+				javaMethodComment, javaMethod, indent);
 
 			// Handle override tag insertion
 
@@ -1724,8 +1745,7 @@ public class JavadocFormatter {
 				if (_isOverrideMethod(
 						javaClass, javaMethod, ancestorJavaClassTuples)) {
 
-					String overrideLine =
-						_getIndent(lines, javaMethod) + "@Override\n";
+					String overrideLine = indent + "@Override\n";
 
 					if (Validator.isNotNull(javaMethodComment)) {
 						javaMethodComment = javaMethodComment + overrideLine;
@@ -1756,9 +1776,15 @@ public class JavadocFormatter {
 				continue;
 			}
 
-			commentsMap.put(
-				javaField.getLineNumber(),
-				_getJavaFieldComment(lines, fieldElementsMap, javaField));
+			String indent = _getIndent(lines, javaField);
+
+			String javaFieldComment = _getJavaFieldComment(
+				fieldElementsMap, javaField, indent);
+
+			javaFieldComment = _addDeprecatedTag(
+				javaFieldComment, javaField, indent);
+
+			commentsMap.put(javaField.getLineNumber(), javaFieldComment);
 		}
 
 		StringBundler sb = new StringBundler(javadocLessContent.length());

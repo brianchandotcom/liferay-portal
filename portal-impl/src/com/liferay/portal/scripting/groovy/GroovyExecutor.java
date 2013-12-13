@@ -119,6 +119,8 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 		if (groovyShell == null) {
 			synchronized (this) {
+				groovyShell = _groovyShells.get(aggregateClassLoader);
+
 				if (groovyShell == null) {
 					groovyShell = new GroovyShell(aggregateClassLoader);
 

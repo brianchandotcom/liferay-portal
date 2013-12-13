@@ -11,6 +11,11 @@ import java.util.Arrays;
 </#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 
 	public ${entity.name}${sessionTypeName}ServiceClpInvoker() {

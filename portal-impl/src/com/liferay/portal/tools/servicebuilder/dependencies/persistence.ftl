@@ -40,6 +40,11 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
+
+			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
+				@Deprecated
+			</#if>
+
 			public ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name} (
 
 			<#assign parameters = method.parameters>

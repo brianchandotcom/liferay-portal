@@ -152,6 +152,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             String, int, boolean, int, String, boolean, boolean,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Group addGroup(
 			long parentGroupId, String name, String description, int type,
@@ -170,6 +171,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, String,
 	 *             String, int, String, boolean, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Group addGroup(
 			String name, String description, int type, String friendlyURL,
@@ -425,6 +427,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getManageableSiteGroups(Collection, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getManageableSites(Collection<Portlet> portlets, int max)
 		throws PortalException, SystemException {
@@ -530,6 +533,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	 *             String[], boolean, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getUserPlaces(
 			long userId, String[] classNames, boolean includeControlPanel,
@@ -575,6 +579,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	 *             String[], int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getUserPlaces(long userId, String[] classNames, int max)
 		throws PortalException, SystemException {
@@ -617,6 +622,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(
 	 *             String[], int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getUserPlaces(String[] classNames, int max)
 		throws PortalException, SystemException {
@@ -635,6 +641,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
 	 */
+	@Deprecated
 	@Override
 	public int getUserPlacesCount() throws PortalException, SystemException {
 		return getUserSitesGroupsCount();
@@ -650,6 +657,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getUserSites() throws PortalException, SystemException {
 		return getUserSitesGroups();

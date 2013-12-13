@@ -115,6 +115,7 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addRole(String, long,
 	 *             String, Map, Map, int, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Role addRole(
 			String name, Map<Locale, String> titleMap,

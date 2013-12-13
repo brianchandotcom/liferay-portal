@@ -77,6 +77,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 	 * @deprecated As of 6.2.0, replaced by {@link #forward(ServletRequest,
 	 *             ServletResponse)}
 	 */
+	@Deprecated
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			boolean named)
@@ -106,6 +107,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 	 * @deprecated As of 6.2.0, replaced by {@link #include(ServletRequest,
 	 *             ServletResponse)}
 	 */
+	@Deprecated
 	public void include(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			boolean named)
@@ -193,6 +195,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 	 * @deprecated As of 6.2.0, replaced by {@link #invoke(ServletRequest,
 	 *             ServletResponse, boolean)}
 	 */
+	@Deprecated
 	public void invoke(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			boolean named, boolean include)

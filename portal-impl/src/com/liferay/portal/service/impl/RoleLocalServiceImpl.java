@@ -106,6 +106,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	 *             String, Map, Map, int, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Role addRole(
 			long userId, long companyId, String name,
@@ -141,6 +142,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	 *             String, Map, Map, int, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Role addRole(
 			long userId, long companyId, String name,

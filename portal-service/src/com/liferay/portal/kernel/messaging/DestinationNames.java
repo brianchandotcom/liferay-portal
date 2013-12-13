@@ -31,6 +31,7 @@ public interface DestinationNames {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
+	@Deprecated
 	public static final String BLOGS = "liferay/blogs";
 
 	public static final String CONVERT_PROCESS = "liferay/convert_process";
@@ -77,6 +78,7 @@ public interface DestinationNames {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
+	@Deprecated
 	public static final String JOURNAL = "liferay/journal";
 
 	public static final String LAYOUTS_LOCAL_PUBLISHER =
@@ -96,6 +98,7 @@ public interface DestinationNames {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
+	@Deprecated
 	public static final String MESSAGE_BOARDS = "liferay/message_boards";
 
 	public static final String MESSAGE_BOARDS_MAILING_LIST =
@@ -147,6 +150,7 @@ public interface DestinationNames {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #SUBSCRIPTION_SENDER}
 	 */
+	@Deprecated
 	public static final String WIKI = "liferay/wiki";
 
 	public static final String WORKFLOW_DEFINITION =

@@ -55,6 +55,7 @@ public abstract class AbstractIntegrationJUnitTestRunner
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	@Override
 	protected Statement withAfters(
 		FrameworkMethod frameworkMethod, Object instance, Statement statement) {
@@ -79,6 +80,7 @@ public abstract class AbstractIntegrationJUnitTestRunner
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	@Override
 	protected Statement withBefores(
 		FrameworkMethod frameworkMethod, Object instance, Statement statement) {

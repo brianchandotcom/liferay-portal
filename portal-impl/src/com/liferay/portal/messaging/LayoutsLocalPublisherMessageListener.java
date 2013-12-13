@@ -55,6 +55,7 @@ public class LayoutsLocalPublisherMessageListener
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public LayoutsLocalPublisherMessageListener(
 		SingleDestinationMessageSender statusSender,
 		MessageSender responseSender) {

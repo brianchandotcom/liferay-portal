@@ -256,6 +256,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, String, boolean, TZSRecurrence, int, int, int,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CalEvent addEvent(
@@ -865,6 +866,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, boolean, String, boolean, TZSRecurrence, int, int,
 	 *             int, ServiceContext)}
 	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CalEvent updateEvent(

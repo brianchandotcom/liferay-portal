@@ -229,6 +229,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	 * @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,
 	 *             String, int, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<ExpandoRow> getRows(
 			String className, String tableName, int start, int end)
@@ -273,6 +274,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	 * @deprecated As of 6.1.0, replaced by {@link #getRowsCount(long, String,
 	 *             String)}
 	 */
+	@Deprecated
 	@Override
 	public int getRowsCount(String className, String tableName)
 		throws SystemException {

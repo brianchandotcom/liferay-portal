@@ -166,6 +166,7 @@ public interface ExportImportHelper {
 	 *             #replaceImportContentReferences(PortletDataContext,
 	 *             StagedModel, Element, String, boolean)}
 	 */
+	@Deprecated
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)
@@ -182,6 +183,7 @@ public interface ExportImportHelper {
 	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
 	 *             String, boolean)}
 	 */
+	@Deprecated
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,
 			String content, boolean importReferencedContent)

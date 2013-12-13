@@ -46,6 +46,7 @@ public class PortletServlet extends HttpServlet {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             PluginContextListener#PLUGIN_CLASS_LOADER}
 	 */
+	@Deprecated
 	public static final String PORTLET_CLASS_LOADER =
 		PluginContextListener.PLUGIN_CLASS_LOADER;
 

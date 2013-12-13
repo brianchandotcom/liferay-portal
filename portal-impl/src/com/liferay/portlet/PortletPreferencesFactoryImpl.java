@@ -179,6 +179,7 @@ public class PortletPreferencesFactoryImpl
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #fromXML(long, int, String)}
 	 */
+	@Deprecated
 	@Override
 	public PortalPreferences fromXML(
 			long companyId, long ownerId, int ownerType, String xml)
@@ -290,6 +291,7 @@ public class PortletPreferencesFactoryImpl
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getPortalPreferences(HttpSession, long, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public PortalPreferences getPortalPreferences(
 			HttpSession session, long companyId, long userId, boolean signedIn)
@@ -309,6 +311,7 @@ public class PortletPreferencesFactoryImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getPortalPreferences(long,
 	 *             boolean)}
 	 */
+	@Deprecated
 	@Override
 	public PortalPreferences getPortalPreferences(
 			long companyId, long userId, boolean signedIn)

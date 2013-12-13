@@ -64,6 +64,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
 	 */
+	@Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public void deleteFeed(long groupId, long feedId)
@@ -95,6 +96,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
 	 */
+	@Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public JournalFeed getFeed(long groupId, long feedId)

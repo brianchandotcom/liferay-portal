@@ -58,6 +58,7 @@ public interface LuceneHelper {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #addNumericRangeTerm(BooleanQuery, String, Long, Long)}
 	 */
+	@Deprecated
 	public void addNumericRangeTerm(
 		BooleanQuery booleanQuery, String field, String startValue,
 		String endValue);

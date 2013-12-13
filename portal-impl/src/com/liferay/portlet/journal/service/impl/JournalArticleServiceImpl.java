@@ -2071,6 +2071,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *             #updateArticleTranslation(long, String, double, Locale,
 	 *             String, String, String, Map, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public JournalArticle updateArticleTranslation(
 			long groupId, String articleId, double version, Locale locale,

@@ -34,6 +34,7 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addPhone( String, long,
 	 *             String, String, int, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Phone addPhone(
 			String className, long classPK, String number, String extension,

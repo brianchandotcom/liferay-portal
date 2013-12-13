@@ -997,6 +997,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *             String, String, boolean, byte[], String, String, String,
 	 *             String, String, String, String, String, String)}
 	 */
+	@Deprecated
 	@Override
 	public Company updateCompany(
 			long companyId, String virtualHostname, String mx, String homeURL,

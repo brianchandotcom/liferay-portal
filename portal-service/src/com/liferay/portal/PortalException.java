@@ -19,6 +19,7 @@ package com.liferay.portal;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.exception.PortalException}
  */
+@Deprecated
 public class PortalException
 	extends com.liferay.portal.kernel.exception.PortalException {
 

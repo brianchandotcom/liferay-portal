@@ -118,6 +118,7 @@ public class SocialActivityInterpreterLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	 *             SocialActivity, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {

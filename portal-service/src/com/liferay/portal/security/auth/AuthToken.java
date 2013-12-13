@@ -27,6 +27,7 @@ public interface AuthToken {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #checkCSRFToken(HttpServletRequest, String)}
 	 */
+	@Deprecated
 	public void check(HttpServletRequest request) throws PortalException;
 
 	public void checkCSRFToken(HttpServletRequest request, String origin)

@@ -201,6 +201,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	 * @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
 	 *             double)}
 	 */
+	@Deprecated
 	@Override
 	public void deletePage(long nodeId, String title, double version)
 		throws PortalException, SystemException {
@@ -331,6 +332,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
 	 *             String, double, String, String, String, String)}
 	 */
+	@Deprecated
 	@Override
 	public String getNodePagesRSS(
 			long nodeId, int max, String type, double version,
@@ -492,6 +494,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	 *             String, int, String, double, String, String, String, String,
 	 *             java.util.Locale)}
 	 */
+	@Deprecated
 	@Override
 	public String getPagesRSS(
 			long companyId, long nodeId, String title, int max, String type,

@@ -101,6 +101,7 @@ public interface DDMDisplay {
 	/**
 	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean controlPanel, Locale locale);
 

@@ -21,6 +21,7 @@ import java.util.List;
  * @deprecated As of 7.0.0, moved to {@link
  *             com.liferay.portal.kernel.jazzy.InvalidWord}
  */
+@Deprecated
 public class InvalidWord extends com.liferay.portal.kernel.jazzy.InvalidWord {
 
 	public InvalidWord(

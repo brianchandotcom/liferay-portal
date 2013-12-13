@@ -239,6 +239,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
 	 *             int, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public List<DDLRecord> getCompanyRecords(
 			long companyId, int scope, int start, int end,
@@ -254,6 +255,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
 	 *             int, int)}
 	 */
+	@Deprecated
 	@Override
 	public int getCompanyRecordsCount(long companyId, int scope)
 		throws SystemException {

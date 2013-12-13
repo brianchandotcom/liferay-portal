@@ -32,6 +32,7 @@ public abstract class BaseMessageStatusMessageListener
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public BaseMessageStatusMessageListener(
 		SingleDestinationMessageSender statusSender,
 		MessageSender responseSender) {

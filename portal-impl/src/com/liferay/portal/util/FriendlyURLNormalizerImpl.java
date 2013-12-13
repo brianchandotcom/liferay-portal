@@ -42,6 +42,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #normalize(String, Pattern)}
 	 */
+	@Deprecated
 	@Override
 	public String normalize(String friendlyURL, char[] replaceChars) {
 		if (Validator.isNull(friendlyURL)) {

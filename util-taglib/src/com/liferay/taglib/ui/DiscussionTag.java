@@ -67,6 +67,7 @@ public class DiscussionTag extends IncludeTag {
 	/**
 	 * @deprecated As of 6.2.0, with no direct replacement
 	 */
+	@Deprecated
 	public void setSubject(String subject) {
 	}
 

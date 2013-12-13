@@ -76,6 +76,7 @@ public class ServiceTestUtil {
 	/**
 	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public static void addResourcePermission(
 			Role role, String resourceName, int scope, String primKey,
 			String actionId)
@@ -88,6 +89,7 @@ public class ServiceTestUtil {
 	/**
 	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public static void addResourcePermission(
 			String roleName, String resourceName, int scope, String primKey,
 			String actionId)
@@ -100,6 +102,7 @@ public class ServiceTestUtil {
 	/**
 	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public static Role addRole(String roleName, int roleType) throws Exception {
 		return RoleTestUtil.addRole(roleName, roleType);
 	}
@@ -107,6 +110,7 @@ public class ServiceTestUtil {
 	/**
 	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	public static Role addRole(
 			String roleName, int roleType, String resourceName, int scope,
 			String primKey, String actionId)

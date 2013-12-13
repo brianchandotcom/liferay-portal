@@ -100,6 +100,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	 *             long, long, String, int, int, long, int)}
 	 */
+	@Deprecated
 	@Override
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
@@ -152,6 +153,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	 *             long, long, String, int, int, long, int)}
 	 */
+	@Deprecated
 	@Override
 	public SocialActivityCounter addActivityCounter(
 			long groupId, long classNameId, long classPK, String name,
@@ -444,6 +446,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	 *             long, long, String, int, int, long, int)}
 	 */
+	@Deprecated
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter createActivityCounter(
@@ -496,6 +499,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	 *             long, long, String, int, int, long, int)}
 	 */
+	@Deprecated
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public SocialActivityCounter createActivityCounter(

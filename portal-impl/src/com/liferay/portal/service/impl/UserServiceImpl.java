@@ -2128,6 +2128,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *             java.util.List, java.util.List, boolean, byte[],
 	 *             com.liferay.portal.service.ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public User updateUser(
 			long userId, String oldPassword, String newPassword1,

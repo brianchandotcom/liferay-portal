@@ -132,6 +132,7 @@ public class AnnouncementsEntryLocalServiceImpl
 	 *             String, String, String, String, int, int, int, int, int,
 	 *             boolean, int, int, int, int, int, int, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public AnnouncementsEntry addEntry(
 			long userId, long classNameId, long classPK, String title,

@@ -48,6 +48,7 @@ public class UserConstants {
 	 * @deprecated As of 7.0.0 replaced by {@link #getPortraitURL(String,
 	 *             boolean, long, String)}
 	 */
+	@Deprecated
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId) {
 

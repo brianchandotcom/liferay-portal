@@ -135,6 +135,7 @@ public class AssetPublisherUtil {
 	 *             PortletPreferences, PermissionChecker, long[], long[],
 	 *             String[], boolean , boolean)}
 	 */
+	@Deprecated
 	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
@@ -156,6 +157,7 @@ public class AssetPublisherUtil {
 	 *             PortletPreferences, PermissionChecker, long[], boolean,
 	 *             boolean)}
 	 */
+	@Deprecated
 	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,

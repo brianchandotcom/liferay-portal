@@ -190,6 +190,7 @@ public class PortletPermissionUtil {
 	 *             #hasControlPanelAccessPermission(PermissionChecker, long,
 	 *             Collection)}
 	 */
+	@Deprecated
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, long plid,
 		Collection<Portlet> portlets, String actionId) {

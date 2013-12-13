@@ -123,6 +123,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	 *             Boolean, Boolean, Boolean, String, long, long, String,
 	 *             Boolean, Boolean, long, long, Boolean, String)}
 	 */
+	@Deprecated
 	@Override
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
@@ -305,6 +306,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	 * @deprecated As of 6.2.0, replaced by {@link #discussion(String, long,
 	 *             String, String, boolean, boolean, String, long)})}
 	 */
+	@Deprecated
 	@Override
 	public void discussion(
 			String className, long classPK, String formAction, String formName,
@@ -494,6 +496,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #iconBack}
 	 */
+	@Deprecated
 	@Override
 	public void iconBack() throws Exception {
 		portletIconBack();
@@ -502,6 +505,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconClose}
 	 */
+	@Deprecated
 	@Override
 	public void iconClose() throws Exception {
 		portletIconClose();
@@ -510,6 +514,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconConfiguration}
 	 */
+	@Deprecated
 	@Override
 	public void iconConfiguration() throws Exception {
 		portletIconConfiguration();
@@ -518,6 +523,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEdit}
 	 */
+	@Deprecated
 	@Override
 	public void iconEdit() throws Exception {
 		portletIconEdit();
@@ -526,6 +532,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditDefaults}
 	 */
+	@Deprecated
 	@Override
 	public void iconEditDefaults() throws Exception {
 		portletIconEditDefaults();
@@ -534,6 +541,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditGuest}
 	 */
+	@Deprecated
 	@Override
 	public void iconEditGuest() throws Exception {
 		portletIconEditGuest();
@@ -542,6 +550,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconHelp}
 	 */
+	@Deprecated
 	@Override
 	public void iconHelp() throws Exception {
 		portletIconHelp();
@@ -562,6 +571,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMaximize}
 	 */
+	@Deprecated
 	@Override
 	public void iconMaximize() throws Exception {
 		portletIconMaximize();
@@ -570,6 +580,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMinimize}
 	 */
+	@Deprecated
 	@Override
 	public void iconMinimize() throws Exception {
 		portletIconMinimize();
@@ -578,6 +589,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconOptions}
 	 */
+	@Deprecated
 	@Override
 	public void iconOptions() throws Exception {
 		portletIconOptions();
@@ -586,6 +598,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortlet}
 	 */
+	@Deprecated
 	@Override
 	public void iconPortlet() throws Exception {
 		portletIconPortlet();
@@ -594,6 +607,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortlet(Portlet)}
 	 */
+	@Deprecated
 	@Override
 	public void iconPortlet(Portlet portlet) throws Exception {
 		portletIconPortlet();
@@ -602,6 +616,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortletCss}
 	 */
+	@Deprecated
 	@Override
 	public void iconPortletCss() throws Exception {
 		portletIconPortletCss();
@@ -610,6 +625,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPrint}
 	 */
+	@Deprecated
 	@Override
 	public void iconPrint() throws Exception {
 		portletIconPrint();
@@ -618,6 +634,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconRefresh}
 	 */
+	@Deprecated
 	@Override
 	public void iconRefresh() throws Exception {
 		portletIconRefresh();
@@ -739,6 +756,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #mySites}
 	 */
+	@Deprecated
 	@Override
 	public void myPlaces() throws Exception {
 		mySites();
@@ -747,6 +765,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #mySites(int)}
 	 */
+	@Deprecated
 	@Override
 	public void myPlaces(int max) throws Exception {
 		mySites(max);
@@ -788,6 +807,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String,
 	 *             String, String, Object, String, String, int[])}
 	 */
+	@Deprecated
 	@Override
 	public void permissionsURL(
 			String redirect, String modelResource,
@@ -1004,6 +1024,7 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	 *             Boolean, Boolean, Boolean, long, long, String, Boolean,
 	 *             Boolean, long, long, Boolean, String)}
 	 */
+	@Deprecated
 	@Override
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,

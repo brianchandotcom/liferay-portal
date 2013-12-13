@@ -37,6 +37,7 @@ public class JNDIUtil {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #lookup(Context, String)}
 	 */
+	@Deprecated
 	public static Object lookup(Context context, String location, boolean cache)
 		throws NamingException {
 

@@ -79,6 +79,7 @@ public class AssetVocabularyLocalServiceImpl
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public AssetVocabulary addVocabulary(
 			long userId, Map<Locale, String> titleMap,
@@ -360,6 +361,7 @@ public class AssetVocabularyLocalServiceImpl
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public AssetVocabulary updateVocabulary(
 			long vocabularyId, Map<Locale, String> titleMap,

@@ -56,6 +56,7 @@ public class LayoutsRemotePublisherMessageListener
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public LayoutsRemotePublisherMessageListener(
 		SingleDestinationMessageSender statusSender,
 		MessageSender responseSender) {

@@ -372,6 +372,7 @@ public class DocumentImpl implements Document {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public void addModifiedDate() {
 		addModifiedDate(new Date());
@@ -380,6 +381,7 @@ public class DocumentImpl implements Document {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public void addModifiedDate(Date modifiedDate) {
 		addDate(Field.MODIFIED, modifiedDate);

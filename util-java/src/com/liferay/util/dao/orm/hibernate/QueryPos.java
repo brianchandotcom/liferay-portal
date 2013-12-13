@@ -23,6 +23,7 @@ import org.hibernate.Query;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.dao.orm.QueryPos}
  */
+@Deprecated
 public class QueryPos {
 
 	public static QueryPos getInstance(Query query) {

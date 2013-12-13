@@ -41,6 +41,7 @@ public class PrettyDateFormat extends DateFormat {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public PrettyDateFormat(long companyId, Locale locale, TimeZone timeZone) {
 		this(locale, timeZone);
 	}

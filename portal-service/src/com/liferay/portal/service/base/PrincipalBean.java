@@ -32,6 +32,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.portal.service.BaseServiceImpl}
  */
+@Deprecated
 public class PrincipalBean {
 
 	public static final String[] ANONYMOUS_NAMES = {

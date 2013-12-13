@@ -245,6 +245,7 @@ public class PortletKeys {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #ASSET_CATEGORIES_NAVIGATION}
 	 */
+	@Deprecated
 	public static final String TAGS_CATEGORIES_NAVIGATION =
 		ASSET_CATEGORIES_NAVIGATION;
 
@@ -255,6 +256,7 @@ public class PortletKeys {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #ASSET_TAGS_NAVIGATION}
 	 */
+	@Deprecated
 	public static final String TAGS_ENTRIES_NAVIGATION = ASSET_TAGS_NAVIGATION;
 
 	public static final String TRANSLATOR = "26";

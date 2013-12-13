@@ -295,12 +295,14 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #update(BaseModel)}}
 	 */
+	@Deprecated
 	public T update(T model, boolean merge) throws SystemException;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #update(BaseModel,
 	 *             ServiceContext)}}
 	 */
+	@Deprecated
 	public T update(T model, boolean merge, ServiceContext serviceContext)
 		throws SystemException;
 

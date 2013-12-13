@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.messaging.LayoutsLocalPublisherMessageListener}
  */
+@Deprecated
 public class LayoutsLocalPublisherMessageListener
 	extends com.liferay.portal.messaging.LayoutsLocalPublisherMessageListener {
 
@@ -31,6 +32,7 @@ public class LayoutsLocalPublisherMessageListener
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public LayoutsLocalPublisherMessageListener(
 		SingleDestinationMessageSender statusSender,
 		MessageSender responseSender) {

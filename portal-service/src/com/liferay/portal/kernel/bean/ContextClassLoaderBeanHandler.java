@@ -18,6 +18,7 @@ package com.liferay.portal.kernel.bean;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.1.0
  */
+@Deprecated
 public class ContextClassLoaderBeanHandler extends ClassLoaderBeanHandler {
 
 	public ContextClassLoaderBeanHandler(Object bean, ClassLoader classLoader) {

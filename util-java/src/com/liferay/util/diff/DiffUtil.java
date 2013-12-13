@@ -38,6 +38,7 @@ import org.incava.util.diff.Difference;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.util.DiffUtil}
  */
+@Deprecated
 public class DiffUtil {
 
 	public static final String CLOSE_DEL = "</del>";

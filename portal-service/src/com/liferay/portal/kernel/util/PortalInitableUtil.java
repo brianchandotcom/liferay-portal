@@ -21,6 +21,7 @@ import java.util.Vector;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.1.0, replaced by {@link PortalLifecycleUtil}
  */
+@Deprecated
 public class PortalInitableUtil {
 
 	public static synchronized void flushInitables() {

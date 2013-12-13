@@ -526,6 +526,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	 *             String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
@@ -2118,6 +2119,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Lock lockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
@@ -2133,6 +2135,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	 *             String, long, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Lock lockFileEntry(
 			long fileEntryId, String owner, long expirationTime)
@@ -2706,6 +2709,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	 *             boolean, String, ServiceContext)}.
 	 */
+	@Deprecated
 	@Override
 	public void unlockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
@@ -2718,6 +2722,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	 *             String)}.
 	 */
+	@Deprecated
 	@Override
 	public void unlockFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {

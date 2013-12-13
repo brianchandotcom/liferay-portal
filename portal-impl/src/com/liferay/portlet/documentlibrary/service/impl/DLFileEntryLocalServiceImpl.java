@@ -423,6 +423,7 @@ public class DLFileEntryLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long,
 	 *             String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void checkInFileEntry(long userId, long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
@@ -463,6 +464,7 @@ public class DLFileEntryLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	 *             long, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId)
 		throws PortalException, SystemException {
@@ -484,6 +486,7 @@ public class DLFileEntryLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	 *             long, String, long, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DLFileEntry checkOutFileEntry(
 			long userId, long fileEntryId, String owner, long expirationTime)

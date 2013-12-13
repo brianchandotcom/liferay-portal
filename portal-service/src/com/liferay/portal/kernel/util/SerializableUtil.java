@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
  * @author     Igor Spasic
  * @deprecated As of 6.1.0, moved to {@link com.liferay.util.SerializableUtil}
  */
+@Deprecated
 public class SerializableUtil {
 
 	public static Object clone(Object object) {

@@ -87,6 +87,7 @@ public class PortalPreferencesLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
 	 *             int, String)}
 	 */
+	@Deprecated
 	@Override
 	public PortalPreferences addPortalPreferences(
 			long companyId, long ownerId, int ownerType,
@@ -143,6 +144,7 @@ public class PortalPreferencesLocalServiceImpl
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
 	 */
+	@Deprecated
 	@Override
 	public PortletPreferences getPreferences(
 			long companyId, long ownerId, int ownerType)
@@ -155,6 +157,7 @@ public class PortalPreferencesLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
 	 *             String)}
 	 */
+	@Deprecated
 	@Override
 	public PortletPreferences getPreferences(
 			long companyId, long ownerId, int ownerType,

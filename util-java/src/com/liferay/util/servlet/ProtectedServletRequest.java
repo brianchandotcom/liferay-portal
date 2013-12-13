@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.servlet.ProtectedServletRequest}
  */
+@Deprecated
 public class ProtectedServletRequest
 	extends com.liferay.portal.kernel.servlet.ProtectedServletRequest {
 

@@ -43,6 +43,7 @@ import org.apache.struts.action.ActionMapping;
  * @author     Eduardo Lundgren
  * @deprecated As of 6.2.0, with no direct replacement
  */
+@Deprecated
 public class PortletURLAction extends Action {
 
 	@Override

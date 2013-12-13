@@ -199,6 +199,7 @@ public class MDRRuleGroupLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #search(long, String,
 	 *             LinkedHashMap, boolean, int, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<MDRRuleGroup> search(
 			long groupId, String name, boolean andOperator, int start, int end)
@@ -227,6 +228,7 @@ public class MDRRuleGroupLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
 	 *             String, LinkedHashMap, boolean, int, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<MDRRuleGroup> searchByKeywords(
 			long groupId, String keywords, boolean andOperator, int start,
@@ -256,6 +258,7 @@ public class MDRRuleGroupLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
 	 *             String, LinkedHashMap, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public int searchByKeywordsCount(
 			long groupId, String keywords, boolean andOperator)
@@ -282,6 +285,7 @@ public class MDRRuleGroupLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #searchCount(long, String,
 	 *             LinkedHashMap, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(long groupId, String name, boolean andOperator)
 		throws SystemException {

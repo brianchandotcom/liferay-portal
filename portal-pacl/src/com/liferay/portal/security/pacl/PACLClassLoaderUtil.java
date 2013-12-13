@@ -21,5 +21,6 @@ import com.liferay.portal.util.ClassLoaderUtil;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.util.ClassLoaderUtil}
  */
+@Deprecated
 public class PACLClassLoaderUtil extends ClassLoaderUtil {
 }

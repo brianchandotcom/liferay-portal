@@ -89,6 +89,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 * @deprecated As of 6.2.0, Replaced by {@link #deleteCategories(long[],
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void deleteCategories(long[] categoryIds)
 		throws PortalException, SystemException {
@@ -183,6 +184,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #search(long[], String,
 	 *             long[], int, int)}
 	 */
+	@Deprecated
 	@Override
 	public JSONArray getJSONSearch(
 			long groupId, String name, long[] vocabularyIds, int start, int end)
@@ -196,6 +198,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 *             #getVocabularyCategoriesDisplay(long, int, int,
 	 *             OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public JSONObject getJSONVocabularyCategories(
 			long vocabularyId, int start, int end, OrderByComparator obc)
@@ -218,6 +221,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 *             #getVocabularyCategoriesDisplay(long, String, long, int, int,
 	 *             OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public JSONObject getJSONVocabularyCategories(
 			long groupId, String name, long vocabularyId, int start, int end,
@@ -356,6 +360,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 *             #getVocabularyRootCategories(long, long, int, int,
 	 *             OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public List<AssetCategory> getVocabularyRootCategories(
 			long vocabularyId, int start, int end, OrderByComparator obc)

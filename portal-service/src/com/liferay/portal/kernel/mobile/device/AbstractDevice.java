@@ -27,6 +27,7 @@ public abstract class AbstractDevice implements Device {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getScreenResolution()}
 	 */
+	@Deprecated
 	@Override
 	public Dimensions getScreenSize() {
 		return getScreenResolution();

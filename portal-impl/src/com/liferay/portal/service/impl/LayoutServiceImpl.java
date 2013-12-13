@@ -116,6 +116,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             long, Map, Map, Map, Map, Map, String, String, boolean, Map,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Layout addLayout(
 			long groupId, boolean privateLayout, long parentLayoutId,
@@ -1452,6 +1453,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             long, long, Map, Map, Map, Map, Map, String, boolean, Map,
 	 *             Boolean, byte[], ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Layout updateLayout(
 			long groupId, boolean privateLayout, long layoutId,

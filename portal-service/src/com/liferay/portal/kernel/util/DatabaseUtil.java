@@ -28,6 +28,7 @@ import javax.naming.NamingException;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.1.0, replaced by {@link DBFactoryUtil}
  */
+@Deprecated
 public class DatabaseUtil {
 
 	public static Database getDatabase() {

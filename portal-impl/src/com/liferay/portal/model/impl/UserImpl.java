@@ -376,6 +376,7 @@ public class UserImpl extends UserBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getMySites() throws PortalException, SystemException {
 		return getMySiteGroups();
@@ -385,6 +386,7 @@ public class UserImpl extends UserBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(boolean,
 	 *             int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getMySites(boolean includeControlPanel, int max)
 		throws PortalException, SystemException {
@@ -395,6 +397,7 @@ public class UserImpl extends UserBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getMySites(int max)
 		throws PortalException, SystemException {
@@ -406,6 +409,7 @@ public class UserImpl extends UserBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
 	 *             boolean, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getMySites(
 			String[] classNames, boolean includeControlPanel, int max)
@@ -418,6 +422,7 @@ public class UserImpl extends UserBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
 	 *             int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Group> getMySites(String[] classNames, int max)
 		throws PortalException, SystemException {

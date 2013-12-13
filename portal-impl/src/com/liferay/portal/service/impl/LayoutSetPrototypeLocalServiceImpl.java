@@ -188,6 +188,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
 	 */
+	@Deprecated
 	@Override
 	public LayoutSetPrototype getLayoutSetPrototypeByUuid(String uuid)
 		throws PortalException, SystemException {

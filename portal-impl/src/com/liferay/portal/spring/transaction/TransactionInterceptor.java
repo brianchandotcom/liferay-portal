@@ -78,6 +78,7 @@ public class TransactionInterceptor implements MethodInterceptor {
 	 * @deprecated As of 6.1.0, replaced by {@link
 	 *             #setPlatformTransactionManager(PlatformTransactionManager)}
 	 */
+	@Deprecated
 	public void setTransactionManager(
 		PlatformTransactionManager platformTransactionManager) {
 

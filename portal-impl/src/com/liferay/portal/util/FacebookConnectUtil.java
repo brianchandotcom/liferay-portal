@@ -19,6 +19,7 @@ package com.liferay.portal.util;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.facebook.FacebookConnectUtil}
  */
+@Deprecated
 public class FacebookConnectUtil
 	extends com.liferay.portal.kernel.facebook.FacebookConnectUtil {
 }

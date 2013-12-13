@@ -52,6 +52,7 @@ public interface VelocityTaglib {
 	 *             Boolean, Boolean, Boolean, String, long, long, String,
 	 *             Boolean, Boolean, long, long, Boolean, String)}
 	 */
+	@Deprecated
 	public void actionURL(
 			String windowState, String portletMode, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, String name,
@@ -109,6 +110,7 @@ public interface VelocityTaglib {
 	 * @deprecated As of 6.2.0, replaced by {@link #discussion(String, long,
 	 *             String, String, boolean, boolean, String, long)})}
 	 */
+	@Deprecated
 	public void discussion(
 			String className, long classPK, String formAction, String formName,
 			boolean hideControls, boolean ratingsEnabled, String redirect,
@@ -159,36 +161,43 @@ public interface VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #iconBack}
 	 */
+	@Deprecated
 	public void iconBack() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconClose}
 	 */
+	@Deprecated
 	public void iconClose() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconConfiguration}
 	 */
+	@Deprecated
 	public void iconConfiguration() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEdit}
 	 */
+	@Deprecated
 	public void iconEdit() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditDefaults}
 	 */
+	@Deprecated
 	public void iconEditDefaults() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconEditGuest}
 	 */
+	@Deprecated
 	public void iconEditGuest() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconHelp}
 	 */
+	@Deprecated
 	public void iconHelp() throws Exception;
 
 	public void iconHelp(String message) throws Exception;
@@ -196,41 +205,49 @@ public interface VelocityTaglib {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMaximize}
 	 */
+	@Deprecated
 	public void iconMaximize() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconMinimize}
 	 */
+	@Deprecated
 	public void iconMinimize() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconOptions}
 	 */
+	@Deprecated
 	public void iconOptions() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortlet}
 	 */
+	@Deprecated
 	public void iconPortlet() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortlet(Portlet)}
 	 */
+	@Deprecated
 	public void iconPortlet(Portlet portlet) throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPortletCss}
 	 */
+	@Deprecated
 	public void iconPortletCss() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconPrint}
 	 */
+	@Deprecated
 	public void iconPrint() throws Exception;
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #portletIconRefresh}
 	 */
+	@Deprecated
 	public void iconRefresh() throws Exception;
 
 	public void include(ServletContext servletContext, String page)
@@ -266,11 +283,13 @@ public interface VelocityTaglib {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #mySites}
 	 */
+	@Deprecated
 	public void myPlaces() throws Exception;
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #mySites(int)}
 	 */
+	@Deprecated
 	public void myPlaces(int max) throws Exception;
 
 	public void mySites() throws Exception;
@@ -287,6 +306,7 @@ public interface VelocityTaglib {
 	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String,
 	 *             String, String, Object, String, String, int[])}
 	 */
+	@Deprecated
 	public void permissionsURL(
 			String redirect, String modelResource,
 			String modelResourceDescription, String resourcePrimKey,
@@ -347,6 +367,7 @@ public interface VelocityTaglib {
 	 *             Boolean, Boolean, Boolean, long, long, String, Boolean,
 	 *             Boolean, long, long, Boolean, String)}
 	 */
+	@Deprecated
 	public void renderURL(
 			String windowState, String portletMode, Boolean secure,
 			Boolean copyCurrentRenderParameters, Boolean escapeXml, long plid,

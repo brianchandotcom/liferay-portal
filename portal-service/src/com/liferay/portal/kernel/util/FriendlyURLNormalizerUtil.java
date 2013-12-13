@@ -38,6 +38,7 @@ public class FriendlyURLNormalizerUtil {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #normalize(String, Pattern)}
 	 */
+	@Deprecated
 	public static String normalize(String friendlyURL, char[] replaceChars) {
 		return getFriendlyURLNormalizer().normalize(friendlyURL, replaceChars);
 	}

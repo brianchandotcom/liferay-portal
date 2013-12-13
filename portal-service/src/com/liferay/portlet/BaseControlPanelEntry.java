@@ -64,6 +64,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 	 *             #hasAccessPermission} to determine if a portlet should be
 	 *             displayed in the Control Panel.</p>
 	 */
+	@Deprecated
 	@Override
 	public boolean isVisible(
 			PermissionChecker permissionChecker, Portlet portlet)
@@ -83,6 +84,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 	 *             #hasAccessPermission} to determine if a portlet should be
 	 *             displayed in the Control Panel.</p>
 	 */
+	@Deprecated
 	@Override
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)

@@ -2751,6 +2751,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getUserByUuidAndCompanyId(String, long)}
 	 */
+	@Deprecated
 	@Override
 	public User getUserByUuid(String uuid)
 		throws PortalException, SystemException {
@@ -5154,6 +5155,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             String, String, long[], long[], long[], java.util.List,
 	 *             long[], boolean, byte[], ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public User updateUser(
 			long userId, String oldPassword, String newPassword1,

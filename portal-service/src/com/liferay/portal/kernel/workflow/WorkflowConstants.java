@@ -86,6 +86,7 @@ public class WorkflowConstants {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public static final int STATUS_DRAFT_FROM_APPROVED = 9;
 
 	public static final int STATUS_EXPIRED = 3;
@@ -196,6 +197,7 @@ public class WorkflowConstants {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getStatusLabel(int)}
 	 */
+	@Deprecated
 	public static String toLabel(int status) {
 		return getStatusLabel(status);
 	}
@@ -203,6 +205,7 @@ public class WorkflowConstants {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getLabelStatus(String)}
 	 */
+	@Deprecated
 	public static int toStatus(String label) {
 		return getLabelStatus(label);
 	}

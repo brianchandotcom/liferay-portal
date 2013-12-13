@@ -24,6 +24,7 @@ import com.liferay.portal.model.BaseModel;
  * @see        BatchSession
  * @deprecated As of 6.2.0, see LPS-30598.
  */
+@Deprecated
 public class BatchSessionUtil {
 
 	public static void delete(Session session, BaseModel<?> model)

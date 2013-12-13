@@ -441,6 +441,7 @@ public class HttpImpl implements Http {
 	 * @deprecated As of 6.1.0, replaced by {@link
 	 *             #getHostConfiguration(String)}
 	 */
+	@Deprecated
 	public HostConfiguration getHostConfig(String location) throws IOException {
 		return getHostConfiguration(location);
 	}

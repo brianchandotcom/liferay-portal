@@ -19,6 +19,7 @@ package com.liferay.util;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.util.LocalizationUtil}
  */
+@Deprecated
 public class LocalizationUtil
 	extends com.liferay.portal.kernel.util.LocalizationUtil {
 }

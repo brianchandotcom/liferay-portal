@@ -475,6 +475,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
 	 *             double)}
 	 */
+	@Deprecated
 	@Override
 	public void deletePage(long nodeId, String title, double version)
 		throws PortalException, SystemException {
@@ -1259,6 +1260,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
 	 *             int, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<WikiPage> getRecentChanges(long nodeId, int start, int end)
 		throws PortalException, SystemException {
@@ -1285,6 +1287,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
 	 *             long)}
 	 */
+	@Deprecated
 	@Override
 	public int getRecentChangesCount(long nodeId)
 		throws PortalException, SystemException {

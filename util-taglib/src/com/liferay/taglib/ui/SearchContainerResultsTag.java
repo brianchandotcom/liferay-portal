@@ -34,6 +34,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             SearchContainer#DEFAULT_RESULTS_VAR}.
 	 */
+	@Deprecated
 	public static final String DEFAULT_RESULTS_VAR =
 		SearchContainer.DEFAULT_RESULTS_VAR;
 
@@ -41,6 +42,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             SearchContainer#DEFAULT_DEPRECATED_TOTAL_VAR}.
 	 */
+	@Deprecated
 	public static final String DEFAULT_TOTAL_VAR =
 		SearchContainer.DEFAULT_DEPRECATED_TOTAL_VAR;
 
@@ -147,6 +149,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             SearchContainerTag#getTotal()}.
 	 */
+	@Deprecated
 	public int getTotal() {
 		return _deprecatedTotal;
 	}
@@ -155,6 +158,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             SearchContainerTag#getTotalVar()}.
 	 */
+	@Deprecated
 	public String getTotalVar() {
 		return _deprecatedTotalVar;
 	}
@@ -171,6 +175,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             SearchContainerTag#setTotal(int)}.
 	 */
+	@Deprecated
 	public void setTotal(int deprecatedTotal) {
 		_deprecatedTotal = deprecatedTotal;
 	}
@@ -179,6 +184,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             SearchContainerTag#setTotalVar(String)}.
 	 */
+	@Deprecated
 	public void setTotalVar(String deprecatedTotalVar) {
 		_deprecatedTotalVar = deprecatedTotalVar;
 	}

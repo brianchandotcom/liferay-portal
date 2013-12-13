@@ -51,6 +51,7 @@ public class UsersAdminUtil {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link UsersAdmin#CUSTOM_QUESTION}
 	 */
+	@Deprecated
 	public static final String CUSTOM_QUESTION = "write-my-own-question";
 
 	public static void addPortletBreadcrumbEntries(
@@ -257,6 +258,7 @@ public class UsersAdminUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #hasUpdateFieldPermission(User, String)}
 	 */
+	@Deprecated
 	public static boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
@@ -274,6 +276,7 @@ public class UsersAdminUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #hasUpdateFieldPermission(User, String)}
 	 */
+	@Deprecated
 	public static boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {

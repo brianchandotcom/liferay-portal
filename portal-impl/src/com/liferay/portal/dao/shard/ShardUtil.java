@@ -19,5 +19,6 @@ package com.liferay.portal.dao.shard;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.dao.shard.ShardUtil}
  */
+@Deprecated
 public class ShardUtil extends com.liferay.portal.kernel.dao.shard.ShardUtil {
 }

@@ -26,6 +26,7 @@ import java.util.List;
  * @deprecated As of 7.0.0, moved to {@link
  *             com.liferay.portal.words.BasicSpellCheckListener}
  */
+@Deprecated
 public class BasicSpellCheckListener implements SpellCheckListener {
 
 	public BasicSpellCheckListener(String text) {

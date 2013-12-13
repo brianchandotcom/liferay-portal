@@ -195,6 +195,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *             otherwise
 	 * @deprecated As of 6.1.0, renamed to {@link #isAddGroupPermissions()}
 	 */
+	@Deprecated
 	public boolean getAddCommunityPermissions() {
 		return isAddGroupPermissions();
 	}
@@ -272,6 +273,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return     the community permissions
 	 * @deprecated As of 6.1.0, renamed to {@link #getGroupPermissions()}
 	 */
+	@Deprecated
 	public String[] getCommunityPermissions() {
 		return getGroupPermissions();
 	}
@@ -986,6 +988,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @deprecated As of 6.1.0, renamed to {@link
 	 *             #setAddGroupPermissions(boolean)}
 	 */
+	@Deprecated
 	public void setAddCommunityPermissions(boolean addCommunityPermissions) {
 		setAddGroupPermissions(addCommunityPermissions);
 	}
@@ -1095,6 +1098,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @deprecated As of 6.1.0, renamed to {@link
 	 *             #setGroupPermissions(String[])}
 	 */
+	@Deprecated
 	public void setCommunityPermissions(String[] communityPermissions) {
 		setGroupPermissions(communityPermissions);
 	}

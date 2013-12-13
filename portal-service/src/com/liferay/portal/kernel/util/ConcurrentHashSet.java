@@ -21,6 +21,7 @@ import java.util.Set;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.concurrent.ConcurrentHashSet}
  */
+@Deprecated
 public class ConcurrentHashSet<E>
 	extends com.liferay.portal.kernel.concurrent.ConcurrentHashSet<E> {
 

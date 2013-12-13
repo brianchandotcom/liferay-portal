@@ -39,6 +39,7 @@ public interface ControlPanelEntry {
 	 *             #hasAccessPermission} to determine if a portlet should be
 	 *             displayed in the Control Panel.</p>
 	 */
+	@Deprecated
 	public boolean isVisible(
 			PermissionChecker permissionChecker, Portlet portlet)
 		throws Exception;
@@ -54,6 +55,7 @@ public interface ControlPanelEntry {
 	 *             #hasAccessPermission} to determine if a portlet should be
 	 *             displayed in the Control Panel.</p>
 	 */
+	@Deprecated
 	public boolean isVisible(
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception;

@@ -270,6 +270,7 @@ public class SitesUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #mergeLayoutPrototypeLayout(Group, Layout)}
 	 */
+	@Deprecated
 	public static void mergeLayoutProtypeLayout(Group group, Layout layout)
 		throws Exception {
 
@@ -287,6 +288,7 @@ public class SitesUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #mergeLayoutSetPrototypeLayouts(Group, LayoutSet)}
 	 */
+	@Deprecated
 	public static void mergeLayoutSetProtypeLayouts(
 			Group group, LayoutSet layoutSet)
 		throws Exception {

@@ -51,6 +51,7 @@ public interface AssetRenderer {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getAvailableLanguageIds}
 	 */
+	@Deprecated
 	public String[] getAvailableLocales() throws Exception;
 
 	public String getClassName();

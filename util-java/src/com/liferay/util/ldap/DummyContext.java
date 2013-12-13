@@ -19,5 +19,6 @@ package com.liferay.util.ldap;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.ldap.DummyContext}
  */
+@Deprecated
 public class DummyContext extends com.liferay.portal.kernel.ldap.DummyContext {
 }

@@ -21,5 +21,6 @@ package com.liferay.util.ldap;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.ldap.LDAPUtil}
  */
+@Deprecated
 public class LDAPUtil extends com.liferay.portal.kernel.ldap.LDAPUtil {
 }

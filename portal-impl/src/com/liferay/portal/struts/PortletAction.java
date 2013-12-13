@@ -290,6 +290,7 @@ public class PortletAction extends Action {
 	/**
 	 * @deprecated As of 6.2.0 {@link #hideDefaultSuccessMessage(PortletRequest)
 	 */
+	@Deprecated
 	protected void hideDefaultSuccessMessage(
 		PortletConfig portletConfig, PortletRequest portletRequest) {
 

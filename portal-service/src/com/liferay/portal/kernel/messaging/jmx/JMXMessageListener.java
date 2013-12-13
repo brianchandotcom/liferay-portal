@@ -118,6 +118,7 @@ public class JMXMessageListener extends BaseDestinationEventListener {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #afterPropertiesSet}
 	 */
+	@Deprecated
 	public void init() throws Exception {
 		afterPropertiesSet();
 	}

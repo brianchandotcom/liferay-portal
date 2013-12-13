@@ -30,6 +30,7 @@ import javax.servlet.jsp.PageContext;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.taglib.ui.InputPermissionsTag}
  */
+@Deprecated
 public class InputPermissionsTagUtil {
 
 	public static void doEndTag(

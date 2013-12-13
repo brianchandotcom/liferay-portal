@@ -130,6 +130,8 @@ log
 /portal-web/test-output
 /portal-web/test-results
 
+/portal-web/third-party/node*
+
 /portal-web/docroot/dtd
 /portal-web/docroot/favicon.ico
 /portal-web/docroot/wsrp

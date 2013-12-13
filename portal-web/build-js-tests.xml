@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+
+<project name="build-js-tests">
+	<import file="../build-common.xml" />
+
+	<property name="nodejs.version" value="0.8.11" />
+	<property name="npm.version" value="1.1.62" />
+
+	<property name="nodejs.dist" value="http://nodejs.org/dist/v${nodejs.version}" />
+	<property name="npm.dist" value="http://nodejs.org/dist/npm/npm-${npm.version}" />
+
+	<property name="nodejs.win.file" value="node${nodejs.version}.exe" />
+
+	<property name="nodejs.dir" value="third-party/node-v${nodejs.version}" />
+	<property name="npm.file.ext" value="npm-${npm.version}.zip" />
+
+	<if>
+		<contains casesensitive="false" string="${os.name}" substring="windows" />
+		<then>
+			<property name="nodejs.exec.dir" value="${nodejs.dir}" />
+			<property name="nodejs.exec.file" value="node${nodejs.version}.exe" />
+			<property name="npm.exec.file" value="npm.cmd" />
+		</then>
+		<else>
+			<property name="nodejs.exec.dir" value="${nodejs.dir}/bin" />
+			<property name="nodejs.exec.file" value="node" />
+			<property name="npm.exec.file" value="npm" />
+		</else>
+	</if>
+
+	<property name="yeti.dir" value="node_modules/yeti" />
+
+	<!-- Determine NodeJS download URL according to the OS family append arch -->
+
+	<if>
+
+		<!-- Windows 32 -->
+
+		<and>
+			<contains casesensitive="false" string="${os.name}" substring="windows" />
+			<equals arg1="${os.arch}" arg2="x86" />
+		</and>
+		<then>
+			<property name="nodejs.url" value="${nodejs.dist}/node.exe" />
+			<property name="npm.url" value="${npm.dist}.zip" />
+			<property name="nodejs.file" value="${nodejs.win.file}" />
+			<property name="nodejs.file.ext" value="${nodejs.win.file}" />
+			<property name="nodejs.decompress" value="none" />
+		</then>
+
+		<!-- Windows 64 -->
+
+		<elseif>
+			<and>
+				<contains casesensitive="false" string="${os.name}" substring="windows"  />
+				<equals arg1="${os.arch}" arg2="amd64" />
+			</and>
+			<then>
+				<property name="nodejs.url" value="${nodejs.dist}/x64/node.exe" />
+				<property name="npm.url" value="${npm.dist}.zip" />
+				<property name="nodejs.file" value="${nodejs.win.file}" />
+				<property name="nodejs.file.ext" value="${nodejs.win.file}" />
+				<property name="nodejs.decompress" value="none" />
+			</then>
+		</elseif>
+
+		<!-- Mac OSX 32 -->
+
+		<elseif>
+			<and>
+				<equals arg1="${os.name}" arg2="Mac OS X" />
+				<equals arg1="${os.arch}" arg2="x86_32" />
+			</and>
+			<then>
+				<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-darwin-x86.tar.gz" />
+				<property name="nodejs.file" value="node-v${nodejs.version}-darwin-x86}" />
+				<property name="nodejs.file.ext" value="node-v${nodejs.version}-darwin-x86}.tar.gz" />
+				<property name="nodejs.decompress" value="untar" />
+			</then>
+		</elseif>
+
+		<!-- Mac OSX 64 -->
+
+		<elseif>
+			<and>
+				<equals arg1="${os.name}" arg2="Mac OS X" />
+				<equals arg1="${os.arch}" arg2="x86_64" />
+			</and>
+			<then>
+				<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-darwin-x64.tar.gz" />
+				<property name="nodejs.file" value="node-v${nodejs.version}-darwin-x64" />
+				<property name="nodejs.file.ext" value="node-v${nodejs.version}-darwin-x64.tar.gz" />
+				<property name="nodejs.decompress" value="untar" />
+			</then>
+		</elseif>
+
+		<!-- GNU/Linux 32 -->
+
+		<elseif>
+			<and>
+				<equals arg1="${os.name}" arg2="Linux" />
+				<equals arg1="${os.arch}" arg2="amd" />
+			</and>
+			<then>
+				<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-linux-x86.tar.gz" />
+				<property name="nodejs.file" value="node-v${nodejs.version}-linux-x86" />
+				<property name="nodejs.file.ext" value="node-v${nodejs.version}-linux-x86.tar.gz" />
+				<property name="nodejs.decompress" value="untar" />
+			</then>
+		</elseif>
+
+		<!-- GNU/Linux 64 -->
+
+		<elseif>
+			<and>
+				<equals arg1="${os.name}" arg2="Linux" />
+				<equals arg1="${os.arch}" arg2="amd64" />
+			</and>
+			<then>
+				<property name="nodejs.url" value="${nodejs.dist}/node-v${nodejs.version}-linux-x64.tar.gz" />
+				<property name="nodejs.file" value="node-v${nodejs.version}-linux-x64" />
+				<property name="nodejs.file.ext" value="node-v${nodejs.version}-linux-x64.tar.gz" />
+				<property name="nodejs.decompress" value="untar" />
+			</then>
+		</elseif>
+	</if>
+
+	<target name="nodejs-download">
+		<if>
+			<not>
+				<available file="third-party/${nodejs.file.ext}" />
+			</not>
+			<then>
+				<get src="${nodejs.url}"
+					dest="third-party/${nodejs.file.ext}"
+					verbose="true" />
+
+				<if>
+					<equals arg1="${nodejs.decompress}" arg2="untar" />
+					<then>
+						<exec dir="third-party" executable="tar">
+							<arg line="zxf ${nodejs.file.ext}" />
+						</exec>
+
+						<move file="third-party/${nodejs.file}" tofile="${nodejs.dir}" />
+					</then>
+					<else>
+						<mkdir dir="${nodejs.dir}" />
+
+						<copy file="third-party/${nodejs.file.ext}" todir="third-party/node-v${nodejs.version}" />
+					</else>
+				</if>
+
+			</then>
+		</if>
+	</target>
+
+	<target name="nodejs-npm-download" depends="nodejs-download">
+		<if>
+			<not>
+				<available file="${nodejs.exec.dir}/${npm.file.ext}" />
+			</not>
+			<then>
+				<get src="${npm.url}"
+					dest="${nodejs.exec.dir}"
+					verbose="true" />
+
+				<unzip src="${nodejs.exec.dir}/${npm.file.ext}" dest="${nodejs.exec.dir}" />
+			</then>
+		</if>
+	</target>
+
+	<target name="nodejs-npm-install" depends="nodejs-download">
+		<if>
+			<contains casesensitive="false" string="${os.name}" substring="windows" />
+			<then>
+				<antcall target="nodejs-npm-download" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${nodejs.exec.dir}/${yeti.dir}" />
+			</not>
+			<then>
+				<exec dir="${nodejs.exec.dir}" executable="./${npm.exec.file}" resolveexecutable="true">
+					<arg line="install yeti" />
+				</exec>
+			</then>
+		</if>
+	</target>
+
+	<target name="start-yeti-node" depends="nodejs-npm-install">
+		<exec dir="${nodejs.exec.dir}" executable="./${nodejs.exec.file}" resolveexecutable="true">
+			<arg line="${yeti.dir}/cli.js --server" />
+		</exec>
+	</target>
+
+	<target name="test-js" depends="nodejs-npm-install">
+		<condition property="args" value=""> 
+			<not>
+				<isset property="args" />
+			</not> 
+		</condition>
+
+		<exec dir="${user.dir}" executable="${user.dir}/${nodejs.exec.dir}/${nodejs.exec.file}" resolveexecutable="true">
+			<arg line="${nodejs.exec.dir}/${yeti.dir}/cli.js ${args}" />
+		</exec>
+	</target>
+</project>

@@ -3,6 +3,8 @@
 <project name="portal-web" basedir="." default="war" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../build-common-web.xml" />
 
+	<import file="build-js-tests.xml" />
+
 	<property name="war.file" value="${ant.project.name}" />
 
 	<property name="alloy-font-awesome.file" value="alloy-font-awesome-1.0.0.zip" />

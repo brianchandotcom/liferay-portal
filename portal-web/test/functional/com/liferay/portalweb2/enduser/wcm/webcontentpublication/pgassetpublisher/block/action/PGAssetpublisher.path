@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STAR_1</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[contains(@class, 'taglib-text') and contains(.,'Edit')]</td>
+	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingStar')]//a[1][@class='rating-element icon-star']</td>
 	<td></td>
 </tr>
 <tr>

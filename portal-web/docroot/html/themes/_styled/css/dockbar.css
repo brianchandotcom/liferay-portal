@@ -207,8 +207,8 @@ $editLayoutPanelWidth: 460px;
 								}
 							}
 
-							> a {
-								@include respond-to(phone, tablet) {
+							@include respond-to(phone, tablet) {
+								> a {
 									display: inline-block;
 									margin-left: 5px;
 									margin-top: 5px;
@@ -231,9 +231,25 @@ $editLayoutPanelWidth: 460px;
 										}
 									}
 								}
-							}
 
-							@include respond-to(phone, tablet) {
+								&.user-avatar {
+									.user-avatar-link {
+										padding: 16px 12px 12px;
+
+										.nav-item-label {
+											display: inline;
+
+											img {
+												width: 27px;
+											}
+
+											.user-full-name {
+												display: none;
+											}
+										}
+									}
+								}
+
 								.icon-caret-down {
 									display: none;
 								}
@@ -261,10 +277,6 @@ $editLayoutPanelWidth: 460px;
 								@include respond-to(phone, tablet) {
 									display: inline-block;
 								}
-							}
-
-							.user-avatar-image {
-								display: none;
 							}
 						}
 

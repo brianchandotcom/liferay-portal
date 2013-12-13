@@ -28,7 +28,7 @@
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
-		<aui:nav-item anchorCssClass="user-avatar-link" cssClass='<%= themeDisplay.isImpersonated() ? "user-avatar impersonating-user" : "user-avatar" %>' dropdown="<%= true %>" iconCssClass="icon-user" id="userAvatar" label="<%= userName %>">
+		<aui:nav-item anchorCssClass="user-avatar-link" cssClass='<%= themeDisplay.isImpersonated() ? "user-avatar impersonating-user" : "user-avatar" %>' dropdown="<%= true %>" id="userAvatar" label="<%= userName %>">
 			<c:if test="<%= themeDisplay.isImpersonated() %>">
 
 				<%

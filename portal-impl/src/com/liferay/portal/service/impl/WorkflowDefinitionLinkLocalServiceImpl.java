@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.base.WorkflowDefinitionLinkLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -53,7 +52,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		groupId = StagingUtil.getLiveGroupId(groupId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		long workflowDefinitionLinkId = counterLocalService.increment();
@@ -104,7 +103,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			return null;
 		}
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
 			WorkflowConstants.DEFAULT_GROUP_ID, companyId, classNameId, classPK,
@@ -132,7 +131,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 
 		groupId = StagingUtil.getLiveGroupId(groupId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
@@ -159,7 +158,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			throw new NoSuchWorkflowDefinitionLinkException();
 		}
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return workflowDefinitionLinkPersistence.findByG_C_C_C_T(
 			WorkflowConstants.DEFAULT_GROUP_ID, companyId, classNameId, classPK,
@@ -287,7 +286,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		groupId = StagingUtil.getLiveGroupId(groupId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		WorkflowDefinitionLink workflowDefinitionLink =

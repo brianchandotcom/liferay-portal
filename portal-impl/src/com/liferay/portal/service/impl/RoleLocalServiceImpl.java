@@ -189,12 +189,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		className = GetterUtil.getString(className);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		long roleId = counterLocalService.increment();
 
 		if ((classNameId <= 0) || className.equals(Role.class.getName())) {
-			classNameId = PortalUtil.getClassNameId(Role.class);
+			classNameId = classNameLocalService.getClassNameId(Role.class);
 			classPK = roleId;
 		}
 
@@ -815,7 +815,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public Role getTeamRole(long companyId, long teamId)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(Team.class);
+		long classNameId = classNameLocalService.getClassNameId(Team.class);
 
 		return rolePersistence.findByC_C_C(companyId, classNameId, teamId);
 	}
@@ -1611,7 +1611,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			long roleId, long companyId, long classNameId, String name)
 		throws PortalException, SystemException {
 
-		if (classNameId == PortalUtil.getClassNameId(Role.class)) {
+		if (classNameId == classNameLocalService.getClassNameId(Role.class)) {
 			if (Validator.isNull(name) ||
 				(name.indexOf(CharPool.COMMA) != -1) ||
 				(name.indexOf(CharPool.STAR) != -1)) {

@@ -23,7 +23,6 @@ import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.PortletItemLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -41,7 +40,7 @@ public class PortletItemLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		validate(name);
@@ -70,7 +69,7 @@ public class PortletItemLocalServiceImpl
 			long groupId, String name, String portletId, String className)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return portletItemPersistence.findByG_N_P_C(
 			groupId, name, portletId, classNameId);
@@ -80,7 +79,7 @@ public class PortletItemLocalServiceImpl
 	public List<PortletItem> getPortletItems(long groupId, String className)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return portletItemPersistence.findByG_C(groupId, classNameId);
 	}
@@ -90,7 +89,7 @@ public class PortletItemLocalServiceImpl
 			long groupId, String portletId, String className)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return portletItemPersistence.findByG_P_C(
 			groupId, portletId, classNameId);

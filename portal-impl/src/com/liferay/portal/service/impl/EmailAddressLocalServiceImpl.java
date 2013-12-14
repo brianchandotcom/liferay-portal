@@ -25,7 +25,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.EmailAddressLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -59,7 +58,7 @@ public class EmailAddressLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		validate(
@@ -115,7 +114,7 @@ public class EmailAddressLocalServiceImpl
 			long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<EmailAddress> emailAddresses = emailAddressPersistence.findByC_C_C(
 			companyId, classNameId, classPK);
@@ -135,7 +134,7 @@ public class EmailAddressLocalServiceImpl
 			long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return emailAddressPersistence.findByC_C_C(
 			companyId, classNameId, classPK);

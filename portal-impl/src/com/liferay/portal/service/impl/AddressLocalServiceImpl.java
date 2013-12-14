@@ -31,7 +31,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -70,7 +69,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		validate(
@@ -128,7 +127,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	public void deleteAddresses(long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<Address> addresses = addressPersistence.findByC_C_C(
 			companyId, classNameId, classPK);
@@ -148,7 +147,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return addressPersistence.findByC_C_C(companyId, classNameId, classPK);
 	}
@@ -249,9 +248,12 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			classPK = address.getClassPK();
 		}
 
-		if ((classNameId == PortalUtil.getClassNameId(Account.class)) ||
-			(classNameId == PortalUtil.getClassNameId(Contact.class)) ||
-			(classNameId == PortalUtil.getClassNameId(Organization.class))) {
+		if ((classNameId ==
+				classNameLocalService.getClassNameId(Account.class)) ||
+			(classNameId ==
+				classNameLocalService.getClassNameId(Contact.class)) ||
+			(classNameId ==
+				classNameLocalService.getClassNameId(Organization.class))) {
 
 			listTypeService.validate(
 				typeId, classNameId, ListTypeConstants.ADDRESS);

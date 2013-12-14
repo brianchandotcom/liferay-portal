@@ -29,7 +29,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.PhoneLocalServiceBaseImpl;
-import com.liferay.portal.util.PortalUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -62,7 +61,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		validate(
@@ -114,7 +113,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 	public void deletePhones(long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<Phone> phones = phonePersistence.findByC_C_C(
 			companyId, classNameId, classPK);
@@ -133,7 +132,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 	public List<Phone> getPhones(long companyId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return phonePersistence.findByC_C_C(companyId, classNameId, classPK);
 	}
@@ -206,9 +205,12 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 			classPK = phone.getClassPK();
 		}
 
-		if ((classNameId == PortalUtil.getClassNameId(Account.class)) ||
-			(classNameId == PortalUtil.getClassNameId(Contact.class)) ||
-			(classNameId == PortalUtil.getClassNameId(Organization.class))) {
+		if ((classNameId ==
+				classNameLocalService.getClassNameId(Account.class)) ||
+			(classNameId ==
+				classNameLocalService.getClassNameId(Contact.class)) ||
+			(classNameId ==
+				classNameLocalService.getClassNameId(Organization.class))) {
 
 			listTypeService.validate(
 				typeId, classNameId, ListTypeConstants.PHONE);

@@ -77,7 +77,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 			<aui:input name='<%= "preferences--" + emailBodyParam + "--" %>' type="hidden" />
 		</aui:field-wrapper>
 
-		<div class="definition-of-terms">
+		<aui:fieldset cssClass="definition-of-terms">
 			<legend>
 				<liferay-ui:message key="definition-of-terms" />
 			</legend>
@@ -151,7 +151,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 					<liferay-ui:message key="the-name-of-the-email-recipient" />
 				</dd>
 			</dl>
-		</div>
+		</aui:fieldset>
 	</div>
 </aui:fieldset>
 

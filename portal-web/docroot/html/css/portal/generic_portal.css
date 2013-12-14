@@ -19,16 +19,12 @@ td {
 .definition-of-terms {
 	margin-bottom: 2em;
 
-	dd {
-		margin-left: 16em;
-
-		&:after {
-			content: '';
-			clear: both;
-			display: block;
-			height: 0;
-			visibility: hidden;
-		}
+	dd:after {
+		content: '';
+		clear: both;
+		display: block;
+		height: 0;
+		visibility: hidden;
 	}
 
 	dl {
@@ -37,7 +33,7 @@ td {
 
 	dt {
 		float: left;
-		width: 14em;
+		width: 25em;
 		word-break: break-word;
 	}
 }
@@ -217,7 +213,6 @@ img.icon {
 
 		dt {
 			float: none;
-			width: auto;
 		}
 	}
 }

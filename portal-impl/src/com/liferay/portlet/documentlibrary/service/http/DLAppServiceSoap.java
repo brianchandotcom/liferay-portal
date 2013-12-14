@@ -251,6 +251,7 @@ public class DLAppServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid) throws RemoteException {
 		try {
@@ -2290,6 +2291,7 @@ public class DLAppServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	boolean, String, ServiceContext)}.
 	*/
+	@Deprecated
 	public static void unlockFileEntry(long fileEntryId)
 		throws RemoteException {
 		try {
@@ -2306,6 +2308,7 @@ public class DLAppServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String)}.
 	*/
+	@Deprecated
 	public static void unlockFileEntry(long fileEntryId,
 		java.lang.String lockUuid) throws RemoteException {
 		try {

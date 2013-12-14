@@ -923,6 +923,7 @@ public class RepositoryUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(RepositoryPersistence persistence) {
 	}
 

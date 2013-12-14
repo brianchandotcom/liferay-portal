@@ -366,6 +366,7 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	long, long, String, String, String, UnicodeProperties,
 	boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Repository addRepository(long userId,
 		long groupId, long classNameId, long parentFolderId,
@@ -476,6 +477,7 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public RepositoryLocalService getWrappedRepositoryLocalService() {
 		return _repositoryLocalService;
 	}
@@ -483,6 +485,7 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedRepositoryLocalService(
 		RepositoryLocalService repositoryLocalService) {
 		_repositoryLocalService = repositoryLocalService;

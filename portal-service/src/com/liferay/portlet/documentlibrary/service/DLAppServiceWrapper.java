@@ -377,6 +377,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public void checkInFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1800,6 +1801,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1811,6 +1813,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	String, long, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId,
 		java.lang.String owner, long expirationTime)
@@ -2188,6 +2191,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	boolean, String, ServiceContext)}.
 	*/
+	@Deprecated
 	@Override
 	public void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2199,6 +2203,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String)}.
 	*/
+	@Deprecated
 	@Override
 	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2564,6 +2569,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DLAppService getWrappedDLAppService() {
 		return _dlAppService;
 	}
@@ -2571,6 +2577,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDLAppService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}

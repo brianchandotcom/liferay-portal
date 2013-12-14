@@ -813,6 +813,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _dlFolder.getApproved();
@@ -1153,6 +1154,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public DLFolder getWrappedDLFolder() {
 		return _dlFolder;
 	}

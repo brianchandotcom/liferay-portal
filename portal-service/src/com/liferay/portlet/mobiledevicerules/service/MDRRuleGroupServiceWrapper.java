@@ -112,6 +112,7 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MDRRuleGroupService getWrappedMDRRuleGroupService() {
 		return _mdrRuleGroupService;
 	}
@@ -119,6 +120,7 @@ public class MDRRuleGroupServiceWrapper implements MDRRuleGroupService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMDRRuleGroupService(
 		MDRRuleGroupService mdrRuleGroupService) {
 		_mdrRuleGroupService = mdrRuleGroupService;

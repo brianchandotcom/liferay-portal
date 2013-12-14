@@ -103,6 +103,7 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutSetBranchService getWrappedLayoutSetBranchService() {
 		return _layoutSetBranchService;
 	}
@@ -110,6 +111,7 @@ public class LayoutSetBranchServiceWrapper implements LayoutSetBranchService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutSetBranchService(
 		LayoutSetBranchService layoutSetBranchService) {
 		_layoutSetBranchService = layoutSetBranchService;

@@ -142,6 +142,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
 	double)}
 	*/
+	@Deprecated
 	@Override
 	public void deletePage(long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -223,6 +224,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	* @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
 	String, double, String, String, String, String)}
 	*/
+	@Deprecated
 	@Override
 	public java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
@@ -322,6 +324,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	String, int, String, double, String, String, String, String,
 	java.util.Locale)}
 	*/
+	@Deprecated
 	@Override
 	public java.lang.String getPagesRSS(long companyId, long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
@@ -459,6 +462,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public WikiPageService getWrappedWikiPageService() {
 		return _wikiPageService;
 	}
@@ -466,6 +470,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedWikiPageService(WikiPageService wikiPageService) {
 		_wikiPageService = wikiPageService;
 	}

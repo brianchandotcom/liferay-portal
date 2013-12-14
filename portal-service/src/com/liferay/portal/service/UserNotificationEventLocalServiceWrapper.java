@@ -422,6 +422,7 @@ public class UserNotificationEventLocalServiceWrapper
 	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
 	boolean)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, boolean archived)
@@ -434,6 +435,7 @@ public class UserNotificationEventLocalServiceWrapper
 	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
 	boolean, int, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, boolean archived, int start, int end)
@@ -460,6 +462,7 @@ public class UserNotificationEventLocalServiceWrapper
 	* @deprecated As of 6.2.0 {@link
 	#getArchivedUserNotificationEventsCount(long, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public int getUserNotificationEventsCount(long userId, boolean archived)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -487,6 +490,7 @@ public class UserNotificationEventLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public UserNotificationEventLocalService getWrappedUserNotificationEventLocalService() {
 		return _userNotificationEventLocalService;
 	}
@@ -494,6 +498,7 @@ public class UserNotificationEventLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedUserNotificationEventLocalService(
 		UserNotificationEventLocalService userNotificationEventLocalService) {
 		_userNotificationEventLocalService = userNotificationEventLocalService;

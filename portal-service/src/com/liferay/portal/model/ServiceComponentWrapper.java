@@ -356,6 +356,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public ServiceComponent getWrappedServiceComponent() {
 		return _serviceComponent;
 	}

@@ -990,6 +990,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,
@@ -1032,6 +1033,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Group addGroup(long userId,
 		java.lang.String className, long classPK, long liveGroupId,
@@ -1072,6 +1074,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Group addGroup(long userId,
 		java.lang.String className, long classPK, java.lang.String name,
@@ -3038,6 +3041,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public GroupLocalService getWrappedGroupLocalService() {
 		return _groupLocalService;
 	}
@@ -3045,6 +3049,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}

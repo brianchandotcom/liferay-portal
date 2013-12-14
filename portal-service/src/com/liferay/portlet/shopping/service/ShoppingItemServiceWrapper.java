@@ -161,6 +161,7 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ShoppingItemService getWrappedShoppingItemService() {
 		return _shoppingItemService;
 	}
@@ -168,6 +169,7 @@ public class ShoppingItemServiceWrapper implements ShoppingItemService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedShoppingItemService(
 		ShoppingItemService shoppingItemService) {
 		_shoppingItemService = shoppingItemService;

@@ -277,6 +277,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int currentValue, int totalValue, int startPeriod,
@@ -325,6 +326,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int currentValue, int totalValue, int startPeriod,
@@ -427,6 +429,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int currentValue, int totalValue, int startPeriod,
@@ -474,6 +477,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
 		int ownerType, int currentValue, int totalValue, int startPeriod,

@@ -774,6 +774,7 @@ public interface GroupLocalService extends BaseLocalService,
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,
 		java.lang.String name, java.lang.String description, int type,
@@ -811,6 +812,7 @@ public interface GroupLocalService extends BaseLocalService,
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Group addGroup(long userId,
 		java.lang.String className, long classPK, long liveGroupId,
 		java.lang.String name, java.lang.String description, int type,
@@ -846,6 +848,7 @@ public interface GroupLocalService extends BaseLocalService,
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Group addGroup(long userId,
 		java.lang.String className, long classPK, java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,

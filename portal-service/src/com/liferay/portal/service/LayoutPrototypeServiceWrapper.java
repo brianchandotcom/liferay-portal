@@ -55,6 +55,7 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
 	String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -104,6 +105,7 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 	* @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
 		long layoutPrototypeId,
@@ -130,6 +132,7 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutPrototypeService getWrappedLayoutPrototypeService() {
 		return _layoutPrototypeService;
 	}
@@ -137,6 +140,7 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutPrototypeService(
 		LayoutPrototypeService layoutPrototypeService) {
 		_layoutPrototypeService = layoutPrototypeService;

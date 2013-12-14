@@ -409,6 +409,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, String,
 	LinkedHashMap, boolean, int, int)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
 		long groupId, java.lang.String name, boolean andOperator, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -428,6 +429,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
 	String, LinkedHashMap, boolean, int, int)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> searchByKeywords(
 		long groupId, java.lang.String keywords, boolean andOperator,
 		int start, int end)
@@ -450,6 +452,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
 	String, LinkedHashMap, boolean)}
 	*/
+	@Deprecated
 	public static int searchByKeywordsCount(long groupId,
 		java.lang.String keywords, boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -469,6 +472,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #searchCount(long, String,
 	LinkedHashMap, boolean)}
 	*/
+	@Deprecated
 	public static int searchCount(long groupId, java.lang.String name,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -508,6 +512,7 @@ public class MDRRuleGroupLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(MDRRuleGroupLocalService service) {
 	}
 

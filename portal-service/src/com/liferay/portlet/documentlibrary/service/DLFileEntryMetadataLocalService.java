@@ -280,6 +280,7 @@ public interface DLFileEntryMetadataLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getFileVersionFileEntryMetadatasCount(long)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException;

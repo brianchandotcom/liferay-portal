@@ -870,6 +870,7 @@ public interface JournalArticleModel extends AttachedModel,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */
+	@Deprecated
 	@Override
 	public boolean getApproved();
 

@@ -827,6 +827,7 @@ public class DDMStructureLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -837,6 +838,7 @@ public class DDMStructureLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long, int, int)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -911,6 +913,7 @@ public class DDMStructureLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long, OrderByComparator)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -1014,6 +1017,7 @@ public class DDMStructureLocalServiceUtil {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getStructureEntries();
@@ -1022,6 +1026,7 @@ public class DDMStructureLocalServiceUtil {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -1032,6 +1037,7 @@ public class DDMStructureLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
 	int)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -1533,6 +1539,7 @@ public class DDMStructureLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DDMStructureLocalService service) {
 	}
 

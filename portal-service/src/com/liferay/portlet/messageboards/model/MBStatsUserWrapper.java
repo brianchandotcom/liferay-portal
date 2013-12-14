@@ -386,6 +386,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public MBStatsUser getWrappedMBStatsUser() {
 		return _mbStatsUser;
 	}

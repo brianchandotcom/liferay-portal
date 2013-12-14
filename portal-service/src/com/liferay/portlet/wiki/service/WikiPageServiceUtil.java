@@ -141,6 +141,7 @@ public class WikiPageServiceUtil {
 	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
 	double)}
 	*/
+	@Deprecated
 	public static void deletePage(long nodeId, java.lang.String title,
 		double version)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -214,6 +215,7 @@ public class WikiPageServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
 	String, double, String, String, String, String)}
 	*/
+	@Deprecated
 	public static java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL)
@@ -304,6 +306,7 @@ public class WikiPageServiceUtil {
 	String, int, String, double, String, String, String, String,
 	java.util.Locale)}
 	*/
+	@Deprecated
 	public static java.lang.String getPagesRSS(long companyId, long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
@@ -436,6 +439,7 @@ public class WikiPageServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(WikiPageService service) {
 	}
 

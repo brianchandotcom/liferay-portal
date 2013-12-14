@@ -383,6 +383,7 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
 	String)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner, boolean retrieveFromCache)
@@ -403,6 +404,7 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
 	String)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
@@ -443,6 +445,7 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	String)}
 	*/
+	@Deprecated
 	@Override
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean retrieveFromCache)
@@ -453,6 +456,7 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LockLocalService getWrappedLockLocalService() {
 		return _lockLocalService;
 	}
@@ -460,6 +464,7 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLockLocalService(LockLocalService lockLocalService) {
 		_lockLocalService = lockLocalService;
 	}

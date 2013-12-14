@@ -752,6 +752,7 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public LayoutSet getWrappedLayoutSet() {
 		return _layoutSet;
 	}

@@ -1367,6 +1367,7 @@ public class UserServiceWrapper implements UserService,
 	java.util.List, java.util.List, boolean, byte[],
 	com.liferay.portal.service.ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
@@ -1504,6 +1505,7 @@ public class UserServiceWrapper implements UserService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public UserService getWrappedUserService() {
 		return _userService;
 	}
@@ -1511,6 +1513,7 @@ public class UserServiceWrapper implements UserService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedUserService(UserService userService) {
 		_userService = userService;
 	}

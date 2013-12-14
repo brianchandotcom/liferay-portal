@@ -417,6 +417,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public DLFileEntryMetadata getWrappedDLFileEntryMetadata() {
 		return _dlFileEntryMetadata;
 	}

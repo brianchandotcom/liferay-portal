@@ -112,6 +112,7 @@ public interface AssetEntryService extends BaseService {
 	Date, String, String, String, String, String, String, int,
 	int, Integer, boolean)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
@@ -131,6 +132,7 @@ public interface AssetEntryService extends BaseService {
 	Date, Date, Date, String, String, String, String, String,
 	String, int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,

@@ -132,6 +132,7 @@ public class MDRActionServiceWrapper implements MDRActionService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MDRActionService getWrappedMDRActionService() {
 		return _mdrActionService;
 	}
@@ -139,6 +140,7 @@ public class MDRActionServiceWrapper implements MDRActionService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMDRActionService(MDRActionService mdrActionService) {
 		_mdrActionService = mdrActionService;
 	}

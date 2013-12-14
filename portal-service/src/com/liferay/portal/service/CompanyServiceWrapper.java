@@ -365,6 +365,7 @@ public class CompanyServiceWrapper implements CompanyService,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
@@ -423,6 +424,7 @@ public class CompanyServiceWrapper implements CompanyService,
 	String, java.util.List, java.util.List, java.util.List,
 	java.util.List, UnicodeProperties)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
@@ -552,6 +554,7 @@ public class CompanyServiceWrapper implements CompanyService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public CompanyService getWrappedCompanyService() {
 		return _companyService;
 	}
@@ -559,6 +562,7 @@ public class CompanyServiceWrapper implements CompanyService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedCompanyService(CompanyService companyService) {
 		_companyService = companyService;
 	}

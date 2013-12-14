@@ -86,6 +86,7 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	SocialActivity, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
 		com.liferay.portlet.social.model.SocialActivity activity,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);

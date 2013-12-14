@@ -456,6 +456,7 @@ public class AssetTagPropertyLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetTagPropertyLocalService getWrappedAssetTagPropertyLocalService() {
 		return _assetTagPropertyLocalService;
 	}
@@ -463,6 +464,7 @@ public class AssetTagPropertyLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetTagPropertyLocalService(
 		AssetTagPropertyLocalService assetTagPropertyLocalService) {
 		_assetTagPropertyLocalService = assetTagPropertyLocalService;

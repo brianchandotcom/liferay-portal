@@ -328,6 +328,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
 		java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -388,6 +389,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(LayoutSetPrototypeLocalService service) {
 	}
 

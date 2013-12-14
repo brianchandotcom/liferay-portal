@@ -78,6 +78,7 @@ public class AnnouncementsEntryServiceWrapper
 	String, String, String, String, int, int, int, int, int,
 	boolean, int, int, int, int, int, int, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry addEntry(
 		long plid, long classNameId, long classPK, java.lang.String title,
@@ -130,6 +131,7 @@ public class AnnouncementsEntryServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AnnouncementsEntryService getWrappedAnnouncementsEntryService() {
 		return _announcementsEntryService;
 	}
@@ -137,6 +139,7 @@ public class AnnouncementsEntryServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAnnouncementsEntryService(
 		AnnouncementsEntryService announcementsEntryService) {
 		_announcementsEntryService = announcementsEntryService;

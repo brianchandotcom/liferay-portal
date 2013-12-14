@@ -63,6 +63,7 @@ public class AssetVocabularyServiceUtil {
 	* @deprecated As of 6.1.0 {@link #addVocabulary(String, Map, Map, String,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -100,6 +101,7 @@ public class AssetVocabularyServiceUtil {
 	* @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static void deleteVocabularies(long[] vocabularyIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -204,6 +206,7 @@ public class AssetVocabularyServiceUtil {
 	/**
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
 		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -231,6 +234,7 @@ public class AssetVocabularyServiceUtil {
 	* @deprecated As of 6.1.0, {@link #updateVocabulary(long, String, Map, Map,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -271,6 +275,7 @@ public class AssetVocabularyServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AssetVocabularyService service) {
 	}
 

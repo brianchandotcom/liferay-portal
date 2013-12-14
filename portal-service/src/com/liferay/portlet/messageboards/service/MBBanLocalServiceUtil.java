@@ -407,6 +407,7 @@ public class MBBanLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(MBBanLocalService service) {
 	}
 

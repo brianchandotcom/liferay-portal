@@ -647,6 +647,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _bookmarksFolder.getApproved();
@@ -954,6 +955,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public BookmarksFolder getWrappedBookmarksFolder() {
 		return _bookmarksFolder;
 	}

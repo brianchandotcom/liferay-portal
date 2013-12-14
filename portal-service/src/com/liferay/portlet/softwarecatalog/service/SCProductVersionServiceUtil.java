@@ -126,6 +126,7 @@ public class SCProductVersionServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(SCProductVersionService service) {
 	}
 

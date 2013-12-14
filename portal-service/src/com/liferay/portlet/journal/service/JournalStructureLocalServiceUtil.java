@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 Dynamic Data Mapping framework to handle structures
  * @generated
  */
+@Deprecated
 @ProviderType
 public class JournalStructureLocalServiceUtil {
 	/*
@@ -280,6 +281,7 @@ public class JournalStructureLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(JournalStructureLocalService service) {
 	}
 

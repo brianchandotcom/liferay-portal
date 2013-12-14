@@ -389,6 +389,7 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DLContentLocalService getWrappedDLContentLocalService() {
 		return _dlContentLocalService;
 	}
@@ -396,6 +397,7 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDLContentLocalService(
 		DLContentLocalService dlContentLocalService) {
 		_dlContentLocalService = dlContentLocalService;

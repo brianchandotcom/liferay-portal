@@ -2226,6 +2226,7 @@ public class UserLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getUserByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.User getUserByUuid(
 		java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -3454,6 +3455,7 @@ public class UserLocalServiceUtil {
 	String, String, long[], long[], long[], java.util.List,
 	long[], boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
 		java.lang.String newPassword2, boolean passwordReset,
@@ -3517,6 +3519,7 @@ public class UserLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(UserLocalService service) {
 	}
 

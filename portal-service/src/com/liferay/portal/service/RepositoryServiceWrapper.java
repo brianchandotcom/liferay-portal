@@ -151,6 +151,7 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public RepositoryService getWrappedRepositoryService() {
 		return _repositoryService;
 	}
@@ -158,6 +159,7 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedRepositoryService(RepositoryService repositoryService) {
 		_repositoryService = repositoryService;
 	}

@@ -776,6 +776,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public MDRRuleGroup getWrappedMDRRuleGroup() {
 		return _mdrRuleGroup;
 	}

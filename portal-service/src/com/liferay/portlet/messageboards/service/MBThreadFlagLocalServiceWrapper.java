@@ -404,6 +404,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MBThreadFlagLocalService getWrappedMBThreadFlagLocalService() {
 		return _mbThreadFlagLocalService;
 	}
@@ -411,6 +412,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMBThreadFlagLocalService(
 		MBThreadFlagLocalService mbThreadFlagLocalService) {
 		_mbThreadFlagLocalService = mbThreadFlagLocalService;

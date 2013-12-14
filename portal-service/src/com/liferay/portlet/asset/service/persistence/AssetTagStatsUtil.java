@@ -673,6 +673,7 @@ public class AssetTagStatsUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(AssetTagStatsPersistence persistence) {
 	}
 

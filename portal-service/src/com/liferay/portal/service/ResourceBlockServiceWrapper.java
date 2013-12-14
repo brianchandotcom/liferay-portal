@@ -162,6 +162,7 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ResourceBlockService getWrappedResourceBlockService() {
 		return _resourceBlockService;
 	}
@@ -169,6 +170,7 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedResourceBlockService(
 		ResourceBlockService resourceBlockService) {
 		_resourceBlockService = resourceBlockService;

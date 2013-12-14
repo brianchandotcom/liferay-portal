@@ -320,6 +320,7 @@ public class PluginSettingLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PluginSettingLocalService getWrappedPluginSettingLocalService() {
 		return _pluginSettingLocalService;
 	}
@@ -327,6 +328,7 @@ public class PluginSettingLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPluginSettingLocalService(
 		PluginSettingLocalService pluginSettingLocalService) {
 		_pluginSettingLocalService = pluginSettingLocalService;

@@ -115,6 +115,7 @@ public class OrganizationServiceUtil {
 	java.util.List, java.util.List, java.util.List,
 	java.util.List, java.util.List, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -167,6 +168,7 @@ public class OrganizationServiceUtil {
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -331,6 +333,7 @@ public class OrganizationServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
 	int, int)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.model.Organization> getManageableOrganizations(
 		java.lang.String actionId, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -538,6 +541,7 @@ public class OrganizationServiceUtil {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -587,6 +591,7 @@ public class OrganizationServiceUtil {
 	long, String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -687,6 +692,7 @@ public class OrganizationServiceUtil {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, int statusId,
@@ -758,6 +764,7 @@ public class OrganizationServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(OrganizationService service) {
 	}
 

@@ -37,6 +37,7 @@ import com.liferay.portal.service.BaseLocalService;
             Dynamic Data Mapping framework to handle structures
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

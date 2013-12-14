@@ -861,6 +861,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public PollsQuestion getWrappedPollsQuestion() {
 		return _pollsQuestion;
 	}

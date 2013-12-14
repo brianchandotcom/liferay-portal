@@ -2355,6 +2355,7 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getUserByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.User getUserByUuid(java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -3619,6 +3620,7 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	String, String, long[], long[], long[], java.util.List,
 	long[], boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
@@ -3673,6 +3675,7 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public UserLocalService getWrappedUserLocalService() {
 		return _userLocalService;
 	}
@@ -3680,6 +3683,7 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

@@ -669,6 +669,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public OrgLabor getWrappedOrgLabor() {
 		return _orgLabor;
 	}

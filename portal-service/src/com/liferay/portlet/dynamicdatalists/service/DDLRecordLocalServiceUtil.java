@@ -399,6 +399,7 @@ public class DDLRecordLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
 	int, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
 		long companyId, int scope, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -412,6 +413,7 @@ public class DDLRecordLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
 	int, int)}
 	*/
+	@Deprecated
 	public static int getCompanyRecordsCount(long companyId, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCompanyRecordsCount(companyId, scope);
@@ -579,6 +581,7 @@ public class DDLRecordLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DDLRecordLocalService service) {
 	}
 

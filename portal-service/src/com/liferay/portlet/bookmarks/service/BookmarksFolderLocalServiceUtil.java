@@ -555,6 +555,7 @@ public class BookmarksFolderLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(BookmarksFolderLocalService service) {
 	}
 

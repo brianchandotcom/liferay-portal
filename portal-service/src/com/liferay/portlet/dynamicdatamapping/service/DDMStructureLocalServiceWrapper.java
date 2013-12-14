@@ -872,6 +872,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId)
@@ -883,6 +884,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long, int, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId, int start, int end)
@@ -963,6 +965,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long, OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId,
@@ -1073,6 +1076,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -1082,6 +1086,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId)
@@ -1093,6 +1098,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
 	int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId, int start, int end)
@@ -1604,6 +1610,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DDMStructureLocalService getWrappedDDMStructureLocalService() {
 		return _ddmStructureLocalService;
 	}
@@ -1611,6 +1618,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 		_ddmStructureLocalService = ddmStructureLocalService;

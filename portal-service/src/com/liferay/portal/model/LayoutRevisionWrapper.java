@@ -1571,6 +1571,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _layoutRevision.getApproved();
@@ -1927,6 +1928,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public LayoutRevision getWrappedLayoutRevision() {
 		return _layoutRevision;
 	}

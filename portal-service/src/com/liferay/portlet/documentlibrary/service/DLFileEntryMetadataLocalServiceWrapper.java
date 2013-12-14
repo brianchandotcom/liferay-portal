@@ -335,6 +335,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getFileVersionFileEntryMetadatasCount(long)}
 	*/
+	@Deprecated
 	@Override
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -382,6 +383,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DLFileEntryMetadataLocalService getWrappedDLFileEntryMetadataLocalService() {
 		return _dlFileEntryMetadataLocalService;
 	}
@@ -389,6 +391,7 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDLFileEntryMetadataLocalService(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;

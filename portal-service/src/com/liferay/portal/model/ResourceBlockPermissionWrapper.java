@@ -317,6 +317,7 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public ResourceBlockPermission getWrappedResourceBlockPermission() {
 		return _resourceBlockPermission;
 	}

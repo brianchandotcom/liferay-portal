@@ -323,6 +323,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public CounterLocalService getWrappedCounterLocalService() {
 		return _counterLocalService;
 	}
@@ -330,6 +331,7 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedCounterLocalService(
 		CounterLocalService counterLocalService) {
 		_counterLocalService = counterLocalService;

@@ -386,6 +386,7 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public UserGroupGroupRoleLocalService getWrappedUserGroupGroupRoleLocalService() {
 		return _userGroupGroupRoleLocalService;
 	}
@@ -393,6 +394,7 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedUserGroupGroupRoleLocalService(
 		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
 		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;

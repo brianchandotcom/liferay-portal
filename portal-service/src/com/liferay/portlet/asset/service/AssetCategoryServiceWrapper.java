@@ -80,6 +80,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	* @deprecated As of 6.2.0, Replaced by {@link #deleteCategories(long[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public void deleteCategories(long[] categoryIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -142,6 +143,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	* @deprecated As of 6.2.0, replaced by {@link #search(long[], String,
 	long[], int, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.json.JSONArray getJSONSearch(
 		long groupId, java.lang.String name, long[] vocabularyIds, int start,
@@ -157,6 +159,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	#getVocabularyCategoriesDisplay(long, int, int,
 	OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
 		long vocabularyId, int start, int end,
@@ -172,6 +175,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	#getVocabularyCategoriesDisplay(long, String, long, int, int,
 	OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getJSONVocabularyCategories(
 		long groupId, java.lang.String name, long vocabularyId, int start,
@@ -251,6 +255,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	#getVocabularyRootCategories(long, long, int, int,
 	OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyRootCategories(
 		long vocabularyId, int start, int end,
@@ -332,6 +337,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetCategoryService getWrappedAssetCategoryService() {
 		return _assetCategoryService;
 	}
@@ -339,6 +345,7 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetCategoryService(
 		AssetCategoryService assetCategoryService) {
 		_assetCategoryService = assetCategoryService;

@@ -507,6 +507,7 @@ public class SCLicenseLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(SCLicenseLocalService service) {
 	}
 

@@ -476,6 +476,7 @@ public class PollsQuestionLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PollsQuestionLocalService getWrappedPollsQuestionLocalService() {
 		return _pollsQuestionLocalService;
 	}
@@ -483,6 +484,7 @@ public class PollsQuestionLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPollsQuestionLocalService(
 		PollsQuestionLocalService pollsQuestionLocalService) {
 		_pollsQuestionLocalService = pollsQuestionLocalService;

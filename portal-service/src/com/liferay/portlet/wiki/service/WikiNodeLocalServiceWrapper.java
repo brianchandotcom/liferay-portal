@@ -589,6 +589,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public WikiNodeLocalService getWrappedWikiNodeLocalService() {
 		return _wikiNodeLocalService;
 	}
@@ -596,6 +597,7 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 		_wikiNodeLocalService = wikiNodeLocalService;

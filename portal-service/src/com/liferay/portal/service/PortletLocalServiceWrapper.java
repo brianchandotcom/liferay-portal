@@ -306,6 +306,7 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Portlet clonePortlet(long companyId,
 		java.lang.String portletId) {
@@ -486,6 +487,7 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PortletLocalService getWrappedPortletLocalService() {
 		return _portletLocalService;
 	}
@@ -493,6 +495,7 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPortletLocalService(
 		PortletLocalService portletLocalService) {
 		_portletLocalService = portletLocalService;

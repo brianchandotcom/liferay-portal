@@ -361,6 +361,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, String,
 	LinkedHashMap, boolean, int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> search(
 		long groupId, java.lang.String name, boolean andOperator, int start,
@@ -377,6 +378,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywords(long,
 	String, LinkedHashMap, boolean, int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> searchByKeywords(
 		long groupId, java.lang.String keywords, boolean andOperator,
@@ -394,6 +396,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #searchByKeywordsCount(long,
 	String, LinkedHashMap, boolean)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchByKeywordsCount(long groupId, java.lang.String keywords,
 		boolean andOperator)
@@ -409,6 +412,7 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #searchCount(long, String,
 	LinkedHashMap, boolean)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, java.lang.String name,
 		boolean andOperator)

@@ -92,6 +92,7 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	SocialActivity, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
 		com.liferay.portlet.social.model.SocialActivity activity,
 		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
@@ -147,6 +148,7 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(SocialActivityInterpreterLocalService service) {
 	}
 

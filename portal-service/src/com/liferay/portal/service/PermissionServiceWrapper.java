@@ -91,6 +91,7 @@ public class PermissionServiceWrapper implements PermissionService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PermissionService getWrappedPermissionService() {
 		return _permissionService;
 	}
@@ -98,6 +99,7 @@ public class PermissionServiceWrapper implements PermissionService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPermissionService(PermissionService permissionService) {
 		_permissionService = permissionService;
 	}

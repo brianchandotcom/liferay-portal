@@ -474,6 +474,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
 	double)}
 	*/
+	@Deprecated
 	@Override
 	public void deletePage(long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -854,6 +855,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
 	int, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getRecentChanges(
 		long nodeId, int start, int end)
@@ -874,6 +876,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
 	long)}
 	*/
+	@Deprecated
 	@Override
 	public int getRecentChangesCount(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1051,6 +1054,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public WikiPageLocalService getWrappedWikiPageLocalService() {
 		return _wikiPageLocalService;
 	}
@@ -1058,6 +1062,7 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 		_wikiPageLocalService = wikiPageLocalService;

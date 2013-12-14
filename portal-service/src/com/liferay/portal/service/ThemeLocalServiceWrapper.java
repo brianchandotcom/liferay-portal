@@ -104,6 +104,7 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Theme> getThemes(
 		long companyId, long groupId, long userId, boolean wapTheme)
@@ -146,6 +147,7 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ThemeLocalService getWrappedThemeLocalService() {
 		return _themeLocalService;
 	}
@@ -153,6 +155,7 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedThemeLocalService(ThemeLocalService themeLocalService) {
 		_themeLocalService = themeLocalService;
 	}

@@ -345,6 +345,7 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	#updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
 	String)}
 	*/
+	@Deprecated
 	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
@@ -461,6 +462,7 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutSetLocalService getWrappedLayoutSetLocalService() {
 		return _layoutSetLocalService;
 	}
@@ -468,6 +470,7 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutSetLocalService(
 		LayoutSetLocalService layoutSetLocalService) {
 		_layoutSetLocalService = layoutSetLocalService;

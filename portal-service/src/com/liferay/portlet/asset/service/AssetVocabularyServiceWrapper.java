@@ -57,6 +57,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	* @deprecated As of 6.1.0 {@link #addVocabulary(String, Map, Map, String,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -95,6 +96,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	* @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public void deleteVocabularies(long[] vocabularyIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -214,6 +216,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	/**
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getJSONGroupVocabularies(
 		long groupId, java.lang.String name, int start, int end,
@@ -244,6 +247,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	* @deprecated As of 6.1.0, {@link #updateVocabulary(long, String, Map, Map,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
@@ -273,6 +277,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetVocabularyService getWrappedAssetVocabularyService() {
 		return _assetVocabularyService;
 	}
@@ -280,6 +285,7 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetVocabularyService(
 		AssetVocabularyService assetVocabularyService) {
 		_assetVocabularyService = assetVocabularyService;

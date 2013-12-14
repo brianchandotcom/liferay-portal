@@ -388,6 +388,7 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MBStatsUserLocalService getWrappedMBStatsUserLocalService() {
 		return _mbStatsUserLocalService;
 	}
@@ -395,6 +396,7 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMBStatsUserLocalService(
 		MBStatsUserLocalService mbStatsUserLocalService) {
 		_mbStatsUserLocalService = mbStatsUserLocalService;

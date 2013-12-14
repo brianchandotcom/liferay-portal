@@ -313,6 +313,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 	long, long, String, String, String, UnicodeProperties,
 	boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Repository addRepository(long userId,
 		long groupId, long classNameId, long parentFolderId,
 		java.lang.String name, java.lang.String description,

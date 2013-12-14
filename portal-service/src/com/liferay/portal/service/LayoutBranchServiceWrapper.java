@@ -82,6 +82,7 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutBranchService getWrappedLayoutBranchService() {
 		return _layoutBranchService;
 	}
@@ -89,6 +90,7 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutBranchService(
 		LayoutBranchService layoutBranchService) {
 		_layoutBranchService = layoutBranchService;

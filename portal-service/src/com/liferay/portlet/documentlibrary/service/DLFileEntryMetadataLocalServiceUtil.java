@@ -313,6 +313,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getFileVersionFileEntryMetadatasCount(long)}
 	*/
+	@Deprecated
 	public static long getFileEntryMetadataCount(long fileEntryId,
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -367,6 +368,7 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DLFileEntryMetadataLocalService service) {
 	}
 

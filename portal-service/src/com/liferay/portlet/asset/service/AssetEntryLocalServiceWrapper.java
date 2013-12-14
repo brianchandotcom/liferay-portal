@@ -771,6 +771,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
 	String, String, int, int, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
@@ -794,6 +795,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	String, String, String, String, String, String, int, boolean,
 	int, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
@@ -823,6 +825,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
 	String, String, int, int, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, java.lang.String className, java.lang.String keywords,
@@ -868,6 +871,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	Date, Date, String, String, String, String, String, String,
 	int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(long userId,
 		long groupId, java.lang.String className, long classPK,
@@ -893,6 +897,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	boolean, Date, Date, Date, String, String, String, String,
 	String, String, int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(long userId,
 		long groupId, java.lang.String className, long classPK,
@@ -951,6 +956,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetEntryLocalService getWrappedAssetEntryLocalService() {
 		return _assetEntryLocalService;
 	}
@@ -958,6 +964,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 		_assetEntryLocalService = assetEntryLocalService;

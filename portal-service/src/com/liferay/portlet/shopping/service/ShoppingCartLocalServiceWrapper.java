@@ -321,6 +321,7 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ShoppingCartLocalService getWrappedShoppingCartLocalService() {
 		return _shoppingCartLocalService;
 	}
@@ -328,6 +329,7 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedShoppingCartLocalService(
 		ShoppingCartLocalService shoppingCartLocalService) {
 		_shoppingCartLocalService = shoppingCartLocalService;

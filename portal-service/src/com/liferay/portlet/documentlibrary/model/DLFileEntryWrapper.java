@@ -1165,6 +1165,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserId()}
 	*/
+	@Deprecated
 	@Override
 	public long getVersionUserId() {
 		return _dlFileEntry.getVersionUserId();
@@ -1173,6 +1174,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserName()}
 	*/
+	@Deprecated
 	@Override
 	public java.lang.String getVersionUserName() {
 		return _dlFileEntry.getVersionUserName();
@@ -1181,6 +1183,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserUuid()}
 	*/
+	@Deprecated
 	@Override
 	public java.lang.String getVersionUserUuid() {
 		return _dlFileEntry.getVersionUserUuid();
@@ -1234,6 +1237,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public DLFileEntry getWrappedDLFileEntry() {
 		return _dlFileEntry;
 	}

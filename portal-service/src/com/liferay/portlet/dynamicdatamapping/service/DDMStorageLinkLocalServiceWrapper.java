@@ -360,6 +360,7 @@ public class DDMStorageLinkLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DDMStorageLinkLocalService getWrappedDDMStorageLinkLocalService() {
 		return _ddmStorageLinkLocalService;
 	}
@@ -367,6 +368,7 @@ public class DDMStorageLinkLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDDMStorageLinkLocalService(
 		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;

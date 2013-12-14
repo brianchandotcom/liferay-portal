@@ -709,6 +709,7 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHostname, java.lang.String mx,
@@ -845,6 +846,7 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public CompanyLocalService getWrappedCompanyLocalService() {
 		return _companyLocalService;
 	}
@@ -852,6 +854,7 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 		_companyLocalService = companyLocalService;

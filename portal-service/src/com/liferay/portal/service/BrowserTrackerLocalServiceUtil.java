@@ -302,6 +302,7 @@ public class BrowserTrackerLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(BrowserTrackerLocalService service) {
 	}
 

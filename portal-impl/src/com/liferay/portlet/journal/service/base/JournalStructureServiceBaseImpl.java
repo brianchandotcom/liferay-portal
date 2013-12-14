@@ -58,6 +58,7 @@ import javax.sql.DataSource;
             Dynamic Data Mapping framework to handle templates
  * @generated
  */
+@Deprecated
 public abstract class JournalStructureServiceBaseImpl extends BaseServiceImpl
 	implements JournalStructureService, IdentifiableBean {
 	/*

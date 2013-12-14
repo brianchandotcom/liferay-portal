@@ -81,6 +81,7 @@ public class ListTypeServiceWrapper implements ListTypeService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ListTypeService getWrappedListTypeService() {
 		return _listTypeService;
 	}
@@ -88,6 +89,7 @@ public class ListTypeServiceWrapper implements ListTypeService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedListTypeService(ListTypeService listTypeService) {
 		_listTypeService = listTypeService;
 	}

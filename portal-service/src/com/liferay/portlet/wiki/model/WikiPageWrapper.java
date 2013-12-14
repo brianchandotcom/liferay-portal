@@ -833,6 +833,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _wikiPage.getApproved();
@@ -1151,6 +1152,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public WikiPage getWrappedWikiPage() {
 		return _wikiPage;
 	}

@@ -389,6 +389,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long, long,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public void checkInFileEntry(long userId, long fileEntryId,
 		java.lang.String lockUuid)
@@ -411,6 +412,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	long, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId)
@@ -433,6 +435,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	long, String, long, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry checkOutFileEntry(
 		long userId, long fileEntryId, java.lang.String owner,
@@ -934,6 +937,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DLFileEntryLocalService getWrappedDLFileEntryLocalService() {
 		return _dlFileEntryLocalService;
 	}
@@ -941,6 +945,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDLFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 		_dlFileEntryLocalService = dlFileEntryLocalService;

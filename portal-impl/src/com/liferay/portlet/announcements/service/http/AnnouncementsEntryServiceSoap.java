@@ -96,6 +96,7 @@ public class AnnouncementsEntryServiceSoap {
 	String, String, String, String, int, int, int, int, int,
 	boolean, int, int, int, int, int, int, boolean)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.announcements.model.AnnouncementsEntrySoap addEntry(
 		long plid, long classNameId, long classPK, java.lang.String title,
 		java.lang.String content, java.lang.String url, java.lang.String type,

@@ -619,6 +619,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHostname, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,

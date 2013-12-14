@@ -53,6 +53,7 @@ import com.liferay.portlet.journal.service.JournalTemplateServiceUtil;
             Dynamic Data Mapping framework to handle templates
  * @generated
  */
+@Deprecated
 public class JournalTemplateServiceHttp {
 	public static com.liferay.portlet.journal.model.JournalTemplate addTemplate(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String templateId,

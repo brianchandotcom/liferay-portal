@@ -58,6 +58,7 @@ import java.util.Map;
             Dynamic Data Mapping framework to handle templates
  * @generated
  */
+@Deprecated
 @ProviderType
 public class JournalTemplateServiceSoap {
 	public static com.liferay.portlet.journal.model.JournalTemplateSoap addTemplate(

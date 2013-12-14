@@ -311,6 +311,7 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
 	long, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,
@@ -364,6 +365,7 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public WebsiteLocalService getWrappedWebsiteLocalService() {
 		return _websiteLocalService;
 	}
@@ -371,6 +373,7 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedWebsiteLocalService(
 		WebsiteLocalService websiteLocalService) {
 		_websiteLocalService = websiteLocalService;

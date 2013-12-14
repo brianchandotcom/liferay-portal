@@ -714,6 +714,7 @@ public class AssetCategoryLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AssetCategoryLocalService service) {
 	}
 

@@ -120,6 +120,7 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ShoppingCouponService getWrappedShoppingCouponService() {
 		return _shoppingCouponService;
 	}
@@ -127,6 +128,7 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedShoppingCouponService(
 		ShoppingCouponService shoppingCouponService) {
 		_shoppingCouponService = shoppingCouponService;

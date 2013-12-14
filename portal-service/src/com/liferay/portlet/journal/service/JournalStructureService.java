@@ -38,6 +38,7 @@ import com.liferay.portal.service.BaseService;
             Dynamic Data Mapping framework to handle templates
  * @generated
  */
+@Deprecated
 @ProviderType
 @AccessControlled
 @JSONWebService

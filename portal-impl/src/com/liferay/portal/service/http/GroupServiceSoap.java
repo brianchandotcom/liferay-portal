@@ -139,6 +139,7 @@ public class GroupServiceSoap {
 	String, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.GroupSoap addGroup(
 		long parentGroupId, java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
@@ -163,6 +164,7 @@ public class GroupServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, String,
 	String, int, String, boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.GroupSoap addGroup(
 		java.lang.String name, java.lang.String description, int type,
 		java.lang.String friendlyURL, boolean site, boolean active,
@@ -415,6 +417,7 @@ public class GroupServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getManageableSiteGroups(Collection, int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.GroupSoap[] getManageableSites(
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
 		throws RemoteException {
@@ -549,6 +552,7 @@ public class GroupServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], boolean, int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.GroupSoap[] getUserPlaces(
 		long userId, java.lang.String[] classNames,
 		boolean includeControlPanel, int max) throws RemoteException {
@@ -601,6 +605,7 @@ public class GroupServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.GroupSoap[] getUserPlaces(
 		long userId, java.lang.String[] classNames, int max)
 		throws RemoteException {
@@ -652,6 +657,7 @@ public class GroupServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(
 	String[], int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.GroupSoap[] getUserPlaces(
 		java.lang.String[] classNames, int max) throws RemoteException {
 		try {
@@ -678,6 +684,7 @@ public class GroupServiceSoap {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
 	*/
+	@Deprecated
 	public static int getUserPlacesCount() throws RemoteException {
 		try {
 			int returnValue = GroupServiceUtil.getUserPlacesCount();
@@ -701,6 +708,7 @@ public class GroupServiceSoap {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.GroupSoap[] getUserSites()
 		throws RemoteException {
 		try {

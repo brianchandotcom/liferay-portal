@@ -60,6 +60,7 @@ public class ImageServiceWrapper implements ImageService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ImageService getWrappedImageService() {
 		return _imageService;
 	}
@@ -67,6 +68,7 @@ public class ImageServiceWrapper implements ImageService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedImageService(ImageService imageService) {
 		_imageService = imageService;
 	}

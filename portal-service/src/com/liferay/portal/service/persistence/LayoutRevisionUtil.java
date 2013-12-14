@@ -2150,6 +2150,7 @@ public class LayoutRevisionUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(LayoutRevisionPersistence persistence) {
 	}
 

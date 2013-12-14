@@ -575,6 +575,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public SCProductVersion getWrappedSCProductVersion() {
 		return _scProductVersion;
 	}

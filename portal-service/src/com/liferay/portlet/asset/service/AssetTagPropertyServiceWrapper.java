@@ -140,6 +140,7 @@ public class AssetTagPropertyServiceWrapper implements AssetTagPropertyService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetTagPropertyService getWrappedAssetTagPropertyService() {
 		return _assetTagPropertyService;
 	}
@@ -147,6 +148,7 @@ public class AssetTagPropertyServiceWrapper implements AssetTagPropertyService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetTagPropertyService(
 		AssetTagPropertyService assetTagPropertyService) {
 		_assetTagPropertyService = assetTagPropertyService;

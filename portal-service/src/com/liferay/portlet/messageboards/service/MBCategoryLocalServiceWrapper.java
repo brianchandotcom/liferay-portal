@@ -682,6 +682,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MBCategoryLocalService getWrappedMBCategoryLocalService() {
 		return _mbCategoryLocalService;
 	}
@@ -689,6 +690,7 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMBCategoryLocalService(
 		MBCategoryLocalService mbCategoryLocalService) {
 		_mbCategoryLocalService = mbCategoryLocalService;

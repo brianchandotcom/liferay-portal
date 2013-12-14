@@ -393,6 +393,7 @@ public class UserNotificationEventLocalServiceUtil {
 	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
 	boolean)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, boolean archived)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -403,6 +404,7 @@ public class UserNotificationEventLocalServiceUtil {
 	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
 	boolean, int, int)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, boolean archived, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -425,6 +427,7 @@ public class UserNotificationEventLocalServiceUtil {
 	* @deprecated As of 6.2.0 {@link
 	#getArchivedUserNotificationEventsCount(long, boolean)}
 	*/
+	@Deprecated
 	public static int getUserNotificationEventsCount(long userId,
 		boolean archived)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -459,6 +462,7 @@ public class UserNotificationEventLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(UserNotificationEventLocalService service) {
 	}
 

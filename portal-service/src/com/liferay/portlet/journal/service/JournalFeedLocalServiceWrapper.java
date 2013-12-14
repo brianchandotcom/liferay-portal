@@ -534,6 +534,7 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JournalFeedLocalService getWrappedJournalFeedLocalService() {
 		return _journalFeedLocalService;
 	}
@@ -541,6 +542,7 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJournalFeedLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
 		_journalFeedLocalService = journalFeedLocalService;

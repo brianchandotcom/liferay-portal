@@ -65,6 +65,7 @@ public interface EmailAddressService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress( String,
 	long, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.EmailAddress addEmailAddress(
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary)

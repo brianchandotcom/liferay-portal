@@ -322,6 +322,7 @@ public class LayoutPrototypeLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
 	long, Map, String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
 		long userId, long companyId,
@@ -356,6 +357,7 @@ public class LayoutPrototypeLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getLayoutPrototypeByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
 		java.lang.String uuid)
@@ -383,6 +385,7 @@ public class LayoutPrototypeLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
 		long layoutPrototypeId,
@@ -409,6 +412,7 @@ public class LayoutPrototypeLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutPrototypeLocalService getWrappedLayoutPrototypeLocalService() {
 		return _layoutPrototypeLocalService;
 	}
@@ -416,6 +420,7 @@ public class LayoutPrototypeLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutPrototypeLocalService(
 		LayoutPrototypeLocalService layoutPrototypeLocalService) {
 		_layoutPrototypeLocalService = layoutPrototypeLocalService;

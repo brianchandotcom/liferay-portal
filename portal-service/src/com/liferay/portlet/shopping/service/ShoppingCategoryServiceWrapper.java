@@ -124,6 +124,7 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ShoppingCategoryService getWrappedShoppingCategoryService() {
 		return _shoppingCategoryService;
 	}
@@ -131,6 +132,7 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedShoppingCategoryService(
 		ShoppingCategoryService shoppingCategoryService) {
 		_shoppingCategoryService = shoppingCategoryService;

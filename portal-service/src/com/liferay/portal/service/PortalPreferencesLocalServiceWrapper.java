@@ -294,6 +294,7 @@ public class PortalPreferencesLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
 	int, String)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long companyId, long ownerId, int ownerType,
@@ -321,6 +322,7 @@ public class PortalPreferencesLocalServiceWrapper
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
 	*/
+	@Deprecated
 	@Override
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType)
@@ -333,6 +335,7 @@ public class PortalPreferencesLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
 	String)}
 	*/
+	@Deprecated
 	@Override
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType, java.lang.String defaultPreferences)
@@ -361,6 +364,7 @@ public class PortalPreferencesLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PortalPreferencesLocalService getWrappedPortalPreferencesLocalService() {
 		return _portalPreferencesLocalService;
 	}
@@ -368,6 +372,7 @@ public class PortalPreferencesLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPortalPreferencesLocalService(
 		PortalPreferencesLocalService portalPreferencesLocalService) {
 		_portalPreferencesLocalService = portalPreferencesLocalService;

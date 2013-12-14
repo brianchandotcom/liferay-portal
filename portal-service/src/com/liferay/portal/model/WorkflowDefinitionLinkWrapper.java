@@ -574,6 +574,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public WorkflowDefinitionLink getWrappedWorkflowDefinitionLink() {
 		return _workflowDefinitionLink;
 	}

@@ -106,6 +106,7 @@ public interface UserGroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -233,6 +234,7 @@ public interface UserGroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
 	String, String, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -633,6 +633,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
@@ -669,6 +670,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
@@ -1540,6 +1542,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public RoleLocalService getWrappedRoleLocalService() {
 		return _roleLocalService;
 	}
@@ -1547,6 +1550,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedRoleLocalService(RoleLocalService roleLocalService) {
 		_roleLocalService = roleLocalService;
 	}

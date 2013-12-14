@@ -103,6 +103,7 @@ public class ThemeLocalServiceUtil {
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.model.Theme> getThemes(
 		long companyId, long groupId, long userId, boolean wapTheme)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -153,6 +154,7 @@ public class ThemeLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(ThemeLocalService service) {
 	}
 

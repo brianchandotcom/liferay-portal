@@ -422,6 +422,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DDMContentLocalService getWrappedDDMContentLocalService() {
 		return _ddmContentLocalService;
 	}
@@ -429,6 +430,7 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDDMContentLocalService(
 		DDMContentLocalService ddmContentLocalService) {
 		_ddmContentLocalService = ddmContentLocalService;

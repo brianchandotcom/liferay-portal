@@ -3172,6 +3172,7 @@ public class JournalArticleLocalServiceUtil {
 	#updateArticleTranslation(long, String, double, Locale,
 	String, String, String, Map, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
 		long groupId, java.lang.String articleId, double version,
 		java.util.Locale locale, java.lang.String title,
@@ -3404,6 +3405,7 @@ public class JournalArticleLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(JournalArticleLocalService service) {
 	}
 

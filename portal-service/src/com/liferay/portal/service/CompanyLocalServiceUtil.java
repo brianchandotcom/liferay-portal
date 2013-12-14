@@ -691,6 +691,7 @@ public class CompanyLocalServiceUtil {
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Company updateCompany(
 		long companyId, java.lang.String virtualHostname, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,
@@ -834,6 +835,7 @@ public class CompanyLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(CompanyLocalService service) {
 	}
 

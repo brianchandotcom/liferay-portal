@@ -305,6 +305,7 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public WebDAVPropsLocalService getWrappedWebDAVPropsLocalService() {
 		return _webDAVPropsLocalService;
 	}
@@ -312,6 +313,7 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedWebDAVPropsLocalService(
 		WebDAVPropsLocalService webDAVPropsLocalService) {
 		_webDAVPropsLocalService = webDAVPropsLocalService;

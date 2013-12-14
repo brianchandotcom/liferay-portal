@@ -94,6 +94,7 @@ public interface ThemeLocalService extends BaseLocalService {
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Theme> getThemes(
 		long companyId, long groupId, long userId, boolean wapTheme)

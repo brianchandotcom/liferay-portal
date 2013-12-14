@@ -123,6 +123,7 @@ public interface GroupService extends BaseService {
 	String, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Group addGroup(long parentGroupId,
 		java.lang.String name, java.lang.String description, int type,
 		java.lang.String friendlyURL, boolean site, boolean active,
@@ -134,6 +135,7 @@ public interface GroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, String,
 	String, int, String, boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Group addGroup(java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
 		boolean site, boolean active,
@@ -291,6 +293,7 @@ public interface GroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getManageableSiteGroups(Collection, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getManageableSites(
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
@@ -377,6 +380,7 @@ public interface GroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], boolean, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames,
@@ -420,6 +424,7 @@ public interface GroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames, int max)
@@ -461,6 +466,7 @@ public interface GroupService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(
 	String[], int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		java.lang.String[] classNames, int max)
@@ -478,6 +484,7 @@ public interface GroupService extends BaseService {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserPlacesCount()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -493,6 +500,7 @@ public interface GroupService extends BaseService {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserSites()
 		throws com.liferay.portal.kernel.exception.PortalException,

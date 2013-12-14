@@ -70,6 +70,7 @@ public class PasswordPolicyServiceSoap {
 	int, int, int, int, String, boolean, int, boolean, long,
 	long, int, boolean, int, long, long, long, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicySoap addPasswordPolicy(
 		java.lang.String name, java.lang.String description,
 		boolean changeable, boolean changeRequired, long minAge,
@@ -147,6 +148,7 @@ public class PasswordPolicyServiceSoap {
 	long, long, int, boolean, int, long, long, long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicySoap updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
 		java.lang.String description, boolean changeable,

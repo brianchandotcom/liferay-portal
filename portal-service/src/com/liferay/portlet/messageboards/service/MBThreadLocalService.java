@@ -340,6 +340,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, int status, int start, int end)
@@ -362,6 +363,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	boolean, boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
@@ -372,6 +374,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, boolean subscribed, int start,
@@ -381,6 +384,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreads(long, long,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, int status, int start, int end)
@@ -402,6 +406,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -422,6 +427,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	long, QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId, long userId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -430,6 +436,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	long, boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId, long userId, int status,
 		boolean subscribed)
@@ -439,6 +446,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupThreadsCount(long,
 	long, boolean, boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupThreadsCount(long groupId, long userId, int status,
 		boolean subscribed, boolean includeAnonymous)
@@ -564,6 +572,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #incrementViewCounter(long,
 	int)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.messageboards.model.MBThread updateThread(
 		long threadId, int viewCount)
 		throws com.liferay.portal.kernel.exception.PortalException,

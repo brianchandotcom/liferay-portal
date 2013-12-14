@@ -653,6 +653,7 @@ public class OrganizationLocalServiceUtil {
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization addOrganization(
 		long userId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -1545,6 +1546,7 @@ public class OrganizationLocalServiceUtil {
 	long, long, String, String, long, long, int, String, boolean,
 	byte[], boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long companyId, long organizationId, long parentOrganizationId,
 		java.lang.String name, java.lang.String type, boolean recursable,
@@ -1627,6 +1629,7 @@ public class OrganizationLocalServiceUtil {
 	long, long, String, String, long, long, int, String, boolean,
 	boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Organization updateOrganization(
 		long companyId, long organizationId, long parentOrganizationId,
 		java.lang.String name, java.lang.String type, long regionId,
@@ -1654,6 +1657,7 @@ public class OrganizationLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(OrganizationLocalService service) {
 	}
 

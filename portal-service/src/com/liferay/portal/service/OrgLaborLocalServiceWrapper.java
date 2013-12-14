@@ -309,6 +309,7 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public OrgLaborLocalService getWrappedOrgLaborLocalService() {
 		return _orgLaborLocalService;
 	}
@@ -316,6 +317,7 @@ public class OrgLaborLocalServiceWrapper implements OrgLaborLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedOrgLaborLocalService(
 		OrgLaborLocalService orgLaborLocalService) {
 		_orgLaborLocalService = orgLaborLocalService;

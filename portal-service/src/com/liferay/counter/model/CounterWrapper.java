@@ -258,6 +258,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Counter getWrappedCounter() {
 		return _counter;
 	}

@@ -116,6 +116,7 @@ public class ExpandoColumnServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(ExpandoColumnService service) {
 	}
 

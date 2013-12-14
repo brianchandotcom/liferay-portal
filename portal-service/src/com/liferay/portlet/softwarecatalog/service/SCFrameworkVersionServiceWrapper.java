@@ -107,6 +107,7 @@ public class SCFrameworkVersionServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SCFrameworkVersionService getWrappedSCFrameworkVersionService() {
 		return _scFrameworkVersionService;
 	}
@@ -114,6 +115,7 @@ public class SCFrameworkVersionServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSCFrameworkVersionService(
 		SCFrameworkVersionService scFrameworkVersionService) {
 		_scFrameworkVersionService = scFrameworkVersionService;

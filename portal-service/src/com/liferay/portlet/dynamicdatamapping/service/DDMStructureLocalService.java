@@ -719,6 +719,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId)
@@ -728,6 +729,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long, int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId, int start, int end)
@@ -796,6 +798,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getClassStructures(long,
 	long, OrderByComparator)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getClassStructures(
 		long classNameId,
@@ -891,6 +894,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries()
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -898,6 +902,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId)
@@ -907,6 +912,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getStructures(long, int,
 	int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureEntries(
 		long groupId, int start, int end)

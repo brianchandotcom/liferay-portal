@@ -734,6 +734,7 @@ public class UserGroupLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.UserGroup addUserGroup(long userId,
 		long companyId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -782,6 +783,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0
 	*/
+	@Deprecated
 	public static void copyUserGroupLayouts(long userGroupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -799,6 +801,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -815,6 +818,7 @@ public class UserGroupLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1121,6 +1125,7 @@ public class UserGroupLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.UserGroup updateUserGroup(
 		long companyId, long userGroupId, java.lang.String name,
 		java.lang.String description)
@@ -1170,6 +1175,7 @@ public class UserGroupLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(UserGroupLocalService service) {
 	}
 

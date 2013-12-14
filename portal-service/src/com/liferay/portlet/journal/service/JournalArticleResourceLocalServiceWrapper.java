@@ -377,6 +377,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JournalArticleResourceLocalService getWrappedJournalArticleResourceLocalService() {
 		return _journalArticleResourceLocalService;
 	}
@@ -384,6 +385,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJournalArticleResourceLocalService(
 		JournalArticleResourceLocalService journalArticleResourceLocalService) {
 		_journalArticleResourceLocalService = journalArticleResourceLocalService;

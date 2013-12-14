@@ -123,6 +123,7 @@ public class AssetEntryServiceUtil {
 	Date, String, String, String, String, String, String, int,
 	int, Integer, boolean)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
@@ -148,6 +149,7 @@ public class AssetEntryServiceUtil {
 	Date, Date, Date, String, String, String, String, String,
 	String, int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
@@ -180,6 +182,7 @@ public class AssetEntryServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AssetEntryService service) {
 	}
 

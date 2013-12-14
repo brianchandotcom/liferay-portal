@@ -125,6 +125,7 @@ public class UserGroupServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.UserGroupSoap addUserGroup(
 		java.lang.String name, java.lang.String description)
 		throws RemoteException {
@@ -323,6 +324,7 @@ public class UserGroupServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
 	String, String, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.UserGroupSoap updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description)
 		throws RemoteException {

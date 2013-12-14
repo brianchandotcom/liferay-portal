@@ -482,6 +482,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutFriendlyURLLocalService getWrappedLayoutFriendlyURLLocalService() {
 		return _layoutFriendlyURLLocalService;
 	}
@@ -489,6 +490,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutFriendlyURLLocalService(
 		LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
 		_layoutFriendlyURLLocalService = layoutFriendlyURLLocalService;

@@ -497,6 +497,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public BlogsStatsUser getWrappedBlogsStatsUser() {
 		return _blogsStatsUser;
 	}

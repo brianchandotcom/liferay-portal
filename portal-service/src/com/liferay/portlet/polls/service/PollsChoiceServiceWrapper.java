@@ -55,6 +55,7 @@ public class PollsChoiceServiceWrapper implements PollsChoiceService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PollsChoiceService getWrappedPollsChoiceService() {
 		return _pollsChoiceService;
 	}
@@ -62,6 +63,7 @@ public class PollsChoiceServiceWrapper implements PollsChoiceService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPollsChoiceService(
 		PollsChoiceService pollsChoiceService) {
 		_pollsChoiceService = pollsChoiceService;

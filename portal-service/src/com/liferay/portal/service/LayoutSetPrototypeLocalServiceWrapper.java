@@ -343,6 +343,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
 		java.lang.String uuid)
@@ -398,6 +399,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutSetPrototypeLocalService getWrappedLayoutSetPrototypeLocalService() {
 		return _layoutSetPrototypeLocalService;
 	}
@@ -405,6 +407,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutSetPrototypeLocalService(
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;

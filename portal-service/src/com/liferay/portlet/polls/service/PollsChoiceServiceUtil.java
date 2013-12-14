@@ -73,6 +73,7 @@ public class PollsChoiceServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(PollsChoiceService service) {
 	}
 

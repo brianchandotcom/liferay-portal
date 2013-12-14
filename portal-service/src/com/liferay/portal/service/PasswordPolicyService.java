@@ -66,6 +66,7 @@ public interface PasswordPolicyService extends BaseService {
 	int, int, int, int, String, boolean, int, boolean, long,
 	long, int, boolean, int, long, long, long, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		java.lang.String name, java.lang.String description,
 		boolean changeable, boolean changeRequired, long minAge,
@@ -102,6 +103,7 @@ public interface PasswordPolicyService extends BaseService {
 	long, long, int, boolean, int, long, long, long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
 		java.lang.String description, boolean changeable,

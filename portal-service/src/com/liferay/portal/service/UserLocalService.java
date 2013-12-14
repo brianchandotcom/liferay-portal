@@ -1941,6 +1941,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getUserByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.User getUserByUuid(java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -3031,6 +3032,7 @@ public interface UserLocalService extends BaseLocalService,
 	String, String, long[], long[], long[], java.util.List,
 	long[], boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
 		java.lang.String newPassword2, boolean passwordReset,

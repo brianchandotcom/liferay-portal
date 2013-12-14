@@ -63,6 +63,7 @@ public class LayoutPrototypeServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
 	String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active)
@@ -107,6 +108,7 @@ public class LayoutPrototypeServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -144,6 +146,7 @@ public class LayoutPrototypeServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(LayoutPrototypeService service) {
 	}
 

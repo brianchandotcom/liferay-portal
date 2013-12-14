@@ -380,6 +380,7 @@ public class RepositoryEntryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public RepositoryEntryLocalService getWrappedRepositoryEntryLocalService() {
 		return _repositoryEntryLocalService;
 	}
@@ -387,6 +388,7 @@ public class RepositoryEntryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedRepositoryEntryLocalService(
 		RepositoryEntryLocalService repositoryEntryLocalService) {
 		_repositoryEntryLocalService = repositoryEntryLocalService;

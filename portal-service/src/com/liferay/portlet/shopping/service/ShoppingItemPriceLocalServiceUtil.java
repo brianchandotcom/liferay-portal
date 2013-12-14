@@ -292,6 +292,7 @@ public class ShoppingItemPriceLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(ShoppingItemPriceLocalService service) {
 	}
 

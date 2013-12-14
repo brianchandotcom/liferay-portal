@@ -350,6 +350,7 @@ public class RepositoryLocalServiceUtil {
 	long, long, String, String, String, UnicodeProperties,
 	boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Repository addRepository(
 		long userId, long groupId, long classNameId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
@@ -458,6 +459,7 @@ public class RepositoryLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(RepositoryLocalService service) {
 	}
 

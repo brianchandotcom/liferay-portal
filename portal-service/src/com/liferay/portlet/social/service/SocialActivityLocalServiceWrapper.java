@@ -1181,6 +1181,7 @@ public class SocialActivityLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SocialActivityLocalService getWrappedSocialActivityLocalService() {
 		return _socialActivityLocalService;
 	}
@@ -1188,6 +1189,7 @@ public class SocialActivityLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSocialActivityLocalService(
 		SocialActivityLocalService socialActivityLocalService) {
 		_socialActivityLocalService = socialActivityLocalService;

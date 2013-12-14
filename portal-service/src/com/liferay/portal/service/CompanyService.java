@@ -338,6 +338,7 @@ public interface CompanyService extends BaseService {
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,
@@ -391,6 +392,7 @@ public interface CompanyService extends BaseService {
 	String, java.util.List, java.util.List, java.util.List,
 	java.util.List, UnicodeProperties)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Company updateCompany(long companyId,
 		java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,

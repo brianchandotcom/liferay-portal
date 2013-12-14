@@ -319,6 +319,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
 	String)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -332,6 +333,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
 	String)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
 		java.lang.String updatedOwner, boolean retrieveFromCache)
@@ -356,6 +358,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	String)}
 	*/
+	@Deprecated
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;

@@ -302,6 +302,7 @@ public class AddressLocalServiceUtil {
 	long, String, String, String, String, String, long, long,
 	int, boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Address addAddress(long userId,
 		java.lang.String className, long classPK, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
@@ -371,6 +372,7 @@ public class AddressLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AddressLocalService service) {
 	}
 

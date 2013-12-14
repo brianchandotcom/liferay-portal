@@ -380,6 +380,7 @@ public class DLAppServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1766,6 +1767,7 @@ public class DLAppServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1776,6 +1778,7 @@ public class DLAppServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	String, long, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Lock lockFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2137,6 +2140,7 @@ public class DLAppServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	boolean, String, ServiceContext)}.
 	*/
+	@Deprecated
 	public static void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2147,6 +2151,7 @@ public class DLAppServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String)}.
 	*/
+	@Deprecated
 	public static void unlockFileEntry(long fileEntryId,
 		java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2514,6 +2519,7 @@ public class DLAppServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DLAppService service) {
 	}
 

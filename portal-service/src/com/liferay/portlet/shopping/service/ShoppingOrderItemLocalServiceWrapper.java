@@ -294,6 +294,7 @@ public class ShoppingOrderItemLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ShoppingOrderItemLocalService getWrappedShoppingOrderItemLocalService() {
 		return _shoppingOrderItemLocalService;
 	}
@@ -301,6 +302,7 @@ public class ShoppingOrderItemLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedShoppingOrderItemLocalService(
 		ShoppingOrderItemLocalService shoppingOrderItemLocalService) {
 		_shoppingOrderItemLocalService = shoppingOrderItemLocalService;

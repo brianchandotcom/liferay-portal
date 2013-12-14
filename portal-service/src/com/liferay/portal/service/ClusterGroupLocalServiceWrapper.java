@@ -297,6 +297,7 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ClusterGroupLocalService getWrappedClusterGroupLocalService() {
 		return _clusterGroupLocalService;
 	}
@@ -304,6 +305,7 @@ public class ClusterGroupLocalServiceWrapper implements ClusterGroupLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedClusterGroupLocalService(
 		ClusterGroupLocalService clusterGroupLocalService) {
 		_clusterGroupLocalService = clusterGroupLocalService;

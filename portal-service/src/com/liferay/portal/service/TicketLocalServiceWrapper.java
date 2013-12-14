@@ -300,6 +300,7 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public TicketLocalService getWrappedTicketLocalService() {
 		return _ticketLocalService;
 	}
@@ -307,6 +308,7 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedTicketLocalService(
 		TicketLocalService ticketLocalService) {
 		_ticketLocalService = ticketLocalService;

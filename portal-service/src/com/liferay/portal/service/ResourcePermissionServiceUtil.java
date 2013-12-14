@@ -260,6 +260,7 @@ public class ResourcePermissionServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(ResourcePermissionService service) {
 	}
 

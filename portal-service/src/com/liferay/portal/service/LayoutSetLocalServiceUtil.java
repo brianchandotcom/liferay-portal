@@ -335,6 +335,7 @@ public class LayoutSetLocalServiceUtil {
 	#updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
 	String)}
 	*/
+	@Deprecated
 	public static void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -451,6 +452,7 @@ public class LayoutSetLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(LayoutSetLocalService service) {
 	}
 

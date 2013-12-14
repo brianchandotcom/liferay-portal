@@ -191,7 +191,7 @@
 				AssetTag
 			WHERE
 				(AssetTag.groupId = ?) AND
-				(lower(AssetTag.name) = ?)
+				(AssetTag.name = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_C_N">

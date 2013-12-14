@@ -229,7 +229,10 @@ public class AssetTagFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(name);
+
+			String lowerCaseName = StringUtil.toLowerCase(name);
+
+			qPos.add(lowerCaseName);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -277,8 +280,11 @@ public class AssetTagFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(classNameId);
-			qPos.add(name);
-			qPos.add(name);
+
+			String lowerCaseName = StringUtil.toLowerCase(name);
+
+			qPos.add(lowerCaseName);
+			qPos.add(lowerCaseName);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -328,8 +334,11 @@ public class AssetTagFinderImpl
 			setJoin(qPos, tagProperties);
 
 			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(name);
+
+			String lowerCaseName = StringUtil.toLowerCase(name);
+
+			qPos.add(lowerCaseName);
+			qPos.add(lowerCaseName);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -376,7 +385,10 @@ public class AssetTagFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-			qPos.add(name);
+
+			String lowerCaseName = StringUtil.toLowerCase(name);
+
+			qPos.add(lowerCaseName);
 
 			List<AssetTag> tags = q.list();
 
@@ -431,8 +443,11 @@ public class AssetTagFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(classNameId);
-			qPos.add(name);
-			qPos.add(name);
+
+			String lowerCaseName = StringUtil.toLowerCase(name);
+
+			qPos.add(lowerCaseName);
+			qPos.add(lowerCaseName);
 
 			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -475,8 +490,11 @@ public class AssetTagFinderImpl
 			setJoin(qPos, tagProperties);
 
 			qPos.add(groupIds);
-			qPos.add(name);
-			qPos.add(name);
+
+			String lowerCaseName = StringUtil.toLowerCase(name);
+
+			qPos.add(lowerCaseName);
+			qPos.add(lowerCaseName);
 
 			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
 		}

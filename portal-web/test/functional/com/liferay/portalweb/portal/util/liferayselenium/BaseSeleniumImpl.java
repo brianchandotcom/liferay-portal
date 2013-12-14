@@ -86,6 +86,10 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void assertLiferayErrors() throws Exception {
+	}
+
+	@Override
 	public void assertLocation(String pattern) {
 		LiferaySeleniumHelper.assertLocation(this, pattern);
 	}

@@ -86,8 +86,9 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				return layout;
 			}
 
-			if (Validator.isNull(layout.getLayoutPrototypeUuid()) &&
-				Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+			if ((Validator.isNull(layout.getLayoutPrototypeUuid()) &&
+				 Validator.isNull(layout.getSourcePrototypeLayoutUuid())) ||
+				!layout.getLayoutPrototypeLinkEnabled()) {
 
 				return layout;
 			}

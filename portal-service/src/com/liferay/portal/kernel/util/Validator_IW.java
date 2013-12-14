@@ -206,6 +206,7 @@ public class Validator_IW {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public boolean isNotNull(java.lang.Object[] array) {
 		return Validator.isNotNull(array);
 	}
@@ -225,6 +226,7 @@ public class Validator_IW {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public boolean isNull(java.lang.Object[] array) {
 		return Validator.isNull(array);
 	}

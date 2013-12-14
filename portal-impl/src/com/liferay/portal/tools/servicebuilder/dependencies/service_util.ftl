@@ -45,6 +45,10 @@ import com.liferay.portal.service.Invokable${sessionTypeName}Service;
  */
 </#if>
 
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 <#if pluginName == "">
 	@ProviderType
 </#if>
@@ -60,6 +64,10 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 	<#list methods as method>
 		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
+
+			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
+				@Deprecated
+			</#if>
 
 			<#if method.name = "dynamicQuery" && (method.parameters?size != 0)>
 				@SuppressWarnings("rawtypes")
@@ -139,6 +147,7 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(${entity.name}${sessionTypeName}Service service) {
 	}
 

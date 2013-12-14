@@ -453,6 +453,7 @@ public class WikiPageLocalServiceUtil {
 	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
 	double)}
 	*/
+	@Deprecated
 	public static void deletePage(long nodeId, java.lang.String title,
 		double version)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -791,6 +792,7 @@ public class WikiPageLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getRecentChanges(long, long,
 	int, int)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getRecentChanges(
 		long nodeId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -808,6 +810,7 @@ public class WikiPageLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getRecentChangesCount(long,
 	long)}
 	*/
+	@Deprecated
 	public static int getRecentChangesCount(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -977,6 +980,7 @@ public class WikiPageLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(WikiPageLocalService service) {
 	}
 

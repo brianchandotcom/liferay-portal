@@ -144,6 +144,7 @@ public class SharedSessionWrapper implements HttpSession {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public javax.servlet.http.HttpSessionContext getSessionContext() {
 		HttpSession session = getSessionDelegate();

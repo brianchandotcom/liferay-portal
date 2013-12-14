@@ -19,6 +19,7 @@ package com.liferay.taglib.util;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.servlet.PortalIncludeUtil}
  */
+@Deprecated
 public class PortalIncludeUtil
 	extends com.liferay.portal.kernel.servlet.PortalIncludeUtil {
 }

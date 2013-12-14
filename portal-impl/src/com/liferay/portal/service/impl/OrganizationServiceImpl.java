@@ -119,6 +119,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 *             java.util.List, java.util.List, java.util.List,
 	 *             java.util.List, java.util.List, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization addOrganization(
 			long parentOrganizationId, String name, String type,
@@ -168,6 +169,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 *             String, String, long, long, int, String, boolean,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization addOrganization(
 			long parentOrganizationId, String name, String type,
@@ -392,6 +394,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
 	 *             int, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> getManageableOrganizations(
 			String actionId, int max)
@@ -672,6 +675,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 *             java.util.List, java.util.List, boolean, byte[],
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization updateOrganization(
 			long organizationId, long parentOrganizationId, String name,
@@ -718,6 +722,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 *             long, String, String, long, long, int, String, boolean,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization updateOrganization(
 			long organizationId, long parentOrganizationId, String name,
@@ -880,6 +885,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 *             java.util.List, java.util.List, boolean, byte[],
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization updateOrganization(
 			long organizationId, long parentOrganizationId, String name,

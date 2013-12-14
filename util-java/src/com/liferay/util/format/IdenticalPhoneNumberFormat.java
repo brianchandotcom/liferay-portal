@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.portal.format.IdenticalPhoneNumberFormatImpl}
  */
+@Deprecated
 public class IdenticalPhoneNumberFormat implements PhoneNumberFormat {
 
 	@Override

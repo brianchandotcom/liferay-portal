@@ -21,6 +21,7 @@ import java.util.Map;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.struts.LastPath}
  */
+@Deprecated
 public class LastPath extends com.liferay.portal.kernel.struts.LastPath {
 
 	public LastPath(String contextPath, String path) {

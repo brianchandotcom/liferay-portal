@@ -412,6 +412,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
 	Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -423,6 +424,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
 	Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -444,6 +446,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyEntriesCount(long,
 	Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getCompanyEntriesCount(long companyId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -485,6 +488,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, java.util.Date displayDate, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -496,6 +500,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, java.util.Date displayDate, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -517,6 +522,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -527,6 +533,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -545,6 +552,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
 	Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getGroupEntriesCount(long groupId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -563,6 +571,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getGroupEntriesCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getGroupEntriesCount(groupId, status);
@@ -578,6 +587,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupsEntries(long, long,
 	Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
 		long companyId, long groupId, java.util.Date displayDate, int status,
 		int start, int end)
@@ -600,6 +610,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
 	long, Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end)
@@ -613,6 +624,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
 	long, Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -635,6 +647,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getGroupUserEntriesCount(long, long, Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getGroupUserEntriesCount(long groupId, long userId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -661,6 +674,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
 	Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
 		long organizationId, java.util.Date displayDate, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -673,6 +687,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
 	Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
 		long organizationId, java.util.Date displayDate, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -695,6 +710,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getOrganizationEntriesCount(long, Date, QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getOrganizationEntriesCount(long organizationId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -846,6 +862,7 @@ public class BlogsEntryLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(BlogsEntryLocalService service) {
 	}
 

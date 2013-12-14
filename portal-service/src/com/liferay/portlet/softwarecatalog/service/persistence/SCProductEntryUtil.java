@@ -1257,6 +1257,7 @@ public class SCProductEntryUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(SCProductEntryPersistence persistence) {
 	}
 

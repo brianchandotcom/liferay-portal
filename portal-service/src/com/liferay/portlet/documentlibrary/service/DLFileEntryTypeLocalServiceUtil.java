@@ -806,6 +806,7 @@ public class DLFileEntryTypeLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DLFileEntryTypeLocalService service) {
 	}
 

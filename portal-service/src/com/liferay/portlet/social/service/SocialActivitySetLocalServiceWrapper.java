@@ -435,6 +435,7 @@ public class SocialActivitySetLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SocialActivitySetLocalService getWrappedSocialActivitySetLocalService() {
 		return _socialActivitySetLocalService;
 	}
@@ -442,6 +443,7 @@ public class SocialActivitySetLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSocialActivitySetLocalService(
 		SocialActivitySetLocalService socialActivitySetLocalService) {
 		_socialActivitySetLocalService = socialActivitySetLocalService;

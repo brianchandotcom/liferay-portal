@@ -312,6 +312,7 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	long, String, String, String, String, String, long, long,
 	int, boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Address addAddress(long userId,
 		java.lang.String className, long classPK, java.lang.String street1,
@@ -374,6 +375,7 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AddressLocalService getWrappedAddressLocalService() {
 		return _addressLocalService;
 	}
@@ -381,6 +383,7 @@ public class AddressLocalServiceWrapper implements AddressLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAddressLocalService(
 		AddressLocalService addressLocalService) {
 		_addressLocalService = addressLocalService;

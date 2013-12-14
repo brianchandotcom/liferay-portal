@@ -92,6 +92,7 @@ public class AnnouncementsFlagServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AnnouncementsFlagService service) {
 	}
 

@@ -363,6 +363,7 @@ public class AssetVocabularyLocalServiceWrapper
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		long userId,
@@ -518,6 +519,7 @@ public class AssetVocabularyLocalServiceWrapper
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
@@ -547,6 +549,7 @@ public class AssetVocabularyLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetVocabularyLocalService getWrappedAssetVocabularyLocalService() {
 		return _assetVocabularyLocalService;
 	}
@@ -554,6 +557,7 @@ public class AssetVocabularyLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetVocabularyLocalService(
 		AssetVocabularyLocalService assetVocabularyLocalService) {
 		_assetVocabularyLocalService = assetVocabularyLocalService;

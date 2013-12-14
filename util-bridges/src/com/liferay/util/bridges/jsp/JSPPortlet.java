@@ -21,5 +21,6 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
  * @deprecated As of 6.2.0, renamed to {@link
  *             com.liferay.util.bridges.mvc.MVCPortlet}
  */
+@Deprecated
 public class JSPPortlet extends MVCPortlet {
 }

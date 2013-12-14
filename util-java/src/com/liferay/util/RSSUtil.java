@@ -67,6 +67,7 @@ public class RSSUtil {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #FORMAT_DEFAULT}
 	 */
+	@Deprecated
 	public static final String TYPE_DEFAULT = FORMAT_DEFAULT;
 
 	public static final double VERSION_DEFAULT = getFeedTypeVersion(

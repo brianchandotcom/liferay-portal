@@ -1886,6 +1886,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	#updateArticleTranslation(long, String, double, Locale,
 	String, String, String, Map, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle updateArticleTranslation(
 		long groupId, java.lang.String articleId, double version,
@@ -1995,6 +1996,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JournalArticleService getWrappedJournalArticleService() {
 		return _journalArticleService;
 	}
@@ -2002,6 +2004,7 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJournalArticleService(
 		JournalArticleService journalArticleService) {
 		_journalArticleService = journalArticleService;

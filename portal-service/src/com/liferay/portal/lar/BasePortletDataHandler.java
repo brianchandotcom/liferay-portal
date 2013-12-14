@@ -19,6 +19,7 @@ package com.liferay.portal.lar;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.lar.BasePortletDataHandler}
  */
+@Deprecated
 public abstract class BasePortletDataHandler
 	extends com.liferay.portal.kernel.lar.BasePortletDataHandler {
 }

@@ -19,6 +19,7 @@ package com.liferay.util;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.bean.BeanParamUtil}
  */
+@Deprecated
 public class BeanParamUtil
 	extends com.liferay.portal.kernel.bean.BeanParamUtil {
 }

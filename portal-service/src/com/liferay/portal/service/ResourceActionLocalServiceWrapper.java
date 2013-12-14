@@ -325,6 +325,7 @@ public class ResourceActionLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ResourceActionLocalService getWrappedResourceActionLocalService() {
 		return _resourceActionLocalService;
 	}
@@ -332,6 +333,7 @@ public class ResourceActionLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedResourceActionLocalService(
 		ResourceActionLocalService resourceActionLocalService) {
 		_resourceActionLocalService = resourceActionLocalService;

@@ -82,6 +82,7 @@ public interface JournalFeedService extends BaseService {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
 	*/
+	@Deprecated
 	public void deleteFeed(long groupId, long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -98,6 +99,7 @@ public interface JournalFeedService extends BaseService {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFeed getFeed(long groupId,
 		long feedId)

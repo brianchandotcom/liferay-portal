@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.2.0
  */
+@Deprecated
 public class LayoutHiddenException extends PortalException {
 
 	public LayoutHiddenException() {

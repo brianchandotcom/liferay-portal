@@ -33,6 +33,7 @@ import java.util.List;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.util.DiffResult}
  */
+@Deprecated
 public class DiffResult {
 
 	public static final String SOURCE = "SOURCE";

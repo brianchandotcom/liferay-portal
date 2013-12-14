@@ -47,6 +47,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             PortalLDAPImporterUtil#importLDAPUser(long, String, String)}
 	 */
+	@Deprecated
 	protected User addUser(long companyId, String screenName) throws Exception {
 		return PortalLDAPImporterUtil.importLDAPUser(
 			companyId, StringPool.BLANK, screenName);

@@ -67,6 +67,7 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public BackgroundTaskService getWrappedBackgroundTaskService() {
 		return _backgroundTaskService;
 	}
@@ -74,6 +75,7 @@ public class BackgroundTaskServiceWrapper implements BackgroundTaskService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedBackgroundTaskService(
 		BackgroundTaskService backgroundTaskService) {
 		_backgroundTaskService = backgroundTaskService;

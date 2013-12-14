@@ -333,6 +333,7 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ContactLocalService getWrappedContactLocalService() {
 		return _contactLocalService;
 	}
@@ -340,6 +341,7 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedContactLocalService(
 		ContactLocalService contactLocalService) {
 		_contactLocalService = contactLocalService;

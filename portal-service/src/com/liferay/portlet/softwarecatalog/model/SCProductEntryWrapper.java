@@ -680,6 +680,7 @@ public class SCProductEntryWrapper implements SCProductEntry,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public SCProductEntry getWrappedSCProductEntry() {
 		return _scProductEntry;
 	}

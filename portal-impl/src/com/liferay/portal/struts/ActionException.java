@@ -19,6 +19,7 @@ package com.liferay.portal.struts;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.events.ActionException}
  */
+@Deprecated
 public class ActionException
 	extends com.liferay.portal.kernel.events.ActionException {
 

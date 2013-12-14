@@ -117,6 +117,7 @@ public class GroupServiceWrapper implements GroupService,
 	String, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Group addGroup(long parentGroupId,
 		java.lang.String name, java.lang.String description, int type,
@@ -132,6 +133,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, String,
 	String, int, String, boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Group addGroup(java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
@@ -318,6 +320,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getManageableSiteGroups(Collection, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getManageableSites(
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
@@ -414,6 +417,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], boolean, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames,
@@ -460,6 +464,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		long userId, java.lang.String[] classNames, int max)
@@ -503,6 +508,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(
 	String[], int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserPlaces(
 		java.lang.String[] classNames, int max)
@@ -522,6 +528,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
 	*/
+	@Deprecated
 	@Override
 	public int getUserPlacesCount()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -539,6 +546,7 @@ public class GroupServiceWrapper implements GroupService,
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserSites()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -873,6 +881,7 @@ public class GroupServiceWrapper implements GroupService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public GroupService getWrappedGroupService() {
 		return _groupService;
 	}
@@ -880,6 +889,7 @@ public class GroupServiceWrapper implements GroupService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedGroupService(GroupService groupService) {
 		_groupService = groupService;
 	}

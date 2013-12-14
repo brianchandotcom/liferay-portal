@@ -159,6 +159,7 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DDLRecordSetService getWrappedDDLRecordSetService() {
 		return _ddlRecordSetService;
 	}
@@ -166,6 +167,7 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 		_ddlRecordSetService = ddlRecordSetService;

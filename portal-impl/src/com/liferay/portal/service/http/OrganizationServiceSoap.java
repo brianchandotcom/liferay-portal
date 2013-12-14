@@ -126,6 +126,7 @@ public class OrganizationServiceSoap {
 	java.util.List, java.util.List, java.util.List,
 	java.util.List, java.util.List, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -194,6 +195,7 @@ public class OrganizationServiceSoap {
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -406,6 +408,7 @@ public class OrganizationServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
 	int, int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap[] getManageableOrganizations(
 		java.lang.String actionId, int max) throws RemoteException {
 		try {
@@ -687,6 +690,7 @@ public class OrganizationServiceSoap {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -752,6 +756,7 @@ public class OrganizationServiceSoap {
 	long, String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -874,6 +879,7 @@ public class OrganizationServiceSoap {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.OrganizationSoap updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, int statusId,

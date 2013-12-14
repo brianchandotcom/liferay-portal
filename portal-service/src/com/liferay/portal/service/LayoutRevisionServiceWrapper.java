@@ -76,6 +76,7 @@ public class LayoutRevisionServiceWrapper implements LayoutRevisionService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public LayoutRevisionService getWrappedLayoutRevisionService() {
 		return _layoutRevisionService;
 	}
@@ -83,6 +84,7 @@ public class LayoutRevisionServiceWrapper implements LayoutRevisionService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedLayoutRevisionService(
 		LayoutRevisionService layoutRevisionService) {
 		_layoutRevisionService = layoutRevisionService;

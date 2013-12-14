@@ -36,6 +36,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static ServiceMonitorAdvice getInstance() {
 		return new ServiceMonitorAdvice();
 	}
@@ -160,6 +161,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setMonitoringDestinationName(String monitoringDestinationName) {
 	}
 

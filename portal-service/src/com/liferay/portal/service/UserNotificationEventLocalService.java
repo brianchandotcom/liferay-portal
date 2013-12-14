@@ -337,6 +337,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
 	boolean)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, boolean archived)
@@ -346,6 +347,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
 	boolean, int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId, boolean archived, int start, int end)
@@ -364,6 +366,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0 {@link
 	#getArchivedUserNotificationEventsCount(long, boolean)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationEventsCount(long userId, boolean archived)
 		throws com.liferay.portal.kernel.exception.SystemException;

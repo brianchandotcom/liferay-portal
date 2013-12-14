@@ -65,6 +65,7 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public FlagsEntryService getWrappedFlagsEntryService() {
 		return _flagsEntryService;
 	}
@@ -72,6 +73,7 @@ public class FlagsEntryServiceWrapper implements FlagsEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedFlagsEntryService(FlagsEntryService flagsEntryService) {
 		_flagsEntryService = flagsEntryService;
 	}

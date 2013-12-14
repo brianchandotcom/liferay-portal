@@ -141,6 +141,7 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public StagingLocalService getWrappedStagingLocalService() {
 		return _stagingLocalService;
 	}
@@ -148,6 +149,7 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedStagingLocalService(
 		StagingLocalService stagingLocalService) {
 		_stagingLocalService = stagingLocalService;

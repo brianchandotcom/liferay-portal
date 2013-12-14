@@ -97,6 +97,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	 *             String, String, java.util.List, boolean, double, boolean,
 	 *             com.liferay.portal.service.ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, long threadId, long parentMessageId,

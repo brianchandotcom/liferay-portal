@@ -113,6 +113,7 @@ public class AssetTagServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
 	String, int, int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
 		long groupId, java.lang.String name, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -227,6 +228,7 @@ public class AssetTagServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AssetTagService service) {
 	}
 

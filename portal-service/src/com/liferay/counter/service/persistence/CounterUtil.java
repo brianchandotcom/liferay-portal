@@ -275,6 +275,7 @@ public class CounterUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(CounterPersistence persistence) {
 	}
 

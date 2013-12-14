@@ -293,6 +293,7 @@ public class UserTrackerPathLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public UserTrackerPathLocalService getWrappedUserTrackerPathLocalService() {
 		return _userTrackerPathLocalService;
 	}
@@ -300,6 +301,7 @@ public class UserTrackerPathLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedUserTrackerPathLocalService(
 		UserTrackerPathLocalService userTrackerPathLocalService) {
 		_userTrackerPathLocalService = userTrackerPathLocalService;

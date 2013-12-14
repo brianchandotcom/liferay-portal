@@ -493,6 +493,7 @@ public class DLFolderLocalServiceUtil {
 	long, long, boolean, long, String, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.documentlibrary.model.DLFolder addFolder(
 		long userId, long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, java.lang.String name,
@@ -574,6 +575,7 @@ public class DLFolderLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -596,6 +598,7 @@ public class DLFolderLocalServiceUtil {
 	#getFileEntriesAndFileShortcutsCount(long, long,
 	QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -666,6 +669,7 @@ public class DLFolderLocalServiceUtil {
 	#getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, boolean includeMountFolders,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -680,6 +684,7 @@ public class DLFolderLocalServiceUtil {
 	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
 		boolean includeMountFolders, int start, int end,
@@ -705,6 +710,7 @@ public class DLFolderLocalServiceUtil {
 	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, int status, boolean includeMountFolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -718,6 +724,7 @@ public class DLFolderLocalServiceUtil {
 	#getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	String[], boolean, QueryDefinition)}
 	*/
+	@Deprecated
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
 		boolean includeMountFolders)
@@ -882,6 +889,7 @@ public class DLFolderLocalServiceUtil {
 	/**
 	* @deprecated As of 6.2.0
 	*/
+	@Deprecated
 	public static void updateLastPostDate(long folderId,
 		java.util.Date lastPostDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -914,6 +922,7 @@ public class DLFolderLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DLFolderLocalService service) {
 	}
 

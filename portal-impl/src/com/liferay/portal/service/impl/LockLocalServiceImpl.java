@@ -194,6 +194,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
 	 *             String)}
 	 */
+	@Deprecated
 	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -251,6 +252,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
 	 *             String)}
 	 */
+	@Deprecated
 	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -343,6 +345,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	 *             String)}
 	 */
+	@Deprecated
 	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)

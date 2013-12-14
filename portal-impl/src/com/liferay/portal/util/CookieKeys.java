@@ -20,6 +20,7 @@ package com.liferay.portal.util;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.portal.kernel.util.CookieKeys}
  */
+@Deprecated
 public class CookieKeys extends com.liferay.portal.kernel.util.CookieKeys {
 
 	public static final int VERSION = 0;

@@ -22,6 +22,7 @@ import javax.servlet.ServletContextListener;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.2.0
  */
+@Deprecated
 public class PortletContextListener implements ServletContextListener {
 
 	@Override

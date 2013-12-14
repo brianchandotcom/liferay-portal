@@ -18,5 +18,6 @@ package com.liferay.portal.service.persistence;
  * @author     Brian Wing Shun Chan
  * @deprecated
  */
+@Deprecated
 public interface ResourcePersistence {
 }

@@ -115,6 +115,7 @@ public class LayoutServiceSoap {
 	long, Map, Map, Map, Map, Map, String, String, boolean, Map,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutSoap addLayout(long groupId,
 		boolean privateLayout, long parentLayoutId,
 		java.lang.String[] localeNamesMapLanguageIds,
@@ -803,6 +804,7 @@ public class LayoutServiceSoap {
 	long, long, Map, Map, Map, Map, Map, String, boolean, Map,
 	Boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutSoap updateLayout(
 		long groupId, boolean privateLayout, long layoutId,
 		long parentLayoutId, java.lang.String[] localeNamesMapLanguageIds,

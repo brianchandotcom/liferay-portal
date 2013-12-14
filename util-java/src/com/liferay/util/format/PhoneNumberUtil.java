@@ -21,5 +21,6 @@ import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
  * @author     Manuel de la Peña
  * @deprecated As of 6.2.0, moved to {@link PhoneNumberFormatUtil}
  */
+@Deprecated
 public class PhoneNumberUtil extends PhoneNumberFormatUtil {
 }

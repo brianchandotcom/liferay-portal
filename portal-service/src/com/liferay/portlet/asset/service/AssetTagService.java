@@ -105,6 +105,7 @@ public interface AssetTagService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
 	String, int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.json.JSONObject getJSONGroupTags(
 		long groupId, java.lang.String name, int start, int end)

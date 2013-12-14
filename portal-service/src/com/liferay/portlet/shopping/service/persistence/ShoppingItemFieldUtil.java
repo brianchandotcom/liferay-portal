@@ -438,6 +438,7 @@ public class ShoppingItemFieldUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(ShoppingItemFieldPersistence persistence) {
 	}
 

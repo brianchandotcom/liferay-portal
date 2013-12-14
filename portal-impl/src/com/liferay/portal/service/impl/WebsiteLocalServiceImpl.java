@@ -38,6 +38,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
 	 *             long, String, int, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Website addWebsite(
 			long userId, String className, long classPK, String url, int typeId,

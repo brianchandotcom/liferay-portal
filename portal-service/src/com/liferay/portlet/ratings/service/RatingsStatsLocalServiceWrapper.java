@@ -319,6 +319,7 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public RatingsStatsLocalService getWrappedRatingsStatsLocalService() {
 		return _ratingsStatsLocalService;
 	}
@@ -326,6 +327,7 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedRatingsStatsLocalService(
 		RatingsStatsLocalService ratingsStatsLocalService) {
 		_ratingsStatsLocalService = ratingsStatsLocalService;

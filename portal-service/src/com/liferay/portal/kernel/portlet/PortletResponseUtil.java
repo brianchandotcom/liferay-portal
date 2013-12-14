@@ -53,6 +53,7 @@ public class PortletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, byte[] bytes)
 		throws IOException {
@@ -63,6 +64,7 @@ public class PortletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, byte[] bytes,
 			String contentType)
@@ -74,6 +76,7 @@ public class PortletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, InputStream inputStream)
 		throws IOException {
@@ -84,6 +87,7 @@ public class PortletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, InputStream inputStream,
 			int contentLength, String contentType)
@@ -97,6 +101,7 @@ public class PortletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			MimeResponse mimeResponse, String fileName, InputStream inputStream,
 			String contentType)

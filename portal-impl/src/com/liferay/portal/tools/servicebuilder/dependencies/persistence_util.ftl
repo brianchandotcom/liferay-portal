@@ -99,6 +99,11 @@ public class ${entity.name}Util {
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
+
+			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
+				@Deprecated
+			</#if>
+
 			public static ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name} (
 
 			<#list method.parameters as parameter>
@@ -160,6 +165,7 @@ public class ${entity.name}Util {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(${entity.name}Persistence persistence) {
 	}
 

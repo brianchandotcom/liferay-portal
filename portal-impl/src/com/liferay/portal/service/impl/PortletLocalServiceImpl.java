@@ -217,6 +217,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
 	 */
+	@Deprecated
 	@Override
 	@Skip
 	public Portlet clonePortlet(long companyId, String portletId) {

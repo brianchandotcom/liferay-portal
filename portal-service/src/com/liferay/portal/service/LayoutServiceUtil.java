@@ -106,6 +106,7 @@ public class LayoutServiceUtil {
 	long, Map, Map, Map, Map, Map, String, String, boolean, Map,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Layout addLayout(long groupId,
 		boolean privateLayout, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
@@ -1108,6 +1109,7 @@ public class LayoutServiceUtil {
 	long, long, Map, Map, Map, Map, Map, String, boolean, Map,
 	Boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Layout updateLayout(long groupId,
 		boolean privateLayout, long layoutId, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> localeNamesMap,
@@ -1389,6 +1391,7 @@ public class LayoutServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(LayoutService service) {
 	}
 

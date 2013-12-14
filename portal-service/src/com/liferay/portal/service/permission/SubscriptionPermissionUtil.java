@@ -35,6 +35,7 @@ public class SubscriptionPermissionUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link #check(PermissionChecker,
 	 *             String, long, String, long)}
 	 */
+	@Deprecated
 	public static void check(
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException, SystemException {
@@ -62,6 +63,7 @@ public class SubscriptionPermissionUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
 	 *             String, long, String, long)}
 	 */
+	@Deprecated
 	public static boolean contains(
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException, SystemException {

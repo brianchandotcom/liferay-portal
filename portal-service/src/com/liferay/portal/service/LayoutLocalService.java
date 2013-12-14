@@ -358,6 +358,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	boolean, long, Map, Map, Map, Map, Map, String, String,
 	boolean, Map, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Layout addLayout(long userId, long groupId,
 		boolean privateLayout, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -1408,6 +1409,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	long, long, Map, Map, Map, Map, Map, String, boolean, Map,
 	Boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Layout updateLayout(long groupId,
 		boolean privateLayout, long layoutId, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -1634,6 +1636,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/
+	@Deprecated
 	public void updateScopedPortletNames(long groupId, boolean privateLayout,
 		long layoutId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -1655,6 +1658,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @see com.liferay.portlet.portletconfiguration.action.EditScopeAction
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/
+	@Deprecated
 	public void updateScopedPortletNames(long groupId, boolean privateLayout,
 		long layoutId, java.lang.String name, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

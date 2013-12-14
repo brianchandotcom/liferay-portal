@@ -137,6 +137,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(long)}
 	 */
+	@Deprecated
 	@Override
 	public boolean isCommunityAdmin(long groupId) {
 		return isGroupAdmin(groupId);
@@ -145,6 +146,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(long)}
 	 */
+	@Deprecated
 	@Override
 	public boolean isCommunityOwner(long groupId) {
 		return isGroupOwner(groupId);

@@ -301,6 +301,7 @@ public class WebsiteLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #addWebsite(long, String,
 	long, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Website addWebsite(long userId,
 		java.lang.String className, long classPK, java.lang.String url,
 		int typeId, boolean primary)
@@ -359,6 +360,7 @@ public class WebsiteLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(WebsiteLocalService service) {
 	}
 

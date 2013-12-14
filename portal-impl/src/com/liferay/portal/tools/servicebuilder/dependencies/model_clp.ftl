@@ -595,6 +595,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		/**
 		 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 		 */
+		@Deprecated
 		@Override
 		public boolean getApproved() {
 			return isApproved();

@@ -105,6 +105,7 @@ public interface HttpHeaders {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #CONNECTION_CLOSE_VALUE}
 	 */
+	@Deprecated
 	public static final String CLOSE = CONNECTION_CLOSE_VALUE;
 
 	public static final String CONTENT_DISPOSITION_ATTACHMENT = "attachment";
@@ -120,6 +121,7 @@ public interface HttpHeaders {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #CACHE_CONTROL_PUBLIC_VALUE}
 	 */
+	@Deprecated
 	public static final String PUBLIC = CACHE_CONTROL_PUBLIC_VALUE;
 
 	public static final String XML_HTTP_REQUEST = "XMLHttpRequest";

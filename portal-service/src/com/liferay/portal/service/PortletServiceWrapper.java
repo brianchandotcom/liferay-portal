@@ -66,6 +66,7 @@ public class PortletServiceWrapper implements PortletService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PortletService getWrappedPortletService() {
 		return _portletService;
 	}
@@ -73,6 +74,7 @@ public class PortletServiceWrapper implements PortletService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPortletService(PortletService portletService) {
 		_portletService = portletService;
 	}

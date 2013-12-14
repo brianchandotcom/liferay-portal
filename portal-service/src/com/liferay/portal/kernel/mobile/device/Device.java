@@ -49,6 +49,7 @@ public interface Device extends Serializable {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getScreenResolution()}
 	 */
+	@Deprecated
 	public Dimensions getScreenSize();
 
 	public boolean hasQwertyKeyboard();

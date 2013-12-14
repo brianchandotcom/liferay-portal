@@ -76,6 +76,7 @@ public interface MBMessageService extends BaseService {
 	String, String, java.util.List, boolean, double, boolean,
 	com.liferay.portal.service.ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long groupId, long categoryId, long threadId, long parentMessageId,
 		java.lang.String subject, java.lang.String body,

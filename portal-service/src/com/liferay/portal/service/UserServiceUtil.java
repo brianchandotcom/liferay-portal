@@ -1335,6 +1335,7 @@ public class UserServiceUtil {
 	java.util.List, java.util.List, boolean, byte[],
 	com.liferay.portal.service.ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.User updateUser(long userId,
 		java.lang.String oldPassword, java.lang.String newPassword1,
 		java.lang.String newPassword2, boolean passwordReset,
@@ -1481,6 +1482,7 @@ public class UserServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(UserService service) {
 	}
 

@@ -308,6 +308,7 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
 	long, Map, String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -341,6 +342,7 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getLayoutPrototypeByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
 		java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -364,6 +366,7 @@ public class LayoutPrototypeLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -401,6 +404,7 @@ public class LayoutPrototypeLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(LayoutPrototypeLocalService service) {
 	}
 

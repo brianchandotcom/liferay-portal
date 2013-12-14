@@ -73,6 +73,7 @@ public class AssetVocabularyServiceSoap {
 	* @deprecated As of 6.1.0 {@link #addVocabulary(String, Map, Map, String,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetVocabularySoap addVocabulary(
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
@@ -144,6 +145,7 @@ public class AssetVocabularyServiceSoap {
 	* @deprecated As of 6.2.0, Replaced by {@link #deleteVocabularies(long[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static void deleteVocabularies(long[] vocabularyIds)
 		throws RemoteException {
 		try {
@@ -367,6 +369,7 @@ public class AssetVocabularyServiceSoap {
 	/**
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/
+	@Deprecated
 	public static java.lang.String getJSONGroupVocabularies(long groupId,
 		java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -417,6 +420,7 @@ public class AssetVocabularyServiceSoap {
 	* @deprecated As of 6.1.0, {@link #updateVocabulary(long, String, Map, Map,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetVocabularySoap updateVocabulary(
 		long vocabularyId, java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,

@@ -302,6 +302,7 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public UserTrackerLocalService getWrappedUserTrackerLocalService() {
 		return _userTrackerLocalService;
 	}
@@ -309,6 +310,7 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedUserTrackerLocalService(
 		UserTrackerLocalService userTrackerLocalService) {
 		_userTrackerLocalService = userTrackerLocalService;

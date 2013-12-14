@@ -271,6 +271,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
 	String, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, int typeId, boolean primary)

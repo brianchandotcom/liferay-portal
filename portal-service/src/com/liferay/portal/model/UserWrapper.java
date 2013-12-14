@@ -1531,6 +1531,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySites()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1542,6 +1543,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(boolean,
 	int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySites(
 		boolean includeControlPanel, int max)
@@ -1553,6 +1555,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySites(int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1564,6 +1567,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
 	boolean, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySites(
 		java.lang.String[] classNames, boolean includeControlPanel, int max)
@@ -1576,6 +1580,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
 	int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySites(
 		java.lang.String[] classNames, int max)
@@ -1871,6 +1876,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public User getWrappedUser() {
 		return _user;
 	}

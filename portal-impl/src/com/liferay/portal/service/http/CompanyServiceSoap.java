@@ -389,6 +389,7 @@ public class CompanyServiceSoap {
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.CompanySoap updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
 		java.lang.String homeURL, java.lang.String name,

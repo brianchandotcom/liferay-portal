@@ -19,6 +19,7 @@ package com.liferay.portal.util;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.util.InstancePool}
  */
+@Deprecated
 public class InstancePool {
 
 	public static Object get(String className) {

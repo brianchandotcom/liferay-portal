@@ -3354,6 +3354,7 @@ public class UserUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(UserPersistence persistence) {
 	}
 

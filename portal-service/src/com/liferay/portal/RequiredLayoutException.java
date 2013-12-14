@@ -26,6 +26,7 @@ public class RequiredLayoutException extends PortalException {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public static final int FIRST_LAYOUT_HIDDEN = 4;
 
 	public static final int FIRST_LAYOUT_TYPE = 3;

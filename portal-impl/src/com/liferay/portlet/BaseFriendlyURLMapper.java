@@ -20,6 +20,7 @@ package com.liferay.portlet;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper}
  */
+@Deprecated
 public abstract class BaseFriendlyURLMapper
 	extends com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper {
 }

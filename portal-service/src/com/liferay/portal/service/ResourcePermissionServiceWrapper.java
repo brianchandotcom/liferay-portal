@@ -242,6 +242,7 @@ public class ResourcePermissionServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ResourcePermissionService getWrappedResourcePermissionService() {
 		return _resourcePermissionService;
 	}
@@ -249,6 +250,7 @@ public class ResourcePermissionServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedResourcePermissionService(
 		ResourcePermissionService resourcePermissionService) {
 		_resourcePermissionService = resourcePermissionService;

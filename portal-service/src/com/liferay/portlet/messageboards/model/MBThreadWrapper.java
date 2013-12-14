@@ -808,6 +808,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _mbThread.getApproved();
@@ -1116,6 +1117,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public MBThread getWrappedMBThread() {
 		return _mbThread;
 	}

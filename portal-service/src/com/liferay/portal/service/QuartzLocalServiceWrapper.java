@@ -59,6 +59,7 @@ public class QuartzLocalServiceWrapper implements QuartzLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public QuartzLocalService getWrappedQuartzLocalService() {
 		return _quartzLocalService;
 	}
@@ -66,6 +67,7 @@ public class QuartzLocalServiceWrapper implements QuartzLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedQuartzLocalService(
 		QuartzLocalService quartzLocalService) {
 		_quartzLocalService = quartzLocalService;

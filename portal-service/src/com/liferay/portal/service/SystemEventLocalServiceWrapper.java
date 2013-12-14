@@ -340,6 +340,7 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SystemEventLocalService getWrappedSystemEventLocalService() {
 		return _systemEventLocalService;
 	}
@@ -347,6 +348,7 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSystemEventLocalService(
 		SystemEventLocalService systemEventLocalService) {
 		_systemEventLocalService = systemEventLocalService;

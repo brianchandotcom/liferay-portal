@@ -57,6 +57,7 @@ import java.util.Calendar;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.cal.DayAndPosition}
  */
+@Deprecated
 public class DayAndPosition implements Cloneable, Serializable {
 
 	/**

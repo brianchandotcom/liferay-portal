@@ -442,6 +442,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             long, long, String, String, int, boolean, int, String,
 	 *             boolean, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Group addGroup(
 			long userId, long parentGroupId, String className, long classPK,
@@ -485,6 +486,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             long, long, String, String, int, boolean, int, String,
 	 *             boolean, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Group addGroup(
 			long userId, String className, long classPK, long liveGroupId,
@@ -526,6 +528,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             long, long, String, String, int, boolean, int, String,
 	 *             boolean, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Group addGroup(
 			long userId, String className, long classPK, String name,

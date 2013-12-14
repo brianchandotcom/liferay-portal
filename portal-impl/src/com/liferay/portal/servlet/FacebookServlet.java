@@ -19,6 +19,7 @@ package com.liferay.portal.servlet;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.facebook.FacebookServlet}
  */
+@Deprecated
 public class FacebookServlet
 	extends com.liferay.portal.facebook.FacebookServlet {
 }

@@ -310,6 +310,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	public com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		long userId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -415,6 +416,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

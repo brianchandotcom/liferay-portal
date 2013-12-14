@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.util.Constants}
  */
+@Deprecated
 public class Constants
 	implements com.liferay.portal.kernel.util.Constants, ContentTypes {
 }

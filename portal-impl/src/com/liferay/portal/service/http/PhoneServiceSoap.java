@@ -68,6 +68,7 @@ public class PhoneServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #addPhone( String, long,
 	String, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PhoneSoap addPhone(
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, int typeId, boolean primary)

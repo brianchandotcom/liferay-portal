@@ -40,6 +40,7 @@ public class EmailAddressLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #addEmailAddress(long,
 	 *             String, long, String, int, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public EmailAddress addEmailAddress(
 			long userId, String className, long classPK, String address,

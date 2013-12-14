@@ -19,5 +19,6 @@ package com.liferay.util;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.util.MathUtil}
  */
+@Deprecated
 public class MathUtil extends com.liferay.portal.kernel.util.MathUtil {
 }

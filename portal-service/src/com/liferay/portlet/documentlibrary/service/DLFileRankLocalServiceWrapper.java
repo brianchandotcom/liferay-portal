@@ -368,6 +368,7 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DLFileRankLocalService getWrappedDLFileRankLocalService() {
 		return _dlFileRankLocalService;
 	}
@@ -375,6 +376,7 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDLFileRankLocalService(
 		DLFileRankLocalService dlFileRankLocalService) {
 		_dlFileRankLocalService = dlFileRankLocalService;

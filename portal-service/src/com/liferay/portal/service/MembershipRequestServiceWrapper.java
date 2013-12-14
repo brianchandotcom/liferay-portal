@@ -89,6 +89,7 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MembershipRequestService getWrappedMembershipRequestService() {
 		return _membershipRequestService;
 	}
@@ -96,6 +97,7 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMembershipRequestService(
 		MembershipRequestService membershipRequestService) {
 		_membershipRequestService = membershipRequestService;

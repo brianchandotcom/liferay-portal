@@ -102,6 +102,7 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SCProductEntryService getWrappedSCProductEntryService() {
 		return _scProductEntryService;
 	}
@@ -109,6 +110,7 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSCProductEntryService(
 		SCProductEntryService scProductEntryService) {
 		_scProductEntryService = scProductEntryService;

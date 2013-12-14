@@ -72,6 +72,7 @@ public class LayoutPrototypeServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
 	String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototypeSoap addLayoutPrototype(
 		java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String description,
@@ -160,6 +161,7 @@ public class LayoutPrototypeServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	Map, String, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutPrototypeSoap updateLayoutPrototype(
 		long layoutPrototypeId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, java.lang.String description,

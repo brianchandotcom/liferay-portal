@@ -706,6 +706,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public LayoutPrototype getWrappedLayoutPrototype() {
 		return _layoutPrototype;
 	}

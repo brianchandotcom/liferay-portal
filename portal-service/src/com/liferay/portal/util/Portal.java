@@ -268,6 +268,7 @@ public interface Portal {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.kernel.language.LanguageUtil#getAvailableLocales}
 	 */
+	@Deprecated
 	public Locale[] getAlternateLocales(HttpServletRequest request)
 		throws PortalException, SystemException;
 
@@ -297,6 +298,7 @@ public interface Portal {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions}
 	 */
+	@Deprecated
 	public Set<String> getAuthTokenIgnoreActions();
 
 	/**
@@ -308,6 +310,7 @@ public interface Portal {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelist}
 	 */
+	@Deprecated
 	public Set<String> getAuthTokenIgnorePortlets();
 
 	/**
@@ -408,6 +411,7 @@ public interface Portal {
 	 * @deprecated As of 6.2.0, replaced by the more general {@link
 	 *             #getCDNHost(boolean)}
 	 */
+	@Deprecated
 	public String getCDNHost();
 
 	/**
@@ -852,6 +856,7 @@ public interface Portal {
 	/**
 	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
 	 */
+	@Deprecated
 	public long getParentGroupId(long scopeGroupId)
 		throws PortalException, SystemException;
 
@@ -892,6 +897,7 @@ public interface Portal {
 	 * @deprecated As of 6.2.0, replaced by the more general {@link
 	 *             #getPortalPort(boolean)}
 	 */
+	@Deprecated
 	public int getPortalPort();
 
 	public int getPortalPort(boolean secure);
@@ -921,18 +927,21 @@ public interface Portal {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelist}
 	 */
+	@Deprecated
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist();
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelistActions}
 	 */
+	@Deprecated
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
+	@Deprecated
 	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request);
 
@@ -1188,6 +1197,7 @@ public interface Portal {
 	/**
 	 * @deprecated As of 6.2.0 with no direct replacement
 	 */
+	@Deprecated
 	public boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException;
@@ -1200,11 +1210,13 @@ public interface Portal {
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(User, long)}
 	 */
+	@Deprecated
 	public boolean isCommunityAdmin(User user, long groupId) throws Exception;
 
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(User, long)}
 	 */
+	@Deprecated
 	public boolean isCommunityOwner(User user, long groupId) throws Exception;
 
 	public boolean isCompanyAdmin(User user) throws Exception;
@@ -1288,12 +1300,14 @@ public interface Portal {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelist}
 	 */
+	@Deprecated
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist();
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions}
 	 */
+	@Deprecated
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 
 	public void sendError(

@@ -34,6 +34,7 @@ import com.liferay.portal.model.BaseModel;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.2.0, see LPS-30598.
  */
+@Deprecated
 public interface BatchSession {
 
 	/**

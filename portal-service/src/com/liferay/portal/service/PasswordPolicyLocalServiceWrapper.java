@@ -324,6 +324,7 @@ public class PasswordPolicyLocalServiceWrapper
 	boolean, long, long, int, boolean, int, long, long, long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		long userId, boolean defaultPolicy, java.lang.String name,
@@ -400,6 +401,7 @@ public class PasswordPolicyLocalServiceWrapper
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long organizationId, long locationId)
@@ -448,6 +450,7 @@ public class PasswordPolicyLocalServiceWrapper
 	long, long, int, boolean, int, long, long, long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
@@ -494,6 +497,7 @@ public class PasswordPolicyLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PasswordPolicyLocalService getWrappedPasswordPolicyLocalService() {
 		return _passwordPolicyLocalService;
 	}
@@ -501,6 +505,7 @@ public class PasswordPolicyLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPasswordPolicyLocalService(
 		PasswordPolicyLocalService passwordPolicyLocalService) {
 		_passwordPolicyLocalService = passwordPolicyLocalService;

@@ -26,6 +26,7 @@ import javax.naming.NamingException;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.dao.db.DB}
  */
+@Deprecated
 public interface Database {
 
 	public String getType();

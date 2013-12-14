@@ -162,6 +162,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	 *             Date, String, String, String, String, String, String, int,
 	 *             int, Integer, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public AssetEntry updateEntry(
 			long groupId, String className, long classPK, String classUuid,
@@ -188,6 +189,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	 *             Date, Date, Date, String, String, String, String, String,
 	 *             String, int, int, Integer, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public AssetEntry updateEntry(
 			long groupId, String className, long classPK, String classUuid,

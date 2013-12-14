@@ -50,6 +50,7 @@ public class LayoutPrototypeLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
 	 *             long, Map, String, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype addLayoutPrototype(
 			long userId, long companyId, Map<Locale, String> nameMap,
@@ -192,6 +193,7 @@ public class LayoutPrototypeLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getLayoutPrototypeByUuidAndCompanyId(String, long)}
 	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype getLayoutPrototypeByUuid(String uuid)
 		throws PortalException, SystemException {
@@ -240,6 +242,7 @@ public class LayoutPrototypeLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	 *             Map, String, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,

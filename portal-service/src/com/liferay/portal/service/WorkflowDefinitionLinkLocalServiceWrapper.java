@@ -431,6 +431,7 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public WorkflowDefinitionLinkLocalService getWrappedWorkflowDefinitionLinkLocalService() {
 		return _workflowDefinitionLinkLocalService;
 	}
@@ -438,6 +439,7 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 		_workflowDefinitionLinkLocalService = workflowDefinitionLinkLocalService;

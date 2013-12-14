@@ -308,6 +308,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public BrowserTracker getWrappedBrowserTracker() {
 		return _browserTracker;
 	}

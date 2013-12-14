@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.servlet.DynamicServletRequest}
  */
+@Deprecated
 public class DynamicServletRequest
 	extends com.liferay.portal.kernel.servlet.DynamicServletRequest {
 

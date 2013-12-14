@@ -137,6 +137,7 @@ public class RoleServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.RoleSoap addRole(
 		java.lang.String name, java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,

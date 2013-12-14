@@ -71,6 +71,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	String, String, java.util.List, boolean, double, boolean,
 	com.liferay.portal.service.ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long groupId, long categoryId, long threadId, long parentMessageId,
@@ -334,6 +335,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MBMessageService getWrappedMBMessageService() {
 		return _mbMessageService;
 	}
@@ -341,6 +343,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMBMessageService(MBMessageService mbMessageService) {
 		_mbMessageService = mbMessageService;
 	}

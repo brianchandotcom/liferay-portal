@@ -960,6 +960,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
 	*/
+	@Deprecated
 	@Override
 	public boolean isChild(long groupId) {
 		return _group.isChild(groupId);
@@ -968,6 +969,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	/**
 	* @deprecated As of 6.1.0, renamed to {@link #isRegularSite}
 	*/
+	@Deprecated
 	@Override
 	public boolean isCommunity() {
 		return _group.isCommunity();
@@ -1105,6 +1107,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Group getWrappedGroup() {
 		return _group;
 	}

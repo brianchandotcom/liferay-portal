@@ -883,6 +883,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public LayoutSetBranch getWrappedLayoutSetBranch() {
 		return _layoutSetBranch;
 	}

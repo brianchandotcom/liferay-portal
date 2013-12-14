@@ -22,6 +22,7 @@ import java.util.Collection;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.portal.kernel.util.UniqueList}
  */
+@Deprecated
 public class UniqueList<E>
 	extends com.liferay.portal.kernel.util.UniqueList<E> {
 

@@ -354,6 +354,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserId()}
 	 */
+	@Deprecated
 	@Override
 	public long getVersionUserId() {
 		long versionUserId = 0;
@@ -373,6 +374,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserName()}
 	 */
+	@Deprecated
 	@Override
 	public String getVersionUserName() {
 		String versionUserName = StringPool.BLANK;
@@ -392,6 +394,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserUuid()}
 	 */
+	@Deprecated
 	@Override
 	public String getVersionUserUuid() {
 		String versionUserUuid = StringPool.BLANK;

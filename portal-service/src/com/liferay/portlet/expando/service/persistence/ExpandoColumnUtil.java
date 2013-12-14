@@ -697,6 +697,7 @@ public class ExpandoColumnUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(ExpandoColumnPersistence persistence) {
 	}
 

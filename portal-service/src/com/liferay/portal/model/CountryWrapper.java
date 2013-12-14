@@ -453,6 +453,7 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Country getWrappedCountry() {
 		return _country;
 	}

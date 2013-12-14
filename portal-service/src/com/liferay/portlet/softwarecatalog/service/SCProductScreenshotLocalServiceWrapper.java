@@ -335,6 +335,7 @@ public class SCProductScreenshotLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SCProductScreenshotLocalService getWrappedSCProductScreenshotLocalService() {
 		return _scProductScreenshotLocalService;
 	}
@@ -342,6 +343,7 @@ public class SCProductScreenshotLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSCProductScreenshotLocalService(
 		SCProductScreenshotLocalService scProductScreenshotLocalService) {
 		_scProductScreenshotLocalService = scProductScreenshotLocalService;

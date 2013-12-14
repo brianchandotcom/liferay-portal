@@ -26,6 +26,7 @@ public class NotificationThreadLocal {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isEnabled}
 	 */
+	@Deprecated
 	public static boolean isNotificationEnabled() {
 		return isEnabled();
 	}
@@ -37,6 +38,7 @@ public class NotificationThreadLocal {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setEnabled(boolean)}
 	 */
+	@Deprecated
 	public static void setNotificationEnabled(boolean notificationEnabled) {
 		setEnabled(notificationEnabled);
 	}

@@ -1345,6 +1345,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 
 	protected Map<Long, Boolean> companyAdmins = new HashMap<Long, Boolean>();

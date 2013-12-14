@@ -63,6 +63,10 @@ import java.util.Map;
  * @generated
  */
 
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 <#if pluginName == "">
 	@ProviderType
 </#if>
@@ -82,6 +86,11 @@ public class ${entity.name}ServiceSoap {
 			<#assign soapModelName = packagePath + ".model." + entity.name + "Soap">
 
 			${serviceBuilder.getJavadocComment(method)}
+
+			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
+				@Deprecated
+			</#if>
+
 			public static
 
 			<#if returnValueName == extendedModelName>

@@ -838,6 +838,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
+	@Deprecated
 	@Override
 	public boolean getApproved() {
 		return _blogsEntry.getApproved();
@@ -1077,6 +1078,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public BlogsEntry getWrappedBlogsEntry() {
 		return _blogsEntry;
 	}

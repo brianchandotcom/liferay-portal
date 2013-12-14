@@ -112,6 +112,7 @@ public class StringUtil_IW {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public java.lang.String highlight(java.lang.String s,
 		java.lang.String keywords) {
 		return StringUtil.highlight(s, keywords);
@@ -120,6 +121,7 @@ public class StringUtil_IW {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public java.lang.String highlight(java.lang.String s,
 		java.lang.String keywords, java.lang.String highlight1,
 		java.lang.String highlight2) {
@@ -351,6 +353,7 @@ public class StringUtil_IW {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public java.lang.String remove(java.lang.String s, java.lang.String element) {
 		return StringUtil.remove(s, element);
 	}
@@ -358,6 +361,7 @@ public class StringUtil_IW {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public java.lang.String remove(java.lang.String s,
 		java.lang.String element, java.lang.String delimiter) {
 		return StringUtil.remove(s, element, delimiter);

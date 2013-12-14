@@ -1084,6 +1084,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #hasUpdateFieldPermission(User, String)}
 	 */
+	@Deprecated
 	@Override
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
@@ -1146,6 +1147,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #hasUpdateFieldPermission(User, String)}
 	 */
+	@Deprecated
 	@Override
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)

@@ -326,6 +326,7 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Shard getWrappedShard() {
 		return _shard;
 	}

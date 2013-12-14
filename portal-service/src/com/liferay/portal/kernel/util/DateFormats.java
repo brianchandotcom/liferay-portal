@@ -24,6 +24,7 @@ import java.util.TimeZone;
  * @deprecated As of 6.2.0, replaced by {@link DateFormatFactoryUtil} or {@link
  *             FastDateFormatFactoryUtil}
  */
+@Deprecated
 public class DateFormats {
 
 	public static DateFormat getDate(Locale locale) {

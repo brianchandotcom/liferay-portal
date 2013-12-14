@@ -422,6 +422,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
 	int, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
 		long companyId, int scope, int start, int end,
@@ -435,6 +436,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
 	int, int)}
 	*/
+	@Deprecated
 	@Override
 	public int getCompanyRecordsCount(long companyId, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -607,6 +609,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DDLRecordLocalService getWrappedDDLRecordLocalService() {
 		return _ddlRecordLocalService;
 	}
@@ -614,6 +617,7 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDDLRecordLocalService(
 		DDLRecordLocalService ddlRecordLocalService) {
 		_ddlRecordLocalService = ddlRecordLocalService;

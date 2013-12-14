@@ -410,6 +410,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *             String, String, boolean, byte[], String, String, String,
 	 *             String, String, String, String, String, String)}
 	 */
+	@Deprecated
 	@Override
 	public Company updateCompany(
 			long companyId, String virtualHost, String mx, String homeURL,
@@ -466,6 +467,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *             String, java.util.List, java.util.List, java.util.List,
 	 *             java.util.List, UnicodeProperties)}
 	 */
+	@Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public Company updateCompany(

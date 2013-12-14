@@ -68,6 +68,7 @@ public class WebsiteServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #addWebsite( String, long,
 	String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.WebsiteSoap addWebsite(
 		java.lang.String className, long classPK, java.lang.String url,
 		int typeId, boolean primary) throws RemoteException {

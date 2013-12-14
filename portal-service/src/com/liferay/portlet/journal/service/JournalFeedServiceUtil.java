@@ -87,6 +87,7 @@ public class JournalFeedServiceUtil {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
 	*/
+	@Deprecated
 	public static void deleteFeed(long groupId, long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -109,6 +110,7 @@ public class JournalFeedServiceUtil {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.journal.model.JournalFeed getFeed(
 		long groupId, long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -156,6 +158,7 @@ public class JournalFeedServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(JournalFeedService service) {
 	}
 

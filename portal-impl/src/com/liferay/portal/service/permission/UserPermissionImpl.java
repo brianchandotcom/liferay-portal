@@ -40,6 +40,7 @@ public class UserPermissionImpl implements UserPermission {
 	 * @deprecated As of 6.2.0, replaced by {@link #check(PermissionChecker,
 	 *             long, long[], String)}
 	 */
+	@Deprecated
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, long userId,
@@ -76,6 +77,7 @@ public class UserPermissionImpl implements UserPermission {
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
 	 *             long, long[], String)}
 	 */
+	@Deprecated
 	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, long userId, long organizationId,

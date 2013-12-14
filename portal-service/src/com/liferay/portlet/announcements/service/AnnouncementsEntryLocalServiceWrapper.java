@@ -343,6 +343,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 	String, String, String, String, int, int, int, int, int,
 	boolean, int, int, int, int, int, int, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry addEntry(
 		long userId, long classNameId, long classPK, java.lang.String title,
@@ -525,6 +526,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AnnouncementsEntryLocalService getWrappedAnnouncementsEntryLocalService() {
 		return _announcementsEntryLocalService;
 	}
@@ -532,6 +534,7 @@ public class AnnouncementsEntryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAnnouncementsEntryLocalService(
 		AnnouncementsEntryLocalService announcementsEntryLocalService) {
 		_announcementsEntryLocalService = announcementsEntryLocalService;

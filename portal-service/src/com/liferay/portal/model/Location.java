@@ -20,5 +20,6 @@ import java.io.Serializable;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.1.0
  */
+@Deprecated
 public interface Location extends Serializable {
 }

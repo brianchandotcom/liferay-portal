@@ -510,6 +510,7 @@ public class DLSyncEventUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(DLSyncEventPersistence persistence) {
 	}
 

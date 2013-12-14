@@ -106,6 +106,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	java.util.List, java.util.List, java.util.List,
 	java.util.List, java.util.List, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
@@ -158,6 +159,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
@@ -325,6 +327,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
 	int, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Organization> getManageableOrganizations(
 		java.lang.String actionId, int max)
@@ -540,6 +543,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
@@ -589,6 +593,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	long, String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
@@ -689,6 +694,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
@@ -749,6 +755,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public OrganizationService getWrappedOrganizationService() {
 		return _organizationService;
 	}
@@ -756,6 +763,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedOrganizationService(
 		OrganizationService organizationService) {
 		_organizationService = organizationService;

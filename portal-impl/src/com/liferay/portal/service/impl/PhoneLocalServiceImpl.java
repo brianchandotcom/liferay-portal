@@ -42,6 +42,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addPhone(long, String, long,
 	 *             String, String, int, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Phone addPhone(
 			long userId, String className, long classPK, String number,

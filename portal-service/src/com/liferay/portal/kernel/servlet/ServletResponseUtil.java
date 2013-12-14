@@ -206,6 +206,7 @@ public class ServletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			HttpServletResponse response, String fileName, byte[] bytes)
 		throws IOException {
@@ -216,6 +217,7 @@ public class ServletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			HttpServletResponse response, String fileName, byte[] bytes,
 			String contentType)
@@ -227,6 +229,7 @@ public class ServletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			HttpServletResponse response, String fileName,
 			InputStream inputStream)
@@ -238,6 +241,7 @@ public class ServletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			HttpServletResponse response, String fileName,
 			InputStream inputStream, int contentLength, String contentType)
@@ -250,6 +254,7 @@ public class ServletResponseUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void sendFile(
 			HttpServletResponse response, String fileName,
 			InputStream inputStream, String contentType)

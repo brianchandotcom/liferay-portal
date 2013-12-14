@@ -702,6 +702,7 @@ public class AssetEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
 	String, String, int, int, int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		java.lang.String keywords, int start, int end)
@@ -725,6 +726,7 @@ public class AssetEntryLocalServiceUtil {
 	String, String, String, String, String, String, int, boolean,
 	int, int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		java.lang.String userName, java.lang.String title,
@@ -754,6 +756,7 @@ public class AssetEntryLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #search(long, long[], long,
 	String, String, int, int, int)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, java.lang.String className, java.lang.String keywords,
 		int start, int end)
@@ -797,6 +800,7 @@ public class AssetEntryLocalServiceUtil {
 	Date, Date, String, String, String, String, String, String,
 	int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long userId, long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
@@ -822,6 +826,7 @@ public class AssetEntryLocalServiceUtil {
 	boolean, Date, Date, Date, String, String, String, String,
 	String, String, int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long userId, long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
@@ -886,6 +891,7 @@ public class AssetEntryLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AssetEntryLocalService service) {
 	}
 

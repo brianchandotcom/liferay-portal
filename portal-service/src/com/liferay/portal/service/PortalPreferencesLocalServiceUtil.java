@@ -282,6 +282,7 @@ public class PortalPreferencesLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
 	int, String)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long companyId, long ownerId, int ownerType,
 		java.lang.String defaultPreferences)
@@ -307,6 +308,7 @@ public class PortalPreferencesLocalServiceUtil {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
 	*/
+	@Deprecated
 	public static javax.portlet.PortletPreferences getPreferences(
 		long companyId, long ownerId, int ownerType)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -317,6 +319,7 @@ public class PortalPreferencesLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
 	String)}
 	*/
+	@Deprecated
 	public static javax.portlet.PortletPreferences getPreferences(
 		long companyId, long ownerId, int ownerType,
 		java.lang.String defaultPreferences)
@@ -354,6 +357,7 @@ public class PortalPreferencesLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(PortalPreferencesLocalService service) {
 	}
 

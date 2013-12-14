@@ -335,6 +335,7 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	* @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,
 	String, int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
 		java.lang.String className, java.lang.String tableName, int start,
@@ -358,6 +359,7 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	* @deprecated As of 6.1.0, replaced by {@link #getRowsCount(long, String,
 	String)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRowsCount(java.lang.String className,
 		java.lang.String tableName)

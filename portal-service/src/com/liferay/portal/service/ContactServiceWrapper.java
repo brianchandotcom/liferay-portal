@@ -77,6 +77,7 @@ public class ContactServiceWrapper implements ContactService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ContactService getWrappedContactService() {
 		return _contactService;
 	}
@@ -84,6 +85,7 @@ public class ContactServiceWrapper implements ContactService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedContactService(ContactService contactService) {
 		_contactService = contactService;
 	}

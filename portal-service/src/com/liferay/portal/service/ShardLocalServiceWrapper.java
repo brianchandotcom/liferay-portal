@@ -291,6 +291,7 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ShardLocalService getWrappedShardLocalService() {
 		return _shardLocalService;
 	}
@@ -298,6 +299,7 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedShardLocalService(ShardLocalService shardLocalService) {
 		_shardLocalService = shardLocalService;
 	}

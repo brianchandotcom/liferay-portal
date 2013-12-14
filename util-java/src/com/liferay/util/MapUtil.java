@@ -20,5 +20,6 @@ package com.liferay.util;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.util.MapUtil}
  */
+@Deprecated
 public class MapUtil extends com.liferay.portal.kernel.util.MapUtil {
 }

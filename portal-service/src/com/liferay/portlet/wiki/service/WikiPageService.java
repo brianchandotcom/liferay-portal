@@ -118,6 +118,7 @@ public interface WikiPageService extends BaseService {
 	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
 	double)}
 	*/
+	@Deprecated
 	public void deletePage(long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -172,6 +173,7 @@ public interface WikiPageService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #getNodePagesRSS(long, int,
 	String, double, String, String, String, String)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
@@ -241,6 +243,7 @@ public interface WikiPageService extends BaseService {
 	String, int, String, double, String, String, String, String,
 	java.util.Locale)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getPagesRSS(long companyId, long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,

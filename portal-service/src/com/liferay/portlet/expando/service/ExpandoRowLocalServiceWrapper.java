@@ -424,6 +424,7 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	* @deprecated As of 6.1.0, replaced by {@link #getRows(long, String,
 	String, int, int)}
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getRows(
 		java.lang.String className, java.lang.String tableName, int start,
@@ -457,6 +458,7 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	* @deprecated As of 6.1.0, replaced by {@link #getRowsCount(long, String,
 	String)}
 	*/
+	@Deprecated
 	@Override
 	public int getRowsCount(java.lang.String className,
 		java.lang.String tableName)
@@ -467,6 +469,7 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ExpandoRowLocalService getWrappedExpandoRowLocalService() {
 		return _expandoRowLocalService;
 	}
@@ -474,6 +477,7 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedExpandoRowLocalService(
 		ExpandoRowLocalService expandoRowLocalService) {
 		_expandoRowLocalService = expandoRowLocalService;

@@ -60,6 +60,7 @@ import java.util.Date;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.cal.Recurrence}
  */
+@Deprecated
 public class Recurrence implements Serializable {
 
 	/**

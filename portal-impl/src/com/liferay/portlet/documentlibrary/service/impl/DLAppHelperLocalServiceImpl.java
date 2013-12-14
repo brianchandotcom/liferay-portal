@@ -403,6 +403,7 @@ public class DLAppHelperLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getFileShortcuts(long, long,
 	 *             boolean, int)}
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileShortcut> getFileShortcuts(
 			long groupId, long folderId, int status)
@@ -424,6 +425,7 @@ public class DLAppHelperLocalServiceImpl
 	 * @deprecated As of 6.2.0, replaced by {@link #getFileShortcutsCount(long,
 	 *             long, boolean, int)}
 	 */
+	@Deprecated
 	@Override
 	public int getFileShortcutsCount(long groupId, long folderId, int status)
 		throws SystemException {

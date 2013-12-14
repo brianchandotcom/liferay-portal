@@ -257,6 +257,7 @@ public interface PortletLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Portlet clonePortlet(long companyId,
 		java.lang.String portletId);
 

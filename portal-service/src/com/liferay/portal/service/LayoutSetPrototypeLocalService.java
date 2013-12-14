@@ -291,6 +291,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link
 	#getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
 		java.lang.String uuid)

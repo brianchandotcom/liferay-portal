@@ -19,5 +19,6 @@ package com.liferay.portal.security.pwd;
  * @author     Scott Lee
  * @deprecated As of 6.2.0, replaced by {@link PasswordEncryptorUtil}
  */
+@Deprecated
 public class PwdEncryptor extends PasswordEncryptorUtil {
 }

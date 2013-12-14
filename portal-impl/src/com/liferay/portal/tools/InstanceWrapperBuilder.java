@@ -126,6 +126,7 @@ public class InstanceWrapperBuilder {
 				sb.append("\t/**\n");
 				sb.append("\t * @deprecated\n");
 				sb.append("\t */\n");
+				sb.append("\t@Deprecated\n");
 			}
 
 			sb.append("public ");

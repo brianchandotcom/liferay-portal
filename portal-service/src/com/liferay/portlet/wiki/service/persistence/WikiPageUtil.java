@@ -6739,6 +6739,7 @@ public class WikiPageUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(WikiPagePersistence persistence) {
 	}
 

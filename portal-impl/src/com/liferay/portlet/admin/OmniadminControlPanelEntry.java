@@ -19,6 +19,7 @@ package com.liferay.portlet.admin;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.portlet.OmniadminControlPanelEntry}
  */
+@Deprecated
 public class OmniadminControlPanelEntry
 	extends com.liferay.portlet.OmniadminControlPanelEntry {
 }

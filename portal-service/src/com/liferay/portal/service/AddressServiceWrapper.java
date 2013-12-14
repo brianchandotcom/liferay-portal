@@ -55,6 +55,7 @@ public class AddressServiceWrapper implements AddressService,
 	String, String, String, String, String, long, long, int,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Address addAddress(
 		java.lang.String className, long classPK, java.lang.String street1,
@@ -118,6 +119,7 @@ public class AddressServiceWrapper implements AddressService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AddressService getWrappedAddressService() {
 		return _addressService;
 	}
@@ -125,6 +127,7 @@ public class AddressServiceWrapper implements AddressService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAddressService(AddressService addressService) {
 		_addressService = addressService;
 	}

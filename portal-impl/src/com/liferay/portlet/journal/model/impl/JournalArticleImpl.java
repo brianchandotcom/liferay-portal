@@ -129,6 +129,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getAvailableLanguageIds}
 	 */
+	@Deprecated
 	@Override
 	public String[] getAvailableLocales() {
 		return getAvailableLanguageIds();
@@ -154,6 +155,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
 	 */
+	@Deprecated
 	@Override
 	public String getDefaultLocale() {
 		return getDefaultLanguageId();

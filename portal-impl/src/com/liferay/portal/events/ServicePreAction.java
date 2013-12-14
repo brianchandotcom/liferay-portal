@@ -1957,6 +1957,7 @@ public class ServicePreAction extends Action {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	protected boolean isViewableCommunity(
 			User user, long groupId, boolean privateLayout,
 			PermissionChecker permissionChecker)
@@ -1969,6 +1970,7 @@ public class ServicePreAction extends Action {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	protected boolean isViewableGroup(
 			User user, long groupId, boolean privateLayout, long layoutId,
 			String controlPanelCategory, PermissionChecker permissionChecker)

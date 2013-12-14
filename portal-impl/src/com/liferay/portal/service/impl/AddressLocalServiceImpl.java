@@ -46,6 +46,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	 *             long, String, String, String, String, String, long, long,
 	 *             int, boolean, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Address addAddress(
 			long userId, String className, long classPK, String street1,

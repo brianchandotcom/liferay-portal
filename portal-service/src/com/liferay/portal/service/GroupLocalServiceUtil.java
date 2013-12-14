@@ -922,6 +922,7 @@ public class GroupLocalServiceUtil {
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Group addGroup(long userId,
 		long parentGroupId, java.lang.String className, long classPK,
 		java.lang.String name, java.lang.String description, int type,
@@ -963,6 +964,7 @@ public class GroupLocalServiceUtil {
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Group addGroup(long userId,
 		java.lang.String className, long classPK, long liveGroupId,
 		java.lang.String name, java.lang.String description, int type,
@@ -1002,6 +1004,7 @@ public class GroupLocalServiceUtil {
 	long, long, String, String, int, boolean, int, String,
 	boolean, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Group addGroup(long userId,
 		java.lang.String className, long classPK, java.lang.String name,
 		java.lang.String description, int type, java.lang.String friendlyURL,
@@ -2917,6 +2920,7 @@ public class GroupLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(GroupLocalService service) {
 	}
 

@@ -73,6 +73,7 @@ public class ExpandoTableLocalServiceImpl
 	 * @deprecated As of 6.1.0, replaced by {@link #addTable(long, long,
 	 *             String)}
 	 */
+	@Deprecated
 	@Override
 	public ExpandoTable addTable(long classNameId, String name)
 		throws PortalException, SystemException {
@@ -95,6 +96,7 @@ public class ExpandoTableLocalServiceImpl
 	 * @deprecated As of 6.1.0, replaced by {@link #addTable(long, String,
 	 *             String)}
 	 */
+	@Deprecated
 	@Override
 	public ExpandoTable addTable(String className, String name)
 		throws PortalException, SystemException {
@@ -245,6 +247,7 @@ public class ExpandoTableLocalServiceImpl
 	 * @deprecated As of 6.1.0, replaced by {@link #getTable(long, long,
 	 *             String)}
 	 */
+	@Deprecated
 	@Override
 	public ExpandoTable getTable(long classNameId, String name)
 		throws PortalException, SystemException {
@@ -267,6 +270,7 @@ public class ExpandoTableLocalServiceImpl
 	 * @deprecated As of 6.1.0, replaced by {@link #getTable(long, String,
 	 *             String)}
 	 */
+	@Deprecated
 	@Override
 	public ExpandoTable getTable(String className, String name)
 		throws PortalException, SystemException {

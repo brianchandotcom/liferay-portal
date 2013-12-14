@@ -71,18 +71,21 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#PATH_PREFIX_GROUP}
 	 */
+	@Deprecated
 	public static final String ROOT_PATH_GROUPS = "/groups/";
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#PATH_PREFIX_LAYOUT}
 	 */
+	@Deprecated
 	public static final String ROOT_PATH_LAYOUTS = "/layouts/";
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#PATH_PREFIX_PORTLET}
 	 */
+	@Deprecated
 	public static final String ROOT_PATH_PORTLETS = "/portlets/";
 
 	public void addAssetCategories(Class<?> clazz, long classPK)
@@ -110,6 +113,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
 	 *             ClassedModel, Class)}
 	 */
+	@Deprecated
 	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel,
 			Class<?> clazz, String namespace)
@@ -119,6 +123,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
 	 *             String, ClassedModel)}
 	 */
+	@Deprecated
 	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel,
 			String namespace)
@@ -209,6 +214,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #createServiceContext(Element, ClassedModel)}
 	 */
+	@Deprecated
 	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel, String namespace);
 
@@ -224,6 +230,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link #createServiceContext(String,
 	 *             ClassedModel)}
 	 */
+	@Deprecated
 	public ServiceContext createServiceContext(
 		String path, ClassedModel classedModel, String namespace);
 
@@ -296,6 +303,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#getLayoutPath(PortletDataContext, long)}
 	 */
+	@Deprecated
 	public String getLayoutPath(long plid);
 
 	public Map<String, Lock> getLocks();
@@ -323,6 +331,7 @@ public interface PortletDataContext extends Serializable {
 	 *             ExportImportPathUtil#getPortletPath(PortletDataContext,
 	 *             String)}
 	 */
+	@Deprecated
 	public String getPortletPath(String portletId);
 
 	public Set<String> getPrimaryKeys();
@@ -364,6 +373,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#getRootPath(PortletDataContext)}
 	 */
+	@Deprecated
 	public String getRootPath();
 
 	public Set<String> getScopedPrimaryKeys();
@@ -385,6 +395,7 @@ public interface PortletDataContext extends Serializable {
 	 *             ExportImportPathUtil#getSourceLayoutPath(PortletDataContext,
 	 *             long)}
 	 */
+	@Deprecated
 	public String getSourceLayoutPath(long layoutId);
 
 	/**
@@ -392,12 +403,14 @@ public interface PortletDataContext extends Serializable {
 	 *             ExportImportPathUtil#getSourcePortletPath(
 	 *             PortletDataContext, String)}
 	 */
+	@Deprecated
 	public String getSourcePortletPath(String portletId);
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#getSourceRootPath(PortletDataContext)}
 	 */
+	@Deprecated
 	public String getSourceRootPath();
 
 	public long getSourceUserPersonalSiteGroupId();
@@ -451,6 +464,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #importClassedModel(ClassedModel, ClassedModel, Class)}
 	 */
+	@Deprecated
 	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,
 			Class<?> clazz, String namespace)
@@ -460,6 +474,7 @@ public interface PortletDataContext extends Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #importClassedModel(ClassedModel, ClassedModel)}
 	 */
+	@Deprecated
 	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,
 			String namespace)

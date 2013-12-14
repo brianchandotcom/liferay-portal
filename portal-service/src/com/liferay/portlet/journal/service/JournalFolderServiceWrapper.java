@@ -247,6 +247,7 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JournalFolderService getWrappedJournalFolderService() {
 		return _journalFolderService;
 	}
@@ -254,6 +255,7 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJournalFolderService(
 		JournalFolderService journalFolderService) {
 		_journalFolderService = journalFolderService;

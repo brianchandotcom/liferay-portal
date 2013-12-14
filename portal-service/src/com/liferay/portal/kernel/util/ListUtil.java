@@ -187,6 +187,7 @@ public class ListUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public static <E> boolean remove(List<E> list, E element) {
 		Iterator<E> itr = list.iterator();
 

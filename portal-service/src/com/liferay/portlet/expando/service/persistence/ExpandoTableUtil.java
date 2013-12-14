@@ -534,6 +534,7 @@ public class ExpandoTableUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(ExpandoTablePersistence persistence) {
 	}
 

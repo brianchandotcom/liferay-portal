@@ -20,5 +20,6 @@ import com.liferay.portal.spring.aop.ChainableMethodAdvice;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.2.0
  */
+@Deprecated
 public class PACLAdvice extends ChainableMethodAdvice {
 }

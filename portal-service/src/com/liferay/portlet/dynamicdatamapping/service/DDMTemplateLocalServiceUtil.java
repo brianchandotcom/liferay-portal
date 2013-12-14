@@ -1291,6 +1291,7 @@ public class DDMTemplateLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DDMTemplateLocalService service) {
 	}
 

@@ -8624,6 +8624,7 @@ public class JournalArticleUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(JournalArticlePersistence persistence) {
 	}
 

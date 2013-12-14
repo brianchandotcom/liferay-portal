@@ -1309,6 +1309,7 @@ public class LayoutSetPrototypeUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(LayoutSetPrototypePersistence persistence) {
 	}
 

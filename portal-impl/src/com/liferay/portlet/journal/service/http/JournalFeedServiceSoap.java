@@ -106,6 +106,7 @@ public class JournalFeedServiceSoap {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
 	*/
+	@Deprecated
 	public static void deleteFeed(long groupId, long feedId)
 		throws RemoteException {
 		try {
@@ -147,6 +148,7 @@ public class JournalFeedServiceSoap {
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.journal.model.JournalFeedSoap getFeed(
 		long groupId, long feedId) throws RemoteException {
 		try {

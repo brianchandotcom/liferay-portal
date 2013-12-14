@@ -59,6 +59,7 @@ import org.apache.struts.action.ActionMapping;
  * @author     Raymond Augé
  * @deprecated As of 6.2.0, replaced by {@link PreviewArticleContentAction}
  */
+@Deprecated
 public class ViewArticleContentAction extends Action {
 
 	@Override

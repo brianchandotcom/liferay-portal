@@ -2483,6 +2483,7 @@ public class BookmarksFolderUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(BookmarksFolderPersistence persistence) {
 	}
 

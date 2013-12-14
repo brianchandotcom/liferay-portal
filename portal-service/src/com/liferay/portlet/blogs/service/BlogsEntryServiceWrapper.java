@@ -254,6 +254,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public BlogsEntryService getWrappedBlogsEntryService() {
 		return _blogsEntryService;
 	}
@@ -261,6 +262,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedBlogsEntryService(BlogsEntryService blogsEntryService) {
 		_blogsEntryService = blogsEntryService;
 	}

@@ -386,6 +386,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public WorkflowInstanceLinkLocalService getWrappedWorkflowInstanceLinkLocalService() {
 		return _workflowInstanceLinkLocalService;
 	}
@@ -393,6 +394,7 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedWorkflowInstanceLinkLocalService(
 		WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
 		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;

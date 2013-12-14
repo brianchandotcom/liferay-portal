@@ -54,6 +54,7 @@ public class PhoneServiceWrapper implements PhoneService,
 	* @deprecated As of 6.2.0, replaced by {@link #addPhone( String, long,
 	String, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Phone addPhone(java.lang.String className,
 		long classPK, java.lang.String number, java.lang.String extension,
@@ -110,6 +111,7 @@ public class PhoneServiceWrapper implements PhoneService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PhoneService getWrappedPhoneService() {
 		return _phoneService;
 	}
@@ -117,6 +119,7 @@ public class PhoneServiceWrapper implements PhoneService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPhoneService(PhoneService phoneService) {
 		_phoneService = phoneService;
 	}

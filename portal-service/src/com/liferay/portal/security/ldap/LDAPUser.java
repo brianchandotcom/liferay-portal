@@ -214,6 +214,7 @@ public class LDAPUser {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #setMale(boolean)}
 	 */
+	@Deprecated
 	public void isMale(boolean male) {
 		setMale(male);
 	}

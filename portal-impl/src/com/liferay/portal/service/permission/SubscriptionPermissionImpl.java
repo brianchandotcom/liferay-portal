@@ -57,6 +57,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 	 * @deprecated As of 6.2.0, replaced by {@link #check(PermissionChecker,
 	 *             String, long, String, long)}
 	 */
+	@Deprecated
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, String className, long classPK)
@@ -84,6 +85,7 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
 	 *             String, long, String, long)}
 	 */
+	@Deprecated
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, String className, long classPK)

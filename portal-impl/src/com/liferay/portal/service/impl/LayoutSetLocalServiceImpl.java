@@ -210,6 +210,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	 *             #updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
 	 *             String)}
 	 */
+	@Deprecated
 	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,

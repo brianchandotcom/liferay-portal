@@ -20,6 +20,7 @@ package com.liferay.util.format;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.format.PhoneNumberFormat}
  */
+@Deprecated
 public interface PhoneNumberFormat
 	extends com.liferay.portal.kernel.format.PhoneNumberFormat {
 }

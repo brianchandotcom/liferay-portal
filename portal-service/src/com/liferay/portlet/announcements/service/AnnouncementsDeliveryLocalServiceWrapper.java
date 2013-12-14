@@ -356,6 +356,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AnnouncementsDeliveryLocalService getWrappedAnnouncementsDeliveryLocalService() {
 		return _announcementsDeliveryLocalService;
 	}
@@ -363,6 +364,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAnnouncementsDeliveryLocalService(
 		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
 		_announcementsDeliveryLocalService = announcementsDeliveryLocalService;

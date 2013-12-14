@@ -578,6 +578,7 @@ public class SCFrameworkVersionLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(SCFrameworkVersionLocalService service) {
 	}
 

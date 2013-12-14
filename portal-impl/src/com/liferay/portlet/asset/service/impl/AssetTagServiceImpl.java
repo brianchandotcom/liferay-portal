@@ -148,6 +148,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupTagsDisplay(long,
 	 *             String, int, int)}
 	 */
+	@Deprecated
 	@Override
 	public JSONObject getJSONGroupTags(
 			long groupId, String name, int start, int end)

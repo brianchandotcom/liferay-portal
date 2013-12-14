@@ -203,6 +203,7 @@ public interface Localization {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getLocalizationMap(PortletRequest, String)}
 	 */
+	@Deprecated
 	public Map<Locale, String> getLocalizedParameter(
 		PortletRequest portletRequest, String parameter);
 

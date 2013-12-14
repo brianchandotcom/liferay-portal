@@ -457,6 +457,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Release getWrappedRelease() {
 		return _release;
 	}

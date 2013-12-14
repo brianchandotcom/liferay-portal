@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.portal.kernel.util.CookieKeys}
  */
+@Deprecated
 public class CookieUtil {
 
 	public static String get(HttpServletRequest request, String name) {

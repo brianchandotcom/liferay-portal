@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
  * @author     Ganesh Ram
  * @deprecated As of 6.1.0
  */
+@Deprecated
 public abstract class DBUtil implements DB {
 
 	public static DB getInstance() {

@@ -335,6 +335,7 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ClassNameLocalService getWrappedClassNameLocalService() {
 		return _classNameLocalService;
 	}
@@ -342,6 +343,7 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {
 		_classNameLocalService = classNameLocalService;

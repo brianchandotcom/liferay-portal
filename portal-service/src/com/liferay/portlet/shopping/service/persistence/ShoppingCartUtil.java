@@ -668,6 +668,7 @@ public class ShoppingCartUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(ShoppingCartPersistence persistence) {
 	}
 

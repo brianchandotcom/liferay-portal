@@ -401,6 +401,7 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MBDiscussionLocalService getWrappedMBDiscussionLocalService() {
 		return _mbDiscussionLocalService;
 	}
@@ -408,6 +409,7 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMBDiscussionLocalService(
 		MBDiscussionLocalService mbDiscussionLocalService) {
 		_mbDiscussionLocalService = mbDiscussionLocalService;

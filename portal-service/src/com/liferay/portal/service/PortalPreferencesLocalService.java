@@ -252,6 +252,7 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addPortalPreferences(long,
 	int, String)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.PortalPreferences addPortalPreferences(
 		long companyId, long ownerId, int ownerType,
 		java.lang.String defaultPreferences)
@@ -270,6 +271,7 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType)
@@ -279,6 +281,7 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getPreferences(long, int,
 	String)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType, java.lang.String defaultPreferences)

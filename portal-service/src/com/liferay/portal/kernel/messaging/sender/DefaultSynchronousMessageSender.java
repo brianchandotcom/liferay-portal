@@ -36,6 +36,7 @@ public class DefaultSynchronousMessageSender
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public DefaultSynchronousMessageSender(
 		MessageBus messageBus, PortalUUID portalUUID, long timeout) {
 

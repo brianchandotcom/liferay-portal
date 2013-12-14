@@ -147,6 +147,7 @@ public interface UsersAdmin {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #hasUpdateFieldPermission(User, String)}
 	 */
+	@Deprecated
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException;
@@ -158,6 +159,7 @@ public interface UsersAdmin {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #hasUpdateFieldPermission(User, String)}
 	 */
+	@Deprecated
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException;

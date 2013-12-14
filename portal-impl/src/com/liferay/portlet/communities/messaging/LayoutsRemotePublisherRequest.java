@@ -22,6 +22,7 @@ import java.util.Map;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.messaging.LayoutsRemotePublisherRequest}
  */
+@Deprecated
 public class LayoutsRemotePublisherRequest
 	extends com.liferay.portal.messaging.LayoutsRemotePublisherRequest {
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 Dynamic Data Mapping framework to handle templates
  * @generated
  */
+@Deprecated
 @ProviderType
 public class JournalTemplateLocalServiceUtil {
 	/*
@@ -326,6 +327,7 @@ public class JournalTemplateLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(JournalTemplateLocalService service) {
 	}
 

@@ -280,6 +280,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	/**
 	 * @deprecated As of 7.0.0
 	 */
+	@Deprecated
 	@Override
 	public String getViewTemplatesTitle(
 		DDMStructure structure, boolean controlPanel, Locale locale) {

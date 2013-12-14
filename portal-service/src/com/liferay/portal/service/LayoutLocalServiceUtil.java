@@ -391,6 +391,7 @@ public class LayoutLocalServiceUtil {
 	boolean, long, Map, Map, Map, Map, Map, String, String,
 	boolean, Map, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Layout addLayout(long userId,
 		long groupId, boolean privateLayout, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -1616,6 +1617,7 @@ public class LayoutLocalServiceUtil {
 	long, long, Map, Map, Map, Map, Map, String, boolean, Map,
 	Boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.Layout updateLayout(long groupId,
 		boolean privateLayout, long layoutId, long parentLayoutId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -1883,6 +1885,7 @@ public class LayoutLocalServiceUtil {
 	/**
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/
+	@Deprecated
 	public static void updateScopedPortletNames(long groupId,
 		boolean privateLayout, long layoutId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -1908,6 +1911,7 @@ public class LayoutLocalServiceUtil {
 	* @see com.liferay.portlet.portletconfiguration.action.EditScopeAction
 	* @deprecated As of 6.2.0, with no direct replacement
 	*/
+	@Deprecated
 	public static void updateScopedPortletNames(long groupId,
 		boolean privateLayout, long layoutId, java.lang.String name,
 		java.lang.String languageId)
@@ -1976,6 +1980,7 @@ public class LayoutLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(LayoutLocalService service) {
 	}
 

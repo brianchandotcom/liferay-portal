@@ -52,6 +52,7 @@ import java.util.Map;
  * @deprecated As of 6.2.0, since Web Content Administration now uses the
  *             Dynamic Data Mapping framework to handle structures
  */
+@Deprecated
 public class JournalStructureLocalServiceImpl
 	extends JournalStructureLocalServiceBaseImpl {
 

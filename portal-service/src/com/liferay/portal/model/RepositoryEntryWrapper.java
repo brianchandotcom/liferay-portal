@@ -543,6 +543,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public RepositoryEntry getWrappedRepositoryEntry() {
 		return _repositoryEntry;
 	}

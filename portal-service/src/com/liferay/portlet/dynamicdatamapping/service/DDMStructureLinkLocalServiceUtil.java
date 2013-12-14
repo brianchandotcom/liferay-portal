@@ -352,6 +352,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(DDMStructureLinkLocalService service) {
 	}
 

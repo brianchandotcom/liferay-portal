@@ -129,6 +129,7 @@ public class SocialActivitySettingServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(SocialActivitySettingService service) {
 	}
 

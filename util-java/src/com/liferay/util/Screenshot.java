@@ -19,5 +19,6 @@ package com.liferay.util;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.plugin.Screenshot}
  */
+@Deprecated
 public class Screenshot extends com.liferay.portal.kernel.plugin.Screenshot {
 }

@@ -186,6 +186,7 @@ public class AssetEntryServiceSoap {
 	Date, String, String, String, String, String, String, int,
 	int, Integer, boolean)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntrySoap updateEntry(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
@@ -218,6 +219,7 @@ public class AssetEntryServiceSoap {
 	Date, Date, Date, String, String, String, String, String,
 	String, int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntrySoap updateEntry(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,

@@ -31,6 +31,7 @@ public class ToggleValueTag extends TagSupport {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void doTag(
 			String id, PageContext pageContext, HttpServletRequest request)
 		throws Exception {

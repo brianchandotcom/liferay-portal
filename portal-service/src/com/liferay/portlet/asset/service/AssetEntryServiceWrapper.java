@@ -122,6 +122,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	Date, String, String, String, String, String, String, int,
 	int, Integer, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long groupId, java.lang.String className, long classPK,
@@ -147,6 +148,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	Date, Date, Date, String, String, String, String, String,
 	String, int, int, Integer, boolean)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
 		long groupId, java.lang.String className, long classPK,
@@ -168,6 +170,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetEntryService getWrappedAssetEntryService() {
 		return _assetEntryService;
 	}
@@ -175,6 +178,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetEntryService(AssetEntryService assetEntryService) {
 		_assetEntryService = assetEntryService;
 	}

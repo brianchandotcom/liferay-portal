@@ -999,6 +999,7 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */
+	@Deprecated
 	@Override
 	public boolean getApproved();
 

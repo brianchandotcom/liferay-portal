@@ -231,6 +231,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.kernel.language.LanguageUtil#getAvailableLocales}
 	 */
+	@Deprecated
 	public static Locale[] getAlternateLocales(HttpServletRequest request)
 		throws PortalException, SystemException {
 
@@ -266,6 +267,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions}
 	 */
+	@Deprecated
 	public static Set<String> getAuthTokenIgnoreActions() {
 		return getPortal().getAuthTokenIgnoreActions();
 	}
@@ -274,6 +276,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelist}
 	 */
+	@Deprecated
 	public static Set<String> getAuthTokenIgnorePortlets() {
 		return getPortal().getAuthTokenIgnorePortlets();
 	}
@@ -345,6 +348,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getCDNHost(boolean)}
 	 */
+	@Deprecated
 	public static String getCDNHost() {
 		return getPortal().getCDNHost();
 	}
@@ -545,6 +549,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link DBFactoryUtil#getDB()}
 	 */
+	@Deprecated
 	public static DB getDB() {
 		return DBFactoryUtil.getDB();
 	}
@@ -953,6 +958,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.1.0, replaced by {@link
 	 *             #getBaseModel(ResourcePermission)}
 	 */
+	@Deprecated
 	public static BaseModel<?> getModel(ResourcePermission resourcePermission)
 		throws PortalException, SystemException {
 
@@ -963,6 +969,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.1.0, replaced by {@link #getBaseModel(String,
 	 *             String)}
 	 */
+	@Deprecated
 	public static BaseModel<?> getModel(String modelName, String primKey)
 		throws PortalException, SystemException {
 
@@ -992,6 +999,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
 	 */
+	@Deprecated
 	public static long getParentGroupId(long scopeGroupId)
 		throws PortalException, SystemException {
 
@@ -1075,6 +1083,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getPortalPort(boolean)}
 	 */
+	@Deprecated
 	public static int getPortalPort() {
 		return getPortal().getPortalPort();
 	}
@@ -1133,6 +1142,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0 replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelist}
 	 */
+	@Deprecated
 	public static Set<String> getPortletAddDefaultResourceCheckWhitelist() {
 		return getPortal().getPortletAddDefaultResourceCheckWhitelist();
 	}
@@ -1141,6 +1151,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0 replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelistActions}
 	 */
+	@Deprecated
 	public static Set<String>
 		getPortletAddDefaultResourceCheckWhitelistActions() {
 
@@ -1151,6 +1162,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.1.0, replaced by {@link
 	 *             #getPortletBreadcrumbs(HttpServletRequest)}
 	 */
+	@Deprecated
 	public static List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request) {
 
@@ -1656,6 +1668,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.2.0 with no direct replacement
 	 */
+	@Deprecated
 	public static boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {
@@ -1677,6 +1690,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(User, long)}
 	 */
+	@Deprecated
 	public static boolean isCommunityAdmin(User user, long groupId)
 		throws Exception {
 
@@ -1686,6 +1700,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(User, long)}
 	 */
+	@Deprecated
 	public static boolean isCommunityOwner(User user, long groupId)
 		throws Exception {
 
@@ -1849,6 +1864,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0 replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelist}
 	 */
+	@Deprecated
 	public static Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
 		return getPortal().resetPortletAddDefaultResourceCheckWhitelist();
 	}
@@ -1857,6 +1873,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0 replaced by {@link
 	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions}
 	 */
+	@Deprecated
 	public static Set<String>
 		resetPortletAddDefaultResourceCheckWhitelistActions() {
 
@@ -1867,6 +1884,7 @@ public class PortalUtil {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link DB#runSQL(String)}
 	 */
+	@Deprecated
 	public static void runSQL(String sql) throws IOException, SQLException {
 		DBFactoryUtil.getDB().runSQL(sql);
 	}

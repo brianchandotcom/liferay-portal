@@ -516,6 +516,7 @@ public class AnnouncementsFlagUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(AnnouncementsFlagPersistence persistence) {
 	}
 

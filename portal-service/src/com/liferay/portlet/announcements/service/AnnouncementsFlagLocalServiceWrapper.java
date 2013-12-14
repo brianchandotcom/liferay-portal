@@ -321,6 +321,7 @@ public class AnnouncementsFlagLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AnnouncementsFlagLocalService getWrappedAnnouncementsFlagLocalService() {
 		return _announcementsFlagLocalService;
 	}
@@ -328,6 +329,7 @@ public class AnnouncementsFlagLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAnnouncementsFlagLocalService(
 		AnnouncementsFlagLocalService announcementsFlagLocalService) {
 		_announcementsFlagLocalService = announcementsFlagLocalService;

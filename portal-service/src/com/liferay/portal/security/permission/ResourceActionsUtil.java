@@ -37,12 +37,14 @@ public class ResourceActionsUtil {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getActionNamePrefix}
 	 */
+	@Deprecated
 	public static final String ACTION_NAME_PREFIX =
 		ResourceActions.ACTION_NAME_PREFIX;
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getModelResourceNamePrefix}
 	 */
+	@Deprecated
 	public static final String MODEL_RESOURCE_NAME_PREFIX =
 		ResourceActions.MODEL_RESOURCE_NAME_PREFIX;
 
@@ -50,12 +52,14 @@ public class ResourceActionsUtil {
 	 * @deprecated As of 6.1.0, replaced by {@link
 	 *             #getOrganizationModelResources}
 	 */
+	@Deprecated
 	public static final String[] ORGANIZATION_MODEL_RESOURCES =
 		ResourceActions.ORGANIZATION_MODEL_RESOURCES;
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getPortalModelResources}
 	 */
+	@Deprecated
 	public static final String[] PORTAL_MODEL_RESOURCES =
 		ResourceActions.PORTAL_MODEL_RESOURCES;
 
@@ -235,6 +239,7 @@ public class ResourceActionsUtil {
 	 * @deprecated As of 6.1.0, replaced by {@link #getRoles(long, Group,
 	 *             String, int[])}
 	 */
+	@Deprecated
 	public static List<Role> getRoles(
 			long companyId, Group group, String modelResource)
 		throws SystemException {
@@ -257,6 +262,7 @@ public class ResourceActionsUtil {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	public static void init() {
 	}
 

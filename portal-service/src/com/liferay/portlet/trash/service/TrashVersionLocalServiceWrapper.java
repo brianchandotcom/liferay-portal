@@ -323,6 +323,7 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public TrashVersionLocalService getWrappedTrashVersionLocalService() {
 		return _trashVersionLocalService;
 	}
@@ -330,6 +331,7 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedTrashVersionLocalService(
 		TrashVersionLocalService trashVersionLocalService) {
 		_trashVersionLocalService = trashVersionLocalService;

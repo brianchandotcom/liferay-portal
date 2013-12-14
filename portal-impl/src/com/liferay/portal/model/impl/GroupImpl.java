@@ -592,6 +592,7 @@ public class GroupImpl extends GroupBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
 	 */
+	@Deprecated
 	@Override
 	public boolean isChild(long groupId) {
 		return hasAncestor(groupId);
@@ -600,6 +601,7 @@ public class GroupImpl extends GroupBaseImpl {
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isRegularSite}
 	 */
+	@Deprecated
 	@Override
 	public boolean isCommunity() {
 		return isRegularSite();

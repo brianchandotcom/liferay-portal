@@ -490,6 +490,7 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MDRRuleGroupInstanceLocalService getWrappedMDRRuleGroupInstanceLocalService() {
 		return _mdrRuleGroupInstanceLocalService;
 	}
@@ -497,6 +498,7 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMDRRuleGroupInstanceLocalService(
 		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
 		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;

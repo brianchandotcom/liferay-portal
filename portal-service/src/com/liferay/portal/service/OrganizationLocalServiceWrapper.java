@@ -701,6 +701,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization addOrganization(long userId,
 		long parentOrganizationId, java.lang.String name,
@@ -1625,6 +1626,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	long, long, String, String, long, long, int, String, boolean,
 	byte[], boolean, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization updateOrganization(
 		long companyId, long organizationId, long parentOrganizationId,
@@ -1707,6 +1709,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	long, long, String, String, long, long, int, String, boolean,
 	boolean, byte[], ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Organization updateOrganization(
 		long companyId, long organizationId, long parentOrganizationId,
@@ -1723,6 +1726,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public OrganizationLocalService getWrappedOrganizationLocalService() {
 		return _organizationLocalService;
 	}
@@ -1730,6 +1734,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedOrganizationLocalService(
 		OrganizationLocalService organizationLocalService) {
 		_organizationLocalService = organizationLocalService;

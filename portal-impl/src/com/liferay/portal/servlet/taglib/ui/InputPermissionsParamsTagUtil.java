@@ -45,6 +45,7 @@ import javax.servlet.jsp.PageContext;
  * @deprecated As of 6.2.0, replaced by {@link
  *             com.liferay.taglib.ui.InputPermissionsParamsTag}
  */
+@Deprecated
 public class InputPermissionsParamsTagUtil {
 
 	public static void doEndTag(String modelName, PageContext pageContext)

@@ -318,6 +318,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
 	 *             String, ClassedModel, Class)}
 	 */
+	@Deprecated
 	@Override
 	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel,
@@ -331,6 +332,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	 * @deprecated As of 6.2.0, replaced by {@link #addClassedModel(Element,
 	 *             String, ClassedModel)}
 	 */
+	@Deprecated
 	@Override
 	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel,
@@ -739,6 +741,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #createServiceContext(Element, ClassedModel)}
 	 */
+	@Deprecated
 	@Override
 	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel, String namespace) {
@@ -773,6 +776,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	 * @deprecated As of 6.2.0, replaced by {@link #createServiceContext(String,
 	 *             ClassedModel)}
 	 */
+	@Deprecated
 	@Override
 	public ServiceContext createServiceContext(
 		String path, ClassedModel classedModel, String namespace) {
@@ -1453,6 +1457,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #importClassedModel(ClassedModel, ClassedModel, Class)}
 	 */
+	@Deprecated
 	@Override
 	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,
@@ -1466,6 +1471,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #importClassedModel(ClassedModel, ClassedModel)}
 	 */
+	@Deprecated
 	@Override
 	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,

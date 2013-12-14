@@ -295,6 +295,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
 	long, boolean, long, long)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)

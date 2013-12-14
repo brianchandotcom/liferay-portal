@@ -177,6 +177,7 @@ public class OrganizationLocalServiceImpl
 	 *             String, String, long, long, int, String, boolean,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization addOrganization(
 			long userId, long parentOrganizationId, String name, String type,
@@ -1616,6 +1617,7 @@ public class OrganizationLocalServiceImpl
 	 *             long, long, String, String, long, long, int, String, boolean,
 	 *             byte[], boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization updateOrganization(
 			long companyId, long organizationId, long parentOrganizationId,
@@ -1798,6 +1800,7 @@ public class OrganizationLocalServiceImpl
 	 *             long, long, String, String, long, long, int, String, boolean,
 	 *             boolean, byte[], ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Organization updateOrganization(
 			long companyId, long organizationId, long parentOrganizationId,

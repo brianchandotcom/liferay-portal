@@ -21,6 +21,7 @@ import java.security.BasicPermission;
  * @author     Zsolt Berentey
  * @deprecated As of 6.2.0
  */
+@Deprecated
 public class CheckMemberAccessPermission extends BasicPermission {
 
 	public CheckMemberAccessPermission(

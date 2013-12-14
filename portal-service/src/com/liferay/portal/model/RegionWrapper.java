@@ -342,6 +342,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Region getWrappedRegion() {
 		return _region;
 	}

@@ -41,6 +41,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
 	 *             String, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype addLayoutPrototype(
 			Map<Locale, String> nameMap, String description, boolean active)
@@ -121,6 +122,7 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #updateLayoutPrototype(long,
 	 *             Map, String, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public LayoutPrototype updateLayoutPrototype(
 			long layoutPrototypeId, Map<Locale, String> nameMap,

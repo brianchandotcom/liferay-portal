@@ -156,6 +156,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             long, long, boolean, long, String, String, boolean,
 	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public DLFolder addFolder(
 			long userId, long groupId, long repositoryId, boolean mountPoint,
@@ -403,6 +404,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<Object> getFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, int start, int end)
@@ -429,6 +431,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFileEntriesAndFileShortcutsCount(long, long,
 	 *             QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status)
@@ -532,6 +535,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status,
@@ -551,6 +555,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
@@ -580,6 +585,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status,
@@ -597,6 +603,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
 	 *             String[], boolean, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
@@ -1014,6 +1021,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	@Override
 	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException, SystemException {

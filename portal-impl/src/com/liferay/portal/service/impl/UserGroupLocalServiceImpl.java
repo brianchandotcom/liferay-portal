@@ -117,6 +117,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
 	 *             String, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public UserGroup addUserGroup(
 			long userId, long companyId, String name, String description)
@@ -244,6 +245,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	@Override
 	public void copyUserGroupLayouts(long userGroupId, long userId)
 		throws PortalException, SystemException {
@@ -277,6 +279,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
 		throws PortalException, SystemException {
@@ -313,6 +316,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws PortalException, SystemException {
@@ -829,6 +833,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
 	 *             String, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public UserGroup updateUserGroup(
 			long companyId, long userGroupId, String name, String description)

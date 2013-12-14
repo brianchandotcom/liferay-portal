@@ -308,6 +308,7 @@ public class SocialActivityLimitLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SocialActivityLimitLocalService getWrappedSocialActivityLimitLocalService() {
 		return _socialActivityLimitLocalService;
 	}
@@ -315,6 +316,7 @@ public class SocialActivityLimitLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSocialActivityLimitLocalService(
 		SocialActivityLimitLocalService socialActivityLimitLocalService) {
 		_socialActivityLimitLocalService = socialActivityLimitLocalService;

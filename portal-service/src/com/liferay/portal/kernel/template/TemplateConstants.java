@@ -26,6 +26,7 @@ public interface TemplateConstants {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";
 
 	public static final String LANG_TYPE_CSS = "css";

@@ -314,6 +314,7 @@ public class AnnouncementsFlagLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AnnouncementsFlagLocalService service) {
 	}
 

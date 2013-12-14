@@ -19,5 +19,6 @@ package com.liferay.portal.words;
  * @deprecated As of 7.0.0, moved to {@link
  *             com.liferay.portal.kernel.words.WordsUtil}
  */
+@Deprecated
 public class WordsUtil extends com.liferay.portal.kernel.words.WordsUtil {
 }

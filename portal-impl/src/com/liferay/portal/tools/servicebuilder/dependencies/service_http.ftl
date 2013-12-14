@@ -42,6 +42,11 @@ import com.liferay.portal.service.http.TunnelUtil;
 </#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 public class ${entity.name}ServiceHttp {
 
 	<#assign hasMethods = false>

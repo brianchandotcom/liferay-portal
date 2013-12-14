@@ -480,6 +480,7 @@ public class StagingImpl implements Staging {
 	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
 	 *             Group, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void disableStaging(
 			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
@@ -493,6 +494,7 @@ public class StagingImpl implements Staging {
 	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
 	 *             Group, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void disableStaging(Group liveGroup, ServiceContext serviceContext)
 		throws Exception {
@@ -505,6 +507,7 @@ public class StagingImpl implements Staging {
 	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
 	 *             PortletRequest, Group, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void disableStaging(
 			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,
@@ -519,6 +522,7 @@ public class StagingImpl implements Staging {
 	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
 	 *             PortletRequest, Group, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void disableStaging(
 			PortletRequest portletRequest, Group liveGroup,
@@ -534,6 +538,7 @@ public class StagingImpl implements Staging {
 	 *             com.liferay.portal.service.StagingLocalService#enableLocalStaging(
 	 *             long, Group, boolean, boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void enableLocalStaging(
 			long userId, Group scopeGroup, Group liveGroup,
@@ -552,6 +557,7 @@ public class StagingImpl implements Staging {
 	 *             long, Group, boolean, boolean, String, int, String, boolean,
 	 *             long, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public void enableRemoteStaging(
 			long userId, Group scopeGroup, Group liveGroup,

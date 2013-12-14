@@ -138,6 +138,7 @@ public class PortalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(PortalService service) {
 	}
 

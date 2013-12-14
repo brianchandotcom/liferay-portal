@@ -1115,6 +1115,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	 *             #replaceImportContentReferences(PortletDataContext,
 	 *             StagedModel, Element, String, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, Element entityElement,
@@ -1148,6 +1149,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
 	 *             String, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext, Element entityElement,

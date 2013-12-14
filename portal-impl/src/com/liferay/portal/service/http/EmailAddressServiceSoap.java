@@ -68,6 +68,7 @@ public class EmailAddressServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress( String,
 	long, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.EmailAddressSoap addEmailAddress(
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary) throws RemoteException {

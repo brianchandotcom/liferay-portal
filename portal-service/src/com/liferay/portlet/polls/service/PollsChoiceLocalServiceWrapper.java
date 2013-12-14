@@ -394,6 +394,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PollsChoiceLocalService getWrappedPollsChoiceLocalService() {
 		return _pollsChoiceLocalService;
 	}
@@ -401,6 +402,7 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPollsChoiceLocalService(
 		PollsChoiceLocalService pollsChoiceLocalService) {
 		_pollsChoiceLocalService = pollsChoiceLocalService;

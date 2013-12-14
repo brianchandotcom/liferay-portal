@@ -179,11 +179,13 @@ public interface PermissionChecker extends Cloneable {
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupAdmin(long)}
 	 */
+	@Deprecated
 	public boolean isCommunityAdmin(long groupId);
 
 	/**
 	 * @deprecated As of 6.1.0, renamed to {@link #isGroupOwner(long)}
 	 */
+	@Deprecated
 	public boolean isCommunityOwner(long groupId);
 
 	/**
@@ -282,11 +284,13 @@ public interface PermissionChecker extends Cloneable {
 	/**
 	 * @deprecated As of 6.2.0, does nothing
 	 */
+	@Deprecated
 	public void resetValues();
 
 	/**
 	 * @deprecated As of 6.2.0, does nothing
 	 */
+	@Deprecated
 	public void setValues(PortletRequest portletRequest);
 
 }

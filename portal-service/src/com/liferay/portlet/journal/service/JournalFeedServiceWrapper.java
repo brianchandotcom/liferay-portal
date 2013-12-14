@@ -81,6 +81,7 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
 	*/
+	@Deprecated
 	@Override
 	public void deleteFeed(long groupId, long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -105,6 +106,7 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed getFeed(long groupId,
 		long feedId)
@@ -143,6 +145,7 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JournalFeedService getWrappedJournalFeedService() {
 		return _journalFeedService;
 	}
@@ -150,6 +153,7 @@ public class JournalFeedServiceWrapper implements JournalFeedService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJournalFeedService(
 		JournalFeedService journalFeedService) {
 		_journalFeedService = journalFeedService;

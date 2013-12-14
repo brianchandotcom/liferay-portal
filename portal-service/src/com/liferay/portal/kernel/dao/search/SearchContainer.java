@@ -50,6 +50,7 @@ public class SearchContainer<R> {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #DEFAULT_CUR}.
 	 */
+	@Deprecated
 	public static final int DEFAULT_CUR_VALUE = DEFAULT_CUR;
 
 	public static final int DEFAULT_DELTA = GetterUtil.getInteger(
@@ -64,6 +65,7 @@ public class SearchContainer<R> {
 	/**
 	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
+	@Deprecated
 	public static final int DEFAULT_MAX_PAGES = 25;
 
 	public static final String DEFAULT_ORDER_BY_COL_PARAM = "orderByCol";
@@ -193,6 +195,7 @@ public class SearchContainer<R> {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getCur}
 	 */
+	@Deprecated
 	public int getCurValue() {
 		return getCur();
 	}
@@ -272,6 +275,7 @@ public class SearchContainer<R> {
 	/**
 	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
+	@Deprecated
 	public int getMaxPages() {
 		return _maxPages;
 	}
@@ -415,6 +419,7 @@ public class SearchContainer<R> {
 	/**
 	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
+	@Deprecated
 	public void setMaxPages(int maxPages) {
 		_maxPages = maxPages;
 	}
@@ -531,6 +536,7 @@ public class SearchContainer<R> {
 	/**
 	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
+	@Deprecated
 	private int _maxPages = DEFAULT_MAX_PAGES;
 
 	private List<String> _normalizedHeaderNames;

@@ -316,6 +316,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
@@ -369,6 +370,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter addActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
@@ -484,6 +486,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
@@ -536,6 +539,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #addActivityCounter(long,
 	long, long, String, int, int, long, int)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter createActivityCounter(
 		long groupId, long classNameId, long classPK, java.lang.String name,
@@ -941,6 +945,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SocialActivityCounterLocalService getWrappedSocialActivityCounterLocalService() {
 		return _socialActivityCounterLocalService;
 	}
@@ -948,6 +953,7 @@ public class SocialActivityCounterLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSocialActivityCounterLocalService(
 		SocialActivityCounterLocalService socialActivityCounterLocalService) {
 		_socialActivityCounterLocalService = socialActivityCounterLocalService;

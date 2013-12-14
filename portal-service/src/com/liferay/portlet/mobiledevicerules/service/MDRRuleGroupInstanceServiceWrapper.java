@@ -112,6 +112,7 @@ public class MDRRuleGroupInstanceServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MDRRuleGroupInstanceService getWrappedMDRRuleGroupInstanceService() {
 		return _mdrRuleGroupInstanceService;
 	}
@@ -119,6 +120,7 @@ public class MDRRuleGroupInstanceServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMDRRuleGroupInstanceService(
 		MDRRuleGroupInstanceService mdrRuleGroupInstanceService) {
 		_mdrRuleGroupInstanceService = mdrRuleGroupInstanceService;

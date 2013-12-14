@@ -848,6 +848,7 @@ public class AssetTagPropertyUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(AssetTagPropertyPersistence persistence) {
 	}
 

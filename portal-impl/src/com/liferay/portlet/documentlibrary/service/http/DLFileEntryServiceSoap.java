@@ -99,6 +99,7 @@ public class DLFileEntryServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #checkInFileEntry(long,
 	String, ServiceContext)}
 	*/
+	@Deprecated
 	public static void checkInFileEntry(long fileEntryId,
 		java.lang.String lockUuid) throws RemoteException {
 		try {
@@ -130,6 +131,7 @@ public class DLFileEntryServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap checkOutFileEntry(
 		long fileEntryId) throws RemoteException {
 		try {
@@ -165,6 +167,7 @@ public class DLFileEntryServiceSoap {
 	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
 	String, long, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap checkOutFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime)
 		throws RemoteException {

@@ -350,6 +350,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecords(long, int,
 	int, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getCompanyRecords(
 		long companyId, int scope, int start, int end,
@@ -360,6 +361,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #getCompanyRecordsCount(long,
 	int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyRecordsCount(long companyId, int scope)
 		throws com.liferay.portal.kernel.exception.SystemException;

@@ -95,6 +95,7 @@ public class PageContextWrapper extends PageContext {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public javax.servlet.jsp.el.ExpressionEvaluator getExpressionEvaluator() {
 		return _pageContext.getExpressionEvaluator();
@@ -138,6 +139,7 @@ public class PageContextWrapper extends PageContext {
 	/**
 	 * @deprecated As of 6.1.0
 	 */
+	@Deprecated
 	@Override
 	public javax.servlet.jsp.el.VariableResolver getVariableResolver() {
 		return _pageContext.getVariableResolver();

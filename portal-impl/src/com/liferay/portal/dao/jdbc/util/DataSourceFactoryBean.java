@@ -19,6 +19,7 @@ package com.liferay.portal.dao.jdbc.util;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean}
  */
+@Deprecated
 public class DataSourceFactoryBean
 	extends com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean {
 }

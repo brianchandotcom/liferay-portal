@@ -104,6 +104,7 @@ public class RoleServiceWrapper implements RoleService,
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.model.Role addRole(java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -372,6 +373,7 @@ public class RoleServiceWrapper implements RoleService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public RoleService getWrappedRoleService() {
 		return _roleService;
 	}
@@ -379,6 +381,7 @@ public class RoleServiceWrapper implements RoleService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedRoleService(RoleService roleService) {
 		_roleService = roleService;
 	}

@@ -67,6 +67,7 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getAvailableLanguageIds}
 	*/
+	@java.lang.Deprecated()
 	public java.lang.String[] getAvailableLocales();
 
 	public java.lang.String getContentByLocale(java.lang.String languageId);
@@ -74,6 +75,7 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
 	*/
+	@java.lang.Deprecated()
 	public java.lang.String getDefaultLocale();
 
 	public com.liferay.portlet.journal.model.JournalFolder getFolder()

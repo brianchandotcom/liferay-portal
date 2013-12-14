@@ -338,6 +338,7 @@ public class LayoutSetBranchLocalServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
 	long, boolean, long, long)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -392,6 +393,7 @@ public class LayoutSetBranchLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(LayoutSetBranchLocalService service) {
 	}
 

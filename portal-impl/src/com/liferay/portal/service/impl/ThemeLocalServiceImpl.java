@@ -247,6 +247,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
 	 */
+	@Deprecated
 	@Override
 	public List<Theme> getThemes(
 			long companyId, long groupId, long userId, boolean wapTheme)

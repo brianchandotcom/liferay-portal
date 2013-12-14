@@ -476,6 +476,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public Team getWrappedTeam() {
 		return _team;
 	}

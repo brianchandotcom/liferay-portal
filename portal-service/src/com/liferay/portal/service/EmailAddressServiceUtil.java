@@ -63,6 +63,7 @@ public class EmailAddressServiceUtil {
 	* @deprecated As of 6.2.0, replaced by {@link #addEmailAddress( String,
 	long, String, int, boolean, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.EmailAddress addEmailAddress(
 		java.lang.String className, long classPK, java.lang.String address,
 		int typeId, boolean primary)
@@ -126,6 +127,7 @@ public class EmailAddressServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(EmailAddressService service) {
 	}
 

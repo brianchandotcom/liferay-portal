@@ -58,6 +58,7 @@ import javax.sql.DataSource;
             Dynamic Data Mapping framework to handle structures
  * @generated
  */
+@Deprecated
 public abstract class JournalStructureLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements JournalStructureLocalService,
 		IdentifiableBean {

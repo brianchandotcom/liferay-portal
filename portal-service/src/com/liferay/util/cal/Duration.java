@@ -53,6 +53,7 @@ import java.io.Serializable;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.cal.Duration}
  */
+@Deprecated
 public class Duration implements Cloneable, Serializable {
 
 	/**

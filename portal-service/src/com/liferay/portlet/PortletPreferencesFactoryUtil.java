@@ -72,6 +72,7 @@ public class PortletPreferencesFactoryUtil {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #fromXML(long, int, String)}
 	 */
+	@Deprecated
 	public static PortalPreferences fromXML(
 			long companyId, long ownerId, int ownerType, String xml)
 		throws SystemException {
@@ -107,6 +108,7 @@ public class PortletPreferencesFactoryUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getPortalPreferences(HttpSession, long, boolean)}
 	 */
+	@Deprecated
 	public static PortalPreferences getPortalPreferences(
 			HttpSession session, long companyId, long userId, boolean signedIn)
 		throws SystemException {
@@ -127,6 +129,7 @@ public class PortletPreferencesFactoryUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link #getPortalPreferences(long,
 	 *             boolean)}
 	 */
+	@Deprecated
 	public static PortalPreferences getPortalPreferences(
 			long companyId, long userId, boolean signedIn)
 		throws SystemException {

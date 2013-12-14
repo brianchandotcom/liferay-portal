@@ -113,6 +113,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	 *             long, long, String, String, String, UnicodeProperties,
 	 *             boolean, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Repository addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,

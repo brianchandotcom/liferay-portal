@@ -394,6 +394,7 @@ public class SubscriptionSender implements Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link #hasPermission(Subscription,
 	 *             String, long, User)}
 	 */
+	@Deprecated
 	protected boolean hasPermission(Subscription subscription, User user)
 		throws Exception {
 
@@ -404,6 +405,7 @@ public class SubscriptionSender implements Serializable {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #notifySubscriber(Subscription, String, long)}
 	 */
+	@Deprecated
 	protected void notifySubscriber(Subscription subscription)
 		throws Exception {
 

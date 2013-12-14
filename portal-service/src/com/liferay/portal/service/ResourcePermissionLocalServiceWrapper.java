@@ -977,6 +977,7 @@ public class ResourcePermissionLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ResourcePermissionLocalService getWrappedResourcePermissionLocalService() {
 		return _resourcePermissionLocalService;
 	}
@@ -984,6 +985,7 @@ public class ResourcePermissionLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedResourcePermissionLocalService(
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 		_resourcePermissionLocalService = resourcePermissionLocalService;

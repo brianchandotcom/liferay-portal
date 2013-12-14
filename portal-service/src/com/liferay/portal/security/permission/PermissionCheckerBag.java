@@ -48,6 +48,7 @@ public interface PermissionCheckerBag extends Serializable {
 	 * @deprecated As of 6.1.0, renamed to {@link
 	 *             #isGroupAdmin(PermissionChecker, Group)}
 	 */
+	@Deprecated
 	public boolean isCommunityAdmin(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;
@@ -56,6 +57,7 @@ public interface PermissionCheckerBag extends Serializable {
 	 * @deprecated As of 6.1.0, renamed to {@link
 	 *             #isGroupOwner(PermissionChecker, Group)}
 	 */
+	@Deprecated
 	public boolean isCommunityOwner(
 			PermissionChecker permissionChecker, Group group)
 		throws Exception;

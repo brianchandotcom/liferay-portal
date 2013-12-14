@@ -114,6 +114,7 @@ public interface OrganizationService extends BaseService {
 	java.util.List, java.util.List, java.util.List,
 	java.util.List, java.util.List, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -160,6 +161,7 @@ public interface OrganizationService extends BaseService {
 	String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -303,6 +305,7 @@ public interface OrganizationService extends BaseService {
 	* @deprecated As of 6.2.0, replaced by {@link #getOrganizations(long, long,
 	int, int)}
 	*/
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getManageableOrganizations(
 		java.lang.String actionId, int max)
@@ -491,6 +494,7 @@ public interface OrganizationService extends BaseService {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -534,6 +538,7 @@ public interface OrganizationService extends BaseService {
 	long, String, String, long, long, int, String, boolean,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, boolean recursable, long regionId,
@@ -623,6 +628,7 @@ public interface OrganizationService extends BaseService {
 	java.util.List, java.util.List, boolean, byte[],
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, int statusId,

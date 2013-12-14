@@ -79,6 +79,11 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableBean {
 
 		/*
@@ -102,6 +107,11 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableBean {
 
 		/*

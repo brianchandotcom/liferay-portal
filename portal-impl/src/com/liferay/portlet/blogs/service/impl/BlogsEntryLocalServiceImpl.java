@@ -385,6 +385,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
 	 *             Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getCompanyEntries(
 			long companyId, Date displayDate, int status, int start, int end)
@@ -400,6 +401,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
 	 *             Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getCompanyEntries(
 			long companyId, Date displayDate, int status, int start, int end,
@@ -435,6 +437,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntriesCount(long,
 	 *             Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getCompanyEntriesCount(
 			long companyId, Date displayDate, int status)
@@ -490,6 +493,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
 	 *             QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int start, int end)
@@ -505,6 +509,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long, Date,
 	 *             QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, Date displayDate, int status, int start, int end,
@@ -540,6 +545,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
 	 *             QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, int status, int start, int end)
@@ -555,6 +561,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntries(long,
 	 *             QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 			long groupId, int status, int start, int end, OrderByComparator obc)
@@ -589,6 +596,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
 	 *             Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getGroupEntriesCount(long groupId, Date displayDate, int status)
 		throws SystemException {
@@ -617,6 +625,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupEntriesCount(long,
 	 *             QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getGroupEntriesCount(long groupId, int status)
 		throws SystemException {
@@ -645,6 +654,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupsEntries(long, long,
 	 *             Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getGroupsEntries(
 			long companyId, long groupId, Date displayDate, int status,
@@ -672,6 +682,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
 	 *             long, Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getGroupUserEntries(
 			long groupId, long userId, Date displayDate, int status, int start,
@@ -689,6 +700,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getGroupUserEntries(long,
 	 *             long, Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getGroupUserEntries(
 			long groupId, long userId, Date displayDate, int status, int start,
@@ -726,6 +738,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getGroupUserEntriesCount(long, long, Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getGroupUserEntriesCount(
 			long groupId, long userId, Date displayDate, int status)
@@ -762,6 +775,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
 	 *             Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getOrganizationEntries(
 			long organizationId, Date displayDate, int status, int start,
@@ -779,6 +793,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #getOrganizationEntries(long,
 	 *             Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getOrganizationEntries(
 			long organizationId, Date displayDate, int status, int start,
@@ -806,6 +821,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getOrganizationEntriesCount(long, Date, QueryDefinition)}
 	 */
+	@Deprecated
 	@Override
 	public int getOrganizationEntriesCount(
 			long organizationId, Date displayDate, int status)

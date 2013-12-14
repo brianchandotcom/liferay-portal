@@ -412,6 +412,7 @@ public class BlogsStatsUserLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public BlogsStatsUserLocalService getWrappedBlogsStatsUserLocalService() {
 		return _blogsStatsUserLocalService;
 	}
@@ -419,6 +420,7 @@ public class BlogsStatsUserLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedBlogsStatsUserLocalService(
 		BlogsStatsUserLocalService blogsStatsUserLocalService) {
 		_blogsStatsUserLocalService = blogsStatsUserLocalService;

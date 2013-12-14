@@ -65,6 +65,7 @@ public class PasswordPolicyServiceUtil {
 	int, int, int, int, String, boolean, int, boolean, long,
 	long, int, boolean, int, long, long, long, ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		java.lang.String name, java.lang.String description,
 		boolean changeable, boolean changeRequired, long minAge,
@@ -119,6 +120,7 @@ public class PasswordPolicyServiceUtil {
 	long, long, int, boolean, int, long, long, long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
 		java.lang.String description, boolean changeable,
@@ -176,6 +178,7 @@ public class PasswordPolicyServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(PasswordPolicyService service) {
 	}
 

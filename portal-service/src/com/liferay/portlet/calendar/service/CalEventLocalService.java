@@ -319,6 +319,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	boolean, String, boolean, TZSRecurrence, int, int, int,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.calendar.model.CalEvent addEvent(long userId,
 		java.lang.String title, java.lang.String description,
 		java.lang.String location, int startDateMonth, int startDateDay,
@@ -491,6 +492,7 @@ public interface CalEventLocalService extends BaseLocalService,
 	boolean, boolean, String, boolean, TZSRecurrence, int, int,
 	int, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portlet.calendar.model.CalEvent updateEvent(
 		long userId, long eventId, java.lang.String title,
 		java.lang.String description, java.lang.String location,

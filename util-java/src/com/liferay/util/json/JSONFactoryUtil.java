@@ -19,6 +19,7 @@ package com.liferay.util.json;
  * @deprecated As of 6.1.0, replaced by {@link
  *             com.liferay.portal.kernel.json.JSONFactoryUtil}
  */
+@Deprecated
 public class JSONFactoryUtil
 	extends com.liferay.portal.kernel.json.JSONFactoryUtil {
 }

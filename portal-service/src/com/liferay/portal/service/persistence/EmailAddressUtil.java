@@ -1515,6 +1515,7 @@ public class EmailAddressUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(EmailAddressPersistence persistence) {
 	}
 

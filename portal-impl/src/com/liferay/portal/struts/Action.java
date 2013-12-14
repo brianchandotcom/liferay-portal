@@ -19,5 +19,6 @@ package com.liferay.portal.struts;
  * @deprecated As of 6.2.0, moved to {@link
  *             com.liferay.portal.kernel.events.Action}
  */
+@Deprecated
 public abstract class Action extends com.liferay.portal.kernel.events.Action {
 }

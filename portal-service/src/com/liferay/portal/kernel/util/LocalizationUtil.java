@@ -56,6 +56,7 @@ public class LocalizationUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getAvailableLanguageIds(String)}
 	 */
+	@Deprecated
 	public static String[] getAvailableLocales(String xml) {
 		return getAvailableLanguageIds(xml);
 	}
@@ -80,6 +81,7 @@ public class LocalizationUtil {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #getDefaultLanguageId(String)}
 	 */
+	@Deprecated
 	public static String getDefaultLocale(String xml) {
 		return getDefaultLanguageId(xml);
 	}
@@ -156,6 +158,7 @@ public class LocalizationUtil {
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getLocalizationMap}
 	 */
+	@Deprecated
 	public static Map<Locale, String> getLocalizedParameter(
 		PortletRequest portletRequest, String parameter) {
 

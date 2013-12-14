@@ -311,6 +311,7 @@ public class PasswordPolicyLocalServiceUtil {
 	boolean, long, long, int, boolean, int, long, long, long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
 		long userId, boolean defaultPolicy, java.lang.String name,
 		java.lang.String description, boolean changeable,
@@ -382,6 +383,7 @@ public class PasswordPolicyLocalServiceUtil {
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long companyId, long organizationId, long locationId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -423,6 +425,7 @@ public class PasswordPolicyLocalServiceUtil {
 	long, long, int, boolean, int, long, long, long,
 	ServiceContext)}
 	*/
+	@Deprecated
 	public static com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
 		long passwordPolicyId, java.lang.String name,
 		java.lang.String description, boolean changeable,
@@ -480,6 +483,7 @@ public class PasswordPolicyLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(PasswordPolicyLocalService service) {
 	}
 

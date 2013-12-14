@@ -535,6 +535,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public DDLRecordSetLocalService getWrappedDDLRecordSetLocalService() {
 		return _ddlRecordSetLocalService;
 	}
@@ -542,6 +543,7 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedDDLRecordSetLocalService(
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;

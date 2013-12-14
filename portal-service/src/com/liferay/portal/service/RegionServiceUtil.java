@@ -122,6 +122,7 @@ public class RegionServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(RegionService service) {
 	}
 

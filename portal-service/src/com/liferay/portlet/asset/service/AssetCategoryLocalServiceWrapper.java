@@ -773,6 +773,7 @@ public class AssetCategoryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AssetCategoryLocalService getWrappedAssetCategoryLocalService() {
 		return _assetCategoryLocalService;
 	}
@@ -780,6 +781,7 @@ public class AssetCategoryLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAssetCategoryLocalService(
 		AssetCategoryLocalService assetCategoryLocalService) {
 		_assetCategoryLocalService = assetCategoryLocalService;

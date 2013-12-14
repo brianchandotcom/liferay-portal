@@ -636,6 +636,7 @@ public class JournalFolderLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JournalFolderLocalService getWrappedJournalFolderLocalService() {
 		return _journalFolderLocalService;
 	}
@@ -643,6 +644,7 @@ public class JournalFolderLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 		_journalFolderLocalService = journalFolderLocalService;

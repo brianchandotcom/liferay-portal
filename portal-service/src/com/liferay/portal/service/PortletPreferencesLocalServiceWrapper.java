@@ -486,6 +486,7 @@ public class PortletPreferencesLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public PortletPreferencesLocalService getWrappedPortletPreferencesLocalService() {
 		return _portletPreferencesLocalService;
 	}
@@ -493,6 +494,7 @@ public class PortletPreferencesLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedPortletPreferencesLocalService(
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 		_portletPreferencesLocalService = portletPreferencesLocalService;

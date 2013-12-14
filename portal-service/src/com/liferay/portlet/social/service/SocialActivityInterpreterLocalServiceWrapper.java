@@ -91,6 +91,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
 	SocialActivity, ServiceContext)}
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityFeedEntry interpret(
 		com.liferay.portlet.social.model.SocialActivity activity,
@@ -142,6 +143,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SocialActivityInterpreterLocalService getWrappedSocialActivityInterpreterLocalService() {
 		return _socialActivityInterpreterLocalService;
 	}
@@ -149,6 +151,7 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSocialActivityInterpreterLocalService(
 		SocialActivityInterpreterLocalService socialActivityInterpreterLocalService) {
 		_socialActivityInterpreterLocalService = socialActivityInterpreterLocalService;

@@ -32,6 +32,7 @@ public class AuthTokenWrapper implements AuthToken {
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #checkCSRFToken(HttpServletRequest, String)}
 	 */
+	@Deprecated
 	@Override
 	public void check(HttpServletRequest request) throws PortalException {
 		_authToken.check(request);

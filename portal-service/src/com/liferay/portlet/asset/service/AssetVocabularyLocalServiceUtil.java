@@ -342,6 +342,7 @@ public class AssetVocabularyLocalServiceUtil {
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetVocabulary addVocabulary(
 		long userId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -480,6 +481,7 @@ public class AssetVocabularyLocalServiceUtil {
 	/**
 	* @deprecated As of 6.1.0
 	*/
+	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -520,6 +522,7 @@ public class AssetVocabularyLocalServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AssetVocabularyLocalService service) {
 	}
 

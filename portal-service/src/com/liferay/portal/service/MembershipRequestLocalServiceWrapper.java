@@ -353,6 +353,7 @@ public class MembershipRequestLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public MembershipRequestLocalService getWrappedMembershipRequestLocalService() {
 		return _membershipRequestLocalService;
 	}
@@ -360,6 +361,7 @@ public class MembershipRequestLocalServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedMembershipRequestLocalService(
 		MembershipRequestLocalService membershipRequestLocalService) {
 		_membershipRequestLocalService = membershipRequestLocalService;

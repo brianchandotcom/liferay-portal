@@ -27,6 +27,7 @@ import com.liferay.portal.service.ServiceWrapper;
 Dynamic Data Mapping framework to handle templates
  * @generated
  */
+@Deprecated
 @ProviderType
 public class JournalStructureServiceWrapper implements JournalStructureService,
 	ServiceWrapper<JournalStructureService> {
@@ -173,6 +174,7 @@ public class JournalStructureServiceWrapper implements JournalStructureService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public JournalStructureService getWrappedJournalStructureService() {
 		return _journalStructureService;
 	}
@@ -180,6 +182,7 @@ public class JournalStructureServiceWrapper implements JournalStructureService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedJournalStructureService(
 		JournalStructureService journalStructureService) {
 		_journalStructureService = journalStructureService;

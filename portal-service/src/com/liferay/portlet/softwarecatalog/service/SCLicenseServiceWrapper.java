@@ -90,6 +90,7 @@ public class SCLicenseServiceWrapper implements SCLicenseService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SCLicenseService getWrappedSCLicenseService() {
 		return _scLicenseService;
 	}
@@ -97,6 +98,7 @@ public class SCLicenseServiceWrapper implements SCLicenseService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSCLicenseService(SCLicenseService scLicenseService) {
 		_scLicenseService = scLicenseService;
 	}

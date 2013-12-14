@@ -177,6 +177,7 @@ public class WikiNodeServiceUtil {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(WikiNodeService service) {
 	}
 

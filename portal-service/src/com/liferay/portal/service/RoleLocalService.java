@@ -509,6 +509,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -541,6 +542,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
+	@Deprecated
 	public com.liferay.portal.model.Role addRole(long userId, long companyId,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

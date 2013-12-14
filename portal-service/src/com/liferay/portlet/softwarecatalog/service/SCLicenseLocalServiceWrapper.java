@@ -542,6 +542,7 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public SCLicenseLocalService getWrappedSCLicenseLocalService() {
 		return _scLicenseLocalService;
 	}
@@ -549,6 +550,7 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedSCLicenseLocalService(
 		SCLicenseLocalService scLicenseLocalService) {
 		_scLicenseLocalService = scLicenseLocalService;

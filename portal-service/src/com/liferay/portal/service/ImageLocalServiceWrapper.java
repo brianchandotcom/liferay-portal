@@ -338,6 +338,7 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public ImageLocalService getWrappedImageLocalService() {
 		return _imageLocalService;
 	}
@@ -345,6 +346,7 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedImageLocalService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}

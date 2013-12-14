@@ -22,6 +22,7 @@ import javax.servlet.ServletContext;
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.2.0, renamed to {@link ServletContextPool}.
  */
+@Deprecated
 public class VelocityContextPool {
 
 	public static boolean containsKey(String servletContextName) {

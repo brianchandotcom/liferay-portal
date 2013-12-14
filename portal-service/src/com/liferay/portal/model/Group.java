@@ -120,11 +120,13 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
 	*/
+	@java.lang.Deprecated()
 	public boolean isChild(long groupId);
 
 	/**
 	* @deprecated As of 6.1.0, renamed to {@link #isRegularSite}
 	*/
+	@java.lang.Deprecated()
 	public boolean isCommunity();
 
 	public boolean isCompany();

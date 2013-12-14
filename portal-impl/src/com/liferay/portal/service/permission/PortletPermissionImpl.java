@@ -266,8 +266,8 @@ public class PortletPermissionImpl implements PortletPermission {
 		Group group = layout.getGroup();
 
 		if (!group.isLayoutSetPrototype() &&
-			!SitesUtil.isLayoutUpdateable(layout) &&
-			actionId.equals(ActionKeys.CONFIGURATION)) {
+			actionId.equals(ActionKeys.CONFIGURATION) &&
+			!SitesUtil.isLayoutUpdateable(layout)) {
 
 			return false;
 		}

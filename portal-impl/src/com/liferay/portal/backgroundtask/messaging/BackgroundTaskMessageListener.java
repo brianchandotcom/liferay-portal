@@ -123,7 +123,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 
 			if (_log.isInfoEnabled()) {
 				if (statusMessage != null) {
-					statusMessage.concat(StackTraceUtil.getStackTrace(e));
+					statusMessage = statusMessage.concat(
+						StackTraceUtil.getStackTrace(e));
 				}
 				else {
 					statusMessage = StackTraceUtil.getStackTrace(e);

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
@@ -49,7 +48,7 @@ public class SocialActivitySettingLocalServiceImpl
 			long groupId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
 		SocialActivitySetting activitySetting =
@@ -177,7 +176,7 @@ public class SocialActivitySettingLocalServiceImpl
 			long groupId, String className, boolean enabled)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		SocialActivitySetting activitySetting =
 			socialActivitySettingPersistence.fetchByG_C_A_N(
@@ -210,7 +209,7 @@ public class SocialActivitySettingLocalServiceImpl
 			SocialActivityCounterDefinition activityCounterDefinition)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		SocialActivityDefinition defaultActivityDefinition =
 			SocialConfigurationUtil.getActivityDefinition(
@@ -267,7 +266,7 @@ public class SocialActivitySettingLocalServiceImpl
 			long groupId, String className, long classPK, boolean enabled)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
 		SocialActivitySetting activitySetting =
@@ -398,7 +397,7 @@ public class SocialActivitySettingLocalServiceImpl
 			long groupId, String className, int activityType)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<SocialActivitySetting> activitySettings =
 			socialActivitySettingPersistence.findByG_C_A(

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.ColumnNameException;
 import com.liferay.portlet.expando.ColumnTypeException;
 import com.liferay.portlet.expando.DuplicateColumnNameException;
@@ -131,7 +130,7 @@ public class ExpandoColumnLocalServiceImpl
 			long companyId, String className, String tableName, String name)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		deleteColumn(companyId, classNameId, tableName, name);
 	}
@@ -162,7 +161,7 @@ public class ExpandoColumnLocalServiceImpl
 			long companyId, String className, String tableName)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		deleteColumns(companyId, classNameId, tableName);
 	}
@@ -201,7 +200,7 @@ public class ExpandoColumnLocalServiceImpl
 			long companyId, String className, String tableName, String name)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumn(companyId, classNameId, tableName, name);
 	}
@@ -257,7 +256,7 @@ public class ExpandoColumnLocalServiceImpl
 			long companyId, String className, String tableName)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumns(companyId, classNameId, tableName);
 	}
@@ -268,7 +267,7 @@ public class ExpandoColumnLocalServiceImpl
 			Collection<String> columnNames)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumns(companyId, classNameId, tableName, columnNames);
 	}
@@ -298,7 +297,7 @@ public class ExpandoColumnLocalServiceImpl
 			long companyId, String className, String tableName)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumnsCount(companyId, classNameId, tableName);
 	}
@@ -318,7 +317,7 @@ public class ExpandoColumnLocalServiceImpl
 			long companyId, String className, String name)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumn(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME,
@@ -345,7 +344,7 @@ public class ExpandoColumnLocalServiceImpl
 			long companyId, String className)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumns(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
@@ -369,7 +368,7 @@ public class ExpandoColumnLocalServiceImpl
 	public int getDefaultTableColumnsCount(long companyId, String className)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getColumnsCount(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);

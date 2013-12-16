@@ -17,7 +17,6 @@ package com.liferay.portlet.trash.service.impl;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashVersionLocalServiceBaseImpl;
 
@@ -56,7 +55,7 @@ public class TrashVersionLocalServiceImpl
 	public TrashVersion deleteTrashVersion(String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		TrashVersion trashVersion = trashVersionPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -73,7 +72,7 @@ public class TrashVersionLocalServiceImpl
 			long entryId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return trashVersionPersistence.fetchByE_C_C(
 			entryId, classNameId, classPK);
@@ -92,7 +91,7 @@ public class TrashVersionLocalServiceImpl
 			return trashVersionPersistence.findByEntryId(entryId);
 		}
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return trashVersionPersistence.findByE_C(entryId, classNameId);
 	}

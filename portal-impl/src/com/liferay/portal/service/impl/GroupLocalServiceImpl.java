@@ -883,7 +883,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			socialActivitySettingLocalService.deleteActivitySettings(
 				group.getGroupId());
 			socialRequestLocalService.deleteRequests(
-				PortalUtil.getClassNameId(Group.class), group.getGroupId());
+				classNameLocalService.getClassNameId(Group.class),
+				group.getGroupId());
 
 			// Software catalog
 

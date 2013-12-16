@@ -22,7 +22,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -142,7 +141,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			int end)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<SocialActivity> activities =
 			socialActivityLocalService.getActivities(
@@ -178,7 +177,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			String className, int start, int end)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		List<SocialActivity> activities =
 			socialActivityLocalService.getActivities(
@@ -237,7 +236,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 			long mirrorActivityId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getActivitiesCount(mirrorActivityId, classNameId, classPK);
 	}
@@ -251,7 +250,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 */
 	@Override
 	public int getActivitiesCount(String className) throws SystemException {
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getActivitiesCount(classNameId);
 	}

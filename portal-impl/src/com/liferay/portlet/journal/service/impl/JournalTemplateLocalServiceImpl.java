@@ -89,8 +89,9 @@ public class JournalTemplateLocalServiceImpl
 		}
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.addTemplate(
-			userId, groupId, PortalUtil.getClassNameId(DDMStructure.class),
-			classPK, templateId, nameMap, descriptionMap,
+			userId, groupId,
+			classNameLocalService.getClassNameId(DDMStructure.class), classPK,
+			templateId, nameMap, descriptionMap,
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE, langType, xsl, cacheable,
 			smallImage, smallImageURL, smallImageFile, serviceContext);
@@ -368,7 +369,7 @@ public class JournalTemplateLocalServiceImpl
 	@Override
 	public List<JournalTemplate> getTemplates() throws SystemException {
 		List<DDMTemplate> ddmTemplates = ddmTemplateFinder.findByG_SC(
-			null, PortalUtil.getClassNameId(JournalArticle.class),
+			null, classNameLocalService.getClassNameId(JournalArticle.class),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		return JournalUtil.toJournalTemplates(ddmTemplates);
@@ -414,7 +415,9 @@ public class JournalTemplateLocalServiceImpl
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 
@@ -433,7 +436,9 @@ public class JournalTemplateLocalServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 
@@ -451,7 +456,9 @@ public class JournalTemplateLocalServiceImpl
 			String structureId, String structureIdComparator)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 
@@ -466,7 +473,9 @@ public class JournalTemplateLocalServiceImpl
 			String description, boolean andOperator)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 
@@ -531,22 +540,24 @@ public class JournalTemplateLocalServiceImpl
 		throws SystemException {
 
 		List<DDMTemplate> ddmTemplates = ddmTemplateFinder.findByG_SC(
-			groupId, PortalUtil.getClassNameId(JournalArticle.class), start,
-			end, null);
+			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
+			start, end, null);
 
 		return JournalUtil.toJournalTemplates(ddmTemplates);
 	}
 
 	protected int doGetTemplatesCount(long groupId) throws SystemException {
 		return ddmTemplateFinder.countByG_SC(
-			groupId, PortalUtil.getClassNameId(JournalArticle.class));
+			groupId,
+			classNameLocalService.getClassNameId(JournalArticle.class));
 	}
 
 	protected DDMTemplate fetchDDMTemplate(long groupId, String templateId)
 		throws SystemException {
 
 		return ddmTemplateLocalService.fetchTemplate(
-			groupId, PortalUtil.getClassNameId(DDMStructure.class), templateId);
+			groupId, classNameLocalService.getClassNameId(DDMStructure.class),
+			templateId);
 	}
 
 	protected JournalTemplate fetchTemplate(long groupId, String templateId)
@@ -572,7 +583,8 @@ public class JournalTemplateLocalServiceImpl
 
 		try {
 			return ddmTemplateLocalService.getTemplate(
-				groupId, PortalUtil.getClassNameId(DDMStructure.class),
+				groupId,
+				classNameLocalService.getClassNameId(DDMStructure.class),
 				templateId);
 		}
 		catch (PortalException pe) {

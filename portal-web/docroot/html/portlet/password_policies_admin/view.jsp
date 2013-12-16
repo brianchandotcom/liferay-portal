@@ -66,6 +66,10 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</c:if>
 	</aui:nav-bar>
 
+	<div class="alert alert-info">
+		<liferay-ui:message key="assign-password-policy-alert" />
+	</div>
+
 	<c:if test="<%= !passwordPolicyEnabled && windowState.equals(WindowState.MAXIMIZED) %>">
 
 		<%

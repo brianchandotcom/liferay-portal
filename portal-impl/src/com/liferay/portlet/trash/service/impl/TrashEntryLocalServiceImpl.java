@@ -33,7 +33,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
@@ -76,7 +75,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
@@ -186,7 +185,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	public TrashEntry deleteEntry(String className, long classPK)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		TrashEntry entry = trashEntryPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -235,7 +234,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	public TrashEntry fetchEntry(String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return trashEntryPersistence.fetchByC_C(classNameId, classPK);
 	}
@@ -294,7 +293,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	public List<TrashEntry> getEntries(long groupId, String className)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return trashEntryPersistence.findByG_C(groupId, classNameId);
 	}
@@ -341,7 +340,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	public TrashEntry getEntry(String className, long classPK)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return trashEntryPersistence.findByC_C(classNameId, classPK);
 	}

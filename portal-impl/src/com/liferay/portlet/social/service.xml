@@ -94,6 +94,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
@@ -212,6 +213,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
@@ -375,6 +377,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
 	<entity name="SocialRelation" uuid="true" local-service="true" remote-service="false">
@@ -506,6 +509,10 @@
 			<finder-column name="receiverUserId" />
 			<finder-column name="status" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 	</entity>
 	<entity name="SocialRequestInterpreter" local-service="true" remote-service="false" tx-manager="none" />
 	<exceptions>

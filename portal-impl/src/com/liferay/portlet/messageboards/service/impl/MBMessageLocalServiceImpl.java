@@ -192,7 +192,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Discussion
 
 		if (parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
-			long classNameId = PortalUtil.getClassNameId(className);
+			long classNameId = classNameLocalService.getClassNameId(className);
 
 			MBDiscussion discussion = mbDiscussionPersistence.fetchByC_C(
 				classNameId, classPK);
@@ -325,7 +325,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		message.setAnonymous(anonymous);
 
 		if (message.isDiscussion()) {
-			long classNameId = PortalUtil.getClassNameId(
+			long classNameId = classNameLocalService.getClassNameId(
 				(String)serviceContext.getAttribute("className"));
 			long classPK = ParamUtil.getLong(serviceContext, "classPK");
 
@@ -485,7 +485,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			long classNameId = PortalUtil.getClassNameId(className);
+			long classNameId = classNameLocalService.getClassNameId(className);
 
 			MBDiscussion discussion = mbDiscussionPersistence.findByC_C(
 				classNameId, classPK);
@@ -873,7 +873,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int status, String threadView)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		MBMessage message = null;
 
@@ -961,7 +961,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String className, long classPK, int status)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getDiscussionMessagesCount(classNameId, classPK, status);
 	}
@@ -970,7 +970,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public List<MBDiscussion> getDiscussions(String className)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mbDiscussionPersistence.findByClassNameId(classNameId);
 	}
@@ -1159,7 +1159,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String className, long classPK, int status)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.findByC_C(classNameId, classPK);
@@ -1288,7 +1288,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getUserDiscussionMessages(
 			userId, classNameId, classPK, status, start, end, obc);
@@ -1328,7 +1328,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long userId, String className, long classPK, int status)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getUserDiscussionMessagesCount(
 			userId, classNameId, classPK, status);
@@ -1813,7 +1813,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBDiscussion discussion = mbDiscussionPersistence.findByThreadId(
 			message.getThreadId());
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		long classPK = discussion.getClassPK();
 
 		if (discussion.getClassNameId() != classNameId) {

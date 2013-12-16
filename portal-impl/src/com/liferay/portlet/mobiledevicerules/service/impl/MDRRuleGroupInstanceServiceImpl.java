@@ -21,7 +21,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceServiceBaseImpl;
 import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil;
@@ -85,7 +84,7 @@ public class MDRRuleGroupInstanceServiceImpl
 		throws SystemException {
 
 		long groupId = getGroupId(className, classPK);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.filterFindByG_C_C(
 			groupId, classNameId, classPK, start, end, orderByComparator);
@@ -96,7 +95,7 @@ public class MDRRuleGroupInstanceServiceImpl
 		throws SystemException {
 
 		long groupId = getGroupId(className, classPK);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.filterCountByG_C_C(
 			groupId, classNameId, classPK);

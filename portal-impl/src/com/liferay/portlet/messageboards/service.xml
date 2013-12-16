@@ -157,6 +157,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 	</entity>
 	<entity name="MBMailingList" human-name="message boards mailing list" uuid="true" local-service="true" remote-service="false">
 
@@ -361,6 +365,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.mail" entity="Mail" />
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Lock" />

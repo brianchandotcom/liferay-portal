@@ -203,6 +203,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.mail" entity="Mail" />
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
@@ -411,6 +412,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
@@ -508,6 +510,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
@@ -515,6 +518,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />

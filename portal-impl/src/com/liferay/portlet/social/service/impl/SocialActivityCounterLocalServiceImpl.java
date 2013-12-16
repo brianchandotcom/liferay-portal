@@ -602,7 +602,7 @@ public class SocialActivityCounterLocalServiceImpl
 			deleteActivityCounters(assetEntry);
 		}
 		else {
-			long classNameId = PortalUtil.getClassNameId(className);
+			long classNameId = classNameLocalService.getClassNameId(className);
 
 			socialActivityCounterPersistence.removeByC_C(classNameId, classPK);
 
@@ -1155,7 +1155,7 @@ public class SocialActivityCounterLocalServiceImpl
 		SocialActivityCounter latestContributionActivityCounter =
 			fetchLatestActivityCounter(
 				assetEntry.getGroupId(),
-				PortalUtil.getClassNameId(User.class.getName()),
+				classNameLocalService.getClassNameId(User.class.getName()),
 				assetEntry.getUserId(),
 				SocialActivityCounterConstants.NAME_CONTRIBUTION,
 				SocialActivityCounterConstants.TYPE_CREATOR);
@@ -1245,7 +1245,7 @@ public class SocialActivityCounterLocalServiceImpl
 			return assetEntry.getClassNameId();
 		}
 
-		return PortalUtil.getClassNameId(User.class.getName());
+		return classNameLocalService.getClassNameId(User.class.getName());
 	}
 
 	protected long getClassPK(User user, AssetEntry assetEntry, int ownerType) {

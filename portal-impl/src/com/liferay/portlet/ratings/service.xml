@@ -42,6 +42,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
 		<reference package-path="com.liferay.portlet.blogs" entity="BlogsStatsUser" />
@@ -67,6 +68,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="ClassName" />
 	</entity>
 	<exceptions>
 		<exception>EntryScore</exception>

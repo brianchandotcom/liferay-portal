@@ -16,7 +16,7 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v6_2_0.UpgradeSchema;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
 
 /**
  * @author Julio Camarero

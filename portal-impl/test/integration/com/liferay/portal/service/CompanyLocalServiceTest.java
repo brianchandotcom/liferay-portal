@@ -34,6 +34,10 @@ import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.UserTestUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
@@ -75,10 +79,12 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompany() throws Exception {
 		Company company = addCompany();
 
+		String companyWebId = company.getWebId();
+
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 
 		for (String webId : PortalInstances.getWebIds()) {
-			Assert.assertNotEquals("test.com", webId);
+			Assert.assertNotEquals(companyWebId, webId);
 		}
 	}
 
@@ -119,6 +125,38 @@ public class CompanyLocalServiceTest {
 			companyStagingGroup.getGroupId());
 
 		Assert.assertNull(companyStagingGroup);
+	}
+
+	@Test
+	public void testAddandDeleteCompanyWithDocumentTypes() throws Exception {
+		Company company = addCompany();
+
+		long companyId = company.getCompanyId();
+
+		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+
+		Group companyGroup = company.getGroup();
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				companyGroup.getGroupId(),
+				DLFileEntryTypeConstants.NAME_CONTRACT);
+
+		Group guestGroup = GroupLocalServiceUtil.getGroup(
+			companyId, GroupConstants.GUEST);
+
+		ServiceContext serviceContext = getServiceContext(companyId);
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
+		serviceContext.setUserId(userId);
+		serviceContext.setScopeGroupId(guestGroup.getGroupId());
+
+		DLAppLocalServiceUtil.addFileEntry(
+			userId, guestGroup.getGroupId(), 0, "test.xml", "text/xml",
+			"test.xml", "", "", "test".getBytes(), serviceContext);
+
+		CompanyLocalServiceUtil.deleteCompany(companyId);
 	}
 
 	@Test
@@ -242,11 +280,13 @@ public class CompanyLocalServiceTest {
 	}
 
 	protected Company addCompany() throws Exception {
-		Company company = CompanyLocalServiceUtil.addCompany(
-			"test.com", "test.com", "test.com", PropsValues.SHARD_DEFAULT_NAME,
-			false, 0, true);
+		String webId = ServiceTestUtil.randomString() + "test.com";
 
-		PortalInstances.initCompany(_mockServletContext, "test.com");
+		Company company = CompanyLocalServiceUtil.addCompany(
+			webId, webId, "test.com", PropsValues.SHARD_DEFAULT_NAME, false, 0,
+			true);
+
+		PortalInstances.initCompany(_mockServletContext, webId);
 
 		return company;
 	}

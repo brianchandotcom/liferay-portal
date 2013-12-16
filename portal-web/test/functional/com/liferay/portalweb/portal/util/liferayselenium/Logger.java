@@ -15,6 +15,8 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +50,8 @@ public class Logger {
 
 	public Logger(LiferaySelenium liferaySelenium) {
 		_liferaySelenium = liferaySelenium;
+
+		_liferayHome = PropsUtil.get(PropsKeys.LIFERAY_HOME);
 
 		WebDriver.Options options = _webDriver.manage();
 
@@ -368,6 +372,20 @@ public class Logger {
 						"Logger.html");
 		}
 
+		String xmlLog4jFile = _liferayHome + "/logs/log.xml";
+
+		if (!FileUtil.exists(xmlLog4jFile)) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("Custom error log file is not present. ");
+			sb.append("Please copy log4j.dtd and portal-log4j-ext.xml from ");
+			sb.append("../portal-web/test/functional/com/liferay/portalweb/");
+			sb.append("portal/util/liferayselenium/dependencies ");
+			sb.append("and place them in META-INF of the bundle directory.");
+
+			System.out.println(sb.toString());
+		}
+
 		_loggerStarted = true;
 	}
 
@@ -602,6 +620,7 @@ public class Logger {
 	private int _actionCount;
 	private int _errorCount;
 	private JavascriptExecutor _javascriptExecutor;
+	private String _liferayHome;
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
 	private int _screenshotCount;

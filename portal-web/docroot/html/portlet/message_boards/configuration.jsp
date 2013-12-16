@@ -136,8 +136,10 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				<aui:input label="html-format" name="preferences--emailHtmlFormat--" type="checkbox" value="<%= MBUtil.getEmailHtmlFormat(portletPreferences) %>" />
 			</aui:fieldset>
 
-			<div class="definition-of-terms">
-				<h4><liferay-ui:message key="definition-of-terms" /></h4>
+			<aui:fieldset cssClass="definition-of-terms">
+				<legend>
+					<liferay-ui:message key="definition-of-terms" />
+				</legend>
 
 				<dl>
 					<dt>
@@ -193,7 +195,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
 					</dd>
 				</dl>
-			</div>
+			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.startsWith("message-") %>'>
 			<aui:fieldset>
@@ -213,8 +215,10 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + emailSignatureParam + "--" %>' type="textarea" value="<%= emailSignature %>" wrap="soft" />
 			</aui:fieldset>
 
-			<div class="definition-of-terms">
-				<h4><liferay-ui:message key="definition-of-terms" /></h4>
+			<aui:fieldset cssClass="definition-of-terms">
+				<legend>
+					<liferay-ui:message key="definition-of-terms" />
+				</legend>
 
 				<dl>
 					<dt>
@@ -333,7 +337,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 						</dd>
 					</c:if>
 				</dl>
-			</div>
+			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.equals("thread-priorities") %>'>
 			<div class="alert alert-info">

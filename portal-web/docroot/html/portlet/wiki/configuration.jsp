@@ -101,8 +101,10 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 			</aui:fieldset>
 
-			<div class="definition-of-terms">
-				<h4><liferay-ui:message key="definition-of-terms" /></h4>
+			<aui:fieldset cssClass="definition-of-terms">
+				<legend>
+					<liferay-ui:message key="definition-of-terms" />
+				</legend>
 
 				<dl>
 					<dt>
@@ -148,7 +150,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 						<liferay-ui:message key="the-site-name-associated-with-the-wiki" />
 					</dd>
 				</dl>
-			</div>
+			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.startsWith("page-") %>'>
 			<aui:fieldset>
@@ -168,8 +170,10 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 				<aui:input cssClass="lfr-textarea-container" label="signature" name='<%= "preferences--" + emailSignatureParam + "--" %>' type="textarea" value="<%= emailSignature %>" wrap="soft" />
 			</aui:fieldset>
 
-			<div class="definition-of-terms">
-				<h4><liferay-ui:message key="definition-of-terms" /></h4>
+			<aui:fieldset cssClass="definition-of-terms">
+				<legend>
+					<liferay-ui:message key="definition-of-terms" />
+				</legend>
 
 				<dl>
 					<dt>
@@ -299,7 +303,7 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 						<liferay-ui:message key="the-name-of-the-email-recipient" />
 					</dd>
 				</dl>
-			</div>
+			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.equals("rss") %>'>
 			<liferay-ui:rss-settings

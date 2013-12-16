@@ -42,8 +42,10 @@ String editorContent = emailMessageBody;
 		</aui:field-wrapper>
 	</aui:fieldset>
 
-	<div class="definition-of-terms">
-		<h4><liferay-ui:message key="definition-of-terms" /></h4>
+	<aui:fieldset cssClass="definition-of-terms">
+		<legend>
+			<liferay-ui:message key="definition-of-terms" />
+		</legend>
 
 		<dl>
 			<dt>
@@ -71,7 +73,7 @@ String editorContent = emailMessageBody;
 				<%= company.getVirtualHostname() %>
 			</dd>
 		</dl>
-	</div>
+	</aui:fieldset>
 
 	<aui:button-row>
 		<aui:button type="submit" />

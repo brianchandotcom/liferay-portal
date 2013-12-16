@@ -25,6 +25,12 @@
 		}
 	}
 
+	legend {
+		color: #8D8D8D;
+		font-size: 18px;
+		font-weight: 200;
+	}
+
 	.alert {
 		word-wrap: break-word;
 	}

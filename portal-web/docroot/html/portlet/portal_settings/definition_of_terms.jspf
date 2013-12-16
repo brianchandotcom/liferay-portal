@@ -14,7 +14,9 @@
  */
 --%>
 
-<h4><liferay-ui:message key="definition-of-terms" /></h4>
+<legend>
+	<liferay-ui:message key="definition-of-terms" />
+</legend>
 
 <dl>
 	<c:if test='<%= sectionName.equals("email-verification-notification") %>'>

@@ -268,8 +268,10 @@ else if (tabs3.equals("shipping-email")) {
 							<aui:input name="<%= editorParam %>" type="hidden" value="" />
 						</aui:field-wrapper>
 
-						<div class="definition-of-terms">
-							<h4><liferay-ui:message key="definition-of-terms" /></h4>
+						<aui:fieldset cssClass="definition-of-terms">
+							<legend>
+								<liferay-ui:message key="definition-of-terms" />
+							</legend>
 
 							<dl>
 								<dt>
@@ -339,7 +341,7 @@ else if (tabs3.equals("shipping-email")) {
 									<liferay-ui:message key="the-name-of-the-email-recipient" />
 								</dd>
 							</dl>
-						</div>
+						</aui:fieldset>
 					</aui:fieldset>
 				</c:when>
 				<c:otherwise>

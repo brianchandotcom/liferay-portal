@@ -25,12 +25,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		font-weight: normal;
 	}
 
-	legend {
-		color: #8D8D8D;
-		font-size: 18px;
-		font-weight: 200;
-	}
-
 	#banner {
 		display: none;
 	}

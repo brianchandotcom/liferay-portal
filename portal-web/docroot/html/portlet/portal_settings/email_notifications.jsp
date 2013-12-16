@@ -78,9 +78,9 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY + "--" %>' type="hidden" value="<%= adminEmailUserAddedNoPasswordBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-user-add definition-of-terms">
+			<aui:fieldset cssClass="terms email-user-add definition-of-terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
-			</div>
+			</aui:fieldset>
 		</aui:fieldset>
 	</liferay-ui:section>
 	<liferay-ui:section>
@@ -97,9 +97,9 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY + "--" %>' type="hidden" value="<%= adminEmailPasswordResetBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-verification definition-of-terms">
+			<aui:fieldset cssClass="terms email-verification definition-of-terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
-			</div>
+			</aui:fieldset>
 		</aui:fieldset>
 	</liferay-ui:section>
 	<liferay-ui:section>
@@ -116,9 +116,9 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_BODY + "--" %>' type="hidden" value="<%= adminEmailPasswordSentBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-password-sent definition-of-terms">
+			<aui:fieldset cssClass="terms email-password-sent definition-of-terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
-			</div>
+			</aui:fieldset>
 		</aui:fieldset>
 	</liferay-ui:section>
 	<liferay-ui:section>
@@ -135,9 +135,9 @@ String adminEmailVerificationBody = PrefsPropsUtil.getContent(company.getCompany
 				<aui:input name='<%= "settings--" + PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY + "--" %>' type="hidden" value="<%= adminEmailPasswordResetBody %>" />
 			</aui:field-wrapper>
 
-			<div class="terms email-password-sent definition-of-terms">
+			<aui:fieldset cssClass="terms email-password-sent definition-of-terms">
 				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
-			</div>
+			</aui:fieldset>
 		</aui:fieldset>
 	</liferay-ui:section>
 </liferay-ui:tabs>

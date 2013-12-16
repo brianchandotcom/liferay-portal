@@ -1077,6 +1077,15 @@ tck.url=true</echo>
 		</if>
 
 		<if>
+			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.assert.liferay.errors=false
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.basedir" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
@@ -1822,6 +1831,21 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<else>
 				<antcall target="rebuild-database" inheritAll="false" />
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="${test.assert.liferay.errors}" arg2="true" />
+			<then>
+				<copy
+					file="portal-web/test/functional/com/liferay/portalweb/portal/util/liferayselenium/dependencies/portal-log4j-ext.xml"
+					tofile="${simple.server.portal.dir}/WEB-INF/classes/META-INF/portal-log4j-ext.xml"
+				/>
+
+				<copy
+					file="portal-web/test/functional/com/liferay/portalweb/portal/util/liferayselenium/dependencies/log4j.dtd"
+					tofile="${simple.server.portal.dir}/WEB-INF/classes/META-INF/log4j.dtd"
+				/>
+			</then>
 		</if>
 
 		<antcall target="copy-optional-jars" inheritAll="false">

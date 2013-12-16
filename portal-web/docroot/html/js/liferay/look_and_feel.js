@@ -1285,7 +1285,7 @@ AUI.add(
 
 						var portletTitleSelector = '.portlet-title-default';
 
-						if (showBorders.get("value") != "false") {
+						if (showBorders.val() != 'false') {
 							portletTitleSelector = '.portlet-title-text';
 						}
 

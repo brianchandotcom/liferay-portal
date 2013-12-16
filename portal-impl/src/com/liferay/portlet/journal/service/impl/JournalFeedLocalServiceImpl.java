@@ -361,7 +361,8 @@ public class JournalFeedLocalServiceImpl
 		try {
 			DDMStructure ddmStructure =
 				ddmStructureLocalService.getStructure(
-					groupId, PortalUtil.getClassNameId(JournalArticle.class),
+					groupId,
+					classNameLocalService.getClassNameId(JournalArticle.class),
 					structureId);
 
 			Document document = SAXReaderUtil.read(ddmStructure.getXsd());

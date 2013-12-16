@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.DuplicateRuleGroupInstanceException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
@@ -45,7 +44,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(
 			serviceContext.getUserId());
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		Date now = new Date();
 
 		validate(classNameId, classPK, ruleGroupId);
@@ -162,7 +161,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			String className, long classPK, long ruleGroupId)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.fetchByC_C_R(
 			classNameId, classPK, ruleGroupId);
@@ -181,7 +180,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			String className, long classPK, long ruleGroupId)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.findByC_C_R(
 			classNameId, classPK, ruleGroupId);
@@ -208,7 +207,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.findByC_C(classNameId, classPK);
 	}
@@ -219,7 +218,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			OrderByComparator orderByComparator)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.findByC_C(
 			classNameId, classPK, start, end, orderByComparator);
@@ -236,7 +235,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 	public int getRuleGroupInstancesCount(String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mdrRuleGroupInstancePersistence.countByC_C(classNameId, classPK);
 	}

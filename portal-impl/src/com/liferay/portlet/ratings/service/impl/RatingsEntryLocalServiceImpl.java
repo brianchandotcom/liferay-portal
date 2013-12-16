@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -51,7 +50,7 @@ public class RatingsEntryLocalServiceImpl
 
 		// Entry
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		RatingsEntry entry = ratingsEntryPersistence.fetchByU_C_C(
 			userId, classNameId, classPK);
@@ -88,7 +87,7 @@ public class RatingsEntryLocalServiceImpl
 	public RatingsEntry fetchEntry(long userId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryPersistence.fetchByU_C_C(
 			userId, classNameId, classPK);
@@ -99,7 +98,7 @@ public class RatingsEntryLocalServiceImpl
 			long userId, String className, List<Long> classPKs)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryFinder.findByU_C_C(userId, classNameId, classPKs);
 	}
@@ -108,7 +107,7 @@ public class RatingsEntryLocalServiceImpl
 	public List<RatingsEntry> getEntries(String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryPersistence.findByC_C(classNameId, classPK);
 	}
@@ -118,7 +117,7 @@ public class RatingsEntryLocalServiceImpl
 			String className, long classPK, double score)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryPersistence.findByC_C_S(classNameId, classPK, score);
 	}
@@ -127,7 +126,7 @@ public class RatingsEntryLocalServiceImpl
 	public int getEntriesCount(String className, long classPK, double score)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryPersistence.countByC_C_S(
 			classNameId, classPK, score);
@@ -137,7 +136,7 @@ public class RatingsEntryLocalServiceImpl
 	public RatingsEntry getEntry(long userId, String className, long classPK)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return ratingsEntryPersistence.findByU_C_C(
 			userId, classNameId, classPK);
@@ -153,7 +152,7 @@ public class RatingsEntryLocalServiceImpl
 
 		boolean newEntry = false;
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 		double oldScore = 0;
 		Date now = new Date();
 

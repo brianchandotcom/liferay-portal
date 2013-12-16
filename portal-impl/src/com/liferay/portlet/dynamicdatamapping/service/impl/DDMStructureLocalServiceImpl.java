@@ -45,7 +45,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
@@ -407,7 +406,8 @@ public class DDMStructureLocalServiceImpl
 					RequiredStructureException.REFERENCED_STRUCTURE);
 			}
 
-			long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+			long classNameId = classNameLocalService.getClassNameId(
+				DDMStructure.class);
 
 			if (ddmTemplatePersistence.countByG_C_C(
 					structure.getGroupId(), classNameId,
@@ -1538,7 +1538,8 @@ public class DDMStructureLocalServiceImpl
 	protected void syncStructureTemplatesFields(DDMStructure structure)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = classNameLocalService.getClassNameId(
+			DDMStructure.class);
 
 		List<DDMTemplate> templates = ddmTemplateLocalService.getTemplates(
 			structure.getGroupId(), classNameId, structure.getStructureId(),

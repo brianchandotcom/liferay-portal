@@ -207,7 +207,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		if ((repositoryDLFolder != null) && repositoryDLFolder.isHidden()) {
-			long classNameId = PortalUtil.getClassNameId(
+			long classNameId = classNameLocalService.getClassNameId(
 				(String)serviceContext.getAttribute("className"));
 			long classPK = ParamUtil.getLong(serviceContext, "classPK");
 
@@ -658,7 +658,7 @@ public class DLFileEntryLocalServiceImpl
 			ddmStructures = dlFileEntryType.getDDMStructures();
 		}
 		else {
-			long classNameId = PortalUtil.getClassNameId(
+			long classNameId = classNameLocalService.getClassNameId(
 				DLFileEntryMetadata.class);
 
 			ddmStructures = ddmStructureLocalService.getClassStructures(

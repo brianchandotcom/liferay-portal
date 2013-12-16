@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -111,7 +110,8 @@ public class JournalStructureServiceImpl
 
 		List<DDMStructure> ddmStructures =
 			ddmStructurePersistence.filterFindByG_C(
-				groupId, PortalUtil.getClassNameId(JournalArticle.class));
+				groupId,
+				classNameLocalService.getClassNameId(JournalArticle.class));
 
 		return JournalUtil.toJournalStructures(ddmStructures);
 	}
@@ -122,7 +122,8 @@ public class JournalStructureServiceImpl
 
 		List<DDMStructure> ddmStructures =
 			ddmStructurePersistence.filterFindByG_C(
-				groupIds, PortalUtil.getClassNameId(JournalArticle.class));
+				groupIds,
+				classNameLocalService.getClassNameId(JournalArticle.class));
 
 		return JournalUtil.toJournalStructures(ddmStructures);
 	}
@@ -133,7 +134,9 @@ public class JournalStructureServiceImpl
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		List<DDMStructure> ddmStructures =
 			ddmStructureFinder.filterFindByKeywords(
@@ -149,7 +152,9 @@ public class JournalStructureServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		List<DDMStructure> ddmStructures =
 			ddmStructureFinder.filterFindByC_G_C_N_D_S_T(
@@ -164,7 +169,9 @@ public class JournalStructureServiceImpl
 	public int searchCount(long companyId, long[] groupIds, String keywords)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		return ddmStructureFinder.filterCountByKeywords(
 			companyId, groupIds, classNameIds, keywords);
@@ -176,7 +183,9 @@ public class JournalStructureServiceImpl
 			String description, boolean andOperator)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		return ddmStructureFinder.filterCountByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, name, description, null,

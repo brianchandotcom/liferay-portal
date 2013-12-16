@@ -34,7 +34,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ImageUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
@@ -395,14 +394,15 @@ public class DDMTemplateLocalServiceImpl
 		// Template
 
 		if (template.getClassNameId() ==
-				PortalUtil.getClassNameId(DDMStructure.class.getName())) {
+				classNameLocalService.getClassNameId(
+					DDMStructure.class.getName())) {
 
 			DDMStructure structure = ddmStructureLocalService.fetchDDMStructure(
 				template.getClassPK());
 
 			if ((structure != null) &&
 				(structure.getClassNameId() ==
-					PortalUtil.getClassNameId(
+					classNameLocalService.getClassNameId(
 						JournalArticle.class.getName()))) {
 
 				Group companyGroup = groupLocalService.getCompanyGroup(

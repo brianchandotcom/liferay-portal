@@ -31,7 +31,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -467,7 +466,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		TrashEntry trashEntry = trashEntryPersistence.fetchByC_C(
-			PortalUtil.getClassNameId(className), classPK);
+			classNameLocalService.getClassNameId(className), classPK);
 
 		if (trashEntry != null) {
 			return restoreEntry(trashEntry.getEntryId(), overrideClassPK, name);

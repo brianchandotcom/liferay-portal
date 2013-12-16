@@ -249,6 +249,8 @@
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_ASSIGN_USERS" value1="Assign Users" />
 
+		<var name="key_userScreenName" value="${userScreenName}" />
+		
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
 		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />

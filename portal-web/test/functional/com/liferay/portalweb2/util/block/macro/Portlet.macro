@@ -46,7 +46,6 @@
 	</command>
 
 	<command name="addPG">
-		<var name="i" value="1" />
 		<var name="portletTypeKey" value="PORTLET" />
 
 		<if>
@@ -61,6 +60,8 @@
 				</then>
 			</elseif>
 		</if>
+
+		<var name="i" value="1" />
 
 		<while>
 			<not>

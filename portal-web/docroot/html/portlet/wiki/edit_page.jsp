@@ -481,6 +481,10 @@ if (Validator.isNull(redirect)) {
 
 		confirmMessage = AUI().Lang.sub(confirmMessage, [currentFormat, newFormat]);
 
+		if (document.<portlet:namespace />fm.<portlet:namespace />title.value == "") {
+			confirmMessage = '<%= UnicodeLanguageUtil.get(pageContext, "Title is required to change format") %>';
+		}
+
 		if (!confirm(confirmMessage)) {
 			formatSelect.selectedIndex = window.<portlet:namespace />currentFormatIndex;
 

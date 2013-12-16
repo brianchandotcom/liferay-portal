@@ -5,7 +5,7 @@
 		<execute action="SOMembersInvite#type" locator-key1="FIND_MEMBERS_SEARCH_FIELD" value1="${userName}" />
 		<execute action="SOMembersInvite#assertTextEquals" locator-key1="FIND_MEMBERS_USER" value1="${userName}" />
 		<execute action="SOMembersInvite#click" locator-key1="FIND_MEMBERS_USER" />
-		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName} ${userEmailAddress}" />
+		<execute action="SOMembersInvite#assertTextEquals" locator-key1="MEMBERS_INVITE_LIST" value1="${userName}${userEmailAddress}" />
 
 		<if>
 			<isset var="siteRoleInvite" />
@@ -41,6 +41,8 @@
 	</command>
 
 	<command name="viewConfirmMemberInvite">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />		
@@ -110,14 +112,13 @@
 				<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 				<execute action="SOMembers#assertTextEquals" locator-key1="USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 
-				<execute macro="Page#gotoCP">
-					<var name="portletName" value="Sites" />
+				<execute macro="Page#openURL">
+					<var name="siteName" value="${siteName}" />
+					<var name="siteURL" value="true" />
 				</execute>
 
-				<execute macro="Page#gotoUsersCP">
-					<var name="siteScopeName" value="${siteName}" />
-					<var name="portletName" value="Site Memberships" />
-				</execute>
+				<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+				<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -136,6 +137,8 @@
 	</command>
 
 	<command name="viewIgnoreMemberInvite">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />		

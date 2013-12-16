@@ -1,9 +1,11 @@
 <definition>
 	<command name="addCP">
-		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_DETAILS_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
 		<execute action="CPCategoriesAddSubcategory#type" locator-key1="NAME_FIELD" value1="${subcategoryName}" />
@@ -12,11 +14,12 @@
 	</command>
 
 	<command name="deleteByActionsCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_subcategoryName" value="${subcategoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 
 		<if>
@@ -25,6 +28,8 @@
 				<execute action="CPCategories#click" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
 			</then>
 		</if>
+
+		<var name="key_subcategoryName" value="${subcategoryName}" />
 
 		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" value1="${subcategoryName}" />
 		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
@@ -35,10 +40,12 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 
 		<if>
@@ -47,6 +54,8 @@
 				<execute action="CPCategories#click" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
 			</then>
 		</if>
+
+		<var name="key_subcategoryName" value="${subcategoryName}" />
 
 		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" />
 		<execute action="CPCategories#assertClick" locator-key1="SUBCATEGORY_DETAILS_EDIT_BUTTON" value1="Edit" />
@@ -54,16 +63,20 @@
 		<execute action="CPCategoriesEditSubcategory#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute action="CPCategories#click" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
+
+		<var name="key_subcategoryName" value="${subcategoryNameEdit}" />
+
 		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" />
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUBCATEGORY_DETAILS_HEADER" value1="${subcategoryNameEdit}" />
 	</command>
 
 	<command name="viewCP">
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_subcategoryName" value="${subcategoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 
 		<if>
@@ -72,6 +85,8 @@
 				<execute action="CPCategories#click" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
 			</then>
 		</if>
+
+		<var name="key_subcategoryName" value="${subcategoryName}" />
 
 		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" />
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY_SUBCATEGORY" value1="${subcategoryName}" />

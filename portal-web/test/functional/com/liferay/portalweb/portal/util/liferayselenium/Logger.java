@@ -15,11 +15,10 @@
 package com.liferay.portalweb.portal.util.liferayselenium;
 
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -50,8 +49,6 @@ public class Logger {
 
 	public Logger(LiferaySelenium liferaySelenium) {
 		_liferaySelenium = liferaySelenium;
-
-		_liferayHome = PropsUtil.get(PropsKeys.LIFERAY_HOME);
 
 		WebDriver.Options options = _webDriver.manage();
 
@@ -140,6 +137,9 @@ public class Logger {
 		String stackTrace = generateStackTrace(throwable);
 
 		stackTrace = StringEscapeUtils.escapeEcmaScript(stackTrace);
+
+		stackTrace = StringUtil.replace(stackTrace, "\\\\n", "\\n");
+		stackTrace = StringUtil.replace(stackTrace, "\\\\t", "\\t");
 
 		sb.append(stackTrace);
 		sb.append("';");
@@ -372,9 +372,9 @@ public class Logger {
 						"Logger.html");
 		}
 
-		String xmlLog4jFile = _liferayHome + "/logs/log.xml";
+		String log4jXMLFile = PropsValues.LIFERAY_HOME + "/logs/log.xml";
 
-		if (!FileUtil.exists(xmlLog4jFile)) {
+		if (!FileUtil.exists(log4jXMLFile)) {
 			StringBundler sb = new StringBundler();
 
 			sb.append("Custom error log file is not present. ");
@@ -620,7 +620,6 @@ public class Logger {
 	private int _actionCount;
 	private int _errorCount;
 	private JavascriptExecutor _javascriptExecutor;
-	private String _liferayHome;
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
 	private int _screenshotCount;

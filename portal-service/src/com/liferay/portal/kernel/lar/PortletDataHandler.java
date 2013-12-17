@@ -113,16 +113,14 @@ public interface PortletDataHandler {
 		throws PortletDataException;
 
 	/**
-	 * Returns the overall count of entities defined for this data handler that
-	 * are available for export according to the provided manifest summary, or
+	 * Returns the number of entities defined for this data handler that are
+	 * available for export according to the provided manifest summary, or
 	 * <code>-1</code> if the entities are not included in the manifest summary.
 	 *
-	 * @param manifestSummary the manifest summary with the count of the
-	 *                        exportable entities
-	 * @return the overall count of entities defined for this data handler that
-	 * 		   are available for export according to the provided manifest
-	 * 		   summary, or <code>-1</code> if the entities are not included in
-	 * 		   the manifest summary
+	 * @param  manifestSummary the manifest summary listing the number of
+	 *         exportable entities
+	 * @return the number of entities that are available for export according to
+	 *         the manifest summary
 	 */
 	public long getExportModelCount(ManifestSummary manifestSummary);
 

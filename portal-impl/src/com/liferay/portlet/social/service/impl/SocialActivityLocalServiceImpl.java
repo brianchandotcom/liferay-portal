@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -106,7 +105,7 @@ public class SocialActivityLocalServiceImpl
 		}
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		if (groupId > 0) {
 			Group group = groupLocalService.getGroup(groupId);
@@ -201,7 +200,7 @@ public class SocialActivityLocalServiceImpl
 
 		Date createDate = new Date();
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		while (true) {
 			SocialActivity socialActivity =
@@ -293,7 +292,7 @@ public class SocialActivityLocalServiceImpl
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		SocialActivity socialActivity =
 			socialActivityPersistence.fetchByG_U_CD_C_C_T_R(
@@ -334,7 +333,7 @@ public class SocialActivityLocalServiceImpl
 			String extraData, long receiverUserId)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		int count = socialActivityPersistence.countByG_U_C_C_T_R(
 			groupId, userId, classNameId, classPK, type, receiverUserId);
@@ -399,7 +398,7 @@ public class SocialActivityLocalServiceImpl
 	public void deleteActivities(String className, long classPK)
 		throws PortalException, SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
 			socialActivitySetLocalService.decrementActivityCount(
@@ -505,7 +504,7 @@ public class SocialActivityLocalServiceImpl
 			String className, long classPK, int type)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return socialActivityPersistence.fetchByC_C_T_First(
 			classNameId, classPK, type, null);
@@ -602,7 +601,7 @@ public class SocialActivityLocalServiceImpl
 			int end)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getActivities(
 			mirrorActivityId, classNameId, classPK, start, end);
@@ -633,7 +632,7 @@ public class SocialActivityLocalServiceImpl
 			String className, int start, int end)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getActivities(classNameId, start, end);
 	}
@@ -687,7 +686,7 @@ public class SocialActivityLocalServiceImpl
 			long mirrorActivityId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getActivitiesCount(mirrorActivityId, classNameId, classPK);
 	}
@@ -701,7 +700,7 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getActivitiesCount(String className) throws SystemException {
-		long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getActivitiesCount(classNameId);
 	}

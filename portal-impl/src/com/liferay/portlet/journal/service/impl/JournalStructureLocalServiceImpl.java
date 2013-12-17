@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -86,8 +85,8 @@ public class JournalStructureLocalServiceImpl
 
 		DDMStructure ddmStructure = ddmStructureLocalService.addStructure(
 			userId, groupId, parentStructureId,
-			PortalUtil.getClassNameId(JournalArticle.class), structureId,
-			nameMap, descriptionMap, xsd,
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			structureId, nameMap, descriptionMap, xsd,
 			PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE,
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 
@@ -264,7 +263,7 @@ public class JournalStructureLocalServiceImpl
 	public List<JournalStructure> findAll() throws SystemException {
 		List<DDMStructure> ddmStructures =
 			ddmStructureLocalService.getClassStructures(
-				PortalUtil.getClassNameId(JournalArticle.class));
+				classNameLocalService.getClassNameId(JournalArticle.class));
 
 		return JournalUtil.toJournalStructures(ddmStructures);
 	}
@@ -334,7 +333,9 @@ public class JournalStructureLocalServiceImpl
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		List<DDMStructure> ddmStructures = ddmStructureFinder.findByKeywords(
 			companyId, groupIds, classNameIds, keywords, start, end, obc);
@@ -349,7 +350,9 @@ public class JournalStructureLocalServiceImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		List<DDMStructure> ddmStructures =
 			ddmStructureFinder.findByC_G_C_N_D_S_T(
@@ -364,7 +367,9 @@ public class JournalStructureLocalServiceImpl
 	public int searchCount(long companyId, long[] groupIds, String keywords)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		return ddmStructureFinder.countByKeywords(
 			companyId, groupIds, classNameIds, keywords);
@@ -376,7 +381,9 @@ public class JournalStructureLocalServiceImpl
 			String description, boolean andOperator)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(JournalArticle.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(JournalArticle.class)
+		};
 
 		return ddmStructureFinder.countByC_G_C_N_D_S_T(
 			companyId, groupIds, classNameIds, name, description, null,
@@ -436,15 +443,17 @@ public class JournalStructureLocalServiceImpl
 
 		List<DDMStructure> ddmStructures =
 			ddmStructureLocalService.getStructures(
-				groupId, PortalUtil.getClassNameId(JournalArticle.class), start,
-				end);
+				groupId,
+				classNameLocalService.getClassNameId(JournalArticle.class),
+				start, end);
 
 		return JournalUtil.toJournalStructures(ddmStructures);
 	}
 
 	protected int doGetStructuresCount(long groupId) throws SystemException {
 		return ddmStructureLocalService.getStructuresCount(
-			groupId, PortalUtil.getClassNameId(JournalArticle.class));
+			groupId,
+			classNameLocalService.getClassNameId(JournalArticle.class));
 	}
 
 	protected DDMStructure fetchDDMStructure(JournalStructure structure)
@@ -458,7 +467,7 @@ public class JournalStructureLocalServiceImpl
 		throws SystemException {
 
 		return ddmStructureLocalService.fetchStructure(
-			groupId, PortalUtil.getClassNameId(JournalArticle.class),
+			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
 			structureId);
 	}
 
@@ -474,7 +483,8 @@ public class JournalStructureLocalServiceImpl
 
 		try {
 			return ddmStructureLocalService.getStructure(
-				groupId, PortalUtil.getClassNameId(JournalArticle.class),
+				groupId,
+				classNameLocalService.getClassNameId(JournalArticle.class),
 				structureId);
 		}
 		catch (PortalException pe) {

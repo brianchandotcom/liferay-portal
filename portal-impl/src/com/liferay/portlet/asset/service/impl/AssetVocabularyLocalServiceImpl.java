@@ -27,7 +27,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.DuplicateVocabularyException;
 import com.liferay.portlet.asset.VocabularyNameException;
@@ -278,7 +277,8 @@ public class AssetVocabularyLocalServiceImpl
 
 				long[] selectedClassNameIds = StringUtil.split(
 					settingsProperties.getProperty("selectedClassNameIds"), 0L);
-				long classNameId = PortalUtil.getClassNameId(className);
+				long classNameId = classNameLocalService.getClassNameId(
+					className);
 
 				if ((selectedClassNameIds.length == 0) ||
 					(selectedClassNameIds[0] == 0) ||

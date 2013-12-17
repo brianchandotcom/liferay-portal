@@ -1228,6 +1228,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				line = StringUtil.replace(line, ":" , " :");
 			}
 
+			// LPS-42924
+
+			if (line.contains("PortalUtil.getClassNameId(") &&
+				fileName.endsWith("ServiceImpl.java")) {
+
+				processErrorMessage(
+					fileName,
+					"Use classNameLocalService.getClassNameId: " + fileName +
+						" " + lineCount);
+			}
+
 			line = replacePrimitiveWrapperInstantiation(
 				fileName, line, lineCount);
 

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.journal.model.JournalStructure;
@@ -146,7 +145,9 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 
@@ -165,7 +166,9 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 
@@ -183,7 +186,9 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			String structureId, String structureIdComparator)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 
@@ -198,7 +203,9 @@ public class JournalTemplateServiceImpl extends JournalTemplateServiceBaseImpl {
 			String description, boolean andOperator)
 		throws SystemException {
 
-		long[] classNameIds = {PortalUtil.getClassNameId(DDMStructure.class)};
+		long[] classNameIds = {
+			classNameLocalService.getClassNameId(DDMStructure.class)
+		};
 		long[] classPKs = JournalUtil.getStructureClassPKs(
 			groupIds, structureId);
 

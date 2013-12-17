@@ -14,20 +14,13 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.io.File;
@@ -59,8 +52,6 @@ public abstract class BaseWebDriverImpl
 		super(webDriver);
 
 		_projectDir = projectDir;
-
-		_liferayHome = PropsUtil.get(PropsKeys.LIFERAY_HOME);
 
 		WebDriver.Options options = webDriver.manage();
 
@@ -165,81 +156,7 @@ public abstract class BaseWebDriverImpl
 			return;
 		}
 
-		String xmlLog4jFile = _liferayHome + "/logs/log.xml";
-
-		if (FileUtil.exists(xmlLog4jFile)) {
-			Element rootElement = null;
-
-			try {
-				String content = FileUtil.read(xmlLog4jFile);
-
-				if (content.equals("")) {
-					return;
-				}
-
-				StringBundler sb = new StringBundler();
-
-				sb.append("<log4j>");
-
-				UnsyncBufferedReader unsyncBufferedReader =
-					new UnsyncBufferedReader(new UnsyncStringReader(content));
-
-				String line = null;
-
-				while ((line = unsyncBufferedReader.readLine()) != null) {
-					sb.append(line.trim());
-				}
-
-				sb.append("</log4j>");
-
-				content = sb.toString();
-
-				if (content != null) {
-					content = content.trim();
-					content = content.replaceAll("log4j:", "");
-				}
-
-				Document document = SAXReaderUtil.read(content, true);
-
-				rootElement = document.getRootElement();
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			if (rootElement != null) {
-				List<Element> errors = rootElement.elements("event");
-
-				for (Element error : errors) {
-					Element message = error.element("message");
-
-					Element throwable = error.element("throwable");
-
-					String messageText = message.getText();
-
-					if (messageText.contains(
-							"Table 'lportal.lock_' doesn't exist")) {
-
-						continue;
-					}
-
-					try {
-						FileUtil.write(xmlLog4jFile, "");
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
-
-					if (throwable != null) {
-						throw new Exception(
-							message.getText() + throwable.getText());
-					}
-					else {
-						throw new Exception(message.getText());
-					}
-				}
-			}
-		}
+		LiferaySeleniumHelper.assertLiferayErrors();
 	}
 
 	@Override
@@ -852,7 +769,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	private String _clipBoard = "";
-	private String _liferayHome;
 	private String _primaryTestSuiteName;
 	private String _projectDir;
 	private int _screenshotCount = 0;

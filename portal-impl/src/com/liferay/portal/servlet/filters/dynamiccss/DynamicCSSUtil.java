@@ -68,6 +68,8 @@ public class DynamicCSSUtil {
 				ClassLoaderUtil.getPortalClassLoader(),
 				"com/liferay/portal/servlet/filters/dynamiccss" +
 					"/dependencies/main.rb");
+
+			RTLCSSUtil.init();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -130,7 +132,8 @@ public class DynamicCSSUtil {
 
 		URLConnection cacheResourceURLConnection = null;
 
-		URL cacheResourceURL = _getCacheResource(servletContext, resourcePath);
+		URL cacheResourceURL = _getCacheResource(
+			servletContext, request, resourcePath);
 
 		if (cacheResourceURL != null) {
 			cacheResourceURLConnection = cacheResourceURL.openConnection();
@@ -162,6 +165,30 @@ public class DynamicCSSUtil {
 			parsedContent = _parseSass(
 				servletContext, request, themeDisplay, theme, resourcePath,
 				content);
+
+			if (PortalUtil.isRightToLeft(request)) {
+				parsedContent = RTLCSSUtil.getRtlCss(
+						resourcePath, parsedContent);
+
+				// Append custom css for rtl
+
+				URL rtlCustomResourceURL = _getRtlCustomResource(
+					servletContext, resourcePath);
+
+				if (rtlCustomResourceURL != null) {
+					URLConnection rtlCustomResourceURLConnection =
+						rtlCustomResourceURL.openConnection();
+
+					String rtlCustomContent = StringUtil.read(
+						rtlCustomResourceURLConnection.getInputStream());
+
+					String rtlCustomParsedContent = _parseSass(
+						servletContext, request, themeDisplay, theme,
+						resourcePath, rtlCustomContent);
+
+					parsedContent += rtlCustomParsedContent;
+				}
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -203,16 +230,18 @@ public class DynamicCSSUtil {
 	}
 
 	private static URL _getCacheResource(
-			ServletContext servletContext, String resourcePath)
+			ServletContext servletContext, HttpServletRequest request,
+			String resourcePath)
 		throws Exception {
 
-		int pos = resourcePath.lastIndexOf(StringPool.SLASH);
+		String cacheFileSuffix = StringPool.BLANK;
 
-		String cacheFileName =
-			resourcePath.substring(0, pos + 1) + ".sass-cache/" +
-				resourcePath.substring(pos + 1);
+		if (PortalUtil.isRightToLeft(request)) {
+			cacheFileSuffix = "_rtl";
+		}
 
-		return servletContext.getResource(cacheFileName);
+		return servletContext.getResource(
+			SassToCssBuilder.getCacheFileName(resourcePath, cacheFileSuffix));
 	}
 
 	private static String _getCssThemePath(
@@ -234,6 +263,14 @@ public class DynamicCSSUtil {
 		}
 
 		return servletContext.getRealPath(theme.getCssPath());
+	}
+
+	private static URL _getRtlCustomResource(
+			ServletContext servletContext, String resourcePath)
+		throws Exception {
+
+		return servletContext.getResource(
+			SassToCssBuilder.getRtlCustomFileName(resourcePath));
 	}
 
 	private static File _getSassTempDir(ServletContext servletContext) {

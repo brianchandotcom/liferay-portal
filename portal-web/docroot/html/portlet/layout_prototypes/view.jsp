@@ -20,6 +20,20 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layout_prototypes/view");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-col", orderByCol);
+	portalPreferences.setValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-col", "name");
+	orderByType = portalPreferences.getValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-type", "asc");
+}
+
+OrderByComparator obc = OrderByComparatorFactoryUtil.create(LayoutPrototypeModelImpl.TABLE_NAME, orderByCol, orderByType.equals("asc"));
 %>
 
 <liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
@@ -35,12 +49,15 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 		emptyResultsMessage="no-page-templates-were-found"
 		headerNames="name"
 		iteratorURL="<%= portletURL %>"
+		orderByCol="<%= orderByCol %>"
+		orderByComparator="<%= obc %>"
+		orderByType="<%= orderByType %>"
 		total="<%= LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null) %>"
 	>
 		<aui:input name="deleteLayoutPrototypesIds" type="hidden" />
 
 		<liferay-ui:search-container-results
-			results="<%= LayoutPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+			results="<%= LayoutPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), obc) %>"
 		/>
 
 		<liferay-ui:search-container-row

@@ -19,7 +19,21 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
 portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-col", orderByCol);
+	portalPreferences.setValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-col", "name");
+	orderByType = portalPreferences.getValue(PortletKeys.LAYOUT_PROTOTYPE, "entries-order-by-type", "asc");
+}
+
+OrderByComparator obc = OrderByComparatorFactoryUtil.create(LayoutSetPrototypeModelImpl.TABLE_NAME, orderByCol, orderByType.equals("asc"));
 %>
 
 <liferay-ui:error exception="<%= RequiredLayoutSetPrototypeException.class %>" message="you-cannot-delete-site-templates-that-are-used-by-a-site" />
@@ -35,12 +49,15 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 		emptyResultsMessage="no-site-templates-were-found"
 		headerNames="name"
 		iteratorURL="<%= portletURL %>"
+		orderByCol="<%= orderByCol %>"
+		orderByComparator="<%= obc %>"
+		orderByType="<%= orderByType %>"
 		total="<%= LayoutSetPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null) %>"
 	>
 		<aui:input name="deleteLayoutSetPrototypesIds" type="hidden" />
 
 		<liferay-ui:search-container-results
-			results="<%= LayoutSetPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+			results="<%= LayoutSetPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), obc) %>"
 		/>
 
 		<liferay-ui:search-container-row

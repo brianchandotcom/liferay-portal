@@ -1,13 +1,21 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="FORM_RADIO_FIELD_1">
+			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="FORM_SELECT_FIELD_1">
+			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#pauseAssertTextClickAtAndWait" />
+		</case>
+	</command>
+	
 	<command name="assertTextEquals">
 		<case comparator="startsWith" locator-key1="FORM_">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-
-	<command name="assertClick">
-		<case locator-key1="SAVE_BUTTON">
-			<execute function="AssertClick#pauseAssertTextClickAtAndWait" />
 		</case>
 	</command>
 

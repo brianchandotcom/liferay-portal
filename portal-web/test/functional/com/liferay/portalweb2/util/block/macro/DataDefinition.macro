@@ -115,11 +115,34 @@
 					<var name="fieldName" value="" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${settingsFieldKey}" arg2="SETTINGS_OPTIONS" />
+				<then>
+					<var name="fieldName" value="${optionsNames}" />
+				</then>
+			</elseif>
 		</if>
 
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${fieldName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="${settingsFieldKey}" value1="${fieldName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="${cellEditorTypeKey}" value1="${cellEditorFieldName}" />
+
+		<if>
+			<equals arg1="${settingsFieldKey}" arg2="SETTINGS_OPTIONS" />
+			<then>
+				<var name="fieldOptionsSettingsName" value="${cellEditorFieldName?replace(' ', '')}" />
+				<var name="i" value="0" />
+
+				<for list="${fieldOptionsSettingsName}" param="name">
+					<var name="i" value="${i?increment()}" />
+
+					<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="${cellEditorTypeKey}_${i}" value1="${name}" />
+				</for>
+			</then>
+			<else>
+				<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="${cellEditorTypeKey}" value1="${cellEditorFieldName}" />
+			</else>
+		</if>
+
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${cellEditorFieldName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

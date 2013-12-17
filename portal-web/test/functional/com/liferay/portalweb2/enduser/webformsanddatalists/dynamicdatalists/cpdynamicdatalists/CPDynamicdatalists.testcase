@@ -743,6 +743,100 @@
 		</execute>
 	</command>
 
+	<command name="EditFieldRadioOptionsUTF8CP" priority="5">
+		<var name="cellEditorFieldName" value="りんご, バナナ, クランベリー" />
+		<var name="cellEditorTypeKey" value="SETTINGS_CELL_EDITOR_OPTIONS_NAME" />
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="fieldName" value="Radio" />
+		<var name="formFieldKey" value="FORM_RADIO_FIELD_1" />
+		<var name="settingsFieldKey" value="SETTINGS_OPTIONS" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#editFieldSettingsFieldCP">
+			<var name="cellEditorFieldName" value="${cellEditorFieldName}" />
+			<var name="cellEditorTypeKey" value="${cellEditorTypeKey}" />
+			<var name="dataDefinitionName" value="Data Definition" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="optionsNames" value="option 1, option 2, option 3" />
+			<var name="settingsFieldKey" value="${settingsFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewEditFieldSettingsFieldCP">
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="settingsFieldKey" value="${settingsFieldKey}" />
+			<var name="settingsFieldValue" value="${cellEditorFieldName}" />
+		</execute>
+	</command>
+
+	<command name="EditFieldSelectOptionsUTF8CP" priority="5">
+		<var name="cellEditorFieldName" value="りんご, バナナ, クランベリー" />
+		<var name="cellEditorTypeKey" value="SETTINGS_CELL_EDITOR_OPTIONS_NAME" />
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="fieldName" value="Select" />
+		<var name="formFieldKey" value="FORM_SELECT_FIELD_1" />
+		<var name="settingsFieldKey" value="SETTINGS_OPTIONS" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#editFieldSettingsFieldCP">
+			<var name="cellEditorFieldName" value="${cellEditorFieldName}" />
+			<var name="cellEditorTypeKey" value="${cellEditorTypeKey}" />
+			<var name="dataDefinitionName" value="Data Definition" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="optionsNames" value="option 1, option 2, option 3" />
+			<var name="settingsFieldKey" value="${settingsFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewEditFieldSettingsFieldCP">
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="settingsFieldKey" value="${settingsFieldKey}" />
+			<var name="settingsFieldValue" value="${cellEditorFieldName}" />
+		</execute>
+	</command>
+
 	<command name="EditDataDefinitionCP" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDescriptionEdit" value="Data Definition Description Edit" />

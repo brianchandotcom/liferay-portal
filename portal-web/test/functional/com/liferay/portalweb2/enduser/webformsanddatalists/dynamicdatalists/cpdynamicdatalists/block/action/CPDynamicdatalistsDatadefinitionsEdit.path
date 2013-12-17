@@ -173,6 +173,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_OPTIONS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -312,6 +317,36 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_CANCEL_BUTTON</td>
 	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_1</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')][1]//input[contains(@class,'celleditor-edit-input-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_2</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')][2]//input[contains(@class,'celleditor-edit-input-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_3</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')][3]//input[contains(@class,'celleditor-edit-input-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_VALUE_1</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')]//input[contains(@class,'celleditor-edit-input-value')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_ADD_OPTIONS</td>
+	<td>//div[contains(@class,'celleditor-edit yui3-dd-drop')]//a[contains(@class,'celleditor-edit-add-option')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTIONS_REMOVE_1</td>
+	<td>//div[contains(@class,'celleditor-edit-option-row')]//a[contains(@class,'celleditor-edit-delete-option')][1]</td>
 	<td></td>
 </tr>
 </tbody>

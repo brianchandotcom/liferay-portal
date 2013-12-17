@@ -1,4 +1,4 @@
-2<definition>
+<definition>
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

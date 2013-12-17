@@ -187,7 +187,8 @@ public class FolderStagedModelDataHandler
 		Element folderElement = portletDataContext.getImportDataElement(folder);
 
 		importFolderFileEntryTypes(
-			portletDataContext, folderElement, folder, serviceContext);
+			portletDataContext, folderElement, folder, importedFolder,
+			serviceContext);
 
 		portletDataContext.importClassedModel(
 			folder, importedFolder, DLFolder.class);
@@ -301,7 +302,7 @@ public class FolderStagedModelDataHandler
 
 	protected void importFolderFileEntryTypes(
 			PortletDataContext portletDataContext, Element folderElement,
-			Folder folder, ServiceContext serviceContext)
+			Folder folder, Folder importedFolder, ServiceContext serviceContext)
 		throws Exception {
 
 		List<Long> currentFolderFileEntryTypeIds = new ArrayList<Long>();
@@ -358,7 +359,7 @@ public class FolderStagedModelDataHandler
 		}
 
 		if (!currentFolderFileEntryTypeIds.isEmpty()) {
-			DLFolder dlFolder = (DLFolder)folder.getModel();
+			DLFolder dlFolder = (DLFolder)importedFolder.getModel();
 
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 			dlFolder.setOverrideFileEntryTypes(true);

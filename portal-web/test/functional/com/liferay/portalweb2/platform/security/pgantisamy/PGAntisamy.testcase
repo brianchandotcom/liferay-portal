@@ -1,5 +1,5 @@
 <definition>
-	<property name="hook.plugins.include" value="antisamy-hook" />
+	<property name="hook.plugins.includes" value="antisamy-hook" />
 
 	<var name="pageName" value="Antisamy Test Page" />
 	<var name="portletName" value="Wiki" />

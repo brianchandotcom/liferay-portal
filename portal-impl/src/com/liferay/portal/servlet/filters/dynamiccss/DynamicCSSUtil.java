@@ -132,7 +132,7 @@ public class DynamicCSSUtil {
 
 		URLConnection cacheResourceURLConnection = null;
 
-		URL cacheResourceURL = _getCacheResource(
+		URL cacheResourceURL = _getCacheResourceURL(
 			servletContext, request, resourcePath);
 
 		if (cacheResourceURL != null) {
@@ -168,11 +168,11 @@ public class DynamicCSSUtil {
 
 			if (PortalUtil.isRightToLeft(request)) {
 				parsedContent = RTLCSSUtil.getRtlCss(
-						resourcePath, parsedContent);
+					resourcePath, parsedContent);
 
-				// Append custom css for rtl
+				// Append custom CSS for RTL
 
-				URL rtlCustomResourceURL = _getRtlCustomResource(
+				URL rtlCustomResourceURL = _getRtlCustomResourceURL(
 					servletContext, resourcePath);
 
 				if (rtlCustomResourceURL != null) {
@@ -229,19 +229,19 @@ public class DynamicCSSUtil {
 		return parsedContent;
 	}
 
-	private static URL _getCacheResource(
+	private static URL _getCacheResourceURL(
 			ServletContext servletContext, HttpServletRequest request,
 			String resourcePath)
 		throws Exception {
 
-		String cacheFileSuffix = StringPool.BLANK;
+		String suffix = StringPool.BLANK;
 
 		if (PortalUtil.isRightToLeft(request)) {
-			cacheFileSuffix = "_rtl";
+			suffix = "_rtl";
 		}
 
 		return servletContext.getResource(
-			SassToCssBuilder.getCacheFileName(resourcePath, cacheFileSuffix));
+			SassToCssBuilder.getCacheFileName(resourcePath, suffix));
 	}
 
 	private static String _getCssThemePath(
@@ -265,7 +265,7 @@ public class DynamicCSSUtil {
 		return servletContext.getRealPath(theme.getCssPath());
 	}
 
-	private static URL _getRtlCustomResource(
+	private static URL _getRtlCustomResourceURL(
 			ServletContext servletContext, String resourcePath)
 		throws Exception {
 

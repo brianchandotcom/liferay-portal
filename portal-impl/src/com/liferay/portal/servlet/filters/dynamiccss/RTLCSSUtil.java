@@ -45,8 +45,9 @@ public class RTLCSSUtil {
 			context.evaluateString(
 				scope, "function require() {}", "require", 1, null);
 			context.evaluateString(
-				scope, "String.prototype.trim = function() {" +
-					"return this.replace(/^\\s+|\\s+$/g, '');}",
+				scope,
+				"String.prototype.trim = function() {return " +
+					"this.replace(/^\\s+|\\s+$/g, '');}",
 				"trim", 1, null);
 			context.evaluateString(scope, _jsScript, "script", 1, null);
 
@@ -59,7 +60,7 @@ public class RTLCSSUtil {
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse " + fileName + " to rtl");
+				_log.debug("Unable to parse " + fileName + " to RTL");
 			}
 		}
 		finally {

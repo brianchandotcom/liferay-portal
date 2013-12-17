@@ -64,12 +64,12 @@ public class SassToCssBuilder {
 		String cacheFileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int pos1 = cacheFileName.lastIndexOf(StringPool.SLASH);
-		int pos2 = cacheFileName.lastIndexOf(StringPool.PERIOD);
+		int x = cacheFileName.lastIndexOf(StringPool.SLASH);
+		int y = cacheFileName.lastIndexOf(StringPool.PERIOD);
 
-		return cacheFileName.substring(0, pos1 + 1) + ".sass-cache/" +
-			cacheFileName.substring(pos1 + 1, pos2) + suffix +
-				cacheFileName.substring(pos2);
+		return cacheFileName.substring(0, x + 1) + ".sass-cache/" +
+			cacheFileName.substring(x + 1, y) + suffix +
+				cacheFileName.substring(y);
 	}
 
 	public static String getContent(String docrootDirName, String fileName)
@@ -173,7 +173,7 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private void _addSassCache(
+	private void _cacheSass(
 			String docrootDirName, String portalCommonDirName, String fileName)
 		throws Exception {
 
@@ -181,30 +181,29 @@ public class SassToCssBuilder {
 			return;
 		}
 
-		String filePath = docrootDirName.concat(fileName);
-
-		File file = new File(filePath);
-		File cacheFile = getCacheFile(filePath);
+		File cacheFile = getCacheFile(docrootDirName.concat(fileName));
 
 		String parsedContent = _parseSassFile(
 			docrootDirName, portalCommonDirName, fileName);
 
 		FileUtil.write(cacheFile, parsedContent);
 
+		File file = new File(docrootDirName.concat(fileName));
+
 		cacheFile.setLastModified(file.lastModified());
 
-		// Generate rtl cache
+		// Generate RTL cache
 
-		File rtlCacheFile = getCacheFile(filePath, "_rtl");
+		File rtlCacheFile = getCacheFile(
+			docrootDirName.concat(fileName), "_rtl");
 
 		String rtlCss = RTLCSSUtil.getRtlCss(fileName, parsedContent);
 
-		// Append custom css for rtl
+		// Append custom CSS for RTL
 
 		String rtlCustomFileName = getRtlCustomFileName(fileName);
-		String rtlCustomFilePath = docrootDirName.concat(rtlCustomFileName);
 
-		if (FileUtil.exists(rtlCustomFilePath)) {
+		if (FileUtil.exists(docrootDirName.concat(rtlCustomFileName))) {
 			String rtlCustomCss = _parseSassFile(
 				docrootDirName, portalCommonDirName, rtlCustomFileName);
 
@@ -305,7 +304,7 @@ public class SassToCssBuilder {
 			try {
 				long start = System.currentTimeMillis();
 
-				_addSassCache(docrootDirName, portalCommonDirName, fileName);
+				_cacheSass(docrootDirName, portalCommonDirName, fileName);
 
 				long end = System.currentTimeMillis();
 

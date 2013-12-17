@@ -35,28 +35,26 @@ public class SassToCssBuilderTest {
 
 	@Test
 	public void testSassToCssBuilder() throws Exception {
-		List<String> dirNames = ListUtil.fromArray(new String[]{_DIR_NAME});
+		List<String> dirNames = ListUtil.fromArray(new String[]{ _DIR_NAME});
 		String docrootDirName = _DOCROOT_DIR_NAME;
 		String portalCommonDirName = _DOCROOT_DIR_NAME;
 
 		new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
 
-		// Compare generated with expected
-
-		String cacheContent = FileUtil.read(
-			_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME + _FILE_NAME);
 		String expectedCacheContent = FileUtil.read(
 			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _FILE_NAME);
+		String actualCacheContent = FileUtil.read(
+			_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME + _FILE_NAME);
 
-		Assert.assertEquals(cacheContent, expectedCacheContent);
+		Assert.assertEquals(expectedCacheContent, actualCacheContent);
 
-		String rtlCacheContent = FileUtil.read(
+		String expectedRtlCacheContent = FileUtil.read(
+			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _RTL_FILE_NAME);
+		String actualRtlCacheContent = FileUtil.read(
 			_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME +
 				_RTL_FILE_NAME);
-		String rtlExpectedCacheContent = FileUtil.read(
-			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _RTL_FILE_NAME);
 
-		Assert.assertEquals(rtlCacheContent, rtlExpectedCacheContent);
+		Assert.assertEquals(expectedRtlCacheContent, actualRtlCacheContent);
 	}
 
 	private static final String _DIR_NAME = "/css";

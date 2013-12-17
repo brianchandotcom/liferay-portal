@@ -1192,6 +1192,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public Element getReferenceElement(
+		Element parentElement, Class<?> clazz, long classPK, long groupId,
+		String uuid, String referenceType) {
+
+		List<Element> referenceElements = getReferenceElements(
+			parentElement, clazz, groupId, uuid, classPK, referenceType);
+
+		if (!referenceElements.isEmpty()) {
+			return referenceElements.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	public Element getReferenceElement(
 		StagedModel parentStagedModel, Class<?> clazz, long classPK) {
 
 		List<Element> referenceElements = getReferenceElements(

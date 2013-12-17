@@ -1635,6 +1635,33 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 								uuid, companyGroupId);
 						}
 
+						if (dlFileEntryType == null) {
+							Element rootElement =
+								portletDataContext.getImportDataRootElement();
+
+							Element element =
+								portletDataContext.getReferenceElement(
+									rootElement, clazz, 0, companyGroupId, uuid,
+									null);
+
+							if (element != null) {
+								String fileEntryTypeKey =
+									element.attributeValue(
+										"file-entry-type-key");
+
+								boolean preloaded = GetterUtil.getBoolean(
+										element.attributeValue("preloaded"));
+
+								if (preloaded) {
+									dlFileEntryType =
+										DLFileEntryTypeLocalServiceUtil.
+											fetchFileEntryType(
+												companyGroupId,
+												fileEntryTypeKey);
+								}
+							}
+						}
+
 						if (dlFileEntryType != null) {
 							newPrimaryKey =
 								dlFileEntryType.getFileEntryTypeId();

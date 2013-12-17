@@ -852,7 +852,10 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 				String projectDirName = projectDir.getName();
 
-				String pluginsDirName = "liferay-plugins" + projectDirName.substring("liferay-portal".length());
+				String basePortalDir = project.getProperty("portal.dir.name");
+				String basePluginsDir = project.getProperty("plugins.dir.name");
+
+				String pluginsDirName = basePluginsDir + projectDirName.substring(basePortalDir.length());
 
 				File pluginsDir = new File(projectDir.getParent(), pluginsDirName);
 

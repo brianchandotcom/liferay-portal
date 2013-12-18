@@ -364,6 +364,29 @@
 		</if>
 	</command>
 
+	<command name="exportSite">
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_EXPORT" value1="Export" />
+		<execute action="CPSites#selectFrame" locator-key1="CONFIGURATION_FRAME" />
+		<execute action="CPSites#type" locator-key1="EXPORT_FILE_NAME" value1="${fileName}" />
+		<execute action="CPSites#assertClick" locator-key1="CONFIGURATION_EXPORT_BUTTON" value1="Export" />
+		<execute action="CPSites#pause" locator1="5000" />
+		<execute action="CPSites#assertClick" locator-key1="DOWNLOAD_FILE" value1="${fileDownload}" />
+	</command>
+
+	<command name="importSite">
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_IMPORT" value1="Import" />
+		<execute action="CPSites#selectFrame" locator-key1="IMPORT_FRAME" />
+		<execute action="CPSites#assertClick" locator-key1="SELECT_FILE" value1="Select File" />
+		<execute action="Sikuli#click" locator-key1="TYPE_FILE_NAME" />
+		<execute action="Sikuli#type" locator-key1="FILE_DIALOG" />
+		<execute action="Sikuli#click" locator-key1="TESTLAR_FILE" />
+		<execute action="Sikuli#click" locator-key1="OPEN" />
+		<execute action="CPSites#assertClick" locator-key1="IMPORT_CONTINUE" value1="Continue" />
+		<execute action="CPSites#assertClick" locator-key1="IMPORT_CONTINUE_2" value1="Continue" />
+		<execute action="CPSites#assertClick" locator-key1="IMPORT" value1="Import" />
+		<execute action="CPBlogsAdd#pause" locator1="2000" />
+	</command>
+
 	<command name="joinViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 

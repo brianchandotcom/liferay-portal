@@ -34,6 +34,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
 
+import org.sikuli.script.FindFailed;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -265,6 +267,11 @@ public abstract class BaseWebDriverImpl
 	public void clickAtAndWait(String locator, String coordString) {
 		super.clickAt(locator, coordString);
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public void clickImageElement(String image) throws FindFailed {
+		LiferaySeleniumHelper.clickImageElement(this, image);
 	}
 
 	@Override
@@ -614,6 +621,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
+	}
+
+	@Override
+	public void typeImageElement(String image) throws FindFailed {
+		LiferaySeleniumHelper.typeImageElement(this, image);
 	}
 
 	@Override

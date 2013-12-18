@@ -29,13 +29,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -51,27 +51,27 @@
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_USERS</td>
-	<td>//div[@class='ayout-content thread-info-content ']</td>
+	<td>//div[@class='layout-content thread-info-content ']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_SENDER</td>
-	<td>//div[@class='message' and contains(.,'${messageBody}')]/span/a</td>
+	<td>//div[@class='message' and contains(.,'${key_messageBody}')]/span/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_BODY</td>
-	<td>//div[@class='message' and contains(.,'${messageBody}')]/div[@class='body']</td>
+	<td>//div[@class='message' and contains(.,'${key_messageBody}')]/div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_ATTACHMENT</td>
-	<td>//div[@class='message' and contains(.,'${messageBody}')]//div[@class='image-thumbnail']/a/img</td>
+	<td>//div[@class='message' and contains(.,'${key_messageBody}')]//div[@class='image-thumbnail']/a/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_ATTACHMENT_LINK</td>
-	<td>//div[@class='message' and contains(.,'${messageBody}')]//td[2]/a</td>
+	<td>//div[@class='message' and contains(.,'${key_messageBody}')]//li[@class='message-attachment']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,22 +97,22 @@
 <!--PRIVATE_MESSAGE_REPLY-->
 <tr>
 	<td>PRIVATE_MESSAGE_REPLY_SENDER</td>
-	<td>//div[@class='message' and contains(.,'${messageReplyBody}')]/span/a</td>
+	<td>//div[@class='message' and contains(.,'${key_messageReplyBody}')]/span/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_REPLY_BODY</td>
-	<td>//div[@class='message' and contains(.,'${messageReplyBody}')]/div[@class='body']</td>
+	<td>//div[@class='message' and contains(.,'${key_messageReplyBody}')]/div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_REPLY_ATTACHMENT</td>
-	<td>//div[@class='message' and contains(.,'${messageReplyBody}')]//div[@class='image-thumbnail']/a/img</td>
+	<td>//div[@class='message' and contains(.,'${key_messageReplyBody}')]//div[@class='image-thumbnail']/a/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_MESSAGE_REPLY_ATTACHMENT_LINK</td>
-	<td>//div[@class='message' and contains(.,'${messageReplyBody}')]//td[2]/a</td>
+	<td>//div[@class='message' and contains(.,'${key_messageReplyBody}')]//li[@class='message-attachment']/span/a/span</td>
 	<td></td>
 </tr>
 </tbody>

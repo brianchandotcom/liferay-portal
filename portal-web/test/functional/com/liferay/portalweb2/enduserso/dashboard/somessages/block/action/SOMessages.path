@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL_CHECKBOX</td>
-	<td>//input[contains(@id,'checkAll')]</td>
+	<td>//input[@class='field check-all']</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,13 +44,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -61,32 +66,17 @@
 <!--FILTER-->
 <tr>
 	<td>MESSAGE_SENDER</td>
-	<td>//span[@class='author-sender']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_SENDER_INCREMENT</td>
-	<td>//a[@class='message-link' and contains(.,'${messageBody}${number}')]//span[@class='author-sender']</td>
+	<td>//a[@class='message-link' and contains(.,'${key_messageBody}')]//span[@class='author-sender']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_SUBJECT</td>
-	<td>//div[@class='subject']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_SUBJECT_INCREMENT</td>
-	<td>//a[@class='message-link' and contains(.,'${messageBody}${number}')]//div[@class='subject']</td>
+	<td>//a[@class='message-link' and contains(.,'${key_messageBody}')]//div[@class='subject']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_BODY</td>
-	<td>//a[@class='message-link']//div[@class='body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_BODY_INCREMENT</td>
-	<td>//a[@class='message-link' and contains(.,'${messageBody}${number}')]//div[@class='body']</td>
+	<td>//a[@class='message-link' and contains(.,'${key_messageBody}')]//div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,22 +86,12 @@
 </tr>
 <tr>
 	<td>MESSAGE_CHECKBOX</td>
-	<td>//input[contains(@name,'ThreadCheckbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_CHECKBOX_INCREMENT</td>
-	<td>//tr[contains(.,'${messageBody}${number}')]//input[contains(@name,'ThreadCheckbox')]</td>
+	<td>//tr[contains(.,'${key_messageBody}')]//input[contains(@name,'ThreadCheckbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MESSAGE_UNREAD</td>
-	<td>//tr[contains(@class, 'unread')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MESSAGE_UNREAD_INCREMENT</td>
-	<td>xpath=(//tr[contains(@class, 'unread')])[contains(.,'${messageBody}${number}')]</td>
+	<td>xpath=(//tr[contains(@class, 'unread')])[contains(.,'${key_messageBody}')]</td>
 	<td></td>
 </tr>
 <tr>

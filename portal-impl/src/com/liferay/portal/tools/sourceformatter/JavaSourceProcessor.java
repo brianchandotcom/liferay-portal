@@ -1241,9 +1241,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-42599
 
-			if (line.contains("session.createSQLQuery(") &&
-				fileName.endsWith("FinderImpl.java")) {
-
+			if (line.contains("= session.createSQLQuery(")) {
 				line = StringUtil.replace(
 					line, "createSQLQuery", "createSynchronizedSQLQuery");
 			}

@@ -45,7 +45,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	for (int i = 0; i < mdrActions.size(); i++) {
 		MDRAction mdrAction = mdrActions.get(i);
 
-		sb.append(mdrAction.getName(locale));
+		sb.append(HtmlUtil.escape(mdrAction.getName(locale)));
 
 		if (i < (mdrActions.size() -1)) {
 			sb.append(", ");
@@ -53,7 +53,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	}
 	%>
 
-	<%= HtmlUtil.escape(sb.toString()) %>
+	<%= sb.toString() %>
 
 </liferay-ui:search-container-column-text>
 

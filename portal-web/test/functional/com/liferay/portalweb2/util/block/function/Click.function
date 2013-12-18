@@ -62,6 +62,12 @@
 		<execute function="Click#clickAt" />
 	</command>
 
+	<command name="clickImageElement">
+		<execute selenium="clickImageElement" />
+
+		<execute selenium="pause" argument1="2000" />
+	</command>
+
 	<command name="clickWaitForInlineCKEditor">
 		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" />
 

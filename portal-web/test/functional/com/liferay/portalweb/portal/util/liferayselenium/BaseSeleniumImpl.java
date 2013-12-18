@@ -28,6 +28,8 @@ import java.lang.reflect.Field;
 
 import java.util.Map;
 
+import org.sikuli.script.FindFailed;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -195,6 +197,11 @@ public abstract class BaseSeleniumImpl
 	public void clickAtAndWait(String locator, String coordString) {
 		super.clickAt(locator, coordString);
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public void clickImageElement(String imageUrl) throws FindFailed {
+		LiferaySeleniumHelper.clickImageElement(this, imageUrl);
 	}
 
 	@Override
@@ -522,6 +529,11 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public void typeFrame(String locator, String value) {
 		LiferaySeleniumHelper.typeFrame(this, locator, value);
+	}
+
+	@Override
+	public void typeImageElement(String image) throws FindFailed {
+		LiferaySeleniumHelper.typeImageElement(this, image);
 	}
 
 	@Override

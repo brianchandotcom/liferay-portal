@@ -1377,7 +1377,10 @@ public class SeleniumBuilderFileUtil {
 			text = text.substring(0, text.length() - 1);
 		}
 
-		if (!text.equals("") && !text.startsWith("link=")) {
+		if (!text.equals("") &&
+			!text.startsWith("link=") &&
+			!text.contains(".png")) {
+
 			try {
 				XPathFactory xPathFactory = XPathFactory.newInstance();
 

@@ -15,18 +15,55 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+
+import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @author Carlos Sierra
+ * @author Akos Thurzo
  */
 public class PortalImplLayoutSetFriendlyURLTest
 	extends PortalImplBaseURLTestCase {
+
+	@Test
+	public void testAccessFromVirtualHost() throws Exception {
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME");
+
+		Object value = field.get(null);
+
+		try {
+			Group defaultGroup = GroupTestUtil.addGroup();
+
+			field.set(null, defaultGroup.getName());
+
+			ThemeDisplay themeDisplay = initThemeDisplay(
+				company, group, layout, VIRTUAL_HOSTNAME);
+
+			company.setVirtualHostname(LOCALHOST);
+
+			Layout layout = LayoutTestUtil.addLayout(
+				defaultGroup.getGroupId(), ServiceTestUtil.randomString());
+
+			String friendlyURL = PortalUtil.getLayoutSetFriendlyURL(
+				layout.getLayoutSet(), themeDisplay);
+
+			Assert.assertFalse(friendlyURL.contains(LOCALHOST));
+		}
+		finally {
+			field.set(null, value);
+		}
+	}
 
 	@Test
 	public void testPreserveParameters() throws Exception {

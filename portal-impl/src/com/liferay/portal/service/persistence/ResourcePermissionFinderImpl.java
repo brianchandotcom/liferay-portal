@@ -77,7 +77,7 @@ public class ResourcePermissionFinderImpl
 
 			sql = StringUtil.replace(sql, "[$SCOPE$]", getScopes(scopes));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -145,7 +145,7 @@ public class ResourcePermissionFinderImpl
 					sql, "ResourcePermission.roleId = ?", sb.toString());
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -190,7 +190,7 @@ public class ResourcePermissionFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_RESOURCE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
 
@@ -226,7 +226,7 @@ public class ResourcePermissionFinderImpl
 
 			sql = StringUtil.replace(sql, "[$SCOPE$]", getScopes(scopes));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("ResourcePermission", ResourcePermissionImpl.class);
 

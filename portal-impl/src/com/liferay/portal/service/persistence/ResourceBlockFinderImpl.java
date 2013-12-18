@@ -52,7 +52,7 @@ public class ResourceBlockFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$ROLE_ID$]", StringUtil.merge(roleIds));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("resourceBlockId", Type.LONG);
 			q.addScalar("actionIds", Type.LONG);

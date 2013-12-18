@@ -48,7 +48,7 @@ public class AssetTagPropertyKeyFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_GROUP_ID);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -92,7 +92,7 @@ public class AssetTagPropertyKeyFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_GROUP_ID);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("propertyKey", Type.STRING);
 

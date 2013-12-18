@@ -109,7 +109,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -177,7 +177,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -231,7 +231,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -283,7 +283,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -352,7 +352,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -415,7 +415,7 @@ public class MBThreadFinderImpl
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -482,7 +482,7 @@ public class MBThreadFinderImpl
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -528,7 +528,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -556,7 +556,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -616,7 +616,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -662,7 +662,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -706,7 +706,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -746,7 +746,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -799,7 +799,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -871,7 +871,7 @@ public class MBThreadFinderImpl
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -917,7 +917,7 @@ public class MBThreadFinderImpl
 
 			sql = updateSQL(sql, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -983,7 +983,7 @@ public class MBThreadFinderImpl
 					groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -1057,7 +1057,7 @@ public class MBThreadFinderImpl
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 
@@ -1114,7 +1114,7 @@ public class MBThreadFinderImpl
 					groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("MBThread", MBThreadImpl.class);
 

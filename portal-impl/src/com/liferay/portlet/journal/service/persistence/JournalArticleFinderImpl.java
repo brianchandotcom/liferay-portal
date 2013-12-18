@@ -484,7 +484,7 @@ public class JournalArticleFinderImpl
 			String sql = CustomSQLUtil.get(
 				FIND_BY_EXPIRATION_DATE, queryDefinition);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
@@ -558,7 +558,7 @@ public class JournalArticleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_REVIEW_DATE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
@@ -592,7 +592,7 @@ public class JournalArticleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_R_D);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
@@ -745,7 +745,7 @@ public class JournalArticleFinderImpl
 				sql, "[$FOLDER_ID$]",
 				getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -814,7 +814,7 @@ public class JournalArticleFinderImpl
 					"JournalArticle.resourcePrimKey", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -884,7 +884,7 @@ public class JournalArticleFinderImpl
 					"JournalArticle.resourcePrimKey", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -1024,7 +1024,7 @@ public class JournalArticleFinderImpl
 					sql, "(companyId", "(JournalArticle.companyId");
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -1119,7 +1119,7 @@ public class JournalArticleFinderImpl
 				sql, "[$FOLDER_ID$]",
 				getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
@@ -1187,7 +1187,7 @@ public class JournalArticleFinderImpl
 					"JournalArticle.resourcePrimKey", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
@@ -1253,7 +1253,7 @@ public class JournalArticleFinderImpl
 					"JournalArticle.resourcePrimKey", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
@@ -1388,7 +1388,7 @@ public class JournalArticleFinderImpl
 					sql, "(companyId", "(JournalArticle.companyId");
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);

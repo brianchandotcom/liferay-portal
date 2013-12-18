@@ -68,7 +68,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_RELATION);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -107,7 +107,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_RELATION_TYPE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -145,7 +145,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_USER);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -186,7 +186,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_USER_GROUPS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -228,7 +228,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_RELATION);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivitySet", SocialActivitySetImpl.class);
 
@@ -259,7 +259,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_RELATION_TYPE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivitySet", SocialActivitySetImpl.class);
 
@@ -290,7 +290,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivitySet", SocialActivitySetImpl.class);
 
@@ -325,7 +325,7 @@ public class SocialActivitySetFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUPS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivitySet", SocialActivitySetImpl.class);
 

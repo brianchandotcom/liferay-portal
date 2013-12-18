@@ -110,7 +110,8 @@ public class RoleFinderImpl
 		try {
 			session = openSession();
 
-			SQLQuery q = session.createSQLQuery(getCountByR_U_SQL());
+			SQLQuery q = session.createSynchronizedSQLQuery(
+				getCountByR_U_SQL());
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -140,7 +141,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_U_G_R);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -214,7 +215,7 @@ public class RoleFinderImpl
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -286,7 +287,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_SYSTEM);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 
@@ -315,7 +316,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUP_GROUP_ROLE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 
@@ -345,7 +346,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUP_ROLE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 
@@ -377,7 +378,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_N);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 
@@ -446,7 +447,7 @@ public class RoleFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds, "Groups_Roles"));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 
@@ -477,7 +478,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_R_N_A);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 
@@ -549,7 +550,7 @@ public class RoleFinderImpl
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 
@@ -584,7 +585,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_N_S_P);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("roleName", Type.STRING);
 			q.addScalar("actionId", Type.STRING);
@@ -641,7 +642,7 @@ public class RoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_N_S_P_A);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Role_", RoleImpl.class);
 

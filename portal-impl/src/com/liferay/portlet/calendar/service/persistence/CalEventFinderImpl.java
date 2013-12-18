@@ -74,7 +74,7 @@ public class CalEventFinderImpl
 
 			sql = StringUtil.replace(sql, "[$TYPE$]", getTypes(types));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("CalEvent", CalEventImpl.class);
 
@@ -129,7 +129,7 @@ public class CalEventFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_FUTURE_REMINDERS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("CalEvent", CalEventImpl.class);
 
@@ -158,7 +158,7 @@ public class CalEventFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("CalEvent", CalEventImpl.class);
 
@@ -201,7 +201,7 @@ public class CalEventFinderImpl
 
 			sql = StringUtil.replace(sql, "[$TYPE$]", getTypes(types));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("CalEvent", CalEventImpl.class);
 

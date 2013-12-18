@@ -43,7 +43,7 @@ public class BookmarksEntryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("BookmarksEntry", BookmarksEntryImpl.class);
 

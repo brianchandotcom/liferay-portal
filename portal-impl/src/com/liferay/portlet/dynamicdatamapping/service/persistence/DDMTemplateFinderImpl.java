@@ -665,7 +665,7 @@ public class DDMTemplateFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -742,7 +742,7 @@ public class DDMTemplateFinderImpl
 				sql, "language", StringPool.LIKE, true, languages);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -814,7 +814,7 @@ public class DDMTemplateFinderImpl
 				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DDMTemplate", DDMTemplateImpl.class);
 
@@ -887,7 +887,7 @@ public class DDMTemplateFinderImpl
 				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DDMTemplate", DDMTemplateImpl.class);
 

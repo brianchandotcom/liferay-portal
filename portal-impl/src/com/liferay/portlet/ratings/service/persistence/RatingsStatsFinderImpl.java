@@ -84,7 +84,7 @@ public class RatingsStatsFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$CLASS_PKS$]", StringUtil.merge(classPKs));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("RatingsStats", RatingsStatsImpl.class);
 

@@ -215,14 +215,25 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						dlFileVersion.getVersion(), false);
 				}
 				catch (Exception e) {
-					DLFileEntry fileEntry = dlFileVersion.getFileEntry();
-
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to find file version " +
-								dlFileVersion.getVersion() + " for file " +
-									"entry " + fileEntry.getName(),
-							e);
+						DLFileEntry fileEntry =
+							DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+								dlFileVersion.getFileEntryId());
+
+						if (fileEntry == null) {
+							_log.warn(
+								"Unable to find file entry associated with " +
+									"file version " +
+										dlFileVersion.getFileVersionId(),
+								e);
+						}
+						else {
+							_log.warn(
+								"Unable to find file version " +
+									dlFileVersion.getVersion() + " for file " +
+										"entry " + fileEntry.getName(),
+								e);
+						}
 					}
 
 					return;

@@ -17,6 +17,8 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -89,18 +91,27 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			title = title.substring(0, index);
 		}
 
-		File file = DLStoreUtil.getFile(
-			companyId, CompanyConstants.SYSTEM, filePath);
+		try {
+			File file = DLStoreUtil.getFile(
+				companyId, CompanyConstants.SYSTEM, filePath);
 
-		ServiceContext serviceContext = createServiceContext();
+			ServiceContext serviceContext = createServiceContext();
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			userId, groupId, folderId, fileName, contentType, title,
-			StringPool.BLANK, StringPool.BLANK, file, serviceContext);
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				userId, groupId, folderId, fileName, contentType, title,
+				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
 
-		updateFileEntryStatus(fileEntry, status, serviceContext);
+			updateFileEntryStatus(fileEntry, status, serviceContext);
 
-		return fileEntry;
+			return fileEntry;
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to add file entry " + fileName, e);
+			}
+
+			return null;
+		}
 	}
 
 	protected Folder addFolder(
@@ -415,7 +426,9 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 				companyId, userId, groupId, folder.getFolderId(),
 				jsonObject.getString("name"), filePath, status);
 
-			fieldValues.put(field.getName(), getJSON(fileEntry));
+			if (fileEntry != null) {
+				fieldValues.put(field.getName(), getJSON(fileEntry));
+			}
 		}
 
 		updateFieldValues(storageId, fieldValues);
@@ -497,6 +510,9 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateStructure(structure, document.asXML());
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		VerifyDynamicDataMapping.class);
 
 	private long _ddlRecordSetClassNameId;
 	private long _ddmStructureClassNameId;

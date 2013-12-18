@@ -349,7 +349,7 @@ public class GroupServiceTest {
 
 		LayoutTestUtil.addLayout(
 			parentOrganizationGroup.getGroupId(),
-			ServiceTestUtil.randomString(), false);
+			ServiceTestUtil.randomString());
 
 		Organization childOrganization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),

@@ -24,10 +24,10 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	name="name"
 >
 
-	<%= mdrRuleGroup.getName(locale) %>
+	<%= HtmlUtil.escape(mdrRuleGroup.getName(locale)) %>
 
 	<c:if test="<%= Validator.isNotNull(mdrRuleGroup.getDescription(locale)) %>">
-		<liferay-ui:icon-help message="<%= mdrRuleGroup.getDescription(locale) %>" />
+		<liferay-ui:icon-help message="<%= HtmlUtil.escape(mdrRuleGroup.getDescription(locale)) %>" />
 	</c:if>
 </liferay-ui:search-container-column-text>
 
@@ -53,7 +53,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 	}
 	%>
 
-	<%= sb.toString() %>
+	<%= HtmlUtil.escape(sb.toString()) %>
 
 </liferay-ui:search-container-column-text>
 

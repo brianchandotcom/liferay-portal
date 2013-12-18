@@ -131,7 +131,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_MENU_ENTRY_SUBCONTENT</td>
-	<td>//div[contains(@class,'user-notification')]//div[@class='body']</td>
+	<td>//div[contains(@class,'user-notification')]//div[@class='body']/div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='portlet-msg-success']</td>
+	<td>NEW_MESSAGE_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe')]</td>
 	<td></td>
 </tr>
 <tr>

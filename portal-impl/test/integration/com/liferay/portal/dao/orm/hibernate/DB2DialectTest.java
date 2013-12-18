@@ -65,7 +65,7 @@ public class DB2DialectTest {
 		try {
 			session = _sessionFactory.openSession();
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			List<?> result = QueryUtil.list(
 				q, _sessionFactory.getDialect(), offset, offset + limit);

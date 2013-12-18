@@ -226,7 +226,7 @@ public class QueryUtilTest {
 		try {
 			session = _sessionFactory.openSession();
 
-			SQLQuery q = session.createSQLQuery(_SQL_SELECT);
+			SQLQuery q = session.createSynchronizedSQLQuery(_SQL_SELECT);
 
 			List<Object[]> result = (List<Object[]>)QueryUtil.list(
 				q, _sessionFactory.getDialect(), start, end, unmodifiable);
@@ -273,7 +273,7 @@ public class QueryUtilTest {
 		try {
 			session = _sessionFactory.openSession();
 
-			SQLQuery sqlQuery = session.createSQLQuery(
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				"SELECT id FROM QueryUtilTest ORDER BY value ".concat(order));
 
 			sqlQuery.addScalar("id", Type.INTEGER);
@@ -310,7 +310,7 @@ public class QueryUtilTest {
 				sql += " ORDER BY type ".concat(order);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			List<Object[]> result = (List<Object[]>)QueryUtil.list(
 				q, _sessionFactory.getDialect(), start, end, true);

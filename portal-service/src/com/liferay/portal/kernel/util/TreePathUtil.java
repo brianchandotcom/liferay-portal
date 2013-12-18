@@ -143,7 +143,7 @@ public class TreePathUtil {
 			sb.append(".status != ?)");
 		}
 
-		SQLQuery sqlQuery = session.createSQLQuery(sb.toString());
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sb.toString());
 
 		QueryPos qPos = QueryPos.getInstance(sqlQuery);
 

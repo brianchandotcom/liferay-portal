@@ -1374,21 +1374,28 @@ public class LayoutTypePortletImpl
 	protected String getColumn(String portletId) {
 		List<String> columns = getColumns();
 
-		for (String columnId : columns) {
-			String columnValue = getColumnValue(columnId);
+		String columnWithIdenticalRootPortletId = StringPool.BLANK;
+
+		for (String column : columns) {
+			String columnValue = getColumnValue(column);
 
 			String[] portletIds = StringUtil.split(columnValue);
 
 			for (String columnPortletId : portletIds) {
-				if (PortletConstants.hasIdenticalRootPortletId(
+				if (columnPortletId.equals(portletId)) {
+					return column;
+				}
+
+				if (Validator.isNull(columnWithIdenticalRootPortletId) &&
+					PortletConstants.hasIdenticalRootPortletId(
 						columnPortletId, portletId)) {
 
-					return columnId;
+					columnWithIdenticalRootPortletId = column;
 				}
 			}
 		}
 
-		return StringPool.BLANK;
+		return columnWithIdenticalRootPortletId;
 	}
 
 	protected List<String> getColumns() {

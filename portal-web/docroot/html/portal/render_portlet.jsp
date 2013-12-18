@@ -71,7 +71,7 @@ else {
 long portletItemId = ParamUtil.getLong(request, "p_p_i_id");
 
 if (portletItemId > 0) {
-	PortletPreferencesServiceUtil.restoreArchivedPreferences(themeDisplay.getSiteGroupId(), layout, portlet.getRootPortletId(), portletItemId, portletPreferences);
+	PortletPreferencesServiceUtil.restoreArchivedPreferences(themeDisplay.getSiteGroupId(), layout, portlet.getPortletId(), portletItemId, portletPreferences);
 }
 
 PortletConfig portletConfig = PortletConfigFactoryUtil.create(portlet, application);

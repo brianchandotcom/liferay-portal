@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -94,7 +95,7 @@ public class PortletPreferencesServiceImpl
 		javax.portlet.PortletPreferences archivedPreferences =
 			portletPreferencesLocalService.getPreferences(
 				portletItem.getCompanyId(), ownerId, ownerType, plid,
-				portletId);
+				PortletConstants.getRootPortletId(portletId));
 
 		copyPreferences(archivedPreferences, preferences);
 	}

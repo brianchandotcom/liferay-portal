@@ -761,6 +761,30 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/sikuli-api.jar</file-name>
+		<version>1.1.0</version>
+		<project-name>>Sikuli</project-name>
+		<project-url>https://code.google.com/p/sikuli-api/wiki/SikuliWebDriver</project-url>
+		<licenses>
+			<license>
+				<license-name>MIT License</license-name>
+				<license-url>http://sikuli.org/license.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>lib/development/sikuli-script.jar</file-name>
+		<version>1.0.1</version>
+		<project-name>Sikuli</project-name>
+		<project-url>http://www.sikuli.org/</project-url>
+		<licenses>
+			<license>
+				<license-name>MIT License</license-name>
+				<license-url>http://sikuli.org/license.html</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/smtp.jar</file-name>
 		<version>1.4</version>
 		<project-name>JavaMail</project-name>

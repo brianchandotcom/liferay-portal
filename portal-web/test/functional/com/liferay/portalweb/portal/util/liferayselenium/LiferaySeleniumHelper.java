@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -38,6 +39,11 @@ import java.io.File;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+
+import org.sikuli.api.robot.Key;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
+import org.sikuli.script.Screen;
 
 /**
  * @author Brian Wing Shun Chan
@@ -354,6 +360,26 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void clickImageElement(
+			LiferaySelenium liferaySelenium, String image)
+		throws FindFailed {
+
+		if (OSDetector.isWindows()) {
+			_imageDirectory = StringUtil.replace(_imageDirectory, "//", "\\");
+			_imageDirectory = StringUtil.replace(
+				_imageDirectory, "LinuxImages", "WindowsImages");
+		}
+
+		Match match = screen.exists(
+			liferaySelenium.getProjectDir() + _imageDirectory + image);
+
+		if ((match == null) && image.equals("typeFileName.png")) {
+			return;
+		}
+
+		screen.click(liferaySelenium.getProjectDir() + _imageDirectory + image);
+	}
+
 	public static void connectToEmailAccount(
 			String emailAddress, String emailPassword)
 		throws Exception {
@@ -646,6 +672,31 @@ public class LiferaySeleniumHelper {
 			"document.body.innerHTML = \"" + value + "\"");
 
 		liferaySelenium.selectFrame("relative=parent");
+	}
+
+	public static void typeImageElement(
+			LiferaySelenium liferaySelenium, String image)
+		throws FindFailed {
+
+		if (OSDetector.isWindows()) {
+			_imageDirectory = StringUtil.replace(_imageDirectory, "//", "\\");
+			_imageDirectory = StringUtil.replace(
+				_imageDirectory, "LinuxImages", "WindowsImages");
+			_outputDirectory = StringUtil.replace(_outputDirectory, "//", "\\");
+		}
+
+		Match match = screen.exists(
+			liferaySelenium.getProjectDir() + _imageDirectory + image);
+
+		if (match == null) {
+			return;
+		}
+		else {
+			screen.click(
+				liferaySelenium.getProjectDir() + _imageDirectory + image);
+			screen.type(_outputDirectory);
+			screen.type(Key.ENTER);
+		}
 	}
 
 	public static void waitForElementNotPresent(
@@ -962,6 +1013,11 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	private static String _imageDirectory =
+		"portal-web//test//functional//com//liferay//portalweb//portal//" +
+			"util//liferayselenium//dependencies//LinuxImages//";
+	private static String _outputDirectory = TestPropsValues.OUTPUT_DIR;
+	private static Screen screen = new Screen();
 	private static int _screenshotCount = 0;
 	private static String _screenshotFileName = "";
 

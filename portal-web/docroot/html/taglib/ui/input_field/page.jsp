@@ -348,6 +348,7 @@ if (hints != null) {
 			boolean checkTab = false;
 			String displayHeight = ModelHintsConstants.TEXT_DISPLAY_HEIGHT;
 			String displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
+			int displayWidthInt = 0;
 			boolean editor = false;
 			String maxLength = ModelHintsConstants.TEXT_MAX_LENGTH;
 			boolean secret = false;
@@ -358,6 +359,7 @@ if (hints != null) {
 				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 				displayHeight = GetterUtil.getString(hints.get("display-height"), displayHeight);
 				displayWidth = GetterUtil.getString(hints.get("display-width"), displayWidth);
+				displayWidthInt = Integer.parseInt(displayWidth);
 				editor = GetterUtil.getBoolean(hints.get("editor"), editor);
 				maxLength = GetterUtil.getString(hints.get("max-length"), maxLength);
 				secret = GetterUtil.getBoolean(hints.get("secret"), secret);
@@ -366,6 +368,25 @@ if (hints != null) {
 
 			if (autoSize) {
 				displayHeight = "auto";
+			}
+
+			if (displayWidthInt <= 60) {
+				cssClass += " input-mini";
+			}
+			else if (displayWidthInt > 60 && displayWidthInt <= 90) {
+				cssClass += " input-small";
+			}
+			else if (displayWidthInt > 90 && displayWidthInt <= 150) {
+				cssClass += " input-medium";
+			}
+			else if (displayWidthInt > 210 && displayWidthInt <= 270) {
+				cssClass += " input-xlarge";
+			}
+			else if (displayWidthInt > 270) {
+				cssClass += " input-xxlarge";
+			}
+			else {
+				cssClass += " input-large";
 			}
 
 			boolean localized = ModelHintsUtil.isLocalized(model, field);
@@ -402,14 +423,13 @@ if (hints != null) {
 								cssClass='<%= cssClass + " lfr-input-text" %>'
 								defaultLanguageId="<%= defaultLanguageId %>"
 								disabled="<%= disabled %>"
-								displayWidth="<%= displayWidth %>"
 								formName="<%= formName %>"
 								id="<%= id %>"
 								ignoreRequestValue="<%= ignoreRequestValue %>"
 								languageId="<%= languageId %>"
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
-								style='<%= "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") + "; " + (upperCase ? "text-transform: uppercase;" : "" ) %>'
+								style='<%= (upperCase ? "text-transform: uppercase;" : "" ) %>'
 								type="editor"
 								xml="<%= xml %>"
 							/>
@@ -439,20 +459,20 @@ if (hints != null) {
 
 					<c:choose>
 						<c:when test="<%= localized %>">
-							<liferay-ui:input-localized autoFocus="<%= autoFocus %>" availableLocales="<%= availableLocales %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" displayWidth="<%= displayWidth %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" style='<%= "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") + "; " + (upperCase ? "text-transform: uppercase;" : "" ) %>' xml="<%= xml %>" />
+							<liferay-ui:input-localized autoFocus="<%= autoFocus %>" availableLocales="<%= availableLocales %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" style='<%= (upperCase ? "text-transform: uppercase;" : "" ) %>' xml="<%= xml %>" />
 						</c:when>
 						<c:otherwise>
-							<input class="<%= cssClass + " lfr-input-text" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>; <%= upperCase ? "text-transform: uppercase;" : "" %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
+							<input class="<%= cssClass + " lfr-input-text" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="<%= upperCase ? "text-transform: uppercase;" : "" %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<c:choose>
 						<c:when test="<%= localized %>">
-							<liferay-ui:input-localized autoFocus="<%= autoFocus %>" autoSize="<%= autoSize %>" availableLocales="<%= availableLocales %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" displayWidth="<%= displayWidth %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : "") + "Liferay.Util.disableEsc();" %>' style='<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK + "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") +";" %>' type="textarea" wrap="soft" xml="<%= xml %>" />
+							<liferay-ui:input-localized autoFocus="<%= autoFocus %>" autoSize="<%= autoSize %>" availableLocales="<%= availableLocales %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" onKeyDown='<%= (checkTab ? "Liferay.Util.checkTab(this); " : "") + "Liferay.Util.disableEsc();" %>' style='<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>' type="textarea" wrap="soft" xml="<%= xml %>" />
 						</c:when>
 						<c:otherwise>
-							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %> max-width: <%= displayWidth %><%= Validator.isDigit(displayWidth) ? "px" : "" %>;" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
+							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 						</c:otherwise>
 					</c:choose>
 

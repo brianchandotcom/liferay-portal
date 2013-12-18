@@ -31,7 +31,7 @@
 	</model>
 	<model name="com.liferay.portal.model.Account">
 		<default-hints>
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="accountId" type="long" />
 		<field name="companyId" type="long" />
@@ -54,7 +54,7 @@
 	</model>
 	<model name="com.liferay.portal.model.Address">
 		<default-hints>
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="uuid" type="String" />
 		<field name="addressId" type="long" />
@@ -120,7 +120,7 @@
 	</model>
 	<model name="com.liferay.portal.model.Company">
 		<default-hints>
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="companyId" type="long" />
 		<field name="accountId" type="long" />
@@ -141,7 +141,7 @@
 	</model>
 	<model name="com.liferay.portal.model.Contact">
 		<default-hints>
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="contactId" type="long" />
 		<field name="companyId" type="long" />
@@ -204,7 +204,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="address" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<validator name="email" />
 		</field>
 		<field name="typeId" type="int" />
@@ -223,7 +223,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="name" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">150</hint>
 			<validator name="required" />
 		</field>
@@ -264,12 +264,12 @@
 		<field name="layoutId" type="long" />
 		<field name="parentLayoutId" type="long" />
 		<field name="name" type="String" localized="true">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">4000</hint>
 			<validator name="required" />
 		</field>
 		<field name="title" type="String" localized="true">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="description" type="String" localized="true">
@@ -290,7 +290,7 @@
 		</field>
 		<field name="hidden" type="boolean" />
 		<field name="friendlyURL" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="iconImageId" type="long" />
@@ -525,7 +525,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="name" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">100</hint>
 			<validator name="required" />
 		</field>
@@ -816,7 +816,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="name" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<validator name="required" />
 		</field>
 		<field name="title" type="String" localized="true">
@@ -900,7 +900,7 @@
 	</model>
 	<model name="com.liferay.portal.model.User">
 		<default-hints>
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="uuid" type="String" />
 		<field name="userId" type="long" />
@@ -971,7 +971,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="parentUserGroupId" type="long" />
 		<field name="name" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<validator name="required" />
 		</field>
 		<field name="description" type="String">
@@ -1046,7 +1046,7 @@
 	</model>
 	<model name="com.liferay.portal.model.VirtualHost">
 		<default-hints>
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="virtualHostId" type="long" />
 		<field name="companyId" type="long" />
@@ -1078,7 +1078,7 @@
 		<field name="classPK" type="long" />
 		<field name="url" type="String">
 			<hint-collection name="URL" />
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<validator name="url" />
 		</field>
 		<field name="typeId" type="int" />
@@ -1180,10 +1180,10 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="categoryId" type="long" />
 		<field name="key" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</field>
 		<field name="value" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</field>
 	</model>
 	<model name="com.liferay.portlet.asset.model.AssetEntry">
@@ -1253,10 +1253,10 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="tagId" type="long" />
 		<field name="key" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</field>
 		<field name="value" type="String">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 		</field>
 	</model>
@@ -1320,7 +1320,7 @@
 		<field name="smallImageId" type="long" />
 		<field name="smallImageURL" type="String">
 			<hint-collection name="URL" />
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</field>
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -2122,7 +2122,7 @@
 		<field name="classPK" type="long" />
 		<field name="ruleGroupInstanceId" type="long" />
 		<field name="name" type="String" localized="true">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
@@ -2147,7 +2147,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="ruleGroupId" type="long" />
 		<field name="name" type="String" localized="true">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
@@ -2171,7 +2171,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" localized="true">
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
@@ -2407,7 +2407,7 @@
 	</model>
 	<model name="com.liferay.portlet.shopping.model.ShoppingOrder">
 		<default-hints>
-			<hint name="display-width">150</hint>
+			<hint name="display-width">210</hint>
 		</default-hints>
 		<field name="orderId" type="long" />
 		<field name="groupId" type="long" />

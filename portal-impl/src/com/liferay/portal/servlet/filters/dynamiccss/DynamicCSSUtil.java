@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -405,14 +406,33 @@ public class DynamicCSSUtil {
 
 		String portalWebDir = PortalUtil.getPortalWebDir();
 
-		inputObjects.put(
-			"commonSassPath", portalWebDir.concat(_SASS_COMMON_DIR));
+		String commonSassPath = portalWebDir.concat(_SASS_COMMON_DIR);
+		String cssThemePath = _getCssThemePath(
+			servletContext, request, themeDisplay, theme);
 
+		if (ServerDetector.isWebLogic()) {
+			if (new File(commonSassPath).exists() == false) {
+				int index = cssThemePath.indexOf("autodeploy");
+
+				if (index == -1) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("DynamicCSS compilation may not work.");
+					}
+				}
+				else {
+					index += 11;
+
+					commonSassPath = cssThemePath.substring(0, index);
+
+					commonSassPath += "ROOT/".concat(_SASS_COMMON_DIR);
+				}
+			}
+		}
+
+		inputObjects.put("commonSassPath", commonSassPath);
 		inputObjects.put("content", content);
 		inputObjects.put("cssRealPath", resourcePath);
-		inputObjects.put(
-			"cssThemePath",
-			_getCssThemePath(servletContext, request, themeDisplay, theme));
+		inputObjects.put("cssThemePath",cssThemePath);
 
 		File sassTempDir = _getSassTempDir(servletContext);
 

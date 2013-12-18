@@ -761,7 +761,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				try {
 					session = openSession();
 
-					SQLQuery q = session.createSQLQuery(sql);
+					SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 					if (getDB().isSupportsInlineDistinct()) {
 						q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
@@ -1001,7 +1001,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
-					SQLQuery q = session.createSQLQuery(sql);
+					SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 					q.setFirstResult(0);
 					q.setMaxResults(2);
@@ -1262,7 +1262,7 @@ that may or may not be enforced with a unique index at the database level. Case
 					try {
 						session = openSession();
 
-						SQLQuery q = session.createSQLQuery(sql);
+						SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 						if (getDB().isSupportsInlineDistinct()) {
 							q.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);

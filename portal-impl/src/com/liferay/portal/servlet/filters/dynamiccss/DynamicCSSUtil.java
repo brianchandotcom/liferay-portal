@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -410,22 +411,18 @@ public class DynamicCSSUtil {
 		String cssThemePath = _getCssThemePath(
 			servletContext, request, themeDisplay, theme);
 
-		if (ServerDetector.isWebLogic()) {
-			if (new File(commonSassPath).exists() == false) {
-				int index = cssThemePath.indexOf("autodeploy");
+		if (ServerDetector.isWebLogic() && !FileUtil.exists(commonSassPath)) {
+			int pos = cssThemePath.indexOf("autodeploy/");
 
-				if (index == -1) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("DynamicCSS compilation may not work.");
-					}
+			if (pos == -1) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("DynamicCSS compilation may not work.");
 				}
-				else {
-					index += 11;
-
-					commonSassPath = cssThemePath.substring(0, index);
-
-					commonSassPath += "ROOT/".concat(_SASS_COMMON_DIR);
-				}
+			}
+			else {
+				commonSassPath =
+					cssThemePath.substring(0, pos + 11) + "ROOT/" +
+						_SASS_COMMON_DIR;
 			}
 		}
 

@@ -60,8 +60,7 @@
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
 		<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addNullCP">
@@ -166,14 +165,6 @@
 		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="Pending" />
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
@@ -462,7 +453,7 @@
 		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
 		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
 		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="Pending" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${workflowStatus}" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
 		<execute action="CPWebcontentAddwebcontent#assertTextEquals" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />

@@ -25,8 +25,8 @@
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@id='workflowMeTasksPanel']//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td></td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td>There are no completed publications requested by me.</td>
 </tr>
 <tr>
 	<td></td>

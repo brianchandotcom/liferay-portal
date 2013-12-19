@@ -24,7 +24,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveWebContentCP" priority="5">
+	<command name="AddWebContentCP" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -38,6 +38,104 @@
 		</execute>
 
 		<execute macro="WebContent#viewWithWorkflowCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="workflowStatus" value="Pending" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#viewMySubmissionsCP">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+	</command>
+
+	<command name="AddWebContentDraftCP" priority="5">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addDraftCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewWithWorkflowCP">
+			<var name='workflowStatus' value="Draft" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
+	</command>
+
+	<command name="AddWebContentNoWorkflowCP" priority="5">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
+	</command>
+
+	<command name="ApproveWebContentCP" priority="5">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -59,6 +157,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="workflowStatus" value="Pending" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -81,7 +180,7 @@
 		</execute>
 	</command>
 
-<command name="RejectWebContentCP" priority="5">
+	<command name="RejectWebContentCP" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -130,6 +229,7 @@
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name='workflowStatus' value="Pending" />
 		</execute>
 	</command>
 </definition>

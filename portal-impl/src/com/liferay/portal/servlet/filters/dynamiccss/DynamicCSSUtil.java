@@ -116,6 +116,10 @@ public class DynamicCSSUtil {
 					_log.warn("No theme found for " + currentURL);
 				}
 
+				if (PortalUtil.isRightToLeft(request)) {
+					content = RTLCSSUtil.getRtlCss(resourcePath, content);
+				}
+
 				return content;
 			}
 		}

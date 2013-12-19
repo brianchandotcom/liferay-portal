@@ -353,8 +353,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			defaultUser.setGreeting(
 				LanguageUtil.format(
-					defaultUser.getLocale(), "welcome-x", StringPool.BLANK,
-					false));
+					defaultUser.getLocale(), "welcome-x", StringPool.BLANK));
 			defaultUser.setLoginDate(now);
 			defaultUser.setFailedLoginAttempts(0);
 			defaultUser.setAgreedToTermsOfUse(true);

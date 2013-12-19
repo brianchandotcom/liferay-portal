@@ -32,7 +32,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(WebKeys.MOBILE
 String title = null;
 
 if (action == null) {
-	title = LanguageUtil.format(pageContext, "new-action-for-x", ruleGroup.getName(locale), false);
+	title = LanguageUtil.format(pageContext, "new-action-for-x", ruleGroup.getName(locale));
 }
 else {
 	StringBundler sb = new StringBundler(5);

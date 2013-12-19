@@ -23,7 +23,7 @@ String value = null;
 if (fieldsModel.contains(name)) {
 	com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
 
-	value = HtmlUtil.escape(field.getRenderedValue(themeDisplay.getLocale()));
+	value = HtmlUtil.escape(field.getRenderedValue(locale));
 
 	if (dataType.equals(FieldConstants.HTML)) {
 		value = "<a href=\"javascript:Liferay.DDLUtil.openPreviewDialog('" + value + "');\">(" + LanguageUtil.get(pageContext, "preview") + ")</a>";

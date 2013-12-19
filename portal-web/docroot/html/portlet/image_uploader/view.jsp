@@ -63,7 +63,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			</liferay-ui:error>
 
 			<aui:fieldset cssClass="lfr-portrait-editor">
-				<aui:input autoFocus="<= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= LanguageUtil.format(pageContext, "upload-images-no-larger-than-x-k", maxFileSize, false) %>' name="fileName" size="50" type="file" />
+				<aui:input autoFocus="<= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= LanguageUtil.format(pageContext, "upload-images-no-larger-than-x-k", maxFileSize) %>' name="fileName" size="50" type="file" />
 
 				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
 					<img alt="image-preview" class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(currentImageURL) %>" />

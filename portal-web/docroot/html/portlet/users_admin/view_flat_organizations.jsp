@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
+String toolbarItem = "view-all-organizations";
+
 String usersListView = (String)request.getAttribute("view.jsp-usersListView");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
@@ -60,7 +62,7 @@ if (filterManageableOrganizations) {
 
 					<portlet:renderURL var="viewOrganizationsFlatURL">
 						<portlet:param name="struts_action" value="/users_admin/view" />
-						<portlet:param name="toolbarItem" value="view-all-organizations" />
+						<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
 						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
 						<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:renderURL>

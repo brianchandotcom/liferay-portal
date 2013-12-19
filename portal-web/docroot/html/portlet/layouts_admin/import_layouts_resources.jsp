@@ -53,7 +53,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	LARTypeException lpe = (LARTypeException)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= lpe.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" />
+	<liferay-ui:message arguments="<%= lpe.getMessage() %>" key="please-import-a-lar-file-of-the-correct-type-x-is-not-valid" translateArguments="<%= true %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />

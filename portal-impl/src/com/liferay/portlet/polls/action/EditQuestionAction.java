@@ -130,10 +130,7 @@ public class EditQuestionAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				SessionMessages.add(
-					actionRequest,
-					PortalUtil.getPortletId(actionRequest) +
-						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+				hideDefaultErrorMessage(actionRequest);
 			}
 			else if (e instanceof QuestionExpiredException) {
 			}

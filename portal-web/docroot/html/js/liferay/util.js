@@ -1779,7 +1779,9 @@
 		function(folderData, namespace) {
 			A.byIdNS(namespace, folderData.idString).val(folderData.idValue);
 
-			A.byIdNS(namespace, folderData.nameString).val(folderData.nameValue);
+			var name = A.Lang.String.unescapeEntities(folderData.nameValue);
+
+			A.byIdNS(namespace, folderData.nameString).val(name);
 
 			var button = A.byIdNS(namespace, 'removeFolderButton');
 

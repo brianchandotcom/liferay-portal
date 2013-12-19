@@ -79,6 +79,33 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 				selenium.sendLogger(currentTestCaseName + "${lineNumber}", "pass", ${context});
 			</#list>
 		</#if>
+
+		<#assign commandElements = rootElement.elements("command")>
+		<#if rootElement.element("tear-down")??&&rootElement.element("set-up")??&&!testCaseName?contains("SO")&&!testCaseName?contains("LogicalOperators")>
+			if (tearDownOnce){
+				if (TestPropsValues.TEST_TEAR_DOWN_FIRST){ 
+				<#list commandElements as commandElement>
+					<#list 1..2 as i>
+						<#if i = 2>
+							<#break>
+						</#if>
+						<#assign commandName = commandElement.attributeValue("name")>
+							definitionScopeVariables.put("testCaseName",
+							"${testCaseName}TestCase${commandName}");
+							commandScopeVariables = new HashMap<String, String>();
+							commandScopeVariables.putAll(definitionScopeVariables);
+							UserMacro userMacro = new UserMacro(selenium);
+							executeScopeVariables = new HashMap<String, String>();
+							executeScopeVariables.putAll(commandScopeVariables);
+							userMacro.firstLoginPG(executeScopeVariables);
+							methodTearDown("${commandName}", false);
+					</#list>
+					<#break>
+				</#list>
+				}
+				tearDownOnce = false;
+			}
+		</#if>	
 	}
 
 	<#assign methodNames = ["command", "set-up", "tear-down"]>

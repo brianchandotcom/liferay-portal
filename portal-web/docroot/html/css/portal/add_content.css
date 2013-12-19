@@ -270,6 +270,8 @@
 	}
 
 	.asset-summary {
+		@include ellipsis;
+
 		margin-bottom: 20px;
 	}
 

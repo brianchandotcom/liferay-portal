@@ -43,7 +43,7 @@ if (assetVocabularies.isEmpty()) {
 
 	<%
 	for (AssetVocabulary assetVocabulary : assetVocabularies) {
-		List<AssetCategory> assetCategories = AssetCategoryServiceUtil.getVocabularyRootCategories(assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<AssetCategory> assetCategories = AssetCategoryServiceUtil.getVocabularyRootCategories(assetVocabulary.getGroupId(), assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (assetCategories.isEmpty()) {
 			continue;

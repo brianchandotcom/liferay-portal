@@ -1892,8 +1892,8 @@ public class DataFactory {
 			_portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
-	public List<PortletPreferencesModel> newPortletPreferencesModels(
-		long plid) {
+	public List<PortletPreferencesModel>
+		newPortletPreferencesModelsForDDL(long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
 			new ArrayList<PortletPreferencesModel>(2);
@@ -1904,7 +1904,33 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, PortletKeys.PORTLET_CONFIGURATION,
+				plid, PortletKeys.DYNAMIC_DATA_LISTS,
+				PortletConstants.DEFAULT_PREFERENCES));
+		portletPreferencesModels.add(
+			newPortletPreferencesModel(
+				plid, PortletKeys.DYNAMIC_DATA_LIST_DISPLAY,
+				PortletConstants.DEFAULT_PREFERENCES));
+		portletPreferencesModels.add(
+			newPortletPreferencesModel(
+				plid, PortletKeys.DYNAMIC_DATA_MAPPING,
+				PortletConstants.DEFAULT_PREFERENCES));
+
+		return portletPreferencesModels;
+	}
+
+	public List<PortletPreferencesModel>
+		newPortletPreferencesModelsForJournal(long plid) {
+
+		List<PortletPreferencesModel> portletPreferencesModels =
+			new ArrayList<PortletPreferencesModel>(2);
+
+		portletPreferencesModels.add(
+			newPortletPreferencesModel(
+				plid, PortletKeys.DOCKBAR,
+				PortletConstants.DEFAULT_PREFERENCES));
+		portletPreferencesModels.add(
+			newPortletPreferencesModel(
+				plid, PortletKeys.JOURNAL,
 				PortletConstants.DEFAULT_PREFERENCES));
 
 		return portletPreferencesModels;
@@ -2065,6 +2091,13 @@ public class DataFactory {
 			portletPreferencesModel.getPlid(), portletId);
 
 		return newResourcePermissionModels(name, primKey, 0);
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		String name, long primKey) {
+
+		return newResourcePermissionModels(
+			name, String.valueOf(primKey), _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

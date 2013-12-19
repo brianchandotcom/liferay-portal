@@ -1,5 +1,11 @@
 <#assign journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)>
 
+<#assign resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.portlet.journal", groupId)>
+
+<#list resourcePermissionModels as resourcePermissionModel>
+	insert into ResourcePermission values (${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
+</#list>
+
 <#list journalArticlePageCounts as journalArticlePageCount>
 	<#assign portletIdPrefix = "56_INSTANCE_TEST_" + journalArticlePageCount + "_">
 
@@ -11,7 +17,7 @@
 		_layoutModel = layoutModel
 	/>
 
-	<#assign portletPreferencesModels = dataFactory.newPortletPreferencesModels(layoutModel.plid)>
+	<#assign portletPreferencesModels = dataFactory.newPortletPreferencesModelsForJournal(layoutModel.plid)>
 
 	<#list portletPreferencesModels as portletPreferencesModel>
 		<@insertPortletPreferences

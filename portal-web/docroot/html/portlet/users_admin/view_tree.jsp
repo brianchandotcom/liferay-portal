@@ -129,13 +129,14 @@ if (organization != null) {
 			%>
 
 			<portlet:renderURL var="headerBackURL">
-				<portlet:param name="struts_action" value="/organization/view" />
+				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
 				<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:header
 				backLabel="<%= parentOrganizationName %>"
-				backURL="<%= headerBackURL.toString() %>"
+				backURL="<%= Validator.isNotNull(backURL) ? backURL : headerBackURL.toString() %>"
 				localizeTitle="<%= false %>"
 				title="<%= organization.getName() %>"
 			/>
@@ -354,6 +355,7 @@ if (organization != null) {
 								>
 									<liferay-portlet:renderURL varImpl="rowURL">
 										<portlet:param name="struts_action" value="/users_admin/view" />
+										<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
 										<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
 										<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
 									</liferay-portlet:renderURL>

@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
-
 String usersListView = (String)request.getAttribute("view.jsp-usersListView");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
@@ -123,6 +121,7 @@ if (filterManageableOrganizations) {
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
 					<portlet:param name="struts_action" value="/users_admin/view" />
+					<portlet:param name="toolbarItem" value="view-all-organizations" />
 					<portlet:param name="redirect" value="<%= organizationSearchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 					<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />

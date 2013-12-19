@@ -323,7 +323,9 @@ if ((exception != null) && fieldName.equals(focusField)) {
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= autoFocus %>">
-			Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>');
+			<aui:script>
+				Liferay.Util.focusFormField('#<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>');
+			</aui:script>
 		</c:if>
 	</c:otherwise>
 </c:choose>

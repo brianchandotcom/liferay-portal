@@ -1718,6 +1718,21 @@
 			)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserGroupGroupRoleFinder.findByUserId">
+		<![CDATA[
+			(
+				SELECT
+					{UserGroupGroupRole.*}
+				FROM
+					UserGroupGroupRole
+				INNER JOIN
+					Users_UserGroups ON
+						(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+				WHERE
+					(Users_UserGroups.userId = ?)
+			)
+		]]>
+	</sql>
 	<sql id="com.liferay.util.dao.orm.CustomSQL.countBySelectSQL">
 		<![CDATA[
 			SELECT

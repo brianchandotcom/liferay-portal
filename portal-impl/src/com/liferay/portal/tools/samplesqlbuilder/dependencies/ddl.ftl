@@ -59,7 +59,7 @@
 		_portletPreferencesModel = portletPreferencesModel
 	/>
 
-	<#assign portletPreferencesModels = dataFactory.newPortletPreferencesModels(layoutModel.plid)>
+	<#assign portletPreferencesModels = dataFactory.newPortletPreferencesModelsForDDL(layoutModel.plid)>
 
 	<#list portletPreferencesModels as portletPreferencesModel>
 		<@insertPortletPreferences

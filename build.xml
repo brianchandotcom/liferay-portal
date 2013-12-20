@@ -859,7 +859,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 					lpPluginsDir = "liferay-plugins" + projectDirName.substring("liferay-portal".length());
 
-					pluginsDir = new File(projectDir.getParent(), pluginsDirName);
+					pluginsDir = new File(projectDir.getParent(), lpPluginsDir);
 
 					project.setProperty("git.plugins.dir", pluginsDir.toString());
 				}

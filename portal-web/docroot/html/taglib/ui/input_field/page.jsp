@@ -348,7 +348,6 @@ if (hints != null) {
 			boolean checkTab = false;
 			String displayHeight = ModelHintsConstants.TEXT_DISPLAY_HEIGHT;
 			String displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
-			int displayWidthInt = 0;
 			boolean editor = false;
 			String maxLength = ModelHintsConstants.TEXT_MAX_LENGTH;
 			boolean secret = false;
@@ -359,34 +358,37 @@ if (hints != null) {
 				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 				displayHeight = GetterUtil.getString(hints.get("display-height"), displayHeight);
 				displayWidth = GetterUtil.getString(hints.get("display-width"), displayWidth);
-				displayWidthInt = Integer.parseInt(displayWidth);
 				editor = GetterUtil.getBoolean(hints.get("editor"), editor);
 				maxLength = GetterUtil.getString(hints.get("max-length"), maxLength);
 				secret = GetterUtil.getBoolean(hints.get("secret"), secret);
 				upperCase = GetterUtil.getBoolean(hints.get("upper-case"), upperCase);
 			}
-
 			if (autoSize) {
 				displayHeight = "auto";
 			}
 
-			if (displayWidthInt <= 60) {
-				cssClass += " input-mini";
-			}
-			else if (displayWidthInt > 60 && displayWidthInt <= 90) {
-				cssClass += " input-small";
-			}
-			else if (displayWidthInt > 90 && displayWidthInt <= 150) {
-				cssClass += " input-medium";
-			}
-			else if (displayWidthInt > 210 && displayWidthInt <= 270) {
-				cssClass += " input-xlarge";
-			}
-			else if (displayWidthInt > 270) {
-				cssClass += " input-xxlarge";
-			}
-			else {
-				cssClass += " input-large";
+
+			if (Validator.isDigit(displayWidth)) {
+				int displayWidthInt = GetterUtil.getInteger(displayWidth);
+
+				if (displayWidthInt <= 60) {
+					cssClass += " input-mini";
+				}
+				else if (displayWidthInt > 60 && displayWidthInt <= 90) {
+					cssClass += " input-small";
+				}
+				else if (displayWidthInt > 90 && displayWidthInt <= 150) {
+					cssClass += " input-medium";
+				}
+				else if (displayWidthInt > 210 && displayWidthInt <= 270) {
+					cssClass += " input-xlarge";
+				}
+				else if (displayWidthInt > 270) {
+					cssClass += " input-xxlarge";
+				}
+				else {
+					cssClass += " input-large";
+				}
 			}
 
 			boolean localized = ModelHintsUtil.isLocalized(model, field);

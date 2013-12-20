@@ -21,7 +21,7 @@ public class ModelHintsConstants {
 
 	public static final String TEXT_DISPLAY_HEIGHT = "15";
 
-	public static final String TEXT_DISPLAY_WIDTH = "350";
+	public static final String TEXT_DISPLAY_WIDTH = "210";
 
 	public static final String TEXT_MAX_LENGTH = "75";
 

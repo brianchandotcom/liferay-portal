@@ -167,9 +167,11 @@ if (ddmStructureId > 0) {
 			function(event) {
 				var A = AUI();
 
+				var name = A.Lang.String.unescapeEntities(event.name);
+
 				A.one('#<portlet:namespace />ddmStructureId').val(event.ddmstructureid);
 
-				A.one('#<portlet:namespace />ddmStructureNameDisplay').val(event.name);
+				A.one('#<portlet:namespace />ddmStructureNameDisplay').val(name);
 			}
 		);
 	}

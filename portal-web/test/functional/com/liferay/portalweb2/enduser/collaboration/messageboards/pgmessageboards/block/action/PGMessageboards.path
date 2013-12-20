@@ -85,11 +85,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_SEARCH_FIELD</td>
+	<td>//input[contains(@class,'search-query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SEARCH_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--CATEGORY_TABLE-->
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_NAME</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_DESCRIPTION</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}${key_categoryDescription}')]/a</td>
+	<td></td>
+</tr>
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY_1</td>
 	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1]/a)[1]</td>

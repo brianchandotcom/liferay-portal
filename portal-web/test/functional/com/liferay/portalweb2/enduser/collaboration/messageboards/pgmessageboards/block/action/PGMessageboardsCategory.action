@@ -1,0 +1,43 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="NAVIGATION_MY_POSTS">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case locator-key1="POST_NEW_THREAD_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case locator-key1="THREAD_MENULIST_RECYCLE_BIN">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case  locator-key1="THREAD_TABLE_ACTIONS">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+		<case locator-key1="THREAD_TABLE_THREAD">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="INFO_MESSAGE_THREAD">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="THREAD_TABLE_LAST_POST">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="CATEGORY_MENULIST_RECYCLE_BIN">
+			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
+		</case>
+		<case comparator="startsWith" locator-key1="CATEGORY_TABLE_ACTIONS_">
+			<execute function="Click#textClickAt" value1="Actions" />
+		</case>
+		<case comparator="startsWith" locator-key1="CATEGORY_TABLE_CATEGORY_">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+	</command>
+</definition>

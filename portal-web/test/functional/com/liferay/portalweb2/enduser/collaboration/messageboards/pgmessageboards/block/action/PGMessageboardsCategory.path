@@ -28,6 +28,271 @@
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
+	<td>//form[@id='_19_undoForm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE_THREAD</td>
+	<td>//div[@id='messageBoardsThreadsPanelContent']/div/div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBCATEGORY_BUTTON</td>
+	<td>//button[contains(.,'Add Subcategory')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POST_NEW_THREAD_BUTTON</td>
+	<td>//button[contains(.,'Post New Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_MESSAGE_BOARDS_HOME</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Message Boards Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_RECENT_POSTS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Recent Posts')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MY_POSTS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'My Posts')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MY_SUBSCRIPTIONS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'My Subscriptions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_STATISTICS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Statistics')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_BANNED_USERS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Banned Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SEARCH_FIELD</td>
+	<td>//input[contains(@class,'search-query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SEARCH_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORY_TABLE-->
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_subCategoryName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORIES</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORIES_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_THREADS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_THREADS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_POSTS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_POSTS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ACTIONS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORY_MENULIST-->
+<tr>
+	<td>CATEGORY_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_RSS</td>
+	<td>//a[@role='menuitem' and contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_SUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_UNSUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_MENULIST_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_TABLE-->
+<tr>
+	<td>THREAD_TABLE_THREAD</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'Thread')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_FLAG</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//a[contains(.,'Waiting for an Answer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_THREAD_KEY</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_STARTED_BY</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_POSTS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_LAST_POST</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ACTIONS_GENERIC</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[1]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_MENULIST-->
+<tr>
+	<td>THREAD_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_RSS</td>
+	<td>//a[@role='menuitem' and contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_SUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_UNSUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_LOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Lock Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_UNLOCK_THREAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Unlock Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_MENULIST_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

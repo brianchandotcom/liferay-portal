@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>PGMessageboardsMovethread</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMessageboardsMovethread</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMessageboardsMovethread</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_FIELD</td>
+	<td>//input[contains(@id,'categoryName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_BUTTON</td>
+	<td>//button[contains(@id,'selectCategoryButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_THREAD_BUTTON</td>
+	<td>//button[@type='submit' and contains(.,'Move Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[@class='btn btn-cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_EXPLANATION_POST-->
+<tr>
+	<td>ADD_EXPLANATION_POST_CHECKBOX</td>
+	<td>//input[contains(@id,'addExplanationPostCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_EXPLANATION_POST_BODY_FIELD</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_EXPLANATION_POST_SUBJECT_FIELD</td>
+	<td>//input[contains(@id,'subject')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

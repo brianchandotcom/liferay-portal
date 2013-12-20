@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>PGMessageboardsMovethreadSelectcategory</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMessageboardsMovethreadSelectcategory</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMessageboardsMovethreadSelectcategory</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CATEGORY_IFRAME</td>
+	<td>//iframe[@id='_19_selectCategory_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CATEGORY_HEADER</td>
+	<td>//h3[@class='header-title' and contains (.,'Message Boards Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_THIS_CATEGORY_BUTTON</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORY_TABLE-->
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORIES</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORIES_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[2]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_THREADS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_THREADS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_POSTS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_POSTS_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CHOOSE_BUTTON</td>
+	<td>//button[@data-name='MB Category2 Name' and contains(.,'Choose')]</td>
+	<td>${key_categoryName}</td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CHOOSE_BUTTON_1</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]/button)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CHOOSE_BUTTON_2</td>
+	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//tr/td[5]/button)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_NUMBER_OF_THREADS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

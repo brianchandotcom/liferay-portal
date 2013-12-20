@@ -1779,7 +1779,7 @@
 		function(folderData, namespace) {
 			A.byIdNS(namespace, folderData.idString).val(folderData.idValue);
 
-			var name = A.Lang.String.unescapeEntities(folderData.nameValue);
+			var name = AString.unescapeEntities(folderData.nameValue);
 
 			A.byIdNS(namespace, folderData.nameString).val(name);
 

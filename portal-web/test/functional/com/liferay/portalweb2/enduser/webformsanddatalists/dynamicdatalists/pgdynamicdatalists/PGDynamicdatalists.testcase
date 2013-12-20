@@ -146,9 +146,9 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ListPortlet#configureListViewPG">
-			<var name="configureChecked" value="false" />
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
 			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
+			<var name="configureChecked" value="false" />
 			<var name="listName" value="${listName}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -194,9 +194,9 @@
 			<var name="portletName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ListPortlet#configureListViewPG">
-			<var name="configureChecked" value="true" />
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
 			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+			<var name="configureChecked" value="true" />
 			<var name="listName" value="${listName}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>

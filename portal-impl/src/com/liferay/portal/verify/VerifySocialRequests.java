@@ -22,35 +22,42 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Bryan Engler
+ */
 public class VerifySocialRequests extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-		for (long companyId : companyIds) {
-			List<Group> groups = GroupLocalServiceUtil.getCompanyGroups(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			List<SocialRequest> requests =
-				SocialRequestLocalServiceUtil.getSocialRequests(
+		List<SocialRequest> requests =
+			SocialRequestLocalServiceUtil.getSocialRequests(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		if (!requests.isEmpty()) {
+			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+			List<Group> groups = new ArrayList<Group>();
+
+			for (long companyId : companyIds) {
+				groups.addAll(
+					GroupLocalServiceUtil.getCompanyGroups(
+						companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+			}
+
+			List<Long> groupIds = new ArrayList<Long>();
+
+			for (Group group : groups) {
+				groupIds.add(group.getGroupId());
+			}
+
 			for (SocialRequest request : requests) {
-				boolean deleteRequest = true;
+				if (!groupIds.contains(request.getClassPK()) &&
+					(request.getClassNameId() != PortalUtil.getClassNameId(
+						Group.class))) {
 
-				for (Group group : groups) {
-					if ((request.getClassPK() == group.getGroupId()) &&
-						(request.getClassNameId() == PortalUtil.getClassNameId(
-							Group.class))) {
-
-						deleteRequest = false;
-						break;
-					}
-				}
-
-				if (deleteRequest == true) {
 					SocialRequestLocalServiceUtil.deleteRequest(request);
 				}
 			}

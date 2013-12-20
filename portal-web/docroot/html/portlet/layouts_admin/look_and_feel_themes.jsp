@@ -35,15 +35,15 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		<legend><liferay-ui:message key="current-theme" /></legend>
 
 		<div>
-			<img alt="<%= selTheme.getName() %>" class="img-polaroid theme-screenshot" onclick="<portlet:namespace /><%= device %>selectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= selTheme.getStaticResourcePath() %><%= selTheme.getImagesPath() %>/thumbnail.png" title="<%= selTheme.getName() %>" />
+			<img alt="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" class="img-polaroid theme-screenshot" onclick="<portlet:namespace /><%= device %>selectTheme('SelTheme', false);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(selTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(selTheme.getName()) %>" />
 
 			<div class="theme-details">
 				<c:choose>
 					<c:when test="<%= editable %>">
-						<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id='<%= device + "SelTheme" %>' label="<%= selTheme.getName() %>" name='<%= device + "ThemeId" %>' type="radio" value="<%= selTheme.getThemeId() %>" />
+						<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id='<%= device + "SelTheme" %>' label="<%= HtmlUtil.escape(selTheme.getName()) %>" name='<%= device + "ThemeId" %>' type="radio" value="<%= selTheme.getThemeId() %>" />
 					</c:when>
 					<c:otherwise>
-						<div class="selected-theme theme-title"><%= selTheme.getName() %></div>
+						<div class="selected-theme theme-title"><%= HtmlUtil.escape(selTheme.getName()) %></div>
 					</c:otherwise>
 				</c:choose>
 
@@ -58,7 +58,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 							<liferay-ui:message key="description" />
 						</dt>
 						<dd>
-							<%= selPluginPackage.getShortDescription() %>
+							<%= HtmlUtil.escape(selPluginPackage.getShortDescription()) %>
 						</dd>
 					</c:if>
 
@@ -67,7 +67,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 							<liferay-ui:message key="author" />
 						</dt>
 						<dd>
-							<a href="<%= selPluginPackage.getPageURL() %>"><%= selPluginPackage.getAuthor() %></a>
+							<a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></a>
 						</dd>
 					</c:if>
 
@@ -121,9 +121,9 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 								%>
 
 								<div class="<%= cssClass %> theme-entry">
-									<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace /><%= device %>selectColorScheme('#<portlet:namespace /><%= device %>ColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= selTheme.getStaticResourcePath() %><%= curColorScheme.getColorSchemeThumbnailPath() %>/thumbnail.png" title="<%= curColorScheme.getName() %>" />
+									<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace /><%= device %>selectColorScheme('#<portlet:namespace /><%= device %>ColorSchemeId<%= i %>');" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
 
-									<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= device + "ColorSchemeId" + i %>' label="<%= curColorScheme.getName() %>" name='<%= device + "ColorSchemeId" %>' type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
+									<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= device + "ColorSchemeId" + i %>' label="<%= HtmlUtil.escape(curColorScheme.getName()) %>" name='<%= device + "ColorSchemeId" %>' type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
 								</div>
 
 								<%
@@ -153,21 +153,21 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 									value = selLayoutSet.getThemeSetting(name, device);
 								}
 
-								String propertyName = device + "ThemeSettingsProperties--" + name + StringPool.DOUBLE_DASH;
+								String propertyName = HtmlUtil.escapeAttribute(device + "ThemeSettingsProperties--" + name + StringPool.DOUBLE_DASH);
 							%>
 
 								<c:choose>
 									<c:when test='<%= type.equals("checkbox") || type.equals("text") || type.equals("textarea") %>'>
-										<aui:input label="<%= name %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
+										<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
 									</c:when>
 									<c:when test='<%= type.equals("select") %>'>
-										<aui:select label="<%= name %>" name="<%= propertyName %>">
+										<aui:select label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>">
 
 											<%
 											for (String option : themeSetting.getOptions()) {
 											%>
 
-												<aui:option label="<%= option %>" selected="<%= option.equals(value) %>" />
+												<aui:option label="<%= HtmlUtil.escape(option) %>" selected="<%= option.equals(value) %>" />
 
 											<%
 											}
@@ -233,16 +233,16 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 							<li>
 								<div class="theme-entry">
-									<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace /><%= device %>selectTheme('ThemeId<%= i %>', true);" src="<%= themeDisplay.getCDNBaseURL() %><%= curTheme.getStaticResourcePath() %><%= curTheme.getImagesPath() %>/thumbnail.png" title="<%= curTheme.getName() %>" />
+									<img alt="" class="modify-link theme-thumbnail" onclick="<portlet:namespace /><%= device %>selectTheme('ThemeId<%= i %>', true);" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(curTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curTheme.getImagesPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curTheme.getName()) %>" />
 
-									<aui:input cssClass="theme-title" id='<%= device + "ThemeId" + i %>' label="<%= curTheme.getName() %>" name='<%= device + "ThemeId" %>' type="radio" value="<%= curTheme.getThemeId() %>" />
+									<aui:input cssClass="theme-title" id='<%= device + "ThemeId" + i %>' label="<%= HtmlUtil.escape(curTheme.getName()) %>" name='<%= device + "ThemeId" %>' type="radio" value="<%= curTheme.getThemeId() %>" />
 								</div>
 							</li>
 
 					<%
 						}
 					}
-					%>
+					 %>.
 
 				</ul>
 			</c:if>

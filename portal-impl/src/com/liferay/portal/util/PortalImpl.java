@@ -5001,7 +5001,7 @@ public class PortalImpl implements Portal {
 			((parameterMap == null) || !parameterMap.containsKey("themeId"))) {
 
 			sb.append("&themeId=");
-			sb.append(theme.getThemeId());
+			sb.append(HttpUtil.encodeURL(theme.getThemeId()));
 		}
 
 		if (uri.endsWith(".jsp") &&
@@ -5009,7 +5009,7 @@ public class PortalImpl implements Portal {
 			 !parameterMap.containsKey("colorSchemeId"))) {
 
 			sb.append("&colorSchemeId=");
-			sb.append(colorScheme.getColorSchemeId());
+			sb.append(HttpUtil.encodeURL(colorScheme.getColorSchemeId()));
 		}
 
 		// Minifier

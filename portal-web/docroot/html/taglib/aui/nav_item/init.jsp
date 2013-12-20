@@ -44,6 +44,7 @@ java.lang.String href = GetterUtil.getString((java.lang.Object)request.getAttrib
 java.lang.String iconCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:iconCssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:id"));
 java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:label"));
+boolean localizeLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:localizeLabel")), true);
 boolean selected = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav-item:selected")));
 java.lang.String state = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:state"));
 java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-item:title"));
@@ -63,6 +64,7 @@ _updateOptions(_options, "href", href);
 _updateOptions(_options, "iconCssClass", iconCssClass);
 _updateOptions(_options, "id", id);
 _updateOptions(_options, "label", label);
+_updateOptions(_options, "localizeLabel", localizeLabel);
 _updateOptions(_options, "selected", selected);
 _updateOptions(_options, "state", state);
 _updateOptions(_options, "title", title);

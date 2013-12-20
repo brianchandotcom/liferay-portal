@@ -857,6 +857,12 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>localizeLabel</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<name>selected</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

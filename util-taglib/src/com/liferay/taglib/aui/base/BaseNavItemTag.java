@@ -81,6 +81,10 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		return _label;
 	}
 
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public boolean getSelected() {
 		return _selected;
 	}
@@ -177,6 +181,12 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("label", label);
 	}
 
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
 	public void setSelected(boolean selected) {
 		_selected = selected;
 
@@ -227,6 +237,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_iconCssClass = null;
 		_id = null;
 		_label = null;
+		_localizeLabel = true;
 		_selected = false;
 		_state = null;
 		_title = null;
@@ -259,6 +270,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "iconCssClass", _iconCssClass);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "selected", _selected);
 		setNamespacedAttribute(request, "state", _state);
 		setNamespacedAttribute(request, "title", _title);
@@ -287,6 +299,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _iconCssClass = null;
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;
+	private boolean _localizeLabel = true;
 	private boolean _selected = false;
 	private java.lang.String _state = null;
 	private java.lang.String _title = null;

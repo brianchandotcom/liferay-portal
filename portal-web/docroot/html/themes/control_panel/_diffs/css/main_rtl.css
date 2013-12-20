@@ -1,9 +1,13 @@
-.aui .add-content-menu .accordion .accordion-group .toggler-header .accordion-toggle, .aui .lfr-edit-layout-panel .accordion .accordion-group .toggler-header .accordion-toggle, .aui .panel-page-menu .portlet-borderless-container .accordion .accordion-group {
-	.toggler-header .accordion-toggle {
-		background-position: 0 -20px;
-	}
+.aui {
+	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
+		.accordion .accordion-group {
+			.toggler-header .accordion-toggle {
+				background-position: 0 -20px;
+			}
 
-	.toggler-header-collapsed .accordion-toggle {
-		background-position: 0 0;
+			.toggler-header-collapsed .accordion-toggle {
+				background-position: 0 0;
+			}
+		}
 	}
 }

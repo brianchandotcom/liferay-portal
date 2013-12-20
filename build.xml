@@ -850,9 +850,22 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<![CDATA[
 				String lpPluginsDir = project.getProperty("lp.plugins.dir");
 
-				lpPluginsDir = lpPluginsDir.substring(0, lpPluginsDir.lastIndexOf("/"));
+				File pluginsDir = null;
 
-				File pluginsDir = new File(lpPluginsDir);
+				if (lpPluginsDir == null || lpPluginsDir.equals("")) {
+					File projectDir = new File(project.getProperty("project.dir"));
+
+					String projectDirName = projectDir.getName();
+
+					lpPluginsDir = "liferay-plugins" + projectDirName.substring("liferay-portal".length());
+
+					pluginsDir = new File(projectDir.getParent(), lpPluginsDir);
+				}
+				else {
+					lpPluginsDir = lpPluginsDir.substring(0, lpPluginsDir.lastIndexOf("/"));
+
+					pluginsDir = new File(lpPluginsDir);
+				}
 
 				project.setProperty("git.plugins.dir", pluginsDir.toString());
 			]]>

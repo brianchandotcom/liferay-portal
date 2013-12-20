@@ -248,12 +248,7 @@
 		margin-bottom: 10px;
 	}
 
-	.asset-information {
-		margin-bottom: 20px;
-	}
-
 	.asset-image-preview {
-		margin-bottom: 5px;
 		text-align: center;
 
 		img {
@@ -261,22 +256,16 @@
 		}
 	}
 
-	.asset-metadata {
-		margin-bottom: 20px;
-
-		.categories {
-			margin-bottom: 5px;
-		}
-	}
-
-	.asset-summary {
+	.asset-information, .asset-metadata, .asset-summary {
 		margin-bottom: 20px;
 	}
 
-	.asset-title {
-		@include ellipsis;
-
+	.asset-image-preview, .asset-metadata .categories, .asset-title {
 		margin-bottom: 5px;
+	}
+
+	.asset-summary, .asset-title {
+		@include ellipsis;
 	}
 }
 

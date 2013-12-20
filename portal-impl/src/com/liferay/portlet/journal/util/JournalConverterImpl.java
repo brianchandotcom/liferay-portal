@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -309,9 +310,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 		sb.append("entry[@");
 		sb.append(attributeName);
-		sb.append("='");
-		sb.append(attributeValue);
-		sb.append("']");
+		sb.append(StringPool.EQUAL);
+		sb.append(HtmlUtil.escapeXPathAttribute(attributeValue));
+		sb.append(StringPool.CLOSE_BRACKET);
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(sb.toString());
 

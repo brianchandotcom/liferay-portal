@@ -45,7 +45,7 @@ portletURL.setParameter("redirect", redirect);
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(pageContext, "classification-rules-for-x", ruleGroup.getName(locale), false) %>'
+	title='<%= LanguageUtil.format(pageContext, "classification-rules-for-x", ruleGroup.getName(locale)) %>'
 />
 
 <aui:nav-bar>

@@ -248,7 +248,7 @@ for (JournalArticle curArticle : articles) {
 						width: 680
 					},
 					id: '<portlet:namespace />selectFolder',
-					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+					title: '<liferay-ui:message arguments="folder" key="select-x" translateArguments="<%= true %>" />',
 					uri: '<%= selectFolderURL.toString() %>'
 				},
 				function(event) {

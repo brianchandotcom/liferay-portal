@@ -82,7 +82,7 @@ public class MessageTag extends TagSupport {
 				_arguments = null;
 				_key = null;
 				_localizeKey = true;
-				_translateArguments = true;
+				_translateArguments = false;
 				_unicode = false;
 			}
 		}
@@ -124,7 +124,7 @@ public class MessageTag extends TagSupport {
 	private Object[] _arguments;
 	private String _key;
 	private boolean _localizeKey = true;
-	private boolean _translateArguments = true;
+	private boolean _translateArguments;
 	private boolean _unicode;
 
 }

@@ -61,14 +61,14 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 						String lockExpirationTime = StringUtil.toLowerCase(LanguageUtil.getTimeDescription(pageContext, DLFileEntryConstants.LOCK_EXPIRATION_TIME));
 						%>
 
-						<%= LanguageUtil.format(pageContext, "you-now-have-a-lock-on-this-document", lockExpirationTime, false) %>
+						<%= LanguageUtil.format(pageContext, "you-now-have-a-lock-on-this-document", lockExpirationTime) %>
 					</c:otherwise>
 				</c:choose>
 			</div>
 		</c:when>
 		<c:otherwise>
 			<div class="alert alert-error">
-				<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
+				<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-checked-out-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}) %>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -158,7 +158,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 						width: 680
 					},
 					id: '<portlet:namespace />selectFolder',
-					title: '<liferay-ui:message arguments="folder" key="select-x" />',
+					title: '<liferay-ui:message arguments="folder" key="select-x" translateArguments="<%= true %>" />',
 					uri: '<%= selectFolderURL.toString() %>'
 				},
 				function(event) {

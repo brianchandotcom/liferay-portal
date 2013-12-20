@@ -81,7 +81,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					<%
 					com.liferay.portlet.dynamicdatamapping.storage.Field ddmField = new com.liferay.portlet.dynamicdatamapping.storage.Field();
 
-					ddmField.setDefaultLocale(themeDisplay.getLocale());
+					ddmField.setDefaultLocale(locale);
 					ddmField.setDDMStructureId(ddmStructureId);
 					ddmField.setName(name);
 
@@ -92,7 +92,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 							ddmStructureFieldValue = GetterUtil.getDate(ddmStructureFieldValue, DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss"));
 						}
 
-						ddmField.setValue(themeDisplay.getLocale(), ddmStructureFieldValue);
+						ddmField.setValue(locale, ddmStructureFieldValue);
 					}
 					%>
 

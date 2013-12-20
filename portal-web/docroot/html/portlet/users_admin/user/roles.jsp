@@ -105,7 +105,7 @@ userGroupRoles.addAll(siteRoles);
 							width: 600
 						},
 						id: '<portlet:namespace />selectRegularRole',
-						title: '<liferay-ui:message arguments="regular-role" key="select-x" />',
+						title: '<liferay-ui:message arguments="regular-role" key="select-x" translateArguments="<%= true %>" />',
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_regular_role" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
 					function(event) {
@@ -269,7 +269,7 @@ userGroupRoles.addAll(siteRoles);
 							modal: true
 						},
 						id: '<portlet:namespace />selectOrganizationRole',
-						title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
+						title: '<liferay-ui:message arguments="organization-role" key="select-x" translateArguments="<%= true %>" />',
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization_role" /><portlet:param name="step" value="1" /><portlet:param name="organizationIds" value="<%= StringUtil.merge(organizationIds) %>" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
 					function(event) {
@@ -382,7 +382,7 @@ userGroupRoles.addAll(siteRoles);
 									width: 600
 								},
 								id: '<portlet:namespace />selectSiteRole',
-								title: '<liferay-ui:message arguments="site-role" key="select-x" />',
+								title: '<liferay-ui:message arguments="site-role" key="select-x" translateArguments="<%= true %>" />',
 								uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site_role" /><portlet:param name="step" value="1" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 							},
 							function(event) {

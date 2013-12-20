@@ -81,12 +81,12 @@ public class LanguageImpl implements Language {
 	public String format(
 		Locale locale, String pattern, List<Object> arguments) {
 
-		return format(locale, pattern, arguments.toArray(), true);
+		return format(locale, pattern, arguments.toArray(), false);
 	}
 
 	@Override
 	public String format(Locale locale, String pattern, Object argument) {
-		return format(locale, pattern, new Object[] {argument}, true);
+		return format(locale, pattern, new Object[] {argument}, false);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class LanguageImpl implements Language {
 
 	@Override
 	public String format(Locale locale, String pattern, Object[] arguments) {
-		return format(locale, pattern, arguments, true);
+		return format(locale, pattern, arguments, false);
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class LanguageImpl implements Language {
 		PageContext pageContext, String pattern, LanguageWrapper argument) {
 
 		return format(
-			pageContext, pattern, new LanguageWrapper[] {argument}, true);
+			pageContext, pattern, new LanguageWrapper[] {argument}, false);
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public class LanguageImpl implements Language {
 	public String format(
 		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
 
-		return format(pageContext, pattern, arguments, true);
+		return format(pageContext, pattern, arguments, false);
 	}
 
 	@Override
@@ -225,7 +225,7 @@ public class LanguageImpl implements Language {
 	public String format(
 		PageContext pageContext, String pattern, Object argument) {
 
-		return format(pageContext, pattern, new Object[] {argument}, true);
+		return format(pageContext, pattern, new Object[] {argument}, false);
 	}
 
 	@Override
@@ -241,7 +241,7 @@ public class LanguageImpl implements Language {
 	public String format(
 		PageContext pageContext, String pattern, Object[] arguments) {
 
-		return format(pageContext, pattern, arguments, true);
+		return format(pageContext, pattern, arguments, false);
 	}
 
 	@Override
@@ -294,7 +294,7 @@ public class LanguageImpl implements Language {
 		Object argument) {
 
 		return format(
-			portletConfig, locale, pattern, new Object[] {argument}, true);
+			portletConfig, locale, pattern, new Object[] {argument}, false);
 	}
 
 	@Override
@@ -312,7 +312,7 @@ public class LanguageImpl implements Language {
 		PortletConfig portletConfig, Locale locale, String pattern,
 		Object[] arguments) {
 
-		return format(portletConfig, locale, pattern, arguments, true);
+		return format(portletConfig, locale, pattern, arguments, false);
 	}
 
 	@Override

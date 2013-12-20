@@ -428,8 +428,8 @@ public class DDLImpl implements DDL {
 		}
 		catch (Exception e) {
 			return LanguageUtil.format(
-				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
-				"content");
+				LocaleUtil.getSiteDefault(), "x-is-temporarily-unavailable",
+				"content", true);
 		}
 	}
 

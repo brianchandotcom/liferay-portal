@@ -97,7 +97,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 
 	<liferay-ui:panel-container extended="<%= true %>" id="shoppingEditCouponPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditCouponDiscountPanel" persistState="<%= true %>" title="discount">
-			<liferay-ui:message arguments="<%= currencyFormat.format(0) %>" key="coupons-can-be-set-to-only-apply-to-orders-above-a-minimum-amount" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= currencyFormat.format(0) %>" key="coupons-can-be-set-to-only-apply-to-orders-above-a-minimum-amount" />
 
 			<br /><br />
 

@@ -69,7 +69,7 @@ else if (tabs3.equals("shipping-email")) {
 			<div class="alert alert-info">
 				<liferay-ui:message key="enter-a-paypal-email-address-to-send-all-payments-to-paypal" />
 
-				<liferay-ui:message arguments='<%= "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/shopping/notify</strong>" %>' key="go-to-paypal-and-set-up-ipn-to-post-to-x" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments='<%= "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/shopping/notify</strong>" %>' key="go-to-paypal-and-set-up-ipn-to-post-to-x" />
 			</div>
 
 			<div class="alert alert-info">

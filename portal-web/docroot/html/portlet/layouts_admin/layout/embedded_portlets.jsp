@@ -77,7 +77,7 @@ rowChecker.setRowIds("removeEmbeddedPortletIds");
 					<liferay-ui:message key="inactive" />
 				</c:when>
 				<c:when test="<%= !portlet.isReady() %>">
-					<liferay-ui:message arguments="portlet" key="is-not-ready" />
+					<liferay-ui:message arguments="portlet" key="x-is-not-ready" translateArguments="<%= true %>" />
 				</c:when>
 				<c:when test="<%= portlet.isUndeployedPortlet() %>">
 					<liferay-ui:message key="undeployed" />

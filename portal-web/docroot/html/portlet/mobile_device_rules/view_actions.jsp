@@ -37,7 +37,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 	backURL="<%= redirect %>"
 	localizeTitle="<%= false %>"
 	showBackURL="<%= showBackURL %>"
-	title='<%= LanguageUtil.format(pageContext, "actions-for-x", ruleGroup.getName(locale), false) %>'
+	title='<%= LanguageUtil.format(pageContext, "actions-for-x", ruleGroup.getName(locale)) %>'
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

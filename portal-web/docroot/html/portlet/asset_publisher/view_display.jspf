@@ -18,7 +18,7 @@
 if (!ArrayUtil.contains(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES, assetPublisherDisplayContext.getDisplayStyle())) {
 %>
 
-	<%= HtmlUtil.escape(LanguageUtil.format(pageContext, "x-is-not-a-display-type", assetPublisherDisplayContext.getDisplayStyle())) %>
+	<%= HtmlUtil.escape(LanguageUtil.format(pageContext, "x-is-not-a-display-type", assetPublisherDisplayContext.getDisplayStyle(), true)) %>
 
 <%
 }

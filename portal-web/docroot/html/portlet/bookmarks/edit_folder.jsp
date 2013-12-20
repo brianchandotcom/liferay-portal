@@ -105,7 +105,7 @@ else {
 											width: 680
 										},
 										id: '<portlet:namespace />selectFolder',
-										title: '<liferay-ui:message arguments="folder" key="select-x" />',
+										title: '<liferay-ui:message arguments="folder" key="select-x" translateArguments="<%= true %>" />',
 										uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
 									},
 									function(event) {

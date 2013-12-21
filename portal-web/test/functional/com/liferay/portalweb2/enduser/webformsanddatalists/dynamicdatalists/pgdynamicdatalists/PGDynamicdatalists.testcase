@@ -112,6 +112,102 @@
 		</execute>
 	</command>
 
+	<command name="ConfigureEditableListPG" priority="5">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="fieldName" value="Text" />
+		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="List#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="listDescription" value="${listDescription}" />
+			<var name="listName" value="${listName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
+			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
+			<var name="configureChecked" value="false" />
+			<var name="listName" value="${listName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertElementNotPresent" locator-key1="ADD_RECORD_BUTTON" />
+	</command>
+
+	<command name="ConfigureSpreadsheetListPG" priority="5">
+		<var name="dataDefinitionDescription" value="Data Definition Description" />
+		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="fieldName" value="Text" />
+		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+		<var name="listDescription" value="List Description" />
+		<var name="listName" value="List Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="List#addPG">
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="listDescription" value="${listDescription}" />
+			<var name="listName" value="${listName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
+			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+			<var name="configureChecked" value="true" />
+			<var name="listName" value="${listName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGDynamicdatalists#assertElementPresent" locator-key1="SPREADSHEET_CONTAINER" />
+	</command>
+
 	<command name="DeleteList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />

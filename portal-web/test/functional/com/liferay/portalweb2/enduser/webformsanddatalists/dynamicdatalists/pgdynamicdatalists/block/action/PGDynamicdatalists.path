@@ -14,6 +14,11 @@
 	<td>PGDynamicdatalists</td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -25,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADD_RECORD_BUTTON</td>
-	<td>//section[contains(@id,'portlet_169_')]//span[contains(.,'Add')]</td>
+	<td>//section[contains(@id,'portlet_169_')]//a[@role='menuitem']/span[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,6 +46,11 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPREADSHEET_CONTAINER</td>
+	<td>//div[@class='lfr-spreadsheet-container']</td>
 	<td></td>
 </tr>
 <tr>

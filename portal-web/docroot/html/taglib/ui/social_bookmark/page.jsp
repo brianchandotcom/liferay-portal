@@ -22,6 +22,7 @@
 			<liferay-ui:icon
 				cssClass="social-bookmark"
 				image="<%= icon %>"
+				label="<%= true %>"
 				message="<%= type %>"
 				method="get"
 				url="<%= postUrl %>"

@@ -829,6 +829,10 @@ $editLayoutPanelWidth: 460px;
 			position: static;
 			width: auto;
 
+			@include respond-to(tablet) {
+				margin: 0;
+			}
+
 			&.lfr-add-panel .add-content-menu .lfr-add-page-toolbar, &.lfr-edit-layout-panel .taglib-form-navigator .button-holder {
 				margin-top: 0;
 				position: static;
@@ -860,9 +864,13 @@ $editLayoutPanelWidth: 460px;
 		padding-left: $editLayoutPanelWidth;
 	}
 
-	@include respond-to(phone) {
-		.lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
+	.lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
+		@include respond-to(phone) {
 			padding-left: 20px;
+		}
+
+		@include respond-to(tablet) {
+			padding-left: 0;
 		}
 	}
 

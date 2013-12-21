@@ -113,58 +113,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_ACCOUNT_SETTINGS_CHECKBOX</td>
-	<td>//label[contains(.,'Account Settings')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_APPLICATION_DISPLAY_TEMPLATES_CHECKBOX</td>
-	<td>//label[contains(.,'Application Display Templates')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_BLOGS_CHECKBOX</td>
-	<td>//label[contains(.,'Blogs')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_BOOKMARKS_CHECKBOX</td>
-	<td>//label[contains(.,'Bookmarks')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_DOCUMENTS_AND_MEDIA_CHECKBOX</td>
-	<td>//label[contains(.,'Documents and Media')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_DYNAMIC_DATA_LISTS_CHECKBOX</td>
-	<td>//label[contains(.,'Dynamic Data Lists')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_MESSAGE_BOARDS_CHECKBOX</td>
-	<td>//label[contains(.,'Message Boards')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_MOBILE_DEVICE_FAMILIES_CHECKBOX</td>
-	<td>//label[contains(.,'Mobile Device Families')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_POLLS_CHECKBOX</td>
-	<td>//label[contains(.,'Polls')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_WEB_CONTENT_CHECKBOX</td>
-	<td>//label[contains(.,'Web Content')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STAGING_WIKI_CHECKBOX</td>
-	<td>//label[contains(.,'Wiki')]/input[2]</td>
+	<td>STAGING_CONTENT_CHECKBOX</td>
+	<td>//label[contains(.,'${key_contentName}')]/input[2]</td>
 	<td></td>
 </tr>
 </tbody>

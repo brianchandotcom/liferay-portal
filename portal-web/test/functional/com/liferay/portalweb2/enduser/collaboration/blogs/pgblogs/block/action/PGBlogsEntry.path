@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_CKE_EDIT</td>
+	<td>//div[@class='entry-body']/div[contains(@class,'cke_editable') and contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_AUTHOR</td>
 	<td>//div[@class='entry-author']</td>
 	<td></td>

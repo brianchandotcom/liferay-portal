@@ -107,6 +107,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO</td>
+	<td>//input[@id='_88_chooseApplications']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX</td>
+	<td>//ul[@id='_88_selectApplications']//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -125,6 +135,11 @@
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
 	<td>//label[contains(.,'1 Deletions')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
+	<td>//ul[@class='portlet-list']/li/label[contains(.,'${key_contentName}')]/input[2]</td>
 	<td></td>
 </tr>
 <tr>

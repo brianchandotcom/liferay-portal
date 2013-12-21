@@ -125,6 +125,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
+			<var name="pageStaging" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>

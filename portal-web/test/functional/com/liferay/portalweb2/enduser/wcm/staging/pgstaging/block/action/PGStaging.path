@@ -106,6 +106,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_MENU_READY_FOR_PUBLICATION</td>
+	<td>//span[@class='workflow-status']/strong[contains(.,'Ready for Publication')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_MENU_SUBMIT_FOR_PUBLICATION</td>
 	<td>//a[@id='_170_submitLink']/span[contains(.,'Submit for Publication')]</td>
 	<td></td>

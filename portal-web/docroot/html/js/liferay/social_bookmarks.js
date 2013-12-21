@@ -26,6 +26,7 @@ AUI.add(
 						var instance = this;
 
 						var portletBody = instance.get('contentBox').ancestor('.portlet-body');
+
 						var id = portletBody.guid();
 
 						if (!SocialBookmarks.registered[id]) {

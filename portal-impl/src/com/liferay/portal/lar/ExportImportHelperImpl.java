@@ -1642,7 +1642,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 							Element element =
 								portletDataContext.getReferenceElement(
 									rootElement, clazz, companyGroupId, uuid,
-									null);
+									PortletDataContext.
+										REFERENCE_TYPE_DEPENDENCY);
 
 							if (element != null) {
 								String fileEntryTypeKey =

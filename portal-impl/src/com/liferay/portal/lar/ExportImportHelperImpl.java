@@ -1641,7 +1641,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 							Element element =
 								portletDataContext.getReferenceElement(
-									rootElement, clazz, 0, companyGroupId, uuid,
+									rootElement, clazz, companyGroupId, uuid,
 									null);
 
 							if (element != null) {

@@ -364,8 +364,8 @@ public interface PortletDataContext extends Serializable {
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
 
 	public Element getReferenceElement(
-		Element parentElement, Class<?> clazz, long classPK, long groupId,
-		String uuid, String referenceType);
+		Element parentElement, Class<?> clazz, long groupId, String uuid,
+		String referenceType);
 
 	public Element getReferenceElement(
 		StagedModel parentStagedModel, Class<?> clazz, long classPK);

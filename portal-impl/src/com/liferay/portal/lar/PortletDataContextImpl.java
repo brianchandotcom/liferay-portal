@@ -807,6 +807,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _assetCategoryIdsMap.get(getPrimaryKeyString(clazz, classPK));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public Map<String, long[]> getAssetCategoryIdsMap() {
 		return _assetCategoryIdsMap;
@@ -1066,6 +1070,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return map;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public long getOldPlid() {
 		return _oldPlid;
@@ -1156,6 +1164,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getReferenceDataElement(parentElement, clazz, groupId, uuid);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<Element> getReferenceDataElements(
 		Element parentElement, Class<?> clazz) {
@@ -1231,6 +1243,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return ExportImportPathUtil.getRootPath(this);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public Set<String> getScopedPrimaryKeys() {
 		return _scopedPrimaryKeys;
@@ -1306,6 +1322,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _userPersonalSiteGroupId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<String> getZipEntries() {
 		return getZipReader().getEntries();
@@ -1369,6 +1389,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getZipReader().getEntryAsString(path);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public List<String> getZipFolderEntries() {
 		return getZipFolderEntries(StringPool.SLASH);
@@ -1820,6 +1844,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return addScopedPrimaryKey(String.class, path);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public boolean isPathNotExportedInScope(String path) {
 		return !isPathExportedInScope(path);

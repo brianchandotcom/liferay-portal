@@ -317,8 +317,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select * from JournalStructure where structureId = " +
-					structureId);
+				"select * from JournalStructure where structureId = ?");
+			ps.setString(1, structureId);
 
 			rs = ps.executeQuery();
 

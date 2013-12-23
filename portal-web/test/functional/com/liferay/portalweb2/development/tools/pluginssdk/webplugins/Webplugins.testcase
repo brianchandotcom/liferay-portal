@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="ScriptingExecutorWebSmoke" priority="5">
-		<property name="web.plugins.includes" value="scripting-executor--web" />
+		<property name="web.plugins.includes" value="scripting-executor-web" />
 
 		<var name="appName" value="Scripting Executor" />
 

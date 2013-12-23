@@ -139,10 +139,6 @@ public class JSONFactoryUtil {
 		return getJSONFactory().serialize(object);
 	}
 
-	public static String serializeException(Exception exception) {
-		return getJSONFactory().serializeException(exception);
-	}
-
 	public static String serializeThrowable(Throwable throwable) {
 		return getJSONFactory().serializeThrowable(throwable);
 	}

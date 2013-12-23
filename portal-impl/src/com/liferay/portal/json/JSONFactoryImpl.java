@@ -308,44 +308,26 @@ public class JSONFactoryImpl implements JSONFactory {
 	}
 
 	@Override
-	public String serializeException(Exception exception) {
+	public String serializeThrowable(Throwable throwable) {
 		JSONObject jsonObject = createJSONObject();
 
+		String type = null;
 		String message = null;
 
-		if (exception instanceof InvocationTargetException) {
-			Throwable cause = exception.getCause();
-
-			message = cause.toString();
-		}
-		else {
-			message = exception.getMessage();
+		if (throwable instanceof InvocationTargetException) {
+			throwable = throwable.getCause();
 		}
 
-		if (Validator.isNull(message)) {
-			message = exception.toString();
-		}
+		type = throwable.getClass().getName();
 
-		jsonObject.put("exception", message);
-
-		return jsonObject.toString();
-	}
-
-	@Override
-	public String serializeThrowable(Throwable throwable) {
-		if (throwable instanceof Exception) {
-			return serializeException((Exception)throwable);
-		}
-
-		JSONObject jsonObject = createJSONObject();
-
-		String message = throwable.getMessage();
+		message = throwable.getMessage();
 
 		if (Validator.isNull(message)) {
 			message = throwable.toString();
 		}
 
-		jsonObject.put("throwable", message);
+		jsonObject.put("exception", type);
+		jsonObject.put("message", message);
 
 		return jsonObject.toString();
 	}

@@ -89,7 +89,7 @@ public abstract class JSONAction extends Action {
 				_log.warn(se.getMessage());
 			}
 
-			json = JSONFactoryUtil.serializeException(se);
+			json = JSONFactoryUtil.serializeThrowable(se);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -157,7 +157,7 @@ public class JSONServiceAction extends JSONAction {
 					e);
 			}
 
-			return JSONFactoryUtil.serializeException(e);
+			return JSONFactoryUtil.serializeThrowable(e);
 		}
 	}
 

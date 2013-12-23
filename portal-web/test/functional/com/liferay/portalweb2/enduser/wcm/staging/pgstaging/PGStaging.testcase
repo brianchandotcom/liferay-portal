@@ -1,4 +1,4 @@
-<definition>
+<definition component-area="portal-wcm">
 	<var name="siteName" value="Site Name" />
 
 	<set-up>

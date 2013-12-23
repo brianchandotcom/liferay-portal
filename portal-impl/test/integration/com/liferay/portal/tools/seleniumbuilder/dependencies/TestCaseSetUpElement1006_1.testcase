@@ -1,4 +1,4 @@
-<definition extends="TestCase">
+<definition component-area="portal-collaboration" extends="TestCase">
 	<set-up>
 		<execute test-case="" />
 	</set-up>

@@ -393,11 +393,11 @@ public class LayoutImporter {
 				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
 					layoutSetPrototype);
 
-				for (LayoutSet layoutSetUpdate : layoutSets) {
-					layoutSetUpdate.setLayoutSetPrototypeUuid(
+				for (LayoutSet tempLayoutSet : layoutSets) {
+					tempLayoutSet.setLayoutSetPrototypeUuid(
 						importedLayoutSetPrototypeUuid);
 
-					LayoutSetLocalServiceUtil.updateLayoutSet(layoutSetUpdate);
+					LayoutSetLocalServiceUtil.updateLayoutSet(tempLayoutSet);
 				}
 			}
 		}

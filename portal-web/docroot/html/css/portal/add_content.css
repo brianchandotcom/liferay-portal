@@ -35,6 +35,10 @@
 
 				.lfr-content-item {
 					padding-left: 15px;
+
+					&.lfr-archived-setup {
+						padding-left: 30px;
+					}
 				}
 			}
 		}
@@ -138,10 +142,6 @@
 				&.add-content-item {
 					display: none;
 				}
-			}
-
-			&.lfr-archived-setup {
-				padding-left: 30px;
 			}
 		}
 

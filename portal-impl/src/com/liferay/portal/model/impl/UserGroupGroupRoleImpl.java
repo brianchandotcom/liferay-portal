@@ -32,14 +32,17 @@ public class UserGroupGroupRoleImpl extends UserGroupGroupRoleBaseImpl {
 	public UserGroupGroupRoleImpl() {
 	}
 
+	@Override
 	public Group getGroup() throws PortalException, SystemException {
 		return GroupLocalServiceUtil.getGroup(getGroupId());
 	}
 
+	@Override
 	public Role getRole() throws PortalException, SystemException {
 		return RoleLocalServiceUtil.getRole(getRoleId());
 	}
 
+	@Override
 	public UserGroup getUserGroup() throws PortalException, SystemException {
 		return UserGroupLocalServiceUtil.getUserGroup(getUserGroupId());
 	}

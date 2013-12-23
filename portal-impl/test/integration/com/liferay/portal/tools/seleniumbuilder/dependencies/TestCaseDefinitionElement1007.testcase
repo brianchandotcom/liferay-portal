@@ -1,5 +1,5 @@
-<definition component-area="portal-collaboration">
+<definition component-name="portal-collaboration">
 	<command name="name" priority="5">
 		<execute macro="macro" />
 	</command>
-<definition component-area="portal-collaboration">
+<definition component-name="portal-collaboration">

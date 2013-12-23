@@ -1,4 +1,4 @@
-<definition component-area="portal-web-forms-and-data-lists">
+<definition component-name="portal-web-forms-and-data-lists">
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

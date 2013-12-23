@@ -1,4 +1,4 @@
-<definition>
+<definition component-area="portal-wcm">
 	<var name="pageName" value="Blogs Page" />
 
 	<set-up>

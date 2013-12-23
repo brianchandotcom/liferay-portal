@@ -1,4 +1,4 @@
-<definition>
+<definition component-area="portal-collaboration">
 	<var name="pageName" value="Wiki Display Test Page" />
 	<var name="portletName" value="Wiki Display" />
 

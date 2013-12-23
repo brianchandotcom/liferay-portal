@@ -1,4 +1,4 @@
-<definition>
+<definition component-area="portal-collaboration">
 	<command name="name" priority="">
 		<execute macro="macro" />
 	</command>

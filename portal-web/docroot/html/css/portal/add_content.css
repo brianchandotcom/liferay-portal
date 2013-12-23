@@ -296,7 +296,7 @@
 			background-color: #FFF;
 		}
 
-		lfr-content-item {
+		.lfr-content-item {
 			color: #3EA9DB;
 
 			&:hover {

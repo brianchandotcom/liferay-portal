@@ -36,30 +36,30 @@ public class VerifySocialRequests extends VerifyProcess {
 			SocialRequestLocalServiceUtil.getSocialRequests(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		if (!requests.isEmpty()) {
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+		if (requests.isEmpty()) {
+			return;
+		}
 
-			List<Group> groups = new ArrayList<Group>();
+		List<Group> groups = new ArrayList<Group>();
 
-			for (long companyId : companyIds) {
-				groups.addAll(
-					GroupLocalServiceUtil.getCompanyGroups(
-						companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-			}
+		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+			groups.addAll(
+				GroupLocalServiceUtil.getCompanyGroups(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		}
 
-			List<Long> groupIds = new ArrayList<Long>();
+		List<Long> groupIds = new ArrayList<Long>();
 
-			for (Group group : groups) {
-				groupIds.add(group.getGroupId());
-			}
+		for (Group group : groups) {
+			groupIds.add(group.getGroupId());
+		}
 
-			for (SocialRequest request : requests) {
-				if (!groupIds.contains(request.getClassPK()) &&
-					(request.getClassNameId() == PortalUtil.getClassNameId(
-						Group.class))) {
+		for (SocialRequest request : requests) {
+			if (!groupIds.contains(request.getClassPK()) &&
+				(request.getClassNameId() ==
+					PortalUtil.getClassNameId(Group.class))) {
 
-					SocialRequestLocalServiceUtil.deleteRequest(request);
-				}
+				SocialRequestLocalServiceUtil.deleteRequest(request);
 			}
 		}
 	}

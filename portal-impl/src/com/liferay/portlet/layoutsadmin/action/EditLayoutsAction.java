@@ -762,8 +762,6 @@ public class EditLayoutsAction extends PortletAction {
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			groupId, privateLayout, layoutId);
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
 		for (String key : themeSettings.keySet()) {
 			ThemeSetting themeSetting = themeSettings.get(key);
 
@@ -774,9 +772,7 @@ public class EditLayoutsAction extends PortletAction {
 			String value = ParamUtil.getString(
 				actionRequest, property, themeSetting.getValue());
 
-			if (!Validator.equals(
-					value, layoutSet.getThemeSetting(key, device))) {
-
+			if (!Validator.equals(value, layout.getThemeSetting(key, device))) {
 				typeSettingsProperties.setProperty(
 					ThemeSettingImpl.namespaceProperty(device, key), value);
 			}

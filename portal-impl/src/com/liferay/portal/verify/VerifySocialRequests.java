@@ -55,7 +55,7 @@ public class VerifySocialRequests extends VerifyProcess {
 
 			for (SocialRequest request : requests) {
 				if (!groupIds.contains(request.getClassPK()) &&
-					(request.getClassNameId() != PortalUtil.getClassNameId(
+					(request.getClassNameId() == PortalUtil.getClassNameId(
 						Group.class))) {
 
 					SocialRequestLocalServiceUtil.deleteRequest(request);

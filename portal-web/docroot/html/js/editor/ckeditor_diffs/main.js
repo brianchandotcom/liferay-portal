@@ -87,11 +87,19 @@ AUI.add(
 					},
 
 					_getAutoSaveTimeout: function() {
-						return CKCONFIG.autoSaveTimeout;
+						var instance = this;
+
+						var editor = instance.get(EDITOR);
+
+						return editor.config.autoSaveTimeout;
 					},
 
 					_getCloseNoticeTimeout: function() {
-						return CKCONFIG.closeNoticeTimeout;
+						var instance = this;
+
+						var editor = instance.get(EDITOR);
+
+						return editor.config.closeNoticeTimeout;
 					},
 
 					_onEditorBlur: function() {

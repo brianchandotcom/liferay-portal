@@ -25,19 +25,22 @@
 <%@ page import="java.util.Locale" %>
 
 <%
+String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
 String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 String languageId = ParamUtil.getString(request, "languageId");
-long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
-String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
+String name = ParamUtil.getString(request, "name");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
+long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
-CKEDITOR.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
+var ckEditor = CKEDITOR.instances['<%= name %>'];
 
-CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+ckEditor.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
+
+ckEditor.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 <%
 Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
@@ -45,23 +48,23 @@ Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 %>
 
-CKEDITOR.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
+ckEditor.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
 
-CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
+ckEditor.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
 
-CKEDITOR.config.decodeLinks = true;
+ckEditor.config.decodeLinks = true;
 
-CKEDITOR.config.disableObjectResizing = true;
+ckEditor.config.disableObjectResizing = true;
 
-CKEDITOR.config.extraPlugins = 'creole,wikilink';
+ckEditor.config.extraPlugins = 'creole,wikilink';
 
-CKEDITOR.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
+ckEditor.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 
-CKEDITOR.config.height = 265;
+ckEditor.config.height = 265;
 
-CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
+ckEditor.config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
 
-CKEDITOR.config.removePlugins = [
+ckEditor.config.removePlugins = [
 	'elementspath',
 	'save',
 	'font',
@@ -89,12 +92,12 @@ CKEDITOR.config.removePlugins = [
 ].join();
 
 <c:if test="<%= resizable %>">
-	CKEDITOR.config.resize_dir = 'vertical';
+	ckEditor.config.resize_dir = 'vertical';
 </c:if>
 
-CKEDITOR.config.resize_enabled = <%= resizable %>;
+ckEditor.config.resize_enabled = <%= resizable %>;
 
-CKEDITOR.config.toolbar_creole = [
+ckEditor.config.toolbar_creole = [
 	['Cut','Copy','Paste','PasteText','PasteFromWord'],
 	['Undo','Redo'],
 	['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
@@ -115,13 +118,13 @@ CKEDITOR.config.toolbar_creole = [
 	['Source']
 ];
 
-CKEDITOR.config.toolbar_phone = [
+ckEditor.config.toolbar_phone = [
 	['Bold', 'Italic', 'Underline'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink']
 ];
 
-CKEDITOR.config.toolbar_tablet = [
+ckEditor.config.toolbar_tablet = [
 	['Bold', 'Italic', 'Underline', 'Strike'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink'],
@@ -129,7 +132,7 @@ CKEDITOR.config.toolbar_tablet = [
 	['Styles', 'FontSize']
 ];
 
-CKEDITOR.on(
+ckEditor.on(
 	'dialogDefinition',
 	function(event) {
 		var dialogName = event.data.name;

@@ -53,7 +53,7 @@
 								0
 							);
 						},
-						icon: CKEDITOR.config.imagesPath + 'code.png',
+						icon: editor.config.imagesPath + 'code.png',
 						label: Liferay.Language.get('code')
 					}
 				);

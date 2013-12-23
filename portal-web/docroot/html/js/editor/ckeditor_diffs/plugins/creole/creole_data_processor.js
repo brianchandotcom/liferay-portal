@@ -47,7 +47,14 @@
 
 	var TAG_UNORDERED_LIST_ITEM = '*';
 
-	CKEDITOR.htmlDataProcessor.prototype = {
+	var attachmentURLPrefix;
+
+	var CreoleDataProcessor = function() {
+	};
+
+	CreoleDataProcessor.constructor = CreoleDataProcessor,
+
+	CreoleDataProcessor.prototype = {
 		toDataFormat: function(html, fixForBody ) {
 			var instance = this;
 
@@ -64,7 +71,7 @@
 			if (!instance._creoleParser) {
 				instance._creoleParser = new CKEDITOR.CreoleParser(
 					{
-						imagePrefix: CKEDITOR.config.attachmentURLPrefix
+						imagePrefix: attachmentURLPrefix
 					}
 				);
 			}
@@ -313,7 +320,7 @@
 			var attrAlt = element.getAttribute('alt');
 			var attrSrc = element.getAttribute('src');
 
-			attrSrc = attrSrc.replace(CKEDITOR.config.attachmentURLPrefix, STR_BLANK);
+			attrSrc = attrSrc.replace(attachmentURLPrefix, STR_BLANK);
 
 			listTagsIn.push('{{', attrSrc);
 
@@ -562,7 +569,9 @@
 			requires: ['htmlwriter'],
 
 			init: function(editor) {
-				editor.dataProcessor = new CKEDITOR.htmlDataProcessor(editor);
+				attachmentURLPrefix = editor.config.attachmentURLPrefix;
+
+				editor.dataProcessor = new CreoleDataProcessor(editor);
 
 				editor.on(
 					'paste',
@@ -571,7 +580,7 @@
 
 						var htmlData = data.dataValue;
 
-						htmlData = CKEDITOR.htmlDataProcessor.prototype.toDataFormat(htmlData);
+						htmlData = CreoleDataProcessor.prototype.toDataFormat(htmlData);
 
 						data.dataValue = htmlData;
 					},

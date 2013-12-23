@@ -112,13 +112,16 @@ public class EhcacheStreamBootstrapHelpUtil {
 			(EhcachePortalCacheManager<?, ?>)PortalBeanLocatorUtil.locate(
 				_BEAN_NAME_MULTI_VM_PORTAL_CACHE_MANAGER);
 
-		CacheManager cacheManager =
-			ehcachePortalCacheManager.getEhcacheManager();
-
 		List<String> cacheNames = new ArrayList<String>();
 
 		for (Ehcache ehcache : ehcaches) {
-			cacheNames.add(ehcache.getName());
+			CacheManager cacheManager = ehcache.getCacheManager();
+
+			if (_BEAN_NAME_MULTI_VM_PORTAL_CACHE_MANAGER.equals(
+					cacheManager.getName())) {
+
+				cacheNames.add(ehcache.getName());
+			}
 		}
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
@@ -176,6 +179,9 @@ public class EhcacheStreamBootstrapHelpUtil {
 
 			objectInputStream = new AnnotatedObjectInputStream(
 				socket.getInputStream());
+
+			CacheManager cacheManager =
+				ehcachePortalCacheManager.getEhcacheManager();
 
 			Ehcache ehcache = null;
 

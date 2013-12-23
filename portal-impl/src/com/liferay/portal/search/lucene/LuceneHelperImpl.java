@@ -72,6 +72,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -673,14 +674,44 @@ public class LuceneHelperImpl implements LuceneHelper {
 		MessageBus messageBus = MessageBusUtil.getMessageBus();
 
 		for (String searchEngineId : SearchEngineUtil.getSearchEngineIds()) {
-			String searchReaderDestinationName =
+			String searchWriterDestinationName =
 				SearchEngineUtil.getSearchWriterDestinationName(searchEngineId);
 
-			Destination searchReaderDestination = messageBus.getDestination(
-				searchReaderDestinationName);
+			Destination searchWriteDestination = messageBus.getDestination(
+				searchWriterDestinationName);
 
-			if (searchReaderDestination != null) {
-				searchReaderDestination.close(true);
+			if (searchWriteDestination != null) {
+				ThreadPoolExecutor threadPoolExecutor =
+					PortalExecutorManagerUtil.getPortalExecutor(
+						searchWriterDestinationName);
+
+				int maxPoolSize = threadPoolExecutor.getMaxPoolSize();
+
+				CountDownLatch checkInCountDownLatch = new CountDownLatch(
+					maxPoolSize);
+
+				ShutdownSyncJob shutdownSyncJob = new ShutdownSyncJob(
+					checkInCountDownLatch);
+
+				for (int i = 0; i < maxPoolSize; i++) {
+					threadPoolExecutor.submit(shutdownSyncJob);
+				}
+
+				try {
+					checkInCountDownLatch.await();
+				}
+				catch (InterruptedException ie) {
+					_log.error("Shutdown waiting interrupted", ie);
+				}
+
+				List<Runnable> runnables = threadPoolExecutor.shutdownNow();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Cancelled appending indexing jobs : " + runnables);
+				}
+
+				searchWriteDestination.close(true);
 			}
 		}
 
@@ -928,6 +959,29 @@ public class LuceneHelperImpl implements LuceneHelper {
 	private LoadIndexClusterEventListener _loadIndexClusterEventListener;
 	private ThreadPoolExecutor _luceneIndexThreadPoolExecutor;
 	private Version _version;
+
+	private static class ShutdownSyncJob implements Runnable {
+
+		public ShutdownSyncJob(CountDownLatch countDownLatch) {
+			_countDownLatch = countDownLatch;
+		}
+
+		@Override
+		public void run() {
+			_countDownLatch.countDown();
+
+			try {
+				synchronized (this) {
+					wait();
+				}
+			}
+			catch (InterruptedException ie) {
+			}
+		}
+
+		private final CountDownLatch _countDownLatch;
+
+	}
 
 	private class LoadIndexClusterEventListener
 		implements ClusterEventListener {

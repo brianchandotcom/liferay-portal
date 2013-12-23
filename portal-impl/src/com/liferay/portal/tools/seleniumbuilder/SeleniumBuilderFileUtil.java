@@ -1478,18 +1478,18 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 
-		String componentArea = rootElement.attributeValue("component-area");
+		String componentName = rootElement.attributeValue("component-name");
 
-		if (componentArea == null) {
+		if (componentName == null) {
 			throwValidationException(
-				1003, fileName, rootElement, "component-area");
+				1003, fileName, rootElement, "component-name");
 		}
 
-		if ((componentArea != null) &&
-			!_componentAreaList.contains(componentArea)) {
+		if ((componentName != null) &&
+			!_componentNameList.contains(componentName)) {
 
 			throwValidationException(
-				1006, fileName, rootElement, "component-area");
+				1006, fileName, rootElement, "component-name");
 		}
 
 		List<Element> elements = rootElement.elements();
@@ -1728,7 +1728,7 @@ public class SeleniumBuilderFileUtil {
 			"attribute", "line-number", "locator", "locator-key", "name",
 			"path", "value"
 		});
-	private static List<String> _componentAreaList = ListUtil.fromArray(
+	private static List<String> _componentNameList = ListUtil.fromArray(
 		new String[] {
 			"portal-administration", "portal-apis",
 			"portal-application-standards", "portal-authentication",

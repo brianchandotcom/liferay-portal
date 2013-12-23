@@ -116,6 +116,9 @@ public class SeleniumBuilder {
 		}
 
 		_seleniumBuilderFileUtil.writeFile(
+			"../../../component-names", _getComponentNamesString(), false);
+
+		_seleniumBuilderFileUtil.writeFile(
 			"../../../test.case.method.names.properties",
 			_getTestCaseMethodNamesProperties(), false);
 
@@ -125,6 +128,23 @@ public class SeleniumBuilder {
 
 		System.out.println(
 			"\nThere are " + _getTestCaseMethodCount() + " test cases.");
+	}
+
+	private String _getComponentNamesString() {
+		Map<String, Set<String>> testCaseMethodNameMap =
+			_getTestCaseMethodNameMap();
+
+		Set<String> componentNames = new TreeSet<String>();
+
+		for (Map.Entry<String, Set<String>> testCaseMethodNamesEntry :
+				testCaseMethodNameMap.entrySet()) {
+
+			componentNames.add(testCaseMethodNamesEntry.getKey());
+		}
+
+		return StringUtil.merge(
+			componentNames.toArray(new String[componentNames.size()]),
+			StringPool.SPACE);
 	}
 
 	private int _getTestCaseMethodCount() {
@@ -156,7 +176,7 @@ public class SeleniumBuilder {
 			Element rootElement =
 				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
 
-			String componentArea = rootElement.attributeValue("component-area");
+			String componentName = rootElement.attributeValue("component-name");
 
 			List<Element> commandElements =
 				_seleniumBuilderFileUtil.getAllChildElements(
@@ -164,8 +184,8 @@ public class SeleniumBuilder {
 
 			Set<String> testCaseMethodNames = new TreeSet<String>();
 
-			if (testCaseMethodNameMap.containsKey(componentArea)) {
-				testCaseMethodNames = testCaseMethodNameMap.get(componentArea);
+			if (testCaseMethodNameMap.containsKey(componentName)) {
+				testCaseMethodNames = testCaseMethodNameMap.get(componentName);
 			}
 
 			for (Element commandElement : commandElements) {
@@ -174,7 +194,7 @@ public class SeleniumBuilder {
 						commandElement.attributeValue("name"));
 			}
 
-			testCaseMethodNameMap.put(componentArea, testCaseMethodNames);
+			testCaseMethodNameMap.put(componentName, testCaseMethodNames);
 		}
 
 		return testCaseMethodNameMap;
@@ -184,7 +204,6 @@ public class SeleniumBuilder {
 		Map<String, Set<String>> testCaseMethodNameMap =
 			_getTestCaseMethodNameMap();
 
-		Set<String> componentAreaNames = new TreeSet<String>();
 		Set<String> testCaseMethodNames = new TreeSet<String>();
 
 		StringBundler sb = new StringBundler();
@@ -192,15 +211,13 @@ public class SeleniumBuilder {
 		for (Map.Entry<String, Set<String>> testCaseMethodNamesEntry :
 				testCaseMethodNameMap.entrySet()) {
 
-			String componentArea = testCaseMethodNamesEntry.getKey();
+			String componentName = testCaseMethodNamesEntry.getKey();
 
-			componentAreaNames.add(componentArea);
+			componentName = StringUtil.replace(componentName, "-", "_");
+			componentName = StringUtil.upperCase(componentName);
 
-			componentArea = StringUtil.replace(componentArea, "-", "_");
-			componentArea = StringUtil.upperCase(componentArea);
-
-			sb.append("TEST_CASE_METHOD_NAMES_");
-			sb.append(componentArea);
+			sb.append(componentName);
+			sb.append("_TEST_CASE_METHOD_NAMES");
 			sb.append("=");
 
 			Set<String> testCommandSet = testCaseMethodNamesEntry.getValue();
@@ -221,13 +238,6 @@ public class SeleniumBuilder {
 
 		sb.append("\nTEST_CASE_METHOD_NAMES=");
 		sb.append(testCaseMethodNamesString);
-
-		String componentAreaNamesString = StringUtil.merge(
-			componentAreaNames.toArray(new String[componentAreaNames.size()]),
-			StringPool.SPACE);
-
-		sb.append("\nCOMPONENT_AREA_NAMES=");
-		sb.append(componentAreaNamesString);
 
 		return sb.toString();
 	}

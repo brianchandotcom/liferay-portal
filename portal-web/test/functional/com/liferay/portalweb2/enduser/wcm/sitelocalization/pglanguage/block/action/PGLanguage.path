@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGE_MENU_JAPANESE</td>
+	<td>//a[@lang='ja-JP']/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE_MENU_PORTUGUESE</td>
 	<td>//img[@title='português']</td>
 	<td></td>

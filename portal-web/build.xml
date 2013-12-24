@@ -1088,46 +1088,12 @@
 		</if>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean">
-		<delete dir="classes" />
-		<delete dir="docroot/dtd" />
-		<delete dir="docroot/html/js/aui" />
-		<delete dir="docroot/html/js/editor/ckeditor" />
-		<delete dir="docroot/html/js/editor/fckeditor" />
-		<delete dir="docroot/html/js/editor/tinymce" />
-		<delete dir="docroot/html/portal/aui" />
-		<delete dir="docroot/html/themes/_unstyled/images/aui/" />
-		<delete dir="docroot/html/themes/classic/color_schemes" />
-		<delete dir="docroot/html/VAADIN" />
-		<delete dir="docroot/WEB-INF/classes" />
-		<delete dir="docroot/WEB-INF/lib" />
-		<delete dir="test-classes" />
-		<delete dir="test-results" />
-
-		<delete includeemptydirs="true">
-			<fileset dir="docroot/html/css" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-			<fileset dir="docroot/html/themes" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
-		</delete>
-
-		<antcall target="clean-themes" />
+	<target name="clean">
+		<ant antfile="../build.xml" inheritall="false" target="clean-portal-web" />
 	</target>
 
 	<target name="clean-themes">
-		<for param="module.name">
-			<path>
-				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
-			</path>
-			<sequential>
-				<delete includeemptydirs="true" quiet="true" failonerror="false">
-					<fileset
-						dir="@{module.name}"
-						excludes="**/_diffs/**"
-					/>
-				</delete>
-			</sequential>
-		</for>
+		<ant antfile="../build.xml" target="clean-themes" />
 	</target>
 
 	<target name="compile-common-jsp">

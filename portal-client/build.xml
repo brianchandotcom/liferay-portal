@@ -47,6 +47,10 @@
 		<antcall target="jar" />
 	</target>
 
+	<target name="clean">
+		<ant antfile="../build.xml" inheritall="false" target="clean-portal-client" />
+	</target>
+
 	<target name="jar" depends="compile">
 		<jar
 			jarfile="${jar.file}.jar"

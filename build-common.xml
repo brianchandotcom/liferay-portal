@@ -554,6 +554,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-current-time">
+		<sequential>
+			<tstamp>
+				<format property="current.time" pattern="MMMM d, yyyy 'at' hh:mm aa" />
+			</tstamp>
+
+			<echo message="${current.time}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="release-to-repo-macro">
 		<attribute name="bndRootFile" />
 		<attribute name="file" />

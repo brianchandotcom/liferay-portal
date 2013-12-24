@@ -9,6 +9,10 @@
 	<property name="manifest.bundle.symbolic.name" value="util-slf4j" />
 	<property name="release.info.version" value="6.2.0" />
 
+	<target name="clean">
+		<ant antfile="../build.xml" inheritall="false" target="clean-util-slf4j" />
+	</target>
+
 	<target name="jar" depends="build-common-java.jar">
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
 	</target>

@@ -8,6 +8,10 @@
 	<property name="manifest.bundle.name" value="Liferay Portal PACL" />
 	<property name="manifest.bundle.symbolic.name" value="portal-pacl;singleton:=true" />
 
+	<target name="clean">
+		<ant antfile="../build.xml" inheritall="false" target="clean-portal-pacl" />
+	</target>
+
 	<target name="compile">
 		<if>
 			<antelope:isgreaterthan arg1="${ant.java.version}" arg2="1.5" />

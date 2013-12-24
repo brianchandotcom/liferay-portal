@@ -28,6 +28,10 @@
 		</java>
 	</target>
 
+	<target name="clean">
+		<ant antfile="../build.xml" inheritall="false" target="clean-util-taglib" />
+	</target>
+
 	<target name="compile">
 		<if>
 			<not>

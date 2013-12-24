@@ -1,0 +1,256 @@
+<definition>
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<var name="userEmailAddress" value="socialoffice01@liferay.com" />
+	<var name="userFirstName" value="Social01" />
+	<var name="userLastName" value="User01" />
+	<var name="userMiddleName" value="Office01" />
+	<var name="userName" value="Social01 Office01 User01" />
+	<var name="userScreenName" value="socialoffice01" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="SOUser#addUserWithSORole">
+			<var name="adminEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userMiddleName" value="${userMiddleName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>
+	</set-up>
+
+	<command name="AddAdditionalEmailAddress" priority="5">
+		<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
+
+		<execute macro="MyAccount#addAdditionalEmailAddress">
+			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewAdditionalEmailAddress">
+			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
+		</execute>
+	</command>
+
+ 	<command name="AddAddress" priority="5">
+		<var name="userAddressCity" value="Ray of Light" />
+		<var name="userAddressCountry" value="United States" />
+		<var name="userAddressPostalCode" value="91234" />
+		<var name="userAddressRegion" value="California" />
+		<var name="userAddressStreet1" value="123 Liferay Ln." />
+		<var name="userAddressType" value="Personal" />
+
+		<execute macro="MyAccount#addAddress">
+			<var name="userAddressCity" value="${userAddressCity}" />
+			<var name="userAddressCountry" value="${userAddressCountry}" />
+			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
+			<var name="userAddressRegion" value="${userAddressRegion}" />
+			<var name="userAddressStreet1" value="${userAddressStreet1}" />
+			<var name="userAddressType" value="${userAddressType}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewAddress">
+			<var name="userAddressCity" value="${userAddressCity}" />
+			<var name="userAddressCountry" value="${userAddressCountry}" />
+			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
+			<var name="userAddressRegion" value="${userAddressRegion}" />
+			<var name="userAddressStreet1" value="${userAddressStreet1}" />
+			<var name="userAddressType" value="${userAddressType}" />
+		</execute>
+	</command>
+
+	<command name="AddIntroduction" priority="5">
+		<var name="userIntroduction" value="Introduction Content" />
+
+		<execute macro="MyAccount#addComments">
+			<var name="userIntroduction" value="${userIntroduction}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewIntroduction">
+			<var name="userIntroduction" value="${userIntroduction}" />
+		</execute>
+	</command>
+
+	<command name="AddInstantMessenger" priority="5">
+		<var name="userInstantMessengerAIM" value="socialofficesn" />
+		<var name="userInstantMessengerICQ" value="socialofficesn" />
+		<var name="userInstantMessengerJabber" value="socialofficesn" />
+		<var name="userInstantMessengerSkype" value="socialofficesn" />
+		<var name="userInstantMessengerWindowsLiveMessenger" value="socialofficesn" />
+		<var name="userInstantMessengerYM" value="socialofficesn" />
+
+		<execute macro="MyAccount#addInstantMessenger">
+			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
+			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
+			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
+			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
+			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
+			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewInstantMessenger">
+			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
+			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
+			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
+			<var name="userInstantMessengerSkype" value="${userInstantMessengerSkype}" />
+			<var name="userInstantMessengerWindowsLiveMessenger" value="${userInstantMessengerWindowsLiveMessenger}" />
+			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
+		</execute>
+	</command>
+
+	<command name="AddPhoneNumbers" priority="5">
+		<var name="userPhoneNumberNumber" value="123-123-1234" />
+		<var name="userPhoneNumberExtension" value="123" />
+		<var name="userPhoneNumberType" value="Business" />
+
+		<execute macro="MyAccount#addPhoneNumbers">
+			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
+			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
+			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewPhoneNumbers">
+			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
+			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
+			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
+		</execute>
+	</command>
+
+	<command name="AddProfilePicture" priority="5">
+		<var name="imageFileName" value="Document_4.jpg" />
+		<var name="userName" value="${userName}" />
+
+		<execute macro="MyAccount#addProfilePicture">
+			<var name="imageFileName" value="${imageFileName}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewProfilePicture" />
+
+		<execute macro="MyAccount#deleteProfilePicture" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#assertElementPresent" locator-key1="DEFAULT_PROFILE_PICTURE" />
+	</command>
+
+	<command name="AddProjects" priority="5">
+		<var name="userProjectTitle" value="Expertise Title" />
+		<var name="userProjectDescription" value="Expertise Description" />
+
+		<execute macro="MyAccount#addProjects">
+			<var name="userProjectTitle" value="${userProjectTitle}" />
+			<var name="userProjectDescription" value="${userProjectDescription}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewProjects">
+			<var name="userProjectTitle" value="${userProjectTitle}" />
+			<var name="userProjectDescription" value="${userProjectDescription}" />
+		</execute>
+	</command>
+
+	<command name="AddSMS" priority="5">
+		<var name="userSMS" value="socialoffice@liferay.com" />
+
+		<execute macro="MyAccount#addSMS">
+			<var name="userSMS" value="${userSMS}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewSMS">
+			<var name="userSMS" value="${userSMS}" />
+		</execute>
+	</command>
+
+	<command name="AddSocialNetwork" priority="5">
+		<var name="userSocialNetworkFacebook" value="socialoffice01" />
+		<var name="userSocialNetworkMyspace" value="socialoffice01" />
+		<var name="userSocialNetworkTwitter" value="socialoffice01" />
+
+		<execute macro="MyAccount#addSocialNetwork">
+			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
+			<var name="userSocialNetworkMyspace" value="${userSocialNetworkMyspace}" />
+			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewSocialNetwork">
+			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
+			<var name="userSocialNetworkMyspace" value="${userSocialNetworkMyspace}" />
+			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
+		</execute>
+	</command>
+
+	<command name="AddTag" priority="5">
+		<var name="userTag" value="tag1" />
+
+		<execute macro="MyAccount#addTag">
+			<var name="userTag" value="${userTag}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewTag">
+			<var name="key_userTag" value="${userTag}" />
+			<var name="userTag" value="${userTag}" />
+		</execute>
+	</command>
+
+	<command name="AddWebsite" priority="5">
+		<var name="userWebsiteURL" value="http://www.socialoffice01.com" />
+		<var name="userWebsiteType" value="Personal" />
+
+		<execute macro="MyAccount#addWebsite">
+			<var name="userWebsiteURL" value="${userWebsiteURL}" />
+			<var name="userWebsiteType" value="${userWebsiteType}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute macro="SOProfile#viewWebsite">
+			<var name="userWebsiteURL" value="${userWebsiteURL}" />
+			<var name="userWebsiteType" value="${userWebsiteType}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="SOUser#tearDownCP" />
+	</tear-down>
+</definition>

@@ -1,0 +1,147 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="LocalizationStyle0" priority="3">
+		<property name="custom.properties" value="locale.prepend.friendly.url.style=0" />
+
+		<var name="pageName" value="Language Test Page" />
+		<var name="portletName" value="Language" />
+		<var name="siteURL" value="localhost:8080" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="SPANISH (Spain)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Japanese (Japan)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="LocalizationStyle1" priority="3">
+		<property name="custom.properties" value="locale.prepend.friendly.url.style=1" />
+
+		<var name="pageName" value="Language Test Page" />
+		<var name="portletName" value="Language" />
+		<var name="siteURL" value="localhost:8080" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="SPANISH (Spain)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/es/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Japanese (Japan)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/ja/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="LocalizationStyle2" priority="3">
+		<property name="custom.properties" value="locale.prepend.friendly.url.style=2" />
+
+		<var name="pageName" value="Language Test Page" />
+		<var name="portletName" value="Language" />
+		<var name="siteURL" value="localhost:8080" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/en/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="SPANISH (Spain)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/es/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Japanese (Japan)" />
+		</execute>
+
+		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/ja/web/guest/language-test-page" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+</definition>

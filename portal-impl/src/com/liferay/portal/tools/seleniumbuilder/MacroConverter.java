@@ -28,7 +28,9 @@ public class MacroConverter extends BaseConverter {
 	public void convert(String macroName) throws Exception {
 		Map<String, Object> context = getContext();
 
+		context.put("contextLevelStack", new FreeMarkerStack());
 		context.put("elementsStack", new FreeMarkerStack());
+		context.put("forParameterStack", new FreeMarkerStack());
 		context.put("ifTypeStack", new FreeMarkerStack());
 		context.put("macroNameStack", new FreeMarkerStack());
 		context.put("macroName", macroName);

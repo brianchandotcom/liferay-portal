@@ -15,7 +15,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 		<#if actionElement.attributeValue("locator${i}")??>
 			<#assign actionLocator = actionElement.attributeValue("locator${i}")>
 
-			RuntimeVariables.evaluateVariable("${actionLocator}", commandScopeVariables)
+			RuntimeVariables.evaluateVariable("${actionLocator}", ${context})
 		<#else>
 			null
 		</#if>
@@ -25,7 +25,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 		<#if actionElement.attributeValue("locator-key${i}")??>
 			<#assign actionLocatorKey = actionElement.attributeValue("locator-key${i}")>
 
-			RuntimeVariables.evaluateVariable("${actionLocatorKey}", commandScopeVariables)
+			RuntimeVariables.evaluateVariable("${actionLocatorKey}", ${context})
 		<#else>
 			""
 		</#if>
@@ -35,7 +35,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 		<#if actionElement.attributeValue("value${i}")??>
 			<#assign actionValue = actionElement.attributeValue("value${i}")>
 
-			RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(actionValue)}", commandScopeVariables)
+			RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(actionValue)}", ${context})
 		<#else>
 			""
 		</#if>
@@ -44,7 +44,7 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 			,
 		</#if>
 	</#list>
-, commandScopeVariables)
+, ${context})
 
 <#if actionElement.getName() == "execute">
 	;

@@ -69,8 +69,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<%@ include file="/html/portlet/asset_publisher/asset_search_results.jspf" %>
 			</liferay-ui:search-container-results>
 
-			<div class="separator"><!-- --></div>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.search.Document"
 				escapedModel="<%= true %>"
@@ -107,17 +105,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				/>
 
 				<liferay-ui:search-container-column-text
-					name="userName"
+					name="user-name"
 					value="<%= PortalUtil.getUserName(assetEntry) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
-					name="modifiedDate"
+					name="modified-date"
 					value="<%= assetEntry.getModifiedDate() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					name="descriptiveName"
+					name="site"
 					value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 				/>
 

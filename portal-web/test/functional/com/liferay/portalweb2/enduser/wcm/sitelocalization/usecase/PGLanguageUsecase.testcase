@@ -12,7 +12,6 @@
 
 		<var name="pageName" value="Language Test Page" />
 		<var name="portletName" value="Language" />
-		<var name="siteURL" value="localhost:8080" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -30,19 +29,19 @@
 			<var name="language" value="English (United States)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="SPANISH (Spain)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="Japanese (Japan)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="English (United States)" />
@@ -58,7 +57,6 @@
 
 		<var name="pageName" value="Language Test Page" />
 		<var name="portletName" value="Language" />
-		<var name="siteURL" value="localhost:8080" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -76,19 +74,19 @@
 			<var name="language" value="English (United States)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="SPANISH (Spain)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/es/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/es/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="Japanese (Japan)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/ja/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/ja/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="English (United States)" />
@@ -104,7 +102,6 @@
 
 		<var name="pageName" value="Language Test Page" />
 		<var name="portletName" value="Language" />
-		<var name="siteURL" value="localhost:8080" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -122,19 +119,19 @@
 			<var name="language" value="English (United States)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/en/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/en/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="SPANISH (Spain)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/es/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/es/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="Japanese (Japan)" />
 		</execute>
 
-		<execute action="Home#assertLocation" locator-key1="SITE_NAME" value1="http://${siteURL}/ja/web/guest/language-test-page" />
+		<execute action="Home#assertLocation" value1="http://localhost:8080/ja/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="English (United States)" />

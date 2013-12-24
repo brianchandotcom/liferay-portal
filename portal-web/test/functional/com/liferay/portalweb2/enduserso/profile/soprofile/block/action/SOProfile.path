@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CONNECTION_REQUESTED_MESSAGE</td>
-	<td>//span[@class='disabled']/span</td>
+	<td>//span[@class='disabled']/span[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,6 +86,26 @@
 <tr>
 	<td>ADD_CONTENT_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONTENT_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_PROFILE_PICTURE</td>
+	<td>//img[contains(@src,'default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_PROFILE_PICTURE</td>
+	<td>//img[@alt='${key_userName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_PROFILE_PICTURE_BUTTON</td>
+	<td>//button[contains(@class,'edit-logo')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -308,8 +328,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROFILE_INFO_TAGS_EDIT</td>
+	<td>//div[@data-title='Tags']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROFILE_INFO_TAGS_CONTENT</td>
-	<td>//ul[@class='user-tags']/li/a</td>
+	<td>xpath=(//ul[@class='user-tags']/li/a)[contains(.,'${key_userTag}')]</td>
 	<td></td>
 </tr>
 <tr>

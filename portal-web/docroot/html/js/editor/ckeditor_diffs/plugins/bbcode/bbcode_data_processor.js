@@ -532,7 +532,7 @@
 		_handleLink: function(element, listTagsIn, listTagsOut) {
 			var hrefAttribute = element.getAttribute('href');
 
-		if (hrefAttribute != null) {
+			if (hrefAttribute != null) {
 				var decodedLink = decodeURIComponent(hrefAttribute);
 
 				if (decodedLink.indexOf(NEW_THREAD_URL) >= 0) {

@@ -26,7 +26,9 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -61,13 +63,36 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 			StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		recordSet = addRecordSet(ddmStructure.getStructureId());
+	}
 
-		addRecord("Joe Bloggs", "Simple description");
-		addRecord("Bloggs","Another description example");
+	@Test
+	public void testPublishRecordDraftWithoutChanges() throws Exception {
+		DDLRecord record = addRecord(
+			"Joe Bloggs", "Simple description",
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, record.getStatus());
+
+		DDLRecordVersion recordVersion = record.getRecordVersion();
+
+		Assert.assertTrue(recordVersion.isDraft());
+
+		record = updateRecord(
+			record.getRecordId(), record.getFields(),
+			WorkflowConstants.ACTION_PUBLISH);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, record.getStatus());
+
+		recordVersion = record.getRecordVersion();
+
+		Assert.assertTrue(recordVersion.isApproved());
 	}
 
 	@Test
 	public void testSearchByTextAreaField() throws Exception {
+		addSampleRecords();
+
 		SearchContext searchContext = getSearchContext("example");
 
 		Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
@@ -83,6 +108,8 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 
 	@Test
 	public void testSearchByTextField() throws Exception {
+		addSampleRecords();
+
 		SearchContext searchContext = getSearchContext("\"Joe Bloggs\"");
 
 		Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
@@ -96,7 +123,10 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 		Assert.assertEquals(1, hits.getLength());
 	}
 
-	protected void addRecord(String name, String description) throws Exception {
+	protected DDLRecord addRecord(
+			String name, String description, int workflowAction)
+		throws Exception {
+
 		Fields fields = new Fields();
 
 		Field nameField = new Field(
@@ -109,7 +139,17 @@ public class DDLRecordServiceTest extends BaseDDLServiceTestCase {
 
 		fields.put(descriptionField);
 
-		addRecord(recordSet.getRecordSetId(), fields);
+		return addRecord(recordSet.getRecordSetId(), fields, workflowAction);
+	}
+
+	protected void addSampleRecords() throws Exception {
+		addRecord(
+			"Joe Bloggs", "Simple description",
+			WorkflowConstants.ACTION_PUBLISH);
+
+		addRecord(
+			"Bloggs","Another description example",
+			WorkflowConstants.ACTION_PUBLISH);
 	}
 
 	protected SearchContext getSearchContext(String keywords) throws Exception {

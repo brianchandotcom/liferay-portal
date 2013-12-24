@@ -3,6 +3,24 @@
 <project name="portal" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<macrodef name="clean">
+		<attribute name="dir" />
+
+		<attribute default="@{dir}" name="jar.file" />
+
+		<sequential>
+			<delete dir="@{dir}/classes" />
+			<delete dir="@{dir}/test-classes" />
+			<delete dir="@{dir}/test-coverage" />
+			<delete dir="@{dir}/test-results" />
+			<delete dir="@{dir}/woven-classes" />
+			<delete dir="${doc.dir}/@{dir}/javadocs" />
+			<delete failonerror="false" file="@{dir}/@{jar.file}.jar" />
+			<delete failonerror="false" file="@{dir}/@{jar.file}-javadoc.jar" />
+			<delete failonerror="false" file="@{dir}/@{jar.file}-sources.jar" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-jrebel">
 		<sequential>
 			<echo file="${app.server.lib.global.dir}/rebel.xml"><![CDATA[<?xml version="1.0"?>
@@ -70,24 +88,30 @@
 		<antcall target="deploy" />
 	</target>
 
-	<target name="clean">
-		<ant dir="classes" target="clean" inheritAll="false" />
+	<target
+		depends="
+			clean-portal-service,
+			clean-util-bridges,
+			clean-util-java,
+			clean-util-slf4j,
+			clean-util-taglib,
+			clean-portal-impl,
+			clean-portal-pacl,
+			clean-portal-web,
+			clean-osgi-bootstrap"
+		name="clean"
+	>
+		<delete>
+			<fileset dir="classes" includes="*.class" />
+		</delete>
 
-		<ant dir="portal-service" target="clean" inheritAll="false" />
-
-		<ant dir="util-bridges" target="clean" inheritAll="false" />
-		<ant dir="util-java" target="clean" inheritAll="false" />
-		<ant dir="util-slf4j" target="clean" inheritAll="false" />
-		<ant dir="util-taglib" target="clean" inheritAll="false" />
-
-		<ant dir="portal-impl" target="clean" inheritAll="false" />
-		<ant dir="portal-pacl" target="clean" inheritAll="false" />
-
-		<ant dir="osgi/bootstrap" target="clean" inheritAll="false" />
-
-		<ant dir="portal-web" target="clean" inheritAll="false" />
-
-		<ant dir="sql" target="clean" inheritAll="false" />
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset
+				dir="sql"
+				excludes="*.sql,*.vm"
+				includes="create*/**,indexes/**,log/**,portal*/**,sequences/**,update*/**"
+			/>
+		</delete>
 
 		<delete dir="${doc.dir}" />
 
@@ -123,7 +147,9 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="resin" />
 			<then>
-				<ant dir="support-resin" target="clean" inheritAll="false" />
+				<clean dir="support-resin" />
+
+				<delete file="${app.server.lib.support.dir}/support-resin.jar" />
 			</then>
 		</if>
 
@@ -137,14 +163,18 @@
 					/>
 				</delete>
 
-				<ant dir="support-tomcat" target="clean" inheritAll="false" />
+				<clean dir="support-tomcat" />
+
+				<delete file="${app.server.lib.support.dir}/support-tomcat.jar" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
-				<ant dir="support-websphere" target="clean" inheritAll="false" />
+				<clean dir="support-websphere" />
+
+				<delete file="${app.server.lib.support.dir}/support-websphere.jar" />
 			</then>
 		</if>
 
@@ -210,7 +240,101 @@
 			</then>
 		</if>
 
-		<antcall target="print-current-time" />
+		<print-current-time />
+	</target>
+
+	<target name="clean-osgi-bootstrap">
+		<clean dir="osgi/bootstrap" jar.file="osgi-bootstrap" />
+	</target>
+
+	<target name="clean-portal-impl">
+		<clean dir="portal-impl" />
+	</target>
+
+	<target name="clean-portal-pacl">
+		<clean dir="portal-pacl" />
+	</target>
+
+	<target name="clean-portal-service">
+		<clean dir="portal-service" />
+	</target>
+
+	<target depends="clean-themes" name="clean-portal-web">
+		<delete dir="portal-web/docroot/WEB-INF/classes" />
+		<delete file="portal-web/portal-web.war" failonerror="false" />
+
+		<delete>
+			<fileset dir="portal-web/docroot" includes="**/.sprite.png" />
+			<fileset dir="portal-web/docroot" includes="**/.sprite.properties" />
+			<fileset dir="portal-web/docroot" includes="**/Thumbs.db" />
+		</delete>
+
+		<delete dir="portal-web/classes" />
+		<delete dir="portal-web/test-classes" />
+		<delete dir="portal-web/docroot/dtd" />
+		<delete dir="portal-web/docroot/html/js/aui" />
+		<delete dir="portal-web/docroot/html/js/editor/ckeditor" />
+		<delete dir="portal-web/docroot/html/js/editor/fckeditor" />
+		<delete dir="portal-web/docroot/html/js/editor/tinymce" />
+		<delete dir="portal-web/docroot/html/portal/aui" />
+		<delete dir="portal-web/docroot/html/themes/_unstyled/images/aui/" />
+		<delete dir="portal-web/docroot/html/themes/classic/color_schemes" />
+		<delete dir="portal-web/docroot/html/VAADIN" />
+		<delete dir="portal-web/docroot/WEB-INF/classes" />
+		<delete dir="portal-web/docroot/WEB-INF/lib" />
+		<delete dir="portal-web/test-results" />
+		<delete dir="portal-web/docroot/WEB-INF/classes" />
+		<delete file="portal-web/portal-web.war" failonerror="false" />
+
+		<delete>
+			<fileset dir="portal-web/docroot" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/.sprite.png,**/.sprite.properties,**/Thumbs.db,**/_sass_cache_*.css,WEB-INF/tld/liferay*.tld" />
+		</delete>
+
+		<for param="module.name">
+			<path>
+				<dirset dir="portal-web/docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
+			</path>
+			<sequential>
+				<delete includeemptydirs="true" quiet="true" failonerror="false">
+					<fileset
+						dir="portal-web/@{module.name}"
+						excludes="**/_diffs/**"
+					/>
+				</delete>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="clean-themes">
+		<for param="module.name">
+			<path>
+				<dirset dir="portal-web/docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
+			</path>
+			<sequential>
+				<delete includeemptydirs="true" quiet="true" failonerror="false">
+					<fileset
+						dir="@{module.name}"
+						excludes="**/_diffs/**"
+					/>
+				</delete>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="clean-util-bridges">
+		<clean dir="util-bridges" />
+	</target>
+
+	<target name="clean-util-java">
+		<clean dir="util-java" />
+	</target>
+
+	<target name="clean-util-slf4j">
+		<clean dir="util-slf4j" />
+	</target>
+
+	<target name="clean-util-taglib">
+		<clean dir="util-taglib" />
 	</target>
 
 	<target name="compile">

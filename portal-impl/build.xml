@@ -1301,9 +1301,7 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="clean">
-		<delete dir="classes" />
-
-		<antcall target="build-common-java.clean" />
+		<ant antfile="../build.xml" inheritall="false" target="clean-portal-impl" />
 	</target>
 
 	<target name="compile">

@@ -3,17 +3,6 @@
 <project name="build-common-web" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
-	<target name="clean">
-		<delete dir="docroot/WEB-INF/classes" />
-		<delete file="${war.file}.war" failonerror="false" />
-
-		<delete>
-			<fileset dir="docroot" includes="**/.sprite.png" />
-			<fileset dir="docroot" includes="**/.sprite.properties" />
-			<fileset dir="docroot" includes="**/Thumbs.db" />
-		</delete>
-	</target>
-
 	<target name="compile">
 		<if>
 			<available file="docroot/WEB-INF/src" />

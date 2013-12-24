@@ -1,4 +1,293 @@
 <definition>
+	<command name="addAdditionalEmailAddress">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_ADDITIONAL_EMAIL_ADDRESSES" />
+		<execute action="Myaccount#type" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${userAdditionalEmailAddress}" />
+		<execute action="Myaccount#select" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT" value1="Email Address" />
+		<execute action="Myaccount#click" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addAddress">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_ADDRESSES" />
+		<execute action="Myaccount#type" locator-key1="ADDRESSES_STREET_1_FIELD" value1="${userAddressStreet1}" />
+
+		<if>
+			<isset var="userAddressCountry" />
+			<then>
+				<execute action="Myaccount#select" locator-key1="ADDRESSES_COUNTRY_SELECT" value1="${userAddressCountry}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userAddressRegion" />
+			<then>
+				<execute action="Myaccount#select" locator-key1="ADDRESSES_REGION_SELECT" value1="${userAddressRegion}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userAddressPostalCode" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="ADDRESSES_POSTAL_CODE_FIELD" value1="${userAddressPostalCode}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userAddressType" />
+			<then>
+				<execute action="Myaccount#select" locator-key1="ADDRESSES_TYPE_SELECT" value1="${userAddressType}" />
+			</then>
+		</if>
+
+		<execute action="Myaccount#type" locator-key1="ADDRESSES_CITY_FIELD" value1="${userAddressCity}" />
+		<execute action="Myaccount#click" locator-key1="ADDRESSES_PRIMARY_RADIO_BUTTON" />
+		<execute action="Myaccount#check" locator-key1="ADDRESSES_MAILING_CHECKBOX" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addComments">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_COMMENTS" />
+		<execute action="Myaccount#type" locator-key1="COMMENTS_FIELD" value1="${userIntroduction}" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addInstantMessenger">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_INSTANT_MESSENGER" />
+
+		<if>
+			<isset var="userInstantMessengerAIM" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_AIM_FIELD" value1="${userInstantMessengerAIM}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerICQ" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_ICQ_FIELD" value1="${userInstantMessengerICQ}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerJabber" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_JABBER_FIELD" value1="${userInstantMessengerJabber}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerSkype" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_SKYPE_FIELD" value1="${userInstantMessengerSkype}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerWindowsLiveMessenger" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_WINDOWS_LIVE_MESSENGER_FIELD" value1="${userInstantMessengerWindowsLiveMessenger}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerYM" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_YM_FIELD" value1="${userInstantMessengerYM}" />
+			</then>
+		</if>
+
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addPhoneNumbers">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_PHONE_NUMBERS" />
+		<execute action="Myaccount#type" locator-key1="PHONE_NUMBERS_NUMBER_FIELD" value1="${userPhoneNumberNumber}" />
+
+		<if>
+			<isset var="userPhoneNumberExtension" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="PHONE_NUMBERS_EXTENSION_FIELD" value1="${userPhoneNumberExtension}" />
+			</then>
+		</if>
+
+		<execute action="Myaccount#select" locator-key1="PHONE_NUMBERS_TYPE_SELECT" value1="${userPhoneNumberType}" />
+
+		<execute action="Myaccount#click" locator-key1="PHONE_NUMBERS_PRIMARY_RADIO_BUTTON" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addProfilePicture">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="DETAILS_PICTURE_CHANGE_BUTTON" />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute action="Myaccount#selectFrame" locator-key1="UPLOAD_IMAGE_IFRAME" />
+		<execute action="Myaccount#uploadCommonFile" locator-key1="PROFILE_PICTURE_UPLOAD_IMAGE_FIELD" value1="${imageFileName}" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertElementNotPresent" locator-key1="PROFILE_PICTURE_UPLOAD_IMAGE_FIELD" />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addProjects">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_PROJECTS" />
+		<execute action="Myaccount#type" locator-key1="PROJECTS_TITLE_FIELD" value1="${userProjectTitle}" />
+		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_MONTH_SELECT" value1="January" />
+		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_YEAR_SELECT" value1="2012" />
+		<execute action="Myaccount#check" locator-key1="PROJECTS_CURRENT_CHECKBOX" />
+
+		<if>
+			<isset var="userProjectDescription" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="PROJECTS_DESCRIPTION_FIELD" value1="${userProjectDescription}" />
+			</then>
+		</if>
+
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addSMS">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_SMS" />
+		<execute action="Myaccount#type" locator-key1="SMS_SMS_FIELD" value1="${userSMS}" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addSocialNetwork">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_SOCIAL_NETWORK" />
+
+		<if>
+			<isset var="userSocialNetworkFacebook" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="SOCIAL_NETWORK_FACEBOOK_FIELD" value1="${userSocialNetworkFacebook}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userSocialNetworkTwitter" />
+			<then>
+				<execute action="Myaccount#type" locator-key1="SOCIAL_NETWORK_TWITTER_FIELD" value1="${userSocialNetworkTwitter}" />
+			</then>
+		</if>
+
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addTag">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_CATEGORIZATION" />
+		<execute action="Myaccount#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${userTag}" />
+		<execute action="Myaccount#click" locator-key1="CATEGORIZATION_ADD_BUTTON" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="addWebsite">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_WEBSITES" />
+		<execute action="Myaccount#type" locator-key1="WEBSITES_URL_FIELD" value1="${userWebsiteURL}" />
+		<execute action="Myaccount#select" locator-key1="WEBSITES_TYPE_SELECT" value1="${userWebsiteType}" />
+		<execute action="Myaccount#click" locator-key1="WEBSITES_PRIMARY_RADIO_BUTTON" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
+	<command name="deleteProfilePicture">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+
+		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
+		<execute action="Myaccount#click" locator-key1="DETAILS_PICTURE_DELETE_BUTTON" />
+		<execute action="Myaccount#pause" value1="1000" />
+		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
+		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Myaccount#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#openURL" />
+	</command>
+
 	<command name="view">
 		<execute action="Myaccount#assertTextEquals" locator-key1="MENU_USER_INFORMATION_DETAILS" value1="Details" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="MENU_USER_INFORMATION_PASSWORD" value1="Password" />

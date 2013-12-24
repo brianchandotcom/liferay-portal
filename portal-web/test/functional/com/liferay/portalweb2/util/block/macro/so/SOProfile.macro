@@ -1,17 +1,5 @@
 <definition>
-	<command name="addAdditionalEmailAddressMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_ADDITIONAL_EMAIL_ADDRESSES" />
-		<execute action="Myaccount#type" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${userAdditionalEmailAddress}" />
-		<execute action="Myaccount#select" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT" value1="Email Address" />
-		<execute action="Myaccount#click" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON" />
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addAdditionalEmailAddressProfile">
+	<command name="addAdditionalEmailAddress">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -28,49 +16,7 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
 	</command>
 
-	<command name="addAddressMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_ADDRESSES" />
-		<execute action="Myaccount#type" locator-key1="ADDRESSES_STREET_1_FIELD" value1="${userAddressStreet1}" />
-
-		<if>
-			<isset var="userAddressCountry" />
-			<then>
-				<execute action="Myaccount#select" locator-key1="ADDRESSES_COUNTRY_SELECT" value1="${userAddressCountry}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userAddressRegion" />
-			<then>
-				<execute action="Myaccount#select" locator-key1="ADDRESSES_REGION_SELECT" value1="${userAddressRegion}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userAddressPostalCode" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="ADDRESSES_POSTAL_CODE_FIELD" value1="${userAddressPostalCode}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userAddressType" />
-			<then>
-				<execute action="Myaccount#select" locator-key1="ADDRESSES_TYPE_SELECT" value1="${userAddressType}" />
-			</then>
-		</if>
-
-		<execute action="Myaccount#type" locator-key1="ADDRESSES_CITY_FIELD" value1="${userAddressCity}" />
-		<execute action="Myaccount#click" locator-key1="ADDRESSES_PRIMARY_RADIO_BUTTON" />
-		<execute action="Myaccount#check" locator-key1="ADDRESSES_MAILING_CHECKBOX" />
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addAddressProfile">
+	<command name="addAddress">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -114,18 +60,9 @@
 
 		<execute action="SOProfileAddAddress#click" locator-key1="SAVE_BUTTON" />
 
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
-	</command>
-
-	<command name="addCommentsMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_COMMENTS" />
-		<execute action="Myaccount#type" locator-key1="COMMENTS_FIELD" value1="${userIntroduction}" />
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addConnection">
@@ -136,12 +73,10 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="password" value="test" />
-		</execute>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+		</execute>	
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
 			<var name="senderName" value="${adminName}" />
@@ -149,7 +84,7 @@
 		</execute>
 	</command>
 	
-	<command name="addIntroductionProfile">
+	<command name="addIntroduction">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -164,59 +99,7 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
 
-	<command name="addInstantMessengerMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_INSTANT_MESSENGER" />
-
-		<if>
-			<isset var="userInstantMessengerAIM" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_AIM_FIELD" value1="${userInstantMessengerAIM}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerICQ" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_ICQ_FIELD" value1="${userInstantMessengerICQ}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerJabber" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_JABBER_FIELD" value1="${userInstantMessengerJabber}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerSkype" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_SKYPE_FIELD" value1="${userInstantMessengerSkype}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerWindowsLiveMessenger" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_WINDOWS_LIVE_MESSENGER_FIELD" value1="${userInstantMessengerWindowsLiveMessenger}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userInstantMessengerYM" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="INSTANT_MESSENGER_YM_FIELD" value1="${userInstantMessengerYM}" />
-			</then>
-		</if>
-
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addInstantMessengerProfile">
+	<command name="addInstantMessenger">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -265,7 +148,7 @@
 			</then>
 		</if>
 
-		<execute action="SOProfileAddAddress#click" locator-key1="SAVE_BUTTON" />
+		<execute action="SOProfileAddInstantMessenger#click" locator-key1="SAVE_BUTTON" />
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
@@ -277,28 +160,7 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
 
-	<command name="addPhoneNumbersMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_PHONE_NUMBERS" />
-		<execute action="Myaccount#type" locator-key1="PHONE_NUMBERS_NUMBER_FIELD" value1="${userPhoneNumberNumber}" />
-
-		<if>
-			<isset var="userPhoneNumberExtension" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="PHONE_NUMBERS_EXTENSION_FIELD" value1="${userPhoneNumberExtension}" />
-			</then>
-		</if>
-
-		<execute action="Myaccount#select" locator-key1="PHONE_NUMBERS_TYPE_SELECT" value1="${userPhoneNumberType}" />
-
-		<execute action="Myaccount#click" locator-key1="PHONE_NUMBERS_PRIMARY_RADIO_BUTTON" />
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addPhoneNumbersProfile">
+	<command name="addPhoneNumbers">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -332,28 +194,25 @@
 		</if>
 	</command>
 
-	<command name="addProjectsMyAccount">
+	<command name="addProfilePicture">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_PROJECTS" />
-		<execute action="Myaccount#type" locator-key1="PROJECTS_TITLE_FIELD" value1="${userProjectTitle}" />
-		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_MONTH_SELECT" value1="January" />
-		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_YEAR_SELECT" value1="2012" />
-		<execute action="Myaccount#check" locator-key1="PROJECTS_CURRENT_CHECKBOX" />
+		<execute action="SOProfile#click" locator-key1="EDIT_PROFILE_PICTURE_BUTTON" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
 
-		<if>
-			<isset var="userProjectDescription" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="PROJECTS_DESCRIPTION_FIELD" value1="${userProjectDescription}" />
-			</then>
-		</if>
+		<execute action="SOProfileAddProfilePicture#uploadCommonFile" locator-key1="UPLOAD_IMAGE_FIELD" value1="${imageFileName}" />
+		<execute action="SOProfileAddWebsite#click" locator-key1="SAVE_BUTTON" />
 
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+
+		<var name="key_userName" value="${userName}" />		
+
+		<execute action="SOProfile#assertElementPresent" locator-key1="USER_PROFILE_PICTURE" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="DEFAULT_PROFILE_PICTURE" />
 	</command>
 
-	<command name="addProjectsProfile">
+	<command name="addProjects">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -386,17 +245,7 @@
 		</if>
 	</command>
 
-	<command name="addSMSMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_SMS" />
-		<execute action="Myaccount#type" locator-key1="SMS_SMS_FIELD" value1="${userSMS}" />
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addSMSProfile">
+	<command name="addSMS">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -411,31 +260,7 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
 	</command>
 
-	<command name="addSocialNetworkMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_SOCIAL_NETWORK" />
-
-		<if>
-			<isset var="userSocialNetworkFacebook" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="SOCIAL_NETWORK_FACEBOOK_FIELD" value1="${userSocialNetworkFacebook}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="userSocialNetworkTwitter" />
-			<then>
-				<execute action="Myaccount#type" locator-key1="SOCIAL_NETWORK_TWITTER_FIELD" value1="${userSocialNetworkTwitter}" />
-			</then>
-		</if>
-
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addSocialNetworkProfile">
+	<command name="addSocialNetwork">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -464,18 +289,7 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
 	</command>
 
-	<command name="addTagMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_CATEGORIZATION" />
-		<execute action="Myaccount#type" locator-key1="CATEGORIZATION_TAGS_FIELD" value1="${userTag}" />
-		<execute action="Myaccount#click" locator-key1="CATEGORIZATION_ADD_BUTTON" />
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addTagProfile">
+	<command name="addTag">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -491,19 +305,7 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 	</command>
 
-	<command name="addWebsiteMyAccount">
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
-
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_WEBSITES" />
-		<execute action="Myaccount#type" locator-key1="WEBSITES_URL_FIELD" value1="${userWebsiteURL}" />
-		<execute action="Myaccount#select" locator-key1="WEBSITES_TYPE_SELECT" value1="${userWebsiteType}" />
-		<execute action="Myaccount#click" locator-key1="WEBSITES_PRIMARY_RADIO_BUTTON" />
-		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
-		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addWebsiteProfile">
+	<command name="addWebsite">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
 
@@ -532,6 +334,467 @@
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="DISCONNECT_BUTTON" />
 	</command>
 
+	<command name="editAddress">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_ADDRESS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddAddress#type" locator-key1="STREET_1_FIELD" value1="${userAddressStreet1}" />
+
+		<if>
+			<isset var="userAddressPostalCode" />
+			<then>
+				<execute action="SOProfileAddAddress#type" locator-key1="POSTAL_CODE_FIELD" value1="${userAddressPostalCode}" />
+			</then>
+		</if>
+
+		<execute action="SOProfileAddAddress#type" locator-key1="CITY_FIELD" value1="${userAddressCity}" />
+
+		<if>
+			<isset var="userAddressType" />
+			<then>
+				<execute action="SOProfileAddAddress#select" locator-key1="TYPE_SELECT" value1="${userAddressType}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userAddressCountry" />
+			<then>
+				<execute action="SOProfileAddAddress#select" locator-key1="COUNTRY_SELECT" value1="${userAddressCountry}" />
+			</then>
+		</if>
+
+		<execute action="SOProfileAddAddress#click" locator-key1="PRIMARY_RADIO_BUTTON" />
+		<execute action="SOProfileAddAddress#check" locator-key1="MAILING_CHECKBOX" />
+
+		<if>
+			<isset var="userAddressRegion" />
+			<then>
+				<execute action="SOProfileAddAddress#select" locator-key1="REGION_SELECT" value1="${userAddressRegion}" />
+			</then>
+		</if>
+
+		<execute action="SOProfileAddAddress#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
+	</command>
+
+	<command name="editAddressNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_ADDRESS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddAddress#type" locator-key1="STREET_1_FIELD" value1="" />
+		<execute action="SOProfileAddAddress#type" locator-key1="POSTAL_CODE_FIELD" value1="" />
+		<execute action="SOProfileAddAddress#type" locator-key1="CITY_FIELD" value1="" />
+		<execute action="SOProfileAddAddress#select" locator-key1="COUNTRY_SELECT" value1="" />
+		<execute action="SOProfileAddAddress#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_ADDRESSES" />
+	</command>
+
+	<command name="editAdditionalEmailAddress">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_EMAIL_ADDRESS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddAdditionalEmailAddress#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userAdditionalEmailAddress}" />
+		<execute action="SOProfileAddAdditionalEmailAddress#select" locator-key1="TYPE_SELECT" value1="Email Address" />
+		<execute action="SOProfileAddAdditionalEmailAddress#click" locator-key1="PRIMARY_RADIO_BUTTON" />
+		<execute action="SOProfileAddAdditionalEmailAddress#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
+	</command>
+
+	<command name="editAdditionalEmailAddressNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_EMAIL_ADDRESS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddAdditionalEmailAddress#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="" />
+		<execute action="SOProfileAddAdditionalEmailAddress#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_EMAIL_ADDRESS" />
+	</command>
+
+	<command name="editIntroduction">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_INTRODUCTION_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddIntroduction#type" locator-key1="INTRODUCTION_FIELD" value1="${userIntroduction}" />
+		<execute action="SOProfileAddIntroduction#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
+	</command>
+
+	<command name="editIntroductionNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_INTRODUCTION_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddIntroduction#type" locator-key1="INTRODUCTION_FIELD" value1="" />
+		<execute action="SOProfileAddIntroduction#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_INTRODUCTION" />
+	</command>
+
+	<command name="editInstantMessenger">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<if>
+			<isset var="userInstantMessengerAIM" />
+			<then>
+				<execute action="SOProfileAddInstantMessenger#type" locator-key1="AIM_FIELD" value1="${userInstantMessengerAIM}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerICQ" />
+			<then>
+				<execute action="SOProfileAddInstantMessenger#type" locator-key1="ICQ_FIELD" value1="${userInstantMessengerICQ}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerJabber" />
+			<then>
+				<execute action="SOProfileAddInstantMessenger#type" locator-key1="JABBER_FIELD" value1="${userInstantMessengerJabber}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerSkype" />
+			<then>
+				<execute action="SOProfileAddInstantMessenger#type" locator-key1="SKYPE_FIELD" value1="${userInstantMessengerSkype}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerWindowsLiveMessenger" />
+			<then>
+				<execute action="SOProfileAddInstantMessenger#type" locator-key1="WINDOWS_LIVE_MESSENGER_FIELD" value1="${userInstantMessengerWindowsLiveMessenger}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userInstantMessengerYM" />
+			<then>
+				<execute action="SOProfileAddInstantMessenger#type" locator-key1="YM_FIELD" value1="${userInstantMessengerYM}" />
+			</then>
+		</if>
+
+		<execute action="SOProfileAddInstantMessenger#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT" value1="Jabber ${userInstantMessengerJabber}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_MSN_CONTENT" value1="msn ${userInstantMessengerWindowsLiveMessenger}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT" value1="Skype ${userInstantMessengerSkype}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
+	</command>
+
+	<command name="editInstantMessengerNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddInstantMessenger#type" locator-key1="AIM_FIELD" value1="" />
+		<execute action="SOProfileAddInstantMessenger#type" locator-key1="ICQ_FIELD" value1="" />
+		<execute action="SOProfileAddInstantMessenger#type" locator-key1="JABBER_FIELD" value1="" />
+		<execute action="SOProfileAddInstantMessenger#type" locator-key1="SKYPE_FIELD" value1="" />
+		<execute action="SOProfileAddInstantMessenger#type" locator-key1="WINDOWS_LIVE_MESSENGER_FIELD" value1="" />
+		<execute action="SOProfileAddInstantMessenger#type" locator-key1="YM_FIELD" value1="" />
+		<execute action="SOProfileAddInstantMessenger#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_INSTANT_MESSENGER" />
+	</command>
+
+	<command name="editPhoneNumbers">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_PHONE_NUMBERS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddPhoneNumber#type" locator-key1="NUMBER_FIELD" value1="${userPhoneNumberNumber}" />
+
+		<if>
+			<isset var="userPhoneNumberExtension" />
+			<then>
+				<execute action="SOProfileAddPhoneNumber#type" locator-key1="EXTENSION_FIELD" value1="${userPhoneNumberExtension}" />
+			</then>
+		</if>
+
+		<execute action="SOProfileAddPhoneNumber#select" locator-key1="TYPE_SELECT" value1="${userPhoneNumberType}" />
+		<execute action="SOProfileAddPhoneNumber#click" locator-key1="PRIMARY_RADIO_BUTTON" />
+		<execute action="SOProfileAddPhoneNumber#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
+
+		<if>
+			<isset var="userPhoneNumberExtension" />
+			<then>
+				<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PHONE_NUMBERS_CONTENT" value1="${userPhoneNumberType} ${userPhoneNumberNumber} ${userPhoneNumberExtension}" />
+			</then>
+			<else>
+				<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PHONE_NUMBERS_CONTENT" value1="${userPhoneNumberType} ${userPhoneNumberNumber}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="editPhoneNumbersNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_PHONE_NUMBERS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddPhoneNumber#type" locator-key1="NUMBER_FIELD" value1="" />
+		<execute action="SOProfileAddPhoneNumber#type" locator-key1="EXTENSION_FIELD" value1="" />
+		<execute action="SOProfileAddPhoneNumber#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_PHONES" />
+	</command>
+
+	<command name="editProjects">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_PROJECTS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddExpertise#type" locator-key1="TITLE_FIELD" value1="${userProjectTitle}" />
+		<execute action="SOProfileAddExpertise#select" locator-key1="START_DATE_MONTH_SELECT" value1="February" />
+		<execute action="SOProfileAddExpertise#select" locator-key1="START_DATE_YEAR_SELECT" value1="2012" />
+		<execute action="SOProfileAddExpertise#check" locator-key1="CURRENT_CHECKBOX" />
+
+		<if>
+			<isset var="userProjectDescription" />
+			<then>
+				<execute action="SOProfileAddExpertise#type" locator-key1="DESCRIPTION_FIELD" value1="${userProjectDescription}" />
+			</then>
+		</if>
+
+		<execute action="SOProfileAddExpertise#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="Expertise Title:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
+
+		<if>
+			<isset var="userProjectDescription" />
+			<then>
+				<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DESCRIPTION" value1="${userProjectDescription}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="editProjectsNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_PROJECTS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddExpertise#type" locator-key1="TITLE_FIELD" value1="" />
+		<execute action="SOProfileAddExpertise#type" locator-key1="DESCRIPTION_FIELD" value1="" />
+		<execute action="SOProfileAddExpertise#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_PROJECTS" />
+	</command>
+
+	<command name="editSMS">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_SMS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddSMS#type" locator-key1="SMS_FIELD" value1="${userSMS}" />
+		<execute action="SOProfileAddSMS#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SMS_TITLE" value1="SMS:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
+	</command>
+
+	<command name="editSMSNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_SMS_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddSMS#type" locator-key1="SMS_FIELD" value1="" />
+		<execute action="SOProfileAddSMS#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_SMS" />
+	</command>
+
+	<command name="editSocialNetwork">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<if>
+			<isset var="userSocialNetworkFacebook" />
+			<then>
+				<execute action="SOProfileAddSocialNetwork#type" locator-key1="FACEBOOK_FIELD" value1="${userSocialNetworkFacebook}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userSocialNetworkTwitter" />
+			<then>
+				<execute action="SOProfileAddSocialNetwork#type" locator-key1="TWITTER_FIELD" value1="${userSocialNetworkTwitter}" />
+			</then>
+		</if>
+
+		<execute action="SOProfileAddSocialNetwork#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
+	</command>
+
+	<command name="editSocialNetworkNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+		
+		<execute action="SOProfileAddSocialNetwork#type" locator-key1="FACEBOOK_FIELD" value1="" />
+		<execute action="SOProfileAddSocialNetwork#type" locator-key1="TWITTER_FIELD" value1="" />
+		<execute action="SOProfileAddSocialNetwork#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_SOCIAL_NETWORK" />
+	</command>
+
+	<command name="editTag">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_TAGS_EDIT" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddTag#type" locator-key1="TAG_FIELD" value1="${userTag}" />
+		<execute action="SOProfileAddTag#click" locator-key1="ADD_BUTTON" />
+		<execute action="SOProfileAddTag#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_TITLE" value1="Tags" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
+	</command>
+
+	<command name="editTagNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_TAGS_EDIT" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<while>
+			<condition action="SOProfileAddTag#isElementPresent" locator-key1="DELETE_TAG_BUTTON" />
+			<then>
+				<execute action="SOProfileAddTag#click" locator-key1="DELETE_TAG_BUTTON" />
+				<execute action="SOProfileAddTag#pause" value1="1000" />
+			</then>
+		</while>
+
+		<execute action="SOProfileAddTag#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_TAGS" />
+	</command>
+
+	<command name="editWebsite">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_WEBSITES_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddWebsite#type" locator-key1="URL_FIELD" value1="${userWebsiteURL}" />
+		<execute action="SOProfileAddWebsite#select" locator-key1="TYPE_SELECT" value1="${userWebsiteType}" />
+		<execute action="SOProfileAddWebsite#click" locator-key1="PRIMARY_RADIO_BUTTON" />
+		<execute action="SOProfileAddWebsite#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
+	</command>
+
+	<command name="editWebsiteNull">
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+
+		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_WEBSITES_TITLE" />
+		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
+
+		<execute action="SOProfileAddWebsite#type" locator-key1="URL_FIELD" value1="" />
+		<execute action="SOProfileAddWebsite#click" locator-key1="SAVE_BUTTON" />
+
+		<execute action="SOProfile#selectFrame" value1="relative=top" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="ADD_WEBSITES" />
+	</command>
+
+	<command name="followCCUser">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertClick" locator-key1="FOLLOW_BUTTON" value1="Follow" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="UNFOLLOW_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="FOLLOW_BUTTON" />
+	</command>
+
 	<command name="requestToConnect">
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
@@ -549,17 +812,34 @@
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
 	</command>
 
-	<command name="viewAdditionalEmailAddressProfile">
+	<command name="unfollowCCUser">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
+
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userScreenName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertClick" locator-key1="UNFOLLOW_BUTTON" value1="Unfollow" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="FOLLOW_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="UNFOLLOW_BUTTON" />
+	</command>
+
+	<command name="viewAdditionalEmailAddress">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_EMAIL_ADDRESS_TITLE" value1="Additional Email Addresses:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_EMAIL_ADDRESS_CONTENT" value1="Email Address ${userAdditionalEmailAddress}" />
 	</command>
 
-	<command name="viewAddressProfile">
+	<command name="viewAddress">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_TITLE" value1="Addresses:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_ADDRESS_CONTENT" value1="${userAddressType} ${userAddressStreet1}, ${userAddressCity}, ${userAddressPostalCode}, ${userAddressRegion}, ${userAddressCountry} (Mailing)" />
 	</command>
 
-	<command name="viewConnectionProfile">
+	<command name="viewConnection">
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have ${filterTypeCount} connections." />
 		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Connections" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
@@ -574,7 +854,43 @@
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="CONNECT_BUTTON" />
 	</command>
 
-	<command name="viewInstantMessengerProfile">
+	<command name="viewNotFollowing">
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_FOLLOWING" value1="You are following 0 people." />
+		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Following" />
+		<execute action="SOContactscenter#assertTextNotPresent" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have 0 connections." />
+		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Connections" />
+		<execute action="SOContactscenter#assertTextNotPresent" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="CONNECT_BUTTON" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="FOLLOW_BUTTON" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="BLOCK_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="DISCONNECT_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="UNFOLLOW_BUTTON" />
+	</command>
+
+	<command name="viewFollowing">
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_FOLLOWING" value1="You are following ${filterTypeCount} people." />
+		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Following" />
+		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
+
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="CONNECT_BUTTON" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="UNFOLLOW_BUTTON" />
+		<execute action="SOProfile#assertElementPresent" locator-key1="BLOCK_BUTTON" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="FOLLOW_BUTTON" />
+	</command>
+
+	<command name="viewInstantMessenger">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_TITLE" value1="Instant Messenger:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT" value1="AIM ${userInstantMessengerAIM}" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT" value1="ICQ ${userInstantMessengerICQ}" />
@@ -584,12 +900,12 @@
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT" value1="ym ${userInstantMessengerYM}" />
 	</command>
 
-	<command name="viewIntroductionProfile">
+	<command name="viewIntroduction">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INTRODUCTION_TITLE" value1="Introduction:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_INTRODUCTION_CONTENT" value1="${userIntroduction}"  />
 	</command>
 
-	<command name="viewPhoneNumbersProfile">
+	<command name="viewPhoneNumbers">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PHONE_NUMBERS_TITLE" value1="Phones:" />
 
 		<if>
@@ -603,9 +919,28 @@
 		</if>
 	</command>
 
-	<command name="viewProjectsProfile">
+	<command name="viewProfilePicture">
+		<var name="key_userName" value="${userName}" />
+
+		<execute action="SOProfile#assertElementPresent" locator-key1="USER_PROFILE_PICTURE" />
+		<execute action="SOProfile#assertElementNotPresent" locator-key1="DEFAULT_PROFILE_PICTURE" />
+	</command>
+
+	<command name="viewProjects">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="Expertise Title:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DATES" value1="01 Jan 2012 - Current"  />
+
+		<if>
+			<isset var="userProjectDescription" />
+			<then>
+				<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DESCRIPTION" value1="${userProjectDescription}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewProjectsEdit">
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_TITLE" value1="Expertise Title:" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_PROJECTS_DATES" value1="01 Feb 2012 - Current"  />
 
 		<if>
 			<isset var="userProjectDescription" />
@@ -618,35 +953,35 @@
 	<command name="viewNoConnection">
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LINK_CONNECTIONS" value1="You have ${filterTypeCount} connections." />
 		<execute action="SOContactscenter#assertSelectedLabel" locator-key1="CONTACTS_LIST_FILTER" value1="Connections" />
-		<execute action="SOContactscenter#assertTextNotPresent" locator-key1="CONTACTS_LIST_EMAIL" value1="${adminEmailAddress}" />
+		<execute action="SOContactscenter#assertTextNotPresent" locator-key1="CONTACTS_LIST_EMAIL" value1="${userEmailAddress}" />
 		<execute action="SOContactscenter#select" locator-key1="CONTACTS_LIST_FILTER" value1="All" />
-		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${adminName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${adminListName}" />
-		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${adminName}" />
+		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${userName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${userListName}" />
+		<execute action="SOContactscenter#assertClick" locator-key1="USER_DETAILS_NAME" value1="${userName}" />
 
-		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${adminName}" />
-		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${adminEmailAddress}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+		<execute action="SOProfile#assertTextEquals" locator-key1="USER_EMAIL" value1="${userEmailAddress}" />
 		<execute action="SOProfile#assertElementPresent" locator-key1="CONNECT_BUTTON" />
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="DISCONNECT_BUTTON" />
 	</command>
 
-	<command name="viewSMSProfile">
+	<command name="viewSMS">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SMS_TITLE" value1="SMS:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SMS_CONTENT" value1="${userSMS}"  />
 	</command>
 
-	<command name="viewSocialNetworkProfile">
+	<command name="viewSocialNetwork">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TITLE" value1="Social Network:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_FACEBOOK_CONTENT" value1="Facebook ${userSocialNetworkFacebook}" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TWITTER_CONTENT" value1="Twitter ${userSocialNetworkTwitter}" />
 	</command>
 
-	<command name="viewTagProfile">
+	<command name="viewTag">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_TITLE" value1="Tags" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_TAGS_CONTENT" value1="${userTag}" />
 	</command>
 
-	<command name="viewWebsiteProfile">
+	<command name="viewWebsite">
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_WEBSITES_TITLE" value1="Websites:" />
 		<execute action="SOProfile#assertTextEquals" locator-key1="PROFILE_INFO_WEBSITES_CONTENT" value1="${userWebsiteType} ${userWebsiteURL}" />
 	</command>

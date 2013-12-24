@@ -1,51 +1,56 @@
 <definition>
 	<command name="selectLanguagePG">
-
-	<if>
-		<equals arg1="${language}" arg2="Chinese (China)" />
-		<then>
-			<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_CHINESE" />
-		</then>
-		<elseif>
-			<equals arg1="${language}" arg2="English (United States)" />
+		<if>
+			<equals arg1="${language}" arg2="Chinese (China)" />
 			<then>
-				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_ENGLISH" />
+				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_CHINESE" />
 			</then>
-		</elseif>
-		<elseif>
-			<equals arg1="${language}" arg2="French French (Canada)" />
-			<then>
-				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_FRENCH" />
-			</then>
-		</elseif>
-		<elseif>
-			<equals arg1="${language}" arg2="German (Germany)" />
-			<then>
-				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_GERMAN" />
-			</then>
-		</elseif>
-		<elseif>
-			<equals arg1="${language}" arg2="Hungarian (Hungary)" />
-			<then>
-				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_HUNGARIAN" />
-			</then>
-		</elseif>
-		<elseif>
-			<equals arg1="${language}" arg2="Portuguese (Brazil)" />
-			<then>
-				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_PORTUGUESE" />
-			</then>
-		</elseif>
-		<elseif>
-			<equals arg1="${language}" arg2="SPANISH (Spain)" />
-			<then>
-				<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_SPANISH" />
-			</then>
-		</elseif>
-		<else>
-			<fail message="Invalid var language. Must be (Chinese|English|French|German|Hungarian|Portuguese|Spanish)." />
-		</else>
-	</if>
+			<elseif>
+				<equals arg1="${language}" arg2="English (United States)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_ENGLISH" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="French French (Canada)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_FRENCH" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="German (Germany)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_GERMAN" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_HUNGARIAN" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Japanese (Japan)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_JAPANESE" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_PORTUGUESE" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${language}" arg2="SPANISH (Spain)" />
+				<then>
+					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_SPANISH" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var language. Must be (Chinese|English|French|German|Hungarian|Japanese|Portuguese|Spanish)." />
+			</else>
+		</if>
 	</command>
 
 	<command name="tearDownLanguagePG">

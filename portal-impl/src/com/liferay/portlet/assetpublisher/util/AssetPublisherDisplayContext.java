@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -179,9 +180,18 @@ public class AssetPublisherDisplayContext {
 			themeDisplay.getUser(), _portletPreferences, assetEntryQuery);
 
 		assetEntryQuery.setAllCategoryIds(getAllAssetCategoryIds());
-		assetEntryQuery.setAllTagIds(
-			AssetTagLocalServiceUtil.getTagIds(
-				themeDisplay.getScopeGroupId(), getAllAssetTagNames()));
+
+		if (hasPageScope(groupIds)) {
+			assetEntryQuery.setAllTagIds(
+				AssetTagLocalServiceUtil.getTagIds(
+					groupIds, getAllAssetTagNames()));
+		}
+		else {
+			assetEntryQuery.setAllTagIds(
+				AssetTagLocalServiceUtil.getTagIds(
+					getGroupIds(), getAllAssetTagNames()));
+		}
+
 		assetEntryQuery.setClassTypeIds(classTypeIds);
 		assetEntryQuery.setEnablePermissions(isEnablePermissions());
 		assetEntryQuery.setExcludeZeroViewCount(isExcludeZeroViewCount());
@@ -807,6 +817,18 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return portletConfig.getPortletName();
+	}
+
+	protected boolean hasPageScope(long[] groupIds) {
+		for (long groupId : groupIds) {
+			try {
+				if (GroupLocalServiceUtil.getGroup(groupId).isLayout()) {
+					return true;
+				}
+			} catch (Exception e) {}
+		}
+
+		return false;
 	}
 
 	protected void setDDMStructure() throws Exception {

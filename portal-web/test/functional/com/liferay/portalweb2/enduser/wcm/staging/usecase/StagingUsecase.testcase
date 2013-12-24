@@ -1,4 +1,4 @@
-<definition extends="PGStaging">
+<definition component-name="portal-wcm" extends="PGStaging">
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 

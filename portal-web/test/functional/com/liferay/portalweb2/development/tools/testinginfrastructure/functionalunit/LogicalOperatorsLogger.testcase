@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-tools">
 	<set-up>
 		<echo message="testing logical operators in a test case set-up element" />
 

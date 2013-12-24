@@ -1478,6 +1478,20 @@ public class SeleniumBuilderFileUtil {
 			}
 		}
 
+		String componentName = rootElement.attributeValue("component-name");
+
+		if (componentName == null) {
+			throwValidationException(
+				1003, fileName, rootElement, "component-name");
+		}
+
+		if ((componentName != null) &&
+			!_componentNameList.contains(componentName)) {
+
+			throwValidationException(
+				1006, fileName, rootElement, "component-name");
+		}
+
 		List<Element> elements = rootElement.elements();
 
 		if (elements.isEmpty()) {
@@ -1713,6 +1727,26 @@ public class SeleniumBuilderFileUtil {
 		new String[] {
 			"attribute", "line-number", "locator", "locator-key", "name",
 			"path", "value"
+		});
+	private static List<String> _componentNameList = ListUtil.fromArray(
+		new String[] {
+			"portal-administration", "portal-apis",
+			"portal-application-standards", "portal-authentication",
+			"portal-business-productivity", "portal-calendar",
+			"portal-collaboration", "portal-configuration", "portal-deployment",
+			"portal-document-management", "portal-frameworks",
+			"portal-infrastructure", "portal-integrations", "portal-legacy",
+			"portal-official-guides", "portal-opensocial", "portal-operations",
+			"portal-personalization-and-customization",
+			"portal-reference-documentation", "portal-sample-portlet-plugins",
+			"portal-search", "portal-security", "portal-social-networking",
+			"portal-theme-development", "portal-tools", "portal-upgrades",
+			"portal-user-interface", "portal-util-misc", "portal-wcm",
+			"portal-web-forms-and-data-lists", "portal-workflow",
+			"social-office-administration", "social-office-dashboard",
+			"social-office-environment", "social-office-official-guides",
+			"social-office-profile", "social-office-reference-documentation",
+			"social-office-site", "social-office-user-bar"
 		});
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {

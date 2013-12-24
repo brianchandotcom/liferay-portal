@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-security">
 	<property name="hook.plugins.includes" value="antisamy-hook" />
 
 	<var name="pageName" value="Antisamy Test Page" />

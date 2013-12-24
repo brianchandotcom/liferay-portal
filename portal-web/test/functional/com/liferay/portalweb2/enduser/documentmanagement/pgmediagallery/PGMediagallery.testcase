@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-document-management">
 	<var name="pageName" value="Media Gallery Page" />
 	<var name="portletName" value="Media Gallery" />
 

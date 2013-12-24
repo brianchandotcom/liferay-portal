@@ -1,4 +1,4 @@
-<definition extends="Parent">
+<definition component-name="portal-tools" extends="Parent">
 	<var name="commitMessage" value="LPS-42016" />
 	<var name="ticketSummary" value="LIFERAYQA-6190: Add Portal Resiliency setup to all tests" />
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-6190" />

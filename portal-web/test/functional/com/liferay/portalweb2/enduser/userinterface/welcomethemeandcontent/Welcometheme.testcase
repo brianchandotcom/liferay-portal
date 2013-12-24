@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-user-interface">
 	<tear-down>
 		<execute macro="User#logoutPG" />
 	</tear-down>

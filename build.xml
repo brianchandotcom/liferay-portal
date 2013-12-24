@@ -3,6 +3,24 @@
 <project name="portal" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<macrodef name="clean">
+		<attribute name="dir" />
+
+		<attribute default="@{dir}" name="jar.file" />
+
+		<sequential>
+			<delete dir="@{dir}/classes" />
+			<delete dir="@{dir}/test-classes" />
+			<delete dir="@{dir}/test-coverage" />
+			<delete dir="@{dir}/test-results" />
+			<delete dir="@{dir}/woven-classes" />
+			<delete dir="${doc.dir}/@{dir}/javadocs" />
+			<delete failonerror="false" file="@{dir}/@{jar.file}.jar" />
+			<delete failonerror="false" file="@{dir}/@{jar.file}-javadoc.jar" />
+			<delete failonerror="false" file="@{dir}/@{jar.file}-sources.jar" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-jrebel">
 		<sequential>
 			<echo file="${app.server.lib.global.dir}/rebel.xml"><![CDATA[<?xml version="1.0"?>
@@ -69,23 +87,6 @@
 		<antcall target="start" />
 		<antcall target="deploy" />
 	</target>
-
-	<macrodef name="clean">
-		<attribute name="dir" />
-		<attribute default="@{dir}" name="jar.file" />
-
-		<sequential>
-			<delete dir="@{dir}/classes" />
-			<delete dir="@{dir}/test-classes" />
-			<delete dir="@{dir}/test-coverage" />
-			<delete dir="@{dir}/test-results" />
-			<delete dir="@{dir}/woven-classes" />
-			<delete dir="${doc.dir}/@{dir}/javadocs" />
-			<delete file="@{dir}/@{jar.file}.jar" failonerror="false" />
-			<delete file="@{dir}/@{jar.file}-javadoc.jar" failonerror="false" />
-			<delete file="@{dir}/@{jar.file}-sources.jar" failonerror="false" />
-		</sequential>
-	</macrodef>
 
 	<target
 		depends="

@@ -84,7 +84,7 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		addNumber(name, _dateFormat.format(value), Long.class);
+		addDate(name, new Date[] {value});
 	}
 
 	@Override
@@ -94,12 +94,23 @@ public class DocumentImpl implements Document {
 		}
 
 		String[] dates = new String[values.length];
+		String[] datesTime = new String[values.length];
 
 		for (int i = 0; i < values.length; i++) {
 			dates[i] = _dateFormat.format(values[i]);
+			datesTime[i] = String.valueOf(values[i].getTime());
 		}
 
-		addNumber(name, dates, Long.class);
+		String sortableFieldName = getSortableFieldName(name);
+
+		Field field = new Field(sortableFieldName, datesTime);
+
+		field.setNumeric(true);
+		field.setNumericClass(Long.class);
+
+		_fields.put(sortableFieldName, field);
+
+		addKeyword(name, dates);
 	}
 
 	@Override

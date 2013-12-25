@@ -550,8 +550,8 @@ public class AssetEntryQuery {
 		sb.append(StringUtil.merge(_classNameIds));
 		sb.append(", classTypeIds=");
 		sb.append(StringUtil.merge(_classTypeIds));
-		sb.append(_description);
 		sb.append(", description=");
+		sb.append(_description);
 
 		if (_layout != null) {
 			sb.append(", layout=");
@@ -592,8 +592,8 @@ public class AssetEntryQuery {
 		sb.append(_publishDate);
 		sb.append(", start=");
 		sb.append(_start);
-		sb.append(_title);
 		sb.append(", title=");
+		sb.append(_title);
 		sb.append(", visible=");
 		sb.append(_visible);
 		sb.append("}");

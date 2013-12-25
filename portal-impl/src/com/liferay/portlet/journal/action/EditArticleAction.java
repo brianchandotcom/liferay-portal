@@ -428,6 +428,8 @@ public class EditArticleAction extends PortletAction {
 			false);
 		portletURL.setParameter(
 			"groupId", String.valueOf(article.getGroupId()), false);
+		portletURL.setParameter(
+			"folderId", String.valueOf(article.getFolderId()), false);
 		portletURL.setParameter("articleId", article.getArticleId(), false);
 		portletURL.setParameter(
 			"version", String.valueOf(article.getVersion()), false);

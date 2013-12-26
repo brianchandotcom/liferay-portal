@@ -473,29 +473,33 @@ if (Validator.isNull(redirect)) {
 
 <aui:script>
 	function <portlet:namespace />changeFormat(formatSelect) {
-		var currentFormat = formatSelect.options[window.<portlet:namespace />currentFormatIndex].text;
+		if (document.<portlet:namespace />fm.<portlet:namespace />title.value == '') {
+			alert('<%= UnicodeLanguageUtil.get(pageContext, "title-is-required-to-change-format") %>');
 
-		var newFormat = formatSelect.options[formatSelect.selectedIndex].text;
-
-		var confirmMessage = '<%= UnicodeLanguageUtil.get(pageContext, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
-
-		confirmMessage = AUI().Lang.sub(confirmMessage, [currentFormat, newFormat]);
-
-		if (document.<portlet:namespace />fm.<portlet:namespace />title.value == "") {
-			confirmMessage = '<%= UnicodeLanguageUtil.get(pageContext, "Title is required to change format") %>';
-		}
-
-		if (!confirm(confirmMessage)) {
 			formatSelect.selectedIndex = window.<portlet:namespace />currentFormatIndex;
 
 			return;
 		}
+		else {
+			var confirmMessage = '<%= UnicodeLanguageUtil.get(pageContext, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
 
-		if (window.<portlet:namespace />editor) {
-			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
+			var currentFormat = formatSelect.options[window.<portlet:namespace />currentFormatIndex].text;
+			var newFormat = formatSelect.options[formatSelect.selectedIndex].text;
+
+			confirmMessage = AUI().Lang.sub(confirmMessage, [currentFormat, newFormat]);
+
+			if (!confirm(confirmMessage)) {
+				formatSelect.selectedIndex = window.<portlet:namespace />currentFormatIndex;
+
+				return;
+			}
+
+			if (window.<portlet:namespace />editor) {
+				document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
+			}
+
+			submitForm(document.<portlet:namespace />fm);
 		}
-
-		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />discardDraftPage() {

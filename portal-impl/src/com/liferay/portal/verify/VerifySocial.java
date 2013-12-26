@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Bryan Engler
  */
-public class VerifySocialRequests extends VerifyProcess {
+public class VerifySocial extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {

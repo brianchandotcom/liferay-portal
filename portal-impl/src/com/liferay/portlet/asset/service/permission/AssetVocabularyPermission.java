@@ -38,6 +38,16 @@ public class AssetVocabularyPermission {
 	}
 
 	public static void check(
+			PermissionChecker permissionChecker, long groupId,
+			long vocabularyId, String actionId)
+		throws PortalException, SystemException {
+
+		if (!contains(permissionChecker, groupId, vocabularyId, actionId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	public static void check(
 			PermissionChecker permissionChecker, long vocabularyId,
 			String actionId)
 		throws PortalException, SystemException {
@@ -62,6 +72,22 @@ public class AssetVocabularyPermission {
 		return permissionChecker.hasPermission(
 			vocabulary.getGroupId(), AssetVocabulary.class.getName(),
 			vocabulary.getVocabularyId(), actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long groupId,
+			long vocabularyId, String actionId)
+		throws PortalException, SystemException {
+
+		if (vocabularyId == 0) {
+			return permissionChecker.hasPermission(
+				groupId, AssetVocabulary.class.getName(), groupId, actionId);
+		}
+
+		AssetVocabulary vocabulary =
+			AssetVocabularyLocalServiceUtil.getVocabulary(vocabularyId);
+
+		return contains(permissionChecker, vocabulary, actionId);
 	}
 
 	public static boolean contains(

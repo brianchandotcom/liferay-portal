@@ -41,6 +41,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertJavaScriptErrors() throws Exception;
 
+	public void assertLiferayErrors() throws Exception;
+
 	public void assertLocation(String pattern);
 
 	public void assertNotAlert(String pattern);

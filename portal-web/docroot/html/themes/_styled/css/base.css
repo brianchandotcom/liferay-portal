@@ -51,6 +51,116 @@ body.html-editor {
 	}
 }
 
+/* ---------- Table Styles ---------- */
+
+@include respond-to(phone, tablet) {
+	.responsive-table-horizontal {
+		display: block;
+		position: relative;
+		width: 100%;
+
+		&:after {
+			content: " ";
+			clear: both;
+			display: block;
+			font-size: 0;
+			height: 0;
+			visibility: hidden;
+		}
+
+		tbody {
+			display: block;
+			overflow-x: auto;
+			position: relative;
+			white-space: nowrap;
+			width: auto;
+
+			tr {
+				display: inline-block;
+				vertical-align: top;
+
+				td {
+					display: block;
+					margin-bottom: 20px;
+
+					&:first-child {
+						text-align: left;
+					}
+				}
+			}
+		}
+
+		thead {
+			display: block;
+			float: left;
+			margin-right: 10px;
+
+			&:after {
+				content: " ";
+				clear: both;
+				display: block;
+				font-size: 0;
+				height: 0;
+				visibility: hidden;
+			}
+
+			th {
+				display: block;
+				margin-bottom: 20px;
+				text-align: right;
+
+				&:first-child {
+					text-align: right;
+				}
+			}
+		}
+	}
+
+	.ie9, .ie8, .ie7, .ie6 {
+		.responsive-table-horizontal {
+			display: table;
+			position: static;
+			width: auto;
+
+			thead {
+				display: table-header-group;
+				float: none;
+				margin-right: auto;
+
+				th {
+					display: table-cell;
+					margin-bottom: auto;
+					text-align: initial;
+
+					&:first-child {
+						text-align: initial;
+					}
+				}
+			}
+
+			tbody {
+				display: table-row-group;
+				overflow-x: auto;
+				position: static;
+
+				tr {
+					display: table-row;
+
+					td {
+						display: table-cell;
+						margin-bottom: auto;
+						text-align: initial;
+
+						&:first-child {
+							text-align: initial;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 /* ---------- Text formatting ---------- */
 
 .important {

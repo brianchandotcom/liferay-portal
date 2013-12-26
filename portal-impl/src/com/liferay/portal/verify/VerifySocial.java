@@ -14,13 +14,18 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
+import com.liferay.portlet.social.service.persistence.SocialRequestActionableDynamicQuery;
+
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,36 +37,59 @@ public class VerifySocial extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		List<SocialRequest> requests =
-			SocialRequestLocalServiceUtil.getSocialRequests(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		verifyRequest();
+	}
 
-		if (requests.isEmpty()) {
+	protected void verifyRequest()
+		throws PortalException, SQLException, SystemException {
+
+		ActionableDynamicQuery socialRequestActionableDynamicQuery =
+			new SocialRequestActionableDynamicQuery() {
+
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+
+				SocialRequest socialRequest = (SocialRequest)object;
+
+				if (!_groupIds.contains(socialRequest.getClassPK()) &&
+					(socialRequest.getClassNameId() ==
+						PortalUtil.getClassNameId(Group.class))) {
+
+					SocialRequestLocalServiceUtil.deleteRequest(socialRequest);
+				}
+			}
+		};
+
+		long requestCount = socialRequestActionableDynamicQuery.performCount();
+
+		if (requestCount == 0) {
 			return;
 		}
 
-		List<Group> groups = new ArrayList<Group>();
+		_groupIds = new ArrayList<Long>();
+
+		ActionableDynamicQuery groupActionableDynamicQuery =
+			new GroupActionableDynamicQuery() {
+
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+
+				Group group = (Group)object;
+
+				_groupIds.add(group.getGroupId());
+			}
+		};
 
 		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
-			groups.addAll(
-				GroupLocalServiceUtil.getCompanyGroups(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+			groupActionableDynamicQuery.setCompanyId(companyId);
+
+			groupActionableDynamicQuery.performActions();
 		}
 
-		List<Long> groupIds = new ArrayList<Long>();
-
-		for (Group group : groups) {
-			groupIds.add(group.getGroupId());
-		}
-
-		for (SocialRequest request : requests) {
-			if (!groupIds.contains(request.getClassPK()) &&
-				(request.getClassNameId() ==
-					PortalUtil.getClassNameId(Group.class))) {
-
-				SocialRequestLocalServiceUtil.deleteRequest(request);
-			}
-		}
+		socialRequestActionableDynamicQuery.performActions();
 	}
 
+	private List<Long> _groupIds;
 }

@@ -1842,6 +1842,12 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public java.lang.String getThemeSetting(java.lang.String key,
+		java.lang.String device, boolean inheritLookAndFeel) {
+		return _layout.getThemeSetting(key, device, inheritLookAndFeel);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return _layout.getTypeSettingsProperties();
 	}

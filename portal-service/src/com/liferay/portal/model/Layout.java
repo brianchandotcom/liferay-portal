@@ -128,6 +128,9 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public java.lang.String getThemeSetting(java.lang.String key,
 		java.lang.String device);
 
+	public java.lang.String getThemeSetting(java.lang.String key,
+		java.lang.String device, boolean inheritLookAndFeel);
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
 	public java.lang.String getTypeSettingsProperty(java.lang.String key);

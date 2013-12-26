@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -819,13 +820,13 @@ public class AssetPublisherDisplayContext {
 		return portletConfig.getPortletName();
 	}
 
-	protected boolean hasPageScope(long[] groupIds) {
+	protected boolean hasPageScope(long[] groupIds) throws SystemException {
 		for (long groupId : groupIds) {
-			try {
-				if (GroupLocalServiceUtil.getGroup(groupId).isLayout()) {
-					return true;
-				}
-			} catch (Exception e) {}
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+			if ((group != null) && group.isLayout()) {
+				return true;
+			}
 		}
 
 		return false;

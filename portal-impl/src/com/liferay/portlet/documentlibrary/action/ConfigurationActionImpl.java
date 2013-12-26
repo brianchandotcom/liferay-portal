@@ -46,6 +46,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (Validator.isNotNull(cmd)) {
 			if (tabs2.equals("display-settings")) {
+				validateDisplayStyleViews(actionRequest);
+
 				validateRootFolder(actionRequest);
 			}
 			else if (tabs2.equals("document-added-email")) {
@@ -60,6 +62,17 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	protected void validateDisplayStyleViews(ActionRequest actionRequest)
+		throws Exception {
+
+		String displayViews = GetterUtil.getString(
+			getParameter(actionRequest, "displayViews"));
+
+		if (Validator.isNull(displayViews)) {
+			SessionErrors.add(actionRequest, "displayViewsInvalid");
+		}
 	}
 
 	protected void validateEmailFileEntryAdded(ActionRequest actionRequest)

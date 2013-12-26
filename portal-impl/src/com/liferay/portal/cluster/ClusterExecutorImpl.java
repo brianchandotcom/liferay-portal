@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalPortEventListener;
@@ -298,8 +300,7 @@ public class ClusterExecutorImpl
 	@Override
 	public void portalPortConfigured(int port) {
 		if (!isEnabled() ||
-			(_localClusterNode.getPort() ==
-				PropsValues.PORTAL_INSTANCE_HTTP_PORT)) {
+			(_localClusterNode.getPort() == getConfiguredPort())) {
 
 			return;
 		}
@@ -383,6 +384,14 @@ public class ClusterExecutorImpl
 		return clusterNodeResponse;
 	}
 
+	protected int getConfiguredPort() {
+		if (isSecure()) {
+			return PropsValues.PORTAL_INSTANCE_HTTPS_PORT;
+		}
+
+		return PropsValues.PORTAL_INSTANCE_HTTP_PORT;
+	}
+
 	protected JChannel getControlChannel() {
 		return _controlJChannel;
 	}
@@ -416,14 +425,30 @@ public class ClusterExecutorImpl
 		ClusterNode localClusterNode = new ClusterNode(
 			PortalUUIDUtil.generate(), inetAddress);
 
-		if (PropsValues.PORTAL_INSTANCE_HTTP_PORT > 0) {
-			localClusterNode.setPort(PropsValues.PORTAL_INSTANCE_HTTP_PORT);
-		}
-		else {
-			localClusterNode.setPort(PortalUtil.getPortalPort(false));
+		int port = getConfiguredPort();
+
+		if (port <= 0) {
+			if (isSecure()) {
+				port = PortalUtil.getPortalPort(true);
+			}
+			else {
+				port = PortalUtil.getPortalPort(false);
+			}
 		}
 
+		localClusterNode.setPort(port);
+
 		_localClusterNode = localClusterNode;
+	}
+
+	protected boolean isSecure() {
+		if (StringUtil.equalsIgnoreCase(
+				Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isShortcutLocalMethod() {

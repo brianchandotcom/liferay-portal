@@ -6732,7 +6732,12 @@ public class PortalImpl implements Portal {
 			if (_securePortalPort.get() == -1) {
 				int securePortalPort = request.getServerPort();
 
-				_securePortalPort.compareAndSet(-1, securePortalPort);
+				if (_securePortalPort.compareAndSet(-1, securePortalPort) &&
+					StringUtil.equalsIgnoreCase(
+						Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
+
+					notifyPortalPortEventListeners(securePortalPort);
+				}
 			}
 		}
 		else {

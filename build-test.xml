@@ -1840,15 +1840,60 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<equals arg1="${test.assert.liferay.errors}" arg2="true" />
 			<then>
 				<copy
-					file="portal-web/test/functional/com/liferay/portalweb/portal/util/liferayselenium/dependencies/portal-log4j-ext.xml"
-					tofile="${simple.server.portal.dir}/WEB-INF/classes/META-INF/portal-log4j-ext.xml"
+					file="portal-impl/src/META-INF/log4j.dtd"
+					tofile="${simple.server.portal.dir}/WEB-INF/classes/META-INF/log4j.dtd"
 				/>
 
 				<copy
-					file="portal-web/test/functional/com/liferay/portalweb/portal/util/liferayselenium/dependencies/log4j.dtd"
-					tofile="${simple.server.portal.dir}/WEB-INF/classes/META-INF/log4j.dtd"
+					file="portal-impl/src/META-INF/portal-log4j.xml"
+					tofile="${simple.server.portal.dir}/WEB-INF/classes/META-INF/portal-log4j-ext.xml"
 				/>
+
+				<replace file="${simple.server.portal.dir}/WEB-INF/classes/META-INF/portal-log4j-ext.xml">
+					<replacetoken><![CDATA[<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							<param name="Threshold" value="INFO" />
+							<param name="Append" value="false" />
+
+							<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+						]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="${simple.server.portal.dir}/WEB-INF/classes/META-INF/portal-log4j-ext.xml">
+					<replacetoken><![CDATA[<category name="com.browseengine.bobo">]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							<appender name="XML" class="org.apache.log4j.FileAppender">
+								<param name="File" value="@liferay.home@/logs/log.xml" />
+								<param name="Threshold" value="ERROR" />
+								<param name="Append" value="false" />
+
+								<layout class="org.apache.log4j.xml.XMLLayout">
+									<param name="LocationInfo" value="true" />
+								</layout>
+							</appender>
+
+							<category name="com.browseengine.bobo">
+						]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="${simple.server.portal.dir}/WEB-INF/classes/META-INF/portal-log4j-ext.xml">
+					<replacetoken><![CDATA[<appender-ref ref="FILE" />]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							<appender-ref ref="FILE" />
+							<appender-ref ref="XML" />
+						]]>
+					</replacevalue>
+				</replace>
 			</then>
+			<else>
+				<delete file="${simple.server.portal.dir}/WEB-INF/classes/META-INF/log4j.dtd" />
+				<delete file="${simple.server.portal.dir}/WEB-INF/classes/META-INF/portal-log4j-ext.xml" />
+			</else>
 		</if>
 
 		<antcall target="copy-optional-jars" inheritAll="false">

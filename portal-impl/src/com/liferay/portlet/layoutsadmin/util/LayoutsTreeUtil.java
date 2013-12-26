@@ -44,6 +44,7 @@ import com.liferay.portal.util.SessionClicks;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,6 +79,41 @@ public class LayoutsTreeUtil {
 		return _toJSON(request, groupId, layoutTreeNodes);
 	}
 
+	private static List<Layout> _getLayoutAncestors(HttpServletRequest request)
+		throws Exception {
+
+		long selPlid = ParamUtil.getLong(request, "selPlid");
+
+		if (selPlid == 0) {
+			return Collections.emptyList();
+		}
+
+		List<Layout> layoutAncestors = LayoutServiceUtil.getAncestorLayouts(
+			selPlid);
+
+		Layout selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+
+		layoutAncestors.add(selLayout);
+
+		return layoutAncestors;
+	}
+
+	private static List<Layout> _getLayouts(
+			HttpServletRequest request, long groupId, boolean privateLayout,
+			long parentLayoutId, boolean incomplete)
+		throws Exception {
+
+		List<Layout> layouts = LayoutServiceUtil.getLayouts(
+			groupId, privateLayout, parentLayoutId, incomplete,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (!_isPaginationEnabled(request)) {
+			return layouts;
+		}
+
+		return _paginateLayouts(request, parentLayoutId, layouts);
+	}
+
 	private static List<LayoutTreeNode> _getLayoutTreeNodes(
 			HttpServletRequest request, long groupId, boolean privateLayout,
 			long parentLayoutId, boolean incomplete, long[] expandedLayoutIds)
@@ -85,49 +121,18 @@ public class LayoutsTreeUtil {
 
 		List<LayoutTreeNode> layoutTreeNodes = new ArrayList<LayoutTreeNode>();
 
-		List<Layout> layoutAncestors = null;
+		List<Layout> layoutAncestors = _getLayoutAncestors(request);
 
-		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Layout> layouts = _getLayouts(
+			request, groupId, privateLayout, parentLayoutId, incomplete);
 
-		long selPlid = ParamUtil.getLong(request, "selPlid");
-
-		if (selPlid != 0) {
-			Layout selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
-
-			layoutAncestors = LayoutServiceUtil.getAncestorLayouts(selPlid);
-
-			layoutAncestors.add(selLayout);
-		}
-
-		int start = 0;
-		int end = layouts.size();
-
-		if (PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN > -1) {
-			start = ParamUtil.getInteger(request, "start");
-			start = Math.max(0, Math.min(start, layouts.size()));
-
-			end = ParamUtil.getInteger(
-				request, "end",
-				start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
-
-			int loadedLayoutsCount = _getLoadedLayoutsCount(
-				request, parentLayoutId);
-
-			if (loadedLayoutsCount > end) {
-				end = loadedLayoutsCount;
-			}
-
-			end = Math.max(start, Math.min(end, layouts.size()));
-		}
-
-		for (Layout layout : layouts.subList(start, end)) {
+		for (Layout layout : layouts) {
 			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
 
-			if ((layoutAncestors != null) && layoutAncestors.contains(layout) ||
-				ArrayUtil.contains(expandedLayoutIds, layout.getLayoutId())) {
+			boolean isLayoutExpandable = _isLayoutExpandable(
+				request, layoutAncestors, expandedLayoutIds, layout);
 
+			if (isLayoutExpandable) {
 				List<LayoutTreeNode> children = new ArrayList<LayoutTreeNode>();
 
 				if (layout instanceof VirtualLayout) {
@@ -183,14 +188,63 @@ public class LayoutsTreeUtil {
 		return paginationJSONObject.getInt(String.valueOf(layoutId), 0);
 	}
 
+	private static boolean _isLayoutExpandable(
+		HttpServletRequest request, List<Layout> layoutAncestors,
+		long[] expandedLayoutIds, Layout layout) {
+
+		boolean expandParentLayouts = ParamUtil.getBoolean(
+			request, "expandParentLayouts");
+
+		if (expandParentLayouts || layoutAncestors.contains(layout) ||
+			ArrayUtil.contains(expandedLayoutIds, layout.getLayoutId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isPaginationEnabled(HttpServletRequest request) {
+		boolean paginate = ParamUtil.getBoolean(request, "paginate", true);
+
+		if (paginate ||
+			(PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN > -1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static List<Layout> _paginateLayouts(
+			HttpServletRequest request, long parentLayoutId,
+			List<Layout> layouts)
+		throws Exception {
+
+		int start = ParamUtil.getInteger(request, "start");
+
+		start = Math.max(0, Math.min(start, layouts.size()));
+
+		int end = ParamUtil.getInteger(
+			request, "end",
+			start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
+
+		int loadedLayoutsCount = _getLoadedLayoutsCount(
+			request, parentLayoutId);
+
+		if (loadedLayoutsCount > end) {
+			end = loadedLayoutsCount;
+		}
+
+		end = Math.max(start, Math.min(end, layouts.size()));
+
+		return layouts.subList(start, end);
+	}
+
 	private static String _toJSON(
 			HttpServletRequest request, long groupId,
 			List<LayoutTreeNode> layoutTreeNodes)
 		throws Exception {
-
-		if (layoutTreeNodes.isEmpty()) {
-			return StringPool.BLANK;
-		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -207,7 +261,8 @@ public class LayoutsTreeUtil {
 			String childrenJSON = _toJSON(
 				request, groupId, layoutTreeNode.getChildren());
 
-			jsonObject.put("children", childrenJSON);
+			jsonObject.put(
+				"children", JSONFactoryUtil.createJSONObject(childrenJSON));
 
 			Layout layout = layoutTreeNode.getLayout();
 

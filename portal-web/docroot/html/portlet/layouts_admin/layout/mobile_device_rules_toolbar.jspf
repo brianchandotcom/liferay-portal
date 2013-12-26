@@ -49,6 +49,31 @@
 
 	Liferay.provide(
 		window,
+		'<portlet:namespace />deleteRuleGroupInstance',
+		function(ruleGroupInstanceId) {
+			var A = AUI();
+
+			Liferay.Service(
+				'/mdrrulegroupinstance/delete-rule-group-instance',
+				{
+					ruleGroupInstanceId: ruleGroupInstanceId,
+					serviceContext: A.JSON.stringify(
+						{
+							scopeGroupId: themeDisplay.getScopeGroupId(),
+							userId: themeDisplay.getUserId()
+						}
+					)
+				},
+				function(response, xhr) {
+					<portlet:namespace />updateRuleGroupInstances();
+				}
+			);
+		},
+		['aui-loading-mask-deprecated']
+	);
+
+	Liferay.provide(
+		window,
 		'<portlet:namespace />saveRuleGroupInstance',
 		function(ruleGroupId, ruleGroupName) {
 			var A = AUI();

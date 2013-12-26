@@ -806,9 +806,17 @@ public class LuceneHelperImpl implements LuceneHelper {
 				_CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT,
 				TimeUnit.MILLISECONDS);
 
-			String transientToken = (String)clusterNodeResponse.getResult();
-
 			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
+			int port = clusterNode.getPort();
+
+			if (port <= 0) {
+				throw new Exception(
+					"Invalid port " + port + " of ClusterNode, port is " +
+						"detected by the first request arrived, or configured" +
+							" by \"portal.instance.http.port\" and " +
+								"\"portal.instance.https.port\"");
+			}
 
 			InetAddress inetAddress = clusterNode.getInetAddress();
 
@@ -821,8 +829,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 			fileName = fileName.concat("lucene/dump");
 
 			URL url = new URL(
-				"http", inetAddress.getHostAddress(), clusterNode.getPort(),
-				fileName);
+				"http", inetAddress.getHostAddress(), port, fileName);
+
+			String transientToken = (String)clusterNodeResponse.getResult();
 
 			return new ObjectValuePair<String, URL>(transientToken, url);
 		}

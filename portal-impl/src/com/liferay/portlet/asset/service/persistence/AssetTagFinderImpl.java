@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -444,7 +445,11 @@ public class AssetTagFinderImpl
 			qPos.add(groupId);
 			qPos.add(classNameId);
 
-			String lowerCaseName = StringUtil.toLowerCase(name);
+			String lowerCaseName = name;
+
+			if (Validator.isNotNull(name)) {
+				lowerCaseName = StringUtil.toLowerCase(name);
+			}
 
 			qPos.add(lowerCaseName);
 			qPos.add(lowerCaseName);

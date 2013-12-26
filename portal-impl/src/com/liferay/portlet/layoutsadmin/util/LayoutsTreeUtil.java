@@ -43,6 +43,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SessionClicks;
 import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,7 @@ import javax.servlet.http.HttpSession;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  * @author Bruno Basto
+ * @author Marcellus Tavares
  */
 public class LayoutsTreeUtil {
 
@@ -69,10 +71,19 @@ public class LayoutsTreeUtil {
 			long parentLayoutId, long[] expandedLayoutIds, boolean incomplete)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		List<LayoutTreeNode> layoutTreeNodes = _getLayoutTreeNodes(
+			request, groupId, privateLayout, parentLayoutId, incomplete,
+			expandedLayoutIds);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		return _toJSON(request, groupId, layoutTreeNodes);
+	}
+
+	private static List<LayoutTreeNode> _getLayoutTreeNodes(
+			HttpServletRequest request, long groupId, boolean privateLayout,
+			long parentLayoutId, boolean incomplete, long[] expandedLayoutIds)
+		throws Exception {
+
+		List<LayoutTreeNode> layoutTreeNodes = new ArrayList<LayoutTreeNode>();
 
 		List<Layout> layoutAncestors = null;
 
@@ -111,36 +122,94 @@ public class LayoutsTreeUtil {
 			end = Math.max(start, Math.min(end, layouts.size()));
 		}
 
-		boolean hasManageLayoutsPermission = GroupPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), groupId,
-			ActionKeys.MANAGE_LAYOUTS);
-
 		for (Layout layout : layouts.subList(start, end)) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
 
 			if ((layoutAncestors != null) && layoutAncestors.contains(layout) ||
 				ArrayUtil.contains(expandedLayoutIds, layout.getLayoutId())) {
 
-				String childrenJSON = StringPool.BLANK;
+				List<LayoutTreeNode> children = new ArrayList<LayoutTreeNode>();
 
 				if (layout instanceof VirtualLayout) {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
 
-					childrenJSON = getLayoutsJSON(
+					children = _getLayoutTreeNodes(
 						request, virtualLayout.getSourceGroupId(),
 						virtualLayout.isPrivateLayout(),
-						virtualLayout.getLayoutId(), expandedLayoutIds,
-						incomplete);
+						virtualLayout.getLayoutId(), incomplete,
+						expandedLayoutIds);
 				}
 				else {
-					childrenJSON = getLayoutsJSON(
+					children = _getLayoutTreeNodes(
 						request, groupId, layout.isPrivateLayout(),
-						layout.getLayoutId(), expandedLayoutIds, incomplete);
+						layout.getLayoutId(), incomplete, expandedLayoutIds);
 				}
 
-				jsonObject.put(
-					"children", JSONFactoryUtil.createJSONObject(childrenJSON));
+				layoutTreeNode.setChildren(children);
 			}
+
+			layoutTreeNodes.add(layoutTreeNode);
+		}
+
+		return layoutTreeNodes;
+	}
+
+	private static int _getLoadedLayoutsCount(
+			HttpServletRequest request, long layoutId)
+		throws Exception {
+
+		HttpSession session = request.getSession();
+
+		String treeId = ParamUtil.getString(request, "treeId");
+		long groupId = ParamUtil.getLong(request, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(treeId);
+		sb.append(StringPool.COLON);
+		sb.append(groupId);
+		sb.append(StringPool.COLON);
+		sb.append(privateLayout);
+		sb.append(StringPool.COLON);
+		sb.append("Pagination");
+
+		String paginationJSON = SessionClicks.get(
+			session, sb.toString(), JSONFactoryUtil.getNullJSON());
+
+		JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
+			paginationJSON);
+
+		return paginationJSONObject.getInt(String.valueOf(layoutId), 0);
+	}
+
+	private static String _toJSON(
+			HttpServletRequest request, long groupId,
+			List<LayoutTreeNode> layoutTreeNodes)
+		throws Exception {
+
+		if (layoutTreeNodes.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		boolean hasManageLayoutsPermission = GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), groupId,
+			ActionKeys.MANAGE_LAYOUTS);
+
+		for (LayoutTreeNode layoutTreeNode : layoutTreeNodes) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			String childrenJSON = _toJSON(
+				request, groupId, layoutTreeNode.getChildren());
+
+			jsonObject.put("children", childrenJSON);
+
+			Layout layout = layoutTreeNode.getLayout();
 
 			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
 			jsonObject.put("friendlyURL", layout.getFriendlyURL());
@@ -219,38 +288,33 @@ public class LayoutsTreeUtil {
 		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
 
 		responseJSONObject.put("layouts", jsonArray);
-		responseJSONObject.put("total", layouts.size());
+		responseJSONObject.put("total", layoutTreeNodes.size());
 
 		return responseJSONObject.toString();
 	}
 
-	private static int _getLoadedLayoutsCount(
-			HttpServletRequest request, long layoutId)
-		throws Exception {
+	private static class LayoutTreeNode {
 
-		HttpSession session = request.getSession();
+		public LayoutTreeNode(Layout layout) {
+			_layout = layout;
+		}
 
-		String treeId = ParamUtil.getString(request, "treeId");
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+		public Layout getLayout() {
+			return _layout;
+		}
 
-		StringBundler sb = new StringBundler(7);
+		public List<LayoutTreeNode> getChildren() {
+			return _children;
+		}
 
-		sb.append(treeId);
-		sb.append(StringPool.COLON);
-		sb.append(groupId);
-		sb.append(StringPool.COLON);
-		sb.append(privateLayout);
-		sb.append(StringPool.COLON);
-		sb.append("Pagination");
+		public void setChildren(List<LayoutTreeNode> children) {
+			_children = children;
+		}
 
-		String paginationJSON = SessionClicks.get(
-			session, sb.toString(), JSONFactoryUtil.getNullJSON());
+		private Layout _layout;
+		private List<LayoutTreeNode> _children =
+			new ArrayList<LayoutTreeNode>();
 
-		JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
-			paginationJSON);
-
-		return paginationJSONObject.getInt(String.valueOf(layoutId), 0);
 	}
 
 }

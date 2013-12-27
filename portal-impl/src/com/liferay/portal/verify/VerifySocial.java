@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
@@ -25,31 +24,22 @@ import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 import com.liferay.portlet.social.service.persistence.SocialRequestActionableDynamicQuery;
 
-import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Bryan Engler
+ * @author Sherry Yang
  */
 public class VerifySocial extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyRequest();
-	}
-
-	protected void verifyRequest()
-		throws PortalException, SQLException, SystemException {
-
 		ActionableDynamicQuery socialRequestActionableDynamicQuery =
 			new SocialRequestActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
+			protected void performAction(Object object) throws SystemException {
 				SocialRequest socialRequest = (SocialRequest)object;
 
 				if (!_groupIds.contains(socialRequest.getClassPK()) &&
@@ -59,27 +49,23 @@ public class VerifySocial extends VerifyProcess {
 					SocialRequestLocalServiceUtil.deleteRequest(socialRequest);
 				}
 			}
+
 		};
 
-		long requestCount = socialRequestActionableDynamicQuery.performCount();
-
-		if (requestCount == 0) {
+		if (socialRequestActionableDynamicQuery.performCount() == 0) {
 			return;
 		}
-
-		_groupIds = new ArrayList<Long>();
 
 		ActionableDynamicQuery groupActionableDynamicQuery =
 			new GroupActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
+			protected void performAction(Object object) {
 				Group group = (Group)object;
 
 				_groupIds.add(group.getGroupId());
 			}
+
 		};
 
 		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
@@ -91,5 +77,6 @@ public class VerifySocial extends VerifyProcess {
 		socialRequestActionableDynamicQuery.performActions();
 	}
 
-	private List<Long> _groupIds;
+	private List<Long> _groupIds = new ArrayList<Long>();
+
 }

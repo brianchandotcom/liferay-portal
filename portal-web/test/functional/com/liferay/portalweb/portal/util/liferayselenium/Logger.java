@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
@@ -370,18 +369,6 @@ public class Logger {
 				"file:///" + _TEST_BASEDIR + "/test/functional/com/liferay/" +
 					"portalweb/portal/util/liferayselenium/dependencies/" +
 						"Logger.html");
-		}
-
-		String log4jXMLFile = PropsValues.LIFERAY_HOME + "/logs/log.xml";
-
-		if (!FileUtil.exists(log4jXMLFile)) {
-			StringBundler sb = new StringBundler();
-
-			sb.append("Test run error log file is not present. ");
-			sb.append("Please make sure that portal-log4j.xml has ");
-			sb.append("not been altered.");
-
-			System.out.println(sb.toString());
 		}
 
 		_loggerStarted = true;

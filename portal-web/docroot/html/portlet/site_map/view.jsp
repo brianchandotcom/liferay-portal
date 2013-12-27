@@ -56,10 +56,10 @@ private void _buildLayoutView(Layout layout, String cssClass, boolean useHtmlTit
 
 	sb.append("> ");
 
-	String layoutName = layout.getName(themeDisplay.getLocale());
+	String layoutName = HtmlUtil.escape(layout.getName(themeDisplay.getLocale()));
 
 	if (useHtmlTitle) {
-		layoutName = layout.getHTMLTitle(themeDisplay.getLocale());
+		layoutName = HtmlUtil.escape(layout.getHTMLTitle(themeDisplay.getLocale()));
 	}
 
 	sb.append(layoutName);

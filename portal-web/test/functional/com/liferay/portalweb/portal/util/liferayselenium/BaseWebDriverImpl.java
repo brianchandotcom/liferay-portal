@@ -14,7 +14,6 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -23,6 +22,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+
 import java.io.File;
 
 import java.util.Arrays;
@@ -30,12 +34,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
@@ -543,31 +547,31 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void saveScreenshot(String fileName) throws Exception {
-		if (_screenshotFileName.equals(fileName)) {
-			_screenshotCount++;
+		if (TestPropsValues.SAVE_SCREENSHOT) {
+			if (_screenshotFileName.equals(fileName)) {
+				_screenshotCount++;
+			}
+			else {
+				_screenshotCount = 0;
+
+				_screenshotFileName = fileName;
+			}
+
+			File file = new File(
+					getProjectDir() + "portal-web\\test-results\\functional\\" +
+						_screenshotFileName + "\\" + _screenshotFileName +
+						_screenshotCount + ".jpg");
+
+			file.mkdirs();
+
+			Rectangle rectangle = new Rectangle(
+				Toolkit.getDefaultToolkit().getScreenSize());
+
+			BufferedImage bufferedImage =
+				new Robot().createScreenCapture(rectangle);
+
+			ImageIO.write(bufferedImage, "jpg", file);
 		}
-		else {
-			_screenshotCount = 0;
-
-			_screenshotFileName = fileName;
-		}
-
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		TakesScreenshot takesScreenshot = (TakesScreenshot)webDriver;
-
-		File file = takesScreenshot.getScreenshotAs(OutputType.FILE);
-
-		FileUtil.copyFile(
-			file,
-			new File(
-				getProjectDir() + "portal-web\\test-results\\functional\\" +
-					_screenshotFileName + "\\" + _screenshotFileName +
-					_screenshotCount + ".jpg"));
 	}
 
 	@Override

@@ -428,25 +428,28 @@ public abstract class BaseSeleniumImpl
 
 	@Override
 	public void saveScreenshot(String fileName) throws Exception {
-		if (_screenshotFileName.equals(fileName)) {
-			_screenshotCount++;
+		if (TestPropsValues.SAVE_SCREENSHOT) {
+			if (_screenshotFileName.equals(fileName)) {
+				_screenshotCount++;
+			}
+			else {
+				_screenshotCount = 0;
+
+				_screenshotFileName = fileName;
+			}
+
+			String screenshotDir =
+				TestPropsValues.OUTPUT_DIR + _screenshotFileName;
+
+			if (!FileUtil.exists(screenshotDir)) {
+				FileUtil.mkdirs(screenshotDir);
+			}
+
+			captureEntirePageScreenshot(
+				screenshotDir + "/" + _screenshotFileName + _screenshotCount +
+					".jpg",
+				"");
 		}
-		else {
-			_screenshotCount = 0;
-
-			_screenshotFileName = fileName;
-		}
-
-		String screenshotDir = TestPropsValues.OUTPUT_DIR + _screenshotFileName;
-
-		if (!FileUtil.exists(screenshotDir)) {
-			FileUtil.mkdirs(screenshotDir);
-		}
-
-		captureEntirePageScreenshot(
-			screenshotDir + "/" + _screenshotFileName + _screenshotCount +
-				".jpg",
-			"");
 	}
 
 	@Override

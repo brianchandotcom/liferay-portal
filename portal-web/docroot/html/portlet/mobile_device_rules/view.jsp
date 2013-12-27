@@ -85,24 +85,6 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 			keyProperty="ruleGroupId"
 			modelVar="ruleGroup"
 		>
-
-			<%
-			String rowHREF = null;
-
-			if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
-			%>
-
-				<liferay-portlet:renderURL var="editURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-					<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
-				</liferay-portlet:renderURL>
-
-			<%
-				rowHREF = editURL;
-			}
-			%>
-
 			<%@ include file="/html/portlet/mobile_device_rules/rule_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 

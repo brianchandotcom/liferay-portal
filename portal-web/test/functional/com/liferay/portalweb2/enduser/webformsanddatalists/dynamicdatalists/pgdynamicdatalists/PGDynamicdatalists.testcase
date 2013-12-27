@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-web-forms-and-data-lists">
 	<var name="pageName" value="Dynamic Data List Display Page" />
 	<var name="portletName" value="Dynamic Data List Display" />
 

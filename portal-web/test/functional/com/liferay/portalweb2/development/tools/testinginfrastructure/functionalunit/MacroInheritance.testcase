@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-tools">
 	<command name="DefinedByChild" priority="5">
 		<execute macro="Child#definedByChild" />
 	</command>

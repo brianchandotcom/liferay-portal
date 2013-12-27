@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-user-interface">
 	<var name="pageName" value="CKEditor Page" />
 
 	<set-up>

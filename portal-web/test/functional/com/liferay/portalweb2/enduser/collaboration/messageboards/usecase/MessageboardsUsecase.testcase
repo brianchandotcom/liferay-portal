@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-collaboration">
 	<var name="pageName" value="Message Boards Page" />
 	<var name="portletName" value="Message Boards" />
 

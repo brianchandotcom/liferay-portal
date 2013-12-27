@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-wcm">
 	<var name="pageName" value="Embedded Portlet Page" />
 	<var name="portletName" value="Web Content Display" />
 

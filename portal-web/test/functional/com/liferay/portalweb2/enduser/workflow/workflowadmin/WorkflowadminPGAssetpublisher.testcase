@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-workflow">
 	<property name="web.plugins.includes" value="kaleo-web" />
 
 	<var name="pageName" value="Asset Publisher Page" />

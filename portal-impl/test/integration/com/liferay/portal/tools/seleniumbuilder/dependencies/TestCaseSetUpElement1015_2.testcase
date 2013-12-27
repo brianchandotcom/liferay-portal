@@ -1,4 +1,4 @@
-<definition extends="TestCase">
+<definition component-name="portal-collaboration" extends="TestCase">
 	<set-up>
 		<execute test-case="fail#fail" />
 	</set-up>

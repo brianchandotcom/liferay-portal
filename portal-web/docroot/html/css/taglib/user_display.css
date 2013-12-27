@@ -12,6 +12,7 @@
 		.user-profile-image, .user-name {
 			clear: both;
 			display: block;
+			min-height: 20px;
 			text-align: center;
 		}
 	}

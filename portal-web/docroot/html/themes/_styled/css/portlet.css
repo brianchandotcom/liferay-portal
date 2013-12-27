@@ -119,6 +119,12 @@ body.portlet {
 
 .portlet-borderless-bar {
 	@extend %portlet-action-bar;
+
+	.portlet-options, .portlet-options.open {
+		.dropdown-toggle {
+			background-image: url(../images/portlet/options_borderless.png);
+		}
+	}
 }
 
 .portlet-borderless-container, .portlet-content {

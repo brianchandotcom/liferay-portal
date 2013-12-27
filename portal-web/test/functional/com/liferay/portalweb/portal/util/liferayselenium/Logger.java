@@ -137,6 +137,9 @@ public class Logger {
 
 		stackTrace = StringEscapeUtils.escapeEcmaScript(stackTrace);
 
+		stackTrace = StringUtil.replace(stackTrace, "\\\\n", "\\n");
+		stackTrace = StringUtil.replace(stackTrace, "\\\\t", "\\t");
+
 		sb.append(stackTrace);
 		sb.append("';");
 		sb.append("errorList.appendChild(newLine);");

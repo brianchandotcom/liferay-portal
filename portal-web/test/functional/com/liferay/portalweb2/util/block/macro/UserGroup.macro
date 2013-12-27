@@ -302,6 +302,16 @@
 		</if>
 	</command>
 
+	<command name="viewPortletCP">
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="ADD" value1="Add" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_FIELD" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="OPTIONS_ICON" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="INFO_MESSAGE" value1="No user groups were found." />
+	</command>
+
 	<command name="viewRemoveMemberCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 

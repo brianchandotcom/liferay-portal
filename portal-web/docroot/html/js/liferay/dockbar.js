@@ -19,6 +19,8 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
+		var EVENT_MOUSEDOWN_OUTSIDE = 'mousedownoutside';
+
 		var SELECTOR_NAV_ACCOUNT_CONTROLS = '.nav-account-controls';
 
 		var SELECTOR_NAV_ADD_CONTROLS = '.nav-add-controls';
@@ -306,20 +308,36 @@ AUI.add(
 
 				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
 
+				var handle;
+
 				if (btnNavigation && navigation) {
-					dockBar.delegate(
+					btnNavigation.on(
 						EVENT_CLICK,
 						function(event) {
-							var currentTarget = event.currentTarget;
-
 							var open = navigation.hasClass(STR_OPEN);
 
-							if (open || (currentTarget === btnNavigation)) {
-								btnNavigation.toggleClass(STR_ACTIVE);
-								navigation.toggleClass(STR_OPEN);
+							if (open && handle) {
+								handle.detach();
+
+								handle = null;
 							}
-						},
-						'.btn-navbar, .nav-collapse .dropdown'
+							else {
+								handle = navigation.on(
+									EVENT_MOUSEDOWN_OUTSIDE,
+									function(event) {
+										if (!btnNavigation.contains(event.target)) {
+											handle.detach();
+
+											btnNavigation.removeClass(STR_ACTIVE);
+											navigation.removeClass(STR_OPEN);
+										}
+									}
+								);
+							}
+
+							btnNavigation.toggleClass(STR_ACTIVE);
+							navigation.toggleClass(STR_OPEN);
+						}
 					);
 				}
 

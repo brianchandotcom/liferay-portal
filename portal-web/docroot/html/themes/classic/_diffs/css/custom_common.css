@@ -282,6 +282,10 @@
 				.btn-navbar {
 					color: #FFF;
 
+					&.active, &.open {
+						background-color: #3EA9DB;
+					}
+
 					.user-avatar-image {
 					    position: relative;
 					    top: 2px;
@@ -357,7 +361,7 @@
 								right: auto;
 
 								@include respond-to(phone, tablet) {
-									margin-top: 3px;
+									margin-top: 4px;
 								}
 
 								> li > a {
@@ -866,6 +870,12 @@
 		}
 	}
 
+	@include respond-to(phone, tablet) {
+		#navigation.open .navbar-inner .nav-collapse li a {
+			@include border-radius(0);
+		}
+	}
+
 	.breadcrumb > li {
 		@include text-shadow(none);
 	}
@@ -921,6 +931,10 @@
 			li.dropdown {
 				.dropdown-menu {
 					@include border-radius(0);
+
+					> li > a {
+						@include border-radius(0);
+					}
 				}
 			}
 		}

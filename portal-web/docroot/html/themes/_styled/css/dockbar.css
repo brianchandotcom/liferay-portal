@@ -10,18 +10,35 @@ $editLayoutPanelWidth: 460px;
 	@include respond-to(phone, tablet) {
 		#navigation {
 			display: none;
+			left: 0;
+			position: fixed;
+			top: 60px;
+			width: 100%;
+			z-index: 301;
 
 			&.open {
 				display: block;
 
 				.navbar-inner {
-					@include border-radius(3px);
-
-					padding: 10px;
+					padding: 0;
 
 					.nav-collapse {
 						height: auto;
 						overflow: visible;
+
+						li a {
+							font-size: 16px;
+							font-weight: 300;
+							line-height: 27px;
+							margin: 0;
+							max-width: none;
+							padding: 9px 15px;
+
+							b {
+								position: absolute;
+								right: 5px;
+							}
+						}
 					}
 				}
 			}
@@ -119,6 +136,7 @@ $editLayoutPanelWidth: 460px;
 			padding: 0 20px;
 
 			@include respond-to(phone, tablet) {
+				border: 0;
 				padding: 0;
 			}
 

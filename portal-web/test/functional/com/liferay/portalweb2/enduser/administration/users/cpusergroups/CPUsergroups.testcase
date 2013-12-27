@@ -382,4 +382,12 @@
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 	</command>
+
+	<command name="ViewPortletUserGroup" priority="3">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewPortletCP" />
+	</command>
 </definition>

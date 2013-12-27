@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,20 +44,20 @@ public class SeleniumBuilder {
 
 		String baseDir = arguments.get("selenium.base.dir");
 
-		SeleniumBuilderContext seleniumBuilderContext =
-			new SeleniumBuilderContext(baseDir);
+		_seleniumBuilderContext = new SeleniumBuilderContext(baseDir);
+		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(baseDir);
 
 		Set<String> types = SetUtil.fromArray(
 			StringUtil.split(arguments.get("selenium.types")));
 
 		if (types.contains("action")) {
 			ActionConverter actionConverter = new ActionConverter(
-				seleniumBuilderContext);
+				_seleniumBuilderContext);
 
-			Set<String> actionNames = seleniumBuilderContext.getActionNames();
+			Set<String> actionNames = _seleniumBuilderContext.getActionNames();
 
 			for (String actionName : actionNames) {
-				seleniumBuilderContext.validateActionElements(actionName);
+				_seleniumBuilderContext.validateActionElements(actionName);
 
 				actionConverter.convert(actionName);
 			}
@@ -64,13 +65,13 @@ public class SeleniumBuilder {
 
 		if (types.contains("function")) {
 			FunctionConverter functionConverter = new FunctionConverter(
-				seleniumBuilderContext);
+				_seleniumBuilderContext);
 
 			Set<String> functionNames =
-				seleniumBuilderContext.getFunctionNames();
+				_seleniumBuilderContext.getFunctionNames();
 
 			for (String functionName : functionNames) {
-				seleniumBuilderContext.validateFunctionElements(functionName);
+				_seleniumBuilderContext.validateFunctionElements(functionName);
 
 				functionConverter.convert(functionName);
 			}
@@ -78,12 +79,12 @@ public class SeleniumBuilder {
 
 		if (types.contains("macro")) {
 			MacroConverter macroConverter = new MacroConverter(
-				seleniumBuilderContext);
+				_seleniumBuilderContext);
 
-			Set<String> macroNames = seleniumBuilderContext.getMacroNames();
+			Set<String> macroNames = _seleniumBuilderContext.getMacroNames();
 
 			for (String macroName : macroNames) {
-				seleniumBuilderContext.validateMacroElements(macroName);
+				_seleniumBuilderContext.validateMacroElements(macroName);
 
 				macroConverter.convert(macroName);
 			}
@@ -91,9 +92,9 @@ public class SeleniumBuilder {
 
 		if (types.contains("path")) {
 			PathConverter pathConverter = new PathConverter(
-				seleniumBuilderContext);
+				_seleniumBuilderContext);
 
-			Set<String> pathNames = seleniumBuilderContext.getPathNames();
+			Set<String> pathNames = _seleniumBuilderContext.getPathNames();
 
 			for (String pathName : pathNames) {
 				pathConverter.convert(pathName);
@@ -102,30 +103,145 @@ public class SeleniumBuilder {
 
 		if (types.contains("testcase")) {
 			TestCaseConverter testCaseConverter = new TestCaseConverter(
-				seleniumBuilderContext);
+				_seleniumBuilderContext);
 
 			Set<String> testCaseNames =
-				seleniumBuilderContext.getTestCaseNames();
+				_seleniumBuilderContext.getTestCaseNames();
 
 			for (String testCaseName : testCaseNames) {
-				seleniumBuilderContext.validateTestCaseElements(testCaseName);
+				_seleniumBuilderContext.validateTestCaseElements(testCaseName);
 
 				testCaseConverter.convert(testCaseName);
 			}
 		}
 
-		SeleniumBuilderFileUtil seleniumBuilderFileUtil =
-			new SeleniumBuilderFileUtil(baseDir);
+		_seleniumBuilderFileUtil.writeFile(
+			"../../../test.case.method.names.properties",
+			_getTestCaseMethodNamesProperties(), false);
 
-		Set<String> testCaseMethodNames = new TreeSet<String>();
-		Set<String> testCaseProperties = new TreeSet<String>();
+		_seleniumBuilderFileUtil.writeFile(
+			"../../../test.generated.properties", _getTestCaseProperties(),
+			false);
+
+		System.out.println(
+			"\nThere are " + _getTestCaseMethodCount() + " test cases.");
+	}
+
+	private int _getTestCaseMethodCount() {
 		int testCaseCount = 0;
 
-		Set<String> testCaseNames = seleniumBuilderContext.getTestCaseNames();
+		Set<String> testCaseNames = _seleniumBuilderContext.getTestCaseNames();
 
 		for (String testCaseName : testCaseNames) {
-			Element rootElement = seleniumBuilderContext.getTestCaseRootElement(
-				testCaseName);
+			Element rootElement =
+				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
+
+			List<Element> commandElements =
+				_seleniumBuilderFileUtil.getAllChildElements(
+					rootElement, "command");
+
+			testCaseCount += commandElements.size();
+		}
+
+		return testCaseCount;
+	}
+
+	private Map<String, Set<String>> _getTestCaseMethodNameMap() {
+		Map<String, Set<String>> testCaseMethodNameMap =
+			new HashMap<String, Set<String>>();
+
+		Set<String> testCaseNames = _seleniumBuilderContext.getTestCaseNames();
+
+		for (String testCaseName : testCaseNames) {
+			Element rootElement =
+				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
+
+			String componentName = rootElement.attributeValue("component-name");
+
+			Set<String> testCaseMethodNames = new TreeSet<String>();
+
+			if (testCaseMethodNameMap.containsKey(componentName)) {
+				testCaseMethodNames = testCaseMethodNameMap.get(componentName);
+			}
+
+			List<Element> commandElements =
+				_seleniumBuilderFileUtil.getAllChildElements(
+					rootElement, "command");
+
+			for (Element commandElement : commandElements) {
+				testCaseMethodNames.add(
+					testCaseName + "TestCase#test" +
+						commandElement.attributeValue("name"));
+			}
+
+			testCaseMethodNameMap.put(componentName, testCaseMethodNames);
+		}
+
+		List<String> componentNames =
+			_seleniumBuilderFileUtil.getComponentNames();
+
+		for (String componentName : componentNames) {
+			if (!testCaseMethodNameMap.containsKey(componentName)) {
+				testCaseMethodNameMap.put(
+					componentName,
+					SetUtil.fromArray(
+						new String[] {"PortalSmokeTestCase#testSmoke"}));
+			}
+		}
+
+		return testCaseMethodNameMap;
+	}
+
+	private String _getTestCaseMethodNamesProperties() {
+		Map<String, Set<String>> testCaseMethodNameMap =
+			_getTestCaseMethodNameMap();
+
+		Set<String> testCaseMethodNames = new TreeSet<String>();
+
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, Set<String>> testCaseMethodNamesEntry :
+				testCaseMethodNameMap.entrySet()) {
+
+			String componentName = testCaseMethodNamesEntry.getKey();
+
+			componentName = StringUtil.replace(componentName, "-", "_");
+			componentName = StringUtil.upperCase(componentName);
+
+			sb.append(componentName);
+			sb.append("_TEST_CASE_METHOD_NAMES");
+			sb.append("=");
+
+			Set<String> testCommandSet = testCaseMethodNamesEntry.getValue();
+
+			String testCommands = StringUtil.merge(
+				testCommandSet.toArray(new String[testCommandSet.size()]),
+				StringPool.SPACE);
+
+			sb.append(testCommands);
+			sb.append("\n");
+
+			testCaseMethodNames.add(testCommands);
+		}
+
+		String testCaseMethodNamesString = StringUtil.merge(
+			testCaseMethodNames.toArray(new String[testCaseMethodNames.size()]),
+			StringPool.SPACE);
+
+		sb.append("\nTEST_CASE_METHOD_NAMES=");
+		sb.append(testCaseMethodNamesString);
+
+		return sb.toString();
+	}
+
+	private String _getTestCaseProperties() {
+		Set<String> testCaseProperties = new TreeSet<String>();
+
+		Set<String> testCaseNames = _seleniumBuilderContext.getTestCaseNames();
+
+		for (String testCaseName : testCaseNames) {
+			Element rootElement =
+				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
 
 			List<Element> rootPropertyElements = rootElement.elements(
 				"property");
@@ -143,16 +259,16 @@ public class SeleniumBuilder {
 			}
 
 			List<Element> commandElements =
-				seleniumBuilderFileUtil.getAllChildElements(
+				_seleniumBuilderFileUtil.getAllChildElements(
 					rootElement, "command");
 
 			for (Element commandElement : commandElements) {
-				testCaseMethodNames.add(
+				String testCaseMethodName =
 					testCaseName + "TestCase#test" +
-						commandElement.attributeValue("name"));
+						commandElement.attributeValue("name");
 
 				List<Element> commandPropertyElements =
-					seleniumBuilderFileUtil.getAllChildElements(
+					_seleniumBuilderFileUtil.getAllChildElements(
 						commandElement, "property");
 
 				for (Element commandPropertyElement : commandPropertyElements) {
@@ -169,28 +285,14 @@ public class SeleniumBuilder {
 					testCaseProperties.add(sb.toString());
 				}
 			}
-
-			testCaseCount += commandElements.size();
 		}
 
-		String testCaseMethodNamesString = StringUtil.merge(
-			testCaseMethodNames.toArray(
-				new String[testCaseMethodNames.size()]),
-			StringPool.SPACE);
-
-		seleniumBuilderFileUtil.writeFile(
-			"../../../test.case.method.names.properties",
-			"TEST_CASE_METHOD_NAMES=" + testCaseMethodNamesString, false);
-
-		String testCasePropertiesString = StringUtil.merge(
+		return StringUtil.merge(
 			testCaseProperties.toArray(new String[testCaseProperties.size()]),
 			StringPool.NEW_LINE);
-
-		seleniumBuilderFileUtil.writeFile(
-			"../../../test.generated.properties", testCasePropertiesString,
-				false);
-
-		System.out.println("\nThere are " + testCaseCount + " test cases.");
 	}
+
+	private static SeleniumBuilderContext _seleniumBuilderContext;
+	private static SeleniumBuilderFileUtil _seleniumBuilderFileUtil;
 
 }

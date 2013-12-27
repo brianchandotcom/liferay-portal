@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-tools">
 	<var name="commitMessage" value="LPS-41203" />
 	<var name="ticketSummary" value="LIFERAYQA-5879: Enable looping on a list" />
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5879" />

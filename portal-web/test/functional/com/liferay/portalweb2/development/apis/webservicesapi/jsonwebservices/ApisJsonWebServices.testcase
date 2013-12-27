@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-apis">
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

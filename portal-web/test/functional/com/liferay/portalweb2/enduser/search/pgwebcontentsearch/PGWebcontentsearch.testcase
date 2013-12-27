@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-search">
 	<var name="webContentSearchPageName" value="Web Content Search Page" />
 	<var name="webContentSearchPortletName" value="Web Content Search" />
 

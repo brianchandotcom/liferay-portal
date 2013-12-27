@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-collaboration">
 	<var name="name" value="value" />
 	<var name="name" value="" />
 	<var name="name" value="&quot;value&quot;" />

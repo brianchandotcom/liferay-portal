@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-administration">
 	<var name="siteName" value="Site Name" />
 
 	<set-up>

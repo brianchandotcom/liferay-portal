@@ -1,2 +1,2 @@
-<definition extends="">
+<definition component-name="portal-collaboration" extends="">
 </definition>

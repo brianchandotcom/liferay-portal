@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-collaboration">
 	<var name="name" value="value">
 
 	<command name="name" priority="5">

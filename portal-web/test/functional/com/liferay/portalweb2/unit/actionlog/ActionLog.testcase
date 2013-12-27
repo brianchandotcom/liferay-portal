@@ -1,0 +1,87 @@
+<definition>
+	<command name="IfStatements" priority="5">
+		<if>
+			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+			<then>
+				<echo message="" />
+			</then>
+		</if>
+
+		<if>
+			<contains string="string" substring="substring" />
+			<then>
+				<echo message="" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="arg1" arg2="arg2" />
+			<then>
+				<echo message="" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="var" />
+			<then>
+				<echo message="" />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<equals arg1="a" arg2="a" />
+				<equals arg1="b" arg2="b" />
+			</and>
+			<then>
+				<echo message="" />
+			</then>
+		</if>
+	</command>
+
+	<command name="ForLoops" priority="5">
+		<var name="list" value="1,2,3" />
+
+		<for list="${list}" param="param">
+			<echo message="${param}" />
+		</for>
+
+		<for list="a,b,c" param="param">
+			<echo message="${param}" />
+		</for>
+	</command>
+
+	<command name="WhileLoops" priority="5">
+		<while>
+			<condition action="Dockbar#isElementNotPresent" locator-key1="USER_NAME" />
+			<then>
+				<echo message="" />
+			</then>
+		</while>
+
+		<while>
+			<contains string="string" substring="substring" />
+			<then>
+				<echo message="" />
+			</then>
+		</while>
+
+		<while>
+			<equals arg1="arg1" arg2="arg2" />
+			<then>
+				<echo message="" />
+			</then>
+		</while>
+
+		<while>
+			<isset var="var" />
+			<then>
+				<echo message="" />
+			</then>
+		</while>
+	</command>
+
+	<command name="EchoStatement" priority="5">
+		<echo message="echoMessage" />
+	</command>
+</definition>

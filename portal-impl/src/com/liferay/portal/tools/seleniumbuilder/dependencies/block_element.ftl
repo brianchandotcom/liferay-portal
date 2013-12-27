@@ -24,6 +24,10 @@
 	<#if name == "echo">
 		<#assign message = element.attributeValue("message")>
 
+		<#assign elementType = "echo">
+
+		<#include "action_log_element.ftl">
+
 		${selenium}.echo(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(message)}", commandScopeVariables));
 
 		<#assign lineNumber = element.attributeValue("line-number")>
@@ -52,6 +56,8 @@
 			<#else>
 				<#assign actionNextElement = element>
 			</#if>
+
+			<#assign elementType = "action">
 
 			<#include "action_log_element.ftl">
 
@@ -99,6 +105,10 @@
 	<#elseif name == "fail">
 		<#assign message = element.attributeValue("message")>
 
+		<#assign elementType = "fail">
+
+		<#include "action_log_element.ftl">
+
 		${selenium}.fail(RuntimeVariables.evaluateVariable("${message}", commandScopeVariables));
 
 		<#assign lineNumber = element.attributeValue("line-number")>
@@ -111,6 +121,10 @@
 
 		<#assign forElement = element>
 
+		<#assign elementType = "for">
+
+		<#include "action_log_element.ftl">
+
 		<#include "for_element.ftl">
 
 		<#assign lineNumber = element.attributeValue("line-number")>
@@ -122,6 +136,10 @@
 		executeScopeVariables.putAll(commandScopeVariables);
 
 		<#assign ifElement = element>
+
+		<#assign elementType = "if">
+
+		<#include "action_log_element.ftl">
 
 		<#include "if_element.ftl">
 
@@ -176,6 +194,10 @@
 		_whileCount = 0;
 
 		<#assign ifElement = element>
+
+		<#assign elementType = "if">
+
+		<#include "action_log_element.ftl">
 
 		<#include "if_element.ftl">
 

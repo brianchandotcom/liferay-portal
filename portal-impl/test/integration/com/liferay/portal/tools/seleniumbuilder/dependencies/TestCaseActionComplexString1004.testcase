@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-collaboration">
 	<command name="AddWikiFrontPageContentJavascript" priority="5">
 		<var name="wikiPageContent">
 			<![CDATA[

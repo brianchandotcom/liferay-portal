@@ -1,4 +1,4 @@
-<definition extends="fail">
+<definition component-name="portal-collaboration" extends="fail">
 	<command name="name" priority="5">
 		<var name="name" value="value" />
 	</command>

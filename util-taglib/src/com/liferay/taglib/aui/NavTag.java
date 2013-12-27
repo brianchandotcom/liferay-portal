@@ -17,6 +17,7 @@ package com.liferay.taglib.aui;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -55,8 +56,8 @@ public class NavTag extends BaseNavTag {
 
 			sb.append("<a class=\"btn btn-navbar");
 
-			if (cssClass != null) {
-				sb.append(" ");
+			if (Validator.isNotNull(cssClass)) {
+				sb.append(StringPool.SPACE);
 				sb.append(cssClass);
 				sb.append("-btn");
 			}

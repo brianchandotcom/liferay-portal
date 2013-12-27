@@ -37,11 +37,11 @@
 </c:if>
 
 <c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
-	<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
-		<label <%= labelTag %>>
-			<%= labelContent %>
-		</label>
-	</c:if>
+	<label <%= labelTag %>>
+		<c:if test='<%= !choiceField && !inlineLabel.equals("right") %>'>
+				<%= labelContent %>
+			</label>
+		</c:if>
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(prefix) || Validator.isNotNull(suffix) %>">
@@ -237,18 +237,10 @@
 </c:if>
 
 <c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
-	<c:choose>
-		<c:when test='<%= choiceField %>'>
+	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
-		</c:when>
-		<c:otherwise>
-			<c:if test='<%= inlineLabel.equals("right") %>'>
-				<label <%= labelTag %>>
-					<%= labelContent %>
-				</label>
-			</c:if>
-		</c:otherwise>
-	</c:choose>
+		</label>
+	</c:if>
 </c:if>
 
 <c:if test='<%= !choiceField && !type.equals("hidden") && !wrappedField %>'>

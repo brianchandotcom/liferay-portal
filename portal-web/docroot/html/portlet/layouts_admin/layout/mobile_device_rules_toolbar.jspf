@@ -25,11 +25,11 @@
 </c:if>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/mobile_device_rules/view" />
+	<portlet:param name="struts_action" value="/mobile_device_rules/select_rule_group" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="className" value="<%= className %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<portlet:param name="chooseCallback" value='<%= liferayPortletResponse.getNamespace() + "saveRuleGroupInstance" %>' />
+	<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectRuleGroup" %>' />
 </liferay-portlet:renderURL>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -41,35 +41,42 @@
 </liferay-portlet:renderURL>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />processDialog',
-		function(dialog) {
-			var A = AUI();
-
-			if (dialog) {
-				if (Liferay.Util.getTop() == window) {
-					dialog.plug(A.LoadingMask).render();
-				}
-				else {
-					dialog.hide();
-				}
-			}
-		},
-		['aui-loading-mask-deprecated']
-	);
-
 	function <portlet:namespace />saveRuleGroupsPriorities(dialog) {
-		<portlet:namespace />processDialog(dialog);
+		dialog.hide();
+
+		<portlet:namespace />updateRuleGroupInstances();
 	}
 
 	Liferay.provide(
 		window,
-		'<portlet:namespace />saveRuleGroupInstance',
-		function(ruleGroupId, ruleGroupName, dialog) {
+		'<portlet:namespace />deleteRuleGroupInstance',
+		function(ruleGroupInstanceId) {
 			var A = AUI();
 
-			<portlet:namespace />processDialog(dialog);
+			Liferay.Service(
+				'/mdrrulegroupinstance/delete-rule-group-instance',
+				{
+					ruleGroupInstanceId: ruleGroupInstanceId,
+					serviceContext: A.JSON.stringify(
+						{
+							scopeGroupId: themeDisplay.getScopeGroupId(),
+							userId: themeDisplay.getUserId()
+						}
+					)
+				},
+				function(response, xhr) {
+					<portlet:namespace />updateRuleGroupInstances();
+				}
+			);
+		},
+		['aui-loading-mask-deprecated']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveRuleGroupInstance',
+		function(ruleGroupId, ruleGroupName) {
+			var A = AUI();
 
 			Liferay.Service(
 				'/mdrrulegroupinstance/add-rule-group-instance',
@@ -86,11 +93,45 @@
 					)
 				},
 				function(response, xhr) {
-					window.location.reload();
+					<portlet:namespace />updateRuleGroupInstances();
 				}
 			);
 		},
 		['aui-loading-mask-deprecated']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />updateRuleGroupInstances',
+		function() {
+			var A = AUI();
+
+			A.io.request(
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewRuleGroupInstancesURL">
+					<portlet:param name="struts_action" value="/layouts_admin/mobile_device_rules" />
+					<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+					<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+					<portlet:param name="className" value="<%= className %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+				</liferay-portlet:resourceURL>
+
+				'<%= viewRuleGroupInstancesURL.toString() %>',
+				{
+					on: {
+						success: function(event, id, obj) {
+							var uniqueRuleGroupInstancesContainer = A.one('#<portlet:namespace />uniqueRuleGroupInstancesContainer');
+
+							if (uniqueRuleGroupInstancesContainer) {
+								uniqueRuleGroupInstancesContainer.plug(A.Plugin.ParseContent);
+
+								uniqueRuleGroupInstancesContainer.setContent(this.get('responseData'));
+							}
+						}
+					}
+				}
+			);
+		}
 	);
 </aui:script>
 
@@ -101,11 +142,19 @@
 		saveInstance.on(
 			'click',
 			function(event) {
-				Liferay.Util.openWindow(
+				Liferay.Util.selectEntity(
 					{
-						id: '<portlet:namespace />ruleGroups',
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true
+						},
+						id: '<portlet:namespace />selectRuleGroup',
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>',
 						uri: '<%= selectRuleGroupURL %>'
+					},
+					function(event) {
+						<portlet:namespace />saveRuleGroupInstance(event.rulegroupid, event.rulegroupname);
 					}
 				);
 			}

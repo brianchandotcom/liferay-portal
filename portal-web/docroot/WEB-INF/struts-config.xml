@@ -463,6 +463,11 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.edit_layout_panel" />
 		</action>
 
+		<action path="/dockbar/mobile_device_rules" type="com.liferay.portlet.layoutsadmin.action.MobileDeviceRulesAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.dockbar.edit_layout_panel" />
+			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.edit_layout_panel" />
+		</action>
+
 		<action path="/dockbar/preview_panel" forward="portlet.dockbar.preview_panel" />
 
 		<action path="/dockbar/update_layout" type="com.liferay.portlet.grouppages.action.EditLayoutsAction">
@@ -749,6 +754,11 @@
 		</action>
 
 		<action path="/group_pages/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
+
+		<action path="/group_pages/mobile_device_rules" type="com.liferay.portlet.layoutsadmin.action.MobileDeviceRulesAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
 
 		<action path="/group_pages/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
@@ -1068,6 +1078,11 @@
 
 		<action path="/layouts_admin/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
 
+		<action path="/layouts_admin/mobile_device_rules" type="com.liferay.portlet.layoutsadmin.action.MobileDeviceRulesAction">
+			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		</action>
+
 		<action path="/layouts_admin/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
@@ -1317,6 +1332,8 @@
 		</action>
 
 		<action path="/mobile_device_rules/edit_rule_group_instance_editor" type="com.liferay.portlet.mobiledevicerules.action.EditRuleGroupInstanceAction" />
+
+		<action path="/mobile_device_rules/select_rule_group" forward="portlet.mobile_device_rules.select_rule_group" />
 
 		<action path="/mobile_device_rules/site_url_layouts" type="com.liferay.portlet.mobiledevicerules.action.SiteURLLayoutsAction" />
 

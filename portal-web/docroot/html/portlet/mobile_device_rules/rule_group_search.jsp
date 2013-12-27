@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/mobile_device_rules/init.jsp" %>
 
 <%
-String chooseCallback = ParamUtil.getString(request, "chooseCallback");
-
 RuleGroupSearch searchContainer = (RuleGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
 
 RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();

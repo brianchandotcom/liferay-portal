@@ -14,6 +14,18 @@
  */
 --%>
 
+<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+
+<%
+long groupId = ParamUtil.getLong(request, "groupId");
+String className = ParamUtil.getString(request, "className");
+long classPK = ParamUtil.getLong(request, "classPK");
+
+PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules.jsp-portletURL");
+%>
+
+<%@ include file="/html/portlet/layouts_admin/layout/mobile_device_rules_toolbar.jspf" %>
+
 <liferay-ui:search-container
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="no-device-rules-are-configured"
@@ -46,16 +58,11 @@
 
 <aui:script>
 	function <portlet:namespace />mobileDeviceActionHandler(href) {
-		if (<%= themeDisplay.isStateExclusive() %>) {
-			<portlet:namespace />mobileDeviceOpenWindow(
-				{
-					uri: href
-				}
-			);
-		}
-		else {
-			location.href = href;
-		}
+		<portlet:namespace />mobileDeviceOpenWindow(
+			{
+				uri: href
+			}
+		);
 	}
 
 	function <portlet:namespace />mobileDeviceOpenWindow(config) {
@@ -63,7 +70,12 @@
 			config,
 			{
 				dialog: {
-					width: 1024
+					width: 1024,
+					on: {
+						visibleChange: function(event) {
+							<portlet:namespace />updateRuleGroupInstances();
+						}
+					}
 				},
 				title: Liferay.Language.get('javax.portlet.title.178')
 			}

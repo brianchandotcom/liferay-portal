@@ -32,15 +32,15 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 
 <liferay-ui:icon-menu>
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="viewRuleGroupInstanceActionsURL" windowState="<%= (themeDisplay.isStateExclusive() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.MY)) ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="viewRuleGroupInstanceActionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
-			<portlet:param name="showBackURL" value="<%= themeDisplay.isStateExclusive() ? Boolean.FALSE.toString() : Boolean.TRUE.toString() %>" />
+			<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 			<portlet:param name="redirect" value='<%= HttpUtil.setParameter(redirect, liferayPortletResponse.getNamespace() + "historyKey", "mobileDeviceRules") %>' />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<%
-		String taglibActionHandler = renderResponse.getNamespace() + "mobileDeviceActionHandler('" + viewRuleGroupInstanceActionsURL.toString() + "');";
+		String taglibActionHandler = liferayPortletResponse.getNamespace() + "mobileDeviceActionHandler('" + viewRuleGroupInstanceActionsURL.toString() + "');";
 		%>
 
 		<liferay-ui:icon image="manage_nodes" message="manage-actions" onClick="<%= taglibActionHandler %>" url="javascript:;" />
@@ -59,18 +59,6 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">
-
-		<%
-		redirect = themeDisplay.isStateExclusive() ? closeRedirect : HttpUtil.setParameter(redirect, liferayPortletResponse.getNamespace() + "historyKey", "mobileDeviceRules");
-		%>
-
-		<liferay-portlet:actionURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" var="deleteURL">
-			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group_instance" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteRuleGroupInstance(" + mdrRuleGroupInstance.getRuleGroupInstanceId() + ");" %>' />
 	</c:if>
 </liferay-ui:icon-menu>

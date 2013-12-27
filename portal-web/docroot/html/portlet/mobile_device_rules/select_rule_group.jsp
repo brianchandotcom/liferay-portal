@@ -19,41 +19,30 @@
 <%
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectRuleGroup");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/mobile_device_rules/view");
 portletURL.setParameter("groupId", String.valueOf(groupId));
+portletURL.setParameter("eventName", eventName);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="ruleGroupIds" type="hidden" />
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectRuleGroupFm">
 
 	<%
 	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
-
-	RowChecker rowChecker = new RuleGroupChecker(renderResponse);
 	%>
 
 	<liferay-ui:search-container
-		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= ruleGroupSearch %>"
 	>
 		<aui:nav-bar>
 			<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
-				<portlet:renderURL var="viewRulesURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/view" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="className" value="<%= className %>" />
-					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-				</portlet:renderURL>
-
 				<liferay-portlet:renderURL var="addRuleGroupURL">
 					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
-					<portlet:param name="redirect" value="<%= viewRulesURL %>" />
-					<portlet:param name="backURL" value="<%= viewRulesURL %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				</liferay-portlet:renderURL>
 
@@ -85,36 +74,53 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 			keyProperty="ruleGroupId"
 			modelVar="ruleGroup"
 		>
-			<%@ include file="/html/portlet/mobile_device_rules/rule_group_columns.jspf" %>
+
+			<liferay-ui:search-container-column-text
+				name="name"
+				value="<%= ruleGroup.getName(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="description"
+				value="<%= ruleGroup.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-text>
+
+				<%
+				MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
+				%>
+
+				<c:if test="<%= (ruleGroupInstance == null) %>">
+
+					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("rulegroupid", ruleGroup.getRuleGroupId());
+					data.put("rulegroupname", HtmlUtil.escapeAttribute(ruleGroup.getName()));
+					%>
+
+					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				</c:if>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
-
-		<c:if test="<%= total > 0 %>">
-			<aui:button-row>
-				<aui:button cssClass="delete-rules-button" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteRules();" %>' value="delete" />
-			</aui:button-row>
-
-			<div class="separator"><!-- --></div>
-		</c:if>
 
 		<liferay-ui:search-iterator type="more" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />deleteRules',
-		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-				document.<portlet:namespace />fm.method = "post";
-				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />ruleGroupIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	A.one('#<portlet:namespace />selectRuleGroupFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
 
-				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" /></portlet:actionURL>");
-			}
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+			Util.getWindow().hide();
 		},
-		['liferay-util-list-fields']
+		'.selector-button'
 	);
 </aui:script>

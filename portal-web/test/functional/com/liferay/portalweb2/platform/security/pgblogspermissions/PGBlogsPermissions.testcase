@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-security">
 	<var name="pageName" value="Blogs Page" />
 	<var name="portletName" value="Blogs" />
 

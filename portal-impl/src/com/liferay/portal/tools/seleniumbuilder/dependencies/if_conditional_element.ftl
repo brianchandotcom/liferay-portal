@@ -5,9 +5,6 @@
 
 		<#assign firstCase = true>
 
-		<#assign elementType = "and" />
-
-		(<#include "action_log_element.ftl">) &&
 		(
 			<#list conditionalCases as conditionalCase>
 				<#if conditionalCaseNames?seq_contains(conditionalCase.getName())>
@@ -25,8 +22,6 @@
 	<#if ifConditionalElement.attributeValue("action")??>
 		<#assign actionElement = ifConditionalElement>
 
-		<#assign elementType = "action">
-
 		(<#include "action_log_element.ftl">) && (<#include "action_element.ftl">)
 	<#elseif ifConditionalElement.attributeValue("macro")??>
 		<#assign macroElement = ifConditionalElement>
@@ -38,9 +33,6 @@
 
 	<#assign substring = ifConditionalElement.attributeValue("substring")>
 
-	<#assign elementType = "contains" />
-
-	(<#include "action_log_element.ftl">) &&
 	(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(string)}", commandScopeVariables)).contains(
 		RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(substring)}", commandScopeVariables))
 <#elseif ifConditionalElement.getName() == "equals">
@@ -48,22 +40,13 @@
 
 	<#assign arg2 = ifConditionalElement.attributeValue("arg2")>
 
-	<#assign elementType = "equals" />
-
-	(<#include "action_log_element.ftl">) &&
 	(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(arg1)}", commandScopeVariables)).equals(
 		RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(arg2)}", commandScopeVariables))
 <#elseif ifConditionalElement.getName() == "isset">
 	<#assign var = ifConditionalElement.attributeValue("var")>
 
-	<#assign elementType = "isset" />
-
-	(<#include "action_log_element.ftl">) &&
-	(RuntimeVariables.variableExists(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(var)}", commandScopeVariables), commandScopeVariables))
+	RuntimeVariables.variableExists(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(var)}", commandScopeVariables), commandScopeVariables)
 <#elseif ifConditionalElement.getName() == "not">
-	<#assign elementType = "not" />
-
-	(<#include "action_log_element.ftl">) &&
 	!(
 		<#if ifConditionalElement.element("and")??>
 			<#assign ifConditionalElement = ifConditionalElement.element("and")>
@@ -88,9 +71,6 @@
 
 		<#assign firstCase = true>
 
-		<#assign elementType = "or" />
-
-		(<#include "action_log_element.ftl">) &&
 		(
 			<#list conditionalCases as conditionalCase>
 				<#if conditionalCaseNames?seq_contains(conditionalCase.getName())>

@@ -86,8 +86,14 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay, false);
 
-		return PortalUtil.getCanonicalURL(
+		String relativeURL = PortalUtil.getCanonicalURL(
 			layoutFullURL, themeDisplay, layout, true);
+
+		String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
+
+		relativeURL = relativeURL.substring(portalURL.length());
+
+		return relativeURL;
 	}
 
 	private void _getFiles(

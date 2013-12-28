@@ -80,22 +80,6 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		}
 	}
 
-	private String _getCanonicalURL(Layout layout, ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
-
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, themeDisplay, false);
-
-		String relativeURL = PortalUtil.getCanonicalURL(
-			layoutFullURL, themeDisplay, layout, true);
-
-		String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
-
-		relativeURL = relativeURL.substring(portalURL.length());
-
-		return relativeURL;
-	}
-
 	private void _getFiles(
 			CommandArgument commandArgument, Document document, Node rootNode)
 		throws Exception {
@@ -135,7 +119,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				fileElement.setAttribute("size", StringPool.BLANK);
 				fileElement.setAttribute(
 					"url",
-					_getCanonicalURL(
+					_getRelativeLayoutURL(
 						layout, commandArgument.getThemeDisplay()));
 			}
 		}
@@ -163,7 +147,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				fileElement.setAttribute("size", getSize());
 				fileElement.setAttribute(
 					"url",
-					_getCanonicalURL(
+					_getRelativeLayoutURL(
 						layout, commandArgument.getThemeDisplay()));
 			}
 		}
@@ -270,6 +254,23 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		layoutName = layoutName.replace('>', '/');
 
 		return layoutName;
+	}
+
+	private String _getRelativeLayoutURL(
+			Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			layout, themeDisplay, false);
+
+		String relativeURL = PortalUtil.getCanonicalURL(
+			layoutFullURL, themeDisplay, layout, true);
+
+		String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
+
+		relativeURL = relativeURL.substring(portalURL.length());
+
+		return relativeURL;
 	}
 
 }

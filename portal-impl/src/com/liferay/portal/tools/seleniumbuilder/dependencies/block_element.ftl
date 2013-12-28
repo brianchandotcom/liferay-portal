@@ -24,7 +24,7 @@
 	<#if name == "echo">
 		<#assign message = element.attributeValue("message")>
 
-		<#assign elementType = "echo">
+		<#assign actionElement = element>
 
 		<#include "action_log_element.ftl">
 
@@ -56,8 +56,6 @@
 			<#else>
 				<#assign actionNextElement = element>
 			</#if>
-
-			<#assign elementType = "action">
 
 			<#include "action_log_element.ftl">
 
@@ -105,7 +103,7 @@
 	<#elseif name == "fail">
 		<#assign message = element.attributeValue("message")>
 
-		<#assign elementType = "fail">
+		<#assign actionElement = element>
 
 		<#include "action_log_element.ftl">
 
@@ -121,10 +119,6 @@
 
 		<#assign forElement = element>
 
-		<#assign elementType = "for">
-
-		<#include "action_log_element.ftl">
-
 		<#include "for_element.ftl">
 
 		<#assign lineNumber = element.attributeValue("line-number")>
@@ -136,10 +130,6 @@
 		executeScopeVariables.putAll(commandScopeVariables);
 
 		<#assign ifElement = element>
-
-		<#assign elementType = "if">
-
-		<#include "action_log_element.ftl">
 
 		<#include "if_element.ftl">
 
@@ -194,10 +184,6 @@
 		_whileCount = 0;
 
 		<#assign ifElement = element>
-
-		<#assign elementType = "if">
-
-		<#include "action_log_element.ftl">
 
 		<#include "if_element.ftl">
 

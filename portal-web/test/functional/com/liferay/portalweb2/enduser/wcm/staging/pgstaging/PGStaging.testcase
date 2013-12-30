@@ -876,8 +876,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Staging#viewStagingLocalLivePG" />
-
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT" />

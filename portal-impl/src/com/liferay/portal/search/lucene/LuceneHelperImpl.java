@@ -785,6 +785,15 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 
 		BooleanQuery.setMaxClauseCount(_LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE);
+
+		if (StringUtil.equalsIgnoreCase(
+				Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
+
+			_protocol = Http.HTTPS;
+		}
+		else {
+			_protocol = Http.HTTP;
+		}
 	}
 
 	private ObjectValuePair<String, URL>
@@ -829,19 +838,8 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 			fileName = fileName.concat("lucene/dump");
 
-			String protocol = null;
-
-			if (StringUtil.equalsIgnoreCase(
-					Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
-
-				protocol = Http.HTTPS;
-			}
-			else {
-				protocol = Http.HTTP;
-			}
-
 			URL url = new URL(
-				protocol, inetAddress.getHostAddress(), port, fileName);
+				_protocol, inetAddress.getHostAddress(), port, fileName);
 
 			String transientToken = (String)clusterNodeResponse.getResult();
 
@@ -978,6 +976,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		new ConcurrentHashMap<Long, IndexAccessor>();
 	private LoadIndexClusterEventListener _loadIndexClusterEventListener;
 	private ThreadPoolExecutor _luceneIndexThreadPoolExecutor;
+	private String _protocol;
 	private Version _version;
 
 	private static class ShutdownSyncJob implements Runnable {

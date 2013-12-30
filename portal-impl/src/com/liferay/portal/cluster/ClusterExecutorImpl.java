@@ -94,6 +94,16 @@ public class ClusterExecutorImpl
 			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
 		}
 
+		_secure = StringUtil.equalsIgnoreCase(
+			Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL);
+
+		if (_secure) {
+			_configuredPort = PropsValues.PORTAL_INSTANCE_HTTPS_PORT;
+		}
+		else {
+			_configuredPort = PropsValues.PORTAL_INSTANCE_HTTP_PORT;
+		}
+
 		super.afterPropertiesSet();
 	}
 
@@ -299,9 +309,7 @@ public class ClusterExecutorImpl
 
 	@Override
 	public void portalPortConfigured(int port) {
-		if (!isEnabled() ||
-			(_localClusterNode.getPort() == getConfiguredPort())) {
-
+		if (!isEnabled() || (_localClusterNode.getPort() == _configuredPort)) {
 			return;
 		}
 
@@ -384,14 +392,6 @@ public class ClusterExecutorImpl
 		return clusterNodeResponse;
 	}
 
-	protected int getConfiguredPort() {
-		if (isSecure()) {
-			return PropsValues.PORTAL_INSTANCE_HTTPS_PORT;
-		}
-
-		return PropsValues.PORTAL_INSTANCE_HTTP_PORT;
-	}
-
 	protected JChannel getControlChannel() {
 		return _controlJChannel;
 	}
@@ -425,30 +425,15 @@ public class ClusterExecutorImpl
 		ClusterNode localClusterNode = new ClusterNode(
 			PortalUUIDUtil.generate(), inetAddress);
 
-		int port = getConfiguredPort();
+		int port = _configuredPort;
 
 		if (port <= 0) {
-			if (isSecure()) {
-				port = PortalUtil.getPortalPort(true);
-			}
-			else {
-				port = PortalUtil.getPortalPort(false);
-			}
+			port = PortalUtil.getPortalPort(_secure);
 		}
 
 		localClusterNode.setPort(port);
 
 		_localClusterNode = localClusterNode;
-	}
-
-	protected boolean isSecure() {
-		if (StringUtil.equalsIgnoreCase(
-				Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected boolean isShortcutLocalMethod() {
@@ -584,6 +569,7 @@ public class ClusterExecutorImpl
 		new CopyOnWriteArrayList<ClusterEventListener>();
 	private Map<String, Address> _clusterNodeAddresses =
 		new ConcurrentHashMap<String, Address>();
+	private int _configuredPort;
 	private JChannel _controlJChannel;
 	private ExecutorService _executorService;
 	private Map<String, FutureClusterResponses> _futureClusterResponses =
@@ -592,6 +578,7 @@ public class ClusterExecutorImpl
 		new ConcurrentHashMap<Address, ClusterNode>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
+	private boolean _secure;
 	private boolean _shortcutLocalMethod;
 
 	private class ClusterResponseCallbackJob implements Runnable {

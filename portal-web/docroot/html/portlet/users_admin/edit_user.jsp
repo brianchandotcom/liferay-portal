@@ -134,7 +134,7 @@ else if (selUser != null) {
 List<UserGroupGroupRole> inheritedSiteRoles = Collections.emptyList();
 
 if (selUser != null) {
-	inheritedSiteRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRolesByUser(selUser.getUserId());
+	inheritedSiteRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRolesByUserId(selUser.getUserId());
 }
 
 List<Group> inheritedSites = GroupLocalServiceUtil.getUserGroupsRelatedGroups(userGroups);

@@ -205,7 +205,6 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 			%>
 
 		</liferay-ui:search-container-column-text>
-
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator paginate="<%= false %>" />

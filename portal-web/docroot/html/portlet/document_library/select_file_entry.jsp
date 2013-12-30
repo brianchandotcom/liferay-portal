@@ -112,7 +112,6 @@ if (folder != null) {
 				name="num-of-documents"
 				value="<%= String.valueOf(fileEntriesCount) %>"
 			/>
-
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />

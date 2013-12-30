@@ -435,7 +435,6 @@ userGroupRoles.addAll(siteRoles);
 				name="user-group"
 				value="<%= HtmlUtil.escape(userGroupGroupRole.getUserGroup().getName()) %>"
 			/>
-
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator paginate="<%= false %>" />

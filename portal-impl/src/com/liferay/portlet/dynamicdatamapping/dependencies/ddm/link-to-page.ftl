@@ -30,7 +30,7 @@
 					&ndash;&nbsp;
 				</#list>
 
-				${curLayout.getName(requestedLocale)}
+				${escape(curLayout.getName(requestedLocale))}
 			</@>
 
 			<@getLayoutsOptions

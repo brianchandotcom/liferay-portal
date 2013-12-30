@@ -26,6 +26,7 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -400,70 +401,96 @@ public class Logger {
 	protected String generateStackTrace(Throwable throwable) {
 		Stack<String> ids = (Stack<String>)_xpathIdStack.clone();
 
-		String currentCommand = null;
-		String currentLine = null;
-		String parentCommand = null;
-		String parentLine = null;
-		String testCaseCommand = null;
-
 		StringBundler sb = new StringBundler();
 
 		sb.append("<p>");
 
+		List<String> xPaths = new ArrayList<String>();
+
 		while (ids.size() > 1) {
 			String xpath = generateXpath(ids);
+
+			ids.pop();
+
+			String commandTag = getLogElementText(
+				xpath + "/div/span[@class='tag'][1]");
+
+			if (!commandTag.equals("execute") &&
+				!commandTag.equals("fail") &&
+				!commandTag.equals("echo")) {
+
+				continue;
+			}
+
+			xPaths.add(xpath);
+		}
+
+		Stack<String> xPathsStack = new Stack<String>();
+
+		for (int i = xPaths.size() - 1; i >= 0; i--) {
+			String xpath = xPaths.get(i);
+
+			xPathsStack.push(xpath);
+		}
+
+		while (!xPathsStack.isEmpty()) {
+			String xpath = xPathsStack.pop();
+
+			String commandType = getLogElementText(
+				xpath + "/div/span[@class='attribute'][1]");
 
 			String command = getLogElementText(
 				xpath + "/div/span[@class='quote'][1]");
 
 			command = StringUtil.replace(command, "\"", "");
 
-			String line = getLogElementText(
+			String lineNumber = getLogElementText(
 				xpath + "/div/div[@class='line-number']");
 
-			if ((parentCommand == null) || (parentLine == null)) {
-				parentCommand = command;
-				parentLine = line;
+			String parentFileName = "";
+
+			if (!xPathsStack.isEmpty()) {
+				String parentXpath = xPathsStack.peek();
+
+				String parentCommandType = getLogElementText(
+					parentXpath + "/div/span[@class='attribute'][1]");
+
+				String parentCommand = getLogElementText(
+					parentXpath + "/div/span[@class='quote'][1]");
+
+				parentCommand = StringUtil.replace(parentCommand, "\"", "");
+
+				int x = parentCommand.indexOf("#");
+
+				parentFileName =
+					parentCommand.substring(0, x) + "." + parentCommandType;
 			}
-			else {
-				currentCommand = parentCommand;
-				currentLine = parentLine;
 
-				parentCommand = command;
-				parentLine = line;
+			sb.append("Failed Line: ");
 
-				String parentFileName = "";
+			sb.append(commandType);
+			sb.append(": <b>");
+			sb.append(command);
+			sb.append("</b> ");
 
-				if (ids.size() > 2) {
-					int x = parentCommand.indexOf("#");
-
-					parentFileName = parentCommand.substring(0, x) + ".macro";
-				}
-				else {
-					ids.pop();
-
-					String testCaseXpath = generateXpath(ids);
-
-					testCaseCommand = getLogElementText(
-						testCaseXpath + "/div/h3");
-
-					int x = testCaseCommand.lastIndexOf("#");
-
-					parentFileName =
-						testCaseCommand.substring(0, x) + ".testcase";
-				}
-
-				sb.append("Failed Line: <b>");
-				sb.append(currentCommand);
-				sb.append("</b> (");
+			if (!parentFileName.equals("")) {
+				sb.append("(from ");
 				sb.append(parentFileName);
-				sb.append(":");
-				sb.append(currentLine);
-				sb.append(")<br />");
+				sb.append(") ");
 			}
 
-			ids.pop();
+			sb.append("at line ");
+			sb.append(lineNumber);
+			sb.append("<br />");
 		}
+
+		String testCaseXpath = generateXpath(ids);
+
+		String testCaseCommand = getLogElementText(testCaseXpath + "/div/h3");
+
+		int x = testCaseCommand.indexOf("#");
+
+		String testCaseFileName = testCaseCommand.substring(0,x) + ".testcase";
 
 		sb.append("in test case command <b>");
 		sb.append(testCaseCommand.trim());
@@ -477,7 +504,7 @@ public class Logger {
 			String className = stackTraceElement.getClassName();
 
 			if (className.startsWith("com.liferay")) {
-				sb.append("\\n\\t");
+				sb.append("&#10;");
 				sb.append(stackTraceElement.toString());
 			}
 		}

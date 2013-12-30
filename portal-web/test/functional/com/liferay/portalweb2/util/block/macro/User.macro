@@ -21,14 +21,15 @@
 		<execute action="CPUsersandorganizationsAdduser#assertClick" locator-key1="SAVE" value1="Save" />
 
 		<if>
-			<equals arg1="${userEmailAddressVariation}" arg2="At" />
+			<equals arg1="${userEmailAddressVariation}" arg2="Invalid" />
 			<then>
 				<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="EMAIL_ADDRESS_FIELD_ALERT" value1="Please enter a valid email address." />
 			</then>
 			<elseif>
-				<equals arg1="${userEmailAddressVariation}" arg2="Period" />
+				<equals arg1="${userEmailAddressVariation}" arg2="Root" />
 				<then>
-					<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="EMAIL_ADDRESS_FIELD_ALERT" value1="Please enter a valid email address." />
+					<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="CPUsersandorganizationsAdduser#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter a valid email address." />
 				</then>
 			</elseif>
 			<elseif>

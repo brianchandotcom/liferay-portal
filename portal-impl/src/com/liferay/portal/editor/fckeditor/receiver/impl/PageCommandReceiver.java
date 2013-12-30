@@ -119,8 +119,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				fileElement.setAttribute("size", StringPool.BLANK);
 				fileElement.setAttribute(
 					"url",
-					_getRelativeLayoutURL(
-						layout, commandArgument.getThemeDisplay()));
+					_getRelativeURL(layout, commandArgument.getThemeDisplay()));
 			}
 		}
 		else {
@@ -147,8 +146,7 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				fileElement.setAttribute("size", getSize());
 				fileElement.setAttribute(
 					"url",
-					_getRelativeLayoutURL(
-						layout, commandArgument.getThemeDisplay()));
+					_getRelativeURL(layout, commandArgument.getThemeDisplay()));
 			}
 		}
 	}
@@ -256,21 +254,18 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		return layoutName;
 	}
 
-	private String _getRelativeLayoutURL(
-			Layout layout, ThemeDisplay themeDisplay)
+	private String _getRelativeURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay, false);
 
-		String relativeURL = PortalUtil.getCanonicalURL(
+		String canonicalURL = PortalUtil.getCanonicalURL(
 			layoutFullURL, themeDisplay, layout, true);
 
 		String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
 
-		relativeURL = relativeURL.substring(portalURL.length());
-
-		return relativeURL;
+		return canonicalURL.substring(portalURL.length());
 	}
 
 }

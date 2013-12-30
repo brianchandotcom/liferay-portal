@@ -47,7 +47,7 @@ public class UserGroupGroupRoleFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUPS_USERS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("UserGroupGroupRole", UserGroupGroupRoleImpl.class);
 

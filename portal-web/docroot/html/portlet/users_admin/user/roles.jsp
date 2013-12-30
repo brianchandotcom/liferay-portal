@@ -397,8 +397,6 @@ userGroupRoles.addAll(siteRoles);
 	</c:otherwise>
 </c:choose>
 
-<br /><br />
-
 <h3><liferay-ui:message key="inherited-site-roles" /></h3>
 
 <c:if test="<%= inheritedSiteRoles.isEmpty() %>">

@@ -1,0 +1,55 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="AUTHENTICATION_CAS_LOGIN_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_CAS_LOGOUT_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_CAS_SERVER_NAME_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_CAS_SERVER_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_CAS_SERVICE_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="LDAP_SERVER_CONNECTION_BASE_DN_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

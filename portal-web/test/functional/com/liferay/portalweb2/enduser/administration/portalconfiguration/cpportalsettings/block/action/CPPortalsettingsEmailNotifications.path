@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>CPPortalsettingsEmailNotifications</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPortalsettingsEmailNotifications</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPPortalsettingsEmailNotifications</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SENDER</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Sender')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ACCOUNT_CREATED_NOTIFICATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Account Created Notification')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Email Verification Notification')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PASSWORD_CHANGED_NOTIFICATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Password Changed Notification')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PASSWORD_RESET_NOTIFICATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Password Reset Notification')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMAIL_NOTIFICATIONS_SENDER-->
+<tr>
+	<td>EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER</td>
+	<td>//label[@for='_130_admin.email.from.name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_SENDER_NAME_FIELD</td>
+	<td>//input[@id='_130_admin.email.from.name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_SENDER_ADDRESS_HEADER</td>
+	<td>//label[@for='_130_admin.email.from.address']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_SENDER_ADDRESS_FIELD</td>
+	<td>//input[@id='_130_admin.email.from.address']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION-->
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_admin.email.user.added.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_HEADER</td>
+	<td>//label[@for='_130_admin.email.user.added.subject']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_FIELD</td>
+	<td>//input[@id='_130_admin.email.user.added.subject']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_HEADER</td>
+	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body with Password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD</td>
+	<td>//iframe[@title='Rich Text Editor,_130_emailUserAddedBody']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER</td>
+	<td>//div[@class='control-group field-wrapper']/label[contains(.,'Body without Password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD</td>
+	<td>//iframe[@title='Rich Text Editor,_130_emailUserAddedNoPasswordBody']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION-->
+<tr>
+	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER</td>
+	<td>//label[@for='_130_admin.email.password.sent.subject']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD</td>
+	<td>//input[@id='_130_admin.email.password.sent.subject']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER</td>
+	<td>xPath=(//div[@class='control-group field-wrapper']/label[contains(.,'Body')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD</td>
+	<td>//iframe[@title='Rich Text Editor,_130_emailPasswordSentBody']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

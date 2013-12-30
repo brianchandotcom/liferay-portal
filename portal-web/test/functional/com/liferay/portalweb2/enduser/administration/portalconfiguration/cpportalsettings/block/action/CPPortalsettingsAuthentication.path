@@ -1,0 +1,508 @@
+<html>
+<head>
+<title>CPPortalsettingsAuthentication</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPortalsettingsAuthentication</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPPortalsettingsAuthentication</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_GENERAL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'General')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_LDAP</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'LDAP')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_CAS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'CAS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_FACEBOOK</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Facebook')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_NTLM</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'NTLM')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_OPEN_ID</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'OpenID')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_OPEN_SSO</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Open SSO')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SITE_MINDER</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'SiteMinder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AUTHENTICATION_GENERAL-->
+<tr>
+	<td>AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX</td>
+	<td>//input[@id='_130_company.security.auto.loginCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX</td>
+	<td>//input[@id='_130_company.security.send.passwordCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GENERAL__ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX</td>
+	<td>//input[@id='_130_company.security.send.password.reset.linkCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX</td>
+	<td>//input[@id='_130_company.security.strangersCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX</td>
+	<td>//input[@id='_130_company.security.strangers.with.mxCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX</td>
+	<td>//input[@id='_130_company.security.strangers.verifyCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT</td>
+	<td>//select[@id='_130_company.security.auth.type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AUTHENTICATION_LDAP-->
+<tr>
+	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_ldap.auth.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_LDAP_REQUIRED_CHECKBOX</td>
+	<td>//input[@id='_130_ldap.auth.requiredCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_ldapImportEnabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_ldapExportEnabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX</td>
+	<td>//input[@id='_130_ldap.password.policy.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_LDAP_ADD_BUTTON</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LDAP_SERVER-->
+<tr>
+	<td>LDAP_SERVER_SERVER_NAME</td>
+	<td>//input[@id='_130_ldap.server.name.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_DEFAULT_VALUES_MICROSOFT_ACTIVE_DIRECTORY_SERVER_RADIO</td>
+	<td>//input[@value='microsoft']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_RESET_VALUES_BUTTON</td>
+	<td>//button[contains(.,'Reset Values')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER</td>
+	<td>//label[@for='_130_ldap.base.provider.url.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD</td>
+	<td>//input[@id='_130_ldap.base.provider.url.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION_BASE_DN_HEADER</td>
+	<td>//label[@for='_130_ldap.base.dn.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION_BASE_DN_FIELD</td>
+	<td>//input[@id='_130_ldap.base.dn.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION__PRINCIPAL_HEADER</td>
+	<td>//label[@for='_130_ldap.security.principal.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD</td>
+	<td>//input[@id='_130_ldap.security.principal.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER</td>
+	<td>//label[@for='_130_ldap.security.credentials.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD</td>
+	<td>//input[@id='_130_ldap.security.credentials.0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON</td>
+	<td>//button[contains(.,'Test LDAP Connection')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_TEST_LDAP_USERS_BUTTON</td>
+	<td>//button[contains(.,'Test LDAP Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON</td>
+	<td>//button[contains(.,'Test LDAP Groups')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AUTHENTICATION_CAS-->
+<tr>
+	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_cas.auth.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX</td>
+	<td>//input[@id='_130_cas.import.from.ldapCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_LOGIN_URL_HEADER</td>
+	<td>//label[@for='_130_cas.login.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_LOGIN_URL_FIELD</td>
+	<td>//input[@id='_130_cas.login.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_LOGOUT_URL_HEADER</td>
+	<td>//label[@for='_130_cas.logout.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_LOGOUT_URL_FIELD</td>
+	<td>//input[@id='_130_cas.logout.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_NAME_HEADER</td>
+	<td>//label[@for='_130_cas.server.name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_NAME_FIELD</td>
+	<td>//input[@id='_130_cas.server.name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_URL_HEADER</td>
+	<td>//label[@for='_130_cas.server.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVER_URL_FIELD</td>
+	<td>//input[@id='_130_cas.server.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVICE_URL_HEADER</td>
+	<td>//label[@for='_130_cas.service.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_SERVICE_URL_FIELD</td>
+	<td>//input[@id='_130_cas.service.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER</td>
+	<td>//label[@for='_130_cas.no.such.user.redirect.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD</td>
+	<td>//input[@id='_130_cas.no.such.user.redirect.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON</td>
+	<td>//button[contains(.,'Test CAS Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AUTHENTICATION_NTLM-->
+<tr>
+	<td>AUTHENTICATION_NTLM_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_ntlm.auth.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER</td>
+	<td>//label[@for='_130_ntlm.auth.domain.controller']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD</td>
+	<td>//input[@id='_130_ntlm.auth.domain.controller']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER</td>
+	<td>//label[@for='_130_ntlm.auth.domain.controller.name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD</td>
+	<td>//input[@id='_130_ntlm.auth.domain.controller.name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_DOMAIN_HEADER</td>
+	<td>//label[@for='_130_ntlm.auth.domain']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_DOMAIN_FIELD</td>
+	<td>//input[@id='_130_ntlm.auth.domain']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER</td>
+	<td>//label[@for='_130_ntlm.auth.service.account']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD</td>
+	<td>//input[@id='_130_ntlm.auth.service.account']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER</td>
+	<td>//label[@for='_130_ntlm.auth.service.password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD</td>
+	<td>//input[@id='_130_ntlm.auth.service.password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AUTHENTICATION_OPEN_ID-->
+<tr>
+	<td>AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_open.id.auth.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AUTHENTICATION_OPEN_SSO-->
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_open.sso.auth.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX</td>
+	<td>//input[@id='_130_open.sso.ldap.import.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER</td>
+	<td>//label[@for='_130_open.sso.login.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD</td>
+	<td>//input[@id='_130_open.sso.login.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER</td>
+	<td>//label[@for='_130_open.sso.logout.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD</td>
+	<td>//input[@id='_130_open.sso.logout.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER</td>
+	<td>//label[@for='_130_open.sso.service.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD</td>
+	<td>//input[@id='_130_open.sso.service.url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER</td>
+	<td>//label[@for='_130_open.sso.screen.name.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD</td>
+	<td>//input[@id='_130_open.sso.screen.name.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER</td>
+	<td>//label[@for='_130_open.sso.email.address.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD</td>
+	<td>//input[@id='_130_open.sso.email.address.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER</td>
+	<td>//label[@for='_130_open.sso.first.name.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD</td>
+	<td>//input[@id='_130_open.sso.first.name.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER</td>
+	<td>//label[@for='_130_open.sso.last.name.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD</td>
+	<td>//input[@id='_130_open.sso.last.name.attr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON</td>
+	<td>//button[contains(.,'Test OpenSSO Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AUTHENTICATION_SITE_MINDER-->
+<tr>
+	<td>AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_130_siteminder.auth.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX</td>
+	<td>//input[@id='_130_siteminder.import.from.ldapCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_SITE_MINDER_USER_HEADER_HEADER</td>
+	<td>//label[@for='_130_siteminder.user.header']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_SITE_MINDER_USER_HEADER_FIELD</td>
+	<td>//input[@id='_130_siteminder.user.header']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

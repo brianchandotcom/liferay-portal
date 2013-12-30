@@ -150,6 +150,123 @@
 		</execute>
 	</command>
 
+	<command name="viewAuthenticationCASCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_CAS" value1="CAS" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_LOGIN_URL_HEADER" value1="Login URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_LOGOUT_URL_HEADER" value1="Logout URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_SERVER_NAME_HEADER" value1="Server Name" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_SERVER_NAME_FIELD" value1="localhost:8080" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_SERVER_URL_HEADER" value1="Server URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_SERVICE_URL_HEADER" value1="Service URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_SERVICE_URL_FIELD" value1="" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER" value1="No Such User Redirect URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD" value1="http://localhost:8080" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
+	</command>
+
+	<command name="viewAuthenticationGeneralCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_GENERAL" value1="General" />
+		<execute action="CPPortalsettingsAuthentication#assertSelectedLabel" locator-key1="AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_GENERAL__ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX" />
+	</command>
+
+	<command name="viewAuthenticationLDAPCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_LDAP" value1="LDAP" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_LDAP_REQUIRED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
+		<execute action="CPPortalsettingsAuthentication#click" locator-key1="LDAP_SERVER_DEFAULT_VALUES_MICROSOFT_ACTIVE_DIRECTORY_SERVER_RADIO" />
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="LDAP_SERVER_RESET_VALUES_BUTTON" value1="Reset Values" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER" value1="Base Provider URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD" value1="ldap://localhost:389" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION_BASE_DN_HEADER" value1="Base DN" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION_BASE_DN_FIELD" value1="dc=example,dc=com" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION__PRINCIPAL_HEADER" value1="Principal" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD" value1="admin" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER" value1="Credentials" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD" value1="secret" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" value1="Test LDAP Connection" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="LDAP_SERVER_TEST_LDAP_USERS_BUTTON" value1="Test LDAP Users" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON" value1="Test LDAP Groups" />
+	</command>
+
+	<command name="viewAuthenticationNTLMCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_NTLM" value1="NTLM" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_NTLM_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER" value1="Domain Controller" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD" value1="127.0.0.1" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER" value1="Domain Controller Name" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD" value1="EXAMPLE" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_DOMAIN_HEADER" value1="Domain" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_DOMAIN_FIELD" value1="EXAMPLE" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER" value1="Service Account" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD" value1="LIFERAY$@EXAMPLE.COM" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER" value1="Service Password" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD" value1="test" />
+	</command>
+
+	<command name="viewAuthenticationOpenIDCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_OPEN_ID" value1="OpenID" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
+	</command>
+
+	<command name="viewAuthenticationOpenSSOCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_OPEN_SSO" value1="Open SSO" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER" value1="Login URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD" value1="http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER" value1="Logout URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD" value1="http://openssohost.example.com:8080/opensso/UI/Logout?goto=http://portalhost.example.com:8080/web/guest/home" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER" value1="Service URL" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD" value1="http://openssohost.example.com:8080/opensso" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER" value1="Screen Name Attribute" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD" value1="uid" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER" value1="Email Address Attribute" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD" value1="mail" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER" value1="First Name Attribute" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD" value1="givenname" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER" value1="Last Name Attribute" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD" value1="sn" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON" value1="Test OpenSSO Configuration" />
+	</command>
+
+	<command name="viewAuthenticationSiteMinderCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+
+		<execute action="CPPortalsettingsAuthentication#assertClick" locator-key1="NAVIGATION_SITE_MINDER" value1="SiteMinder" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertElementPresent" locator-key1="AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_SITE_MINDER_USER_HEADER_HEADER" value1="User Header" />
+		<execute action="CPPortalsettingsAuthentication#assertTextEquals" locator-key1="AUTHENTICATION_SITE_MINDER_USER_HEADER_FIELD" value1="SM_USER" />
+	</command>
+
 	<command name="viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
 
@@ -176,5 +293,63 @@
 
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
 		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+	</command>
+
+	<command name="viewDefaultUserAssociationsCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
+
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
+		<execute action="CPPortalsettingsUsers#assertElementPresent" locator-key1="APPLY_TO_EXISTING_USERS_CHECKBOX" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_SITES_HEADER" value1="Sites" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER" value1="Organization Sites" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
+	</command>
+
+	<command name="viewEmailNotificationsAccountCreatedNotificationCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+
+		<execute action="CPPortalsettingsEmailNotifications#assertClick" locator-key1="NAVIGATION_ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
+		<execute action="CPPortalsettingsEmailNotifications#assertElementPresent" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_HEADER" value1="Subject" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Account" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_HEADER" value1="Body with Password" />
+		<execute action="CPPortalsettingsEmailNotifications#assertElementPresent" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER" value1="Body without Password" />
+		<execute action="CPPortalsettingsEmailNotifications#assertElementPresent" locator-key1="EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD" />
+	</command>
+
+	<command name="viewEmailNotificationsPasswordChangedNotificationCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+
+		<execute action="CPPortalsettingsEmailNotifications#assertClick" locator-key1="NAVIGATION_PASSWORD_CHANGED_NOTIFICATION" value1="Password Changed Notification" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER" value1="Subject" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Password" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER" value1="Body" />
+		<execute action="CPPortalsettingsEmailNotifications#assertElementPresent" locator-key1="EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD" />
+	</command>
+
+	<command name="viewEmailNotificationsSenderCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+
+		<execute action="CPPortalsettingsEmailNotifications#assertClick" locator-key1="NAVIGATION_SENDER" value1="Sender" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER" value1="Name" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_SENDER_NAME_FIELD" value1="Joe Bloggs" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_SENDER_ADDRESS_HEADER" value1="Address" />
+		<execute action="CPPortalsettingsEmailNotifications#assertTextEquals" locator-key1="EMAIL_NOTIFICATIONS_SENDER_ADDRESS_FIELD" value1="test@liferay.com" />
+	</command>
+
+	<command name="viewReservedCredentialsScreenNamesCP">
+		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_USERS" value1="Users" />
+
+		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />
+		<execute action="CPPortalsettingsUsers#assertTextEquals" locator-key1="RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
 	</command>
 </definition>

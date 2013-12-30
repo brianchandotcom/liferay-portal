@@ -22,19 +22,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-
-import java.io.File;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import net.jsourcerer.webdriver.jserrorcollector.JavaScriptError;
 
@@ -547,31 +538,11 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void saveScreenshot(String fileName) throws Exception {
-		if (TestPropsValues.SAVE_SCREENSHOT) {
-			if (_screenshotFileName.equals(fileName)) {
-				_screenshotCount++;
-			}
-			else {
-				_screenshotCount = 0;
-
-				_screenshotFileName = fileName;
-			}
-
-			File file = new File(
-					getProjectDir() + "portal-web\\test-results\\functional\\" +
-						_screenshotFileName + "\\" + _screenshotFileName +
-						_screenshotCount + ".jpg");
-
-			file.mkdirs();
-
-			Rectangle rectangle = new Rectangle(
-				Toolkit.getDefaultToolkit().getScreenSize());
-
-			BufferedImage bufferedImage =
-				new Robot().createScreenCapture(rectangle);
-
-			ImageIO.write(bufferedImage, "jpg", file);
+		if (!TestPropsValues.SAVE_SCREENSHOT) {
+			return;
 		}
+
+		LiferaySeleniumHelper.saveScreenshot(this, fileName);
 	}
 
 	@Override
@@ -775,7 +746,5 @@ public abstract class BaseWebDriverImpl
 	private String _clipBoard = "";
 	private String _primaryTestSuiteName;
 	private String _projectDir;
-	private int _screenshotCount = 0;
-	private String _screenshotFileName = "";
 
 }

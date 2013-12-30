@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_ICON</td>
+	<td>//menu[@class='portlet-topper-toolbar']/div/a/i</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>

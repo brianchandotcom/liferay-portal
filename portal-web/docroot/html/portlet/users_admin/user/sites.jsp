@@ -91,8 +91,6 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
-	<br />
-
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"
@@ -153,8 +151,6 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 		);
 	</aui:script>
 </c:if>
-
-<br /><br />
 
 <h3><liferay-ui:message key="inherited-sites" /></h3>
 

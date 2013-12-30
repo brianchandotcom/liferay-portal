@@ -65,8 +65,6 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
-	<br />
-
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"

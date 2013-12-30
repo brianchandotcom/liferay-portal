@@ -17,7 +17,11 @@ AUI.add(
 
 		var STR_EXPANDED = 'expanded';
 
+		var STR_MORE_RESULTS_LABEL = 'moreResultsLabel';
+
 		var STR_PREV_EXPANDED = '_LFR_prevExpanded';
+
+		var STR_START = 'start';
 
 		var TPL_CHECKED = ' checked="checked" ';
 
@@ -237,6 +241,13 @@ AUI.add(
 									checked = true;
 								}
 
+								var paginatorConfig = {
+									limit: 10,
+									moreResultsLabel: instance.get(STR_MORE_RESULTS_LABEL),
+									offsetParam: STR_START,
+									total: item.childrenCount
+								};
+
 								var newTreeNode = {
 									after: {
 										checkedChange: A.bind('_onCheckedChange', instance)
@@ -245,6 +256,7 @@ AUI.add(
 									id: treeId,
 									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
 									leaf: !item.hasChildren,
+									paginator: paginatorConfig,
 									type: type
 								};
 
@@ -627,14 +639,14 @@ AUI.add(
 						var treeId = 'vocabulary' + vocabularyId;
 
 						var paginatorConfig = {
-							offsetParam: 'start'
+							offsetParam: STR_START
 						};
 
 						var maxEntries = instance.get('maxEntries');
 
 						if (maxEntries > 0) {
 							paginatorConfig.limit = maxEntries;
-							paginatorConfig.moreResultsLabel = instance.get('moreResultsLabel');
+							paginatorConfig.moreResultsLabel = instance.get(STR_MORE_RESULTS_LABEL);
 							paginatorConfig.total = item.categoriesCount;
 						}
 						else {

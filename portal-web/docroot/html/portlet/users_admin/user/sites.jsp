@@ -203,7 +203,7 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 				buffer.append(StringPool.COMMA_AND_SPACE);
 			}
 
-			if (!userGroupRoles.isEmpty()) {
+			if (!inheritedRoles.isEmpty() || !userGroupRoles.isEmpty()) {
 				buffer.setIndex(buffer.index() - 1);
 			}
 			%>

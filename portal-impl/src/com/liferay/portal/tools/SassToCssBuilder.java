@@ -190,7 +190,9 @@ public class SassToCssBuilder {
 
 		File file = new File(docrootDirName.concat(fileName));
 
-		cacheFile.setLastModified(file.lastModified());
+		long lastModified = file.lastModified();
+
+		cacheFile.setLastModified(lastModified);
 
 		// Generate RTL cache
 
@@ -202,8 +204,13 @@ public class SassToCssBuilder {
 		// Append custom CSS for RTL
 
 		String rtlCustomFileName = getRtlCustomFileName(fileName);
+		String rtlCustomFilePath = docrootDirName.concat(rtlCustomFileName);
 
-		if (FileUtil.exists(docrootDirName.concat(rtlCustomFileName))) {
+		if (FileUtil.exists(rtlCustomFilePath)) {
+			File rtlCustomFile = new File(rtlCustomFilePath);
+
+			lastModified = rtlCustomFile.lastModified();
+
 			String rtlCustomCss = _parseSassFile(
 				docrootDirName, portalCommonDirName, rtlCustomFileName);
 
@@ -212,7 +219,7 @@ public class SassToCssBuilder {
 
 		FileUtil.write(rtlCacheFile, rtlCss);
 
-		rtlCacheFile.setLastModified(file.lastModified());
+		rtlCacheFile.setLastModified(lastModified);
 	}
 
 	private String _getCssThemePath(String fileName) {
@@ -309,8 +316,8 @@ public class SassToCssBuilder {
 				long end = System.currentTimeMillis();
 
 				System.out.println(
-					"Parsed " + docrootDirName + fileName + " in " +
-						(end - start) + " ms");
+						"Parsed " + docrootDirName + fileName + " in " +
+								(end - start) + " ms");
 			}
 			catch (Exception e) {
 				System.out.println("Unable to parse " + fileName);

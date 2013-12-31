@@ -18,7 +18,7 @@
 String dataType = fields.get(FieldConstants.DATA_TYPE);
 String name = fields.get(FieldConstants.NAME);
 
-String value = null;
+String value = StringPool.BLANK;
 
 if (fieldsModel.contains(name)) {
 	com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
@@ -31,9 +31,6 @@ if (fieldsModel.contains(name)) {
 	else {
 		value = HtmlUtil.escape(value);
 	}
-}
-else {
-	value = StringPool.BLANK;
 }
 
 if (editable) {

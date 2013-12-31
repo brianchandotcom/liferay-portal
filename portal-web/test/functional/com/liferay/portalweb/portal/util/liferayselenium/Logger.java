@@ -26,10 +26,11 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -399,72 +400,41 @@ public class Logger {
 	}
 
 	protected String generateStackTrace(Throwable throwable) {
-		Stack<String> ids = (Stack<String>)_xpathIdStack.clone();
+		Stack<String> xpathIdStack = (Stack<String>)_xpathIdStack.clone();
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("<p>");
 
-		List<String> xPaths = new ArrayList<String>();
+		Queue<String> xpathQueue = new LinkedList<String>();
 
-		while (ids.size() > 1) {
-			String xpath = generateXpath(ids);
+		while (xpathIdStack.size() > 1) {
+			String xpath = generateXpath(xpathIdStack);
 
-			ids.pop();
+			xpathIdStack.pop();
 
 			String commandTag = getLogElementText(
 				xpath + "/div/span[@class='tag'][1]");
 
-			if (!commandTag.equals("execute") &&
-				!commandTag.equals("fail") &&
-				!commandTag.equals("echo")) {
+			if (!commandTag.equals("echo") && !commandTag.equals("execute") &&
+				!commandTag.equals("fail")) {
 
 				continue;
 			}
 
-			xPaths.add(xpath);
+			xpathQueue.add(xpath);
 		}
 
-		Stack<String> xPathsStack = new Stack<String>();
-
-		for (int i = xPaths.size() - 1; i >= 0; i--) {
-			String xpath = xPaths.get(i);
-
-			xPathsStack.push(xpath);
-		}
-
-		while (!xPathsStack.isEmpty()) {
-			String xpath = xPathsStack.pop();
-
-			String commandType = getLogElementText(
-				xpath + "/div/span[@class='attribute'][1]");
+		while (xpathQueue.peek() != null) {
+			String xpath = xpathQueue.poll();
 
 			String command = getLogElementText(
 				xpath + "/div/span[@class='quote'][1]");
 
 			command = StringUtil.replace(command, "\"", "");
 
-			String lineNumber = getLogElementText(
-				xpath + "/div/div[@class='line-number']");
-
-			String parentFileName = "";
-
-			if (!xPathsStack.isEmpty()) {
-				String parentXpath = xPathsStack.peek();
-
-				String parentCommandType = getLogElementText(
-					parentXpath + "/div/span[@class='attribute'][1]");
-
-				String parentCommand = getLogElementText(
-					parentXpath + "/div/span[@class='quote'][1]");
-
-				parentCommand = StringUtil.replace(parentCommand, "\"", "");
-
-				int x = parentCommand.indexOf("#");
-
-				parentFileName =
-					parentCommand.substring(0, x) + "." + parentCommandType;
-			}
+			String commandType = getLogElementText(
+				xpath + "/div/span[@class='attribute'][1]");
 
 			sb.append("Failed Line: ");
 
@@ -473,24 +443,36 @@ public class Logger {
 			sb.append(command);
 			sb.append("</b> ");
 
-			if (!parentFileName.equals("")) {
+			if (xpathQueue.peek() != null) {
+				String parentXpath = xpathQueue.peek();
+
+				String parentCommand = getLogElementText(
+					parentXpath + "/div/span[@class='quote'][1]");
+
+				parentCommand = StringUtil.replace(parentCommand, "\"", "");
+
+				String parentCommandType = getLogElementText(
+					parentXpath + "/div/span[@class='attribute'][1]");
+
+				int x = parentCommand.indexOf("#");
+
 				sb.append("(from ");
-				sb.append(parentFileName);
+				sb.append(parentCommand.substring(0, x));
+				sb.append(".");
+				sb.append(parentCommandType);
 				sb.append(") ");
 			}
+
+			String lineNumber = getLogElementText(
+				xpath + "/div/div[@class='line-number']");
 
 			sb.append("at line ");
 			sb.append(lineNumber);
 			sb.append("<br />");
 		}
 
-		String testCaseXpath = generateXpath(ids);
-
-		String testCaseCommand = getLogElementText(testCaseXpath + "/div/h3");
-
-		int x = testCaseCommand.indexOf("#");
-
-		String testCaseFileName = testCaseCommand.substring(0,x) + ".testcase";
+		String testCaseCommand = getLogElementText(
+			generateXpath(xpathIdStack) + "/div/h3");
 
 		sb.append("in test case command <b>");
 		sb.append(testCaseCommand.trim());
@@ -504,7 +486,7 @@ public class Logger {
 			String className = stackTraceElement.getClassName();
 
 			if (className.startsWith("com.liferay")) {
-				sb.append("&#10;");
+				sb.append("&#10;&#9;");
 				sb.append(stackTraceElement.toString());
 			}
 		}

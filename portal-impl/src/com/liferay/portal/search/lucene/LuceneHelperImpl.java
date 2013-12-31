@@ -829,7 +829,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 				sb.append(". The port is set by the first request or ");
 				sb.append("configured in portal.properties by the properties ");
 				sb.append("\"portal.instance.http.port\" and ");
-				sb.append("\"portal.instance.https.port\"".);
+				sb.append("\"portal.instance.https.port\"");
 
 				throw new Exception(sb.toString());
 			}

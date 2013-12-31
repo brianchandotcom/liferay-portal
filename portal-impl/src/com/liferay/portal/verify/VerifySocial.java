@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialRequest;
@@ -51,8 +50,7 @@ public class VerifySocial extends VerifyProcess {
 				Property classPK = PropertyFactoryUtil.forName("classPK");
 
 				DynamicQuery groupDynamicQuery =
-					DynamicQueryFactoryUtil.forClass(
-						Group.class, PortalClassLoaderUtil.getClassLoader());
+					DynamicQueryFactoryUtil.forClass(Group.class);
 
 				groupDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("groupId"));

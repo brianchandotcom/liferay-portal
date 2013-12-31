@@ -68,12 +68,6 @@ public class VerifySocial extends VerifyProcess {
 
 		};
 
-		long requestCount = socialRequestActionableDynamicQuery.performCount();
-
-		if (requestCount == 0) {
-			return;
-		}
-
 		socialRequestActionableDynamicQuery.performActions();
 	}
 

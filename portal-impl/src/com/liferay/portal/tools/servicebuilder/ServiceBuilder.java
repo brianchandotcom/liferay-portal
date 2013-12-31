@@ -3543,7 +3543,7 @@ public class ServiceBuilder {
 		int y = content.indexOf(");", x);
 
 		if (x != -1) {
-			String oldCreateTableString = content.substring(x + 1, y);
+			String oldCreateTableString = content.substring(x, y + 2);
 
 			if (!oldCreateTableString.equals(newCreateTableString)) {
 				content =

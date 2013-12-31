@@ -64,7 +64,7 @@ public class ResourceTypePermissionFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_EITHER_SCOPE_C_G_N);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				"ResourceTypePermission", ResourceTypePermissionImpl.class);
@@ -111,7 +111,7 @@ public class ResourceTypePermissionFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_GROUP_SCOPE_C_N_R);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
 				"ResourceTypePermission", ResourceTypePermissionImpl.class);

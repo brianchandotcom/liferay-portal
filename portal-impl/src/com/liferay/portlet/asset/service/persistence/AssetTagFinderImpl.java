@@ -168,7 +168,7 @@ public class AssetTagFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_N_S_E);
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -222,7 +222,7 @@ public class AssetTagFinderImpl
 					PortalUtil.getSiteGroupId(groupId));
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -325,7 +325,7 @@ public class AssetTagFinderImpl
 					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -378,7 +378,7 @@ public class AssetTagFinderImpl
 					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AssetTag", AssetTagImpl.class);
 
@@ -435,7 +435,7 @@ public class AssetTagFinderImpl
 					PortalUtil.getSiteGroupId(groupId));
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AssetTag", AssetTagImpl.class);
 
@@ -481,7 +481,7 @@ public class AssetTagFinderImpl
 					sql, AssetTag.class.getName(), "AssetTag.tagId", groupIds);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AssetTag", AssetTagImpl.class);
 

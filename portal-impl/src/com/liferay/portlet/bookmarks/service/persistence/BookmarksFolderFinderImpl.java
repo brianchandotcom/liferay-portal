@@ -104,7 +104,7 @@ public class BookmarksFolderFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("BookmarksFolder", BookmarksFolderImpl.class);
 
@@ -180,7 +180,7 @@ public class BookmarksFolderFinderImpl
 
 			sql = sb.toString();
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -276,7 +276,7 @@ public class BookmarksFolderFinderImpl
 
 			sql = sb.toString();
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("modelId", Type.LONG);
 			q.addScalar("modelName", Type.STRING);

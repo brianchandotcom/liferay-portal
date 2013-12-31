@@ -88,7 +88,7 @@ public class AnnouncementsEntryFinderImpl
 				sql, "[$CLASS_PKS$]", getClassPKs(classNameId, classPKs));
 			sql = CustomSQLUtil.replaceAndOperator(sql, true);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -150,7 +150,7 @@ public class AnnouncementsEntryFinderImpl
 			sql = StringUtil.replace(sql, "[$CLASS_PKS$]", getClassPKs(scopes));
 			sql = CustomSQLUtil.replaceAndOperator(sql, true);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -203,7 +203,7 @@ public class AnnouncementsEntryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_DISPLAY_DATE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AnnouncementsEntry", AnnouncementsEntryImpl.class);
 
@@ -247,7 +247,7 @@ public class AnnouncementsEntryFinderImpl
 				sql, "[$CLASS_PKS$]", getClassPKs(classNameId, classPKs));
 			sql = CustomSQLUtil.replaceAndOperator(sql, true);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AnnouncementsEntry", AnnouncementsEntryImpl.class);
 
@@ -300,7 +300,7 @@ public class AnnouncementsEntryFinderImpl
 			sql = StringUtil.replace(sql, "[$CLASS_PKS$]", getClassPKs(scopes));
 			sql = CustomSQLUtil.replaceAndOperator(sql, true);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AnnouncementsEntry", AnnouncementsEntryImpl.class);
 

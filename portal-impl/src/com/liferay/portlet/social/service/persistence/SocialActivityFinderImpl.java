@@ -101,7 +101,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_GROUP_ID);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -138,7 +138,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_GROUP_USERS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -177,7 +177,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_ORGANIZATION_ID);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -216,7 +216,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_ORGANIZATION_USERS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -253,7 +253,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_RELATION);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -292,7 +292,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_RELATION_TYPE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -330,7 +330,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_USER_GROUPS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -372,7 +372,7 @@ public class SocialActivityFinderImpl
 			String sql = CustomSQLUtil.get(
 				COUNT_BY_USER_GROUPS_AND_ORGANIZATIONS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -412,7 +412,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_USER_ORGANIZATIONS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -451,7 +451,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_GROUP_ID);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 
@@ -482,7 +482,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_GROUP_USERS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 
@@ -513,7 +513,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_ORGANIZATION_ID);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 
@@ -544,7 +544,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_ORGANIZATION_USERS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 
@@ -574,7 +574,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_RELATION);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 
@@ -605,7 +605,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_RELATION_TYPE);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 
@@ -637,7 +637,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUPS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 
@@ -671,7 +671,7 @@ public class SocialActivityFinderImpl
 			String sql = CustomSQLUtil.get(
 				FIND_BY_USER_GROUPS_AND_ORGANIZATIONS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("activityId", Type.LONG);
 
@@ -717,7 +717,7 @@ public class SocialActivityFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_USER_ORGANIZATIONS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("SocialActivity", SocialActivityImpl.class);
 

@@ -51,7 +51,7 @@ public class AssetTagPropertyFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_K);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -99,7 +99,7 @@ public class AssetTagPropertyFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_K);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("tagPropertyValue", Type.STRING);
 

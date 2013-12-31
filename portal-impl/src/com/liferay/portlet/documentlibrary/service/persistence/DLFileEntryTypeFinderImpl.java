@@ -176,7 +176,7 @@ public class DLFileEntryTypeFinderImpl
 				sql, "description", StringPool.LIKE, true, descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -259,7 +259,7 @@ public class DLFileEntryTypeFinderImpl
 				sql = sql.concat(StringPool.CLOSE_PARENTHESIS);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DLFileEntryType", DLFileEntryTypeImpl.class);
 

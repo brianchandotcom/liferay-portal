@@ -132,7 +132,7 @@ public class UserFinderImpl
 
 			sql = replaceJoinAndWhere(sql, params);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -469,7 +469,7 @@ public class UserFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("User_", UserImpl.class);
 
@@ -496,7 +496,7 @@ public class UserFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_CONTACTS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("User_", UserImpl.class);
 
@@ -519,7 +519,7 @@ public class UserFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_GROUPS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("User_", UserImpl.class);
 
@@ -785,7 +785,7 @@ public class UserFinderImpl
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("userId", Type.LONG);
 
@@ -903,7 +903,7 @@ public class UserFinderImpl
 		sql = replaceJoinAndWhere(sql, params);
 		sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-		SQLQuery q = session.createSQLQuery(sql);
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 		q.addScalar("userId", Type.LONG);
 

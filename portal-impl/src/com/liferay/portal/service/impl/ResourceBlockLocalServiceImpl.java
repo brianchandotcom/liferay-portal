@@ -438,7 +438,7 @@ public class ResourceBlockLocalServiceImpl
 			try {
 				String sql = CustomSQLUtil.get(_RELEASE_RESOURCE_BLOCK);
 
-				SQLQuery sqlQuery = session.createSQLQuery(sql);
+				SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
@@ -451,7 +451,7 @@ public class ResourceBlockLocalServiceImpl
 					if (resourceBlock.getReferenceCount() == 0) {
 						sql = CustomSQLUtil.get(_DELETE_RESOURCE_BLOCK);
 
-						sqlQuery = session.createSQLQuery(sql);
+						sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 						qPos = QueryPos.getInstance(sqlQuery);
 
@@ -915,7 +915,7 @@ public class ResourceBlockLocalServiceImpl
 			try {
 				String sql = CustomSQLUtil.get(_RETAIN_RESOURCE_BLOCK);
 
-				SQLQuery sqlQuery = session.createSQLQuery(sql);
+				SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(sqlQuery);
 

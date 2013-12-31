@@ -81,7 +81,7 @@ public class ShoppingItemFinderImpl
 			query.append("ShoppingItem.featured = ? AND ");
 			query.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -152,7 +152,7 @@ public class ShoppingItemFinderImpl
 
 			keywords = '%' + keywords + '%';
 
-			SQLQuery q = session.createSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -220,7 +220,7 @@ public class ShoppingItemFinderImpl
 			query.append("ShoppingItem.sale = ? AND ");
 			query.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -297,7 +297,7 @@ public class ShoppingItemFinderImpl
 			query.append("ShoppingItem.featured = ? AND ");
 			query.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
 
 			q.addEntity("ShoppingItem", ShoppingItemImpl.class);
 
@@ -360,7 +360,7 @@ public class ShoppingItemFinderImpl
 
 			keywords = '%' + keywords + '%';
 
-			SQLQuery q = session.createSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
 
 			q.addEntity("ShoppingItem", ShoppingItemImpl.class);
 
@@ -422,7 +422,7 @@ public class ShoppingItemFinderImpl
 			query.append("ShoppingItem.sale = ? AND ");
 			query.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
 
 			q.addEntity("ShoppingItem", ShoppingItemImpl.class);
 
@@ -468,7 +468,7 @@ public class ShoppingItemFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$CATEGORY_ID$]", getCategoryIds(categoryIds));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 

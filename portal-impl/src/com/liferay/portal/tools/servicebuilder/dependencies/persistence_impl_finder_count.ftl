@@ -233,7 +233,7 @@ public int countBy${finder.name}(
 			try {
 				session = openSession();
 
-				SQLQuery q = session.createSQLQuery(sql);
+				SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 				q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
@@ -370,7 +370,7 @@ public int countBy${finder.name}(
 				try {
 					session = openSession();
 
-					SQLQuery q = session.createSQLQuery(sql);
+					SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 					q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 

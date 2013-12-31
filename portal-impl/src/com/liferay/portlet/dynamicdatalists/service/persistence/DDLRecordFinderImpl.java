@@ -65,7 +65,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 					sql, "(DDLRecordVersion.status = ?) AND", StringPool.BLANK);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -113,7 +113,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 					sql, "(DDLRecordVersion.status = ?) AND", StringPool.BLANK);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -166,7 +166,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DDLRecord", DDLRecordImpl.class);
 
@@ -208,7 +208,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DDLRecord", DDLRecordImpl.class);
 
@@ -252,7 +252,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 					sql, "(DDLRecordVersion.status = ?) AND", StringPool.BLANK);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("minRecordId", Type.LONG);
 			q.addScalar("maxRecordId", Type.LONG);
@@ -305,7 +305,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 			sql +=
 				" AND (DDLRecord.recordId >= ?) AND (DDLRecord.recordId < ?)";
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DDLRecord", DDLRecordImpl.class);
 

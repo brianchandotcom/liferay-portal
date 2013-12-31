@@ -91,7 +91,7 @@ public class PortletPreferencesFinderImpl
 					sql, _PREFERENCES_SQL, StringPool.BLANK);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -162,7 +162,7 @@ public class PortletPreferencesFinderImpl
 					sql, _PREFERENCES_SQL, StringPool.BLANK);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -215,7 +215,7 @@ public class PortletPreferencesFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_PORTLET_ID);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("PortletPreferences", PortletPreferencesImpl.class);
 
@@ -269,7 +269,7 @@ public class PortletPreferencesFinderImpl
 
 				String sql = CustomSQLUtil.get(FIND_BY_C_G_O_O_P_P);
 
-				SQLQuery q = session.createSQLQuery(sql);
+				SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 				q.addEntity("PortletPreferences", PortletPreferencesImpl.class);
 

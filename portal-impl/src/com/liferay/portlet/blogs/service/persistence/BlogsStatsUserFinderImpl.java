@@ -76,7 +76,7 @@ public class BlogsStatsUserFinderImpl
 				sql, "[$ORGANIZATION_ID$]",
 				getOrganizationIds(organizationIds));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -120,7 +120,7 @@ public class BlogsStatsUserFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_GROUP_IDS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("userId", Type.LONG);
 			q.addScalar("lastPostDate", Type.TIMESTAMP);
@@ -193,7 +193,7 @@ public class BlogsStatsUserFinderImpl
 				getOrganizationIds(organizationIds));
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("BlogsStatsUser", BlogsStatsUserImpl.class);
 

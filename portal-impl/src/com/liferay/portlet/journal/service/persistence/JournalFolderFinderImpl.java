@@ -91,7 +91,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			String sql = CustomSQLUtil.get(FIND_F_BY_NO_ASSETS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(JournalFolderImpl.TABLE_NAME, JournalFolderImpl.class);
 
@@ -137,7 +137,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			String sql = updateSQL(sb.toString(), folderId);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -206,7 +206,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("modelFolderId", Type.LONG);
 			q.addScalar("modelFolder", Type.LONG);

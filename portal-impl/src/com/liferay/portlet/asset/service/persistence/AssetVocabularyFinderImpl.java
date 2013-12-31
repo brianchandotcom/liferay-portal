@@ -91,7 +91,7 @@ public class AssetVocabularyFinderImpl
 					"AssetVocabulary.vocabularyId", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -143,7 +143,7 @@ public class AssetVocabularyFinderImpl
 					"AssetVocabulary.vocabularyId", groupId);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AssetVocabulary", AssetVocabularyImpl.class);
 

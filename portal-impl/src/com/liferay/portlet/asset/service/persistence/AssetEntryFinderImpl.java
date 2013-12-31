@@ -400,7 +400,7 @@ public class AssetEntryFinderImpl
 
 		String sql = sb.toString();
 
-		SQLQuery q = session.createSQLQuery(sql);
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 		if (count) {
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);

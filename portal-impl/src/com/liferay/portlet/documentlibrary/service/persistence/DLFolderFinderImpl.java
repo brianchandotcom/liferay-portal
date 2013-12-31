@@ -169,7 +169,7 @@ public class DLFolderFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_F_BY_NO_ASSETS);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("DLFolder", DLFolderImpl.class);
 
@@ -243,7 +243,7 @@ public class DLFolderFinderImpl
 
 			sql = updateSQL(sql, folderId, includeMountFolders);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -312,7 +312,7 @@ public class DLFolderFinderImpl
 
 			sql = updateSQL(sql, folderId, false);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -372,7 +372,7 @@ public class DLFolderFinderImpl
 
 			sql = updateSQL(sql, folderId, false);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -464,7 +464,7 @@ public class DLFolderFinderImpl
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("modelFolderId", Type.LONG);
 			q.addScalar("name", Type.STRING);
@@ -572,7 +572,7 @@ public class DLFolderFinderImpl
 
 			sql = updateSQL(sql, folderId, false);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("modelFolderId", Type.LONG);
 			q.addScalar("name", Type.STRING);

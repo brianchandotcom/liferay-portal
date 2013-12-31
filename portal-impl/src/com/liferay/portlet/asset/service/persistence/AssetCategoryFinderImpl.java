@@ -80,7 +80,7 @@ public class AssetCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_C_N);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -123,7 +123,7 @@ public class AssetCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_N_P);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -180,7 +180,7 @@ public class AssetCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_L);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("categoryId", Type.LONG);
 
@@ -224,7 +224,7 @@ public class AssetCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_N);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AssetCategory", AssetCategoryImpl.class);
 
@@ -284,7 +284,7 @@ public class AssetCategoryFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$JOIN$]", getJoin(categoryProperties));
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("AssetCategory", AssetCategoryImpl.class);
 

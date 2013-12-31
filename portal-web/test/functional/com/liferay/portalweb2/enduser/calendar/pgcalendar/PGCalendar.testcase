@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-calendar">
 	<property name="portlet.plugins.includes" value="calendar-portlet" />
 
 	<var name="pageName" value="Calendar Page" />

@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-integrations">
 	<property name="portlet.plugins.includes" value="akismet-portlet" />
 
 	<set-up>

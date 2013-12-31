@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-wcm">
 	<var name="pageName" value="Blogs ADT Test Page" />
 
 	<set-up>

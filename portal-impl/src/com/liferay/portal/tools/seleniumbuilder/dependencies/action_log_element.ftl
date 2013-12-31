@@ -59,7 +59,7 @@
 		;
 	</#if>
 <#elseif actionElement.getName() == "echo" || actionElement.getName() == "fail">
-	"${actionElement.getName()} message: '" + RuntimeVariables.evaluateVariable("${message}", commandScopeVariables) + "'",
+	"${actionElement.getName()} message: \"" + RuntimeVariables.evaluateVariable("${message}", commandScopeVariables) + "\"",
 
 	new String[] {"", "", ""});
 </#if>

@@ -587,7 +587,7 @@ jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}
 
-captcha.max.challenges=0
+captcha.max.challenges=-1
 
 browser.launcher.url=
 

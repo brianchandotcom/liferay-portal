@@ -23,10 +23,13 @@ String value = null;
 if (fieldsModel.contains(name)) {
 	com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
 
-	value = HtmlUtil.escape(field.getRenderedValue(themeDisplay.getLocale()));
+	value = field.getRenderedValue(themeDisplay.getLocale());
 
 	if (dataType.equals(FieldConstants.HTML)) {
-		value = "<a href=\"javascript:Liferay.DDLUtil.openPreviewDialog('" + value + "');\">(" + LanguageUtil.get(pageContext, "preview") + ")</a>";
+		value = "<a href=\"javascript:Liferay.DDLUtil.openPreviewDialog('" + HtmlUtil.escapeJS(value) + "');\">(" + LanguageUtil.get(pageContext, "preview") + ")</a>";
+	}
+	else {
+		value = HtmlUtil.escape(value);
 	}
 }
 else {

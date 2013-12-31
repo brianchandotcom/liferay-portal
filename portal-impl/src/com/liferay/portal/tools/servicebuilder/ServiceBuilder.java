@@ -3505,7 +3505,7 @@ public class ServiceBuilder {
 				_createSQLTables(sqlFile, createTableSQL, entity, true);
 
 				_updateSQLFile(
-					"update-6.1.1-6.2.0.sql", createTableSQL, entity);
+					"update-6.2.0-7.0.0.sql", createTableSQL, entity);
 			}
 		}
 

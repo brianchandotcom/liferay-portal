@@ -27,8 +27,10 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -398,72 +400,79 @@ public class Logger {
 	}
 
 	protected String generateStackTrace(Throwable throwable) {
-		Stack<String> ids = (Stack<String>)_xpathIdStack.clone();
-
-		String currentCommand = null;
-		String currentLine = null;
-		String parentCommand = null;
-		String parentLine = null;
-		String testCaseCommand = null;
+		Stack<String> xpathIdStack = (Stack<String>)_xpathIdStack.clone();
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("<p>");
 
-		while (ids.size() > 1) {
-			String xpath = generateXpath(ids);
+		Queue<String> xpathQueue = new LinkedList<String>();
+
+		while (xpathIdStack.size() > 1) {
+			String xpath = generateXpath(xpathIdStack);
+
+			xpathIdStack.pop();
+
+			String commandTag = getLogElementText(
+				xpath + "/div/span[@class='tag'][1]");
+
+			if (!commandTag.equals("echo") && !commandTag.equals("execute") &&
+				!commandTag.equals("fail")) {
+
+				continue;
+			}
+
+			xpathQueue.add(xpath);
+		}
+
+		while (xpathQueue.peek() != null) {
+			String xpath = xpathQueue.poll();
 
 			String command = getLogElementText(
 				xpath + "/div/span[@class='quote'][1]");
 
 			command = StringUtil.replace(command, "\"", "");
 
-			String line = getLogElementText(
+			String commandType = getLogElementText(
+				xpath + "/div/span[@class='attribute'][1]");
+
+			sb.append("Failed Line: ");
+
+			sb.append(commandType);
+			sb.append(": <b>");
+			sb.append(command);
+			sb.append("</b> ");
+
+			if (xpathQueue.peek() != null) {
+				String parentXpath = xpathQueue.peek();
+
+				String parentCommand = getLogElementText(
+					parentXpath + "/div/span[@class='quote'][1]");
+
+				parentCommand = StringUtil.replace(parentCommand, "\"", "");
+
+				String parentCommandType = getLogElementText(
+					parentXpath + "/div/span[@class='attribute'][1]");
+
+				int x = parentCommand.indexOf("#");
+
+				sb.append("(from ");
+				sb.append(parentCommand.substring(0, x));
+				sb.append(".");
+				sb.append(parentCommandType);
+				sb.append(") ");
+			}
+
+			String lineNumber = getLogElementText(
 				xpath + "/div/div[@class='line-number']");
 
-			if ((parentCommand == null) || (parentLine == null)) {
-				parentCommand = command;
-				parentLine = line;
-			}
-			else {
-				currentCommand = parentCommand;
-				currentLine = parentLine;
-
-				parentCommand = command;
-				parentLine = line;
-
-				String parentFileName = "";
-
-				if (ids.size() > 2) {
-					int x = parentCommand.indexOf("#");
-
-					parentFileName = parentCommand.substring(0, x) + ".macro";
-				}
-				else {
-					ids.pop();
-
-					String testCaseXpath = generateXpath(ids);
-
-					testCaseCommand = getLogElementText(
-						testCaseXpath + "/div/h3");
-
-					int x = testCaseCommand.lastIndexOf("#");
-
-					parentFileName =
-						testCaseCommand.substring(0, x) + ".testcase";
-				}
-
-				sb.append("Failed Line: <b>");
-				sb.append(currentCommand);
-				sb.append("</b> (");
-				sb.append(parentFileName);
-				sb.append(":");
-				sb.append(currentLine);
-				sb.append(")<br />");
-			}
-
-			ids.pop();
+			sb.append("at line ");
+			sb.append(lineNumber);
+			sb.append("<br />");
 		}
+
+		String testCaseCommand = getLogElementText(
+			generateXpath(xpathIdStack) + "/div/h3");
 
 		sb.append("in test case command <b>");
 		sb.append(testCaseCommand.trim());
@@ -477,7 +486,7 @@ public class Logger {
 			String className = stackTraceElement.getClassName();
 
 			if (className.startsWith("com.liferay")) {
-				sb.append("\\n\\t");
+				sb.append("&#10;&#9;");
 				sb.append(stackTraceElement.toString());
 			}
 		}

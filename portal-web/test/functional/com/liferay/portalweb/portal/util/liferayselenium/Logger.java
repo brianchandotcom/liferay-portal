@@ -229,7 +229,7 @@ public class Logger {
 		sb.append("/");
 		sb.append(_screenshotFileName);
 		sb.append(_screenshotCount);
-		sb.append(".jpg\" width=\"950\" />");
+		sb.append(".jpg\" width=\"1050\" />");
 
 		sb.append("<hr />");
 

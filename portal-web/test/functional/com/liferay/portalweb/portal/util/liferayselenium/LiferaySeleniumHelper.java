@@ -28,7 +28,16 @@ import com.liferay.portalweb.portal.util.EmailCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+
+import java.io.File;
+
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 /**
  * @author Brian Wing Shun Chan
@@ -586,6 +595,37 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.pause("3000");
 	}
 
+	public static void saveScreenshot(
+			LiferaySelenium liferaySelenium, String fileName)
+		throws Exception {
+
+		if (_screenshotFileName.equals(fileName)) {
+			_screenshotCount++;
+		}
+		else {
+			_screenshotCount = 0;
+
+			_screenshotFileName = fileName;
+		}
+
+		File file = new File(
+			liferaySelenium.getProjectDir() + "portal-web\\test-results\\" +
+				"functional\\" + _screenshotFileName + "\\" +
+				_screenshotFileName + _screenshotCount + ".jpg");
+
+		file.mkdirs();
+
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+		Rectangle rectangle = new Rectangle(toolkit.getScreenSize());
+
+		Robot robot = new Robot();
+
+		BufferedImage bufferedImage = robot.createScreenCapture(rectangle);
+
+		ImageIO.write(bufferedImage, "jpg", file);
+	}
+
 	public static void sendEmail(
 			LiferaySelenium liferaySelenium, String to, String subject,
 			String body)
@@ -922,5 +962,8 @@ public class LiferaySeleniumHelper {
 			Thread.sleep(1000);
 		}
 	}
+
+	private static int _screenshotCount = 0;
+	private static String _screenshotFileName = "";
 
 }

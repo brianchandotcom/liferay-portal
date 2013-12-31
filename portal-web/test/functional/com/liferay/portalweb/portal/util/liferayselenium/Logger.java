@@ -566,7 +566,7 @@ public class Logger {
 		sb.append("');");
 
 		if (type.equals("selenium")) {
-			if (_actionCount == _seleniumCount) {
+			if (_actionCount >= _seleniumCount) {
 				_seleniumCount++;
 
 				sb.append(

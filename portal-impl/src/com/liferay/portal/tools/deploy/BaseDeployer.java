@@ -355,6 +355,10 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			String jarName = jarFullName.substring(
 				jarFullName.lastIndexOf("/") + 1);
 
+			if (!FileUtil.exists(jarFullName)) {
+				DeployUtil.getResourcePath(jarName);
+			}
+
 			FileUtil.copyFile(
 				jarFullName, srcFile + "/WEB-INF/lib/" + jarName, false);
 		}

@@ -1977,6 +1977,8 @@ public interface PropsKeys {
 
 	public static final String PORTAL_INSTANCE_HTTP_PORT = "portal.instance.http.port";
 
+	public static final String PORTAL_INSTANCE_HTTPS_PORT = "portal.instance.https.port";
+
 	public static final String PORTAL_JAAS_AUTH_TYPE = "portal.jaas.auth.type";
 
 	public static final String PORTAL_JAAS_ENABLE = "portal.jaas.enable";

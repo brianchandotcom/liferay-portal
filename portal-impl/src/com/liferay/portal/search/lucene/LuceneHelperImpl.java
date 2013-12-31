@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -784,6 +785,15 @@ public class LuceneHelperImpl implements LuceneHelper {
 		}
 
 		BooleanQuery.setMaxClauseCount(_LUCENE_BOOLEAN_QUERY_CLAUSE_MAX_SIZE);
+
+		if (StringUtil.equalsIgnoreCase(
+				Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
+
+			_protocol = Http.HTTPS;
+		}
+		else {
+			_protocol = Http.HTTP;
+		}
 	}
 
 	private ObjectValuePair<String, URL>
@@ -806,9 +816,17 @@ public class LuceneHelperImpl implements LuceneHelper {
 				_CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT,
 				TimeUnit.MILLISECONDS);
 
-			String transientToken = (String)clusterNodeResponse.getResult();
-
 			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
+			int port = clusterNode.getPort();
+
+			if (port <= 0) {
+				throw new Exception(
+					"Invalid port " + port + " of ClusterNode, port is " +
+						"detected by the first request arrived, or configured" +
+							" by \"portal.instance.http.port\" and " +
+								"\"portal.instance.https.port\"");
+			}
 
 			InetAddress inetAddress = clusterNode.getInetAddress();
 
@@ -821,8 +839,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 			fileName = fileName.concat("lucene/dump");
 
 			URL url = new URL(
-				"http", inetAddress.getHostAddress(), clusterNode.getPort(),
-				fileName);
+				_protocol, inetAddress.getHostAddress(), port, fileName);
+
+			String transientToken = (String)clusterNodeResponse.getResult();
 
 			return new ObjectValuePair<String, URL>(transientToken, url);
 		}
@@ -957,6 +976,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 		new ConcurrentHashMap<Long, IndexAccessor>();
 	private LoadIndexClusterEventListener _loadIndexClusterEventListener;
 	private ThreadPoolExecutor _luceneIndexThreadPoolExecutor;
+	private String _protocol;
 	private Version _version;
 
 	private static class ShutdownSyncJob implements Runnable {

@@ -17,7 +17,6 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -38,7 +37,6 @@ public class VerifySocial extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-
 		ActionableDynamicQuery socialRequestActionableDynamicQuery =
 			new SocialRequestActionableDynamicQuery() {
 
@@ -52,15 +50,14 @@ public class VerifySocial extends VerifyProcess {
 
 				Property classPK = PropertyFactoryUtil.forName("classPK");
 
-				DynamicQuery groupIdDq = DynamicQueryFactoryUtil.forClass(
-					Group.class, PortalClassLoaderUtil.getClassLoader());
+				DynamicQuery groupDynamicQuery =
+					DynamicQueryFactoryUtil.forClass(
+						Group.class, PortalClassLoaderUtil.getClassLoader());
 
-				Projection groupIdProjection = ProjectionFactoryUtil.property(
-					"groupId");
+				groupDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("groupId"));
 
-				groupIdDq.setProjection(groupIdProjection);
-
-				dynamicQuery.add(classPK.notIn(groupIdDq));
+				dynamicQuery.add(classPK.notIn(groupDynamicQuery));
 			}
 
 			@Override

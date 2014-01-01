@@ -2120,9 +2120,9 @@ public class ServiceBuilder {
 		}
 
 		int firstClass = newContent.indexOf(
-			"<class name=\"" + _packagePath + ".model.impl.");
+			"<class name=\"" + _packagePath + ".model.");
 		int lastClass = newContent.lastIndexOf(
-			"<class name=\"" + _packagePath + ".model.impl.");
+			"<class name=\"" + _packagePath + ".model.");
 
 		if (firstClass == -1) {
 			int x = newContent.indexOf("</hibernate-mapping>");

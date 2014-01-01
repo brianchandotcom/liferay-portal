@@ -164,6 +164,7 @@
 	<bean id="com.liferay.portal.service.UserGroupGroupRoleLocalService" class="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.UserGroupGroupRoleService" class="com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.UserGroupGroupRolePersistence" class="com.liferay.portal.service.persistence.UserGroupGroupRolePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.persistence.UserGroupGroupRoleFinder" class="com.liferay.portal.service.persistence.UserGroupGroupRoleFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.UserGroupRoleLocalService" class="com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.UserGroupRoleService" class="com.liferay.portal.service.impl.UserGroupRoleServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.UserGroupRolePersistence" class="com.liferay.portal.service.persistence.UserGroupRolePersistenceImpl" parent="basePersistence" />

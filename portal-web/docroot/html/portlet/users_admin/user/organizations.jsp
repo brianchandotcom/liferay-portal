@@ -95,8 +95,6 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
-	<br />
-
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"

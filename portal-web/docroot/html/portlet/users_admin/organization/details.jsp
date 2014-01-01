@@ -225,8 +225,6 @@ if (parentOrganization != null) {
 	<liferay-ui:search-iterator paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<br />
-
 <liferay-ui:icon
 	cssClass="modify-link"
 	iconCssClass="icon-search"

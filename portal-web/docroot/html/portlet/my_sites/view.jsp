@@ -202,7 +202,6 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 				align="right"
 				path="/html/portlet/my_sites/site_action.jsp"
 			/>
-
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />

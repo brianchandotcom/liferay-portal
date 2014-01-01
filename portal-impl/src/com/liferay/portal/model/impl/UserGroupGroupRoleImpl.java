@@ -14,12 +14,37 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Norbert Kocsis
  */
 public class UserGroupGroupRoleImpl extends UserGroupGroupRoleBaseImpl {
 
 	public UserGroupGroupRoleImpl() {
+	}
+
+	@Override
+	public Group getGroup() throws PortalException, SystemException {
+		return GroupLocalServiceUtil.getGroup(getGroupId());
+	}
+
+	@Override
+	public Role getRole() throws PortalException, SystemException {
+		return RoleLocalServiceUtil.getRole(getRoleId());
+	}
+
+	@Override
+	public UserGroup getUserGroup() throws PortalException, SystemException {
+		return UserGroupLocalServiceUtil.getUserGroup(getUserGroupId());
 	}
 
 }

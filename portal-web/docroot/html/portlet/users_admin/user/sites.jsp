@@ -19,6 +19,7 @@
 <%
 User selUser = (User)request.getAttribute("user.selUser");
 List<Group> groups = (List<Group>)request.getAttribute("user.groups");
+List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSites");
 %>
 
 <liferay-ui:error-marker key="errorSection" value="sites" />
@@ -90,8 +91,6 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
-	<br />
-
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"
@@ -152,3 +151,61 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 		);
 	</aui:script>
 </c:if>
+
+<h3><liferay-ui:message key="inherited-sites" /></h3>
+
+<liferay-ui:search-container
+	headerNames="name,roles"
+>
+	<liferay-ui:search-container-results
+		results="<%= inheritedSites %>"
+		total="<%= inheritedSites.size() %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Group"
+		escapedModel="<%= true %>"
+		keyProperty="groupId"
+		modelVar="inheritedSite"
+		rowIdProperty="friendlyURL"
+	>
+		<liferay-ui:search-container-column-text
+			name="name"
+			value="<%= HtmlUtil.escape(inheritedSite.getDescriptiveName(locale)) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			buffer="buffer"
+			name="roles"
+		>
+
+			<%
+			long userId = selUser.getUserId();
+			long groupId = inheritedSite.getGroupId();
+
+			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(userId, groupId);
+
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
+
+				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
+				buffer.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(userId, groupId);
+
+			for (Role role : inheritedRoles) {
+				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
+				buffer.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			if (!inheritedRoles.isEmpty() || !userGroupRoles.isEmpty()) {
+				buffer.setIndex(buffer.index() - 1);
+			}
+			%>
+
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator paginate="<%= false %>" />
+</liferay-ui:search-container>

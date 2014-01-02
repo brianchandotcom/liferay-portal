@@ -76,7 +76,7 @@ public class AssetCategoryPropertyServiceImpl
 
 	@Override
 	public AssetCategoryProperty updateCategoryProperty(
-			long categoryPropertyId, String key, String value)
+			long userId, long categoryPropertyId, String key, String value)
 		throws PortalException, SystemException {
 
 		AssetCategoryProperty assetCategoryProperty =
@@ -88,7 +88,15 @@ public class AssetCategoryPropertyServiceImpl
 			ActionKeys.UPDATE);
 
 		return assetCategoryPropertyLocalService.updateCategoryProperty(
-			categoryPropertyId, key, value);
+			userId, categoryPropertyId, key, value);
+	}
+
+	@Override
+	public AssetCategoryProperty updateCategoryProperty(
+			long categoryPropertyId, String key, String value)
+		throws PortalException, SystemException {
+
+		return updateCategoryProperty(0, categoryPropertyId, key, value);
 	}
 
 }

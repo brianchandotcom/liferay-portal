@@ -556,8 +556,7 @@ public class AssetCategoryLocalServiceImpl
 				while (iterator.hasNext()) {
 					oldCategoryProperty = iterator.next();
 
-					if ((userId == oldCategoryProperty.getUserId()) &&
-						(categoryId == oldCategoryProperty.getCategoryId()) &&
+					if ((categoryId == oldCategoryProperty.getCategoryId()) &&
 						key.equals(oldCategoryProperty.getKey())) {
 
 						addCategoryProperty = false;
@@ -578,8 +577,8 @@ public class AssetCategoryLocalServiceImpl
 				}
 				else if (updateCategoryProperty) {
 					assetCategoryPropertyLocalService.updateCategoryProperty(
-						oldCategoryProperty.getCategoryPropertyId(), key,
-						value);
+						userId, oldCategoryProperty.getCategoryPropertyId(),
+						key, value);
 				}
 			}
 		}

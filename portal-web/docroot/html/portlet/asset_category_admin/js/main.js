@@ -2683,34 +2683,37 @@ AUI.add(
 
 						var vocabularyPanelAdd = instance._vocabularyPanelAdd;
 
+						var vocabularyURL = instance._createURL(TYPE_VOCABULARY, ACTION_ADD, LIFECYCLE_RENDER);
+
 						if (!vocabularyPanelAdd) {
 							vocabularyPanelAdd = instance._createVocabularyPanelAdd();
-
-							var vocabularyURL = instance._createURL(TYPE_VOCABULARY, ACTION_ADD, LIFECYCLE_RENDER);
-
-							vocabularyPanelAdd.show();
-
-							vocabularyPanelAdd._syncUIPosAlign();
-
-							var afterSuccess = A.bind('_initializeVocabularyPanelAdd', instance, null);
 
 							vocabularyPanelAdd.plug(
 								A.Plugin.IO,
 								{
-									uri: vocabularyURL.toString(),
-									after: {
-										success: afterSuccess
-									}
+									autoLoad: false,
+									uri: vocabularyURL.toString()
 								}
 							);
 						}
-						else {
-							vocabularyPanelAdd.show();
+						else if (instance._currentVocabularyPanelAddIOHandle) {
+							instance._currentVocabularyPanelAddIOHandle.detach();
 
-							vocabularyPanelAdd._syncUIPosAlign();
+							vocabularyPanelAdd.io.set(STR_URI, vocabularyURL.toString());
 
 							instance._focusVocabularyPanelAdd();
 						}
+
+						vocabularyPanelAdd.show();
+
+						vocabularyPanelAdd._syncUIPosAlign();
+
+						instance._currentVocabularyPanelAddIOHandle = vocabularyPanelAdd.io.after(
+							STR_SUCCESS,
+							A.bind('_initializeVocabularyPanelAdd', instance, null)
+						);
+
+						vocabularyPanelAdd.io.start();
 					},
 
 					_showVocabularyPanelEdit: function() {

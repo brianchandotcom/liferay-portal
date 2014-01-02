@@ -15,10 +15,8 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,18 +25,23 @@ import javax.servlet.http.HttpSession;
 public interface EventsProcessor {
 
 	public void process(
-			String key, String[] classes, String[] ids,
-			HttpServletRequest request, HttpServletResponse response,
-			HttpSession session)
+			String key, String[] classes, LifecycleEvent lifecycleEvent)
 		throws ActionException;
 
 	public void processEvent(
-			Object event, String[] ids, HttpServletRequest request,
-			HttpServletResponse response, HttpSession session)
+			LifecycleAction lifecycleAction, LifecycleEvent lifecycleEvent)
 		throws ActionException;
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             com.liferay.portal.service.registry.ServiceRegistry}
+	 */
 	public void registerEvent(String key, Object event);
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             com.liferay.portal.service.registry.ServiceRegistry}
+	 */
 	public void unregisterEvent(String key, Object event);
 
 }

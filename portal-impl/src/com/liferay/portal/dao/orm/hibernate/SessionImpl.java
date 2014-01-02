@@ -119,13 +119,7 @@ public class SessionImpl implements Session {
 	public SQLQuery createSynchronizedSQLQuery(String queryString)
 		throws ORMException {
 
-		SQLQuery sqlQuery = createSQLQuery(queryString);
-
-		String[] tableNames = SQLQueryTableNamesUtil.getTableNames(queryString);
-
-		sqlQuery.addSynchronizedQuerySpaces(tableNames);
-
-		return sqlQuery;
+		return createSynchronizedSQLQuery(queryString, true);
 	}
 
 	@Override
@@ -133,13 +127,22 @@ public class SessionImpl implements Session {
 			String queryString, boolean strictName)
 		throws ORMException {
 
-		SQLQuery sqlQuery = createSQLQuery(queryString, strictName);
+		try {
+			queryString = SQLTransformer.transformFromJpqlToHql(queryString);
 
-		String[] tableNames = SQLQueryTableNamesUtil.getTableNames(queryString);
+			SQLQuery sqlQuery = new SQLQueryImpl(
+				_session.createSQLQuery(queryString), strictName);
 
-		sqlQuery.addSynchronizedQuerySpaces(tableNames);
+			String[] tableNames = SQLQueryTableNamesUtil.getTableNames(
+				queryString);
 
-		return sqlQuery;
+			sqlQuery.addSynchronizedQuerySpaces(tableNames);
+
+			return DoPrivilegedUtil.wrapWhenActive(sqlQuery);
+		}
+		catch (Exception e) {
+			throw ExceptionTranslator.translate(e);
+		}
 	}
 
 	@NotPrivileged

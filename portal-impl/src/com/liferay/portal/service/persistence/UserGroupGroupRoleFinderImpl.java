@@ -33,11 +33,11 @@ public class UserGroupGroupRoleFinderImpl
 	extends BasePersistenceImpl<UserGroupGroupRole>
 	implements UserGroupGroupRoleFinder {
 
-	public static final String FIND_BY_USER_ID =
-		UserGroupGroupRoleFinder.class.getName() + ".findByUserId";
+	public static final String FIND_BY_USER_GROUPS_USERS =
+		UserGroupGroupRoleFinder.class.getName() + ".findByUserGroupsUsers";
 
 	@Override
-	public List<UserGroupGroupRole> findByUserId(long userId)
+	public List<UserGroupGroupRole> findByUserGroupsUsers(long userId)
 		throws SystemException {
 
 		Session session = null;
@@ -45,7 +45,7 @@ public class UserGroupGroupRoleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_USER_ID);
+			String sql = CustomSQLUtil.get(FIND_BY_USER_GROUPS_USERS);
 
 			SQLQuery q = session.createSQLQuery(sql);
 

@@ -1698,7 +1698,7 @@
 				(Users_UserGroups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.UserGroupGroupRoleFinder.findByUserId">
+	<sql id="com.liferay.portal.service.persistence.UserGroupGroupRoleFinder.findByUserGroupsUsers">
 		<![CDATA[
 			(
 				SELECT

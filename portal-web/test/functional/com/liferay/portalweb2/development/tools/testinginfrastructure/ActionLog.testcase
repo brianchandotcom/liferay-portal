@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-tools">
 	<command name="IfStatements" priority="5">
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />

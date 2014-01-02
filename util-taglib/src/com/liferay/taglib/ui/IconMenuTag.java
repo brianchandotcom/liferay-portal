@@ -337,7 +337,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 							caret = "icon-caret-left";
 						}
 
-						jspWriter.write("<i class=\"");
+						jspWriter.write("<i class=\"lfr-icon-menu-arrow ");
 						jspWriter.write(caret);
 						jspWriter.write("\"></i> ");
 					}
@@ -348,13 +348,16 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 						auiImage = _icon.startsWith(_AUI_PATH);
 
 						if (auiImage) {
-							jspWriter.write(" <i class=\"icon-");
+							jspWriter.write(
+								" <i class=\"lfr-icon-menu-icon icon-");
 							jspWriter.write(
 								_icon.substring(_AUI_PATH.length()));
 							jspWriter.write("\"></i> ");
 						}
 						else {
-							jspWriter.write("<img alt=\"\" src=\"");
+							jspWriter.write(
+								"<img alt=\"\" class=\"lfr-icon-menu-icon\" ");
+							jspWriter.write("src=\"");
 							jspWriter.write(_icon);
 							jspWriter.write("\" /> ");
 						}
@@ -373,7 +376,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 							caret = "icon-caret-" + _direction;
 						}
 
-						jspWriter.write(" <i class=\"");
+						jspWriter.write(" <i class=\"lfr-icon-menu-arrow ");
 						jspWriter.write(caret);
 						jspWriter.write("\"></i> ");
 					}

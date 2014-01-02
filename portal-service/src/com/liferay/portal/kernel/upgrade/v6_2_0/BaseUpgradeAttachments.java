@@ -130,7 +130,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(8);
 
-			sb.append("insert into DLFileVersion (uuid_, fileVersionId,");
+			sb.append("insert into DLFileVersion (uuid_, fileVersionId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");
 			sb.append("modifiedDate, repositoryId, folderId, fileEntryId, ");
 			sb.append("extension, mimeType, title, description, changeLog, ");

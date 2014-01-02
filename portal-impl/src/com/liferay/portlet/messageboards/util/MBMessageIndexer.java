@@ -436,6 +436,10 @@ public class MBMessageIndexer extends BaseIndexer {
 			protected void performAction(Object object) throws PortalException {
 				MBMessage message = (MBMessage)object;
 
+				if (message.isDiscussion() && message.isRoot()) {
+					return;
+				}
+
 				Document document = getDocument(message);
 
 				addDocument(document);

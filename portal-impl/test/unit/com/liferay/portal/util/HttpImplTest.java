@@ -156,7 +156,7 @@ public class HttpImplTest extends PowerMockito {
 	@Test
 	public void testProtocolizeWithoutPort() {
 		Assert.assertEquals(
-			"http://foo.com/web/guest",
+			"http://foo.com:8443/web/guest",
 			_httpImpl.protocolize("https://foo.com:8443/web/guest", -1, false));
 	}
 

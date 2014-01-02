@@ -29,12 +29,14 @@ import java.util.Map;
  */
 public class BaseTestCase extends LiferaySeleneseTestCase {
 
-	public BaseTestCase() {
-		InitUtil.initWithSpring();
-
+	static {
 		if (GraphicsEnvironment.isHeadless()) {
 			System.setProperty("java.awt.headless", Boolean.FALSE.toString());
 		}
+	}
+
+	public BaseTestCase() {
+		InitUtil.initWithSpring();
 	}
 
 	@Override

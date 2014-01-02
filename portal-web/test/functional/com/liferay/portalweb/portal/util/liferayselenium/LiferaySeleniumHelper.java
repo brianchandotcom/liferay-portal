@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -40,8 +39,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.sikuli.api.robot.Key;
 import org.sikuli.script.FindFailed;
+import org.sikuli.script.Key;
 import org.sikuli.script.Match;
 import org.sikuli.script.Screen;
 
@@ -365,20 +364,19 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws FindFailed {
 
-		if (OSDetector.isWindows()) {
-			_imageDirectory = StringUtil.replace(_imageDirectory, "//", "\\");
-			_imageDirectory = StringUtil.replace(
-				_imageDirectory, "LinuxImages", "WindowsImages");
-		}
+		Screen screen = new Screen();
 
 		Match match = screen.exists(
-			liferaySelenium.getProjectDir() + _imageDirectory + image);
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
 
-		if ((match == null) && image.equals("typeFileName.png")) {
+		if (match == null) {
 			return;
 		}
 
-		screen.click(liferaySelenium.getProjectDir() + _imageDirectory + image);
+		screen.click(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
 	}
 
 	public static void connectToEmailAccount(
@@ -679,25 +677,23 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws FindFailed {
 
-		if (OSDetector.isWindows()) {
-			_imageDirectory = StringUtil.replace(_imageDirectory, "//", "\\");
-			_imageDirectory = StringUtil.replace(
-				_imageDirectory, "LinuxImages", "WindowsImages");
-			_outputDirectory = StringUtil.replace(_outputDirectory, "//", "\\");
-		}
+		Screen screen = new Screen();
 
 		Match match = screen.exists(
-			liferaySelenium.getProjectDir() + _imageDirectory + image);
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
 
 		if (match == null) {
 			return;
 		}
-		else {
-			screen.click(
-				liferaySelenium.getProjectDir() + _imageDirectory + image);
-			screen.type(_outputDirectory);
-			screen.type(Key.ENTER);
-		}
+
+		screen.click(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
+
+		screen.type(liferaySelenium.getOutputDir());
+
+		screen.type(Key.ENTER);
 	}
 
 	public static void waitForElementNotPresent(
@@ -1014,11 +1010,6 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	private static String _imageDirectory =
-		"portal-web//test//functional//com//liferay//portalweb//portal//" +
-			"util//liferayselenium//dependencies//LinuxImages//";
-	private static String _outputDirectory = TestPropsValues.OUTPUT_DIR;
-	private static Screen screen = new Screen();
 	private static int _screenshotCount = 0;
 	private static String _screenshotFileName = "";
 

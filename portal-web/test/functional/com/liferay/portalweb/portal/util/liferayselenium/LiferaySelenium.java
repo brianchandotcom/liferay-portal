@@ -118,9 +118,13 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getNumberIncrement(String value);
 
+	public String getOutputDir();
+
 	public String getPrimaryTestSuiteName();
 
 	public String getProjectDir();
+
+	public String getSikuliImagesDir();
 
 	public void goBackAndWait();
 

@@ -44,7 +44,7 @@
 				%>
 
 					<liferay-util:buffer var="entityLink">
-						<em class="restore-entry-title"><aui:a href="<%= restoreEntryLinks.get(i) %>" label="<%= restoreEntryMessages.get(i) %>" /></em>
+						<em class="restore-entry-title"><aui:a href="<%= restoreEntryLinks.get(i) %>" label="<%= HtmlUtil.escape(restoreEntryMessages.get(i)) %>" /></em>
 					</liferay-util:buffer>
 
 					<liferay-util:buffer var="link">

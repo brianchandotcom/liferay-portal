@@ -20,7 +20,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMListFinder.findByC_G_L_N_D">
 		<![CDATA[
 			SELECT
-				{DDMList.*}
+				DDMList.*
 			FROM
 				DDMList
 			WHERE
@@ -56,7 +56,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
-				{DDMStructure.*}
+				DDMStructure.*
 			FROM
 				DDMStructure
 			WHERE
@@ -118,7 +118,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
 		<![CDATA[
 			SELECT
-				{DDMTemplate.*}
+				DDMTemplate.*
 			FROM
 				DDMTemplate
 			WHERE
@@ -142,7 +142,7 @@
 	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_N_D_T_M_L">
 		<![CDATA[
 			SELECT
-				{DDMTemplate.*}
+				DDMTemplate.*
 			FROM
 				DDMTemplate
 			WHERE

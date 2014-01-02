@@ -21,7 +21,7 @@
 	<sql id="com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder.findByGroupIds">
 		<![CDATA[
 			SELECT
-				{BlogsEntry.*}
+				BlogsEntry.*
 			FROM
 				BlogsEntry
 			INNER JOIN
@@ -67,7 +67,7 @@
 	<sql id="com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder.findByOrganizationIds">
 		<![CDATA[
 			SELECT
-				{BlogsEntry.*}
+				BlogsEntry.*
 			FROM
 				BlogsEntry
 			INNER JOIN
@@ -86,7 +86,7 @@
 	<sql id="com.liferay.portlet.blogs.service.persistence.BlogsEntryFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
-				{BlogsEntry.*}
+				BlogsEntry.*
 			FROM
 				BlogsEntry
 			WHERE
@@ -174,7 +174,7 @@
 	<sql id="com.liferay.portlet.blogs.service.persistence.BlogsStatsUserFinder.findByOrganizationIds">
 		<![CDATA[
 			SELECT
-				{BlogsStatsUser.*}
+				BlogsStatsUser.*
 			FROM
 				BlogsStatsUser
 			INNER JOIN

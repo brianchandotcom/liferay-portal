@@ -50,7 +50,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_N">
 		<![CDATA[
 			SELECT
-				{AssetCategory.*}
+				AssetCategory.*
 			FROM
 				AssetCategory
 			WHERE
@@ -61,7 +61,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_N_P">
 		<![CDATA[
 			SELECT
-				{AssetCategory.*}
+				AssetCategory.*
 			FROM
 				AssetCategory
 			[$JOIN$]
@@ -186,7 +186,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N">
 		<![CDATA[
 			SELECT
-				DISTINCT {AssetTag.*}
+				DISTINCT AssetTag.*
 			FROM
 				AssetTag
 			WHERE
@@ -197,7 +197,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_C_N">
 		<![CDATA[
 			SELECT
-				DISTINCT {AssetTag.*}
+				DISTINCT AssetTag.*
 			FROM
 				AssetTag
 			INNER JOIN
@@ -222,7 +222,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N_P">
 		<![CDATA[
 			SELECT
-				DISTINCT {AssetTag.*}
+				DISTINCT AssetTag.*
 			FROM
 				AssetTag
 			[$JOIN$]
@@ -331,7 +331,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder.findByG_N">
 		<![CDATA[
 			SELECT
-				{AssetVocabulary.*}
+				AssetVocabulary.*
 			FROM
 				AssetVocabulary
 			WHERE

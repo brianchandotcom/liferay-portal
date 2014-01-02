@@ -89,7 +89,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT
-				{JournalArticle.*}
+				JournalArticle.*
 			FROM
 				JournalArticle
 			WHERE
@@ -101,7 +101,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByReviewDate">
 		<![CDATA[
 			SELECT
-				{JournalArticle.*}
+				JournalArticle.*
 			FROM
 				JournalArticle
 			WHERE
@@ -113,7 +113,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByR_D">
 		<![CDATA[
 			SELECT
-				{JournalArticle.*}
+				JournalArticle.*
 			FROM
 				JournalArticle
 			WHERE
@@ -243,7 +243,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFeedFinder.findByC_G_F_N_D">
 		<![CDATA[
 			SELECT
-				{JournalFeed.*}
+				JournalFeed.*
 			FROM
 				JournalFeed
 			WHERE
@@ -308,7 +308,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">
 		<![CDATA[
 			SELECT
-				{JournalFolder.*}
+				JournalFolder.*
 			FROM
 				JournalFolder
 			WHERE

@@ -226,7 +226,7 @@ public class AssetEntryFinderImpl
 				"SELECT COUNT(DISTINCT AssetEntry.entryId) AS COUNT_VALUE ");
 		}
 		else {
-			sb.append("SELECT DISTINCT {AssetEntry.*} ");
+			sb.append("SELECT DISTINCT AssetEntry.* ");
 
 			String orderByCol1 = entryQuery.getOrderByCol1();
 			String orderByCol2 = entryQuery.getOrderByCol2();

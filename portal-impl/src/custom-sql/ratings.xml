@@ -4,7 +4,7 @@
 	<sql id="com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder.findByU_C_C">
 		<![CDATA[
 			SELECT
-				{RatingsEntry.*}
+				RatingsEntry.*
 			FROM
 				RatingsEntry
 			WHERE
@@ -16,7 +16,7 @@
 	<sql id="com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder.findByC_C">
 		<![CDATA[
 			SELECT
-				{RatingsStats.*}
+				RatingsStats.*
 			FROM
 				RatingsStats
 			WHERE

@@ -18,7 +18,7 @@
 	<sql id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder.findByResourcePrimKey">
 		<![CDATA[
 			SELECT
-				{WikiPage.*}
+				WikiPage.*
 			FROM
 				WikiPage
 			WHERE
@@ -29,7 +29,7 @@
 	<sql id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder.findByCreateDate">
 		<![CDATA[
 			SELECT
-				{WikiPage.*}
+				WikiPage.*
 			FROM
 				WikiPage
 			WHERE
@@ -45,7 +45,7 @@
 	<sql id="com.liferay.portlet.wiki.service.persistence.WikiPageFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
-				{WikiPage.*}
+				WikiPage.*
 			FROM
 				WikiPage
 			WHERE

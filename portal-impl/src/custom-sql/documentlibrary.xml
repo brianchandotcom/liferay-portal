@@ -65,7 +65,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByAnyImageId">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				DLFileEntry
 			WHERE
@@ -78,7 +78,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByCompanyId">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				(
 					SELECT
@@ -99,7 +99,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByDDMStructureIds">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				DLFileEntry
 			WHERE
@@ -116,7 +116,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByMisversioned">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				DLFileEntry
 			WHERE
@@ -134,7 +134,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				DLFileEntry
 			WHERE
@@ -151,7 +151,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByExtraSettings">
 		<![CDATA[
 			SELECT
-				DISTINCT {DLFileEntry.*}
+				DISTINCT DLFileEntry.*
 			FROM
 				DLFileEntry
 			INNER JOIN
@@ -167,7 +167,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByOrphanedFileEntries">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				DLFileEntry
 			WHERE
@@ -182,7 +182,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_F">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				(
 					SELECT
@@ -202,7 +202,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByG_U_F">
 		<![CDATA[
 			SELECT
-				{DLFileEntry.*}
+				DLFileEntry.*
 			FROM
 				(
 					SELECT
@@ -243,7 +243,7 @@
 		<![CDATA[
 			[$BASIC_DOCUMENT$]
 			SELECT
-				DISTINCT {DLFileEntryType.*}
+				DISTINCT DLFileEntryType.*
 			FROM
 				DLFileEntryType
 			WHERE
@@ -273,7 +273,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByFolderId">
 		<![CDATA[
 			SELECT
-				{DLFileRank.*}
+				DLFileRank.*
 			FROM
 				DLFileRank
 			INNER JOIN
@@ -326,7 +326,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findF_ByNoAssets">
 		<![CDATA[
 			SELECT
-				{DLFolder.*}
+				DLFolder.*
 			FROM
 				DLFolder
 			WHERE

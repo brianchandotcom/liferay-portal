@@ -19,7 +19,7 @@
 	<sql id="com.liferay.portlet.calendar.service.persistence.CalEventFinder.findByFutureReminders">
 		<![CDATA[
 			SELECT
-				{CalEvent.*}
+				CalEvent.*
 			FROM
 				CalEvent
 			WHERE
@@ -47,7 +47,7 @@
 	<sql id="com.liferay.portlet.calendar.service.persistence.CalEventFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
-				{CalEvent.*}
+				CalEvent.*
 			FROM
 				CalEvent
 			WHERE
@@ -64,7 +64,7 @@
 	<sql id="com.liferay.portlet.calendar.service.persistence.CalEventFinder.findByG_SD_T">
 		<![CDATA[
 			SELECT
-				{CalEvent.*}
+				CalEvent.*
 			FROM
 				CalEvent
 			WHERE

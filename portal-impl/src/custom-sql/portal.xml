@@ -189,7 +189,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLayouts">
 		<![CDATA[
 			SELECT
-				{Group_.*}
+				Group_.*
 			FROM
 				Group_
 			INNER JOIN
@@ -212,7 +212,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLiveGroups">
 		<![CDATA[
 			SELECT
-				{Group_.*}
+				Group_.*
 			FROM
 				Group_
 			WHERE
@@ -229,7 +229,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByNoLayouts">
 		<![CDATA[
 			SELECT
-				{Group_.*}
+				Group_.*
 			FROM
 				Group_
 			INNER JOIN
@@ -245,7 +245,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByNullFriendlyURL">
 		<![CDATA[
 			SELECT
-				{Group_.*}
+				Group_.*
 			FROM
 				Group_
 			WHERE
@@ -255,19 +255,17 @@
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findBySystem">
 		<![CDATA[
-			(
-				SELECT
-					{Group_.*}
-				FROM
-					Group_
-				WHERE
-					(Group_.companyId = ?) AND
-					(
-						(Group_.name = 'Control Panel') OR
-						(Group_.name = 'Guest') OR
-						(Group_.type_ = 4)
-					)
-			)
+			SELECT
+				Group_.*
+			FROM
+				Group_
+			WHERE
+				(Group_.companyId = ?) AND
+				(
+					(Group_.name = 'Control Panel') OR
+					(Group_.name = 'Guest') OR
+					(Group_.type_ = 4)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_C">
@@ -302,7 +300,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByC_N">
 		<![CDATA[
 			SELECT
-				{Group_.*}
+				Group_.*
 			FROM
 				Group_
 			WHERE
@@ -495,7 +493,7 @@
 	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByNoPermissions">
 		<![CDATA[
 			SELECT
-				{Layout.*}
+				Layout.*
 			FROM
 				Layout
 			LEFT JOIN
@@ -512,7 +510,7 @@
 	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByNullFriendlyURL">
 		<![CDATA[
 			SELECT
-				{Layout.*}
+				Layout.*
 			FROM
 				Layout
 			WHERE
@@ -522,7 +520,7 @@
 	<sql id="com.liferay.portal.service.persistence.LayoutFinder.findByScopeGroup">
 		<![CDATA[
 			SELECT
-				{Layout.*}
+				Layout.*
 			FROM
 				Layout
 			INNER JOIN
@@ -653,7 +651,7 @@
 	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
-				{Organization_.*}
+				Organization_.*
 			FROM
 				Organization_
 			WHERE
@@ -819,7 +817,7 @@
 	<sql id="com.liferay.portal.service.persistence.PasswordPolicyFinder.findByC_N">
 		<![CDATA[
 			SELECT
-				{PasswordPolicy.*}
+				PasswordPolicy.*
 			FROM
 				PasswordPolicy
 			WHERE
@@ -863,7 +861,7 @@
 	<sql id="com.liferay.portal.service.persistence.PortletPreferencesFinder.findByPortletId">
 		<![CDATA[
 			SELECT
-				{PortletPreferences.*}
+				PortletPreferences.*
 			FROM
 				PortletPreferences
 			WHERE
@@ -873,7 +871,7 @@
 	<sql id="com.liferay.portal.service.persistence.PortletPreferencesFinder.findByC_G_O_O_P_P">
 		<![CDATA[
 			SELECT
-				{PortletPreferences.*}
+				PortletPreferences.*
 			FROM
 				PortletPreferences
 			INNER JOIN
@@ -936,7 +934,7 @@
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByResource">
 		<![CDATA[
 			SELECT
-				{ResourcePermission.*}
+				ResourcePermission.*
 			FROM
 				ResourcePermission
 			WHERE
@@ -959,7 +957,7 @@
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByR_S">
 		<![CDATA[
 			SELECT
-				{ResourcePermission.*}
+				ResourcePermission.*
 			FROM
 				ResourcePermission
 			WHERE
@@ -970,7 +968,7 @@
 	<sql id="com.liferay.portal.service.persistence.ResourceTypePermissionFinder.findByEitherScopeC_G_N">
 		<![CDATA[
 			SELECT
-				{ResourceTypePermission.*}
+				ResourceTypePermission.*
 			FROM
 				ResourceTypePermission
 			WHERE
@@ -985,7 +983,7 @@
 	<sql id="com.liferay.portal.service.persistence.ResourceTypePermissionFinder.findByGroupScopeC_N_R">
 		<![CDATA[
 			SELECT
-				{ResourceTypePermission.*}
+				ResourceTypePermission.*
 			FROM
 				ResourceTypePermission
 			WHERE
@@ -1126,68 +1124,62 @@
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findBySystem">
 		<![CDATA[
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				WHERE
-					(Role_.companyId = ?) AND
-					(
-						(Role_.name = 'Administrator') OR
-						(Role_.name = 'Guest') OR
-						(Role_.name = 'Organization Administrator') OR
-						(Role_.name = 'Organization Member') OR
-						(Role_.name = 'Organization Owner') OR
-						(Role_.name = 'Owner') OR
-						(Role_.name = 'Site Administrator') OR
-						(Role_.name = 'Site Member') OR
-						(Role_.name = 'Site Owner') OR
-						(Role_.name = 'Power User') OR
-						(Role_.name = 'User')
-					)
-			)
+			SELECT
+				Role_.*
+			FROM
+				Role_
+			WHERE
+				(Role_.companyId = ?) AND
+				(
+					(Role_.name = 'Administrator') OR
+					(Role_.name = 'Guest') OR
+					(Role_.name = 'Organization Administrator') OR
+					(Role_.name = 'Organization Member') OR
+					(Role_.name = 'Organization Owner') OR
+					(Role_.name = 'Owner') OR
+					(Role_.name = 'Site Administrator') OR
+					(Role_.name = 'Site Member') OR
+					(Role_.name = 'Site Owner') OR
+					(Role_.name = 'Power User') OR
+					(Role_.name = 'User')
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findByUserGroupGroupRole">
 		<![CDATA[
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				INNER JOIN
-					UserGroupGroupRole ON
-						(UserGroupGroupRole.roleId = Role_.roleId)
-				INNER JOIN
-					Users_UserGroups ON
-						(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
-				WHERE
-					(Users_UserGroups.userId = ?) AND
-					(UserGroupGroupRole.groupId = ?)
-			)
+			SELECT
+				Role_.*
+			FROM
+				Role_
+			INNER JOIN
+				UserGroupGroupRole ON
+					(UserGroupGroupRole.roleId = Role_.roleId)
+			INNER JOIN
+				Users_UserGroups ON
+					(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+			WHERE
+				(Users_UserGroups.userId = ?) AND
+				(UserGroupGroupRole.groupId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findByUserGroupRole">
 		<![CDATA[
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				INNER JOIN
-					UserGroupRole ON
-						(UserGroupRole.roleId = Role_.roleId)
-				WHERE
-					(UserGroupRole.userId = ?) AND
-					(UserGroupRole.groupId = ?)
-			)
+			SELECT
+				Role_.*
+			FROM
+				Role_
+			INNER JOIN
+				UserGroupRole ON
+					(UserGroupRole.roleId = Role_.roleId)
+			WHERE
+				(UserGroupRole.userId = ?) AND
+				(UserGroupRole.groupId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findByC_N">
 		<![CDATA[
 			SELECT
-				{Role_.*}
+				Role_.*
 			FROM
 				Role_
 			WHERE
@@ -1199,7 +1191,7 @@
 		<![CDATA[
 			(
 				SELECT
-					{Role_.*}
+					Role_.*
 				FROM
 					Role_
 				INNER JOIN
@@ -1211,7 +1203,7 @@
 			UNION
 			(
 				SELECT
-					{Role_.*}
+					Role_.*
 				FROM
 					Role_
 				INNER JOIN
@@ -1225,7 +1217,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findByR_N_A">
 		<![CDATA[
 			SELECT
-				{Role_.*}
+				Role_.*
 			FROM
 				ResourceBlockPermission
 			INNER JOIN
@@ -1245,7 +1237,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findByC_N_D_T">
 		<![CDATA[
 			SELECT
-				DISTINCT {Role_.*}
+				DISTINCT Role_.*
 			FROM
 				Role_
 			[$JOIN$]
@@ -1265,7 +1257,7 @@
 	<sql id="com.liferay.portal.service.persistence.RoleFinder.findByC_N_S_P_A">
 		<![CDATA[
 			SELECT
-				{Role_.*}
+				Role_.*
 			FROM
 				ResourcePermission
 			INNER JOIN
@@ -1307,7 +1299,7 @@
 	<sql id="com.liferay.portal.service.persistence.TeamFinder.findByG_N_D">
 		<![CDATA[
 			SELECT
-				DISTINCT {Team.*}
+				DISTINCT Team.*
 			FROM
 				Team
 			[$JOIN$]
@@ -1376,7 +1368,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByNoAnnouncementsDeliveries">
 		<![CDATA[
 			SELECT
-				{User_.*}
+				User_.*
 			FROM
 				User_
 			WHERE
@@ -1394,7 +1386,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByNoContacts">
 		<![CDATA[
 			SELECT
-				{User_.*}
+				User_.*
 			FROM
 				User_
 			WHERE
@@ -1412,7 +1404,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByNoGroups">
 		<![CDATA[
 			SELECT
-				{User_.*}
+				User_.*
 			FROM
 				User_
 			WHERE
@@ -1623,7 +1615,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserGroupFinder.findByC_N">
 		<![CDATA[
 			SELECT
-				{UserGroup.*}
+				UserGroup.*
 			FROM
 				UserGroup
 			WHERE
@@ -1634,7 +1626,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserGroupFinder.findByC_N_D">
 		<![CDATA[
 			SELECT
-				DISTINCT {UserGroup.*}
+				DISTINCT UserGroup.*
 			FROM
 				UserGroup
 			[$JOIN$]
@@ -1700,22 +1692,20 @@
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserGroupRoleFinder.findByUserUserGroupGroupRole">
 		<![CDATA[
-			(
-				SELECT
-					{UserGroupRole.*}
-				FROM
-					UserGroupRole
-				INNER JOIN
-					UserGroupGroupRole ON
-						(UserGroupGroupRole.groupId = UserGroupRole.groupId) AND
-						(UserGroupGroupRole.roleId = UserGroupRole.roleId)
-				INNER JOIN
-					Users_UserGroups ON
-						(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
-				WHERE
-					(Users_UserGroups.userId = ?) AND
-					(UserGroupGroupRole.groupId = ?)
-			)
+			SELECT
+				UserGroupRole.*
+			FROM
+				UserGroupRole
+			INNER JOIN
+				UserGroupGroupRole ON
+					(UserGroupGroupRole.groupId = UserGroupRole.groupId) AND
+					(UserGroupGroupRole.roleId = UserGroupRole.roleId)
+			INNER JOIN
+				Users_UserGroups ON
+					(Users_UserGroups.userGroupId = UserGroupGroupRole.userGroupId)
+			WHERE
+				(Users_UserGroups.userId = ?) AND
+				(UserGroupGroupRole.groupId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.util.dao.orm.CustomSQL.countBySelectSQL">

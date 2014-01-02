@@ -15,17 +15,19 @@
 package com.liferay.portal.kernel.events;
 
 /**
- * @author Brian Wing Shun Chan
+ * A marker interface for the lifecycle actions of the portal.
+ *
+ * <ul>
+ * <li>{@link Action}</li>
+ * <li>{@link SessionAction}</li>
+ * <li>{@link SimpleAction}</li>
+ * </ul>
+ *
+ * @author Raymond Augé
  */
-public abstract class SimpleAction implements LifecycleAction {
+public interface LifecycleAction {
 
-	@Override
-	public final void processEvent(LifecycleEvent lifecycleEvent)
-		throws ActionException {
-
-		run(lifecycleEvent.getIds());
-	}
-
-	public abstract void run(String[] ids) throws ActionException;
+	public void processEvent(LifecycleEvent lifecycleEvent)
+		throws ActionException;
 
 }

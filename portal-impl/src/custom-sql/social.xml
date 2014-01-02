@@ -62,7 +62,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder.findAC_By_G_C_C_N_S_E">
 		<![CDATA[
 			SELECT
-				{SocialActivityCounter.*}
+				SocialActivityCounter.*
 			FROM
 				SocialActivityCounter
 			WHERE
@@ -302,7 +302,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByGroupId">
 		<![CDATA[
 			SELECT
-				{SocialActivity.*}
+				SocialActivity.*
 			FROM
 				SocialActivity
 			WHERE
@@ -315,7 +315,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByGroupUsers">
 		<![CDATA[
 			SELECT
-				{SocialActivity.*}
+				SocialActivity.*
 			FROM
 				SocialActivity
 			INNER JOIN
@@ -331,7 +331,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByOrganizationId">
 		<![CDATA[
 			SELECT
-				{SocialActivity.*}
+				SocialActivity.*
 			FROM
 				SocialActivity
 			INNER JOIN
@@ -350,7 +350,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByOrganizationUsers">
 		<![CDATA[
 			SELECT
-				{SocialActivity.*}
+				SocialActivity.*
 			FROM
 				SocialActivity
 			INNER JOIN
@@ -366,7 +366,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByRelation">
 		<![CDATA[
 			SELECT
-				DISTINCT {SocialActivity.*}
+				DISTINCT SocialActivity.*
 			FROM
 				SocialActivity
 			INNER JOIN
@@ -381,7 +381,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByRelationType">
 		<![CDATA[
 			SELECT
-				{SocialActivity.*}
+				SocialActivity.*
 			FROM
 				SocialActivity
 			INNER JOIN
@@ -398,7 +398,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByUserGroups">
 		<![CDATA[
 			SELECT
-				{SocialActivity.*}
+				SocialActivity.*
 			FROM
 				SocialActivity
 			WHERE
@@ -494,7 +494,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByUserOrganizations">
 		<![CDATA[
 			SELECT
-				{SocialActivity.*}
+				SocialActivity.*
 			FROM
 				SocialActivity
 			INNER JOIN
@@ -644,7 +644,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByRelation">
 		<![CDATA[
 			SELECT
-				DISTINCT {SocialActivitySet.*}
+				DISTINCT SocialActivitySet.*
 			FROM
 				SocialActivitySet
 			INNER JOIN
@@ -659,7 +659,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByRelationType">
 		<![CDATA[
 			SELECT
-				DISTINCT {SocialActivitySet.*}
+				DISTINCT SocialActivitySet.*
 			FROM
 				SocialActivitySet
 			INNER JOIN
@@ -675,7 +675,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByUser">
 		<![CDATA[
 			SELECT
-				DISTINCT {SocialActivitySet.*}
+				DISTINCT SocialActivitySet.*
 			FROM
 				SocialActivitySet
 			WHERE
@@ -731,7 +731,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivitySetFinder.findByUserGroups">
 		<![CDATA[
 			SELECT
-				DISTINCT {SocialActivitySet.*}
+				DISTINCT SocialActivitySet.*
 			FROM
 				SocialActivitySet
 			WHERE

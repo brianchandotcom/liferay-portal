@@ -53,7 +53,7 @@
 	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingCouponFinder.findByG_C_C_A_DT">
 		<![CDATA[
 			SELECT
-				{ShoppingCoupon.*}
+				ShoppingCoupon.*
 			FROM
 				ShoppingCoupon
 			WHERE
@@ -71,7 +71,7 @@
 	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderFinder.findByG_C_U_N_PPPS">
 		<![CDATA[
 			SELECT
-				{ShoppingOrder.*}
+				ShoppingOrder.*
 			FROM
 				ShoppingOrder
 			WHERE

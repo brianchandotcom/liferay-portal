@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
@@ -44,7 +46,8 @@ public class SQLQueryTableNamesUtil {
 		Statement statement = null;
 
 		try {
-			statement = _jSqlParser.parse(new UnsyncStringReader(sql));
+			statement = _jSqlParser.parse(
+				new UnsyncStringReader(_escapeSQL(sql)));
 		}
 		catch (JSQLParserException jsqlpe) {
 			_log.error("Unable to parse SQL: " + sql, jsqlpe);
@@ -70,11 +73,25 @@ public class SQLQueryTableNamesUtil {
 		return tableNames;
 	}
 
+	private static String _escapeSQL(String sql) {
+		Matcher matcher = _modPattern.matcher(sql);
+
+		sql = matcher.replaceAll("1");
+
+		matcher = _valuePattern.matcher(sql);
+
+		return matcher.replaceAll("tempValue");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		SQLQueryTableNamesUtil.class);
 
 	private static JSqlParser _jSqlParser = new CCJSqlParserManager();
+	private static Pattern _modPattern = Pattern.compile(
+		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static PortalCache<String, String[]> _portalCache =
 		SingleVMPoolUtil.getCache(SQLQueryTableNamesUtil.class.getName());
+	private static Pattern _valuePattern = Pattern.compile(
+		"\\bvalue\\b", Pattern.CASE_INSENSITIVE);
 
 }

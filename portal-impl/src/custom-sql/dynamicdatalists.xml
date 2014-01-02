@@ -36,7 +36,7 @@
 	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder.findByR_S">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDLRecord.*}
+				DISTINCT DDLRecord.*
 			FROM
 				DDLRecord
 			INNER JOIN
@@ -52,7 +52,7 @@
 	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder.findByC_S_S">
 		<![CDATA[
 			SELECT
-				DISTINCT {DDLRecord.*}
+				DISTINCT DDLRecord.*
 			FROM
 				DDLRecord
 			INNER JOIN
@@ -88,7 +88,7 @@
 	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.findByC_G_N_D_S">
 		<![CDATA[
 			SELECT
-				{DDLRecordSet.*}
+				DDLRecordSet.*
 			FROM
 				DDLRecordSet
 			WHERE

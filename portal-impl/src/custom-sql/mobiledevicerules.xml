@@ -15,7 +15,7 @@
 	<sql id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder.findByG_N">
 		<![CDATA[
 			SELECT
-				{MDRRuleGroup.*}
+				MDRRuleGroup.*
 			FROM
 				MDRRuleGroup
 			WHERE

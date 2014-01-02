@@ -776,6 +776,11 @@ public class UserFinderImpl
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
+			if (sb.index() == 3) {
+				sb.setStringAt(sb.stringAt(1), 0);
+				sb.setIndex(1);
+			}
+
 			if (obc != null) {
 				sb.append(" ORDER BY ");
 				sb.append(obc.toString());

@@ -47,7 +47,7 @@
 	<sql id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder.findByDisplayDate">
 		<![CDATA[
 			SELECT
-				{AnnouncementsEntry.*}
+				AnnouncementsEntry.*
 			FROM
 				AnnouncementsEntry
 			WHERE
@@ -58,7 +58,7 @@
 	<sql id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder.findByHidden">
 		<![CDATA[
 			SELECT
-				{AnnouncementsEntry.*}
+				AnnouncementsEntry.*
 			FROM
 				AnnouncementsEntry
 			LEFT JOIN
@@ -79,7 +79,7 @@
 	<sql id="com.liferay.portlet.announcements.service.persistence.AnnouncementsEntryFinder.findByNotHidden">
 		<![CDATA[
 			SELECT
-				{AnnouncementsEntry.*}
+				AnnouncementsEntry.*
 			FROM
 				AnnouncementsEntry
 			WHERE

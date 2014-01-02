@@ -50,7 +50,7 @@
 	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksFolderFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
-				{BookmarksFolder.*}
+				BookmarksFolder.*
 			FROM
 				BookmarksFolder
 			WHERE
@@ -113,7 +113,7 @@
 	<sql id="com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
-				{BookmarksEntry.*}
+				BookmarksEntry.*
 			FROM
 				BookmarksEntry
 			WHERE

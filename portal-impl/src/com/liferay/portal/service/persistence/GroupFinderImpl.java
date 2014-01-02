@@ -768,12 +768,14 @@ public class GroupFinderImpl
 
 			StringBundler sb = new StringBundler(12);
 
-			sb.append(StringPool.OPEN_PARENTHESIS);
+			if (doUnion) {
+				sb.append(StringPool.OPEN_PARENTHESIS);
+			}
+
 			sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params1));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if (doUnion) {
-				sb.append(" UNION (");
+				sb.append(") UNION (");
 				sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params2));
 				sb.append(") UNION (");
 				sb.append(replaceJoinAndWhere(findByC_PG_N_D_SQL, params3));

@@ -17,7 +17,7 @@
 		</#if>
 
 		<#list layouts as curLayout>
-			<#assign curLayoutJSON = htmlUtil.escapeAttribute("{ \"layoutId\": ${curLayout.getLayoutId()}, \"groupId\": ${groupId}, \"privateLayout\": ${privateLayout?string} }")>
+			<#assign curLayoutJSON = escapeAttribute("{ \"layoutId\": ${curLayout.getLayoutId()}, \"groupId\": ${groupId}, \"privateLayout\": ${privateLayout?string} }")>
 
 			<#assign selected = false>
 
@@ -30,7 +30,7 @@
 					&ndash;&nbsp;
 				</#list>
 
-				${curLayout.getName(requestedLocale)}
+				${escape(curLayout.getName(requestedLocale))}
 			</@>
 
 			<@getLayoutsOptions

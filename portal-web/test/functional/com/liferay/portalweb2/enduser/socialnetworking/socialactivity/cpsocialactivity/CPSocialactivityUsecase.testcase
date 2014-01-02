@@ -1,0 +1,242 @@
+<definition component-name="portal-social-networking">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns. -->
+	</tear-down>
+
+	<command name="BlogsDemo" priority="5">
+		<var name="entryComment1" value="Blogs Entry Comment 1" />
+		<var name="entryComment2" value="Blogs Entry Comment 2" />
+		<var name="entryComment3" value="Guest Blogs Entry Comment" />
+		<var name="entryComment4" value="Blogs Entry Comment from userfn" />
+		<var name="entryComment5" value="Blogs Entry Comment 3" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="userAction1" value="Adds a Comment" />
+		<var name="userAction2" value="Reads a Blog" />
+		<var name="userAction3" value="Subscribes to a Blog" />
+		<var name="userAction4" value="Votes on a Blog" />
+		<var name="user1Name" value="Test Test" />
+		<var name="user1Rank" value="Rank: 1" />
+		<var name="user2Name" value="userfn userln" />
+		<var name="user2Rank" value="Rank: 2" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Social Activity" />
+		</execute>
+
+		<execute macro="SocialActivity#enableCP" />
+
+		<execute macro="SocialActivity#configureActionCP">
+			<var name="contributionIncrement" value="2" />
+			<var name="contributionLimitValue" value="2" />
+			<var name="participationIncrement" value="2" />
+			<var name="participationLimitValue" value="2" />
+			<var name="userAction" value="${userAction1}" />
+		</execute>
+
+		<execute macro="SocialActivity#removeActionCP">
+			<var name="userAction" value="${userAction2}" />
+		</execute>
+
+		<execute macro="SocialActivity#removeActionCP">
+			<var name="userAction" value="${userAction3}" />
+		</execute>
+
+		<execute macro="SocialActivity#configureActionCP">
+			<var name="participationIncrement" value="0" />
+			<var name="userAction" value="${userAction4}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Statistics" />
+		</execute>
+
+		<var name="key_portletName" value="User Statistics" />
+
+		<execute action="PGUserstatistics#assertTextEquals" locator-key1="PORTLET_BODY" value1="There are no active users for this period." />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="SocialActivity#viewPGViaUserStatistics">
+			<var name="contributionScore" value="Contribution Score: 0 (Total: 0)" />
+			<var name="participationScore" value="Participation Score: 5 (Total: 5)" />
+			<var name="userName" value="${user1Name}" />
+			<var name="userRank" value="${user1Rank}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addPG">
+			<var name="entryComment" value="${entryComment1}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="SocialActivity#viewPGViaUserStatistics">
+			<var name="contributionScore" value="Contribution Score: 0 (Total: 0)" />
+			<var name="participationScore" value="Participation Score: 7 (Total: 7)" />
+			<var name="userName" value="${user1Name}" />
+			<var name="userRank" value="${user1Rank}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addPG">
+			<var name="entryComment" value="${entryComment2}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="SocialActivity#viewPGViaUserStatistics">
+			<var name="contributionScore" value="Contribution Score: 0 (Total: 0)" />
+			<var name="participationScore" value="Participation Score: 9 (Total: 9)" />
+			<var name="userName" value="${user1Name}" />
+			<var name="userRank" value="${user1Rank}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addPG">
+			<var name="entryComment" value="${entryComment3}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="userEmailAddress" value="guest@liferay.com" />
+			<var name="userFirstName" value="Guest" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addPG">
+			<var name="entryComment" value="${entryComment4}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="SocialActivity#viewPGViaUserStatistics">
+			<var name="contributionScore" value="Contribution Score: 2 (Total: 2)" />
+			<var name="participationScore" value="Participation Score: 9 (Total: 9)" />
+			<var name="userName" value="${user1Name}" />
+			<var name="userRank" value="${user1Rank}" />
+		</execute>
+
+		<execute macro="SocialActivity#viewPGViaUserStatistics">
+			<var name="contributionScore" value="Contribution Score: 0 (Total: 0)" />
+			<var name="participationScore" value="Participation Score: 2 (Total: 2)" />
+			<var name="userName" value="${user2Name}" />
+			<var name="userRank" value="${user2Rank}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addPG">
+			<var name="entryComment" value="${entryComment5}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="SocialActivity#viewPGViaUserStatistics">
+			<var name="contributionScore" value="Contribution Score: 2 (Total: 2)" />
+			<var name="participationScore" value="Participation Score: 9 (Total: 9)" />
+			<var name="userName" value="${user1Name}" />
+			<var name="userRank" value="${user1Rank}" />
+		</execute>
+
+		<execute macro="SocialActivity#viewPGViaUserStatistics">
+			<var name="contributionScore" value="Contribution Score: 0 (Total: 0)" />
+			<var name="participationScore" value="Participation Score: 2 (Total: 2)" />
+			<var name="userName" value="${user2Name}" />
+			<var name="userRank" value="${user2Rank}" />
+		</execute>
+	</command>
+</definition>

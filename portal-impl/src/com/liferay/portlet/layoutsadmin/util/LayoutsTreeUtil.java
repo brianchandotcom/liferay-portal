@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.User;
@@ -57,6 +58,29 @@ import javax.servlet.http.HttpSession;
  * @author Marcellus Tavares
  */
 public class LayoutsTreeUtil {
+
+	public static String getLayoutsJSON(
+			HttpServletRequest request, long groupId)
+		throws Exception {
+
+		List<LayoutTreeNode> layoutTreeNodes = new ArrayList<LayoutTreeNode>();
+
+		// Private layouts
+
+		layoutTreeNodes.addAll(
+			_getLayoutTreeNodes(
+				request, groupId, true,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null));
+
+		// Public layouts
+
+		layoutTreeNodes.addAll(
+			_getLayoutTreeNodes(
+				request, groupId, false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null));
+
+		return _toJSON(request, groupId, layoutTreeNodes);
+	}
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,

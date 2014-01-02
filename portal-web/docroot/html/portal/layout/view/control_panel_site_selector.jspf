@@ -41,13 +41,13 @@ String switchGroupURL = HttpUtil.setParameter(PortalUtil.getCurrentURL(request),
 %>
 
 <c:choose>
-	<c:when test="<%=  manageableSiteGroups.isEmpty() %>">
+	<c:when test="<%= manageableSiteGroups.isEmpty() %>">
 		<span class="control-panel-site-selector">
 			<%= HtmlUtil.escape(siteGroup.getDescriptiveName()) %>
 		</span>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" id="controlPanelSiteSelector" message="<%= HtmlUtil.escape(siteGroup.getDescriptiveName()) %>" showArrow="%<= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= false %>">
+		<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" id="controlPanelSiteSelector" message="<%= HtmlUtil.escape(siteGroup.getDescriptiveName()) %>" showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 			<%
 			for (Group manageableSiteGroup : manageableSiteGroups) {

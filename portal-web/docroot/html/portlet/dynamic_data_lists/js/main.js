@@ -11,7 +11,11 @@ AUI.add(
 
 		var EMPTY_FN = A.Lang.emptyFn;
 
+		var SPACE = ' ';
+
 		var STR_EMPTY = '';
+
+		var DASH = '-';
 
 		var DLFileEntryCellEditor = A.Component.create(
 			{
@@ -156,6 +160,157 @@ AUI.add(
 			}
 		);
 
+		var LinkToPageCellEditor = A.Component.create(
+			{
+				NAME: 'link-to-page-cell-editor',
+
+				EXTENDS: A.DropDownCellEditor,
+
+				prototype: {
+					OPT_GROUP_TEMPLATE: '<optgroup label="{label}"></optgroup>',
+
+					renderUI: function(val) {
+						var instance = this,
+							options = {};
+
+						LinkToPageCellEditor.superclass.renderUI.apply(instance, arguments);
+
+						A.io.request(
+							themeDisplay.getPathMain() + '/layouts_admin/get_layouts',
+							{
+								after: {
+									success: function() {
+										var	response = A.JSON.parse(this.get('responseData'));
+
+										if (response && response.layouts) {
+											instance._createOptionElements(response.layouts, options, STR_EMPTY);
+
+											instance.set('options', options);
+										}
+									}
+								},
+								data: {
+									cmd: 'getAll',
+									groupId: themeDisplay.getScopeGroupId(),
+									expandParentLayouts: true,
+									paginate: false,
+									p_auth: Liferay.authToken
+								}
+							}
+						);
+					},
+
+					_createOptions: function(val) {
+			            var instance = this;
+			            var elements = instance.elements;
+			            var publicOptionsBuffer = [];
+			            var privateOptionsBuffer = [];
+			            var optionTpl = instance.OPTION_TEMPLATE;
+			            var optGroupTpl = instance.OPT_GROUP_TEMPLATE;
+
+			            var publicOptGroup = A.Node.create(
+				            Lang.sub(
+				            	optGroupTpl,
+				            	{
+				            		'label': Liferay.Language.get('public-pages')
+				            	}
+				            )
+			            );
+
+			            var privateOptGroup = A.Node.create(
+			            	Lang.sub(
+				            	optGroupTpl,
+				            	{
+				            		'label': Liferay.Language.get('private-pages')
+				            	}
+				            )
+			            );
+
+			            var options = A.NodeList.create();
+
+			            A.each(val, function(curLayout, oLabel) {
+			                var values = {
+			                    id: A.guid(),
+			                    label: oLabel,
+			                    value: Liferay.Util.escapeHTML(JSON.stringify(curLayout))
+			                };
+
+			                var option = A.Node.create(Lang.sub(optionTpl, values));
+
+			                if (curLayout.privateLayout) {
+			                	privateOptionsBuffer.push(Lang.sub(optionTpl, values));
+			                }
+			                else {
+			                	publicOptionsBuffer.push(Lang.sub(optionTpl, values));
+			                }
+
+			                options.append(option);
+			            });
+
+			            var privateOptions = A.NodeList.create(privateOptionsBuffer.join(STR_EMPTY));
+
+			            privateOptGroup.setContent(privateOptions);
+
+			            var publicOptions = A.NodeList.create(publicOptionsBuffer.join(STR_EMPTY));
+
+			            publicOptGroup.setContent(publicOptions);
+
+			            elements.empty();
+
+		                elements.append(publicOptGroup);
+		                elements.append(privateOptGroup);
+
+			            instance.options = elements.all('option');
+			        },
+
+					_createOptionElements: function(layouts, options, prependLabel) {
+						var instance = this;
+
+						AArray.each(layouts, function(layout) {
+		                    var curLayout = {
+		                    	'groupId': layout.groupId,
+		                    	'layoutId': layout.layoutId,
+		                    	'name': layout.name,
+		                    	'privateLayout': layout.privateLayout
+		                    };
+
+		                    options[prependLabel + layout.name] = curLayout;
+
+		                    if (layout.hasChildren) {
+		                    	instance._createOptionElements(layout.children.layouts, options, prependLabel + DASH + SPACE);
+		                    }
+		                });
+					},
+
+					_uiSetValue: function(val) {
+			            var instance = this;
+			            var options = instance.options;
+
+			            if (options && options.size()) {
+			                options.set('selected', false);
+
+			                if (Lang.isValue(val)) {
+			                	var selLayout = SpreadSheet.Util.parseJSON(val);
+
+			                	options.each(function(option) {
+			                		var curLayout = SpreadSheet.Util.parseJSON(option.attr('value'));
+
+			                		if ((curLayout.groupId === selLayout.groupId) &&
+			                			(curLayout.layoutId === selLayout.layoutId) &&
+			                			(curLayout.privateLayout === selLayout.privateLayout)) {
+
+			                			option.set('selected', true);
+			                		}
+			                	});
+			                }
+			            }
+
+			            return val;
+			        }
+				}
+			}
+		);
+
 		var SpreadSheet = A.Component.create(
 			{
 				ATTRS: {
@@ -262,7 +417,14 @@ AUI.add(
 								var type = item.type;
 								var value = record.get(item.name);
 
-								if ((type === 'radio') || (type === 'select')) {
+								if (type === 'ddm-link-to-page') {
+									var layoutData = SpreadSheet.Util.parseJSON(value);
+
+									delete layoutData.name;
+
+									value = JSON.stringify(layoutData);
+								}
+								else if ((type === 'radio') || (type === 'select')) {
 									if (!Lang.isArray(value)) {
 										value = AArray(value);
 									}
@@ -482,6 +644,7 @@ AUI.add(
 								};
 
 								config.outputFormatter = function(val) {
+
 									return AArray.map(
 										val,
 										function(item, index, collection) {
@@ -547,6 +710,24 @@ AUI.add(
 
 										if (fileData.title) {
 											label = fileData.title;
+										}
+									}
+
+									return label;
+								};
+							}
+							else if (type === 'ddm-link-to-page') {
+								item.formatter = function(obj) {
+									var data = obj.data;
+
+									var label = STR_EMPTY;
+									var value = data[name];
+
+									if (value !== STR_EMPTY) {
+										var linkToPageData = SpreadSheet.Util.parseJSON(value);
+
+										if (linkToPageData.name) {
+											label = linkToPageData.name;
 										}
 									}
 
@@ -731,6 +912,7 @@ AUI.add(
 		};
 
 		SpreadSheet.TYPE_EDITOR['ddm-documentlibrary'] = DLFileEntryCellEditor;
+		SpreadSheet.TYPE_EDITOR['ddm-link-to-page'] = LinkToPageCellEditor;
 
 		Liferay.SpreadSheet = SpreadSheet;
 

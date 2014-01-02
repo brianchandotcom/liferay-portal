@@ -1,3 +1,7 @@
+.link-to-page-cell-editor-hidden {
+	display: none;
+}
+
 .portlet-dynamic-data-lists, .portlet-dynamic-data-list-display {
 	.lfr-spreadsheet-container .table {
 		overflow: auto;

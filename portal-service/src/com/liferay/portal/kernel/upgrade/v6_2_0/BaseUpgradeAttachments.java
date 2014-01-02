@@ -56,7 +56,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(10);
+			StringBundler sb = new StringBundler(9);
 
 			sb.append("insert into DLFileEntry (uuid_, fileEntryId, groupId, ");
 			sb.append("companyId, userId, userName, createDate, ");
@@ -130,42 +130,43 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(8);
 
-			sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
-			sb.append("companyId, userId, userName, createDate, ");
+			sb.append("insert into DLFileVersion (uuid_, fileVersionId, ");
+			sb.append("groupId, companyId, userId, userName, createDate, ");
 			sb.append("modifiedDate, repositoryId, folderId, fileEntryId, ");
 			sb.append("extension, mimeType, title, description, changeLog, ");
 			sb.append("extraSettings, fileEntryTypeId, version, size_, ");
 			sb.append("status, statusByUserId, statusByUserName, statusDate) ");
 			sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
 			ps = con.prepareStatement(sql);
 
-			ps.setLong(1, fileVersionId);
-			ps.setLong(2, groupId);
-			ps.setLong(3, companyId);
-			ps.setLong(4, userId);
-			ps.setString(5, userName);
-			ps.setTimestamp(6, createDate);
+			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setLong(2, fileVersionId);
+			ps.setLong(3, groupId);
+			ps.setLong(4, companyId);
+			ps.setLong(5, userId);
+			ps.setString(6, userName);
 			ps.setTimestamp(7, createDate);
-			ps.setLong(8, repositoryId);
-			ps.setLong(9, folderId);
-			ps.setLong(10, fileEntryId);
-			ps.setString(11, extension);
-			ps.setString(12, mimeType);
-			ps.setString(13, title);
-			ps.setString(14, StringPool.BLANK);
+			ps.setTimestamp(8, createDate);
+			ps.setLong(9, repositoryId);
+			ps.setLong(10, folderId);
+			ps.setLong(11, fileEntryId);
+			ps.setString(12, extension);
+			ps.setString(13, mimeType);
+			ps.setString(14, title);
 			ps.setString(15, StringPool.BLANK);
 			ps.setString(16, StringPool.BLANK);
-			ps.setLong(17, 0);
-			ps.setString(18, "1.0");
-			ps.setLong(19, size);
-			ps.setInt(20, 0);
-			ps.setLong(21, userId);
-			ps.setString(22, userName);
-			ps.setTimestamp(23, createDate);
+			ps.setString(17, StringPool.BLANK);
+			ps.setLong(18, 0);
+			ps.setString(19, "1.0");
+			ps.setLong(20, size);
+			ps.setInt(21, 0);
+			ps.setLong(22, userId);
+			ps.setString(23, userName);
+			ps.setTimestamp(24, createDate);
 
 			ps.executeUpdate();
 		}
@@ -269,7 +270,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("insert into Repository (uuid_, repositoryId, groupId, ");
 			sb.append("companyId, userId, userName, createDate, ");

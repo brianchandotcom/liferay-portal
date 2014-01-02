@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.templateparser.Transformer;
@@ -64,6 +66,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -131,6 +134,27 @@ public class DDLImpl implements DDL {
 
 				fieldValueJSONObject.put(
 					"title", getFileEntryTitle(uuid, groupId));
+
+				jsonObject.put(fieldName, fieldValueJSONObject.toString());
+			}
+			else if (fieldType.equals(DDMImpl.TYPE_DDM_LINK_TO_PAGE) &&
+					 Validator.isNotNull(fieldValue)) {
+
+				JSONObject fieldValueJSONObject =
+					JSONFactoryUtil.createJSONObject(
+						String.valueOf(fieldValue));
+
+				long groupId = fieldValueJSONObject.getLong("groupId");
+				boolean privateLayout = fieldValueJSONObject.getBoolean(
+					"privateLayout");
+				long layoutId = fieldValueJSONObject.getLong("layoutId");
+				Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+				String layoutName = getLayoutName(
+					groupId, privateLayout, layoutId,
+					LanguageUtil.getLanguageId(locale));
+
+				fieldValueJSONObject.put("name", layoutName);
 
 				jsonObject.put(fieldName, fieldValueJSONObject.toString());
 			}
@@ -425,6 +449,20 @@ public class DDLImpl implements DDL {
 					uuid, groupId);
 
 			return fileEntry.getTitle();
+		}
+		catch (Exception e) {
+			return LanguageUtil.format(
+				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
+				"content");
+		}
+	}
+
+	protected String getLayoutName(
+		long groupId, boolean privateLayout, long layoutId, String languageId) {
+
+		try {
+			return LayoutServiceUtil.getLayoutName(
+				groupId, privateLayout, layoutId, languageId);
 		}
 		catch (Exception e) {
 			return LanguageUtil.format(

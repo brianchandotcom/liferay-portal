@@ -498,6 +498,18 @@
 		</if>
 	</command>
 
+	<command name="fastLoginGuestPG">
+		<execute action="PGFastlogin#selectFrame" locator-key1="SIGN_IN_IFRAME" />
+		<execute action="PGFastlogin#assertClick" locator-key1="GUEST_LINK" value1="Guest" />
+
+		<execute action="PGFastloginGuest#type" locator-key1="FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute action="PGFastloginGuest#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGFastloginGuest#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGFastloginGuest#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your comment has already been posted. Would you like to create an account with the provided information?" />
+		<execute action="PGFastloginGuest#assertClick" locator-key1="CANCEL_BUTTON" value1="Cancel" />
+		<execute action="PGFastlogin#selectFrame" value1="relative=top" />
+	</command>
+
 	<command name="firstLoginPG">
 		<execute macro="Page#openURL" />
 

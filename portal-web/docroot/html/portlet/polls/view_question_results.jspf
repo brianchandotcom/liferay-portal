@@ -165,7 +165,7 @@ for (int i = 0; i < choices.size(); i++) {
 			}
 
 			if (user2 != null) {
-				row.addText(user2.getFullName(), user2.getDisplayURL(themeDisplay));
+				row.addText(HtmlUtil.escape(user2.getFullName()), user2.getDisplayURL(themeDisplay));
 			}
 			else {
 				row.addText(String.valueOf(vote.getUserId()));

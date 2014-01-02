@@ -63,7 +63,12 @@
 	</command>
 
 	<command name="clickWaitForInlineCKEditor">
-		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" />
+		<if>
+			<condition selenium="isElementPresent" argument1="//div[contains(@class,'cke_editable_inline')]" />
+			<then>
+				<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'http://localhost:8080/html/js/editor/ckeditor/plugins/wsc/lang/en.js')]" />
+			</then>
+		</if>
 
 		<execute function="Click#click" />
 	</command>

@@ -260,6 +260,10 @@
 	<td>COMMENTS_REPLY_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Reply')]</td>
 	<td></td>
+</tr><tr>
+	<td>COMMENTS_REPLY_AS_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Reply as...')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_CANCEL_BUTTON</td>

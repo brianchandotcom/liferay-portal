@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>PGUserstatistics</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGUserstatistics</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGUserstatistics</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RANKING_TABLE-->
+<tr>
+	<td>RANKING_TABLE_USER_NAME</td>
+	<td>//div[@id='_180_ocerSearchContainer']//tr[contains(.,'${key_userName}')]//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RANKING_TABLE_RANK</td>
+	<td>//div[@id='_180_ocerSearchContainer']//tr[contains(.,'${key_userName}')]//div[@class='user-rank']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RANKING_TABLE_CONTRIBUTION_SCORE</td>
+	<td>//div[@id='_180_ocerSearchContainer']//tr[contains(.,'${key_userName}')]//div[@class='contribution-score']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RANKING_TABLE_PARTICIPATION_SCORE</td>
+	<td>//div[@id='_180_ocerSearchContainer']//tr[contains(.,'${key_userName}')]//div[@class='participation-score']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

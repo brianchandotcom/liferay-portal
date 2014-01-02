@@ -406,6 +406,11 @@
 	<td>//li[contains(@class,'sign-out')]/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USER_SIGN_IN</td>
+	<td>//li[contains(@class,'sign-in')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

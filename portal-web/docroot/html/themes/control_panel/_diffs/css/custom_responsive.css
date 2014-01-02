@@ -15,10 +15,7 @@
 
 			.brand {
 				padding: 12px 0 0 0;
-
-				@include respond-to(phone, tablet) {
-					line-height: 16px;
-				}
+				line-height: 16px;
 
 				.control-panel-back-link {
 					float: left;
@@ -43,10 +40,15 @@
 							text-overflow: ellipsis;
 							white-space: nowrap;
 							width: 75px;
+
+							.lfr-icon-menu-text {
+								font-size: 18px;
+							}
 						}
 
 						.control-panel-site-selector, .site-administration-title {
 							@include ellipsis;
+							font-size: 16px;
 						}
 
 						.control-panel-site-selector {
@@ -55,7 +57,7 @@
 							i {
 								bottom: 4px;
 								position: absolute;
-								right: -12px;
+								right: -15px;
 							}
 						}
 

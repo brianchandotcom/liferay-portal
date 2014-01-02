@@ -208,37 +208,52 @@ $dockbarOpenGradientStart: #0EA6F9;
 					font-weight: 100;
 					text-shadow: none;
 
-					@include respond-to(phone) {
+					@include respond-to(phone, tablet) {
 						letter-spacing: 0px;
 					}
 				}
 
-				h1 {
-					position: relative;
+				@include respond-to(phone, tablet) {
+					h1 {
+						position: relative;
+					}
 				}
 
 				.control-panel-site-selector {
 					font-size: inherit;
-					font-weight: 200;
 					margin-bottom: 0;
 					margin-top: 0;
 					vertical-align: baseline;
-
-
 					position: static;
 
-					i {
-						bottom: -22%;
-						left: 100%;
-						position: absolute;
+					@include respond-to(phone, tablet) {
+						font-weight: 200;
+						position: static;
 					}
 
 					a {
 						text-decoration: none;
 
+						@include respond-to(phone) {
+							.lfr-icon-menu-arrow {
+								display: none;
+							}
+						}
+
+						.lfr-icon-menu-icon {
+							display: none;
+
+							@include respond-to(phone) {
+								display: inline-block;
+								position: absolute;
+							}
+						}
+
 						.lfr-icon-menu-text {
-							line-height: 22px;
-							font-weight: 200;
+							@include respond-to(phone, tablet) {
+								font-weight: 200;
+								line-height: 22px;
+							}
 
 							&:hover, &:focus {
 								text-decoration: underline;
@@ -253,9 +268,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				.control-panel-back-link {
-					margin: 0 10px;
+					margin: 0 15px;
 
-					@include respond-to(phone) {
+					@include respond-to(phone, tablet) {
 						margin: 0 8px;
 					}
 
@@ -276,13 +291,19 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 						@include respond-to(phone, tablet) {
 							margin: 5px 0 3px 5px;
-							padding: 12px 15px;
+							padding: 12px;
 						}
 					}
 				}
 
-				.nav-collapse > .nav li.dropdown ul.dropdown-menu {
-					margin-top: 0;
+				.nav-collapse {
+					@include respond-to(phone, tablet) {
+						float: right;
+					}
+
+					> .nav li.dropdown ul.dropdown-menu {
+						margin-top: 0;
+					}
 				}
 
 				.nav-navigation {

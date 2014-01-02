@@ -157,14 +157,7 @@
 									color: #FFF;
 									font-size: 16px;
 									line-height: 20px;
-									padding: 12px 15px;
-
-									@include respond-to(phone, tablet) {
-										margin-left: 0;
-										margin-right: 0;
-
-										padding: 12px 8px;
-									}
+									padding: 12px;
 
 									&:focus, &:hover {
 										background-color: #5BBAE8;

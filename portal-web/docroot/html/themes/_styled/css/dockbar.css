@@ -60,6 +60,11 @@ $editLayoutPanelWidth: 460px;
 		@include respond-to(phone, tablet) {
 			#_145_navSiteNavigationNavbarBtn {
 				display: inline-block;
+				padding: 12px;
+
+				> i {
+					margin-top: 2px;
+				}
 			}
 		}
 
@@ -143,9 +148,13 @@ $editLayoutPanelWidth: 460px;
 			.brand h1 {
 				display: inline-block;
 				font-size: inherit;
-				line-height: 16px;
+				line-height: 1;
 				margin-bottom: 0;
 				margin-top: 0;
+
+				@include respond-to(phone, tablet) {
+					line-height: 16px;
+				}
 			}
 
 			.btn-navbar {
@@ -166,7 +175,7 @@ $editLayoutPanelWidth: 460px;
 					@include respond-to(phone, tablet) {
 						clear: none;
 						display: inline-block;
-						float: right;
+						float: left;
 						height: auto;
 						overflow: visible;
 						position: static;
@@ -211,10 +220,6 @@ $editLayoutPanelWidth: 460px;
 									margin-left: 5px;
 									margin-top: 5px;
 									padding: 0;
-
-									> .nav-item-icon {
-										margin-top: 3px;
-									}
 
 									> .nav-item-label {
 										display: none;
@@ -364,6 +369,10 @@ $editLayoutPanelWidth: 460px;
 										> .nav-item-icon {
 											margin-right: 0;
 											margin-top: 3px;
+
+											@include respond-to(phone, tablet) {
+												margin-top: 0;
+											}
 										}
 
 										.nav-item-label {
@@ -597,6 +606,7 @@ $editLayoutPanelWidth: 460px;
 
 											@include respond-to(phone, tablet) {
 												font-size: inherit;
+												margin-top: 0;
 											}
 										}
 
@@ -653,10 +663,6 @@ $editLayoutPanelWidth: 460px;
 
 								@include respond-to(phone, tablet) {
 									color: inherit;
-								}
-
-								.nav-item-icon {
-									margin-top: 3px;
 								}
 							}
 

@@ -305,8 +305,10 @@
 							}
 						}
 
-						&.nav-account-controls > li > a .nav-item-icon {
-							margin-top: 0;
+						@include respond-to(phone, tablet) {
+							&.nav-account-controls > li > a .nav-item-icon {
+								margin-top: 0;
+							}
 						}
 
 						> li {
@@ -320,10 +322,6 @@
 
 								&:focus, &:hover {
 									color: #FFF;
-								}
-
-								[class^="icon-"], [class*=" icon-"] {
-									margin-top: 3px;
 								}
 							}
 

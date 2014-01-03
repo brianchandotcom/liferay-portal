@@ -20,6 +20,8 @@ List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.get
 portletURL.setParameter("struts_action", "/workflow_definitions/view");
 %>
 
+<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="you-cannot-deactivate-or-delete-this-definition" />
+
 <liferay-util:include page="/html/portlet/workflow_definitions/toolbar.jsp" />
 
 <liferay-ui:search-container

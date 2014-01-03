@@ -55,6 +55,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("ownerType", getOwnerType());
 		attributes.put("preferences", getPreferences());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 
 		if (preferences != null) {
 			setPreferences(preferences);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -184,6 +191,26 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	@Override
 	public void setPreferences(java.lang.String preferences) {
 		_portalPreferences.setPreferences(preferences);
+	}
+
+	/**
+	* Returns the orm version of this portal preferences.
+	*
+	* @return the orm version of this portal preferences
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _portalPreferences.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this portal preferences.
+	*
+	* @param ormVersion the orm version of this portal preferences
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_portalPreferences.setOrmVersion(ormVersion);
 	}
 
 	@Override

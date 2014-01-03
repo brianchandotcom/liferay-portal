@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface CompanyModel extends BaseModel<Company> {
+public interface CompanyModel extends BaseModel<Company>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -215,6 +215,20 @@ public interface CompanyModel extends BaseModel<Company> {
 	 * @param active the active of this company
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the orm version of this company.
+	 *
+	 * @return the orm version of this company
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this company.
+	 *
+	 * @param ormVersion the orm version of this company
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

@@ -7668,6 +7668,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		backgroundTaskImpl.setCompletionDate(backgroundTask.getCompletionDate());
 		backgroundTaskImpl.setStatus(backgroundTask.getStatus());
 		backgroundTaskImpl.setStatusMessage(backgroundTask.getStatusMessage());
+		backgroundTaskImpl.setOrmVersion(backgroundTask.getOrmVersion());
 
 		return backgroundTaskImpl;
 	}

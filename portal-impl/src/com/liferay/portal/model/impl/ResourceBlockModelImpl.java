@@ -66,9 +66,10 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 			{ "groupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "permissionsHash", Types.VARCHAR },
-			{ "referenceCount", Types.BIGINT }
+			{ "referenceCount", Types.BIGINT },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (resourceBlockId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlock (resourceBlockId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,permissionsHash VARCHAR(75) null,referenceCount LONG,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlock";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourceBlock.resourceBlockId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourceBlock.resourceBlockId ASC";
@@ -109,6 +110,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		model.setName(soapModel.getName());
 		model.setPermissionsHash(soapModel.getPermissionsHash());
 		model.setReferenceCount(soapModel.getReferenceCount());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -179,6 +181,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		attributes.put("name", getName());
 		attributes.put("permissionsHash", getPermissionsHash());
 		attributes.put("referenceCount", getReferenceCount());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -222,6 +225,12 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 		if (referenceCount != null) {
 			setReferenceCount(referenceCount);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -345,6 +354,17 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		_referenceCount = referenceCount;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -382,6 +402,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		resourceBlockImpl.setName(getName());
 		resourceBlockImpl.setPermissionsHash(getPermissionsHash());
 		resourceBlockImpl.setReferenceCount(getReferenceCount());
+		resourceBlockImpl.setOrmVersion(getOrmVersion());
 
 		resourceBlockImpl.resetOriginalValues();
 
@@ -487,12 +508,14 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 		resourceBlockCacheModel.referenceCount = getReferenceCount();
 
+		resourceBlockCacheModel.ormVersion = getOrmVersion();
+
 		return resourceBlockCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{resourceBlockId=");
 		sb.append(getResourceBlockId());
@@ -506,6 +529,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		sb.append(getPermissionsHash());
 		sb.append(", referenceCount=");
 		sb.append(getReferenceCount());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -513,7 +538,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourceBlock");
@@ -543,6 +568,10 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 			"<column><column-name>referenceCount</column-name><column-value><![CDATA[");
 		sb.append(getReferenceCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -565,6 +594,7 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	private String _permissionsHash;
 	private String _originalPermissionsHash;
 	private long _referenceCount;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private ResourceBlock _escapedModel;
 }

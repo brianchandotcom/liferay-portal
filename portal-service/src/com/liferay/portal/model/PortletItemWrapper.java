@@ -62,6 +62,7 @@ public class PortletItemWrapper implements PortletItem,
 		attributes.put("name", getName());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class PortletItemWrapper implements PortletItem,
 
 		if (classNameId != null) {
 			setClassNameId(classNameId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -384,6 +391,26 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public void setClassNameId(long classNameId) {
 		_portletItem.setClassNameId(classNameId);
+	}
+
+	/**
+	* Returns the orm version of this portlet item.
+	*
+	* @return the orm version of this portlet item
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _portletItem.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this portlet item.
+	*
+	* @param ormVersion the orm version of this portlet item
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_portletItem.setOrmVersion(ormVersion);
 	}
 
 	@Override

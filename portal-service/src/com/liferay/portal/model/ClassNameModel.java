@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ClassNameModel extends BaseModel<ClassName>, TypedModel {
+public interface ClassNameModel extends BaseModel<ClassName>, TypedModel,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -98,6 +99,20 @@ public interface ClassNameModel extends BaseModel<ClassName>, TypedModel {
 	 * @param value the value of this class name
 	 */
 	public void setValue(String value);
+
+	/**
+	 * Returns the orm version of this class name.
+	 *
+	 * @return the orm version of this class name
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this class name.
+	 *
+	 * @param ormVersion the orm version of this class name
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

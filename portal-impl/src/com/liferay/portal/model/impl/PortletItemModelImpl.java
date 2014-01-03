@@ -69,9 +69,10 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "portletId", Types.VARCHAR },
-			{ "classNameId", Types.BIGINT }
+			{ "classNameId", Types.BIGINT },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PortletItem (portletItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(200) null,classNameId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PortletItem (portletItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(200) null,classNameId LONG,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table PortletItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY portletItem.portletItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PortletItem.portletItemId ASC";
@@ -142,6 +143,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		attributes.put("name", getName());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -209,6 +211,12 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 		if (classNameId != null) {
 			setClassNameId(classNameId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -401,6 +409,16 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		return _originalClassNameId;
 	}
 
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -442,6 +460,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		portletItemImpl.setName(getName());
 		portletItemImpl.setPortletId(getPortletId());
 		portletItemImpl.setClassNameId(getClassNameId());
+		portletItemImpl.setOrmVersion(getOrmVersion());
 
 		portletItemImpl.resetOriginalValues();
 
@@ -575,12 +594,14 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 		portletItemCacheModel.classNameId = getClassNameId();
 
+		portletItemCacheModel.ormVersion = getOrmVersion();
+
 		return portletItemCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{portletItemId=");
 		sb.append(getPortletItemId());
@@ -602,6 +623,8 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		sb.append(getPortletId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -609,7 +632,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PortletItem");
@@ -655,6 +678,10 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
 		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -682,6 +709,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private PortletItem _escapedModel;
 }

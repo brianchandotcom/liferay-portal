@@ -59,9 +59,10 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 			{ "clusterGroupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "clusterNodeIds", Types.VARCHAR },
-			{ "wholeCluster", Types.BOOLEAN }
+			{ "wholeCluster", Types.BOOLEAN },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ClusterGroup (clusterGroupId LONG not null primary key,name VARCHAR(75) null,clusterNodeIds VARCHAR(75) null,wholeCluster BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table ClusterGroup (clusterGroupId LONG not null primary key,name VARCHAR(75) null,clusterNodeIds VARCHAR(75) null,wholeCluster BOOLEAN,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table ClusterGroup";
 	public static final String ORDER_BY_JPQL = " ORDER BY clusterGroup.clusterGroupId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ClusterGroup.clusterGroupId ASC";
@@ -119,6 +120,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		attributes.put("name", getName());
 		attributes.put("clusterNodeIds", getClusterNodeIds());
 		attributes.put("wholeCluster", getWholeCluster());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -150,6 +152,12 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 		if (wholeCluster != null) {
 			setWholeCluster(wholeCluster);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -209,6 +217,16 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	}
 
 	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			ClusterGroup.class.getName(), getPrimaryKey());
@@ -239,6 +257,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		clusterGroupImpl.setName(getName());
 		clusterGroupImpl.setClusterNodeIds(getClusterNodeIds());
 		clusterGroupImpl.setWholeCluster(getWholeCluster());
+		clusterGroupImpl.setOrmVersion(getOrmVersion());
 
 		clusterGroupImpl.resetOriginalValues();
 
@@ -325,12 +344,14 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 		clusterGroupCacheModel.wholeCluster = getWholeCluster();
 
+		clusterGroupCacheModel.ormVersion = getOrmVersion();
+
 		return clusterGroupCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{clusterGroupId=");
 		sb.append(getClusterGroupId());
@@ -340,6 +361,8 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		sb.append(getClusterNodeIds());
 		sb.append(", wholeCluster=");
 		sb.append(getWholeCluster());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -347,7 +370,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ClusterGroup");
@@ -369,6 +392,10 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 			"<column><column-name>wholeCluster</column-name><column-value><![CDATA[");
 		sb.append(getWholeCluster());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -383,5 +410,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	private String _name;
 	private String _clusterNodeIds;
 	private boolean _wholeCluster;
+	private long _ormVersion;
 	private ClusterGroup _escapedModel;
 }

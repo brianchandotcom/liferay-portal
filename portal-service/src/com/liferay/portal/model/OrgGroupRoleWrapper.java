@@ -54,6 +54,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -76,6 +77,12 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -158,6 +165,26 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	@Override
 	public void setRoleId(long roleId) {
 		_orgGroupRole.setRoleId(roleId);
+	}
+
+	/**
+	* Returns the orm version of this org group role.
+	*
+	* @return the orm version of this org group role
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _orgGroupRole.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this org group role.
+	*
+	* @param ormVersion the orm version of this org group role
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_orgGroupRole.setOrmVersion(ormVersion);
 	}
 
 	@Override

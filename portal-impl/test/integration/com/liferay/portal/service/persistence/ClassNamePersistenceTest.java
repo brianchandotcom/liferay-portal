@@ -115,6 +115,8 @@ public class ClassNamePersistenceTest {
 
 		newClassName.setValue(ServiceTestUtil.randomString());
 
+		newClassName.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newClassName);
 
 		ClassName existingClassName = _persistence.findByPrimaryKey(newClassName.getPrimaryKey());
@@ -123,6 +125,8 @@ public class ClassNamePersistenceTest {
 			newClassName.getClassNameId());
 		Assert.assertEquals(existingClassName.getValue(),
 			newClassName.getValue());
+		Assert.assertEquals(existingClassName.getOrmVersion(),
+			newClassName.getOrmVersion());
 	}
 
 	@Test
@@ -160,7 +164,7 @@ public class ClassNamePersistenceTest {
 
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ClassName_", "classNameId",
-			true, "value", true);
+			true, "value", true, "ormVersion", true);
 	}
 
 	@Test
@@ -296,6 +300,8 @@ public class ClassNamePersistenceTest {
 		ClassName className = _persistence.create(pk);
 
 		className.setValue(ServiceTestUtil.randomString());
+
+		className.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(className);
 

@@ -34,6 +34,7 @@ public class UserIdMapperSoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setExternalUserId(model.getExternalUserId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -126,9 +127,18 @@ public class UserIdMapperSoap implements Serializable {
 		_externalUserId = externalUserId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _userIdMapperId;
 	private long _userId;
 	private String _type;
 	private String _description;
 	private String _externalUserId;
+	private long _ormVersion;
 }

@@ -44,7 +44,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
-	GroupedModel, WorkflowedModel {
+	GroupedModel, VersionedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -995,6 +995,20 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the orm version of this layout revision.
+	 *
+	 * @return the orm version of this layout revision
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this layout revision.
+	 *
+	 * @param ormVersion the orm version of this layout revision
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}

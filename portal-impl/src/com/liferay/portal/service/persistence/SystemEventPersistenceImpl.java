@@ -2615,6 +2615,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEventImpl.setSystemEventSetKey(systemEvent.getSystemEventSetKey());
 		systemEventImpl.setType(systemEvent.getType());
 		systemEventImpl.setExtraData(systemEvent.getExtraData());
+		systemEventImpl.setOrmVersion(systemEvent.getOrmVersion());
 
 		return systemEventImpl;
 	}

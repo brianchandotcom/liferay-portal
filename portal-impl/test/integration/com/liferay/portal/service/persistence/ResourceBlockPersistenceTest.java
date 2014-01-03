@@ -123,6 +123,8 @@ public class ResourceBlockPersistenceTest {
 
 		newResourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
 
+		newResourceBlock.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newResourceBlock);
 
 		ResourceBlock existingResourceBlock = _persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
@@ -139,6 +141,8 @@ public class ResourceBlockPersistenceTest {
 			newResourceBlock.getPermissionsHash());
 		Assert.assertEquals(existingResourceBlock.getReferenceCount(),
 			newResourceBlock.getReferenceCount());
+		Assert.assertEquals(existingResourceBlock.getOrmVersion(),
+			newResourceBlock.getOrmVersion());
 	}
 
 	@Test
@@ -178,7 +182,8 @@ public class ResourceBlockPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceBlock",
 			"resourceBlockId", true, "companyId", true, "groupId", true,
-			"name", true, "permissionsHash", true, "referenceCount", true);
+			"name", true, "permissionsHash", true, "referenceCount", true,
+			"ormVersion", true);
 	}
 
 	@Test
@@ -331,6 +336,8 @@ public class ResourceBlockPersistenceTest {
 		resourceBlock.setPermissionsHash(ServiceTestUtil.randomString());
 
 		resourceBlock.setReferenceCount(ServiceTestUtil.nextLong());
+
+		resourceBlock.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(resourceBlock);
 

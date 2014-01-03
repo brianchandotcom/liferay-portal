@@ -38,7 +38,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface GroupModel extends AttachedModel, BaseModel<Group> {
+public interface GroupModel extends AttachedModel, BaseModel<Group>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -380,6 +381,20 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 	 * @param active the active of this group
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the orm version of this group.
+	 *
+	 * @return the orm version of this group
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this group.
+	 *
+	 * @param ormVersion the orm version of this group
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

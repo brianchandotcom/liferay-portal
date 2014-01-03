@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ContactModel extends AttachedModel, AuditedModel,
-	BaseModel<Contact> {
+	BaseModel<Contact>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -591,6 +591,20 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	 * @param hoursOfOperation the hours of operation of this contact
 	 */
 	public void setHoursOfOperation(String hoursOfOperation);
+
+	/**
+	 * Returns the orm version of this contact.
+	 *
+	 * @return the orm version of this contact
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this contact.
+	 *
+	 * @param ormVersion the orm version of this contact
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

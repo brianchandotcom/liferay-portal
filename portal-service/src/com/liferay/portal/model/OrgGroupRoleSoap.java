@@ -34,6 +34,7 @@ public class OrgGroupRoleSoap implements Serializable {
 		soapModel.setOrganizationId(model.getOrganizationId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setRoleId(model.getRoleId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -112,7 +113,16 @@ public class OrgGroupRoleSoap implements Serializable {
 		_roleId = roleId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _organizationId;
 	private long _groupId;
 	private long _roleId;
+	private long _ormVersion;
 }

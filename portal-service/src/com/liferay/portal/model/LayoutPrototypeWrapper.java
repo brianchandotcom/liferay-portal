@@ -64,6 +64,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
 		attributes.put("active", getActive());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -134,6 +135,12 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -527,6 +534,26 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	@Override
 	public void setActive(boolean active) {
 		_layoutPrototype.setActive(active);
+	}
+
+	/**
+	* Returns the orm version of this layout prototype.
+	*
+	* @return the orm version of this layout prototype
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _layoutPrototype.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this layout prototype.
+	*
+	* @param ormVersion the orm version of this layout prototype
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_layoutPrototype.setOrmVersion(ormVersion);
 	}
 
 	@Override

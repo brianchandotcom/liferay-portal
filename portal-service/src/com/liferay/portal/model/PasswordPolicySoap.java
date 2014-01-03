@@ -65,6 +65,7 @@ public class PasswordPolicySoap implements Serializable {
 		soapModel.setRequireUnlock(model.getRequireUnlock());
 		soapModel.setResetFailureCount(model.getResetFailureCount());
 		soapModel.setResetTicketMaxAge(model.getResetTicketMaxAge());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -425,6 +426,14 @@ public class PasswordPolicySoap implements Serializable {
 		_resetTicketMaxAge = resetTicketMaxAge;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _passwordPolicyId;
 	private long _companyId;
@@ -459,4 +468,5 @@ public class PasswordPolicySoap implements Serializable {
 	private boolean _requireUnlock;
 	private long _resetFailureCount;
 	private long _resetTicketMaxAge;
+	private long _ormVersion;
 }

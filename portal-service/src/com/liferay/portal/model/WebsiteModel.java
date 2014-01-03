@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -282,6 +282,20 @@ public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
 	 * @param primary the primary of this website
 	 */
 	public void setPrimary(boolean primary);
+
+	/**
+	 * Returns the orm version of this website.
+	 *
+	 * @return the orm version of this website
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this website.
+	 *
+	 * @param ormVersion the orm version of this website
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

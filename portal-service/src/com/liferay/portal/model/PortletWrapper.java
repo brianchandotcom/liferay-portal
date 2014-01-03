@@ -55,6 +55,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		attributes.put("portletId", getPortletId());
 		attributes.put("roles", getRoles());
 		attributes.put("active", getActive());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -89,6 +90,12 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -220,6 +227,26 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setActive(boolean active) {
 		_portlet.setActive(active);
+	}
+
+	/**
+	* Returns the orm version of this portlet.
+	*
+	* @return the orm version of this portlet
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _portlet.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this portlet.
+	*
+	* @param ormVersion the orm version of this portlet
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_portlet.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -130,6 +130,8 @@ public class TeamPersistenceTest {
 
 		newTeam.setDescription(ServiceTestUtil.randomString());
 
+		newTeam.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newTeam);
 
 		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
@@ -147,6 +149,8 @@ public class TeamPersistenceTest {
 		Assert.assertEquals(existingTeam.getName(), newTeam.getName());
 		Assert.assertEquals(existingTeam.getDescription(),
 			newTeam.getDescription());
+		Assert.assertEquals(existingTeam.getOrmVersion(),
+			newTeam.getOrmVersion());
 	}
 
 	@Test
@@ -197,7 +201,7 @@ public class TeamPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Team", "teamId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "groupId", true, "name", true,
-			"description", true);
+			"description", true, "ormVersion", true);
 	}
 
 	@Test
@@ -348,6 +352,8 @@ public class TeamPersistenceTest {
 		team.setName(ServiceTestUtil.randomString());
 
 		team.setDescription(ServiceTestUtil.randomString());
+
+		team.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(team);
 

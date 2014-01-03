@@ -40,7 +40,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MembershipRequestModel extends BaseModel<MembershipRequest> {
+public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -232,6 +233,20 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest> {
 	 * @param statusId the status ID of this membership request
 	 */
 	public void setStatusId(int statusId);
+
+	/**
+	 * Returns the orm version of this membership request.
+	 *
+	 * @return the orm version of this membership request
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this membership request.
+	 *
+	 * @param ormVersion the orm version of this membership request
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

@@ -64,6 +64,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("mappedId", getMappedId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -135,6 +136,12 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 
 		if (manualCheckInRequired != null) {
 			setManualCheckInRequired(manualCheckInRequired);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -408,6 +415,26 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	@Override
 	public void setManualCheckInRequired(boolean manualCheckInRequired) {
 		_repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
+	}
+
+	/**
+	* Returns the orm version of this repository entry.
+	*
+	* @return the orm version of this repository entry
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _repositoryEntry.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this repository entry.
+	*
+	* @param ormVersion the orm version of this repository entry
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_repositoryEntry.setOrmVersion(ormVersion);
 	}
 
 	@Override

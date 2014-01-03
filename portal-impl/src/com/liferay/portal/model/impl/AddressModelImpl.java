@@ -85,9 +85,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			{ "countryId", Types.BIGINT },
 			{ "typeId", Types.INTEGER },
 			{ "mailing", Types.BOOLEAN },
-			{ "primary_", Types.BOOLEAN }
+			{ "primary_", Types.BOOLEAN },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Address (uuid_ VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId INTEGER,mailing BOOLEAN,primary_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Address (uuid_ VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId INTEGER,mailing BOOLEAN,primary_ BOOLEAN,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Address";
 	public static final String ORDER_BY_JPQL = " ORDER BY address.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Address.createDate ASC";
@@ -144,6 +145,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		model.setTypeId(soapModel.getTypeId());
 		model.setMailing(soapModel.getMailing());
 		model.setPrimary(soapModel.getPrimary());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -227,6 +229,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		attributes.put("typeId", getTypeId());
 		attributes.put("mailing", getMailing());
 		attributes.put("primary", getPrimary());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -348,6 +351,12 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -717,6 +726,17 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _originalPrimary;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -773,6 +793,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		addressImpl.setTypeId(getTypeId());
 		addressImpl.setMailing(getMailing());
 		addressImpl.setPrimary(getPrimary());
+		addressImpl.setOrmVersion(getOrmVersion());
 
 		addressImpl.resetOriginalValues();
 
@@ -960,12 +981,14 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		addressCacheModel.primary = getPrimary();
 
+		addressCacheModel.ormVersion = getOrmVersion();
+
 		return addressCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1005,6 +1028,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		sb.append(getMailing());
 		sb.append(", primary=");
 		sb.append(getPrimary());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -1012,7 +1037,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Address");
@@ -1094,6 +1119,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
 		sb.append(getPrimary());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1137,6 +1166,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private Address _escapedModel;
 }

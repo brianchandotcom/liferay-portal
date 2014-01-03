@@ -33,7 +33,7 @@ import java.io.ObjectOutput;
 public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{orgLaborId=");
 		sb.append(orgLaborId);
@@ -69,6 +69,8 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable 
 		sb.append(satOpen);
 		sb.append(", satClose=");
 		sb.append(satClose);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -95,6 +97,7 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable 
 		orgLaborImpl.setFriClose(friClose);
 		orgLaborImpl.setSatOpen(satOpen);
 		orgLaborImpl.setSatClose(satClose);
+		orgLaborImpl.setOrmVersion(ormVersion);
 
 		orgLaborImpl.resetOriginalValues();
 
@@ -120,6 +123,7 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable 
 		friClose = objectInput.readInt();
 		satOpen = objectInput.readInt();
 		satClose = objectInput.readInt();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -142,6 +146,7 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable 
 		objectOutput.writeInt(friClose);
 		objectOutput.writeInt(satOpen);
 		objectOutput.writeInt(satClose);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long orgLaborId;
@@ -161,4 +166,5 @@ public class OrgLaborCacheModel implements CacheModel<OrgLabor>, Externalizable 
 	public int friClose;
 	public int satOpen;
 	public int satClose;
+	public long ormVersion;
 }

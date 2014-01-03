@@ -33,6 +33,7 @@ public class PortalPreferencesSoap implements Serializable {
 		soapModel.setOwnerId(model.getOwnerId());
 		soapModel.setOwnerType(model.getOwnerType());
 		soapModel.setPreferences(model.getPreferences());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -120,8 +121,17 @@ public class PortalPreferencesSoap implements Serializable {
 		_preferences = preferences;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _portalPreferencesId;
 	private long _ownerId;
 	private int _ownerType;
 	private String _preferences;
+	private long _ormVersion;
 }

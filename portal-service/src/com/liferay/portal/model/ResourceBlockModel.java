@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ResourceBlockModel extends BaseModel<ResourceBlock> {
+public interface ResourceBlockModel extends BaseModel<ResourceBlock>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,6 +144,20 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock> {
 	 * @param referenceCount the reference count of this resource block
 	 */
 	public void setReferenceCount(long referenceCount);
+
+	/**
+	 * Returns the orm version of this resource block.
+	 *
+	 * @return the orm version of this resource block
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this resource block.
+	 *
+	 * @param ormVersion the orm version of this resource block
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

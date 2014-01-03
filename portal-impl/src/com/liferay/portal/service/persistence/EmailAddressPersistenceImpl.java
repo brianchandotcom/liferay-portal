@@ -4284,6 +4284,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		emailAddressImpl.setAddress(emailAddress.getAddress());
 		emailAddressImpl.setTypeId(emailAddress.getTypeId());
 		emailAddressImpl.setPrimary(emailAddress.isPrimary());
+		emailAddressImpl.setOrmVersion(emailAddress.getOrmVersion());
 
 		return emailAddressImpl;
 	}

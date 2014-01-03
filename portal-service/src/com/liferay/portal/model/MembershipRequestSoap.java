@@ -41,6 +41,7 @@ public class MembershipRequestSoap implements Serializable {
 		soapModel.setReplyDate(model.getReplyDate());
 		soapModel.setReplierUserId(model.getReplierUserId());
 		soapModel.setStatusId(model.getStatusId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -176,6 +177,14 @@ public class MembershipRequestSoap implements Serializable {
 		_statusId = statusId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _membershipRequestId;
 	private long _groupId;
 	private long _companyId;
@@ -186,4 +195,5 @@ public class MembershipRequestSoap implements Serializable {
 	private Date _replyDate;
 	private long _replierUserId;
 	private int _statusId;
+	private long _ormVersion;
 }

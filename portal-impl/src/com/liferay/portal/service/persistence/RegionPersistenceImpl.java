@@ -2206,6 +2206,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		regionImpl.setRegionCode(region.getRegionCode());
 		regionImpl.setName(region.getName());
 		regionImpl.setActive(region.isActive());
+		regionImpl.setOrmVersion(region.getOrmVersion());
 
 		return regionImpl;
 	}

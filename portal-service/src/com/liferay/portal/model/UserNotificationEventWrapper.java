@@ -62,6 +62,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		attributes.put("delivered", getDelivered());
 		attributes.put("payload", getPayload());
 		attributes.put("archived", getArchived());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -127,6 +128,12 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 
 		if (archived != null) {
 			setArchived(archived);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -390,6 +397,26 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	@Override
 	public void setArchived(boolean archived) {
 		_userNotificationEvent.setArchived(archived);
+	}
+
+	/**
+	* Returns the orm version of this user notification event.
+	*
+	* @return the orm version of this user notification event
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _userNotificationEvent.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this user notification event.
+	*
+	* @param ormVersion the orm version of this user notification event
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_userNotificationEvent.setOrmVersion(ormVersion);
 	}
 
 	@Override

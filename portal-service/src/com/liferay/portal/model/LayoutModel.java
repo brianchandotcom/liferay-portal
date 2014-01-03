@@ -43,7 +43,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel {
+public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -976,6 +977,20 @@ public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel {
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid of this layout
 	 */
 	public void setSourcePrototypeLayoutUuid(String sourcePrototypeLayoutUuid);
+
+	/**
+	 * Returns the orm version of this layout.
+	 *
+	 * @return the orm version of this layout
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this layout.
+	 *
+	 * @param ormVersion the orm version of this layout
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

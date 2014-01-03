@@ -39,7 +39,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface UserNotificationDeliveryModel extends BaseModel<UserNotificationDelivery>,
-	TypedModel {
+	TypedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -206,6 +206,20 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	 * @param deliver the deliver of this user notification delivery
 	 */
 	public void setDeliver(boolean deliver);
+
+	/**
+	 * Returns the orm version of this user notification delivery.
+	 *
+	 * @return the orm version of this user notification delivery
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this user notification delivery.
+	 *
+	 * @param ormVersion the orm version of this user notification delivery
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

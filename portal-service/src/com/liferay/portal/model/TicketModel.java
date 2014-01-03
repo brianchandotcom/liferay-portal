@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TicketModel extends AttachedModel, BaseModel<Ticket> {
+public interface TicketModel extends AttachedModel, BaseModel<Ticket>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -201,6 +202,20 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket> {
 	 * @param expirationDate the expiration date of this ticket
 	 */
 	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the orm version of this ticket.
+	 *
+	 * @return the orm version of this ticket
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this ticket.
+	 *
+	 * @param ormVersion the orm version of this ticket
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

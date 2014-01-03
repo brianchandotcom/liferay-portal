@@ -54,6 +54,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 		attributes.put("userGroupId", getUserGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -76,6 +77,12 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -158,6 +165,26 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	@Override
 	public void setRoleId(long roleId) {
 		_userGroupGroupRole.setRoleId(roleId);
+	}
+
+	/**
+	* Returns the orm version of this user group group role.
+	*
+	* @return the orm version of this user group group role
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _userGroupGroupRole.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this user group group role.
+	*
+	* @param ormVersion the orm version of this user group group role
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_userGroupGroupRole.setOrmVersion(ormVersion);
 	}
 
 	@Override

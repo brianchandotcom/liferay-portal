@@ -33,6 +33,7 @@ public class VirtualHostSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setLayoutSetId(model.getLayoutSetId());
 		soapModel.setHostname(model.getHostname());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -117,8 +118,17 @@ public class VirtualHostSoap implements Serializable {
 		_hostname = hostname;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _virtualHostId;
 	private long _companyId;
 	private long _layoutSetId;
 	private String _hostname;
+	private long _ormVersion;
 }

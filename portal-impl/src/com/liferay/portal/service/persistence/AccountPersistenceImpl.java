@@ -333,6 +333,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		accountImpl.setIndustry(account.getIndustry());
 		accountImpl.setType(account.getType());
 		accountImpl.setSize(account.getSize());
+		accountImpl.setOrmVersion(account.getOrmVersion());
 
 		return accountImpl;
 	}

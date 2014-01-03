@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface OrganizationModel extends BaseModel<Organization>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -340,6 +340,20 @@ public interface OrganizationModel extends BaseModel<Organization>,
 	 * @param logoId the logo ID of this organization
 	 */
 	public void setLogoId(long logoId);
+
+	/**
+	 * Returns the orm version of this organization.
+	 *
+	 * @return the orm version of this organization
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this organization.
+	 *
+	 * @param ormVersion the orm version of this organization
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

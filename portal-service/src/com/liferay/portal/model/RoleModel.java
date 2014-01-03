@@ -44,7 +44,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface RoleModel extends AttachedModel, BaseModel<Role>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -479,6 +479,20 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>,
 	 * @param subtype the subtype of this role
 	 */
 	public void setSubtype(String subtype);
+
+	/**
+	 * Returns the orm version of this role.
+	 *
+	 * @return the orm version of this role
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this role.
+	 *
+	 * @param ormVersion the orm version of this role
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

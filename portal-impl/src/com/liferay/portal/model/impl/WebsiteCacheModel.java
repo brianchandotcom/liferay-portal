@@ -36,7 +36,7 @@ import java.util.Date;
 public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -62,6 +62,8 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 		sb.append(typeId);
 		sb.append(", primary=");
 		sb.append(primary);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,6 +117,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 
 		websiteImpl.setTypeId(typeId);
 		websiteImpl.setPrimary(primary);
+		websiteImpl.setOrmVersion(ormVersion);
 
 		websiteImpl.resetOriginalValues();
 
@@ -135,6 +138,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 		url = objectInput.readUTF();
 		typeId = objectInput.readInt();
 		primary = objectInput.readBoolean();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -172,6 +176,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 
 		objectOutput.writeInt(typeId);
 		objectOutput.writeBoolean(primary);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public String uuid;
@@ -186,4 +191,5 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable {
 	public String url;
 	public int typeId;
 	public boolean primary;
+	public long ormVersion;
 }

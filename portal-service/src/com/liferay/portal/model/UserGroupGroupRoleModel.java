@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface UserGroupGroupRoleModel extends BaseModel<UserGroupGroupRole> {
+public interface UserGroupGroupRoleModel extends BaseModel<UserGroupGroupRole>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -99,6 +100,20 @@ public interface UserGroupGroupRoleModel extends BaseModel<UserGroupGroupRole> {
 	 * @param roleId the role ID of this user group group role
 	 */
 	public void setRoleId(long roleId);
+
+	/**
+	 * Returns the orm version of this user group group role.
+	 *
+	 * @return the orm version of this user group group role
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this user group group role.
+	 *
+	 * @param ormVersion the orm version of this user group group role
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

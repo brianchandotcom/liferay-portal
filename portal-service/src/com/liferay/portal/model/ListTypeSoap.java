@@ -33,6 +33,7 @@ public class ListTypeSoap implements Serializable {
 		soapModel.setListTypeId(model.getListTypeId());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -109,7 +110,16 @@ public class ListTypeSoap implements Serializable {
 		_type = type;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private int _listTypeId;
 	private String _name;
 	private String _type;
+	private long _ormVersion;
 }

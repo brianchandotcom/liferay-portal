@@ -1926,6 +1926,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		workflowDefinitionLinkImpl.setTypePK(workflowDefinitionLink.getTypePK());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionName(workflowDefinitionLink.getWorkflowDefinitionName());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(workflowDefinitionLink.getWorkflowDefinitionVersion());
+		workflowDefinitionLinkImpl.setOrmVersion(workflowDefinitionLink.getOrmVersion());
 
 		return workflowDefinitionLinkImpl;
 	}

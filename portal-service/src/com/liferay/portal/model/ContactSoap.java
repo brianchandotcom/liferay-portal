@@ -64,6 +64,7 @@ public class ContactSoap implements Serializable {
 		soapModel.setJobTitle(model.getJobTitle());
 		soapModel.setJobClass(model.getJobClass());
 		soapModel.setHoursOfOperation(model.getHoursOfOperation());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -384,6 +385,14 @@ public class ContactSoap implements Serializable {
 		_hoursOfOperation = hoursOfOperation;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _contactId;
 	private long _companyId;
 	private long _userId;
@@ -417,4 +426,5 @@ public class ContactSoap implements Serializable {
 	private String _jobTitle;
 	private String _jobClass;
 	private String _hoursOfOperation;
+	private long _ormVersion;
 }

@@ -37,7 +37,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{membershipRequestId=");
 		sb.append(membershipRequestId);
@@ -59,6 +59,8 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		sb.append(replierUserId);
 		sb.append(", statusId=");
 		sb.append(statusId);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -103,6 +105,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 
 		membershipRequestImpl.setReplierUserId(replierUserId);
 		membershipRequestImpl.setStatusId(statusId);
+		membershipRequestImpl.setOrmVersion(ormVersion);
 
 		membershipRequestImpl.resetOriginalValues();
 
@@ -121,6 +124,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		replyDate = objectInput.readLong();
 		replierUserId = objectInput.readLong();
 		statusId = objectInput.readInt();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -149,6 +153,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		objectOutput.writeLong(replyDate);
 		objectOutput.writeLong(replierUserId);
 		objectOutput.writeInt(statusId);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long membershipRequestId;
@@ -161,4 +166,5 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 	public long replyDate;
 	public long replierUserId;
 	public int statusId;
+	public long ormVersion;
 }

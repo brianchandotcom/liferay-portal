@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.hibernate;
 
+import com.liferay.portal.dao.orm.hibernate.event.VersionSynchronizerPostUpdateEventListener;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -46,6 +47,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.Dialect;
+import org.hibernate.event.EventListeners;
+import org.hibernate.event.PostUpdateEventListener;
 
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
@@ -75,6 +78,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		Converter<String> hibernateConfigurationConverter) {
 
 		_hibernateConfigurationConverter = hibernateConfigurationConverter;
+	}
+
+	public void setVersioned(boolean versioned) {
+		_versioned = versioned;
 	}
 
 	protected static Map<String, Class<?>> getPreloadClassLoaderClasses() {
@@ -158,6 +165,15 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 			if (dbType.equals(DB.TYPE_HYPERSONIC)) {
 				//configuration.setProperty("hibernate.jdbc.batch_size", "0");
+			}
+
+			if (_versioned) {
+				EventListeners eventListeners =
+					configuration.getEventListeners();
+
+				eventListeners.setPostUpdateEventListeners(
+					new PostUpdateEventListener[] {
+						VersionSynchronizerPostUpdateEventListener.INSTANCE});
 			}
 		}
 		catch (Exception e1) {
@@ -298,5 +314,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	}
 
 	private Converter<String> _hibernateConfigurationConverter;
+	private boolean _versioned = true;
 
 }

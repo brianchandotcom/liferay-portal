@@ -16,6 +16,9 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
+import com.liferay.portal.model.BaseModel;
+
+import org.hibernate.Session;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,6 +28,24 @@ public class ExceptionTranslator {
 	public static ORMException translate(Exception e) {
 		if (e instanceof org.hibernate.ObjectNotFoundException) {
 			return new ObjectNotFoundException(e);
+		}
+		else {
+			return new ORMException(e);
+		}
+	}
+
+	public static ORMException translate(
+		Session session, Object object, Exception e) {
+
+		if (e instanceof org.hibernate.StaleObjectStateException) {
+			BaseModel<?> baseModel = (BaseModel<?>)object;
+
+			Object baseObject = session.get(
+				object.getClass(), baseModel.getPrimaryKeyObj());
+
+			return new ORMException(
+				"Update on stale object : " + object +
+					", current base object : " + baseObject, e);
 		}
 		else {
 			return new ORMException(e);

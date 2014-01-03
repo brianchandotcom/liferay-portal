@@ -118,6 +118,10 @@ public interface ${entity.name}Model extends
 		<#assign overrideColumnNames = overrideColumnNames + ["className", "classNameId"]>
 	</#if>
 
+	<#if entity.isVersioned()>
+		, VersionedModel
+	</#if>
+
 	<#if entity.isWorkflowEnabled()>
 		, WorkflowedModel
 

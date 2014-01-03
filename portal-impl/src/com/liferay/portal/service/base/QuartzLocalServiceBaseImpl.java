@@ -88,6 +88,7 @@ import com.liferay.portal.service.persistence.TeamPersistence;
 import com.liferay.portal.service.persistence.TicketPersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserGroupFinder;
+import com.liferay.portal.service.persistence.UserGroupGroupRoleFinder;
 import com.liferay.portal.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.service.persistence.UserGroupPersistence;
 import com.liferay.portal.service.persistence.UserGroupRoleFinder;
@@ -3196,6 +3197,25 @@ public abstract class QuartzLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the user group group role finder.
+	 *
+	 * @return the user group group role finder
+	 */
+	public UserGroupGroupRoleFinder getUserGroupGroupRoleFinder() {
+		return userGroupGroupRoleFinder;
+	}
+
+	/**
+	 * Sets the user group group role finder.
+	 *
+	 * @param userGroupGroupRoleFinder the user group group role finder
+	 */
+	public void setUserGroupGroupRoleFinder(
+		UserGroupGroupRoleFinder userGroupGroupRoleFinder) {
+		this.userGroupGroupRoleFinder = userGroupGroupRoleFinder;
+	}
+
+	/**
 	 * Returns the user group role local service.
 	 *
 	 * @return the user group role local service
@@ -4063,6 +4083,8 @@ public abstract class QuartzLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.service.UserGroupGroupRoleService userGroupGroupRoleService;
 	@BeanReference(type = UserGroupGroupRolePersistence.class)
 	protected UserGroupGroupRolePersistence userGroupGroupRolePersistence;
+	@BeanReference(type = UserGroupGroupRoleFinder.class)
+	protected UserGroupGroupRoleFinder userGroupGroupRoleFinder;
 	@BeanReference(type = com.liferay.portal.service.UserGroupRoleLocalService.class)
 	protected com.liferay.portal.service.UserGroupRoleLocalService userGroupRoleLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserGroupRoleService.class)

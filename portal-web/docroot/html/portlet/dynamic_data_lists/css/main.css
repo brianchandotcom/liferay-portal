@@ -1,8 +1,4 @@
-.document-library-file-entry-cell-editor-hidden {
-	display: none;
-}
-
-.link-to-page-cell-editor-hidden {
+.document-library-file-entry-cell-editor-hidden, .link-to-page-cell-editor-hidden {
 	display: none;
 }
 

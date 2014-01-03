@@ -7,15 +7,15 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var JSON = A.JSON;
-
 		var EMPTY_FN = A.Lang.emptyFn;
 
-		var SPACE = ' ';
+		var JSON = A.JSON;
+
+		var STR_DASH = '-';
 
 		var STR_EMPTY = '';
 
-		var DASH = '-';
+		var STR_SPACE = ' ';
 
 		var DLFileEntryCellEditor = A.Component.create(
 			{
@@ -167,11 +167,12 @@ AUI.add(
 				EXTENDS: A.DropDownCellEditor,
 
 				prototype: {
-					OPT_GROUP_TEMPLATE: '<optgroup label="{label}"></optgroup>',
+					OPT_GROUP_TEMPLATE: '<optgroup label="{label}">{options}</optgroup>',
 
 					renderUI: function(val) {
-						var instance = this,
-							options = {};
+						var instance = this;
+
+						var options = {};
 
 						LinkToPageCellEditor.superclass.renderUI.apply(instance, arguments);
 
@@ -191,122 +192,119 @@ AUI.add(
 								},
 								data: {
 									cmd: 'getAll',
-									groupId: themeDisplay.getScopeGroupId(),
 									expandParentLayouts: true,
-									paginate: false,
-									p_auth: Liferay.authToken
+									groupId: themeDisplay.getScopeGroupId(),
+									p_auth: Liferay.authToken,
+									paginate: false
 								}
 							}
 						);
 					},
 
 					_createOptions: function(val) {
-			            var instance = this;
-			            var elements = instance.elements;
-			            var publicOptionsBuffer = [];
-			            var privateOptionsBuffer = [];
-			            var optionTpl = instance.OPTION_TEMPLATE;
-			            var optGroupTpl = instance.OPT_GROUP_TEMPLATE;
-
-			            var publicOptGroup = A.Node.create(
-				            Lang.sub(
-				            	optGroupTpl,
-				            	{
-				            		'label': Liferay.Language.get('public-pages')
-				            	}
-				            )
-			            );
-
-			            var privateOptGroup = A.Node.create(
-			            	Lang.sub(
-				            	optGroupTpl,
-				            	{
-				            		'label': Liferay.Language.get('private-pages')
-				            	}
-				            )
-			            );
-
-			            var options = A.NodeList.create();
-
-			            A.each(val, function(curLayout, oLabel) {
-			                var values = {
-			                    id: A.guid(),
-			                    label: oLabel,
-			                    value: Liferay.Util.escapeHTML(JSON.stringify(curLayout))
-			                };
-
-			                var option = A.Node.create(Lang.sub(optionTpl, values));
-
-			                if (curLayout.privateLayout) {
-			                	privateOptionsBuffer.push(Lang.sub(optionTpl, values));
-			                }
-			                else {
-			                	publicOptionsBuffer.push(Lang.sub(optionTpl, values));
-			                }
-
-			                options.append(option);
-			            });
-
-			            var privateOptions = A.NodeList.create(privateOptionsBuffer.join(STR_EMPTY));
-
-			            privateOptGroup.setContent(privateOptions);
-
-			            var publicOptions = A.NodeList.create(publicOptionsBuffer.join(STR_EMPTY));
-
-			            publicOptGroup.setContent(publicOptions);
-
-			            elements.empty();
-
-		                elements.append(publicOptGroup);
-		                elements.append(privateOptGroup);
-
-			            instance.options = elements.all('option');
-			        },
-
-					_createOptionElements: function(layouts, options, prependLabel) {
 						var instance = this;
 
-						AArray.each(layouts, function(layout) {
-		                    var curLayout = {
-		                    	'groupId': layout.groupId,
-		                    	'layoutId': layout.layoutId,
-		                    	'name': layout.name,
-		                    	'privateLayout': layout.privateLayout
-		                    };
+						var elements = instance.elements;
 
-		                    options[prependLabel + layout.name] = curLayout;
+						var publicOptions = [];
 
-		                    if (layout.hasChildren) {
-		                    	instance._createOptionElements(layout.children.layouts, options, prependLabel + DASH + SPACE);
-		                    }
-		                });
+						var privateOptions = [];
+
+						A.each(
+							val,
+							function(item, index, collection) {
+								var values = {
+									id: A.guid(),
+									label: index,
+									value: Liferay.Util.escapeHTML(JSON.stringify(item))
+								};
+
+								if (item.privateLayout) {
+									privateOptions.push(
+										Lang.sub(instance.OPTION_TEMPLATE, values)
+									);
+								}
+								else {
+									publicOptions.push(
+										Lang.sub(instance.OPTION_TEMPLATE, values)
+									);
+								}
+							}
+						);
+
+						var publicOptGroup = Lang.sub(
+							instance.OPT_GROUP_TEMPLATE,
+							{
+								label: Liferay.Language.get('public-pages'),
+								options: publicOptions.join(STR_EMPTY)
+							}
+						);
+
+						var privateOptGroup = Lang.sub(
+							instance.OPT_GROUP_TEMPLATE,
+							{
+								label: Liferay.Language.get('private-pages'),
+								options: privateOptions.join(STR_EMPTY)
+							}
+						);
+
+						elements.setContent(publicOptGroup + privateOptGroup);
+
+						instance.options = elements.all('option');
+					},
+
+					_createOptionElements: function(layouts, options, prefix) {
+						var instance = this;
+
+						AArray.each(
+							layouts,
+							function(item, index, collection) {
+								options[prefix + item.name] = {
+									groupId: item.groupId,
+									layoutId: item.layoutId,
+									name: item.name,
+									privateLayout: item.privateLayout
+								};
+
+								if (item.hasChildren) {
+									instance._createOptionElements(
+										item.children.layouts,
+										options,
+										prefix + STR_DASH + STR_SPACE
+									);
+								}
+							}
+						);
 					},
 
 					_uiSetValue: function(val) {
-			            var instance = this;
-			            var options = instance.options;
+						var instance = this;
 
-			            if (options && options.size()) {
-			                options.set('selected', false);
+						var options = instance.options;
 
-			                if (Lang.isValue(val)) {
-			                	var selLayout = SpreadSheet.Util.parseJSON(val);
+						if (options && options.size()) {
+							options.set('selected', false);
 
-			                	options.each(function(option) {
-			                		var curLayout = SpreadSheet.Util.parseJSON(option.attr('value'));
+							if (Lang.isValue(val)) {
+								var selLayout = SpreadSheet.Util.parseJSON(val);
 
-			                		if ((curLayout.groupId === selLayout.groupId) &&
-			                			(curLayout.layoutId === selLayout.layoutId) &&
-			                			(curLayout.privateLayout === selLayout.privateLayout)) {
+								options.each(
+									function(item, index, collection) {
+										var curLayout = SpreadSheet.Util.parseJSON(item.attr('value'));
 
-			                			option.set('selected', true);
-			                		}
-			                	});
-			                }
-			            }
+										if ((curLayout.groupId === selLayout.groupId) &&
+											(curLayout.layoutId === selLayout.layoutId) &&
+											(curLayout.privateLayout === selLayout.privateLayout)) {
 
-			            return val;
-			        }
+											item.set('selected', true);
+										}
+									}
+								);
+							}
+						}
+
+						return val;
+					}
 				}
 			}
 		);
@@ -418,11 +416,11 @@ AUI.add(
 								var value = record.get(item.name);
 
 								if (type === 'ddm-link-to-page') {
-									var layoutData = SpreadSheet.Util.parseJSON(value);
+									value = SpreadSheet.Util.parseJSON(value);
 
-									delete layoutData.name;
+									delete value.name;
 
-									value = JSON.stringify(layoutData);
+									value = JSON.stringify(value);
 								}
 								else if ((type === 'radio') || (type === 'select')) {
 									if (!Lang.isArray(value)) {
@@ -644,7 +642,6 @@ AUI.add(
 								};
 
 								config.outputFormatter = function(val) {
-
 									return AArray.map(
 										val,
 										function(item, index, collection) {

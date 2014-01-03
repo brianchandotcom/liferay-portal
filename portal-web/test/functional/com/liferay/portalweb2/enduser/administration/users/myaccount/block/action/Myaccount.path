@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPLOAD_IMAGE_IFRAME</td>
+	<td>//iframe[contains(@id,'_2_changeLogo_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
@@ -161,6 +166,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_PICTURE_CHANGE_BUTTON</td>
+	<td>//button[contains(@class,'edit-logo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PICTURE_DELETE_BUTTON</td>
+	<td>//button[contains(@class,'delete-logo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PROFILE_PICTURE-->
+<tr>
+	<td>PROFILE_PICTURE_UPLOAD_IMAGE_FIELD</td>
+	<td>//input[contains(@id,'_2_fileName')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -259,7 +285,7 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_ADD_BUTTON</td>
-	<td>//button[@id='add']</td>
+	<td>//button[@title='Add Tags']</td>
 	<td></td>
 </tr>
 <tr>

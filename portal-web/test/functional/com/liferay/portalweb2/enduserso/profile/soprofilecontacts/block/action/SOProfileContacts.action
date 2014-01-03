@@ -1,0 +1,11 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="CONTACTS_LIST_NAME">
+			<execute function="AssertClick#pauseAssertTextClickAt" />
+		</case>
+
+		<case locator-key1="USER_DETAILS_NAME">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+</definition>

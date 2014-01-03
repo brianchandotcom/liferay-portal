@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case locator-key1="DELETE_TAG_BUTTON">
+			<execute function="Click#click" />
+		</case>
+	</command>
+</definition>

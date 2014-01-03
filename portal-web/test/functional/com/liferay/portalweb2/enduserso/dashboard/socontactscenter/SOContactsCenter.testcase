@@ -342,11 +342,11 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
-		<execute macro="SOProfile#addAdditionalEmailAddressProfile">
+		<execute macro="SOProfile#addAdditionalEmailAddress">
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
 		</execute>
 
-		<execute macro="SOProfile#addAddressProfile">
+		<execute macro="SOProfile#addAddress">
 			<var name="userAddressCity" value="${userAddressCity}" />
 			<var name="userAddressCountry" value="${userAddressCountry}" />
 			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
@@ -355,11 +355,11 @@
 			<var name="userAddressType" value="${userAddressType}" />
 		</execute>
 
-		<execute macro="SOProfile#addIntroductionProfile">
+		<execute macro="SOProfile#addIntroduction">
 			<var name="userIntroduction" value="${userIntroduction}" />
 		</execute>
 
-		<execute macro="SOProfile#addInstantMessengerProfile">
+		<execute macro="SOProfile#addInstantMessenger">
 			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
@@ -368,32 +368,32 @@
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
-		<execute macro="SOProfile#addPhoneNumbersProfile">
+		<execute macro="SOProfile#addPhoneNumbers">
 			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
-		<execute macro="SOProfile#addProjectsProfile">
+		<execute macro="SOProfile#addProjects">
 			<var name="userProjectTitle" value="${userProjectTitle}" />
 			<var name="userProjectDescription" value="${userProjectDescription}" />
 		</execute>
 
-		<execute macro="SOProfile#addSMSProfile">
+		<execute macro="SOProfile#addSMS">
 			<var name="userSMS" value="${userSMS}" />
 		</execute>
 
-		<execute macro="SOProfile#addSocialNetworkProfile">
+		<execute macro="SOProfile#addSocialNetwork">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
 			<var name="userSocialNetworkMyspace" value="${userSocialNetworkMyspace}" />
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
 		</execute>
 
-		<execute macro="SOProfile#addTagProfile">
+		<execute macro="SOProfile#addTag">
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
-		<execute macro="SOProfile#addWebsiteProfile">
+		<execute macro="SOProfile#addWebsite">
 			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 			<var name="userWebsiteType" value="${userWebsiteType}" />
 		</execute>
@@ -409,11 +409,11 @@
 			<var name="userScreenName" value="socialoffice01" />
 		</execute>
 
-		<execute macro="SOProfile#viewAdditionalEmailAddressProfile">
+		<execute macro="SOProfile#viewAdditionalEmailAddress">
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
 		</execute>
 
-		<execute macro="SOProfile#viewAddressProfile">
+		<execute macro="SOProfile#viewAddress">
 			<var name="userAddressCity" value="${userAddressCity}" />
 			<var name="userAddressCountry" value="${userAddressCountry}" />
 			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
@@ -422,11 +422,11 @@
 			<var name="userAddressType" value="${userAddressType}" />
 		</execute>
 
-		<execute macro="SOProfile#viewIntroductionProfile">
+		<execute macro="SOProfile#viewIntroduction">
 			<var name="userIntroduction" value="${userIntroduction}" />
 		</execute>
 
-		<execute macro="SOProfile#viewInstantMessengerProfile">
+		<execute macro="SOProfile#viewInstantMessenger">
 			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
@@ -435,28 +435,28 @@
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
-		<execute macro="SOProfile#viewPhoneNumbersProfile">
+		<execute macro="SOProfile#viewPhoneNumbers">
 			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
-		<execute macro="SOProfile#viewProjectsProfile">
+		<execute macro="SOProfile#viewProjects">
 			<var name="userProjectTitle" value="${userProjectTitle}" />
 			<var name="userProjectDescription" value="${userProjectDescription}" />
 		</execute>
 
-		<execute macro="SOProfile#viewSMSProfile">
+		<execute macro="SOProfile#viewSMS">
 			<var name="userSMS" value="${userSMS}" />
 		</execute>
 
-		<execute macro="SOProfile#viewSocialNetworkProfile">
+		<execute macro="SOProfile#viewSocialNetwork">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
 			<var name="userSocialNetworkMyspace" value="${userSocialNetworkMyspace}" />
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
 		</execute>
 
-		<execute macro="SOProfile#viewWebsiteProfile">
+		<execute macro="SOProfile#viewWebsite">
 			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 			<var name="userWebsiteType" value="${userWebsiteType}" />
 		</execute>
@@ -472,11 +472,11 @@
 			<var name="userScreenName" value="socialoffice01" />
 		</execute>
 
-		<execute macro="SOProfile#viewAdditionalEmailAddressProfile">
+		<execute macro="SOProfile#viewAdditionalEmailAddress">
 			<var name="userAdditionalEmailAddress" value="socialoffice02@liferay.com" />
 		</execute>
 
-		<execute macro="SOProfile#viewAddressProfile">
+		<execute macro="SOProfile#viewAddress">
 			<var name="userAddressCity" value="${userAddressCity}" />
 			<var name="userAddressCountry" value="${userAddressCountry}" />
 			<var name="userAddressPostalCode" value="${userAddressPostalCode}" />
@@ -485,11 +485,11 @@
 			<var name="userAddressType" value="${userAddressType}" />
 		</execute>
 
-		<execute macro="SOProfile#viewIntroductionProfile">
+		<execute macro="SOProfile#viewIntroduction">
 			<var name="userIntroduction" value="${userIntroduction}" />
 		</execute>
 
-		<execute macro="SOProfile#viewInstantMessengerProfile">
+		<execute macro="SOProfile#viewInstantMessenger">
 			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
 			<var name="userInstantMessengerICQ" value="${userInstantMessengerICQ}" />
 			<var name="userInstantMessengerJabber" value="${userInstantMessengerJabber}" />
@@ -498,28 +498,28 @@
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
-		<execute macro="SOProfile#viewPhoneNumbersProfile">
+		<execute macro="SOProfile#viewPhoneNumbers">
 			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
 			<var name="userPhoneNumberExtension" value="${userPhoneNumberExtension}" />
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
-		<execute macro="SOProfile#viewProjectsProfile">
+		<execute macro="SOProfile#viewProjects">
 			<var name="userProjectTitle" value="${userProjectTitle}" />
 			<var name="userProjectDescription" value="${userProjectDescription}" />
 		</execute>
 
-		<execute macro="SOProfile#viewSMSProfile">
+		<execute macro="SOProfile#viewSMS">
 			<var name="userSMS" value="${userSMS}" />
 		</execute>
 
-		<execute macro="SOProfile#viewSocialNetworkProfile">
+		<execute macro="SOProfile#viewSocialNetwork">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
 			<var name="userSocialNetworkMyspace" value="${userSocialNetworkMyspace}" />
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
 		</execute>
 
-		<execute macro="SOProfile#viewWebsiteProfile">
+		<execute macro="SOProfile#viewWebsite">
 			<var name="userWebsiteURL" value="${userWebsiteURL}" />
 			<var name="userWebsiteType" value="${userWebsiteType}" />
 		</execute>

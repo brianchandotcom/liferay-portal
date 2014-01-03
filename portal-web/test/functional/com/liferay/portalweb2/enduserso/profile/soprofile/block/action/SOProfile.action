@@ -40,4 +40,10 @@
 			<execute function="AssertTextEquals#assertText" />
 		</case>
 	</command>
+
+	<command name="click">
+		<case locator-key1="EDIT_PROFILE_PICTURE_BUTTON">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+	</command>
 </definition>

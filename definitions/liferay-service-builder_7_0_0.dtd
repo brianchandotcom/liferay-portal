@@ -111,7 +111,8 @@ entity. Set this to false if data in the table will be updated by other
 programs. The default value is true.
 
 The dynamic-update-enabled value specifies whether or not unmodified properties
-are excluded in the SQL update statement. The default value is false.
+are excluded in the SQL update statement. If the entity is versioned, the
+default value is true, otherwise default to false.
 
 The json-enabled value specifies whether or not the entity should be annotated
 for JSON serialization. By default, if the remote-service value is true, then

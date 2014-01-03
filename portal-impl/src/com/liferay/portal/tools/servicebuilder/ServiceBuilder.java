@@ -4370,8 +4370,6 @@ public class ServiceBuilder {
 		String txManager = entityElement.attributeValue("tx-manager");
 		boolean cacheEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("cache-enabled"), true);
-		boolean dynamicUpdateEnabled = GetterUtil.getBoolean(
-			entityElement.attributeValue("dynamic-update-enabled"));
 		boolean jsonEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("json-enabled"), remoteService);
 		boolean trashEnabled = GetterUtil.getBoolean(
@@ -4380,6 +4378,8 @@ public class ServiceBuilder {
 			entityElement.attributeValue("deprecated"));
 		boolean versioned = GetterUtil.getBoolean(
 			entityElement.attributeValue("versioned"), _versioned);
+		boolean dynamicUpdateEnabled = GetterUtil.getBoolean(
+			entityElement.attributeValue("dynamic-update-enabled"), versioned);
 
 		List<EntityColumn> pkList = new ArrayList<EntityColumn>();
 		List<EntityColumn> regularColList = new ArrayList<EntityColumn>();

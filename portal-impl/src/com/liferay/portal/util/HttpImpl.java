@@ -1453,7 +1453,7 @@ public class HttpImpl implements Http {
 
 					try {
 						progressInputStream.readAll(
-						unsyncByteArrayOutputStream);
+							unsyncByteArrayOutputStream);
 					}
 					finally {
 						progressInputStream.clearProgress();

@@ -1688,6 +1688,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								"line break: " + fileName + " " + lineCount);
 						}
 
+						if ((lineLeadingTabCount ==
+								previousLineLeadingTabCount) &&
+							(previousLine.endsWith(StringPool.EQUAL) ||
+							 previousLine.endsWith(
+								 StringPool.OPEN_PARENTHESIS))) {
+
+							processErrorMessage(
+								fileName, "tab: " + fileName + " " + lineCount);
+						}
+
 						if (Validator.isNotNull(trimmedLine)) {
 							if (((previousLine.endsWith(StringPool.COLON) &&
 								  previousLine.contains(

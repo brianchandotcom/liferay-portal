@@ -158,7 +158,8 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testAllAssetTags3() throws Exception {
 		testAssetTags(
-		new String[] {"liferay", "architecture", "services"}, false, false, 1);
+			new String[] {"liferay", "architecture", "services"}, false, false,
+			1);
 	}
 
 	@Test

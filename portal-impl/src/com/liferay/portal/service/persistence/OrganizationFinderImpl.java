@@ -59,7 +59,7 @@ public class OrganizationFinderImpl
 		OrganizationFinder.class.getName() + ".countByC_PO_N_L_S_C_Z_R_C";
 
 	public static final String FIND_BY_NO_ASSETS =
-	OrganizationFinder.class.getName() + ".findByNoAssets";
+		OrganizationFinder.class.getName() + ".findByNoAssets";
 
 	public static final String FIND_BY_GROUP_ID =
 		OrganizationFinder.class.getName() + ".findByGroupId";

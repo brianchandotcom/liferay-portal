@@ -33,7 +33,7 @@ public class DLFileRankFinderImpl
 	extends BasePersistenceImpl<DLFileRank> implements DLFileRankFinder {
 
 	public static final String FIND_BY_STALE_RANKS =
-	DLFileRankFinder.class.getName() + ".findByStaleRanks";
+		DLFileRankFinder.class.getName() + ".findByStaleRanks";
 
 	public static final String FIND_BY_FOLDER_ID =
 		DLFileRankFinder.class.getName() + ".findByFolderId";

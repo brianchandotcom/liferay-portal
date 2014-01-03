@@ -1661,7 +1661,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			DeleteOrganizationActionableDynamicQuery
 				deleteOrganizationActionableDynamicQuery =
-				new DeleteOrganizationActionableDynamicQuery();
+					new DeleteOrganizationActionableDynamicQuery();
 
 			deleteOrganizationActionableDynamicQuery.setCompanyId(
 				organization.getCompanyId());

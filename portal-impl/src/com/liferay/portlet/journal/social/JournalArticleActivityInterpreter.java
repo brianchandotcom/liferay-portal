@@ -123,7 +123,8 @@ public class JournalArticleActivityInterpreter
 		}
 		else if ((activityType == JournalActivityKeys.UPDATE_ARTICLE) &&
 				 !JournalArticlePermission.contains(
-				permissionChecker, activity.getClassPK(), ActionKeys.UPDATE)) {
+					 permissionChecker, activity.getClassPK(),
+					 ActionKeys.UPDATE)) {
 
 			return false;
 		}

@@ -90,8 +90,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 
 			BackgroundTaskStatusMessageTranslator
 				backgroundTaskStatusMessageTranslator =
-				backgroundTaskExecutor.
-					getBackgroundTaskStatusMessageTranslator();
+					backgroundTaskExecutor.
+						getBackgroundTaskStatusMessageTranslator();
 
 			if (backgroundTaskStatusMessageTranslator != null) {
 				backgroundTaskStatusMessageListener =

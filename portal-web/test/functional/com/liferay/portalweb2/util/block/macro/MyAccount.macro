@@ -11,8 +11,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addAddress">
@@ -57,8 +55,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addComments">
@@ -71,8 +67,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addInstantMessenger">
@@ -127,8 +121,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addPhoneNumbers">
@@ -152,8 +144,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addProfilePicture">
@@ -172,8 +162,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addProjects">
@@ -197,8 +185,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addSMS">
@@ -211,8 +197,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addSocialNetwork">
@@ -239,8 +223,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addTag">
@@ -254,8 +236,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="addWebsite">
@@ -270,8 +250,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="deleteProfilePicture">
@@ -284,8 +262,6 @@
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="Myaccount#selectFrame" value1="relative=top" />
-
-		<execute macro="Page#openURL" />
 	</command>
 
 	<command name="view">

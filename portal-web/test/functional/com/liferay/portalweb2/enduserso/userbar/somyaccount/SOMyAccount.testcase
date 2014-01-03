@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="social-office-user-bar">
 	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
 	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
 	<property name="theme.plugins.includes" value="so-theme" />
@@ -37,8 +37,7 @@
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewAdditionalEmailAddress">
 			<var name="userAdditionalEmailAddress" value="${userAdditionalEmailAddress}" />
@@ -62,8 +61,7 @@
 			<var name="userAddressType" value="${userAddressType}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewAddress">
 			<var name="userAddressCity" value="${userAddressCity}" />
@@ -82,8 +80,7 @@
 			<var name="userIntroduction" value="${userIntroduction}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewIntroduction">
 			<var name="userIntroduction" value="${userIntroduction}" />
@@ -107,8 +104,7 @@
 			<var name="userInstantMessengerYM" value="${userInstantMessengerYM}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewInstantMessenger">
 			<var name="userInstantMessengerAIM" value="${userInstantMessengerAIM}" />
@@ -131,8 +127,7 @@
 			<var name="userPhoneNumberType" value="${userPhoneNumberType}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewPhoneNumbers">
 			<var name="userPhoneNumberNumber" value="${userPhoneNumberNumber}" />
@@ -149,15 +144,13 @@
 			<var name="imageFileName" value="${imageFileName}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProfilePicture" />
 
 		<execute macro="MyAccount#deleteProfilePicture" />
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute action="SOProfile#assertElementPresent" locator-key1="DEFAULT_PROFILE_PICTURE" />
 	</command>
@@ -171,8 +164,7 @@
 			<var name="userProjectDescription" value="${userProjectDescription}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewProjects">
 			<var name="userProjectTitle" value="${userProjectTitle}" />
@@ -187,8 +179,7 @@
 			<var name="userSMS" value="${userSMS}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewSMS">
 			<var name="userSMS" value="${userSMS}" />
@@ -206,8 +197,7 @@
 			<var name="userSocialNetworkTwitter" value="${userSocialNetworkTwitter}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewSocialNetwork">
 			<var name="userSocialNetworkFacebook" value="${userSocialNetworkFacebook}" />
@@ -223,8 +213,7 @@
 			<var name="userTag" value="${userTag}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewTag">
 			<var name="key_userTag" value="${userTag}" />
@@ -241,8 +230,7 @@
 			<var name="userWebsiteType" value="${userWebsiteType}" />
 		</execute>
 
-		<execute action="Dockbar#click" locator-key1="USER_NAME" />
-		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
+		<execute macro="Page#gotoMyProfile" />
 
 		<execute macro="SOProfile#viewWebsite">
 			<var name="userWebsiteURL" value="${userWebsiteURL}" />

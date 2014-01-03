@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>Dynamicdatamapping</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATA_DEFINTIONS_IFRAME</td>
 	<td>//iframe[contains(@src,'dynamicdatalists')]</td>
 	<td></td>

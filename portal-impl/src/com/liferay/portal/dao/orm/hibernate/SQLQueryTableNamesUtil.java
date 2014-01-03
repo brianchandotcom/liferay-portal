@@ -101,7 +101,7 @@ public class SQLQueryTableNamesUtil {
 			if (openCount == 1) {
 				String body = sql.substring(1, closeIndex);
 
-				if (closeIndex < sql.length() - 1) {
+				if (closeIndex < (sql.length() - 1)) {
 					String tail = sql.substring(closeIndex + 1);
 
 					sql = body.concat(tail);

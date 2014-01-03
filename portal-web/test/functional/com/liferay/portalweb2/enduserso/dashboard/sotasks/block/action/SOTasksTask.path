@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>SOTasksTask</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SOTasksTask</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SOTasksTask</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_DESCRIPTION</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_ASSIGNEE</td>
+	<td>//div[@class='task-data assignee']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_REPORTER</td>
+	<td>//div[@class='task-data reporter']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_STATUS</td>
+	<td>//div[@class='task-data status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_PRIORITY_NORMAL</td>
+	<td>//div[@class='task-data normal']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_PRIORITY_HIGH</td>
+	<td>//div[@class='task-data high']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_PRIORITY_LOW</td>
+	<td>//div[@class='task-data low']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_DUE_DATE</td>
+	<td>//div[@class='task-data due-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_TAG</td>
+	<td>xpath=(//span[@class='tag'])[contains(.,'${key_tagNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_RESOLVE_BUTTON</td>
+	<td>//input[@value='Resolve']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_EDIT_BUTTON</td>
+	<td>//input[@value='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_DELETE_BUTTON</td>
+	<td>//input[@value='Delete']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TASK_CLOSE_BUTTON</td>
+	<td>//input[@value='Close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT-->
+<tr>
+	<td>COMMENT_ADD_BUTTON</td>
+	<td>//a/span[contains(.,'Add Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_FIELD</td>
+	<td>//textarea[@class='comment-form']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_POST_BUTTON</td>
+	<td>//input[@value='Post']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_BODY</td>
+	<td>//div[@class='comment-body']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

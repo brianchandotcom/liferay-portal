@@ -9,30 +9,14 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
 
-		<execute macro="DataDefinition#addFieldCmdCP">
+		<execute macro="DynamicDataMapping#addField">
 			<var name="fieldname" value="${fieldName}" />
-			<var name="fieldNameLabel" value="${fieldNameLabel}" />
 			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
 
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
-	</command>
-
-	<command name="addFieldCmdCP">
-		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
-		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#dragAndDrop" locator-key1="FIELDS_NAME" locator-key2="FORM_BUILDER" value1="${fieldName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#click" locator-key1="${formFieldKey}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#doubleClick" locator-key1="SETTINGS_NAME" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldNameLabel}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#click" locator-key1="NAME_FIELD" />
 	</command>
 
 	<command name="deleteCP">
@@ -102,49 +86,15 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="${formFieldKey}" value1="${fieldName}" />
+		<execute macro="DynamicDataMapping#editFieldSettingsField">
+			<var name="cellEditorFieldName" value="${cellEditorFieldName}" />
+			<var name="cellEditorTypeKey" value="${cellEditorTypeKey}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="optionsNames" value="option 1, option 2, option 3" />
+			<var name="settingsFieldKey" value="${settingsFieldKey}" />
+		</execute>
 
-		<if>
-			<equals arg1="${settingsFieldKey}" arg2="SETTINGS_NAME" />
-			<then>
-				<var name="fieldName" value="${fieldName?lowercase()}" />
-			</then>
-			<elseif>
-				<equals arg1="${settingsFieldKey}" arg2="SETTINGS_TIP" />
-				<then>
-					<var name="fieldName" value="" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${settingsFieldKey}" arg2="SETTINGS_OPTIONS" />
-				<then>
-					<var name="fieldName" value="${optionsNames}" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${fieldName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="${settingsFieldKey}" value1="${fieldName}" />
-
-		<if>
-			<equals arg1="${settingsFieldKey}" arg2="SETTINGS_OPTIONS" />
-			<then>
-				<var name="fieldOptionsSettingsName" value="${cellEditorFieldName?replace(' ', '')}" />
-				<var name="i" value="0" />
-
-				<for list="${fieldOptionsSettingsName}" param="name">
-					<var name="i" value="${i?increment()}" />
-
-					<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="${cellEditorTypeKey}_${i}" value1="${name}" />
-				</for>
-			</then>
-			<else>
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="${cellEditorTypeKey}" value1="${cellEditorFieldName}" />
-			</else>
-		</if>
-
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${cellEditorFieldName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -161,27 +111,12 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="${formFieldKey}" value1="${fieldName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${isValueSet}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="${settingsFieldKey}" value1="${isValueSet}" />
-
-		<if>
-			<equals arg1="${isValueSet}" arg2="No" />
-			<then>
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertNotChecked" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertChecked" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="Yes" />
-			</then>
-			<else>
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertChecked" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertNotChecked" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="No" />
-			</else>
-		</if>
+		<execute macro="DynamicDataMapping#editFieldSettingsFieldRadio">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="isValueSet" value="${isValueSet}" />
+			<var name="settingsFieldKey" value="${settingsFieldKey}" />
+		</execute>
 
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
@@ -225,7 +160,10 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="FORM_FIELD_1" value1="${fieldName}" />
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
@@ -239,17 +177,12 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
-		<if>
-			<equals arg1="${settingsFieldKey}" arg2="SETTINGS_SHOW_LABEL" />
-			<then>
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#click" locator-key1="${formFieldKey}" />
-			</then>
-			<else>
-				<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="${formFieldKey}" value1="${fieldName}" />
-			</else>
-		</if>
-
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${settingsFieldValue}" />
+		<execute macro="DynamicDataMapping#viewEditFieldSettingsField">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+			<var name="settingsFieldKey" value="${settingsFieldKey}" />
+			<var name="settingsFieldValue" value="${settingsFieldValue}" />
+		</execute>
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>

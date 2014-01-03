@@ -1734,7 +1734,7 @@ public class SeleniumBuilderFileUtil {
 		});
 	private static List<String> _componentNames = ListUtil.fromArray(
 		new String[] {
-			"portal-administration", "portal-apis",
+			"marketplace", "portal-administration", "portal-apis",
 			"portal-application-standards", "portal-authentication",
 			"portal-business-productivity", "portal-calendar",
 			"portal-collaboration", "portal-configuration", "portal-deployment",

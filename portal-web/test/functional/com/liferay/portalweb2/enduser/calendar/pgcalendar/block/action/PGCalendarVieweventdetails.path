@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>PGCalendarVieweventdetails</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarVieweventdetails</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGCalendarVieweventdetails</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_EVENT_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_DATE_FIELD</td>
+	<td>xpath=(//dl[@class='property-list']/dd)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>END_DATE_FIELD</td>
+	<td>xpath=(//dl[@class='property-list']/dd)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCES_FIELD</td>
+	<td>xpath=(//dl[@class='property-list']/dd)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAYBE_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Maybe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DECLINE_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Decline')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_BE_THE_FIRST</td>
+	<td>//fieldset[@class='fieldset add-comment']/div/a[contains(.,'Be the first.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_SUBSCRIBE_TO_COMMENTS</td>
+	<td>//fieldset[@class='fieldset add-comment']/div/span[@class='subscribe-link']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_TEXT_AREA</td>
+	<td>//textarea[contains(@id,'postReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_CANCEL_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_USER_NAME</td>
+	<td>//span[@class='user-name' and contains (.,'${key_user}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_BODY</td>
+	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_eventComment}')]/div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

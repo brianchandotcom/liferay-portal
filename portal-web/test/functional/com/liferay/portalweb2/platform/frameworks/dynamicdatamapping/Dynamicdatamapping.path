@@ -137,6 +137,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TIP</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Tip')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_OPTIONS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -149,7 +159,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]/div/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -199,12 +209,12 @@
 </tr>
 <tr>
 	<td>FORM_RADIO_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'form-builder-radio-field-content')])[1]</td>
+	<td>xpath=(//div[contains(@class,'form-builder-radio-field-content')])[1]/label</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_SELECT_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'form-builder-select-field-content')])[1]</td>
+	<td>xpath=(//div[contains(@class,'form-builder-select-field-content')])[1]/label</td>
 	<td></td>
 </tr>
 <tr>

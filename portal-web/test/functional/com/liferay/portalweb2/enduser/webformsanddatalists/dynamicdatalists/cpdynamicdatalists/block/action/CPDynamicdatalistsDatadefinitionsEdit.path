@@ -151,47 +151,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SETTINGS-->
-<tr>
-	<td>SETTINGS_TYPE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_FIELD_LABEL</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_NAME</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_PREDEFINED_VALUE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_SHOW_LABEL</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Show Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_TIP</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Tip')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_OPTIONS</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>

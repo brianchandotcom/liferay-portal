@@ -1,15 +1,25 @@
 <definition>
-	<command name="click">
+	<command name="assertClick">
+		<case locator-key1="ENTRY_DELETE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="ENTRY_EDIT">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
 		<case locator-key1="NAVIGATION_MANAGE_ENTRIES">
-			<execute function="Click#textClickAtAndWait" value1="Manage Entries" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertElementNotPresent">
+		<case locator-key1="ENTRY_CONTENT">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
 
-		<case comparator="startsWith" locator-key1="ENTRY_DELETE_">
-			<execute function="Click#textClickAndWait" value1="Delete" />
-		</case>
-
-		<case comparator="startsWith" locator-key1="ENTRY_EDIT_">
-			<execute function="Click#textClickAndWait" value1="Edit" />
+		<case locator-key1="ENTRY_SCOPE">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
 		</case>
 	</command>
 </definition>

@@ -304,6 +304,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.dao.orm.VersionCheckerUtil">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.deploy">
 		<priority value="INFO" />
 	</category>

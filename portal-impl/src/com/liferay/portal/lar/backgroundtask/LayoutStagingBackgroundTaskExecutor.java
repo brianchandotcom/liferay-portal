@@ -31,6 +31,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
+import com.liferay.portal.service.persistence.BackgroundTaskUtil;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 
@@ -70,8 +71,8 @@ public class LayoutStagingBackgroundTaskExecutor
 		try {
 			Callable<MissingReferences> layoutStagingCallable =
 				new LayoutStagingCallable(
-					backgroundTask, sourceGroupId, targetGroupId,
-					taskContextMap, userId);
+					backgroundTask.getBackgroundTaskId(), sourceGroupId,
+					targetGroupId, taskContextMap, userId);
 
 			missingReferences = TransactionalCallableUtil.call(
 					_transactionAttribute, layoutStagingCallable);
@@ -140,11 +141,10 @@ public class LayoutStagingBackgroundTaskExecutor
 	private class LayoutStagingCallable implements Callable<MissingReferences> {
 
 		private LayoutStagingCallable(
-			BackgroundTask backgroundTask, long sourceGroupId,
-			long targetGroupId, Map<String, Serializable> taskContextMap,
-			long userId) {
+			long backgroundTaskId, long sourceGroupId, long targetGroupId,
+			Map<String, Serializable> taskContextMap, long userId) {
 
-			_backgroundTask = backgroundTask;
+			_backgroundTaskId = backgroundTaskId;
 			_sourceGroupId = sourceGroupId;
 			_targetGroupId = targetGroupId;
 			_taskContextMap = taskContextMap;
@@ -170,16 +170,18 @@ public class LayoutStagingBackgroundTaskExecutor
 					_sourceGroupId, privateLayout, layoutIds, parameterMap,
 					startDate, endDate);
 
-				_backgroundTask = markBackgroundTask(
-					_backgroundTask, "exported");
+				BackgroundTask backgroundTask =
+					BackgroundTaskUtil.findByPrimaryKey(_backgroundTaskId);
+
+				backgroundTask = markBackgroundTask(backgroundTask, "exported");
 
 				missingReferences =
 					LayoutLocalServiceUtil.validateImportLayoutsFile(
 						_userId, _targetGroupId, privateLayout, parameterMap,
 						file);
 
-				_backgroundTask = markBackgroundTask(
-					_backgroundTask, "validated");
+				backgroundTask = markBackgroundTask(
+					backgroundTask, "validated");
 
 				LayoutLocalServiceUtil.importLayouts(
 					_userId, _targetGroupId, privateLayout, parameterMap, file);
@@ -211,7 +213,7 @@ public class LayoutStagingBackgroundTaskExecutor
 			return missingReferences;
 		}
 
-		private BackgroundTask _backgroundTask;
+		private long _backgroundTaskId;
 		private long _sourceGroupId;
 		private long _targetGroupId;
 		private Map<String, Serializable> _taskContextMap;

@@ -11,7 +11,7 @@
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGDocumentsandmedia</td>
+	<td>PGDocumentsandmediaSearch</td>
 </tr>
 <tr>
 	<td></td>
@@ -32,12 +32,12 @@
 <tr>
 	<td>SEARCH_FIELD</td>
 	<td>//input[@class='search-query span9']</td>
-	<td>Search Field</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
 	<td>//button[contains(.,'Search')]</td>
-	<td>Search Button</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -48,27 +48,27 @@
 <tr>
 	<td>SEARCH_RESULTS_TITLE</td>
 	<td>//a[@class='entry-link']/div/span[@class='entry-title']</td>
-	<td>Search Result Title</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_WORD_HIGHLIGHT</td>
 	<td>//a[@class='entry-link']/div/span[@class='entry-title']/span</td>
-	<td>Search Result Word Highlight</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_PARENT_FOLDER</td>
 	<td>//dd</td>
-	<td>Search Result Parent Folder</td>
+	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_RESULTS_DESCRIPTION</td>
+	<td>SEARCH_RESULTS_CONTENT</td>
 	<td>//a[@class='entry-link']/div/span[@class='entry-description']</td>
-	<td>Search Result Description</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_RESULTS_ACTIONS</td>
 	<td>xpath=(//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i)[2]</td>
-	<td>Search Result Actions</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -79,32 +79,32 @@
 <tr>
 	<td>FOLDER_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td>Edit</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_MOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
-	<td>Move</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td>Permissions</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
-	<td>Move to the Recycle Bin</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_ADD_SUBFOLDER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
-	<td>Add Subfolder</td>
+	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENULIST_ACCESS_FROM_DESKTOP</td>
 	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
-	<td>Access from Desktop</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -115,32 +115,32 @@
 <tr>
 	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
 	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
-	<td>Download</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_EDIT</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td>Edit</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_MOVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
-	<td>Move</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_CHECKOUT</td>
 	<td>//a[@role='menuitem' and contains(.,'Checkout')]</td>
-	<td>Checkout</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_PERMISSIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td>Permissions</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_MENULIST_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
-	<td>Move to the Recycle Bin</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

@@ -11,32 +11,47 @@
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGDocumentsandmediaMovefiles</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_MESSAGE</td>
+	<td>//div[contains(@class,'alert alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_MESSAGE_2</td>
+	<td>xpath=(//div[contains(@class,'alert alert-error')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_BUTTON</td>
 	<td>//button[contains(.,'Select')]</td>
-	<td>Select</td>
+	<td></td>
 </tr>
 <tr>
 	<td>MOVE_BUTTON</td>
 	<td>//button[contains(.,'Move')]</td>
-	<td>Move</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//button[contains(.,'Cancel')]</td>
-	<td>Cancel</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_NULL_WINDOW</td>
 	<td>null</td>
-	<td>Select Null Window</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -57,22 +72,48 @@
 <tr>
 	<td>SELECT_POP_UP_ADD_FOLDER</td>
 	<td>//button[contains(.,'Add Folder')]</td>
-	<td>Add Folder</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_POP_UP_ADD_SUBFOLDER</td>
 	<td>//button[contains(.,'Add Subfolder')]</td>
-	<td>Add Subfolder</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_POP_UP_CHOOSE_THIS_FOLDER</td>
 	<td>//button[contains(.,'Choose This Folder')]</td>
-	<td>Choose This Folder</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_POP_UP_CHOOSE</td>
 	<td>//button[@data-foldername='${key_dmFolderName}' and contains(.,'Choose')]</td>
-	<td>Choose 1</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_FOLDER_TABLE-->
+<tr>
+	<td>SELECT_FOLDER_TABLE_FOLDER</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[1]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_#_OF_FOLDERS</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_#_OF_DOCUMENTS</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_CHOOSE</td>
+	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]/button</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

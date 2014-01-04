@@ -11,21 +11,26 @@
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGDocumentsandmedia</td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert-success')]</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
 	<td>BACK_BUTTON</td>
 	<td>//a[@id='_20_TabsBack']/span[contains(.,'Back')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_MESSAGE</td>
+	<td>//div[contains(@class,'alert alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,43 +41,43 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[1][contains(.,'Download')]</td>
-	<td>Download</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Download')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_EDIT_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[2][contains(.,'Edit')]</td>
-	<td>Edit</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Edit')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MOVE_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[3][contains(.,'Move')]</td>
-	<td>Move</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Move')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CHECKOUT_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[4][contains(.,'Checkout')]</td>
-	<td>Checkout</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Checkout')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CANCEL_CHECKOUT_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[4][contains(.,'Cancel Checkout')]</td>
-	<td>Cancel Checkout</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Cancel Checkout')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_PERMISSIONS_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[5][contains(.,'Permissions')]</td>
-	<td>Permissions</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Permissions')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_CHECKIN_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[5][contains(.,'Checkin')]</td>
-	<td>Checkin</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Checkin')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON</td>
-	<td>//div[@id='_20_fileEntryToolbar']/div/button[6][contains(.,'Move to the Recycle Bin')]</td>
-	<td>Move to the Recycle Bin</td>
+	<td>//div[@id='_20_fileEntryToolbar']/div/button[contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -82,37 +87,77 @@
 <!--DOCUMENT_INFO-->
 <tr>
 	<td>DOCUMENT_INFO_TITLE</td>
-	<td>//div[@class='document-info']/h2[@class='document-title' and contains(.,'${key_dmDocumentTitle}')]</td>
-	<td>Title</td>
+	<td>//div[@class='document-info']/h2[@class='document-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_THUMBNAIL</td>
+	<td>//span[@class='document-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_UPLOADED_BY</td>
+	<td>//span[@class='user-date']/span/span/a</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RATING</td>
 	<td>//div[@class='document-info']/span[@class='lfr-asset-ratings']</td>
-	<td>Rating</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_LINKS</td>
-	<td>//div[@class='document-info']/div[@class='entry-links']</td>
-	<td>Links</td>
+	<td>//div[@class='document-info']/div[@class='links']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_DESCRIPTION</td>
-	<td>//div[@class='document-info']/span[@class='document-description' and contains(.,'${key_dmDocumentDescription}')]</td>
-	<td>Description</td>
+	<td>//div[@class='document-info']/span[@class='document-description']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_CATEGORIES</td>
 	<td>//div[@class='document-info']/div[@class='lfr-asset-categories']</td>
-	<td>Categories</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_TAGS</td>
 	<td>//div[@class='document-info']/div[@class='lfr-asset-tags']</td>
-	<td>Tags</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_VERSION_NUMBER</td>
-	<td>//h3[contains(.,'${key_versionNumber}')]</td>
+	<td>//h3[contains(.,'${key_dmDocumentVersionNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_LAST_UPDATED_BY</td>
+	<td>//div[@class='lfr-asset-icon lfr-asset-author' and contains(.,'Last Updated by Test Test')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_DATE</td>
+	<td>//div[@class='lfr-asset-icon lfr-asset-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status workflow-status-icon']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_DOWNLOAD_DOCUMENT</td>
+	<td>//span[@class='download-document']/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL</td>
+	<td>//span[@class='webdav-url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA</td>
+	<td>//div[@id='documentLibraryAssetMetadataPanel']/div/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,52 +169,67 @@
 <tr>
 	<td>COMMENTS_BE_THE_FIRST</td>
 	<td>link=Be the first.</td>
-	<td>Be the first.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_ADD_COMMENT</td>
 	<td>link=Add Comment</td>
-	<td>Add Comment</td>
+	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_SUBSCRIBE_TO_COMMENTS</td>
 	<td>link=Subscribe to Comments</td>
-	<td>Subscribe to Comments</td>
+	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_UNSUBSCRIBE_FROM_COMMENTS</td>
 	<td>link=Unsubscribe from Comments</td>
-	<td>Unsubscribe from Comments</td>
+	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_POST_REPLY_BODY</td>
 	<td>//div[@class='taglib-discussion']/form/div/div/div[3]/div</td>
-	<td>Post Reply Body</td>
+	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_REPLY</td>
-	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[1]</td>
-	<td>Reply</td>
+	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Reply')]</td>
+	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_REPLY</td>
-	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[2]</td>
-	<td>Cancel</td>
+	<td>COMMENTS_CANCEL</td>
+	<td>//div[@class='taglib-discussion']/form/fieldset/div/div[2]/div[2]/button[contains(.,'Cancel')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-<!--VERSION_HISTORY-->
+<!--VERSION_HISTORY_TABLE-->
 <tr>
-	<td>VERSION_HISTORY_VERSION</td>
-	<td>//tr[contains(.,'${key_versionHistoryNumber}')]/td[1]</td>
+	<td>VERSION_HISTORY_TABLE_VERSION</td>
+	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>VERSION_HISTORY_DROPDOWN</td>
-	<td>//tr[contains(.,'${key_versionHistoryNumber}')]/td[5]/div/a/i[@class='caret']</td>
+	<td>VERSION_HISTORY_TABLE_DATE</td>
+	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_TABLE_SIZE</td>
+	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_TABLE_DROPDOWN</td>
+	<td>//tr[contains(.,'${key_dmDocumentVersionNumber}')]/td[5]/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
@@ -180,22 +240,22 @@
 <!--VERSION_HISTORY_MENULIST-->
 <tr>
 	<td>VERSION_HISTORY_MENULIST_DOWNLOAD</td>
-	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Download')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li[contains(.,'Download')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_MENULIST_VIEW</td>
-	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'View')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li[contains(.,'View')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_MENULIST_REVERT</td>
-	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Revert')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li[contains(.,'Revert')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VERSION_HISTORY_MENULIST_DELETE_VERSION</td>
-	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li/a[contains(.,'Delete Version')]</td>
+	<td>//ul[contains(@class,'dropdown-menu') and contains(@class,'lfr-menu-list') and contains(@class,'direction-down')]/li[contains(.,'Delete Version')]/a</td>
 	<td></td>
 </tr>
 <tr>

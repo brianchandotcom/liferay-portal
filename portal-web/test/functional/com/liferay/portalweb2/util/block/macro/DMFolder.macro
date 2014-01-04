@@ -41,8 +41,8 @@
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ADD_MENULIST_SUBFOLDER" value1="Subfolder" />
 
-		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="NAME_FIELD" value1="${dmFolderName}" />
-		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmFolderDescription}" />
+		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="NAME_FIELD" value1="${dmSubFolderName}" />
+		<execute action="PGDocumentsandmediaAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${dmSubFolderDescription}" />
 		<execute action="PGDocumentsandmediaAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -51,7 +51,6 @@
 	<command name="deletePG">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_FOLDER" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
 		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRIES_FOLDER_SELECT" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
@@ -105,6 +104,12 @@
 
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName} Edit" />
+	</command>
+
+	<command name="gotoPG">
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}" />
 	</command>
 
 	<command name="gotoPGViaMG">

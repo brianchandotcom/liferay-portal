@@ -72,7 +72,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="DMFolderDocument#addPGViaMG">
+		<execute macro="DMDocument#addPGViaMG">
 			<var name="mgFolderName" value="${mgFolderName}" />
 			<var name="mgDocumentFile" value="${mgDocumentFile}" />
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
@@ -105,7 +105,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="DMFolderDocument#addPGViaMG">
+		<execute macro="DMDocument#addPGViaMG">
 			<var name="mgFolderName" value="${mgFolderName}" />
 			<var name="mgDocumentFile" value="${mgDocumentFile}" />
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
@@ -120,7 +120,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="DMFolderDocument#deletePGViaMG">
+		<execute macro="DMDocument#deletePGViaMG">
 			<var name="mgFolderName" value="${mgFolderName}" />
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
 		</execute>
@@ -178,7 +178,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="DMFolderDocument#addPGViaMG">
+		<execute macro="DMDocument#addPGViaMG">
 			<var name="mgFolderName" value="${mgFolderName}" />
 			<var name="mgDocumentFile" value="${mgDocumentFile}" />
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
@@ -193,7 +193,7 @@
 			<var name="mgFolderName" value="${mgFolderName}" />
 		</execute>
 
-		<execute macro="DMFolderDocument#editPGViaMG">
+		<execute macro="DMDocument#editPGViaMG">
 			<var name="mgFolderName" value="${mgFolderName}" />
 			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
 			<var name="mgDocumentTitleEdit" value="${mgDocumentTitle} Edit" />

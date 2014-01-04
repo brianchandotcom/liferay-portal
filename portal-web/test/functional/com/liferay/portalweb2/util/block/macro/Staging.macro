@@ -27,14 +27,14 @@
 			</then>
 		</if>
 
-		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
-
 		<if>
 			<equals arg1="${editActivateStaging}" arg2="true" />
 			<then>
+				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 			<else>
+				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
 				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate local staging for ${siteName}?" />
 				<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</else>

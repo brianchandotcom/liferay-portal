@@ -136,7 +136,7 @@ $editLayoutPanelWidth: 460px;
 			padding: 0 20px;
 
 			@include respond-to(phone, tablet) {
-				border: 0;
+				border-width: 0;
 				padding: 0;
 			}
 

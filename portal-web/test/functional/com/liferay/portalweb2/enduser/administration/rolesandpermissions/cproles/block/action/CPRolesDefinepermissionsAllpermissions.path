@@ -435,6 +435,50 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONTENT_CATEGORIES_GENERAL-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
+	<td>//input[@value='147ACCESS_IN_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_CATEGORIES_ASSET_ENTRIES-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.assetADD_CATEGORY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.assetADD_VOCABULARY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY_VOCABULARY-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY_VOCABULARY_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.asset.model.AssetVocabularyVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY_ADD_CATEGORY_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.asset.model.AssetCategoryADD_CATEGORY']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

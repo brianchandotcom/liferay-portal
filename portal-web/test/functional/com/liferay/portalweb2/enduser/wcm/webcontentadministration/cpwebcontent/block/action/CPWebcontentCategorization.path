@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>CPWebcontentCategorization</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentCategorization</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentCategorization</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_SELECT</td>
+	<td>//select[@id='_15_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_SELECT</td>
+	<td>//button[@title='Select ${key_vocabularyName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY</td>
+	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
+	<td>asdf</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIES_WINDOW-->
+<tr>
+	<td>CATEGORIES_WINDOW_CATEGORY_CHECKBOX</td>
+	<td>//div[contains(@class,'tree-node') and contains(.,'${key_categoryName}')]/i[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIES_WINDOW_CLOSE_BUTTON</td>
+	<td>//button[contains(@class,'btn close')]</td>
+	<td></td>
+</tr>
+<!---->
+<!--TAGS-->
+<tr>
+	<td>TAGS_BOX</td>
+	<td>//input[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_ADD_BUTTON</td>
+	<td>//button[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_SELECT_BUTTON</td>
+	<td>//button[@title='Select Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAGS_SUGGESTIONS_BUTTON</td>
+	<td>//button[@title='Suggestions']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

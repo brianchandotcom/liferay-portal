@@ -65,7 +65,7 @@
 		</case>
 
 		<case locator-key1="USER_SIGN_OUT">
-			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
+			<execute function="Click#clickAtAndWait" />
 		</case>
 
 		<case comparator="startsWith" locator1="//span[@data-title='">

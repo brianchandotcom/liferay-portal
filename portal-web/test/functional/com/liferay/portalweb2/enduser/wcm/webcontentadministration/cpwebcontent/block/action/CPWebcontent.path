@@ -320,24 +320,39 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ENTRY_DESCRIPTIVE_VERSION</td>
-    <td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Version: ')]/following-sibling::dd</td>
-    <td></td>
+	<td>ENTRY_DESCRIPTIVE_TITLE_COPY</td>
+	<td>xpath=(//div[@data-title='${key_webContentTitle}']//span[@class='entry-title']/span)[3]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ENTRY_DESCRIPTIVE_CREATED</td>
-    <td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Created: ')]/following-sibling::dd</td>
-    <td></td>
+	<td>ENTRY_DESCRIPTIVE_VERSION</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Version: ')]/following-sibling::dd</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ENTRY_DESCRIPTIVE_DISPLAY_DATE</td>
-    <td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Display Date: ')]/following-sibling::dd</td>
-    <td></td>
+	<td>ENTRY_DESCRIPTIVE_CREATED</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Created: ')]/following-sibling::dd</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ENTRY_DESCRIPTIVE_WORKFLOW_STATUS</td>
-    <td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/strong</td>
-    <td></td>
+	<td>ENTRY_DESCRIPTIVE_DISPLAY_DATE</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Display Date: ')]/following-sibling::dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_CATEGORY</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_CATEGORY_COPY</td>
+	<td>xpath=(//div[@data-title='${key_webContentTitle}']//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_WORKFLOW_STATUS</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/strong</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

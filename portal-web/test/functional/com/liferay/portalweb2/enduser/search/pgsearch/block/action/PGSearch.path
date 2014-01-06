@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SEARCH_ICON</td>
-	<td>//input[@type='image' and @title='Search']</td>
+	<td>//input[@type='image' and @title='${key_searchIDName}']</td>
 	<td></td>
 </tr>
 </tbody>

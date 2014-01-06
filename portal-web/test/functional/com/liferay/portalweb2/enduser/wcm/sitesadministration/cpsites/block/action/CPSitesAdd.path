@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_PROPAGATION_CHECKBOX</td>
+	<td>//label[contains(.,'Enable propagation')]/input[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

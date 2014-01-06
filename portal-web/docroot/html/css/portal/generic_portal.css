@@ -107,12 +107,27 @@ img.icon {
 	margin-left: 5px;
 }
 
-.popup-alert-notice, .popup-alert-warning {
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 10000;
+.alert-block {
+	&.popup-alert-notice, &.popup-alert-warning {
+		left: 0;
+		line-height: 30px;
+		padding: 9px 14px;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 10000;
+
+		@include respond-to(phone, tablet) {
+			line-height: 20px;
+			margin-bottom: 0;
+			padding: 14px;
+			position: static;
+
+			@include respond-to(phone) {
+				margin: 0 -20px;
+			}
+		}
+	}
 }
 
 .lfr-token-list {

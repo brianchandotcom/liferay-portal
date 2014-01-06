@@ -245,7 +245,7 @@ AUI.add(
 				instance._addToggleButton(notice);
 
 				if (!node || (node && !node.inDoc())) {
-					instance._body.append(notice);
+					instance._body.prepend(notice);
 				}
 
 				instance._body.addClass(CSS_ALERTS);

@@ -13,6 +13,25 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="addCategoryLocalizationCP">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
+
+		<execute action="CPCategoriesAdd#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
+
+		<var name="key_localizationName" value="${localizationNameKey}" />
+
+		<execute action="CPCategoriesAdd#click" locator-key1="LOCALIZATION_NAME" />
+		<execute action="CPCategoriesAdd#type" locator-key1="NAME_FIELD" value1="${localizationName}" />
+		<execute action="CPCategoriesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+	</command>
+
 	<command name="addCategoryPropertyCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />

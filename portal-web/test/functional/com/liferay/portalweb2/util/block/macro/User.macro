@@ -217,6 +217,31 @@
 		</if>
 	</command>
 
+	<command name="assignSiteRoleCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_ROLES" value1="Roles" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ROLES_SITE_ROLES_SELECT_LINK" value1="Select" />
+		<execute action="CPUsersandorganizationsUser#selectFrame" locator-key1="ROLES_SITE_ROLES_IFRAME" />
+
+		<var name="key_siteRoleName" value="${siteRoleName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ROLES_SITE_ROLES_IFRAME_TITLE" value1="${siteRoleName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="ROLES_SITE_ROLES_IFRAME_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ROLES_SITE_ROLES_TABLE_TITLE" value1="${siteRoleName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="basicSearchCP">
 		<if>
 			<equals arg1="${userBasicSearch}" arg2="Basic" />
@@ -392,6 +417,23 @@
 		<execute action="CPUsersandorganizationsViewusers#assertElementNotPresent" locator-key1="DELETE" value1="Delete" />
 	</command>
 
+	<command name="editDisplaySettingsCP">
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute action="CPUsersandorganizationsUser#select" locator-key1="DISPLAY_SETTINGS_LANGUAGE_SELECT" value1="${languageName}" />
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="editPasswordCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="All Users" />
 
@@ -530,7 +572,7 @@
 
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
-		<execute action="PGLogin#assertClick" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" value1="Sign In" />
 
 		<if>
 			<condition action="PGLoginTermsofservice#isElementPresent" locator-key1="I_AGREE_BUTTON" value1="I Agree" />

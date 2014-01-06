@@ -195,6 +195,10 @@ public class BeanLocatorTest {
 				new BeanLocator() {
 
 					@Override
+					public void destroy() {
+					}
+
+					@Override
 					public ClassLoader getClassLoader() {
 						return null;
 					}

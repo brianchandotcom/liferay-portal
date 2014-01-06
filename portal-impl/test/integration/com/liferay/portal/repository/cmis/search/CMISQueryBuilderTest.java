@@ -47,7 +47,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
 import org.powermock.api.mockito.PowerMockito;
 
 /**
@@ -69,6 +68,10 @@ public class CMISQueryBuilderTest extends PowerMockito {
 
 		PortalBeanLocatorUtil.setBeanLocator(
 			new BeanLocator() {
+
+				@Override
+				public void destroy() {
+				}
 
 				@Override
 				public ClassLoader getClassLoader() {

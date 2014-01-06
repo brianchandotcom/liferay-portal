@@ -22,6 +22,8 @@ import java.util.Map;
  */
 public interface BeanLocator {
 
+	public void destroy();
+
 	public ClassLoader getClassLoader();
 
 	public String[] getNames();

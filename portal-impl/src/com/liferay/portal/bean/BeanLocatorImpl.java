@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -46,6 +47,18 @@ public class BeanLocatorImpl implements BeanLocator {
 
 		_classLoader = classLoader;
 		_applicationContext = applicationContext;
+	}
+
+	@Override
+	public void destroy() {
+		if (_applicationContext instanceof AbstractApplicationContext) {
+			AbstractApplicationContext abstractApplicationContext =
+				(AbstractApplicationContext)_applicationContext;
+
+			abstractApplicationContext.destroy();
+		}
+
+		_applicationContext = null;
 	}
 
 	public ApplicationContext getApplicationContext() {

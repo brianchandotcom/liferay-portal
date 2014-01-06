@@ -19,9 +19,13 @@
 </c:if>
 
 <%
+RowChecker rowChecker = new RowChecker(renderResponse);
+
+rowChecker.setRowIds("rowIdsUserCheckbox");
+
 SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", currentURLObj);
 
-searchContainer.setRowChecker(new RowChecker(renderResponse));
+searchContainer.setRowChecker(rowChecker);
 
 if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	currentURLObj.setParameter("status", String.valueOf(status));

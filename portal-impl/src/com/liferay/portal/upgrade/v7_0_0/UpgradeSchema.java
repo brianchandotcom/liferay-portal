@@ -14,16 +14,102 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
+import java.io.InputStream;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+
+import java.util.List;
 
 /**
  * @author Julio Camarero
+ * @author Shuyang Zhou
  */
 public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQLTemplate("update-6.2.0-7.0.0.sql", false);
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"META-INF/portal-hbm.xml");
+
+		Document document = SAXReaderUtil.read(inputStream);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> classElements = rootElement.elements("class");
+
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
+
+		try {
+			DatabaseMetaData databaseMetaData = con.getMetaData();
+
+			for (Element classElement : classElements) {
+				if (classElement.element("version") == null) {
+					continue;
+				}
+
+				String versionedTable = classElement.attributeValue("table");
+
+				ResultSet tableResultSet = databaseMetaData.getTables(
+					null, null, versionedTable, null);
+
+				try {
+					if (!tableResultSet.next()) {
+						_log.error(
+							"Table " + versionedTable + " does not exist!");
+
+						continue;
+					}
+
+					ResultSet columnResultSet = databaseMetaData.getColumns(
+						null, null, versionedTable, "ormVersion");
+
+					try {
+						if (columnResultSet.next()) {
+							continue;
+						}
+
+						String addColumnSQL =
+							"alter table ".concat(versionedTable).concat(
+								" add ormVersion LONG default 0");
+
+						runSQL(addColumnSQL);
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Added ormVersion column to table " +
+									versionedTable);
+						}
+					}
+					finally {
+						DataAccess.cleanUp(columnResultSet);
+					}
+				}
+				finally {
+					DataAccess.cleanUp(tableResultSet);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con);
+		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(UpgradeSchema.class);
 
 }

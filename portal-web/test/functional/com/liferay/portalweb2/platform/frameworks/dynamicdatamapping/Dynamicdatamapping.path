@@ -159,7 +159,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]/div/label</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,12 +209,12 @@
 </tr>
 <tr>
 	<td>FORM_RADIO_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'form-builder-radio-field-content')])[1]/label</td>
+	<td>xpath=(//div[contains(@class,'form-builder-radio-field-content')]/label)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_SELECT_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'form-builder-select-field-content')])[1]/label</td>
+	<td>xpath=(//div[contains(@class,'form-builder-select-field-content')]/label)[1]</td>
 	<td></td>
 </tr>
 <tr>

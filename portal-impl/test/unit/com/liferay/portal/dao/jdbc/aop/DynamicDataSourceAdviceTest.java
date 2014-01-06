@@ -92,6 +92,11 @@ public class DynamicDataSourceAdviceTest {
 		_dynamicDataSourceAdvice.setServiceBeanAopCacheManager(
 			serviceBeanAopCacheManager);
 
+		// Set twice to satisfy code coverage
+
+		_dynamicDataSourceAdvice.setServiceBeanAopCacheManager(
+			serviceBeanAopCacheManager);
+
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			registeredAnnotationChainableMethodAdvices =
 				serviceBeanAopCacheManager.

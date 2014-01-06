@@ -2544,6 +2544,8 @@ AUI.add(
 
 						var categoryURL = instance._createURL(CATEGORY, action, LIFECYCLE_RENDER);
 
+						categoryURL = categoryURL.toString();
+
 						if (!categoryPanelAdd) {
 							categoryPanelAdd = instance._createCategoryPanelAdd();
 
@@ -2551,14 +2553,14 @@ AUI.add(
 								A.Plugin.IO,
 								{
 									autoLoad: false,
-									uri: categoryURL.toString()
+									uri: categoryURL
 								}
 							);
 						}
 						else if (instance._currentCategoryPanelAddIOHandle) {
 							instance._currentCategoryPanelAddIOHandle.detach();
 
-							categoryPanelAdd.io.set(STR_URI, categoryURL.toString());
+							categoryPanelAdd.io.set(STR_URI, categoryURL);
 						}
 
 						categoryPanelAdd.show();
@@ -2599,14 +2601,17 @@ AUI.add(
 						categoryPanelEdit.plug(
 							A.Plugin.IO,
 							{
-								uri: categoryEditURL.toString(),
 								after: {
 									success: instance._currentPanelEditInitListener
-								}
+								},
+								uri: categoryEditURL.toString(),
 							}
 						);
 
-						instance._currentPanelEditIOHandle = categoryPanelEdit.io.after(STR_SUCCESS, instance._initializeCategoryPanelEdit, instance);
+						instance._currentPanelEditIOHandle = categoryPanelEdit.io.after(
+							STR_SUCCESS,
+							instance._initializeCategoryPanelEdit, instance
+						);
 
 						if (forceStart) {
 							categoryPanelEdit.io.start();
@@ -2685,6 +2690,8 @@ AUI.add(
 
 						var vocabularyURL = instance._createURL(TYPE_VOCABULARY, ACTION_ADD, LIFECYCLE_RENDER);
 
+						vocabularyURL = vocabularyURL.toString();
+
 						if (!vocabularyPanelAdd) {
 							vocabularyPanelAdd = instance._createVocabularyPanelAdd();
 
@@ -2692,14 +2699,14 @@ AUI.add(
 								A.Plugin.IO,
 								{
 									autoLoad: false,
-									uri: vocabularyURL.toString()
+									uri: vocabularyURL
 								}
 							);
 						}
 						else if (instance._currentVocabularyPanelAddIOHandle) {
 							instance._currentVocabularyPanelAddIOHandle.detach();
 
-							vocabularyPanelAdd.io.set(STR_URI, vocabularyURL.toString());
+							vocabularyPanelAdd.io.set(STR_URI, vocabularyURL);
 
 							instance._focusVocabularyPanelAdd();
 						}
@@ -2746,7 +2753,10 @@ AUI.add(
 							}
 						);
 
-						instance._currentPanelEditIOHandle = vocabularyPanelEdit.io.after(STR_SUCCESS, instance._initializeVocabularyPanelEdit, instance);
+						instance._currentPanelEditIOHandle = vocabularyPanelEdit.io.after(
+							STR_SUCCESS,
+							instance._initializeVocabularyPanelEdit, instance
+						);
 
 						if (forceStart) {
 							vocabularyPanelEdit.io.start();

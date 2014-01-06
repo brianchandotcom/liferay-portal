@@ -93,112 +93,101 @@ if (Validator.isNotNull(userFilter) && !userFilter.equals(StringPool.STAR)) {
 
 <liferay-ui:message key="a-subset-of-users-has-been-displayed-for-you-to-review" />
 
-<br /><br />
-
-<table class="lfr-table" width="100%">
-
 <%
 boolean showMissingAttributeMessage = false;
 
-int counter = 0;
+PortletURL portletURL = renderResponse.createRenderURL();
 
-for (SearchResult searchResult : searchResults) {
-	Attributes attributes = searchResult.getAttributes();
+portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-	String screenName = StringUtil.toLowerCase(LDAPUtil.getAttributeString(attributes, userMappings.getProperty("screenName")));
-	String password = StringUtil.toLowerCase(LDAPUtil.getAttributeString(attributes, userMappings.getProperty("password")));
-	String emailAddress = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("emailAddress"));
-	String firstName = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("firstName"));
-	String lastName = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("lastName"));
-	String jobTitle = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("jobTitle"));
-	Attribute attribute = attributes.get(userMappings.getProperty("group"));
-
-	if (Validator.isNull(screenName) || Validator.isNull(password) || Validator.isNull(emailAddress) || Validator.isNull(firstName) || Validator.isNull(lastName)) {
-		showMissingAttributeMessage = true;
-	}
-
-	if (counter == 0) {
+portletURL.setParameter("struts_action", "/portal_settings/test_ldap_users");
+portletURL.setParameter("ldapServerId", String.valueOf(ldapServerId));
+portletURL.setParameter("baseProviderURL", baseProviderURL);
+portletURL.setParameter("baseDN", baseDN);
+portletURL.setParameter("principal", principal);
+portletURL.setParameter("credentials", credentials);
+portletURL.setParameter("importUserSearchFilter", userFilter);
+portletURL.setParameter("userMappingScreenName", ParamUtil.getString(request, "userMappingScreenName"));
+portletURL.setParameter("userMappingPassword", ParamUtil.getString(request, "userMappingPassword"));
+portletURL.setParameter("userMappingEmailAddress", ParamUtil.getString(request, "userMappingEmailAddress"));
+portletURL.setParameter("userMappingFullName", ParamUtil.getString(request, "userMappingFullName"));
+portletURL.setParameter("userMappingFirstName", ParamUtil.getString(request, "userMappingFirstName"));
+portletURL.setParameter("userMappingLastName", ParamUtil.getString(request, "userMappingLastName"));
+portletURL.setParameter("userMappingJobTitle", ParamUtil.getString(request, "userMappingJobTitle"));
+portletURL.setParameter("userMappingGroup", ParamUtil.getString(request, "userMappingGroup"));
 %>
 
-		<tr>
-			<th>
-				#
-			</th>
-			<th>
-				<liferay-ui:message key="screen-name" />
-			</th>
-			<th>
-				<liferay-ui:message key="email-address" />
-			</th>
-			<th>
-				<liferay-ui:message key="first-name" />
-			</th>
-			<th>
-				<liferay-ui:message key="last-name" />
-			</th>
-			<th>
-				<liferay-ui:message key="password" />
-			</th>
-			<th>
-				<liferay-ui:message key="job-title" />
-			</th>
-			<th>
-				<liferay-ui:message key="group" />
-			</th>
-		</tr>
+<liferay-ui:search-container
+	emptyResultsMessage="no-users-were-found"
+	iteratorURL="<%= portletURL %>"
+>
 
-<%
-	}
+	<liferay-ui:search-container-results
+		results="<%= ListUtil.subList(searchResults, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		total="<%= searchResults.size() %>"
+	/>
 
-	counter++;
-%>
+	<liferay-ui:search-container-row
+		className="javax.naming.directory.SearchResult"
+		modelVar="searchResult"
+	>
 
-	<tr>
-		<td>
-			<%= counter %>
-		</td>
-		<td>
-			<%= screenName %>
-		</td>
-		<td>
-			<%= emailAddress %>
-		</td>
-		<td>
-			<%= firstName %>
-		</td>
-		<td>
-			<%= lastName %>
-		</td>
-		<td>
-			<c:if test="<%= Validator.isNotNull(password) %>">
-				********
-			</c:if>
-		</td>
-		<td>
-			<%= jobTitle %>
-		</td>
-		<td>
-			<%= (attribute == null) ? "0" : String.valueOf(attribute.size()) %>
-		</td>
-	</tr>
+		<%
+		Attributes attributes = searchResult.getAttributes();
 
-<%
-}
+		String emailAddress = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("emailAddress"));
+		String firstName = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("firstName"));
+		String lastName = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("lastName"));
+		String jobTitle = LDAPUtil.getAttributeString(attributes, userMappings.getProperty("jobTitle"));
 
-if (counter == 0) {
-%>
+		String password = StringUtil.toLowerCase(LDAPUtil.getAttributeString(attributes, userMappings.getProperty("password")));
+		String screenName = StringUtil.toLowerCase(LDAPUtil.getAttributeString(attributes, userMappings.getProperty("screenName")));
 
-	<tr>
-		<td colspan="7">
-			<liferay-ui:message key="no-users-were-found" />
-		</td>
-	</tr>
+		Attribute attribute = attributes.get(userMappings.getProperty("group"));
 
-<%
-}
-%>
+		if (Validator.isNull(emailAddress) || Validator.isNull(firstName) || Validator.isNull(lastName) || Validator.isNull(password) || Validator.isNull(screenName)) {
+			showMissingAttributeMessage = true;
+		}
+		%>
 
-</table>
+		<liferay-ui:search-container-column-text
+			name="screenName"
+			value="<%= HtmlUtil.escape(screenName) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="emailAddress"
+			value="<%= HtmlUtil.escape(emailAddress) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="first-name"
+			value="<%= HtmlUtil.escape(firstName) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="last-name"
+			value="<%= HtmlUtil.escape(lastName) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="password"
+			value='<%= Validator.isNotNull(password) ? "********" : "" %>'
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="job-title"
+			value="<%= HtmlUtil.escape(jobTitle) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="group"
+			value='<%= (attribute == null) ? "0" : String.valueOf(attribute.size()) %>'
+		/>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>
 
 <%
 if (showMissingAttributeMessage) {

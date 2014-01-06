@@ -335,7 +335,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 
 		groupMappingInput.value = '';
 
-		for (var i = 0; i<groupMappingFields.length; i++) {
+		for (var i = 0; i < groupMappingFields.length; i++) {
 			var groupMappingField = groupMappingFields[i];
 			var groupMappingValue = document.<portlet:namespace />fm['<portlet:namespace />' + groupMappingFieldValues[i]].value;
 

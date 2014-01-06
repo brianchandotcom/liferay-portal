@@ -68,9 +68,10 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			{ "key_", Types.VARCHAR },
 			{ "owner", Types.VARCHAR },
 			{ "inheritable", Types.BOOLEAN },
-			{ "expirationDate", Types.TIMESTAMP }
+			{ "expirationDate", Types.TIMESTAMP },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Lock_ (uuid_ VARCHAR(75) null,lockId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,className VARCHAR(75) null,key_ VARCHAR(200) null,owner VARCHAR(255) null,inheritable BOOLEAN,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Lock_ (uuid_ VARCHAR(75) null,lockId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,className VARCHAR(75) null,key_ VARCHAR(200) null,owner VARCHAR(255) null,inheritable BOOLEAN,expirationDate DATE null,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Lock_";
 	public static final String ORDER_BY_JPQL = " ORDER BY lock.lockId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Lock_.lockId ASC";
@@ -143,6 +144,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		attributes.put("owner", getOwner());
 		attributes.put("inheritable", getInheritable());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -216,6 +218,12 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -419,6 +427,16 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		return _originalExpirationDate;
 	}
 
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -461,6 +479,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		lockImpl.setOwner(getOwner());
 		lockImpl.setInheritable(getInheritable());
 		lockImpl.setExpirationDate(getExpirationDate());
+		lockImpl.setOrmVersion(getOrmVersion());
 
 		lockImpl.resetOriginalValues();
 
@@ -608,12 +627,14 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			lockCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
+		lockCacheModel.ormVersion = getOrmVersion();
+
 		return lockCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -637,6 +658,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		sb.append(getInheritable());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -644,7 +667,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Lock");
@@ -694,6 +717,10 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
 		sb.append(getExpirationDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -720,6 +747,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private boolean _inheritable;
 	private Date _expirationDate;
 	private Date _originalExpirationDate;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private Lock _escapedModel;
 }

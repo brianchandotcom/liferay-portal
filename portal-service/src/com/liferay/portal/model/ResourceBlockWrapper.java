@@ -57,6 +57,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		attributes.put("name", getName());
 		attributes.put("permissionsHash", getPermissionsHash());
 		attributes.put("referenceCount", getReferenceCount());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -97,6 +98,12 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 		if (referenceCount != null) {
 			setReferenceCount(referenceCount);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -238,6 +245,26 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	@Override
 	public void setReferenceCount(long referenceCount) {
 		_resourceBlock.setReferenceCount(referenceCount);
+	}
+
+	/**
+	* Returns the orm version of this resource block.
+	*
+	* @return the orm version of this resource block
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _resourceBlock.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this resource block.
+	*
+	* @param ormVersion the orm version of this resource block
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_resourceBlock.setOrmVersion(ormVersion);
 	}
 
 	@Override

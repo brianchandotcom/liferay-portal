@@ -62,6 +62,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		attributes.put("owner", getOwner());
 		attributes.put("inheritable", getInheritable());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -132,6 +133,12 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -405,6 +412,26 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	@Override
 	public void setExpirationDate(java.util.Date expirationDate) {
 		_lock.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Returns the orm version of this lock.
+	*
+	* @return the orm version of this lock
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _lock.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this lock.
+	*
+	* @param ormVersion the orm version of this lock
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_lock.setOrmVersion(ormVersion);
 	}
 
 	@Override

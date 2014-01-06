@@ -40,6 +40,7 @@ public class CompanySoap implements Serializable {
 		soapModel.setSystem(model.getSystem());
 		soapModel.setMaxUsers(model.getMaxUsers());
 		soapModel.setActive(model.getActive());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -180,6 +181,14 @@ public class CompanySoap implements Serializable {
 		_active = active;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _companyId;
 	private long _accountId;
 	private String _webId;
@@ -190,4 +199,5 @@ public class CompanySoap implements Serializable {
 	private boolean _system;
 	private int _maxUsers;
 	private boolean _active;
+	private long _ormVersion;
 }

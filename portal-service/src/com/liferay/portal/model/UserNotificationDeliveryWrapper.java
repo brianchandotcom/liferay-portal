@@ -61,6 +61,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 		attributes.put("notificationType", getNotificationType());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliver", getDeliver());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -114,6 +115,12 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 
 		if (deliver != null) {
 			setDeliver(deliver);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -342,6 +349,26 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	@Override
 	public void setDeliver(boolean deliver) {
 		_userNotificationDelivery.setDeliver(deliver);
+	}
+
+	/**
+	* Returns the orm version of this user notification delivery.
+	*
+	* @return the orm version of this user notification delivery
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _userNotificationDelivery.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this user notification delivery.
+	*
+	* @param ormVersion the orm version of this user notification delivery
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_userNotificationDelivery.setOrmVersion(ormVersion);
 	}
 
 	@Override

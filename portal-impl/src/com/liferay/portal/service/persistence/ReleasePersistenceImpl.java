@@ -632,6 +632,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		releaseImpl.setVerified(release.isVerified());
 		releaseImpl.setState(release.getState());
 		releaseImpl.setTestString(release.getTestString());
+		releaseImpl.setOrmVersion(release.getOrmVersion());
 
 		return releaseImpl;
 	}

@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserTrackerModel extends BaseModel<UserTracker> {
+public interface UserTrackerModel extends BaseModel<UserTracker>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -191,6 +191,20 @@ public interface UserTrackerModel extends BaseModel<UserTracker> {
 	 * @param userAgent the user agent of this user tracker
 	 */
 	public void setUserAgent(String userAgent);
+
+	/**
+	 * Returns the orm version of this user tracker.
+	 *
+	 * @return the orm version of this user tracker
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this user tracker.
+	 *
+	 * @param ormVersion the orm version of this user tracker
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

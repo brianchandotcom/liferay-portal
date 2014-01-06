@@ -61,6 +61,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("master", getMaster());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -125,6 +126,12 @@ public class LayoutBranchWrapper implements LayoutBranch,
 
 		if (master != null) {
 			setMaster(master);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -378,6 +385,26 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	@Override
 	public void setMaster(boolean master) {
 		_layoutBranch.setMaster(master);
+	}
+
+	/**
+	* Returns the orm version of this layout branch.
+	*
+	* @return the orm version of this layout branch
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _layoutBranch.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this layout branch.
+	*
+	* @param ormVersion the orm version of this layout branch
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_layoutBranch.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PluginSettingModel extends BaseModel<PluginSetting> {
+public interface PluginSettingModel extends BaseModel<PluginSetting>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -151,6 +152,20 @@ public interface PluginSettingModel extends BaseModel<PluginSetting> {
 	 * @param active the active of this plugin setting
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the orm version of this plugin setting.
+	 *
+	 * @return the orm version of this plugin setting
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this plugin setting.
+	 *
+	 * @param ormVersion the orm version of this plugin setting
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

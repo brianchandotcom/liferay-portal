@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutSetModel extends BaseModel<LayoutSet> {
+public interface LayoutSetModel extends BaseModel<LayoutSet>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -305,6 +305,20 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 	 */
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled);
+
+	/**
+	 * Returns the orm version of this layout set.
+	 *
+	 * @return the orm version of this layout set
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this layout set.
+	 *
+	 * @param ormVersion the orm version of this layout set
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

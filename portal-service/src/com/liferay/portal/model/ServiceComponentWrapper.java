@@ -56,6 +56,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
 		attributes.put("data", getData());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -90,6 +91,12 @@ public class ServiceComponentWrapper implements ServiceComponent,
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -211,6 +218,26 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public void setData(java.lang.String data) {
 		_serviceComponent.setData(data);
+	}
+
+	/**
+	* Returns the orm version of this service component.
+	*
+	* @return the orm version of this service component
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _serviceComponent.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this service component.
+	*
+	* @param ormVersion the orm version of this service component
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_serviceComponent.setOrmVersion(ormVersion);
 	}
 
 	@Override

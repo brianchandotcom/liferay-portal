@@ -33,6 +33,7 @@ public class ShardSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -117,8 +118,17 @@ public class ShardSoap implements Serializable {
 		_name = name;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _shardId;
 	private long _classNameId;
 	private long _classPK;
 	private String _name;
+	private long _ormVersion;
 }

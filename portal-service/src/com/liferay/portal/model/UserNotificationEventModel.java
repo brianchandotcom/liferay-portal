@@ -38,7 +38,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface UserNotificationEventModel extends BaseModel<UserNotificationEvent> {
+public interface UserNotificationEventModel extends BaseModel<UserNotificationEvent>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -230,6 +231,20 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	 * @param archived the archived of this user notification event
 	 */
 	public void setArchived(boolean archived);
+
+	/**
+	 * Returns the orm version of this user notification event.
+	 *
+	 * @return the orm version of this user notification event
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this user notification event.
+	 *
+	 * @param ormVersion the orm version of this user notification event
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

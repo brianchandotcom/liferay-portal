@@ -92,6 +92,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("agreedToTermsOfUse", getAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", getEmailAddressVerified());
 		attributes.put("status", getStatus());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -341,6 +342,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -1244,6 +1251,26 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public void setStatus(int status) {
 		_user.setStatus(status);
+	}
+
+	/**
+	* Returns the orm version of this user.
+	*
+	* @return the orm version of this user
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _user.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this user.
+	*
+	* @param ormVersion the orm version of this user
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_user.setOrmVersion(ormVersion);
 	}
 
 	@Override

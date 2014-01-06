@@ -40,7 +40,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserGroupModel extends BaseModel<UserGroup>, StagedAuditedModel {
+public interface UserGroupModel extends BaseModel<UserGroup>, StagedAuditedModel,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -254,6 +255,20 @@ public interface UserGroupModel extends BaseModel<UserGroup>, StagedAuditedModel
 	 * @param addedByLDAPImport the added by l d a p import of this user group
 	 */
 	public void setAddedByLDAPImport(boolean addedByLDAPImport);
+
+	/**
+	 * Returns the orm version of this user group.
+	 *
+	 * @return the orm version of this user group
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this user group.
+	 *
+	 * @param ormVersion the orm version of this user group
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

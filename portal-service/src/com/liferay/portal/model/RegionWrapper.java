@@ -55,6 +55,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		attributes.put("regionCode", getRegionCode());
 		attributes.put("name", getName());
 		attributes.put("active", getActive());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -89,6 +90,12 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -220,6 +227,26 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	@Override
 	public void setActive(boolean active) {
 		_region.setActive(active);
+	}
+
+	/**
+	* Returns the orm version of this region.
+	*
+	* @return the orm version of this region
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _region.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this region.
+	*
+	* @param ormVersion the orm version of this region
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_region.setOrmVersion(ormVersion);
 	}
 
 	@Override

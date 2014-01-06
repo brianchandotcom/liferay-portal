@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ClusterGroupModel extends BaseModel<ClusterGroup> {
+public interface ClusterGroupModel extends BaseModel<ClusterGroup>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -122,6 +123,20 @@ public interface ClusterGroupModel extends BaseModel<ClusterGroup> {
 	 * @param wholeCluster the whole cluster of this cluster group
 	 */
 	public void setWholeCluster(boolean wholeCluster);
+
+	/**
+	 * Returns the orm version of this cluster group.
+	 *
+	 * @return the orm version of this cluster group
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this cluster group.
+	 *
+	 * @param ormVersion the orm version of this cluster group
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

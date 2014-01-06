@@ -33,6 +33,7 @@ public class ResourceActionSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setActionId(model.getActionId());
 		soapModel.setBitwiseValue(model.getBitwiseValue());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -117,8 +118,17 @@ public class ResourceActionSoap implements Serializable {
 		_bitwiseValue = bitwiseValue;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _resourceActionId;
 	private String _name;
 	private String _actionId;
 	private long _bitwiseValue;
+	private long _ormVersion;
 }

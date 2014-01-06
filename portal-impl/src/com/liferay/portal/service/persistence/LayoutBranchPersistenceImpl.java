@@ -2352,6 +2352,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		layoutBranchImpl.setName(layoutBranch.getName());
 		layoutBranchImpl.setDescription(layoutBranch.getDescription());
 		layoutBranchImpl.setMaster(layoutBranch.isMaster());
+		layoutBranchImpl.setOrmVersion(layoutBranch.getOrmVersion());
 
 		return layoutBranchImpl;
 	}

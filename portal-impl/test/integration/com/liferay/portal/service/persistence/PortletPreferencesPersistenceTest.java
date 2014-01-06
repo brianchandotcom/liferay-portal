@@ -123,6 +123,8 @@ public class PortletPreferencesPersistenceTest {
 
 		newPortletPreferences.setPreferences(ServiceTestUtil.randomString());
 
+		newPortletPreferences.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newPortletPreferences);
 
 		PortletPreferences existingPortletPreferences = _persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
@@ -139,6 +141,8 @@ public class PortletPreferencesPersistenceTest {
 			newPortletPreferences.getPortletId());
 		Assert.assertEquals(existingPortletPreferences.getPreferences(),
 			newPortletPreferences.getPreferences());
+		Assert.assertEquals(existingPortletPreferences.getOrmVersion(),
+			newPortletPreferences.getOrmVersion());
 	}
 
 	@Test
@@ -178,7 +182,8 @@ public class PortletPreferencesPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PortletPreferences",
 			"portletPreferencesId", true, "ownerId", true, "ownerType", true,
-			"plid", true, "portletId", true, "preferences", true);
+			"plid", true, "portletId", true, "preferences", true, "ormVersion",
+			true);
 	}
 
 	@Test
@@ -332,6 +337,8 @@ public class PortletPreferencesPersistenceTest {
 		portletPreferences.setPortletId(ServiceTestUtil.randomString());
 
 		portletPreferences.setPreferences(ServiceTestUtil.randomString());
+
+		portletPreferences.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(portletPreferences);
 

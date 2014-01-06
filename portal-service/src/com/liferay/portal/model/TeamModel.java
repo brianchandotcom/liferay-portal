@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TeamModel extends BaseModel<Team>, GroupedModel {
+public interface TeamModel extends BaseModel<Team>, GroupedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -218,6 +218,20 @@ public interface TeamModel extends BaseModel<Team>, GroupedModel {
 	 * @param description the description of this team
 	 */
 	public void setDescription(String description);
+
+	/**
+	 * Returns the orm version of this team.
+	 *
+	 * @return the orm version of this team
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this team.
+	 *
+	 * @param ormVersion the orm version of this team
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

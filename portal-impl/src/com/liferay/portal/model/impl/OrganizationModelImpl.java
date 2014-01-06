@@ -81,9 +81,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			{ "countryId", Types.BIGINT },
 			{ "statusId", Types.INTEGER },
 			{ "comments", Types.VARCHAR },
-			{ "logoId", Types.BIGINT }
+			{ "logoId", Types.BIGINT },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Organization_ (uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null,logoId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Organization_ (uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId INTEGER,comments STRING null,logoId LONG,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 	public static final String ORDER_BY_JPQL = " ORDER BY organization.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Organization_.name ASC";
@@ -136,6 +137,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		model.setStatusId(soapModel.getStatusId());
 		model.setComments(soapModel.getComments());
 		model.setLogoId(soapModel.getLogoId());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -233,6 +235,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		attributes.put("statusId", getStatusId());
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -342,6 +345,12 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		if (logoId != null) {
 			setLogoId(logoId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -641,6 +650,17 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_logoId = logoId;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -695,6 +715,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationImpl.setStatusId(getStatusId());
 		organizationImpl.setComments(getComments());
 		organizationImpl.setLogoId(getLogoId());
+		organizationImpl.setOrmVersion(getOrmVersion());
 
 		organizationImpl.resetOriginalValues();
 
@@ -864,12 +885,14 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		organizationCacheModel.logoId = getLogoId();
 
+		organizationCacheModel.ormVersion = getOrmVersion();
+
 		return organizationCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -905,6 +928,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		sb.append(getComments());
 		sb.append(", logoId=");
 		sb.append(getLogoId());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -912,7 +937,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Organization");
@@ -986,6 +1011,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			"<column><column-name>logoId</column-name><column-value><![CDATA[");
 		sb.append(getLogoId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1023,6 +1052,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private int _statusId;
 	private String _comments;
 	private long _logoId;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private Organization _escapedModel;
 }

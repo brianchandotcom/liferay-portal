@@ -33,6 +33,7 @@ public class PasswordPolicyRelSoap implements Serializable {
 		soapModel.setPasswordPolicyId(model.getPasswordPolicyId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -120,8 +121,17 @@ public class PasswordPolicyRelSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _passwordPolicyRelId;
 	private long _passwordPolicyId;
 	private long _classNameId;
 	private long _classPK;
+	private long _ormVersion;
 }

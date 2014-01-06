@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole> {
+public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -99,6 +100,20 @@ public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole> {
 	 * @param roleId the role ID of this org group role
 	 */
 	public void setRoleId(long roleId);
+
+	/**
+	 * Returns the orm version of this org group role.
+	 *
+	 * @return the orm version of this org group role
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this org group role.
+	 *
+	 * @param ormVersion the orm version of this org group role
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

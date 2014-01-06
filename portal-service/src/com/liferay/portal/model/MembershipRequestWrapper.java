@@ -62,6 +62,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		attributes.put("replyDate", getReplyDate());
 		attributes.put("replierUserId", getReplierUserId());
 		attributes.put("statusId", getStatusId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class MembershipRequestWrapper implements MembershipRequest,
 
 		if (statusId != null) {
 			setStatusId(statusId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -391,6 +398,26 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	@Override
 	public void setStatusId(int statusId) {
 		_membershipRequest.setStatusId(statusId);
+	}
+
+	/**
+	* Returns the orm version of this membership request.
+	*
+	* @return the orm version of this membership request
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _membershipRequest.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this membership request.
+	*
+	* @param ormVersion the orm version of this membership request
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_membershipRequest.setOrmVersion(ormVersion);
 	}
 
 	@Override

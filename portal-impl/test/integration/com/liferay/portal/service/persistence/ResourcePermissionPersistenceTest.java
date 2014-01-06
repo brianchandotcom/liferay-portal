@@ -127,6 +127,8 @@ public class ResourcePermissionPersistenceTest {
 
 		newResourcePermission.setActionIds(ServiceTestUtil.nextLong());
 
+		newResourcePermission.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newResourcePermission);
 
 		ResourcePermission existingResourcePermission = _persistence.findByPrimaryKey(newResourcePermission.getPrimaryKey());
@@ -147,6 +149,8 @@ public class ResourcePermissionPersistenceTest {
 			newResourcePermission.getOwnerId());
 		Assert.assertEquals(existingResourcePermission.getActionIds(),
 			newResourcePermission.getActionIds());
+		Assert.assertEquals(existingResourcePermission.getOrmVersion(),
+			newResourcePermission.getOrmVersion());
 	}
 
 	@Test
@@ -187,7 +191,7 @@ public class ResourcePermissionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ResourcePermission",
 			"resourcePermissionId", true, "companyId", true, "name", true,
 			"scope", true, "primKey", true, "roleId", true, "ownerId", true,
-			"actionIds", true);
+			"actionIds", true, "ormVersion", true);
 	}
 
 	@Test
@@ -348,6 +352,8 @@ public class ResourcePermissionPersistenceTest {
 		resourcePermission.setOwnerId(ServiceTestUtil.nextLong());
 
 		resourcePermission.setActionIds(ServiceTestUtil.nextLong());
+
+		resourcePermission.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(resourcePermission);
 

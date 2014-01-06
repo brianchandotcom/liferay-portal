@@ -55,6 +55,7 @@ public class ResourceActionWrapper implements ResourceAction,
 		attributes.put("name", getName());
 		attributes.put("actionId", getActionId());
 		attributes.put("bitwiseValue", getBitwiseValue());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class ResourceActionWrapper implements ResourceAction,
 
 		if (bitwiseValue != null) {
 			setBitwiseValue(bitwiseValue);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -184,6 +191,26 @@ public class ResourceActionWrapper implements ResourceAction,
 	@Override
 	public void setBitwiseValue(long bitwiseValue) {
 		_resourceAction.setBitwiseValue(bitwiseValue);
+	}
+
+	/**
+	* Returns the orm version of this resource action.
+	*
+	* @return the orm version of this resource action
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _resourceAction.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this resource action.
+	*
+	* @param ormVersion the orm version of this resource action
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_resourceAction.setOrmVersion(ormVersion);
 	}
 
 	@Override

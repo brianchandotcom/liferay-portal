@@ -65,6 +65,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		attributes.put("extension", getExtension());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -147,6 +148,12 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -475,6 +482,26 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	@Override
 	public void setPrimary(boolean primary) {
 		_phone.setPrimary(primary);
+	}
+
+	/**
+	* Returns the orm version of this phone.
+	*
+	* @return the orm version of this phone
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _phone.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this phone.
+	*
+	* @param ormVersion the orm version of this phone
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_phone.setOrmVersion(ormVersion);
 	}
 
 	@Override

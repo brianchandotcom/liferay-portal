@@ -37,7 +37,7 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{workflowDefinitionLinkId=");
 		sb.append(workflowDefinitionLinkId);
@@ -63,6 +63,8 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 		sb.append(workflowDefinitionName);
 		sb.append(", workflowDefinitionVersion=");
 		sb.append(workflowDefinitionVersion);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,6 +112,7 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 		}
 
 		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(workflowDefinitionVersion);
+		workflowDefinitionLinkImpl.setOrmVersion(ormVersion);
 
 		workflowDefinitionLinkImpl.resetOriginalValues();
 
@@ -130,6 +133,7 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 		typePK = objectInput.readLong();
 		workflowDefinitionName = objectInput.readUTF();
 		workflowDefinitionVersion = objectInput.readInt();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -161,6 +165,7 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 		}
 
 		objectOutput.writeInt(workflowDefinitionVersion);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long workflowDefinitionLinkId;
@@ -175,4 +180,5 @@ public class WorkflowDefinitionLinkCacheModel implements CacheModel<WorkflowDefi
 	public long typePK;
 	public String workflowDefinitionName;
 	public int workflowDefinitionVersion;
+	public long ormVersion;
 }

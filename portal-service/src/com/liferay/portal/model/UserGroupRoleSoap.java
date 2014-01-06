@@ -35,6 +35,7 @@ public class UserGroupRoleSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setRoleId(model.getRoleId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -113,7 +114,16 @@ public class UserGroupRoleSoap implements Serializable {
 		_roleId = roleId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _userId;
 	private long _groupId;
 	private long _roleId;
+	private long _ormVersion;
 }

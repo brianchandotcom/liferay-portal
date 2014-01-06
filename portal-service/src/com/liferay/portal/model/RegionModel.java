@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface RegionModel extends BaseModel<Region> {
+public interface RegionModel extends BaseModel<Region>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -136,6 +136,20 @@ public interface RegionModel extends BaseModel<Region> {
 	 * @param active the active of this region
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the orm version of this region.
+	 *
+	 * @return the orm version of this region
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this region.
+	 *
+	 * @param ormVersion the orm version of this region
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

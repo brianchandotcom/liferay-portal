@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ShardModel extends AttachedModel, BaseModel<Shard> {
+public interface ShardModel extends AttachedModel, BaseModel<Shard>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -128,6 +129,20 @@ public interface ShardModel extends AttachedModel, BaseModel<Shard> {
 	 * @param name the name of this shard
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the orm version of this shard.
+	 *
+	 * @return the orm version of this shard
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this shard.
+	 *
+	 * @param ormVersion the orm version of this shard
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

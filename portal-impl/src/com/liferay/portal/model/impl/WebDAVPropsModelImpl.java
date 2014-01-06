@@ -65,9 +65,10 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "props", Types.CLOB }
+			{ "props", Types.CLOB },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table WebDAVProps (webDavPropsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,props TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table WebDAVProps (webDavPropsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,props TEXT null,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table WebDAVProps";
 	public static final String ORDER_BY_JPQL = " ORDER BY webDAVProps.webDavPropsId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WebDAVProps.webDavPropsId ASC";
@@ -133,6 +134,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("props", getProps());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -182,6 +184,12 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 		if (props != null) {
 			setProps(props);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -304,6 +312,16 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		_props = props;
 	}
 
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -342,6 +360,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		webDAVPropsImpl.setClassNameId(getClassNameId());
 		webDAVPropsImpl.setClassPK(getClassPK());
 		webDAVPropsImpl.setProps(getProps());
+		webDAVPropsImpl.setOrmVersion(getOrmVersion());
 
 		webDAVPropsImpl.resetOriginalValues();
 
@@ -453,12 +472,14 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 			webDAVPropsCacheModel.props = null;
 		}
 
+		webDAVPropsCacheModel.ormVersion = getOrmVersion();
+
 		return webDAVPropsCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{webDavPropsId=");
 		sb.append(getWebDavPropsId());
@@ -474,6 +495,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		sb.append(getClassPK());
 		sb.append(", props=");
 		sb.append(getProps());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -481,7 +504,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.WebDAVProps");
@@ -515,6 +538,10 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 			"<column><column-name>props</column-name><column-value><![CDATA[");
 		sb.append(getProps());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -536,6 +563,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _props;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private WebDAVProps _escapedModel;
 }

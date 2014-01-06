@@ -147,6 +147,8 @@ public class AddressPersistenceTest {
 
 		newAddress.setPrimary(ServiceTestUtil.randomBoolean());
 
+		newAddress.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newAddress);
 
 		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
@@ -186,6 +188,8 @@ public class AddressPersistenceTest {
 			newAddress.getMailing());
 		Assert.assertEquals(existingAddress.getPrimary(),
 			newAddress.getPrimary());
+		Assert.assertEquals(existingAddress.getOrmVersion(),
+			newAddress.getOrmVersion());
 	}
 
 	@Test
@@ -227,7 +231,8 @@ public class AddressPersistenceTest {
 			true, "createDate", true, "modifiedDate", true, "classNameId",
 			true, "classPK", true, "street1", true, "street2", true, "street3",
 			true, "city", true, "zip", true, "regionId", true, "countryId",
-			true, "typeId", true, "mailing", true, "primary", true);
+			true, "typeId", true, "mailing", true, "primary", true,
+			"ormVersion", true);
 	}
 
 	@Test
@@ -380,6 +385,8 @@ public class AddressPersistenceTest {
 		address.setMailing(ServiceTestUtil.randomBoolean());
 
 		address.setPrimary(ServiceTestUtil.randomBoolean());
+
+		address.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(address);
 

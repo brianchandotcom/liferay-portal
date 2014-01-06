@@ -38,7 +38,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface UserIdMapperModel extends BaseModel<UserIdMapper> {
+public interface UserIdMapperModel extends BaseModel<UserIdMapper>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -146,6 +147,20 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper> {
 	 * @param externalUserId the external user ID of this user ID mapper
 	 */
 	public void setExternalUserId(String externalUserId);
+
+	/**
+	 * Returns the orm version of this user ID mapper.
+	 *
+	 * @return the orm version of this user ID mapper
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this user ID mapper.
+	 *
+	 * @param ormVersion the orm version of this user ID mapper
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

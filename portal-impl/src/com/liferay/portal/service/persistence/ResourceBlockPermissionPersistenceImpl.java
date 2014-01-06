@@ -1681,6 +1681,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockPermission.getResourceBlockId());
 		resourceBlockPermissionImpl.setRoleId(resourceBlockPermission.getRoleId());
 		resourceBlockPermissionImpl.setActionIds(resourceBlockPermission.getActionIds());
+		resourceBlockPermissionImpl.setOrmVersion(resourceBlockPermission.getOrmVersion());
 
 		return resourceBlockPermissionImpl;
 	}

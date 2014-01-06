@@ -40,6 +40,7 @@ public class UserNotificationEventSoap implements Serializable {
 		soapModel.setDelivered(model.getDelivered());
 		soapModel.setPayload(model.getPayload());
 		soapModel.setArchived(model.getArchived());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -183,6 +184,14 @@ public class UserNotificationEventSoap implements Serializable {
 		_archived = archived;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _userNotificationEventId;
 	private long _companyId;
@@ -193,4 +202,5 @@ public class UserNotificationEventSoap implements Serializable {
 	private boolean _delivered;
 	private String _payload;
 	private boolean _archived;
+	private long _ormVersion;
 }

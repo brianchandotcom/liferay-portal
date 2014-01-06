@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -634,6 +634,20 @@ public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>,
 	 * @param resetTicketMaxAge the reset ticket max age of this password policy
 	 */
 	public void setResetTicketMaxAge(long resetTicketMaxAge);
+
+	/**
+	 * Returns the orm version of this password policy.
+	 *
+	 * @return the orm version of this password policy
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this password policy.
+	 *
+	 * @param ormVersion the orm version of this password policy
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

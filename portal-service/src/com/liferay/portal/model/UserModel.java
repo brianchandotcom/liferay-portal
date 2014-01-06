@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserModel extends BaseModel<User>, StagedModel {
+public interface UserModel extends BaseModel<User>, StagedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -703,6 +703,20 @@ public interface UserModel extends BaseModel<User>, StagedModel {
 	 * @param status the status of this user
 	 */
 	public void setStatus(int status);
+
+	/**
+	 * Returns the orm version of this user.
+	 *
+	 * @return the orm version of this user
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this user.
+	 *
+	 * @param ormVersion the orm version of this user
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

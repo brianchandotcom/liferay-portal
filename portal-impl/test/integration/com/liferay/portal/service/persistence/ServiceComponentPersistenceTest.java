@@ -121,6 +121,8 @@ public class ServiceComponentPersistenceTest {
 
 		newServiceComponent.setData(ServiceTestUtil.randomString());
 
+		newServiceComponent.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newServiceComponent);
 
 		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
@@ -135,6 +137,8 @@ public class ServiceComponentPersistenceTest {
 			newServiceComponent.getBuildDate());
 		Assert.assertEquals(existingServiceComponent.getData(),
 			newServiceComponent.getData());
+		Assert.assertEquals(existingServiceComponent.getOrmVersion(),
+			newServiceComponent.getOrmVersion());
 	}
 
 	@Test
@@ -174,7 +178,7 @@ public class ServiceComponentPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ServiceComponent",
 			"serviceComponentId", true, "buildNamespace", true, "buildNumber",
-			true, "buildDate", true, "data", true);
+			true, "buildDate", true, "data", true, "ormVersion", true);
 	}
 
 	@Test
@@ -320,6 +324,8 @@ public class ServiceComponentPersistenceTest {
 		serviceComponent.setBuildDate(ServiceTestUtil.nextLong());
 
 		serviceComponent.setData(ServiceTestUtil.randomString());
+
+		serviceComponent.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(serviceComponent);
 

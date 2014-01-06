@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SubscriptionModel extends AttachedModel, AuditedModel,
-	BaseModel<Subscription> {
+	BaseModel<Subscription>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -230,6 +230,20 @@ public interface SubscriptionModel extends AttachedModel, AuditedModel,
 	 * @param frequency the frequency of this subscription
 	 */
 	public void setFrequency(String frequency);
+
+	/**
+	 * Returns the orm version of this subscription.
+	 *
+	 * @return the orm version of this subscription
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this subscription.
+	 *
+	 * @param ormVersion the orm version of this subscription
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

@@ -48,6 +48,7 @@ public class OrganizationSoap implements Serializable {
 		soapModel.setStatusId(model.getStatusId());
 		soapModel.setComments(model.getComments());
 		soapModel.setLogoId(model.getLogoId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -240,6 +241,14 @@ public class OrganizationSoap implements Serializable {
 		_logoId = logoId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _organizationId;
 	private long _companyId;
@@ -257,4 +266,5 @@ public class OrganizationSoap implements Serializable {
 	private int _statusId;
 	private String _comments;
 	private long _logoId;
+	private long _ormVersion;
 }

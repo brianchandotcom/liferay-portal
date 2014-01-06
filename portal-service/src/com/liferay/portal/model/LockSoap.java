@@ -41,6 +41,7 @@ public class LockSoap implements Serializable {
 		soapModel.setOwner(model.getOwner());
 		soapModel.setInheritable(model.getInheritable());
 		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -185,6 +186,14 @@ public class LockSoap implements Serializable {
 		_expirationDate = expirationDate;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _lockId;
 	private long _companyId;
@@ -196,4 +205,5 @@ public class LockSoap implements Serializable {
 	private String _owner;
 	private boolean _inheritable;
 	private Date _expirationDate;
+	private long _ormVersion;
 }

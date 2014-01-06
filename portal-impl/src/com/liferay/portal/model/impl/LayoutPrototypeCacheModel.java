@@ -37,7 +37,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -61,6 +61,8 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		sb.append(settings);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,6 +126,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		}
 
 		layoutPrototypeImpl.setActive(active);
+		layoutPrototypeImpl.setOrmVersion(ormVersion);
 
 		layoutPrototypeImpl.resetOriginalValues();
 
@@ -143,6 +146,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		description = objectInput.readUTF();
 		settings = objectInput.readUTF();
 		active = objectInput.readBoolean();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -191,6 +195,7 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 		}
 
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public String uuid;
@@ -204,4 +209,5 @@ public class LayoutPrototypeCacheModel implements CacheModel<LayoutPrototype>,
 	public String description;
 	public String settings;
 	public boolean active;
+	public long ormVersion;
 }

@@ -43,6 +43,7 @@ public class EmailAddressSoap implements Serializable {
 		soapModel.setAddress(model.getAddress());
 		soapModel.setTypeId(model.getTypeId());
 		soapModel.setPrimary(model.getPrimary());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -195,6 +196,14 @@ public class EmailAddressSoap implements Serializable {
 		_primary = primary;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _emailAddressId;
 	private long _companyId;
@@ -207,4 +216,5 @@ public class EmailAddressSoap implements Serializable {
 	private String _address;
 	private int _typeId;
 	private boolean _primary;
+	private long _ormVersion;
 }

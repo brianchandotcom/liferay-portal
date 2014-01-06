@@ -54,6 +54,7 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -82,6 +83,12 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -198,6 +205,26 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	@Override
 	public void setName(java.lang.String name) {
 		_shard.setName(name);
+	}
+
+	/**
+	* Returns the orm version of this shard.
+	*
+	* @return the orm version of this shard
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _shard.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this shard.
+	*
+	* @param ormVersion the orm version of this shard
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_shard.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -34,6 +34,7 @@ public class ResourceBlockPermissionSoap implements Serializable {
 		soapModel.setResourceBlockId(model.getResourceBlockId());
 		soapModel.setRoleId(model.getRoleId());
 		soapModel.setActionIds(model.getActionIds());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -121,8 +122,17 @@ public class ResourceBlockPermissionSoap implements Serializable {
 		_actionIds = actionIds;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _resourceBlockPermissionId;
 	private long _resourceBlockId;
 	private long _roleId;
 	private long _actionIds;
+	private long _ormVersion;
 }

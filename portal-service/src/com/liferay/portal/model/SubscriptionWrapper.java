@@ -61,6 +61,7 @@ public class SubscriptionWrapper implements Subscription,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("frequency", getFrequency());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -119,6 +120,12 @@ public class SubscriptionWrapper implements Subscription,
 
 		if (frequency != null) {
 			setFrequency(frequency);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -357,6 +364,26 @@ public class SubscriptionWrapper implements Subscription,
 	@Override
 	public void setFrequency(java.lang.String frequency) {
 		_subscription.setFrequency(frequency);
+	}
+
+	/**
+	* Returns the orm version of this subscription.
+	*
+	* @return the orm version of this subscription
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _subscription.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this subscription.
+	*
+	* @param ormVersion the orm version of this subscription
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_subscription.setOrmVersion(ormVersion);
 	}
 
 	@Override

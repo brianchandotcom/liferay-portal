@@ -117,6 +117,8 @@ public class UserTrackerPathPersistenceTest {
 
 		newUserTrackerPath.setPathDate(ServiceTestUtil.nextDate());
 
+		newUserTrackerPath.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newUserTrackerPath);
 
 		UserTrackerPath existingUserTrackerPath = _persistence.findByPrimaryKey(newUserTrackerPath.getPrimaryKey());
@@ -130,6 +132,8 @@ public class UserTrackerPathPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingUserTrackerPath.getPathDate()),
 			Time.getShortTimestamp(newUserTrackerPath.getPathDate()));
+		Assert.assertEquals(existingUserTrackerPath.getOrmVersion(),
+			newUserTrackerPath.getOrmVersion());
 	}
 
 	@Test
@@ -169,7 +173,7 @@ public class UserTrackerPathPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserTrackerPath",
 			"userTrackerPathId", true, "userTrackerId", true, "path", true,
-			"pathDate", true);
+			"pathDate", true, "ormVersion", true);
 	}
 
 	@Test
@@ -294,6 +298,8 @@ public class UserTrackerPathPersistenceTest {
 		userTrackerPath.setPath(ServiceTestUtil.randomString());
 
 		userTrackerPath.setPathDate(ServiceTestUtil.nextDate());
+
+		userTrackerPath.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(userTrackerPath);
 

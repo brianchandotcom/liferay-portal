@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
-	StagedGroupedModel {
+	StagedGroupedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -256,6 +256,20 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 * @param manualCheckInRequired the manual check in required of this repository entry
 	 */
 	public void setManualCheckInRequired(boolean manualCheckInRequired);
+
+	/**
+	 * Returns the orm version of this repository entry.
+	 *
+	 * @return the orm version of this repository entry
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this repository entry.
+	 *
+	 * @param ormVersion the orm version of this repository entry
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

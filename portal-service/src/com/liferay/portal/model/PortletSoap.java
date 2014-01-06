@@ -35,6 +35,7 @@ public class PortletSoap implements Serializable {
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setRoles(model.getRoles());
 		soapModel.setActive(model.getActive());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -131,9 +132,18 @@ public class PortletSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _id;
 	private long _companyId;
 	private String _portletId;
 	private String _roles;
 	private boolean _active;
+	private long _ormVersion;
 }

@@ -103,7 +103,10 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 				<div class="export-dialog-tree">
-					<aui:input cssClass="file-selector" label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" required="<%= true %>" showRequiredLabel="<%= false %>" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>' />
+					<aui:input cssClass="file-selector" label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" showRequiredLabel="<%= false %>" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>'>
+						<aui:validator name="maxLength">75</aui:validator>
+						<aui:validator name="required" />
+					</aui:input>
 
 					<aui:input name="layoutIds" type="hidden" />
 

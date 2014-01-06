@@ -10,6 +10,7 @@
 >
 	<bean id="counterHibernateSessionFactory" class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration">
 		<property name="dataSource" ref="counterDataSource" />
+		<property name="versioned" value="false" />
 	</bean>
 	<bean id="counterSessionFactory" class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
 		<property name="sessionFactoryClassLoader">

@@ -76,6 +76,10 @@
 				</id>
 			</#if>
 
+			<#if entity.isVersioned()>
+				<version name="ormVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
+			</#if>
+
 			<#list entity.columnList as column>
 				<#if column.EJBName??>
 					<#assign ejbName = true>
@@ -83,7 +87,7 @@
 					<#assign ejbName = false>
 				</#if>
 
-				<#if !column.isPrimary() && !column.isCollection() && !ejbName && ((column.type != "Blob") || ((column.type == "Blob") && !column.lazy))>
+				<#if !column.isPrimary() && !column.isCollection() && !ejbName && ((column.type != "Blob") || ((column.type == "Blob") && !column.lazy)) && (column.name != "ormVersion")>
 					<property name="${column.name}"
 
 					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>

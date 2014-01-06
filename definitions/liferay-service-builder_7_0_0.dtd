@@ -20,10 +20,14 @@ The package-path value specifies the package of the generated code.
 The auto-namespace-tables value specifies whether or not to automatically
 namespace tables. The default value is false for core services and true for
 plugin services.
+
+The versioned value specifies whether or not to do auto versioning for entities
+in this service.xml to prevent lost update. Default value is false.
 -->
 <!ATTLIST service-builder
 	package-path CDATA #REQUIRED
 	auto-namespace-tables CDATA #IMPLIED
+	versioned CDATA #IMPLIED
 >
 
 <!--
@@ -117,6 +121,10 @@ The trash-enabled value specifies whether trash related methods should be
 generated or not.
 
 The deprecated value specifies whether the entity's services are deprecated.
+
+The versioned value specifies whether or not to do auto versioning for this
+entity to prevent lost update. Default value is up to service-builder's
+versioned attribute value.
 -->
 <!ATTLIST entity
 	name CDATA #REQUIRED
@@ -135,6 +143,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	json-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
 	deprecated CDATA #IMPLIED
+	versioned CDATA #IMPLIED
 >
 
 <!--

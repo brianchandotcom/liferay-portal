@@ -74,35 +74,34 @@ public class InstrumentationAgent {
 
 			_coberturaClassFileTransformer = null;
 
-			if (_originalClassDefinitions == null) {
-				return;
-			}
+			if (_originalClassDefinitions != null) {
+				try {
+					List<ClassDefinition> classDefinitions =
+						new ArrayList<ClassDefinition>(
+							_originalClassDefinitions.size());
 
-			try {
-				List<ClassDefinition> classDefinitions =
-					new ArrayList<ClassDefinition>(
-						_originalClassDefinitions.size());
+					for (int i = 0; i < _originalClassDefinitions.size(); i++) {
+						OriginalClassDefinition originalClassDefinition =
+							_originalClassDefinitions.get(i);
 
-				for (int i = 0; i < _originalClassDefinitions.size(); i++) {
-					OriginalClassDefinition originalClassDefinition =
-						_originalClassDefinitions.get(i);
+						ClassDefinition classDefinition =
+							originalClassDefinition.toClassDefinition();
 
-					ClassDefinition classDefinition =
-						originalClassDefinition.toClassDefinition();
-
-					if (classDefinition != null) {
-						classDefinitions.add(classDefinition);
+						if (classDefinition != null) {
+							classDefinitions.add(classDefinition);
+						}
 					}
+
+					_originalClassDefinitions = null;
+
+					_instrumentation.redefineClasses(
+						classDefinitions.toArray(
+							new ClassDefinition[classDefinitions.size()]));
 				}
-
-				_originalClassDefinitions = null;
-
-				_instrumentation.redefineClasses(
-					classDefinitions.toArray(
-						new ClassDefinition[classDefinitions.size()]));
-			}
-			catch (Exception e) {
-				throw new RuntimeException("Unable to uninstrument classes", e);
+				catch (Exception e) {
+					throw new RuntimeException(
+						"Unable to uninstrument classes", e);
+				}
 			}
 		}
 	}

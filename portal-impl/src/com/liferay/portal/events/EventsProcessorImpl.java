@@ -14,10 +14,9 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SessionAction;
-import com.liferay.portal.kernel.events.SimpleAction;
+import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -28,21 +27,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Michael Young
+ * @author Raymond Augé
  */
 public class EventsProcessorImpl implements EventsProcessor {
 
 	@Override
 	public void process(
-			String key, String[] classes, String[] ids,
-			HttpServletRequest request, HttpServletResponse response,
-			HttpSession session)
+			String key, String[] classes, LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
 		for (String className : classes) {
@@ -54,80 +48,48 @@ public class EventsProcessorImpl implements EventsProcessor {
 				_log.debug("Process event " + className);
 			}
 
-			Object event = InstancePool.get(className);
+			LifecycleAction lifecycleAction =
+				(LifecycleAction)InstancePool.get(className);
 
-			processEvent(event, ids, request, response, session);
+			lifecycleAction.processEvent(lifecycleEvent);
 		}
 
 		if (Validator.isNull(key)) {
 			return;
 		}
 
-		List<Object> events = _getEvents(key);
-
-		for (Object event : events) {
-			processEvent(event, ids, request, response, session);
+		for (LifecycleAction lifecycleAction : _getEvents(key)) {
+			lifecycleAction.processEvent(lifecycleEvent);
 		}
 	}
 
 	@Override
 	public void processEvent(
-			Object event, String[] ids, HttpServletRequest request,
-			HttpServletResponse response, HttpSession session)
+			LifecycleAction lifecycleAction, LifecycleEvent lifecycleEvent)
 		throws ActionException {
 
-		if (event instanceof Action) {
-			Action action = (Action)event;
-
-			try {
-				action.run(request, response);
-			}
-			catch (ActionException ae) {
-				throw ae;
-			}
-			catch (Exception e) {
-				throw new ActionException(e);
-			}
-		}
-		else if (event instanceof SessionAction) {
-			SessionAction sessionAction = (SessionAction)event;
-
-			try {
-				sessionAction.run(session);
-			}
-			catch (ActionException ae) {
-				throw ae;
-			}
-			catch (Exception e) {
-				throw new ActionException(e);
-			}
-		}
-		else if (event instanceof SimpleAction) {
-			SimpleAction simpleAction = (SimpleAction)event;
-
-			simpleAction.run(ids);
-		}
+		lifecycleAction.processEvent(lifecycleEvent);
 	}
 
 	@Override
 	public void registerEvent(String key, Object event) {
-		List<Object> events = _getEvents(key);
+		List<LifecycleAction> events = _getEvents(key);
 
-		events.add(event);
+		events.add((LifecycleAction)event);
 	}
 
 	@Override
 	public void unregisterEvent(String key, Object event) {
-		List<Object> events = _getEvents(key);
+		List<LifecycleAction> events = _getEvents(key);
 
 		events.remove(event);
 	}
 
-	private List<Object> _getEvents(String key) {
-		List<Object> events = _eventsMap.get(key);
+	private List<LifecycleAction> _getEvents(String key) {
+		List<LifecycleAction> events = _eventsMap.get(key);
 
 		if (events == null) {
-			events = new ArrayList<Object>();
+			events = new ArrayList<LifecycleAction>();
 
 			_eventsMap.put(key, events);
 		}
@@ -137,7 +99,7 @@ public class EventsProcessorImpl implements EventsProcessor {
 
 	private static Log _log = LogFactoryUtil.getLog(EventsProcessorImpl.class);
 
-	private Map<String, List<Object>> _eventsMap =
-		new HashMap<String, List<Object>>();
+	private Map<String, List<LifecycleAction>> _eventsMap =
+		new HashMap<String, List<LifecycleAction>>();
 
 }

@@ -19,7 +19,14 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class SessionAction {
+public abstract class SessionAction implements LifecycleAction {
+
+	@Override
+	public final void processEvent(LifecycleEvent lifecycleEvent)
+		throws ActionException {
+
+		run(lifecycleEvent.getSession());
+	}
 
 	public abstract void run(HttpSession session) throws ActionException;
 

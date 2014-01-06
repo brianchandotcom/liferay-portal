@@ -354,7 +354,7 @@
 		_handleLink: function(element, listTagsIn, listTagsOut) {
 			var hrefAttribute = element.getAttribute('href');
 
-			if (hrefAttribute != null) {
+			if (hrefAttribute) {
 				if (CKEDITOR.env.ie && (CKEDITOR.env.version < 8)) {
 					var ckeSavedHref = element.getAttribute('data-cke-saved-href');
 

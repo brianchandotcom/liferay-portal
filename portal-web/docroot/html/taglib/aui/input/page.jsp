@@ -237,15 +237,10 @@
 </c:if>
 
 <c:if test='<%= !type.equals("assetCategories") && !type.equals("hidden") && Validator.isNotNull(label) %>'>
-	<c:if test='<%= !choiceField && inlineLabel.equals("right") %>'>
-		<label <%= labelTag %>>
+	<c:if test='<%= choiceField || inlineLabel.equals("right") %>'>
 			<%= labelContent %>
+		</label>
 	</c:if>
-	<c:if test="<%= choiceField %>">
-		<%= labelContent %>
-	</c:if>
-
-	</label>
 </c:if>
 
 <c:if test='<%= !choiceField && !type.equals("hidden") && !wrappedField %>'>

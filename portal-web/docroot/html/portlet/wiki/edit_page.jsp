@@ -491,7 +491,7 @@ if (Validator.isNull(redirect)) {
 			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();
 		}
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(document.<portlet:namespace />fm, null, null, false);
 	}
 
 	function <portlet:namespace />discardDraftPage() {

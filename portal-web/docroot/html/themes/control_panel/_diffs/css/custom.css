@@ -1085,7 +1085,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					float: left;
 					margin-top: 20px;
 					width: 100%;
-					z-index: 400;
+					z-index: 399;
 
 					&:after {
 						background-image: none;

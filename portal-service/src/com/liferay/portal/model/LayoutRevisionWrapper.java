@@ -82,6 +82,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -267,6 +268,12 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -1566,6 +1573,26 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	@Override
 	public void setStatusDate(java.util.Date statusDate) {
 		_layoutRevision.setStatusDate(statusDate);
+	}
+
+	/**
+	* Returns the orm version of this layout revision.
+	*
+	* @return the orm version of this layout revision
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _layoutRevision.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this layout revision.
+	*
+	* @param ormVersion the orm version of this layout revision
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_layoutRevision.setOrmVersion(ormVersion);
 	}
 
 	/**

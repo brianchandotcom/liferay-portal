@@ -42,6 +42,7 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setLanguageId(model.getLanguageId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -197,6 +198,14 @@ public class LayoutFriendlyURLSoap implements Serializable {
 		_languageId = languageId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _layoutFriendlyURLId;
 	private long _groupId;
@@ -209,4 +218,5 @@ public class LayoutFriendlyURLSoap implements Serializable {
 	private boolean _privateLayout;
 	private String _friendlyURL;
 	private String _languageId;
+	private long _ormVersion;
 }

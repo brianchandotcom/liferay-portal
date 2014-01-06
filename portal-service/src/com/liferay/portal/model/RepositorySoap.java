@@ -45,6 +45,7 @@ public class RepositorySoap implements Serializable {
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setDlFolderId(model.getDlFolderId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -209,6 +210,14 @@ public class RepositorySoap implements Serializable {
 		_dlFolderId = dlFolderId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _repositoryId;
 	private long _groupId;
@@ -223,4 +232,5 @@ public class RepositorySoap implements Serializable {
 	private String _portletId;
 	private String _typeSettings;
 	private long _dlFolderId;
+	private long _ormVersion;
 }

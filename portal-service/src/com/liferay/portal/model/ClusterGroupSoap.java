@@ -33,6 +33,7 @@ public class ClusterGroupSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setClusterNodeIds(model.getClusterNodeIds());
 		soapModel.setWholeCluster(model.getWholeCluster());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -121,8 +122,17 @@ public class ClusterGroupSoap implements Serializable {
 		_wholeCluster = wholeCluster;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _clusterGroupId;
 	private String _name;
 	private String _clusterNodeIds;
 	private boolean _wholeCluster;
+	private long _ormVersion;
 }

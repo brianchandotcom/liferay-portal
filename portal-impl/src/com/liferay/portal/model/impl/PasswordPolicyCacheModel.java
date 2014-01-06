@@ -37,7 +37,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -107,6 +107,8 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		sb.append(resetFailureCount);
 		sb.append(", resetTicketMaxAge=");
 		sb.append(resetTicketMaxAge);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -195,6 +197,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		passwordPolicyImpl.setRequireUnlock(requireUnlock);
 		passwordPolicyImpl.setResetFailureCount(resetFailureCount);
 		passwordPolicyImpl.setResetTicketMaxAge(resetTicketMaxAge);
+		passwordPolicyImpl.setOrmVersion(ormVersion);
 
 		passwordPolicyImpl.resetOriginalValues();
 
@@ -237,6 +240,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		requireUnlock = objectInput.readBoolean();
 		resetFailureCount = objectInput.readLong();
 		resetTicketMaxAge = objectInput.readLong();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -309,6 +313,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		objectOutput.writeBoolean(requireUnlock);
 		objectOutput.writeLong(resetFailureCount);
 		objectOutput.writeLong(resetTicketMaxAge);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public String uuid;
@@ -345,4 +350,5 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	public boolean requireUnlock;
 	public long resetFailureCount;
 	public long resetTicketMaxAge;
+	public long ormVersion;
 }

@@ -84,6 +84,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("jobClass", getJobClass());
 		attributes.put("hoursOfOperation", getHoursOfOperation());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -286,6 +287,12 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		if (hoursOfOperation != null) {
 			setHoursOfOperation(hoursOfOperation);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -1014,6 +1021,26 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public void setHoursOfOperation(java.lang.String hoursOfOperation) {
 		_contact.setHoursOfOperation(hoursOfOperation);
+	}
+
+	/**
+	* Returns the orm version of this contact.
+	*
+	* @return the orm version of this contact
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _contact.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this contact.
+	*
+	* @param ormVersion the orm version of this contact
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_contact.setOrmVersion(ormVersion);
 	}
 
 	@Override

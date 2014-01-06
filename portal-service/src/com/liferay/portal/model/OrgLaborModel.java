@@ -36,7 +36,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface OrgLaborModel extends BaseModel<OrgLabor> {
+public interface OrgLaborModel extends BaseModel<OrgLabor>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -294,6 +294,20 @@ public interface OrgLaborModel extends BaseModel<OrgLabor> {
 	 * @param satClose the sat close of this org labor
 	 */
 	public void setSatClose(int satClose);
+
+	/**
+	 * Returns the orm version of this org labor.
+	 *
+	 * @return the orm version of this org labor
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this org labor.
+	 *
+	 * @param ormVersion the orm version of this org labor
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

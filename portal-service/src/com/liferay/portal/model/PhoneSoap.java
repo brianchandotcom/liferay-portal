@@ -44,6 +44,7 @@ public class PhoneSoap implements Serializable {
 		soapModel.setExtension(model.getExtension());
 		soapModel.setTypeId(model.getTypeId());
 		soapModel.setPrimary(model.getPrimary());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -204,6 +205,14 @@ public class PhoneSoap implements Serializable {
 		_primary = primary;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _phoneId;
 	private long _companyId;
@@ -217,4 +226,5 @@ public class PhoneSoap implements Serializable {
 	private String _extension;
 	private int _typeId;
 	private boolean _primary;
+	private long _ormVersion;
 }

@@ -71,6 +71,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		attributes.put("typeId", getTypeId());
 		attributes.put("mailing", getMailing());
 		attributes.put("primary", getPrimary());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -189,6 +190,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -647,6 +654,26 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	@Override
 	public void setPrimary(boolean primary) {
 		_address.setPrimary(primary);
+	}
+
+	/**
+	* Returns the orm version of this address.
+	*
+	* @return the orm version of this address
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _address.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this address.
+	*
+	* @param ormVersion the orm version of this address
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_address.setOrmVersion(ormVersion);
 	}
 
 	@Override

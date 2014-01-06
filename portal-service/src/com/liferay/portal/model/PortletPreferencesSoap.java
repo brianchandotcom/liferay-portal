@@ -36,6 +36,7 @@ public class PortletPreferencesSoap implements Serializable {
 		soapModel.setPlid(model.getPlid());
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setPreferences(model.getPreferences());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -139,10 +140,19 @@ public class PortletPreferencesSoap implements Serializable {
 		_preferences = preferences;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _portletPreferencesId;
 	private long _ownerId;
 	private int _ownerType;
 	private long _plid;
 	private String _portletId;
 	private String _preferences;
+	private long _ormVersion;
 }

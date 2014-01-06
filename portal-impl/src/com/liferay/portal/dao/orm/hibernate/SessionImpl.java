@@ -231,7 +231,7 @@ public class SessionImpl implements Session {
 			return _session.merge(object);
 		}
 		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+			throw ExceptionTranslator.translate(_session, object, e);
 		}
 	}
 
@@ -253,7 +253,7 @@ public class SessionImpl implements Session {
 			_session.saveOrUpdate(object);
 		}
 		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+			throw ExceptionTranslator.translate(_session, object, e);
 		}
 	}
 

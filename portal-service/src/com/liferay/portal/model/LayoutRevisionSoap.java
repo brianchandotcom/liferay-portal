@@ -61,6 +61,7 @@ public class LayoutRevisionSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -365,6 +366,14 @@ public class LayoutRevisionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _layoutRevisionId;
 	private long _groupId;
 	private long _companyId;
@@ -395,4 +404,5 @@ public class LayoutRevisionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _ormVersion;
 }

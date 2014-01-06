@@ -36,7 +36,7 @@ import java.util.Date;
 public class ReleaseCacheModel implements CacheModel<Release>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{releaseId=");
 		sb.append(releaseId);
@@ -56,6 +56,8 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable {
 		sb.append(state);
 		sb.append(", testString=");
 		sb.append(testString);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -107,6 +109,8 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable {
 			releaseImpl.setTestString(testString);
 		}
 
+		releaseImpl.setOrmVersion(ormVersion);
+
 		releaseImpl.resetOriginalValues();
 
 		return releaseImpl;
@@ -123,6 +127,7 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable {
 		verified = objectInput.readBoolean();
 		state = objectInput.readInt();
 		testString = objectInput.readUTF();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -150,6 +155,8 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable {
 		else {
 			objectOutput.writeUTF(testString);
 		}
+
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long releaseId;
@@ -161,4 +168,5 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable {
 	public boolean verified;
 	public int state;
 	public String testString;
+	public long ormVersion;
 }

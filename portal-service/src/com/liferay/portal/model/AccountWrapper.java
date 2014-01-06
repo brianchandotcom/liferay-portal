@@ -67,6 +67,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		attributes.put("industry", getIndustry());
 		attributes.put("type", getType());
 		attributes.put("size", getSize());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -167,6 +168,12 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -530,6 +537,26 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public void setSize(java.lang.String size) {
 		_account.setSize(size);
+	}
+
+	/**
+	* Returns the orm version of this account.
+	*
+	* @return the orm version of this account
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _account.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this account.
+	*
+	* @param ormVersion the orm version of this account
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_account.setOrmVersion(ormVersion);
 	}
 
 	@Override

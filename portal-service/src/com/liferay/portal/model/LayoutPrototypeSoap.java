@@ -42,6 +42,7 @@ public class LayoutPrototypeSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setActive(model.getActive());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -188,6 +189,14 @@ public class LayoutPrototypeSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _layoutPrototypeId;
 	private long _companyId;
@@ -199,4 +208,5 @@ public class LayoutPrototypeSoap implements Serializable {
 	private String _description;
 	private String _settings;
 	private boolean _active;
+	private long _ormVersion;
 }

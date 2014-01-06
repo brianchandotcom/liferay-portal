@@ -44,6 +44,7 @@ public class SystemEventSoap implements Serializable {
 		soapModel.setSystemEventSetKey(model.getSystemEventSetKey());
 		soapModel.setType(model.getType());
 		soapModel.setExtraData(model.getExtraData());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -208,6 +209,14 @@ public class SystemEventSoap implements Serializable {
 		_extraData = extraData;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _systemEventId;
 	private long _groupId;
 	private long _companyId;
@@ -222,4 +231,5 @@ public class SystemEventSoap implements Serializable {
 	private long _systemEventSetKey;
 	private int _type;
 	private String _extraData;
+	private long _ormVersion;
 }

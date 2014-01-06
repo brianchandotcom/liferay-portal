@@ -55,6 +55,7 @@ public class VirtualHostWrapper implements VirtualHost,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("layoutSetId", getLayoutSetId());
 		attributes.put("hostname", getHostname());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class VirtualHostWrapper implements VirtualHost,
 
 		if (hostname != null) {
 			setHostname(hostname);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -184,6 +191,26 @@ public class VirtualHostWrapper implements VirtualHost,
 	@Override
 	public void setHostname(java.lang.String hostname) {
 		_virtualHost.setHostname(hostname);
+	}
+
+	/**
+	* Returns the orm version of this virtual host.
+	*
+	* @return the orm version of this virtual host
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _virtualHost.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this virtual host.
+	*
+	* @param ormVersion the orm version of this virtual host
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_virtualHost.setOrmVersion(ormVersion);
 	}
 
 	@Override

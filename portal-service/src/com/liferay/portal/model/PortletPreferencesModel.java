@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PortletPreferencesModel extends BaseModel<PortletPreferences> {
+public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,6 +144,20 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences> {
 	 * @param preferences the preferences of this portlet preferences
 	 */
 	public void setPreferences(String preferences);
+
+	/**
+	 * Returns the orm version of this portlet preferences.
+	 *
+	 * @return the orm version of this portlet preferences
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this portlet preferences.
+	 *
+	 * @param ormVersion the orm version of this portlet preferences
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

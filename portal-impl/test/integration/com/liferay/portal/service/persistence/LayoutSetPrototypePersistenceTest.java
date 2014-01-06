@@ -131,6 +131,8 @@ public class LayoutSetPrototypePersistenceTest {
 
 		newLayoutSetPrototype.setActive(ServiceTestUtil.randomBoolean());
 
+		newLayoutSetPrototype.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newLayoutSetPrototype);
 
 		LayoutSetPrototype existingLayoutSetPrototype = _persistence.findByPrimaryKey(newLayoutSetPrototype.getPrimaryKey());
@@ -159,6 +161,8 @@ public class LayoutSetPrototypePersistenceTest {
 			newLayoutSetPrototype.getSettings());
 		Assert.assertEquals(existingLayoutSetPrototype.getActive(),
 			newLayoutSetPrototype.getActive());
+		Assert.assertEquals(existingLayoutSetPrototype.getOrmVersion(),
+			newLayoutSetPrototype.getOrmVersion());
 	}
 
 	@Test
@@ -200,7 +204,7 @@ public class LayoutSetPrototypePersistenceTest {
 			"uuid", true, "layoutSetPrototypeId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "description", true,
-			"settings", true, "active", true);
+			"settings", true, "active", true, "ormVersion", true);
 	}
 
 	@Test
@@ -341,6 +345,8 @@ public class LayoutSetPrototypePersistenceTest {
 		layoutSetPrototype.setSettings(ServiceTestUtil.randomString());
 
 		layoutSetPrototype.setActive(ServiceTestUtil.randomBoolean());
+
+		layoutSetPrototype.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(layoutSetPrototype);
 

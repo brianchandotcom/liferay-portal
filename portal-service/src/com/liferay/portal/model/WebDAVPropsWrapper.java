@@ -59,6 +59,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("props", getProps());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -105,6 +106,12 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 
 		if (props != null) {
 			setProps(props);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -281,6 +288,26 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	@Override
 	public void setProps(java.lang.String props) {
 		_webDAVProps.setProps(props);
+	}
+
+	/**
+	* Returns the orm version of this web d a v props.
+	*
+	* @return the orm version of this web d a v props
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _webDAVProps.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this web d a v props.
+	*
+	* @param ormVersion the orm version of this web d a v props
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_webDAVProps.setOrmVersion(ormVersion);
 	}
 
 	@Override

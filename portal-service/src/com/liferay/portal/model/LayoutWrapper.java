@@ -84,6 +84,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 			getLayoutPrototypeLinkEnabled());
 		attributes.put("sourcePrototypeLayoutUuid",
 			getSourcePrototypeLayoutUuid());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -271,6 +272,12 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 
 		if (sourcePrototypeLayoutUuid != null) {
 			setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -1550,6 +1557,26 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public void setSourcePrototypeLayoutUuid(
 		java.lang.String sourcePrototypeLayoutUuid) {
 		_layout.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
+	}
+
+	/**
+	* Returns the orm version of this layout.
+	*
+	* @return the orm version of this layout
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _layout.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this layout.
+	*
+	* @param ormVersion the orm version of this layout
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_layout.setOrmVersion(ormVersion);
 	}
 
 	@Override

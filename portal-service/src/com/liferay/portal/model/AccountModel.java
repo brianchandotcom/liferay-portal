@@ -40,7 +40,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AccountModel extends AuditedModel, BaseModel<Account> {
+public interface AccountModel extends AuditedModel, BaseModel<Account>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -321,6 +322,20 @@ public interface AccountModel extends AuditedModel, BaseModel<Account> {
 	 * @param size the size of this account
 	 */
 	public void setSize(String size);
+
+	/**
+	 * Returns the orm version of this account.
+	 *
+	 * @return the orm version of this account
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this account.
+	 *
+	 * @param ormVersion the orm version of this account
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

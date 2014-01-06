@@ -223,9 +223,13 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
 		layout.setLayoutPrototypeLinkEnabled(true);
 
 		LayoutLocalServiceUtil.updateLayout(layout);
+
+		_layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
 
 		_layout.setLayoutPrototypeLinkEnabled(true);
 
@@ -237,6 +241,8 @@ public class LayoutSetPrototypePropagationTest
 		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
 
 		_layout = LayoutTestUtil.updateLayoutTemplateId(_layout, "1_column");
+
+		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
 		SitesUtil.resetPrototype(layout);
 

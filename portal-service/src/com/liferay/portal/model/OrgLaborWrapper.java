@@ -67,6 +67,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		attributes.put("friClose", getFriClose());
 		attributes.put("satOpen", getSatOpen());
 		attributes.put("satClose", getSatClose());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -173,6 +174,12 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 
 		if (satClose != null) {
 			setSatClose(satClose);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -534,6 +541,26 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public void setSatClose(int satClose) {
 		_orgLabor.setSatClose(satClose);
+	}
+
+	/**
+	* Returns the orm version of this org labor.
+	*
+	* @return the orm version of this org labor
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _orgLabor.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this org labor.
+	*
+	* @param ormVersion the orm version of this org labor
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_orgLabor.setOrmVersion(ormVersion);
 	}
 
 	@Override

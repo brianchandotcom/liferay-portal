@@ -1269,6 +1269,9 @@ public class SitesImpl implements Sites {
 			Map<String, String[]> parameterMap =
 				getLayoutSetPrototypesParameters(importData);
 
+			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				layoutSet.getLayoutSetId());
+
 			removeMergeFailFriendlyURLLayouts(layoutSet);
 
 			importLayoutSetPrototype(

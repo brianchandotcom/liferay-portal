@@ -69,6 +69,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("site", getSite());
 		attributes.put("remoteStagingGroupCount", getRemoteStagingGroupCount());
 		attributes.put("active", getActive());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -189,6 +190,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -657,6 +664,26 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setActive(boolean active) {
 		_group.setActive(active);
+	}
+
+	/**
+	* Returns the orm version of this group.
+	*
+	* @return the orm version of this group
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _group.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this group.
+	*
+	* @param ormVersion the orm version of this group
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_group.setOrmVersion(ormVersion);
 	}
 
 	@Override

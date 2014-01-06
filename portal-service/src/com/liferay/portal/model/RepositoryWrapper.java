@@ -66,6 +66,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 		attributes.put("portletId", getPortletId());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("dlFolderId", getDlFolderId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 
 		if (dlFolderId != null) {
 			setDlFolderId(dlFolderId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -492,6 +499,26 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	@Override
 	public void setDlFolderId(long dlFolderId) {
 		_repository.setDlFolderId(dlFolderId);
+	}
+
+	/**
+	* Returns the orm version of this repository.
+	*
+	* @return the orm version of this repository
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _repository.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this repository.
+	*
+	* @param ormVersion the orm version of this repository
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_repository.setOrmVersion(ormVersion);
 	}
 
 	@Override

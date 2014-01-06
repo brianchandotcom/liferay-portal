@@ -8654,6 +8654,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		layoutImpl.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
 		layoutImpl.setLayoutPrototypeLinkEnabled(layout.isLayoutPrototypeLinkEnabled());
 		layoutImpl.setSourcePrototypeLayoutUuid(layout.getSourcePrototypeLayoutUuid());
+		layoutImpl.setOrmVersion(layout.getOrmVersion());
 
 		return layoutImpl;
 	}

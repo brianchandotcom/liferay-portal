@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface RepositoryModel extends BaseModel<Repository>,
-	StagedGroupedModel, TypedModel {
+	StagedGroupedModel, TypedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -306,6 +306,20 @@ public interface RepositoryModel extends BaseModel<Repository>,
 	 * @param dlFolderId the dl folder ID of this repository
 	 */
 	public void setDlFolderId(long dlFolderId);
+
+	/**
+	 * Returns the orm version of this repository.
+	 *
+	 * @return the orm version of this repository
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this repository.
+	 *
+	 * @param ormVersion the orm version of this repository
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

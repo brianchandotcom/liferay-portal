@@ -58,6 +58,7 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 		attributes.put("name", getName());
 		attributes.put("roleId", getRoleId());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -99,6 +100,12 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 
 		if (actionIds != null) {
 			setActionIds(actionIds);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -240,6 +247,26 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	@Override
 	public void setActionIds(long actionIds) {
 		_resourceTypePermission.setActionIds(actionIds);
+	}
+
+	/**
+	* Returns the orm version of this resource type permission.
+	*
+	* @return the orm version of this resource type permission
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _resourceTypePermission.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this resource type permission.
+	*
+	* @param ormVersion the orm version of this resource type permission
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_resourceTypePermission.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
-	TypedModel {
+	TypedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -245,6 +245,20 @@ public interface PortletItemModel extends BaseModel<PortletItem>, GroupedModel,
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the orm version of this portlet item.
+	 *
+	 * @return the orm version of this portlet item
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this portlet item.
+	 *
+	 * @param ormVersion the orm version of this portlet item
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

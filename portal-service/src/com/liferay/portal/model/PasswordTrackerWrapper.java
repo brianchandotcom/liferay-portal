@@ -56,6 +56,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("password", getPassword());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 
 		if (password != null) {
 			setPassword(password);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -207,6 +214,26 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	@Override
 	public void setPassword(java.lang.String password) {
 		_passwordTracker.setPassword(password);
+	}
+
+	/**
+	* Returns the orm version of this password tracker.
+	*
+	* @return the orm version of this password tracker
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _passwordTracker.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this password tracker.
+	*
+	* @param ormVersion the orm version of this password tracker
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_passwordTracker.setOrmVersion(ormVersion);
 	}
 
 	@Override

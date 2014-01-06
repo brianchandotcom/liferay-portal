@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
-	StagedGroupedModel {
+	StagedGroupedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -271,6 +271,20 @@ public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
 	 * @param languageId the language ID of this layout friendly u r l
 	 */
 	public void setLanguageId(String languageId);
+
+	/**
+	 * Returns the orm version of this layout friendly u r l.
+	 *
+	 * @return the orm version of this layout friendly u r l
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this layout friendly u r l.
+	 *
+	 * @param ormVersion the orm version of this layout friendly u r l
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

@@ -68,9 +68,10 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 			{ "primKey", Types.VARCHAR },
 			{ "roleId", Types.BIGINT },
 			{ "ownerId", Types.BIGINT },
-			{ "actionIds", Types.BIGINT }
+			{ "actionIds", Types.BIGINT },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourcePermission (resourcePermissionId LONG not null primary key,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,roleId LONG,ownerId LONG,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourcePermission (resourcePermissionId LONG not null primary key,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,roleId LONG,ownerId LONG,actionIds LONG,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table ResourcePermission";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourcePermission.resourcePermissionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourcePermission.resourcePermissionId ASC";
@@ -114,6 +115,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		model.setRoleId(soapModel.getRoleId());
 		model.setOwnerId(soapModel.getOwnerId());
 		model.setActionIds(soapModel.getActionIds());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -187,6 +189,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		attributes.put("roleId", getRoleId());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -242,6 +245,12 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 		if (actionIds != null) {
 			setActionIds(actionIds);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -399,6 +408,17 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		_actionIds = actionIds;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -438,6 +458,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		resourcePermissionImpl.setRoleId(getRoleId());
 		resourcePermissionImpl.setOwnerId(getOwnerId());
 		resourcePermissionImpl.setActionIds(getActionIds());
+		resourcePermissionImpl.setOrmVersion(getOrmVersion());
 
 		resourcePermissionImpl.resetOriginalValues();
 
@@ -551,12 +572,14 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 		resourcePermissionCacheModel.actionIds = getActionIds();
 
+		resourcePermissionCacheModel.ormVersion = getOrmVersion();
+
 		return resourcePermissionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{resourcePermissionId=");
 		sb.append(getResourcePermissionId());
@@ -574,6 +597,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		sb.append(getOwnerId());
 		sb.append(", actionIds=");
 		sb.append(getActionIds());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -581,7 +606,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourcePermission");
@@ -619,6 +644,10 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
 		sb.append(getActionIds());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -645,6 +674,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	private boolean _setOriginalRoleId;
 	private long _ownerId;
 	private long _actionIds;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private ResourcePermission _escapedModel;
 }

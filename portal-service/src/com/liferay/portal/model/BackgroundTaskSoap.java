@@ -46,6 +46,7 @@ public class BackgroundTaskSoap implements Serializable {
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusMessage(model.getStatusMessage());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -222,6 +223,14 @@ public class BackgroundTaskSoap implements Serializable {
 		_statusMessage = statusMessage;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _backgroundTaskId;
 	private long _groupId;
 	private long _companyId;
@@ -237,4 +246,5 @@ public class BackgroundTaskSoap implements Serializable {
 	private Date _completionDate;
 	private int _status;
 	private String _statusMessage;
+	private long _ormVersion;
 }

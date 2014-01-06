@@ -58,6 +58,7 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		attributes.put("idd", getIdd());
 		attributes.put("zipRequired", getZipRequired());
 		attributes.put("active", getActive());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -110,6 +111,12 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -311,6 +318,26 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	@Override
 	public void setActive(boolean active) {
 		_country.setActive(active);
+	}
+
+	/**
+	* Returns the orm version of this country.
+	*
+	* @return the orm version of this country
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _country.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this country.
+	*
+	* @param ormVersion the orm version of this country
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_country.setOrmVersion(ormVersion);
 	}
 
 	@Override

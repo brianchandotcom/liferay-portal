@@ -52,6 +52,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("value", getValue());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -68,6 +69,12 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 
 		if (value != null) {
 			setValue(value);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -144,6 +151,26 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	@Override
 	public void setValue(java.lang.String value) {
 		_className.setValue(value);
+	}
+
+	/**
+	* Returns the orm version of this class name.
+	*
+	* @return the orm version of this class name
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _className.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this class name.
+	*
+	* @param ormVersion the orm version of this class name
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_className.setOrmVersion(ormVersion);
 	}
 
 	@Override

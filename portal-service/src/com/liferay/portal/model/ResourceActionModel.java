@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ResourceActionModel extends BaseModel<ResourceAction> {
+public interface ResourceActionModel extends BaseModel<ResourceAction>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -115,6 +116,20 @@ public interface ResourceActionModel extends BaseModel<ResourceAction> {
 	 * @param bitwiseValue the bitwise value of this resource action
 	 */
 	public void setBitwiseValue(long bitwiseValue);
+
+	/**
+	 * Returns the orm version of this resource action.
+	 *
+	 * @return the orm version of this resource action
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this resource action.
+	 *
+	 * @param ormVersion the orm version of this resource action
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

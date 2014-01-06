@@ -32,6 +32,7 @@ public class ClassNameSoap implements Serializable {
 
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setValue(model.getValue());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -100,6 +101,15 @@ public class ClassNameSoap implements Serializable {
 		_value = value;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _classNameId;
 	private String _value;
+	private long _ormVersion;
 }

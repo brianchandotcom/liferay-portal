@@ -70,6 +70,7 @@ public class OrganizationWrapper implements Organization,
 		attributes.put("statusId", getStatusId());
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -176,6 +177,12 @@ public class OrganizationWrapper implements Organization,
 
 		if (logoId != null) {
 			setLogoId(logoId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -569,6 +576,26 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public void setLogoId(long logoId) {
 		_organization.setLogoId(logoId);
+	}
+
+	/**
+	* Returns the orm version of this organization.
+	*
+	* @return the orm version of this organization
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _organization.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this organization.
+	*
+	* @param ormVersion the orm version of this organization
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_organization.setOrmVersion(ormVersion);
 	}
 
 	@Override

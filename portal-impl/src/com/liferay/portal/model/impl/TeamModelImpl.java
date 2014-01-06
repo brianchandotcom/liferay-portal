@@ -71,9 +71,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "groupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Team (teamId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table Team (teamId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Team";
 	public static final String ORDER_BY_JPQL = " ORDER BY team.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Team.name ASC";
@@ -114,6 +115,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		model.setGroupId(soapModel.getGroupId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -203,6 +205,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -264,6 +267,12 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -413,6 +422,17 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_description = description;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -453,6 +473,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamImpl.setGroupId(getGroupId());
 		teamImpl.setName(getName());
 		teamImpl.setDescription(getDescription());
+		teamImpl.setOrmVersion(getOrmVersion());
 
 		teamImpl.resetOriginalValues();
 
@@ -576,12 +597,14 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			teamCacheModel.description = null;
 		}
 
+		teamCacheModel.ormVersion = getOrmVersion();
+
 		return teamCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{teamId=");
 		sb.append(getTeamId());
@@ -601,6 +624,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -608,7 +633,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Team");
@@ -650,6 +675,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -671,6 +700,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private String _name;
 	private String _originalName;
 	private String _description;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private Team _escapedModel;
 }

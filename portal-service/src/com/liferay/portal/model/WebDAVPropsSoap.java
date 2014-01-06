@@ -37,6 +37,7 @@ public class WebDAVPropsSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setProps(model.getProps());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -145,6 +146,14 @@ public class WebDAVPropsSoap implements Serializable {
 		_props = props;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _webDavPropsId;
 	private long _companyId;
 	private Date _createDate;
@@ -152,4 +161,5 @@ public class WebDAVPropsSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _props;
+	private long _ormVersion;
 }

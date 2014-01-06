@@ -63,6 +63,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("addedByLDAPImport", getAddedByLDAPImport());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -133,6 +134,12 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 
 		if (addedByLDAPImport != null) {
 			setAddedByLDAPImport(addedByLDAPImport);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -406,6 +413,26 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	@Override
 	public void setAddedByLDAPImport(boolean addedByLDAPImport) {
 		_userGroup.setAddedByLDAPImport(addedByLDAPImport);
+	}
+
+	/**
+	* Returns the orm version of this user group.
+	*
+	* @return the orm version of this user group
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _userGroup.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this user group.
+	*
+	* @param ormVersion the orm version of this user group
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_userGroup.setOrmVersion(ormVersion);
 	}
 
 	@Override

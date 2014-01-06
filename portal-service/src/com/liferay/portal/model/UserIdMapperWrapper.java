@@ -56,6 +56,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 		attributes.put("type", getType());
 		attributes.put("description", getDescription());
 		attributes.put("externalUserId", getExternalUserId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -90,6 +91,12 @@ public class UserIdMapperWrapper implements UserIdMapper,
 
 		if (externalUserId != null) {
 			setExternalUserId(externalUserId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -233,6 +240,26 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	@Override
 	public void setExternalUserId(java.lang.String externalUserId) {
 		_userIdMapper.setExternalUserId(externalUserId);
+	}
+
+	/**
+	* Returns the orm version of this user ID mapper.
+	*
+	* @return the orm version of this user ID mapper
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _userIdMapper.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this user ID mapper.
+	*
+	* @param ormVersion the orm version of this user ID mapper
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_userIdMapper.setOrmVersion(ormVersion);
 	}
 
 	@Override

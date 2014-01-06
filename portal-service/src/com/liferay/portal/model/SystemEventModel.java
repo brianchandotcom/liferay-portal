@@ -40,7 +40,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent> {
+public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -288,6 +289,20 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent> 
 	 * @param extraData the extra data of this system event
 	 */
 	public void setExtraData(String extraData);
+
+	/**
+	 * Returns the orm version of this system event.
+	 *
+	 * @return the orm version of this system event
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this system event.
+	 *
+	 * @param ormVersion the orm version of this system event
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

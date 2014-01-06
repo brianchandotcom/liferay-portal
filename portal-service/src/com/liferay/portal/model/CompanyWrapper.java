@@ -60,6 +60,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 		attributes.put("system", getSystem());
 		attributes.put("maxUsers", getMaxUsers());
 		attributes.put("active", getActive());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -124,6 +125,12 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -365,6 +372,26 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	@Override
 	public void setActive(boolean active) {
 		_company.setActive(active);
+	}
+
+	/**
+	* Returns the orm version of this company.
+	*
+	* @return the orm version of this company
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _company.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this company.
+	*
+	* @param ormVersion the orm version of this company
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_company.setOrmVersion(ormVersion);
 	}
 
 	@Override

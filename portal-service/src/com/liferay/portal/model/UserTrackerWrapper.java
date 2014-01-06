@@ -60,6 +60,7 @@ public class UserTrackerWrapper implements UserTracker,
 		attributes.put("remoteAddr", getRemoteAddr());
 		attributes.put("remoteHost", getRemoteHost());
 		attributes.put("userAgent", getUserAgent());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -112,6 +113,12 @@ public class UserTrackerWrapper implements UserTracker,
 
 		if (userAgent != null) {
 			setUserAgent(userAgent);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -315,6 +322,26 @@ public class UserTrackerWrapper implements UserTracker,
 	@Override
 	public void setUserAgent(java.lang.String userAgent) {
 		_userTracker.setUserAgent(userAgent);
+	}
+
+	/**
+	* Returns the orm version of this user tracker.
+	*
+	* @return the orm version of this user tracker
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _userTracker.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this user tracker.
+	*
+	* @param ormVersion the orm version of this user tracker
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_userTracker.setOrmVersion(ormVersion);
 	}
 
 	@Override

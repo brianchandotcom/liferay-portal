@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class PortletCacheModel implements CacheModel<Portlet>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -46,6 +46,8 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable {
 		sb.append(roles);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -73,6 +75,7 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable {
 		}
 
 		portletImpl.setActive(active);
+		portletImpl.setOrmVersion(ormVersion);
 
 		portletImpl.resetOriginalValues();
 
@@ -86,6 +89,7 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable {
 		portletId = objectInput.readUTF();
 		roles = objectInput.readUTF();
 		active = objectInput.readBoolean();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -109,6 +113,7 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable {
 		}
 
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long id;
@@ -116,4 +121,5 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable {
 	public String portletId;
 	public String roles;
 	public boolean active;
+	public long ormVersion;
 }

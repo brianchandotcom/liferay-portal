@@ -67,9 +67,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 			{ "key_", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
 			{ "extraInfo", Types.CLOB },
-			{ "expirationDate", Types.TIMESTAMP }
+			{ "expirationDate", Types.TIMESTAMP },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Ticket (ticketId LONG not null primary key,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(75) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Ticket (ticketId LONG not null primary key,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(75) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Ticket";
 	public static final String ORDER_BY_JPQL = " ORDER BY ticket.ticketId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Ticket.ticketId ASC";
@@ -136,6 +137,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		attributes.put("type", getType());
 		attributes.put("extraInfo", getExtraInfo());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -197,6 +199,12 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -332,6 +340,16 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		_expirationDate = expirationDate;
 	}
 
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -372,6 +390,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		ticketImpl.setType(getType());
 		ticketImpl.setExtraInfo(getExtraInfo());
 		ticketImpl.setExpirationDate(getExpirationDate());
+		ticketImpl.setOrmVersion(getOrmVersion());
 
 		ticketImpl.resetOriginalValues();
 
@@ -493,12 +512,14 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 			ticketCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
+		ticketCacheModel.ormVersion = getOrmVersion();
+
 		return ticketCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{ticketId=");
 		sb.append(getTicketId());
@@ -518,6 +539,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		sb.append(getExtraInfo());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -525,7 +548,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Ticket");
@@ -567,6 +590,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
 		sb.append(getExpirationDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -585,6 +612,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private int _type;
 	private String _extraInfo;
 	private Date _expirationDate;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private Ticket _escapedModel;
 }

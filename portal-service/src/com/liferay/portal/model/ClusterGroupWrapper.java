@@ -55,6 +55,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		attributes.put("name", getName());
 		attributes.put("clusterNodeIds", getClusterNodeIds());
 		attributes.put("wholeCluster", getWholeCluster());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class ClusterGroupWrapper implements ClusterGroup,
 
 		if (wholeCluster != null) {
 			setWholeCluster(wholeCluster);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -194,6 +201,26 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	@Override
 	public void setWholeCluster(boolean wholeCluster) {
 		_clusterGroup.setWholeCluster(wholeCluster);
+	}
+
+	/**
+	* Returns the orm version of this cluster group.
+	*
+	* @return the orm version of this cluster group
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _clusterGroup.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this cluster group.
+	*
+	* @param ormVersion the orm version of this cluster group
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_clusterGroup.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ListTypeModel extends BaseModel<ListType> {
+public interface ListTypeModel extends BaseModel<ListType>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -101,6 +101,20 @@ public interface ListTypeModel extends BaseModel<ListType> {
 	 * @param type the type of this list type
 	 */
 	public void setType(String type);
+
+	/**
+	 * Returns the orm version of this list type.
+	 *
+	 * @return the orm version of this list type
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this list type.
+	 *
+	 * @param ormVersion the orm version of this list type
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

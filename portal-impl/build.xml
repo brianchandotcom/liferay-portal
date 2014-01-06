@@ -811,6 +811,7 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="service.sql.indexes.file=indexes.sql" />
 			<arg value="service.sql.indexes.properties.file=indexes.properties" />
 			<arg value="service.sql.sequences.file=sequences.sql" />
+			<arg value="service.sql.versioned.tables.file=versioned-tables.txt" />
 			<arg value="service.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 			<arg value="service.props.util=com.liferay.portal.util.PropsUtil" />
 			<arg value="service.target.entity.name=${service.target.entity.name}" />
@@ -1348,7 +1349,7 @@ public class Creole10Parser]]></replacevalue>
 		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies" preservelastmodified="true">
 			<fileset
 				dir="${project.dir}/sql"
-				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,quartz-tables.sql,sequences.sql,update-*.sql"
+				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,quartz-tables.sql,sequences.sql,update-*.sql,versioned-tables.txt"
 			/>
 		</copy>
 

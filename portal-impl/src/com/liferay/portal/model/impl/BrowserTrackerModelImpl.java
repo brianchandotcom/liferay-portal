@@ -59,9 +59,10 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "browserTrackerId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "browserKey", Types.BIGINT }
+			{ "browserKey", Types.BIGINT },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BrowserTracker (browserTrackerId LONG not null primary key,userId LONG,browserKey LONG)";
+	public static final String TABLE_SQL_CREATE = "create table BrowserTracker (browserTrackerId LONG not null primary key,userId LONG,browserKey LONG,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table BrowserTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY browserTracker.browserTrackerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BrowserTracker.browserTrackerId ASC";
@@ -122,6 +123,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		attributes.put("browserTrackerId", getBrowserTrackerId());
 		attributes.put("userId", getUserId());
 		attributes.put("browserKey", getBrowserKey());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -147,6 +149,12 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 		if (browserKey != null) {
 			setBrowserKey(browserKey);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -202,6 +210,16 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		_browserKey = browserKey;
 	}
 
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -236,6 +254,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		browserTrackerImpl.setBrowserTrackerId(getBrowserTrackerId());
 		browserTrackerImpl.setUserId(getUserId());
 		browserTrackerImpl.setBrowserKey(getBrowserKey());
+		browserTrackerImpl.setOrmVersion(getOrmVersion());
 
 		browserTrackerImpl.resetOriginalValues();
 
@@ -315,12 +334,14 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 		browserTrackerCacheModel.browserKey = getBrowserKey();
 
+		browserTrackerCacheModel.ormVersion = getOrmVersion();
+
 		return browserTrackerCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{browserTrackerId=");
 		sb.append(getBrowserTrackerId());
@@ -328,6 +349,8 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		sb.append(getUserId());
 		sb.append(", browserKey=");
 		sb.append(getBrowserKey());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -335,7 +358,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.BrowserTracker");
@@ -353,6 +376,10 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 			"<column><column-name>browserKey</column-name><column-value><![CDATA[");
 		sb.append(getBrowserKey());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -369,6 +396,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private long _browserKey;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private BrowserTracker _escapedModel;
 }

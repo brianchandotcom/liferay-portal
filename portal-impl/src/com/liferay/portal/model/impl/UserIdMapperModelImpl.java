@@ -62,9 +62,10 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 			{ "userId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "externalUserId", Types.VARCHAR }
+			{ "externalUserId", Types.VARCHAR },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserIdMapper (userIdMapperId LONG not null primary key,userId LONG,type_ VARCHAR(75) null,description VARCHAR(75) null,externalUserId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table UserIdMapper (userIdMapperId LONG not null primary key,userId LONG,type_ VARCHAR(75) null,description VARCHAR(75) null,externalUserId VARCHAR(75) null,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table UserIdMapper";
 	public static final String ORDER_BY_JPQL = " ORDER BY userIdMapper.userIdMapperId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserIdMapper.userIdMapperId ASC";
@@ -129,6 +130,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		attributes.put("type", getType());
 		attributes.put("description", getDescription());
 		attributes.put("externalUserId", getExternalUserId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -166,6 +168,12 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 		if (externalUserId != null) {
 			setExternalUserId(externalUserId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -276,6 +284,16 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		return GetterUtil.getString(_originalExternalUserId);
 	}
 
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -312,6 +330,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		userIdMapperImpl.setType(getType());
 		userIdMapperImpl.setDescription(getDescription());
 		userIdMapperImpl.setExternalUserId(getExternalUserId());
+		userIdMapperImpl.setOrmVersion(getOrmVersion());
 
 		userIdMapperImpl.resetOriginalValues();
 
@@ -417,12 +436,14 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 			userIdMapperCacheModel.externalUserId = null;
 		}
 
+		userIdMapperCacheModel.ormVersion = getOrmVersion();
+
 		return userIdMapperCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{userIdMapperId=");
 		sb.append(getUserIdMapperId());
@@ -434,6 +455,8 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 		sb.append(getDescription());
 		sb.append(", externalUserId=");
 		sb.append(getExternalUserId());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -441,7 +464,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserIdMapper");
@@ -467,6 +490,10 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 			"<column><column-name>externalUserId</column-name><column-value><![CDATA[");
 		sb.append(getExternalUserId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -487,6 +514,7 @@ public class UserIdMapperModelImpl extends BaseModelImpl<UserIdMapper>
 	private String _description;
 	private String _externalUserId;
 	private String _originalExternalUserId;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private UserIdMapper _escapedModel;
 }

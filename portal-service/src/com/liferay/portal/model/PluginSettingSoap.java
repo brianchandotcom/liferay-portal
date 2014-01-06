@@ -36,6 +36,7 @@ public class PluginSettingSoap implements Serializable {
 		soapModel.setPluginType(model.getPluginType());
 		soapModel.setRoles(model.getRoles());
 		soapModel.setActive(model.getActive());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -140,10 +141,19 @@ public class PluginSettingSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _pluginSettingId;
 	private long _companyId;
 	private String _pluginId;
 	private String _pluginType;
 	private String _roles;
 	private boolean _active;
+	private long _ormVersion;
 }

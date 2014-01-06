@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PortletModel extends BaseModel<Portlet> {
+public interface PortletModel extends BaseModel<Portlet>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -136,6 +136,20 @@ public interface PortletModel extends BaseModel<Portlet> {
 	 * @param active the active of this portlet
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the orm version of this portlet.
+	 *
+	 * @return the orm version of this portlet
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this portlet.
+	 *
+	 * @param ormVersion the orm version of this portlet
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

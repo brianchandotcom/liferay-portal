@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
-	GroupedModel {
+	GroupedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -402,6 +402,20 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	 */
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled);
+
+	/**
+	 * Returns the orm version of this layout set branch.
+	 *
+	 * @return the orm version of this layout set branch
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this layout set branch.
+	 *
+	 * @param ormVersion the orm version of this layout set branch
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

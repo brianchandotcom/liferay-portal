@@ -37,7 +37,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{layoutSetBranchId=");
 		sb.append(layoutSetBranchId);
@@ -79,6 +79,8 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		sb.append(layoutSetPrototypeUuid);
 		sb.append(", layoutSetPrototypeLinkEnabled=");
 		sb.append(layoutSetPrototypeLinkEnabled);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -183,6 +185,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		}
 
 		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		layoutSetBranchImpl.setOrmVersion(ormVersion);
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -211,6 +214,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		settings = objectInput.readUTF();
 		layoutSetPrototypeUuid = objectInput.readUTF();
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -299,6 +303,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		}
 
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long layoutSetBranchId;
@@ -321,4 +326,5 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
+	public long ormVersion;
 }

@@ -36,6 +36,7 @@ public class ResourceBlockSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPermissionsHash(model.getPermissionsHash());
 		soapModel.setReferenceCount(model.getReferenceCount());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -136,10 +137,19 @@ public class ResourceBlockSoap implements Serializable {
 		_referenceCount = referenceCount;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _resourceBlockId;
 	private long _companyId;
 	private long _groupId;
 	private String _name;
 	private String _permissionsHash;
 	private long _referenceCount;
+	private long _ormVersion;
 }

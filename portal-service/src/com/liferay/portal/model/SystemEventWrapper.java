@@ -66,6 +66,7 @@ public class SystemEventWrapper implements SystemEvent,
 		attributes.put("systemEventSetKey", getSystemEventSetKey());
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class SystemEventWrapper implements SystemEvent,
 
 		if (extraData != null) {
 			setExtraData(extraData);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -492,6 +499,26 @@ public class SystemEventWrapper implements SystemEvent,
 	@Override
 	public void setExtraData(java.lang.String extraData) {
 		_systemEvent.setExtraData(extraData);
+	}
+
+	/**
+	* Returns the orm version of this system event.
+	*
+	* @return the orm version of this system event
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _systemEvent.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this system event.
+	*
+	* @param ormVersion the orm version of this system event
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_systemEvent.setOrmVersion(ormVersion);
 	}
 
 	@Override

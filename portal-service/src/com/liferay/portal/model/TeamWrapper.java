@@ -60,6 +60,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -118,6 +119,12 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -341,6 +348,26 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	@Override
 	public void setDescription(java.lang.String description) {
 		_team.setDescription(description);
+	}
+
+	/**
+	* Returns the orm version of this team.
+	*
+	* @return the orm version of this team
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _team.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this team.
+	*
+	* @param ormVersion the orm version of this team
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_team.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ServiceComponentModel extends BaseModel<ServiceComponent> {
+public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -129,6 +130,20 @@ public interface ServiceComponentModel extends BaseModel<ServiceComponent> {
 	 * @param data the data of this service component
 	 */
 	public void setData(String data);
+
+	/**
+	 * Returns the orm version of this service component.
+	 *
+	 * @return the orm version of this service component
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this service component.
+	 *
+	 * @param ormVersion the orm version of this service component
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

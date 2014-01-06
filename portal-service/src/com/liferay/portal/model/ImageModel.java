@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ImageModel extends BaseModel<Image> {
+public interface ImageModel extends BaseModel<Image>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -144,6 +144,20 @@ public interface ImageModel extends BaseModel<Image> {
 	 * @param size the size of this image
 	 */
 	public void setSize(int size);
+
+	/**
+	 * Returns the orm version of this image.
+	 *
+	 * @return the orm version of this image
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this image.
+	 *
+	 * @param ormVersion the orm version of this image
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

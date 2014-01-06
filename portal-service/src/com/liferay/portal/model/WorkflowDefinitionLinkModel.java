@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WorkflowDefinitionLinkModel extends AttachedModel,
-	BaseModel<WorkflowDefinitionLink>, GroupedModel {
+	BaseModel<WorkflowDefinitionLink>, GroupedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -274,6 +274,20 @@ public interface WorkflowDefinitionLinkModel extends AttachedModel,
 	 * @param workflowDefinitionVersion the workflow definition version of this workflow definition link
 	 */
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion);
+
+	/**
+	 * Returns the orm version of this workflow definition link.
+	 *
+	 * @return the orm version of this workflow definition link
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this workflow definition link.
+	 *
+	 * @param ormVersion the orm version of this workflow definition link
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

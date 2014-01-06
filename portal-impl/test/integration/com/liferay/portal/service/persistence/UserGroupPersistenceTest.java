@@ -134,6 +134,8 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setAddedByLDAPImport(ServiceTestUtil.randomBoolean());
 
+		newUserGroup.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newUserGroup);
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
@@ -160,6 +162,8 @@ public class UserGroupPersistenceTest {
 			newUserGroup.getDescription());
 		Assert.assertEquals(existingUserGroup.getAddedByLDAPImport(),
 			newUserGroup.getAddedByLDAPImport());
+		Assert.assertEquals(existingUserGroup.getOrmVersion(),
+			newUserGroup.getOrmVersion());
 	}
 
 	@Test
@@ -200,7 +204,7 @@ public class UserGroupPersistenceTest {
 			"userGroupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
 			"parentUserGroupId", true, "name", true, "description", true,
-			"addedByLDAPImport", true);
+			"addedByLDAPImport", true, "ormVersion", true);
 	}
 
 	@Test
@@ -356,6 +360,8 @@ public class UserGroupPersistenceTest {
 		userGroup.setDescription(ServiceTestUtil.randomString());
 
 		userGroup.setAddedByLDAPImport(ServiceTestUtil.randomBoolean());
+
+		userGroup.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(userGroup);
 

@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
-	GroupedModel {
+	GroupedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -313,6 +313,20 @@ public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
 	 * @param statusMessage the status message of this background task
 	 */
 	public void setStatusMessage(String statusMessage);
+
+	/**
+	 * Returns the orm version of this background task.
+	 *
+	 * @return the orm version of this background task
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this background task.
+	 *
+	 * @param ormVersion the orm version of this background task
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

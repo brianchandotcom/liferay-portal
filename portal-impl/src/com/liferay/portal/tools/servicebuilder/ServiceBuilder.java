@@ -231,6 +231,7 @@ public class ServiceBuilder {
 		String sqlIndexesFileName = arguments.get("service.sql.indexes.file");
 		String sqlIndexesPropertiesFileName = arguments.get("service.sql.indexes.properties.file");
 		String sqlSequencesFileName = arguments.get("service.sql.sequences.file");
+		String sqlVersionedTablesFileName = arguments.get("service.sql.versioned.tables.file");
 		boolean autoNamespaceTables = GetterUtil.getBoolean(arguments.get("service.auto.namespace.tables"));
 		String beanLocatorUtil = arguments.get("service.bean.locator.util");
 		String propsUtil = arguments.get("service.props.util");
@@ -245,9 +246,10 @@ public class ServiceBuilder {
 				fileName, hbmFileName, modelHintsFileName, springFileName,
 				apiDir, implDir, remotingFileName, sqlDir, sqlFileName,
 				sqlIndexesFileName, sqlIndexesPropertiesFileName,
-				sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
-				propsUtil, pluginName, targetEntityName, testDir, true,
-				buildNumber, buildNumberIncrement);
+				sqlSequencesFileName, sqlVersionedTablesFileName,
+				autoNamespaceTables, beanLocatorUtil, propsUtil, pluginName,
+				targetEntityName, testDir, true, buildNumber,
+				buildNumberIncrement);
 		}
 		catch (RuntimeException re) {
 			System.out.println(
@@ -265,6 +267,7 @@ public class ServiceBuilder {
 				"\tservice.sql.indexes.file=indexes.sql\n" +
 				"\tservice.sql.indexes.properties.file=indexes.properties\n" +
 				"\tservice.sql.sequences.file=sequences.sql\n" +
+				"\tservice.sql.versioned.tables.file=versioned-tables.txt\n" +
 				"\tservice.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil\n" +
 				"\tservice.props.util=com.liferay.portal.util.PropsUtil\n" +
 				"\tservice.target.entity.name=${service.target.entity.name}\n" +
@@ -504,16 +507,16 @@ public class ServiceBuilder {
 		String springFileName, String apiDir, String implDir,
 		String remotingFileName, String sqlDir, String sqlFileName,
 		String sqlIndexesFileName, String sqlIndexesPropertiesFileName,
-		String sqlSequencesFileName, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir) {
+		String sqlSequencesFileName, String sqlVersionedTablesFileName,
+		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
+		String pluginName, String targetEntityName, String testDir) {
 
 		this(
 			fileName, hbmFileName, modelHintsFileName, springFileName, apiDir,
 			implDir, remotingFileName, sqlDir, sqlFileName, sqlIndexesFileName,
 			sqlIndexesPropertiesFileName, sqlSequencesFileName,
-			autoNamespaceTables, beanLocatorUtil, propsUtil, pluginName,
-			targetEntityName, testDir, true, 1, true);
+			sqlVersionedTablesFileName, autoNamespaceTables, beanLocatorUtil,
+			propsUtil, pluginName, targetEntityName, testDir, true, 1, true);
 	}
 
 	public ServiceBuilder(
@@ -521,10 +524,10 @@ public class ServiceBuilder {
 		String springFileName, String apiDir, String implDir,
 		String remotingFileName, String sqlDir, String sqlFileName,
 		String sqlIndexesFileName, String sqlIndexesPropertiesFileName,
-		String sqlSequencesFileName, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir, boolean build,
-		long buildNumber, boolean buildNumberIncrement) {
+		String sqlSequencesFileName, String sqlVersionedTablesFileName,
+		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
+		String pluginName, String targetEntityName, String testDir,
+		boolean build, long buildNumber, boolean buildNumberIncrement) {
 
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
@@ -594,6 +597,7 @@ public class ServiceBuilder {
 			_sqlIndexesFileName = sqlIndexesFileName;
 			_sqlIndexesPropertiesFileName = sqlIndexesPropertiesFileName;
 			_sqlSequencesFileName = sqlSequencesFileName;
+			_sqlVersionedTablesFileName = sqlVersionedTablesFileName;
 			_autoNamespaceTables = autoNamespaceTables;
 			_beanLocatorUtil = beanLocatorUtil;
 			_beanLocatorUtilShortName = _beanLocatorUtil.substring(
@@ -635,6 +639,9 @@ public class ServiceBuilder {
 			_autoNamespaceTables = GetterUtil.getBoolean(
 				rootElement.attributeValue("auto-namespace-tables"),
 				_autoNamespaceTables);
+
+			_versioned = GetterUtil.getBoolean(
+				rootElement.attributeValue("versioned"));
 
 			Element authorElement = rootElement.element("author");
 
@@ -988,9 +995,10 @@ public class ServiceBuilder {
 			refFileName, _hbmFileName, _modelHintsFileName, _springFileName,
 			_apiDir, _implDir, _remotingFileName, _sqlDir, _sqlFileName,
 			_sqlIndexesFileName, _sqlIndexesPropertiesFileName,
-			_sqlSequencesFileName, _autoNamespaceTables, _beanLocatorUtil,
-			_propsUtil, _pluginName, _targetEntityName, _testDir, false,
-			_buildNumber, _buildNumberIncrement);
+			_sqlSequencesFileName, _sqlVersionedTablesFileName,
+			_autoNamespaceTables, _beanLocatorUtil, _propsUtil, _pluginName,
+			_targetEntityName, _testDir, false, _buildNumber,
+			_buildNumberIncrement);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -3482,11 +3490,26 @@ public class ServiceBuilder {
 			return;
 		}
 
-		File sqlFile = new File(_sqlDir + "/" + _sqlFileName);
+		File sqlFile = new File(_sqlDir, _sqlFileName);
 
 		if (!sqlFile.exists()) {
-			FileUtil.write(sqlFile, StringPool.BLANK);
+			sqlFile.createNewFile();
 		}
+
+		File sqlVersionedTablesFile = new File(
+			_sqlDir, _sqlVersionedTablesFileName);
+
+		List<String> sqlVersionedTables = null;
+
+		if (!sqlVersionedTablesFile.exists()) {
+			sqlVersionedTablesFile.createNewFile();
+			sqlVersionedTables = new ArrayList<String>();
+		}
+		else {
+			sqlVersionedTables = ListUtil.fromFile(sqlVersionedTablesFile);
+		}
+
+		int sqlVersionedTablesCount = sqlVersionedTables.size();
 
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
@@ -3507,6 +3530,23 @@ public class ServiceBuilder {
 				_updateSQLFile(
 					"update-6.2.0-7.0.0.sql", createTableSQL, entity);
 			}
+
+			if (entity.isVersioned() &&
+				!sqlVersionedTables.contains(entity.getTable())) {
+
+				sqlVersionedTables.add(entity.getTable());
+			}
+		}
+
+		if (sqlVersionedTables.size() > sqlVersionedTablesCount) {
+			Collections.sort(sqlVersionedTables);
+
+			String newContent = StringUtil.merge(
+				sqlVersionedTables.toArray(
+					new String[sqlVersionedTables.size()]),
+				StringPool.NEW_LINE);
+
+			FileUtil.write(sqlVersionedTablesFile, newContent);
 		}
 
 		for (Map.Entry<String, EntityMapping> entry :
@@ -3985,7 +4025,7 @@ public class ServiceBuilder {
 		List<EntityColumn> pkList = entity.getPKList();
 		List<EntityColumn> regularColList = entity.getRegularColList();
 
-		if (regularColList.size() == 0) {
+		if (regularColList.isEmpty()) {
 			return null;
 		}
 
@@ -4075,6 +4115,10 @@ public class ServiceBuilder {
 				colIdType.equals("identity")) {
 
 				sb.append(" IDENTITY");
+			}
+
+			if (colName.equals("ormVersion")) {
+				sb.append(" default 0");
 			}
 
 			if (((i + 1) != regularColList.size()) ||
@@ -4363,14 +4407,16 @@ public class ServiceBuilder {
 		String txManager = entityElement.attributeValue("tx-manager");
 		boolean cacheEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("cache-enabled"), true);
-		boolean dynamicUpdateEnabled = GetterUtil.getBoolean(
-			entityElement.attributeValue("dynamic-update-enabled"));
 		boolean jsonEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("json-enabled"), remoteService);
 		boolean trashEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("trash-enabled"));
 		boolean deprecated = GetterUtil.getBoolean(
 			entityElement.attributeValue("deprecated"));
+		boolean versioned = GetterUtil.getBoolean(
+			entityElement.attributeValue("versioned"), _versioned);
+		boolean dynamicUpdateEnabled = GetterUtil.getBoolean(
+			entityElement.attributeValue("dynamic-update-enabled"), versioned);
 
 		List<EntityColumn> pkList = new ArrayList<EntityColumn>();
 		List<EntityColumn> regularColList = new ArrayList<EntityColumn>();
@@ -4380,7 +4426,14 @@ public class ServiceBuilder {
 
 		List<Element> columnElements = entityElement.elements("column");
 
-		boolean permissionedModel = false;
+		if (versioned && !columnElements.isEmpty()) {
+			Element columnElement = SAXReaderUtil.createElement("column");
+
+			columnElement.addAttribute("name", "ormVersion");
+			columnElement.addAttribute("type", "long");
+
+			columnElements.add(columnElement);
+		}
 
 		if (uuid) {
 			Element columnElement = SAXReaderUtil.createElement("column");
@@ -4390,6 +4443,8 @@ public class ServiceBuilder {
 
 			columnElements.add(0, columnElement);
 		}
+
+		boolean permissionedModel = false;
 
 		for (Element columnElement : columnElements) {
 			String columnName = columnElement.attributeValue("name");
@@ -4749,9 +4804,9 @@ public class ServiceBuilder {
 				humanName, table, alias, uuid, uuidAccessor, localService,
 				remoteService, persistenceClass, finderClass, dataSource,
 				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
-				jsonEnabled, trashEnabled, deprecated, pkList, regularColList,
-				blobList, collectionList, columnList, order, finderList,
-				referenceList, txRequiredList));
+				jsonEnabled, trashEnabled, deprecated, versioned, pkList,
+				regularColList, blobList, collectionList, columnList, order,
+				finderList, referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)
@@ -4845,6 +4900,7 @@ public class ServiceBuilder {
 	private String _sqlIndexesFileName;
 	private String _sqlIndexesPropertiesFileName;
 	private String _sqlSequencesFileName;
+	private String _sqlVersionedTablesFileName;
 	private String _targetEntityName;
 	private String _testDir;
 	private String _testOutputPath;
@@ -4896,5 +4952,6 @@ public class ServiceBuilder {
 	private String _tplServiceUtil = _TPL_ROOT + "service_util.ftl";
 	private String _tplServiceWrapper = _TPL_ROOT + "service_wrapper.ftl";
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
+	private boolean _versioned;
 
 }

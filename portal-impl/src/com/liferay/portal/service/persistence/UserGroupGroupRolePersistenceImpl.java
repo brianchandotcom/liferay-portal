@@ -2971,6 +2971,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		userGroupGroupRoleImpl.setUserGroupId(userGroupGroupRole.getUserGroupId());
 		userGroupGroupRoleImpl.setGroupId(userGroupGroupRole.getGroupId());
 		userGroupGroupRoleImpl.setRoleId(userGroupGroupRole.getRoleId());
+		userGroupGroupRoleImpl.setOrmVersion(userGroupGroupRole.getOrmVersion());
 
 		return userGroupGroupRoleImpl;
 	}

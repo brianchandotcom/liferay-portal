@@ -1,0 +1,121 @@
+<definition component-name="portal-tools">
+	<command name="GetFirstNumber" priority="5">
+		<echo message="Test getFirstNumber()" />
+
+		<var name="string" value="abc1de" />
+
+		<var name="stringFirstNumber" value="${string?getFirstNumber()}" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="1" />
+			<var name="actual" value="${stringFirstNumber}" />
+		</execute>
+
+		<echo message="Test getFirstNumber() used inline" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="1" />
+			<var name="actual" value="${string?getFirstNumber()}" />
+		</execute>
+	</command>
+
+	<command name="Increment" priority="5">
+		<echo message="Test increment()" />
+
+		<var name="number" value="1" />
+
+		<var name="numberIncremented" value="${number?increment()}" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="2" />
+			<var name="actual" value="${numberIncremented}" />
+		</execute>
+
+		<echo message="Test increment() used inline" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="2" />
+			<var name="actual" value="${number?increment()}" />
+		</execute>
+	</command>
+
+	<command name="Length" priority="5">
+		<echo message="Test length()" />
+
+		<var name="string" value="abcde" />
+
+		<var name="stringLength" value="${string?length()}" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="5" />
+			<var name="actual" value="${stringLength}" />
+		</execute>
+
+		<echo message="Test length() used inline" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="5" />
+			<var name="actual" value="${string?length()}" />
+		</execute>
+	</command>
+
+	<command name="Lowercase" priority="5">
+		<echo message="Test lowercase()" />
+
+		<var name="string" value="abCDe" />
+
+		<var name="stringLowercased" value="${string?lowercase()}" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="abcde" />
+			<var name="actual" value="${stringLowercased}" />
+		</execute>
+
+		<echo message="Test lowercase() used inline" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="abcde" />
+			<var name="actual" value="${string?lowercase()}" />
+		</execute>
+	</command>
+
+	<command name="Replace" priority="5">
+		<echo message="Test replace()" />
+
+		<var name="string" value="abcde" />
+
+		<var name="stringReplaced" value="${string?replace('abc','123')}" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="123de" />
+			<var name="actual" value="${stringReplaced}" />
+		</execute>
+
+		<echo message="Test replace() used inline" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="123de" />
+			<var name="actual" value="${string?replace('abc','123')}" />
+		</execute>
+	</command>
+
+	<command name="Uppercase" priority="5">
+		<echo message="Test uppercase()" />
+
+		<var name="string" value="abCDe" />
+
+		<var name="stringUppercased" value="${string?uppercase()}" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="ABCDE" />
+			<var name="actual" value="${stringUppercased}" />
+		</execute>
+
+		<echo message="Test uppercase() used inline" />
+
+		<execute macro="TestUtils#assertEquals">
+			<var name="expected" value="ABCDE" />
+			<var name="actual" value="${string?uppercase()}" />
+		</execute>
+	</command>
+</definition>

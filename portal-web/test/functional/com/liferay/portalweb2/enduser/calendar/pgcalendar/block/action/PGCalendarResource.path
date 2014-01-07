@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>PGCalendarResource</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarResource</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGCalendarResource</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_RESOURCE_BUTTON</td>
+	<td>//button[@type='button' and contains (.,'Add Resource')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@id,'calendar_resource_searchkeywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_CALENDAR</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Calendar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_RESOURCES</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Resources')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCE_TABLE-->
+<tr>
+	<td>RESOURCE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_ACTIVE</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_ACTIONS_GENERIC</td>
+	<td>//tr//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCE_MENULIST-->
+<tr>
+	<td>RESOURCE_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_MENULIST_DELETE</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_MENULIST_VIEW_CALENDARS</td>
+	<td>//a[@role='menuitem' and contains(.,'View Calendars')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

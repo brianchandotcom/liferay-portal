@@ -21,6 +21,8 @@ AUI.add(
 
 		var STR_PREV_EXPANDED = '_LFR_prevExpanded';
 
+		var STR_MAX_ENTRIES = 'maxEntries';
+
 		var STR_START = 'start';
 
 		var TPL_CHECKED = ' checked="checked" ';
@@ -241,13 +243,6 @@ AUI.add(
 									checked = true;
 								}
 
-								var paginatorConfig = {
-									limit: 10,
-									moreResultsLabel: instance.get(STR_MORE_RESULTS_LABEL),
-									offsetParam: STR_START,
-									total: item.childrenCount
-								};
-
 								var newTreeNode = {
 									after: {
 										checkedChange: A.bind('_onCheckedChange', instance)
@@ -256,7 +251,7 @@ AUI.add(
 									id: treeId,
 									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
 									leaf: !item.hasChildren,
-									paginator: paginatorConfig,
+									paginator: instance._getPaginatorConfig(),
 									type: type
 								};
 
@@ -335,6 +330,28 @@ AUI.add(
 								callback
 							);
 						}
+					},
+
+					_getPaginatorConfig: function() {
+						var instance = this;
+
+						var paginatorConfig = {
+							offsetParam: STR_START
+						};
+
+						var maxEntries = instance.get(STR_MAX_ENTRIES);
+
+						if (maxEntries > 0) {
+							paginatorConfig.limit = maxEntries;
+							paginatorConfig.moreResultsLabel = instance.get(STR_MORE_RESULTS_LABEL);
+							paginatorConfig.total = item.categoriesCount;
+						}
+						else {
+							paginatorConfig.end = -1;
+							paginatorConfig.start = -1;
+						}
+
+						return paginatorConfig;
 					},
 
 					_getTreeNodeAssetId: function(treeNode) {
@@ -638,28 +655,12 @@ AUI.add(
 
 						var treeId = 'vocabulary' + vocabularyId;
 
-						var paginatorConfig = {
-							offsetParam: STR_START
-						};
-
-						var maxEntries = instance.get('maxEntries');
-
-						if (maxEntries > 0) {
-							paginatorConfig.limit = maxEntries;
-							paginatorConfig.moreResultsLabel = instance.get(STR_MORE_RESULTS_LABEL);
-							paginatorConfig.total = item.categoriesCount;
-						}
-						else {
-							paginatorConfig.end = -1;
-							paginatorConfig.start = -1;
-						}
-
 						var vocabularyRootNode = {
 							alwaysShowHitArea: true,
 							id: treeId,
 							label: vocabularyTitle,
 							leaf: false,
-							paginator: paginatorConfig,
+							paginator: instance._getPaginatorConfig(),
 							type: 'io'
 						};
 

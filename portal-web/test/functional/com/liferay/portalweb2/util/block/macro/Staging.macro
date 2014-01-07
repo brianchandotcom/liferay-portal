@@ -185,6 +185,20 @@
 		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
 	</command>
 
+	<command name="submitForPublicationPageRevision">
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
+				<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			</then>
+		</if>
+
+		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Draft" />
+		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Pending (Review)" />
+	</command>
+
 	<command name="viewPageVariationPG">
 		<var name="key_pageVariationName" value="${pageVariationName}" />
 
@@ -199,5 +213,17 @@
 
 	<command name="viewStagingLocalLivePG">
 		<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_VIEW" />
+	</command>
+
+	<command name="viewStagingWorkflowStatusPG">
+		<if>
+			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			<then>
+				<execute action="PGStaging#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
+				<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+			</then>
+		</if>
+
+		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${stagingWorkflowStatus}" />
 	</command>
 </definition>

@@ -1,20 +1,20 @@
 <definition>
 	<command name="addPG">
 		<execute macro="CalendarEvent#changeViewPG">
-				<var name="viewType" value="Week" />
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<if>
 			<equals arg1="${calendarType}" arg2="My Calendars" />
 			<then>
-					<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_MENULIST_ARROW" />
-					<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_MENULIST_ARROW" />
+				<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
-					<execute action="PGCalendarAddcalendar#type" locator-key1="NAME_FIELD" value1="${calendarName}" />
-					<execute action="PGCalendarAddcalendar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-					<execute action="PGCalendarAddcalendar#click" locator-key1="SAVE_BUTTON" />
+				<execute action="PGCalendarAddcalendar#type" locator-key1="NAME_FIELD" value1="${calendarName}" />
+				<execute action="PGCalendarAddcalendar#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="PGCalendarAddcalendar#click" locator-key1="SAVE_BUTTON" />
 
-					<execute action="PGCalendarAddcalendar#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGCalendarAddcalendar#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -45,7 +45,7 @@
 
 	<command name="changeColorPG">
 		<execute macro="CalendarEvent#changeViewPG">
-				<var name="viewType" value="Week" />
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<if>
@@ -65,7 +65,7 @@
 
 	<command name="deletePG">
 		<execute macro="CalendarEvent#changeViewPG">
-				<var name="viewType" value="Week" />
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<if>
@@ -98,16 +98,16 @@
 
 	<command name="enableCommentsPG">
 		<execute macro="CalendarEvent#changeViewPG">
-				<var name="viewType" value="Week" />
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<if>
 			<equals arg1="${calendarType}" arg2="My Calendars" />
 			<then>
-					<var name="key_user" value="${user}" />
+				<var name="key_user" value="${user}" />
 
-					<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
-					<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS" value1="Calendar Settings" />
+				<execute action="PGCalendar#click" locator-key1="MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
+				<execute action="PGCalendar#assertClick" locator-key1="MY_CALENDARS_CALENDAR_MENULIST_CALENDAR_SETTINGS" value1="Calendar Settings" />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -136,7 +136,7 @@
 
 	<command name="tearDownColorPG">
 		<execute macro="CalendarEvent#changeViewPG">
-				<var name="viewType" value="Week" />
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<if>
@@ -150,7 +150,7 @@
 
 	<command name="tearDownPG">
 		<execute macro="CalendarEvent#changeViewPG">
-				<var name="viewType" value="Week" />
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<while>

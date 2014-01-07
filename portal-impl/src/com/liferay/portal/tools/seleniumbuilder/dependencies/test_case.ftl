@@ -196,6 +196,12 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 	private static String testCaseName;
 
+	static {
+		if(java.awt.GraphicsEnvironment.isHeadless() == true) {
+			System.setProperty("java.awt.headless", "false");
+		}
+	}
+
 	private int _whileCount;
 
 }

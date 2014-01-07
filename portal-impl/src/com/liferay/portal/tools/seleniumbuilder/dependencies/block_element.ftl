@@ -59,7 +59,7 @@
 
 			<#include "action_log_element.ftl">
 
-			<#if !(action?contains("#confirm")) && !(action?contains("#is"))>
+			<#if !(action?contains("#is"))>
 				<#if testCaseName??>
 					selenium
 				<#else>

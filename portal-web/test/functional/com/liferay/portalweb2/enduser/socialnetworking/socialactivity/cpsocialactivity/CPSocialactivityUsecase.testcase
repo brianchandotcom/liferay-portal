@@ -4,6 +4,8 @@
 	</set-up>
 
 	<tear-down>
+		<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns.-->
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="User#tearDownCP" />
@@ -11,8 +13,6 @@
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
-
-		<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns. -->
 	</tear-down>
 
 	<command name="BlogsDemo" priority="5">

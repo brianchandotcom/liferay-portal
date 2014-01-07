@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -2307,9 +2308,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 		sb.append("staged-model");
 		sb.append("[@");
 		sb.append(attribute);
-		sb.append("='");
-		sb.append(value);
-		sb.append("']");
+		sb.append(StringPool.EQUAL);
+		sb.append(HtmlUtil.escapeXPathAttribute(value));
+		sb.append(StringPool.CLOSE_BRACKET);
 
 		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
 
@@ -2406,15 +2407,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 				StringBuilder sb = new StringBuilder(5);
 
-				sb.append("staged-model[@uuid='");
-				sb.append(uuid);
+				sb.append("staged-model[@uuid=");
+				sb.append(HtmlUtil.escapeXPathAttribute(uuid));
 
 				if (groupId != null) {
-					sb.append("' and @group-id='");
-					sb.append(groupId);
+					sb.append(" and @group-id=");
+					sb.append(HtmlUtil.escapeXPathAttribute(groupId));
 				}
 
-				sb.append("']");
+				sb.append(StringPool.CLOSE_BRACKET);
 
 				XPath xPath = SAXReaderUtil.createXPath(sb.toString());
 
@@ -2449,32 +2450,34 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return Collections.emptyList();
 		}
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("reference[@class-name='");
-		sb.append(clazz.getName());
+		sb.append("reference[@class-name=");
+		sb.append(HtmlUtil.escapeXPathAttribute(clazz.getName()));
 
 		if (groupId > 0) {
-			sb.append("' and @group-id='");
+			sb.append(" and @group-id='");
 			sb.append(groupId);
+			sb.append(StringPool.APOSTROPHE);
 		}
 
 		if (Validator.isNotNull(uuid)) {
-			sb.append("' and @uuid='");
-			sb.append(uuid);
+			sb.append(" and @uuid=");
+			sb.append(HtmlUtil.escapeXPathAttribute(uuid));
 		}
 
 		if (classPK > 0) {
-			sb.append("' and @class-pk='");
+			sb.append(" and @class-pk='");
 			sb.append(classPK);
+			sb.append(StringPool.APOSTROPHE);
 		}
 
 		if (referenceType != null) {
-			sb.append("' and @type='");
-			sb.append(referenceType);
+			sb.append(" and @type=");
+			sb.append(HtmlUtil.escapeXPathAttribute(referenceType));
 		}
 
-		sb.append("']");
+		sb.append(StringPool.CLOSE_BRACKET);
 
 		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
 

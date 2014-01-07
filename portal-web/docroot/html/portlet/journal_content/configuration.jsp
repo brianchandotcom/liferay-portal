@@ -301,7 +301,7 @@ catch (NoSuchArticleException nsae) {
 
 			var displayArticleId = A.one('.displaying-article-id');
 
-			displayArticleId.set('innerHTML', articleTitle + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
+			displayArticleId.set('innerHTML', Liferay.Util.escapeHTML(articleTitle) + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
 			displayArticleId.addClass('modified');
 		},
 		['aui-base']

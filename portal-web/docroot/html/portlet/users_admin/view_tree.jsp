@@ -271,7 +271,11 @@ if (organization != null) {
 							<%
 							SearchContainer searchContainer = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
 
-							searchContainer.setRowChecker(new RowChecker(renderResponse));
+							RowChecker rowChecker = new RowChecker(renderResponse);
+
+							rowChecker.setRowIds("rowIdsOrganizationCheckbox");
+
+							searchContainer.setRowChecker(rowChecker);
 							%>
 
 							<liferay-ui:search-container

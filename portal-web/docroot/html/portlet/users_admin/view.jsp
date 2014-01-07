@@ -217,7 +217,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		function() {
 			<portlet:namespace />doDeleteOrganization(
 				'<%= Organization.class.getName() %>',
-				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
+				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsOrganizationCheckbox')
 			);
 		},
 		['liferay-util-list-fields']

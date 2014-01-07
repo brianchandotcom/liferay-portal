@@ -42,7 +42,7 @@ catch (NoSuchFolderException nsfe) {
 	<aui:input name="preferences--mimeTypes--" type="hidden" />
 	<aui:input name="preferences--rootFolderId--" type="hidden" value="<%= rootFolderId %>" />
 
-	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
+	<liferay-ui:error key="rootFolderIdInvalid" message="please-enter-a-valid-root-folder" />
 
 	<liferay-ui:panel-container extended="<%= true %>" id="imageGalleryDisplaySettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryDisplayDisplay" persistState="<%= true %>" title="display-settings">

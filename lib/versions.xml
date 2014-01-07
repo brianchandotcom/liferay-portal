@@ -2740,18 +2740,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/memcached.jar</file-name>
-		<version>2.5</version>
-		<project-name>Memcached</project-name>
-		<project-url>http://code.google.com/p/spymemcached</project-url>
-		<licenses>
-			<license>
-				<license-name>MIT License</license-name>
-				<license-url>http://opensource.org/licenses/MIT</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/metadata-extractor.jar</file-name>
 		<version>2.6.2</version>
 		<project-name>Metadata Extractor</project-name>

@@ -242,7 +242,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 					<%
 						}
 					}
-					 %>.
+					%>
 
 				</ul>
 			</c:if>

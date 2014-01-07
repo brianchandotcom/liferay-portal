@@ -943,6 +943,39 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
+	public String removePathParameters(String uri) {
+		if (Validator.isNull(uri)) {
+			return uri;
+		}
+
+		int pos = uri.indexOf(StringPool.SEMICOLON);
+
+		if (pos == -1) {
+			return uri;
+		}
+
+		String[] pathSegments = StringUtil.split(
+			uri.substring(1), StringPool.SLASH);
+
+		StringBundler sb = new StringBundler(pathSegments.length * 2);
+
+		for (String pathSegment : pathSegments) {
+			pos = pathSegment.indexOf(StringPool.SEMICOLON);
+
+			if (pos == -1) {
+				sb.append(StringPool.SLASH);
+				sb.append(pathSegment);
+			}
+			else {
+				sb.append(StringPool.SLASH);
+				sb.append(pathSegment.substring(0, pos));
+			}
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public String removeProtocol(String url) {
 		if (Validator.isNull(url)) {
 			return url;

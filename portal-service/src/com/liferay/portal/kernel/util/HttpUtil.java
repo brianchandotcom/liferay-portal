@@ -234,6 +234,10 @@ public class HttpUtil {
 		return getHttp().removeParameter(url, name);
 	}
 
+	public static String removePathParamters(String uri) {
+		return getHttp().removePathParameters(uri);
+	}
+
 	public static String removeProtocol(String url) {
 		return getHttp().removeProtocol(url);
 	}

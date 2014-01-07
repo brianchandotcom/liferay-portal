@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.servlet.ServletVersionDetector;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -246,7 +247,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			uri = uri.substring(_contextPath.length());
 		}
 
-		return uri;
+		return HttpUtil.removePathParamters(uri);
 	}
 
 	protected HttpServletRequest handleNonSerializableRequest(

@@ -143,6 +143,8 @@ public interface Http {
 
 	public String removeParameter(String url, String name);
 
+	public String removePathParameters(String uri);
+
 	public String removeProtocol(String url);
 
 	public String sanitizeHeader(String header);

@@ -15,13 +15,8 @@
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.StringPool;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.util.HttpImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,55 +32,26 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Mika Koivisto
  */
 @RunWith(PowerMockRunner.class)
-public class FilterMappingTest extends PowerMockito {
+public class InvokerFilterTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_dispatchers = new ArrayList<String>();
+		HttpUtil httpUtil = new HttpUtil();
 
-		for (Dispatcher dispatcher : Dispatcher.values()) {
-			_dispatchers.add(dispatcher.name());
-		}
-
-		_filter = mock(Filter.class);
-
-		_filterConfig = mock(FilterConfig.class);
-
-		when(
-			_filterConfig.getInitParameter("url-regex-pattern")
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		when(
-			_filterConfig.getInitParameter("url-regex-ignore-pattern")
-		).thenReturn(
-			StringPool.BLANK
-		);
+		httpUtil.setHttp(new HttpImpl());
 	}
 
 	@Test
-	public void testIsMatchUrlPattern() {
-		List<String> urlPatterns = new ArrayList<String>();
+	public void testGetURIWithJSessionId() {
+		InvokerFilter invokerFilter = new InvokerFilter();
 
-		urlPatterns.add("/c/portal/login");
-
-		FilterMapping filterMapping = new FilterMapping(
-			_filter, _filterConfig, urlPatterns, _dispatchers);
-
-		String uri = "/c/portal/login";
+		String uri = "/c/portal/login;jsessionid=ae01b0f2af.worker1";
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(HttpMethods.GET, uri);
 
 		Assert.assertEquals(
-			true,
-			filterMapping.isMatch(
-				mockHttpServletRequest, Dispatcher.REQUEST, uri));
+			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
 	}
-
-	private List<String> _dispatchers;
-	private Filter _filter;
-	private FilterConfig _filterConfig;
 
 }

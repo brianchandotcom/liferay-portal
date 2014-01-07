@@ -22,6 +22,10 @@
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
 	<command name="AddBlogsEntries" priority="5">
@@ -263,12 +267,11 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsPortletOrganizationSitePublicPage" priority="5">
-		<var name="portletName" value="Blogs" />
+	<command name="AddPortletToOrganizationSitePublicPage" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="Organization Name" />
-		<var name="sitePageName" value="Public Page" />
+		<var name="sitePageName" value="${pageName}" />
 		<var name="sitePageType" value="Public" />
 
 		<execute macro="Page#gotoCP">
@@ -298,12 +301,6 @@
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
@@ -314,9 +311,13 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="Site#tearDownCP" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="Organization#tearDownCP" />
+		<execute macro="BlogsPortlet#viewPG" />
 	</command>
 
 	<command name="DeleteBlogsEntryComment" priority="5">
@@ -831,7 +832,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryDraftNoNewUser" priority="3">
+	<command name="ViewBlogsEntryDraftNoAsUser" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="password" value="test" />

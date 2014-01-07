@@ -22,6 +22,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="Role#tearDownCP" />
+
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
@@ -51,6 +53,464 @@
 
 	<command name="LayoutScope" priority="5">
 		<echo message="override" />
+	</command>
+
+	<command name="StagingLocalLiveWorkflow" priority="5">
+		<property name="web.plugins.includes" value="kaleo-web" />
+
+		<var name="pageName" value="Home" />
+		<var name="siteName" value="Community Site Name" />
+		<var name="webContentTitle" value="Web Content Title" />
+		<var name="webContentContent" value="Web Content Content" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCommunityCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="uncheckPropagation" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Staging Admin" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GENERAL_PERMISSIONS_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Staging Admin" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Staging Admin" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Staging Admin" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_VARIATION_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Staging Admin" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_PAGES_VARIATION_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="Staging Admin" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Content Creator" />
+			<var name="roleType" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FEED_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_STRUCTURE_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_TEMPLATE_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT" />
+			<var name="permissionNavigationValue" value="Web Content" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS_ACTION" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY" />
+			<var name="permissionNavigationValue" value="Web Content Display" />
+			<var name="roleName" value="Content Creator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="contentcreator@liferay.com" />
+			<var name="userFirstName" value="userfncreator" />
+			<var name="userLastName" value="creator" />
+			<var name="userScreenName" value="contentcreator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userScreenName" value="contentcreator" />
+			<var name="userEmailAddress" value="contentcreator@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="userfncreator" />
+			<var name="userLastName" value="creator" />
+			<var name="userScreenName" value="contentcreator" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="Content Creator" />
+			<var name="userFirstName" value="userfncreator" />
+			<var name="userLastName" value="creator" />
+			<var name="userScreenName" value="contentcreator" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="Staging Admin" />
+			<var name="userFirstName" value="userfncreator" />
+			<var name="userLastName" value="creator" />
+			<var name="userScreenName" value="contentcreator" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="contentapprover@liferay.com" />
+			<var name="userFirstName" value="userfnapprover" />
+			<var name="userLastName" value="approver" />
+			<var name="userScreenName" value="contentapprover" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="contentapprover@liferay.com" />
+			<var name="userScreenName" value="contentapprover" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="userfnapprover" />
+			<var name="userLastName" value="approver" />
+			<var name="userScreenName" value="contentapprover" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#assignRoleCP">
+			<var name="roleName" value="Site Content Reviewer" />
+			<var name="userFirstName" value="userfnapprover" />
+			<var name="userLastName" value="approver" />
+			<var name="userScreenName" value="contentapprover" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="userfncreator creator" />
+			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContent#addWithWorkflowPGViaWCD">
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="userfnapprover approver" />
+			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="BasePortlet#assertTextNotEquals" locator-key1="TITLE" value1="Web Content Display" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="userfncreator creator" />
+			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#submitForPublicationPageRevision" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="userfnapprover approver" />
+			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Home" />
+			<var name="workflowAssetType" value="Page Revision" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="Home" />
+			<var name="workflowAssetType" value="Page Revision" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="userfncreator creator" />
+			<var name="userLoginEmailAddress" value="contentcreator@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#viewStagingWorkflowStatusPG">
+			<var name="stagingWorkflowStatus" value="Ready for Publication" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="userfnapprover approver" />
+			<var name="userLoginEmailAddress" value="contentapprover@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewCompletedTasksPG">
+			<var name="workflowAssetTitle" value="Home" />
+			<var name="workflowAssetType" value="Page Revision" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewCompletedTasksPG">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+		</execute>
 	</command>
 
 	<command name="StagingPublishPortlet" priority="5">

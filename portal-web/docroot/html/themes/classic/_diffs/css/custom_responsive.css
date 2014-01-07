@@ -23,6 +23,10 @@
 			}
 		}
 
+		#navigation.open .navbar-inner {
+			background: #009AE5;
+		}
+
 		.dockbar .navbar-inner .container .nav-collapse .nav-add-controls ul.dropdown-menu {
 			background: transparent;
 			padding: 0;
@@ -53,11 +57,11 @@
 						border-width: 0;
 						font-size: 24px;
 
-						&:hover {
+						&:hover, &.nav-account-controls-btn.open, &.nav-add-controls-btn.open {
 							background-color: #5BBAE8;
 						}
 
-						&.open {
+						&.nav-navigation-btn.active {
 							background-color: #F5AF45;
 						}
 					}
@@ -83,11 +87,6 @@
 
 									&:focus, &:hover {
 										background-color: #5BBAE8;
-									}
-
-									.nav-item-icon {
-										font-size: 22px;
-										margin-top: 0;
 									}
 
 									&.toggle-controls-link {
@@ -116,9 +115,20 @@
 									}
 
 									.dropdown-menu {
-										> li > a {
+										li a {
 											font-size: 16px;
-											line-height: 31px;
+											line-height: 27px;
+											margin: 0;
+
+											.nav-item-icon {
+												font-size: 22px;
+												margin-top: 0;
+												vertical-align: middle;
+											}
+
+											.nav-item-label {
+												vertical-align: middle;
+											}
 										}
 									}
 								}

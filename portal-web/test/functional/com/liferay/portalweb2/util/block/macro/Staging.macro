@@ -152,20 +152,17 @@
 		</if>
 
 		<if>
-			<condition action="PGStagingPublishtolivenow#isElementPresent" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+			<equals arg1="${uncheckApplication}" arg2="true" />
 			<then>
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
+				<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+
+				<var name="key_applicationName" value="${applicationName}" />
+
+				<execute action="PGStagingPublishtolivenow#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
 			</then>
-			<elseif>
-				<equals arg1="${uncheckApplication}" arg2="true" />
-					<then>
-						<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
-
-						<var name="key_applicationName" value="${applicationName}" />
-
-						<execute action="PGStagingPublishtolivenow#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
-					</then>
-			</elseif>
+			<else>
+				<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
+			</else>
 		</if>
 
 		<if>
@@ -178,7 +175,7 @@
 				<execute action="PGStagingPublishtolivenow#uncheck" locator-key1="CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 			</then>
 			<else>
-			<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
+				<execute action="PGStagingPublishtolivenow#check" locator-key1="CONTENT_ALL_CONTENT_RADIO" />
 			</else>
 		</if>
 

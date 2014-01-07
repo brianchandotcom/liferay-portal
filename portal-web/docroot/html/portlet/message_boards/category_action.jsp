@@ -25,15 +25,29 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 
 boolean isDefaultParentCategory = false;
 
-boolean hasPermissionsPermission = false;
-
 if (category.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 	isDefaultParentCategory = true;
+}
 
-	hasPermissionsPermission = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
+String modelResource = null;
+String modelResourceDescription = null;
+String resourcePrimKey = null;
+
+boolean showPermissionsURL = false;
+
+if (!isDefaultParentCategory) {
+	modelResource = MBCategory.class.getName();
+	modelResourceDescription = category.getName();
+	resourcePrimKey = String.valueOf(category.getCategoryId());
+
+	showPermissionsURL = MBCategoryPermission.contains(permissionChecker, category, ActionKeys.PERMISSIONS);
 }
 else {
-	hasPermissionsPermission = MBCategoryPermission.contains(permissionChecker, category, ActionKeys.PERMISSIONS);
+	modelResource = "com.liferay.portlet.messageboards";
+	modelResourceDescription = themeDisplay.getScopeGroupName();
+	resourcePrimKey = String.valueOf(scopeGroupId);
+
+	showPermissionsURL = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
 %>
 
@@ -63,45 +77,24 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= hasPermissionsPermission %>">
-		<c:choose>
-			<c:when test="<%= isDefaultParentCategory %>">
-				<liferay-security:permissionsURL
-					modelResource="com.liferay.portlet.messageboards"
-					modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
-					resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
+	<c:if test="<%= showPermissionsURL %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= modelResource %>"
+			modelResourceDescription="<%= modelResourceDescription %>"
+			resourcePrimKey="<%= resourcePrimKey %>"
+			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
 
-				<liferay-ui:icon
-					image="permissions"
-					method="get"
-					url="<%= permissionsURL %>"
-					useDialog="<%= true %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<liferay-security:permissionsURL
-					modelResource="<%= MBCategory.class.getName() %>"
-					modelResourceDescription="<%= category.getName() %>"
-					resourcePrimKey="<%= String.valueOf(category.getCategoryId()) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<liferay-ui:icon
-					image="permissions"
-					method="get"
-					url="<%= permissionsURL %>"
-					useDialog="<%= true %>"
-				/>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:icon
+			image="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
-
 		<c:if test="<%= enableRSS %>">
 
 			<%
@@ -122,17 +115,19 @@ else {
 		</c:if>
 
 		<%
+		long categorySubscriptionClassPK = 0;
+
 		boolean hasSubscriptionPermission = false;
 
-		long categorySubscriptionClassPK = category.getCategoryId();
-
 		if (!isDefaultParentCategory) {
+			categorySubscriptionClassPK = category.getCategoryId();
+
 			hasSubscriptionPermission = MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE);
 		}
 		else {
-			hasSubscriptionPermission = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
-
 			categorySubscriptionClassPK = scopeGroupId;
+
+			hasSubscriptionPermission = MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
 		}
 		%>
 

@@ -181,6 +181,31 @@
 </tr>
 <!--SITE_ADMIN_PAGES_SITE_PAGES_SITE-->
 <tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_GENERAL_PERMISSIONS_ACTION</td>
+	<td>//input[@name='_128_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_ACTION</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_ACTION</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_PAGE_VARIATION_ACTION</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_RESOURCE_PERMISSIONS_SITE_PAGES_VARIATION_ACTION</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[5]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_ADD_SITE</td>
 	<td>//input[@value='com.liferay.portal.model.GroupADD_COMMUNITY']</td>
 	<td></td>
@@ -212,8 +237,38 @@
 </tr>
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL-->
 <tr>
-	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ALL_CHECKBOX</td>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
 	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FEED_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_STRUCTURE_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_TEMPLATE_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[7]</td>
 	<td></td>
 </tr>
 <tr>
@@ -477,6 +532,10 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY_ADD_CATEGORY_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portlet.asset.model.AssetCategoryADD_CATEGORY']</td>
+<!--SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS_ACTION</td>
+	<td>//input[@name='_128_allRowIds']</td>
 	<td></td>
 </tr>
 </tbody>

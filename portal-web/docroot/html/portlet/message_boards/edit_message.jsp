@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
 long messageId = BeanParamUtil.getLong(message, request, "messageId");
@@ -99,7 +101,9 @@ else {
 }
 %>
 
-<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
+<c:if test="<%= Validator.isNull(referringPortletResource) %>">
+	<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
+</c:if>
 
 <liferay-ui:header
 	backURL="<%= redirect %>"

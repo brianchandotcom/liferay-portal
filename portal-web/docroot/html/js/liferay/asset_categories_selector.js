@@ -251,7 +251,7 @@ AUI.add(
 									id: treeId,
 									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
 									leaf: !item.hasChildren,
-									paginator: instance._getPaginatorConfig(),
+									paginator: instance._getPaginatorConfig(item),
 									type: type
 								};
 
@@ -299,7 +299,7 @@ AUI.add(
 									'$vocabularies = /assetvocabulary/get-vocabularies': {
 										vocabularyIds: vocabularyIds,
 
-										'$categoriesCount = /assetcategory/get-vocabulary-categories-count': {
+										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
 											'@groupId': '$vocabularies.groupId',
 											'@vocabularyId': '$vocabularies.vocabularyId'
 										}
@@ -321,7 +321,7 @@ AUI.add(
 										groupIds: groupIds,
 										className: className,
 
-										'$categoriesCount = /assetcategory/get-vocabulary-categories-count': {
+										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
 											'groupId': '$vocabularies.groupId',
 											'@vocabularyId': '$vocabularies.vocabularyId'
 										}
@@ -332,7 +332,7 @@ AUI.add(
 						}
 					},
 
-					_getPaginatorConfig: function() {
+					_getPaginatorConfig: function(item) {
 						var instance = this;
 
 						var paginatorConfig = {
@@ -344,7 +344,7 @@ AUI.add(
 						if (maxEntries > 0) {
 							paginatorConfig.limit = maxEntries;
 							paginatorConfig.moreResultsLabel = instance.get(STR_MORE_RESULTS_LABEL);
-							paginatorConfig.total = item.categoriesCount;
+							paginatorConfig.total = item.childrenCount;
 						}
 						else {
 							paginatorConfig.end = -1;
@@ -660,7 +660,7 @@ AUI.add(
 							id: treeId,
 							label: vocabularyTitle,
 							leaf: false,
-							paginator: instance._getPaginatorConfig(),
+							paginator: instance._getPaginatorConfig(item),
 							type: 'io'
 						};
 

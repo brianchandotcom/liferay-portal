@@ -1,0 +1,13 @@
+<definition>
+	<command name="click">
+		<default>
+			<execute function="Click#clickImageElement" />
+		</default>
+	</command>
+
+	<command name="type">
+		<default>
+			<execute function="Type#typeImageElement" />
+		</default>
+	</command>
+</definition>

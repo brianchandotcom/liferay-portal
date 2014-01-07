@@ -288,6 +288,10 @@
 		<delete file="portal-web/test-ant-scripts/log" />
 	</target>
 
+	<target name="clean-up-sikuli-libs">
+		<delete dir="lib/development/libs" />
+	</target>
+
 	<target name="copy-log-file">
 		<for param="log.file">
 			<path>
@@ -2075,6 +2079,8 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</exec>
 			</sequential>
 		</parallel>
+
+		<antcall target="clean-up-sikuli-libs" />
 
 		<if>
 			<equals arg1="${test.browser}" arg2="googlechrome" />

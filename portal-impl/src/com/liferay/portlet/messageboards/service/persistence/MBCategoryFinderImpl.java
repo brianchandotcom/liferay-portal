@@ -249,7 +249,7 @@ public class MBCategoryFinderImpl
 
 				category.setGroupId(group.getGroupId());
 				category.setCompanyId(group.getCompanyId());
-				category.setName(group.getName());
+				category.setName(group.getDescriptiveName());
 				category.setDescription(group.getDescription());
 				category.setThreadCount(threadCount);
 				category.setMessageCount(messageCount);

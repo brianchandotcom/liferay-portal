@@ -49,7 +49,7 @@ catch (NoSuchFolderException nsfe) {
 	<aui:input name="preferences--folderColumns--" type="hidden" />
 	<aui:input name="preferences--fileEntryColumns--" type="hidden" />
 
-	<liferay-ui:error key="rootFolderId" message="please-enter-a-valid-root-folder" />
+	<liferay-ui:error key="rootFolderIdInvalid" message="please-enter-a-valid-root-folder" />
 
 	<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDisplay" persistState="<%= true %>" title="display-settings">

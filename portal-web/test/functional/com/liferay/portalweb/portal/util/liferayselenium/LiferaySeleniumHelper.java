@@ -116,7 +116,7 @@ public class LiferaySeleniumHelper {
 
 		String log4jXMLFile =
 			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate +
-				".log.xml";
+				".xml";
 
 		if (!FileUtil.exists(log4jXMLFile)) {
 			return;

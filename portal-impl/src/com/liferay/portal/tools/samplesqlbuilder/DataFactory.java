@@ -245,6 +245,13 @@ public class DataFactory {
 		_dlDDMStructureContent = StringUtil.read(
 			getResourceInputStream("ddm_structure_basic_document.xml"));
 
+		String defaultAssetPublisherPreference = StringUtil.read(
+			getResourceInputStream("default_asset_publisher_preference.xml"));
+
+		_defaultAssetPublisherPortletPreference =
+			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
+				defaultAssetPublisherPreference);
+
 		initAssetCategoryModels();
 		initAssetTagModels();
 		initCompanyModel();
@@ -1873,7 +1880,8 @@ public class DataFactory {
 				assetTagModels, (int)counter.get());
 		}
 
-		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
+		PortletPreferences jxPortletPreferences =
+			(PortletPreferences)_defaultAssetPublisherPortletPreference.clone();
 
 		jxPortletPreferences.setValue("queryAndOperator0", "false");
 		jxPortletPreferences.setValue("queryContains0", "true");
@@ -2934,6 +2942,7 @@ public class DataFactory {
 	private long _companyId;
 	private CompanyModel _companyModel;
 	private SimpleCounter _counter;
+	private PortletPreferencesImpl _defaultAssetPublisherPortletPreference;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
 	private DDMStructureModel _defaultDLDDMStructureModel;
 	private DLFileEntryTypeModel _defaultDLFileEntryTypeModel;

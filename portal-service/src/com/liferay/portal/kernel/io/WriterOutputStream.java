@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.io;
 
 import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
+import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
 /**
@@ -33,39 +35,29 @@ public class WriterOutputStream extends OutputStream {
 
 	public WriterOutputStream(Writer writer) {
 		this(
-			writer, StringPool.UTF8, _DEFAULT_INTPUT_BUFFER_SIZE,
+			writer, StringPool.DEFAULT_CHARSET_NAME,
 			_DEFAULT_OUTPUT_BUFFER_SIZE, false);
 	}
 
 	public WriterOutputStream(Writer writer, String charsetName) {
-		this(
-			writer, charsetName, _DEFAULT_INTPUT_BUFFER_SIZE,
-			_DEFAULT_OUTPUT_BUFFER_SIZE, false);
+		this(writer, charsetName, _DEFAULT_OUTPUT_BUFFER_SIZE, false);
 	}
 
 	public WriterOutputStream(
 		Writer writer, String charsetName, boolean autoFlush) {
 
-		this(
-			writer, charsetName, _DEFAULT_INTPUT_BUFFER_SIZE,
-			_DEFAULT_OUTPUT_BUFFER_SIZE, autoFlush);
+		this(writer, charsetName, _DEFAULT_OUTPUT_BUFFER_SIZE, autoFlush);
 	}
 
 	public WriterOutputStream(
-		Writer writer, String charsetName, int inputBufferSize,
-		int outputBufferSize) {
+		Writer writer, String charsetName, int outputBufferSize) {
 
-		this(writer, charsetName, inputBufferSize, outputBufferSize, false);
+		this(writer, charsetName, outputBufferSize, false);
 	}
 
 	public WriterOutputStream(
-		Writer writer, String charsetName, int inputBufferSize,
-		int outputBufferSize, boolean autoFlush) {
-
-		if (inputBufferSize < 4) {
-			throw new IllegalArgumentException(
-				"Input buffer size " + inputBufferSize + " is less than 4");
-		}
+		Writer writer, String charsetName, int outputBufferSize,
+		boolean autoFlush) {
 
 		if (outputBufferSize <= 0) {
 			throw new IllegalArgumentException(
@@ -80,24 +72,36 @@ public class WriterOutputStream extends OutputStream {
 		_writer = writer;
 		_charsetName = charsetName;
 		_charsetDecoder = CharsetDecoderUtil.getCharsetDecoder(charsetName);
-		_inputBuffer = ByteBuffer.allocate(inputBufferSize);
+
+		CharsetEncoder charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
+			charsetName);
+
+		_inputBuffer = ByteBuffer.allocate(
+			(int)Math.ceil(charsetEncoder.maxBytesPerChar()));
+		_inputBuffer.limit(0);
+
 		_outputBuffer = CharBuffer.allocate(outputBufferSize);
 		_autoFlush = autoFlush;
 	}
 
 	@Override
 	public void close() throws IOException {
-		_doDecode(true);
-		_doFlush();
+		_doDecode(_inputBuffer, true);
+
+		flush();
 
 		_writer.close();
 	}
 
 	@Override
 	public void flush() throws IOException {
-		_doFlush();
+		if (_outputBuffer.position() > 0) {
+			_writer.write(_outputBuffer.array(), 0, _outputBuffer.position());
 
-		_writer.flush();
+			_writer.flush();
+
+			_outputBuffer.rewind();
+		}
 	}
 
 	public String getEncoding() {
@@ -111,59 +115,64 @@ public class WriterOutputStream extends OutputStream {
 
 	@Override
 	public void write(byte[] bytes, int offset, int length) throws IOException {
-		while (length > 0) {
-			int blockSize = Math.min(length, _inputBuffer.remaining());
+		while (_inputBuffer.hasRemaining()) {
+			write(bytes[offset++]);
 
-			_inputBuffer.put(bytes, offset, blockSize);
-
-			_doDecode(false);
-
-			length -= blockSize;
-			offset += blockSize;
+			length--;
 		}
 
-		if (_autoFlush) {
-			_doFlush();
+		ByteBuffer inputBuffer = ByteBuffer.wrap(bytes, offset, length);
+
+		_doDecode(inputBuffer, false);
+
+		if (inputBuffer.hasRemaining()) {
+			_inputBuffer.limit(inputBuffer.remaining());
+			_inputBuffer.put(inputBuffer);
+
+			_inputBuffer.flip();
 		}
 	}
 
 	@Override
 	public void write(int b) throws IOException {
-		write(new byte[] {(byte)b}, 0, 1);
+		int limit = _inputBuffer.limit();
+
+		_inputBuffer.limit(limit + 1);
+
+		_inputBuffer.put(limit, (byte)b);
+
+		_doDecode(_inputBuffer, false);
+
+		if (!_inputBuffer.hasRemaining()) {
+			_inputBuffer.position(0);
+			_inputBuffer.limit(0);
+		}
 	}
 
-	private void _doDecode(boolean endOfInput) throws IOException {
-		_inputBuffer.flip();
+	private void _doDecode(ByteBuffer inputBuffer, boolean endOfInput)
+		throws IOException {
 
 		while (true) {
 			CoderResult coderResult = _charsetDecoder.decode(
-				_inputBuffer, _outputBuffer, endOfInput);
+				inputBuffer, _outputBuffer, endOfInput);
 
 			if (coderResult.isOverflow()) {
-				_doFlush();
+				flush();
 			}
 			else if (coderResult.isUnderflow()) {
+				if (_autoFlush) {
+					flush();
+				}
+
 				break;
 			}
 			else {
 				throw new IOException("Unexcepted coder result " + coderResult);
 			}
 		}
-
-		_inputBuffer.compact();
 	}
 
-	private void _doFlush() throws IOException {
-		if (_outputBuffer.position() > 0) {
-			_writer.write(_outputBuffer.array(), 0, _outputBuffer.position());
-
-			_outputBuffer.rewind();
-		}
-	}
-
-	private static final int _DEFAULT_INTPUT_BUFFER_SIZE = 128;
-
-	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 1024;
+	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 8192;
 
 	private boolean _autoFlush;
 	private CharsetDecoder _charsetDecoder;

@@ -24,6 +24,7 @@ import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CoderResult;
 
 /**
  * @author Shuyang Zhou
@@ -31,10 +32,36 @@ import java.nio.charset.CharsetEncoder;
 public class OutputStreamWriter extends Writer {
 
 	public OutputStreamWriter(OutputStream outputStream) {
-		this(outputStream, StringPool.DEFAULT_CHARSET_NAME);
+		this(
+			outputStream, StringPool.DEFAULT_CHARSET_NAME,
+			_DEFAULT_OUTPUT_BUFFER_SIZE, false);
 	}
 
 	public OutputStreamWriter(OutputStream outputStream, String charsetName) {
+		this(outputStream, charsetName, _DEFAULT_OUTPUT_BUFFER_SIZE, false);
+	}
+
+	public OutputStreamWriter(
+		OutputStream outputStream, String charsetName, boolean autoFlush) {
+
+		this(outputStream, charsetName, _DEFAULT_OUTPUT_BUFFER_SIZE, autoFlush);
+	}
+
+	public OutputStreamWriter(
+		OutputStream outputStream, String charsetName, int outputBufferSize) {
+
+		this(outputStream, charsetName, outputBufferSize, false);
+	}
+
+	public OutputStreamWriter(
+		OutputStream outputStream, String charsetName, int outputBufferSize,
+		boolean autoFlush) {
+
+		if (outputBufferSize < 4) {
+			throw new IllegalArgumentException(
+				"Output buffer size " + outputBufferSize + " is less than 4");
+		}
+
 		if (charsetName == null) {
 			charsetName = StringPool.DEFAULT_CHARSET_NAME;
 		}
@@ -42,16 +69,27 @@ public class OutputStreamWriter extends Writer {
 		_outputStream = outputStream;
 		_charsetName = charsetName;
 		_charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(charsetName);
+		_outputBuffer = ByteBuffer.allocate(outputBufferSize);
+		_autoFlush = autoFlush;
 	}
 
 	@Override
 	public void close() throws IOException {
+		flush();
+
 		_outputStream.close();
 	}
 
 	@Override
 	public void flush() throws IOException {
-		_outputStream.flush();
+		if (_outputBuffer.position() > 0) {
+			_outputStream.write(
+				_outputBuffer.array(), 0, _outputBuffer.position());
+
+			_outputStream.flush();
+
+			_outputBuffer.rewind();
+		}
 	}
 
 	public String getEncoding() {
@@ -59,33 +97,65 @@ public class OutputStreamWriter extends Writer {
 	}
 
 	@Override
-	public void write(char[] chars, int offset, int length) throws IOException {
-		ByteBuffer byteBuffer = _charsetEncoder.encode(
-			CharBuffer.wrap(chars, offset, length));
+	public void write(char[] chars) throws IOException {
+		_doWrite(CharBuffer.wrap(chars, 0, chars.length));
+	}
 
-		_outputStream.write(byteBuffer.array(), 0, byteBuffer.limit());
+	@Override
+	public void write(char[] chars, int offset, int length) throws IOException {
+		_doWrite(CharBuffer.wrap(chars, offset, length));
 	}
 
 	@Override
 	public void write(int c) throws IOException {
-		ByteBuffer byteBuffer = _charsetEncoder.encode(
-			CharBuffer.wrap(new char[] {(char)c}));
+		_inputArray[0] = (char)c;
 
-		_outputStream.write(byteBuffer.array(), 0, byteBuffer.limit());
+		_doWrite(_inputBuffer);
+
+		_inputBuffer.clear();
+	}
+
+	@Override
+	public void write(String string) throws IOException {
+		_doWrite(CharBuffer.wrap(string, 0, string.length()));
 	}
 
 	@Override
 	public void write(String string, int offset, int length)
 		throws IOException {
 
-		ByteBuffer byteBuffer = _charsetEncoder.encode(
-			CharBuffer.wrap(string, offset, offset + length));
-
-		_outputStream.write(byteBuffer.array(), 0, byteBuffer.limit());
+		_doWrite(CharBuffer.wrap(string, offset, offset + length));
 	}
 
+	private void _doWrite(CharBuffer inputBuffer) throws IOException {
+		while (true) {
+			CoderResult coderResult = _charsetEncoder.encode(
+				inputBuffer, _outputBuffer, true);
+
+			if (coderResult.isOverflow()) {
+				flush();
+			}
+			else if (coderResult.isUnderflow()) {
+				if (_autoFlush) {
+					flush();
+				}
+
+				break;
+			}
+			else {
+				throw new IOException("Unexcepted coder result " + coderResult);
+			}
+		}
+	}
+
+	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 8192;
+
+	private boolean _autoFlush;
 	private CharsetEncoder _charsetEncoder;
 	private String _charsetName;
+	private char[] _inputArray = new char[1];
+	private CharBuffer _inputBuffer = CharBuffer.wrap(_inputArray);
+	private ByteBuffer _outputBuffer;
 	private OutputStream _outputStream;
 
 }

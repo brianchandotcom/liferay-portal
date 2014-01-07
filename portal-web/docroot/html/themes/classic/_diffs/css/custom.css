@@ -615,7 +615,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(0 0 3px 3px);
 	}
 
-	.portlet-content {
+	.portlet-borderless-container, .portlet-content {
 		.lfr-icon-actions {
 			@extend %portlet-action-bar-custom;
 		}

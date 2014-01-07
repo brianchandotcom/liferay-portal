@@ -20,7 +20,6 @@
 			<liferay-security:permissionsURL
 				modelResource="<%= DLFileEntryConstants.getClassName() %>"
 				modelResourceDescription="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>"
-				redirect="<%= currentURL %>"
 				resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
 				var="permissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
@@ -39,7 +38,6 @@
 			<liferay-security:permissionsURL
 				modelResource="<%= DLFileShortcut.class.getName() %>"
 				modelResourceDescription="<%= fileEntry.getTitle() %>"
-				redirect="<%= currentURL %>"
 				resourcePrimKey="<%= String.valueOf(fileShortcut.getFileShortcutId()) %>"
 				var="shortcutPermissionsURL"
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"

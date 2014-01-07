@@ -102,17 +102,22 @@
 <!--CATEGORY_TABLE-->
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY_TABLE_CATEGORY_NAME</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}')]/a</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td/a/span[@class='category-title']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CATEGORY_DESCRIPTION</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//td[(@class='table-cell first') and contains(.,'${key_categoryName}${key_categoryDescription}')]/a</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td/a/div[@class='category-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_SUBCATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td/a[2]</td>
 	<td></td>
 </tr>
 <tr>

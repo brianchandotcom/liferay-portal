@@ -87,6 +87,7 @@
 	<command name="AddMBCategoryDescription" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="categoryDescription" value="MB Category Description" />
+		<var name="categoryDescriptionEnabled" value="true" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -95,11 +96,13 @@
 		<execute macro="MessageboardsCategory#addPG">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="categoryDescription" value="${categoryDescription}" />
+			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewPG">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="categoryDescription" value="${categoryDescription}" />
+			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
 		</execute>
 	</command>
 
@@ -132,10 +135,6 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -152,6 +151,7 @@
 
 		<execute macro="MessageboardsCategory#viewSubcategoryPG">
 			<var name="categoryName" value="${categoryName}" />
+			<var name="subCategoryDescription" value="${subCategoryDescription}" />
 			<var name="subCategoryName" value="${subCategoryName}" />
 		</execute>
 	</command>
@@ -159,7 +159,6 @@
 	<command name="AddMBCategorySubcategoryNullName" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
-		<var name="subCategoryName" value="MB Subcategory Name" />
 		<var name="subCategoryNullName" value=" " />
 
 		<execute macro="Page#gotoPG">
@@ -167,10 +166,6 @@
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
@@ -188,15 +183,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsCategory#viewNoSubcategoryPG">
+		<execute macro="MessageboardsCategory#viewCategoryDefaultPG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
-			<var name="subCategoryNullName" value="${subCategoryNullName}" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategorySubcategoryThread" priority="5">
 		<var name="categoryName" value="MB Category Name" />
+		<var name="subCategoryEnabled" value="true" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryName" value="MB Subcategory Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
@@ -224,11 +218,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryPG" value="subCategoryPG" />
+			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
 			<var name="subCategoryName" value="${subCategoryName}" />
-			<var name="subCategoryDescription" value="${subCategoryDescription}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
@@ -240,9 +233,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryDescription" value="${subCategoryDescription}" />
+			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
 			<var name="subCategoryName" value="${subCategoryName}" />
 		</execute>
 
@@ -270,7 +263,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
@@ -284,7 +277,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
@@ -313,7 +306,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
@@ -326,7 +319,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
@@ -503,7 +496,6 @@
 	</command>
 
 	<command name="MoveMessageboardCategory1ThreadToCategory2" priority="5">
-		<var name="categoryDescription" value="MB Category Description" />
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
@@ -521,7 +513,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName1}" />
 		</execute>
 
@@ -553,7 +545,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName2}" />
 		</execute>
 
@@ -565,11 +557,10 @@
 	</command>
 
 	<command name="MoveMessageboardCategory1ThreadWithExplanationPostToCategory2" priority="5">
-		<var name="categoryDescription" value="MB Category Description" />
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
-		<var name="mbExplanationBody" value="MB Explanation Post Body" />
-		<var name="mbExplanationSubject" value="MB Explanation Post Subject" />
+		<var name="explanationBody" value="MB Explanation Post Body" />
+		<var name="explanationSubject" value="MB Explanation Post Subject" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -585,8 +576,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
-			<var name="categoryDescription" value="${categoryDescription}" />
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName1}" />
 		</execute>
 
@@ -611,8 +601,8 @@
 			<var name="categoryName" value="${categoryName1}" />
 			<var name="categoryName" value="${categoryName2}" />
 			<var name="explanationPost" value="explanationPost" />
-			<var name="mbExplanationBody" value="${mbExplanationBody}" />
-			<var name="mbExplanationSubject" value="${mbExplanationSubject}" />
+			<var name="explanationBody" value="${explanationBody}" />
+			<var name="explanationSubject" value="${explanationSubject}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -621,17 +611,17 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="MessageboardsThread#gotoPG">
+		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName2}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="postCount" value="2" />
 			<var name="threadBody" value="${threadBody}" />
-			<var name="threadBody2" value="${mbExplanationBody}" />
+			<var name="threadBody2" value="${explanationBody}" />
 			<var name="threadPost2" value="threadPost2" />
 			<var name="threadSubject" value="${threadSubject}" />
-			<var name="threadSubject2" value="${mbExplanationSubject}" />
+			<var name="threadSubject2" value="${explanationSubject}" />
 		</execute>
 	</command>
 </definition>

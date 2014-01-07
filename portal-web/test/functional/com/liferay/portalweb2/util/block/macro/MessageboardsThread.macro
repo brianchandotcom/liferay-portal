@@ -30,7 +30,7 @@
 		</if>
 
 		<if>
-			<equals arg1="markAsQuestion" arg2="true"/>
+			<equals arg1="markAsQuestion" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsPostthread#check" locator-key1="MARK_AS_A_QUESTION_CHECKBOX" />
 			</then>
@@ -135,53 +135,19 @@
 		<execute action="PGMessageboardsThread#assertTextNotEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
-	<command name="gotoPG">
-		<var name="key_categoryDescription" value="${categoryDescription}" />
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_subCategoryDescription" value="${subCategoryDescription}" />
-		<var name="key_subCategoryName" value="${subCategoryName}" />
-
-		<if>
-			<isset var="categoryDescription" />
-			<then>
-				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryName} ${categoryDescription}" />
-			</then>
-			<else>
-				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="markAsQuestion" arg2="true"/>
-			<then>
-				<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="THREAD_TABLE_FLAG" value1="Waiting for an Answer" />
-			</then>
-			<elseif>
-				<isset var="subCategoryDescription" />
-				<then>
-					<execute action="PGMessageboardsCategory#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${subCategoryName}${subCategoryDescription}" />
-				</then>
-			</elseif>
-			<elseif>
-				<isset var="subCategoryName" />
-				<then>
-					<execute action="PGMessageboardsCategory#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
-				</then>
-			</elseif>
-		</if>
-	</command>
-
 	<command name="movePG">
-		<var name="key_categoryDescription" value="${categoryDescription}" />
-		<var name="key_categoryName" value="${categoryName1}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<if>
-			<isset var="categoryDescription" />
+			<equals arg1="categoryDescriptionEnabled" arg2="true" />
 			<then>
-				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryName1} ${categoryDescription}" />
+				<var name="key_categoryDescription" value="${categoryDescription}" />
+
+				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY_DESCRIPTION" value1="${categoryDescription}" />
 			</then>
 			<else>
+				<var name="key_categoryName" value="${categoryName1}" />
+
 				<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName1}" />
 			</else>
 		</if>
@@ -207,6 +173,7 @@
 				<execute action="PGMessageboardsMovethread#type" locator-key1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${mbExplanationBody}" />
 			</then>
 		</if>
+
 		<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
 		<execute action="PGMessageboardsMovethread#assertElementPresent" locator-key1="CATEGORY_FIELD" />
 		<execute action="PGMessageboardsMovethread#assertClick" locator-key1="MOVE_THREAD_BUTTON" value1="Move Thread" />
@@ -351,7 +318,6 @@
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
 		<execute action="CPMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_ACTIONS" />
 	</command>
-
 
 	<command name="viewNoPG">
 		<var name="key_threadSubject" value="${threadSubject}" />

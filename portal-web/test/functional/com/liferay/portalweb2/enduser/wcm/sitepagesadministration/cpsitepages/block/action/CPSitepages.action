@@ -20,10 +20,6 @@
 	</command>
 
 	<command name="click">
-		<case locator-key1="ADD_PAGE_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Add Page" />
-		</case>
-
 		<case locator-key1="NAVIGATION_PRIVATE_PAGES">
 			<execute function="Click#textClickAtAndWait" value1="Private Pages" />
 		</case>
@@ -82,12 +78,6 @@
 
 		<case locator-key1="PAGE_TREE_PAGE_LINK_3">
 			<execute function="IsElementPresent#isVisible" />
-		</case>
-	</command>
-
-	<command name="type">
-		<case locator-key1="ADD_PAGE_NAME_FIELD">
-			<execute function="Type#clickAtSendKeys" />
 		</case>
 	</command>
 </definition>

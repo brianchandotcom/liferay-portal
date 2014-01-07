@@ -105,42 +105,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ADD_PAGE-->
-<tr>
-	<td>ADD_PAGE_NAME_FIELD</td>
-	<td>//input[@id='_156_addLayoutName']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_TEMPLATE_SELECT</td>
-	<td>//select[@id='_156_layoutPrototypeId']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_TYPE_SELECT</td>
-	<td>//select[@id='_156_addLayoutType']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_COPY_PARENT_CHECKBOX</td>
-	<td>//input[@id='_156_inheritFromParentLayoutIdCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_HIDDEN_CHECKBOX</td>
-	<td>//input[@id='_156_addLayoutHiddenCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_BUTTON</td>
-	<td>//div[@id='_156_addLayout']//button[contains(.,'Add Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_TREE-->
 <tr>
 	<td>PAGE_TREE_ROOT_ARROW</td>

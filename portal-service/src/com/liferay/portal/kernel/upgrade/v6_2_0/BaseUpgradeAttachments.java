@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -477,28 +478,36 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			String mimeType = MimeTypesUtil.getExtensionContentType(extension);
 
-			long size = DLStoreUtil.getFileSize(
-				companyId, CompanyConstants.SYSTEM, attachment);
+			try {
+				long size = DLStoreUtil.getFileSize(
+					companyId, CompanyConstants.SYSTEM, attachment);
 
-			long fileEntryId = addDLFileEntry(
-				groupId, companyId, userId, getClassName(), resourcePrimKey,
-				userName, createDate, repositoryId, containerModelFolderId,
-				name, extension, mimeType, title, size);
+				long fileEntryId = addDLFileEntry(
+					groupId, companyId, userId, getClassName(), resourcePrimKey,
+					userName, createDate, repositoryId, containerModelFolderId,
+					name, extension, mimeType, title, size);
 
-			if (fileEntryId < 0) {
-				continue;
+				if (fileEntryId < 0) {
+					continue;
+				}
+
+				addDLFileVersion(
+					increment(), groupId, companyId, userId, userName,
+					createDate, repositoryId, containerModelFolderId,
+					fileEntryId, extension, mimeType, title, size);
+
+				byte[] bytes = DLStoreUtil.getFileAsBytes(
+					companyId, CompanyConstants.SYSTEM, attachment);
+
+				DLStoreUtil.addFile(
+					companyId, containerModelFolderId, name, false, bytes);
 			}
-
-			addDLFileVersion(
-				increment(), groupId, companyId, userId, userName, createDate,
-				repositoryId, containerModelFolderId, fileEntryId, extension,
-				mimeType, title, size);
-
-			byte[] bytes = DLStoreUtil.getFileAsBytes(
-				companyId, CompanyConstants.SYSTEM, attachment);
-
-			DLStoreUtil.addFile(
-				companyId, containerModelFolderId, name, false, bytes);
+			catch (NoSuchFileException nsfe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to find the attachment " + attachment, nsfe);
+				}
+			}
 
 			try {
 				DLStoreUtil.deleteFile(

@@ -846,7 +846,7 @@ public class DLFileEntryLocalServiceImpl
 			if (!dlFileVersion.isDraft()) {
 				workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 					dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
-					DLFileEntry.class.getName(),
+					DLFileEntryConstants.getClassName(),
 					dlFileVersion.getFileVersionId());
 			}
 

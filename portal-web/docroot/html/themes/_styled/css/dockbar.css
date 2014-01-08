@@ -207,8 +207,8 @@ $editLayoutPanelWidth: 460px;
 								}
 							}
 
-							> a {
-								@include respond-to(phone, tablet) {
+							@include respond-to(phone, tablet) {
+								> a {
 									display: inline-block;
 									margin-left: 5px;
 									margin-top: 5px;
@@ -231,9 +231,28 @@ $editLayoutPanelWidth: 460px;
 										}
 									}
 								}
-							}
 
-							@include respond-to(phone, tablet) {
+								&.user-avatar {
+									.user-avatar-link {
+										padding: 15px 13px 12px;
+
+										.nav-item-label {
+											display: inline;
+
+											.user-avatar-image {
+												background-size: auto 26px;
+												height: 26px;
+												margin-top: 0;
+												width: 26px;
+											}
+
+											.user-full-name {
+												display: none;
+											}
+										}
+									}
+								}
+
 								.icon-caret-down {
 									display: none;
 								}
@@ -261,10 +280,6 @@ $editLayoutPanelWidth: 460px;
 								@include respond-to(phone, tablet) {
 									display: inline-block;
 								}
-							}
-
-							.user-avatar-image {
-								display: none;
 							}
 						}
 
@@ -407,9 +422,12 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.user-avatar img {
+		.user-avatar .user-avatar-image {
+			background: #333 no-repeat center;
+			background-size: auto 20px;
+			display: inline-block;
+			height: 20px;
 			margin-top: -2px;
-			text-decoration: none;
 			vertical-align: middle;
 			width: 20px;
 		}

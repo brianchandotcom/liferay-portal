@@ -31,14 +31,11 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 
-import java.io.Serializable;
-
 import java.lang.reflect.Method;
 
 import java.net.URL;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -118,30 +115,6 @@ public class PortalCacheDatagramReceiveHandlerTest {
 			responseDatagram.getDataByteBuffer());
 
 		Assert.assertEquals(_TEST_VALUE, deserializer.readObject());
-	}
-
-	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
-	@Test
-	public void testGetBulk() throws Exception {
-		Serializer serializer = createSerializer(
-			PortalCacheActionType.GET_BULK);
-
-		serializer.writeObject((Serializable)_testKeys);
-
-		PortalCacheDatagramReceiveHandler portalCacheDatagramReceiveHandler =
-			new PortalCacheDatagramReceiveHandler();
-
-		portalCacheDatagramReceiveHandler.doReceive(
-			_mockRegistrationReference,
-			Datagram.createRequestDatagram(
-				_portalCacheType, serializer.toByteBuffer()));
-
-		Datagram responseDatagram = _mockIntraband.getDatagram();
-
-		Deserializer deserializer = new Deserializer(
-			responseDatagram.getDataByteBuffer());
-
-		Assert.assertEquals(_testValues, deserializer.readObject());
 	}
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
@@ -392,15 +365,6 @@ public class PortalCacheDatagramReceiveHandlerTest {
 		@Override
 		public void destroy() {
 			_destroyed = true;
-		}
-
-		@Override
-		public Collection<String> get(Collection<String> keys) {
-			if (_testKeys.equals(keys)) {
-				return _testValues;
-			}
-
-			return null;
 		}
 
 		@Override

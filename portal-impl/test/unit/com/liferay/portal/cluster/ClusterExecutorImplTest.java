@@ -995,9 +995,40 @@ public class ClusterExecutorImplTest extends BaseClusterExecutorImplTestCase {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
+	@AdviseWith(
+		adviceClasses = {
+			EnableClusterLinkAdvice.class, SetPortalPortAdvice.class,
+			SetWebServerProtocolAdvice.class
+		}
+
+	)
 	@Test
 	public void testPortalPortConfigured3() throws Exception {
+		ClusterExecutorImpl clusterExecutorImpl = null;
+
+		try {
+			clusterExecutorImpl = getClusterExecutorImpl(false, false);
+
+			ClusterNode clusterNode = clusterExecutorImpl.getLocalClusterNode();
+
+			Assert.assertEquals(
+				SetPortalPortAdvice.SECURE_PORTAL_PORT, clusterNode.getPort());
+
+			clusterExecutorImpl.portalPortConfigured(80);
+
+			Assert.assertEquals(
+				SetPortalPortAdvice.SECURE_PORTAL_PORT, clusterNode.getPort());
+		}
+		finally {
+			if (clusterExecutorImpl != null) {
+				clusterExecutorImpl.destroy();
+			}
+		}
+	}
+
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
+	@Test
+	public void testPortalPortConfigured4() throws Exception {
 		ClusterExecutorImpl clusterExecutorImpl = null;
 
 		try {

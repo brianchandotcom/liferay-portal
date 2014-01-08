@@ -125,14 +125,40 @@ public abstract class BaseClusterExecutorImplTestCase
 	public static class SetPortalPortAdvice {
 
 		public static final int PORTAL_PORT = 80;
+		public static final int SECURE_PORTAL_PORT = 81;
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
 				"PORTAL_INSTANCE_HTTP_PORT)")
-		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
+		public Object setPortalPort(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			return proceedingJoinPoint.proceed(new Object[] {PORTAL_PORT});
+		}
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues." +
+				"PORTAL_INSTANCE_HTTPS_PORT)")
+		public Object setSecurePortalPort(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(
+				new Object[] {SECURE_PORTAL_PORT});
+		}
+
+	}
+
+	@Aspect
+	public static class SetWebServerProtocolAdvice {
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues.WEB_SERVER_PROTOCOL)")
+		public Object setWebServerProtocol(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(new Object[] {"https"});
 		}
 
 	}
@@ -250,6 +276,8 @@ public abstract class BaseClusterExecutorImplTestCase
 
 			channel.setReceiver(
 				new MockClusterRequestReceiver(clusterExecutorImpl));
+
+			clusterExecutorImpl.bindInetAddress = null;
 		}
 
 		clusterExecutorImpl.initialize();

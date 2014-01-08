@@ -458,6 +458,10 @@ public class AssetUtil {
 		return addPortletURLs;
 	}
 
+	/**
+	 * @deprecated As of 6.1.0
+	 */
+	@Deprecated
 	public static List<AssetEntry> getAssetEntries(Hits hits) {
 		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 

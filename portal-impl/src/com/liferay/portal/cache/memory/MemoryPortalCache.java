@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -48,17 +45,6 @@ public class MemoryPortalCache<K extends Serializable, V>
 		_cacheListeners = null;
 		_map = null;
 		_name = null;
-	}
-
-	@Override
-	public Collection<V> get(Collection<K> keys) {
-		List<V> values = new ArrayList<V>(keys.size());
-
-		for (K key : keys) {
-			values.add(get(key));
-		}
-
-		return values;
 	}
 
 	@Override

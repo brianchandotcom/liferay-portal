@@ -28,8 +28,6 @@ import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.Collection;
-
 /**
  * @author Shuyang Zhou
  */
@@ -68,20 +66,6 @@ public class PortalCacheDatagramReceiveHandler
 				Serializable value = portalCache.get(key);
 
 				_sendResponse(registrationReference, datagram, value);
-
-				break;
-
-			case GET_BULK:
-				portalCache = portalCacheManager.getCache(
-					deserializer.readString());
-
-				Collection<Serializable> keys =
-					(Collection<Serializable>)deserializer.readObject();
-
-				Collection<Serializable> values = portalCache.get(keys);
-
-				_sendResponse(
-					registrationReference, datagram, (Serializable)values);
 
 				break;
 

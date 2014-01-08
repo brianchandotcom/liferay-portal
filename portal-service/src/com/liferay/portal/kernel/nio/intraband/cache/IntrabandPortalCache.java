@@ -30,10 +30,6 @@ import java.io.Serializable;
 
 import java.nio.ByteBuffer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * @author Shuyang Zhou
  */
@@ -63,31 +59,6 @@ public class IntrabandPortalCache
 			_registrationReference,
 			Datagram.createRequestDatagram(
 				_portalCacheType, serializer.toByteBuffer()));
-	}
-
-	@Override
-	public Collection<V> get(Collection<K> keys) {
-		Serializer serializer = _createSerializer(
-			PortalCacheActionType.GET_BULK);
-
-		serializer.writeObject((Serializable)keys);
-
-		try {
-			return (Collection<V>)_syncSend(serializer.toByteBuffer());
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to bulk get, coverting to cache miss", e);
-			}
-
-			List<V> values = new ArrayList<V>(keys.size());
-
-			for (int i = 0; i < keys.size(); i++) {
-				values.add(null);
-			}
-
-			return values;
-		}
 	}
 
 	@Override

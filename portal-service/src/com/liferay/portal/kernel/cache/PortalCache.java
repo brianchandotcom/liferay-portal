@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.cache;
 
 import java.io.Serializable;
 
-import java.util.Collection;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
@@ -26,8 +24,6 @@ import java.util.Collection;
 public interface PortalCache<K extends Serializable, V> {
 
 	public void destroy();
-
-	public Collection<V> get(Collection<K> keys);
 
 	public V get(K key);
 

@@ -106,13 +106,6 @@ public class TransactionalPortalCacheTest {
 
 		Assert.assertTrue(cacheListeners.isEmpty());
 
-		List<String> values = (List<String>)_transactionalPortalCache.get(
-			Arrays.asList(_KEY_1, _KEY_2));
-
-		Assert.assertEquals(2, values.size());
-		Assert.assertEquals(_VALUE_1, values.get(0));
-		Assert.assertNull(values.get(1));
-
 		_transactionalPortalCache.destroy();
 	}
 

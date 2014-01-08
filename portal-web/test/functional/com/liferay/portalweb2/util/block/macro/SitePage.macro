@@ -28,6 +28,7 @@
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
 
 		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_CHILD_PAGE" />
+
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
 		<execute action="CPSitepagesAddpage#click" locator-key1="ADD_PAGE_BUTTON" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -70,6 +71,7 @@
 		</if>
 
 		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_PAGE" />
+
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
@@ -78,6 +80,7 @@
 			<isset var="pageTemplateName" />
 			<then>
 				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+
 				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_RADIO" />
 				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
 				<execute action="CPSitepagesAddpage#check" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
@@ -85,6 +88,7 @@
 		</if>
 
 		<execute action="CPSitepagesAddpage#click" locator-key1="ADD_PAGE_BUTTON" />
+
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="SitePage#expandRootCP" />

@@ -24,21 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_PAGE_TEMPLATE_SELECT</td>
-	<td>//select[@id='_156_layoutPrototypeId']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_TYPE_SELECT</td>
-	<td>//select[@id='_156_addLayoutType']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_COPY_PARENT_CHECKBOX</td>
-	<td>//input[@id='_156_inheritFromParentLayoutIdCheckbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_PAGE_HIDDEN_CHECKBOX</td>
 	<td>//input[@id='_156_addLayoutHiddenCheckbox']</td>
 	<td></td>

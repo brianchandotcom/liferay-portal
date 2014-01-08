@@ -14,12 +14,12 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
@@ -28,7 +28,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,9 +36,7 @@ import java.util.List;
  */
 public class VerifyLayout extends VerifyProcess {
 
-	protected void deleteOphanedLayouts() throws Exception {
-		List<Layout> layoutsWithPrototype = new ArrayList<Layout>();
-
+	protected void deleteOrphanedLayouts() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -48,7 +45,7 @@ public class VerifyLayout extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select * from layout where layoutprototypeuuid != ''");
+				"select plid from layout where layoutPrototypeUuid != ''");
 
 			rs = ps.executeQuery();
 
@@ -57,31 +54,27 @@ public class VerifyLayout extends VerifyProcess {
 
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-				layoutsWithPrototype.add(layout);
+				String uuid = layout.getLayoutPrototypeUuid();
+
+				long companyId = layout.getCompanyId();
+
+				LayoutPrototype layoutPrototype =
+					LayoutPrototypeLocalServiceUtil.
+						fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+
+				if (layoutPrototype == null) {
+					LayoutLocalServiceUtil.deleteLayout(layout);
+				}
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-
-		for (Layout layout : layoutsWithPrototype) {
-			try {
-				String uuid = layout.getLayoutPrototypeUuid();
-
-				long companyId = layout.getCompanyId();
-
-				LayoutPrototypeLocalServiceUtil.
-					getLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
-			}
-			catch (NoSuchLayoutPrototypeException nslpe) {
-				LayoutLocalServiceUtil.deleteLayout(layout);
-			}
-		}
 	}
 
 	@Override
 	protected void doVerify() throws Exception {
-		deleteOphanedLayouts();
+		deleteOrphanedLayouts();
 		verifyFriendlyURL();
 		verifyUuid();
 	}

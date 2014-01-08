@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 /**
@@ -24,7 +26,8 @@ public class BufferTag extends BodyTagSupport {
 	@Override
 	public int doEndTag() {
 		try {
-			pageContext.setAttribute(_var, getBodyContent().getString());
+			pageContext.setAttribute(
+				_var, StringUtil.trim(getBodyContent().getString()));
 
 			return EVAL_PAGE;
 		}

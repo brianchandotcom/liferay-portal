@@ -40,9 +40,7 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 			<%= HtmlUtil.escape(rootNodeName) %>
 		</c:when>
 		<c:otherwise>
-			<aui:a href='<%= redirectURL.toString() + "#tab=mobileDeviceRules" %>'>
-				<%= HtmlUtil.escape(rootNodeName) %>
-			</aui:a>
+			<aui:a href='<%= redirectURL.toString() + "#tab=mobileDeviceRules" %>'><%= HtmlUtil.escape(rootNodeName) %></aui:a>
 		</c:otherwise>
 	</c:choose>
 </liferay-util:buffer>

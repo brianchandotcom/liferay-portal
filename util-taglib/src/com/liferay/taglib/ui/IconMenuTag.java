@@ -349,9 +349,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 						if (auiImage) {
 							jspWriter.write(
-								" <i class=\"lfr-icon-menu-icon icon-");
+								" <i class=\"icon-");
 							jspWriter.write(
 								_icon.substring(_AUI_PATH.length()));
+							jspWriter.write(" lfr-icon-menu-icon");
 							jspWriter.write("\"></i> ");
 						}
 						else {

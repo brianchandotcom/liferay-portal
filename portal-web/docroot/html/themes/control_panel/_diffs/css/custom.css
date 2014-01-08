@@ -209,7 +209,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					text-shadow: none;
 
 					@include respond-to(phone, tablet) {
-						letter-spacing: 0px;
+						letter-spacing: 0;
 					}
 				}
 
@@ -636,7 +636,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						&:before {
 							content: '';
 							height: 44px;
-							margin-left: 0px;
+							margin-left: 0;
 							position: absolute;
 							width: 50px;
 						}

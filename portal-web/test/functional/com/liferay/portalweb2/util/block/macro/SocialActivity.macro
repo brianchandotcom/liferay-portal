@@ -1,0 +1,92 @@
+<definition>
+	<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns. -->
+
+	<command name="addActionCP">
+		<var name="key_userAction" value="${userAction}" />
+
+		<execute action="CPSocialactivity#assertClick" locator-key1="POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
+		<execute action="CPSocialactivity#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="configureActionCP">
+		<var name="key_userAction" value="${userAction}" />
+
+		<if>
+			<isset var="participationIncrement" />
+			<then>
+				<execute action="CPSocialactivity#select" locator-key1="PARTICIPATION_INCREMENT_SELECT" value1="${participationIncrement}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="contributionIncrement" />
+			<then>
+				<execute action="CPSocialactivity#select" locator-key1="CONTRIBUTION_INCREMENT_SELECT" value1="${contributionIncrement}" />
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<isset var="contributionLimitValue" />
+				<isset var="contributionLimitPeriod" />
+				<isset var="participationLimitValue" />
+				<isset var="participationLimitPeriod" />
+			</or>
+			<then>
+				<execute action="CPSocialactivity#assertClick" locator-key1="LIMIT_LINK" value1="Limit" />
+
+				<if>
+					<isset var="contributionLimitValue" />
+					<then>
+						<execute action="CPSocialactivity#select" locator-key1="CONTRIBUTION_LIMIT_VALUE_SELECT" value1="${contributionLimitValue}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="contributionLimitPeriod" />
+					<then>
+						<execute action="CPSocialactivity#select" locator-key1="CONTRIBUTION_LIMIT_PERIOD_SELECT" value1="${contributionLimitPeriod}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="participationLimitValue" />
+					<then>
+						<execute action="CPSocialactivity#select" locator-key1="PARTICIPATION_LIMIT_VALUE_SELECT" value1="${participationLimitValue}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="participationLimitPeriod" />
+					<then>
+						<execute action="CPSocialactivity#select" locator-key1="PARTICIPATION_LIMIT_PERIOD_SELECT" value1="${participationLimitPeriod}" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute action="CPSocialactivity#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="enableCP">
+		<execute action="CPSocialactivity#check" locator-key1="BLOGS_ENTRY_CHECKBOX" />
+		<execute action="CPSocialactivity#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="removeActionCP">
+		<var name="key_userAction" value="${userAction}" />
+
+		<execute action="CPSocialactivity#click" locator-key1="CLOSE_ICON" />
+		<execute action="CPSocialactivity#assertTextEquals" locator-key1="POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
+		<execute action="CPSocialactivity#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="viewPGViaUserStatistics">
+		<var name="key_userName" value="${userName}" />
+
+		<execute action="PGUserstatistics#assertTextEquals" locator-key1="RANKING_TABLE_USER_NAME" value1="${userName}" />
+		<execute action="PGUserstatistics#assertTextEquals" locator-key1="RANKING_TABLE_RANK" value1="${userRank}" />
+		<execute action="PGUserstatistics#assertTextEquals" locator-key1="RANKING_TABLE_CONTRIBUTION_SCORE" value1="${contributionScore}" />
+		<execute action="PGUserstatistics#assertTextEquals" locator-key1="RANKING_TABLE_PARTICIPATION_SCORE" value1="${participationScore}" />
+	</command>
+</definition>

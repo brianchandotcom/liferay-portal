@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>PGFastlogin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGFastlogin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGFastlogin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_164_login']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@id='_164_password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMEMBER_ME_CHECKBOX</td>
+	<td>//input[@id='_164_rememberMeCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//button[contains(.,'Sign In')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_LINK</td>
+	<td>//div[@class='navigation']/ul/li/a/span[contains(.,'Guest')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

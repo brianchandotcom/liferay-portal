@@ -31,7 +31,22 @@
 		</if>
 
 		<execute action="PGBlogsEntry#type" locator-key1="COMMENTS_BODY_FIELD" value1="${entryComment}" />
-		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+
+		<if>
+			<condition action="Dockbar#isElementPresent" locator-key1="USER_SIGN_IN" />
+			<then>
+				<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_AS_BUTTON" value1="Reply as..." />
+
+				<execute macro="User#fastLoginGuestPG">
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+					<var name="userFirstName" value="${userFirstName}" />
+				</execute>
+			</then>
+			<else>
+				<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+			</else>
+		</if>
+
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
 
 		<var name="key_entryComment" value="${entryComment}" />

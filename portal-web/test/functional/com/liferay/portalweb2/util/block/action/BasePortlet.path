@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_BODY</td>
+	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONFIRM</td>
 	<td></td>
 	<td></td>

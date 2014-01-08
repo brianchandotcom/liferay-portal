@@ -132,6 +132,9 @@ public class RuntimeVariables {
 					result = operandValue.replace(
 						argumentsList.get(0), argumentsList.get(1));
 				}
+				else if (method.startsWith("uppercase")) {
+					result = StringUtil.toUpperCase(operandValue);
+				}
 
 				varValue = varValue.replaceFirst(replaceRegex, result);
 			}

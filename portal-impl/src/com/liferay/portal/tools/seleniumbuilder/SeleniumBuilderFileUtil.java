@@ -1753,7 +1753,8 @@ public class SeleniumBuilderFileUtil {
 		});
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {
-			"getFirstNumber", "increment", "length", "lowercase", "replace"
+			"getFirstNumber", "increment", "length", "lowercase", "replace",
+			"uppercase"
 		});
 	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {

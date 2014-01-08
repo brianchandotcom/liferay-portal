@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -67,13 +68,16 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.lucene.document.FieldSelector;
 import org.apache.lucene.document.NumericField;
+import org.apache.lucene.document.SetBasedFieldSelector;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Explanation;
@@ -627,11 +631,30 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 		QueryConfig queryConfig = query.getQueryConfig();
 
+		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
+
+		FieldSelector fieldSelector = null;
+
+		if ((selectedFieldNames != null) && (selectedFieldNames.length > 0)) {
+			Set<String> selectedFields = SetUtil.fromArray(selectedFieldNames);
+
+			if (!selectedFields.isEmpty()) {
+				fieldSelector = new SetBasedFieldSelector(
+					selectedFields, Collections.EMPTY_SET);
+			}
+		}
+
 		for (int i = start; i < start + subsetTotal; i++) {
 			int docId = hitDocs.getDocId(i);
 
-			org.apache.lucene.document.Document document = indexSearcher.doc(
-				docId);
+			org.apache.lucene.document.Document document = null;
+
+			if (fieldSelector != null) {
+				document = indexSearcher.doc(docId, fieldSelector);
+			}
+			else {
+				document = indexSearcher.doc(docId);
+			}
 
 			Document subsetDocument = getDocument(document);
 

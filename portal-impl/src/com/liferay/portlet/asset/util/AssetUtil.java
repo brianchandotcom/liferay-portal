@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -577,7 +578,7 @@ public class AssetUtil {
 		return true;
 	}
 
-	public static Hits search(
+	public static Tuple search(
 			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {
@@ -587,7 +588,7 @@ public class AssetUtil {
 		return search(searchContext, assetEntryQuery, start, end);
 	}
 
-	public static Hits search(
+	public static Tuple search(
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {
@@ -639,7 +640,7 @@ public class AssetUtil {
 			getSorts(assetEntryQuery, searchContext.getLocale()));
 		searchContext.setStart(start);
 
-		return assetSearcher.search(searchContext);
+		return assetSearcher.search(searchContext, AssetEntry.class);
 	}
 
 	public static String substituteCategoryPropertyVariables(

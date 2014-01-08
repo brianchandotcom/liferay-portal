@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalImpl;
@@ -43,6 +44,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
@@ -125,14 +127,40 @@ public abstract class BaseClusterExecutorImplTestCase
 	public static class SetPortalPortAdvice {
 
 		public static final int PORTAL_PORT = 80;
+		public static final int SECURE_PORTAL_PORT = 81;
 
 		@Around(
 			"set(* com.liferay.portal.util.PropsValues." +
 				"PORTAL_INSTANCE_HTTP_PORT)")
-		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
+		public Object setPortalPort(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			return proceedingJoinPoint.proceed(new Object[] {PORTAL_PORT});
+		}
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues." +
+				"PORTAL_INSTANCE_HTTPS_PORT)")
+		public Object setSecurePortalPort(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(
+				new Object[] {SECURE_PORTAL_PORT});
+		}
+
+	}
+
+	@Aspect
+	public static class SetWebServerProtocolAdvice {
+
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues.WEB_SERVER_PROTOCOL)")
+		public Object setWebServerProtocol(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			return proceedingJoinPoint.proceed(new Object[] {"https"});
 		}
 
 	}
@@ -250,6 +278,11 @@ public abstract class BaseClusterExecutorImplTestCase
 
 			channel.setReceiver(
 				new MockClusterRequestReceiver(clusterExecutorImpl));
+
+			Field field = ReflectionUtil.getDeclaredField(
+				ClusterBase.class, "bindInetAddress");
+
+			field.set(clusterExecutorImpl, null);
 		}
 
 		clusterExecutorImpl.initialize();

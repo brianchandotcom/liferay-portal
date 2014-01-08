@@ -1,8 +1,15 @@
 @import "compass";
+@import "mixins";
 
 .portlet-wiki {
 	.wiki-body {
 		@include hyphenation;
+
+		overflow: auto;
+
+		@include respond-to(phone, tablet) {
+			@include experimental(overflow-scrolling, touch);
+		}
 
 		ol ol {
 			list-style: decimal outside;

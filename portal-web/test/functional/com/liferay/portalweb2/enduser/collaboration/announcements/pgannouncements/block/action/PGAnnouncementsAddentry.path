@@ -34,8 +34,50 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIORITY_SELECT</td>
+	<td>//select[@id='_84_priority']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_DATE-->
+<tr>
+	<td>DISPLAY_DATE_DATE_INPUT</td>
+	<td>//input[@id='_84_displayDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_TIME_INPUT</td>
+	<td>//input[@id='_84_displayDateTime']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX</td>
+	<td>//input[@id='_84_fmdisplayDateCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EXPIRATION_DATE-->
+<tr>
+	<td>EXPIRATION_DATE_DATE_INPUT</td>
+	<td>//input[@id='_84_expirationDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRATION_DATE_TIME_INPUT</td>
+	<td>//input[@id='_84_expirationDateTime']</td>
 	<td></td>
 </tr>
 </tbody>

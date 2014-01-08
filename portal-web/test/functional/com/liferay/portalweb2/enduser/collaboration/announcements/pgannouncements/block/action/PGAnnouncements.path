@@ -46,33 +46,43 @@
 </tr>
 <!--ENTRY-->
 <tr>
-	<td>ENTRY_TITLE_1</td>
-	<td>xpath=(//h3[@class='entry-title']/a)[1]</td>
+	<td>ENTRY_TITLE</td>
+	<td>//h3[@class='entry-title' and contains(.,'${key_entryTitle}')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_EDIT_1</td>
-	<td>xpath=(//td[@class='edit-entry']/span/a/span)[1]</td>
+	<td>ENTRY_EDIT</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='edit-entry']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_DELETE_1</td>
-	<td>xpath=(//td[@class='delete-entry']/span/a/span)[1]</td>
+	<td>ENTRY_DELETE</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='delete-entry']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_MARK_AS_READ_1</td>
-	<td>xpath=(//td[@class='control-entry']/a)[1]</td>
+	<td>ENTRY_MARK_AS_READ</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='control-entry' and contains(.,'Mark as Read')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_SCOPE_1</td>
-	<td>xpath=(//span[@class='entry-scope'])[1]</td>
+	<td>ENTRY_SHOW</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='control-entry' and contains(.,'Show')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CONTENT_1</td>
-	<td>xpath=(//div[contains(@class,'entry-content')])[1]</td>
+	<td>ENTRY_HIDE</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//td[@class='control-entry' and contains(.,'Hide')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_SCOPE</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//span[@class='entry-scope']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT</td>
+	<td>//div[h3[@class='entry-title' and contains(.,'${key_entryTitle}')]]//div[contains(@class,'entry-content')]</td>
 	<td></td>
 </tr>
 </tbody>

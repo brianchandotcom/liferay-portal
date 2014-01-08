@@ -76,6 +76,8 @@ AUI.add(
 
 		var LINE_HEIGHT = 'lineHeight';
 
+		var NORMAL = 'normal';
+
 		var OK = 'ok';
 
 		var OPACITY = 'opacity';
@@ -936,7 +938,8 @@ AUI.add(
 
 				var defaultData = {
 					advancedData: {
-						customCSS: EMPTY
+						customCSS: EMPTY,
+						customCSSClassName: EMPTY
 					},
 
 					bgData: {
@@ -1226,6 +1229,7 @@ AUI.add(
 							}
 
 							instance._objData = defaultData;
+							instance._objData.portletData.titles = {};
 							instance._setDefaults();
 						}
 					);
@@ -1460,11 +1464,11 @@ AUI.add(
 				var fontStyle = false;
 				var fontWeight = false;
 
-				if (textData.fontStyle && textData.fontStyle != 'normal') {
+				if (textData.fontStyle && textData.fontStyle != NORMAL) {
 					fontStyle = true;
 				}
 
-				if (textData.fontWeight && textData.fontWeight != 'normal') {
+				if (textData.fontWeight && textData.fontWeight != NORMAL) {
 					fontWeight = true;
 				}
 
@@ -1863,7 +1867,7 @@ AUI.add(
 				fontBold.on(
 					CLICK,
 					function(event) {
-						var style = 'normal';
+						var style = NORMAL;
 
 						if (event.currentTarget.get(CHECKED)) {
 							style = BOLD;

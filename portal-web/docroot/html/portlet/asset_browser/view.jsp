@@ -106,7 +106,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<liferay-ui:search-container-column-text
 					name="user-name"
-					value="<%= PortalUtil.getUserName(assetEntry) %>"
+					value="<%= HtmlUtil.escape(PortalUtil.getUserName(assetEntry)) %>"
 				/>
 
 				<liferay-ui:search-container-column-date

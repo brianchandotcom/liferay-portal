@@ -45,7 +45,7 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 			sb.append(_getNamespacedId());
 			sb.append("NavbarBtn\" data-navId=\"");
 			sb.append(_getNamespacedId());
-			sb.append("\">");
+			sb.append("\" tabindex=\"0\" \">");
 			sb.append("<i class=\"icon-search\"></i></a>");
 		}
 

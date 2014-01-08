@@ -67,7 +67,7 @@ public class NavTag extends BaseNavTag {
 			sb.append("NavbarBtn\" ");
 			sb.append("data-navId=\"");
 			sb.append(_getNamespacedId());
-			sb.append("\">");
+			sb.append("\" tabindex=\"0\" \">");
 
 			String icon = getIcon();
 

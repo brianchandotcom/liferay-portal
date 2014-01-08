@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>PGDocumentsandmediaCheckin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentsandmediaCheckin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmediaCheckin</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'portlet-msg-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INFO_BAR-->
+<tr>
+	<td>VERSION</td>
+	<td>//span[@class='workflow-version']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REVISION-->
+<tr>
+	<td>MAJOR_REVISION</td>
+	<td>xpath=(//input[@name='_20_majorVersion'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINOR_REVISION</td>
+	<td>xpath=(//input[@name='_20_majorVersion'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_LOG</td>
+	<td>//input[@id='_20_changeLog']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--BOTTOM_BUTTONS-->
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[contains(.,'Save as Draft')]</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(.,'Publish')]</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>SAVE_AND_CHECKIN_BUTTON</td>
+	<td>//button[contains(.,'Save and Checkin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_CHECKOUT_BUTTON</td>
+	<td>//button[contains(.,'Cancel Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

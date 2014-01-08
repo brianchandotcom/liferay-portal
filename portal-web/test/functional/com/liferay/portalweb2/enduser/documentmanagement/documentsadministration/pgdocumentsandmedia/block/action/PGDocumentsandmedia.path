@@ -142,6 +142,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_SEARCH_FIELD</td>
+	<td>//input[contains(@class,'search-query')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -361,6 +371,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRIES_DOCUMENT_DESCRIPTION</td>
+	<td>//div[@data-title='${key_dmDocumentTitle}']//span[@class='entry-description']</td>
+	<td>Document Title</td>
+</tr>
+<tr>
+	<td>ENTRIES_DOCUMENT_SEARCH_TITLE</td>
+	<td>//div[contains(@id,'Results')]/div/form/div/a/div[2]/span</td>
+	<td>Document Search Title</td>
+</tr>
+<tr>
 	<td>ENTRIES_DOCUMENT_SELECT</td>
 	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
 	<td></td>
@@ -393,6 +413,52 @@
 <tr>
 	<td>ENTRIES_SEARCH_DOCUMENT_TITLE</td>
 	<td>//span[@class='entry-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_ENTRIES-->
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_CHECKBOX</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_ICON</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_TITLE</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//span[@class='taglib-text ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_WORKFLOW</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'workflow-status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_LOCKED</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'locked')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_SIZE</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_DOWNLOARD</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRIES_DOCUMENT_ACTION</td>
+	<td>//tr[@data-title='${key_dmDocumentTitle}']//a[@id='_20_ocerSearchContainer_1_menu']</td>
 	<td></td>
 </tr>
 <tr>

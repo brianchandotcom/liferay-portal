@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>SODocuments</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SODocuments</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>SODocuments</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_INFO-->
+<tr>
+	<td>DOCUMENT_INFO_TITLE</td>
+	<td>//div[@class='document-info']//h2[@class='document-title']</td>
+	<td>Title</td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_DESCRIPTION</td>
+	<td>//div[@class='document-header']/span[@class='document-description' and contains(.,'${key_dmDocumentDescription}')]</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSION_HISTORY-->
+<tr>
+	<td>VERSION_HISTORY_TITLE</td>
+	<td>//div[@class='lfr-document-library-versions']/div/div/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_NUMBER</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[@class='version-number']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_UPLOADER_NAME</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_DATE</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[@class='modified-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_CHANGE_LOG</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//div[@class='changelog']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_DOWNLOAD</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_VIEW</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_REVERT</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[contains(.,'Revert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_DELETE_VERSION</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[contains(.,'Delete Version')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_HISTORY_SIZE</td>
+	<td>//div[@class='version' and contains(.,'${versionNumber}')]//span[@class='size']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

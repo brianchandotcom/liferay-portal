@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'lfr-asset-column-details')]/div[contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_BUTTON</td>
+	<td>//a[@id='_20_TabsBack']/span[contains(.,'Back')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -261,6 +271,37 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_DETAILS-->
+<tr>
+	<td>DOCUMENT_DETAILS_VERSION</td>
+	<td>//div[@class='asset-details-content']//h3[contains(@class,'version')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_UPLOADER</td>
+	<td>//div[@class='asset-details-content']//div[@class='lfr-asset-icon lfr-asset-author']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_DATE</td>
+	<td>//div[@class='asset-details-content']//div[@class='lfr-asset-icon lfr-asset-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_WORKFLOW</td>
+	<td>//div[@class='asset-details-content']//span[contains(@class,'workflow-status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
+	<td>//div[@class='asset-details-content']//span[@class='download-document']/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_URL</td>
+	<td>//div[@class='asset-details-content']//span[@class='webdav-url']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[contains(.,'Save as Draft')]</td>
+	<td>Publish</td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td></td>

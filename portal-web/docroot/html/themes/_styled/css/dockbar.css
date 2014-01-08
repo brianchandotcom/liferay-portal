@@ -60,6 +60,11 @@ $editLayoutPanelWidth: 460px;
 		@include respond-to(phone, tablet) {
 			#_145_navSiteNavigationNavbarBtn {
 				display: inline-block;
+				padding: 12px;
+
+				> i {
+					margin-top: 2px;
+				}
 			}
 		}
 
@@ -140,13 +145,15 @@ $editLayoutPanelWidth: 460px;
 				padding: 0;
 			}
 
-			.brand {
-				h1 {
-					display: inline-block;
-					font-size: inherit;
-					line-height: 1;
-					margin-bottom: 0;
-					margin-top: 0;
+			.brand h1 {
+				display: inline-block;
+				font-size: inherit;
+				line-height: 1;
+				margin-bottom: 0;
+				margin-top: 0;
+
+				@include respond-to(phone, tablet) {
+					line-height: 16px;
 				}
 			}
 
@@ -212,11 +219,7 @@ $editLayoutPanelWidth: 460px;
 									display: inline-block;
 									margin-left: 5px;
 									margin-top: 5px;
-									padding: 12px 15px;
-
-									> .nav-item-icon {
-										margin-top: 3px;
-									}
+									padding: 0;
 
 									> .nav-item-label {
 										display: none;
@@ -366,6 +369,10 @@ $editLayoutPanelWidth: 460px;
 										> .nav-item-icon {
 											margin-right: 0;
 											margin-top: 3px;
+
+											@include respond-to(phone, tablet) {
+												margin-top: 0;
+											}
 										}
 
 										.nav-item-label {
@@ -599,6 +606,7 @@ $editLayoutPanelWidth: 460px;
 
 											@include respond-to(phone, tablet) {
 												font-size: inherit;
+												margin-top: 0;
 											}
 										}
 
@@ -655,10 +663,6 @@ $editLayoutPanelWidth: 460px;
 
 								@include respond-to(phone, tablet) {
 									color: inherit;
-								}
-
-								.nav-item-icon {
-									margin-top: 3px;
 								}
 							}
 

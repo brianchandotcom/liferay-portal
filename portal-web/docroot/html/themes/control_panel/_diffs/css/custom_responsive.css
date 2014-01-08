@@ -9,20 +9,66 @@
 				display: none;
 			}
 
-			.brand {
-				font-size: 16px;
-				padding: 22px 0 0 0;
+			.nav-account-controls {
+				text-align: top;
+			}
 
-				@include respond-to(phone) {
-					padding-top: 23px;
+			.brand {
+				padding: 12px 0 0 0;
+				line-height: 16px;
+
+				.control-panel-back-link {
+					float: left;
+					margin-top: 6px;
+
+					@include respond-to(phone) {
+						margin: 0;
+						padding: 6px 8px;
+					}
 				}
 
-				h1 a, h1 .site-administration-title {
-					display: inline-block;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-					width: 75px;
+				h1 {
+					@include respond-to(phone) {
+						height: 51px;
+						margin-top: -5px;
+						max-width: 165px;
+						position: relative;
+
+						a {
+							display: inline-block;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							width: 75px;
+
+							.lfr-icon-menu-text {
+								font-size: 18px;
+							}
+						}
+
+						.control-panel-site-selector, .site-administration-title {
+							@include ellipsis;
+							font-size: 16px;
+						}
+
+						.control-panel-site-selector {
+							position: static;
+
+							i {
+								bottom: 4px;
+								position: absolute;
+								right: -15px;
+							}
+						}
+
+						.divider {
+							display: none;
+						}
+					}
+
+					@include respond-to(tablet) {
+						line-height: 32px;
+					}
 				}
 			}
 

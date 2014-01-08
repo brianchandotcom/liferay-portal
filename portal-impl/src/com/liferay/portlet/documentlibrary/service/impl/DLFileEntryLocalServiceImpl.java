@@ -843,12 +843,10 @@ public class DLFileEntryLocalServiceImpl
 
 			expandoRowLocalService.deleteRows(dlFileVersion.getFileVersionId());
 
-			if (!dlFileVersion.isDraft()) {
-				workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-					dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
-					DLFileEntryConstants.getClassName(),
-					dlFileVersion.getFileVersionId());
-			}
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+				dlFileVersion.getCompanyId(), dlFileVersion.getGroupId(),
+				DLFileEntryConstants.getClassName(),
+				dlFileVersion.getFileVersionId());
 
 			dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(fileEntryId);
 

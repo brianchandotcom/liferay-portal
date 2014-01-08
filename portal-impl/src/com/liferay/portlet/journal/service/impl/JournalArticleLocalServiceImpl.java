@@ -858,8 +858,10 @@ public class JournalArticleLocalServiceImpl
 
 		AssetEntry oldAssetEntry = assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
+
 		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
 			oldAssetEntry.getEntryId());
+
 		long[] assetLinkEntryIds = StringUtil.split(
 			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 

@@ -1,10 +1,4 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="ADD_ENTRY_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="select">
 		<case locator-key1="DISTRIBUTION_SCOPE_SELECT">
 			<execute function="Select#selectAndWait" />

@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>WHATS_HAPPENING_INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
+	<td>//div[@class='alert alert-info']</td>
 	<td></td>
 </tr>
 <tr>

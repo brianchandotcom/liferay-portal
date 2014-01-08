@@ -1,0 +1,17 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="NAVIGATION_CONNECTIONS">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="NAVIGATION_FOLLOWING">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="ACTIVITIES_CONTENT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

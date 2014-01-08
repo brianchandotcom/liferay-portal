@@ -1,6 +1,9 @@
 <definition>
 	<command name="searchNoPG">
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
+
+		<var name="key_searchIDName" value="Search" />
+
 		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
@@ -25,6 +28,17 @@
 
 	<command name="searchPG">
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${searchTerm}" />
+
+		<if>
+			<isset var="localizationIDName" />
+			<then>
+				<var name="key_searchIDName" value="${localizationIDName}" />
+			</then>
+			<else>
+				<var name="key_searchIDName" value="Search" />
+			</else>
+		</if>
+
 		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />

@@ -33,6 +33,35 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 	</command>
 
+	<command name="addCPwithCategory">
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<execute action="CPWebcontentAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+		<execute action="CPWebcontentAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="MENU_CATEGORIZATION" value1="Categorization" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPWebcontentCategorization#assertClick" locator-key1="CATEGORY_SELECT" value1="Select" />
+		<execute action="CPWebcontentCategorization#click" locator-key1="CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
+		<execute action="CPWebcontentCategorization#click" locator-key1="CATEGORIES_WINDOW_CLOSE_BUTTON" />
+		<execute action="CPWebcontentCategorization#assertTextEquals" locator-key1="CATEGORY" value1="${categoryName}" />
+
+		<execute action="CPWebcontentAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_CATEGORY" value1="${categoryName}" />
+	</command>
+
 	<command name="addCPwithStructure">
 		<var name="key_structureName" value="${structureName}" />
 
@@ -188,6 +217,28 @@
 		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
+	</command>
+
+	<command name="copyCP">
+		<var name='key_webContentTitle' value="${webContentTitle}" />
+
+		<execute action="CPWebcontent#check" locator-key1="ENTRY_DESCRIPTIVE_CHECKBOX" />
+		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_COPY" value1="Copy" />
+
+		<execute action="CPWebcontentCopy#assertClick" locator-key1="COPY_BUTTON" value1="Copy" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPWebcontent#click" locator-key1="TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_CATEGORY" value1="${categoryName}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE_COPY" value1="${webContentTitle}" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_CATEGORY_COPY" value1="${categoryName}" />
 	</command>
 
 	<command name="deleteCP">

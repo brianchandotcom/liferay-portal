@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_CATEGORIES</td>
+	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Categories')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS</td>
 	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Message Boards')]</td>
 	<td></td>

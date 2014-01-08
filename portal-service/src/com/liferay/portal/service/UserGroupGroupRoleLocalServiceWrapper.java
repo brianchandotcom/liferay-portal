@@ -368,6 +368,12 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.UserGroupGroupRole> getUserGroupGroupRolesByUser(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _userGroupGroupRoleLocalService.getUserGroupGroupRolesByUser(userId);
+	}
+
+	@Override
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
 		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
 		return _userGroupGroupRoleLocalService.hasUserGroupGroupRole(userGroupId,

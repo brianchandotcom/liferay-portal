@@ -228,6 +228,45 @@ public class AssetCategoryPropertyServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
+		HttpPrincipal httpPrincipal, long userId, long categoryPropertyId,
+		java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(AssetCategoryPropertyServiceUtil.class,
+					"updateCategoryProperty",
+					_updateCategoryPropertyParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					categoryPropertyId, key, value);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.asset.model.AssetCategoryProperty)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(AssetCategoryPropertyServiceHttp.class);
 	private static final Class<?>[] _addCategoryPropertyParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
@@ -243,5 +282,9 @@ public class AssetCategoryPropertyServiceHttp {
 		};
 	private static final Class<?>[] _updateCategoryPropertyParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
+		};
+	private static final Class<?>[] _updateCategoryPropertyParameterTypes5 = new Class[] {
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class
 		};
 }

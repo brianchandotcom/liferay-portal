@@ -94,6 +94,16 @@ public class AssetCategoryPropertyServiceWrapper
 			key, value);
 	}
 
+	@Override
+	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetCategoryPropertyService.updateCategoryProperty(userId,
+			categoryPropertyId, key, value);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

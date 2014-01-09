@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -502,9 +501,9 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				DLStoreUtil.addFile(
 					companyId, containerModelFolderId, name, false, bytes);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to find attachment " + attachment, nsfe);
+					_log.warn("Unable to add attachment " + attachment, e);
 				}
 			}
 

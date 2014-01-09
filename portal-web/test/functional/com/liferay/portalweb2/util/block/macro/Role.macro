@@ -157,7 +157,7 @@
 	</command>
 
 	<command name="removePermissionPG">
- 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 
 		<execute action="Permissions#uncheck" locator-key1="${permissionDefinitionKey}" />

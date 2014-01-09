@@ -7,10 +7,10 @@
 			</then>
 			<elseif>
 				<condition action="PGWikidisplay#isElementNotPresent" locator-key1="PORTLET_CONFIGURATION_MESSAGE" />
-					<then>
-						<execute action="PGWikidisplay#click" locator-key1="OPTIONS_ICON"  />
-						<execute action="PGWikidisplay#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-					</then>
+				<then>
+					<execute action="PGWikidisplay#click" locator-key1="OPTIONS_ICON"  />
+					<execute action="PGWikidisplay#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+				</then>
 			</elseif>
 		</if>
 
@@ -36,10 +36,10 @@
 			</then>
 			<elseif>
 				<condition action="PGWikidisplay#isElementNotPresent" locator-key1="PORTLET_CONFIGURATION_MESSAGE" />
-					<then>
-						<execute action="PGWikidisplay#click" locator-key1="OPTIONS_ICON"  />
-						<execute action="PGWikidisplay#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-					</then>
+				<then>
+					<execute action="PGWikidisplay#click" locator-key1="OPTIONS_ICON"  />
+					<execute action="PGWikidisplay#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+				</then>
 			</elseif>
 		</if>
 

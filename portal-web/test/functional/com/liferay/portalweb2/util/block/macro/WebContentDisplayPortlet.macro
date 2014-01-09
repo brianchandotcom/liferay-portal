@@ -219,10 +219,10 @@
 		<if>
 			<isset var="webContentSearchValue" />
 			<then>
-					<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchValue}" />
+				<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchValue}" />
 			</then>
 			<else>
-					<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentTitle}" />
+				<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentTitle}" />
 			</else>
 		</if>
 

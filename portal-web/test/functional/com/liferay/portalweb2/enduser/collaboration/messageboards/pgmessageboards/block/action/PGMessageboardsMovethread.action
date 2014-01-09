@@ -3,5 +3,5 @@
 		<case locator-key1="ADD_EXPLANATION_POST_BODY_FIELD">
 			<execute function="Type#typeFrame" />
 		</case>
-		</command>
+	</command>
 </definition>

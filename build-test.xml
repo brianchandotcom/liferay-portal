@@ -1206,20 +1206,6 @@ tck.url=true</echo>
 				</echo>
 
 				<loadfile failonerror="false" property="system-ext.properties.content" srcfile="portal-impl/classes/system-ext.properties" />
-
-				<if>
-					<not>
-						<contains string="${system-ext.properties.content}" substring="java.awt.headless=false" />
-					</not>
-					<then>
-						<echo
-							append="true"
-							file="portal-impl/classes/system-ext.properties"
-						>
-							java.awt.headless=false
-						</echo>
-					</then>
-				</if>
 			</then>
 		</if>
 
@@ -2210,6 +2196,17 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="start-selenium">
+		<if>
+			<not>
+				<contains string="${system-ext.properties.content}" substring="java.awt.headless=false" />
+			</not>
+			<then>
+				<echo append="true" file="portal-impl/classes/system-ext.properties">
+					java.awt.headless=false
+				</echo>
+			</then>
+		</if>
+
 		<!--<java
 			jar="lib/development/selenium-server.jar"
 			fork="true"
@@ -2283,7 +2280,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	<target name="stop-selenium">
 		<if>
 			<not>
-				<filesmatch 
+				<filesmatch
 					file1="portal-impl/src/system-ext.properties"
 					file2="portal-impl/classes/system-ext.properties"
 				/>

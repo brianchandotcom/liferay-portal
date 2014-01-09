@@ -53,8 +53,13 @@ public class AssetIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
-		Hits hits) {
+	public String getPortletId() {
+		return PORTLET_ID;
+	}
+
+	@Override
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer>
+		getSearchResults(Hits hits) {
 
 		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
@@ -78,11 +83,6 @@ public class AssetIndexer extends BaseIndexer {
 
 		return new ObjectValuePair<List<? extends BaseModel<?>>, Integer>(
 			assetEntries, hits.getLength());
-	}
-
-	@Override
-	public String getPortletId() {
-		return PORTLET_ID;
 	}
 
 	@Override

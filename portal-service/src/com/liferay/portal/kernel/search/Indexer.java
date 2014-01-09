@@ -43,9 +43,6 @@ public interface Indexer {
 
 	public Document getDocument(Object obj) throws SearchException;
 
-	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
-		Hits hits);
-
 	public BooleanQuery getFacetQuery(
 			String className, SearchContext searchContext)
 		throws Exception;
@@ -58,6 +55,9 @@ public interface Indexer {
 	public String getPortletId();
 
 	public String getSearchEngineId();
+
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer>
+		getSearchResults(Hits hits);
 
 	public String[] getSelectedFieldNames();
 

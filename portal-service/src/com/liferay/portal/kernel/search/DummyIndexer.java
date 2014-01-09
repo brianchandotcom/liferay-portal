@@ -52,13 +52,6 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
-	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
-		Hits hits) {
-
-		return null;
-	}
-
-	@Override
 	public BooleanQuery getFacetQuery(
 		String className, SearchContext searchContext) {
 
@@ -83,6 +76,13 @@ public class DummyIndexer implements Indexer {
 	@Override
 	public String getSearchEngineId() {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer>
+		getSearchResults(Hits hits) {
+
+		return null;
 	}
 
 	@Override

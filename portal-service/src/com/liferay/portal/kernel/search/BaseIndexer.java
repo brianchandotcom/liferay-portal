@@ -182,13 +182,6 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
-		Hits hits) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public BooleanQuery getFacetQuery(
 			String className, SearchContext searchContext)
 		throws Exception {
@@ -304,6 +297,13 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return _searchEngineId;
+	}
+
+	@Override
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer>
+		getSearchResults(Hits hits) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -552,7 +552,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		Hits hits = search(searchContext);
 
-		return indexer.getEntries(hits);
+		return indexer.getSearchResults(hits);
 	}
 
 	@Override

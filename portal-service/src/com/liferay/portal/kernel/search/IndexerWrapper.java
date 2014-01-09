@@ -60,13 +60,6 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
-	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
-		Hits hits) {
-
-		return _indexer.getEntries(hits);
-	}
-
-	@Override
 	public BooleanQuery getFacetQuery(
 			String className, SearchContext searchContext)
 		throws Exception {
@@ -94,6 +87,13 @@ public class IndexerWrapper implements Indexer {
 	@Override
 	public String getSearchEngineId() {
 		return _indexer.getSearchEngineId();
+	}
+
+	@Override
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer>
+		getSearchResults(Hits hits) {
+
+		return _indexer.getSearchResults(hits);
 	}
 
 	@Override

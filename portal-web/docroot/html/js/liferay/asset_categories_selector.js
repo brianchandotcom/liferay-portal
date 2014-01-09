@@ -17,7 +17,13 @@ AUI.add(
 
 		var STR_EXPANDED = 'expanded';
 
+		var STR_MORE_RESULTS_LABEL = 'moreResultsLabel';
+
 		var STR_PREV_EXPANDED = '_LFR_prevExpanded';
+
+		var STR_MAX_ENTRIES = 'maxEntries';
+
+		var STR_START = 'start';
 
 		var TPL_CHECKED = ' checked="checked" ';
 
@@ -245,6 +251,7 @@ AUI.add(
 									id: treeId,
 									label: Liferay.Util.escapeHTML(item.titleCurrentValue),
 									leaf: !item.hasChildren,
+									paginator: instance._getPaginatorConfig(item),
 									type: type
 								};
 
@@ -292,7 +299,7 @@ AUI.add(
 									'$vocabularies = /assetvocabulary/get-vocabularies': {
 										vocabularyIds: vocabularyIds,
 
-										'$categoriesCount = /assetcategory/get-vocabulary-categories-count': {
+										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
 											'@groupId': '$vocabularies.groupId',
 											'@vocabularyId': '$vocabularies.vocabularyId'
 										}
@@ -314,7 +321,7 @@ AUI.add(
 										groupIds: groupIds,
 										className: className,
 
-										'$categoriesCount = /assetcategory/get-vocabulary-categories-count': {
+										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
 											'groupId': '$vocabularies.groupId',
 											'@vocabularyId': '$vocabularies.vocabularyId'
 										}
@@ -323,6 +330,28 @@ AUI.add(
 								callback
 							);
 						}
+					},
+
+					_getPaginatorConfig: function(item) {
+						var instance = this;
+
+						var paginatorConfig = {
+							offsetParam: STR_START
+						};
+
+						var maxEntries = instance.get(STR_MAX_ENTRIES);
+
+						if (maxEntries > 0) {
+							paginatorConfig.limit = maxEntries;
+							paginatorConfig.moreResultsLabel = instance.get(STR_MORE_RESULTS_LABEL);
+							paginatorConfig.total = item.childrenCount;
+						}
+						else {
+							paginatorConfig.end = -1;
+							paginatorConfig.start = -1;
+						}
+
+						return paginatorConfig;
 					},
 
 					_getTreeNodeAssetId: function(treeNode) {
@@ -626,28 +655,12 @@ AUI.add(
 
 						var treeId = 'vocabulary' + vocabularyId;
 
-						var paginatorConfig = {
-							offsetParam: 'start'
-						};
-
-						var maxEntries = instance.get('maxEntries');
-
-						if (maxEntries > 0) {
-							paginatorConfig.limit = maxEntries;
-							paginatorConfig.moreResultsLabel = instance.get('moreResultsLabel');
-							paginatorConfig.total = item.categoriesCount;
-						}
-						else {
-							paginatorConfig.end = -1;
-							paginatorConfig.start = -1;
-						}
-
 						var vocabularyRootNode = {
 							alwaysShowHitArea: true,
 							id: treeId,
 							label: vocabularyTitle,
 							leaf: false,
-							paginator: paginatorConfig,
+							paginator: instance._getPaginatorConfig(item),
 							type: 'io'
 						};
 

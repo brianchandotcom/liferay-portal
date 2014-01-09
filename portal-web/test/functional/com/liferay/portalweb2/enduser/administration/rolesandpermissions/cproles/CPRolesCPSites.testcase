@@ -31,7 +31,7 @@
 		<var name="permissionNavigation2Value" value="Sites" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="siteName" value="Site Name" />
-		<var name="sitePageType" value="Public" />
+		<var name="sitePagePrivacy" value="Public" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -295,7 +295,7 @@
 		<var name="permissionNavigation2Value" value="Site Pages" />
 		<var name="regRoleName" value="Regrole Name" />
 		<var name="siteName" value="Site Name" />
-		<var name="sitePageType" value="Public" />
+		<var name="sitePagePrivacy" value="Public" />
 		<var name="siteRoleName" value="Siterole Name" />
 		<var name="siteRoleType" value="Site" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -309,7 +309,7 @@
 			<var name="roleName" value="${siteRoleName}" />
 			<var name="roleType" value="${siteRoleType}" />
 			<var name="siteName" value="${siteName}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -480,7 +480,7 @@
 		<var name="permissionNavigationValue" value="Sites" />
 		<var name="roleName" value="Regrole Name" />
 		<var name="siteName" value="Site Name" />
-		<var name="sitePageType" value="Public" />
+		<var name="sitePagePrivacy" value="Public" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -512,7 +512,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">

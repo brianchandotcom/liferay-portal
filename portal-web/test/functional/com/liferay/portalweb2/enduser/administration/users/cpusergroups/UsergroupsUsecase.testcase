@@ -37,7 +37,7 @@
 
 		<execute macro="UserGroup#addPageCP">
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="Private" />
+			<var name="sitePagePrivacy" value="Private" />
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 

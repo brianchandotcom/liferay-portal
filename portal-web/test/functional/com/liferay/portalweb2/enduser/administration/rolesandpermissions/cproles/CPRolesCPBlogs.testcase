@@ -198,7 +198,7 @@
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
 		<var name="siteName" value="Site Name" />
-		<var name="sitePageType" value="Public" />
+		<var name="sitePagePrivacy" value="Public" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -210,7 +210,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
 			<var name="siteName" value="${siteName}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />

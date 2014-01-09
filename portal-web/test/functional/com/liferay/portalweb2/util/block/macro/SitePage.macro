@@ -8,18 +8,18 @@
 		<execute action="CPSites#click" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<if>
-			<equals arg1="${sitePageType}" arg2="Private" />
+			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="NAVIGATION_PRIVATE_PAGES" />
 			</then>
 			<elseif>
-				<equals arg1="${sitePageType}" arg2="Public" />
+				<equals arg1="${sitePagePrivacy}" arg2="Public" />
 				<then>
 					<execute action="CPSitepages#click" locator-key1="NAVIGATION_PUBLIC_PAGES" />
 				</then>
 			</elseif>
 			<else>
-				<fail message="Invalid var sitePageType. Must be (Private|Public)." />
+				<fail message="Invalid var sitePagePrivacy. Must be (Private|Public)." />
 			</else>
 		</if>
 
@@ -54,18 +54,18 @@
 		</if>
 
 		<if>
-			<equals arg1="${sitePageType}" arg2="Private" />
+			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
 				<execute action="CPSitepages#click" locator-key1="NAVIGATION_PRIVATE_PAGES" />
 			</then>
 			<elseif>
-				<equals arg1="${sitePageType}" arg2="Public" />
+				<equals arg1="${sitePagePrivacy}" arg2="Public" />
 				<then>
 					<execute action="CPSitepages#click" locator-key1="NAVIGATION_PUBLIC_PAGES" />
 				</then>
 			</elseif>
 			<else>
-				<fail message="Invalid var sitePageType. Must be (Private|Public)." />
+				<fail message="Invalid var sitePagePrivacy. Must be (Private|Public)." />
 			</else>
 		</if>
 

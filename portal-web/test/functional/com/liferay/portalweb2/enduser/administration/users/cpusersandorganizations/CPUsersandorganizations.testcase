@@ -217,7 +217,7 @@
 		<var name="siteMember" value="Organization" />
 		<var name="siteName" value="Organization Name" />
 		<var name="sitePageName" value="Private Page" />
-		<var name="sitePageType" value="Private" />
+		<var name="sitePagePrivacy" value="Private" />
 		<var name="sitePageURL" value="http://localhost:8080/group/organization-name/private-page" />
 
 		<execute macro="Page#gotoCP">
@@ -244,7 +244,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
@@ -264,7 +264,7 @@
 		<var name="siteMember" value="Organization" />
 		<var name="siteName" value="Organization Name" />
 		<var name="sitePageName" value="Public Page" />
-		<var name="sitePageType" value="Public" />
+		<var name="sitePagePrivacy" value="Public" />
 		<var name="sitePageURL" value="http://localhost:8080/web/organization-name/public-page" />
 
 		<execute macro="Page#gotoCP">
@@ -291,7 +291,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="SitePage#viewPG">
@@ -2029,7 +2029,7 @@
 		<var name="siteMember" value="Organization" />
 		<var name="siteName" value="Organization Name" />
 		<var name="sitePageName" value="Test Page" />
-		<var name="sitePageType" value="Public" />
+		<var name="sitePagePrivacy" value="Public" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />

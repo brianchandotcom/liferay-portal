@@ -73,18 +73,18 @@
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_MANAGE_SITE_PAGES" value1="Manage Site Pages" />
 
 		<if>
-			<equals arg1="${sitePageType}" arg2="Private" />
+			<equals arg1="${sitePagePrivacy}" arg2="Private" />
 			<then>
 				<execute action="CPUsergroupsSitepages#assertClick" locator-key1="NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
 			</then>
 			<elseif>
-				<equals arg1="${sitePageType}" arg2="Public" />
+				<equals arg1="${sitePagePrivacy}" arg2="Public" />
 				<then>
 					<execute action="CPUsergroupsSitepages#assertClick" locator-key1="NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
 				</then>
 			</elseif>
 			<else>
-				<fail message="Invalid var sitePageType. Must be (Private|Public)." />
+				<fail message="Invalid var sitePagePrivacy. Must be (Private|Public)." />
 			</else>
 		</if>
 

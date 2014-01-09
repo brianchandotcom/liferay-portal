@@ -30,7 +30,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteScopeSelected" value="true" />
 			<var name="sitePageName" value="${publicSitePage}" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -279,13 +279,13 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteScopeSelected" value="true" />
 			<var name="sitePageName" value="${publicSitePage}" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="siteScopeSelected" value="true" />
 			<var name="sitePageName" value="${privateSitePage}" />
-			<var name="sitePageType" value="Private" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -338,7 +338,7 @@
 
 		<execute macro="SitePage#addCP">
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -407,7 +407,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -426,7 +426,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${childSiteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -445,7 +445,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${childChildSiteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -511,7 +511,7 @@
 	    <execute macro="SitePage#addCP">
 		    <var name="siteName" value="${siteName}" />
 		    <var name="sitePageName" value="${sitePageName}" />
-		    <var name="sitePageType" value="Public" />
+		    <var name="sitePagePrivacy" value="Public" />
 	    </execute>
 
 	    <execute macro="Page#gotoCP">
@@ -530,7 +530,7 @@
 	    <execute macro="SitePage#addCP">
 	      	<var name="siteName" value="${childSiteName1}" />
 	      	<var name="sitePageName" value="${sitePageName}" />
-	      	<var name="sitePageType" value="Public" />
+	      	<var name="sitePagePrivacy" value="Public" />
 	    </execute>
 
 	    <execute macro="Page#gotoCP">
@@ -549,7 +549,7 @@
 	    <execute macro="SitePage#addCP">
 	      	<var name="siteName" value="${childChildSiteName1}" />
 	      	<var name="sitePageName" value="${sitePageName}" />
-	      	<var name="sitePageType" value="Public" />
+	      	<var name="sitePagePrivacy" value="Public" />
 	    </execute>
 
 	    <execute macro="Page#gotoCP">
@@ -568,7 +568,7 @@
 	    <execute macro="SitePage#addCP">
 	      	<var name="siteName" value="${childChildSiteName2}" />
 	      	<var name="sitePageName" value="${sitePageName}" />
-	      	<var name="sitePageType" value="Public" />
+	      	<var name="sitePagePrivacy" value="Public" />
 	    </execute>
 
 	    <execute macro="Page#gotoCP">
@@ -587,7 +587,7 @@
 	    <execute macro="SitePage#addCP">
 	      	<var name="siteName" value="${childSiteName2}" />
 	      	<var name="sitePageName" value="${sitePageName}" />
-	      	<var name="sitePageType" value="Public" />
+	      	<var name="sitePagePrivacy" value="Public" />
 	    </execute>
 
 	    <execute macro="Page#gotoPG">

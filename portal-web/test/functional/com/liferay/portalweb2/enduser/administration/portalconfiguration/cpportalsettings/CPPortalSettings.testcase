@@ -353,8 +353,8 @@
 		<var name="parentSite" value="Site Name" />
 		<var name="portletName1" value="Asset Publisher" />
 		<var name="portletName2" value="Web Content Display" />
+		<var name="sitePagePrivacy" value="Public" />
 		<var name="siteScopeName" value="Child SiteName" />
-		<var name="sitePageType" value="Public" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -394,7 +394,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${parentSite}" />
 			<var name="sitePageName" value="${pageName1}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -414,7 +414,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteScopeSelected" value="true" />
 			<var name="sitePageName" value="${pageName2}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -521,8 +521,8 @@
 		<var name="liferaySiteName" value="Liferay" />
 		<var name="pageName" value="AP Test Page" />
 		<var name="portletName" value="Asset Publisher" />
-		<var name="sitePageType" value="Public" />
 		<var name="siteName" value="Site Name" />
+		<var name="sitePagePrivacy" value="Public" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
@@ -551,7 +551,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="Page#openURL">

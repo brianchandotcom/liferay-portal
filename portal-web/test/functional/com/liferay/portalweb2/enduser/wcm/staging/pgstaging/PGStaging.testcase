@@ -19,7 +19,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="Staging Test Page" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
 
@@ -491,7 +491,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="Organization Name" />
 			<var name="sitePageName" value="Staging Test Page" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

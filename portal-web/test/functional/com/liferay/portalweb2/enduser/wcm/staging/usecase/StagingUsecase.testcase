@@ -17,7 +17,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="Staging Test Page" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
 
@@ -121,18 +121,18 @@
        		<var name="siteName" value="${siteName}" />
        		<var name="siteURL" value="true" />
     	</execute>
- 
+
 	    <execute macro="SitesDirectory#viewPortletTitlePG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
- 
+
      	<execute macro="Page#gotoPG">
        		<var name="pageName" value="${pageName}" />
       		<var name="pageStaging" value="true" />
        		<var name="siteName" value="${siteName}" />
        		<var name="siteURL" value="true" />
      	</execute>
- 
+
      	<execute macro="Staging#publishToLiveNowPG" />
 
 		<execute macro="Page#gotoPG">

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -865,15 +865,17 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected abstract String getSearchKeywords();
 
+	@SuppressWarnings("unchecked")
 	protected List<AssetEntry> search(
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		Tuple results = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair =
+			AssetUtil.search(
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		return (List<AssetEntry>)results.getObject(0);
+		return (List<AssetEntry>)objectValuePair.getKey();
 	}
 
 	protected int searchCount(
@@ -890,10 +892,12 @@ public abstract class BaseAssetSearchTestCase {
 			int start, int end)
 		throws Exception {
 
-		Tuple results = AssetUtil.search(
-			searchContext, assetEntryQuery, start, end);
+		ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair =
+			AssetUtil.search(
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		return (Integer)results.getObject(1);
+		return (Integer)objectValuePair.getValue();
 	}
 
 	protected void testAssetCategorization(

@@ -36,12 +36,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Portlet;
@@ -459,7 +460,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
 	public static List<AssetEntry> getAssetEntries(Hits hits) {
@@ -582,7 +583,7 @@ public class AssetUtil {
 		return true;
 	}
 
-	public static Tuple search(
+	public static ObjectValuePair<List<? extends BaseModel<?>>, Integer> search(
 			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {
@@ -592,7 +593,7 @@ public class AssetUtil {
 		return search(searchContext, assetEntryQuery, start, end);
 	}
 
-	public static Tuple search(
+	public static ObjectValuePair<List<? extends BaseModel<?>>, Integer> search(
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {

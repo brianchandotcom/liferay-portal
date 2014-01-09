@@ -228,7 +228,7 @@ public class QueryConfig implements Serializable {
 		_attributes.put(SEARCH_SUBFOLDERS, searchSubfolders);
 	}
 
-	public void setSelectedFieldNames(String[] selectedFieldNames) {
+	public void setSelectedFieldNames(String... selectedFieldNames) {
 		_attributes.put(_SELECTED_FIELD_NAMES, selectedFieldNames);
 	}
 
@@ -246,9 +246,8 @@ public class QueryConfig implements Serializable {
 		_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD =
 			GetterUtil.getInteger(
 				PropsUtil.get(
-					PropsKeys.
-						INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD),
-					50);
+					PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD),
+				50);
 
 	private static final boolean _INDEX_SEARCH_HIGHLIGHT_ENABLED =
 		GetterUtil.getBoolean(

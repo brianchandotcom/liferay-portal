@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -42,7 +43,8 @@ public interface Indexer {
 
 	public Document getDocument(Object obj) throws SearchException;
 
-	public Tuple getEntries(Hits hits);
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
+		Hits hits);
 
 	public BooleanQuery getFacetQuery(
 			String className, SearchContext searchContext)
@@ -101,7 +103,8 @@ public interface Indexer {
 
 	public Hits search(SearchContext searchContext) throws SearchException;
 
-	public Tuple search(SearchContext searchContext, Class<?> entryClass)
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> search(
+			SearchContext searchContext, Class<?> entryClass)
 		throws SearchException;
 
 	public void unregisterIndexerPostProcessor(

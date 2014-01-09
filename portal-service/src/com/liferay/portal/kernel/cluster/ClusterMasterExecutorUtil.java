@@ -53,6 +53,17 @@ public class ClusterMasterExecutorUtil {
 		_clusterMasterExecutor.initialize();
 	}
 
+	public static boolean isEnabled() {
+		ClusterMasterExecutor clusterMasterExecutor =
+			getClusterMasterExecutor();
+
+		if (clusterMasterExecutor == null) {
+			return false;
+		}
+
+		return _clusterMasterExecutor.isEnabled();
+	}
+
 	public static boolean isMaster() {
 		ClusterMasterExecutor clusterMasterExecutor =
 			getClusterMasterExecutor();

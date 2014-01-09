@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.WebKeys;
@@ -208,6 +209,12 @@ public class StartupAction extends SimpleAction {
 		// Liferay JspFactory
 
 		JspFactorySwapper.swap();
+
+		// Background tasks
+
+		if (!ClusterMasterExecutorUtil.isEnabled()) {
+			BackgroundTaskLocalServiceUtil.cleanUpBackgroundTasks();
+		}
 
 		// Jericho
 

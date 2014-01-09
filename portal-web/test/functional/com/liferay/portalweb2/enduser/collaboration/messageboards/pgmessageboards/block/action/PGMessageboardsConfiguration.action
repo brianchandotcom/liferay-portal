@@ -1,7 +1,7 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="SCOPE_SCOPE">
-			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

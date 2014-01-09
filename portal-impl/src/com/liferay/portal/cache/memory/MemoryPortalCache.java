@@ -38,7 +38,6 @@ public class MemoryPortalCache<K extends Serializable, V>
 		_map = new ConcurrentHashMap<K, V>(initialCapacity);
 	}
 
-	@Override
 	public void destroy() {
 		removeAll();
 

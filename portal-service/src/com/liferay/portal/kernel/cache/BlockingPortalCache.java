@@ -32,10 +32,6 @@ public class BlockingPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void destroy() {
-	}
-
-	@Override
 	public V get(K key) {
 		V value = _portalCache.get(key);
 

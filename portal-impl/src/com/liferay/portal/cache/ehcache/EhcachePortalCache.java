@@ -42,10 +42,6 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void destroy() {
-	}
-
-	@Override
 	public V get(K key) {
 		Element element = _ehcache.get(key);
 

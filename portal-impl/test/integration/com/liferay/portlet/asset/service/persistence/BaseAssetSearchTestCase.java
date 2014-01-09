@@ -15,12 +15,11 @@
 package com.liferay.portlet.asset.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -34,11 +33,14 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -863,15 +865,17 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected abstract String getSearchKeywords();
 
-	protected Document[] search(
+	@SuppressWarnings("unchecked")
+	protected List<AssetEntry> search(
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		Hits results = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair =
+			AssetUtil.search(
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		return results.getDocs();
+		return (List<AssetEntry>)objectValuePair.getKey();
 	}
 
 	protected int searchCount(
@@ -888,10 +892,12 @@ public abstract class BaseAssetSearchTestCase {
 			int start, int end)
 		throws Exception {
 
-		Hits results = AssetUtil.search(
-			searchContext, assetEntryQuery, start, end);
+		ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair =
+			AssetUtil.search(
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		return results.getLength();
+		return (Integer)objectValuePair.getValue();
 	}
 
 	protected void testAssetCategorization(
@@ -1004,14 +1010,14 @@ public abstract class BaseAssetSearchTestCase {
 		assetEntryQuery.setOrderByCol1("title");
 		assetEntryQuery.setOrderByType1(orderByType);
 
-		Document[] documents = search(assetEntryQuery, searchContext);
+		List<AssetEntry> assetEntries = search(assetEntryQuery, searchContext);
 
-		for (int i = 0; i < documents.length; i++) {
-			Document document = documents[i];
+		for (int i = 0; i < assetEntries.size(); i++) {
+			AssetEntry assetEntry = assetEntries.get(i);
 
-			String field = document.get("title");
+			String title = assetEntry.getTitleCurrentValue();
 
-			Assert.assertEquals(field, orderedTitles[i]);
+			Assert.assertEquals(title, orderedTitles[i]);
 		}
 	}
 

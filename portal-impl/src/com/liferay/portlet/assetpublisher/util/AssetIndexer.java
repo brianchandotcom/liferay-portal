@@ -18,11 +18,18 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -37,6 +44,9 @@ public class AssetIndexer extends BaseIndexer {
 
 	public static final String PORTLET_ID = PortletKeys.ASSET_PUBLISHER;
 
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK};
+
 	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
@@ -45,6 +55,39 @@ public class AssetIndexer extends BaseIndexer {
 	@Override
 	public String getPortletId() {
 		return PORTLET_ID;
+	}
+
+	@Override
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer>
+		getSearchResults(Hits hits) {
+
+		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
+
+		for (Document document : hits.getDocs()) {
+			String className = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long classPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			try {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					className, classPK);
+
+				if (assetEntry != null) {
+					assetEntries.add(assetEntry);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return new ObjectValuePair<List<? extends BaseModel<?>>, Integer>(
+			assetEntries, hits.getLength());
+	}
+
+	@Override
+	public String[] getSelectedFieldNames() {
+		return SELECTED_FIELD_NAMES;
 	}
 
 	@Override

@@ -45,13 +45,12 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 			int groupTotal = 0;
 
 			if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
-				Hits hits = AssetUtil.search(request, assetEntryQuery, start, end);
+				ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair = AssetUtil.search(request, assetEntryQuery, start, end);
 
-				groupTotal = hits.getLength();
+				results = (List<AssetEntry>)objectValuePair.getKey();
+				groupTotal = objectValuePair.getValue();
 
 				total += groupTotal;
-
-				results = AssetUtil.getAssetEntries(hits);
 			}
 			else {
 				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
@@ -111,13 +110,12 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 		assetEntryQuery.setClassNameIds(assetPublisherDisplayContext.getClassNameIds());
 
 		if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
-			Hits hits = AssetUtil.search(request, assetEntryQuery, start, end);
+			ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair = AssetUtil.search(request, assetEntryQuery, start, end);
 
-			total = hits.getLength();
+			results = (List<AssetEntry>)objectValuePair.getKey();
+			total = objectValuePair.getValue();
 
 			searchContainer.setTotal(total);
-
-			results = AssetUtil.getAssetEntries(hits);
 		}
 		else {
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
@@ -161,13 +159,12 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 			int groupTotal = 0;
 
 			if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
-				Hits hits = AssetUtil.search(request, assetEntryQuery, start, end);
+				ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair = AssetUtil.search(request, assetEntryQuery, start, end);
 
-				groupTotal = hits.getLength();
+				results = (List<AssetEntry>)objectValuePair.getKey();
+				groupTotal = objectValuePair.getValue();
 
 				total += groupTotal;
-
-				results = AssetUtil.getAssetEntries(hits);
 			}
 			else {
 				groupTotal = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);

@@ -15,11 +15,12 @@
 package com.liferay.portlet.journal.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -36,6 +37,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.util.JournalTestUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -68,11 +71,12 @@ public class JournalArticleIndexableTest {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		Hits hits = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair =
+			AssetUtil.search(
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		int total = hits.getLength();
+		int total = (Integer)objectValuePair.getValue();
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			group.getGroupId(), ServiceTestUtil.randomString(),
@@ -80,12 +84,14 @@ public class JournalArticleIndexableTest {
 
 		Assert.assertTrue(article.isIndexable());
 
-		hits = AssetUtil.search(
+		objectValuePair = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
+		int newTotal = (Integer)objectValuePair.getValue();
+
 		Assert.assertEquals(
-			"Regular articles should be indexed", total + 1, hits.getLength());
+			"Regular articles should be indexed", total + 1, newTotal);
 	}
 
 	@Test
@@ -104,11 +110,12 @@ public class JournalArticleIndexableTest {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		Hits hits = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		ObjectValuePair<List<? extends BaseModel<?>>, Integer> objectValuePair =
+			AssetUtil.search(
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		int total = hits.getLength();
+		int total = (Integer)objectValuePair.getValue();
 
 		JournalTestUtil.addArticle(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -117,13 +124,14 @@ public class JournalArticleIndexableTest {
 			ServiceTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
 			true, ServiceTestUtil.getServiceContext(group.getGroupId()));
 
-		hits = AssetUtil.search(
+		objectValuePair = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
+		int newTotal = (Integer)objectValuePair.getValue();
+
 		Assert.assertEquals(
-			"Unindexable articles should not be indexed", total,
-			hits.getLength());
+			"Unindexable articles should not be indexed", total, newTotal);
 	}
 
 }

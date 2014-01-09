@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -181,6 +182,13 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
+		Hits hits) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public BooleanQuery getFacetQuery(
 			String className, SearchContext searchContext)
 		throws Exception {
@@ -296,6 +304,11 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return _searchEngineId;
+	}
+
+	@Override
+	public String[] getSelectedFieldNames() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -522,6 +535,24 @@ public abstract class BaseIndexer implements Indexer {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
+	}
+
+	@Override
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> search(
+			SearchContext searchContext, Class<?> entryClass)
+		throws SearchException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(entryClass.getName());
+
+		String[] selectedFieldNames = indexer.getSelectedFieldNames();
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setSelectedFieldNames(selectedFieldNames);
+
+		Hits hits = search(searchContext);
+
+		return indexer.getEntries(hits);
 	}
 
 	@Override

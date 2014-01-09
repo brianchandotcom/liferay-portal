@@ -1,9 +1,5 @@
 @import "compass";
 
-.document-library-file-entry-cell-editor-hidden {
-	display: none;
-}
-
 .portlet-document-library, .portlet-dynamic-data-mapping {
 	.diagram-builder-drop-container {
 		overflow: auto;

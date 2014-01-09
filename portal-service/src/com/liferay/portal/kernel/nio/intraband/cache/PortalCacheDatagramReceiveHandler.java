@@ -49,17 +49,19 @@ public class PortalCacheDatagramReceiveHandler
 			IntrabandPortalCacheManager.getPortalCacheManager();
 
 		switch (portalCacheActionType) {
-			case DESTROY:
-				PortalCache<Serializable, Serializable> portalCache =
-					portalCacheManager.getCache(deserializer.readString());
+			case CLEAR_ALL:
+				portalCacheManager.clearAll();
 
-				portalCache.destroy();
+				break;
+
+			case DESTROY:
+				portalCacheManager.destroy();
 
 				break;
 
 			case GET:
-				portalCache = portalCacheManager.getCache(
-					deserializer.readString());
+				PortalCache<Serializable, Serializable> portalCache =
+					portalCacheManager.getCache(deserializer.readString());
 
 				Serializable key = deserializer.readObject();
 
@@ -113,6 +115,11 @@ public class PortalCacheDatagramReceiveHandler
 					deserializer.readString());
 
 				portalCache.removeAll();
+
+				break;
+
+			case REMOVE_CACHE:
+				portalCacheManager.removeCache(deserializer.readString());
 
 				break;
 

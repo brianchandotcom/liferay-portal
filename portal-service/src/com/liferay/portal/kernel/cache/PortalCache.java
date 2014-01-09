@@ -23,8 +23,6 @@ import java.io.Serializable;
  */
 public interface PortalCache<K extends Serializable, V> {
 
-	public void destroy();
-
 	public V get(K key);
 
 	public String getName();

@@ -105,8 +105,6 @@ public class TransactionalPortalCacheTest {
 		_transactionalPortalCache.unregisterCacheListeners();
 
 		Assert.assertTrue(cacheListeners.isEmpty());
-
-		_transactionalPortalCache.destroy();
 	}
 
 	@AdviseWith(adviceClasses = {DisableTransactionalCacheAdvice.class})

@@ -74,11 +74,27 @@ public class PortalCacheDatagramReceiveHandlerTest {
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
-	public void testDestroy() throws Exception {
-		MockPortalCache mockPortalCache =
-			(MockPortalCache)_mockPortalCacheManager.getCache(_TEST_NAME);
+	public void testClearAll() throws Exception {
+		Assert.assertFalse(_mockPortalCacheManager._clearAll);
 
-		Assert.assertFalse(mockPortalCache._destroyed);
+		Serializer serializer = createSerializer(
+			PortalCacheActionType.CLEAR_ALL);
+
+		PortalCacheDatagramReceiveHandler portalCacheDatagramReceiveHandler =
+			new PortalCacheDatagramReceiveHandler();
+
+		portalCacheDatagramReceiveHandler.doReceive(
+			_mockRegistrationReference,
+			Datagram.createRequestDatagram(
+				_portalCacheType, serializer.toByteBuffer()));
+
+		Assert.assertTrue(_mockPortalCacheManager._clearAll);
+	}
+
+	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
+	@Test
+	public void testDestroy() throws Exception {
+		Assert.assertFalse(_mockPortalCacheManager._destroyed);
 
 		Serializer serializer = createSerializer(PortalCacheActionType.DESTROY);
 
@@ -90,7 +106,7 @@ public class PortalCacheDatagramReceiveHandlerTest {
 			Datagram.createRequestDatagram(
 				_portalCacheType, serializer.toByteBuffer()));
 
-		Assert.assertTrue(mockPortalCache._destroyed);
+		Assert.assertTrue(_mockPortalCacheManager._destroyed);
 	}
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
@@ -205,6 +221,33 @@ public class PortalCacheDatagramReceiveHandlerTest {
 			(MockPortalCache)_mockPortalCacheManager.getCache(_TEST_NAME);
 
 		Assert.assertTrue(mockPortalCache._removeAll);
+	}
+
+	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
+	@Test
+	public void testGetRemoveCache() throws Exception {
+		MockPortalCache mockPortalCache =
+			(MockPortalCache)_mockPortalCacheManager.getCache(_TEST_NAME);
+
+		Map<String, PortalCache<String, String>> portalCaches =
+			_mockPortalCacheManager._portalCaches;
+
+		Assert.assertSame(mockPortalCache, portalCaches.get(_TEST_NAME));
+
+		Serializer serializer = createSerializer(
+			PortalCacheActionType.REMOVE_CACHE);
+
+		serializer.writeObject(_TEST_NAME);
+
+		PortalCacheDatagramReceiveHandler portalCacheDatagramReceiveHandler =
+			new PortalCacheDatagramReceiveHandler();
+
+		portalCacheDatagramReceiveHandler.doReceive(
+			_mockRegistrationReference,
+			Datagram.createRequestDatagram(
+				_portalCacheType, serializer.toByteBuffer()));
+
+		Assert.assertFalse(portalCaches.containsKey(_TEST_NAME));
 	}
 
 	@AdviseWith(adviceClasses = {
@@ -358,11 +401,6 @@ public class PortalCacheDatagramReceiveHandlerTest {
 		}
 
 		@Override
-		public void destroy() {
-			_destroyed = true;
-		}
-
-		@Override
 		public String get(String key) {
 			if (_TEST_KEY.equals(key)) {
 				return _TEST_VALUE;
@@ -419,7 +457,6 @@ public class PortalCacheDatagramReceiveHandlerTest {
 		public void unregisterCacheListeners() {
 		}
 
-		private boolean _destroyed;
 		private String _key;
 		private String _name;
 		private boolean _removeAll;
@@ -433,6 +470,12 @@ public class PortalCacheDatagramReceiveHandlerTest {
 
 		@Override
 		public void clearAll() {
+			_clearAll = true;
+		}
+
+		@Override
+		public void destroy() {
+			_destroyed = true;
 		}
 
 		@Override
@@ -462,9 +505,12 @@ public class PortalCacheDatagramReceiveHandlerTest {
 
 		@Override
 		public void removeCache(String name) {
+			_portalCaches.remove(name);
 		}
 
 		private URL _configurationURL;
+		private boolean _clearAll;
+		private boolean _destroyed;
 		private Map<String, PortalCache<String, String>> _portalCaches =
 			new ConcurrentHashMap<String, PortalCache<String, String>>();
 

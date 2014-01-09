@@ -105,7 +105,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_cacheManager.clearAll();
 	}
 
-	public void destroy() throws Exception {
+	@Override
+	public void destroy() {
 		try {
 			_ehcachePortalCaches.clear();
 			_portalCaches.clear();

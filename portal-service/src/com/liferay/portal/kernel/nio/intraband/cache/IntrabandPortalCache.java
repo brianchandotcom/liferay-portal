@@ -51,17 +51,6 @@ public class IntrabandPortalCache
 	}
 
 	@Override
-	public void destroy() {
-		Serializer serializer = _createSerializer(
-			PortalCacheActionType.DESTROY);
-
-		_intraband.sendDatagram(
-			_registrationReference,
-			Datagram.createRequestDatagram(
-				_portalCacheType, serializer.toByteBuffer()));
-	}
-
-	@Override
 	public V get(K key) {
 		Serializer serializer = _createSerializer(PortalCacheActionType.GET);
 

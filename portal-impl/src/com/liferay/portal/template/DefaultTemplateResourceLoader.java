@@ -111,8 +111,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void destroy() {
-		_multiVMPortalCache.destroy();
-		_singleVMPortalCache.destroy();
+		MultiVMPoolUtil.removeCache(_multiVMPortalCache.getName());
+		SingleVMPoolUtil.removeCache(_singleVMPortalCache.getName());
 
 		_templateResourceParsers.clear();
 	}

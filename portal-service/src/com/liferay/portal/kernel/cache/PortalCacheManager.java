@@ -25,6 +25,8 @@ public interface PortalCacheManager<K extends Serializable, V> {
 
 	public void clearAll() throws PortalCacheException;
 
+	public void destroy();
+
 	public PortalCache<K, V> getCache(String name) throws PortalCacheException;
 
 	public PortalCache<K, V> getCache(String name, boolean blocking)

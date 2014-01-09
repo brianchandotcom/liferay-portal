@@ -31,13 +31,27 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	public void afterPropertiesSet() {
-		_portalCaches = new ConcurrentHashMap<String, PortalCache<K, V>>(
-			_cacheManagerInitialCapacity);
+		_memoryPortalCaches =
+			new ConcurrentHashMap<String, MemoryPortalCache<K, V>>(
+				_cacheManagerInitialCapacity);
 	}
 
 	@Override
 	public void clearAll() {
-		_portalCaches.clear();
+		for (MemoryPortalCache<K, V> memoryPortalCache :
+				_memoryPortalCaches.values()) {
+
+			memoryPortalCache.removeAll();
+		}
+	}
+
+	@Override
+	public void destroy() {
+		for (MemoryPortalCache<K, V> memoryPortalCache :
+				_memoryPortalCaches.values()) {
+
+			memoryPortalCache.destroy();
+		}
 	}
 
 	@Override
@@ -47,13 +61,13 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public PortalCache<K, V> getCache(String name, boolean blocking) {
-		PortalCache<K, V> portalCache = _portalCaches.get(name);
+		MemoryPortalCache<K, V> portalCache = _memoryPortalCaches.get(name);
 
 		if (portalCache == null) {
 			portalCache = new MemoryPortalCache<K, V>(
 				name, _cacheInitialCapacity);
 
-			_portalCaches.put(name, portalCache);
+			_memoryPortalCaches.put(name, portalCache);
 		}
 
 		return portalCache;
@@ -65,7 +79,10 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void removeCache(String name) {
-		_portalCaches.remove(name);
+		MemoryPortalCache<K, V> memoryPortalCache = _memoryPortalCaches.remove(
+			name);
+
+		memoryPortalCache.destroy();
 	}
 
 	public void setCacheInitialCapacity(int cacheInitialCapacity) {
@@ -80,6 +97,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 	private int _cacheInitialCapacity = 10000;
 	private int _cacheManagerInitialCapacity = 10000;
-	private Map<String, PortalCache<K, V>> _portalCaches;
+	private Map<String, MemoryPortalCache<K, V>> _memoryPortalCaches;
 
 }

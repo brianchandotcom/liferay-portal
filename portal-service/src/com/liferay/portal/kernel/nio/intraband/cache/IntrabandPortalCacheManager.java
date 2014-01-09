@@ -58,7 +58,32 @@ public class IntrabandPortalCacheManager
 
 	@Override
 	public void clearAll() {
+		Serializer serializer = new Serializer();
+
+		serializer.writeInt(PortalCacheActionType.CLEAR_ALL.ordinal());
+
+		SystemDataType systemDataType = SystemDataType.PORTAL_CACHE;
+
+		_intraband.sendDatagram(
+			_registrationReference,
+			Datagram.createRequestDatagram(
+				systemDataType.getValue(), serializer.toByteBuffer()));
+	}
+
+	@Override
+	public void destroy() {
 		_portalCaches.clear();
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeInt(PortalCacheActionType.DESTROY.ordinal());
+
+		SystemDataType systemDataType = SystemDataType.PORTAL_CACHE;
+
+		_intraband.sendDatagram(
+			_registrationReference,
+			Datagram.createRequestDatagram(
+				systemDataType.getValue(), serializer.toByteBuffer()));
 	}
 
 	@Override
@@ -98,6 +123,18 @@ public class IntrabandPortalCacheManager
 	@Override
 	public void removeCache(String name) {
 		_portalCaches.remove(name);
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeInt(PortalCacheActionType.REMOVE_CACHE.ordinal());
+		serializer.writeString(name);
+
+		SystemDataType systemDataType = SystemDataType.PORTAL_CACHE;
+
+		_intraband.sendDatagram(
+			_registrationReference,
+			Datagram.createRequestDatagram(
+				systemDataType.getValue(), serializer.toByteBuffer()));
 	}
 
 	private static PortalCacheManager

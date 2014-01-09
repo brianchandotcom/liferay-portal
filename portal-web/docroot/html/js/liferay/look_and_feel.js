@@ -1600,6 +1600,8 @@ AUI.add(
 					instance._setInput(instance._wapTitleInput, wapData.title);
 					instance._setSelect(instance._wapInitialWindowStateSelect, wapData.initialWindowState);
 				}
+
+				objData = null;
 			},
 
 			_setInput: function(obj, value) {

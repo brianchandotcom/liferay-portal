@@ -1432,6 +1432,53 @@ tck.url=true</echo>
 					</then>
 				</if>
 
+				<if>
+					<and>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
+					</and>
+					<then>
+						<path id="app.server.dir">
+							<dirset dir="${app.server.parent.dir}">
+								<include name="*${app.server.type}-*" />
+							</dirset>
+						</path>
+
+						<property name="app.server.dir" refid="app.server.dir" />
+
+						<delete dir="${app.server.dir}/patching-tool" />
+
+						<get
+							dest="${basedir}"
+							src="${test.build.patching.tool.zip.url}"
+						/>
+
+						<unzip dest="${app.server.dir}">
+							<fileset
+								dir="${basedir}"
+								includes="patching-tool*"
+							/>
+						</unzip>
+
+						<get
+							dest="${app.server.dir}/patching-tool/patches"
+							src="${test.build.fix.pack.zip.url}"
+						/>
+
+						<execute dir="${app.server.dir}/patching-tool">
+							patching-tool${file.suffix.bat} auto-discovery
+							patching-tool${file.suffix.bat} install -force
+							patching-tool${file.suffix.bat} update-plugins
+						</execute>
+
+						<antelope:stringutil property="patching.tool.zip.file.name" string="${test.build.patching.tool.zip.url}">
+							<antelope:replace regex=".+/patching-tool-" replacement="patching-tool-" />
+						</antelope:stringutil>
+
+						<delete file="${basedir}/${patching.tool.zip.file.name}" />
+					</then>
+				</if>
+
 				<delete file="${tstamp.value}.zip" />
 			</else>
 		</if>

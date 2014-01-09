@@ -15,11 +15,11 @@
 package com.liferay.portlet.journal.search;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -68,11 +68,11 @@ public class JournalArticleIndexableTest {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		Hits hits = AssetUtil.search(
+		Tuple tuple = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		int total = hits.getLength();
+		int total = (Integer)tuple.getObject(1);
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			group.getGroupId(), ServiceTestUtil.randomString(),
@@ -80,12 +80,14 @@ public class JournalArticleIndexableTest {
 
 		Assert.assertTrue(article.isIndexable());
 
-		hits = AssetUtil.search(
+		tuple = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
+		int newTotal = (Integer)tuple.getObject(1);
+
 		Assert.assertEquals(
-			"Regular articles should be indexed", total + 1, hits.getLength());
+			"Regular articles should be indexed", total + 1, newTotal);
 	}
 
 	@Test
@@ -104,11 +106,11 @@ public class JournalArticleIndexableTest {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		Hits hits = AssetUtil.search(
+		Tuple tuple = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		int total = hits.getLength();
+		int total = (Integer)tuple.getObject(1);
 
 		JournalTestUtil.addArticle(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -117,13 +119,14 @@ public class JournalArticleIndexableTest {
 			ServiceTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
 			true, ServiceTestUtil.getServiceContext(group.getGroupId()));
 
-		hits = AssetUtil.search(
+		tuple = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
+		int newTotal = (Integer)tuple.getObject(1);
+
 		Assert.assertEquals(
-			"Unindexable articles should not be indexed", total,
-			hits.getLength());
+			"Unindexable articles should not be indexed", total, newTotal);
 	}
 
 }

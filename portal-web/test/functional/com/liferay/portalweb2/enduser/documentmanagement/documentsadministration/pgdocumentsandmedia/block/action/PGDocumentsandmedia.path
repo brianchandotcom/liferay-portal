@@ -158,6 +158,11 @@
 </tr>
 <!--DISPLAY_STYLE_MENULIST-->
 <tr>
+	<td>DISPLAY_STYLE_MENULIST</td>
+	<td>//div[contains(@id,'displayStyleButtons')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_STYLE_MENULIST_ICON</td>
 	<td>//a[@role='menuitem' and contains(.,'Icon')]</td>
 	<td></td>
@@ -367,7 +372,7 @@
 </tr>
 <tr>
 	<td>ENTRIES_DOCUMENT_TITLE</td>
-	<td>//a[@data-folder='false']/span[@class='entry-title']/span[contains(.,'${dmDocumentTitle}')]</td>
+	<td>//a[@data-folder='false']//span[@class='entry-title']/span[contains(.,'${dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

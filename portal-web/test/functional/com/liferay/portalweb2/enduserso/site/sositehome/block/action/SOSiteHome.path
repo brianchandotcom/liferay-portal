@@ -56,42 +56,42 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_HOME</td>
-	<td>//div/ul/li[contains(.,'Home')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Home')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_CALENDAR</td>
-	<td>//div/ul/li[contains(.,'Calendar')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Calendar')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DOCUMENTS</td>
-	<td>//div/ul/li/a/span[.=' Documents']</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,' Documents')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_FORUMS</td>
-	<td>//div/ul/li[contains(.,'Forums')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Forums')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_BLOGS</td>
-	<td>//div/ul/li[contains(.,'Blogs')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Blogs')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_WIKI</td>
-	<td>//div/ul/li[contains(.,'Wiki')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Wiki')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MEMBERS</td>
-	<td>//div/ul/li[contains(.,'Members')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Members')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PAGE</td>
-	<td>//div/ul/li[contains(.,'${key_pageName}')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'${key_pageName}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

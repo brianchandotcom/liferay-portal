@@ -8,11 +8,11 @@
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST_ICON" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_ICON" />
 	</command>
 
-<!-- 	<command name="tearDownPG">
+ 	<command name="tearDownPG">
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="SOUserBar#dashboardPG">
@@ -22,17 +22,22 @@
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
 
 		<if>
-			<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRIES_DOCUMENT_GENERIC" />
+			<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRIES_DOCUMENT" />
 			<then>
 				<execute action="PGDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
 				<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
-				<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ACTIONS_MENULIST_DELETE" />
-				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
-				<execute action="PGDocumentsandmedia#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entries?" />
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
+				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
-	</command> -->
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#emptyCP" />
+	</command>
 
 	<command name="viewPGDisplayView">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -42,57 +47,130 @@
 		<if>
 			<equals arg1="${workflow}" arg2="Draft" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+
+				<if>
+					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+					<then>
+						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+					</then>
+					<else>
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+					</else>
+				</if>
 			</then>
 			<elseif>
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
+					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT_LOCKED" />
-					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+
+					<if>
+						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+						<then>
+							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+						</then>
+						<else>
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+						</else>
+					</if>
 				</then>
 			</elseif>
 		</if>
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST_DESCRIPTIVE" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE" />
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT" />
 
 		<if>
 			<equals arg1="${workflow}" arg2="Draft" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+
+				<if>
+					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+					<then>
+						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+					</then>
+					<else>
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+					</else>
+				</if>
 			</then>
 			<elseif>
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
+					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+						
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT_LOCKED" />
-					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+
+					<if>
+						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+						<then>
+							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+						</then>
+						<else>
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${workflow}" arg2="Locked" />
 				<then>
+					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT_LOCKED" />
-					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+
+					<if>
+						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+						<then>
+							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+						</then>
+						<else>
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+						</else>		
+					</if>
 				</then>
 			</elseif>
 		</if>
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_DESCRIPTION" value1="${dmDocumentDescription}" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST_LIST" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_LIST" />
 
 		<if>
 			<equals arg1="${workflow}" arg2="Draft" />
 			<then>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="LIST_ENTRIES_DOCUMENT_WORKFLOW" value1="Draft" />
+				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+
+				<if>
+					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+					<then>
+						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="LIST_ENTRIES_DOCUMENT_WORKFLOW" value1="Draft" />
+					</then>
+					<else>
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+					</else>						
+				</if>
 			</then>
 			<elseif>
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
-					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="LIST_ENTRIES_DOCUMENT_WORKFLOW" value1="Draft" />
+					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+	
+					<if>
+						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+						<then>
+							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="LIST_ENTRIES_DOCUMENT_WORKFLOW" value1="Draft" />
+						</then>
+						<else>
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+						</else>	
+					</if>
+
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="LIST_ENTRIES_DOCUMENT_LOCKED" />
 				</then>
 			</elseif>
@@ -104,9 +182,9 @@
 			</elseif>
 		</if>
 
-		<!-- <execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="LIST_ENTRIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}" /> -->
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="TOOLBAR_DISPLAY_MENULIST_ICON" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="LIST_ENTRIES_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST" />
+		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_ICON" />
 		<execute action="PGDocumentsandmedia#assertTextPresent" locator-key1="BREADCRUMB_HOME" value1="Home" />
 
 		<if>
@@ -115,7 +193,17 @@
 				<equals arg1="${workflow}" arg2="Checkedout" />
 			</or>
 			<then>
-				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+				<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
+
+				<if>
+					<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
+					<then>
+						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
+					</then>
+					<else>
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+					</else>	
+				</if>
 			</then>
 		</if>
 
@@ -167,10 +255,7 @@
 			</then>
 		</if>
 
-		<var name="key_dmDocumentDescription" value="${dmDocumentDescription}" />
-
 		<execute action="SODocuments#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-		<execute action="SODocuments#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 
 		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />

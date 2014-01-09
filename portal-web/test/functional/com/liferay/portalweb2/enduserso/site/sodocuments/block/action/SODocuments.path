@@ -18,6 +18,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DOCUMENT_BREADCRUMBS-->
+<tr>
+	<td>DOCUMENT_BREADCRUMBS</td>
+	<td>//div[@class='so-breadcrumbs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_BREADCRUMBS_PAGE_LINK</td>
+	<td>//div[@class='so-breadcrumbs']//li[@class='first']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DOCUMENT_INFO-->
 <tr>
 	<td>DOCUMENT_INFO_TITLE</td>

@@ -112,27 +112,27 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RATING</td>
-	<td>//div[@class='document-info']/span[@class='lfr-asset-ratings']</td>
+	<td>//div[@class='document-info']//span[@class='lfr-asset-ratings']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_LINKS</td>
-	<td>//div[@class='document-info']/div[@class='links']</td>
+	<td>//div[@class='document-info']//div[@class='links']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_DESCRIPTION</td>
-	<td>//div[@class='document-info']/span[@class='document-description']</td>
+	<td>//div[@class='document-info']//span[@class='document-description']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_CATEGORIES</td>
-	<td>//div[@class='document-info']/div[@class='lfr-asset-categories']</td>
+	<td>//div[@class='document-info']//div[@class='lfr-asset-categories']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_TAGS</td>
-	<td>//div[@class='document-info']/div[@class='lfr-asset-tags']</td>
+	<td>//div[@class='document-info']//div[@class='lfr-asset-tags']</td>
 	<td></td>
 </tr>
 <tr>

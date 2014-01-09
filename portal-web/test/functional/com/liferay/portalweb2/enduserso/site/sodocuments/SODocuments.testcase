@@ -1,7 +1,8 @@
-<definition>
+<definition component-name="social-office-site">
 	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
-	<property name="portlet.plugins.includes" value="chat-portlet,contacts-portlet,events-display-portlet,microblogs-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
 	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
 
 	<var name="key_siteName" value="${siteName}" />
 	<var name="pageName" value="Documents" />
@@ -42,6 +43,79 @@
 	<var name="dmFolderName" value="DM Folder Name" />
 	<var name="dmFolderDescription" value="DM Folder Description" />
 
+ 	<command name="AddDMFolderDocument" priority="5">
+		<var name="dmDocumentFile" value="${dmDocumentFile}" />
+		<var name="dmDocumentSize" value="${dmDocumentSize}" />
+		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
+		<var name="dmFolderName" value="${dmFolderName}" />
+		<var name="dmFolderDescription" value="${dmFolderDescription}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+		<var name="siteName" value="${siteName}" />
+		<var name="workflow" value="Approved" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
+		</execute>
+	</command> 
+
+	<command name="AddDMFolderImage" priority="5">
+		<var name="dmDocumentFile" value="${dmImageFile}" />
+		<var name="dmDocumentSize" value="${dmImageSize}" />
+		<var name="dmDocumentSizeSO" value="${dmImageSizeSO}" />
+		<var name="dmDocumentTitle" value="${dmImageTitle}" />
+		<var name="dmDocumentDescription" value="${dmImageDescription}" />
+		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
+		<var name="dmFolderName" value="${dmFolderName}" />
+		<var name="dmFolderDescription" value="${dmFolderDescription}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="siteName" value="${siteName}" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
+		</execute>
+	</command>
+
 	<command name="AddDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
@@ -66,7 +140,7 @@
 		</execute>
 	</command>
 
-<!-- 	<command name="AddDMFolderDocument" priority="5">
+	<command name="CancelCheckoutDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -78,55 +152,47 @@
 		<var name="pageName" value="${pageName}" />
 		<var name="pageType" value="${pageType}" />
 		<var name="siteName" value="${siteName}" />
-		<var name="workflow" value="Approved" />
 
 		<execute macro="SOSite#gotoPG" />
 
 		<execute macro="DMFolder#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
-		<execute macro="DMFolderDocument#addPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="DMFolderDocument#viewPG">
+		<execute macro="DMDocument#checkoutPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#cancelCheckoutPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="AddDMFolderImage" priority="5">
-		<var name="dmDocumentFile" value="${dmImageFile}" />
-		<var name="dmDocumentSize" value="${dmImageSize}" />
-		<var name="dmDocumentSizeSO" value="${dmImageSizeSO}" />
-		<var name="dmDocumentTitle" value="${dmImageTitle}" />
-		<var name="dmDocumentDescription" value="${dmImageDescription}" />
-		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
-		<var name="dmFolderName" value="${dmFolderName}" />
-		<var name="dmFolderDescription" value="${dmFolderDescription}" />
-		<var name="key_siteName" value="${key_siteName}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="siteName" value="${siteName}" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolder#addPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#addPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
-		<execute macro="DMFolderDocument#viewPG">
-			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
-		</execute>
-	</command> -->
-
-<!-- 	<command name="CancelCheckoutDMFolderDocument" priority="5">
+ 	<command name="CheckinMajorDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -144,106 +210,99 @@
 		<execute macro="DMFolder#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
-		<execute macro="DMFolderDocument#addPG" />
 
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#checkoutPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#cancelCheckoutPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
-		<execute macro="DMFolderDocument#viewPG">
-			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
-		</execute>
-	</command> -->
-
-<!-- 	<command name="CheckinMinorDMFolderDocument" priority="5">
-		<var name="dmDocumentFile" value="${dmDocumentFile}" />
-		<var name="dmDocumentSize" value="${dmDocumentSize}" />
-		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
-		<var name="dmFolderName" value="${dmFolderName}" />
-		<var name="dmFolderDescription" value="${dmFolderDescription}" />
-		<var name="key_siteName" value="${key_siteName}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="pageType" value="${pageType}" />
-		<var name="siteName" value="${siteName}" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolder#addPG" />
-
-		<execute macro="SOSite#gotoPG" />
-		<execute macro="DMFolderDocument#addPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#checkoutPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#checkinPG">
-			<var name="revision" value="Minor" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
+		<execute macro="DMDocument#addPG" />
+
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
-		<execute macro="SODocuments#viewPGDisplayView">
-			<var name=" dmDocumentUploader" value="${dmDocumentUploader}" />
-			<var name=" dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
-	</command> -->
 
-<!-- 	<command name="CheckinMajorDMFolderDocument" priority="5">
-		<var name="dmDocumentFile" value="${dmDocumentFile}" />
-		<var name="dmDocumentSize" value="${dmDocumentSize}" />
-		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
-		<var name="dmFolderName" value="${dmFolderName}" />
-		<var name="dmFolderDescription" value="${dmFolderDescription}" />
-		<var name="key_siteName" value="${key_siteName}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="pageType" value="${pageType}" />
-		<var name="siteName" value="${siteName}" />
+		<execute macro="DMDocument#checkoutPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolder#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
-		<execute macro="DMFolderDocument#addPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#checkoutPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#checkinPG">
+		<execute macro="DMDocument#checkinPG">
 			<var name="revision" value="Major" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name=" dmDocumentUploader" value="${dmDocumentUploader}" />
 			<var name=" dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="CheckoutDMFolderDocument" priority="5">
+ 	<command name="CheckinMinorDMFolderDocument" priority="5">
+		<var name="dmDocumentFile" value="${dmDocumentFile}" />
+		<var name="dmDocumentSize" value="${dmDocumentSize}" />
+		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
+		<var name="dmFolderName" value="${dmFolderName}" />
+		<var name="dmFolderDescription" value="${dmFolderDescription}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+		<var name="siteName" value="${siteName}" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#checkinPG">
+			<var name="revision" value="Minor" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="SODocuments#viewPGDisplayView">
+			<var name=" dmDocumentUploader" value="${dmDocumentUploader}" />
+			<var name=" dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+		</execute>
+	</command>
+
+ 	<command name="CheckoutDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
@@ -263,22 +322,32 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#checkoutPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="workflow" value="Checkedout" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="DeleteDMFolderDocument" priority="5">
+ 	<command name="DeleteDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
@@ -298,14 +367,22 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#deletePG" />
-	</command> -->
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-<!-- 	<command name="DeleteDMFolderImage" priority="5">
+		<execute macro="DMDocument#deletePG" />
+	</command>
+
+	<command name="DeleteDMFolderImage" priority="5">
 		<var name="dmDocumentFile" value="${dmImageFile}" />
 		<var name="dmDocumentSize" value="${dmImageSize}" />
 		<var name="dmDocumentTitle" value="${dmImageTitle}" />
@@ -323,21 +400,29 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#deletePG" />
-	</command> -->
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-<!-- 	<command name="EditMinorDMFolderDocument" priority="5">
-		<var name="changeLog" value="This is a Minor Revision" />
-		<var name="dmDocumentFile" value="${dmDocumentFile}" />
-		<var name="dmDocumentSize" value="${dmDocumentSize}" />
-		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
-		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-		<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
+		<execute macro="DMDocument#deletePG" />
+	</command>
+
+	<command name="EditDMFolderImage" priority="5">
+		<var name="dmDocumentFile" value="${dmImageFile}" />
+		<var name="dmDocumentSize" value="${dmImageSize}" />
+		<var name="dmDocumentSizeSO" value="${dmImageSizeSO}" />
+		<var name="dmDocumentTitle" value="${dmImageTitle}" />
+		<var name="dmDocumentTitleEdit" value="${dmImageTitleEdit}" />
+		<var name="dmDocumentDescription" value="${dmImageDescription}" />
+		<var name="dmDocumentDescriptionEdit" value="${dmImageDescriptionEdit}" />
 		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
 		<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		<var name="dmDocumentVersionNumberEdit" value="${dmDocumentVersionNumberEdit}" />
@@ -345,9 +430,7 @@
 		<var name="dmFolderDescription" value="${dmFolderDescription}" />
 		<var name="key_siteName" value="${key_siteName}" />
 		<var name="pageName" value="${pageName}" />
-		<var name="pageType" value="${pageType}" />
 		<var name="siteName" value="${siteName}" />
-		<var name="workflow" value="Approved" />
 
 		<execute macro="SOSite#gotoPG" />
 
@@ -355,16 +438,27 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#editPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#editPG" />
 
 		<execute macro="SOSite#gotoPG" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
 
-		<execute macro="DMFolderDocument#viewPG">
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
 			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
@@ -372,9 +466,9 @@
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumberEdit}" />
 			<var name="versionNumber" value="${dmDocumentVersionNumberEdit}" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="EditMajorDMFolderDocument" priority="5">
+ 	<command name="EditMajorDMFolderDocument" priority="5">
 		<var name="changeLog" value="This is a Major Revision" />
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
@@ -400,16 +494,27 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#editPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#editPG" />
 
 		<execute macro="SOSite#gotoPG" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
 
-		<execute macro="DMFolderDocument#viewPG">
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
 			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
@@ -417,16 +522,16 @@
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumberEdit}" />
 			<var name="versionNumber" value="${dmDocumentVersionNumberEdit}" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="EditDMFolderImage" priority="5">
-		<var name="dmDocumentFile" value="${dmImageFile}" />
-		<var name="dmDocumentSize" value="${dmImageSize}" />
-		<var name="dmDocumentSizeSO" value="${dmImageSizeSO}" />
-		<var name="dmDocumentTitle" value="${dmImageTitle}" />
-		<var name="dmDocumentTitleEdit" value="${dmImageTitleEdit}" />
-		<var name="dmDocumentDescription" value="${dmImageDescription}" />
-		<var name="dmDocumentDescriptionEdit" value="${dmImageDescriptionEdit}" />
+ 	<command name="EditMinorDMFolderDocument" priority="5">
+		<var name="changeLog" value="This is a Minor Revision" />
+		<var name="dmDocumentFile" value="${dmDocumentFile}" />
+		<var name="dmDocumentSize" value="${dmDocumentSize}" />
+		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+		<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
 		<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 		<var name="dmDocumentVersionNumberEdit" value="${dmDocumentVersionNumberEdit}" />
@@ -434,7 +539,10 @@
 		<var name="dmFolderDescription" value="${dmFolderDescription}" />
 		<var name="key_siteName" value="${key_siteName}" />
 		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
 		<var name="siteName" value="${siteName}" />
+		<var name="revision" value="Minor" />
+		<var name="workflow" value="Approved" />
 
 		<execute macro="SOSite#gotoPG" />
 
@@ -442,16 +550,27 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#editPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#editPG" />
 
 		<execute macro="SOSite#gotoPG" />
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
 
-		<execute macro="DMFolderDocument#viewPG">
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
 			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
@@ -459,9 +578,9 @@
 			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumberEdit}" />
 			<var name="versionNumber" value="${dmDocumentVersionNumberEdit}" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="PublishDraftDMFolderDocument" priority="5">
+ 	<command name="PublishDraftDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
@@ -481,22 +600,32 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#saveAsDraftPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#saveAsDraftPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#publishDraftDMFolderDocument" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#publishDraftDMFolderDocument" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="DMFolderDocument#viewPG">
+		<execute macro="DMDocument#viewPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
-	</command> -->
+	</command> 
 
-<!-- 	<command name="SaveAndCheckinMinorDMFolderDocument" priority="5">
+ 	<command name="SaveAndCheckinMajorDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -515,73 +644,37 @@
 		<execute macro="DMFolder#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
-		<execute macro="DMFolderDocument#addPG" />
 
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#checkoutPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#saveAndCheckinPG">
-			<var name="revision" value="Minor" />
-			<var name="changeLog" value="Minor Revision" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
+		<execute macro="DMDocument#addPG" />
+
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
-		<execute macro="SODocuments#viewPGDisplayView">
-			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
-			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
-			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitleEdit}" />
-			<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
-			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumberEdit}" />
-			<var name="dmDocumentPreviousDescription" value="${dmDocumentDescription}" />
-			<var name="dmDocumentPreviousSize" value="${dmDocumentSizeSO}" />
-			<var name="dmDocumentPreviousTitle" value="${dmDocumentTitle}" />
-			<var name="dmDocumentPreviousUploader" value="${dmDocumentUploader}" />
-			<var name="dmDocumentPreviousVersionNumber" value="${dmDocumentVersionNumber}" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
-	</command> -->
 
-<!-- 	<command name="SaveAndCheckinMajorDMFolderDocument" priority="5">
-		<var name="dmDocumentFile" value="${dmDocumentFile}" />
-		<var name="dmDocumentSize" value="${dmDocumentSize}" />
-		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
-		<var name="dmFolderName" value="${dmFolderName}" />
-		<var name="dmFolderDescription" value="${dmFolderDescription}" />
-		<var name="key_siteName" value="${key_siteName}" />
-		<var name="pageName" value="${pageName}" />
-		<var name="pageType" value="${pageType}" />
-		<var name="siteName" value="${siteName}" />
-		<var name="workflow" value="Approved" />
+		<execute macro="DMDocument#checkoutPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolder#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="SOSite#gotoPG" />
-		<execute macro="DMFolderDocument#addPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#checkoutPG" />
-
-		<execute macro="SOSite#gotoPG" />
-
-		<execute macro="DMFolderDocument#saveAndCheckinPG">
+		<execute macro="DMDocument#saveAndCheckinPG">
 			<var name="revision" value="Major" />
 			<var name="changeLog" value="Major Revision" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
@@ -596,9 +689,75 @@
 			<var name="dmDocumentPreviousUploader" value="${dmDocumentUploader}" />
 			<var name="dmDocumentPreviousVersionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="SaveAsDraftDMFolderDocument" priority="5">
+ 	<command name="SaveAndCheckinMinorDMFolderDocument" priority="5">
+		<var name="dmDocumentFile" value="${dmDocumentFile}" />
+		<var name="dmDocumentSize" value="${dmDocumentSize}" />
+		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+		<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
+		<var name="dmFolderName" value="${dmFolderName}" />
+		<var name="dmFolderDescription" value="${dmFolderDescription}" />
+		<var name="key_siteName" value="${key_siteName}" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageType" value="${pageType}" />
+		<var name="siteName" value="${siteName}" />
+		<var name="workflow" value="Approved" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutPG" />
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#saveAndCheckinPG">
+			<var name="revision" value="Minor" />
+			<var name="changeLog" value="Minor Revision" />
+		</execute>
+
+		<execute macro="SOSite#gotoPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="SODocuments#viewPGDisplayView">
+			<var name="dmDocumentDescription" value="${dmDocumentDescriptionEdit}" />
+			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
+			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitleEdit}" />
+			<var name="dmDocumentUploader" value="${dmDocumentUploader}" />
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumberEdit}" />
+			<var name="dmDocumentPreviousDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentPreviousSize" value="${dmDocumentSizeSO}" />
+			<var name="dmDocumentPreviousTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentPreviousUploader" value="${dmDocumentUploader}" />
+			<var name="dmDocumentPreviousVersionNumber" value="${dmDocumentVersionNumber}" />
+		</execute>
+	</command>
+
+ 	<command name="SaveAsDraftDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -617,18 +776,24 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#saveAsDraftPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#saveAsDraftPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="workflow" value="Draft" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="SaveAsDraftEditDMFolderDocument" priority="5">
+ 	<command name="SaveAsDraftEditDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -651,22 +816,32 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#saveAsDraftEditDMFolderDocument" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#saveAsDraftEditDMFolderDocument" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="DMFolderDocument#viewSaveAsDraftEditDMFolderDocumentPG">
+		<execute macro="DMDocument#viewSaveAsDraftEditDMFolderDocumentPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumberEdit}" />
 		</execute>
-	</command> -->
+	</command>
 
-<!-- 	<command name="ViewCheckoutDMFolderDocumentSOUser" priority="5">
+ 	<command name="ViewCheckoutDMFolderDocumentSOUser" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -682,6 +857,7 @@
 		<var name="userFirstName" value="Social01" />
 		<var name="userMiddleName" value="Office01" />
 		<var name="userLastName" value="User01" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
@@ -699,17 +875,24 @@
 		<execute macro="DMFolder#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
-		<execute macro="DMFolderDocument#addPG" />
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#checkoutPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="SOUser#logoutPG" />
+		<execute macro="DMDocument#checkoutPG" />
 
-		<execute macro="SOUser#loginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="password" value="test" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -720,7 +903,9 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
 		<execute macro="SODocuments#viewPGDisplayView">
 			<var name="workflow" value="Locked" />
@@ -743,6 +928,7 @@
 		<var name="userFirstName" value="Social01" />
 		<var name="userMiddleName" value="Office01" />
 		<var name="userLastName" value="User01" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
@@ -761,13 +947,15 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#saveAsDraftPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="SOUser#logoutPG" />
+		<execute macro="DMDocument#saveAsDraftPG" />
 
-		<execute macro="SOUser#loginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="password" value="test" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -778,8 +966,11 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="PORTLET_INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>		
+		
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 
 	<command name="ViewDraftEditDMFolderDocumentSOUser" priority="5">
@@ -802,6 +993,7 @@
 		<var name="userFirstName" value="Social01" />
 		<var name="userMiddleName" value="Office01" />
 		<var name="userLastName" value="User01" />
+		<var name="userName" value="Social01 Office01 User01" />
 		<var name="userScreenName" value="socialoffice01" />
 
 		<execute macro="SOUser#addUserWithSORole">
@@ -820,17 +1012,23 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#addPG" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG" />
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute macro="DMFolderDocument#saveAsDraftEditDMFolderDocument" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="SOUser#logoutPG" />
+		<execute macro="DMDocument#saveAsDraftEditDMFolderDocument" />
 
-		<execute macro="SOUser#loginPG">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="password" value="test" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="${userName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="SOSite#gotoPG" />
@@ -841,18 +1039,20 @@
 
 		<execute macro="SOSite#gotoPG" />
 
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 
-		<execute macro="DMFolderDocument#viewPGUser">
+		<execute macro="DMDocument#viewPGNonAuthor">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
-	</command> -->
+	</command>
 
 	<tear-down>
 		<execute macro="SODocuments#tearDownDocumentViewPG" />
 
 		<execute macro="SOSite#tearDownCP" />
 
-		<!-- <execute macro="SOUser#tearDownCP" /> -->
+		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 </definition>

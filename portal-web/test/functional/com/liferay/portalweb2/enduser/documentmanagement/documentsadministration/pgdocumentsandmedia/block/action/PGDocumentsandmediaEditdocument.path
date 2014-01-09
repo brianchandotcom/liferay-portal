@@ -59,6 +59,16 @@
 	<td>Document Type</td>
 </tr>
 <tr>
+	<td>MAJOR_REVISION_BUTTON</td>
+	<td>//label[contains(.,'Major Revision')]/input</td>
+	<td>Document Type</td>
+</tr>
+<tr>
+	<td>MINOR_REVISION_BUTTON</td>
+	<td>//label[contains(.,'Minor Revision')]/input</td>
+	<td>Document Type</td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td>Publish</td>

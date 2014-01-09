@@ -79,8 +79,6 @@
 	</command>
 
 	<command name="cancelCheckoutPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT" />
@@ -113,8 +111,6 @@
 	</command>
 
  	<command name="checkinPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT" />
@@ -154,8 +150,6 @@
 	</command>
 
 	<command name="checkoutPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT" />
@@ -257,6 +251,21 @@
 			<isset var="dmDocumentDescriptionEdit" />
 			<then>
 				<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="revision" />
+			<then>
+				<if>
+					<equals arg1="${revision}" arg2="Major" />
+					<then>
+						<execute action="PGDocumentsandmediaEditdocument#click" locator-key1="MAJOR_REVISION_BUTTON" />
+					</then>
+					<else>
+						<execute action="PGDocumentsandmediaEditdocument#click" locator-key1="MINOR_REVISION_BUTTON" />
+					</else>
+				</if>
 			</then>
 		</if>
 
@@ -367,10 +376,6 @@
 	</command>
 
 	<command name="publishDraftDMFolderDocument">
-		<var name="key_dmFolderName" value="${dmFolderName}" />
-
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT" />
@@ -401,37 +406,9 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="publishDraftDMFolderDocument">
-		<var name="key_dmFolderName" value="${dmFolderName}" />
-
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT" />
-
-		<if>
-			<condition action="PGDocumentsandmediaDocument#isElementPresent" locator-key1="DOCUMENT_INFO_TITLE" />
-			<then>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-			</then>
-			<else>
-				<execute action="SODocuments#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-			</else>
-		</if>
-
-		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
-
-		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="saveAndCheckinPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}"/>
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT_TITLE" />
 
 		<if>
@@ -456,7 +433,6 @@
 		<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitleEdit}"  />
 		<execute action="PGDocumentsandmediaEditdocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
 
-
 		<if>
 			<equals arg1="${revision}" arg2="Major" />
 			<then>
@@ -474,7 +450,6 @@
 			</then>
 		</if>
 
-
 		<execute action="PGDocumentsandmediaEditdocument#assertClick" locator-key1="SAVE_AND_CHECKIN_BUTTON" value1="Save and Checkin" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -491,42 +466,18 @@
 	</command>
 
 	<command name="saveAsDraftPG">
-		<if>
-			<isset var="number" />
-			<then>
-				<var name="number" value="${number}" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
-				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER_INCREMENT" />
-
-				<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-				<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
-
-				<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-				<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}${number}" />
-				<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}${number}" />
-				<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-			</then>
-			<else>
-				<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
-				<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
-				<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
-
-				<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-				<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
-				<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
-				<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
-			</else>
-		</if>
+		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
 
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveAsDraftEditDMFolderDocument">
-		<var name="key_dmFolderName" value="${dmFolderName}" />
-
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
-
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT" />
@@ -704,7 +655,17 @@
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
-		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />
+
+		<if>
+			<condition action="SODocuments#isElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+			<then>
+				<execute action="SODocuments#assertElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />	
+			</else>
+		</if>
+
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_MOVE_BUTTON" value1="Move" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
@@ -796,6 +757,67 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_WORKFLOW" value1="Status: ${workflow}" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />
+	</command>
+
+	<command name="viewPGNonAuthor">
+		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<if>
+            <condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRIES_DOCUMENT_TITLE" />
+            <then>
+                <execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT_TITLE" />
+           	</then>
+        </if>
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+
+		<if>
+			<condition action="SODocuments#isElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+			<then>
+				<execute action="SODocuments#assertElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />	
+			</else>
+		</if>
+
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_THUMBNAIL" />
+
+		<if>
+			<isset var="dmDocumentAuthor" />
+			<then>
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentAuthor}" />
+			</then>
+			<else>
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_UPLOADED_BY" value1="Test Test" />
+			</else>
+		</if>
+
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
+
+		<if>
+			<isset var="dmDocumentVersionNumber" />
+			<then>
+				<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION_NUMBER" value1="Version ${dmDocumentVersionNumber}" />
+			</then>
+			<else>
+				<var name="key_dmDocumentVersionNumber" value="Version 1.0" />
+
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_VERSION_NUMBER" value1="Version 1.0" />
+			</else>
+		</if>
+
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_DATE" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_WORKFLOW_STATUS" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_DOWNLOAD_DOCUMENT" />
+		<execute action="PGDocumentsandmediaDocument#assertElementPresent" locator-key1="DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL" />
+		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA" value1="Automatically Extracted Metadata" />
 	</command>
 
 	<command name="viewPGviaStagingLocalLive">

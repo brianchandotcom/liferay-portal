@@ -27,10 +27,7 @@
 				A.one('#<%= id %>').delegate(
 					['click', 'keypress'],
 					function(event) {
-						var charCode = event.charCode;
-						var eventType = event.type;
-
-						if ((eventType === 'click') || (eventType === 'keypress' && (charCode === 13 || charCode === 32))) {
+						if ((event.type === 'click') || event.isKeyInSet('ENTER', 'SPACE')) {
 							var STR_OPEN = 'open';
 
 							var btnNavbar = event.currentTarget;

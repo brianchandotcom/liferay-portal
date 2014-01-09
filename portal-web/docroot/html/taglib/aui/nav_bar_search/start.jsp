@@ -29,11 +29,7 @@
 			A.one('#<%= id %>NavbarBtn').on(
 				['click', 'keypress'],
 				function(event) {
-					var charCode = event.charCode;
-
-					var eventType = event.type;
-
-					if ((eventType === 'click') || (eventType === 'keypress' && (charCode === 13 || charCode === 32))) {
+					if ((event.type === 'click') || event.isKeyInSet('ENTER', 'SPACE')) {
 						var btnNavbar = event.currentTarget;
 
 						var navbar = btnNavbar.ancestor('.navbar');
@@ -42,7 +38,9 @@
 
 						var handles = Liferay.Data['<%= id %>Handle'];
 
-						if (navbarCollapse.hasClass('open') && handles && handles.length) {
+						var navbarWillOpen = !navbarCollapse.hasClass('open');
+
+						if (!navbarWillOpen && handles && handles.length) {
 							(new A.EventHandle(handles)).detach();
 
 							handles = null;
@@ -62,6 +60,8 @@
 								if (navbar) {
 									navbar.all('.btn-navbar, .nav').show();
 								}
+
+								btnNavbar.focus();
 							};
 
 							var handleMouseOutside = navbarCollapse.on(
@@ -73,15 +73,19 @@
 								}
 							);
 
-							var handleEscape = A.one('doc').on('key', closeNavBar, 'down:27');
+							var handleEscape = A.getDoc().on('key', closeNavBar, 'down:27');
 
 							handles.push(handleEscape, handleMouseOutside);
 						}
 
-						navbarCollapse.toggleClass('open');
+						navbarCollapse.toggleClass('open', navbarWillOpen);
 
 						if (navbar) {
 							navbar.all('.btn-navbar, .nav').hide();
+						}
+
+						if (navbarWillOpen) {
+							Liferay.Util.focusFormField(navbarCollapse.one('input.search-query'));
 						}
 
 						Liferay.Data['<%= id %>Handle'] = handles;

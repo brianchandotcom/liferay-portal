@@ -98,7 +98,7 @@
 		<if>
 			<equals arg1="${assignToMeKey}" arg2="ASSIGN_TO_ME" />
 			<then>
-		 		<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="ASSIGN_TO_ME" value1="Assign to Me" />
+				<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="ASSIGN_TO_ME" value1="Assign to Me" />
 			</then>
 			<else>
 				<execute action="CPMyworkflowtasksTask#assertClick" locator-key1="MENU_ASSIGN_TO_ME" value1="Assign to Me" />

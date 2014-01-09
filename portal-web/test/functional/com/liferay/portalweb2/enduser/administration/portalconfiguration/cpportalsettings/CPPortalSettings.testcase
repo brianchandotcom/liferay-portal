@@ -18,7 +18,7 @@
 
 		<execute macro="WebContent#tearDownCP" />
 
-        <execute macro="Page#tearDownPG" />
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
 	<command name="EditDefaultUserAssociationsOrganizationSites" priority="5">

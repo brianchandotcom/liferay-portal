@@ -1,7 +1,7 @@
 <definition component-name="portal-wcm">
-<var name="portletName" value="Site Templates" />
-<var name="siteName" value="Site Name" />
-<var name="siteTemplateName" value="Site Template Name" />
+	<var name="portletName" value="Site Templates" />
+	<var name="siteName" value="Site Name" />
+	<var name="siteTemplateName" value="Site Template Name" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

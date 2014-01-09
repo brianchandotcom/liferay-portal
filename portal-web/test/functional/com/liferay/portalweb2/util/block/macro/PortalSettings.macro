@@ -2,57 +2,57 @@
 	<command name="configureContentSharingAcrossSitesCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_CONTENT_SHARING" value1="Content Sharing" />
 
-        <if>
-           <equals arg1="${enableAcrossSite}" arg2="true" />
-           <then>
+		<if>
+			<equals arg1="${enableAcrossSite}" arg2="true" />
+			<then>
            		if
-           		<execute action="CPPortalsettingsContentsharing#check" locator-key1="CONTENT_SHARING_CHECKBOX" />
-           		<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="CPPortalsettingsContentsharing#check" locator-key1="CONTENT_SHARING_CHECKBOX" />
+				<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 				<execute action="CPPortalsettingsContentsharing#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				<execute action="CPPortalsettingsContentsharing#assertChecked" locator-key1="CONTENT_SHARING_CHECKBOX" />
-           </then>
-           <elseif>
-           		<equals arg1="${enableAcrossSite}" arg2="false" />
-           		<then>
-           			<execute action="CPPortalsettingsContentsharing#uncheck" locator-key1="CONTENT_SHARING_CHECKBOX" />
-           			<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</then>
+			<elseif>
+				<equals arg1="${enableAcrossSite}" arg2="false" />
+				<then>
+					<execute action="CPPortalsettingsContentsharing#uncheck" locator-key1="CONTENT_SHARING_CHECKBOX" />
+					<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 					<execute action="CPPortalsettingsContentsharing#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					<execute action="CPPortalsettingsContentsharing#assertNotChecked" locator-key1="CONTENT_SHARING_CHECKBOX" />
 				</then>
-           </elseif>
-        </if>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="configureContentSharingSubSitesCP">
 		<execute action="CPPortalsettings#assertClick" locator-key1="MENU_CONFIGURATION_CONTENT_SHARING" value1="Content Sharing" />
 
-        <if>
-           <equals arg1="${subSites}" arg2="enabledByDefault" />
-           <then>
-           		<execute action="CPPortalsettingsContentsharing#select" locator-key1="CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
-           		<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<if>
+			<equals arg1="${subSites}" arg2="enabledByDefault" />
+			<then>
+				<execute action="CPPortalsettingsContentsharing#select" locator-key1="CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
+				<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 				<execute action="CPPortalsettingsContentsharing#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				<execute action="CPPortalsettingsContentsharing#assertSelectedLabel" locator-key1="CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
-           </then>
-           <elseif>
-           		<equals arg1="${subSites}" arg2="disabledByDefault" />
-           		<then>
-	           		<execute action="CPPortalsettingsContentsharing#select" locator-key1="CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
-	           		<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</then>
+			<elseif>
+				<equals arg1="${subSites}" arg2="disabledByDefault" />
+				<then>
+					<execute action="CPPortalsettingsContentsharing#select" locator-key1="CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
+					<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 					<execute action="CPPortalsettingsContentsharing#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					<execute action="CPPortalsettingsContentsharing#assertSelectedLabel" locator-key1="CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
 				</then>
-           </elseif>
-            <elseif>
-           		<equals arg1="${subSites}" arg2="disabled" />
-           		<then>
-	           		<execute action="CPPortalsettingsContentsharing#select" locator-key1="CONTENT_SHARING_SELECTOR" value1="Disabled" />
-	           		<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			</elseif>
+			<elseif>
+				<equals arg1="${subSites}" arg2="disabled" />
+				<then>
+					<execute action="CPPortalsettingsContentsharing#select" locator-key1="CONTENT_SHARING_SELECTOR" value1="Disabled" />
+					<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 					<execute action="CPPortalsettingsContentsharing#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					<execute action="CPPortalsettingsContentsharing#assertSelectedLabel" locator-key1="CONTENT_SHARING_SELECTOR" value1="Disabled" />
 				</then>
-           </elseif>
-        </if>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">

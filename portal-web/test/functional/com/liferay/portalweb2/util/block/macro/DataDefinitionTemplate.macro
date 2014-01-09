@@ -25,7 +25,7 @@
 
 	<command name="addFormFieldCmdCP">
 		<var name="fieldNumber" value="${formFieldKey?getFirstNumber()}" />
- 		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
+		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
 		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
 		<var name="key_fieldName" value="${fieldName}" />
 

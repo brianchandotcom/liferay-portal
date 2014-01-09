@@ -39,6 +39,41 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARK_AS_A_QUESTION_CHECKBOX</td>
+	<td>//input[@id='_19_questionCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANONYMOUS_CHECKBOX</td>
+	<td>//input[@id='_19_anonymousCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE_ME_CHECKBOX</td>
+	<td>//input[@id='_19_subscribeCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIORITY_SELECT</td>
+	<td>//select[@id='_19_priority']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALLOW_PINGBACKS_CHECKBOX</td>
+	<td>//input[@id='_19_allowPingbacksCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[@id='_19_saveButton' and contains(.,'Save as Draft')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[@id='_19_publishButton' and contains(.,'Publish')]</td>
 	<td></td>
@@ -46,6 +81,11 @@
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
 	<td>//button[@id='_19_publishButton' and contains(.,'Submit for Publication')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

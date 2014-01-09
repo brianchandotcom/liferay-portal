@@ -102,6 +102,7 @@
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="postCount" value="1" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>

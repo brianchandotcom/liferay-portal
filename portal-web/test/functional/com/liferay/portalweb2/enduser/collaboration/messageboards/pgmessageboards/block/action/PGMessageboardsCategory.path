@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGMessageboards</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_HEADER</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>
@@ -26,6 +36,114 @@
 <tr>
 	<td>PORTLET_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBCATEGORY_BUTTON</td>
+	<td>//button[contains(.,'Add Subcategory')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUBCATEGORY_TABLE-->
+<tr>
+	<td>SUBCATEGORY_TABLE_PANEL</td>
+	<td>//div[@id='messageBoardsCategoriesPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_TABLE_CATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a/span[@class='category-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_TABLE_CATEGORY_DESCRIPTION</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/a/div[@class='category-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_TABLE_CATEGORY_GENERIC</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td/a/span[@class='category-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_TABLE_CATEGORIES</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_TABLE_THREADS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_TABLE_POSTS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUBCATEGORY_MENULIST-->
+<tr>
+	<td>SUBCATEGORY_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_MENULIST_RSS</td>
+	<td>//a[@role='menuitem' and contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_MENULIST_SUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_MENULIST_UNSUBSCRIBE</td>
+	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCATEGORY_MENULIST_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--THREAD_TABLE-->
+<tr>
+	<td>THREAD_TABLE_FLAG</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//a[contains(.,'Waiting for an Answer')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -1411,6 +1411,51 @@ tck.url=true</echo>
 					/>
 				</unzip>
 
+				<if>
+					<and>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<matches pattern="http" string="${test.build.fix.pack.url}" />
+					</and>
+					<then>
+						<antelope:stringutil property="test.build.fix.pack.file.name" string="${test.build.fix.pack.url}">
+							<antelope:replace regex=".+/liferay-" replacement="liferay-" />
+						</antelope:stringutil>
+
+						<path id="app.server.dir">
+							<dirset dir="${app.server.parent.dir}">
+								<include name="*${app.server.type}-*" />
+							</dirset>
+						</path>
+
+						<property name="app.server.dir" refid="app.server.dir" />
+
+						<delete dir="${app.server.dir}/patching-tool" />
+
+						<get
+							dest="${basedir}"
+							src="${patching.tool.zip.url}"
+						/>
+
+						<unzip dest="${app.server.dir}">
+							<fileset
+								dir="${basedir}"
+								includes="patching-tool*"
+							/>
+						</unzip>
+
+						<get
+							dest="${app.server.dir}/patching-tool/patches"
+							src="${test.build.fix.pack.url}"
+						/>
+
+						<execute dir="${app.server.dir}/patching-tool">
+							patching-tool.bat auto-discovery
+							patching-tool.bat install -force
+							patching-tool.bat update-plugins
+						</execute>
+					</then>
+				</if>
+
 				<chmod perm="a+x">
 					<fileset dir="${test.app.server.bin.dir}">
 						<include name="*.sh" />

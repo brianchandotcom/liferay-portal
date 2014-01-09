@@ -522,6 +522,125 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="execute">
+		<attribute default="." name="dir" />
+		<text name="commands" />
+
+		<sequential>
+			<propertyregex
+				input="@{commands}"
+				override="true"
+				property="commands.trimmed"
+				regexp="\n(?!\w|\t)|\t"
+				replace=""
+			/>
+
+			<for delimiter="${line.separator}" list="${commands.trimmed}" param="command">
+				<sequential>
+					<propertyregex
+						input="@{command}"
+						override="true"
+						property="command.executable"
+						regexp="(.+?) .+"
+						replace="\1"
+					/>
+
+					<propertyregex
+						input="@{command}"
+						override="true"
+						property="command.arg.line"
+						regexp=".+? (.+)"
+						replace="\1"
+					/>
+
+					<if>
+						<contains string="${command.arg.line}" substring=" > " />
+						<then>
+							<propertyregex
+								input="${command.arg.line}"
+								override="true"
+								property="command.arg.line"
+								regexp="(.+) > .+"
+								replace="\1"
+							/>
+
+							<propertyregex
+								input="@{command}"
+								override="true"
+								property="command.output"
+								regexp=".+ > (.+)"
+								replace="\1"
+							/>
+
+							<if>
+								<os family="unix" />
+								<then>
+									<exec dir="@{dir}" executable="${command.executable}" output="${command.output}">
+										<arg line="${command.arg.line}" />
+									</exec>
+								</then>
+								<else>
+									<exec dir="@{dir}" executable="cmd.exe" output="${command.output}">
+										<arg line="/c ${command.executable} ${command.arg.line}" />
+									</exec>
+								</else>
+							</if>
+						</then>
+						<elseif>
+							<contains string="${command.arg.line}" substring=" >> " />
+							<then>
+								<propertyregex
+									input="${command.arg.line}"
+									override="true"
+									property="command.arg.line"
+									regexp="(.+) >> .+"
+									replace="\1"
+								/>
+
+								<propertyregex
+									input="@{command}"
+									override="true"
+									property="command.output"
+									regexp=".+ >> (.+)"
+									replace="\1"
+								/>
+
+								<if>
+									<os family="unix" />
+									<then>
+										<exec append="true" dir="@{dir}" executable="${command.executable}" output="${command.output}">
+											<arg line="${command.arg.line}" />
+										</exec>
+									</then>
+									<else>
+										<exec append="true" dir="@{dir}" executable="cmd.exe" output="${command.output}">
+											<arg line="/c ${command.executable} ${command.arg.line}" />
+										</exec>
+									</else>
+								</if>
+							</then>
+						</elseif>
+						<else>
+							<if>
+								<os family="unix" />
+								<then>
+									<exec dir="@{dir}" executable="${command.executable}">
+										<arg line="${command.arg.line}" />
+									</exec>
+								</then>
+								<else>
+									<exec dir="@{dir}" executable="cmd.exe">
+										<arg line="/c @{command}" />
+									</exec>
+								</else>
+							</if>
+						</else>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="manifest-helper">
 		<attribute name="analyze" default="false" />
 

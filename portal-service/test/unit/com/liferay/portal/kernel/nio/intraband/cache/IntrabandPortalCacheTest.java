@@ -81,29 +81,6 @@ public class IntrabandPortalCacheTest {
 	}
 
 	@Test
-	public void testDestroy() {
-		IntrabandPortalCache<String, String> intrabandPortalCache =
-			new IntrabandPortalCache<String, String>(
-				_testName, _mockRegistrationReference);
-
-		intrabandPortalCache.destroy();
-
-		Datagram datagram = _mockIntraband.getDatagram();
-
-		Deserializer deserializer = new Deserializer(
-			datagram.getDataByteBuffer());
-
-		int actionTypeOrdinal = deserializer.readInt();
-
-		PortalCacheActionType portalCacheActionType =
-			PortalCacheActionType.values()[actionTypeOrdinal];
-
-		Assert.assertEquals(
-			PortalCacheActionType.DESTROY, portalCacheActionType);
-		Assert.assertEquals(_testName, deserializer.readString());
-	}
-
-	@Test
 	public void testGet() {
 
 		// Normal get

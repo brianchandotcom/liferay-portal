@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
@@ -62,6 +63,41 @@ public class IntrabandPortalCacheManagerTest {
 			getRegistrationReference(intrabandPortalCacheManager));
 		Assert.assertSame(
 			_mockIntraband, getIntraband(intrabandPortalCacheManager));
+	}
+
+	@Test
+	public void testDestroy() throws Exception {
+		IntrabandPortalCacheManager<String, String>
+			intrabandPortalCacheManager =
+				new IntrabandPortalCacheManager<String, String>(
+					_mockRegistrationReference);
+
+		String portalCacheName = "portalCacheName";
+
+		PortalCache<?, ?> portalCache = intrabandPortalCacheManager.getCache(
+			portalCacheName);
+
+		Map<String, PortalCache<?, ?>> portalCaches = getPortalCaches(
+			intrabandPortalCacheManager);
+
+		Assert.assertSame(portalCache, portalCaches.get(portalCacheName));
+		Assert.assertEquals(1, portalCaches.size());
+
+		intrabandPortalCacheManager.destroy();
+
+		Assert.assertTrue(portalCaches.isEmpty());
+
+		Datagram datagram = _mockIntraband.getDatagram();
+
+		Assert.assertNotNull(datagram);
+		Assert.assertEquals(
+			SystemDataType.PORTAL_CACHE.getValue(), datagram.getType());
+
+		Deserializer deserializer = new Deserializer(
+			datagram.getDataByteBuffer());
+
+		Assert.assertEquals(
+			PortalCacheActionType.DESTROY.ordinal(), deserializer.readInt());
 	}
 
 	@Test
@@ -178,9 +214,35 @@ public class IntrabandPortalCacheManagerTest {
 		Assert.assertEquals(1, portalCaches.size());
 		Assert.assertSame(portalCache2, portalCaches.get(portalCacheName2));
 
+		Datagram datagram = _mockIntraband.getDatagram();
+
+		Assert.assertNotNull(datagram);
+		Assert.assertEquals(
+			SystemDataType.PORTAL_CACHE.getValue(), datagram.getType());
+
+		Deserializer deserializer = new Deserializer(
+			datagram.getDataByteBuffer());
+
+		Assert.assertEquals(
+			PortalCacheActionType.REMOVE_CACHE.ordinal(),
+			deserializer.readInt());
+		Assert.assertEquals(portalCacheName1, deserializer.readString());
+
 		intrabandPortalCacheManager.clearAll();
 
-		Assert.assertTrue(portalCaches.isEmpty());
+		Assert.assertEquals(1, portalCaches.size());
+		Assert.assertSame(portalCache2, portalCaches.get(portalCacheName2));
+
+		datagram = _mockIntraband.getDatagram();
+
+		Assert.assertNotNull(datagram);
+		Assert.assertEquals(
+			SystemDataType.PORTAL_CACHE.getValue(), datagram.getType());
+
+		deserializer = new Deserializer(datagram.getDataByteBuffer());
+
+		Assert.assertEquals(
+			PortalCacheActionType.CLEAR_ALL.ordinal(), deserializer.readInt());
 	}
 
 	private static MockIntraband getIntraband(
@@ -224,6 +286,10 @@ public class IntrabandPortalCacheManagerTest {
 
 		@Override
 		public void clearAll() {
+		}
+
+		@Override
+		public void destroy() {
 		}
 
 		@Override

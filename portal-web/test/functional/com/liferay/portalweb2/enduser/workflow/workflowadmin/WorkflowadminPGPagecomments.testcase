@@ -131,7 +131,7 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-		<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetTitle" value="${commentBody}" />
 			<var name="workflowAssetType" value="Comments" />
 			<var name="workflowTask" value="Review" />
 		</execute>

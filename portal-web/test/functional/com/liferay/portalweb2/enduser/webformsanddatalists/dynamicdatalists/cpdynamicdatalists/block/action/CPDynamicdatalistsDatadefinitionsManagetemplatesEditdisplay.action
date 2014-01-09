@@ -4,13 +4,13 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 
- 		<case locator-key1="DATA_LIST_RECORD_FIELDS_TEXT">
+		<case locator-key1="DATA_LIST_RECORD_FIELDS_TEXT">
 			<execute function="AssertClick#assertTextClickAt" />
 		</case>
 	</command>
 
 	<command name="assertTextEquals">
- 		<case locator-key1="HEADER_TITLE">
+		<case locator-key1="HEADER_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

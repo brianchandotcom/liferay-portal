@@ -44,7 +44,7 @@
 		</execute>
 	</command>
 
- 	<command name="AddAddress" priority="5">
+	<command name="AddAddress" priority="5">
 		<var name="userAddressCity" value="Ray of Light" />
 		<var name="userAddressCountry" value="United States" />
 		<var name="userAddressPostalCode" value="91234" />

@@ -108,7 +108,7 @@
 		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 
 		<if>
-		<condition action="CPSitesEdit#isElementPresent" locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
+			<condition action="CPSitesEdit#isElementPresent" locator-key1="STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
 			<then>
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 				<execute action="CPSitesEdit#check" locator-key1="STAGING_NONE" />

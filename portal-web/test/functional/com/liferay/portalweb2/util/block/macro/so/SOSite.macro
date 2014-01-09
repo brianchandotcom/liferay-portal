@@ -265,7 +265,7 @@
 				<execute action="SOUserBar#assertTextEquals" locator-key1="GO_TO_SITE_EMPTY" value1="There are no results." />
 				<execute action="SOUserBar#assertElementNotPresent" locator-key1="GO_TO_SITE_NAME_LINK" />
 			</then>
-				<elseif>
+			<elseif>
 				<equals arg1="${siteType}" arg2="Private Restricted" />
 				<then>
 					<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_NAME" />

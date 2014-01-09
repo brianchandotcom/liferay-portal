@@ -1,6 +1,6 @@
 <definition>
 	<command name="addPG">
-  		<var name="key_assetTitle" value="${assetTitle}" />
+		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_CONTENT_LINK" value1="Content" />
@@ -10,9 +10,9 @@
 		<execute action="Dockbar#mouseOver" locator-key1="ADD_CONTENT_CONTENT_TITLE" />
 		<execute action="Dockbar#assertTextEquals" locator-key1="ADD_CONTENT_POPOVER_CONTENT_TITLE" value1="${assetTitle}" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_CONTENT_POPOVER_ADD_BUTTON" value1="Add" />
-    </command>
+	</command>
 
-    <command name="addNewPG">
+	<command name="addNewPG">
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_CONTENT_LINK" value1="Content" />
 
@@ -20,5 +20,5 @@
 
 		<execute action="Dockbar#assertClick" locator-key1="ADD_CONTENT_ADD_NEW" value1="Add New" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_CONTENT_ADD_NEW_MENULIST" value1="${assetType}" />
-    </command>
+	</command>
 </definition>

@@ -303,7 +303,7 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
- 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${siteRoleName}" />

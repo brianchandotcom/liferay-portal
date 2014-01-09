@@ -76,7 +76,7 @@
 
 				<!-- CSS -->
 
-				<property name="alloy.build.dir" value="docroot/html/ALLOY_ZIP/alloy-${alloy.version}/build" />
+				<property name="alloy.build.dir" value="docroot/html/ALLOY_ZIP/build" />
 				<property name="alloy.temp.dir" value="docroot/html/ALLOY_ZIP/temp" />
 
 				<concat destfile="${alloy.temp.dir}/aui_deprecated.css">

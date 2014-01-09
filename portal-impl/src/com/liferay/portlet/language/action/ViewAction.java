@@ -15,6 +15,8 @@
 package com.liferay.portlet.language.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -155,7 +157,12 @@ public class ViewAction extends PortletAction {
 			}
 		}
 
-		redirect = redirect + queryString;
+		int lifecycle = GetterUtil.getInteger(
+			HttpUtil.getParameter(queryString, "p_p_lifecycle", false));
+
+		if (lifecycle == 0) {
+			redirect = redirect + queryString;
+		}
 
 		actionResponse.sendRedirect(redirect);
 	}

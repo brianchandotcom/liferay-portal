@@ -29,27 +29,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP</td>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SETUP</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Setup')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS</td>
+	<td>NAVIGATION_PERMISSIONS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMUNICATION</td>
+	<td>NAVIGATION_COMMUNICATION</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Communication')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SHARING</td>
+	<td>NAVIGATION_SHARING</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SCOPE</td>
+	<td>NAVIGATION_SCOPE</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
@@ -58,15 +69,40 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SCOPE-->
+<!--SETUP_NAVIGATION-->
 <tr>
-	<td>SCOPE_SCOPE_DROPDOWN</td>
-	<td>//div[contains(@class,'btn-group') and contains(@class,'lfr-icon-menu')]/a</td>
+	<td>SETUP_NAVIGATION_GENERAL</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'General')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SCOPE_SCOPE</td>
-	<td>//ul[@role='menu']/li/a[contains(.,'${key_scopeName}')]</td>
+	<td>SETUP_NAVIGATION_EMAIL_FROM</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Message Added Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Message Updated Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_THREAD_PRIORITIES</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Thread Priorities')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_USER_RANKS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'User Ranks')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_NAVIGATION_RSS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 </tbody>

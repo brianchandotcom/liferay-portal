@@ -44,6 +44,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--THREAD_ACTIONS-->
+<tr>
+	<td>THREAD_ACTIONS_SUBSCRIBE</td>
+	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_ACTIONS_UNSUBSCRIBE</td>
+	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--THREAD_TABLE-->
 <tr>
 	<td>THREAD_TABLE_SUBJECT_1</td>

@@ -1204,6 +1204,8 @@ tck.url=true</echo>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					save.screenshot=true
 				</echo>
+
+				<loadfile failonerror="false" property="system-ext.properties.content" srcfile="portal-impl/classes/system-ext.properties" />
 			</then>
 		</if>
 
@@ -2194,6 +2196,17 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="start-selenium">
+		<if>
+			<not>
+				<contains string="${system-ext.properties.content}" substring="java.awt.headless=false" />
+			</not>
+			<then>
+				<echo append="true" file="portal-impl/classes/system-ext.properties">
+					java.awt.headless=false
+				</echo>
+			</then>
+		</if>
+
 		<!--<java
 			jar="lib/development/selenium-server.jar"
 			fork="true"
@@ -2265,6 +2278,22 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="stop-selenium">
+		<if>
+			<not>
+				<filesmatch
+					file1="portal-impl/src/system-ext.properties"
+					file2="portal-impl/classes/system-ext.properties"
+				/>
+			</not>
+			<then>
+				<copy
+					file="portal-impl/src/system-ext.properties"
+					overwrite="true"
+					tofile="portal-impl/classes/system-ext.properties"
+				/>
+			</then>
+		</if>
+
 		<antelope:post to="http://localhost:14444/selenium-server/driver/?cmd=shutDownSeleniumServer" wantresponse="true" />
 	</target>
 

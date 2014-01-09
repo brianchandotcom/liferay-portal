@@ -29,6 +29,8 @@ public interface ClusterMasterExecutor {
 
 	public void initialize();
 
+	public boolean isEnabled();
+
 	public boolean isMaster();
 
 	public void registerClusterMasterTokenTransitionListener(

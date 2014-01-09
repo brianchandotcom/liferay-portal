@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -59,7 +60,9 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
-	public Tuple getEntries(Hits hits) {
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> getEntries(
+		Hits hits) {
+
 		return _indexer.getEntries(hits);
 	}
 
@@ -193,7 +196,8 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
-	public Tuple search(SearchContext searchContext, Class<?> entryClass)
+	public ObjectValuePair<List<? extends BaseModel<?>>, Integer> search(
+			SearchContext searchContext, Class<?> entryClass)
 		throws SearchException {
 
 		return _indexer.search(searchContext, entryClass);

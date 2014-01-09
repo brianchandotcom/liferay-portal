@@ -172,7 +172,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 							buffer.append("<a class=\"user-handle\" href=\"");
 							buffer.append(curUser.getDisplayURL(themeDisplay));
 							buffer.append("\">");
-							buffer.append(curUser.getFullName());
+							buffer.append(HtmlUtil.escape(curUser.getFullName()));
 							buffer.append("</a>");
 							%>
 

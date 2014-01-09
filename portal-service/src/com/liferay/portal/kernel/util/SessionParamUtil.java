@@ -32,22 +32,26 @@ public class SessionParamUtil {
 	public static boolean getBoolean(
 		HttpServletRequest request, String param, boolean defaultValue) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		String requestValue = request.getParameter(param);
 
 		if (requestValue != null) {
 			boolean value = GetterUtil.getBoolean(requestValue);
 
-			session.setAttribute(param, value);
+			if (session != null) {
+				session.setAttribute(param, value);
+			}
 
 			return value;
 		}
 
-		Boolean sessionValue = (Boolean)session.getAttribute(param);
+		if (session != null) {
+			Boolean sessionValue = (Boolean)session.getAttribute(param);
 
-		if (sessionValue != null) {
-			return sessionValue;
+			if (sessionValue != null) {
+				return sessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -62,7 +66,7 @@ public class SessionParamUtil {
 	public static boolean getBoolean(
 		PortletRequest portletRequest, String param, boolean defaultValue) {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletSession portletSession = portletRequest.getPortletSession(false);
 
 		String portletRequestValue = portletRequest.getParameter(param);
 
@@ -74,11 +78,13 @@ public class SessionParamUtil {
 			return value;
 		}
 
-		Boolean portletSessionValue = (Boolean)portletSession.getAttribute(
-			param);
+		if (portletSession != null) {
+			Boolean portletSessionValue = (Boolean)portletSession.getAttribute(
+				param);
 
-		if (portletSessionValue != null) {
-			return portletSessionValue;
+			if (portletSessionValue != null) {
+				return portletSessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -91,22 +97,26 @@ public class SessionParamUtil {
 	public static double getDouble(
 		HttpServletRequest request, String param, double defaultValue) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		String requestValue = request.getParameter(param);
 
 		if (requestValue != null) {
 			double value = GetterUtil.getDouble(requestValue);
 
-			session.setAttribute(param, value);
+			if (session != null) {
+				session.setAttribute(param, value);
+			}
 
 			return value;
 		}
 
-		Double sessionValue = (Double)session.getAttribute(param);
+		if (session != null) {
+			Double sessionValue = (Double)session.getAttribute(param);
 
-		if (sessionValue != null) {
-			return sessionValue;
+			if (sessionValue != null) {
+				return sessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -121,7 +131,7 @@ public class SessionParamUtil {
 	public static double getDouble(
 		PortletRequest portletRequest, String param, double defaultValue) {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletSession portletSession = portletRequest.getPortletSession(false);
 
 		String portletRequestValue = portletRequest.getParameter(param);
 
@@ -133,10 +143,13 @@ public class SessionParamUtil {
 			return value;
 		}
 
-		Double portletSessionValue = (Double)portletSession.getAttribute(param);
+		if (portletSession != null) {
+			Double portletSessionValue = (Double)portletSession.getAttribute(
+				param);
 
-		if (portletSessionValue != null) {
-			return portletSessionValue;
+			if (portletSessionValue != null) {
+				return portletSessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -149,22 +162,26 @@ public class SessionParamUtil {
 	public static int getInteger(
 		HttpServletRequest request, String param, int defaultValue) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		String requestValue = request.getParameter(param);
 
 		if (requestValue != null) {
 			int value = GetterUtil.getInteger(requestValue);
 
-			session.setAttribute(param, value);
+			if (session != null) {
+				session.setAttribute(param, value);
+			}
 
 			return value;
 		}
 
-		Integer sessionValue = (Integer)session.getAttribute(param);
+		if (session != null) {
+			Integer sessionValue = (Integer)session.getAttribute(param);
 
-		if (sessionValue != null) {
-			return sessionValue;
+			if (sessionValue != null) {
+				return sessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -177,7 +194,7 @@ public class SessionParamUtil {
 	public static int getInteger(
 		PortletRequest portletRequest, String param, int defaultValue) {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletSession portletSession = portletRequest.getPortletSession(false);
 
 		String portletRequestValue = portletRequest.getParameter(param);
 
@@ -189,11 +206,13 @@ public class SessionParamUtil {
 			return value;
 		}
 
-		Integer portletSessionValue = (Integer)portletSession.getAttribute(
-			param);
+		if (portletSession != null) {
+			Integer portletSessionValue = (Integer)portletSession.getAttribute(
+				param);
 
-		if (portletSessionValue != null) {
-			return portletSessionValue;
+			if (portletSessionValue != null) {
+				return portletSessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -206,22 +225,26 @@ public class SessionParamUtil {
 	public static long getLong(
 		HttpServletRequest request, String param, long defaultValue) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		String requestValue = request.getParameter(param);
 
 		if (requestValue != null) {
 			long value = GetterUtil.getLong(requestValue);
 
-			session.setAttribute(param, value);
+			if (session != null) {
+				session.setAttribute(param, value);
+			}
 
 			return value;
 		}
 
-		Long sessionValue = (Long)session.getAttribute(param);
+		if (session != null) {
+			Long sessionValue = (Long)session.getAttribute(param);
 
-		if (sessionValue != null) {
-			return sessionValue;
+			if (sessionValue != null) {
+				return sessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -234,7 +257,7 @@ public class SessionParamUtil {
 	public static long getLong(
 		PortletRequest portletRequest, String param, long defaultValue) {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletSession portletSession = portletRequest.getPortletSession(false);
 
 		String portletRequestValue = portletRequest.getParameter(param);
 
@@ -246,10 +269,12 @@ public class SessionParamUtil {
 			return value;
 		}
 
-		Long portletSessionValue = (Long)portletSession.getAttribute(param);
+		if (portletSession != null) {
+			Long portletSessionValue = (Long)portletSession.getAttribute(param);
 
-		if (portletSessionValue != null) {
-			return portletSessionValue;
+			if (portletSessionValue != null) {
+				return portletSessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -262,22 +287,26 @@ public class SessionParamUtil {
 	public static short getShort(
 		HttpServletRequest request, String param, short defaultValue) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		String requestValue = request.getParameter(param);
 
 		if (requestValue != null) {
 			short value = GetterUtil.getShort(requestValue);
 
-			session.setAttribute(param, value);
+			if (session != null) {
+				session.setAttribute(param, value);
+			}
 
 			return value;
 		}
 
-		Short sessionValue = (Short)session.getAttribute(param);
+		if (session != null) {
+			Short sessionValue = (Short)session.getAttribute(param);
 
-		if (sessionValue != null) {
-			return sessionValue;
+			if (sessionValue != null) {
+				return sessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -290,7 +319,7 @@ public class SessionParamUtil {
 	public static short getShort(
 		PortletRequest portletRequest, String param, short defaultValue) {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletSession portletSession = portletRequest.getPortletSession(false);
 
 		String portletRequestValue = portletRequest.getParameter(param);
 
@@ -302,10 +331,13 @@ public class SessionParamUtil {
 			return value;
 		}
 
-		Short portletSessionValue = (Short)portletSession.getAttribute(param);
+		if (portletSession != null) {
+			Short portletSessionValue = (Short)portletSession.getAttribute(
+				param);
 
-		if (portletSessionValue != null) {
-			return portletSessionValue;
+			if (portletSessionValue != null) {
+				return portletSessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -318,22 +350,26 @@ public class SessionParamUtil {
 	public static String getString(
 		HttpServletRequest request, String param, String defaultValue) {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		String requestValue = request.getParameter(param);
 
 		if (requestValue != null) {
 			String value = GetterUtil.getString(requestValue);
 
-			session.setAttribute(param, value);
+			if (session != null) {
+				session.setAttribute(param, value);
+			}
 
 			return value;
 		}
 
-		String sessionValue = (String)session.getAttribute(param);
+		if (session != null) {
+			String sessionValue = (String)session.getAttribute(param);
 
-		if (sessionValue != null) {
-			return sessionValue;
+			if (sessionValue != null) {
+				return sessionValue;
+			}
 		}
 
 		return defaultValue;
@@ -348,7 +384,7 @@ public class SessionParamUtil {
 	public static String getString(
 		PortletRequest portletRequest, String param, String defaultValue) {
 
-		PortletSession portletSession = portletRequest.getPortletSession();
+		PortletSession portletSession = portletRequest.getPortletSession(false);
 
 		String portletRequestValue = portletRequest.getParameter(param);
 
@@ -360,10 +396,13 @@ public class SessionParamUtil {
 			return value;
 		}
 
-		String portletSessionValue = (String)portletSession.getAttribute(param);
+		if (portletSession != null) {
+			String portletSessionValue = (String)portletSession.getAttribute(
+				param);
 
-		if (portletSessionValue != null) {
-			return portletSessionValue;
+			if (portletSessionValue != null) {
+				return portletSessionValue;
+			}
 		}
 
 		return defaultValue;

@@ -632,6 +632,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					.toggler-content {
 						border: 1px solid #DDD;
 						left: 49px;
+						margin-top: 0 !important;
 
 						&:before {
 							content: '';

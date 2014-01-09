@@ -32,10 +32,6 @@ public class TransactionalPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void destroy() {
-	}
-
-	@Override
 	public V get(K key) {
 		V result = null;
 

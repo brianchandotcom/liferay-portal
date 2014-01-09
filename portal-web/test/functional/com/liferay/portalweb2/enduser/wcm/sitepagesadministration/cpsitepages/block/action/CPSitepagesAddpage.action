@@ -1,0 +1,13 @@
+<definition>
+	<command name="click">
+		<case locator-key1="ADD_PAGE_BUTTON">
+			<execute function="Click#textClickAtAndWait" value1="Add Page" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="ADD_PAGE_NAME_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
+	</command>
+</definition>

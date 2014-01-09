@@ -285,8 +285,8 @@ userGroupRoles.addAll(siteRoles);
 <h3><liferay-ui:message key="site-roles" /></h3>
 
 <c:choose>
-	<c:when test="<%= siteRoles.isEmpty() %>">
-		<liferay-ui:message key="this-user-does-not-have-any-site-roles" />
+	<c:when test="<%= groups.isEmpty() %>">
+		<liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" />
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container

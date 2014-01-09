@@ -84,7 +84,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 							String[] nodeValues = StringUtil.split(layoutDesc, '|');
 
 							long objId = GetterUtil.getLong(nodeValues[3]);
-							String name = nodeValues[4];
+							String name = HtmlUtil.escape(nodeValues[4]);
 
 							int depth = 0;
 

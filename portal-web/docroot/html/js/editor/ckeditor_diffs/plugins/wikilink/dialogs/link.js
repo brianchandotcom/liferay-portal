@@ -17,7 +17,7 @@ CKEDITOR.dialog.add(
 			if (element) {
 				var href = element.data('cke-saved-href') || element.getAttribute('href');
 
-				if (CKEDITOR.config.decodeLinks) {
+				if (editor.config.decodeLinks) {
 					data.address = decodeURIComponent(href);
 				}
 				else {

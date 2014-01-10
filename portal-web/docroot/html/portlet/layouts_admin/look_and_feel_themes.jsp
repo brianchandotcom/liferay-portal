@@ -76,7 +76,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 							<liferay-ui:message key="color-scheme" />
 						</dt>
 						<dd>
-							<%= selColorScheme.getName() %>
+							<%= HtmlUtil.escape(selColorScheme.getName()) %>
 						</dd>
 					</c:if>
 
@@ -87,10 +87,10 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						%>
 
 							<dt class="theme-setting">
-								<liferay-ui:message key="<%= name %>" />
+								<liferay-ui:message key="<%= HtmlUtil.escape(name) %>" />
 							</dt>
 							<dd>
-								<%= selLayoutSet.getThemeSetting(name, device) %>
+								<%= HtmlUtil.escape(selLayoutSet.getThemeSetting(name, device)) %>
 							</dd>
 
 						<%

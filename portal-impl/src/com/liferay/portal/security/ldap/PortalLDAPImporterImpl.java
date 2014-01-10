@@ -1265,24 +1265,24 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 					companyId, user.getUserId(), ldapUser.getEmailAddress()));
 		}
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		if (ldapUser.isUpdatePassword()) {
+			UserLocalServiceUtil.updatePassword(
+				user.getUserId(), password, password, passwordReset, true);
+		}
 
 		Contact ldapContact = ldapUser.getContact();
+
+		updateLDAPUser(
+			ldapUser.getUser(), ldapContact, user, userMappings,
+			contactMappings);
+		
+		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
 
 		birthdayCal.setTime(ldapContact.getBirthday());
 
 		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
-
-		if (ldapUser.isUpdatePassword()) {
-			UserLocalServiceUtil.updatePassword(
-				user.getUserId(), password, password, passwordReset, true);
-		}
-
-		updateLDAPUser(
-			ldapUser.getUser(), ldapContact, user, userMappings,
-			contactMappings);
 
 		user = UserLocalServiceUtil.updateUser(
 			user.getUserId(), password, StringPool.BLANK, StringPool.BLANK,
@@ -1316,9 +1316,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {
-		"aimSn", "employeeNumber", "facebookSn", "icqSn", "jabberSn", "male",
-		"msnSn", "mySpaceSn","prefixId", "skypeSn", "smsSn", "suffixId",
-		"twitterSn", "ymSn"
+		"aimSn", "birthday", "employeeNumber", "facebookSn", "icqSn",
+		"jabberSn", "male", "msnSn", "mySpaceSn","prefixId", "skypeSn", "smsSn",
+		"suffixId", "twitterSn", "ymSn"
 	};
 
 	private static final String _IMPORT_BY_GROUP = "group";

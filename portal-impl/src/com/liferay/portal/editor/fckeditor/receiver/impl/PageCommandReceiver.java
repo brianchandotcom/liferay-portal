@@ -263,9 +263,13 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		String canonicalURL = PortalUtil.getCanonicalURL(
 			layoutFullURL, themeDisplay, layout, true);
 
-		String portalURL = PortalUtil.getPortalURL(layout, themeDisplay);
+		String portalURL = themeDisplay.getPortalURL();
 
-		return canonicalURL.substring(portalURL.length());
+		if (canonicalURL.startsWith(portalURL)) {
+			return canonicalURL.substring(portalURL.length());
+		}
+
+		return canonicalURL;
 	}
 
 }

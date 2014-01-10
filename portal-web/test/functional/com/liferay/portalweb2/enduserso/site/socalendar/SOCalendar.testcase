@@ -1,0 +1,149 @@
+<definition component-name="social-office-site">
+	<property name="hook.plugins.includes" value="deploy-listener-hook,portal-compat-hook,so-activities-hook,so-hook" />
+	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
+	<property name="theme.plugins.includes" value="so-theme" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
+
+	<var name="eventTitle" value="Calendar Event Title" />
+	<var name="eventTitleEdit" value="Calendar Event Title Edit" />
+	<var name="eventType" value="Regular" />
+	<var name="key_siteName" value="${siteName}" />
+	<var name="pageName" value="Calendar" />
+	<var name="siteName" value="Open Site Name" />
+	<var name="siteDescription" value="Open Site Description" />
+	<var name="siteType" value="Open" />
+	<var name="userName" value="Test Test" />
+
+	<set-up>
+		<execute macro="SOUser#firstLoginPG" />
+
+		<execute macro="SOUserBar#addSOSite">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteDescription" value="${siteDescription}" />
+			<var name="siteType" value="${siteType}" />
+		</execute>
+	</set-up>
+
+	<command name="AddCalendarEvent" priority="5">
+		<var name="calendarName" value="${siteName}" />
+		<var name="eventTitle" value="${eventTitle}" />
+		<var name="eventType" value="${eventType}" />
+		<var name="soPage" value="true" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="SODashboard#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitle}" />
+
+		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitle}" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="START_DATE_FIELD" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="END_DATE_FIELD" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="MAYBE_BUTTON" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="DECLINE_BUTTON" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG" />
+	</command>
+
+	<command name="DeleteCalendarEvent" priority="5">
+		<var name="calendarName" value="${siteName}" />
+		<var name="eventTitle" value="${eventTitle}" />
+		<var name="eventType" value="${eventType}" />
+		<var name="soPage" value="true" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#deletePG" />
+	</command>
+
+	<command name="EditCalendarEvent" priority="5">
+		<var name="calendarName" value="${siteName}" />
+		<var name="eventTitle" value="${eventTitle}" />
+		<var name="eventTitleEdit" value="${eventTitleEdit}" />
+		<var name="eventType" value="${eventType}" />
+		<var name="soPage" value="true" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="endDateTimeEdit" value="11:59 PM" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+			<var name="startDateTimeEdit" value="11:00 PM" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="SOSiteHome#assertTextEquals" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" value1="${eventTitleEdit}" />
+		<execute action="SODashboard#assertElementPresent" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TIME" />
+		<execute action="SOSiteHome#click" locator-key1="EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
+
+		<execute action="PGCalendarVieweventdetails#assertTextEquals" locator-key1="EVENT_TITLE" value1="${eventTitleEdit}" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="START_DATE_FIELD" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="END_DATE_FIELD" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="RESOURCES_FIELD" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="MAYBE_BUTTON" />
+		<execute action="PGCalendarVieweventdetails#assertElementPresent" locator-key1="DECLINE_BUTTON" />
+
+		<execute macro="Page#gotoPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitleEdit}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="SOSite#tearDownCP" />
+	</tear-down>
+</definition>

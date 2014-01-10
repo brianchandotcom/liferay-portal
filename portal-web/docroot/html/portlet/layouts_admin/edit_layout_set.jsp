@@ -261,7 +261,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</portlet:renderURL>

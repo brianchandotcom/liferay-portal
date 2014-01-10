@@ -118,18 +118,28 @@ public class PortletDataContextFactoryImpl
 
 	@Override
 	public PortletDataContext createPreparePortletDataContext(
-			ThemeDisplay themeDisplay, Date startDate, Date endDate)
+			long companyId, long groupId, Date startDate, Date endDate)
 		throws PortletDataException {
 
 		validateDateRange(startDate, endDate);
 
 		PortletDataContext portletDataContext = createPortletDataContext(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
+			companyId, groupId);
 
 		portletDataContext.setEndDate(endDate);
 		portletDataContext.setStartDate(startDate);
 
 		return portletDataContext;
+	}
+
+	@Override
+	public PortletDataContext createPreparePortletDataContext(
+			ThemeDisplay themeDisplay, Date startDate, Date endDate)
+		throws PortletDataException {
+
+		return createPreparePortletDataContext(
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			startDate, endDate);
 	}
 
 	protected PortletDataContext createPortletDataContext(

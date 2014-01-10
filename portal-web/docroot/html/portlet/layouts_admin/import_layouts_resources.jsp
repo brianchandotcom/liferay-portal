@@ -28,12 +28,6 @@ else {
 	group = (Group)request.getAttribute(WebKeys.GROUP);
 }
 
-Group liveGroup = group;
-
-if (group.isStagingGroup()) {
-	liveGroup = group.getLiveGroup();
-}
-
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
@@ -530,7 +524,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 					<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				</portlet:renderURL>
 

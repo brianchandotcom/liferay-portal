@@ -384,6 +384,11 @@ public class Logger {
 				"return window.document.getElementsByTagName('html')[0]." +
 					"outerHTML;");
 
+			String absoluteTestResultsPath =
+				"file:///" + _TEST_BASEDIR + "/test-results/functional/";
+
+			content = content.replaceAll(absoluteTestResultsPath,"");
+
 			String fileName =
 				_TEST_BASEDIR + "/test-results/functional/report.html";
 

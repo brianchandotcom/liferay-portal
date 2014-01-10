@@ -44,8 +44,11 @@ public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DDLRecordSet.class.getName());
 
-		DDLTestUtil.addRecordSet(
+		DDLRecordSet recordSet = DDLTestUtil.addRecordSet(
 			stagingGroup.getGroupId(), ddmStructure.getStructureId());
+
+		DDLTestUtil.addRecord(
+			stagingGroup.getGroupId(), recordSet.getRecordSetId());
 	}
 
 	@Override

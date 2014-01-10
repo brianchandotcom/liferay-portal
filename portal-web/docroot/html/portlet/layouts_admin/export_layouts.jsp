@@ -578,7 +578,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />exportProcesses">
-			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp" >
+			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 			</liferay-util:include>
 		</div>

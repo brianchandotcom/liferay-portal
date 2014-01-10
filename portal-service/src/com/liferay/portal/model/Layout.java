@@ -72,6 +72,9 @@ public interface Layout extends LayoutModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.String getDefaultThemeSetting(java.lang.String key,
+		java.lang.String device, boolean inheritLookAndFeel);
+
 	public java.lang.String getFriendlyURL(java.util.Locale locale);
 
 	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap()

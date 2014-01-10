@@ -274,6 +274,31 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public String getDefaultThemeSetting(
+		String key, String device, boolean inheritLookAndFeel) {
+
+		if (!inheritLookAndFeel) {
+			try {
+				Theme theme = getTheme(device);
+
+				return theme.getSetting(key);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		try {
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getThemeSetting(key, device);
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getFriendlyURL(Locale locale) {
 		Layout layout = this;
 
@@ -449,25 +474,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return value;
 		}
 
-		if (!inheritLookAndFeel) {
-			try {
-				Theme theme = getTheme(device);
-
-				return theme.getSetting(key);
-			}
-			catch (Exception e) {
-			}
-		}
-
-		try {
-			LayoutSet layoutSet = getLayoutSet();
-
-			value = layoutSet.getThemeSetting(key, device);
-		}
-		catch (Exception e) {
-		}
-
-		return value;
+		return getDefaultThemeSetting(key, device, inheritLookAndFeel);
 	}
 
 	@Override

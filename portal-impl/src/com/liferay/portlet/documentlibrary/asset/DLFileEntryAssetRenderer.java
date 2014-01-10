@@ -45,6 +45,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -351,6 +352,18 @@ public class DLFileEntryAssetRenderer
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public void setAddToPagePreferences(
+			PortletPreferences preferences, String portletId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		preferences.setValue("showAssetTitle", Boolean.FALSE.toString());
+		preferences.setValue("showExtraInfo", Boolean.FALSE.toString());
+
+		super.setAddToPagePreferences(preferences, portletId, themeDisplay);
 	}
 
 	private FileEntry _fileEntry;

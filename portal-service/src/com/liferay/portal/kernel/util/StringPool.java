@@ -120,6 +120,8 @@ public class StringPool {
 
 	public static final String LAQUO = "&laquo;";
 
+	public static final String LAQUO_CHAR = "\u00ab";
+
 	public static final String LESS_THAN = "<";
 
 	public static final String LESS_THAN_OR_EQUAL = "<=";
@@ -165,6 +167,8 @@ public class StringPool {
 	public static final String QUOTE = "\"";
 
 	public static final String RAQUO = "&raquo;";
+
+	public static final String RAQUO_CHAR = "\u00bb";
 
 	public static final String RETURN = "\r";
 

@@ -45,7 +45,7 @@ public class VerifyLayout extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select plid from layout where layoutPrototypeUuid != ''");
+				"select plid from Layout where layoutPrototypeUuid != ''");
 
 			rs = ps.executeQuery();
 
@@ -54,13 +54,11 @@ public class VerifyLayout extends VerifyProcess {
 
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-				String uuid = layout.getLayoutPrototypeUuid();
-
-				long companyId = layout.getCompanyId();
-
 				LayoutPrototype layoutPrototype =
 					LayoutPrototypeLocalServiceUtil.
-						fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+						fetchLayoutPrototypeByUuidAndCompanyId(
+							layout.getLayoutPrototypeUuid(),
+							layout.getCompanyId());
 
 				if (layoutPrototype == null) {
 					LayoutLocalServiceUtil.deleteLayout(layout);

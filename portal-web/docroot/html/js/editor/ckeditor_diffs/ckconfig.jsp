@@ -35,7 +35,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
 ;(function() {
-	var ckEditor = CKEDITOR.instances['<%= name %>'];
+	var ckEditor = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'];
 
 	if (!CKEDITOR.stylesSet.get('liferayStyles')) {
 		CKEDITOR.addStylesSet(

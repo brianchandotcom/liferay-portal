@@ -386,7 +386,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		checkDLFileEntryType();
 		checkMimeTypes();
 		checkTitles();
-		removeOrphanedDLFileEntries();
+		deleteOrphanedDLFileEntries();
 		updateFileEntryAssets();
 		updateFolderAssets();
 		verifyTree();
@@ -405,7 +405,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		return mimeType;
 	}
 
-	protected void removeOrphanedDLFileEntries() throws Exception {
+	protected void deleteOrphanedDLFileEntries() throws Exception {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getOrphanedFileEntries();
 

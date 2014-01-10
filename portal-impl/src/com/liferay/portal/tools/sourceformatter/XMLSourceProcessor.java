@@ -217,50 +217,97 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String fixPoshiXMLNumberOfTabs(String content) {
 		int tabCounter = 0;
 
-		Pattern pattern = Pattern.compile("\\n*([ \\t]*)<[^>]*>");
+		Pattern pattern = Pattern.compile("\\n*([ \\t]*<).*");
 
 		Matcher matcher = pattern.matcher(content);
+
+		boolean ignoredCdataBlock = false;
+		boolean ignoredCommentBlock = false;
 
 		while (matcher.find()) {
 			String statement = matcher.group();
 
+			Pattern quoteWithSlashPattern = Pattern.compile(
+				"\"[^\"]*\\>[^\"]*\"");
+
+			Matcher quoteWithSlashMatcher = quoteWithSlashPattern.matcher(
+				statement);
+
+			String fixedQuoteStatement = statement;
+
+			if (quoteWithSlashMatcher.find()) {
+				fixedQuoteStatement = StringUtil.replace(
+					statement, quoteWithSlashMatcher.group(), "\"\"");
+			}
+
 			Pattern closingTagPattern = Pattern.compile("</[^>/]*>");
 
 			Matcher closingTagMatcher = closingTagPattern.matcher(
-				matcher.group());
+				fixedQuoteStatement);
+
+			Pattern openingTagPattern = Pattern.compile("<[^/][^>]*[^/]>");
+
+			Matcher openingTagMatcher = openingTagPattern.matcher(
+				fixedQuoteStatement);
+
+			Pattern wholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
+
+			Matcher wholeTagMatcher = wholeTagPattern.matcher(
+				fixedQuoteStatement);
 
 			if (closingTagMatcher.find()) {
-				if (!closingTagMatcher.group().contains("</p") &&
-					!closingTagMatcher.group().contains("</script")) {
+				if (!openingTagMatcher.find() && !wholeTagMatcher.find()) {
+					if (!statement.contains("<!--") &&
+						!statement.contains("-->") &&
+						!statement.contains("<![CDATA[") &&
+						!statement.contains("]]>")) {
 
-					--tabCounter;
+						tabCounter--;
+					}
 				}
 			}
 
-			if (!matcher.group().contains(" < ") && 
-				!matcher.group().contains("script")) {
+			if (statement.contains("<![CDATA[")) {
+				ignoredCdataBlock = true;
+			}
+
+			if (statement.contains("]]>")) {
+				ignoredCdataBlock = false;
+			}
+
+			if (statement.contains("<!--")) {
+				ignoredCommentBlock = true;
+			}
+
+			if (statement.contains("-->")) {
+				ignoredCommentBlock = false;
+			}
+
+			if (!ignoredCommentBlock && !ignoredCdataBlock) {
+				StringBundler sb = new StringBundler();
+
+				for (int i = 0; i < tabCounter; i++) {
+					sb.append("\t");
+				}
+
+				sb.append("<");
+
 				String newStatement = StringUtil.replace(
-					statement, matcher.group(1), numberOfTabs(tabCounter));
+					statement, matcher.group(1), sb.toString());
 
 				content = StringUtil.replaceFirst(
 					content, statement, newStatement);
 			}
 
-			Pattern openingTagPattern = Pattern.compile("<[^/][^>]*[^/]>");
-
-			Matcher openingTagMatcher = openingTagPattern.matcher(
-				matcher.group());
-
 			if (openingTagMatcher.find()) {
-				if (!openingTagMatcher.group().contains("< ") &&
-					!openingTagMatcher.group().contains("-->") &&
-					!openingTagMatcher.group().contains("<![CDATA") &&
-					!openingTagMatcher.group().contains("<script") &&
-					!openingTagMatcher.group().contains("<]]") &&
-					!openingTagMatcher.group().contains("userea") &&
-					!openingTagMatcher.group().contains("Sites >")) {
+				if (!closingTagMatcher.find() && !wholeTagMatcher.find()) {
+					if (!statement.contains("<!--") &&
+						!statement.contains("-->") &&
+						!statement.contains("<![CDATA[") &&
+						!statement.contains("]]>")) {
 
-					tabCounter++;
+						tabCounter++;
+					}
 				}
 			}
 		}
@@ -825,17 +872,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		return newContent.substring(0, x) + sb.toString() +
 			newContent.substring(y);
-	}
-
-	protected String numberOfTabs(int tabCounter) {
-		StringBuilder tabs = new StringBuilder(tabCounter);
-
-		while (tabCounter > 0) {
-			tabs.append("\t");
-			tabCounter--;
-		}
-
-		return tabs.toString();
 	}
 
 	private static Pattern _commentPattern1 = Pattern.compile(

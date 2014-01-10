@@ -37,7 +37,7 @@
 				<a class ="tag" style="color: ${color};" href="${tagURL}">
 					${entry.getName()}
 
-					<#if (showAssetCount == "true")>
+					<#if count?? && (showAssetCount == "true")>
 						<span class="tag-asset-count">(${count})</span>
 					</#if>
 				</a>

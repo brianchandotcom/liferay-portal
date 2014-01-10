@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -112,6 +113,9 @@ public class AssetUtil {
 		CharPool.QUESTION, CharPool.QUOTE, CharPool.RETURN, CharPool.SEMICOLON,
 		CharPool.SLASH, CharPool.STAR, CharPool.TILDE
 	};
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK};
 
 	public static Set<String> addLayoutTags(
 		HttpServletRequest request, List<AssetTag> tags) {
@@ -592,54 +596,36 @@ public class AssetUtil {
 			int start, int end)
 		throws Exception {
 
-		Indexer searcher = AssetSearcher.getInstance();
-
-		AssetSearcher assetSearcher = (AssetSearcher)searcher;
-
-		assetSearcher.setAssetEntryQuery(assetEntryQuery);
-
-		Layout layout = assetEntryQuery.getLayout();
-
-		if (layout != null) {
-			searchContext.setAttribute(Field.LAYOUT_UUID, layout.getUuid());
-		}
-
-		String ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
-			"ddmStructureFieldName");
-		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
-			"ddmStructureFieldValue");
-
-		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
-
-			searchContext.setAttribute(
-				"ddmStructureFieldName", ddmStructureFieldName);
-			searchContext.setAttribute(
-				"ddmStructureFieldValue", ddmStructureFieldValue);
-		}
-
-		String paginationType = GetterUtil.getString(
-			assetEntryQuery.getPaginationType(), "more");
-
-		if (!paginationType.equals("none") &&
-			!paginationType.equals("simple")) {
-
-			searchContext.setAttribute("paginationType", paginationType);
-		}
-
-		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
-		searchContext.setEnd(end);
-		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
-
-		if (Validator.isNotNull(assetEntryQuery.getKeywords())) {
-			searchContext.setLike(true);
-		}
-
-		searchContext.setSorts(
-			getSorts(assetEntryQuery, searchContext.getLocale()));
-		searchContext.setStart(start);
+		AssetSearcher assetSearcher = getAssetSearcher(
+			searchContext, assetEntryQuery, start, end);
 
 		return assetSearcher.search(searchContext);
+	}
+
+	public static BaseModelSearchResult<AssetEntry> searchAssetEntries(
+			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
+			int start, int end)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		return searchAssetEntries(searchContext, assetEntryQuery, start, end);
+	}
+
+	public static BaseModelSearchResult<AssetEntry> searchAssetEntries(
+			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
+			int start, int end)
+		throws Exception {
+
+		AssetSearcher assetSearcher = getAssetSearcher(
+			searchContext, assetEntryQuery, start, end);
+
+		Hits hits = assetSearcher.search(searchContext, SELECTED_FIELD_NAMES);
+
+		List<AssetEntry> assetEntries = getAssetEntries(hits);
+
+		return new BaseModelSearchResult<AssetEntry>(
+			assetEntries, hits.getLength());
 	}
 
 	public static String substituteCategoryPropertyVariables(
@@ -720,6 +706,61 @@ public class AssetUtil {
 		}
 
 		return new String(textCharArray);
+	}
+
+	protected static AssetSearcher getAssetSearcher(
+			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
+			int start, int end)
+		throws Exception {
+
+		Indexer searcher = AssetSearcher.getInstance();
+
+		AssetSearcher assetSearcher = (AssetSearcher)searcher;
+
+		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+		Layout layout = assetEntryQuery.getLayout();
+
+		if (layout != null) {
+			searchContext.setAttribute(Field.LAYOUT_UUID, layout.getUuid());
+		}
+
+		String ddmStructureFieldName = (String)assetEntryQuery.getAttribute(
+			"ddmStructureFieldName");
+		Serializable ddmStructureFieldValue = assetEntryQuery.getAttribute(
+			"ddmStructureFieldValue");
+
+		if (Validator.isNotNull(ddmStructureFieldName) &&
+			Validator.isNotNull(ddmStructureFieldValue)) {
+
+			searchContext.setAttribute(
+				"ddmStructureFieldName", ddmStructureFieldName);
+			searchContext.setAttribute(
+				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+
+		String paginationType = GetterUtil.getString(
+			assetEntryQuery.getPaginationType(), "more");
+
+		if (!paginationType.equals("none") &&
+			!paginationType.equals("simple")) {
+
+			searchContext.setAttribute("paginationType", paginationType);
+		}
+
+		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
+
+		if (Validator.isNotNull(assetEntryQuery.getKeywords())) {
+			searchContext.setLike(true);
+		}
+
+		searchContext.setSorts(
+			getSorts(assetEntryQuery, searchContext.getLocale()));
+		searchContext.setStart(start);
+
+		return assetSearcher;
 	}
 
 	protected static Sort getSort(

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,6 +82,7 @@ import javax.servlet.jsp.PageContext;
  * @author Eduardo Lundgren
  * @author Juan Fernández
  */
+@ProviderType
 public class PortalUtil {
 
 	/**

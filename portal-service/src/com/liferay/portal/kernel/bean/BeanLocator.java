@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.bean;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
  */
+@ProviderType
 public interface BeanLocator {
 
 	public void destroy();

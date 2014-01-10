@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -30,6 +32,7 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public abstract class BaseModelImpl<T> implements BaseModel<T> {
 
 	public BaseModelImpl() {

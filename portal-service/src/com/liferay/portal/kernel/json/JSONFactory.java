@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.json;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface JSONFactory {
 
 	public String convertJSONMLArrayToXML(String jsonml);

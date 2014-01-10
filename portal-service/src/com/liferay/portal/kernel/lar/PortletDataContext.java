@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -51,6 +53,7 @@ import java.util.Set;
  * @author Raymond Augé
  * @author Mate Thurzo
  */
+@ProviderType
 public interface PortletDataContext extends Serializable {
 
 	public static final String REFERENCE_TYPE_CHILD = "child";

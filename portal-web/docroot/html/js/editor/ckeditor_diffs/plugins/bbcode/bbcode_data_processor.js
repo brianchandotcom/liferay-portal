@@ -96,11 +96,8 @@
 	var TEMPLATE_IMAGE = '<img src="{image}">';
 
 	var emoticonImages;
-
 	var emoticonPath;
-
 	var emoticonSymbols;
-
 	var newThreadURL;
 
 	var BBCodeDataProcessor = function() {};

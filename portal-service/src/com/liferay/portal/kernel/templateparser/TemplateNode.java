@@ -119,7 +119,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.getLayout(
-				getGroupId(), privateLayout, getLayoutId());
+				getLayoutGroupId(), privateLayout, getLayoutId());
 
 			return PortalUtil.getLayoutFriendlyURL(layout, _themeDisplay);
 		}
@@ -183,13 +183,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		return sb.toString();
 	}
 
-	protected long getGroupId() {
-		String type = getType();
-
-		if (!type.equals("link_to_layout")) {
-			return 0;
-		}
-
+	protected long getLayoutGroupId() {
 		String data = (String)get("data");
 
 		int pos = data.lastIndexOf(CharPool.AT);

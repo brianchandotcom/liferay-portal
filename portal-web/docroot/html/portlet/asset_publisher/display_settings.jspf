@@ -47,6 +47,8 @@
 
 	<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowContextLink() %>" />
 
+	<aui:input cssClass="hidden-field show-extra-info" name="preferences--showExtraInfo--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowExtraInfo() %>" />
+
 	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
 		<aui:option label="show-full-content" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>" value="showFullContent" />
 		<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
@@ -213,6 +215,7 @@
 			if (displayStyle == 'full-content') {
 				var showAssetTitle = A.one('.show-asset-title');
 				var showContextLink = A.one('.show-context-link');
+				var showExtraInfo = A.one('.show-extra-info');
 
 				if (showAssetTitle) {
 					showAssetTitle.get('parentNode').show();
@@ -220,6 +223,10 @@
 
 				if (showContextLink) {
 					showContextLink.get('parentNode').show();
+				}
+
+				if (showExtraInfo) {
+					showExtraInfo.get('parentNode').show();
 				}
 			}
 			else {

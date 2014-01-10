@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -50,6 +51,11 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
+	public List<? extends BaseModel<?>> getEntries(Hits hits) {
+		return null;
+	}
+
+	@Override
 	public BooleanQuery getFacetQuery(
 		String className, SearchContext searchContext) {
 
@@ -74,6 +80,11 @@ public class DummyIndexer implements Indexer {
 	@Override
 	public String getSearchEngineId() {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String[] getSelectedFieldNames() {
+		return null;
 	}
 
 	@Override
@@ -150,6 +161,15 @@ public class DummyIndexer implements Indexer {
 
 	@Override
 	public Hits search(SearchContext searchContext) {
+		return null;
+	}
+
+	@Override
+	public List<? extends BaseModel<?>> search(
+			SearchContext searchContext,
+			Class<? extends BaseModel<?>> entryClass)
+		throws SearchException {
+
 		return null;
 	}
 

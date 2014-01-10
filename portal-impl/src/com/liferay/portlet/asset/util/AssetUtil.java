@@ -457,6 +457,10 @@ public class AssetUtil {
 		return addPortletURLs;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static List<AssetEntry> getAssetEntries(Hits hits) {
 		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
@@ -577,7 +581,7 @@ public class AssetUtil {
 		return true;
 	}
 
-	public static Hits search(
+	public static List<AssetEntry> search(
 			HttpServletRequest request, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {
@@ -587,7 +591,7 @@ public class AssetUtil {
 		return search(searchContext, assetEntryQuery, start, end);
 	}
 
-	public static Hits search(
+	public static List<AssetEntry> search(
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {
@@ -639,7 +643,8 @@ public class AssetUtil {
 			getSorts(assetEntryQuery, searchContext.getLocale()));
 		searchContext.setStart(start);
 
-		return assetSearcher.search(searchContext);
+		return (List<AssetEntry>)assetSearcher.search(
+			searchContext, AssetEntry.class);
 	}
 
 	public static String substituteCategoryPropertyVariables(

@@ -34,143 +34,145 @@ long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimK
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
-var ckEditor = CKEDITOR.instances['<%= name %>'];
+;(function() {
+	var ckEditor = CKEDITOR.instances['<%= name %>'];
 
-var config = ckEditor.config;
+	var config = ckEditor.config;
 
-config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
+	config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
 
-config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
-config.contentsLangDirection = '<%= PortalUtil.isRightToLeft(request) ? "rtl" : "ltr" %>';
+	config.contentsLangDirection = '<%= PortalUtil.isRightToLeft(request) ? "rtl" : "ltr" %>';
 
-config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
+	config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
 
-config.decodeLinks = true;
+	config.decodeLinks = true;
 
-config.disableObjectResizing = true;
+	config.disableObjectResizing = true;
 
-config.extraPlugins = 'creole,wikilink';
+	config.extraPlugins = 'creole,wikilink';
 
-config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
+	config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 
-config.height = 265;
+	config.height = 265;
 
-config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
+	config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
 
-config.removePlugins = [
-	'elementspath',
-	'save',
-	'font',
-	'bidi',
-	'colordialog',
-	'colorbutton',
-	'div',
-	'flash',
-	'font',
-	'forms',
-	'justify',
-	'keystrokes',
-	'link',
-	'maximize',
-	'newpage',
-	'pagebreak',
-	'preview',
-	'print',
-	'save',
-	'smiley',
-	'showblocks',
-	'stylescombo',
-	'templates',
-	'video'
-].join();
+	config.removePlugins = [
+		'elementspath',
+		'save',
+		'font',
+		'bidi',
+		'colordialog',
+		'colorbutton',
+		'div',
+		'flash',
+		'font',
+		'forms',
+		'justify',
+		'keystrokes',
+		'link',
+		'maximize',
+		'newpage',
+		'pagebreak',
+		'preview',
+		'print',
+		'save',
+		'smiley',
+		'showblocks',
+		'stylescombo',
+		'templates',
+		'video'
+	].join();
 
-<c:if test="<%= resizable %>">
-	config.resize_dir = 'vertical';
-</c:if>
+	<c:if test="<%= resizable %>">
+		config.resize_dir = 'vertical';
+	</c:if>
 
-config.resize_enabled = <%= resizable %>;
+	config.resize_enabled = <%= resizable %>;
 
-config.toolbar_creole = [
-	['Cut','Copy','Paste','PasteText','PasteFromWord'],
-	['Undo','Redo'],
-	['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-	['Format'],
+	config.toolbar_creole = [
+		['Cut','Copy','Paste','PasteText','PasteFromWord'],
+		['Undo','Redo'],
+		['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['Format'],
 
-	<%
-	String linkButtonBar = "['Link', 'Unlink']";
+		<%
+		String linkButtonBar = "['Link', 'Unlink']";
 
-	if (wikiPageResourcePrimKey > 0) {
-		linkButtonBar = "['Link', 'Unlink', 'Image']";
-	}
-	%>
-
-	<%= linkButtonBar %>,
-
-	['Table', '-', 'HorizontalRule', 'SpecialChar' ],
-	['Find','Replace','-','SelectAll','RemoveFormat'],
-	['Source']
-];
-
-config.toolbar_phone = [
-	['Bold', 'Italic', 'Underline'],
-	['NumberedList', 'BulletedList'],
-	['Image', 'Link', 'Unlink']
-];
-
-config.toolbar_tablet = [
-	['Bold', 'Italic', 'Underline', 'Strike'],
-	['NumberedList', 'BulletedList'],
-	['Image', 'Link', 'Unlink'],
-	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-	['Styles', 'FontSize']
-];
-
-ckEditor.on(
-	'dialogDefinition',
-	function(event) {
-		var dialogName = event.data.name;
-
-		var dialogDefinition = event.data.definition;
-
-		var infoTab;
-
-		if (dialogName === 'cellProperties') {
-			infoTab = dialogDefinition.getContents('info');
-
-			infoTab.remove('bgColor');
-			infoTab.remove('bgColorChoose');
-			infoTab.remove('borderColor');
-			infoTab.remove('borderColorChoose');
-			infoTab.remove('colSpan');
-			infoTab.remove('hAlign');
-			infoTab.remove('height');
-			infoTab.remove('htmlHeightType');
-			infoTab.remove('rowSpan');
-			infoTab.remove('vAlign');
-			infoTab.remove('width');
-			infoTab.remove('widthType');
-			infoTab.remove('wordWrap');
-
-			dialogDefinition.minHeight = 40;
-			dialogDefinition.minWidth = 210;
+		if (wikiPageResourcePrimKey > 0) {
+			linkButtonBar = "['Link', 'Unlink', 'Image']";
 		}
-		else if (dialogName === 'table' || dialogName === 'tableProperties') {
-			infoTab = dialogDefinition.getContents('info');
+		%>
 
-			infoTab.remove('cmbAlign');
-			infoTab.remove('cmbWidthType');
-			infoTab.remove('cmbWidthType');
-			infoTab.remove('htmlHeightType');
-			infoTab.remove('txtBorder');
-			infoTab.remove('txtCellPad');
-			infoTab.remove('txtCellSpace');
-			infoTab.remove('txtHeight');
-			infoTab.remove('txtSummary');
-			infoTab.remove('txtWidth');
+		<%= linkButtonBar %>,
 
-			dialogDefinition.minHeight = 180;
-			dialogDefinition.minWidth = 210;
+		['Table', '-', 'HorizontalRule', 'SpecialChar' ],
+		['Find','Replace','-','SelectAll','RemoveFormat'],
+		['Source']
+	];
+
+	config.toolbar_phone = [
+		['Bold', 'Italic', 'Underline'],
+		['NumberedList', 'BulletedList'],
+		['Image', 'Link', 'Unlink']
+	];
+
+	config.toolbar_tablet = [
+		['Bold', 'Italic', 'Underline', 'Strike'],
+		['NumberedList', 'BulletedList'],
+		['Image', 'Link', 'Unlink'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+		['Styles', 'FontSize']
+	];
+
+	ckEditor.on(
+		'dialogDefinition',
+		function(event) {
+			var dialogName = event.data.name;
+
+			var dialogDefinition = event.data.definition;
+
+			var infoTab;
+
+			if (dialogName === 'cellProperties') {
+				infoTab = dialogDefinition.getContents('info');
+
+				infoTab.remove('bgColor');
+				infoTab.remove('bgColorChoose');
+				infoTab.remove('borderColor');
+				infoTab.remove('borderColorChoose');
+				infoTab.remove('colSpan');
+				infoTab.remove('hAlign');
+				infoTab.remove('height');
+				infoTab.remove('htmlHeightType');
+				infoTab.remove('rowSpan');
+				infoTab.remove('vAlign');
+				infoTab.remove('width');
+				infoTab.remove('widthType');
+				infoTab.remove('wordWrap');
+
+				dialogDefinition.minHeight = 40;
+				dialogDefinition.minWidth = 210;
+			}
+			else if (dialogName === 'table' || dialogName === 'tableProperties') {
+				infoTab = dialogDefinition.getContents('info');
+
+				infoTab.remove('cmbAlign');
+				infoTab.remove('cmbWidthType');
+				infoTab.remove('cmbWidthType');
+				infoTab.remove('htmlHeightType');
+				infoTab.remove('txtBorder');
+				infoTab.remove('txtCellPad');
+				infoTab.remove('txtCellSpace');
+				infoTab.remove('txtHeight');
+				infoTab.remove('txtSummary');
+				infoTab.remove('txtWidth');
+
+				dialogDefinition.minHeight = 180;
+				dialogDefinition.minWidth = 210;
+			}
 		}
-	}
-);
+	);
+})();

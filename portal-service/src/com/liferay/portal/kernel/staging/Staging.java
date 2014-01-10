@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.staging;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -45,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public interface Staging {
 
 	public String buildRemoteURL(

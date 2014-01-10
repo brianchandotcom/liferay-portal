@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -24,6 +26,7 @@ import java.util.Map;
 /**
  * @author Mate Thurzo
  */
+@ProviderType
 public interface PortletDataContextFactory {
 
 	public PortletDataContext clonePortletDataContext(

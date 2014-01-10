@@ -30,17 +30,22 @@
 </tr>
 <tr>
 	<td>START_DATE_FIELD</td>
-	<td>xpath=(//dl[@class='property-list']/dd)[1]</td>
+	<td>//div[contains(@class,'control-group') and contains(.,'Start Date')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>END_DATE_FIELD</td>
-	<td>xpath=(//dl[@class='property-list']/dd)[2]</td>
+	<td>//div[contains(@class,'control-group') and contains(.,'End Date')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESOURCES_FIELD</td>
-	<td>xpath=(//dl[@class='property-list']/dd)[3]</td>
+	<td>//div[contains(@class,'control-group') and contains(.,'Resources')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[contains(@id,'descriptionDisplay')]</td>
 	<td></td>
 </tr>
 <tr>

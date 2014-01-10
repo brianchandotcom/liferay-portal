@@ -4,8 +4,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var PositionAlign = A.WidgetPositionAlign;
 
-		var CKCONFIG = CKEDITOR.config;
-
 		var ALIGN = 'align';
 
 		var BOUNDING_BOX = 'boundingBox';

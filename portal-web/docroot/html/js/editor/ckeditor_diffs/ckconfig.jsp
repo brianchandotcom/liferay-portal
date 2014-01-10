@@ -64,43 +64,39 @@ if (!CKEDITOR.stylesSet.get('liferayStyles')) {
 	);
 }
 
-ckEditor.config.autoParagraph = false;
+var config = ckEditor.config;
 
-ckEditor.config.autoSaveTimeout = 3000;
+config.autoParagraph = false;
 
-ckEditor.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+config.autoSaveTimeout = 3000;
 
-ckEditor.config.closeNoticeTimeout = 8000;
+config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
-ckEditor.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
+config.closeNoticeTimeout = 8000;
 
-<%
-Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';
 
-String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
-%>
+config.contentsLangDirection = '<%= PortalUtil.isRightToLeft(request) ? "rtl" : "ltr" %>';
 
-ckEditor.config.contentsLangDirection = '<%= PortalUtil.isRightToLeft(request) ? "rtl" : "ltr" %>';
+config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
 
-ckEditor.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
+config.entities = false;
 
-ckEditor.config.entities = false;
+config.extraPlugins = 'ajaxsave,media,restore,scayt,wsc';
 
-ckEditor.config.extraPlugins = 'ajaxsave,media,restore,scayt,wsc';
+config.height = 265;
 
-ckEditor.config.height = 265;
+config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
 
-ckEditor.config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
-
-ckEditor.config.resize_enabled = <%= resizable %>;
+config.resize_enabled = <%= resizable %>;
 
 <c:if test="<%= resizable %>">
-	ckEditor.config.resize_dir = 'vertical';
+	config.resize_dir = 'vertical';
 </c:if>
 
-ckEditor.config.stylesCombo_stylesSet = 'liferayStyles';
+config.stylesCombo_stylesSet = 'liferayStyles';
 
-ckEditor.config.toolbar_editInPlace = [
+config.toolbar_editInPlace = [
 	['Styles'],
 	['Bold', 'Italic', 'Underline', 'Strike'],
 	['Subscript', 'Superscript', 'SpecialChar'],
@@ -109,7 +105,7 @@ ckEditor.config.toolbar_editInPlace = [
 	['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat'],
 ];
 
-ckEditor.config.toolbar_email = [
+config.toolbar_email = [
 	['FontSize', 'TextColor', 'BGColor', '-', 'Bold', 'Italic', 'Underline', 'Strike'],
 	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
 	['SpellChecker', 'Scayt'],
@@ -120,7 +116,7 @@ ckEditor.config.toolbar_email = [
 	['Image']
 ];
 
-ckEditor.config.toolbar_liferay = [
+config.toolbar_liferay = [
 	['Bold', 'Italic', 'Underline', 'Strike'],
 
 	<c:if test="<%= inlineEdit %>">
@@ -143,7 +139,7 @@ ckEditor.config.toolbar_liferay = [
 	</c:if>
 ];
 
-ckEditor.config.toolbar_liferayArticle = [
+config.toolbar_liferayArticle = [
 	['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
 	['Bold', 'Italic', 'Underline', 'Strike'],
 	['Subscript', 'Superscript'],
@@ -158,19 +154,19 @@ ckEditor.config.toolbar_liferayArticle = [
 	['Image', 'Flash', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
 ];
 
-ckEditor.config.toolbar_phone = [
+config.toolbar_phone = [
 	['Bold', 'Italic', 'Underline'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink']
 ];
 
-ckEditor.config.toolbar_simple = [
+config.toolbar_simple = [
 	['Bold', 'Italic', 'Underline', 'Strike'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink', 'Table']
 ];
 
-ckEditor.config.toolbar_tablet = [
+config.toolbar_tablet = [
 	['Bold', 'Italic', 'Underline', 'Strike'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink'],

@@ -19,10 +19,8 @@
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ContentTypes" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-
-<%@ page import="java.util.Locale" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <%
 String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
@@ -38,33 +36,29 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 var ckEditor = CKEDITOR.instances['<%= name %>'];
 
-ckEditor.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
+var config = ckEditor.config;
 
-ckEditor.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';
 
-<%
-Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
-String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
-%>
+config.contentsLangDirection = '<%= PortalUtil.isRightToLeft(request) ? "rtl" : "ltr" %>';
 
-ckEditor.config.contentsLangDirection = '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>';
+config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
 
-ckEditor.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.replace("iw_", "he_")) %>';
+config.decodeLinks = true;
 
-ckEditor.config.decodeLinks = true;
+config.disableObjectResizing = true;
 
-ckEditor.config.disableObjectResizing = true;
+config.extraPlugins = 'creole,wikilink';
 
-ckEditor.config.extraPlugins = 'creole,wikilink';
+config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
 
-ckEditor.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre';
+config.height = 265;
 
-ckEditor.config.height = 265;
+config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
 
-ckEditor.config.language = '<%= HtmlUtil.escapeJS(languageId.replace("iw_", "he_")) %>';
-
-ckEditor.config.removePlugins = [
+config.removePlugins = [
 	'elementspath',
 	'save',
 	'font',
@@ -92,12 +86,12 @@ ckEditor.config.removePlugins = [
 ].join();
 
 <c:if test="<%= resizable %>">
-	ckEditor.config.resize_dir = 'vertical';
+	config.resize_dir = 'vertical';
 </c:if>
 
-ckEditor.config.resize_enabled = <%= resizable %>;
+config.resize_enabled = <%= resizable %>;
 
-ckEditor.config.toolbar_creole = [
+config.toolbar_creole = [
 	['Cut','Copy','Paste','PasteText','PasteFromWord'],
 	['Undo','Redo'],
 	['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
@@ -118,13 +112,13 @@ ckEditor.config.toolbar_creole = [
 	['Source']
 ];
 
-ckEditor.config.toolbar_phone = [
+config.toolbar_phone = [
 	['Bold', 'Italic', 'Underline'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink']
 ];
 
-ckEditor.config.toolbar_tablet = [
+config.toolbar_tablet = [
 	['Bold', 'Italic', 'Underline', 'Strike'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink'],

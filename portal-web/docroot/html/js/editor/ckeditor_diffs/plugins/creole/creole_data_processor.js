@@ -49,12 +49,11 @@
 
 	var attachmentURLPrefix;
 
-	var CreoleDataProcessor = function() {
-	};
-
-	CreoleDataProcessor.constructor = CreoleDataProcessor,
+	var CreoleDataProcessor = function() {};
 
 	CreoleDataProcessor.prototype = {
+		constructor: CreoleDataProcessor,
+
 		toDataFormat: function(html, fixForBody ) {
 			var instance = this;
 
@@ -580,7 +579,7 @@
 
 						var htmlData = data.dataValue;
 
-						htmlData = CreoleDataProcessor.prototype.toDataFormat(htmlData);
+						htmlData = editor.dataProcessor.toDataFormat(htmlData);
 
 						data.dataValue = htmlData;
 					},

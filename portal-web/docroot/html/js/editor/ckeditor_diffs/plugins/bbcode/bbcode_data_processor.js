@@ -96,16 +96,18 @@
 	var TEMPLATE_IMAGE = '<img src="{image}">';
 
 	var emoticonImages;
+
 	var emoticonPath;
+
 	var emoticonSymbols;
+
 	var newThreadURL;
 
-	var BBCodeDataProcessor = function() {
-	};
-
-	BBCodeDataProcessor.constructor = BBCodeDataProcessor,
+	var BBCodeDataProcessor = function() {};
 
 	BBCodeDataProcessor.prototype = {
+		constructor: BBCodeDataProcessor,
+
 		toDataFormat: function(html, fixForBody ) {
 			var instance = this;
 
@@ -838,7 +840,7 @@
 
 						var htmlData = data.dataValue;
 
-						htmlData = BBCodeDataProcessor.prototype.toDataFormat(htmlData);
+						htmlData = editor.dataProcessor.toDataFormat(htmlData);
 
 						data.dataValue = htmlData;
 					},

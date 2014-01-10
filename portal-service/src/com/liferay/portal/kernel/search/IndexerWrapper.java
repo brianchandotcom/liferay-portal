@@ -182,6 +182,14 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	@Override
+	public Hits search(
+			SearchContext searchContext, String... selectedFieldNames)
+		throws SearchException {
+
+		return _indexer.search(searchContext, selectedFieldNames);
+	}
+
+	@Override
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 

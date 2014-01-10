@@ -525,6 +525,18 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
+	public Hits search(
+			SearchContext searchContext, String... selectedFieldNames)
+		throws SearchException {
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setSelectedFieldNames(selectedFieldNames);
+
+		return search(searchContext);
+	}
+
+	@Override
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 

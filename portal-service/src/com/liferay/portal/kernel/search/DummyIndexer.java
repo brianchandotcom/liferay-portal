@@ -154,6 +154,13 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
+	public Hits search(
+		SearchContext searchContext, String... selectedFieldNames) {
+
+		return null;
+	}
+
+	@Override
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 	}

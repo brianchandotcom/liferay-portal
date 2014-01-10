@@ -1071,6 +1071,15 @@ tck.url=true</echo>
 		</if>
 
 		<if>
+			<equals arg1="${tear.down.before.test}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					tear.down.before.test=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
@@ -1212,15 +1221,6 @@ tck.url=true</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					test.skip.tear.down=true
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${test.tear.down.first}" arg2="true" />
-			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.tear.down.first=true
 				</echo>
 			</then>
 		</if>

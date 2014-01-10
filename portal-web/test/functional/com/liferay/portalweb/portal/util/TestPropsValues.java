@@ -73,6 +73,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		TestPropsUtil.get("selenium.port"));
 
+	public static final boolean TEAR_DOWN_BEFORE_TEST = GetterUtil.getBoolean(
+		TestPropsUtil.get("tear.down.before.test"));
+
 	public static final boolean TEST_ASSERT_LIFERAY_ERRORS =
 		GetterUtil.getBoolean(TestPropsUtil.get("test.assert.liferay.errors"));
 
@@ -87,9 +90,6 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 
 	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.skip.tear.down"));
-
-	public static final boolean TEST_TEAR_DOWN_FIRST = GetterUtil.getBoolean(
-		TestPropsUtil.get("test.tear.down.first"));
 
 	public static final boolean TESTING_CLASS_METHOD = GetterUtil.getBoolean(
 		TestPropsUtil.get("testing.class.method"));

@@ -85,12 +85,18 @@ import java.util.TimeZone;
 import java.util.TreeSet;
 
 /**
+ * Represents a portal user, providing access to the user's contact information,
+ * groups, organizations, teams, user groups, roles, locale, timezone, and more.
+ *
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Wesley Gong
  */
 public class UserImpl extends UserBaseImpl {
 
+	/**
+	 * Constructs the user.
+	 */
 	public UserImpl() {
 	}
 
@@ -99,17 +105,37 @@ public class UserImpl extends UserBaseImpl {
 		_remotePreferences.put(remotePreference.getName(), remotePreference);
 	}
 
+	/**
+	 * Returns the user's addresses.
+	 *
+	 * @return the user's addresses
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<Address> getAddresses() throws SystemException {
 		return AddressLocalServiceUtil.getAddresses(
 			getCompanyId(), Contact.class.getName(), getContactId());
 	}
 
+	/**
+	 * Returns the user's birth date.
+	 *
+	 * @return the user's birth date
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Date getBirthday() throws PortalException, SystemException {
 		return getContact().getBirthday();
 	}
 
+	/**
+	 * Returns the user's company's mail domain.
+	 *
+	 * @return the user's company's mail domain
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public String getCompanyMx() throws PortalException, SystemException {
 		Company company = CompanyLocalServiceUtil.getCompanyById(
@@ -118,6 +144,14 @@ public class UserImpl extends UserBaseImpl {
 		return company.getMx();
 	}
 
+	/**
+	 * Returns the user's associated contact.
+	 *
+	 * @return the user's associated contact
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @see    Contact
+	 */
 	@Override
 	public Contact getContact() throws PortalException, SystemException {
 		try {
@@ -130,6 +164,11 @@ public class UserImpl extends UserBaseImpl {
 		}
 	}
 
+	/**
+	 * Returns the user's digest.
+	 *
+	 * @return the user's digest
+	 */
 	@Override
 	public String getDigest() {
 		String digest = super.getDigest();
@@ -141,6 +180,12 @@ public class UserImpl extends UserBaseImpl {
 		return digest;
 	}
 
+	/**
+	 * Returns a digest for the user, incorporating the password.
+	 *
+	 * @param  password a password to incorporate with the digest
+	 * @return a digest for the user, incorporating the password
+	 */
 	@Override
 	public String getDigest(String password) {
 		if (Validator.isNull(getScreenName())) {
@@ -173,6 +218,13 @@ public class UserImpl extends UserBaseImpl {
 		return sb.toString();
 	}
 
+	/**
+	 * Returns the user's primary email address, or a blank string if the
+	 * address is fake.
+	 *
+	 * @return the user's primary email address, or a blank string if the
+	 *         address is fake
+	 */
 	@Override
 	public String getDisplayEmailAddress() {
 		String emailAddress = super.getEmailAddress();

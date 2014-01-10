@@ -1356,12 +1356,25 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		_user.addRemotePreference(remotePreference);
 	}
 
+	/**
+	* Returns the user's addresses.
+	*
+	* @return the user's addresses
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getAddresses();
 	}
 
+	/**
+	* Returns the user's birth date.
+	*
+	* @return the user's birth date
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.util.Date getBirthday()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1369,6 +1382,13 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getBirthday();
 	}
 
+	/**
+	* Returns the user's company's mail domain.
+	*
+	* @return the user's company's mail domain
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public java.lang.String getCompanyMx()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1376,6 +1396,14 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getCompanyMx();
 	}
 
+	/**
+	* Returns the user's associated contact.
+	*
+	* @return the user's associated contact
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @see Contact
+	*/
 	@Override
 	public com.liferay.portal.model.Contact getContact()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1383,11 +1411,24 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getContact();
 	}
 
+	/**
+	* Returns a digest for the user, incorporating the password.
+	*
+	* @param password a password to incorporate with the digest
+	* @return a digest for the user, incorporating the password
+	*/
 	@Override
 	public java.lang.String getDigest(java.lang.String password) {
 		return _user.getDigest(password);
 	}
 
+	/**
+	* Returns the user's primary email address, or a blank string if the
+	* address is fake.
+	*
+	* @return the user's primary email address, or a blank string if the
+	address is fake
+	*/
 	@Override
 	public java.lang.String getDisplayEmailAddress() {
 		return _user.getDisplayEmailAddress();

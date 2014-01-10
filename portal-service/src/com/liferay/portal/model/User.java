@@ -35,23 +35,64 @@ public interface User extends UserModel, PersistedModel {
 	public void addRemotePreference(
 		com.liferay.portal.kernel.util.RemotePreference remotePreference);
 
+	/**
+	* Returns the user's addresses.
+	*
+	* @return the user's addresses
+	* @throws SystemException if a system exception occurred
+	*/
 	public java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's birth date.
+	*
+	* @return the user's birth date
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public java.util.Date getBirthday()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's company's mail domain.
+	*
+	* @return the user's company's mail domain
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public java.lang.String getCompanyMx()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns the user's associated contact.
+	*
+	* @return the user's associated contact
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	* @see Contact
+	*/
 	public com.liferay.portal.model.Contact getContact()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns a digest for the user, incorporating the password.
+	*
+	* @param password a password to incorporate with the digest
+	* @return a digest for the user, incorporating the password
+	*/
 	public java.lang.String getDigest(java.lang.String password);
 
+	/**
+	* Returns the user's primary email address, or a blank string if the
+	* address is fake.
+	*
+	* @return the user's primary email address, or a blank string if the
+	address is fake
+	*/
 	public java.lang.String getDisplayEmailAddress();
 
 	public java.lang.String getDisplayURL(java.lang.String portalURL,

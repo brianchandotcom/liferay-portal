@@ -772,6 +772,15 @@ public class AssetPublisherDisplayContext {
 		return _showContextLink;
 	}
 
+	public boolean isShowExtraInfo() {
+		if (_showExtraInfo == null) {
+			_showExtraInfo = GetterUtil.getBoolean(
+				_portletPreferences.getValue("showExtraInfo", null), true);
+		}
+
+		return _showExtraInfo;
+	}
+
 	public boolean isShowMetadataDescriptions() {
 		if (_showMetadataDescriptions == null) {
 			_showMetadataDescriptions = GetterUtil.getBoolean(
@@ -926,6 +935,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _showAssetTitle;
 	private Boolean _showAvailableLocales;
 	private Boolean _showContextLink;
+	private Boolean _showExtraInfo;
 	private Boolean _showMetadataDescriptions;
 	private Boolean _showOnlyLayoutAssets;
 	private String _socialBookmarksDisplayPosition;

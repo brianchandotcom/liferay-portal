@@ -41,16 +41,13 @@
 		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_NESTED_CHILDREN_SELECT" value1="Yes" />
 		<execute action="PGNavigationConfiguration#assertClick" locator-key1="PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
 		<execute action="PGNavigationConfiguration#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGNavigationConfiguration#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
 	</command>
 
 	<command name="ValidateReturnToDefaultStyle" priority="3">
@@ -81,19 +78,16 @@
 		<execute action="PGNavigationConfiguration#select" locator-key1="SETUP_DISPLAY_STYLE_SELECT" value1="Relative with Breadcrumb" />
 		<execute action="PGNavigationConfiguration#assertClick" locator-key1="PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
 		<execute action="PGNavigationConfiguration#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGNavigationConfiguration#selectFrame" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
 	</command>
 
-	<command name="AutoChangesToDisplayStyle" priority="3">
+	<command name="AutomaticChangesToDisplayStyle" priority="3">
 		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels$${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true$${line.separator}navigation.display.style.default=" />
 
 		<var name="pageName" value="Navigation Display Test Page" />
@@ -110,9 +104,5 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
 	</command>
 </definition>

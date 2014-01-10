@@ -117,7 +117,7 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 	}
 
 	protected static String currentTestCaseName;
-	protected static boolean tearDownOnce = true;
+	protected static boolean tearDownFirstExecuted;
 	protected static int testCaseCount;
 
 	protected Map<String, String> commandScopeVariables;

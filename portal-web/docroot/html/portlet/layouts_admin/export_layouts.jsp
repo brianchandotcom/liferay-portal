@@ -238,7 +238,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 					<%
 					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
 
-					PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
+					PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), liveGroupId, startDate, endDate);
 
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 					%>

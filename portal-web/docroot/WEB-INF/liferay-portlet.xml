@@ -1749,6 +1749,7 @@
 		<indexer-class>com.liferay.portlet.dynamicdatalists.util.DDLIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordSetStagedModelDataHandler</staged-model-data-handler-class>
 		<template-handler>com.liferay.portlet.dynamicdatalists.template.DDLTemplateHandler</template-handler>
 		<webdav-storage-token>dynamic_data_lists</webdav-storage-token>

@@ -1,0 +1,118 @@
+<definition component-name="portal-wcm">
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ManualChangesToDisplayStyle" priority="3">
+		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels$${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
+
+		<var name="pageName" value="Navigation Display Test Page" />
+		<var name="portletName" value="Navigation" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" value1="${pageName}" />
+		<execute action="PGNavigation#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
+		<execute action="PGNavigation#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGNavigationConfiguration#selectFrame" locator-key1="NAVIGATION_CONFIGURATION_IFRAME" />
+		<execute action="PGNavigationConfiguration#assertTextEquals" locator-key1="PREVIEW_BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="SETUP_DISPLAY_STYLE_SELECT" value1="Custom" />
+		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_HEADER_SELECT" value1="Root Page" />
+		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_ROOT_PAGE_SELECT" value1="Parent at Level" />
+		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_ROOT_PAGE_LEVEL_SELECT" value1="1" />
+		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_INCLUDED_PAGES_SELECT" value1="Auto" />
+		<execute action="PGNavigationConfiguration#assertSelectedLabel" locator-key1="CUSTOM_NESTED_CHILDREN_SELECT" value1="Yes" />
+		<execute action="PGNavigationConfiguration#assertClick" locator-key1="PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+		<execute action="PGNavigationConfiguration#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="ValidateReturnToDefaultStyle" priority="3">
+		<property name="custom.properties" value="navigation.display.style.default=from-level-1-with-title$${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true" />
+
+		<var name="pageName" value="Navigation Display Test Page" />
+		<var name="portletName" value="Navigation" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+		<execute action="PGNavigation#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
+		<execute action="PGNavigation#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGNavigationConfiguration#selectFrame" locator-key1="NAVIGATION_CONFIGURATION_IFRAME" />
+		<execute action="PGNavigationConfiguration#select" locator-key1="SETUP_DISPLAY_STYLE_SELECT" value1="Relative with Breadcrumb" />
+		<execute action="PGNavigationConfiguration#assertClick" locator-key1="PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+		<execute action="PGNavigationConfiguration#assertTextEquals" locator-key1="PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="AutoChangesToDisplayStyle" priority="3">
+		<property name="custom.properties" value="navigation.display.style.options=from-level-1-to-all-sublevels$${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true$${line.separator}navigation.display.style.default=" />
+
+		<var name="pageName" value="Navigation Display Test Page" />
+		<var name="portletName" value="Navigation" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_HEADER2_ENTRY" value1="${pageName}" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+</definition>

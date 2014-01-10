@@ -379,32 +379,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			version);
 	}
 
-	@Override
-	protected void doVerify() throws Exception {
-		checkMisversionedDLFileEntries();
-
-		checkDLFileEntryType();
-		checkMimeTypes();
-		checkTitles();
-		deleteOrphanedDLFileEntries();
-		updateFileEntryAssets();
-		updateFolderAssets();
-		verifyTree();
-	}
-
-	protected String getMimeType(InputStream inputStream, String title) {
-		String mimeType = null;
-
-		try {
-			mimeType = MimeTypesUtil.getContentType(inputStream, title);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
-
-		return mimeType;
-	}
-
 	protected void deleteOrphanedDLFileEntries() throws Exception {
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getOrphanedFileEntries();
@@ -433,6 +407,32 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Removed orphaned file entries");
 		}
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		checkMisversionedDLFileEntries();
+
+		checkDLFileEntryType();
+		checkMimeTypes();
+		checkTitles();
+		deleteOrphanedDLFileEntries();
+		updateFileEntryAssets();
+		updateFolderAssets();
+		verifyTree();
+	}
+
+	protected String getMimeType(InputStream inputStream, String title) {
+		String mimeType = null;
+
+		try {
+			mimeType = MimeTypesUtil.getContentType(inputStream, title);
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+
+		return mimeType;
 	}
 
 	protected void updateFileEntryAssets() throws Exception {

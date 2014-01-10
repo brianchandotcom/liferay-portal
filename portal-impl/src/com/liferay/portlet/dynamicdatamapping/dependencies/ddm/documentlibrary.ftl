@@ -1,13 +1,5 @@
 <#include "../init.ftl">
 
-<#assign groupLocalService = serviceLocator.findService("com.liferay.portal.service.GroupLocalService")>
-
-<#assign controlPanelGroup = groupLocalService.getGroup(themeDisplay.getCompanyId(), "Control Panel")>
-
-<#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
-
-<#assign controlPanelPlid = layoutLocalService.getDefaultPlid(controlPanelGroup.getGroupId(), true)>
-
 <#if !(fields?? && fields.get(fieldName)??) && (fieldRawValue == "")>
 	<#assign fieldRawValue = predefinedValue>
 </#if>
@@ -87,12 +79,12 @@
 		namespacedField.on(
 			'click',
 			function(event) {
-				var portletURL = Liferay.PortletURL.createURL('${portletURLFactory.create(request, "166", themeDisplay.getPlid(), "RENDER_PHASE")}');
+				var portletURL = Liferay.PortletURL.createURL('${themeDisplay.getURLControlPanel()}');
+
+				portletURL.setDoAsGroupId(${scopeGroupId?c});
 
 				portletURL.setParameter('groupId', ${scopeGroupId?c});
 				portletURL.setParameter('struts_action', '/dynamic_data_mapping/select_document_library');
-
-				portletURL.setPlid(${controlPanelPlid?c});
 
 				portletURL.setPortletId('166');
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
-	public Tuple getEntries(Hits hits) {
+	public List<? extends BaseModel<?>> getEntries(Hits hits) {
 		return null;
 	}
 
@@ -165,7 +165,9 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
-	public Tuple search(SearchContext searchContext, Class<?> entryClass)
+	public List<? extends BaseModel<?>> search(
+			SearchContext searchContext,
+			Class<? extends BaseModel<?>> entryClass)
 		throws SearchException {
 
 		return null;

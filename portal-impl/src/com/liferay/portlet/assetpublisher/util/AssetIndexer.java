@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -52,7 +52,7 @@ public class AssetIndexer extends BaseIndexer {
 	}
 
 	@Override
-	public Tuple getEntries(Hits hits) {
+	public List<? extends BaseModel<?>> getEntries(Hits hits) {
 		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
 		for (Document document : hits.getDocs()) {
@@ -73,7 +73,7 @@ public class AssetIndexer extends BaseIndexer {
 			}
 		}
 
-		return new Tuple(assetEntries, hits.getLength());
+		return assetEntries;
 	}
 
 	@Override

@@ -638,23 +638,15 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 		if ((selectedFieldNames != null) && (selectedFieldNames.length > 0)) {
 			Set<String> selectedFields = SetUtil.fromArray(selectedFieldNames);
 
-			if (!selectedFields.isEmpty()) {
-				fieldSelector = new SetBasedFieldSelector(
-					selectedFields, Collections.EMPTY_SET);
-			}
+			fieldSelector = new SetBasedFieldSelector(
+				selectedFields, Collections.<String>emptySet());
 		}
 
 		for (int i = start; i < start + subsetTotal; i++) {
 			int docId = hitDocs.getDocId(i);
 
-			org.apache.lucene.document.Document document = null;
-
-			if (fieldSelector != null) {
-				document = indexSearcher.doc(docId, fieldSelector);
-			}
-			else {
-				document = indexSearcher.doc(docId);
-			}
+			org.apache.lucene.document.Document document = indexSearcher.doc(
+				docId, fieldSelector);
 
 			Document subsetDocument = getDocument(document);
 

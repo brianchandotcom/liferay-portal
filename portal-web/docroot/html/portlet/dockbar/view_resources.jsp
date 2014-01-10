@@ -81,9 +81,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 					List<AssetEntry> results = null;
 
 					if (PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX && (assetEntryQuery.getLinkedAssetEntryId() == 0)) {
-						Tuple tuple = AssetUtil.search(request, assetEntryQuery, 0, delta);
-
-						results = (List<AssetEntry>)tuple.getObject(0);
+						results = AssetUtil.search(request, assetEntryQuery, 0, delta);
 					}
 					else {
 						results = AssetEntryServiceUtil.getEntries(assetEntryQuery);

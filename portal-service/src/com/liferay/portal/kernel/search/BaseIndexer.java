@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -182,8 +181,8 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public Tuple getEntries(Hits hits) {
-		throw new UnsupportedOperationException("Not supported yet.");
+	public List<? extends BaseModel<?>> getEntries(Hits hits) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -306,7 +305,7 @@ public abstract class BaseIndexer implements Indexer {
 
 	@Override
 	public String[] getSelectedFieldNames() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -536,7 +535,9 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public Tuple search(SearchContext searchContext, Class<?> entryClass)
+	public List<? extends BaseModel<?>> search(
+			SearchContext searchContext,
+			Class<? extends BaseModel<?>> entryClass)
 		throws SearchException {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(entryClass.getName());

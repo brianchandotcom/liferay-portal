@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -869,11 +868,9 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		Tuple results = AssetUtil.search(
+		return AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
-
-		return (List<AssetEntry>)results.getObject(0);
 	}
 
 	protected int searchCount(
@@ -890,10 +887,12 @@ public abstract class BaseAssetSearchTestCase {
 			int start, int end)
 		throws Exception {
 
-		Tuple results = AssetUtil.search(
-			searchContext, assetEntryQuery, start, end);
+		List<AssetEntry> assetEntries =
+			AssetUtil.search(
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		return (Integer)results.getObject(1);
+		return assetEntries.size();
 	}
 
 	protected void testAssetCategorization(

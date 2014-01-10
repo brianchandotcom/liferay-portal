@@ -26,6 +26,10 @@ String bodyContentString = StringPool.BLANK;
 if (bodyContent != null) {
 	bodyContentString = bodyContent.getString();
 }
+
+if (Validator.isNull(title)) {
+	title = HtmlUtil.stripHtml(LanguageUtil.get(pageContext, label));
+}
 %>
 
 <c:if test="<%= !dropdown || Validator.isNotNull(bodyContentString.trim()) %>">

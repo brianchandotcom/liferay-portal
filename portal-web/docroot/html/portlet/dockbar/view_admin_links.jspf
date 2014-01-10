@@ -33,7 +33,7 @@
 							String url = HttpUtil.setParameter(themeDisplay.getURLSiteAdministration(), "controlPanelCategory", StringUtil.replace(category, PortletCategoryKeys.SITE_ADMINISTRATION, currentSiteCategory));
 						%>
 
-							<aui:nav-item anchorId="siteAdministrationLink" href="<%= url %>" iconCssClass="icon-chevron-right" label='<%= "category." + category %>'/>
+							<aui:nav-item anchorId='<%= "siteAdministrationLink-" + category %>' href="<%= url %>" iconCssClass="icon-chevron-right" label='<%= "category." + category %>'/>
 
 						<%
 						}

@@ -35,7 +35,9 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 <liferay-ui:error-marker key="errorSection" value="general" />
 
-<h3><liferay-ui:message key="main-configuration" /></h3>
+<h3><liferay-ui:message key="general" /></h3>
+
+<h4><liferay-ui:message key="main-configuration" /></h4>
 
 <aui:model-context bean="<%= account %>" model="<%= Account.class %>" />
 
@@ -62,7 +64,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 	</aui:col>
 </aui:row>
 
-<h3><liferay-ui:message key="navigation" /></h3>
+<h4><liferay-ui:message key="navigation" /></h4>
 
 <aui:row>
 	<aui:col width="<%= 50 %>">
@@ -75,7 +77,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 	</aui:col>
 </aui:row>
 
-<h3><liferay-ui:message key="additional-information" /></h3>
+<h4><liferay-ui:message key="additional-information" /></h4>
 
 <aui:row>
 	<aui:col width="<%= 50 %>">

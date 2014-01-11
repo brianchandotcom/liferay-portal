@@ -217,16 +217,10 @@ public class Logger {
 
 		_screenshotFileName = fileName;
 
-		String screenShotDir = _liferaySelenium.getProjectDir();
-
-		screenShotDir = StringUtil.replace(screenShotDir, "\\", "/");
-
 		sb.append("<img alt=\"");
 		sb.append(_screenshotFileName);
 		sb.append(_screenshotCount);
-		sb.append("\" height=\"750\" src=\"file:///");
-		sb.append(screenShotDir);
-		sb.append("portal-web/test-results/functional/");
+		sb.append("\" height=\"750\" src=\"");
 		sb.append(_screenshotFileName);
 		sb.append("/");
 		sb.append(_screenshotFileName);

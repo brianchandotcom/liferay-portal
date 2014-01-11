@@ -39,7 +39,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
 ;(function() {
-	var config = CKEDITOR.instances['<%= name %>'].config;
+	var config = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'].config;
 
 	config.height = 265;
 

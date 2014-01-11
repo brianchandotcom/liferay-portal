@@ -2279,18 +2279,23 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 
 	<target name="stop-selenium">
 		<if>
-			<not>
-				<filesmatch
-					file1="portal-impl/src/system-ext.properties"
-					file2="portal-impl/classes/system-ext.properties"
-				/>
-			</not>
+			<available file="portal-impl/src/system-ext.properties" />
 			<then>
-				<copy
-					file="portal-impl/src/system-ext.properties"
-					overwrite="true"
-					tofile="portal-impl/classes/system-ext.properties"
-				/>
+				<if>
+					<not>
+						<filesmatch
+							file1="portal-impl/src/system-ext.properties"
+							file2="portal-impl/classes/system-ext.properties"
+						/>
+					</not>
+					<then>
+						<copy
+							file="portal-impl/src/system-ext.properties"
+							overwrite="true"
+							tofile="portal-impl/classes/system-ext.properties"
+						/>
+					</then>
+				</if>
 			</then>
 		</if>
 

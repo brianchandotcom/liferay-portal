@@ -96,6 +96,10 @@ public interface Indexer {
 
 	public Hits search(SearchContext searchContext) throws SearchException;
 
+	public Hits search(
+			SearchContext searchContext, String... selectedFieldNames)
+		throws SearchException;
+
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor);
 

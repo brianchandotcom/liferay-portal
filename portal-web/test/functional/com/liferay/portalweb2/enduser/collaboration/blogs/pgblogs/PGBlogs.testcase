@@ -225,6 +225,95 @@
 		</execute>
 	</command>
 
+	<command name="AddBlogsEntryWithSamePageScope" priority="4">
+		<var name="entryContent" value="Blogs Entry1 Content" />
+		<var name="entryContent2" value="Blogs Entry2 Content" />
+		<var name="entryTitle" value="Blogs Entry1 Title" />
+		<var name="entryTitle2" value="Blogs Entry2 Title" />
+		<var name="pageName2" value="Blogs Page2" />
+		<var name="portletName2" value="Blogs (Blogs Page2)" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="Liferay" />
+		</execute>
+	</command>
+
 	<command name="AddBlogsEntryWithTrackbackURL" priority="5">
 		<var name="entryContent" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
@@ -579,6 +668,110 @@
 		<execute macro="BlogsEntry#viewDraftPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="SearchBlogsEntriesWithQuotesSamePageScope" priority="4">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContent2" value="Blogs2 Entry2 Content2" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryTitle2" value="Blogs2 Entry2 Title2" />
+		<var name="pageName2" value="Blogs Page2" />
+		<var name="portletName1" value="Blogs (Blogs Page)" />
+		<var name="portletName2" value="Blogs (Blogs Page2)" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="${portletName1}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entrySearchTerm" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entrySearchTerm"><![CDATA["${entryTitle}"]]></var>
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entrySearchTerm" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#searchNoPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entrySearchTerm"><![CDATA["${entryTitle2}"]]></var>
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="Liferay" />
 		</execute>
 	</command>
 
@@ -1036,6 +1229,149 @@
 		<execute macro="BlogsEntry#viewViewCountPG">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntryWithDefaultScope" priority="4">
+		<var name="contentScopeName" value="Default" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="portletName2" value="Blogs (Blogs Page)" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#viewScopeDefaultNoEntryCP">
+			<var name="contentScopeName" value="${contentScopeName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopeCP">
+			<var name="contentScopeName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntryWithMultiplePageDefaultScope" priority="4">
+		<var name="entryAuthor" value="Test Test" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName2" value="Blogs Page2" />
+		<var name="portletName2" value="Blogs (Blogs Page2)" />
+		<var name="scopeSelection" value="Liferay" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopeCP">
+			<var name="contentScopeName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryAuthor" value="${entryAuthor}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewNoPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#viewScopePG">
+			<var name="scopeSelection" value="${scopeSelection}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 </definition>

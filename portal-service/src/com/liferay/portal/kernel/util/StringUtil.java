@@ -387,6 +387,15 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Returns <code>true</code> if the two specified strings are equal,
+	 * ignoring case.
+	 *
+	 * @param  s1 the first string to compare
+	 * @param  s2 the second string to compare
+	 * @return <code>true</code> if the two specified strings are equal,
+	 *         ignoring case; <code>false</code> otherwise
+	 */
 	public static boolean equalsIgnoreCase(String s1, String s2) {
 		if (s1 == s2) {
 			return true;
@@ -618,6 +627,12 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Returns the leading digits as a substring of <code>s</code>.
+	 *
+	 * @param  s the string from which to extract the substring
+	 * @return the leading digits as a substring of <code>s</code>
+	 */
 	public static String extractLeadingDigits(String s) {
 		if (s == null) {
 			return StringPool.BLANK;
@@ -1054,6 +1069,15 @@ public class StringUtil {
 		return prefix.concat(insert).concat(postfix);
 	}
 
+	/**
+	 * Returns <code>true</code> if all the characters in string <code>s</code>
+	 * are lower case, ignoring any non-alphabetic characters.
+	 *
+	 * @param  s the string in which to search
+	 * @return <code>true</code> if all the characters in string <code>s</code>
+	 *         are lower case, ignoring any non-alphabetic characters;
+	 *         <code>false</code> otherwise
+	 */
 	public static boolean isLowerCase(String s) {
 		if (s == null) {
 			return false;
@@ -1082,6 +1106,15 @@ public class StringUtil {
 		return true;
 	}
 
+	/**
+	 * Returns <code>true</code> if all the characters in string <code>s</code>
+	 * are upper case, ignoring any non-alphabetic characters.
+	 *
+	 * @param  s the string in which to search
+	 * @return <code>true</code> if all the characters in string <code>s</code>
+	 *         are upper case, ignoring any non-alphabetic characters;
+	 *         <code>false</code> otherwise
+	 */
 	public static boolean isUpperCase(String s) {
 		if (s == null) {
 			return false;

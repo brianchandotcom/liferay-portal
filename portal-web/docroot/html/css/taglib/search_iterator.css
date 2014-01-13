@@ -12,6 +12,13 @@
 			max-width: none;
 		}
 	}
+
+	@include respond-to(phone) {
+		.selector-button {
+			min-width: 100%;
+			width: auto;
+		}
+	}
 }
 
 .taglib-search-iterator-page-iterator-top {

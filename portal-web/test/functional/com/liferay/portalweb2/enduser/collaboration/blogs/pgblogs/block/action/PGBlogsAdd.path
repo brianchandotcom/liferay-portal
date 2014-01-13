@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ABSTRACT_DROPDOWN</td>
+	<td>//div[@id='blogsEntryAbstractPanel']/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORIZATION_DROPDOWN</td>
 	<td>//div[@id='blogsEntryCategorizationPanel']/div</td>
 	<td></td>
@@ -122,6 +127,17 @@
 <tr>
 	<td>TAGS_SUGGESTIONS_BUTTON</td>
 	<td>//button[@title='Suggestions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ABSTRACT-->
+<tr>
+	<td>ABSTRACT_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_33_description']</td>
 	<td></td>
 </tr>
 </tbody>

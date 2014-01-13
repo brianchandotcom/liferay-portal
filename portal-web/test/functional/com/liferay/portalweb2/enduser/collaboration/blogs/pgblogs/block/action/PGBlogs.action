@@ -1,5 +1,9 @@
 <definition>
 	<command name="assertClick">
+		<case locator-key1="ENTRY_READ_MORE">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
+
 		<case locator-key1="ENTRY_EDIT">
 			<execute function="AssertClick#assertTextClickAndWait" />
 		</case>
@@ -7,6 +11,14 @@
 
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="ENTRY_CONTENT_ABSTRACT">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="ENTRY_READ_MORE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

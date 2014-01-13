@@ -48,7 +48,7 @@
 					</liferay-util:buffer>
 
 					<liferay-util:buffer var="link">
-						<em class="restore-entry-title"><aui:a href="<%= restoreLinks.get(i) %>" label="<%= restoreMessages.get(i) %>" /></em>
+						<em class="restore-entry-title"><aui:a href="<%= restoreLinks.get(i) %>" label="<%= HtmlUtil.escape(restoreMessages.get(i)) %>" /></em>
 					</liferay-util:buffer>
 
 					<liferay-ui:message arguments="<%= new Object[] {type, entityLink.trim(), link.trim()} %>" key="the-x-x-was-restored-to-x" />

@@ -21,27 +21,17 @@ journalParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(JournalArticle.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-boolean corruptIndex = false;
+BaseModelSearchResult<JournalArticle> searchResult = null;
 
-Hits hits = null;
-Tuple tuple = null;
-
-do {
-	if (searchTerms.isAdvancedSearch()) {
-		hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
-	}
-	else {
-		hits = JournalArticleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-	}
-
-	tuple = JournalUtil.getArticles(hits);
-
-	corruptIndex = (Boolean)tuple.getObject(1);
+if (searchTerms.isAdvancedSearch()) {
+	searchResult = JournalArticleLocalServiceUtil.searchJournalArticles(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), StringUtil.valueOf(searchTerms.getStatusCode()), searchTerms.getStructureId(), searchTerms.getTemplateId(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
 }
-while (corruptIndex);
+else {
+	searchResult = JournalArticleLocalServiceUtil.searchJournalArticles(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+}
 
-results = (List<JournalArticle>)tuple.getObject(0);
+results = searchResult.getBaseModels();
 
 searchContainer.setResults(results);
-searchContainer.setTotal(hits.getLength());
+searchContainer.setTotal(searchResult.getLength());
 %>

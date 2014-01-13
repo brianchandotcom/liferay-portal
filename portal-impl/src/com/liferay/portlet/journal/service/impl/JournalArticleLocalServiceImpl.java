@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -4394,6 +4395,88 @@ public class JournalArticleLocalServiceImpl
 			title, description, content, type, ddmStructureKeys,
 			ddmTemplateKeys, displayDateGT, displayDateLT, reviewDate,
 			andOperator, new QueryDefinition(status));
+	}
+
+	@Override
+	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String ddmStructureKey, String ddmTemplateKey,
+			String keywords, LinkedHashMap<String, Object> params, int start,
+			int end, Sort sort)
+		throws PortalException, SystemException {
+
+		String articleId = null;
+		String title = null;
+		String description = null;
+		String content = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			articleId = keywords;
+			title = keywords;
+			description = keywords;
+			content = keywords;
+		}
+		else {
+			andOperator = true;
+		}
+
+		String status = String.valueOf(WorkflowConstants.STATUS_ANY);
+
+		if (params != null) {
+			params.put("keywords", keywords);
+		}
+
+		return searchJournalArticles(
+			companyId, groupId, folderIds, classNameId, articleId, title,
+			description, content, null, status, ddmStructureKey, ddmTemplateKey,
+			params, andOperator, start, end, sort);
+	}
+
+	@Override
+	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, String title,
+			String description, String content, String type, String status,
+			String ddmStructureKey, String ddmTemplateKey,
+			LinkedHashMap<String, Object> params, boolean andSearch, int start,
+			int end, Sort sort)
+		throws PortalException, SystemException {
+
+		while (true) {
+			Hits hits = search(
+				companyId, groupId, folderIds, classNameId, articleId, title,
+				description, content, type, status, ddmStructureKey,
+				ddmTemplateKey, params, andSearch, start, end, sort);
+
+			List<JournalArticle> journalArticles = JournalUtil.getArticles(
+				hits);
+
+			if (journalArticles != null) {
+				return new BaseModelSearchResult<JournalArticle>(
+					journalArticles, hits.getLength());
+			}
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
+			long groupId, long userId, long creatorUserId, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		while (true) {
+			Hits hits = search(
+				groupId, userId, creatorUserId, status, start, end);
+
+			List<JournalArticle> journalArticles = JournalUtil.getArticles(
+				hits);
+
+			if (journalArticles != null) {
+				return new BaseModelSearchResult<JournalArticle>(
+					journalArticles, hits.getLength());
+			}
+		}
 	}
 
 	/**

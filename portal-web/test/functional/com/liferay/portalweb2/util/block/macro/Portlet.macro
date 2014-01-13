@@ -172,4 +172,8 @@
 			</then>
 		</while>
 	</command>
+
+	<command name="viewPG">
+		<execute action="BasePortlet#assertTextEquals" locator-key1="TITLE" value1="${portletName}" />
+	</command>
 </definition>

@@ -753,10 +753,10 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetEntry incrementViewCounter(
-		long userId, java.lang.String className, long classPK, int increment)
+	public void incrementViewCounter(long userId, java.lang.String className,
+		long classPK, int increment)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _assetEntryLocalService.incrementViewCounter(userId, className,
+		_assetEntryLocalService.incrementViewCounter(userId, className,
 			classPK, increment);
 	}
 

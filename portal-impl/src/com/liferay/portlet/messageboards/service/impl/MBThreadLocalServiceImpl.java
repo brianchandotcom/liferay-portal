@@ -662,20 +662,18 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	@BufferedIncrement(
 		configuration = "MBThread", incrementClass = NumberIncrement.class)
 	@Override
-	public MBThread incrementViewCounter(long threadId, int increment)
+	public void incrementViewCounter(long threadId, int increment)
 		throws PortalException, SystemException {
 
-		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
-
 		if (ExportImportThreadLocal.isImportInProcess()) {
-			return thread;
+			return;
 		}
+
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
 		thread.setViewCount(thread.getViewCount() + increment);
 
 		mbThreadPersistence.update(thread);
-
-		return thread;
 	}
 
 	@Override

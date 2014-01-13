@@ -497,8 +497,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 	public boolean hasAnswerMessage(long threadId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portlet.messageboards.model.MBThread incrementViewCounter(
-		long threadId, int increment)
+	public void incrementViewCounter(long threadId, int increment)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

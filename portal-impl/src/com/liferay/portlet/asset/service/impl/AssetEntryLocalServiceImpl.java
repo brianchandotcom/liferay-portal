@@ -375,12 +375,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@BufferedIncrement(
 		configuration = "AssetEntry", incrementClass = NumberIncrement.class)
 	@Override
-	public AssetEntry incrementViewCounter(
+	public void incrementViewCounter(
 			long userId, String className, long classPK, int increment)
 		throws SystemException {
 
 		if (ExportImportThreadLocal.isImportInProcess() || (classPK <= 0)) {
-			return null;
+			return;
 		}
 
 		long classNameId = classNameLocalService.getClassNameId(className);
@@ -389,14 +389,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			classNameId, classPK);
 
 		if (entry == null) {
-			return null;
+			return;
 		}
 
 		entry.setViewCount(entry.getViewCount() + increment);
 
 		assetEntryPersistence.update(entry);
-
-		return entry;
 	}
 
 	@Override

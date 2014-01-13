@@ -30,7 +30,7 @@
 		</if>
 
 		<if>
-			<equals arg1="markAsQuestion" arg2="true" />
+			<equals arg1="${markAsQuestion}" arg2="true" />
 			<then>
 				<execute action="PGMessageboardsPostthread#check" locator-key1="MARK_AS_A_QUESTION_CHECKBOX" />
 			</then>
@@ -139,7 +139,7 @@
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<if>
-			<equals arg1="categoryDescriptionEnabled" arg2="true" />
+			<equals arg1="${categoryDescriptionEnabled}" arg2="true" />
 			<then>
 				<var name="key_categoryDescription" value="${categoryDescription}" />
 

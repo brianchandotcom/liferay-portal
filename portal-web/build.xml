@@ -578,6 +578,37 @@
 					</replacevalue>
 				</replace>
 
+				<!-- common.js -->
+
+				<echo file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/js/common.js" append="true">
+					<![CDATA[
+					var escapeHTML = (function()
+					{
+						var regexp = /[&<>"'/`]/g,
+							tagsToReplace =
+							{
+								'&': '&amp;',
+								'<': '&lt;',
+								'>': '&gt;',
+								'"': '&#034;',
+								'\'': '&#039;',
+								'/': '&#047;',
+								'`': '&#096;'
+							}
+
+						function replaceTag( tag )
+						{
+							return tagsToReplace[tag] || tag ;
+						}
+
+						return function( str )
+						{
+							return str.replace( regexp, replaceTag ) ;
+						}
+					})() ;
+					]]>
+				</echo>
+
 				<!-- frmfolders.html -->
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
@@ -597,7 +628,12 @@
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
 					<replacetoken><![CDATA[oListManager.AddItem( sFolderName, sCurrentFolderPath + sFolderName + '/' ) ;]]></replacetoken>
-					<replacevalue><![CDATA[oListManager.AddItem( sFolderName, sCurrentFolderPath.replace( /'/g, '\\\'') + sFolderName + '/' ) ;]]></replacevalue>
+					<replacevalue><![CDATA[oListManager.AddItem( escapeHTML( sFolderName ), sCurrentFolderPath.replace( /'/g, '\\\'') + sFolderName + '/' ) ;]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
+					<replacetoken><![CDATA[window.parent.frames['frmActualFolder'].SetCurrentFolder( oConnector.ResourceType, folderPath ) ;]]></replacetoken>
+					<replacevalue><![CDATA[window.parent.frames['frmActualFolder'].SetCurrentFolder( oConnector.ResourceType, escapeHTML( folderPath ) ) ;]]></replacevalue>
 				</replace>
 
 				<!-- frmresourceslist.html -->
@@ -627,6 +663,11 @@
 					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileErrorMessageNamedItem = oNode.attributes.getNamedItem('errorMessage');\2\1var sFileErrorMessage = null;\2\1 if (sFileErrorMessageNamedItem) {sFileErrorMessage = sFileErrorMessageNamedItem.value;}\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileDesc, sFileUrl, sFileSize, sFileErrorMessage ) ) ;"
 					flags="s"
 				/>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[oHtml.Append( oListManager.GetFolderRowHtml( sFolderName, sCurrentFolderPath + sFolderName + "/" ) ) ;]]></replacetoken>
+					<replacevalue><![CDATA[oHtml.Append( oListManager.GetFolderRowHtml( escapeHTML( sFolderName ), sCurrentFolderPath + sFolderName + "/" ) ) ;]]></replacevalue>
+				</replace>
 
 				<!-- frmresourcetype.html -->
 

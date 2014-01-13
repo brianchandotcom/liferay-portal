@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -73,6 +74,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -3272,6 +3274,141 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userFinder.countByC_FN_MN_LN_SN_EA_S(
 			companyId, firstName, middleName, lastName, screenName,
 			emailAddress, status, params, andSearch);
+	}
+
+	/**
+	 * Returns total number of hits an ordered range of all the users who
+	 * match the keywords and status, using the indexer. It is preferable
+	 * to use this method instead of the non-indexed version whenever possible
+	 * for performance reasons.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         user's first name, middle name, last name, screen name, or email
+	 *         address
+	 * @param  status the workflow status
+	 * @param  params the indexer parameters (optionally <code>null</code>). For
+	 *         more information see {@link
+	 *         com.liferay.portlet.usersadmin.util.UserIndexer}.
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @param  sort the field and direction to sort by (optionally
+	 *         <code>null</code>)
+	 * @return the matching users and total number of hits
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
+	 */
+	@Override
+	public BaseModelSearchResult<User> searchUsers(
+			long companyId, String keywords, int status,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws SystemException {
+
+		boolean corruptIndex = false;
+
+		Hits hits = null;
+		Tuple tuple = null;
+
+		do {
+			hits = search(
+				companyId, keywords, status, params, start, end, sort);
+
+			try {
+				tuple = UsersAdminUtil.getUsers(hits);
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
+
+			corruptIndex = (Boolean)tuple.getObject(1);
+		}
+		while (corruptIndex);
+
+		return new BaseModelSearchResult<User>(
+			(List<User>)tuple.getObject(0), hits.getLength());
+	}
+
+	/**
+	 * Returns total number of hits and an ordered range of all the users
+	 * with the status, and whose first name, middle name, last name,
+	 * screen name, and email address match the keywords specified for
+	 * them, using the indexer. It is preferable to use this method instead of
+	 * the non-indexed version whenever possible for
+	 * performance reasons.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  firstName the first name keywords (space separated)
+	 * @param  middleName the middle name keywords
+	 * @param  lastName the last name keywords
+	 * @param  screenName the screen name keywords
+	 * @param  emailAddress the email address keywords
+	 * @param  status the workflow status
+	 * @param  params the indexer parameters (optionally <code>null</code>). For
+	 *         more information see {@link
+	 *         com.liferay.portlet.usersadmin.util.UserIndexer}.
+	 * @param  andSearch whether every field must match its keywords, or just
+	 *         one field. For example, &quot;users with the first name 'bob' and
+	 *         last name 'smith'&quot; vs &quot;users with the first name 'bob'
+	 *         or the last name 'smith'&quot;.
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @param  sort the field and direction to sort by (optionally
+	 *         <code>null</code>)
+	 * @return the matching users and total number of hits
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
+	 */
+	@Override
+	public BaseModelSearchResult<User> searchUsers(
+			long companyId, String firstName, String middleName,
+			String lastName, String screenName, String emailAddress, int status,
+			LinkedHashMap<String, Object> params, boolean andSearch, int start,
+			int end, Sort sort)
+		throws SystemException {
+
+		boolean corruptIndex = false;
+
+		Hits hits = null;
+		Tuple tuple = null;
+
+		do {
+			hits = search(
+				companyId, firstName, middleName, lastName, screenName,
+				emailAddress, status, params, andSearch, start, end, sort);
+
+			try {
+				tuple = UsersAdminUtil.getUsers(hits);
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
+
+			corruptIndex = (Boolean)tuple.getObject(1);
+		}
+		while (corruptIndex);
+
+		return new BaseModelSearchResult<User>(
+			(List<User>)tuple.getObject(0), hits.getLength());
 	}
 
 	/**

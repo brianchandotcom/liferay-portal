@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -216,9 +215,7 @@ public class ExportUsersAction extends PortletAction {
 					QueryUtil.ALL_POS, (Sort)null);
 			}
 
-			Tuple tuple = UsersAdminUtil.getUsers(hits);
-
-			return (List<User>)tuple.getObject(0);
+			return UsersAdminUtil.getUsers(hits);
 		}
 
 		if (searchTerms.isAdvancedSearch()) {

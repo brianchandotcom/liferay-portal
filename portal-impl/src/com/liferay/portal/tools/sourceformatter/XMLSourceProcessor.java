@@ -215,7 +215,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixPoshiXMLNumberOfTabs(String content) {
-		int tabCounter = 0;
+		int tabCount = 0;
 
 		Pattern pattern = Pattern.compile("\\n*([ \\t]*<).*");
 
@@ -255,42 +255,37 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			Matcher wholeTagMatcher = wholeTagPattern.matcher(
 				fixedQuoteStatement);
 
-			if (closingTagMatcher.find()) {
-				if (!openingTagMatcher.find() && !wholeTagMatcher.find()) {
-					if (!statement.contains("<!--") &&
-						!statement.contains("-->") &&
-						!statement.contains("<![CDATA[") &&
-						!statement.contains("]]>")) {
+			if (closingTagMatcher.find() && !openingTagMatcher.find() &&
+				!wholeTagMatcher.find() && !statement.contains("<!--") &&
+				!statement.contains("-->") &&
+				!statement.contains("<![CDATA[") &&
+				!statement.contains("]]>")) {
 
-						tabCounter--;
-					}
-				}
-			}
-
-			if (statement.contains("<![CDATA[")) {
-				ignoredCdataBlock = true;
+				tabCount--;
 			}
 
 			if (statement.contains("]]>")) {
 				ignoredCdataBlock = false;
 			}
-
-			if (statement.contains("<!--")) {
-				ignoredCommentBlock = true;
+			else if (statement.contains("<![CDATA[")) {
+				ignoredCdataBlock = true;
 			}
 
 			if (statement.contains("-->")) {
 				ignoredCommentBlock = false;
 			}
+			else if (statement.contains("<!--")) {
+				ignoredCommentBlock = true;
+			}
 
 			if (!ignoredCommentBlock && !ignoredCdataBlock) {
-				StringBundler sb = new StringBundler();
+				StringBundler sb = new StringBundler(tabCount + 1);
 
-				for (int i = 0; i < tabCounter; i++) {
-					sb.append("\t");
+				for (int i = 0; i < tabCount; i++) {
+					sb.append(StringPool.TAB);
 				}
 
-				sb.append("<");
+				sb.append(StringPool.LESS_THAN);
 
 				String newStatement = StringUtil.replace(
 					statement, matcher.group(1), sb.toString());
@@ -299,16 +294,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					content, statement, newStatement);
 			}
 
-			if (openingTagMatcher.find()) {
-				if (!closingTagMatcher.find() && !wholeTagMatcher.find()) {
-					if (!statement.contains("<!--") &&
-						!statement.contains("-->") &&
-						!statement.contains("<![CDATA[") &&
-						!statement.contains("]]>")) {
+			if (openingTagMatcher.find() && !closingTagMatcher.find() &&
+				!wholeTagMatcher.find() && !statement.contains("<!--") &&
+				!statement.contains("-->") &&
+				!statement.contains("<![CDATA[") &&
+				!statement.contains("]]>")) {
 
-						tabCounter++;
-					}
-				}
+				tabCount++;
 			}
 		}
 

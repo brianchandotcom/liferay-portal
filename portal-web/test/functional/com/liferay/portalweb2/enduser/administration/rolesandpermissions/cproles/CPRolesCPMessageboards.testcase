@@ -58,7 +58,7 @@
 
 		<execute macro="Page#gotoContentCP" />
 
-		<execute macro="MessageBoardsPortlet#viewNoPermissionCP" />
+		<execute macro="MessageboardsPortlet#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
@@ -139,7 +139,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="MessageBoardsPortlet#viewNoPermissionCP" />
+		<execute macro="MessageboardsPortlet#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />

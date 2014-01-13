@@ -495,7 +495,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveMessageboardCategory1ThreadToCategory2" priority="5">
+	<command name="MoveMBCategory1ThreadToCategory2" priority="5">
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
@@ -556,7 +556,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveMessageboardCategory1ThreadWithExplanationPostToCategory2" priority="5">
+	<command name="MoveMBCategory1ThreadWithExplanationPostToCategory2" priority="5">
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="explanationBody" value="MB Explanation Post Body" />

@@ -19,27 +19,17 @@ userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-boolean corruptIndex = false;
+BaseModelSearchResult<UserGroup> searchResult = null;
 
-Hits hits = null;
-Tuple tuple = null;
-
-do {
-	if (searchTerms.isAdvancedSearch()) {
-		hits = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
-	}
-	else {
-		hits = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-	}
-
-	tuple = UsersAdminUtil.getUserGroups(hits);
-
-	corruptIndex = (Boolean)tuple.getObject(1);
+if (searchTerms.isAdvancedSearch()) {
+	searchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
 }
-while (corruptIndex);
+else {
+	searchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+}
 
-results = (List<UserGroup>)tuple.getObject(0);
+results = searchResult.getBaseModels();
 
 searchContainer.setResults(results);
-searchContainer.setTotal(hits.getLength());
+searchContainer.setTotal(searchResult.getLength());
 %>

@@ -19,27 +19,17 @@ organizationParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(Organization.class, organizationSearchContainer.getOrderByCol(), organizationSearchContainer.getOrderByType());
 
-boolean corruptIndex = false;
+BaseModelSearchResult<Organization> searchResult = null;
 
-Hits hits = null;
-Tuple tuple = null;
-
-do {
-	if (searchTerms.isAdvancedSearch()) {
-		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
-	}
-	else {
-		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
-	}
-
-	tuple = UsersAdminUtil.getOrganizations(hits);
-
-	corruptIndex = (Boolean)tuple.getObject(1);
+if (searchTerms.isAdvancedSearch()) {
+	searchResult = OrganizationLocalServiceUtil.searchOrganizations(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
 }
-while (corruptIndex);
+else {
+	searchResult = OrganizationLocalServiceUtil.searchOrganizations(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), sort);
+}
 
-results = (List<Organization>)tuple.getObject(0);
+results = searchResult.getBaseModels();
 
 organizationSearchContainer.setResults(results);
-organizationSearchContainer.setTotal(hits.getLength());
+organizationSearchContainer.setTotal(searchResult.getLength());
 %>

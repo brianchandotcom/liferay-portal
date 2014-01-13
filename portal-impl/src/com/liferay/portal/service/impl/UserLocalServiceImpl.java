@@ -50,11 +50,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -3272,6 +3274,51 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userFinder.countByC_FN_MN_LN_SN_EA_S(
 			companyId, firstName, middleName, lastName, screenName,
 			emailAddress, status, params, andSearch);
+	}
+
+	@Override
+	public BaseModelSearchResult<User> searchUsers(
+			long companyId, String keywords, int status,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws PortalException, SystemException {
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = search(
+				companyId, keywords, status, params, start, end, sort);
+
+			List<User> users = UsersAdminUtil.getUsers(hits);
+
+			if (users != null) {
+				return new BaseModelSearchResult<User>(users, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	@Override
+	public BaseModelSearchResult<User> searchUsers(
+			long companyId, String firstName, String middleName,
+			String lastName, String screenName, String emailAddress, int status,
+			LinkedHashMap<String, Object> params, boolean andSearch, int start,
+			int end, Sort sort)
+		throws PortalException, SystemException {
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = search(
+				companyId, firstName, middleName, lastName, screenName,
+				emailAddress, status, params, andSearch, start, end, sort);
+
+			List<User> users = UsersAdminUtil.getUsers(hits);
+
+			if (users != null) {
+				return new BaseModelSearchResult<User>(users, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	/**

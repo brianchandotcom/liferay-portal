@@ -3054,6 +3054,48 @@ public class JournalArticleLocalServiceWrapper
 			displayDateLT, status, reviewDate, andOperator);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
+		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.searchJournalArticles(companyId,
+			groupId, folderIds, classNameId, ddmStructureKey, ddmTemplateKey,
+			keywords, params, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
+		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String articleId, java.lang.String title,
+		java.lang.String description, java.lang.String content,
+		java.lang.String type, java.lang.String status,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.searchJournalArticles(companyId,
+			groupId, folderIds, classNameId, articleId, title, description,
+			content, type, status, ddmStructureKey, ddmTemplateKey, params,
+			andSearch, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.journal.model.JournalArticle> searchJournalArticles(
+		long groupId, long userId, long creatorUserId, int status, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.searchJournalArticles(groupId,
+			userId, creatorUserId, status, start, end);
+	}
+
 	/**
 	* Subscribes the user to notifications for the web content article matching
 	* the group, notifying him the instant versions of the article are created,

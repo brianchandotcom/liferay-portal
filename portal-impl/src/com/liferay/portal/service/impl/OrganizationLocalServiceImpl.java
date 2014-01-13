@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,6 +63,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.util.comparator.OrganizationNameComparator;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
@@ -1502,6 +1505,69 @@ public class OrganizationLocalServiceImpl
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			name, type, street, city, zip, regionId, countryId, params,
 			andOperator);
+	}
+
+	@Override
+	public BaseModelSearchResult<Organization> searchOrganizations(
+			long companyId, long parentOrganizationId, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws PortalException, SystemException {
+
+		String name = null;
+		String type = null;
+		String street = null;
+		String city = null;
+		String zip = null;
+		String region = null;
+		String country = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			name = keywords;
+			type = keywords;
+			street = keywords;
+			city = keywords;
+			zip = keywords;
+			region = keywords;
+			country = keywords;
+		}
+		else {
+			andOperator = true;
+		}
+
+		if (params != null) {
+			params.put("keywords", keywords);
+		}
+
+		return searchOrganizations(
+			companyId, parentOrganizationId, name, type, street, city, zip,
+			region, country, params, andOperator, start, end, sort);
+	}
+
+	@Override
+	public BaseModelSearchResult<Organization> searchOrganizations(
+			long companyId, long parentOrganizationId, String name, String type,
+			String street, String city, String zip, String region,
+			String country, LinkedHashMap<String, Object> params,
+			boolean andSearch, int start, int end, Sort sort)
+		throws PortalException, SystemException {
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = search(
+				companyId, parentOrganizationId, name, type, street, city, zip,
+				region, country, params, andSearch, start, end, sort);
+
+			List<Organization> organizations = UsersAdminUtil.getOrganizations(
+				hits);
+
+			if (organizations != null) {
+				return new BaseModelSearchResult<Organization>(
+					organizations, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	/**

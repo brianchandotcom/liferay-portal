@@ -1307,6 +1307,26 @@ public interface OrganizationLocalService extends BaseLocalService,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.Organization> searchOrganizations(
+		long companyId, long parentOrganizationId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.Organization> searchOrganizations(
+		long companyId, long parentOrganizationId, java.lang.String name,
+		java.lang.String type, java.lang.String street, java.lang.String city,
+		java.lang.String zip, java.lang.String region,
+		java.lang.String country,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Removes the organizations from the group.
 	*

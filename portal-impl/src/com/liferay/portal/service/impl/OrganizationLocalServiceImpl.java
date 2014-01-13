@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeModelFinder;
 import com.liferay.portal.kernel.util.TreePathUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
@@ -1507,45 +1507,11 @@ public class OrganizationLocalServiceImpl
 			andOperator);
 	}
 
-	/**
-	 * Returns total number of hits and an ordered range of all the
-	 * organizations that match the keywords, using the indexer. It is
-	 * preferable to use this method instead of the non-indexed version whenever
-	 * possible for performance reasons.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the organization's company
-	 * @param  parentOrganizationId the primary key of the organization's parent
-	 *         organization
-	 * @param  keywords the keywords (space separated), which may occur in the
-	 *         organization's name, street, city, zipcode, type, region or
-	 *         country (optionally <code>null</code>)
-	 * @param  params the finder parameters (optionally <code>null</code>). For
-	 *         more information see {@link
-	 *         com.liferay.portlet.usersadmin.util.OrganizationIndexer}
-	 * @param  start the lower bound of the range of organizations to return
-	 * @param  end the upper bound of the range of organizations to return (not
-	 *         inclusive)
-	 * @param  sort the field and direction by which to sort (optionally
-	 *         <code>null</code>)
-	 * @return the matching organizations ordered by name and total number of hits
-	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portlet.usersadmin.util.OrganizationIndexer
-	 */
 	@Override
 	public BaseModelSearchResult<Organization> searchOrganizations(
 			long companyId, long parentOrganizationId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		String name = null;
 		String type = null;
@@ -1578,80 +1544,30 @@ public class OrganizationLocalServiceImpl
 			region, country, params, andOperator, start, end, sort);
 	}
 
-	/**
-	 * Returns total number of hits an ordered range of all the
-	 * organizations whose name, type, or location fields match the
-	 * keywords specified for them, using the indexer. It is preferable to
-	 * use this method instead of the non-indexed version whenever possible for
-	 * performance reasons.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the organization's company
-	 * @param  parentOrganizationId the primary key of the organization's parent
-	 *         organization
-	 * @param  name the name keywords (space separated, optionally
-	 *         <code>null</code>)
-	 * @param  type the type keywords (optionally <code>null</code>)
-	 * @param  street the street keywords (optionally <code>null</code>)
-	 * @param  city the city keywords (optionally <code>null</code>)
-	 * @param  zip the zipcode keywords (optionally <code>null</code>)
-	 * @param  region the region keywords (optionally <code>null</code>)
-	 * @param  country the country keywords (optionally <code>null</code>)
-	 * @param  params the finder parameters (optionally <code>null</code>). For
-	 *         more information see {@link
-	 *         com.liferay.portlet.usersadmin.util.OrganizationIndexer}.
-	 * @param  andSearch whether every field must match its keywords or just one
-	 *         field
-	 * @param  start the lower bound of the range of organizations to return
-	 * @param  end the upper bound of the range of organizations to return (not
-	 *         inclusive)
-	 * @param  sort the field and direction by which to sort (optionally
-	 *         <code>null</code>)
-	 * @return the matching organizations ordered by <code>sort</code> and
-	 *			total number of hits
-	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portlet.usersadmin.util.OrganizationIndexer
-	 */
 	@Override
 	public BaseModelSearchResult<Organization> searchOrganizations(
 			long companyId, long parentOrganizationId, String name, String type,
 			String street, String city, String zip, String region,
 			String country, LinkedHashMap<String, Object> params,
 			boolean andSearch, int start, int end, Sort sort)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		boolean corruptIndex = false;
-
-		Hits hits = null;
-		Tuple tuple = null;
-
-		do {
-			hits = search(
+		for (int i = 0; i < 10; i++) {
+			Hits hits = search(
 				companyId, parentOrganizationId, name, type, street, city, zip,
 				region, country, params, andSearch, start, end, sort);
 
-			try {
-				tuple = UsersAdminUtil.getOrganizations(hits);
-			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
-			}
+			List<Organization> organizations = UsersAdminUtil.getOrganizations(
+				hits);
 
-			corruptIndex = (Boolean)tuple.getObject(1);
+			if (organizations != null) {
+				return new BaseModelSearchResult<Organization>(
+					organizations, hits.getLength());
+			}
 		}
-		while (corruptIndex);
 
-		return new BaseModelSearchResult<Organization>(
-			(List<Organization>)tuple.getObject(0), hits.getLength());
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	/**

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -61,7 +62,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TreePathUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -4398,62 +4398,13 @@ public class JournalArticleLocalServiceImpl
 			andOperator, new QueryDefinition(status));
 	}
 
-	/**
-	 * Returns total number of hits and an ordered range of all the web
-	 * content articles matching the parameters using the indexer,
-	 * including a keywords parameter for matching an article's ID, title,
-	 * description, or content, a DDM structure key parameter, a DDM
-	 * template key parameter, and a finder hash map parameter.
-	 * It is preferable to use this method instead of the non-indexed version
-	 * whenever possible for performance reasons.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the web content article's company
-	 * @param  groupId the primary key of the group (optionally <code>0</code>)
-	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param  classNameId the primary key of the DDMStructure class if the web
-	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
-	 *         structure, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
-	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
-	 * @param  keywords the keywords (space separated), which may occur in the
-	 *         web content article ID, title, description, or content
-	 *         (optionally <code>null</code>). If the keywords value is not
-	 *         <code>null</code>, the search uses the OR operator in connecting
-	 *         query criteria; otherwise it uses the AND operator.
-	 * @param  params the finder parameters (optionally <code>null</code>)
-	 * @param  start the lower bound of the range of web content articles to
-	 *         return
-	 * @param  end the upper bound of the range of web content articles to
-	 *         return (not inclusive)
-	 * @param  sort the field, type, and direction by which to sort (optionally
-	 *         <code>null</code>)
-	 * @return the matching web content articles ordered by <code>sort</code>
-	 *			and total number of hits
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
 			long companyId, long groupId, List<Long> folderIds,
 			long classNameId, String ddmStructureKey, String ddmTemplateKey,
 			String keywords, LinkedHashMap<String, Object> params, int start,
 			int end, Sort sort)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		String articleId = null;
 		String title = null;
@@ -4483,68 +4434,6 @@ public class JournalArticleLocalServiceImpl
 			params, andOperator, start, end, sort);
 	}
 
-	/**
-	 * Returns total number of hits an ordered range of all the web
-	 * content articles matching the parameters using the indexer,
-	 * including a keywords parameter for matching an article's ID, title,
-	 * description, or content, a DDM structure key parameter, a DDM
-	 * template key parameter, an AND operator switch, and parameters for
-	 * type, status, a finder hash map. It is preferable to use this method
-	 * instead of the non-indexed version whenever possible for performance reasons.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the web content article's company
-	 * @param  groupId the primary key of the group (optionally <code>0</code>)
-	 * @param  folderIds the primary keys of the web content article folders
-	 *         (optionally {@link java.util.Collections#EMPTY_LIST})
-	 * @param  classNameId the primary key of the DDMStructure class if the web
-	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or {@link
-	 *         JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
-	 * @param  articleId the article ID keywords (space separated, optionally
-	 *         <code>null</code>)
-	 * @param  title the title keywords (space separated, optionally
-	 *         <code>null</code>)
-	 * @param  description the description keywords (space separated, optionally
-	 *         <code>null</code>)
-	 * @param  content the content keywords (space separated, optionally
-	 *         <code>null</code>)
-	 * @param  type the web content article's type (optionally
-	 *         <code>null</code>)
-	 * @param  status the web content article's workflow status. For more
-	 *         information see {@link WorkflowConstants} for constants starting
-	 *         with the "STATUS_" prefix.
-	 * @param  ddmStructureKey the primary key of the web content article's DDM
-	 *         structure, if the article is related to a DDM structure, or
-	 *         <code>null</code> otherwise
-	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template (optionally <code>null</code>). If the article is
-	 *         related to a DDM structure, the template's structure must match
-	 *         it.
-	 * @param  params the finder parameters (optionally <code>null</code>). Can
-	 *         set parameter <code>"includeDiscussions"</code> to
-	 *         <code>true</code> to search for the keywords in the web content
-	 *         article discussions.
-	 * @param  andSearch whether every field must match its value or keywords,
-	 *         or just one field must match
-	 * @param  start the lower bound of the range of web content articles to
-	 *         return
-	 * @param  end the upper bound of the range of web content articles to
-	 *         return (not inclusive)
-	 * @param  sort the field, type, and direction by which to sort (optionally
-	 *         <code>null</code>)
-	 * @return the matching web content articles ordered by <code>sort</code>
-	 *			and total number of hits
-	 * @throws SystemException if a system exception occurred
-	 */
 	@Override
 	public BaseModelSearchResult<JournalArticle> searchJournalArticles(
 			long companyId, long groupId, List<Long> folderIds,
@@ -4553,32 +4442,25 @@ public class JournalArticleLocalServiceImpl
 			String ddmStructureKey, String ddmTemplateKey,
 			LinkedHashMap<String, Object> params, boolean andSearch, int start,
 			int end, Sort sort)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		boolean corruptIndex = false;
-
-		Hits hits = null;
-		Tuple tuple = null;
-
-		do {
-			hits = search(
+		for (int i = 0; i < 10; i++) {
+			Hits hits = search(
 				companyId, groupId, folderIds, classNameId, articleId, title,
 				description, content, type, status, ddmStructureKey,
 				ddmTemplateKey, params, andSearch, start, end, sort);
 
-			try {
-				tuple = JournalUtil.getArticles(hits);
-			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
-			}
+			List<JournalArticle> journalArticles = JournalUtil.getArticles(
+				hits);
 
-			corruptIndex = (Boolean)tuple.getObject(1);
+			if (journalArticles != null) {
+				return new BaseModelSearchResult<JournalArticle>(
+					journalArticles, hits.getLength());
+			}
 		}
-		while (corruptIndex);
 
-		return new BaseModelSearchResult<JournalArticle>(
-			(List<JournalArticle>)tuple.getObject(0), hits.getLength());
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	@Override
@@ -4587,27 +4469,21 @@ public class JournalArticleLocalServiceImpl
 			int start, int end)
 		throws PortalException, SystemException {
 
-		boolean corruptIndex = false;
+		for (int i = 0; i < 10; i++) {
+			Hits hits = search(
+				groupId, userId, creatorUserId, status, start, end);
 
-		Hits hits = null;
-		Tuple tuple = null;
+			List<JournalArticle> journalArticles = JournalUtil.getArticles(
+				hits);
 
-		do {
-			hits = search(groupId, userId, creatorUserId, status, start, end);
-
-			try {
-				tuple = JournalUtil.getArticles(hits);
+			if (journalArticles != null) {
+				return new BaseModelSearchResult<JournalArticle>(
+					journalArticles, hits.getLength());
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
-			}
-
-			corruptIndex = (Boolean)tuple.getObject(1);
 		}
-		while (corruptIndex);
 
-		return new BaseModelSearchResult<JournalArticle>(
-			(List<JournalArticle>)tuple.getObject(0), hits.getLength());
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	/**

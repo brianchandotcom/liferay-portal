@@ -1275,7 +1275,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		updateLDAPUser(
 			ldapUser.getUser(), ldapContact, user, userMappings,
 			contactMappings);
-		
+
 		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
 
 		birthdayCal.setTime(ldapContact.getBirthday());

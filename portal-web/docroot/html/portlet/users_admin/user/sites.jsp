@@ -154,6 +154,10 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 
 <h3><liferay-ui:message key="inherited-sites" /></h3>
 
+<c:if test="<%= inheritedSites.isEmpty() %>">
+	<liferay-ui:message key="this-user-does-not-have-any-inherited-sites" />
+</c:if>
+
 <liferay-ui:search-container
 	headerNames="name,roles"
 >

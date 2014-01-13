@@ -118,22 +118,26 @@ userGroupRoles.addAll(siteRoles);
 	</aui:script>
 </c:if>
 
-<h3><liferay-ui:message key="inherited-roles" /></h3>
+<h3><liferay-ui:message key="inherited-regular-roles" /></h3>
+
+<%
+List<Group> roleGroups = new ArrayList<Group>();
+
+for (Group group : allGroups) {
+	if (RoleLocalServiceUtil.hasGroupRoles(group.getGroupId())) {
+		roleGroups.add(group);
+	}
+}
+%>
+
+<c:if test="<%= roleGroups.isEmpty() %>">
+	<liferay-ui:message key="this-user-does-not-have-any-inherited-regular-roles" />
+</c:if>
 
 <liferay-ui:search-container
 	headerNames="title,group"
 	id="inheritedRolesSearchContainer"
 >
-
-	<%
-	List<Group> roleGroups = new ArrayList<Group>();
-
-	for (Group group : allGroups) {
-		if (RoleLocalServiceUtil.hasGroupRoles(group.getGroupId())) {
-			roleGroups.add(group);
-		}
-	}
-	%>
 
 	<liferay-ui:search-container-results
 		results="<%= roleGroups %>"
@@ -285,8 +289,8 @@ userGroupRoles.addAll(siteRoles);
 <h3><liferay-ui:message key="site-roles" /></h3>
 
 <c:choose>
-	<c:when test="<%= siteRoles.isEmpty() %>">
-		<liferay-ui:message key="this-user-does-not-have-any-site-roles" />
+	<c:when test="<%= groups.isEmpty() %>">
+		<liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" />
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container

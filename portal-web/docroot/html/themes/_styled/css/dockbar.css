@@ -507,17 +507,6 @@ $editLayoutPanelWidth: 460px;
 					}
 
 					> .nav {
-						border-bottom-width: 0;
-						left: auto;
-						position: fixed;
-						right: 0;
-						z-index: 400;
-
-						@include respond-to(phone, tablet) {
-							min-width: 0;
-							position: static;
-						}
-
 						&.nav-account-controls {
 							background: #333;
 							left: auto;
@@ -546,6 +535,7 @@ $editLayoutPanelWidth: 460px;
 								display: block;
 								min-width: 0;
 								position: fixed;
+								right: auto;
 								top: 10%;
 								z-index: 350;
 

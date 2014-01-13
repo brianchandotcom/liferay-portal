@@ -41,9 +41,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -73,7 +73,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -537,28 +536,25 @@ public class JournalUtil {
 		return orderByComparator;
 	}
 
-	public static Tuple getArticles(Hits hits)
+	public static List<JournalArticle> getArticles(Hits hits)
 		throws PortalException, SystemException {
-
-		List<JournalArticle> articles = new ArrayList<JournalArticle>();
-		boolean corruptIndex = false;
 
 		List<com.liferay.portal.kernel.search.Document> documents =
 			hits.toList();
+
+		List<JournalArticle> articles = new ArrayList<JournalArticle>(
+			documents.size());
 
 		for (com.liferay.portal.kernel.search.Document document : documents) {
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 			String articleId = document.get("articleId");
 
-			try {
-				JournalArticle article =
-					JournalArticleLocalServiceUtil.getArticle(
-						groupId, articleId);
+			JournalArticle article =
+				JournalArticleLocalServiceUtil.fetchLatestArticle(
+					groupId, articleId, WorkflowConstants.STATUS_APPROVED);
 
-				articles.add(article);
-			}
-			catch (NoSuchArticleException nsae) {
-				corruptIndex = true;
+			if (article == null) {
+				articles = null;
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					JournalArticle.class);
@@ -568,9 +564,12 @@ public class JournalUtil {
 
 				indexer.delete(companyId, document.getUID());
 			}
+			else if (articles != null) {
+				articles.add(article);
+			}
 		}
 
-		return new Tuple(articles, corruptIndex);
+		return articles;
 	}
 
 	public static String getEmailArticleAddedBody(

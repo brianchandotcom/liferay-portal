@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.usersadmin.util;
 
-import com.liferay.portal.NoSuchOrganizationException;
-import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,7 +30,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
@@ -668,27 +665,23 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public Tuple getOrganizations(Hits hits)
+	public List<Organization> getOrganizations(Hits hits)
 		throws PortalException, SystemException {
 
-		List<Organization> organizations = new ArrayList<Organization>();
-		boolean corruptIndex = false;
-
 		List<Document> documents = hits.toList();
+
+		List<Organization> organizations = new ArrayList<Organization>(
+			documents.size());
 
 		for (Document document : documents) {
 			long organizationId = GetterUtil.getLong(
 				document.get(Field.ORGANIZATION_ID));
 
-			try {
-				Organization organization =
-					OrganizationLocalServiceUtil.getOrganization(
-						organizationId);
+			Organization organization =
+				OrganizationLocalServiceUtil.fetchOrganization(organizationId);
 
-				organizations.add(organization);
-			}
-			catch (NoSuchOrganizationException nsoe) {
-				corruptIndex = true;
+			if (organization == null) {
+				organizations = null;
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					Organization.class);
@@ -698,9 +691,12 @@ public class UsersAdminImpl implements UsersAdmin {
 
 				indexer.delete(companyId, document.getUID());
 			}
+			else if (organizations != null) {
+				organizations.add(organization);
+			}
 		}
 
-		return new Tuple(organizations, corruptIndex);
+		return organizations;
 	}
 
 	@Override
@@ -927,26 +923,22 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public Tuple getUserGroups(Hits hits)
+	public List<UserGroup> getUserGroups(Hits hits)
 		throws PortalException, SystemException {
 
-		List<UserGroup> userGroups = new ArrayList<UserGroup>();
-		boolean corruptIndex = false;
-
 		List<Document> documents = hits.toList();
+
+		List<UserGroup> userGroups = new ArrayList<UserGroup>(documents.size());
 
 		for (Document document : documents) {
 			long userGroupId = GetterUtil.getLong(
 				document.get(Field.USER_GROUP_ID));
 
-			try {
-				UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
-					userGroupId);
+			UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+				userGroupId);
 
-				userGroups.add(userGroup);
-			}
-			catch (NoSuchUserGroupException nsuge) {
-				corruptIndex = true;
+			if (userGroup == null) {
+				userGroups = null;
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					UserGroup.class);
@@ -956,9 +948,12 @@ public class UsersAdminImpl implements UsersAdmin {
 
 				indexer.delete(companyId, document.getUID());
 			}
+			else if (userGroups != null) {
+				userGroups.add(userGroup);
+			}
 		}
 
-		return new Tuple(userGroups, corruptIndex);
+		return userGroups;
 	}
 
 	@Override
@@ -996,22 +991,20 @@ public class UsersAdminImpl implements UsersAdmin {
 	}
 
 	@Override
-	public Tuple getUsers(Hits hits) throws PortalException, SystemException {
-		List<User> users = new ArrayList<User>();
-		boolean corruptIndex = false;
+	public List<User> getUsers(Hits hits)
+		throws PortalException, SystemException {
 
 		List<Document> documents = hits.toList();
+
+		List<User> users = new ArrayList<User>(documents.size());
 
 		for (Document document : documents) {
 			long userId = GetterUtil.getLong(document.get(Field.USER_ID));
 
 			User user = UserLocalServiceUtil.fetchUser(userId);
 
-			if (user != null) {
-				users.add(user);
-			}
-			else {
-				corruptIndex = true;
+			if (user == null) {
+				users = null;
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
 
@@ -1020,9 +1013,12 @@ public class UsersAdminImpl implements UsersAdmin {
 
 				indexer.delete(companyId, document.getUID());
 			}
+			else if (users != null) {
+				users.add(user);
+			}
 		}
 
-		return new Tuple(users, corruptIndex);
+		return users;
 	}
 
 	@Override

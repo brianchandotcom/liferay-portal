@@ -19,17 +19,17 @@ userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-BaseModelSearchResult<UserGroup> searchResult = null;
+BaseModelSearchResult<UserGroup> baseModelSearchResult = null;
 
 if (searchTerms.isAdvancedSearch()) {
-	searchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+	baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
 }
 else {
-	searchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+	baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
 }
 
-results = searchResult.getBaseModels();
+results = baseModelSearchResult.getBaseModels();
 
 searchContainer.setResults(results);
-searchContainer.setTotal(searchResult.getLength());
+searchContainer.setTotal(baseModelSearchResult.getLength());
 %>

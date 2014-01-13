@@ -103,9 +103,9 @@
 			</then>
 			<elseif>
 				<equals arg1="${siteLimitMembership}" arg2="No" />
-					<then>
-						<execute action="CPSitesEdit#uncheck" locator-key1="PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-					</then>
+				<then>
+					<execute action="CPSitesEdit#uncheck" locator-key1="PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+				</then>
 			</elseif>
 		</if>
 
@@ -375,9 +375,9 @@
 			</then>
 			<elseif>
 				<equals arg1="${manualMembershipManagement}" arg2="No" />
-					<then>
-						<execute action="CPSitesAdd#uncheck" locator-key1="MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
-					</then>
+				<then>
+					<execute action="CPSitesAdd#uncheck" locator-key1="MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
+				</then>
 			</elseif>
 		</if>
 
@@ -618,9 +618,9 @@
 
 		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
 		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${sitePageName}" />
-        <execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
-        <execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
 
-        <execute action="Home#assertLocation" value1="${sitePageURL}" />
-    </command>
+		<execute action="Home#assertLocation" value1="${sitePageURL}" />
+	</command>
 </definition>

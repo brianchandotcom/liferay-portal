@@ -117,23 +117,23 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-       		<var name="pageName" value="${pageName}" />
-       		<var name="siteName" value="${siteName}" />
-       		<var name="siteURL" value="true" />
-    	</execute>
+			<var name="pageName" value="${pageName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-	    <execute macro="SitesDirectory#viewPortletTitlePG">
+		<execute macro="SitesDirectory#viewPortletTitlePG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-     	<execute macro="Page#gotoPG">
-       		<var name="pageName" value="${pageName}" />
-      		<var name="pageStaging" value="true" />
-       		<var name="siteName" value="${siteName}" />
-       		<var name="siteURL" value="true" />
-     	</execute>
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-     	<execute macro="Staging#publishToLiveNowPG" />
+		<execute macro="Staging#publishToLiveNowPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

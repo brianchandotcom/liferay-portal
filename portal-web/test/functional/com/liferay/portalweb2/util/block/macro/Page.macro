@@ -191,11 +191,11 @@
 				<var name="siteNameURL" value="/${siteNameURL?lowercase()}" />
 			</then>
 			<elseif>
-   			 	<isset var="friendlyURL" />
-    			<then>
-     				<var name="siteNameURL" value="/${friendlyURL}" />
-    			</then>
-   			</elseif>
+				<isset var="friendlyURL" />
+				<then>
+					<var name="siteNameURL" value="/${friendlyURL}" />
+				</then>
+			</elseif>
 			<else>
 				<var name="siteNameURL" value="/guest" />
 			</else>
@@ -213,12 +213,12 @@
 
 		<if>
 			<isset var="virtualHostsURL" />
-    		<then>
-     			<var name="siteNameURL" value="${virtualHostsURL}" />
+			<then>
+				<var name="siteNameURL" value="${virtualHostsURL}" />
 
-     			<execute action="Home#open" locator1="${siteNameURL}" />
-    		</then>
-    		<else>
+				<execute action="Home#open" locator1="${siteNameURL}" />
+			</then>
+			<else>
 				<execute action="Home#open" locator1="${pageAccessURL}${siteNameURL}${pageStagingURL}" />
 			</else>
 		</if>

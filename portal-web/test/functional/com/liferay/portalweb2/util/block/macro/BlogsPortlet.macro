@@ -1,4 +1,19 @@
 <definition>
+	<command name="configureDisplayPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGBlogsConfiguration#click" locator-key1="DISPLAY_TEMPLATE_MENULIST" />
+
+		<var name="key_displaySelection" value="${displaySelection}" />
+
+		<execute action="PGBlogsConfiguration#doubleClick" locator-key1="DISPLAY_TEMPLATE_MENULIST_SELECTION" value1="${displaySelection}" />
+		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
 	<command name="viewNoPermissionCP">
 		<execute action="CPBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs" />
 		<execute action="CPBlogs#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />

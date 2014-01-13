@@ -1,4 +1,16 @@
 <definition>
+	<command name="addAbstractPG">
+		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+
+		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGBlogsAdd#click" locator-key1="ABSTRACT_DROPDOWN" />
+		<execute action="PGBlogsAdd#type" locator-key1="ABSTRACT_DESCRIPTION_FIELD" value1="${entryContentAbstract}" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addCategoryCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -527,6 +539,17 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewAbstractPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_ABSTRACT" value1="${entryContentAbstract}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_READ_MORE" value1="Read More" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -728,6 +751,18 @@
 		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="FEED_SUBTITLE" value1="Liferay" />
 		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewTitleDisplayPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_READ_MORE" value1="Read More" />
+		<execute action="PGBlogs#assertTextNotPresent" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_READ_MORE" value1="Read More" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewViewCountCP">

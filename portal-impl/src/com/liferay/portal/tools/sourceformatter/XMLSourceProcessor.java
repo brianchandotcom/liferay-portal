@@ -187,8 +187,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			else if (!StringUtil.equalsIgnoreCase(
 						"</var>", closingElementName)) {
 
-				String newStatement =
-					StringUtil.replace(statement, matcher.group(2), "\n\n");
+				String newStatement = StringUtil.replace(
+					statement, matcher.group(2), "\n\n");
 
 				content = StringUtil.replace(content, statement, newStatement);
 			}
@@ -209,6 +209,99 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				statement, matcher.group(1), "\n");
 
 			content = StringUtil.replace(content, statement, newStatement);
+		}
+
+		return content;
+	}
+
+	protected String fixPoshiXMLNumberOfTabs(String content) {
+		int tabCount = 0;
+
+		Pattern pattern = Pattern.compile("\\n*([ \\t]*<).*");
+
+		Matcher matcher = pattern.matcher(content);
+
+		boolean ignoredCdataBlock = false;
+		boolean ignoredCommentBlock = false;
+
+		while (matcher.find()) {
+			String statement = matcher.group();
+
+			Pattern quoteWithSlashPattern = Pattern.compile(
+				"\"[^\"]*\\>[^\"]*\"");
+
+			Matcher quoteWithSlashMatcher = quoteWithSlashPattern.matcher(
+				statement);
+
+			String fixedQuoteStatement = statement;
+
+			if (quoteWithSlashMatcher.find()) {
+				fixedQuoteStatement = StringUtil.replace(
+					statement, quoteWithSlashMatcher.group(), "\"\"");
+			}
+
+			Pattern closingTagPattern = Pattern.compile("</[^>/]*>");
+
+			Matcher closingTagMatcher = closingTagPattern.matcher(
+				fixedQuoteStatement);
+
+			Pattern openingTagPattern = Pattern.compile("<[^/][^>]*[^/]>");
+
+			Matcher openingTagMatcher = openingTagPattern.matcher(
+				fixedQuoteStatement);
+
+			Pattern wholeTagPattern = Pattern.compile("<[^\\>^/]*\\/>");
+
+			Matcher wholeTagMatcher = wholeTagPattern.matcher(
+				fixedQuoteStatement);
+
+			if (closingTagMatcher.find() && !openingTagMatcher.find() &&
+				!wholeTagMatcher.find() && !statement.contains("<!--") &&
+				!statement.contains("-->") &&
+				!statement.contains("<![CDATA[") &&
+				!statement.contains("]]>")) {
+
+				tabCount--;
+			}
+
+			if (statement.contains("]]>")) {
+				ignoredCdataBlock = false;
+			}
+			else if (statement.contains("<![CDATA[")) {
+				ignoredCdataBlock = true;
+			}
+
+			if (statement.contains("-->")) {
+				ignoredCommentBlock = false;
+			}
+			else if (statement.contains("<!--")) {
+				ignoredCommentBlock = true;
+			}
+
+			if (!ignoredCommentBlock && !ignoredCdataBlock) {
+				StringBundler sb = new StringBundler(tabCount + 1);
+
+				for (int i = 0; i < tabCount; i++) {
+					sb.append(StringPool.TAB);
+				}
+
+				sb.append(StringPool.LESS_THAN);
+
+				String newStatement = StringUtil.replace(
+					statement, matcher.group(1), sb.toString());
+
+				content = StringUtil.replaceFirst(
+					content, statement, newStatement);
+			}
+
+			if (openingTagMatcher.find() && !closingTagMatcher.find() &&
+				!wholeTagMatcher.find() && !statement.contains("<!--") &&
+				!statement.contains("-->") &&
+				!statement.contains("<![CDATA[") &&
+				!statement.contains("]]>")) {
+
+				tabCount++;
+			}
 		}
 
 		return content;
@@ -320,7 +413,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String name = targetElement.attributeValue("name");
 
 			if (name.equals("Test")) {
-				name = name.toLowerCase();
+				name = StringUtil.toLowerCase(name);
 			}
 
 			if (name.compareTo(previousName) < -1) {
@@ -549,6 +642,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixPoshiXMLEndLines(newContent);
 
+		newContent = fixPoshiXMLNumberOfTabs(newContent);
+
 		return newContent.trim();
 	}
 
@@ -678,7 +773,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				!previousName.equals("portlet")) {
 
 				processErrorMessage(fileName, "sort: " + fileName + " " + name);
-
 			}
 
 			previousName = name;

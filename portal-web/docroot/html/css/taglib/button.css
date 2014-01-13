@@ -36,6 +36,10 @@
 				display: block;
 				margin-top: 5px;
 				width: 100%;
+
+				&.selector-button {
+					min-width: 100%;
+				}
 			}
 		}
 
@@ -55,7 +59,7 @@
 			border-bottom-width: 5px;
 		}
 
-		button.close, button.btn.close {
+		button.close, button.btn.close, button.btn.selector-button {
 			width: auto;
 		}
 	}

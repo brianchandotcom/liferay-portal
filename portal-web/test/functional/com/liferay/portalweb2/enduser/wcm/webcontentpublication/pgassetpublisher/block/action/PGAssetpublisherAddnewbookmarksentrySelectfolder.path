@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>PGAssetpublisherAddnewbookmarksentrySelectfolder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAssetpublisherAddnewbookmarksentrySelectfolder</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAssetpublisherAddnewbookmarksentrySelectfolder</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_FOLDER-->
+<tr>
+	<td>SELECT_FOLDER_IFRAME</td>
+	<td>//iframe[@id='_28_selectFolder_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_ADD_FOLDER_BUTTON</td>
+	<td>//button[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_CHOOSE_THIS_FOLDER_BUTTON</td>
+	<td>//button[contains(.,'Choose This Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_FOLDER_TABLE-->
+<tr>
+	<td>SELECT_FOLDER_TABLE_FOLDER_NAME</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_NUMBER_OF_FOLDERS</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_NUMBER_OF_ENTRIES</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td[4]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

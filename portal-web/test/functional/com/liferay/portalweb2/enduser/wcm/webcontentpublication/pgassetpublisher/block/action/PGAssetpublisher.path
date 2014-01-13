@@ -172,6 +172,38 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ASSET_ABSTRACT_BOOKMARK-->
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_ICON</td>
+	<td>//span[contains(.,'${bookmarkName}')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_ABSTRACT_BOOKMARK_DETAIL-->
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_DETAIL_NAME</td>
+	<td>//h3[contains(.,'${bookmarkName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK</td>
+	<td>//div/a[contains(@title,'(Opens New Window)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO</td>
+	<td>//img[@alt='Liferay']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--YOUR_RATING-->
 <tr>
 	<td>YOUR_RATING</td>
@@ -287,6 +319,22 @@
 <tr>
 	<td>AVERAGE_STAR_EMPTY_5</td>
 	<td>//div[@class='taglib-header ' and contains(.,'${key_assetTitle}')]/following-sibling::div//div[contains(@id,'_ratingScore')]//a[5][@class='rating-element icon-star-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_TEMPLATE_FULL_CONTENT-->
+<tr>
+	<td>DISPLAY_TEMPLATE_FULL_CONTENT_TWITTER</td>
+	<td>//li[@class='taglib-social-bookmark-twitter']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_FULL_CONTENT_GOOGLE_PLUS</td>
+	<td>//li[@class='taglib-social-bookmark-plusone']</td>
 	<td></td>
 </tr>
 </tbody>

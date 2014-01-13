@@ -163,8 +163,8 @@ public class DLCheckInCheckOutTest {
 			folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
 			if (i == 1) {
-				Assert.assertTrue(
-					lastPostDate.before(folder.getLastPostDate()));
+				Assert.assertFalse(
+					lastPostDate.after(folder.getLastPostDate()));
 			}
 			else {
 				Assert.assertTrue(
@@ -213,7 +213,7 @@ public class DLCheckInCheckOutTest {
 
 		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
-		Assert.assertTrue(lastPostDate.before(folder.getLastPostDate()));
+		Assert.assertFalse(lastPostDate.after(folder.getLastPostDate()));
 
 		Assert.assertEquals("1.1", fileEntry.getVersion());
 
@@ -243,7 +243,7 @@ public class DLCheckInCheckOutTest {
 
 		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
-		Assert.assertTrue(lastPostDate.before(folder.getLastPostDate()));
+		Assert.assertFalse(lastPostDate.after(folder.getLastPostDate()));
 
 		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
@@ -385,8 +385,8 @@ public class DLCheckInCheckOutTest {
 
 				folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
-				Assert.assertTrue(
-					lastPostDate.before(folder.getLastPostDate()));
+				Assert.assertFalse(
+					lastPostDate.after(folder.getLastPostDate()));
 
 				fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 

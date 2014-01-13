@@ -2750,88 +2750,17 @@ public class UserLocalServiceWrapper implements UserLocalService,
 			lastName, screenName, emailAddress, status, params, andSearch);
 	}
 
-	/**
-	* Returns total number of hits an ordered range of all the users who
-	* match the keywords and status, using the indexer. It is preferable
-	* to use this method instead of the non-indexed version whenever possible
-	* for performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param keywords the keywords (space separated), which may occur in the
-	user's first name, middle name, last name, screen name, or email
-	address
-	* @param status the workflow status
-	* @param params the indexer parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.UserIndexer}.
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param sort the field and direction to sort by (optionally
-	<code>null</code>)
-	* @return the matching users and total number of hits
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portlet.usersadmin.util.UserIndexer
-	*/
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
 		long companyId, java.lang.String keywords, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.searchUsers(companyId, keywords, status,
 			params, start, end, sort);
 	}
 
-	/**
-	* Returns total number of hits and an ordered range of all the users
-	* with the status, and whose first name, middle name, last name,
-	* screen name, and email address match the keywords specified for
-	* them, using the indexer. It is preferable to use this method instead of
-	* the non-indexed version whenever possible for
-	* performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param firstName the first name keywords (space separated)
-	* @param middleName the middle name keywords
-	* @param lastName the last name keywords
-	* @param screenName the screen name keywords
-	* @param emailAddress the email address keywords
-	* @param status the workflow status
-	* @param params the indexer parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.UserIndexer}.
-	* @param andSearch whether every field must match its keywords, or just
-	one field. For example, &quot;users with the first name 'bob' and
-	last name 'smith'&quot; vs &quot;users with the first name 'bob'
-	or the last name 'smith'&quot;.
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param sort the field and direction to sort by (optionally
-	<code>null</code>)
-	* @return the matching users and total number of hits
-	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portlet.usersadmin.util.UserIndexer
-	*/
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.User> searchUsers(
 		long companyId, java.lang.String firstName,
@@ -2840,7 +2769,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userLocalService.searchUsers(companyId, firstName, middleName,
 			lastName, screenName, emailAddress, status, params, andSearch,
 			start, end, sort);

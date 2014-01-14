@@ -63,9 +63,11 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -216,8 +218,12 @@ public class DDMImpl implements DDM {
 				continue;
 			}
 
+			Map<String, String> attributes = getFieldAttributeValues(
+				ddmStructure, fieldName, fieldNamespace, serviceContext);
+
 			Field field = createField(
-				ddmStructure, fieldName, fieldValues, serviceContext);
+				ddmStructure, fieldName, fieldValues, attributes,
+				serviceContext);
 
 			fields.put(field);
 		}
@@ -351,6 +357,8 @@ public class DDMImpl implements DDM {
 			}
 			else {
 				for (Locale locale : newField.getAvailableLocales()) {
+					existingField.setAttributes(
+						locale, newField.getAttributes(locale));
 					existingField.setValues(locale, newField.getValues(locale));
 				}
 
@@ -363,7 +371,8 @@ public class DDMImpl implements DDM {
 
 	protected Field createField(
 			DDMStructure ddmStructure, String fieldName,
-			List<Serializable> fieldValues, ServiceContext serviceContext)
+			List<Serializable> fieldValues, Map<String, String> attributes,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Field field = new Field();
@@ -389,6 +398,7 @@ public class DDMImpl implements DDM {
 
 		field.setDefaultLocale(defaultLocale);
 
+		field.setAttributes(locale, attributes);
 		field.setName(fieldName);
 		field.setValues(locale, fieldValues);
 
@@ -416,6 +426,37 @@ public class DDMImpl implements DDM {
 		}
 
 		return ddmStructure;
+	}
+
+	protected Map<String, String> getFieldAttributeValues(
+			DDMStructure ddmStructure, String fieldName, String fieldNamespace,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String fieldDataType = ddmStructure.getFieldDataType(fieldName);
+
+		List<String> fieldNames = getFieldNames(
+			fieldNamespace, fieldName, serviceContext);
+
+		Map<String, String> attributeValues = new HashMap<String, String>(
+			fieldNames.size());
+
+		for (String fieldNameValue : fieldNames) {
+			String attributeValue = null;
+
+			if (fieldDataType.equals(FieldConstants.IMAGE)) {
+				attributeValue = GetterUtil.getString(
+					serviceContext.getAttribute(fieldNameValue + "Alt"));
+			}
+
+			if (attributeValue == null) {
+				return null;
+			}
+
+			attributeValues.put("alt", attributeValue);
+		}
+
+		return attributeValues;
 	}
 
 	protected List<String> getFieldNames(

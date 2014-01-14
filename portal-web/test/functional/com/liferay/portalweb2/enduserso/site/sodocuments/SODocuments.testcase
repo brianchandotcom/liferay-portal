@@ -43,7 +43,7 @@
 	<var name="dmFolderName" value="DM Folder Name" />
 	<var name="dmFolderDescription" value="DM Folder Description" />
 
- 	<command name="AddDMFolderDocument" priority="5">
+	<command name="AddDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -192,7 +192,7 @@
 		</execute>
 	</command>
 
- 	<command name="CheckinMajorDMFolderDocument" priority="5">
+	<command name="CheckinMajorDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
- 	<command name="CheckinMinorDMFolderDocument" priority="5">
+	<command name="CheckinMinorDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -302,7 +302,7 @@
 		</execute>
 	</command>
 
- 	<command name="CheckoutDMFolderDocument" priority="5">
+	<command name="CheckoutDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
@@ -347,7 +347,7 @@
 		</execute>
 	</command>
 
- 	<command name="DeleteDMFolderDocument" priority="5">
+	<command name="DeleteDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
@@ -468,7 +468,7 @@
 		</execute>
 	</command>
 
- 	<command name="EditMajorDMFolderDocument" priority="5">
+	<command name="EditMajorDMFolderDocument" priority="5">
 		<var name="changeLog" value="This is a Major Revision" />
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
@@ -524,7 +524,7 @@
 		</execute>
 	</command>
 
- 	<command name="EditMinorDMFolderDocument" priority="5">
+	<command name="EditMinorDMFolderDocument" priority="5">
 		<var name="changeLog" value="This is a Minor Revision" />
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
@@ -580,7 +580,7 @@
 		</execute>
 	</command>
 
- 	<command name="PublishDraftDMFolderDocument" priority="5">
+	<command name="PublishDraftDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO}" />
@@ -625,7 +625,7 @@
 		</execute>
 	</command> 
 
- 	<command name="SaveAndCheckinMajorDMFolderDocument" priority="5">
+	<command name="SaveAndCheckinMajorDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -691,7 +691,7 @@
 		</execute>
 	</command>
 
- 	<command name="SaveAndCheckinMinorDMFolderDocument" priority="5">
+	<command name="SaveAndCheckinMinorDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -757,7 +757,7 @@
 		</execute>
 	</command>
 
- 	<command name="SaveAsDraftDMFolderDocument" priority="5">
+	<command name="SaveAsDraftDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -793,7 +793,7 @@
 		</execute>
 	</command>
 
- 	<command name="SaveAsDraftEditDMFolderDocument" priority="5">
+	<command name="SaveAsDraftEditDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -841,7 +841,7 @@
 		</execute>
 	</command>
 
- 	<command name="ViewCheckoutDMFolderDocumentSOUser" priority="5">
+	<command name="ViewCheckoutDMFolderDocumentSOUser" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
 		<var name="dmDocumentSize" value="${dmDocumentSize}" />
 		<var name="dmDocumentTitle" value="${dmDocumentTitle}" />

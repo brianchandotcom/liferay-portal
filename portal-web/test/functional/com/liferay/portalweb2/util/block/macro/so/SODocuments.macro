@@ -12,7 +12,7 @@
 		<execute action="PGDocumentsandmedia#click" locator-key1="DISPLAY_STYLE_MENULIST_ICON" />
 	</command>
 
- 	<command name="tearDownPG">
+	<command name="tearDownPG">
 		<execute macro="SOUser#firstLoginPG" />
 
 		<execute macro="SOUserBar#dashboardPG">

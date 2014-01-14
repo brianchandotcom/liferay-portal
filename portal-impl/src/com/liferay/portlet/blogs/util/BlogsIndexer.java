@@ -56,6 +56,7 @@ public class BlogsIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.BLOGS;
 
 	public BlogsIndexer() {
+		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 

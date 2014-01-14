@@ -115,6 +115,9 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 		document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(dlFileEntry.getTreePath(), CharPool.SLASH));
 	}
 
 	@Override

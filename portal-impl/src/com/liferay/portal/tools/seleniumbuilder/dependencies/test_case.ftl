@@ -8,6 +8,7 @@ import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 import com.liferay.portalweb.portal.util.liferayselenium.SeleniumException;
+import com.liferay.portalweb2.util.block.macro.UserMacro;
 
 <#assign rootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
 
@@ -148,6 +149,18 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}
 
 			try {
 				definitionScopeVariables.put("testCaseName", "${testCaseName}TestCase${commandName}");
+
+				<#if rootElement.element("tear-down")??>
+					if (tearDownBeforeTest) {
+						UserMacro userSetupMacro = new UserMacro(selenium);
+
+						userSetupMacro.firstLoginPG(definitionScopeVariables);
+
+						methodTearDown("${commandName}", false);
+
+						tearDownBeforeTest = false;
+					}
+				</#if>
 
 				<#if rootElement.element("set-up")??>
 					methodSetUp("${commandName}", false);

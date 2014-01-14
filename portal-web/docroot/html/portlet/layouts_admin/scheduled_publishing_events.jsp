@@ -44,7 +44,7 @@ for (int i = 0; i < scheduledJobs.size(); i++) {
 
 	// Title
 
-	row.addText(schedulerResponse.getDescription());
+	row.addText(HtmlUtil.escape(schedulerResponse.getDescription()));
 
 	// Start date
 

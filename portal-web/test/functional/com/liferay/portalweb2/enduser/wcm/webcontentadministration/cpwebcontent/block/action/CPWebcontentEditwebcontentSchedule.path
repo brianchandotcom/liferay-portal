@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>CPWebcontentEditwebcontentSchedule</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentEditwebcontentSchedule</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentEditwebcontentSchedule</td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPWebcontentAddwebcontent</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULE-->
+<tr>
+	<td>SCHEDULE_DISPLAY_DATE_FIELD</td>
+	<td>//input[@id='_15_displayDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULE_EXPIRATION_DATE_FIELD</td>
+	<td>//input[@id='_15_expirationDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULE_EXPIRATION_DATE_NEVER_EXPIRE_CHECKBOX</td>
+	<td>//input[@name='_15_neverExpireCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULE_REVIEW_DATE_FIELD</td>
+	<td>//input[@id='_15_reviewDate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULE_REVIEW_DATE_NEVER_REVIEW_CHECKBOX</td>
+	<td>//input[@name='_15_neverReviewCheckbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>CPWebcontentEditwebcontentAddtranslation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentEditwebcontentAddtranslation</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentEditwebcontentAddtranslation</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TRANSLATION_IFRAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'_15_toLanguageId=')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//span[@class='input-localized input-localized-input']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD</td>
+	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_FIELD</td>
+	<td>//body</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@id='_15_translateButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

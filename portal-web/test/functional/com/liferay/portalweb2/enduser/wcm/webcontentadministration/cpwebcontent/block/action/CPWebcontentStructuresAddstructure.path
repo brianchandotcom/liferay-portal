@@ -15,6 +15,16 @@
 </tr>
 <!---->
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+ 	<td>Dynamicdatamapping</td>
+ 	<td></td>
+ </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>STRUCTURES_IFRAME</td>
 	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'scopeTitle=Structures')]</td>
 	<td></td>
@@ -67,110 +77,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--FIELD_MENU-->
-<tr>
-	<td>FIELD_MENU_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Fields')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_MENU_NAME</td>
-	<td>//li[@title='${key_structureFieldName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SETTINGS_MENU-->
-<tr>
-	<td>SETTINGS_MENU_LINK</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_MENU_TYPE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Type')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_MENU_FIELD_LABEL</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Field Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_MENU_NAME</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Name')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_MENU_PREDEFINED_VALUE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]/following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DIAGRAM_BUILDER-->
-<tr>
-	<td>DIAGRAM_BUILDER_DROP_CONTAINER</td>
-	<td>//div[@class='diagram-builder-drop-container']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_BUILDER_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_BUILDER_TEXT_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'form-builder-field-content') and contains(@class,'form-builder-text-field-content') and contains(@class,'clearfix')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_BUILDER_TEXT_BOX_FIELD_1</td>
-	<td>xpath=(//div[contains(@class,'form-builder-textarea-field-content')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_BUILDER_SETTINGS_ICON_1</td>
-	<td>xpath=(//button/i[@class='icon-wrench'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_BUILDER_DUPLICATE_ICON_1</td>
-	<td>xpath=(//button/i[@class='icon-plus'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_BUILDER_DELETE_ICON_1</td>
-	<td>xpath=(//button/i[@class='icon-trash'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SETTINGS_CELL_EDITOR-->
-<tr>
-	<td>SETTINGS_CELL_EDITOR_FIELD</td>
-	<td>//input[@name='value']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_SAVE_BUTTON</td>
-	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_CANCEL_BUTTON</td>
-	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 </tbody>

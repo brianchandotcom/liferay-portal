@@ -70,8 +70,8 @@ public class JournalTestUtil {
 	public static JournalArticle addArticle(
 			long groupId, long folderId, long classNameId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> contentMap, Locale defaultLocale,
-			boolean workflowEnabled, boolean approved,
+			Map<Locale, String> contentMap, Date expirationDate,
+			Locale defaultLocale, boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -87,20 +87,63 @@ public class JournalTestUtil {
 			}
 		}
 
+		boolean neverExpire = true;
+
+		int expirationDateDay = 0;
+		int expirationDateMonth = 0;
+		int expirationDateYear = 0;
+		int expirationDateHour = 0;
+		int expirationDateMinute = 0;
+
+		if (expirationDate != null) {
+			neverExpire = false;
+
+			Calendar expirationCal = CalendarFactoryUtil.getCalendar(
+				TestPropsValues.getUser().getTimeZone());
+
+			expirationCal.setTime(expirationDate);
+
+			expirationDateMonth = expirationCal.get(Calendar.MONTH);
+			expirationDateDay = expirationCal.get(Calendar.DATE);
+			expirationDateYear = expirationCal.get(Calendar.YEAR);
+			expirationDateHour = expirationCal.get(Calendar.HOUR);
+			expirationDateMinute = expirationCal.get(Calendar.MINUTE);
+
+			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+				expirationDateHour += 12;
+			}
+		}
+
 		String content = createLocalizedContent(contentMap, defaultLocale);
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
 			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
 			titleMap, descriptionMap, content, "general", null, null, null, 1,
-			1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
-			false, null, null, null, null, serviceContext);
+			1, 1965, 0, 0, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, 0, 0, 0, 0, 0, true, true, false, null, null, null,
+			null, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> contentMap, Locale defaultLocale,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			groupId, folderId, classNameId, titleMap, descriptionMap,
+			contentMap, null, defaultLocale, workflowEnabled, approved,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticle(
 			long groupId, long folderId, long classNameId, String title,
-			String description, String content, Locale defaultLocale,
-			boolean workflowEnabled, boolean approved,
+			String description, String content, Date expirationDate,
+			Locale defaultLocale, boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -124,8 +167,20 @@ public class JournalTestUtil {
 
 		return addArticle(
 			groupId, folderId, classNameId, titleMap, descriptionMap,
-			contentMap, defaultLocale, workflowEnabled, approved,
-			serviceContext);
+			contentMap, expirationDate, defaultLocale, workflowEnabled,
+			approved, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, String title,
+			String description, String content, Locale defaultLocale,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			groupId, folderId, classNameId, title, description, content, null,
+			defaultLocale, workflowEnabled, approved, serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -168,6 +223,18 @@ public class JournalTestUtil {
 		return addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
 			title, content, LocaleUtil.getSiteDefault(), false, false);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, String title, String content, Date expirationDate,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, title, content,
+			expirationDate, LocaleUtil.getSiteDefault(), false, false,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticle(

@@ -54,6 +54,18 @@ public class BlogsEntryAssetSearchTest extends BaseAssetSearchTestCase {
 	public void testClassTypeIds2() throws Exception {
 	}
 
+	@Ignore()
+	@Override
+	@Test
+	public void testOrderByExpirationDateAsc() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testOrderByExpirationDateDesc() throws Exception {
+	}
+
 	@Override
 	protected BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, String keywords,

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -31,6 +32,7 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -39,6 +41,13 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
+
+import java.text.DateFormat;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -763,6 +772,58 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByCreateDateAsc() throws Exception {
+		AssetEntryQuery assetEntryQuery =
+			AssetEntryQueryTestUtil.createAssetEntryQuery(
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
+
+		String[] titles = {
+			"open", "liferay", "social", "osgi", "content", "life"
+		};
+
+		testOrderByCreateDate(assetEntryQuery, "asc", titles, titles);
+	}
+
+	@Test
+	public void testOrderByCreateDateDesc() throws Exception {
+		AssetEntryQuery assetEntryQuery =
+			AssetEntryQueryTestUtil.createAssetEntryQuery(
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
+
+		String[] titles = {
+			"open", "liferay", "social", "osgi", "content", "life"
+		};
+
+		String[] orderedTitles = {
+			"life", "content", "osgi", "social", "liferay", "open"
+		};
+
+		testOrderByCreateDate(assetEntryQuery, "desc", titles, orderedTitles);
+	}
+
+	@Test
+	public void testOrderByExpirationDateAsc() throws Exception {
+		AssetEntryQuery assetEntryQuery =
+			AssetEntryQueryTestUtil.createAssetEntryQuery(
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
+
+		Date[] expirationDates = randomDates(new Date(), 6);
+
+		testOrderByExpirationDate(assetEntryQuery, "asc", expirationDates);
+	}
+
+	@Test
+	public void testOrderByExpirationDateDesc() throws Exception {
+		AssetEntryQuery assetEntryQuery =
+			AssetEntryQueryTestUtil.createAssetEntryQuery(
+				_group.getGroupId(), new String[] {getBaseModelClassName()});
+
+		Date[] expirationDates = randomDates(new Date(), 6);
+
+		testOrderByExpirationDate(assetEntryQuery, "desc", expirationDates);
+	}
+
+	@Test
 	public void testOrderByTitleAsc() throws Exception {
 		AssetEntryQuery assetEntryQuery =
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
@@ -829,6 +890,14 @@ public abstract class BaseAssetSearchTestCase {
 		testPaginationType(assetEntryQuery, 5);
 	}
 
+	protected BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, String keywords, Date expirationDate,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModel(parentBaseModel, keywords, serviceContext);
+	}
+
 	protected abstract BaseModel<?> addBaseModel(
 			BaseModel<?> parentBaseModel, String keywords,
 			ServiceContext serviceContext)
@@ -836,6 +905,14 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected BaseModel<?> addBaseModelWithClassType(
 			BaseModel<?> parentBaseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModel(parentBaseModel, keywords, serviceContext);
+	}
+
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			BaseModel<?> parentBaseModel, String keywords, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -862,6 +939,27 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected abstract String getSearchKeywords();
+
+	protected Date[] randomDates(Date startDate, int size) {
+		Date[] dates = new Date[size];
+
+		for (int i = 0; i < size; i++) {
+			Date date = new Date(
+				startDate.getTime() +
+				(long)(Math.random() * 60 * 60 * 24 * 365));
+
+			Calendar calendar = new GregorianCalendar();
+
+			calendar.setTime(date);
+
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+
+			dates[i] = calendar.getTime();
+		}
+
+		return dates;
+	}
 
 	protected Document[] search(
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
@@ -979,6 +1077,91 @@ public abstract class BaseAssetSearchTestCase {
 
 			Assert.assertEquals(
 				initialEntries, searchCount(assetEntryQuery, searchContext));
+		}
+	}
+
+	protected void testOrderByCreateDate(
+			AssetEntryQuery assetEntryQuery, String orderByType,
+			String[] titles, String[] orderedTitles)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			_group, serviceContext);
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
+
+		BaseModel[] baseModels = new BaseModel[titles.length];
+
+		for (int i = 0; i < titles.length; i++) {
+			String title = titles[i];
+
+			baseModels[i] = addBaseModel(
+				parentBaseModel, title, serviceContext);
+		}
+
+		assetEntryQuery.setOrderByCol1("createDate");
+		assetEntryQuery.setOrderByType1(orderByType);
+
+		Document[] documents = search(assetEntryQuery, searchContext);
+
+		for (int i = 0; i < documents.length; i++) {
+			Document document = documents[i];
+
+			String field = document.get("title");
+
+			Assert.assertEquals(field, orderedTitles[i]);
+		}
+	}
+
+	protected void testOrderByExpirationDate(
+			AssetEntryQuery assetEntryQuery, String orderByType,
+			Date[] expirationDates)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			_group, serviceContext);
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+
+		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
+
+		for (Date expirationDate : expirationDates) {
+			addBaseModel(
+				parentBaseModel, ServiceTestUtil.randomString(), expirationDate,
+				serviceContext);
+		}
+
+		assetEntryQuery.setOrderByCol1("expirationDate");
+		assetEntryQuery.setOrderByType1(orderByType);
+
+		Arrays.sort(expirationDates);
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			PropsValues.INDEX_DATE_FORMAT_PATTERN);
+
+		Document[] documents = search(assetEntryQuery, searchContext);
+
+		for (int i = 0; i < documents.length; i++) {
+			Document document = documents[i];
+
+			String field = document.get("expirationDate");
+
+			int index = i;
+
+			if (orderByType.equals("desc")) {
+				index = documents.length - 1 - i;
+			}
+
+			Assert.assertEquals(
+				field, dateFormat.format(expirationDates[index]));
 		}
 	}
 

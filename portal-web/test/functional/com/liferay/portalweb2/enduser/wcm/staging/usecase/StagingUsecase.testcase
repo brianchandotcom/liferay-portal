@@ -22,6 +22,11 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+		</execute>
+
 		<execute macro="Role#tearDownCP" />
 
 		<execute macro="Site#tearDownCP" />
@@ -500,13 +505,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasksPG">
+		<execute macro="Workflow#viewCompletedTasksCP">
 			<var name="workflowAssetTitle" value="Home" />
 			<var name="workflowAssetType" value="Page Revision" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTasksPG">
+		<execute macro="Workflow#viewCompletedTasksCP">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="Web Content Article" />
 			<var name="workflowTask" value="Review" />

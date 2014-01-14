@@ -532,6 +532,13 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_CATEGORIES_CATEGORY_ADD_CATEGORY_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portlet.asset.model.AssetCategoryADD_CATEGORY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS_ACTION</td>

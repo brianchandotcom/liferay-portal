@@ -161,7 +161,12 @@
 				<execute action="PGStagingPublishtolivenow#uncheck" locator-key1="APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
 			</then>
 			<else>
-				<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
+				<if>
+					<condition action="PGStagingPublishtolivenow#isElementPresent" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
+					<then>
+						<execute action="PGStagingPublishtolivenow#check" locator-key1="APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO" />
+					</then>
+				</if>
 			</else>
 		</if>
 
@@ -196,7 +201,17 @@
 
 		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Draft" />
 		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Pending (Review)" />
+		<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION_DISABLED" />
+
+		<if>
+			<condition action="PGStaging#isTextEqual" locator-key1="STAGING_MENU_STATUS" value1="Pending (Created)" />
+			<then>
+				<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Pending (Created)" />
+			</then>
+			<else>
+				<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Pending (Review)" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewPageVariationPG">

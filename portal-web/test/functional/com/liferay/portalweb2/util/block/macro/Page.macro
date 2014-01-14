@@ -24,26 +24,7 @@
 
 		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
 
-		<if>
-			<condition action="PGStaging#isElementNotPresent" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
-			<then>
-				<execute action="PGStaging#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
-				<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
-			</then>
-		</if>
-
-		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-		<execute action="PGStaging#assertElementPresent" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION_DISABLED" />
-
-		<if>
-			<condition action="PGStaging#isTextEqual" locator-key1="STAGING_MENU_STATUS" value1="Pending (Created)" />
-			<then>
-				<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="Pending (Created)" />
-			</then>
-			<else>
-				<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${workflowStatus}" />
-			</else>
-		</if>
+		<execute macro="Staging#submitForPublicationPageRevision" />
 	</command>
 
 	<command name="gotoCmdCP">

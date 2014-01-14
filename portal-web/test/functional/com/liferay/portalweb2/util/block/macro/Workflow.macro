@@ -322,7 +322,7 @@
 		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
 	</command>
 
-	<command name="viewCompletedTasksPG">
+	<command name="viewCompletedTasksCP">
 		<execute action="CPMyworkflowtasks#assertClick" locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />

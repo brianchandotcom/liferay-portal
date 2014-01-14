@@ -1,0 +1,43 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="MICROBLOGS_ENTRY_AUTHOR">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="assertClick">
+		<case locator-key1="TAB_MENTIONS">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="TAB_TAG_VALUE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="TAB_TIMELINE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+
+		<case locator-key1="MICROBLOGS_ENTRY_CONTENT_TAG">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="MICROBLOGS_CONTENT_INPUT_FIELD">
+			<execute function="Type#sendKeys" />
+		</case>
+	</command>
+</definition>

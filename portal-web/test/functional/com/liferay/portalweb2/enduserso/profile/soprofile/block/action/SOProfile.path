@@ -116,17 +116,17 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PROFILE</td>
-	<td>//div/ul/li/a/span[contains(.,'Profile')]</td>
+	<td>//div[@id='navigation']/ul/li/a/span[contains(.,'Profile')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_CONTACTS</td>
-	<td>//div/ul/li[contains(.,'Contacts')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Contacts')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MICROBLOGS</td>
-	<td>//div/ul/li[contains(.,'Microblogs')]/a/span</td>
+	<td>//div[@id='navigation']/ul/li[contains(.,'Microblogs')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

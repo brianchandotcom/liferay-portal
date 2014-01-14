@@ -1,0 +1,13 @@
+<definition>
+	<command name="click">
+		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
+			<execute function="Click#makeVisibleClickAt" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="MICROBLOGS_ENTRY_DELETE_LINK">
+			<execute function="IsElementPresent#pauseIsElementPresent" />
+		</case>
+	</command>
+</definition>

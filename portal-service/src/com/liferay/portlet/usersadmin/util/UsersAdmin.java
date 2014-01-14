@@ -16,6 +16,7 @@ package com.liferay.portlet.usersadmin.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
@@ -47,6 +48,9 @@ import javax.servlet.http.HttpServletRequest;
 public interface UsersAdmin {
 
 	public static final String CUSTOM_QUESTION = "write-my-own-question";
+
+	public static final String[] ORGANIZATION_SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID};
 
 	public void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,

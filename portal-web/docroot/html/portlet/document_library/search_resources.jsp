@@ -112,7 +112,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 	<liferay-util:buffer var="searchInfo">
 		<div class="search-info">
 			<span class="keywords">
-				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}, false) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
+				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
 			</span>
 
 			<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
@@ -363,14 +363,14 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 			for (Folder mountFolder : mountFolders) {
 				if (mountFolder.getRepositoryId() == searchRepositoryId) {
-					selectedTab = mountFolder.getName();
+					selectedTab = HtmlUtil.escape(mountFolder.getName());
 				}
 			}
 			%>
 
 				<div class="search-results-container" id="<portlet:namespace />searchResultsContainer">
 					<liferay-ui:tabs
-						names='<%= LanguageUtil.get(pageContext, "local") + "," + ListUtil.toString(mountFolders, "name") %>'
+						names='<%= LanguageUtil.get(pageContext, "local") + "," + HtmlUtil.escape(ListUtil.toString(mountFolders, "name")) %>'
 						refresh="<%= false %>"
 						value="<%= selectedTab %>"
 					>

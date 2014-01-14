@@ -149,7 +149,7 @@ if (folder != null) {
 
 				<c:if test="<%= Validator.isNotNull(curFile.getDescription()) %>">
 					<br />
-					<%= curFile.getDescription() %>
+					<%= HtmlUtil.escape(curFile.getDescription()) %>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 

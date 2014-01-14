@@ -55,6 +55,9 @@ public interface UsersAdmin {
 	public static final String[] USER_GROUP_SELECTED_FIELD_NAMES =
 		{Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID};
 
+	public static final String[] USER_SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.UID, Field.USER_ID};
+
 	public void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest request,
 			RenderResponse renderResponse)

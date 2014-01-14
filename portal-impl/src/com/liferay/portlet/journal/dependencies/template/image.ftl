@@ -1,3 +1,5 @@
 <#include "init.ftl">
 
-<img alt="${label}" src="${getVariableReferenceCode(variableName)}" />
+<#assign variableAltName = name + ".getAttribute(\"alt\")">
+
+<img alt='${getVariableReferenceCode(variableAltName)}' src="${getVariableReferenceCode(variableName)}" />

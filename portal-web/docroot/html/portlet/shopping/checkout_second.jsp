@@ -363,7 +363,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 
 		// SKU
 
-		row.addText(item.getSku(), rowURL);
+		row.addText(HtmlUtil.escape(item.getSku()), rowURL);
 
 		// Description
 
@@ -372,7 +372,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 
 			sb.append(HtmlUtil.escape(item.getName()));
 			sb.append(" (");
-			sb.append(StringUtil.replace(StringUtil.merge(cartItem.getFieldsArray(), ", "), "=", ": "));
+			sb.append(HtmlUtil.escape(StringUtil.replace(StringUtil.merge(cartItem.getFieldsArray(), ", "), "=", ": ")));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			row.addText(sb.toString(), rowURL);
@@ -471,7 +471,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 					</portlet:renderURL>
 
 					<%
-					String taglibOpenCouponWindow = "var viewCouponWindow = window.open('" + viewCouponURL + "', 'viewCoupon', 'directories=no,height=200,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=280'); void(''); viewCouponWindow.focus();";
+					String taglibOpenCouponWindow = "javascript:viewCouponWindow = window.open('" + viewCouponURL + "', 'viewCoupon', 'directories=no,height=200,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=280'); void(''); viewCouponWindow.focus();";
 					%>
 
 					<aui:a href="<%= taglibOpenCouponWindow %>" label='<%= "(" + coupon.getCouponId() + ")" %>' />

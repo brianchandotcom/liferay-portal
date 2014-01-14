@@ -361,7 +361,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 		<div class="well">
 			<h4><liferay-ui:message key="comments" /></h4>
 
-			<%= HtmlUtil.escape(order.getComments()) %>
+			<%= order.getComments() %>
 		</div>
 	</c:if>
 
@@ -417,7 +417,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 
 		// SKU
 
-		row.addText(orderItem.getSku(), rowURL);
+		row.addText(HtmlUtil.escape(orderItem.getSku()), rowURL);
 
 		// Description
 
@@ -426,7 +426,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 
 			sb.append(HtmlUtil.escape(orderItem.getName()));
 			sb.append(" (");
-			sb.append(StringUtil.replace(StringUtil.merge(fieldsArray, ", "), "=", ": "));
+			sb.append(HtmlUtil.escape(StringUtil.replace(StringUtil.merge(fieldsArray, ", "), "=", ": ")));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			row.addText(sb.toString(), rowURL);

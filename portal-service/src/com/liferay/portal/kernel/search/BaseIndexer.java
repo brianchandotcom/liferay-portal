@@ -88,6 +88,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -508,14 +509,14 @@ public abstract class BaseIndexer implements Indexer {
 					queryConfig.getSelectedFieldNames();
 
 				if (selectedFieldNames != null) {
-					Set<String> newSelectedFieldNames = SetUtil.fromArray(
+					Set<String> selectedFieldNameSet = SetUtil.fromArray(
 						selectedFieldNames);
 
-					newSelectedFieldNames.addAll(
+					selectedFieldNameSet.addAll(
 						_PERMISSION_SELECTED_FIELD_NAMES);
 
-					selectedFieldNames = newSelectedFieldNames.toArray(
-						new String[newSelectedFieldNames.size()]);
+					selectedFieldNames = selectedFieldNameSet.toArray(
+						new String[selectedFieldNameSet.size()]);
 
 					queryConfig.setSelectedFieldNames(selectedFieldNames);
 				}
@@ -1724,9 +1725,8 @@ public abstract class BaseIndexer implements Indexer {
 		_stagingAware = stagingAware;
 	}
 
-	private static final Set<String> _PERMISSION_SELECTED_FIELD_NAMES =
-		SetUtil.fromArray(
-			new String[]{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK});
+	private static final List<String> _PERMISSION_SELECTED_FIELD_NAMES =
+		Arrays.asList(Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK);
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 

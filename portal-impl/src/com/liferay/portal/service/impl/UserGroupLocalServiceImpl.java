@@ -663,7 +663,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			SearchContext searchContext = getSearchContext(
+			SearchContext searchContext = buildSearchContext(
 				companyId, name, description, params, andSearch, start, end,
 				sort);
 
@@ -759,7 +759,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			int end, Sort sort)
 		throws PortalException, SystemException {
 
-		SearchContext searchContext = getSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, name, description, params, andSearch, start, end, sort);
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -915,6 +915,50 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		return userGroup;
 	}
 
+	protected SearchContext buildSearchContext(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(andSearch);
+
+		Map<String, Serializable> attributes =
+			new HashMap<String, Serializable>();
+
+		attributes.put("description", description);
+		attributes.put("name", name);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (params != null) {
+			String keywords = (String)params.remove("keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				searchContext.setKeywords(keywords);
+			}
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
 	protected File[] exportLayouts(
 			long userGroupId, Map<String, String[]> parameterMap)
 		throws PortalException, SystemException {
@@ -998,50 +1042,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			new String[] {UserIdStrategy.CURRENT_USER_ID});
 
 		return parameterMap;
-	}
-
-	protected SearchContext getSearchContext(
-		long companyId, String name, String description,
-		LinkedHashMap<String, Object> params, boolean andSearch, int start,
-		int end, Sort sort) {
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAndSearch(andSearch);
-
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
-
-		attributes.put("description", description);
-		attributes.put("name", name);
-
-		searchContext.setAttributes(attributes);
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setEnd(end);
-
-		if (params != null) {
-			String keywords = (String)params.remove("keywords");
-
-			if (Validator.isNotNull(keywords)) {
-				searchContext.setKeywords(keywords);
-			}
-		}
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		searchContext.setStart(start);
-
-		return searchContext;
 	}
 
 	protected void importLayouts(

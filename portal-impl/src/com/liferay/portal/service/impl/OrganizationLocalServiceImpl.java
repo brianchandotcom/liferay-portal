@@ -1361,7 +1361,7 @@ public class OrganizationLocalServiceImpl
 		throws SystemException {
 
 		try {
-			SearchContext searchContext = getSearchContext(
+			SearchContext searchContext = buildSearchContext(
 				companyId, parentOrganizationId, name, type, street, city, zip,
 				region, country, params, andSearch, start, end, sort);
 
@@ -1513,7 +1513,7 @@ public class OrganizationLocalServiceImpl
 			boolean andSearch, int start, int end, Sort sort)
 		throws PortalException, SystemException {
 
-		SearchContext searchContext = getSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, parentOrganizationId, name, type, street, city, zip,
 			region, country, params, andSearch, start, end, sort);
 
@@ -1866,6 +1866,59 @@ public class OrganizationLocalServiceImpl
 		}
 	}
 
+	protected SearchContext buildSearchContext(
+		long companyId, long parentOrganizationId, String name, String type,
+		String street, String city, String zip, String region, String country,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(andSearch);
+
+		Map<String, Serializable> attributes =
+			new HashMap<String, Serializable>();
+
+		attributes.put("city", city);
+		attributes.put("country", country);
+		attributes.put("name", name);
+		attributes.put("params", params);
+		attributes.put(
+			"parentOrganizationId", String.valueOf(parentOrganizationId));
+		attributes.put("region", region);
+		attributes.put("street", street);
+		attributes.put("type", type);
+		attributes.put("zip", zip);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (params != null) {
+			String keywords = (String)params.remove("keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				searchContext.setKeywords(keywords);
+			}
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
 	protected long getParentOrganizationId(
 			long companyId, long parentOrganizationId)
 		throws SystemException {
@@ -1919,59 +1972,6 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return organizationIds;
-	}
-
-	protected SearchContext getSearchContext(
-		long companyId, long parentOrganizationId, String name, String type,
-		String street, String city, String zip, String region, String country,
-		LinkedHashMap<String, Object> params, boolean andSearch, int start,
-		int end, Sort sort) {
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAndSearch(andSearch);
-
-		Map<String, Serializable> attributes =
-			new HashMap<String, Serializable>();
-
-		attributes.put("city", city);
-		attributes.put("country", country);
-		attributes.put("name", name);
-		attributes.put("params", params);
-		attributes.put(
-			"parentOrganizationId", String.valueOf(parentOrganizationId));
-		attributes.put("region", region);
-		attributes.put("street", street);
-		attributes.put("type", type);
-		attributes.put("zip", zip);
-
-		searchContext.setAttributes(attributes);
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setEnd(end);
-
-		if (params != null) {
-			String keywords = (String)params.remove("keywords");
-
-			if (Validator.isNotNull(keywords)) {
-				searchContext.setKeywords(keywords);
-			}
-		}
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		searchContext.setStart(start);
-
-		return searchContext;
 	}
 
 	protected boolean isOrganizationGroup(long organizationId, long groupId)

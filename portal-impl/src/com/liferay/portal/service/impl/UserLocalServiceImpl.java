@@ -3109,7 +3109,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		try {
-			SearchContext searchContext = getSearchContext(
+			SearchContext searchContext = buildSearchContext(
 				companyId, firstName, middleName, lastName, fullName,
 				screenName, emailAddress, street, city, zip, region, country,
 				status, params, andOperator, start, end, sort);
@@ -3225,7 +3225,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			SearchContext searchContext = getSearchContext(
+			SearchContext searchContext = buildSearchContext(
 				companyId, firstName, middleName, lastName, null, screenName,
 				emailAddress, null, null, null, null, null, status, params,
 				andSearch, start, end, sort);
@@ -3337,7 +3337,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			params.put("keywords", keywords);
 		}
 
-		SearchContext searchContext = getSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, firstName, middleName, lastName, fullName, screenName,
 			emailAddress, street, city, zip, region, country, status, params,
 			andOperator, start, end, sort);
@@ -3353,7 +3353,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			int end, Sort sort)
 		throws PortalException, SystemException {
 
-		SearchContext searchContext = getSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, firstName, middleName, lastName, null, screenName,
 			emailAddress, null, null, null, null, null, status, params,
 			andSearch, start, end, sort);
@@ -5682,28 +5682,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return authResult;
 	}
 
-	protected Date getBirthday(
-			int birthdayMonth, int birthdayDay, int birthdayYear)
-		throws PortalException {
-
-		Date birthday = PortalUtil.getDate(
-			birthdayMonth, birthdayDay, birthdayYear,
-			ContactBirthdayException.class);
-
-		Date now = new Date();
-
-		if (birthday.after(now)) {
-			throw new ContactBirthdayException();
-		}
-
-		return birthday;
-	}
-
-	protected String getLogin(String login) {
-		return StringUtil.lowerCase(StringUtil.trim(login));
-	}
-
-	protected SearchContext getSearchContext(
+	protected SearchContext buildSearchContext(
 		long companyId, String firstName, String middleName, String lastName,
 		String fullName, String screenName, String emailAddress, String street,
 		String city, String zip, String region, String country, int status,
@@ -5758,6 +5737,27 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		searchContext.setStart(start);
 
 		return searchContext;
+	}
+
+	protected Date getBirthday(
+			int birthdayMonth, int birthdayDay, int birthdayYear)
+		throws PortalException {
+
+		Date birthday = PortalUtil.getDate(
+			birthdayMonth, birthdayDay, birthdayYear,
+			ContactBirthdayException.class);
+
+		Date now = new Date();
+
+		if (birthday.after(now)) {
+			throw new ContactBirthdayException();
+		}
+
+		return birthday;
+	}
+
+	protected String getLogin(String login) {
+		return StringUtil.lowerCase(StringUtil.trim(login));
 	}
 
 	protected long[] getUserIds(List<User> users) {

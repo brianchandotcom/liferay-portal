@@ -203,7 +203,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 							searchContext.setAttribute(Field.STATUS, searchTerms.getStatusCode());
 							searchContext.setAttribute(Field.TITLE, searchTerms.getTitle());
 							searchContext.setAttribute(Field.TYPE, searchTerms.getType());
-							searchContext.setAttribute("articleId", searchTerms.getArticleId());
+							searchContext.setAttribute(Field.ARTICLE_ID, searchTerms.getArticleId());
 						}
 						else {
 							indexer = JournalSearcher.getInstance();
@@ -214,7 +214,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 								searchContext.setAttribute(Field.CONTENT, keywords);
 								searchContext.setAttribute(Field.DESCRIPTION, keywords);
 								searchContext.setAttribute(Field.TITLE, keywords);
-								searchContext.setAttribute("articleId", keywords);
+								searchContext.setAttribute(Field.ARTICLE_ID, keywords);
 								searchContext.setKeywords(keywords);
 							}
 							else {

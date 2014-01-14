@@ -6214,7 +6214,7 @@ public class JournalArticleLocalServiceImpl
 		attributes.put(Field.STATUS, status);
 		attributes.put(Field.TITLE, title);
 		attributes.put(Field.TYPE, type);
-		attributes.put("articleId", articleId);
+		attributes.put(Field.ARTICLE_ID, articleId);
 		attributes.put("ddmStructureKey", ddmStructureKey);
 		attributes.put("ddmTemplateKey", ddmTemplateKey);
 		attributes.put("params", params);

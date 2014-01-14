@@ -123,7 +123,7 @@ public class JournalUtil {
 	public static final int MAX_STACK_SIZE = 20;
 
 	public static final String[] SELECTED_FIELD_NAMES =
-		{"articleId", Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+		{Field.ARTICLE_ID, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	public static void addAllReservedEls(
 		Element rootElement, Map<String, String> tokens, JournalArticle article,
@@ -550,7 +550,7 @@ public class JournalUtil {
 
 		for (com.liferay.portal.kernel.search.Document document : documents) {
 			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-			String articleId = document.get("articleId");
+			String articleId = document.get(Field.ARTICLE_ID);
 
 			JournalArticle article =
 				JournalArticleLocalServiceUtil.fetchLatestArticle(

@@ -28,7 +28,7 @@ Summary summary = (Summary)objArray[2];
 String content = StringUtil.highlight(summary.getContent(), queryTerms);
 
 long articleGroupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
-String articleId = doc.get("articleId");
+String articleId = doc.get(Field.ARTICLE_ID);
 
 List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.getGroupId(), layout.isPrivateLayout(), articleId);
 %>

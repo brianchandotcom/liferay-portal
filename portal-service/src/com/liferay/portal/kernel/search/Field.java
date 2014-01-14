@@ -29,6 +29,8 @@ import java.util.Map;
  */
 public class Field implements Serializable {
 
+	public static final String ARTICLE_ID = "articleId";
+
 	public static final String ASSET_CATEGORY_IDS = "assetCategoryIds";
 
 	/**

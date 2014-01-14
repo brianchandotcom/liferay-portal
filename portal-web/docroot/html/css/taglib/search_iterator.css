@@ -15,7 +15,6 @@
 
 	@include respond-to(phone) {
 		.selector-button {
-			min-width: 100%;
 			width: auto;
 		}
 	}

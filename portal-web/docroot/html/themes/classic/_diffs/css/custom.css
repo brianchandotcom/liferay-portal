@@ -15,11 +15,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 /* ---------- Base styles ---------- */
 
 .aui {
-	height: 100%;
-
-	body {
-		min-height: 100%;
-	}
+	background-color: transparent;
 
 	.separator {
 		border-color: #BFBFBF transparent #FFF;

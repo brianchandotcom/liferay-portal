@@ -73,6 +73,10 @@ public class Field implements Serializable {
 		this(0, name, value);
 	}
 
+	public void addAttributes(Locale locale, Map<String, String> attributes) {
+		_attributesMap.put(locale, attributes);
+	}
+
 	public void addValue(Locale locale, Serializable value) {
 		List<Serializable> values = _valuesMap.get(locale);
 
@@ -111,6 +115,28 @@ public class Field implements Serializable {
 		}
 
 		return false;
+	}
+
+	public Serializable getAttribute(Locale locale, String name) {
+		Map<String, String> attributes = _attributesMap.get(locale);
+
+		if (attributes == null) {
+			Locale defaultLocale = getDefaultLocale();
+
+			attributes = _attributesMap.get(defaultLocale);
+		}
+
+		return attributes.get(name);
+	}
+
+	public Map<String, String> getAttributes(Locale locale) {
+		Map<String, String> attributes = _attributesMap.get(locale);
+
+		if (attributes == null) {
+			_attributesMap.put(locale, new HashMap<String, String>());
+		}
+
+		return _attributesMap.get(locale);
 	}
 
 	public Set<Locale> getAvailableLocales() {
@@ -231,6 +257,10 @@ public class Field implements Serializable {
 		return ddmStructure.isFieldRepeatable(_name);
 	}
 
+	public void setAttributes(Locale locale, Map<String, String> attributes) {
+		_attributesMap.put(locale, attributes);
+	}
+
 	public void setDDMStructureId(long ddmStructureId) {
 		_ddmStructureId = ddmStructureId;
 	}
@@ -311,6 +341,8 @@ public class Field implements Serializable {
 
 	private static Log _log = LogFactoryUtil.getLog(Field.class);
 
+	private Map<Locale, Map<String, String>> _attributesMap =
+		new HashMap<Locale, Map<String, String>>();
 	private long _ddmStructureId;
 	private Locale _defaultLocale;
 	private String _name;

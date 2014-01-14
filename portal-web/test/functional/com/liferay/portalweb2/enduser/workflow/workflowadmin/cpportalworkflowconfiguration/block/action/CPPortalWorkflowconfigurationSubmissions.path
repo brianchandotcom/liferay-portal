@@ -57,33 +57,33 @@
 </tr>
 <!--PENDING_TABLE-->
 <tr>
-	<td>PENDING_TABLE_TASK_1</td>
-	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[1]/a</td>
+	<td>PENDING_TABLE_DEFINITION</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_ASSET_TITLE_1</td>
-	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[2]/a</td>
+	<td>PENDING_TABLE_ASSET_TITLE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_ASSET_TYPE_1</td>
-	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[3]/a</td>
+	<td>PENDING_TABLE_ASSET_TYPE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_STATUS_1</td>
-	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[4]/a</td>
+	<td>PENDING_TABLE_STATUS</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_LAST_ACTIVITY_DATE_1</td>
-	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[5]/a</td>
+	<td>PENDING_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PENDING_TABLE_END_DATE_1</td>
-	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[1]/td[6]/a</td>
+	<td>PENDING_TABLE_END_DATE</td>
+	<td>//div[@id='_151_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[6]/a</td>
 	<td></td>
 </tr>
 </tbody>

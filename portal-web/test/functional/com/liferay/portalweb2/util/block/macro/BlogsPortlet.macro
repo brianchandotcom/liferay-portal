@@ -1,16 +1,37 @@
 <definition>
-	<command name="configureDisplayPG">
+	<command name="configureDisplayTemplatePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGBlogsConfiguration#click" locator-key1="DISPLAY_TEMPLATE_MENULIST" />
+		<execute action="PGBlogsConfiguration#click" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" />
 
 		<var name="key_displaySelection" value="${displaySelection}" />
 
-		<execute action="PGBlogsConfiguration#doubleClick" locator-key1="DISPLAY_TEMPLATE_MENULIST_SELECTION" value1="${displaySelection}" />
+		<execute action="PGBlogsConfiguration#doubleClick" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION" />
 		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="tearDownConfigurationDisplaySettingsPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGBlogsConfiguration#click" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST" />
+
+		<var name="key_displaySelection" value="Full Content" />
+
+		<execute action="PGBlogsConfiguration#doubleClick" locator-key1="DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION" />
+		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
 		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 

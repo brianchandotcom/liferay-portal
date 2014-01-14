@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>PGBlogsConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBlogsConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>BasePortletConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SETUP</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PERMISSIONS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_COMMUNICATION</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Communication')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SHARING</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SCOPE</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION_SETUP-->
+<tr>
+	<td>NAVIGATION_SETUP_DISPLAY SETTINGS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SETUP_EMAIL_FROM</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SETUP_MESSAGE_ADDED_EMAIL</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Entry Added Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SETUP_MESSAGE_UPDATED_EMAIL</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Entry Updated Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SETUP_RSS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_SETTINGS-->
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_TEMPLATE_MENULIST</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECTION</td>
+	<td>//select[contains(@id,'displayStyle')]/optgroup/option[contains(.,'${key_displaySelection}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

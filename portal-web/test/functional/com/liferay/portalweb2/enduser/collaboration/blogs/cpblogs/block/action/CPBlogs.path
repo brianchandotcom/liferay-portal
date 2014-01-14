@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_182_undoForm']</td>
+	<td>//form[@id='_161_undoForm']</td>
 	<td></td>
 </tr>
 <tr>

@@ -21,6 +21,8 @@
 	<tear-down>
 		<execute macro="BlogsEntry#tearDownCP" />
 
+		<execute macro="BlogsPortlet#tearDownConfigurationDisplaySettingsPG" />
+
 		<execute macro="Page#tearDownPG" />
 
 		<execute macro="Site#tearDownCP" />
@@ -98,42 +100,6 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryAbstractDisplay" priority="5">
-		<var name="displaySelection" value="Abstract" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryContentAbstract" value="Blogs Entry Abstract Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addAbstractPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContentAbstract" value="${entryContentAbstract}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsPortlet#configureDisplayPG">
-		    <var name="displaySelection" value="${displaySelection}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewAbstractPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContentAbstract" value="${entryContentAbstract}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-	</command>
-
 	<command name="AddBlogsEntryComment" priority="5">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
@@ -177,34 +143,6 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryFullContentDisplay" priority="5">
-		<var name="displaySelection" value="Full Content" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsPortlet#configureDisplayPG">
-		    <var name="displaySelection" value="${displaySelection}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-	</command>
-
 	<command name="AddBlogsEntryTitle150Characters" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15" />
@@ -242,34 +180,6 @@
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryTitle" value="${entryValidTitleLength}" />
-		</execute>
-	</command>
-
-	<command name="AddBlogsEntryTitleDisplay" priority="5">
-		<var name="displaySelection" value="Title" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsPortlet#configureDisplayPG">
-		    <var name="displaySelection" value="${displaySelection}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewTitleDisplayPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 
@@ -1003,6 +913,105 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntryWithAbstractDisplayTemplate" priority="5">
+		<var name="displaySelection" value="Abstract" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addAbstractDescriptionPG">
+			<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
+			<var name="displaySelection" value="${displaySelection}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithAbstractDisplayTemplatePG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntryWithFullContentDisplayTemplate" priority="5">
+		<var name="displaySelection" value="Full Content" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
+			<var name="displaySelection" value="${displaySelection}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntryWithTitleDisplayTemplate" priority="5">
+		<var name="displaySelection" value="Title" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureDisplayTemplatePG">
+			<var name="displaySelection" value="${displaySelection}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewWithTitleDisplayTemplatePG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 

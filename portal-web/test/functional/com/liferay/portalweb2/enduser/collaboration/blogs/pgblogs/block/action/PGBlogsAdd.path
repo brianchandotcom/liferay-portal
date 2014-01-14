@@ -54,16 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ABSTRACT_DROPDOWN</td>
-	<td>//div[@id='blogsEntryAbstractPanel']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_DROPDOWN</td>
-	<td>//div[@id='blogsEntryCategorizationPanel']/div</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ALLOW_PINGBACKS_CHECKBOX</td>
 	<td>//input[@id='_33_allowPingbacksCheckbox']</td>
 	<td></td>
@@ -76,6 +66,21 @@
 <tr>
 	<td>TRACKBACKS_TO_SEND_FIELD</td>
 	<td>//input[@id='_33_trackbacks']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ABSTRACT_DROPDOWN</td>
+	<td>//div[@id='blogsEntryAbstractPanel']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ABSTRACT_DROPDOWN_COLLAPSED</td>
+	<td>//div[contains(@class,'header-collapsed') and @data-persist-id='blogsEntryAbstractPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_DROPDOWN</td>
+	<td>//div[@id='blogsEntryCategorizationPanel']/div</td>
 	<td></td>
 </tr>
 <tr>

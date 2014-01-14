@@ -1,6 +1,6 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="ENTRY_READ_MORE">
+		<case locator-key1="ENTRY_CONTENT_READ_MORE">
 			<execute function="AssertClick#assertPartialTextClickAt" />
 		</case>
 
@@ -18,7 +18,7 @@
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 
-		<case locator-key1="ENTRY_READ_MORE">
+		<case locator-key1="ENTRY_CONTENT_READ_MORE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

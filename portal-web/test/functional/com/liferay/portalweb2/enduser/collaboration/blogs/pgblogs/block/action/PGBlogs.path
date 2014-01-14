@@ -171,6 +171,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_READ_MORE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_1</td>
 	<td>xpath=(//div[@class='entry-body']/div)[1]</td>
 	<td></td>
@@ -238,11 +243,6 @@
 <tr>
 	<td>ENTRY_PERMISSIONS_3</td>
 	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_READ_MORE</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/a</td>
 	<td></td>
 </tr>
 <tr>

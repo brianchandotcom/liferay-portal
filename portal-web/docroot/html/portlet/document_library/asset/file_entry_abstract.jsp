@@ -56,7 +56,7 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 			<c:otherwise>
 
 				<%
-				String taglibFileEntryTitle = "<span class='hide-accessible'>" + HtmlUtil.escape(fileEntry.getTitle()) + "</span>";
+				String taglibFileEntryTitle = "<span class='hide-accessible'>" + fileEntry.getTitle() + "</span>";
 				%>
 
 				<liferay-ui:icon

@@ -59,7 +59,7 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append("selectDocumentLibrary('");
 	sb.append(DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, false));
 	sb.append("', '");
-	sb.append(fileEntry.getUuid());
+	sb.append(HtmlUtil.escapeJS(fileEntry.getUuid()));
 	sb.append("', '");
 	sb.append(fileEntry.getGroupId());
 	sb.append("', '");

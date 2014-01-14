@@ -442,7 +442,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(title)));
 
 		sb.append(StringPool.SLASH);
-		sb.append(fileEntry.getUuid());
+		sb.append(HttpUtil.encodeURL(fileEntry.getUuid()));
 
 		if (themeDisplay != null) {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();

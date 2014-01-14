@@ -1,4 +1,4 @@
-<definition component-name="portal-upgrades">
+<definition component-name="portal-upgrades" ignore="true">
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

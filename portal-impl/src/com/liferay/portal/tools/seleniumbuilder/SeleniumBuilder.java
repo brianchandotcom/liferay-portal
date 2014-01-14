@@ -131,6 +131,26 @@ public class SeleniumBuilder {
 			Element rootElement =
 				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
 
+			String ignore = rootElement.attributeValue("ignore");
+
+			if ((ignore != null) && ignore.equals("true")) {
+				continue;
+			}
+
+			String extendsTestCaseName = rootElement.attributeValue("extends");
+
+			if (extendsTestCaseName != null) {
+				Element extendsRootElement =
+					_seleniumBuilderContext.getTestCaseRootElement(
+						extendsTestCaseName);
+
+				List<Element> commandElements =
+					_seleniumBuilderFileUtil.getAllChildElements(
+						extendsRootElement, "command");
+
+				testCaseCount += commandElements.size();
+			}
+
 			List<Element> commandElements =
 				_seleniumBuilderFileUtil.getAllChildElements(
 					rootElement, "command");
@@ -153,6 +173,12 @@ public class SeleniumBuilder {
 			Element rootElement =
 				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
 
+			String ignore = rootElement.attributeValue("ignore");
+
+			if ((ignore != null) && ignore.equals("true")) {
+				continue;
+			}
+
 			String componentName = rootElement.attributeValue("component-name");
 
 			Set<String> compontentTestCaseMethodNames = new TreeSet<String>();
@@ -160,6 +186,28 @@ public class SeleniumBuilder {
 			if (testCaseMethodNameMap.containsKey(componentName)) {
 				compontentTestCaseMethodNames = testCaseMethodNameMap.get(
 					componentName);
+			}
+
+			String extendsTestCaseName = rootElement.attributeValue("extends");
+
+			if (extendsTestCaseName != null) {
+				Element extendsRootElement =
+					_seleniumBuilderContext.getTestCaseRootElement(
+						extendsTestCaseName);
+
+				List<Element> commandElements =
+					_seleniumBuilderFileUtil.getAllChildElements(
+						extendsRootElement, "command");
+
+				for (Element commandElement : commandElements) {
+					String testCaseMethodName =
+						testCaseName + "TestCase#test" +
+							commandElement.attributeValue("name");
+
+					compontentTestCaseMethodNames.add(testCaseMethodName);
+
+					testCaseMethodNames.add(testCaseMethodName);
+				}
 			}
 
 			List<Element> commandElements =

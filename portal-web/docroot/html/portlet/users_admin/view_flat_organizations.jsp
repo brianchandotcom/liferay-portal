@@ -39,9 +39,19 @@ if (filterManageableOrganizations) {
 
 <c:choose>
 	<c:when test="<%= showList %>">
+
+		<%
+		SearchContainer searchContainer = new OrganizationSearch(renderRequest, portletURL);
+
+		RowChecker rowChecker = new RowChecker(renderResponse);
+
+		rowChecker.setRowIds("rowIdsOrganizationCheckbox");
+
+		searchContainer.setRowChecker(rowChecker);
+		%>
+
 		<liferay-ui:search-container
-			rowChecker="<%= new RowChecker(renderResponse) %>"
-			searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
+			searchContainer="<%= searchContainer %>"
 			var="organizationSearchContainer"
 		>
 			<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />

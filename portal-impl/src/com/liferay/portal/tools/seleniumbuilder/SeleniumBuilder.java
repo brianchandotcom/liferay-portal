@@ -132,9 +132,7 @@ public class SeleniumBuilder {
 			Element rootElement =
 				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
 
-			if (GetterUtil.getBoolean(
-					rootElement.attributeValue("ignore"))) {
-
+			if (GetterUtil.getBoolean(rootElement.attributeValue("ignore"))) {
 				continue;
 			}
 
@@ -174,9 +172,7 @@ public class SeleniumBuilder {
 			Element rootElement =
 				_seleniumBuilderContext.getTestCaseRootElement(testCaseName);
 
-			if (GetterUtil.getBoolean(
-					rootElement.attributeValue("ignore"))) {
-
+			if (GetterUtil.getBoolean(rootElement.attributeValue("ignore"))) {
 				continue;
 			}
 

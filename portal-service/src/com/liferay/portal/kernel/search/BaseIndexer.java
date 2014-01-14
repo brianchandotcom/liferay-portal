@@ -490,7 +490,9 @@ public abstract class BaseIndexer implements Indexer {
 
 			BooleanQuery fullQuery = getFullQuery(searchContext);
 
-			fullQuery.setQueryConfig(searchContext.getQueryConfig());
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			fullQuery.setQueryConfig(queryConfig);
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
@@ -501,6 +503,22 @@ public abstract class BaseIndexer implements Indexer {
 			if (isFilterSearch() && (permissionChecker != null)) {
 				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
 				searchContext.setStart(0);
+
+				String[] selectedFieldNames =
+					queryConfig.getSelectedFieldNames();
+
+				if (selectedFieldNames != null) {
+					Set<String> newSelectedFieldNames = SetUtil.fromArray(
+						selectedFieldNames);
+
+					newSelectedFieldNames.addAll(
+						_PERMISSION_SELECTED_FIELD_NAMES);
+
+					selectedFieldNames = newSelectedFieldNames.toArray(
+						new String[newSelectedFieldNames.size()]);
+
+					queryConfig.setSelectedFieldNames(selectedFieldNames);
+				}
 			}
 
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
@@ -1705,6 +1723,10 @@ public abstract class BaseIndexer implements Indexer {
 	protected void setStagingAware(boolean stagingAware) {
 		_stagingAware = stagingAware;
 	}
+
+	private static final Set<String> _PERMISSION_SELECTED_FIELD_NAMES =
+		SetUtil.fromArray(
+			new String[]{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK});
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 

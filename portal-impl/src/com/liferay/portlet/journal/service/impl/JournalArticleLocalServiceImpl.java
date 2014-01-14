@@ -4094,53 +4094,10 @@ public class JournalArticleLocalServiceImpl
 		throws SystemException {
 
 		try {
-			SearchContext searchContext = new SearchContext();
-
-			searchContext.setAndSearch(andSearch);
-
-			Map<String, Serializable> attributes =
-				new HashMap<String, Serializable>();
-
-			attributes.put(Field.CLASS_NAME_ID, classNameId);
-			attributes.put(Field.CONTENT, content);
-			attributes.put(Field.DESCRIPTION, description);
-			attributes.put(Field.STATUS, status);
-			attributes.put(Field.TITLE, title);
-			attributes.put(Field.TYPE, type);
-			attributes.put("articleId", articleId);
-			attributes.put("ddmStructureKey", ddmStructureKey);
-			attributes.put("ddmTemplateKey", ddmTemplateKey);
-			attributes.put("params", params);
-
-			searchContext.setAttributes(attributes);
-
-			searchContext.setCompanyId(companyId);
-			searchContext.setEnd(end);
-			searchContext.setFolderIds(folderIds);
-			searchContext.setGroupIds(new long[] {groupId});
-			searchContext.setIncludeDiscussions(
-				GetterUtil.getBoolean(params.get("includeDiscussions")));
-
-			if (params != null) {
-				String keywords = (String)params.remove("keywords");
-
-				if (Validator.isNotNull(keywords)) {
-					searchContext.setKeywords(keywords);
-				}
-			}
-
-			QueryConfig queryConfig = new QueryConfig();
-
-			queryConfig.setHighlightEnabled(false);
-			queryConfig.setScoreEnabled(false);
-
-			searchContext.setQueryConfig(queryConfig);
-
-			if (sort != null) {
-				searchContext.setSorts(sort);
-			}
-
-			searchContext.setStart(start);
+			SearchContext searchContext = getSearchContext(
+				companyId, groupId, folderIds, classNameId, articleId, title,
+				description, content, type, status, ddmStructureKey,
+				ddmTemplateKey, params, andSearch, start, end, sort);
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				JournalArticle.class);
@@ -4161,26 +4118,8 @@ public class JournalArticleLocalServiceImpl
 		Indexer indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class.getName());
 
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAttribute(Field.STATUS, status);
-
-		searchContext.setAttribute("paginationType", "none");
-
-		if (creatorUserId > 0) {
-			searchContext.setAttribute(
-				Field.USER_ID, String.valueOf(creatorUserId));
-		}
-
-		Group group = groupLocalService.getGroup(groupId);
-
-		searchContext.setCompanyId(group.getCompanyId());
-
-		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
-		searchContext.setStart(start);
-		searchContext.setUserId(userId);
+		SearchContext searchContext = getSearchContext(
+			groupId, userId, creatorUserId, status, start, end);
 
 		return indexer.search(searchContext);
 	}
@@ -4444,22 +4383,12 @@ public class JournalArticleLocalServiceImpl
 			int end, Sort sort)
 		throws PortalException, SystemException {
 
-		for (int i = 0; i < 10; i++) {
-			Hits hits = search(
-				companyId, groupId, folderIds, classNameId, articleId, title,
-				description, content, type, status, ddmStructureKey,
-				ddmTemplateKey, params, andSearch, start, end, sort);
+		SearchContext searchContext = getSearchContext(
+			companyId, groupId, folderIds, classNameId, articleId, title,
+			description, content, type, status, ddmStructureKey, ddmTemplateKey,
+			params, andSearch, start, end, sort);
 
-			List<JournalArticle> articles = JournalUtil.getArticles(hits);
-
-			if (articles != null) {
-				return new BaseModelSearchResult<JournalArticle>(
-					articles, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
+		return searchJournalArticles(searchContext);
 	}
 
 	@Override
@@ -4468,20 +4397,10 @@ public class JournalArticleLocalServiceImpl
 			int start, int end)
 		throws PortalException, SystemException {
 
-		for (int i = 0; i < 10; i++) {
-			Hits hits = search(
-				groupId, userId, creatorUserId, status, start, end);
+		SearchContext searchContext = getSearchContext(
+			groupId, userId, creatorUserId, status, start, end);
 
-			List<JournalArticle> articles = JournalUtil.getArticles(hits);
-
-			if (articles != null) {
-				return new BaseModelSearchResult<JournalArticle>(
-					articles, hits.getLength());
-			}
-		}
-
-		throw new SearchException(
-			"Unable to fix the search index after 10 attempts");
+		return searchJournalArticles(searchContext);
 	}
 
 	/**
@@ -6275,6 +6194,93 @@ public class JournalArticleLocalServiceImpl
 		return dateInterval;
 	}
 
+	protected SearchContext getSearchContext(
+		long companyId, long groupId, List<Long> folderIds, long classNameId,
+		String articleId, String title, String description, String content,
+		String type, String status, String ddmStructureKey,
+		String ddmTemplateKey, LinkedHashMap<String, Object> params,
+		boolean andSearch, int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(andSearch);
+
+		Map<String, Serializable> attributes =
+			new HashMap<String, Serializable>();
+
+		attributes.put(Field.CLASS_NAME_ID, classNameId);
+		attributes.put(Field.CONTENT, content);
+		attributes.put(Field.DESCRIPTION, description);
+		attributes.put(Field.STATUS, status);
+		attributes.put(Field.TITLE, title);
+		attributes.put(Field.TYPE, type);
+		attributes.put("articleId", articleId);
+		attributes.put("ddmStructureKey", ddmStructureKey);
+		attributes.put("ddmTemplateKey", ddmTemplateKey);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setFolderIds(folderIds);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setIncludeDiscussions(
+			GetterUtil.getBoolean(params.get("includeDiscussions")));
+
+		if (params != null) {
+			String keywords = (String)params.remove("keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				searchContext.setKeywords(keywords);
+			}
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
+	protected SearchContext getSearchContext(
+			long groupId, long userId, long creatorUserId, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute(Field.STATUS, status);
+
+		searchContext.setAttribute("paginationType", "none");
+
+		if (creatorUserId > 0) {
+			searchContext.setAttribute(
+				Field.USER_ID, String.valueOf(creatorUserId));
+		}
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		searchContext.setCompanyId(group.getCompanyId());
+
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
+		searchContext.setStart(start);
+		searchContext.setUserId(userId);
+
+		return searchContext;
+	}
+
 	protected String getUniqueUrlTitle(
 			long id, long groupId, String articleId, String title)
 		throws PortalException, SystemException {
@@ -6460,6 +6466,29 @@ public class JournalArticleLocalServiceImpl
 		else {
 			imageLocalService.deleteImage(smallImageId);
 		}
+	}
+
+	protected BaseModelSearchResult<JournalArticle> searchJournalArticles(
+			SearchContext searchContext)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			JournalArticle.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(
+				searchContext, JournalUtil.SELECTED_FIELD_NAMES);
+
+			List<JournalArticle> articles = JournalUtil.getArticles(hits);
+
+			if (articles != null) {
+				return new BaseModelSearchResult<JournalArticle>(
+					articles, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	protected void sendEmail(

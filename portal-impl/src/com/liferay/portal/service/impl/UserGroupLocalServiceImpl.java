@@ -48,6 +48,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.UserGroupLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.usersadmin.util.UsersAdmin;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
 import java.io.File;
@@ -662,41 +663,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			SearchContext searchContext = new SearchContext();
-
-			searchContext.setAndSearch(andSearch);
-
-			Map<String, Serializable> attributes =
-				new HashMap<String, Serializable>();
-
-			attributes.put("description", description);
-			attributes.put("name", name);
-
-			searchContext.setAttributes(attributes);
-
-			searchContext.setCompanyId(companyId);
-			searchContext.setEnd(end);
-
-			if (params != null) {
-				String keywords = (String)params.remove("keywords");
-
-				if (Validator.isNotNull(keywords)) {
-					searchContext.setKeywords(keywords);
-				}
-			}
-
-			QueryConfig queryConfig = new QueryConfig();
-
-			queryConfig.setHighlightEnabled(false);
-			queryConfig.setScoreEnabled(false);
-
-			searchContext.setQueryConfig(queryConfig);
-
-			if (sort != null) {
-				searchContext.setSorts(sort);
-			}
-
-			searchContext.setStart(start);
+			SearchContext searchContext = getSearchContext(
+				companyId, name, description, params, andSearch, start, end,
+				sort);
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				UserGroup.class);
@@ -790,10 +759,15 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			int end, Sort sort)
 		throws PortalException, SystemException {
 
+		SearchContext searchContext = getSearchContext(
+			companyId, name, description, params, andSearch, start, end, sort);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			UserGroup.class);
+
 		for (int i = 0; i < 10; i++) {
-			Hits hits = search(
-				companyId, name, description, params, andSearch, start, end,
-				sort);
+			Hits hits = indexer.search(
+				searchContext, UsersAdmin.USER_GROUP_SELECTED_FIELD_NAMES);
 
 			List<UserGroup> userGroups = UsersAdminUtil.getUserGroups(hits);
 
@@ -1024,6 +998,50 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			new String[] {UserIdStrategy.CURRENT_USER_ID});
 
 		return parameterMap;
+	}
+
+	protected SearchContext getSearchContext(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andSearch, int start,
+		int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(andSearch);
+
+		Map<String, Serializable> attributes =
+			new HashMap<String, Serializable>();
+
+		attributes.put("description", description);
+		attributes.put("name", name);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (params != null) {
+			String keywords = (String)params.remove("keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				searchContext.setKeywords(keywords);
+			}
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
 	}
 
 	protected void importLayouts(

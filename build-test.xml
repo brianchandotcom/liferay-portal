@@ -1693,6 +1693,30 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<delete file="create.sql" />
 	</target>
 
+	<target name="rebuild-legacy-database">
+		<antcall target="rebuild-database">
+			<param name="database" value="${database}" />
+			<param name="sql.dir" value="sql/create-bare/" />
+			<param name="sql.file" value="create-bare-${database}.sql" />
+		</antcall>
+
+		<unzip
+			dest="${liferay.home}"
+			src="${portal.legacy.dir}/${portal.version}/data-archive/data-archive-${database}.zip"
+		/>
+
+		<if>
+			<equals arg1="${database}" arg2="mysql" />
+			<then>
+				<exec executable="mysql" input="${liferay.home}/${database}.sql">
+					<arg value="--database=lportal" />
+					<arg value="--password=${database.mysql.password}" />
+					<arg value="--user=${database.mysql.username}" />
+				</exec>
+			</then>
+		</if>
+	</target>
+
 	<target name="record-test-package-names">
 		<script classpathref="project.classpath" language="beanshell">
 			import com.liferay.portal.kernel.util.OSDetector;
@@ -1843,30 +1867,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<property name="test.class" value="${test.simple.class.name}" />
 				</ant>
 			</else>
-		</if>
-	</target>
-
-	<target name="rebuild-legacy-database">
-		<antcall target="rebuild-database">
-			<param name="database" value="${database}" />
-			<param name="sql.dir" value="sql/create-bare/" />
-			<param name="sql.file" value="create-bare-${database}.sql" />
-		</antcall>
-
-		<unzip
-			dest="${liferay.home}"
-			src="${portal.legacy.dir}/${portal.version}/data-archive/data-archive-${database}.zip"
-		/>
-
-		<if>
-			<equals arg1="${database}" arg2="mysql" />
-			<then>
-				<exec executable="mysql" input="${liferay.home}/${database}.sql">
-					<arg value="--database=lportal" />
-					<arg value="--password=${database.mysql.password}" />
-					<arg value="--user=${database.mysql.username}" />
-				</exec>
-			</then>
 		</if>
 	</target>
 

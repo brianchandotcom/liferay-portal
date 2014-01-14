@@ -358,6 +358,17 @@
 		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_END_DATE" />
 	</command>
 
+	<command name="viewMyWorkflowTasksCP">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMyworkflowtasks#assertTextEquals" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
+		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+	</command>
+
 	<command name="viewRejectTask">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 

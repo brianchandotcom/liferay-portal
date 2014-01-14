@@ -1,4 +1,31 @@
 <definition>
+	<command name="viewEmailConfigurationCP">
+		<execute action="CPWebcontent#click" locator-key1="OPTIONS_WRENCH_ICON" />
+		<execute action="CPWebcontent#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="CPWebcontentConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAVIGATION_WEB_CONTENT_ADDED_EMAIL" value1="Web Content Added Email" />
+		<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAVIGATION_WEB_CONTENT_REVIEW_EMAIL" value1="Web Content Review Email" />
+		<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAVIGATION_WEB_CONTENT_UPDATED_EMAIL" value1="Web Content Updated Email" />
+		<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAME_FIELD" value1="${authorName}" />
+		<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="ADDRESS_FIELD" value1="${authorAddress}" />
+
+		<if>
+			<equals arg1="${webContentWorkflowEnabled}" arg2="true" />
+			<then>
+				<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAVIGATION_WEB_CONTENT_DENIED_EMAIL" value1="Web Content Denied Email" />
+				<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAVIGATION_WEB_CONTENT_GRANTED_EMAIL" value1="Web Content Granted Email" />
+				<execute action="CPWebcontentConfiguration#assertTextEquals" locator-key1="NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL" value1="Web Content Requested Email" />
+			</then>
+			<else>
+				<execute action="CPWebcontentConfiguration#assertElementNotPresent" locator-key1="NAVIGATION_WEB_CONTENT_DENIED_EMAIL" />
+				<execute action="CPWebcontentConfiguration#assertElementNotPresent" locator-key1="NAVIGATION_WEB_CONTENT_GRANTED_EMAIL" />
+				<execute action="CPWebcontentConfiguration#assertElementNotPresent" locator-key1="NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewNoPermissionCP">
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Web Content" />
 		<execute action="CPWebcontent#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />

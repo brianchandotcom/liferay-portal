@@ -5,7 +5,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_NAME" locator-key2="FORM_BUILDER" value1="${fieldName}" />
-		<execute action="Dynamicdatamapping#click" locator-key1="${formFieldKey}" />
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
 		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -85,7 +85,13 @@
 	</command>
 
 	<command name="viewField">
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FORM_FIELD_1" value1="${fieldName}" />
+		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
+		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
+		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
 	</command>
 
 	<command name="viewEditFieldSettingsField">

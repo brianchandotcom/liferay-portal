@@ -64,16 +64,14 @@
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
-		
+
 		<execute macro="Workflow#viewMyWorkflowTasksCP">
-			<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="Web Content Article" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#viewMyWorkflowTasksCP">
-			<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
@@ -89,7 +87,7 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
-		
+
 		<execute macro="WebContentPortlet#viewEmailConfigurationCP">
 			<var name="authorAddress" value="${authorAddress}" />
 			<var name="authorName" value="${authorName}" />

@@ -17,6 +17,7 @@ package com.liferay.portal.tools.sourceformatter;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -60,6 +61,23 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String fixHexColors(String content) {
+		Matcher matcher = _hexColorPattern.matcher(content);
+
+		while (matcher.find()) {
+			String hexColor = matcher.group(1);
+
+			if (Validator.isNumber(hexColor) || (hexColor.length() < 3)) {
+				continue;
+			}
+
+			content = StringUtil.replace(
+				content, hexColor, StringUtil.toUpperCase(hexColor));
+		}
+
+		return content;
+	}
+
 	@Override
 	protected void format() throws Exception {
 		String[] excludes = {
@@ -89,6 +107,8 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixComments(newContent);
 
+		newContent = fixHexColors(newContent);
+
 		if (isAutoFix() && (newContent != null) &&
 			!content.equals(newContent)) {
 
@@ -101,5 +121,7 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private Pattern _commentPattern = Pattern.compile("/\\* -+(.+)-+ \\*/");
+
+	private Pattern _hexColorPattern = Pattern.compile("#([0-9a-f]+)[\\( ;,]");
 
 }

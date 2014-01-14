@@ -890,8 +890,8 @@
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-    		<var name="userEmailAddress" value="test@liferay.com" />
-    	</execute>
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
 	</command>
 
 	<command name="ViewBlogsEntryRSS" priority="5">

@@ -503,9 +503,10 @@
 
 		li {
 			a {
+				display: inline-block;
+
 				@include ellipsis;
 
-				display: inline-block;
 				line-height: normal;
 				max-width: 300px;
 				vertical-align: text-bottom;

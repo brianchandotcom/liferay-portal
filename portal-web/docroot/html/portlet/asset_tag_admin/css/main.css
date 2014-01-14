@@ -23,7 +23,7 @@
 
 			.tags-admin-toolbar {
 				background: #F6F8FB;
-				border-bottom: 1px solid #dedede;
+				border-bottom: 1px solid #DEDEDE;
 				overflow: hidden;
 				padding: 5px 0;
 			}
@@ -60,7 +60,7 @@
 	.tag-item-actions-trigger {
 		background-image: url(@theme_image_path@/common/edit.png);
 		background-repeat: no-repeat;
-		clip: rect(0pt, 0pt, 0pt, 0pt);
+		clip: rect(0, 0, 0, 0);
 		display: block;
 		height: 16px;
 		margin-top: -8px;

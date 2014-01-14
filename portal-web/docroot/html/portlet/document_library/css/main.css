@@ -602,7 +602,7 @@
 			background-image: url(@theme_image_path@/application/button_bg_selected.png);
 			height: 21px;
 			position: absolute;
-			right: 0px;
+			right: 0;
 			width: 21px;
 			z-index: 1;
 		}

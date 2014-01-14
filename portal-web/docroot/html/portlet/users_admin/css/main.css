@@ -226,7 +226,7 @@
 
 	.lfr-permission-navigation-container {
 		.search {
-			margin: 20px 0px;
+			margin: 20px 0;
 		}
 
 		.lfr-permission-navigation {
@@ -271,7 +271,7 @@
 			}
 
 			.permission-navigation-item-summary {
-				margin: 0.5em 0em 1.5em .5em;
+				margin: 0.5em 0 1.5em 0.5em;
 			}
 
 			.permission-navigation-section .permission-navigation-section {

@@ -761,7 +761,7 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.current-version {
-			color: #41801d;
+			color: #41801D;
 			display: block;
 		}
 
@@ -797,7 +797,7 @@ $editLayoutPanelWidth: 460px;
 			padding-left: 0;
 
 			.workflow-status-ready-for-publication {
-				color: #41801d;
+				color: #41801D;
 				font-weight: bold;
 			}
 		}
@@ -925,7 +925,7 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		a:hover .site-type {
-			color: #FFFFFF;
+			color: #FFF;
 			display: inline-block;
 		}
 	}

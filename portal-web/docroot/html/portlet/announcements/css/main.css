@@ -2,8 +2,8 @@
 
 .portlet-alerts {
 	.entry {
-		border: 6px solid #c00;
-		margin: 8px 0px;
+		border: 6px solid #C00;
+		margin: 8px 0;
 		padding: 6px;
 	}
 
@@ -13,29 +13,29 @@
 	}
 
 	.entry-scope {
-		color: #ccc;
+		color: #CCC;
 		display: block;
 	}
 
 	.entry-type-general {
-		background: #fff url('@theme_image_path@/common/page.png') left top no-repeat;
+		background: #FFF url('@theme_image_path@/common/page.png') left top no-repeat;
 		clear: both;
 	}
 
 	.entry-type-news {
-		background: #fff url('@theme_image_path@/common/page.png') left top no-repeat;
+		background: #FFF url('@theme_image_path@/common/page.png') left top no-repeat;
 		clear: both;
 	}
 
 	.entry-type-test {
-		background: #fff url('@theme_image_path@/common/page.png') left top no-repeat;
+		background: #FFF url('@theme_image_path@/common/page.png') left top no-repeat;
 		clear: both;
 	}
 }
 
 .portlet-announcements {
 	.entry {
-		margin: 4px 0px 1.2em;
+		margin: 4px 0 1.2em;
 		padding-bottom: 0.5em;
 	}
 
@@ -58,17 +58,17 @@
 	}
 
 	.entry-type-general {
-		background: #fff url('@theme_image_path@/common/all_pages.png') 4px 4px no-repeat;
+		background: #FFF url('@theme_image_path@/common/all_pages.png') 4px 4px no-repeat;
 		clear: both;
 	}
 
 	.entry-type-news {
-		background: #fff url('@theme_image_path@/common/page.png') 4px 4px no-repeat;
+		background: #FFF url('@theme_image_path@/common/page.png') 4px 4px no-repeat;
 		clear: both;
 	}
 
 	.entry-type-test {
-		background: #fff url('@theme_image_path@/common/page.png') 4px 4px no-repeat;
+		background: #FFF url('@theme_image_path@/common/page.png') 4px 4px no-repeat;
 		clear: both;
 	}
 }

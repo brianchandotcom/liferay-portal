@@ -26,7 +26,7 @@
 
 		.entry-metadata {
 			dt, dd, .entry-categories, .entry-tags, .entry-description {
-				color: #f0f0f0;
+				color: #F0F0F0;
 			}
 		}
 	}
@@ -61,7 +61,7 @@
 		}
 
 		dl {
-			margin: 0px;
+			margin: 0;
 
 			&.entry-latest-approved-container {
 				margin: 20px 0 20px 0;

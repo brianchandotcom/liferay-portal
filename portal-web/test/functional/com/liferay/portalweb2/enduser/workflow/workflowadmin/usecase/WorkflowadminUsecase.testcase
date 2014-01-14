@@ -1,0 +1,118 @@
+<definition component-name="portal-workflow">
+	<property name="web.plugins.includes" value="kaleo-web" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
+	<command name="ViewTaskCount" priority="3">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithWorkflowCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addWithWorkflowCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+		
+		<execute macro="Workflow#viewMyWorkflowTasksCP">
+			<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewMyWorkflowTasksCP">
+			<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetTitle" value="${entryTitle}" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute action="CPMyworkflowtasks#assertElementNotPresent" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
+	</command>
+
+	<command name="ViewWebContentConfigurationCP" priority="4">
+		<var name="authorAddress" value="test@liferay.com" />
+		<var name="authorName" value="Joe Bloggs" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+		
+		<execute macro="WebContentPortlet#viewEmailConfigurationCP">
+			<var name="authorAddress" value="${authorAddress}" />
+			<var name="authorName" value="${authorName}" />
+			<var name="webContentWorkflowEnabled" value="false" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentPortlet#viewEmailConfigurationCP">
+			<var name="authorAddress" value="${authorAddress}" />
+			<var name="authorName" value="${authorName}" />
+			<var name="webContentWorkflowEnabled" value="true" />
+		</execute>
+	</command>
+</definition>

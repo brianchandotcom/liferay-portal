@@ -1863,8 +1863,8 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<exec executable="mysql" input="${liferay.home}/${database}.sql">
 					<arg value="--database=lportal" />
-					<arg value="--password=" />
-					<arg value="--user=" />
+					<arg value="--password=${database.mysql.password}" />
+					<arg value="--user=${database.mysql.username}" />
 				</exec>
 			</then>
 		</if>

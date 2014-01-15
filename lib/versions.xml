@@ -3014,7 +3014,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/rhino.jar</file-name>
-		<version>1.6 R7</version>
+		<version>1.7 R4</version>
 		<project-name>Rhino</project-name>
 		<project-url>http://www.mozilla.org/rhino</project-url>
 		<licenses>

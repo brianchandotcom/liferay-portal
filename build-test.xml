@@ -230,11 +230,12 @@
 					<equals arg1="${database}" arg2="postgresql-9.2" />
 					<equals arg1="${database}" arg2="sql-server-2005" />
 					<equals arg1="${database}" arg2="sql-server-2008" />
+					<equals arg1="${database}" arg2="sql-server-2012" />
 					<equals arg1="${database}" arg2="sybase" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "database" to one of the following:${line.separator}db2-9.7, db2-10.1, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, postgresql-9.2, sql-server-2005, sql-server-2008, sybase</fail>
+				<fail>Please set "database" to one of the following:${line.separator}db2-9.7, db2-10.1, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, postgresql-9.2, sql-server-2005, sql-server-2008, sql-server-2012, sybase</fail>
 			</then>
 		</if>
 	</target>

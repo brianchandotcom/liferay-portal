@@ -343,6 +343,37 @@
 		<url>jdbc:jtds:sqlserver://${database.host}/${database.schema}</url>
 		<vm-vmdk-suffix>sql-server-2008-r2</vm-vmdk-suffix>
 	</sql-server-2008>
+	<sql-server-2012>
+		<device-name></device-name>
+		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+		<family>sql-server</family>
+		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
+		<schema>lportal</schema>
+		<sql-replacement>
+			<create-schema>
+				<token>create database lportal;</token>
+				<value>create database ${database.schema};</value>
+			</create-schema>
+			<create-schema-collate>
+				<token></token>
+				<value></value>
+			</create-schema-collate>
+			<create-schema-secondary>
+				<token></token>
+				<value></value>
+			</create-schema-secondary>
+			<drop-schema>
+				<token>drop database lportal;</token>
+				<value>drop database ${database.schema};</value>
+			</drop-schema>
+			<use-schema>
+				<token>use lportal;</token>
+				<value>use ${database.schema};</value>
+			</use-schema>
+		</sql-replacement>
+		<url>jdbc:jtds:sqlserver://${database.host}/${database.schema}</url>
+		<vm-vmdk-suffix>sql-server-2012</vm-vmdk-suffix>
+	</sql-server-2012>
 	<sybase>
 		<device-name>master</device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>

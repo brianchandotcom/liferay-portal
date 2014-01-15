@@ -16,18 +16,13 @@ package com.liferay.portal.cache.transactional;
 
 import com.liferay.portal.cache.memory.MemoryPortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 
-import java.lang.reflect.Field;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -67,44 +62,6 @@ public class TransactionalPortalCacheTest {
 			new TransactionalPortalCache<String, String>(_portalCache);
 
 		_portalCache.put(_KEY_1, _VALUE_1);
-	}
-
-	@Test
-	public void testMisc() throws Exception {
-		Assert.assertEquals(_CACHE_NAME, _transactionalPortalCache.getName());
-
-		Field cacheListenersField = ReflectionUtil.getDeclaredField(
-			MemoryPortalCache.class, "_cacheListeners");
-
-		Set<MockCacheListener> cacheListeners =
-			(Set<MockCacheListener>)cacheListenersField.get(_portalCache);
-
-		Assert.assertTrue(cacheListeners.isEmpty());
-
-		MockCacheListener mockCacheListener1 = new MockCacheListener();
-
-		_transactionalPortalCache.registerCacheListener(mockCacheListener1);
-
-		Assert.assertEquals(1, cacheListeners.size());
-		Assert.assertTrue(cacheListeners.contains(mockCacheListener1));
-
-		MockCacheListener mockCacheListener2 = new MockCacheListener();
-
-		_transactionalPortalCache.registerCacheListener(
-			mockCacheListener2, CacheListenerScope.ALL);
-
-		Assert.assertEquals(2, cacheListeners.size());
-		Assert.assertTrue(cacheListeners.contains(mockCacheListener1));
-		Assert.assertTrue(cacheListeners.contains(mockCacheListener2));
-
-		_transactionalPortalCache.unregisterCacheListener(mockCacheListener1);
-
-		Assert.assertEquals(1, cacheListeners.size());
-		Assert.assertTrue(cacheListeners.contains(mockCacheListener2));
-
-		_transactionalPortalCache.unregisterCacheListeners();
-
-		Assert.assertTrue(cacheListeners.isEmpty());
 	}
 
 	@AdviseWith(adviceClasses = {DisableTransactionalCacheAdvice.class})

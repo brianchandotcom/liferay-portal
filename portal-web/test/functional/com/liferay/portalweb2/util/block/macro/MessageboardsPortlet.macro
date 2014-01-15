@@ -1,86 +1,86 @@
 <definition>
-        <command name="configureMessageAddedEmailPG">
-                <execute macro="Portlet#gotoPortletOptions">
-                        <var name="portletOption" value="Configuration" />
-                </execute>
+	<command name="configureMessageAddedEmailPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
-                <execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-                <execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
 
-                <if>
-                        <equals arg1="${messageAddedEmailEnabled}" arg2="false" />
-                        <then>
-                                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#uncheck" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
-                        </then>
-                        <else>
-                                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertChecked" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
-                        </else>
-                </if>
+		<if>
+			<equals arg1="${messageAddedEmailEnabled}" arg2="false" />
+			<then>
+				<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#uncheck" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertChecked" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+			</else>
+		</if>
 
-                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-        </command>
+		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
 
-        <command name="configureMessageUpdatedEmailPG">
-                <execute macro="Portlet#gotoPortletOptions">
-                        <var name="portletOption" value="Configuration" />
-                </execute>
+	<command name="configureMessageUpdatedEmailPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
-                <execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-                <execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
-                <if>
-                        <equals arg1="${messageUpdatedEmailEnabled}" arg2="false" />
-                        <then>
-                                <execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#uncheck" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
-                        </then>
-                        <else>
-                                <execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertChecked" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
-                        </else>
-                </if>
+		<if>
+			<equals arg1="${messageUpdatedEmailEnabled}" arg2="false" />
+			<then>
+				<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#uncheck" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+			</then>
+			<else>
+				<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertChecked" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+			</else>
+		</if>
 
-                <execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-                <execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-        </command>
+		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
 
-        <command name="configureScopePG">
-                <execute macro="Portlet#gotoPortletOptions">
-                        <var name="portletOption" value="Configuration" />
-                </execute>
+	<command name="configureScopePG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
-                <execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-                <execute action="PGMessageboardsConfiguration#assertClick" locator-key1="NAVIGATION_SCOPE" value1="Scope" />
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="NAVIGATION_SCOPE" value1="Scope" />
 
-                <var name="key_scopeName" value="${scopeName}" />
+		<var name="key_scopeName" value="${scopeName}" />
 
-                <execute action="PGMessageboardsConfigurationScope#click" locator-key1="SCOPE_DROPDOWN" />
-                <execute action="PGMessageboardsConfigurationScope#assertClick" locator-key1="SCOPE_MENULIST" value1="${scopeName}" />
-                <execute action="PGMessageboardsConfigurationScope#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-        </command>
+		<execute action="PGMessageboardsConfigurationScope#click" locator-key1="SCOPE_DROPDOWN" />
+		<execute action="PGMessageboardsConfigurationScope#assertClick" locator-key1="SCOPE_MENULIST" value1="${scopeName}" />
+		<execute action="PGMessageboardsConfigurationScope#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
 
-        <command name="tearDownConfigurationEmailPG">
-                <execute macro="Portlet#gotoPortletOptions">
-                        <var name="portletOption" value="Configuration" />
-                </execute>
+	<command name="tearDownConfigurationEmailPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
-                <execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
-                <execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
+		<execute action="PGMessageboardsConfiguration#selectFrame" locator-key1="MESSAGE_BOARDS_IFRAME" />
+		<execute action="PGMessageboardsConfiguration#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
 
-                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#check" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
-                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#check" locator-key1="MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-                <execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
+		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGMessageboardsConfigurationSetupMessageAddedEmail#assertClick" locator-key1="SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
-                <execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#check" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
-                <execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#check" locator-key1="MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-                <execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-        </command>
+		<execute action="PGMessageboardsConfigurationSetupMessageUpdatedEmail#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
 
-        <command name="viewNoPermissionCP">
-                <execute action="CPMessageboards#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Message Boards" />
-                <execute action="CPMessageboards#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />
-                <execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
-        </command>
+	<command name="viewNoPermissionCP">
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Message Boards" />
+		<execute action="CPMessageboards#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+	</command>
 </definition>

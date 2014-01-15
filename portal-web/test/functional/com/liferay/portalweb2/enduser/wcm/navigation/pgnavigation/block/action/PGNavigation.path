@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>BREADCRUMB_SELECTED</td>
 	<td>//div[contains(@class,'nav-menu')]/ul/li[@class='selected ']/a</td>
 	<td></td>

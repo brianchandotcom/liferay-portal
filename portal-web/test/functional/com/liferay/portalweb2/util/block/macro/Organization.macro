@@ -105,9 +105,26 @@
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="ORGANIZATION_INFORMATION_ORGANIZATION_SITE" value1="Organization Site" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#check" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertChecked" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
+
+		<if>
+			<or>
+				<equals arg1="${organizationSite}" arg2="Community Site" />
+				<equals arg1="${organizationSite}" arg2="Intranet Site" />
+			</or>
+			<then>
+				<execute action="CPUsersandorganizationsOrganizationEdit#select" locator-key1="ORGANIZATION_SITE_PUBLIC_PAGES_SELECT" value1="${organizationSite}" />
+			</then>
+		</if>
+
+			<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+			<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+ 
+		<if>
+			<condition action="CPUsersandorganizationsOrganizationEdit#isElementPresent" locator-key1="ORGANIZATION_SITE_PUBLIC_PAGES_SELECT" />
+			<then>
+				<execute action="CPUsersandorganizationsOrganizationEdit#assertChecked" locator-key1="ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
+			</then>
+		</if>
 	</command>
 
 	<command name="allowMembershipManagementCP">

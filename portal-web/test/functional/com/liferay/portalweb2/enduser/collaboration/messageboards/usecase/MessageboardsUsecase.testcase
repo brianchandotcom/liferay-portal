@@ -7,6 +7,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="MessageboardsPortlet#tearDownConfigurationEmailPG" />
+
 		<execute macro="MessageboardsCategory#tearDownCP" />
 
 		<execute macro="MessageboardsThread#tearDownCP" />
@@ -111,5 +113,96 @@
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
+	</command>
+
+	<command name="ViewNoSubscribeLinksNoWithEmailNotificationsDisabled" priority="5">
+		<var name="categoryName" value="MB Category Name" />
+		<var name="messageAddedEmailEnabled" value="false" />
+		<var name="messageUpdatedEmailEnabled" value="false" />
+		<var name="threadBody" value="MB Thread Message Body" />
+		<var name="threadSubject" value="MB Thread Message Subject" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_MENULIST_SUBSCRIBE" value1="Subscribe" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#configureMessageAddedEmailPG">
+			<var name="messageAddedEmailEnabled" value="${messageAddedEmailEnabled}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#configureMessageUpdatedEmailPG">
+			<var name="messageUpdatedEmailEnabled" value="${messageUpdatedEmailEnabled}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_MENULIST_SUBSCRIBE" />
+		<execute action="PGMessageboards#assertClick" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="PGMessageboardsCategory#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_MENULIST_UNSUBSCRIBE" />
+		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertElementNotPresent" locator-key1="THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 </definition>

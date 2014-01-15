@@ -118,7 +118,7 @@ if (layout != null) {
 											<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
 										</div>
 
-										<liferay-ui:staging cssClass="branching-enabled span5" extended="<%= false %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />
+										<liferay-ui:staging cssClass="branching-enabled span4" extended="<%= false %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />
 									</c:when>
 
 									<c:otherwise>

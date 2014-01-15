@@ -807,7 +807,7 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
 				_group.getGroupId(), new String[] {getBaseModelClassName()});
 
-		Date[] expirationDates = randomDates(new Date(), 6);
+		Date[] expirationDates = generateRandomDates(new Date(), 6);
 
 		testOrderByExpirationDate(assetEntryQuery, "asc", expirationDates);
 	}
@@ -818,7 +818,7 @@ public abstract class BaseAssetSearchTestCase {
 			AssetEntryQueryTestUtil.createAssetEntryQuery(
 				_group.getGroupId(), new String[] {getBaseModelClassName()});
 
-		Date[] expirationDates = randomDates(new Date(), 6);
+		Date[] expirationDates = generateRandomDates(new Date(), 6);
 
 		testOrderByExpirationDate(assetEntryQuery, "desc", expirationDates);
 	}
@@ -940,7 +940,7 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected abstract String getSearchKeywords();
 
-	protected Date[] randomDates(Date startDate, int size) {
+	protected Date[] generateRandomDates(Date startDate, int size) {
 		Date[] dates = new Date[size];
 
 		for (int i = 0; i < size; i++) {

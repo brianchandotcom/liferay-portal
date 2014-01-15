@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -74,25 +73,24 @@ public class GetLookAndFeelAction extends JSONAction {
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 				layout, portletId);
 
+		JSONObject portletSetupJSONObject = PortletSetupUtil.cssToJSONObject(
+			portletSetup);
+
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 		JSONObject defaultPortletTitlesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		for (Locale locale :
-				LanguageUtil.getAvailableLocales(
-					themeDisplay.getSiteGroupId())) {
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
 
+		for (Locale locale : availableLocales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			defaultPortletTitlesJSONObject.put(
 				languageId,
 				PortalUtil.getPortletTitle(rootPortletId, languageId));
 		}
-
-		JSONObject portletSetupJSONObject = PortletSetupUtil.cssToJSONObject(
-			portletSetup,
-			portletSetup.getValue("portletSetupCss", StringPool.BLANK));
 
 		portletSetupJSONObject.put(
 			"defaultPortletTitles", defaultPortletTitlesJSONObject);

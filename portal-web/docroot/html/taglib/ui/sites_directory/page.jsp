@@ -60,7 +60,7 @@
 						<c:choose>
 							<c:when test="<%= Validator.isNull(portletDisplay.getId()) %>">
 								<div class="alert alert-info">
-									<liferay-ui:message arguments="<%= displayStyle %>" key="the-display-style-x-cannot-be-used-in-this-context" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= displayStyle %>" key="the-display-style-x-cannot-be-used-in-this-context" />
 								</div>
 							</c:when>
 							<c:otherwise>

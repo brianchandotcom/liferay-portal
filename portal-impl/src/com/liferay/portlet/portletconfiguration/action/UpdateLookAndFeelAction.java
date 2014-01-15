@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
@@ -114,8 +115,10 @@ public class UpdateLookAndFeelAction extends JSONAction {
 				title = GetterUtil.getString(titles.getString(languageId));
 			}
 
+			String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
 			String defaultPortletTitle = PortalUtil.getPortletTitle(
-				portletId, languageId);
+				rootPortletId, languageId);
 
 			if ((title != null) &&
 				!Validator.equals(defaultPortletTitle, title)) {

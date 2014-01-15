@@ -363,21 +363,7 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected String translate(
-		PortletRequest portletRequest, String key, Object argument) {
-
-		PortletConfig portletConfig =
-			(PortletConfig)portletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return LanguageUtil.format(
-			portletConfig, themeDisplay.getLocale(), key, argument);
-	}
-
-	protected String translate(
-		PortletRequest portletRequest, String key, Object[] arguments) {
+		PortletRequest portletRequest, String key, Object... arguments) {
 
 		PortletConfig portletConfig =
 			(PortletConfig)portletRequest.getAttribute(

@@ -106,7 +106,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				> li {
 					> a {
 						margin: 0 5px 0 0;
-						padding: 6px 10px;
 
 						&:hover {
 							background-color: #2FA4F5;
@@ -254,6 +253,17 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				> li {
 					background: transparent;
+
+					a {
+						background-color: #2496E5;
+						color: #FFF;
+						padding: 0 20px;
+						line-height: 31px;
+
+						&:hover {
+							background-color: #2FA4F5;
+						}
+					}
 				}
 			}
 		}

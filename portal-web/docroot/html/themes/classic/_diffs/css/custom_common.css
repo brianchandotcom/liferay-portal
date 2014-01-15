@@ -246,7 +246,6 @@
 
 					&.active, &.open {
 						> .dropdown-toggle {
-							background-color: transparent;
 							color: #FFF;
 
 							@include respond-to(phone, tablet) {

@@ -316,15 +316,12 @@
 	<#assign logo_css_class = logo_css_class + " custom-logo" />
 </#if>
 
-<#if is_guest_group>
-	<#assign show_site_name = false />
-<#else>
-	<#assign show_site_name_supported = getterUtil.getBoolean(theme_settings["show-site-name-supported"]!"", true) />
 
-	<#assign show_site_name_default = getterUtil.getBoolean(theme_settings["show-site-name-default"]!"", show_site_name_supported) />
+<#assign show_site_name_supported = getterUtil.getBoolean(theme_settings["show-site-name-supported"]!"", true) />
 
-	<#assign show_site_name = getterUtil.getBoolean(layout.layoutSet.getSettingsProperty("showSiteName"), show_site_name_default) />
-</#if>
+<#assign show_site_name_default = getterUtil.getBoolean(theme_settings["show-site-name-default"]!"", show_site_name_supported) />
+
+<#assign show_site_name = getterUtil.getBoolean(layout.layoutSet.getSettingsProperty("showSiteName"), show_site_name_default) />
 
 <#assign site_logo = company_logo />
 <#assign logo_description = htmlUtil.escape(site_name) />

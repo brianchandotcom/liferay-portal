@@ -704,7 +704,7 @@ public class StagingImpl implements Staging {
 			errorMessage = LanguageUtil.format(
 				locale,
 				"please-import-a-lar-file-of-the-correct-type-x-is-not-valid",
-				lte.getMessage(), false);
+				lte.getMessage());
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (e instanceof LARFileException) {

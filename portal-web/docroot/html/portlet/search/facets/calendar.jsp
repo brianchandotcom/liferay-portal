@@ -66,19 +66,19 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 	<aui:script use="liferay-token-list">
 		Liferay.Search.tokenList.add(
 			{
-				clearFields: '<%= renderResponse.getNamespace() + facet.getFieldId() %>',
+				clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
 				html: '<%= UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + HtmlUtil.escape(fieldParamFrom) + "</strong>", "<strong>" + HtmlUtil.escape(fieldParamTo) + "</strong>"}, false) %>'
 			}
 		);
 	</aui:script>
 </c:if>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldId() %>" type="hidden" value="<%= fieldParam %>" />
-	<aui:input name='<%= facet.getFieldId() + "from" %>' type="hidden" />
-	<aui:input name='<%= facet.getFieldId() + "to" %>' type="hidden" />
+<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+	<aui:input name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "from" %>' type="hidden" />
+	<aui:input name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "to" %>' type="hidden" />
 
-	<div class="date" id="<portlet:namespace /><%= facet.getFieldId() %>PlaceHolder"></div>
+	<div class="date" id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>PlaceHolder"></div>
 </div>
 
 <aui:script use="aui-calendar-deprecated">
@@ -121,10 +121,10 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					var dates = instance.get('dates');
 
 					if (dates.length == 0) {
-						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldId() %>.value = null;
+						document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>'].value = null;
 
-						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldId() %>from.value = null;
-						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldId() %>to.value = null;
+						document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'].value = null;
+						document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'].value = null;
 					}
 					else {
 						var firstSelected = dates[0];
@@ -154,14 +154,14 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 							}
 						);
 
-						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldId() %>.value = '[' + fromDate + ' TO ' + toDate + ']';
+						document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>'].value = '[' + fromDate + ' TO ' + toDate + ']';
 
 						var displayFormat = {
 							format: '%Y-%m-%d'
 						};
 
-						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldId() %>from.value = A.DataType.Date.format(firstSelected, displayFormat);
-						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldId() %>to.value = A.DataType.Date.format(lastSelected, displayFormat);
+						document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>from'].value = A.DataType.Date.format(firstSelected, displayFormat);
+						document.<portlet:namespace />fm['<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>to'].value = A.DataType.Date.format(lastSelected, displayFormat);
 					}
 
 					checkDateRange.call(instance, event);
@@ -188,5 +188,5 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 				today: '<liferay-ui:message key="today" />'
 			}
 		}
-	).render('#<portlet:namespace /><%= facet.getFieldId() %>PlaceHolder');
+	).render('#<portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>PlaceHolder');
 </aui:script>

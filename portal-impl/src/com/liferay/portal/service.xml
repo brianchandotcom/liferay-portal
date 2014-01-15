@@ -403,6 +403,50 @@
 			<finder-column name="primary" />
 		</finder>
 	</entity>
+	<entity name="ExportImportConfiguration" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="exportImportConfigurationId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="type" type="int" />
+		<column name="settings" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+		</finder>
+	</entity>
 	<entity name="Group" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -204,29 +203,24 @@ public class VerifyGroup extends VerifyProcess {
 				long groupId = rs.getLong("groupId");
 				String name = rs.getString("name");
 
-				String orgSuffix =
-					GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX.trim();
-
-				String[] tokens = name.split(" +");
-				String lastToken = tokens[tokens.length - 1];
-
-				if (Validator.equals(lastToken, orgSuffix) ||
-					Validator.equals(lastToken, "(Staging)")) {
+				if (name.endsWith(
+						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX) ||
+					name.endsWith(
+						GroupLocalServiceImpl.ORGANIZATION_STAGING_SUFFIX)) {
 
 					continue;
 				}
-				else {
-					int pos = name.indexOf(
-						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 
-					pos = name.indexOf(" ", pos + 1);
+				int pos = name.indexOf(
+					GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 
-					String newName =
-						name.substring(pos + 1) +
-							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
+				pos = name.indexOf(" ", pos + 1);
 
-					updateName(groupId, newName);
-				}
+				String newName =
+					name.substring(pos + 1) +
+						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
+
+				updateName(groupId, newName);
 			}
 		}
 		finally {

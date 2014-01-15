@@ -202,6 +202,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	public static final String ORGANIZATION_NAME_SUFFIX = " LFR_ORGANIZATION";
 
+	public static final String ORGANIZATION_STAGING_SUFFIX = " (Staging)";
+
 	/**
 	 * Constructs a group local service.
 	 */
@@ -302,7 +304,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			friendlyURL);
 
 		if (staging) {
-			name = name.concat(" (Staging)");
+			name = name.concat(ORGANIZATION_STAGING_SUFFIX);
 			friendlyURL = getFriendlyURL(friendlyURL.concat("-staging"));
 		}
 

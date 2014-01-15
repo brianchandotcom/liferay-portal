@@ -75,7 +75,7 @@
 								<%= LanguageUtil.get(pageContext, "thank-you-for-creating-an-account") %>
 
 								<c:if test="<%= company.isStrangersVerify() %>">
-									<%= LanguageUtil.format(pageContext, "your-email-verification-code-has-been-sent-to-x", userEmailAddress) %>
+									<%= LanguageUtil.format(pageContext, "your-email-verification-code-has-been-sent-to-x", userEmailAddress, false) %>
 								</c:if>
 							</c:when>
 							<c:otherwise>
@@ -84,7 +84,7 @@
 						</c:choose>
 
 						<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED) %>">
-							<%= LanguageUtil.format(pageContext, "your-password-has-been-sent-to-x", userEmailAddress) %>
+							<%= LanguageUtil.format(pageContext, "your-password-has-been-sent-to-x", userEmailAddress, false) %>
 						</c:if>
 					</div>
 				</c:when>
@@ -95,7 +95,7 @@
 					%>
 
 					<div class="alert alert-success">
-						<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", userEmailAddress) %>
+						<%= LanguageUtil.format(pageContext, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", userEmailAddress, false) %>
 					</div>
 				</c:when>
 			</c:choose>

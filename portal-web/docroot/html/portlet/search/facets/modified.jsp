@@ -136,7 +136,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 			String fromDateLabel = HtmlUtil.escape(fieldParamFrom);
 			String toDateLabel = HtmlUtil.escape(fieldParamTo);
 
-			tokenLabel = UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"});
+			tokenLabel = UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + fromDateLabel + "</strong>", "<strong>" + toDateLabel + "</strong>"}, false);
 		}
 		%>
 

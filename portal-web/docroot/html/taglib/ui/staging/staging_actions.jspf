@@ -67,7 +67,7 @@
 					publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 					publishRenderURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
 
-					publishMessage = LanguageUtil.format(pageContext, publishDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()));
+					publishMessage = LanguageUtil.format(pageContext, publishDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()), false);
 					%>
 
 				</c:when>

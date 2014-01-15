@@ -50,7 +50,7 @@
 		buffer.append("<br /><em class=\"organization-details\">");
 
 		if (suborganizationsCount > 0) {
-			buffer.append((suborganizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(suborganizationsCount)) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(suborganizationsCount)));
+			buffer.append((suborganizationsCount == 1) ? LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(suborganizationsCount), false) : LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(suborganizationsCount), false));
 		}
 
 		if ((suborganizationsCount > 0) && (organizationUserCount > 0)) {
@@ -58,7 +58,7 @@
 		}
 
 		if (organizationUserCount > 0) {
-			buffer.append((organizationUserCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(organizationUserCount)) : LanguageUtil.format(pageContext, "x-users", String.valueOf(organizationUserCount)));
+			buffer.append((organizationUserCount == 1) ? LanguageUtil.format(pageContext, "x-user", String.valueOf(organizationUserCount), false) : LanguageUtil.format(pageContext, "x-users", String.valueOf(organizationUserCount), false));
 		}
 
 		buffer.append("</em>");

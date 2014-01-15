@@ -448,7 +448,8 @@ public class LayoutSetBranchLocalServiceImpl
 			sb.append(
 				LanguageUtil.format(
 					locale, "merged-from-x-x",
-					new String[] {mergeLayoutSetBranch.getName(), nowString}));
+					new String[] {mergeLayoutSetBranch.getName(), nowString},
+					false));
 
 			LayoutBranch layoutBranch =
 				layoutBranchLocalService.addLayoutBranch(

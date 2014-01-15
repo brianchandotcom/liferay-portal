@@ -25,7 +25,7 @@ try {
 		<c:choose>
 			<c:when test="<%= !followRedirect && (redirectPage != null) %>">
 				<div class="alert alert-info">
-					<%= LanguageUtil.format(pageContext, "this-page-is-currently-redirected-to-x", redirectPage.getTitle()) %>
+					<%= LanguageUtil.format(pageContext, "this-page-is-currently-redirected-to-x", redirectPage.getTitle(), false) %>
 				</div>
 
 				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">

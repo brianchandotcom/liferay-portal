@@ -69,7 +69,7 @@
 
 						<div class="row-fluid">
 							<aui:fieldset cssClass="span6" label="portal">
-								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay") %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
+								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(pageContext, "for-example-x", "Liferay", false) %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
 								<aui:select inlineField="<%= true %>" label="default-language" name="companyLocale">
 
@@ -390,7 +390,7 @@
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + StringPool.SLASH + SetupWizardUtil.PROPERTIES_FILE_NAME + "</span>";
 									%>
 
-									<liferay-ui:message arguments="<%= taglibArguments %>" key="the-configuration-was-saved-in" />
+									<liferay-ui:message arguments="<%= taglibArguments %>" key="the-configuration-was-saved-in" translateArguments="<%= false %>" />
 								</p>
 
 								<%
@@ -399,7 +399,7 @@
 
 								<c:if test="<%= !passwordUpdated %>">
 									<p class="lfr-setup-notice">
-										<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-your-password-the-next-time-you-log-into-the-portal" />
+										<liferay-ui:message arguments="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" key="your-password-is-x.-you-will-be-required-to-change-your-password-the-next-time-you-log-into-the-portal" translateArguments="<%= false %>" />
 									</p>
 								</c:if>
 
@@ -414,7 +414,7 @@
 									String taglibArguments = "<span class=\"lfr-inline-code\">" + PropsValues.LIFERAY_HOME + "</span>";
 									%>
 
-									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" />
+									<liferay-ui:message arguments="<%= taglibArguments %>" key="sorry,-we-were-not-able-to-save-the-configuration-file-in-x" translateArguments="<%= false %>" />
 								</div>
 							</p>
 

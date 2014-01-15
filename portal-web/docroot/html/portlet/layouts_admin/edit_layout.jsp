@@ -154,7 +154,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 	<c:choose>
 		<c:when test="<%= incomplete %>">
-			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
+			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
 
 			<aui:input name="incompleteLayoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
 
@@ -165,7 +165,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 			%>
 
 			<aui:button-row>
-				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", HtmlUtil.escape(layoutSetBranchName)) %>' />
+				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
 
 				<aui:button name="deleteLayout" onClick="<%= taglibDeleteOnClick %>" value="delete-in-all-pages-variations" />
 			</aui:button-row>
@@ -220,7 +220,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					%>
 
 					<div class="alert alert-block">
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x" />
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x" translateArguments="<%= false %>" />
 					</div>
 				</c:if>
 

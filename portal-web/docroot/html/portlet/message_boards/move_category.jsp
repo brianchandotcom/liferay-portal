@@ -29,7 +29,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (category == null) %>"
-	title='<%= LanguageUtil.format(pageContext, "move-x", category.getName()) %>'
+	title='<%= LanguageUtil.format(pageContext, "move-x", category.getName(), false) %>'
 />
 
 <portlet:actionURL var="moveCategoryURL">

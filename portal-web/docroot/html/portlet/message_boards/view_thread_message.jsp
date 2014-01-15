@@ -192,7 +192,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						String author = parentMessage.isAnonymous() ? LanguageUtil.get(pageContext, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(parentMessage.getUserId(), parentMessage.getUserName()));
 						%>
 
-						<%= LanguageUtil.format(pageContext, "posted-as-a-reply-to", author) %>
+						<%= LanguageUtil.format(pageContext, "posted-as-a-reply-to", author, false) %>
 					</c:if>
 				</div>
 
@@ -370,7 +370,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										<liferay-ui:icon
 											image="delete_attachment"
 											label="<%= true %>"
-											message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount) %>'
+											message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsFileEntriesCount, false) %>'
 											url="<%= viewTrashAttachmentsURL %>"
 										/>
 									</li>

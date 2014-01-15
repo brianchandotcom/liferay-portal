@@ -1471,11 +1471,7 @@ public class ThemeDisplay
 		return LanguageUtil.get(getLocale(), key);
 	}
 
-	public String translate(String pattern, Object argument) {
-		return LanguageUtil.format(getLocale(), pattern, argument);
-	}
-
-	public String translate(String pattern, Object[] arguments) {
+	public String translate(String pattern, Object... arguments) {
 		return LanguageUtil.format(getLocale(), pattern, arguments);
 	}
 

@@ -37,7 +37,7 @@
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
 			<div class="alert alert-info">
-				<liferay-ui:message arguments="<%= InvitationUtil.getEmailMessageMaxRecipients() %>" key="enter-up-to-x-email-addresses-of-friends-you-would-like-to-invite" />
+				<liferay-ui:message arguments="<%= InvitationUtil.getEmailMessageMaxRecipients() %>" key="enter-up-to-x-email-addresses-of-friends-you-would-like-to-invite" translateArguments="<%= false %>" />
 			</div>
 
 			<%

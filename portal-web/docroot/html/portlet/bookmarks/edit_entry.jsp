@@ -66,7 +66,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<liferay-ui:header
 			backURL="<%= backURL %>"
 			localizeTitle="<%= (entry == null) %>"
-			title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(pageContext, "edit-x", entry.getName()) %>'
+			title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(pageContext, "edit-x", entry.getName(), false) %>'
 		/>
 	</c:if>
 

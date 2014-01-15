@@ -127,7 +127,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 							<liferay-ui:icon
 								image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 								label="<%= true %>"
-								message='<%= LanguageUtil.format(locale, "attachment-added-by-x", HtmlUtil.escape(fileEntry.getUserName())) %>'
+								message='<%= LanguageUtil.format(locale, "attachment-added-by-x", HtmlUtil.escape(fileEntry.getUserName()), false) %>'
 							/>
 						</span>
 
@@ -160,7 +160,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 						<liferay-ui:icon
 							image="message"
 							label="<%= true %>"
-							message='<%= LanguageUtil.format(locale, "comment-by-x", HtmlUtil.escape(userDisplay.getFullName())) %>'
+							message='<%= LanguageUtil.format(locale, "comment-by-x", HtmlUtil.escape(userDisplay.getFullName()), false) %>'
 						/>
 					</span>
 

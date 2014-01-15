@@ -78,7 +78,7 @@ else {
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (category == null) %>"
-	title='<%= (category == null) ? "add-category[message-board]" : LanguageUtil.format(pageContext, "edit-x", category.getName()) %>'
+	title='<%= (category == null) ? "add-category[message-board]" : LanguageUtil.format(pageContext, "edit-x", category.getName(), false) %>'
 />
 
 <portlet:actionURL var="editCategoryURL">

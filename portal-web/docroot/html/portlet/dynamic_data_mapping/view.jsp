@@ -176,7 +176,7 @@ portletURL.setParameter("tabs1", tabs1);
 			{
 				id: '<portlet:namespace />copyStructure',
 				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.format(pageContext, "copy-x", ddmDisplay.getStructureName(locale)) %>',
+				title: '<%= UnicodeLanguageUtil.format(pageContext, "copy-x", ddmDisplay.getStructureName(locale), false) %>',
 				uri: uri
 			}
 		);

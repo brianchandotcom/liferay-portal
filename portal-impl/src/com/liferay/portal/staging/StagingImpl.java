@@ -597,7 +597,7 @@ public class StagingImpl implements Staging {
 						locale,
 						"the-referenced-theme-x-is-not-deployed-in-the-" +
 							"current-environment",
-						missingReference.getClassPK()));
+						missingReference.getClassPK(), false));
 			}
 			else if (referrers.size() == 1) {
 				Set<Map.Entry<String, String>> referrerDisplayNames =
@@ -624,14 +624,14 @@ public class StagingImpl implements Staging {
 							ResourceActionsUtil.getModelResource(
 								locale, referrerClassName),
 							referrerDisplayName
-						}
-					));
+						}, false));
 			}
 			else {
 				errorMessageJSONObject.put(
 					"info",
 					LanguageUtil.format(
-						locale, "referenced-by-x-elements", referrers.size()));
+						locale, "referenced-by-x-elements", referrers.size(),
+						true));
 			}
 
 			errorMessageJSONObject.put("name", missingReferenceDisplayName);
@@ -667,7 +667,7 @@ public class StagingImpl implements Staging {
 			errorMessage = LanguageUtil.format(
 				locale,
 				"document-names-must-end-with-one-of-the-following-extensions",
-				".lar");
+				".lar", false);
 			errorType = ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 		}
 		else if (e instanceof FileNameException) {
@@ -695,7 +695,7 @@ public class StagingImpl implements Staging {
 			errorMessage = LanguageUtil.format(
 				locale,
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				fileMaxSize/1024);
+				fileMaxSize/1024, false);
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else if (e instanceof LARTypeException) {
@@ -770,7 +770,8 @@ public class StagingImpl implements Staging {
 					StringUtil.merge(
 						le.getTargetAvailableLocales(),
 						StringPool.COMMA_AND_SPACE)
-				});
+				}, false);
+
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (e instanceof MissingReferenceException) {
@@ -833,8 +834,7 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}
-				);
+					}, false);
 			}
 			else if (pde.getType() == PortletDataException.MISSING_DEPENDENCY) {
 				errorMessage = LanguageUtil.format(
@@ -845,8 +845,7 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}
-				);
+					}, false);
 			}
 			else if (pde.getType() == PortletDataException.STATUS_IN_TRASH) {
 				errorMessage = LanguageUtil.format(
@@ -857,8 +856,7 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}
-				);
+					}, false);
 			}
 			else if (pde.getType() == PortletDataException.STATUS_UNAVAILABLE) {
 				errorMessage = LanguageUtil.format(
@@ -869,8 +867,7 @@ public class StagingImpl implements Staging {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),
 						referrerDisplayName
-					}
-				);
+					}, false);
 			}
 			else {
 				errorMessage = e.getLocalizedMessage();
@@ -1240,7 +1237,8 @@ public class StagingImpl implements Staging {
 						"the-original-x-does-not-exist-in-the-current-" +
 							"environment",
 						ResourceActionsUtil.getModelResource(
-							locale, missingReference.getClassName())));
+							locale, missingReference.getClassName()
+						), false));
 			}
 
 			errorMessageJSONObject.put("size", referrers.size());
@@ -1999,7 +1997,7 @@ public class StagingImpl implements Staging {
 
 		String description = LanguageUtil.format(
 			PortalUtil.getSiteDefaultLocale(groupId), masterBranchDescription,
-			groupName);
+			groupName, false);
 
 		try {
 			serviceContext.setWorkflowAction(WorkflowConstants.STATUS_APPROVED);

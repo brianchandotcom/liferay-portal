@@ -235,7 +235,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 			%>
 
 			<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
-				(<%= LanguageUtil.format(pageContext, "redirected-from-x", originalPage.getTitle()) %>)
+				(<%= LanguageUtil.format(pageContext, "redirected-from-x", originalPage.getTitle(), false) %>)
 			</div>
 		</c:if>
 

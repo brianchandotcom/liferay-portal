@@ -83,7 +83,7 @@
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
 
 		<#if validator.isNotNull(editPortletURL)>
-			<#assign title = languageUtil.format(locale, "edit-x", entryTitle) />
+			<#assign title = languageUtil.format(locale, "edit-x", entryTitle, false) />
 
 			<@liferay_ui["icon"]
 				image="edit"
@@ -170,7 +170,7 @@
 		<@liferay_ui["icon"]
 			image="print"
 			message="print"
-			url="javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "printAsset', title: '" + languageUtil.format(locale, "print-x-x", ["hide-accessible", entryTitle]) + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+			url="javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "printAsset', title: '" + languageUtil.format(locale, "print-x-x", ["hide-accessible", entryTitle], false) + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
 		/>
 	</#if>
 </#macro>

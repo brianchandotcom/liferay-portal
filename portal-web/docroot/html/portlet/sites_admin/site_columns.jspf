@@ -26,11 +26,11 @@
 		Organization organization = OrganizationLocalServiceUtil.getOrganization(curGroup.getOrganizationId());
 
 		buffer.append("<img align=\"left\" alt=\"");
-		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
+		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", organization.getType()));
 		buffer.append("\" border=\"0\" style=\"margin: 0px 5px 0px 0px;\" src=\"");
 		buffer.append(curGroup.getIconURL(themeDisplay));
 		buffer.append("\" title=\"");
-		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", LanguageUtil.get(pageContext, organization.getType())));
+		buffer.append(LanguageUtil.format(pageContext, "belongs-to-an-organization-of-type-x", organization.getType()));
 		buffer.append("\">");
 	}
 	else {
@@ -55,10 +55,10 @@
 
 	if (organizationUser || userGroupUser) {
 		if (names.size() == 1) {
-			message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), names.get(0)});
+			message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), names.get(0)}, false);
 		}
 		else {
-			message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", "), names.get(names.size() - 1)});
+			message = LanguageUtil.format(pageContext, "you-are-a-member-of-x-because-you-belong-to-x-and-x", new Object[] {HtmlUtil.escape(curGroup.getDescriptiveName(locale)), StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", "), names.get(names.size() - 1)}, false);
 		}
 	%>
 
@@ -87,7 +87,7 @@
 			buffer.append("<div class=\"subsites-count\"><a href=\"");
 			buffer.append(viewSubsitesURL.toString());
 			buffer.append("\">");
-			buffer.append(LanguageUtil.format(pageContext, childSites.size() == 1 ? "this-site-has-x-child-site" : "this-site-has-x-child-sites", String.valueOf(childSites.size())));
+			buffer.append(LanguageUtil.format(pageContext, childSites.size() == 1 ? "this-site-has-x-child-site" : "this-site-has-x-child-sites", String.valueOf(childSites.size()), false));
 			buffer.append("</a></div>");
 		}
 	}
@@ -116,7 +116,7 @@
 
 	if (usersCount > 0) {
 		buffer.append("<div class=\"user-count\">");
-		buffer.append(LanguageUtil.format(pageContext, usersCount > 1 ? "x-users" : "x-user", usersCount));
+		buffer.append(LanguageUtil.format(pageContext, usersCount > 1 ? "x-users" : "x-user", usersCount, false));
 		buffer.append("</div>");
 	}
 
@@ -129,7 +129,7 @@
 
 	if (organizationsCount > 0) {
 		buffer.append("<div class=\"organization-count\">");
-		buffer.append(LanguageUtil.format(pageContext, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount));
+		buffer.append(LanguageUtil.format(pageContext, organizationsCount > 1 ? "x-organizations" : "x-organization", organizationsCount, false));
 		buffer.append("</div>");
 	}
 
@@ -141,7 +141,7 @@
 
 	if (userGroupsCount > 0) {
 		buffer.append("<div class=\"user-group-count\">");
-		buffer.append(LanguageUtil.format(pageContext, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount));
+		buffer.append(LanguageUtil.format(pageContext, userGroupsCount > 1 ? "x-user-groups" : "x-user-group", userGroupsCount, false));
 		buffer.append("</div>");
 	}
 

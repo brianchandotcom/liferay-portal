@@ -100,7 +100,7 @@ if (Validator.isNotNull(script)) {
 		title = structure.getName(locale);
 	}
 	else {
-		title = LanguageUtil.format(pageContext, "new-x", ddmDisplay.getStructureName(locale));
+		title = LanguageUtil.format(pageContext, "new-x", ddmDisplay.getStructureName(locale), false);
 	}
 	%>
 
@@ -176,7 +176,7 @@ if (Validator.isNotNull(script)) {
 
 				<aui:input name="description" />
 
-				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale)) %>'>
+				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 					<div class="input-append">

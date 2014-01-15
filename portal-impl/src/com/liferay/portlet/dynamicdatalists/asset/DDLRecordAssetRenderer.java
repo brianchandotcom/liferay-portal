@@ -91,7 +91,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 
 		return LanguageUtil.format(
 			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, recordSetName});
+			new Object[] {ddmStructureName, recordSetName}, false);
 	}
 
 	@Override

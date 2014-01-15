@@ -101,7 +101,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "att
 					cssClass="trash-attachments"
 					image="delete_attachment"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsCount) %>'
+					message='<%= LanguageUtil.format(pageContext, (deletedAttachmentsCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments", deletedAttachmentsCount, false) %>'
 					url="<%= viewTrashAttachmentsURL %>"
 				/>
 			</c:if>

@@ -111,21 +111,21 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								<liferay-ui:icon
 									image="clip"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "x-added-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}) %>'
+									message='<%= LanguageUtil.format(pageContext, "x-added-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH %>">
 								<liferay-ui:icon
 									image="delete_attachment"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "x-removed-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}) %>'
+									message='<%= LanguageUtil.format(pageContext, "x-removed-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH %>">
 								<liferay-ui:icon
 									image="undo"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "x-restored-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}) %>'
+									message='<%= LanguageUtil.format(pageContext, "x-restored-the-attachment-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), attachmentTitle}, false) %>'
 								/>
 							</c:when>
 						</c:choose>
@@ -145,7 +145,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 
 						<liferay-ui:icon
 							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, "x-added-a-comment", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), viewPageURL + "#wikiCommentsPanel"}) %>'
+							message='<%= LanguageUtil.format(pageContext, "x-added-a-comment", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), viewPageURL + "#wikiCommentsPanel"}, false) %>'
 						/>
 					</c:when>
 
@@ -169,7 +169,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								<liferay-ui:icon
 									image="trash"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-move-to-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), socialActivityWikiPage.getTitle()}) %>'
+									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-move-to-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), socialActivityWikiPage.getTitle()}, false) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH %>">
@@ -180,7 +180,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								<liferay-ui:icon
 									image="undo"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-restore-from-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}) %>'
+									message='<%= LanguageUtil.format(pageContext, "activity-wiki-page-restore-from-trash", new Object[] {StringPool.BLANK, HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == WikiActivityKeys.ADD_PAGE %>">
@@ -191,7 +191,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								<liferay-ui:icon
 									image="add_article"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "x-added-the-page-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}) %>'
+									message='<%= LanguageUtil.format(pageContext, "x-added-the-page-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>
 							</c:when>
 							<c:when test="<%= socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE %>">
@@ -208,7 +208,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 								<liferay-ui:icon
 									image="edit"
 									label="<%= true %>"
-									message='<%= LanguageUtil.format(pageContext, "x-updated-the-page-to-version-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}) %>'
+									message='<%= LanguageUtil.format(pageContext, "x-updated-the-page-to-version-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>
 
 								<c:if test="<%= socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED %>">

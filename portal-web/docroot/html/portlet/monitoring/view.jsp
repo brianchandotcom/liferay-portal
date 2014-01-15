@@ -108,9 +108,9 @@ portletURL.setParameter("struts_action", "/monitoring/view");
 		</liferay-ui:search-container>
 	</c:when>
 	<c:when test="<%= !PropsValues.LIVE_USERS_ENABLED %>">
-		<%= LanguageUtil.format(pageContext, "display-of-live-session-data-is-disabled", PropsKeys.LIVE_USERS_ENABLED) %>
+		<%= LanguageUtil.format(pageContext, "display-of-live-session-data-is-disabled", PropsKeys.LIVE_USERS_ENABLED, false) %>
 	</c:when>
 	<c:otherwise>
-		<%= LanguageUtil.format(pageContext, "display-of-live-session-data-is-disabled", PropsKeys.SESSION_TRACKER_MEMORY_ENABLED) %>
+		<%= LanguageUtil.format(pageContext, "display-of-live-session-data-is-disabled", PropsKeys.SESSION_TRACKER_MEMORY_ENABLED, false) %>
 	</c:otherwise>
 </c:choose>

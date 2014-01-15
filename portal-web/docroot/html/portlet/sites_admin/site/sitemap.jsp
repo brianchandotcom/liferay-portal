@@ -49,12 +49,12 @@ if (!host.equals(privateLayoutSet.getVirtualHostname())) {
 	<aui:a href="http://www.sitemaps.org" target="_blank">http://www.sitemaps.org</aui:a>
 </liferay-util:buffer>
 
-<liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" />
+<liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" translateArguments="<%= false %>" />
 
 <br /><br />
 
 <aui:fieldset label="public-pages">
-	<%= LanguageUtil.format(pageContext, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + publicSitemapUrl + "\">", "</a>"}) %>
+	<%= LanguageUtil.format(pageContext, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + publicSitemapUrl + "\">", "</a>"}, false) %>
 
 	<ul>
 		<li>
@@ -67,7 +67,7 @@ if (!host.equals(privateLayoutSet.getVirtualHostname())) {
 </aui:fieldset>
 
 <aui:fieldset label="private-pages">
-	<%= LanguageUtil.format(pageContext, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + privateSitemapUrl + "\">", "</a>"}) %>
+	<%= LanguageUtil.format(pageContext, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + privateSitemapUrl + "\">", "</a>"}, false) %>
 
 	<ul>
 		<li>

@@ -26,7 +26,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 %>
 
 <div>
-	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"1", "2"}) %>
+	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"1", "2"}, false) %>
 
 	<liferay-ui:message key="choose-a-role" />
 </div>

@@ -32,7 +32,7 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-
 			String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
 			%>
 
-			<liferay-ui:message arguments="<%= StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription) %>" key="<%= infoMessage %>" />
+			<liferay-ui:message arguments="<%= StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription) %>" key="<%= infoMessage %>" translateArguments="<%= false %>" />
 
 			<a class="trash-empty-link" href="javascript:;" id="<%= namespace %>empty"><liferay-ui:message key="<%= emptyMessage %>" /></a>
 

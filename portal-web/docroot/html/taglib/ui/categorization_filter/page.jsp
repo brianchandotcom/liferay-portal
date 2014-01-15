@@ -92,7 +92,7 @@ if (assetCategoryId != 0) {
 		%>
 
 		<h2 class="taglib-categorization-filter entry-title">
-			<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, removeCategory, removeTag} %>" key='<%= assetType.concat("-with-x-x-and-tag-x") %>' />
+			<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, removeCategory, removeTag} %>" key='<%= assetType.concat("-with-x-x-and-tag-x") %>' translateArguments="<%= false %>" />
 		</h2>
 	</c:when>
 	<c:when test="<%= assetCategoryId != 0 %>">
@@ -104,7 +104,7 @@ if (assetCategoryId != 0) {
 		%>
 
 		<h2 class="taglib-categorization-filter entry-title">
-			<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, removeCategory} %>" key='<%= assetType.concat("-with-x-x") %>' />
+			<liferay-ui:message arguments="<%= new String[] {assetVocabularyTitle, removeCategory} %>" key='<%= assetType.concat("-with-x-x") %>' translateArguments="<%= false %>" />
 		</h2>
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(assetTagName) %>">
@@ -116,7 +116,7 @@ if (assetCategoryId != 0) {
 		%>
 
 		<h2 class="taglib-categorization-filter entry-title">
-			<liferay-ui:message arguments="<%= removeTag %>" key='<%= assetType.concat("-with-tag-x") %>' />
+			<liferay-ui:message arguments="<%= removeTag %>" key='<%= assetType.concat("-with-tag-x") %>' translateArguments="<%= false %>" />
 		</h2>
 	</c:when>
 </c:choose>

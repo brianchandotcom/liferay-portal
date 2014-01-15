@@ -65,7 +65,7 @@ else {
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= (folder == null) %>"
-		title='<%= (folder == null) ? ((parentFolderId > 0) ? "add-subfolder" : "add-folder") : LanguageUtil.format(pageContext, "edit-x", folder.getName()) %>'
+		title='<%= (folder == null) ? ((parentFolderId > 0) ? "add-subfolder" : "add-folder") : LanguageUtil.format(pageContext, "edit-x", folder.getName(), false) %>'
 	/>
 
 	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />

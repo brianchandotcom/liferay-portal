@@ -44,11 +44,11 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 	</c:if>
 
 	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.TOO_LONG %>">
-		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" />
+		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
 	</c:if>
 
 	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.TOO_SHORT %>">
-		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" />
+		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
 	</c:if>
 </liferay-ui:error>
 

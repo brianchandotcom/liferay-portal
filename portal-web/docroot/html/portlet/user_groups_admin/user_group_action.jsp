@@ -64,7 +64,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= hasPermissionsPermission %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= Group.class.getName() %>"
-			modelResourceDescription='<%= LanguageUtil.format(pageContext, "site-for-user-group-x", userGroup.getName()) %>'
+			modelResourceDescription='<%= LanguageUtil.format(pageContext, "site-for-user-group-x", userGroup.getName(), false) %>'
 			resourcePrimKey="<%= String.valueOf(userGroup.getGroup().getGroupId()) %>"
 			var="permissionsURL"
 		/>

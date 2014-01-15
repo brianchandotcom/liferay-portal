@@ -73,7 +73,7 @@ String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(portletPreferen
 	portletURL.setParameter("searchFolderIds", String.valueOf(searchFolderIds));
 	portletURL.setParameter("keywords", keywords);
 
-	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
 
 	try {
 		SearchContext searchContext = SearchContextFactory.getInstance(request);

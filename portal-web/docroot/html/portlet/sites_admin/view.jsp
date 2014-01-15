@@ -59,7 +59,7 @@ String searchURLString = searchURL.toString();
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 		%>
 
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" />
+		<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= RequiredGroupException.class %>">

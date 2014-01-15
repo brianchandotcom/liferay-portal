@@ -76,7 +76,7 @@ if (selContact != null) {
 			}
 			%>
 
-			<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" />
+			<liferay-ui:message arguments="<%= sb.toString() %>" key="your-portal-administrator-has-disabled-the-ability-to-modify-the-following-fields" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= UserScreenNameException.class %>" focusField="screenName" message="please-enter-a-valid-screen-name" />

@@ -113,7 +113,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 					<aui:input helpMessage="minimum-upper-case-help" label="minimum-upper-case" name="minUpperCase" />
 
 					<%
-					String taglinbHelpMessage = LanguageUtil.format(pageContext, "regular-expression-help", new Object[] {"<a href=\"http://docs.oracle.com/javase/tutorial/essential/regex\" target=\"_blank\">", "</a>"});
+					String taglinbHelpMessage = LanguageUtil.format(pageContext, "regular-expression-help", new Object[] {"<a href=\"http://docs.oracle.com/javase/tutorial/essential/regex\" target=\"_blank\">", "</a>"}, false);
 					%>
 
 					<aui:input helpMessage="<%= taglinbHelpMessage %>" label="regular-expression" name="regex" />

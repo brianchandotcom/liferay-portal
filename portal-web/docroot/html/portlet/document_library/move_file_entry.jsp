@@ -76,7 +76,7 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 <c:if test="<%= cmd.equals(Constants.MOVE_FROM_TRASH) %>">
 	<div class="alert alert-block">
-		<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="the-original-folder-does-not-exist-anymore" />
+		<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="the-original-folder-does-not-exist-anymore" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 

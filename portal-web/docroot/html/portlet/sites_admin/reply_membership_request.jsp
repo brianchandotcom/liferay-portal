@@ -47,7 +47,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 			backURL="<%= redirect %>"
 			escapeXml="<%= false %>"
 			localizeTitle="<%= false %>"
-			title='<%= LanguageUtil.format(pageContext, "reply-membership-request-for-x", HtmlUtil.escape(group.getDescriptiveName(locale))) %>'
+			title='<%= LanguageUtil.format(pageContext, "reply-membership-request-for-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
 		/>
 	</c:if>
 

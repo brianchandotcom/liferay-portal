@@ -110,7 +110,7 @@ viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL,
 
 			<c:if test="<%= Validator.isNotNull(viewURL) %>">
 				<div class="asset-more">
-					<a href="<%= viewURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))} %>' key="<%= viewURLMessage %>" /> &raquo; </a>
+					<a href="<%= viewURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))} %>' key="<%= viewURLMessage %>" translateArguments="<%= false %>" /> &raquo; </a>
 				</div>
 			</c:if>
 		</div>

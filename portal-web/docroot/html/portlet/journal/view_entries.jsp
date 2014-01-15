@@ -215,7 +215,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 				<c:if test="<%= total == 0 %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" />
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
 				</c:if>
 			</c:when>
 			<c:otherwise>

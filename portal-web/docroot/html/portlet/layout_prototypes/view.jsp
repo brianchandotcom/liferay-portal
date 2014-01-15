@@ -70,7 +70,7 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 				<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
 					<liferay-ui:icon
 						image="../messages/alert"
-						message='<%= LanguageUtil.format(pageContext, "the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors", new Object[] {mergeFailCount, "page-template"}) %>'
+						message='<%= LanguageUtil.format(pageContext, "the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors", new Object[] {mergeFailCount, LanguageUtil.get(pageContext, "page-template")}, false) %>'
 					/>
 				</c:if>
 			</liferay-ui:search-container-column-text>

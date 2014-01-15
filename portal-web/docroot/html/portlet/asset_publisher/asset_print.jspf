@@ -38,7 +38,7 @@ printAssetURL.setWindowState(LiferayWindowState.POP_UP);
 		<liferay-ui:icon
 			image="print"
 			label="<%= true %>"
-			message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}) %>'
+			message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
 			url="javascript:print();"
 		/>
 
@@ -50,7 +50,7 @@ printAssetURL.setWindowState(LiferayWindowState.POP_UP);
 		<liferay-ui:icon
 			image="print"
 			label="<%= true %>"
-			message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}) %>'
+			message='<%= LanguageUtil.format(pageContext, "print-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false) %>'
 			url='<%= "javascript:" + renderResponse.getNamespace() + "printPage_" + assetEntryIndex + "();" %>'
 		/>
 

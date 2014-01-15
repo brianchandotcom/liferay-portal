@@ -34,7 +34,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 <aui:input name="removeUserIds" type="hidden" />
 
 <div>
-	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"2", "2"}) %>
+	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"2", "2"}, false) %>
 
 	<%= LanguageUtil.format(pageContext, "current-signifies-current-users-associated-with-the-x-role.-available-signifies-all-users-associated-with-the-x-x", new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(pageContext, (group.isOrganization() ? "organization" : "site"))}) %>
 </div>

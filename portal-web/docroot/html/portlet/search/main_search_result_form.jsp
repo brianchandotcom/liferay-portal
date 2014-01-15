@@ -136,7 +136,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 		</a>
 
 		<c:if test="<%= Validator.isNotNull(downloadURL) %>">
-			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(entryTitle)) %>' url="<%= downloadURL %>" />
+			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(entryTitle), false) %>' url="<%= downloadURL %>" />
 		</c:if>
 	</span>
 

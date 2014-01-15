@@ -112,7 +112,7 @@ if (Validator.isNotNull(className)) {
 					moreResultsLabel: '<%= UnicodeLanguageUtil.get(pageContext, "load-more-results") %>',
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 					singleSelect: <%= !vocabulary.isMultiValued() %>,
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale)) %>',
+					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale), false) %>',
 					vocabularyGroupIds: '<%= vocabulary.getGroupId() %>',
 					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 				}

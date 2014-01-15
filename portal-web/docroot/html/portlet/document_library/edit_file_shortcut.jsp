@@ -84,7 +84,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= (fileShortcut != null)? LanguageUtil.format(pageContext, "shortcut-to-x", fileShortcut.getToTitle()) : "new-file-shortcut" %>'
+		title='<%= (fileShortcut != null)? LanguageUtil.format(pageContext, "shortcut-to-x", fileShortcut.getToTitle(), false) : "new-file-shortcut" %>'
 	/>
 
 	<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />

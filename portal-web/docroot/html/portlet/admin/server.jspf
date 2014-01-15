@@ -378,7 +378,7 @@ serverURL.setParameter("tabs3", tabs3);
 				<liferay-ui:error key="reCaptchaPublicKey" message="the-recaptcha-public-key-is-not-valid" />
 
 				<aui:fieldset>
-					<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "recaptcha-help", "https://www.google.com/recaptcha/admin/create") %>' label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
+					<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "recaptcha-help", "https://www.google.com/recaptcha/admin/create", false) %>' label="enable-recaptcha" name="reCaptchaEnabled" type="checkbox" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_IMPL, PropsValues.CAPTCHA_ENGINE_IMPL).equals(ReCaptchaImpl.class.getName()) %>" />
 
 					<aui:input cssClass="lfr-input-text-container" label="recaptcha-public-key" name="reCaptchaPublicKey" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" />
 
@@ -648,7 +648,7 @@ serverURL.setParameter("tabs3", tabs3);
 								<c:otherwise>
 
 									<%
-									String xugglerHelp = LanguageUtil.format(pageContext, "xuggler-help", "http://www.xuggle.com/xuggler/downloads");
+									String xugglerHelp = LanguageUtil.format(pageContext, "xuggler-help", "http://www.xuggle.com/xuggler/downloads", false);
 
 									String[] xugglerOptions = PropsUtil.getArray(PropsKeys.XUGGLER_JAR_OPTIONS);
 

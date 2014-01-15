@@ -244,7 +244,7 @@ public class DDLIndexer extends BaseIndexer {
 
 			return LanguageUtil.format(
 				locale, "new-x-for-list-x",
-				new Object[] {ddmStructureName, recordSetName});
+				new Object[] {ddmStructureName, recordSetName}, false);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

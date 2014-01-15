@@ -30,7 +30,7 @@ String alternativeLayoutFriendlyURL = (String)SessionMessages.get(request, "alte
 	</liferay-util:buffer>
 
 	<p class="redirected-to-message">
-		<liferay-ui:message arguments="<%= redirectedLink %>" key="you-were-redirected-to-x" />
+		<liferay-ui:message arguments="<%= redirectedLink %>" key="you-were-redirected-to-x" translateArguments="<%= false %>" />
 	</p>
 
 	<liferay-util:buffer var="originalLink">
@@ -40,6 +40,6 @@ String alternativeLayoutFriendlyURL = (String)SessionMessages.get(request, "alte
 	</liferay-util:buffer>
 
 	<p class="original-url">
-		<liferay-ui:message arguments="<%= originalLink %>" key="click-the-following-link-if-you-want-to-dismiss-this-redirect-and-access-the-original-url-x" />
+		<liferay-ui:message arguments="<%= originalLink %>" key="click-the-following-link-if-you-want-to-dismiss-this-redirect-and-access-the-original-url-x" translateArguments="<%= false %>" />
 	</p>
 </c:if>

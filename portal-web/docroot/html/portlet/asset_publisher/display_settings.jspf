@@ -81,11 +81,11 @@
 	</c:if>
 
 	<%
-	String helpMessage1 = "<em>" + LanguageUtil.format(pageContext, "content-related-to-x", StringPool.DOUBLE_PERIOD) + "</em>";
-	String helpMessage2 = "<em>" + LanguageUtil.format(pageContext, "content-with-tag-x", StringPool.DOUBLE_PERIOD) + "</em>";
+	String helpMessage1 = "<em>" + LanguageUtil.format(pageContext, "content-related-to-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
+	String helpMessage2 = "<em>" + LanguageUtil.format(pageContext, "content-with-tag-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
 	%>
 
-	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
+	<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>' name="preferences--showMetadataDescriptions--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
 
 	<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>" />
 

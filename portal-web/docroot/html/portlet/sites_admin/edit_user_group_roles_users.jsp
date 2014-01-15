@@ -34,9 +34,9 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 <aui:input name="removeUserGroupIds" type="hidden" />
 
 <div>
-	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"2", "2"}) %>
+	<%= LanguageUtil.format(pageContext, "step-x-of-x", new String[] {"2", "2"}, false) %>
 
-	<%= LanguageUtil.format(pageContext, "current-signifies-current-user-groups-associated-with-the-x-role.-available-signifies-all-user-groups-associated-with-the-x-x", new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(pageContext, (group.isOrganization() ? "organization" : "site"))}) %>
+	<%= LanguageUtil.format(pageContext, "current-signifies-current-user-groups-associated-with-the-x-role.-available-signifies-all-user-groups-associated-with-the-x-x", new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(pageContext, (group.isOrganization() ? LanguageUtil.get(pageContext, "organization") : LanguageUtil.get(pageContext, "site")))}, false) %>
 </div>
 
 <br />

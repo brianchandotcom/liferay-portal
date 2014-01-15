@@ -105,13 +105,13 @@
 				String taglibSearch = "location.href = '" + searchURL.toString() + "';";
 				%>
 
-				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(pageContext, "search-for-x", HtmlUtil.escapeAttribute(title)) %>' />
+				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(pageContext, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
 
 				<%
 				String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
 				%>
 
-				<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(pageContext, "create-page-x", HtmlUtil.escapeAttribute(title)) %>' />
+				<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(pageContext, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
 			</div>
 		</c:otherwise>
 	</c:choose>

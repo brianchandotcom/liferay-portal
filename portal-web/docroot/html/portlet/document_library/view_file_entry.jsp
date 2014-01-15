@@ -206,7 +206,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							}
 							%>
 
-							<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}) %>' />
+							<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}, false) %>' />
 						</span>
 
 						<c:if test="<%= enableRatings && fileEntry.isSupportsSocial() %>">
@@ -442,7 +442,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						</h3>
 
 						<div class="lfr-asset-icon lfr-asset-author">
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" translateArguments="<%= false %>" />
 						</div>
 
 						<div class="lfr-asset-icon lfr-asset-date">
@@ -520,10 +520,10 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								String webDavHelpMessage = null;
 
 								if (BrowserSnifferUtil.isWindows(request)) {
-									webDavHelpMessage = LanguageUtil.format(pageContext, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"});
+									webDavHelpMessage = LanguageUtil.format(pageContext, "webdav-windows-help", new Object[] {"http://www.microsoft.com/downloads/details.aspx?FamilyId=17C36612-632E-4C04-9382-987622ED1D64", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV"}, false);
 								}
 								else {
-									webDavHelpMessage = LanguageUtil.format(pageContext, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV");
+									webDavHelpMessage = LanguageUtil.format(pageContext, "webdav-help", "http://www.liferay.com/web/guest/community/wiki/-/wiki/Main/WebDAV", false);
 								}
 								%>
 

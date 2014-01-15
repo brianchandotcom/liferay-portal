@@ -198,7 +198,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 		<div class="float-container lfr-available-themes" id="<%= device %>availableThemes">
 			<legend>
 				<span class="header-title">
-					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1)) %>
+					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1), false) %>
 				</span>
 
 				<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">

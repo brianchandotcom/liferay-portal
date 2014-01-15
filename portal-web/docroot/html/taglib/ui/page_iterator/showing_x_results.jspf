@@ -17,21 +17,21 @@
 <small class="search-results">
 	<c:choose>
 		<c:when test='<%= type.equals("approximate") %>'>
-			<%= LanguageUtil.format(pageContext, "page-x-of-approximately-x-results", new Object[] {numberFormat.format(cur), numberFormat.format(total)}) %>
+			<%= LanguageUtil.format(pageContext, "page-x-of-approximately-x-results", new Object[] {numberFormat.format(cur), numberFormat.format(total)}, false) %>
 		</c:when>
 		<c:when test='<%= type.equals("more") %>'>
-			<%= LanguageUtil.format(pageContext, "showing-x-x", new Object[] {numberFormat.format(start + 1), numberFormat.format(end)}) %>
+			<%= LanguageUtil.format(pageContext, "showing-x-x", new Object[] {numberFormat.format(start + 1), numberFormat.format(end)}, false) %>
 		</c:when>
 		<c:when test="<%= total > resultRowsSize %>">
-			<%= LanguageUtil.format(pageContext, "showing-x-x-of-x-results", new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)}) %>
+			<%= LanguageUtil.format(pageContext, "showing-x-x-of-x-results", new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)}, false) %>
 		</c:when>
 		<c:otherwise>
 			<c:choose>
 				<c:when test="<%= total != 1 %>">
-					<%= LanguageUtil.format(pageContext, "showing-x-results", numberFormat.format(total)) %>
+					<%= LanguageUtil.format(pageContext, "showing-x-results", numberFormat.format(total), false) %>
 				</c:when>
 				<c:otherwise>
-					<%= LanguageUtil.format(pageContext, "showing-x-result", numberFormat.format(total)) %>
+					<%= LanguageUtil.format(pageContext, "showing-x-result", numberFormat.format(total), false) %>
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>

@@ -108,7 +108,7 @@ else {
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (message == null) %>"
-	title='<%= (curParentMessage != null) ? LanguageUtil.format(pageContext, "reply-to-x", curParentMessage.getSubject()) : (message == null) ? "add-message" : LanguageUtil.format(pageContext, "edit-x", message.getSubject()) %>'
+	title='<%= (curParentMessage != null) ? LanguageUtil.format(pageContext, "reply-to-x", curParentMessage.getSubject(), false) : (message == null) ? "add-message" : LanguageUtil.format(pageContext, "edit-x", message.getSubject(), false) %>'
 />
 
 <c:if test="<%= preview %>">
@@ -194,7 +194,7 @@ else {
 		fileMaxSize /= 1024;
 		%>
 
-		<liferay-ui:message arguments="<%= fileMaxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
+		<liferay-ui:message arguments="<%= fileMaxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
@@ -453,7 +453,7 @@ else {
 
 		<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
 			<div class="alert alert-info">
-				<%= LanguageUtil.format(pageContext, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName())) %>
+				<%= LanguageUtil.format(pageContext, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()), false) %>
 			</div>
 		</c:if>
 

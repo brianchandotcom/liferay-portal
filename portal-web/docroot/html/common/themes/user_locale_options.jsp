@@ -27,7 +27,7 @@ Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSit
 <c:if test="<%= !locale.equals(user.getLocale()) %>">
 	<button class="close" id="ignoreUserLocaleOptions" type="button">&times;</button>
 
-	<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale)) %>
+	<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale), false) %>
 
 	<c:if test="<%= ArrayUtil.contains(availableLocales, userLocale) %>">
 
@@ -46,7 +46,7 @@ Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSit
 		displayPreferredLanguageURLString = HttpUtil.addParameter(displayPreferredLanguageURLString, "showUserLocaleOptionsMessage", false);
 		%>
 
-		<aui:a href="<%= displayPreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %></aui:a>
+		<aui:a href="<%= displayPreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale), false) %></aui:a>
 	</c:if>
 
 	<%
@@ -63,7 +63,7 @@ Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSit
 	changePreferredLanguageURLString = HttpUtil.addParameter(changePreferredLanguageURLString, "showUserLocaleOptionsMessage", false);
 	%>
 
-	<aui:a href="<%= changePreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "set-x-as-your-preferred-language", locale.getDisplayName(userLocale)) %></aui:a>
+	<aui:a href="<%= changePreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "set-x-as-your-preferred-language", locale.getDisplayName(userLocale), false) %></aui:a>
 
 	<aui:script use="aui-base,liferay-store">
 		var ignoreUserLocaleOptionsNode = A.one('#ignoreUserLocaleOptions');

@@ -116,7 +116,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 						<div class="lfr-asset-metadata">
 							<div class="lfr-asset-icon lfr-asset-date">
-								<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDateTime.format(folder.getModifiedDate())) %>
+								<%= LanguageUtil.format(pageContext, "last-updated-x", dateFormatDateTime.format(folder.getModifiedDate()), false) %>
 							</div>
 
 							<div class="lfr-asset-icon lfr-asset-subfolders">

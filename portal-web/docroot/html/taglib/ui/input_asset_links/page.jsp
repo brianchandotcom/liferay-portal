@@ -118,7 +118,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 			Map<String, Object> data = new HashMap<String, Object>();
 
 			data.put("href", assetBrowserURL.toString());
-			data.put("title", LanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale, false)));
+			data.put("title", LanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale, false), false));
 
 			String type = assetRendererFactory.getTypeName(locale, false);
 

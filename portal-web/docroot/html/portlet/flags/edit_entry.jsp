@@ -35,7 +35,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 <div class="portlet-flags" id="<portlet:namespace />flagsPopup">
 	<aui:form method="post" name="flagsForm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "flag();" %>'>
 		<p>
-			<%= LanguageUtil.format(pageContext, "you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential", themeDisplay.getPathMain() + "/portal/terms_of_use") %>
+			<%= LanguageUtil.format(pageContext, "you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential", themeDisplay.getPathMain() + "/portal/terms_of_use", false) %>
 		</p>
 
 		<aui:fieldset>
@@ -73,7 +73,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 <div class="hide" id="<portlet:namespace />confirmation">
 	<p><strong><liferay-ui:message key="thank-you-for-your-report" /></strong></p>
 
-	<p><%= LanguageUtil.format(pageContext, "although-we-cannot-disclose-our-final-decision,-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-x-is-a-safe-environment-for-everyone", HtmlUtil.escape(company.getName())) %></p>
+	<p><%= LanguageUtil.format(pageContext, "although-we-cannot-disclose-our-final-decision,-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-x-is-a-safe-environment-for-everyone", HtmlUtil.escape(company.getName()), false) %></p>
 </div>
 
 <div class="hide" id="<portlet:namespace />error">

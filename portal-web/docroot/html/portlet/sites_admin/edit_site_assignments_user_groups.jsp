@@ -172,7 +172,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, (total > 1) ? "x-user-groups" : "x-user-group", total) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(pageContext, (total > 1) ? "x-user-groups" : "x-user-group", total, false) %>'>
 				<span class="form-search">
 					<liferay-ui:input-search name='<%= DisplayTerms.KEYWORDS + "_user_groups" %>' />
 				</span>

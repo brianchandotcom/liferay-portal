@@ -107,7 +107,7 @@ for (int i = 0; i < portlets.size(); i++) {
 	//headerNames.add("tags");
 	//headerNames.add("score");
 
-	SearchContainer openSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, 5, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
+	SearchContainer openSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM + i, 5, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
 
 	if (Validator.isNotNull(primarySearch) && primarySearch.equals(portlet.getOpenSearchClass())) {
 		int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM + i);
@@ -357,7 +357,7 @@ for (int i = 0; i < portlets.size(); i++) {
 						<portlet:param name="format" value="<%= format %>" />
 					</portlet:renderURL>
 
-					<aui:a href="<%= moreResultsURL %>"><%= LanguageUtil.format(pageContext, "more-x-results", portletTitle) %> &raquo;</aui:a>
+					<aui:a href="<%= moreResultsURL %>"><%= LanguageUtil.format(pageContext, "more-x-results", portletTitle, false) %> &raquo;</aui:a>
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -369,6 +369,6 @@ for (int i = 0; i < portlets.size(); i++) {
 
 <c:if test="<%= totalResults == 0 %>">
 	<div class="no-results">
-		<%= LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>
+		<%= LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>
 	</div>
 </c:if>

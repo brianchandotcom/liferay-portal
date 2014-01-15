@@ -463,7 +463,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							<div class="lfr-discussion-posted-on">
 								<c:choose>
 									<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
-										<%= LanguageUtil.format(pageContext, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate())) %>
+										<%= LanguageUtil.format(pageContext, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate()), false) %>
 									</c:when>
 									<c:otherwise>
 
@@ -508,7 +508,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										sb.append("</a>");
 										%>
 
-										<%= LanguageUtil.format(pageContext, "posted-on-x-in-reply-to-x", new Object[] {dateFormatDateTime.format(message.getModifiedDate()), sb.toString()}) %>
+										<%= LanguageUtil.format(pageContext, "posted-on-x-in-reply-to-x", new Object[] {dateFormatDateTime.format(message.getModifiedDate()), sb.toString()}, false) %>
 									</c:otherwise>
 								</c:choose>
 							</div>

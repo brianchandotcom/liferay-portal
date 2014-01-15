@@ -77,7 +77,7 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	@Override
 	public String getTitle(Locale locale) {
 		return LanguageUtil.format(
-			locale, "shortcut-to-x", _fileShortcut.getToTitle());
+			locale, "shortcut-to-x", _fileShortcut.getToTitle(), false);
 	}
 
 	@Override

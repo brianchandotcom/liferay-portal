@@ -109,7 +109,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 	<c:if test="<%= !validMoveFolders.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-folders-ready-to-be-moved", validMoveFolders.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-folders-ready-to-be-moved", validMoveFolders.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -135,7 +135,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 	<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-folders-cannot-be-moved", invalidMoveFolders.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-folders-cannot-be-moved", invalidMoveFolders.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -174,7 +174,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 	<c:if test="<%= !validMoveFileEntries.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-files-ready-to-be-moved", validMoveFileEntries.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-files-ready-to-be-moved", validMoveFileEntries.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -200,7 +200,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 	<c:if test="<%= !invalidMoveFileEntries.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-files-cannot-be-moved", invalidMoveFileEntries.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-files-cannot-be-moved", invalidMoveFileEntries.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -240,7 +240,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 	<c:if test="<%= !validShortcutEntries.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-shortcuts-ready-to-be-moved", validShortcutEntries.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-shortcuts-ready-to-be-moved", validShortcutEntries.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -266,7 +266,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 	<c:if test="<%= !invalidShortcutEntries.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-shortcuts-cannot-be-moved", invalidShortcutEntries.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-shortcuts-cannot-be-moved", invalidShortcutEntries.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">

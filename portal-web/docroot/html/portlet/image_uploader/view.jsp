@@ -59,7 +59,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 			<liferay-ui:error exception="<%= FileSizeException.class %>">
-				<liferay-ui:message arguments="<%= maxFileSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
+				<liferay-ui:message arguments="<%= maxFileSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
 			<aui:fieldset cssClass="lfr-portrait-editor">

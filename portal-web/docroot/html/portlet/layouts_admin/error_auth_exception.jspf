@@ -26,7 +26,7 @@
 		RemoteAuthException rae = (RemoteAuthException)errorException;
 		%>
 
-		<liferay-ui:message arguments='<%= "<em>" + rae.getURL() + "</em>" %>' key="an-unexpected-error-occurred-in-the-remote-server-at-x" />
+		<liferay-ui:message arguments='<%= "<em>" + rae.getURL() + "</em>" %>' key="an-unexpected-error-occurred-in-the-remote-server-at-x" translateArguments="<%= false %>" />
 	</c:if>
 
 	<c:if test="<%= ae.getType() == AuthException.INTERNAL_SERVER_ERROR %>">

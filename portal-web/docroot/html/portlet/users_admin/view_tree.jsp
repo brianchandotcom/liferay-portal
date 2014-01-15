@@ -255,10 +255,10 @@ if (organization != null) {
 								organizationsTitle = LanguageUtil.get(pageContext, filterManageableOrganizations ? "my-organizations" : "top-level-organizations");
 							}
 							else if (organizationsCount == 1) {
-								organizationsTitle = LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount));
+								organizationsTitle = LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount), false);
 							}
 							else {
-								organizationsTitle = LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount));
+								organizationsTitle = LanguageUtil.format(pageContext, "x-suborganizations", String.valueOf(organizationsCount), false);
 							}
 							%>
 
@@ -401,10 +401,10 @@ if (organization != null) {
 							}
 							else {
 								if ((active && (usersCount == 1)) || (!active && (inactiveUsersCount == 1))) {
-									usersTitle = LanguageUtil.format(pageContext, (active ? "x-user" : "x-inactive-user"), String.valueOf((active ? usersCount : inactiveUsersCount)));
+									usersTitle = LanguageUtil.format(pageContext, (active ? "x-user" : "x-inactive-user"), String.valueOf((active ? usersCount : inactiveUsersCount)), false);
 								}
 								else {
-									usersTitle = LanguageUtil.format(pageContext, (active ? "x-users" : "x-inactive-users"), String.valueOf((active ? usersCount : inactiveUsersCount)));
+									usersTitle = LanguageUtil.format(pageContext, (active ? "x-users" : "x-inactive-users"), String.valueOf((active ? usersCount : inactiveUsersCount)), false);
 								}
 							}
 							%>

@@ -126,7 +126,7 @@ if (layout != null) {
 											<c:choose>
 												<c:when test="<%= liveLayout == null %>">
 													<span class="last-publication-branch">
-														<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>" %>' key="page-x-has-not-been-published-to-live-yet" />
+														<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>" %>' key="page-x-has-not-been-published-to-live-yet" translateArguments="<%= false %>" />
 													</span>
 												</c:when>
 												<c:otherwise>

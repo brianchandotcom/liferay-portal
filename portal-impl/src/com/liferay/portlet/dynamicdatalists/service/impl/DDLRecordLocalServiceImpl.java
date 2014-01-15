@@ -446,7 +446,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		String title = LanguageUtil.format(
 			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, recordSetName});
+			new Object[] {ddmStructureName, recordSetName}, false);
 
 		if (addDraftAssetEntry) {
 			assetEntryLocalService.updateEntry(

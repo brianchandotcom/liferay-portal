@@ -112,7 +112,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 	<liferay-util:buffer var="searchInfo">
 		<div class="search-info">
 			<span class="keywords">
-				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords)) %>
+				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}, false) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false) %>
 			</span>
 
 			<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
@@ -320,7 +320,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 
 				<c:if test="<%= searchResultsList.isEmpty() %>">
 					<div class="alert alert-info">
-						<%= LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>
+						<%= LanguageUtil.format(pageContext, "no-documents-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>
 					</div>
 				</c:if>
 

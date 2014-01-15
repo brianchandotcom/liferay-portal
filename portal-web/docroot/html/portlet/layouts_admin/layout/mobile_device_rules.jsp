@@ -45,13 +45,13 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 	</c:choose>
 </liferay-util:buffer>
 
-<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
+<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rules-of-the-x", rootNodeNameLink, false) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
 
 <aui:input checked="<%= mdrRuleGroupInstancesCount > 0 %>" id="uniqueRuleGroupInstances" label="define-specific-mobile-device-rules-for-this-page" name="inheritRuleGroupInstances" type="radio" value="<%= false %>" />
 
 <div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
 	<div class="alert alert-info">
-		<liferay-ui:message arguments="<%= rootNodeNameLink %>" key="mobile-device-rules-will-be-inhertited-from-x" />
+		<liferay-ui:message arguments="<%= rootNodeNameLink %>" key="mobile-device-rules-will-be-inhertited-from-x" translateArguments="<%= false %>" />
 	</div>
 </div>
 

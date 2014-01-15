@@ -82,12 +82,12 @@ List rightList = (List)request.getAttribute("liferay-ui:input-move-boxes:rightLi
 		{
 			contentBox: '#<%= randomNamespace + "input-move-boxes" %>',
 			strings: {
-				LEFT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-down", new Object[] {leftTitle}) %>',
-				LEFT_MOVE_UP: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-up", new Object[] {leftTitle}) %>',
-				MOVE_LEFT: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}) %>',
-				MOVE_RIGHT: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}) %>',
-				RIGHT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-down", new Object[] {rightTitle}) %>',
-				RIGHT_MOVE_UP: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-up", new Object[] {rightTitle}) %>'
+				LEFT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-down", new Object[] {leftTitle}, false) %>',
+				LEFT_MOVE_UP: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-up", new Object[] {leftTitle}, false) %>',
+				MOVE_LEFT: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}, false) %>',
+				MOVE_RIGHT: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}, false) %>',
+				RIGHT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-down", new Object[] {rightTitle}, false) %>',
+				RIGHT_MOVE_UP: '<%= UnicodeLanguageUtil.format(pageContext, "move-selected-item-in-x-one-position-up", new Object[] {rightTitle}, false) %>'
 			}
 		}
 	).render();

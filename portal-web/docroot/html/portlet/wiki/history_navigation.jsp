@@ -103,7 +103,7 @@ if (type.equals("html")) {
 			cssClass="central-title"
 			image="pages"
 			label="<%= true %>"
-			message='<%= LanguageUtil.format(pageContext, "comparing-versions-x-and-x", new Object[] {sourceVersionString, targetVersionString}) %>'
+			message='<%= LanguageUtil.format(pageContext, "comparing-versions-x-and-x", new Object[] {sourceVersionString, targetVersionString}, false) %>'
 		/>
 
 		<c:choose>

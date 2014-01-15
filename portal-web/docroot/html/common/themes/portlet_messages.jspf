@@ -80,7 +80,7 @@ else if (group.isStagingGroup()) {
 			String taglibMessage = "class=\"lfr-hide-dialog\" href=\"javascript:;\"";
 			%>
 
-			<liferay-ui:message arguments="<%= taglibMessage %>" key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x" />
+			<liferay-ui:message arguments="<%= taglibMessage %>" key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x" translateArguments="<%= false %>" />
 		</c:if>
 	</div>
 </c:if>

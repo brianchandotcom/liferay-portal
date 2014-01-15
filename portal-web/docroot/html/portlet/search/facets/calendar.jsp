@@ -67,7 +67,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 		Liferay.Search.tokenList.add(
 			{
 				clearFields: '<%= renderResponse.getNamespace() + facet.getFieldId() %>',
-				html: '<%= UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + HtmlUtil.escape(fieldParamFrom) + "</strong>", "<strong>" + HtmlUtil.escape(fieldParamTo) + "</strong>"}) %>'
+				html: '<%= UnicodeLanguageUtil.format(pageContext, "from-x-to-x", new Object[] {"<strong>" + HtmlUtil.escape(fieldParamFrom) + "</strong>", "<strong>" + HtmlUtil.escape(fieldParamTo) + "</strong>"}, false) %>'
 			}
 		);
 	</aui:script>

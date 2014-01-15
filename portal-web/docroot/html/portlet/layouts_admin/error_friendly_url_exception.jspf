@@ -40,7 +40,7 @@
 		Layout duplicateLayout = LayoutLocalServiceUtil.getLayout(duplicateClassPK);
 		%>
 
-		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>" key="please-enter-a-unique-friendly-url" />
+		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), duplicateLayout.getName(locale)} %>" key="please-enter-a-unique-friendly-url" translateArguments="<%= false %>" />
 	</c:if>
 
 	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_SLASH %>">
@@ -52,7 +52,7 @@
 	</c:if>
 
 	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.KEYWORD_CONFLICT %>">
-		<%= LanguageUtil.format(pageContext, "please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x", lfurle.getKeywordConflict()) %>
+		<%= LanguageUtil.format(pageContext, "please-enter-a-friendly-url-that-does-not-conflict-with-the-keyword-x", lfurle.getKeywordConflict(), false) %>
 	</c:if>
 
 	<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.POSSIBLE_DUPLICATE %>">

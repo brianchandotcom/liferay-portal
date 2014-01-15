@@ -33,14 +33,14 @@
 					<aui:nav-item
 						href="<%= _getURL(groupId, plid, entry.getValue(), message, defaultAssetPublisher, layout, pageContext, liferayPortletResponse) %>"
 						iconCssClass="icon-file"
-						label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>'
+						label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message), false) %>'
 					/>
 				</c:when>
 				<c:otherwise>
 					<aui:nav-item
 						dropdown="<%= true %>"
 						iconCssClass="icon-plus"
-						label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'
+						label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}, false) %>'
 					>
 
 						<%
@@ -99,6 +99,6 @@ private String _getURL(long groupId, long plid, PortletURL addPortletURL, String
 		addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
 	}
 
-	return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
+	return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message), false)) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
 }
 %>

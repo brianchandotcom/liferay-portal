@@ -373,7 +373,7 @@ if (Validator.isNotNull(content)) {
 									<img alt="" src='<%= HtmlUtil.escapeAttribute(themeDisplay.getPathThemeImages() + "/language/" + toLanguageId + ".png") %>' />
 								</liferay-util:buffer>
 
-								<%= LanguageUtil.format(pageContext, "translating-web-content-to-x", languageLabel) %>
+								<%= LanguageUtil.format(pageContext, "translating-web-content-to-x", languageLabel, false) %>
 
 								<aui:input name="toLanguageId" type="hidden" value="<%= toLanguageId %>" />
 							</c:when>

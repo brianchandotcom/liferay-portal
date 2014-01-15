@@ -84,7 +84,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !validMoveFolders.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-folders-ready-to-be-moved", validMoveFolders.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-folders-ready-to-be-moved", validMoveFolders.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -110,7 +110,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-folders-cannot-be-moved", invalidMoveFolders.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-folders-cannot-be-moved", invalidMoveFolders.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -142,7 +142,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !validMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-are-ready-to-be-moved", validMoveArticles.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-are-ready-to-be-moved", validMoveArticles.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -168,7 +168,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !invalidMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-cannot-be-moved", invalidMoveArticles.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-cannot-be-moved", invalidMoveArticles.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">

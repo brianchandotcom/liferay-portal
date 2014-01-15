@@ -33,7 +33,7 @@ catch (Exception e) {
 <c:choose>
 	<c:when test="<%= jsonObject == null %>">
 		<div class="alert <%= backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED ? "alert-error" : StringPool.BLANK %> publish-error">
-			<liferay-ui:message arguments="<%= backgroundTask.getStatusMessage() %>" key="unable-to-execute-process-x" />
+			<liferay-ui:message arguments="<%= backgroundTask.getStatusMessage() %>" key="unable-to-execute-process-x" translateArguments="<%= false %>" />
 		</div>
 	</c:when>
 	<c:otherwise>

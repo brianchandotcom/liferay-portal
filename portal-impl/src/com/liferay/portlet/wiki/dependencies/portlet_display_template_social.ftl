@@ -216,7 +216,7 @@
 	${printURL.setParameter("viewMode", "print")}
 	${printURL.setWindowState("pop_up")}
 
-	<#assign title = languageUtil.format(locale, "print-x-x", ["hide-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))]) />
+	<#assign title = languageUtil.format(locale, "print-x-x", ["hide-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))], false) />
 	<#assign taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});" />
 
 	<@liferay_ui["icon"]

@@ -251,7 +251,7 @@ if (feed != null) {
 							for (DDMTemplate curTemplate : ddmTemplates) {
 							%>
 
-								<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label='<%= LanguageUtil.format(pageContext, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale))) %>' selected="<%= rendererTemplateId.equals(curTemplate.getTemplateKey()) %>" value="<%= curTemplate.getTemplateKey() %>" />
+								<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label='<%= LanguageUtil.format(pageContext, "use-template-x", HtmlUtil.escape(curTemplate.getName(locale)), false) %>' selected="<%= rendererTemplateId.equals(curTemplate.getTemplateKey()) %>" value="<%= curTemplate.getTemplateKey() %>" />
 
 							<%
 							}

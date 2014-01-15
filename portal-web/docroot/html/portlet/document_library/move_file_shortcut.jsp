@@ -36,7 +36,7 @@ long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
 
 <c:if test="<%= cmd.equals(Constants.MOVE_FROM_TRASH) %>">
 	<div class="alert alert-block">
-		<liferay-ui:message arguments='<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(pageContext, "shortcut") + ")" %>' key="the-original-folder-does-not-exist-anymore" />
+		<liferay-ui:message arguments='<%= fileShortcut.getToTitle() + " (" + LanguageUtil.get(pageContext, "shortcut") + ")" %>' key="the-original-folder-does-not-exist-anymore" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 

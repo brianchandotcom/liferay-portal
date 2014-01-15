@@ -135,7 +135,7 @@ portletURL.setParameter("tabs3", tabs3);
 								<portlet:param name="passwordPolicyId" value="<%= String.valueOf(curPasswordPolicy.getPasswordPolicyId()) %>" />
 							</portlet:renderURL>
 
-							<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-user-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}) %>' />
+							<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-user-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}, false) %>' />
 						</c:if>
 					</liferay-ui:search-container-column-text>
 
@@ -229,7 +229,7 @@ portletURL.setParameter("tabs3", tabs3);
 								<portlet:param name="passwordPolicyId" value="<%= String.valueOf(curPasswordPolicy.getPasswordPolicyId()) %>" />
 							</portlet:renderURL>
 
-							<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-organization-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}) %>' />
+							<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-organization-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}, false) %>' />
 						</c:if>
 					</liferay-ui:search-container-column-text>
 

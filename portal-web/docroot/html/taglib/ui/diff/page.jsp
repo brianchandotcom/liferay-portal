@@ -96,7 +96,7 @@ List<DiffResult> targetResults = diffResults[1];
 		</table>
 	</c:when>
 	<c:otherwise>
-		<%= LanguageUtil.format(pageContext, "there-are-no-differences-between-x-and-x", new Object[] {sourceName, targetName}) %>
+		<%= LanguageUtil.format(pageContext, "there-are-no-differences-between-x-and-x", new Object[] {sourceName, targetName}, false) %>
 	</c:otherwise>
 </c:choose>
 

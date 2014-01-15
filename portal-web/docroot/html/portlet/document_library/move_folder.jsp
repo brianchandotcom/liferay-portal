@@ -33,7 +33,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 
 <c:if test="<%= cmd.equals(Constants.MOVE_FROM_TRASH) %>">
 	<div class="alert alert-block">
-		<liferay-ui:message arguments="<%= folder.getName() %>" key="the-original-folder-does-not-exist-anymore" />
+		<liferay-ui:message arguments="<%= folder.getName() %>" key="the-original-folder-does-not-exist-anymore" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 

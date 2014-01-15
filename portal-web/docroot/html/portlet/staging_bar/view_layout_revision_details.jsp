@@ -40,7 +40,7 @@ if (workflowEnabled) {
 String taglibHelpMessage = null;
 
 if (layoutRevision.isHead()) {
-	taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", HtmlUtil.escape(layoutSetBranch.getName()));
+	taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", HtmlUtil.escape(layoutSetBranch.getName()), false);
 }
 else if (hasWorkflowTask) {
 	taglibHelpMessage = "you-are-currently-reviewing-this-page.-you-can-make-changes-and-send-them-to-the-next-step-in-the-workflow-when-ready";
@@ -171,7 +171,7 @@ else {
 		<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 			<c:if test="<%= layoutRevision.isIncomplete() %>">
 				<p>
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
 				</p>
 			</c:if>
 
@@ -179,7 +179,7 @@ else {
 			String label = null;
 
 			if (layoutRevision.isIncomplete()) {
-				label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName());
+				label = LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranch.getName(), false);
 			}
 			else {
 				if (workflowEnabled) {

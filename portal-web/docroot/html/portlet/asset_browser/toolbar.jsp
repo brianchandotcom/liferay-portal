@@ -49,7 +49,7 @@ Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {th
 			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
 			%>
 
-			<aui:nav-item href="<%= addPortletURLString %>" label='<%= LanguageUtil.format(pageContext, "add-x", assetRendererFactory.getTypeName(locale, false)) %>' />
+			<aui:nav-item href="<%= addPortletURLString %>" label='<%= LanguageUtil.format(pageContext, "add-x", assetRendererFactory.getTypeName(locale, false), false) %>' />
 		</c:if>
 	</c:when>
 	<c:otherwise>

@@ -580,7 +580,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 	%>
 
 	<c:if test="<%= Validator.isNotNull(urlViewInContext) %>">
-		<a href="<%= urlViewInContext %>" target="blank"><%= LanguageUtil.format(pageContext, "view-content-in-x", defaultDisplayLayout.getName(locale)) %></a>
+		<a href="<%= urlViewInContext %>" target="blank"><%= LanguageUtil.format(pageContext, "view-content-in-x", defaultDisplayLayout.getName(locale), false) %></a>
 	</c:if>
 </c:if>
 

@@ -334,7 +334,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 	<div class="entries-empty alert alert-info">
 		<c:choose>
 			<c:when test="<%= (fileEntryTypeId >= 0) %>">
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(dlFileEntryTypeName) %>" key="there-are-no-documents-or-media-files-of-type-x" />
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(dlFileEntryTypeName) %>" key="there-are-no-documents-or-media-files-of-type-x" translateArguments="<%= false %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />

@@ -46,7 +46,7 @@
 				String impersonatingUserLabel = "you-are-impersonating-the-guest-user";
 
 				if (themeDisplay.isSignedIn()) {
-					impersonatingUserLabel = LanguageUtil.format(pageContext, "you-are-impersonating-x", new Object[] {HtmlUtil.escape(user.getFullName())});
+					impersonatingUserLabel = LanguageUtil.format(pageContext, "you-are-impersonating-x", new Object[] {HtmlUtil.escape(user.getFullName())}, false);
 				}
 				%>
 
@@ -71,11 +71,11 @@
 
 					if (locale.getLanguage().equals(realUserLocale.getLanguage()) && locale.getCountry().equals(realUserLocale.getCountry())) {
 						doAsUserLanguageId = userLocale.getLanguage() + "_" + userLocale.getCountry();
-						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-x's-preferred-language-(x)", new String[] {HtmlUtil.escape(user.getFullName()), userLocale.getDisplayLanguage(realUserLocale)});
+						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-x's-preferred-language-(x)", new String[] {HtmlUtil.escape(user.getFullName()), userLocale.getDisplayLanguage(realUserLocale)}, false);
 					}
 					else {
 						doAsUserLanguageId = realUserLocale.getLanguage() + "_" + realUserLocale.getCountry();
-						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-your-preferred-language-(x)", realUserLocale.getDisplayLanguage(realUserLocale));
+						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-your-preferred-language-(x)", realUserLocale.getDisplayLanguage(realUserLocale), false);
 					}
 					%>
 

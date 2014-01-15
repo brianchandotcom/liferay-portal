@@ -40,7 +40,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	title='<%= LanguageUtil.format(pageContext, "view-x", ddmStructure.getName(locale)) %>'
+	title='<%= LanguageUtil.format(pageContext, "view-x", ddmStructure.getName(locale), false) %>'
 />
 
 <c:if test="<%= recordVersion != null %>">
@@ -99,5 +99,5 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
 portletURL.setParameter("recordSetId", String.valueOf(recordSetId));
 
 PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(pageContext, "view-x", ddmStructure.getName(locale)), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.format(pageContext, "view-x", ddmStructure.getName(locale), false), currentURL);
 %>

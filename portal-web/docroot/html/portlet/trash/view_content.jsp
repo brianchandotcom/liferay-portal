@@ -141,12 +141,12 @@
 								</liferay-ui:search-container-column-text>
 
 								<liferay-ui:search-container-column-text
-									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainedModelName(), true) %>'
+									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainedModelName()) %>'
 									value="<%= String.valueOf(curBaseModelsCount) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainerModelName(), true) %>'
+									name='<%= LanguageUtil.format(pageContext, "num-of-x", curTrashHandler.getTrashContainerModelName()) %>'
 									value="<%= String.valueOf(curContainerModelsCount) %>"
 								/>
 
@@ -212,7 +212,7 @@
 
 				<c:if test="<%= (containerModelsCount + baseModelsCount) == 0 %>">
 					<div class="alert alert-info">
-						<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-an-entry" />
+						<liferay-ui:message arguments="<%= new String[] {ResourceActionsUtil.getModelResource(locale, className)} %>" key="this-x-does-not-contain-an-entry" translateArguments="<%= false %>" />
 					</div>
 				</c:if>
 			</liferay-ui:panel-container>

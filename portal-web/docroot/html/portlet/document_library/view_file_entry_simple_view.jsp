@@ -25,8 +25,6 @@ boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
 boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
 boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
 boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
-
-request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 %>
 
 <div class="view">

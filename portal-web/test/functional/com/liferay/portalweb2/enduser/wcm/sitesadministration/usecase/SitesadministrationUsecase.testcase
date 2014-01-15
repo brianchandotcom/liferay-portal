@@ -1,0 +1,251 @@
+<definition component-name="portal-wcm">
+	<var name="page1Name" value="Home" />
+	<var name="page2Name" value="Wiki" />
+	<var name="page3Name" value="Documents and Media" />
+	<var name="page4Name" value="News" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
+	</tear-down>
+
+	<command name="AddSiteUserandOrganizations" priority="5">
+		<var name="org1Name" value="Organization Name 1" />
+		<var name="org2Name" value="Organization Name 2" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${org1Name}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${org1Name}" />
+			<var name="organizationSite" value="Community Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#manageMembershipOptions">
+			<var name="orgName" value="${org1Name}" />
+		</execute>
+
+		<execute macro="Organization#allowMembershipManagementCP">
+			<var name="orgName" value="${org1Name}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${org1Name}" />
+			<var name="siteMember" value="Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${org2Name}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${org2Name}" />
+			<var name="organizationSite" value="Intranet Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#manageMembershipOptions">
+			<var name="orgName" value="${org2Name}" />
+		</execute>
+
+		<execute macro="Organization#allowMembershipManagementCP">
+			<var name="orgName" value="${org2Name}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${org2Name}" />
+			<var name="siteMember" value="Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="${org1Name}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="${org2Name}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${org1Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+			<var name="key_pageName" value="${page1Name}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${page1Name}" />
+		
+		<execute macro="Page#openURL">
+            <var name="pageName" value="${page2Name}" />
+            <var name="siteName" value="${org1Name}" />
+            <var name="siteURL" value="true" />
+        </execute>
+
+       		<var name="key_pageName" value="${page2Name}" />
+
+        <execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${page2Name}" />
+
+        <execute macro="Page#openURL">
+			<var name="siteName" value="${org2Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+			<var name="key_pageName" value="${page1Name}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${page1Name}" />
+		
+		<execute macro="Page#openURL">
+            <var name="pageName" value="${page3Name}" />
+            <var name="siteName" value="${org2Name}" />
+            <var name="siteURL" value="true" />
+        </execute>
+
+       		<var name="key_pageName" value="${page3Name}" />
+
+        <execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${page3Name}" />
+
+        <execute macro="Page#openURL">
+            <var name="pageName" value="${page4Name}" />
+            <var name="siteName" value="${org2Name}" />
+            <var name="siteURL" value="true" />
+        </execute>
+
+       		<var name="key_pageName" value="${page4Name}" />
+
+        <execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${page4Name}" />
+
+        <execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+			<var name="siteName" value="${org2Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Site#deactivateOrganizationSiteCP">
+			<var name="siteName" value="${org2Name}" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />	
+		</execute>
+
+		<execute macro="Site#deactivateOrganizationSiteCP">
+			<var name="siteName" value="${org2Name}" />
+			<var name="successMessage" value="true" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="test" />
+		</execute>
+
+		<execute macro="Site#viewMySitesViaMySitesPG">
+			<var name="siteName" value="${org2Name}" />
+			<var name="organizationSite" value="true" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${org2Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE_ALERT_INFO" value1="This site is inactive. Please contact the administrator." />
+
+		<execute macro="User#firstLoginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="test" />
+		</execute>
+	</command>
+</definition>

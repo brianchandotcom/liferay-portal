@@ -703,6 +703,30 @@
 		</execute>
 	</command>
 
+	<command name="CannotAddCategoryWithNullTitle" priority="3">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCategoryWithNullTitleCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="CannotAddVocabularyWithNullTitle" priority="3">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addVocabularyWithNullTitle" />
+	</command>
+
 	<command name="DeleteCategories" priority="4">
 		<var name="categoryName1" value="Category Name 1" />
 		<var name="categoryName2" value="Category Name 2" />
@@ -846,7 +870,34 @@
 		<execute action="CPCategories#assertTextNotPresent" locator-key1="CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
 	</command>
 
-	<command name="DeleteSubcategory" priority="5">
+	<command name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#addAssociatedAssetTypeViaVocabularyCP">
+			<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#deleteAssociatedAssetTypeViaVocabularyCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteSubcategoryViaActions" priority="5">
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
 		<var name="vocabularyName" value="Vocabulary Name" />
@@ -874,7 +925,42 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Subcategory#deleteByActionsCP">
+		<execute macro="Subcategory#deleteViaActionsCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteSubcategoryViaDetails" priority="3">
+		<var name="categoryName" value="Category Name" />
+		<var name="subcategoryName" value="Subcategory Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#deleteViaDetailsCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="subcategoryName" value="${subcategoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
@@ -1015,6 +1101,41 @@
 
 		<execute macro="Category#editVocabularyDraganddropCP">
 			<var name="categoryName" value="${categoryName}" />
+		</execute>
+	</command>
+
+	<command name="MoveCategoryViaEdit" priority="3">
+		<var name="categoryName" value="Category Name" />
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="vocabularyName2" value="Vocabulary Name 2" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName2}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#moveCategoryViaEditCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyName2" value="${vocabularyName2}" />
+		</execute>
+
+		<execute macro="Category#viewMoveCategoryViaEditCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyName2" value="${vocabularyName2}" />
 		</execute>
 	</command>
 

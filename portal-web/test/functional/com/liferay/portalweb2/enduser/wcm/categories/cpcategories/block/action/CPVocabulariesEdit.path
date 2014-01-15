@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_147_description']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALLOW_MULTIPLE_CATEGORIES_CHECKBOX</td>
 	<td>//input[@id='_147_multiValuedCheckbox']</td>
 	<td></td>
@@ -56,6 +61,47 @@
 <tr>
 	<td>CLOSE_BUTTON</td>
 	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSOCIATED_ASSET_TYPES-->
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_DROP_DOWN</td>
+	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='accordion-toggle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_SELECT</td>
+	<td>//select[contains(@id,'_147_classNameId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_SELECT_2</td>
+	<td>xpath=(//select[contains(@id,'_147_classNameId')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_ADD_BUTTON</td>
+	<td>//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_ADD_BUTTON_2</td>
+	<td>xpath=(//button[contains(@class,'add-row')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_DELETE_BUTTON</td>
+	<td>//button[contains(@class,'delete-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_DELETE_BUTTON_2</td>
+	<td>xpath=(//button[contains(@class,'delete-row')])[2]</td>
 	<td></td>
 </tr>
 </tbody>

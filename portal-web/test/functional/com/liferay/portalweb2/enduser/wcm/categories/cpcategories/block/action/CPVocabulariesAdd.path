@@ -19,13 +19,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[@id='_147_title']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_147_description']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALLOW_MULTIPLE_CATEGORIES_CHECKBOX</td>
 	<td>//input[@id='_147_multiValuedCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWABLE_BY_SELECT</td>
+	<td>//select[@name='_147_inputPermissionsViewRole']</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,18 +54,34 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSOCIATED_ASSET_TYPES</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSOCIATED_ASSET_TYPES-->
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_DROP_DOWN</td>
 	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='accordion-toggle']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_ASSET_TYPE_SELECT</td>
+	<td>ASSOCIATED_ASSET_TYPES_SELECT</td>
 	<td>//select[contains(@id,'_147_classNameId0')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_VIEWABLE_BY_SELECT</td>
-	<td>//select[@name='_147_inputPermissionsViewRole']</td>
+	<td>ASSOCIATED_ASSET_TYPES_SELECT_2</td>
+	<td>xpath=(//select[contains(@id,'_147_classNameId')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_ADD_BUTTON</td>
+	<td>//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSOCIATED_ASSET_TYPES_DELETE_BUTTON</td>
+	<td>//button[contains(@class,'delete-row')]</td>
 	<td></td>
 </tr>
 </tbody>

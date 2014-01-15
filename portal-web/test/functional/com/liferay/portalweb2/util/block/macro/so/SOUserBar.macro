@@ -33,6 +33,12 @@
 		<execute action="SOUserBarAddSite#assertElementNotPresent" locator-key1="SAVE_BUTTON" />
 	</command>
 
+	<command name="dashboardPG">
+		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
+
+		<execute action="Dockbar#assertTextEquals" locator-key1="USER_NAME" value1="${userName}" />
+	</command>
+
 	<command name="deleteSOSite">
 		<var name="key_siteName" value="${siteName}" />
 

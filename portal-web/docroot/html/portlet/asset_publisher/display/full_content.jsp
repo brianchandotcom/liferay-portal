@@ -159,6 +159,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 		<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>">
 			<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+			<liferay-util:param name="showExtraInfo" value="<%= String.valueOf(assetPublisherDisplayContext.isShowExtraInfo()) %>" />
 		</liferay-util:include>
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableFlags() %>">

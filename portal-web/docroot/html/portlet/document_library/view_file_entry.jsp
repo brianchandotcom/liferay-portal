@@ -96,8 +96,6 @@ boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
-
-request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 %>
 
 <portlet:actionURL var="editFileEntry">

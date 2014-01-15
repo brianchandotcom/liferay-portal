@@ -22,11 +22,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 List<String> rankingNamesList = new ArrayList<String>();
 
 if (rankByParticipation) {
-	rankingNamesList.add(LanguageUtil.get(pageContext, SocialActivityCounterConstants.NAME_PARTICIPATION));
+	rankingNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 }
 
 if (rankByContribution) {
-	rankingNamesList.add(LanguageUtil.get(pageContext, SocialActivityCounterConstants.NAME_CONTRIBUTION));
+	rankingNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 }
 
 String[] rankingNames = rankingNamesList.toArray(new String[rankingNamesList.size()]);
@@ -74,7 +74,7 @@ if (!rankingNamesList.isEmpty()) {
 	String rankingNamesMessage = LanguageUtil.format(pageContext, rankingNames[0], StringPool.BLANK, false);
 
 	for (int i = 1; i < rankingNames.length; i++) {
-		rankingNamesMessage = LanguageUtil.format(pageContext, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]}, false);
+		rankingNamesMessage = LanguageUtil.format(pageContext, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]});
 	}
 	%>
 

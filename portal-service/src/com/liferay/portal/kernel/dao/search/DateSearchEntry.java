@@ -60,8 +60,8 @@ public class DateSearchEntry extends TextSearchEntry {
 						pageContext, "x-ago",
 						LanguageUtil.getTimeDescription(
 							pageContext,
-							System.currentTimeMillis() - _date.getTime(), true
-						), false));
+							System.currentTimeMillis() - _date.getTime(), true),
+						false));
 			}
 			else {
 				sb.append(
@@ -69,8 +69,8 @@ public class DateSearchEntry extends TextSearchEntry {
 						pageContext, "within-x",
 						LanguageUtil.getTimeDescription(
 							pageContext,
-							_date.getTime() - System.currentTimeMillis(), true
-						), false));
+							_date.getTime() - System.currentTimeMillis(), true),
+						false));
 			}
 
 			sb.append("</span>");

@@ -85,25 +85,29 @@
 	</command>
 
 	<command name="deletePG">
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
-		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS_1" />
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_RECYCLE_BIN" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_1" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="editPG">
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
-		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS_1" />
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_EDIT" />
 
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryNameEdit}" />
 		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryNameEdit}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryNameEdit}" />
 	</command>
 
 	<command name="gotoPG">
@@ -175,11 +179,13 @@
 	</command>
 
 	<command name="viewNoPG">
+		<var name="key_categoryName" value="${categoryName}" />
+
 		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_1" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORIES_1" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_THREADS_1" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_POSTS_1" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORIES" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_THREADS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_POSTS" />
 	</command>
 
 	<command name="viewNoSubcategoryCP">
@@ -197,9 +203,9 @@
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="0" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY" />
 
 		<execute action="PGMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />
@@ -211,9 +217,9 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="0" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS_1" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
 
 		<if>
 			<equals arg1="categoryDescriptionEnabled" arg2="true" />

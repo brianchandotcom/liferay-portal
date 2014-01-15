@@ -1,6 +1,6 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="SCOPE_SCOPE">
+		<case locator-key1="SCOPE_MENULIST">
 			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
 		</case>
 	</command>

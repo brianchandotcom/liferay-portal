@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>PGMessageboardsConfigurationSetupMessageAddedEmail</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMessageboardsConfigurationSetupMessageAddedEmail</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMessageboardsConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGMessageboardsConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MESSAGE_ADDED_EMAIL-->
+<tr>
+	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>
+	<td>//input[@id='_86_emailMessageAddedEnabledCheckbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -928,7 +928,7 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageBoardsPortlet#configureScopePG">
+		<execute macro="MessageboardsPortlet#configureScopePG">
 			<var name="scopeName" value="${scopeName}" />
 		</execute>
 

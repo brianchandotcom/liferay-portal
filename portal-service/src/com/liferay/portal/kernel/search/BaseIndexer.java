@@ -88,6 +88,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -490,7 +491,9 @@ public abstract class BaseIndexer implements Indexer {
 
 			BooleanQuery fullQuery = getFullQuery(searchContext);
 
-			fullQuery.setQueryConfig(searchContext.getQueryConfig());
+			QueryConfig queryConfig = searchContext.getQueryConfig();
+
+			fullQuery.setQueryConfig(queryConfig);
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
@@ -501,6 +504,22 @@ public abstract class BaseIndexer implements Indexer {
 			if (isFilterSearch() && (permissionChecker != null)) {
 				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
 				searchContext.setStart(0);
+
+				String[] selectedFieldNames =
+					queryConfig.getSelectedFieldNames();
+
+				if (selectedFieldNames != null) {
+					Set<String> selectedFieldNameSet = SetUtil.fromArray(
+						selectedFieldNames);
+
+					selectedFieldNameSet.addAll(
+						_PERMISSION_SELECTED_FIELD_NAMES);
+
+					selectedFieldNames = selectedFieldNameSet.toArray(
+						new String[selectedFieldNameSet.size()]);
+
+					queryConfig.setSelectedFieldNames(selectedFieldNames);
+				}
 			}
 
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
@@ -1705,6 +1724,9 @@ public abstract class BaseIndexer implements Indexer {
 	protected void setStagingAware(boolean stagingAware) {
 		_stagingAware = stagingAware;
 	}
+
+	private static final List<String> _PERMISSION_SELECTED_FIELD_NAMES =
+		Arrays.asList(Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK);
 
 	private static Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 

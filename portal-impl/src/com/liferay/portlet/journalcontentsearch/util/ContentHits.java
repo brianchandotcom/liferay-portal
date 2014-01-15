@@ -47,7 +47,7 @@ public class ContentHits {
 			Document doc = hits.doc(i);
 
 			long articleGroupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
-			String articleId = doc.get("articleId");
+			String articleId = doc.get(Field.ARTICLE_ID);
 
 			int layoutIdsCount =
 				JournalContentSearchLocalServiceUtil.getLayoutIdsCount(

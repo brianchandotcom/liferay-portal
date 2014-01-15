@@ -24,6 +24,8 @@
 				<var name="startDate" path="PGCalendarAddevent" locator-key="START_DATE" />
 				<var name="startDateTime" path="PGCalendarAddevent" locator-key="START_DATE_TIME" />
 
+				<execute macro="CalendarEvent#selectCalendarPG" />				
+
 				<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
 				<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				<execute action="PGCalendarAddevent#selectFrame" value1="relative=top" />
@@ -52,6 +54,8 @@
 
 					<var name="endDate" path="PGCalendarAddevent" locator-key="END_DATE" />
 					<var name="startDate" path="PGCalendarAddevent" locator-key="START_DATE" />
+
+					<execute macro="CalendarEvent#selectCalendarPG" />	
 
 					<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -91,6 +95,9 @@
 
 					<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_CHECKBOX" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_1" value1="Daily, 1 Times" />
+
+					<execute macro="CalendarEvent#selectCalendarPG" />	
+
 					<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					<execute action="PGCalendarAddevent#selectFrame" value1="relative=top" />
@@ -175,6 +182,23 @@
 		<execute action="PGCalendarVieweventdetails#selectFrame" value1="relative=top" />
 	</command>
 
+	<command name="selectCalendarPG">
+		<if>
+			<isset var="calendarName" />
+			<then>
+				<if>
+					<condition action="PGCalendarAddevent#isElementPresent" locator-key1="DETAILS_PANEL_COLLAPSED" />
+					<then>
+						<execute action="PGCalendarAddevent#click" locator-key1="DETAILS_PANEL_COLLAPSED" />	
+						<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="DETAILS_PANEL_EXPANDED" />
+					</then>
+				</if>
+					
+				<execute action="PGCalendarAddevent#select" locator-key1="DETAILS_CALENDAR_SELECT" value1="${calendarName}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="changeViewPG">
 		<if>
 			<equals arg1="${viewType}" arg2="Day" />
@@ -247,8 +271,25 @@
 	</command>
 
 	<command name="editPG">
-		<var name="endDateTime" value="09:30 AM" />
-		<var name="startDateTime" value="08:30 AM" />
+		<if>
+			<isset var="endDateTimeEdit" />
+			<then>
+				<var name="endDateTime" value="${endDateTimeEdit}" />
+			</then>
+			<else>
+				<var name="endDateTime" value="09:30 AM" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="startDateTimeEdit" />
+			<then>
+				<var name="startDateTime" value="${startDateTimeEdit}" />
+			</then>
+			<else>
+				<var name="startDateTime" value="08:30 AM" />
+			</else>
+		</if>
 
 		<execute macro="CalendarEvent#changeViewPG">
 			<var name="viewType" value="Week" />

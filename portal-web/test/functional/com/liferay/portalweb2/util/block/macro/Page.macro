@@ -134,7 +134,17 @@
 	<command name="gotoPG">
 		<execute macro="Page#openURL" />
 
-		<execute action="Home#click" locator1="link=${pageName}" />
+		<if>
+			<equals arg1="${soPage}" arg2="true" />
+			<then>
+				<var name="key_pageName" value="${pageName}" />
+	
+				<execute action="SOSiteHome#click" locator-key1="NAVIGATION_PAGE" />
+			</then>
+			<else>
+				<execute action="Home#click" locator1="link=${pageName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="gotoUsersCP">

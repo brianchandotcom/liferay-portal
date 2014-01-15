@@ -581,7 +581,8 @@ public class ServicePreAction extends Action {
 			boolean customizable = layoutTypePortlet.isCustomizable();
 
 			if (!customizable ||
-				(group.isLayoutPrototype() || group.isLayoutSetPrototype())) {
+				(group.isLayoutPrototype() || group.isLayoutSetPrototype()) ||
+				group.isStagingGroup()) {
 
 				customizedView = false;
 			}

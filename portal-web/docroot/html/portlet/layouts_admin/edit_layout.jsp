@@ -324,13 +324,15 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 				</aui:script>
 			</c:if>
 
-			<liferay-ui:form-navigator
-				categoryNames="<%= _CATEGORY_NAMES %>"
-				categorySections="<%= categorySections %>"
-				displayStyle="<%= displayStyle %>"
-				jspPath="/html/portlet/layouts_admin/layout/"
-				showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
-			/>
+			<c:if test="<%= !selGroup.hasLocalOrRemoteStagingGroup() || selGroup.isStagingGroup() %>">
+				<liferay-ui:form-navigator
+					categoryNames="<%= _CATEGORY_NAMES %>"
+					categorySections="<%= categorySections %>"
+					displayStyle="<%= displayStyle %>"
+					jspPath="/html/portlet/layouts_admin/layout/"
+					showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
+				/>
+			</c:if>
 		</c:otherwise>
 	</c:choose>
 </aui:form>

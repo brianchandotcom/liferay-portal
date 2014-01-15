@@ -15,7 +15,7 @@
 --%>
 
 <%
-boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
+boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isUserGroup() || group.isStagingGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
 boolean linkedLayout = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
 boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
 %>
@@ -127,9 +127,8 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 							<liferay-ui:icon label="<%= true %>" message="reset-my-customizations" url="<%= taglibURL %>" />
 						</c:if>
 					</div>
-				</div>
 
-				<aui:script>
+					<aui:script>
 					Liferay.provide(
 						window,
 						'<portlet:namespace />toggleCustomizedView',
@@ -154,7 +153,9 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 						},
 						['aui-io-request']
 					);
-				</aui:script>
+					</aui:script>
+
+				</div>
 
 				<aui:script use="aui-base">
 					var toggleCustomizedView = A.one('#<portlet:namespace />toggleCustomizedView');

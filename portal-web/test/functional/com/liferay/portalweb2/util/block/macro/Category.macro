@@ -114,6 +114,17 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="addCategoryWithNullTitleCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="ADD_CATEGORY_BUTTON" value1="Add Category" />
+
+		<execute action="CPCategoriesAdd#type" locator-key1="NAME_FIELD" value1=" " />
+		<execute action="CPCategoriesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPCategoriesAdd#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="Please enter a valid category name." />
+	</command>
+
 	<command name="deleteByActionsCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -202,6 +213,20 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="moveCategoryViaEditCP">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+		<execute action="CPCategories#assertClick" locator-key1="CATEGORY_DETAILS_EDIT_BUTTON" value1="Edit" />
+
+		<execute action="CPCategoriesEdit#select" locator-key1="TO_VOCABULARY_SELECT" value1="${vocabularyName2}" />
+		<execute action="CPCategoriesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+	</command>
+
 	<command name="viewCategoryPropertyCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -282,6 +307,19 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+	</command>
+
+	<command name="viewMoveCategoryViaEditCP">
+		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." />
+
+		<var name="key_vocabularyName" value="${vocabularyName2}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName2}" />
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 </definition>

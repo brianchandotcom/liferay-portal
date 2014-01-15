@@ -127,7 +127,7 @@ if (Validator.isNull(title)) {
 			</aui:script>
 
 			<c:if test="<%= wrapDropDownMenu %>">
-				<ul class='dropdown-menu'>
+				<ul class="dropdown-menu">
 			</c:if>
 		</c:if>
 

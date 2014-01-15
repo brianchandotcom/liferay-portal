@@ -40,6 +40,11 @@ public class SeleniumBuilder {
 		new SeleniumBuilder(args);
 	}
 
+	/**
+	 * Constructs a SeleniumBuilder with argument array of <code>String</code>.
+	 *
+	 * @param args the command-line arguments
+	 */
 	public SeleniumBuilder(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
@@ -123,6 +128,12 @@ public class SeleniumBuilder {
 			"\nThere are " + _getTestCaseMethodCount() + " test cases.");
 	}
 
+	/**
+	 * Returns the number of methods inside each testcase file, and adds them
+	 * together in order to calculate the total number of testcase methods.
+	 *
+	 * @return the number of testcase methods currently existing
+	 */
 	private int _getTestCaseMethodCount() {
 		int testCaseCount = 0;
 
@@ -160,6 +171,26 @@ public class SeleniumBuilder {
 		return testCaseCount;
 	}
 
+	/**
+	 * Gets the list of all the testcase methods names, and sorts them according
+	 * to <code>component-name</code>, and then writes these lists to
+	 * <code>test.case.method.names.properties</code> as properties in this
+	 * format: <code>componentName + "_TEST_CASE_METHOD_NAMES=" + testCaseName +
+	 * "TestCase#test" + commandName</code>
+	 *
+	 * <p>
+	 * Example <code>test.case.method.names.properties</code> output file:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * MARKETPLACE_TEST_CASE_METHOD_NAMES=PortalSmokeTestCase#testSmoke
+	 * PORTAL_APIS_TEST_CASE_METHOD_NAMES=ApisTestCase#testAdd ApisTestCase#test
+	 * </code>
+	 * </pre>
+	 * </p>
+	 */
 	private void _writeTestCaseMethodNamesFile() throws Exception {
 		Map<String, Set<String>> testCaseMethodNameMap =
 			new TreeMap<String, Set<String>>();
@@ -268,6 +299,34 @@ public class SeleniumBuilder {
 			"../../../test.case.method.names.properties", sb.toString(), false);
 	}
 
+	/**
+	 * Gets the list of all the testcase method properties scoped to the
+	 * testcase definition, and writes them to <code>test.generated.properties
+	 * </code> in this format: <code>testCaseName + "all" + propertyName =
+	 * propertyValue</code>.
+	 *
+	 * <p>
+	 * If the testcase method properties is scoped to the testcase command, then
+	 * it writes the properties to <code>test.generated.properties</code> in
+	 * this format: <code>testCaseName + "test" + commandName + propertyName =
+	 * propertyValue </code>.
+	 * </p>
+	 *
+	 * <p>
+	 * Example <code>test.generated.properties</code> output file:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * SOProfileTestCase.all.hook.plugins.includes=deploy-listener-hook,...
+	 * SOProfileTestCase.all.portlet.plugins.includes=calendar-portlet,chat-...
+	 * SOProfileTestCase.all.theme.plugins.includes=so-theme
+	 * SOProfileTestCase.all.web.plugins.includes=resources-importer-web
+	 * </code>
+	 * </pre>
+	 * </p>
+	 */
 	private void _writeTestCasePropertiesFile() throws Exception {
 		Set<String> testCaseProperties = new TreeSet<String>();
 

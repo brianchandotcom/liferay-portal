@@ -193,6 +193,11 @@
 	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Blogs')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Web Content Display')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

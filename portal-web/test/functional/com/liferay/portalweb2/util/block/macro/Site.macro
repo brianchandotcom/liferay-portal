@@ -34,6 +34,12 @@
 				<equals arg1="${siteType}" arg2="Community" />
 				<then>
 					<execute action="CPSites#assertClick" locator-key1="ADD_COMMUNITY_SITE" value1="Community Site" />
+					<if>
+						<equals arg1="${uncheckPropagation}" arg2="true" />
+						<then>
+							<execute action="CPSitesAdd#uncheck" locator-key1="ENABLE_PROPAGATION_CHECKBOX" />
+						</then>
+					</if>
 				</then>
 			</elseif>
 			<elseif>

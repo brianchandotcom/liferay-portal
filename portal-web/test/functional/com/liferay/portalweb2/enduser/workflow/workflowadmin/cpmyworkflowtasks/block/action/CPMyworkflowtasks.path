@@ -39,24 +39,24 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ASSIGNED_TO_ME_COLLAPSED</td>
-    <td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to Me')]</td>
-    <td></td>
+	<td>ASSIGNED_TO_ME_COLLAPSED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to Me')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ASSIGNED_TO_ME_EXPANDED</td>
-    <td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to Me')]</td>
-    <td></td>
+	<td>ASSIGNED_TO_ME_EXPANDED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to Me')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ASSIGNED_TO_MY_ROLES_COLLAPSED</td>
-    <td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to My Roles')]</td>
-    <td></td>
+	<td>ASSIGNED_TO_MY_ROLES_COLLAPSED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-collapsed']//span[contains(.,'Assigned to My Roles')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ASSIGNED_TO_MY_ROLES_EXPANDED</td>
-    <td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to My Roles')]</td>
-    <td></td>
+	<td>ASSIGNED_TO_MY_ROLES_EXPANDED</td>
+	<td>//div[@class='accordion-heading toggler-header toggler-header-expanded']//span[contains(.,'Assigned to My Roles')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -250,6 +250,37 @@
 <tr>
 	<td>PANEL_CANCEL_BUTTON</td>
 	<td>//button[.='Cancel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMPLETED_TABLE-->
+<tr>
+	<td>COMPLETED_TABLE_TASK</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPLETED_TABLE_ASSET_TITLE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPLETED_TABLE_ASSET_TYPE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPLETED_TABLE_LAST_ACTIVITY_DATE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPLETED_TABLE_DUE_DATE</td>
+	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 </tbody>

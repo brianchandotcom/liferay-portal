@@ -174,7 +174,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "sea
 						<liferay-ui:icon
 							image='<%= (BookmarksFolderLocalServiceUtil.getFoldersAndEntriesCount(folder.getGroupId(), folder.getFolderId(), WorkflowConstants.STATUS_ANY) > 0) ? "folder_full_document" : "folder_empty" %>'
 							label="<%= true %>"
-							message="<%= folder.getName() %>"
+							message="<%= HtmlUtil.escape(folder.getName()) %>"
 							url="<%= rowURL %>"
 						/>
 					</liferay-ui:search-container-column-text>

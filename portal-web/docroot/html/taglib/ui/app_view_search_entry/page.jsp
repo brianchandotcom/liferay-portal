@@ -95,7 +95,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 							</dt>
 							<dd>
 
-								<%= containerName %>
+								<%= HtmlUtil.escape(containerName) %>
 
 							</dd>
 						</c:if>

@@ -582,30 +582,27 @@
 
 				<echo file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/js/common.js" append="true">
 					<![CDATA[
-					var escapeHTML = (function()
-					{
-						var regexp = /[&<>"'/`]/g,
-							tagsToReplace =
-							{
-								'&': '&amp;',
-								'<': '&lt;',
-								'>': '&gt;',
-								'"': '&#034;',
-								'\'': '&#039;',
-								'/': '&#047;',
-								'`': '&#096;'
-							}
+					var escapeHTML = (function() {
+						var	tagsToReplace = {
+							'&': '&amp;',
+							'<': '&lt;',
+							'>': '&gt;',
+							'"': '&#034;',
+							'\'': '&#039;',
+							'/': '&#047;',
+							'`': '&#096;'
+						};
 
-						function replaceTag( tag )
-						{
-							return tagsToReplace[tag] || tag ;
-						}
+						var replaceTag = function(tag) {
+							return tagsToReplace[tag] || tag;
+						};
 
-						return function( str )
-						{
-							return str.replace( regexp, replaceTag ) ;
-						}
-					})() ;
+						var regexp = /[&<>"'/`]/g;
+
+						return function(str) {
+							return str.replace(regexp, replaceTag);
+						};
+					})();
 					]]>
 				</echo>
 

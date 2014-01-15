@@ -41,9 +41,11 @@ public class SeleniumBuilder {
 	}
 
 	/**
-	 * Constructs a SeleniumBuilder with argument array of <code>String</code>.
+	 * Constructs a Selenium Builder with an argument array of
+	 * <code>String</code>.
 	 *
-	 * @param args the command-line arguments
+	 * @param  args the command-line arguments
+	 * @throws Exception if an exception occurred
 	 */
 	public SeleniumBuilder(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -129,10 +131,10 @@ public class SeleniumBuilder {
 	}
 
 	/**
-	 * Returns the number of methods inside each testcase file, and adds them
-	 * together in order to calculate the total number of testcase methods.
+	 * Returns the total number of test case methods by adding the number of
+	 * methods inside each test case file.
 	 *
-	 * @return the number of testcase methods currently existing
+	 * @return the total number of test case methods
 	 */
 	private int _getTestCaseMethodCount() {
 		int testCaseCount = 0;
@@ -172,11 +174,11 @@ public class SeleniumBuilder {
 	}
 
 	/**
-	 * Gets the list of all the testcase methods names, and sorts them according
-	 * to <code>component-name</code>, and then writes these lists to
+	 * Gets the list of all test case method names, sorts them according to
+	 * <code>component-name</code>, and then writes these lists to
 	 * <code>test.case.method.names.properties</code> as properties in this
 	 * format: <code>componentName + "_TEST_CASE_METHOD_NAMES=" + testCaseName +
-	 * "TestCase#test" + commandName</code>
+	 * "TestCase#test" + commandName</code>.
 	 *
 	 * <p>
 	 * Example <code>test.case.method.names.properties</code> output file:
@@ -190,6 +192,8 @@ public class SeleniumBuilder {
 	 * </code>
 	 * </pre>
 	 * </p>
+	 *
+	 * @throws Exception if an exception occurred
 	 */
 	private void _writeTestCaseMethodNamesFile() throws Exception {
 		Map<String, Set<String>> testCaseMethodNameMap =
@@ -300,16 +304,16 @@ public class SeleniumBuilder {
 	}
 
 	/**
-	 * Gets the list of all the testcase method properties scoped to the
-	 * testcase definition, and writes them to <code>test.generated.properties
-	 * </code> in this format: <code>testCaseName + "all" + propertyName =
+	 * Gets the list of all test case method properties scoped to the test case
+	 * definition, and writes them to <code>test.generated.properties </code> in
+	 * this format: <code>testCaseName + "all" + propertyName =
 	 * propertyValue</code>.
 	 *
 	 * <p>
-	 * If the testcase method properties is scoped to the testcase command, then
-	 * it writes the properties to <code>test.generated.properties</code> in
-	 * this format: <code>testCaseName + "test" + commandName + propertyName =
-	 * propertyValue </code>.
+	 * If the test case method properties are scoped to the test case command,
+	 * then it writes the properties to <code>test.generated.properties</code>
+	 * in this format: <code>testCaseName + "test" + commandName + propertyName
+	 * = propertyValue </code>.
 	 * </p>
 	 *
 	 * <p>
@@ -326,6 +330,8 @@ public class SeleniumBuilder {
 	 * </code>
 	 * </pre>
 	 * </p>
+	 *
+	 * @throws Exception if an exception occurred
 	 */
 	private void _writeTestCasePropertiesFile() throws Exception {
 		Set<String> testCaseProperties = new TreeSet<String>();

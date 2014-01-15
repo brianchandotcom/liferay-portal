@@ -313,7 +313,7 @@ public class SeleniumBuilder {
 	 * If the test case method properties are scoped to the test case command,
 	 * then it writes the properties to <code>test.generated.properties</code>
 	 * in this format: <code>testCaseName + "test" + commandName + propertyName
-	 * = propertyValue </code>.
+	 * = propertyValue</code>.
 	 * </p>
 	 *
 	 * <p>

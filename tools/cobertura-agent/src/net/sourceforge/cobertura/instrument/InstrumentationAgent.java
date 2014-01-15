@@ -14,6 +14,8 @@
 
 package net.sourceforge.cobertura.instrument;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -54,13 +56,19 @@ public class InstrumentationAgent {
 
 				_assertClassDataCoverage(clazz, classData);
 
-				Class<?>[] declaredClasses = clazz.getDeclaredClasses();
+				if (includeInnerClasses) {
+					Class<?>[] declaredClasses = clazz.getDeclaredClasses();
 
-				for (Class<?> declaredClass : declaredClasses) {
-					classData = projectData.getClassData(
-						declaredClass.getName());
+					for (Class<?> declaredClass : declaredClasses) {
+						if (ArrayUtil.contains(classes, declaredClass)) {
+							continue;
+						}
 
-					_assertClassDataCoverage(declaredClass, classData);
+						classData = projectData.getClassData(
+							declaredClass.getName());
+
+						_assertClassDataCoverage(declaredClass, classData);
+					}
 				}
 			}
 		}

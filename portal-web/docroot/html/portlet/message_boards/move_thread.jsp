@@ -136,7 +136,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "mov
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = event.categoryid;
 
-					document.getElementById('<portlet:namespace />categoryName').value = event.name;
+					document.getElementById('<portlet:namespace />categoryName').value = A.Lang.String.unescapeEntities(event.name);
 				}
 			);
 		}

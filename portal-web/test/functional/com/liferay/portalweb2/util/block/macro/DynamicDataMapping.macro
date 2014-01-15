@@ -89,9 +89,9 @@
 		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FORM_FIELD" value1="${fieldName}" />
 		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
-		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
 	</command>
 
 	<command name="viewEditFieldSettingsField">

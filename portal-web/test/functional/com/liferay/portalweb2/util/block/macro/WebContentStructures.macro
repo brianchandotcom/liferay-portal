@@ -14,19 +14,6 @@
 
 		<execute action="CPWebcontentStructuresAddstructure#type" locator-key1="DESCRIPTION_FIELD" value1="${structureDescription}" />
 
-		<if>
-			<equals arg1="substructure" arg2="True" />
-			<then>
-				<execute action="CPWebcontentStructuresAddstructure#assertClick" locator-key1="PARENT_STRUCTURE_SELECT_BUTTON" value1="Select" />
-
-				<execute action="CPWebcontentTemplatesAddtemplateStructure#selectFrame" />
-				<execute action="CPWebcontentTemplatesAddtemplateStructure#selectFrame" locator-key1="STRUCTURE_IFRAME" />
-				<execute action="CPWebcontentTemplatesAddtemplateStructure#assertClick" locator-key1="STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
-
-				<execute action="CPWebcontentStructuresAddstructure#selectFrame" locator-key1="STRUCTURES_IFRAME" />
-			</then>
-		</if>
-
 		<for list="${structureFieldNames}" param="structureFieldName">
 			<execute macro="DynamicDataMapping#addField">
 				<var name="fieldName" value="${structureFieldName}" />
@@ -84,43 +71,6 @@
 		<execute action="CPWebcontentStructures#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="STRUCTURE_TABLE_NAME" value1="${structureName}" />
 		<execute action="CPWebcontentStructures#assertTextEquals" locator-key1="STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
-	</command>
-
-	<command name="editSubstructureCP">
-		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
-		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
-
-		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#type" locator-key1="SEARCH_FIELD" value1="${substructureName}" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
-
-		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" />
-		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" locator-key1="STRUCTURES_IFRAME" />
-
-		<for list="${editSubstructureFieldNames}" param="structureFieldName">
-			
-			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
-
-			<execute action="CPWebcontentStructuresEditdefaultvalues#type" locator-key1="FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
-		</for>
-
-		<execute action="CPWebcontentStructuresEditdefaultvalues#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPWebcontentStructures#selectFrame" locator-key1="STRUCTURES_IFRAME" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_TABLE_ACTIONS" value1="Actions" />
-		<execute action="CPWebcontentStructures#assertClick" locator-key1="STRUCTURE_MENULIST_EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
-
-		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" />
-		<execute action="CPWebcontentStructuresEditdefaultvalues#selectFrame" locator-key1="STRUCTURES_IFRAME" />
-
-		<for list="${editSubstructureFieldNames}" param="structureFieldName">
-			
-			<var name="key_fieldDefaultValue" value="${structureFieldName}" />
-
-			<execute action="CPWebcontentStructuresEditdefaultvalues#assertTextEquals" locator-key1="FIELD_NAME_FIELD" value1="Edited ${structureFieldName} Field" />
-		</for>	
 	</command>
 
 	<command name="tearDownCP">

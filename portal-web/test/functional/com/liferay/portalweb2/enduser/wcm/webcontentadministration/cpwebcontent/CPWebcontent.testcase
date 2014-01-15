@@ -320,29 +320,20 @@
 	</command>
 
 	<command name="AddWebContentMultiple" priority="4">
-		<var name="webContentContent1" value="WC WebContent Content 1" />
-		<var name="webContentContent2" value="WC WebContent Content 2" />
-		<var name="webContentContent3" value="WC WebContent Content 3" />
-		<var name="webContentTitle1" value="WC WebContent Title 1" />
-		<var name="webContentTitle2" value="WC WebContent Title 2" />
-		<var name="webContentTitle3" value="WC WebContent Title 3" />
+		<var name="webContent1Content" value="WC WebContent Content 1" />
+		<var name="webContent1Title" value="WC WebContent Title 1" />
+		<var name="webContent2Content" value="WC WebContent Content 2" />
+		<var name="webContent2Title" value="WC WebContent Title 2" />
+		<var name="webContent3Content" value="WC WebContent Content 3" />
+		<var name="webContent3Title" value="WC WebContent Title 3" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent1}" />
-			<var name="webContentTitle" value="${webContentTitle1}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent2}" />
-			<var name="webContentTitle" value="${webContentTitle2}" />
+			<var name="webContentContent" value="${webContent1Content}" />
+			<var name="webContentTitle" value="${webContent1Title}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -350,8 +341,17 @@
 		</execute>
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent3}" />
-			<var name="webContentTitle" value="${webContentTitle3}" />
+			<var name="webContentContent" value="${webContent2Content}" />
+			<var name="webContentTitle" value="${webContent2Title}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContent3Content}" />
+			<var name="webContentTitle" value="${webContent3Title}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -359,8 +359,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="${webContentContent1}" />
-			<var name="webContentTitle" value="${webContentTitle1}" />
+			<var name="webContentContent" value="${webContent1Content}" />
+			<var name="webContentTitle" value="${webContent1Title}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -368,8 +368,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="${webContentContent2}" />
-			<var name="webContentTitle" value="${webContentTitle2}" />
+			<var name="webContentContent" value="${webContent2Content}" />
+			<var name="webContentTitle" value="${webContent2Title}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -377,8 +377,8 @@
 		</execute>
 
 		<execute macro="WebContent#viewCP">
-			<var name="webContentContent" value="${webContentContent3}" />
-			<var name="webContentTitle" value="${webContentTitle3}" />
+			<var name="webContentContent" value="${webContent3Content}" />
+			<var name="webContentTitle" value="${webContent3Title}" />
 		</execute>
 	</command>
 
@@ -454,9 +454,6 @@
 		<var name="templateFile" value="xsl_template.xsl" />
 		<var name="templateLanguage" value="xsl" />
 		<var name="templateName" value="WC Template Name" />
-
-		<!-- <var name="templateScript"><![CDATA[/root/dynamic-element[@name='name']]]></var> -->
-
 		<var name="webContentText" value="WC WebContent Text" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -533,15 +530,6 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateName" value="${templateName}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewCP">
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateName" value="${templateName}" />
 		</execute>

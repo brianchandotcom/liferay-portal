@@ -1469,6 +1469,12 @@ tck.url=true</echo>
 							/>
 						</unzip>
 
+						<chmod perm="a+x">
+							<fileset dir="${app.server.dir}/patching-tool">
+								<include name="*.sh" />
+							</fileset>
+						</chmod>
+
 						<get
 							dest="${app.server.dir}/patching-tool/patches"
 							src="${test.build.fix.pack.zip.url}"

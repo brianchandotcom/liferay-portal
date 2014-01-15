@@ -190,7 +190,3 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		</div>
 	</div>
 </div>
-
-<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
-	<%@ include file="/html/portlet/document_library/action/open_document_js.jspf" %>
-</c:if>

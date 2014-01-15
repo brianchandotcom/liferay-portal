@@ -106,7 +106,7 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
 	</portlet:renderURL>
 
-	<aui:script use="escape,liferay-search-container">
+	<aui:script use="liferay-search-container">
 		A.one('#<portlet:namespace />selectSiteLink').on(
 			'click',
 			function(event) {
@@ -126,7 +126,7 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 
 						var rowColumns = [];
 
-						rowColumns.push(A.Escape.html(event.groupdescriptivename));
+						rowColumns.push(event.groupdescriptivename);
 						rowColumns.push('');
 						rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 

@@ -475,10 +475,10 @@ for (Group group : allGroups) {
 
 			var rowColumns = [];
 
-			rowColumns.push(A.Escape.html(name));
+			rowColumns.push(name);
 
 			if (groupName) {
-				rowColumns.push(A.Escape.html(groupName));
+				rowColumns.push(groupName);
 			}
 
 			if (groupId) {
@@ -497,7 +497,7 @@ for (Group group : allGroups) {
 			searchContainer.addRow(rowColumns, roleId);
 			searchContainer.updateDataStore();
 		},
-		['liferay-search-container', 'escape']
+		['liferay-search-container']
 	);
 </aui:script>
 

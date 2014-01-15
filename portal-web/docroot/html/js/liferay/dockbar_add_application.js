@@ -76,18 +76,6 @@ AUI.add(
 						instance._entriesPanel.delegate(STR_KEY, instance._addApplication, STR_ENTER_DOWN, SELECTOR_CONTENT_ITEM, instance);
 
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
-
-						Liferay.on('showTab', instance._onShowTab, instance);
-					},
-
-					_onShowTab: function(event) {
-						var instance = this;
-
-						if (event.namespace.indexOf(instance.get('namespace')) === 0) {
-							var index = event.selectedIndex;
-
-							Liferay.Store('liferay_addpanel_tab', event.names[index]);
-						}
 					},
 
 					_onPortletClose: function(event) {

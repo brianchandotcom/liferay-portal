@@ -66,7 +66,7 @@
 </tr>
 <tr>
 		<td>NAVIGATION_ADDED_EMAIL</td>
-		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Entry Added Email')]</td>
+		<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Added Email')]</td>
 		<td></td>
 </tr>
 <tr>

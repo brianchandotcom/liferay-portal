@@ -589,6 +589,10 @@ public class SearchEngineUtil {
 		return indexSearcher.search(searchContext, query);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
 	public static Hits search(
 			String searchEngineId, long companyId, Query query, int start,
 			int end)
@@ -599,6 +603,10 @@ public class SearchEngineUtil {
 			start, end);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
 	public static Hits search(
 			String searchEngineId, long companyId, Query query, Sort sort,
 			int start, int end)
@@ -608,6 +616,10 @@ public class SearchEngineUtil {
 			searchEngineId, companyId, query, new Sort[] {sort}, start, end);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
 	public static Hits search(
 			String searchEngineId, long companyId, Query query, Sort[] sorts,
 			int start, int end)

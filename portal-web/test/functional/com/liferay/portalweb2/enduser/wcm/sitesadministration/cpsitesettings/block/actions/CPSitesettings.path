@@ -149,6 +149,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MEMBERSHIP_OPTIONS-->
+<tr>
+	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL</td>
+	<td>//div[@class='control-group']/label[@for='_165_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE</td>
+	<td>//div[@class='control-group']/select[@id='_165_type']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

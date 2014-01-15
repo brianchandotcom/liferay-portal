@@ -108,6 +108,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>ERROR_MESSAGE_ALERT_INFO</td>
+	<td>//tr[contains(.,'This site is inactive. Please contact the administrator.')]/td[@align='center']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SCOPE_SELECTOR_MENULIST-->
 <tr>
 	<td>SCOPE_SELECTOR_MENULIST_ITEM</td>

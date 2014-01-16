@@ -65,13 +65,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewMyWorkflowTasksCP">
+		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="Web Content Article" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Workflow#viewMyWorkflowTasksCP">
+		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />

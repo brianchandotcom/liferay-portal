@@ -1,0 +1,67 @@
+<definition component-name="portal-application-standards">
+	<property name="portlet.plugins.includes" value="wsrp-portlet" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="WSRP#tearDownCP" />
+	</tear-down>
+
+	<command name="AddWSRPUnitConverter" priority="5">
+		<var name="consumerName" value="Consumer Demo" />
+		<var name="consumerPortletName" value="Unit Converter" />
+		<var name="pageName" value="WSRP Page" />
+		<var name="portletName" value="WSRP Unit Converter" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="WSRP" />
+		</execute>
+
+		<execute macro="WSRP#addProducerCP">
+			<var name="portletsAvailableSelect" value="Unit Converter" />
+			<var name="producerName" value="Producer Demo" />
+		</execute>
+
+		<execute macro="WSRP#addConsumerCP">
+			<var name="portletsAvailableSelect" value="Unit Converter" />
+			<var name="consumerName" value="Consumer Demo" />
+		</execute>
+
+		<var name="key_consumerName" value="${consumerName}" />
+
+		<execute macro="WSRP#addConsumerPortletCP">
+			<var name="consumerPortletName" value="WSRP Unit Converter" />
+			<var name="consumerPortletType" value="Unit Converter" />
+		</execute>
+
+		<var name="key_consumerPortletName" value="${consumerPortletName}" />
+
+		<execute action="CPWSRPManageportlets#assertTextEquals" locator-key1="PORTLET_TABLE_NAME" value1="WSRP Unit Converter" />
+		<execute action="CPWSRPManageportlets#assertTextEquals" locator-key1="PORTLET_TABLE_REMOTE_PORTLET" value1="Unit Converter" />
+		<execute action="CPWSRPManageportlets#assertElementPresent" locator-key1="PORTLET_TABLE_DELETE" value1="Delete" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="WSRP#wsrpUnitConverterConvertPG">
+			<var name="initialUnit" value="Inch" />
+			<var name="initialValue" value="12" />
+			<var name="targetUnit" value="Foot" />
+			<var name="targetValue" value="1.0" />
+			<var name="unitType" value="Length" />
+		</execute>
+	</command>
+</definition>

@@ -18,18 +18,64 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Daniel Kocsis
  */
 public class DDLTestUtil {
+
+	public static DDLRecord addRecord(long groupId, long recordSetId)
+		throws Exception {
+
+		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
+			recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		Set<String> fieldNames = ddmStructure.getFieldNames();
+
+		Map<String, Serializable> fieldsMap =
+			new HashMap<String, Serializable>();
+
+		for (String fieldName : fieldNames) {
+			if (ddmStructure.isFieldPrivate(fieldName)) {
+				continue;
+			}
+
+			fieldsMap.put(fieldName, null);
+		}
+
+		return addRecord(groupId, recordSetId, fieldsMap);
+	}
+
+	public static DDLRecord addRecord(
+			long groupId, long recordSetId, Map<String, Serializable> fieldsMap)
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		return DDLRecordLocalServiceUtil.addRecord(
+			userId, groupId, recordSetId,
+			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fieldsMap,
+			serviceContext);
+	}
 
 	public static DDLRecordSet addRecordSet(long groupId, long structureId)
 		throws Exception {

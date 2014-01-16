@@ -4,12 +4,87 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="WebContent#tearDownCP" />
 
 		<execute macro="WebContentTemplates#tearDownCP" />
 
 		<execute macro="WebContentStructures#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
+
+	<command name="AddWebContentRemoveGuestViewPermission" priority="5">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<var name="portletName" value="Web Content Display" />
+		<var name="portletOption" value="Configuration" />
+		<var name="roleName" value="Guest" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoWCArticle">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG" >
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoConfigurationPG" />
+
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="Permissions#assertChecked" locator-key1="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" value1="relative=top" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="BasePortlet#assertTextNotPresent" locator-key1="TITLE" value1="${portletName}" />
+
+		<execute action="PGWebcontentdisplay#assertTextNotPresent" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
 
 	<command name="WebContentAdministrationDataValidation" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />

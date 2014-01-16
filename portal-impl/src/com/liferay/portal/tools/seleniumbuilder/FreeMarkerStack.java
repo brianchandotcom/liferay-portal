@@ -23,18 +23,43 @@ import java.util.Stack;
  */
 public class FreeMarkerStack {
 
+	/**
+	 * Returns <code>true</code> if and only if this stack contains no items,
+	 * <code>false</code> otherwise
+	 *
+	 * @return <code>true</code> if and only if this stack contains no items,
+	 *         <code>false</code> otherwise
+	 */
 	public boolean empty() {
 		return _stack.empty();
 	}
 
+	/**
+	 * Looks at the object at the top of this stack without removing it from the
+	 * stack.
+	 *
+	 * @return the object at the top of this stack
+	 */
 	public Object peek() {
 		return _stack.peek();
 	}
 
+	/**
+	 * Removes the object at the top of this stack and returns that object as
+	 * the value of this function.
+	 *
+	 * @return the object to be removed at the top of this stack
+	 */
 	public Object pop() {
 		return _stack.pop();
 	}
 
+	/**
+	 * Pushes an item onto the top of this stack.
+	 *
+	 * @param  object the item to be pushed onto this stack.
+	 * @return the object argument.
+	 */
 	public Object push(Object object) {
 		_stack.push(object);
 

@@ -25,5 +25,9 @@
 		<case locator-key1="NAME_FIELD">
 			<execute function="Type#clickAtSendKeys" />
 		</case>
+
+		<case locator-key1="SCRIPT_CONTENT_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
 	</command>
 </definition>

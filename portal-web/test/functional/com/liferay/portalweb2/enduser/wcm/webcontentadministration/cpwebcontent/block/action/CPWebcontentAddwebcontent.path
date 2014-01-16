@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_TRANSLATION</td>
+	<td>//a[@title='Add Translation']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@id='_15_title_en_US']</td>
 	<td></td>
@@ -88,7 +93,23 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ADD_TRANSLATION_MENULIST-->
+<tr>
+	<td>ADD_TRANSLATION_MENULIST_LANGUAGE</td>
+	<td>//li[@role='presentation']/a/span[contains(.,'${key_localizedLanguage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MENU-->
+<tr>
+	<td>MENU_CONTENT</td>
+	<td>//a[@id='_15_contentLink']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>MENU_ABSTRACT</td>
 	<td>//a[@id='_15_abstractLink']</td>

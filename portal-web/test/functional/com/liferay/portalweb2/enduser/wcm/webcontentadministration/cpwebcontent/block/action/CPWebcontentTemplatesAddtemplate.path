@@ -78,7 +78,7 @@
 <!--SCRIPT-->
 <tr>
 	<td>SCRIPT_CONTENT_FIELD</td>
-	<td>//div[@id='_166_richEditor']/div/div[@class='ace_content']</td>
+	<td>//div[@id='_166_richEditor']/div[2]/div[@class='ace_content']</td>
 	<td></td>
 </tr>
 <tr>

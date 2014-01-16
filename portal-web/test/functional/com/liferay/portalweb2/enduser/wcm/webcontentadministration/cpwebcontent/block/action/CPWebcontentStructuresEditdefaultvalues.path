@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>CPWebcontentStructuresEditdefaultvalues</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentStructuresEditdefaultvalues</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentStructuresEditdefaultvalues</td>
+</tr>
+<!---->
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>CPWebcontentAddwebcontent</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>STRUCTURES_IFRAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'scopeTitle=Structures')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[@id='_15_title_en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_NAME_FIELD</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldDefaultValue}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@id='_15_publishButton' and contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

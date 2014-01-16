@@ -58,6 +58,13 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="templateScript" />
+			<then>
+				<execute action="CPWebcontentTemplatesAddtemplate#type" locator-key1="SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+			</then>
+		</if>
+
 		<execute action="CPWebcontentTemplatesAddtemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
@@ -78,6 +85,36 @@
 		<execute action="CPWebcontentTemplatesAddtemplate#assertTextEquals" locator-key1="NAME_FIELD_REQUIRED" value1="This field is required." />
 
 		<execute action="CPWebcontentTemplates#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="advancedSearchCP">
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+
+		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+
+		<var name="key_templateName" value="${templateName}" />
+
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute action="CPWebcontentTemplates#click" locator-key1="ADVANCED_SEARCH_ICON" />
+
+		<if>
+			<isset var="templateName" />
+			<then>
+				<execute action="CPWebcontentTemplates#type" locator-key1="ADVANCED_SEARCH_NAME_FIELD" value1="${templateName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="templateDescription" />
+			<then>
+				<execute action="CPWebcontentTemplates#type" locator-key1="ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${templateDescription}" />
+			</then>
+		</if>
+
+		<execute action="CPWebcontentTemplates#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
 	</command>
 
 	<command name="tearDownCP">

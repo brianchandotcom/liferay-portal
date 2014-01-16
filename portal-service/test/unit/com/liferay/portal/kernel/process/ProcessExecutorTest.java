@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.process.ProcessExecutor.ShutdownHook;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
@@ -50,7 +51,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -116,7 +116,8 @@ public class ProcessExecutorTest {
 
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+				InetAddressUtil.getLoopbackInetAddress(), 12342,
+				_serverSocketConfigurator);
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
@@ -164,7 +165,8 @@ public class ProcessExecutorTest {
 
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+				InetAddressUtil.getLoopbackInetAddress(), 12342,
+				_serverSocketConfigurator);
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
@@ -221,7 +223,8 @@ public class ProcessExecutorTest {
 
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+				InetAddressUtil.getLoopbackInetAddress(), 12342,
+				_serverSocketConfigurator);
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
@@ -278,7 +281,8 @@ public class ProcessExecutorTest {
 
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+				InetAddressUtil.getLoopbackInetAddress(), 12342,
+				_serverSocketConfigurator);
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
@@ -318,7 +322,8 @@ public class ProcessExecutorTest {
 
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+				InetAddressUtil.getLoopbackInetAddress(), 12342,
+				_serverSocketConfigurator);
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
@@ -358,7 +363,8 @@ public class ProcessExecutorTest {
 
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
-				InetAddress.getLocalHost(), 12342, _serverSocketConfigurator);
+				InetAddressUtil.getLoopbackInetAddress(), 12342,
+				_serverSocketConfigurator);
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
 
@@ -1998,7 +2004,8 @@ public class ProcessExecutorTest {
 			throws Exception {
 
 			_mainThread = mainThread;
-			_socket = new Socket(InetAddress.getLocalHost(), serverPort);
+			_socket = new Socket(
+				InetAddressUtil.getLoopbackInetAddress(), serverPort);
 
 			setName(name);
 		}

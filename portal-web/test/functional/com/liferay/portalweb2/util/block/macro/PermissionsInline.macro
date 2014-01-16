@@ -1,4 +1,16 @@
 <definition>
+	<command name="gotoBlogsConfiguration">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGBlogs#click" locator-key1="OPTIONS" />
+		<execute action="PGBlogs#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+		<execute action="PGBlogsConfiguration#assertClick" locator-key1="PERMISSIONS_NAVIGATION" value1="Permissions" />
+	</command>
+
 	<command name="gotoBlogsPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -96,5 +108,12 @@
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${webContentTitle}" />
+	</command>
+	
+	<command name="viewNoPermissions">
+		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
+		<var name="key_roleName" value="${key_roleName?lowercase()}" />
+
+		<execute action="Permissions#assertNotChecked" locator-key1="${permissionDefinitionKey}" />
 	</command>
 </definition>

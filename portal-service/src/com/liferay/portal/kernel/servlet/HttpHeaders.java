@@ -71,6 +71,8 @@ public interface HttpHeaders {
 
 	public static final String RANGE = "Range";
 
+	public static final String REFERER = "Referer";
+
 	public static final String SET_COOKIE = "Set-Cookie";
 
 	public static final String USER_AGENT = "User-Agent";

@@ -1,0 +1,10 @@
+<definition>
+	<command name="convertPG">
+		<execute action="PGUnitconverter#type" locator-key1="FROM_FIELD" value1="${initialValue}" />
+		<execute action="PGUnitconverter#select" locator-key1="UNIT_FROM_SELECT" value1="${initialUnit}" />
+		<execute action="PGUnitconverter#select" locator-key1="UNIT_TYPE_SELECT" value1="${unitType}" />
+		<execute action="PGUnitconverter#select" locator-key1="UNIT_TO_SELECT" value1="${targetUnit}" />
+		<execute action="PGUnitconverter#assertClick" locator-key1="CONVERT_BUTTON" value1="Convert" />
+		<execute action="PGUnitconverter#assertTextEquals" locator-key1="TO_FIELD" value1="${targetValue}" />
+	</command>
+</definition>

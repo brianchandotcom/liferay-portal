@@ -257,8 +257,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					a {
 						background-color: #2496E5;
 						color: #FFF;
-						padding: 0 20px;
-						line-height: 31px;
+						padding: 2px 20px;
 
 						&:hover {
 							background-color: #2FA4F5;

@@ -59,8 +59,8 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	public DDLPortletDataHandler() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(DDLRecordSet.class),
-			new StagedModelType(DDLRecord.class));
+			new StagedModelType(DDLRecord.class),
+			new StagedModelType(DDLRecordSet.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "record-sets", true, false, null,
@@ -128,7 +128,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "records")) {
 			ActionableDynamicQuery recordActionableDynamicQuery =
-				getDDLRecordActionableDynamicQuery(portletDataContext);
+				getRecordActionableDynamicQuery(portletDataContext);
 
 			recordActionableDynamicQuery.performActions();
 		}
@@ -219,57 +219,9 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		recordSetActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery recordActionableDynamicQuery =
-			getDDLRecordActionableDynamicQuery(portletDataContext);
+			getRecordActionableDynamicQuery(portletDataContext);
 
 		recordActionableDynamicQuery.performCount();
-	}
-
-	protected ActionableDynamicQuery getDDLRecordActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws SystemException {
-
-		return new DDLRecordExportActionableDynamicQuery(
-			portletDataContext) {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
-
-				DynamicQuery ddlRecordVersionDynamicQuery =
-					DynamicQueryFactoryUtil.forClass(
-						DDLRecordVersion.class, "recordVersion",
-						PortalClassLoaderUtil.getClassLoader());
-
-				ddlRecordVersionDynamicQuery.setProjection(
-					ProjectionFactoryUtil.property("recordId"));
-
-				Property workflowStatusProperty = PropertyFactoryUtil.forName(
-					"status");
-
-				StagedModelDataHandler<?> stagedModelDataHandler =
-					StagedModelDataHandlerRegistryUtil.
-						getStagedModelDataHandler(DDLRecord.class.getName());
-
-				ddlRecordVersionDynamicQuery.add(
-					workflowStatusProperty.in(
-						stagedModelDataHandler.getExportableStatuses()));
-
-				ddlRecordVersionDynamicQuery.add(
-					RestrictionsFactoryUtil.eqProperty(
-						"recordVersion.version", "version"));
-
-				ddlRecordVersionDynamicQuery.add(
-					RestrictionsFactoryUtil.eqProperty(
-						"recordVersion.recordId", "recordId"));
-
-				Property recordIdProperty = PropertyFactoryUtil.forName(
-					"recordId");
-
-				dynamicQuery.add(
-					recordIdProperty.in(ddlRecordVersionDynamicQuery));
-			}
-
-		};
 	}
 
 	protected ActionableDynamicQuery getDDMStructureActionableDynamicQuery(
@@ -311,6 +263,54 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 				}
 				catch (SystemException se) {
 				}
+			}
+
+		};
+	}
+
+	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
+			final PortletDataContext portletDataContext)
+		throws SystemException {
+
+		return new DDLRecordExportActionableDynamicQuery(
+			portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				super.addCriteria(dynamicQuery);
+
+				DynamicQuery recordVersionDynamicQuery =
+					DynamicQueryFactoryUtil.forClass(
+						DDLRecordVersion.class, "recordVersion",
+						PortalClassLoaderUtil.getClassLoader());
+
+				recordVersionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("recordId"));
+
+				Property workflowStatusProperty = PropertyFactoryUtil.forName(
+					"status");
+
+				StagedModelDataHandler<?> stagedModelDataHandler =
+					StagedModelDataHandlerRegistryUtil.
+						getStagedModelDataHandler(DDLRecord.class.getName());
+
+				recordVersionDynamicQuery.add(
+					workflowStatusProperty.in(
+						stagedModelDataHandler.getExportableStatuses()));
+
+				recordVersionDynamicQuery.add(
+					RestrictionsFactoryUtil.eqProperty(
+						"recordVersion.version", "version"));
+
+				recordVersionDynamicQuery.add(
+					RestrictionsFactoryUtil.eqProperty(
+						"recordVersion.recordId", "recordId"));
+
+				Property recordIdProperty = PropertyFactoryUtil.forName(
+					"recordId");
+
+				dynamicQuery.add(
+					recordIdProperty.in(recordVersionDynamicQuery));
 			}
 
 		};

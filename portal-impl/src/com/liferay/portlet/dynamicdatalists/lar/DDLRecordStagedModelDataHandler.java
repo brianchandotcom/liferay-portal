@@ -105,12 +105,12 @@ public class DDLRecordStagedModelDataHandler
 			portletDataContext, record, DDLRecordSet.class,
 			record.getRecordSetId());
 
-		Map<Long, Long> ddlRecordSetIds =
+		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDLRecordSet.class);
 
 		long recordSetId = MapUtil.getLong(
-			ddlRecordSetIds, record.getRecordSetId(), record.getRecordSetId());
+			recordSetIds, record.getRecordSetId(), record.getRecordSetId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			record);
@@ -149,6 +149,7 @@ public class DDLRecordStagedModelDataHandler
 		portletDataContext.importClassedModel(record, importedRecord);
 	}
 
+	@Override
 	protected void validateExport(
 			PortletDataContext portletDataContext, DDLRecord record)
 		throws PortletDataException {

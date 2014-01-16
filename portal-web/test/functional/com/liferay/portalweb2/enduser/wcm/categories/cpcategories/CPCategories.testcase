@@ -714,7 +714,7 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute macro="Category#addCategoryWithNullTitleCP">
+		<execute macro="Category#addWithNullTitleCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
@@ -1126,13 +1126,13 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute macro="Category#moveCategoryViaEditCP">
+		<execute macro="Category#moveViaEditCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="vocabularyName2" value="${vocabularyName2}" />
 		</execute>
 
-		<execute macro="Category#viewMoveCategoryViaEditCP">
+		<execute macro="Category#viewMoveViaEditCP">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 			<var name="vocabularyName2" value="${vocabularyName2}" />

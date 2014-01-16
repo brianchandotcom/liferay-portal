@@ -114,7 +114,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
-	<command name="addCategoryWithNullTitleCP">
+	<command name="addWithNullTitleCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
@@ -213,7 +213,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
-	<command name="moveCategoryViaEditCP">
+	<command name="moveViaEditCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -310,7 +310,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
 	</command>
 
-	<command name="viewMoveCategoryViaEditCP">
+	<command name="viewMoveViaEditCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 

@@ -61,6 +61,7 @@ public class LayoutSoap implements Serializable {
 		soapModel.setLayoutPrototypeUuid(model.getLayoutPrototypeUuid());
 		soapModel.setLayoutPrototypeLinkEnabled(model.getLayoutPrototypeLinkEnabled());
 		soapModel.setSourcePrototypeLayoutUuid(model.getSourcePrototypeLayoutUuid());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -366,6 +367,14 @@ public class LayoutSoap implements Serializable {
 		_sourcePrototypeLayoutUuid = sourcePrototypeLayoutUuid;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _plid;
 	private long _groupId;
@@ -396,4 +405,5 @@ public class LayoutSoap implements Serializable {
 	private String _layoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _sourcePrototypeLayoutUuid;
+	private long _ormVersion;
 }

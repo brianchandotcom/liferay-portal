@@ -38,6 +38,7 @@ public class CountrySoap implements Serializable {
 		soapModel.setIdd(model.getIdd());
 		soapModel.setZipRequired(model.getZipRequired());
 		soapModel.setActive(model.getActive());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -162,6 +163,14 @@ public class CountrySoap implements Serializable {
 		_active = active;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _countryId;
 	private String _name;
 	private String _a2;
@@ -170,4 +179,5 @@ public class CountrySoap implements Serializable {
 	private String _idd;
 	private boolean _zipRequired;
 	private boolean _active;
+	private long _ormVersion;
 }

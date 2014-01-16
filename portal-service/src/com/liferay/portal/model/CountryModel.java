@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface CountryModel extends BaseModel<Country> {
+public interface CountryModel extends BaseModel<Country>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -188,6 +188,20 @@ public interface CountryModel extends BaseModel<Country> {
 	 * @param active the active of this country
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the orm version of this country.
+	 *
+	 * @return the orm version of this country
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this country.
+	 *
+	 * @param ormVersion the orm version of this country
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

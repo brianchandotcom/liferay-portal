@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface VirtualHostModel extends BaseModel<VirtualHost> {
+public interface VirtualHostModel extends BaseModel<VirtualHost>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,6 +114,20 @@ public interface VirtualHostModel extends BaseModel<VirtualHost> {
 	 * @param hostname the hostname of this virtual host
 	 */
 	public void setHostname(String hostname);
+
+	/**
+	 * Returns the orm version of this virtual host.
+	 *
+	 * @return the orm version of this virtual host
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this virtual host.
+	 *
+	 * @param ormVersion the orm version of this virtual host
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

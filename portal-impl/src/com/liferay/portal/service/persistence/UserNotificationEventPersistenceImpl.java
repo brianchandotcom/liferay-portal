@@ -3130,6 +3130,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		userNotificationEventImpl.setDelivered(userNotificationEvent.isDelivered());
 		userNotificationEventImpl.setPayload(userNotificationEvent.getPayload());
 		userNotificationEventImpl.setArchived(userNotificationEvent.isArchived());
+		userNotificationEventImpl.setOrmVersion(userNotificationEvent.getOrmVersion());
 
 		return userNotificationEventImpl;
 	}

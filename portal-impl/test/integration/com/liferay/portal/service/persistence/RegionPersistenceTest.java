@@ -119,6 +119,8 @@ public class RegionPersistenceTest {
 
 		newRegion.setActive(ServiceTestUtil.randomBoolean());
 
+		newRegion.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newRegion);
 
 		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
@@ -131,6 +133,8 @@ public class RegionPersistenceTest {
 			newRegion.getRegionCode());
 		Assert.assertEquals(existingRegion.getName(), newRegion.getName());
 		Assert.assertEquals(existingRegion.getActive(), newRegion.getActive());
+		Assert.assertEquals(existingRegion.getOrmVersion(),
+			newRegion.getOrmVersion());
 	}
 
 	@Test
@@ -168,7 +172,8 @@ public class RegionPersistenceTest {
 
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Region", "regionId", true,
-			"countryId", true, "regionCode", true, "name", true, "active", true);
+			"countryId", true, "regionCode", true, "name", true, "active",
+			true, "ormVersion", true);
 	}
 
 	@Test
@@ -292,6 +297,8 @@ public class RegionPersistenceTest {
 		region.setName(ServiceTestUtil.randomString());
 
 		region.setActive(ServiceTestUtil.randomBoolean());
+
+		region.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(region);
 

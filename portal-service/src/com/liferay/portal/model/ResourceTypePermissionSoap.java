@@ -36,6 +36,7 @@ public class ResourceTypePermissionSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setRoleId(model.getRoleId());
 		soapModel.setActionIds(model.getActionIds());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -139,10 +140,19 @@ public class ResourceTypePermissionSoap implements Serializable {
 		_actionIds = actionIds;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _resourceTypePermissionId;
 	private long _companyId;
 	private long _groupId;
 	private String _name;
 	private long _roleId;
 	private long _actionIds;
+	private long _ormVersion;
 }

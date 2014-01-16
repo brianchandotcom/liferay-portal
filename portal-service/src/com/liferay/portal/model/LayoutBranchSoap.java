@@ -40,6 +40,7 @@ public class LayoutBranchSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMaster(model.getMaster());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -176,6 +177,14 @@ public class LayoutBranchSoap implements Serializable {
 		_master = master;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _LayoutBranchId;
 	private long _groupId;
 	private long _companyId;
@@ -186,4 +195,5 @@ public class LayoutBranchSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _master;
+	private long _ormVersion;
 }

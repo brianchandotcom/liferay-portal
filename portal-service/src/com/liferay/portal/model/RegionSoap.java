@@ -35,6 +35,7 @@ public class RegionSoap implements Serializable {
 		soapModel.setRegionCode(model.getRegionCode());
 		soapModel.setName(model.getName());
 		soapModel.setActive(model.getActive());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -131,9 +132,18 @@ public class RegionSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _regionId;
 	private long _countryId;
 	private String _regionCode;
 	private String _name;
 	private boolean _active;
+	private long _ormVersion;
 }

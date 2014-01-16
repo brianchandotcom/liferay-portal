@@ -57,6 +57,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 		attributes.put("plid", getPlid());
 		attributes.put("portletId", getPortletId());
 		attributes.put("preferences", getPreferences());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -97,6 +98,12 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 
 		if (preferences != null) {
 			setPreferences(preferences);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -238,6 +245,26 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	@Override
 	public void setPreferences(java.lang.String preferences) {
 		_portletPreferences.setPreferences(preferences);
+	}
+
+	/**
+	* Returns the orm version of this portlet preferences.
+	*
+	* @return the orm version of this portlet preferences
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _portletPreferences.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this portlet preferences.
+	*
+	* @param ormVersion the orm version of this portlet preferences
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_portletPreferences.setOrmVersion(ormVersion);
 	}
 
 	@Override

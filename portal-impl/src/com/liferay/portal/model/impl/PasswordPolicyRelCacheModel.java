@@ -34,7 +34,7 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{passwordPolicyRelId=");
 		sb.append(passwordPolicyRelId);
@@ -44,6 +44,8 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -57,6 +59,7 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		passwordPolicyRelImpl.setPasswordPolicyId(passwordPolicyId);
 		passwordPolicyRelImpl.setClassNameId(classNameId);
 		passwordPolicyRelImpl.setClassPK(classPK);
+		passwordPolicyRelImpl.setOrmVersion(ormVersion);
 
 		passwordPolicyRelImpl.resetOriginalValues();
 
@@ -69,6 +72,7 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		passwordPolicyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -78,10 +82,12 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		objectOutput.writeLong(passwordPolicyId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long passwordPolicyRelId;
 	public long passwordPolicyId;
 	public long classNameId;
 	public long classPK;
+	public long ormVersion;
 }

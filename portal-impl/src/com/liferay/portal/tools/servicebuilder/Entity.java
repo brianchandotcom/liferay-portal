@@ -89,7 +89,7 @@ public class Entity {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, false, false, false,
-			null, null, null, null, null, null, null, null, null);
+			false, null, null, null, null, null, null, null, null, null);
 	}
 
 	public Entity(
@@ -99,7 +99,7 @@ public class Entity {
 		String persistenceClass, String finderClass, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
 		boolean dynamicUpdateEnabled, boolean jsonEnabled, boolean trashEnabled,
-		boolean deprecated, List<EntityColumn> pkList,
+		boolean deprecated, boolean versioned, List<EntityColumn> pkList,
 		List<EntityColumn> regularColList, List<EntityColumn> blobList,
 		List<EntityColumn> collectionList, List<EntityColumn> columnList,
 		EntityOrder order, List<EntityFinder> finderList,
@@ -128,6 +128,7 @@ public class Entity {
 		_jsonEnabled = jsonEnabled;
 		_trashEnabled = trashEnabled;
 		_deprecated = deprecated;
+		_versioned = versioned;
 		_pkList = pkList;
 		_regularColList = regularColList;
 		_blobList = blobList;
@@ -800,6 +801,10 @@ public class Entity {
 		return false;
 	}
 
+	public boolean isVersioned() {
+		return _versioned;
+	}
+
 	public boolean isWorkflowEnabled() {
 		if (hasColumn("status") && hasColumn("statusByUserId") &&
 			hasColumn("statusByUserName") && hasColumn("statusDate")) {
@@ -867,5 +872,6 @@ public class Entity {
 	private List<String> _txRequiredList;
 	private boolean _uuid;
 	private boolean _uuidAccessor;
+	private boolean _versioned;
 
 }

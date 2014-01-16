@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface BrowserTrackerModel extends BaseModel<BrowserTracker> {
+public interface BrowserTrackerModel extends BaseModel<BrowserTracker>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,6 +115,20 @@ public interface BrowserTrackerModel extends BaseModel<BrowserTracker> {
 	 * @param browserKey the browser key of this browser tracker
 	 */
 	public void setBrowserKey(long browserKey);
+
+	/**
+	 * Returns the orm version of this browser tracker.
+	 *
+	 * @return the orm version of this browser tracker
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this browser tracker.
+	 *
+	 * @param ormVersion the orm version of this browser tracker
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

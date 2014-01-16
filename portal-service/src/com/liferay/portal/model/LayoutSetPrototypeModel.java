@@ -44,7 +44,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -343,6 +343,20 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype>,
 	 * @param active the active of this layout set prototype
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the orm version of this layout set prototype.
+	 *
+	 * @return the orm version of this layout set prototype
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this layout set prototype.
+	 *
+	 * @param ormVersion the orm version of this layout set prototype
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

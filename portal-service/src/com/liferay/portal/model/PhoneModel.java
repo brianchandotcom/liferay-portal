@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PhoneModel extends AttachedModel, BaseModel<Phone>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -297,6 +297,20 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>,
 	 * @param primary the primary of this phone
 	 */
 	public void setPrimary(boolean primary);
+
+	/**
+	 * Returns the orm version of this phone.
+	 *
+	 * @return the orm version of this phone
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this phone.
+	 *
+	 * @param ormVersion the orm version of this phone
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

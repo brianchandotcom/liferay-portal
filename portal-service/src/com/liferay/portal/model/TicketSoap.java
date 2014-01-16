@@ -39,6 +39,7 @@ public class TicketSoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setExtraInfo(model.getExtraInfo());
 		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -163,6 +164,14 @@ public class TicketSoap implements Serializable {
 		_expirationDate = expirationDate;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _ticketId;
 	private long _companyId;
 	private Date _createDate;
@@ -172,4 +181,5 @@ public class TicketSoap implements Serializable {
 	private int _type;
 	private String _extraInfo;
 	private Date _expirationDate;
+	private long _ormVersion;
 }

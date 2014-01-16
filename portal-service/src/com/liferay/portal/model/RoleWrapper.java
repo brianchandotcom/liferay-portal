@@ -66,6 +66,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("subtype", getSubtype());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 
 		if (subtype != null) {
 			setSubtype(subtype);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -734,6 +741,26 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public void setSubtype(java.lang.String subtype) {
 		_role.setSubtype(subtype);
+	}
+
+	/**
+	* Returns the orm version of this role.
+	*
+	* @return the orm version of this role
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _role.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this role.
+	*
+	* @param ormVersion the orm version of this role
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_role.setOrmVersion(ormVersion);
 	}
 
 	@Override

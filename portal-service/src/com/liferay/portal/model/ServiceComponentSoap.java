@@ -34,6 +34,7 @@ public class ServiceComponentSoap implements Serializable {
 		soapModel.setBuildNumber(model.getBuildNumber());
 		soapModel.setBuildDate(model.getBuildDate());
 		soapModel.setData(model.getData());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -128,9 +129,18 @@ public class ServiceComponentSoap implements Serializable {
 		_data = data;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _serviceComponentId;
 	private String _buildNamespace;
 	private long _buildNumber;
 	private long _buildDate;
 	private String _data;
+	private long _ormVersion;
 }

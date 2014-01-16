@@ -23,6 +23,7 @@ import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.VersionedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -116,6 +117,10 @@ public interface ${entity.name}Model extends
 		, TypedModel
 
 		<#assign overrideColumnNames = overrideColumnNames + ["className", "classNameId"]>
+	</#if>
+
+	<#if entity.isVersioned()>
+		, VersionedModel
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>

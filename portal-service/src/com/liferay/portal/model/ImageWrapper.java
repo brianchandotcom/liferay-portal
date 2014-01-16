@@ -57,6 +57,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
 		attributes.put("size", getSize());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -97,6 +98,12 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -238,6 +245,26 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public void setSize(int size) {
 		_image.setSize(size);
+	}
+
+	/**
+	* Returns the orm version of this image.
+	*
+	* @return the orm version of this image
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _image.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this image.
+	*
+	* @param ormVersion the orm version of this image
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_image.setOrmVersion(ormVersion);
 	}
 
 	@Override

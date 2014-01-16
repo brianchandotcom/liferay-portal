@@ -64,6 +64,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		attributes.put("url", getUrl());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -140,6 +141,12 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -448,6 +455,26 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	@Override
 	public void setPrimary(boolean primary) {
 		_website.setPrimary(primary);
+	}
+
+	/**
+	* Returns the orm version of this website.
+	*
+	* @return the orm version of this website
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _website.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this website.
+	*
+	* @param ormVersion the orm version of this website
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_website.setOrmVersion(ormVersion);
 	}
 
 	@Override

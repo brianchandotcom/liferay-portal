@@ -636,6 +636,9 @@ public class ServiceBuilder {
 				rootElement.attributeValue("auto-namespace-tables"),
 				_autoNamespaceTables);
 
+			_versioned = GetterUtil.getBoolean(
+				rootElement.attributeValue("versioned"));
+
 			Element authorElement = rootElement.element("author");
 
 			if (authorElement != null) {
@@ -3985,7 +3988,7 @@ public class ServiceBuilder {
 		List<EntityColumn> pkList = entity.getPKList();
 		List<EntityColumn> regularColList = entity.getRegularColList();
 
-		if (regularColList.size() == 0) {
+		if (regularColList.isEmpty()) {
 			return null;
 		}
 
@@ -4075,6 +4078,10 @@ public class ServiceBuilder {
 				colIdType.equals("identity")) {
 
 				sb.append(" IDENTITY");
+			}
+
+			if (colName.equals("ormVersion")) {
+				sb.append(" default 0");
 			}
 
 			if (((i + 1) != regularColList.size()) ||
@@ -4363,14 +4370,16 @@ public class ServiceBuilder {
 		String txManager = entityElement.attributeValue("tx-manager");
 		boolean cacheEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("cache-enabled"), true);
-		boolean dynamicUpdateEnabled = GetterUtil.getBoolean(
-			entityElement.attributeValue("dynamic-update-enabled"));
 		boolean jsonEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("json-enabled"), remoteService);
 		boolean trashEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("trash-enabled"));
 		boolean deprecated = GetterUtil.getBoolean(
 			entityElement.attributeValue("deprecated"));
+		boolean versioned = GetterUtil.getBoolean(
+			entityElement.attributeValue("versioned"), _versioned);
+		boolean dynamicUpdateEnabled = GetterUtil.getBoolean(
+			entityElement.attributeValue("dynamic-update-enabled"), versioned);
 
 		List<EntityColumn> pkList = new ArrayList<EntityColumn>();
 		List<EntityColumn> regularColList = new ArrayList<EntityColumn>();
@@ -4380,7 +4389,14 @@ public class ServiceBuilder {
 
 		List<Element> columnElements = entityElement.elements("column");
 
-		boolean permissionedModel = false;
+		if (versioned && !columnElements.isEmpty()) {
+			Element columnElement = SAXReaderUtil.createElement("column");
+
+			columnElement.addAttribute("name", "ormVersion");
+			columnElement.addAttribute("type", "long");
+
+			columnElements.add(columnElement);
+		}
 
 		if (uuid) {
 			Element columnElement = SAXReaderUtil.createElement("column");
@@ -4390,6 +4406,8 @@ public class ServiceBuilder {
 
 			columnElements.add(0, columnElement);
 		}
+
+		boolean permissionedModel = false;
 
 		for (Element columnElement : columnElements) {
 			String columnName = columnElement.attributeValue("name");
@@ -4749,9 +4767,9 @@ public class ServiceBuilder {
 				humanName, table, alias, uuid, uuidAccessor, localService,
 				remoteService, persistenceClass, finderClass, dataSource,
 				sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
-				jsonEnabled, trashEnabled, deprecated, pkList, regularColList,
-				blobList, collectionList, columnList, order, finderList,
-				referenceList, txRequiredList));
+				jsonEnabled, trashEnabled, deprecated, versioned, pkList,
+				regularColList, blobList, collectionList, columnList, order,
+				finderList, referenceList, txRequiredList));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)
@@ -4896,5 +4914,6 @@ public class ServiceBuilder {
 	private String _tplServiceUtil = _TPL_ROOT + "service_util.ftl";
 	private String _tplServiceWrapper = _TPL_ROOT + "service_wrapper.ftl";
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
+	private boolean _versioned;
 
 }

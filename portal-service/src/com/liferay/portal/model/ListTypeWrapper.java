@@ -53,6 +53,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 		attributes.put("listTypeId", getListTypeId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -75,6 +76,12 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -156,6 +163,26 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	@Override
 	public void setType(java.lang.String type) {
 		_listType.setType(type);
+	}
+
+	/**
+	* Returns the orm version of this list type.
+	*
+	* @return the orm version of this list type
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _listType.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this list type.
+	*
+	* @param ormVersion the orm version of this list type
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_listType.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -692,6 +692,8 @@ public class LayoutImporter {
 		long lastMergeTime = System.currentTimeMillis();
 
 		for (Layout layout : newLayouts) {
+			layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
+
 			boolean modifiedTypeSettingsProperties = false;
 
 			UnicodeProperties typeSettingsProperties =
@@ -736,6 +738,13 @@ public class LayoutImporter {
 		if (layoutsImportMode.equals(
 				PortletDataHandlerKeys.
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			// The LayoutUtil.update(layout) in previous loop may cause
+			// LayoutSetPrototypeLayoutListener updated LayoutSet in the backend
+			// already, the current layoutSet object needs a refresh.
+
+			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				layoutSet.getLayoutSetId());
 
 			UnicodeProperties settingsProperties =
 				layoutSet.getSettingsProperties();

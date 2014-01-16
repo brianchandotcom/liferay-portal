@@ -66,6 +66,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 		attributes.put("workflowDefinitionName", getWorkflowDefinitionName());
 		attributes.put("workflowDefinitionVersion",
 			getWorkflowDefinitionVersion());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -145,6 +146,12 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 
 		if (workflowDefinitionVersion != null) {
 			setWorkflowDefinitionVersion(workflowDefinitionVersion);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -444,6 +451,26 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	@Override
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion) {
 		_workflowDefinitionLink.setWorkflowDefinitionVersion(workflowDefinitionVersion);
+	}
+
+	/**
+	* Returns the orm version of this workflow definition link.
+	*
+	* @return the orm version of this workflow definition link
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _workflowDefinitionLink.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this workflow definition link.
+	*
+	* @param ormVersion the orm version of this workflow definition link
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_workflowDefinitionLink.setOrmVersion(ormVersion);
 	}
 
 	@Override

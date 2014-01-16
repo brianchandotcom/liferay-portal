@@ -54,6 +54,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		attributes.put("browserTrackerId", getBrowserTrackerId());
 		attributes.put("userId", getUserId());
 		attributes.put("browserKey", getBrowserKey());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -76,6 +77,12 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 
 		if (browserKey != null) {
 			setBrowserKey(browserKey);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -179,6 +186,26 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	@Override
 	public void setBrowserKey(long browserKey) {
 		_browserTracker.setBrowserKey(browserKey);
+	}
+
+	/**
+	* Returns the orm version of this browser tracker.
+	*
+	* @return the orm version of this browser tracker
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _browserTracker.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this browser tracker.
+	*
+	* @param ormVersion the orm version of this browser tracker
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_browserTracker.setOrmVersion(ormVersion);
 	}
 
 	@Override

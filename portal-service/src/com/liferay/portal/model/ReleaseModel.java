@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ReleaseModel extends BaseModel<Release> {
+public interface ReleaseModel extends BaseModel<Release>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -194,6 +194,20 @@ public interface ReleaseModel extends BaseModel<Release> {
 	 * @param testString the test string of this release
 	 */
 	public void setTestString(String testString);
+
+	/**
+	 * Returns the orm version of this release.
+	 *
+	 * @return the orm version of this release
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this release.
+	 *
+	 * @param ormVersion the orm version of this release
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

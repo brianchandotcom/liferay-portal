@@ -65,6 +65,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("languageId", getLanguageId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -141,6 +142,12 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 
 		if (languageId != null) {
 			setLanguageId(languageId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -434,6 +441,26 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	@Override
 	public void setLanguageId(java.lang.String languageId) {
 		_layoutFriendlyURL.setLanguageId(languageId);
+	}
+
+	/**
+	* Returns the orm version of this layout friendly u r l.
+	*
+	* @return the orm version of this layout friendly u r l
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _layoutFriendlyURL.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this layout friendly u r l.
+	*
+	* @param ormVersion the orm version of this layout friendly u r l
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_layoutFriendlyURL.setOrmVersion(ormVersion);
 	}
 
 	@Override

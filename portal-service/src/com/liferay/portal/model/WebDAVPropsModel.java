@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps> {
+public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -172,6 +173,20 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps> 
 	 * @param props the props of this web d a v props
 	 */
 	public void setProps(String props);
+
+	/**
+	 * Returns the orm version of this web d a v props.
+	 *
+	 * @return the orm version of this web d a v props
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this web d a v props.
+	 *
+	 * @param ormVersion the orm version of this web d a v props
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

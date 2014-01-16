@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AddressModel extends AttachedModel, BaseModel<Address>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -391,6 +391,20 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 * @param primary the primary of this address
 	 */
 	public void setPrimary(boolean primary);
+
+	/**
+	 * Returns the orm version of this address.
+	 *
+	 * @return the orm version of this address
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this address.
+	 *
+	 * @param ormVersion the orm version of this address
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

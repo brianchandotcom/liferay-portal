@@ -55,6 +55,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 		attributes.put("passwordPolicyId", getPasswordPolicyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -199,6 +206,26 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	@Override
 	public void setClassPK(long classPK) {
 		_passwordPolicyRel.setClassPK(classPK);
+	}
+
+	/**
+	* Returns the orm version of this password policy rel.
+	*
+	* @return the orm version of this password policy rel
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _passwordPolicyRel.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this password policy rel.
+	*
+	* @param ormVersion the orm version of this password policy rel
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_passwordPolicyRel.setOrmVersion(ormVersion);
 	}
 
 	@Override

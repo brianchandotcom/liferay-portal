@@ -34,7 +34,7 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{browserTrackerId=");
 		sb.append(browserTrackerId);
@@ -42,6 +42,8 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		sb.append(userId);
 		sb.append(", browserKey=");
 		sb.append(browserKey);
+		sb.append(", ormVersion=");
+		sb.append(ormVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -54,6 +56,7 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		browserTrackerImpl.setBrowserTrackerId(browserTrackerId);
 		browserTrackerImpl.setUserId(userId);
 		browserTrackerImpl.setBrowserKey(browserKey);
+		browserTrackerImpl.setOrmVersion(ormVersion);
 
 		browserTrackerImpl.resetOriginalValues();
 
@@ -65,6 +68,7 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		browserTrackerId = objectInput.readLong();
 		userId = objectInput.readLong();
 		browserKey = objectInput.readLong();
+		ormVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -73,9 +77,11 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		objectOutput.writeLong(browserTrackerId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(browserKey);
+		objectOutput.writeLong(ormVersion);
 	}
 
 	public long browserTrackerId;
 	public long userId;
 	public long browserKey;
+	public long ormVersion;
 }

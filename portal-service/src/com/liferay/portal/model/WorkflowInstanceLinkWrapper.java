@@ -63,6 +63,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("workflowInstanceId", getWorkflowInstanceId());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -128,6 +129,12 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 
 		if (workflowInstanceId != null) {
 			setWorkflowInstanceId(workflowInstanceId);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -386,6 +393,26 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	@Override
 	public void setWorkflowInstanceId(long workflowInstanceId) {
 		_workflowInstanceLink.setWorkflowInstanceId(workflowInstanceId);
+	}
+
+	/**
+	* Returns the orm version of this workflow instance link.
+	*
+	* @return the orm version of this workflow instance link
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _workflowInstanceLink.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this workflow instance link.
+	*
+	* @param ormVersion the orm version of this workflow instance link
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_workflowInstanceLink.setOrmVersion(ormVersion);
 	}
 
 	@Override

@@ -60,6 +60,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		attributes.put("type", getType());
 		attributes.put("extraInfo", getExtraInfo());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -118,6 +119,12 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -334,6 +341,26 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	@Override
 	public void setExpirationDate(java.util.Date expirationDate) {
 		_ticket.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Returns the orm version of this ticket.
+	*
+	* @return the orm version of this ticket
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _ticket.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this ticket.
+	*
+	* @param ormVersion the orm version of this ticket
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ticket.setOrmVersion(ormVersion);
 	}
 
 	@Override

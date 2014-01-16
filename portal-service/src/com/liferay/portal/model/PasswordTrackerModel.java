@@ -40,7 +40,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PasswordTrackerModel extends BaseModel<PasswordTracker> {
+public interface PasswordTrackerModel extends BaseModel<PasswordTracker>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -132,6 +133,20 @@ public interface PasswordTrackerModel extends BaseModel<PasswordTracker> {
 	 * @param password the password of this password tracker
 	 */
 	public void setPassword(String password);
+
+	/**
+	 * Returns the orm version of this password tracker.
+	 *
+	 * @return the orm version of this password tracker
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this password tracker.
+	 *
+	 * @param ormVersion the orm version of this password tracker
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

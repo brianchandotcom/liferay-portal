@@ -65,6 +65,7 @@ public class EmailAddressWrapper implements EmailAddress,
 		attributes.put("address", getAddress());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -141,6 +142,12 @@ public class EmailAddressWrapper implements EmailAddress,
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -449,6 +456,26 @@ public class EmailAddressWrapper implements EmailAddress,
 	@Override
 	public void setPrimary(boolean primary) {
 		_emailAddress.setPrimary(primary);
+	}
+
+	/**
+	* Returns the orm version of this email address.
+	*
+	* @return the orm version of this email address
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _emailAddress.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this email address.
+	*
+	* @param ormVersion the orm version of this email address
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_emailAddress.setOrmVersion(ormVersion);
 	}
 
 	@Override

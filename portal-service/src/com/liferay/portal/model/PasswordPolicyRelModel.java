@@ -37,7 +37,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface PasswordPolicyRelModel extends AttachedModel,
-	BaseModel<PasswordPolicyRel> {
+	BaseModel<PasswordPolicyRel>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -127,6 +127,20 @@ public interface PasswordPolicyRelModel extends AttachedModel,
 	 */
 	@Override
 	public void setClassPK(long classPK);
+
+	/**
+	 * Returns the orm version of this password policy rel.
+	 *
+	 * @return the orm version of this password policy rel
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this password policy rel.
+	 *
+	 * @param ormVersion the orm version of this password policy rel
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

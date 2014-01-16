@@ -38,7 +38,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface LayoutBranchModel extends BaseModel<LayoutBranch> {
+public interface LayoutBranchModel extends BaseModel<LayoutBranch>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -223,6 +224,20 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch> {
 	 * @param master the master of this layout branch
 	 */
 	public void setMaster(boolean master);
+
+	/**
+	 * Returns the orm version of this layout branch.
+	 *
+	 * @return the orm version of this layout branch
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this layout branch.
+	 *
+	 * @param ormVersion the orm version of this layout branch
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

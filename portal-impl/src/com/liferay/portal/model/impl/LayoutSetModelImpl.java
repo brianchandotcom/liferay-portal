@@ -77,9 +77,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			{ "pageCount", Types.INTEGER },
 			{ "settings_", Types.CLOB },
 			{ "layoutSetPrototypeUuid", Types.VARCHAR },
-			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
+			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSet (layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutSet.layoutSetId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutSet.layoutSetId ASC";
@@ -129,6 +130,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		model.setSettings(soapModel.getSettings());
 		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
 		model.setLayoutSetPrototypeLinkEnabled(soapModel.getLayoutSetPrototypeLinkEnabled());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -210,6 +212,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
 			getLayoutSetPrototypeLinkEnabled());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -315,6 +318,12 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -574,6 +583,17 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public java.lang.String getVirtualHostname() {
 		return null;
 	}
@@ -628,6 +648,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		layoutSetImpl.setSettings(getSettings());
 		layoutSetImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
 		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(getLayoutSetPrototypeLinkEnabled());
+		layoutSetImpl.setOrmVersion(getOrmVersion());
 
 		layoutSetImpl.resetOriginalValues();
 
@@ -798,6 +819,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		layoutSetCacheModel.layoutSetPrototypeLinkEnabled = getLayoutSetPrototypeLinkEnabled();
 
+		layoutSetCacheModel.ormVersion = getOrmVersion();
+
 		layoutSetCacheModel._virtualHostname = getVirtualHostname();
 
 		return layoutSetCacheModel;
@@ -805,7 +828,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{layoutSetId=");
 		sb.append(getLayoutSetId());
@@ -839,6 +862,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		sb.append(getLayoutSetPrototypeUuid());
 		sb.append(", layoutSetPrototypeLinkEnabled=");
 		sb.append(getLayoutSetPrototypeLinkEnabled());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -846,7 +871,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSet");
@@ -916,6 +941,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			"<column><column-name>layoutSetPrototypeLinkEnabled</column-name><column-value><![CDATA[");
 		sb.append(getLayoutSetPrototypeLinkEnabled());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -947,6 +976,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private String _layoutSetPrototypeUuid;
 	private String _originalLayoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private LayoutSet _escapedModel;
 }

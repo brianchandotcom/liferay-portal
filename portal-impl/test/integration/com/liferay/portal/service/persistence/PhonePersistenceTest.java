@@ -135,6 +135,8 @@ public class PhonePersistenceTest {
 
 		newPhone.setPrimary(ServiceTestUtil.randomBoolean());
 
+		newPhone.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newPhone);
 
 		Phone existingPhone = _persistence.findByPrimaryKey(newPhone.getPrimaryKey());
@@ -159,6 +161,8 @@ public class PhonePersistenceTest {
 			newPhone.getExtension());
 		Assert.assertEquals(existingPhone.getTypeId(), newPhone.getTypeId());
 		Assert.assertEquals(existingPhone.getPrimary(), newPhone.getPrimary());
+		Assert.assertEquals(existingPhone.getOrmVersion(),
+			newPhone.getOrmVersion());
 	}
 
 	@Test
@@ -199,7 +203,7 @@ public class PhonePersistenceTest {
 			"phoneId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "classNameId",
 			true, "classPK", true, "number", true, "extension", true, "typeId",
-			true, "primary", true);
+			true, "primary", true, "ormVersion", true);
 	}
 
 	@Test
@@ -340,6 +344,8 @@ public class PhonePersistenceTest {
 		phone.setTypeId(ServiceTestUtil.nextInt());
 
 		phone.setPrimary(ServiceTestUtil.randomBoolean());
+
+		phone.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(phone);
 

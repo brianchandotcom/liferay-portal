@@ -73,6 +73,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
 			getLayoutSetPrototypeLinkEnabled());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -199,6 +200,12 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -674,6 +681,26 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled) {
 		_layoutSetBranch.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+	}
+
+	/**
+	* Returns the orm version of this layout set branch.
+	*
+	* @return the orm version of this layout set branch
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _layoutSetBranch.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this layout set branch.
+	*
+	* @param ormVersion the orm version of this layout set branch
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_layoutSetBranch.setOrmVersion(ormVersion);
 	}
 
 	@Override

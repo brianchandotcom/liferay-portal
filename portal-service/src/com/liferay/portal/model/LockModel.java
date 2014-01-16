@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LockModel extends BaseModel<Lock> {
+public interface LockModel extends BaseModel<Lock>, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -241,6 +241,20 @@ public interface LockModel extends BaseModel<Lock> {
 	 * @param expirationDate the expiration date of this lock
 	 */
 	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the orm version of this lock.
+	 *
+	 * @return the orm version of this lock
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this lock.
+	 *
+	 * @param ormVersion the orm version of this lock
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

@@ -36,7 +36,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPermission> {
+public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPermission>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -112,6 +113,20 @@ public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPer
 	 * @param actionIds the action IDs of this resource block permission
 	 */
 	public void setActionIds(long actionIds);
+
+	/**
+	 * Returns the orm version of this resource block permission.
+	 *
+	 * @return the orm version of this resource block permission
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this resource block permission.
+	 *
+	 * @param ormVersion the orm version of this resource block permission
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

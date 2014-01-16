@@ -125,6 +125,8 @@ public class WebDAVPropsPersistenceTest {
 
 		newWebDAVProps.setProps(ServiceTestUtil.randomString());
 
+		newWebDAVProps.setOrmVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newWebDAVProps);
 
 		WebDAVProps existingWebDAVProps = _persistence.findByPrimaryKey(newWebDAVProps.getPrimaryKey());
@@ -145,6 +147,8 @@ public class WebDAVPropsPersistenceTest {
 			newWebDAVProps.getClassPK());
 		Assert.assertEquals(existingWebDAVProps.getProps(),
 			newWebDAVProps.getProps());
+		Assert.assertEquals(existingWebDAVProps.getOrmVersion(),
+			newWebDAVProps.getOrmVersion());
 	}
 
 	@Test
@@ -185,7 +189,7 @@ public class WebDAVPropsPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("WebDAVProps",
 			"webDavPropsId", true, "companyId", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"props", true);
+			"props", true, "ormVersion", true);
 	}
 
 	@Test
@@ -334,6 +338,8 @@ public class WebDAVPropsPersistenceTest {
 		webDAVProps.setClassPK(ServiceTestUtil.nextLong());
 
 		webDAVProps.setProps(ServiceTestUtil.randomString());
+
+		webDAVProps.setOrmVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(webDAVProps);
 

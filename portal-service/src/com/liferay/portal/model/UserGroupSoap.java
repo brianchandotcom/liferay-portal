@@ -42,6 +42,7 @@ public class UserGroupSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setAddedByLDAPImport(model.getAddedByLDAPImport());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -186,6 +187,14 @@ public class UserGroupSoap implements Serializable {
 		_addedByLDAPImport = addedByLDAPImport;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private String _uuid;
 	private long _userGroupId;
 	private long _companyId;
@@ -197,4 +206,5 @@ public class UserGroupSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _addedByLDAPImport;
+	private long _ormVersion;
 }

@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress>,
-	StagedAuditedModel {
+	StagedAuditedModel, VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -282,6 +282,20 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	 * @param primary the primary of this email address
 	 */
 	public void setPrimary(boolean primary);
+
+	/**
+	 * Returns the orm version of this email address.
+	 *
+	 * @return the orm version of this email address
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this email address.
+	 *
+	 * @param ormVersion the orm version of this email address
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

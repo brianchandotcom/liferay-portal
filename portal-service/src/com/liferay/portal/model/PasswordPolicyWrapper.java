@@ -87,6 +87,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		attributes.put("requireUnlock", getRequireUnlock());
 		attributes.put("resetFailureCount", getResetFailureCount());
 		attributes.put("resetTicketMaxAge", getResetTicketMaxAge());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -296,6 +297,12 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 
 		if (resetTicketMaxAge != null) {
 			setResetTicketMaxAge(resetTicketMaxAge);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -1109,6 +1116,26 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	@Override
 	public void setResetTicketMaxAge(long resetTicketMaxAge) {
 		_passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
+	}
+
+	/**
+	* Returns the orm version of this password policy.
+	*
+	* @return the orm version of this password policy
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _passwordPolicy.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this password policy.
+	*
+	* @param ormVersion the orm version of this password policy
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_passwordPolicy.setOrmVersion(ormVersion);
 	}
 
 	@Override

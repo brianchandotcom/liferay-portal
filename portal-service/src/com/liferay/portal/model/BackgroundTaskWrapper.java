@@ -67,6 +67,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusMessage", getStatusMessage());
+		attributes.put("ormVersion", getOrmVersion());
 
 		return attributes;
 	}
@@ -163,6 +164,12 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 
 		if (statusMessage != null) {
 			setStatusMessage(statusMessage);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -516,6 +523,26 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public void setStatusMessage(java.lang.String statusMessage) {
 		_backgroundTask.setStatusMessage(statusMessage);
+	}
+
+	/**
+	* Returns the orm version of this background task.
+	*
+	* @return the orm version of this background task
+	*/
+	@Override
+	public long getOrmVersion() {
+		return _backgroundTask.getOrmVersion();
+	}
+
+	/**
+	* Sets the orm version of this background task.
+	*
+	* @param ormVersion the orm version of this background task
+	*/
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_backgroundTask.setOrmVersion(ormVersion);
 	}
 
 	@Override

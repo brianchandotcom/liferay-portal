@@ -65,9 +65,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 			{ "companyId", Types.BIGINT },
 			{ "portletId", Types.VARCHAR },
 			{ "roles", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Portlet (id_ LONG not null primary key,companyId LONG,portletId VARCHAR(200) null,roles STRING null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Portlet (id_ LONG not null primary key,companyId LONG,portletId VARCHAR(200) null,roles STRING null,active_ BOOLEAN,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Portlet";
 	public static final String ORDER_BY_JPQL = " ORDER BY portlet.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Portlet.id_ ASC";
@@ -105,6 +106,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		model.setPortletId(soapModel.getPortletId());
 		model.setRoles(soapModel.getRoles());
 		model.setActive(soapModel.getActive());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -174,6 +176,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		attributes.put("portletId", getPortletId());
 		attributes.put("roles", getRoles());
 		attributes.put("active", getActive());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -211,6 +214,12 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -306,6 +315,17 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		_active = active;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -342,6 +362,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		portletImpl.setPortletId(getPortletId());
 		portletImpl.setRoles(getRoles());
 		portletImpl.setActive(getActive());
+		portletImpl.setOrmVersion(getOrmVersion());
 
 		portletImpl.resetOriginalValues();
 
@@ -439,12 +460,14 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 		portletCacheModel.active = getActive();
 
+		portletCacheModel.ormVersion = getOrmVersion();
+
 		return portletCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -456,6 +479,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		sb.append(getRoles());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -463,7 +488,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Portlet");
@@ -489,6 +514,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -507,6 +536,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	private String _originalPortletId;
 	private String _roles;
 	private boolean _active;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private Portlet _escapedModel;
 }

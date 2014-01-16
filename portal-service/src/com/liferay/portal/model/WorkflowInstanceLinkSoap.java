@@ -41,6 +41,7 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setWorkflowInstanceId(model.getWorkflowInstanceId());
+		soapModel.setOrmVersion(model.getOrmVersion());
 
 		return soapModel;
 	}
@@ -176,6 +177,14 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 		_workflowInstanceId = workflowInstanceId;
 	}
 
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	private long _workflowInstanceLinkId;
 	private long _groupId;
 	private long _companyId;
@@ -186,4 +195,5 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private long _workflowInstanceId;
+	private long _ormVersion;
 }

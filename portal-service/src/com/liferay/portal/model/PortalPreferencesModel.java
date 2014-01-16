@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PortalPreferencesModel extends BaseModel<PortalPreferences> {
+public interface PortalPreferencesModel extends BaseModel<PortalPreferences>,
+	VersionedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,6 +115,20 @@ public interface PortalPreferencesModel extends BaseModel<PortalPreferences> {
 	 * @param preferences the preferences of this portal preferences
 	 */
 	public void setPreferences(String preferences);
+
+	/**
+	 * Returns the orm version of this portal preferences.
+	 *
+	 * @return the orm version of this portal preferences
+	 */
+	public long getOrmVersion();
+
+	/**
+	 * Sets the orm version of this portal preferences.
+	 *
+	 * @param ormVersion the orm version of this portal preferences
+	 */
+	public void setOrmVersion(long ormVersion);
 
 	@Override
 	public boolean isNew();

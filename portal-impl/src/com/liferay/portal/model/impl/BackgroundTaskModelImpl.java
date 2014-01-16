@@ -79,9 +79,10 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			{ "completed", Types.BOOLEAN },
 			{ "completionDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
-			{ "statusMessage", Types.CLOB }
+			{ "statusMessage", Types.CLOB },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BackgroundTask (backgroundTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,servletContextNames VARCHAR(255) null,taskExecutorClassName VARCHAR(200) null,taskContext TEXT null,completed BOOLEAN,completionDate DATE null,status INTEGER,statusMessage TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table BackgroundTask (backgroundTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,servletContextNames VARCHAR(255) null,taskExecutorClassName VARCHAR(200) null,taskContext TEXT null,completed BOOLEAN,completionDate DATE null,status INTEGER,statusMessage TEXT null,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table BackgroundTask";
 	public static final String ORDER_BY_JPQL = " ORDER BY backgroundTask.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BackgroundTask.createDate ASC";
@@ -133,6 +134,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		model.setCompletionDate(soapModel.getCompletionDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusMessage(soapModel.getStatusMessage());
+		model.setOrmVersion(soapModel.getOrmVersion());
 
 		return model;
 	}
@@ -212,6 +214,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusMessage", getStatusMessage());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -311,6 +314,12 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 
 		if (statusMessage != null) {
 			setStatusMessage(statusMessage);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -594,6 +603,17 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		_statusMessage = statusMessage;
 	}
 
+	@JSON
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -640,6 +660,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		backgroundTaskImpl.setCompletionDate(getCompletionDate());
 		backgroundTaskImpl.setStatus(getStatus());
 		backgroundTaskImpl.setStatusMessage(getStatusMessage());
+		backgroundTaskImpl.setOrmVersion(getOrmVersion());
 
 		backgroundTaskImpl.resetOriginalValues();
 
@@ -817,12 +838,14 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			backgroundTaskCacheModel.statusMessage = null;
 		}
 
+		backgroundTaskCacheModel.ormVersion = getOrmVersion();
+
 		return backgroundTaskCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{backgroundTaskId=");
 		sb.append(getBackgroundTaskId());
@@ -854,6 +877,8 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		sb.append(getStatus());
 		sb.append(", statusMessage=");
 		sb.append(getStatusMessage());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -861,7 +886,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.BackgroundTask");
@@ -927,6 +952,10 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 			"<column><column-name>statusMessage</column-name><column-value><![CDATA[");
 		sb.append(getStatusMessage());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -963,6 +992,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	private int _originalStatus;
 	private boolean _setOriginalStatus;
 	private String _statusMessage;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private BackgroundTask _escapedModel;
 }

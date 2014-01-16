@@ -63,9 +63,10 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 			{ "passwordTrackerId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
-			{ "password_", Types.VARCHAR }
+			{ "password_", Types.VARCHAR },
+			{ "ormVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PasswordTracker (passwordTrackerId LONG not null primary key,userId LONG,createDate DATE null,password_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordTracker (passwordTrackerId LONG not null primary key,userId LONG,createDate DATE null,password_ VARCHAR(75) null,ormVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordTracker.userId DESC, passwordTracker.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordTracker.userId DESC, PasswordTracker.createDate DESC";
@@ -127,6 +128,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("password", getPassword());
+		attributes.put("ormVersion", getOrmVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -158,6 +160,12 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 		if (password != null) {
 			setPassword(password);
+		}
+
+		Long ormVersion = (Long)attributes.get("ormVersion");
+
+		if (ormVersion != null) {
+			setOrmVersion(ormVersion);
 		}
 	}
 
@@ -230,6 +238,16 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		_password = password;
 	}
 
+	@Override
+	public long getOrmVersion() {
+		return _ormVersion;
+	}
+
+	@Override
+	public void setOrmVersion(long ormVersion) {
+		_ormVersion = ormVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -265,6 +283,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		passwordTrackerImpl.setUserId(getUserId());
 		passwordTrackerImpl.setCreateDate(getCreateDate());
 		passwordTrackerImpl.setPassword(getPassword());
+		passwordTrackerImpl.setOrmVersion(getOrmVersion());
 
 		passwordTrackerImpl.resetOriginalValues();
 
@@ -376,12 +395,14 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 			passwordTrackerCacheModel.password = null;
 		}
 
+		passwordTrackerCacheModel.ormVersion = getOrmVersion();
+
 		return passwordTrackerCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{passwordTrackerId=");
 		sb.append(getPasswordTrackerId());
@@ -391,6 +412,8 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		sb.append(getCreateDate());
 		sb.append(", password=");
 		sb.append(getPassword());
+		sb.append(", ormVersion=");
+		sb.append(getOrmVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -398,7 +421,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PasswordTracker");
@@ -420,6 +443,10 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 			"<column><column-name>password</column-name><column-value><![CDATA[");
 		sb.append(getPassword());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ormVersion</column-name><column-value><![CDATA[");
+		sb.append(getOrmVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -437,6 +464,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private String _password;
+	private long _ormVersion;
 	private long _columnBitmask;
 	private PasswordTracker _escapedModel;
 }

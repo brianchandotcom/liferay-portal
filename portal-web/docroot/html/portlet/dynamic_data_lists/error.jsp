@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
 
 <liferay-ui:header
-	backURL="javascript:history.go(-1);"
+	backURL="<%= request.getHeader(HttpHeaders.REFERER) %>"
 	title="error"
 />
 

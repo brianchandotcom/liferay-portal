@@ -51,8 +51,232 @@
 		</execute>
 	</command>
 
+	<command name="AddBookmarkViaAP" priority="4">
+		<var name="bookmarkDescription" value="Test Bookmark Description" />
+		<var name="bookmarkName" value="Test Bookmark Name" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="folderName" value="Test Folder Name" />
+		<var name="folderDescription" value="Test Folder Description" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageName2" value="Bookmarks Page" />
+		<var name="portletName2" value="Bookmarks" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#addPG">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Bookmark#addBookmarkViaAP">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkFolderName" value="${folderName}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Bookmark#viewBookmarkViaAP">
+			<var name="bookmarkName" value="${bookmarkName}" />
+		</execute>
+	</command>
+
 	<command name="ConfigureAPPortletDisplayPage" priority="5">
 		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
+	</command>
+
+	<command name="ConfigureAPPortletDisplaytemplateFullContentWithBookmarks" priority="4">
+		<var name="bookmarkDescription" value="Test Bookmark Description" />
+		<var name="bookmarkName" value="Test Bookmark Name" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="folderName" value="Test Folder Name" />
+		<var name="folderDescription" value="Test Folder Description" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageName2" value="Bookmarks Page" />
+		<var name="portletName2" value="Bookmarks" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#addPG">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayTemplatePG">
+			<var name="displayTemplate" value="Full Content" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureAPDisplayTemplateFullContentBookmarksPG">
+			<var name="assetTitle" value="${bookmarkName}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletDisplaytemplateTableWithBookmarks" priority="4">
+		<var name="bookmarkDescription" value="Test Bookmark Description" />
+		<var name="bookmarkName" value="Test Bookmark Name" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="folderName" value="Test Folder Name" />
+		<var name="folderDescription" value="Test Folder Description" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageName2" value="Bookmarks Page" />
+		<var name="portletName2" value="Bookmarks" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#addPG">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayTemplatePG">
+			<var name="displayTemplate" value="Table" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureAPDisplayTemplateTableBookmarksPG">
+			<var name="assetTitle" value="${bookmarkName}" />
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletDisplaytemplateTitlelistWithBookmarks" priority="4">
+		<var name="bookmarkDescription" value="Test Bookmark Description" />
+		<var name="bookmarkName" value="Test Bookmark Name" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="folderName" value="Test Folder Name" />
+		<var name="folderDescription" value="Test Folder Description" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageName2" value="Bookmarks Page" />
+		<var name="portletName2" value="Bookmarks" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#addPG">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayTemplatePG">
+			<var name="displayTemplate" value="Title List" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureAPDisplayTemplateTitleListBookmarksPG">
+			<var name="assetTitle" value="${bookmarkName}" />
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+		</execute>
 	</command>
 
 	<command name="ConfigureAPPortletEnableRatings" priority="4">
@@ -86,7 +310,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureDisplayFullContentPG" />
+		<execute macro="AssetPublisherPortlet#configureDisplayTemplatePG">
+			<var name="displayTemplate" value="Full Content" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -130,6 +356,82 @@
 
 		<execute macro="AssetPublisherPortlet#viewSelectedPG">
 			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletWithSelectedBookmarksEntry" priority="4">
+		<var name="bookmarkDescription" value="Test Bookmark Description" />
+		<var name="bookmarkName" value="Test Bookmark Name" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
+		<var name="folderName" value="Test Folder Name" />
+		<var name="folderDescription" value="Test Folder Description" />
+		<var name="pageName" value="${pageName}" />
+		<var name="pageName2" value="Bookmarks Page" />
+		<var name="portletName2" value="Bookmarks" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#addPG">
+			<var name="folderDescription" value="${folderDescription}" />
+			<var name="folderName" value="${folderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName2}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAPSelectMoreThanOnePG">
+			<var name="contentName" value="Bookmarks Entry" />
+			<var name="selectContent" value="${contentName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureAPMoveToAvailablePG">
+			<var name="assetTitle" value="${bookmarkName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAPSelectMoreThanOnePG" >
+			<var name="contentName" value="Bookmarks Entry" />
+			<var name="moveSelected" value="True" />
+			<var name="selectContent" value="${contentName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewConfigureAPMoveToSelectedPG">
+			<var name="assetTitle" value="${bookmarkName}" />
 		</execute>
 	</command>
 

@@ -21,10 +21,8 @@
 	<command name="AddSiteRegRole" priority="5">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE" />
 		<var name="permissionDefinition1Value" value="Add Site" />
-		<var name="permissionDefinition2Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE_TEMPLATE" />
-		<var name="permissionDefinition2Value" value="Add Site Template" />
-		<var name="permissionDefinition3Key" value="CONTROL_PANEL_SITES_SITES_ACCESS_IN_CONTROL_PANEL" />
-		<var name="permissionDefinition3Value" value="Access in Control Panel" />
+		<var name="permissionDefinition2Key" value="CONTROL_PANEL_SITES_SITES_ACCESS_IN_CONTROL_PANEL" />
+		<var name="permissionDefinition2Value" value="Access in Control Panel" />
 		<var name="permissionNavigation1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
 		<var name="permissionNavigation1Value" value="General Permissions" />
 		<var name="permissionNavigation2Key" value="CONTROL_PANEL_SITES_SITES" />
@@ -49,8 +47,8 @@
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition3Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition3Value}" />
+			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
 			<var name="permissionNavigationKey" value="${permissionNavigation2Key}" />
 			<var name="permissionNavigationValue" value="${permissionNavigation2Value}" />
 			<var name="roleName" value="${roleName}" />
@@ -72,16 +70,6 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
-		</execute>
-
 		<execute macro="Page#gotoCP" />
 
 		<execute macro="Site#addBlankCP">
@@ -96,16 +84,6 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="${permissionDefinition2Key}" />
-			<var name="permissionDefinitionValue" value="${permissionDefinition2Value}" />
-			<var name="permissionNavigationKey" value="${permissionNavigation1Key}" />
-			<var name="permissionNavigationValue" value="${permissionNavigation1Value}" />
-			<var name="roleName" value="${roleName}" />
-			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
 		</execute>
 
 		<execute macro="Page#gotoCP" />

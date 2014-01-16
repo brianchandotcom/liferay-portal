@@ -1740,16 +1740,16 @@ public class SeleniumBuilderFileUtil {
 			"portal-collaboration", "portal-configuration", "portal-deployment",
 			"portal-document-management", "portal-frameworks",
 			"portal-infrastructure", "portal-integrations", "portal-legacy",
-			"portal-opensocial", "portal-operations",
+			"portal-opensocial", "portal-operations", "portal-permissions",
 			"portal-personalization-and-customization",
 			"portal-sample-portlet-plugins", "portal-search", "portal-security",
-			"portal-social-networking", "portal-theme-development",
-			"portal-tools", "portal-upgrades", "portal-user-interface",
-			"portal-util-misc", "portal-wcm", "portal-web-forms-and-data-lists",
-			"portal-workflow", "social-office-administration",
-			"social-office-dashboard", "social-office-environment",
-			"social-office-profile", "social-office-site",
-			"social-office-user-bar"
+			"portal-social-networking", "portal-staging",
+			"portal-theme-development", "portal-tools", "portal-upgrades",
+			"portal-user-interface", "portal-util-misc", "portal-wcm",
+			"portal-web-forms-and-data-lists", "portal-workflow",
+			"social-office-administration", "social-office-dashboard",
+			"social-office-environment", "social-office-profile",
+			"social-office-site", "social-office-user-bar"
 		});
 	private static List<String> _methodNames = ListUtil.fromArray(
 		new String[] {

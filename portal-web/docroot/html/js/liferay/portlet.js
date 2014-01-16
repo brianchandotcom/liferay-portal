@@ -446,8 +446,9 @@
 										var data = {
 											doAsUserId: doAsUserId,
 											p_l_id: plid,
-											p_p_id: portlet.portletId,
-											p_p_state: 'exclusive'
+											p_p_boundary: false,
+											p_p_decorate: false,
+											p_p_id: portlet.portletId
 										};
 
 										content.plug(A.Plugin.ParseContent);

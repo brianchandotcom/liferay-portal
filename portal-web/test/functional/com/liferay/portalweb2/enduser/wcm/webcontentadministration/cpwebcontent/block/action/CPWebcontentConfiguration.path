@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>CPWebcontentConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWebcontentConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWebcontentConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//div[@class='control-group']/input[contains(@id,'emailFromName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESS_FIELD</td>
+	<td>//div[@class='control-group']/input[contains(@id,'emailFromAddress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_EMAIL_FROM</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WEB_CONTENT_ADDED_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Web Content Added Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WEB_CONTENT_REVIEW_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Web Content Review Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WEB_CONTENT_UPDATED_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Web Content Updated Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WEB_CONTENT_DENIED_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Web Content Denied Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WEB_CONTENT_GRANTED_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Web Content Granted Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_WEB_CONTENT_REQUESTED_EMAIL</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Web Content Requested Email')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

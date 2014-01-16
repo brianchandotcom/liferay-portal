@@ -272,7 +272,7 @@
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="Organization Name" />
 		<var name="sitePageName" value="${pageName}" />
-		<var name="sitePageType" value="Public" />
+		<var name="sitePagePrivacy" value="Public" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -298,7 +298,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
-			<var name="sitePageType" value="${sitePageType}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

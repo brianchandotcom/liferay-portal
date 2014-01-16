@@ -37,7 +37,7 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{userTrackerId=");
 		sb.append(userTrackerId);
@@ -55,6 +55,8 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		sb.append(remoteHost);
 		sb.append(", userAgent=");
 		sb.append(userAgent);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -103,6 +105,8 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 			userTrackerImpl.setUserAgent(userAgent);
 		}
 
+		userTrackerImpl.setMvccVersion(mvccVersion);
+
 		userTrackerImpl.resetOriginalValues();
 
 		return userTrackerImpl;
@@ -118,6 +122,7 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		remoteAddr = objectInput.readUTF();
 		remoteHost = objectInput.readUTF();
 		userAgent = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -155,6 +160,8 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		else {
 			objectOutput.writeUTF(userAgent);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long userTrackerId;
@@ -165,4 +172,5 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 	public String remoteAddr;
 	public String remoteHost;
 	public String userAgent;
+	public long mvccVersion;
 }

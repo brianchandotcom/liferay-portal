@@ -36,7 +36,7 @@ import java.util.Date;
 public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{teamId=");
 		sb.append(teamId);
@@ -56,6 +56,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,6 +108,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 			teamImpl.setDescription(description);
 		}
 
+		teamImpl.setMvccVersion(mvccVersion);
+
 		teamImpl.resetOriginalValues();
 
 		return teamImpl;
@@ -122,6 +126,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		groupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -155,6 +160,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long teamId;
@@ -166,4 +173,5 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable {
 	public long groupId;
 	public String name;
 	public String description;
+	public long mvccVersion;
 }

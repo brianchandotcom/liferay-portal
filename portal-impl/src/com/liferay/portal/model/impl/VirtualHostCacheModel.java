@@ -35,7 +35,7 @@ public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{virtualHostId=");
 		sb.append(virtualHostId);
@@ -45,6 +45,8 @@ public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
 		sb.append(layoutSetId);
 		sb.append(", hostname=");
 		sb.append(hostname);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -65,6 +67,8 @@ public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
 			virtualHostImpl.setHostname(hostname);
 		}
 
+		virtualHostImpl.setMvccVersion(mvccVersion);
+
 		virtualHostImpl.resetOriginalValues();
 
 		return virtualHostImpl;
@@ -76,6 +80,7 @@ public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
 		companyId = objectInput.readLong();
 		layoutSetId = objectInput.readLong();
 		hostname = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -91,10 +96,13 @@ public class VirtualHostCacheModel implements CacheModel<VirtualHost>,
 		else {
 			objectOutput.writeUTF(hostname);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long virtualHostId;
 	public long companyId;
 	public long layoutSetId;
 	public String hostname;
+	public long mvccVersion;
 }

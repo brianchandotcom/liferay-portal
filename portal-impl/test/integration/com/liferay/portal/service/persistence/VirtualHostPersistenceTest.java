@@ -119,6 +119,8 @@ public class VirtualHostPersistenceTest {
 
 		newVirtualHost.setHostname(ServiceTestUtil.randomString());
 
+		newVirtualHost.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newVirtualHost);
 
 		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
@@ -131,6 +133,8 @@ public class VirtualHostPersistenceTest {
 			newVirtualHost.getLayoutSetId());
 		Assert.assertEquals(existingVirtualHost.getHostname(),
 			newVirtualHost.getHostname());
+		Assert.assertEquals(existingVirtualHost.getMvccVersion(),
+			newVirtualHost.getMvccVersion());
 	}
 
 	@Test
@@ -170,7 +174,7 @@ public class VirtualHostPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("VirtualHost",
 			"virtualHostId", true, "companyId", true, "layoutSetId", true,
-			"hostname", true);
+			"hostname", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -317,6 +321,8 @@ public class VirtualHostPersistenceTest {
 		virtualHost.setLayoutSetId(ServiceTestUtil.nextLong());
 
 		virtualHost.setHostname(ServiceTestUtil.randomString());
+
+		virtualHost.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(virtualHost);
 

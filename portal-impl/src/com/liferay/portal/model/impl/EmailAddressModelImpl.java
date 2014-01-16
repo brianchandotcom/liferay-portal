@@ -78,9 +78,10 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			{ "classPK", Types.BIGINT },
 			{ "address", Types.VARCHAR },
 			{ "typeId", Types.INTEGER },
-			{ "primary_", Types.BOOLEAN }
+			{ "primary_", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table EmailAddress (uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId INTEGER,primary_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table EmailAddress (uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId INTEGER,primary_ BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 	public static final String ORDER_BY_JPQL = " ORDER BY emailAddress.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY EmailAddress.createDate ASC";
@@ -129,6 +130,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		model.setAddress(soapModel.getAddress());
 		model.setTypeId(soapModel.getTypeId());
 		model.setPrimary(soapModel.getPrimary());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -205,6 +207,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		attributes.put("address", getAddress());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -284,6 +287,12 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -539,6 +548,17 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return _originalPrimary;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -588,6 +608,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		emailAddressImpl.setAddress(getAddress());
 		emailAddressImpl.setTypeId(getTypeId());
 		emailAddressImpl.setPrimary(getPrimary());
+		emailAddressImpl.setMvccVersion(getMvccVersion());
 
 		emailAddressImpl.resetOriginalValues();
 
@@ -733,12 +754,14 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		emailAddressCacheModel.primary = getPrimary();
 
+		emailAddressCacheModel.mvccVersion = getMvccVersion();
+
 		return emailAddressCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -764,6 +787,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		sb.append(getTypeId());
 		sb.append(", primary=");
 		sb.append(getPrimary());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -771,7 +796,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.EmailAddress");
@@ -825,6 +850,10 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
 		sb.append(getPrimary());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -859,6 +888,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private EmailAddress _escapedModel;
 }

@@ -78,9 +78,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 			{ "classPK", Types.BIGINT },
 			{ "url", Types.VARCHAR },
 			{ "typeId", Types.INTEGER },
-			{ "primary_", Types.BOOLEAN }
+			{ "primary_", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Website (uuid_ VARCHAR(75) null,websiteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,typeId INTEGER,primary_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Website (uuid_ VARCHAR(75) null,websiteId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,url STRING null,typeId INTEGER,primary_ BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Website";
 	public static final String ORDER_BY_JPQL = " ORDER BY website.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Website.createDate ASC";
@@ -129,6 +130,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		model.setUrl(soapModel.getUrl());
 		model.setTypeId(soapModel.getTypeId());
 		model.setPrimary(soapModel.getPrimary());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -205,6 +207,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		attributes.put("url", getUrl());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -284,6 +287,12 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -539,6 +548,17 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		return _originalPrimary;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -588,6 +608,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		websiteImpl.setUrl(getUrl());
 		websiteImpl.setTypeId(getTypeId());
 		websiteImpl.setPrimary(getPrimary());
+		websiteImpl.setMvccVersion(getMvccVersion());
 
 		websiteImpl.resetOriginalValues();
 
@@ -733,12 +754,14 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 		websiteCacheModel.primary = getPrimary();
 
+		websiteCacheModel.mvccVersion = getMvccVersion();
+
 		return websiteCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -764,6 +787,8 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		sb.append(getTypeId());
 		sb.append(", primary=");
 		sb.append(getPrimary());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -771,7 +796,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Website");
@@ -825,6 +850,10 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
 		sb.append(getPrimary());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -859,6 +888,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Website _escapedModel;
 }

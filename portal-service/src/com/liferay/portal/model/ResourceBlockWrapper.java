@@ -57,6 +57,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		attributes.put("name", getName());
 		attributes.put("permissionsHash", getPermissionsHash());
 		attributes.put("referenceCount", getReferenceCount());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -97,6 +98,12 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 		if (referenceCount != null) {
 			setReferenceCount(referenceCount);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -238,6 +245,26 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	@Override
 	public void setReferenceCount(long referenceCount) {
 		_resourceBlock.setReferenceCount(referenceCount);
+	}
+
+	/**
+	* Returns the mvcc version of this resource block.
+	*
+	* @return the mvcc version of this resource block
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _resourceBlock.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this resource block.
+	*
+	* @param mvccVersion the mvcc version of this resource block
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_resourceBlock.setMvccVersion(mvccVersion);
 	}
 
 	@Override

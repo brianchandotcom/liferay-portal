@@ -36,7 +36,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface OrgLaborModel extends BaseModel<OrgLabor> {
+public interface OrgLaborModel extends BaseModel<OrgLabor>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -294,6 +294,22 @@ public interface OrgLaborModel extends BaseModel<OrgLabor> {
 	 * @param satClose the sat close of this org labor
 	 */
 	public void setSatClose(int satClose);
+
+	/**
+	 * Returns the mvcc version of this org labor.
+	 *
+	 * @return the mvcc version of this org labor
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this org labor.
+	 *
+	 * @param mvccVersion the mvcc version of this org labor
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

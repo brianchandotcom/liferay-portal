@@ -47,6 +47,7 @@ public class AccountSoap implements Serializable {
 		soapModel.setIndustry(model.getIndustry());
 		soapModel.setType(model.getType());
 		soapModel.setSize(model.getSize());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -227,6 +228,14 @@ public class AccountSoap implements Serializable {
 		_size = size;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _accountId;
 	private long _companyId;
 	private long _userId;
@@ -243,4 +252,5 @@ public class AccountSoap implements Serializable {
 	private String _industry;
 	private String _type;
 	private String _size;
+	private long _mvccVersion;
 }

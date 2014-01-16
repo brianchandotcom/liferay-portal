@@ -614,6 +614,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 
 		classNameImpl.setClassNameId(className.getClassNameId());
 		classNameImpl.setValue(className.getValue());
+		classNameImpl.setMvccVersion(className.getMvccVersion());
 
 		return classNameImpl;
 	}

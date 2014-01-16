@@ -2508,6 +2508,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequestImpl.setReplyDate(membershipRequest.getReplyDate());
 		membershipRequestImpl.setReplierUserId(membershipRequest.getReplierUserId());
 		membershipRequestImpl.setStatusId(membershipRequest.getStatusId());
+		membershipRequestImpl.setMvccVersion(membershipRequest.getMvccVersion());
 
 		return membershipRequestImpl;
 	}

@@ -47,6 +47,7 @@ public class OrgLaborSoap implements Serializable {
 		soapModel.setFriClose(model.getFriClose());
 		soapModel.setSatOpen(model.getSatOpen());
 		soapModel.setSatClose(model.getSatClose());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -235,6 +236,14 @@ public class OrgLaborSoap implements Serializable {
 		_satClose = satClose;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _orgLaborId;
 	private long _organizationId;
 	private int _typeId;
@@ -252,4 +261,5 @@ public class OrgLaborSoap implements Serializable {
 	private int _friClose;
 	private int _satOpen;
 	private int _satClose;
+	private long _mvccVersion;
 }

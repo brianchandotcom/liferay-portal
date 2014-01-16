@@ -1287,6 +1287,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		userNotificationDeliveryImpl.setNotificationType(userNotificationDelivery.getNotificationType());
 		userNotificationDeliveryImpl.setDeliveryType(userNotificationDelivery.getDeliveryType());
 		userNotificationDeliveryImpl.setDeliver(userNotificationDelivery.isDeliver());
+		userNotificationDeliveryImpl.setMvccVersion(userNotificationDelivery.getMvccVersion());
 
 		return userNotificationDeliveryImpl;
 	}

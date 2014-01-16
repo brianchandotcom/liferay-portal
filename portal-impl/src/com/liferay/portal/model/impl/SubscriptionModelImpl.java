@@ -68,9 +68,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "frequency", Types.VARCHAR }
+			{ "frequency", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subscription (subscriptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Subscription (subscriptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Subscription";
 	public static final String ORDER_BY_JPQL = " ORDER BY subscription.subscriptionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subscription.subscriptionId ASC";
@@ -140,6 +141,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("frequency", getFrequency());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -201,6 +203,12 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		if (frequency != null) {
 			setFrequency(frequency);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -382,6 +390,16 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		_frequency = frequency;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -422,6 +440,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionImpl.setClassNameId(getClassNameId());
 		subscriptionImpl.setClassPK(getClassPK());
 		subscriptionImpl.setFrequency(getFrequency());
+		subscriptionImpl.setMvccVersion(getMvccVersion());
 
 		subscriptionImpl.resetOriginalValues();
 
@@ -551,12 +570,14 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			subscriptionCacheModel.frequency = null;
 		}
 
+		subscriptionCacheModel.mvccVersion = getMvccVersion();
+
 		return subscriptionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{subscriptionId=");
 		sb.append(getSubscriptionId());
@@ -576,6 +597,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		sb.append(getClassPK());
 		sb.append(", frequency=");
 		sb.append(getFrequency());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -583,7 +606,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Subscription");
@@ -625,6 +648,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			"<column><column-name>frequency</column-name><column-value><![CDATA[");
 		sb.append(getFrequency());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -653,6 +680,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _frequency;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Subscription _escapedModel;
 }

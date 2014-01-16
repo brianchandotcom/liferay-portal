@@ -35,7 +35,7 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{resourceBlockId=");
 		sb.append(resourceBlockId);
@@ -49,6 +49,8 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		sb.append(permissionsHash);
 		sb.append(", referenceCount=");
 		sb.append(referenceCount);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -77,6 +79,7 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		}
 
 		resourceBlockImpl.setReferenceCount(referenceCount);
+		resourceBlockImpl.setMvccVersion(mvccVersion);
 
 		resourceBlockImpl.resetOriginalValues();
 
@@ -91,6 +94,7 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		name = objectInput.readUTF();
 		permissionsHash = objectInput.readUTF();
 		referenceCount = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -115,6 +119,7 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		}
 
 		objectOutput.writeLong(referenceCount);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long resourceBlockId;
@@ -123,4 +128,5 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	public String name;
 	public String permissionsHash;
 	public long referenceCount;
+	public long mvccVersion;
 }

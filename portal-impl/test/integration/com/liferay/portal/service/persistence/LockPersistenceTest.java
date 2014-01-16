@@ -134,6 +134,8 @@ public class LockPersistenceTest {
 
 		newLock.setExpirationDate(ServiceTestUtil.nextDate());
 
+		newLock.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newLock);
 
 		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
@@ -153,6 +155,8 @@ public class LockPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLock.getExpirationDate()),
 			Time.getShortTimestamp(newLock.getExpirationDate()));
+		Assert.assertEquals(existingLock.getMvccVersion(),
+			newLock.getMvccVersion());
 	}
 
 	@Test
@@ -192,7 +196,8 @@ public class LockPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Lock_", "uuid", true,
 			"lockId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "className", true, "key", true, "owner",
-			true, "inheritable", true, "expirationDate", true);
+			true, "inheritable", true, "expirationDate", true, "mvccVersion",
+			true);
 	}
 
 	@Test
@@ -348,6 +353,8 @@ public class LockPersistenceTest {
 		lock.setInheritable(ServiceTestUtil.randomBoolean());
 
 		lock.setExpirationDate(ServiceTestUtil.nextDate());
+
+		lock.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(lock);
 

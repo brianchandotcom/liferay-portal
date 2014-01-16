@@ -172,6 +172,8 @@ public class LayoutPersistenceTest {
 
 		newLayout.setSourcePrototypeLayoutUuid(ServiceTestUtil.randomString());
 
+		newLayout.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newLayout);
 
 		Layout existingLayout = _persistence.findByPrimaryKey(newLayout.getPrimaryKey());
@@ -227,6 +229,8 @@ public class LayoutPersistenceTest {
 			newLayout.getLayoutPrototypeLinkEnabled());
 		Assert.assertEquals(existingLayout.getSourcePrototypeLayoutUuid(),
 			newLayout.getSourcePrototypeLayoutUuid());
+		Assert.assertEquals(existingLayout.getMvccVersion(),
+			newLayout.getMvccVersion());
 	}
 
 	@Test
@@ -284,7 +288,7 @@ public class LayoutPersistenceTest {
 			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
 			true, "css", true, "priority", true, "layoutPrototypeUuid", true,
 			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
-			true);
+			true, "mvccVersion", true);
 	}
 
 	@Test
@@ -504,6 +508,8 @@ public class LayoutPersistenceTest {
 		layout.setLayoutPrototypeLinkEnabled(ServiceTestUtil.randomBoolean());
 
 		layout.setSourcePrototypeLayoutUuid(ServiceTestUtil.randomString());
+
+		layout.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(layout);
 

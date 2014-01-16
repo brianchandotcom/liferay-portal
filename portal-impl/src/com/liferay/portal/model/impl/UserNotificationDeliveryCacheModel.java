@@ -35,7 +35,7 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{userNotificationDeliveryId=");
 		sb.append(userNotificationDeliveryId);
@@ -53,6 +53,8 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		sb.append(deliveryType);
 		sb.append(", deliver=");
 		sb.append(deliver);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -77,6 +79,7 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		userNotificationDeliveryImpl.setNotificationType(notificationType);
 		userNotificationDeliveryImpl.setDeliveryType(deliveryType);
 		userNotificationDeliveryImpl.setDeliver(deliver);
+		userNotificationDeliveryImpl.setMvccVersion(mvccVersion);
 
 		userNotificationDeliveryImpl.resetOriginalValues();
 
@@ -93,6 +96,7 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		notificationType = objectInput.readInt();
 		deliveryType = objectInput.readInt();
 		deliver = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -113,6 +117,7 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		objectOutput.writeInt(notificationType);
 		objectOutput.writeInt(deliveryType);
 		objectOutput.writeBoolean(deliver);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long userNotificationDeliveryId;
@@ -123,4 +128,5 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 	public int notificationType;
 	public int deliveryType;
 	public boolean deliver;
+	public long mvccVersion;
 }

@@ -634,6 +634,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		portalPreferencesImpl.setOwnerId(portalPreferences.getOwnerId());
 		portalPreferencesImpl.setOwnerType(portalPreferences.getOwnerType());
 		portalPreferencesImpl.setPreferences(portalPreferences.getPreferences());
+		portalPreferencesImpl.setMvccVersion(portalPreferences.getMvccVersion());
 
 		return portalPreferencesImpl;
 	}

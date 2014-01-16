@@ -1668,6 +1668,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		countryImpl.setIdd(country.getIdd());
 		countryImpl.setZipRequired(country.isZipRequired());
 		countryImpl.setActive(country.isActive());
+		countryImpl.setMvccVersion(country.getMvccVersion());
 
 		return countryImpl;
 	}

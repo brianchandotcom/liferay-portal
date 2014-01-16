@@ -36,7 +36,7 @@ import java.util.Date;
 public class LockCacheModel implements CacheModel<Lock>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable {
 		sb.append(inheritable);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,6 +126,8 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable {
 			lockImpl.setExpirationDate(new Date(expirationDate));
 		}
 
+		lockImpl.setMvccVersion(mvccVersion);
+
 		lockImpl.resetOriginalValues();
 
 		return lockImpl;
@@ -142,6 +146,7 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable {
 		owner = objectInput.readUTF();
 		inheritable = objectInput.readBoolean();
 		expirationDate = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -190,6 +195,7 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable {
 
 		objectOutput.writeBoolean(inheritable);
 		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -203,4 +209,5 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable {
 	public String owner;
 	public boolean inheritable;
 	public long expirationDate;
+	public long mvccVersion;
 }

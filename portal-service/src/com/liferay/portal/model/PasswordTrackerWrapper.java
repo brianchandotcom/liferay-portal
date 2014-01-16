@@ -56,6 +56,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("password", getPassword());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 
 		if (password != null) {
 			setPassword(password);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -207,6 +214,26 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	@Override
 	public void setPassword(java.lang.String password) {
 		_passwordTracker.setPassword(password);
+	}
+
+	/**
+	* Returns the mvcc version of this password tracker.
+	*
+	* @return the mvcc version of this password tracker
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _passwordTracker.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this password tracker.
+	*
+	* @param mvccVersion the mvcc version of this password tracker
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_passwordTracker.setMvccVersion(mvccVersion);
 	}
 
 	@Override

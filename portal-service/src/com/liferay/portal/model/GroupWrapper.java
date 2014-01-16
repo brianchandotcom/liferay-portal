@@ -69,6 +69,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("site", getSite());
 		attributes.put("remoteStagingGroupCount", getRemoteStagingGroupCount());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -189,6 +190,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -657,6 +664,26 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setActive(boolean active) {
 		_group.setActive(active);
+	}
+
+	/**
+	* Returns the mvcc version of this group.
+	*
+	* @return the mvcc version of this group
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _group.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this group.
+	*
+	* @param mvccVersion the mvcc version of this group
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_group.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -61,6 +61,7 @@ public class LayoutRevisionSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -365,6 +366,14 @@ public class LayoutRevisionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _layoutRevisionId;
 	private long _groupId;
 	private long _companyId;
@@ -395,4 +404,5 @@ public class LayoutRevisionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _mvccVersion;
 }

@@ -63,6 +63,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("addedByLDAPImport", getAddedByLDAPImport());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -133,6 +134,12 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 
 		if (addedByLDAPImport != null) {
 			setAddedByLDAPImport(addedByLDAPImport);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -406,6 +413,26 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	@Override
 	public void setAddedByLDAPImport(boolean addedByLDAPImport) {
 		_userGroup.setAddedByLDAPImport(addedByLDAPImport);
+	}
+
+	/**
+	* Returns the mvcc version of this user group.
+	*
+	* @return the mvcc version of this user group
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _userGroup.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this user group.
+	*
+	* @param mvccVersion the mvcc version of this user group
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_userGroup.setMvccVersion(mvccVersion);
 	}
 
 	@Override

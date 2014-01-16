@@ -141,6 +141,8 @@ public class AccountPersistenceTest {
 
 		newAccount.setSize(ServiceTestUtil.randomString());
 
+		newAccount.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newAccount);
 
 		Account existingAccount = _persistence.findByPrimaryKey(newAccount.getPrimaryKey());
@@ -175,6 +177,8 @@ public class AccountPersistenceTest {
 			newAccount.getIndustry());
 		Assert.assertEquals(existingAccount.getType(), newAccount.getType());
 		Assert.assertEquals(existingAccount.getSize(), newAccount.getSize());
+		Assert.assertEquals(existingAccount.getMvccVersion(),
+			newAccount.getMvccVersion());
 	}
 
 	@Test
@@ -216,7 +220,7 @@ public class AccountPersistenceTest {
 			"createDate", true, "modifiedDate", true, "parentAccountId", true,
 			"name", true, "legalName", true, "legalId", true, "legalType",
 			true, "sicCode", true, "tickerSymbol", true, "industry", true,
-			"type", true, "size", true);
+			"type", true, "size", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -363,6 +367,8 @@ public class AccountPersistenceTest {
 		account.setType(ServiceTestUtil.randomString());
 
 		account.setSize(ServiceTestUtil.randomString());
+
+		account.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(account);
 

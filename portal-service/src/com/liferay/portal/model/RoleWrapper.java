@@ -66,6 +66,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("subtype", getSubtype());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 
 		if (subtype != null) {
 			setSubtype(subtype);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -734,6 +741,26 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public void setSubtype(java.lang.String subtype) {
 		_role.setSubtype(subtype);
+	}
+
+	/**
+	* Returns the mvcc version of this role.
+	*
+	* @return the mvcc version of this role
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _role.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this role.
+	*
+	* @param mvccVersion the mvcc version of this role
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_role.setMvccVersion(mvccVersion);
 	}
 
 	@Override

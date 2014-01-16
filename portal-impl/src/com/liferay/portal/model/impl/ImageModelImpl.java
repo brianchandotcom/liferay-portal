@@ -66,9 +66,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 			{ "type_", Types.VARCHAR },
 			{ "height", Types.INTEGER },
 			{ "width", Types.INTEGER },
-			{ "size_", Types.INTEGER }
+			{ "size_", Types.INTEGER },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Image (imageId LONG not null primary key,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Image (imageId LONG not null primary key,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Image";
 	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Image.imageId ASC";
@@ -106,6 +107,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		model.setHeight(soapModel.getHeight());
 		model.setWidth(soapModel.getWidth());
 		model.setSize(soapModel.getSize());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -176,6 +178,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
 		attributes.put("size", getSize());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -219,6 +222,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -307,6 +316,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return _originalSize;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -344,6 +364,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		imageImpl.setHeight(getHeight());
 		imageImpl.setWidth(getWidth());
 		imageImpl.setSize(getSize());
+		imageImpl.setMvccVersion(getMvccVersion());
 
 		imageImpl.resetOriginalValues();
 
@@ -448,12 +469,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		imageCacheModel.size = getSize();
 
+		imageCacheModel.mvccVersion = getMvccVersion();
+
 		return imageCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{imageId=");
 		sb.append(getImageId());
@@ -467,6 +490,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		sb.append(getWidth());
 		sb.append(", size=");
 		sb.append(getSize());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -474,7 +499,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Image");
@@ -504,6 +529,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 			"<column><column-name>size</column-name><column-value><![CDATA[");
 		sb.append(getSize());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -520,6 +549,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private int _size;
 	private int _originalSize;
 	private boolean _setOriginalSize;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Image _escapedModel;
 }

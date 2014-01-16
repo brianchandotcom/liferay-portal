@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AddressModel extends AttachedModel, BaseModel<Address>,
-	StagedAuditedModel {
+	MVCCModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -391,6 +391,22 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 * @param primary the primary of this address
 	 */
 	public void setPrimary(boolean primary);
+
+	/**
+	 * Returns the mvcc version of this address.
+	 *
+	 * @return the mvcc version of this address
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this address.
+	 *
+	 * @param mvccVersion the mvcc version of this address
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

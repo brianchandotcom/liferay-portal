@@ -61,6 +61,7 @@ public class SubscriptionWrapper implements Subscription,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("frequency", getFrequency());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -119,6 +120,12 @@ public class SubscriptionWrapper implements Subscription,
 
 		if (frequency != null) {
 			setFrequency(frequency);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -357,6 +364,26 @@ public class SubscriptionWrapper implements Subscription,
 	@Override
 	public void setFrequency(java.lang.String frequency) {
 		_subscription.setFrequency(frequency);
+	}
+
+	/**
+	* Returns the mvcc version of this subscription.
+	*
+	* @return the mvcc version of this subscription
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _subscription.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this subscription.
+	*
+	* @param mvccVersion the mvcc version of this subscription
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_subscription.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -64,6 +64,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		attributes.put("url", getUrl());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -140,6 +141,12 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -448,6 +455,26 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	@Override
 	public void setPrimary(boolean primary) {
 		_website.setPrimary(primary);
+	}
+
+	/**
+	* Returns the mvcc version of this website.
+	*
+	* @return the mvcc version of this website
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _website.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this website.
+	*
+	* @param mvccVersion the mvcc version of this website
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_website.setMvccVersion(mvccVersion);
 	}
 
 	@Override

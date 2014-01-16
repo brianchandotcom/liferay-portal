@@ -37,7 +37,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -61,6 +61,8 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		sb.append(mappedId);
 		sb.append(", manualCheckInRequired=");
 		sb.append(manualCheckInRequired);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,6 +115,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		}
 
 		repositoryEntryImpl.setManualCheckInRequired(manualCheckInRequired);
+		repositoryEntryImpl.setMvccVersion(mvccVersion);
 
 		repositoryEntryImpl.resetOriginalValues();
 
@@ -132,6 +135,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		repositoryId = objectInput.readLong();
 		mappedId = objectInput.readUTF();
 		manualCheckInRequired = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -168,6 +172,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		}
 
 		objectOutput.writeBoolean(manualCheckInRequired);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -181,4 +186,5 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	public long repositoryId;
 	public String mappedId;
 	public boolean manualCheckInRequired;
+	public long mvccVersion;
 }

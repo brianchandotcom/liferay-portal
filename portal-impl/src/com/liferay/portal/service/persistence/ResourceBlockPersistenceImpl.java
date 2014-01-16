@@ -1989,6 +1989,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		resourceBlockImpl.setName(resourceBlock.getName());
 		resourceBlockImpl.setPermissionsHash(resourceBlock.getPermissionsHash());
 		resourceBlockImpl.setReferenceCount(resourceBlock.getReferenceCount());
+		resourceBlockImpl.setMvccVersion(resourceBlock.getMvccVersion());
 
 		return resourceBlockImpl;
 	}

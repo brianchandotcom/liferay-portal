@@ -71,6 +71,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		attributes.put("typeId", getTypeId());
 		attributes.put("mailing", getMailing());
 		attributes.put("primary", getPrimary());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -189,6 +190,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -647,6 +654,26 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	@Override
 	public void setPrimary(boolean primary) {
 		_address.setPrimary(primary);
+	}
+
+	/**
+	* Returns the mvcc version of this address.
+	*
+	* @return the mvcc version of this address
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _address.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this address.
+	*
+	* @param mvccVersion the mvcc version of this address
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_address.setMvccVersion(mvccVersion);
 	}
 
 	@Override

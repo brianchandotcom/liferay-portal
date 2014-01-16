@@ -40,6 +40,7 @@ public class LayoutBranchSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMaster(model.getMaster());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -176,6 +177,14 @@ public class LayoutBranchSoap implements Serializable {
 		_master = master;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _LayoutBranchId;
 	private long _groupId;
 	private long _companyId;
@@ -186,4 +195,5 @@ public class LayoutBranchSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private boolean _master;
+	private long _mvccVersion;
 }

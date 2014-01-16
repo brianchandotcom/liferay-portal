@@ -64,6 +64,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -134,6 +135,12 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -527,6 +534,26 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	@Override
 	public void setActive(boolean active) {
 		_layoutSetPrototype.setActive(active);
+	}
+
+	/**
+	* Returns the mvcc version of this layout set prototype.
+	*
+	* @return the mvcc version of this layout set prototype
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _layoutSetPrototype.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this layout set prototype.
+	*
+	* @param mvccVersion the mvcc version of this layout set prototype
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_layoutSetPrototype.setMvccVersion(mvccVersion);
 	}
 
 	@Override

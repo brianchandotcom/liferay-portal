@@ -35,7 +35,7 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{userIdMapperId=");
 		sb.append(userIdMapperId);
@@ -47,6 +47,8 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 		sb.append(description);
 		sb.append(", externalUserId=");
 		sb.append(externalUserId);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -80,6 +82,8 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 			userIdMapperImpl.setExternalUserId(externalUserId);
 		}
 
+		userIdMapperImpl.setMvccVersion(mvccVersion);
+
 		userIdMapperImpl.resetOriginalValues();
 
 		return userIdMapperImpl;
@@ -92,6 +96,7 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 		type = objectInput.readUTF();
 		description = objectInput.readUTF();
 		externalUserId = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -120,6 +125,8 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 		else {
 			objectOutput.writeUTF(externalUserId);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long userIdMapperId;
@@ -127,4 +134,5 @@ public class UserIdMapperCacheModel implements CacheModel<UserIdMapper>,
 	public String type;
 	public String description;
 	public String externalUserId;
+	public long mvccVersion;
 }

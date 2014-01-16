@@ -119,6 +119,8 @@ public class ShardPersistenceTest {
 
 		newShard.setName(ServiceTestUtil.randomString());
 
+		newShard.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newShard);
 
 		Shard existingShard = _persistence.findByPrimaryKey(newShard.getPrimaryKey());
@@ -128,6 +130,8 @@ public class ShardPersistenceTest {
 			newShard.getClassNameId());
 		Assert.assertEquals(existingShard.getClassPK(), newShard.getClassPK());
 		Assert.assertEquals(existingShard.getName(), newShard.getName());
+		Assert.assertEquals(existingShard.getMvccVersion(),
+			newShard.getMvccVersion());
 	}
 
 	@Test
@@ -165,7 +169,8 @@ public class ShardPersistenceTest {
 
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Shard", "shardId", true,
-			"classNameId", true, "classPK", true, "name", true);
+			"classNameId", true, "classPK", true, "name", true, "mvccVersion",
+			true);
 	}
 
 	@Test
@@ -309,6 +314,8 @@ public class ShardPersistenceTest {
 		shard.setClassPK(ServiceTestUtil.nextLong());
 
 		shard.setName(ServiceTestUtil.randomString());
+
+		shard.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(shard);
 

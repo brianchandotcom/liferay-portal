@@ -87,6 +87,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		attributes.put("requireUnlock", getRequireUnlock());
 		attributes.put("resetFailureCount", getResetFailureCount());
 		attributes.put("resetTicketMaxAge", getResetTicketMaxAge());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -296,6 +297,12 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 
 		if (resetTicketMaxAge != null) {
 			setResetTicketMaxAge(resetTicketMaxAge);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -1109,6 +1116,26 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	@Override
 	public void setResetTicketMaxAge(long resetTicketMaxAge) {
 		_passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
+	}
+
+	/**
+	* Returns the mvcc version of this password policy.
+	*
+	* @return the mvcc version of this password policy
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _passwordPolicy.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this password policy.
+	*
+	* @param mvccVersion the mvcc version of this password policy
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_passwordPolicy.setMvccVersion(mvccVersion);
 	}
 
 	@Override

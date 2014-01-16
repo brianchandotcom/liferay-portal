@@ -59,9 +59,10 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "listTypeId", Types.INTEGER },
 			{ "name", Types.VARCHAR },
-			{ "type_", Types.VARCHAR }
+			{ "type_", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ListType (listTypeId INTEGER not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table ListType (listTypeId INTEGER not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table ListType";
 	public static final String ORDER_BY_JPQL = " ORDER BY listType.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ListType.name ASC";
@@ -96,6 +97,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		model.setListTypeId(soapModel.getListTypeId());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -163,6 +165,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		attributes.put("listTypeId", getListTypeId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -188,6 +191,12 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -246,6 +255,17 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		return GetterUtil.getString(_originalType);
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -267,6 +287,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		listTypeImpl.setListTypeId(getListTypeId());
 		listTypeImpl.setName(getName());
 		listTypeImpl.setType(getType());
+		listTypeImpl.setMvccVersion(getMvccVersion());
 
 		listTypeImpl.resetOriginalValues();
 
@@ -354,12 +375,14 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 			listTypeCacheModel.type = null;
 		}
 
+		listTypeCacheModel.mvccVersion = getMvccVersion();
+
 		return listTypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{listTypeId=");
 		sb.append(getListTypeId());
@@ -367,6 +390,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		sb.append(getName());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -374,7 +399,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ListType");
@@ -392,6 +417,10 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -406,6 +435,7 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	private String _name;
 	private String _type;
 	private String _originalType;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private ListType _escapedModel;
 }

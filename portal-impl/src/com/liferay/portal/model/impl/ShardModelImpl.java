@@ -60,9 +60,10 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 			{ "shardId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "name", Types.VARCHAR }
+			{ "name", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Shard (shardId LONG not null primary key,classNameId LONG,classPK LONG,name VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Shard (shardId LONG not null primary key,classNameId LONG,classPK LONG,name VARCHAR(75) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Shard";
 	public static final String ORDER_BY_JPQL = " ORDER BY shard.shardId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Shard.shardId ASC";
@@ -126,6 +127,7 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -157,6 +159,12 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -259,6 +267,16 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		return GetterUtil.getString(_originalName);
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -294,6 +312,7 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		shardImpl.setClassNameId(getClassNameId());
 		shardImpl.setClassPK(getClassPK());
 		shardImpl.setName(getName());
+		shardImpl.setMvccVersion(getMvccVersion());
 
 		shardImpl.resetOriginalValues();
 
@@ -387,12 +406,14 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 			shardCacheModel.name = null;
 		}
 
+		shardCacheModel.mvccVersion = getMvccVersion();
+
 		return shardCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{shardId=");
 		sb.append(getShardId());
@@ -402,6 +423,8 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 		sb.append(getClassPK());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -409,7 +432,7 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Shard");
@@ -431,6 +454,10 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -448,6 +475,7 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	private boolean _setOriginalClassPK;
 	private String _name;
 	private String _originalName;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Shard _escapedModel;
 }

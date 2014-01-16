@@ -4474,6 +4474,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		resourcePermissionImpl.setRoleId(resourcePermission.getRoleId());
 		resourcePermissionImpl.setOwnerId(resourcePermission.getOwnerId());
 		resourcePermissionImpl.setActionIds(resourcePermission.getActionIds());
+		resourcePermissionImpl.setMvccVersion(resourcePermission.getMvccVersion());
 
 		return resourcePermissionImpl;
 	}

@@ -142,6 +142,8 @@ public class OrgLaborPersistenceTest {
 
 		newOrgLabor.setSatClose(ServiceTestUtil.nextInt());
 
+		newOrgLabor.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newOrgLabor);
 
 		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(newOrgLabor.getPrimaryKey());
@@ -180,6 +182,8 @@ public class OrgLaborPersistenceTest {
 			newOrgLabor.getSatOpen());
 		Assert.assertEquals(existingOrgLabor.getSatClose(),
 			newOrgLabor.getSatClose());
+		Assert.assertEquals(existingOrgLabor.getMvccVersion(),
+			newOrgLabor.getMvccVersion());
 	}
 
 	@Test
@@ -221,7 +225,7 @@ public class OrgLaborPersistenceTest {
 			"sunClose", true, "monOpen", true, "monClose", true, "tueOpen",
 			true, "tueClose", true, "wedOpen", true, "wedClose", true,
 			"thuOpen", true, "thuClose", true, "friOpen", true, "friClose",
-			true, "satOpen", true, "satClose", true);
+			true, "satOpen", true, "satClose", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -370,6 +374,8 @@ public class OrgLaborPersistenceTest {
 		orgLabor.setSatOpen(ServiceTestUtil.nextInt());
 
 		orgLabor.setSatClose(ServiceTestUtil.nextInt());
+
+		orgLabor.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(orgLabor);
 

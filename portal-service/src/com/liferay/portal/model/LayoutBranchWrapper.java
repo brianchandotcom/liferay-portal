@@ -61,6 +61,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("master", getMaster());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -125,6 +126,12 @@ public class LayoutBranchWrapper implements LayoutBranch,
 
 		if (master != null) {
 			setMaster(master);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -378,6 +385,26 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	@Override
 	public void setMaster(boolean master) {
 		_layoutBranch.setMaster(master);
+	}
+
+	/**
+	* Returns the mvcc version of this layout branch.
+	*
+	* @return the mvcc version of this layout branch
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _layoutBranch.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this layout branch.
+	*
+	* @param mvccVersion the mvcc version of this layout branch
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_layoutBranch.setMvccVersion(mvccVersion);
 	}
 
 	@Override

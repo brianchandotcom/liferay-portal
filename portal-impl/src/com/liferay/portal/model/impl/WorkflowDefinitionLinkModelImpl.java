@@ -71,9 +71,10 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 			{ "classPK", Types.BIGINT },
 			{ "typePK", Types.BIGINT },
 			{ "workflowDefinitionName", Types.VARCHAR },
-			{ "workflowDefinitionVersion", Types.INTEGER }
+			{ "workflowDefinitionVersion", Types.INTEGER },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table WorkflowDefinitionLink (workflowDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,typePK LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table WorkflowDefinitionLink (workflowDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,typePK LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table WorkflowDefinitionLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY workflowDefinitionLink.workflowDefinitionName ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WorkflowDefinitionLink.workflowDefinitionName ASC";
@@ -149,6 +150,7 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		attributes.put("workflowDefinitionName", getWorkflowDefinitionName());
 		attributes.put("workflowDefinitionVersion",
 			getWorkflowDefinitionVersion());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -231,6 +233,12 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 		if (workflowDefinitionVersion != null) {
 			setWorkflowDefinitionVersion(workflowDefinitionVersion);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -476,6 +484,16 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		return _originalWorkflowDefinitionVersion;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -519,6 +537,7 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		workflowDefinitionLinkImpl.setTypePK(getTypePK());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionName(getWorkflowDefinitionName());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(getWorkflowDefinitionVersion());
+		workflowDefinitionLinkImpl.setMvccVersion(getMvccVersion());
 
 		workflowDefinitionLinkImpl.resetOriginalValues();
 
@@ -664,12 +683,14 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 		workflowDefinitionLinkCacheModel.workflowDefinitionVersion = getWorkflowDefinitionVersion();
 
+		workflowDefinitionLinkCacheModel.mvccVersion = getMvccVersion();
+
 		return workflowDefinitionLinkCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{workflowDefinitionLinkId=");
 		sb.append(getWorkflowDefinitionLinkId());
@@ -695,6 +716,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		sb.append(getWorkflowDefinitionName());
 		sb.append(", workflowDefinitionVersion=");
 		sb.append(getWorkflowDefinitionVersion());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -702,7 +725,7 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.WorkflowDefinitionLink");
@@ -756,6 +779,10 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 			"<column><column-name>workflowDefinitionVersion</column-name><column-value><![CDATA[");
 		sb.append(getWorkflowDefinitionVersion());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -792,6 +819,7 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	private int _workflowDefinitionVersion;
 	private int _originalWorkflowDefinitionVersion;
 	private boolean _setOriginalWorkflowDefinitionVersion;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private WorkflowDefinitionLink _escapedModel;
 }

@@ -84,6 +84,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("jobClass", getJobClass());
 		attributes.put("hoursOfOperation", getHoursOfOperation());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -286,6 +287,12 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		if (hoursOfOperation != null) {
 			setHoursOfOperation(hoursOfOperation);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -1014,6 +1021,26 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public void setHoursOfOperation(java.lang.String hoursOfOperation) {
 		_contact.setHoursOfOperation(hoursOfOperation);
+	}
+
+	/**
+	* Returns the mvcc version of this contact.
+	*
+	* @return the mvcc version of this contact
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _contact.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this contact.
+	*
+	* @param mvccVersion the mvcc version of this contact
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_contact.setMvccVersion(mvccVersion);
 	}
 
 	@Override

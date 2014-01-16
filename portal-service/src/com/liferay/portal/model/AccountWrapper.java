@@ -67,6 +67,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		attributes.put("industry", getIndustry());
 		attributes.put("type", getType());
 		attributes.put("size", getSize());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -167,6 +168,12 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -530,6 +537,26 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public void setSize(java.lang.String size) {
 		_account.setSize(size);
+	}
+
+	/**
+	* Returns the mvcc version of this account.
+	*
+	* @return the mvcc version of this account
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _account.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this account.
+	*
+	* @param mvccVersion the mvcc version of this account
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_account.setMvccVersion(mvccVersion);
 	}
 
 	@Override

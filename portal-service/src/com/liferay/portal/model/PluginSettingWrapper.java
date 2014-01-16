@@ -57,6 +57,7 @@ public class PluginSettingWrapper implements PluginSetting,
 		attributes.put("pluginType", getPluginType());
 		attributes.put("roles", getRoles());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -97,6 +98,12 @@ public class PluginSettingWrapper implements PluginSetting,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -248,6 +255,26 @@ public class PluginSettingWrapper implements PluginSetting,
 	@Override
 	public void setActive(boolean active) {
 		_pluginSetting.setActive(active);
+	}
+
+	/**
+	* Returns the mvcc version of this plugin setting.
+	*
+	* @return the mvcc version of this plugin setting
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _pluginSetting.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this plugin setting.
+	*
+	* @param mvccVersion the mvcc version of this plugin setting
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_pluginSetting.setMvccVersion(mvccVersion);
 	}
 
 	@Override

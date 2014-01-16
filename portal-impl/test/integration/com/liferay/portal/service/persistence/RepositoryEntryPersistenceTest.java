@@ -134,6 +134,8 @@ public class RepositoryEntryPersistenceTest {
 
 		newRepositoryEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
 
+		newRepositoryEntry.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newRepositoryEntry);
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(newRepositoryEntry.getPrimaryKey());
@@ -162,6 +164,8 @@ public class RepositoryEntryPersistenceTest {
 			newRepositoryEntry.getMappedId());
 		Assert.assertEquals(existingRepositoryEntry.getManualCheckInRequired(),
 			newRepositoryEntry.getManualCheckInRequired());
+		Assert.assertEquals(existingRepositoryEntry.getMvccVersion(),
+			newRepositoryEntry.getMvccVersion());
 	}
 
 	@Test
@@ -203,7 +207,7 @@ public class RepositoryEntryPersistenceTest {
 			true, "repositoryEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "repositoryId", true, "mappedId", true,
-			"manualCheckInRequired", true);
+			"manualCheckInRequired", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -367,6 +371,8 @@ public class RepositoryEntryPersistenceTest {
 		repositoryEntry.setMappedId(ServiceTestUtil.randomString());
 
 		repositoryEntry.setManualCheckInRequired(ServiceTestUtil.randomBoolean());
+
+		repositoryEntry.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(repositoryEntry);
 

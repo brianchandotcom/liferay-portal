@@ -1500,6 +1500,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		userIdMapperImpl.setType(userIdMapper.getType());
 		userIdMapperImpl.setDescription(userIdMapper.getDescription());
 		userIdMapperImpl.setExternalUserId(userIdMapper.getExternalUserId());
+		userIdMapperImpl.setMvccVersion(userIdMapper.getMvccVersion());
 
 		return userIdMapperImpl;
 	}

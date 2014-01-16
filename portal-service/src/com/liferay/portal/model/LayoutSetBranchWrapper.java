@@ -73,6 +73,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
 			getLayoutSetPrototypeLinkEnabled());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -199,6 +200,12 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -674,6 +681,26 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled) {
 		_layoutSetBranch.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+	}
+
+	/**
+	* Returns the mvcc version of this layout set branch.
+	*
+	* @return the mvcc version of this layout set branch
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _layoutSetBranch.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this layout set branch.
+	*
+	* @param mvccVersion the mvcc version of this layout set branch
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_layoutSetBranch.setMvccVersion(mvccVersion);
 	}
 
 	@Override

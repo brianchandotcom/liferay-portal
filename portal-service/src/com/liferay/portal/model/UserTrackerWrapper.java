@@ -60,6 +60,7 @@ public class UserTrackerWrapper implements UserTracker,
 		attributes.put("remoteAddr", getRemoteAddr());
 		attributes.put("remoteHost", getRemoteHost());
 		attributes.put("userAgent", getUserAgent());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -112,6 +113,12 @@ public class UserTrackerWrapper implements UserTracker,
 
 		if (userAgent != null) {
 			setUserAgent(userAgent);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -315,6 +322,26 @@ public class UserTrackerWrapper implements UserTracker,
 	@Override
 	public void setUserAgent(java.lang.String userAgent) {
 		_userTracker.setUserAgent(userAgent);
+	}
+
+	/**
+	* Returns the mvcc version of this user tracker.
+	*
+	* @return the mvcc version of this user tracker
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _userTracker.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this user tracker.
+	*
+	* @param mvccVersion the mvcc version of this user tracker
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_userTracker.setMvccVersion(mvccVersion);
 	}
 
 	@Override

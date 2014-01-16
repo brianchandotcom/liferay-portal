@@ -67,9 +67,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			{ "deliverBy", Types.BIGINT },
 			{ "delivered", Types.BOOLEAN },
 			{ "payload", Types.CLOB },
-			{ "archived", Types.BOOLEAN }
+			{ "archived", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliverBy LONG,delivered BOOLEAN,payload TEXT null,archived BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliverBy LONG,delivered BOOLEAN,payload TEXT null,archived BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationEvent.timestamp DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationEvent.timestamp DESC";
@@ -141,6 +142,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		attributes.put("delivered", getDelivered());
 		attributes.put("payload", getPayload());
 		attributes.put("archived", getArchived());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -209,6 +211,12 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		if (archived != null) {
 			setArchived(archived);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -405,6 +413,16 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		return _originalArchived;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -446,6 +464,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		userNotificationEventImpl.setDelivered(getDelivered());
 		userNotificationEventImpl.setPayload(getPayload());
 		userNotificationEventImpl.setArchived(getArchived());
+		userNotificationEventImpl.setMvccVersion(getMvccVersion());
 
 		userNotificationEventImpl.resetOriginalValues();
 
@@ -579,12 +598,14 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 		userNotificationEventCacheModel.archived = getArchived();
 
+		userNotificationEventCacheModel.mvccVersion = getMvccVersion();
+
 		return userNotificationEventCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -606,6 +627,8 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		sb.append(getPayload());
 		sb.append(", archived=");
 		sb.append(getArchived());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -613,7 +636,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserNotificationEvent");
@@ -659,6 +682,10 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 			"<column><column-name>archived</column-name><column-value><![CDATA[");
 		sb.append(getArchived());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -689,6 +716,7 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	private boolean _archived;
 	private boolean _originalArchived;
 	private boolean _setOriginalArchived;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private UserNotificationEvent _escapedModel;
 }

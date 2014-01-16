@@ -44,7 +44,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
-	StagedAuditedModel {
+	MVCCModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -343,6 +343,22 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
 	 * @param active the active of this layout prototype
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the mvcc version of this layout prototype.
+	 *
+	 * @return the mvcc version of this layout prototype
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this layout prototype.
+	 *
+	 * @param mvccVersion the mvcc version of this layout prototype
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

@@ -60,6 +60,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		attributes.put("verified", getVerified());
 		attributes.put("state", getState());
 		attributes.put("testString", getTestString());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -118,6 +119,12 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 
 		if (testString != null) {
 			setTestString(testString);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -329,6 +336,26 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	@Override
 	public void setTestString(java.lang.String testString) {
 		_release.setTestString(testString);
+	}
+
+	/**
+	* Returns the mvcc version of this release.
+	*
+	* @return the mvcc version of this release
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _release.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this release.
+	*
+	* @param mvccVersion the mvcc version of this release
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_release.setMvccVersion(mvccVersion);
 	}
 
 	@Override

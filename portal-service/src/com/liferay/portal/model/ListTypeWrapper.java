@@ -53,6 +53,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 		attributes.put("listTypeId", getListTypeId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -75,6 +76,12 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -156,6 +163,26 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	@Override
 	public void setType(java.lang.String type) {
 		_listType.setType(type);
+	}
+
+	/**
+	* Returns the mvcc version of this list type.
+	*
+	* @return the mvcc version of this list type
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _listType.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this list type.
+	*
+	* @param mvccVersion the mvcc version of this list type
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_listType.setMvccVersion(mvccVersion);
 	}
 
 	@Override

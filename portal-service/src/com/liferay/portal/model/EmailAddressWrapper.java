@@ -65,6 +65,7 @@ public class EmailAddressWrapper implements EmailAddress,
 		attributes.put("address", getAddress());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -141,6 +142,12 @@ public class EmailAddressWrapper implements EmailAddress,
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -449,6 +456,26 @@ public class EmailAddressWrapper implements EmailAddress,
 	@Override
 	public void setPrimary(boolean primary) {
 		_emailAddress.setPrimary(primary);
+	}
+
+	/**
+	* Returns the mvcc version of this email address.
+	*
+	* @return the mvcc version of this email address
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _emailAddress.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this email address.
+	*
+	* @param mvccVersion the mvcc version of this email address
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_emailAddress.setMvccVersion(mvccVersion);
 	}
 
 	@Override

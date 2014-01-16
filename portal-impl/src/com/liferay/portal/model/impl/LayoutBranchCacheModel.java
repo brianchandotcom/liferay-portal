@@ -35,7 +35,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{LayoutBranchId=");
 		sb.append(LayoutBranchId);
@@ -57,6 +57,8 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		sb.append(description);
 		sb.append(", master=");
 		sb.append(master);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,6 +98,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		}
 
 		layoutBranchImpl.setMaster(master);
+		layoutBranchImpl.setMvccVersion(mvccVersion);
 
 		layoutBranchImpl.resetOriginalValues();
 
@@ -114,6 +117,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		master = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -149,6 +153,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		}
 
 		objectOutput.writeBoolean(master);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long LayoutBranchId;
@@ -161,4 +166,5 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 	public String name;
 	public String description;
 	public boolean master;
+	public long mvccVersion;
 }

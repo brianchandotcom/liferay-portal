@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>PGAssetpublisherAddnewbookmarksentry</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAssetpublisherAddnewbookmarksentry</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAssetpublisherAddnewbookmarksentry</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_FOLDER_NAME_FIELD</td>
+	<td>//input[@id='_28_folderName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_FOLDER_SELECT_BUTTON</td>
+	<td>//button[@id='_28_selectFolderButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_FOLDER_REMOVE_BUTTON</td>
+	<td>//button[@id='_28_removeFolderButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_IFRAME</td>
+	<td>//iframe[contains(@id,'editAsset_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_NAME_FIELD</td>
+	<td>//input[@id='_28_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_URL_FIELD</td>
+	<td>//input[@id='_28_url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_28_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_FOLDER-->
+<tr>
+	<td>SELECT_FOLDER_IFRAME</td>
+	<td>//iframe[@id='_28_selectFolder_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_ADD_FOLDER_BUTTON</td>
+	<td>//button[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_CHOOSE_THIS_FOLDER_BUTTON</td>
+	<td>//button[contains(.,'Choose This Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_FOLDER_TABLE-->
+<tr>
+	<td>SELECT_FOLDER_TABLE_FOLDER_NAME</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_NUMBER_OF_FOLDERS</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_NUMBER_OF_ENTRIES</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER_TABLE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_bookmarkFolderName}')]/td[4]/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

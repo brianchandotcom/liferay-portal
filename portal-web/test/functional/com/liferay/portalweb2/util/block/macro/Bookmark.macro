@@ -1,4 +1,26 @@
 <definition>
+	<command name="addBookmarkViaAP">
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_BOOKMARKS_ENTRY" value1="Bookmarks Entry" />
+		<execute action="PGAssetpublisherAddnewbookmarksentry#selectFrame" locator-key1="BOOKMARKS_IFRAME" />
+		<execute action="PGAssetpublisherAddnewbookmarksentry#assertClick" locator-key1="BOOKMARKS_FOLDER_SELECT_BUTTON" value1="Select" />
+		<execute action="PGAssetpublisherAddnewbookmarksentry#selectFrameTop" />
+
+		<execute action="PGAssetpublisherAddnewbookmarksentrySelectfolder#selectFrame" locator-key1="SELECT_FOLDER_IFRAME" />
+
+		<var name="key_bookmarkFolderName" value="${bookmarkFolderName}" />
+
+		<execute action="PGAssetpublisherAddnewbookmarksentrySelectfolder#assertClick" locator-key1="SELECT_FOLDER_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute action="PGAssetpublisherAddnewbookmarksentry#selectFrameTop" />
+
+		<execute action="PGAssetpublisherAddnewbookmarksentry#selectFrame" locator-key1="BOOKMARKS_IFRAME" />
+		<execute action="PGAssetpublisherAddnewbookmarksentry#type" locator-key1="BOOKMARKS_NAME_FIELD" value1="${bookmarkName}" />
+		<execute action="PGAssetpublisherAddnewbookmarksentry#type" locator-key1="BOOKMARKS_URL_FIELD" value1="${bookmarkURL}" />
+		<execute action="PGAssetpublisherAddnewbookmarksentry#type" locator-key1="BOOKMARKS_DESCRIPTION_FIELD" value1="${bookmarkDescription}" />
+		<execute action="PGAssetpublisherAddnewbookmarksentry#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="addCP">
 		<execute action="CPBookmarks#assertClick" locator-key1="FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
 
@@ -365,6 +387,15 @@
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="viewBookmarkViaAP">
+		<var name="key_assetTitle" value="${bookmarkName}" />
+
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_ABSTRACT_TITLE" value1="${bookmarkName}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_BOOKMARK_DETAIL_NAME" value1="${bookmarkName}" />
+		<execute action="PGAssetpublisher#click" locator-key1="ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO" />
 	</command>
 
 	<command name="viewCP">

@@ -125,6 +125,27 @@
 	<td>//select[@id='_86_anyAssetType']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_MORE_THAN_ONE_ASSET_TYPE-->
+<tr>
+	<td>SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT</td>
+	<td>//select/option[contains(.,'${key_contentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_AVAILABLE</td>
+	<td>//button[contains(@class,'move-left') and contains(@title,'Move selected items from Selected to Available.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_SELECTED</td>
+	<td>//button[contains(@class,'move-right') and contains(@title,'Move selected items from Available to Selected.')]</td>
+	<td></td>
+</tr>
 <!---->
 <!--SOURCE_SCOPE_MENULIST-->
 <tr>

@@ -1,17 +1,4 @@
 <definition>
-	<command name="configureDisplayFullContentPG">
-		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
-		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_LINK" value1="Display Settings" />
-
-		<execute action="PGAssetpublisherConfigurationDisplaysettings#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
-
-		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-	</command>
-
 	<command name="configureDisplayPagePG">
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
@@ -21,6 +8,19 @@
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGAssetpublisherConfiguration#assertChecked" locator-key1="FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX" value1="Show only assets with Test Page as its display page." />
+	</command>
+
+	<command name="configureDisplayTemplatePG">
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+
+		<execute action="PGAssetpublisherConfigurationDisplaysettings#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureFlaggableDisplaySettingsPG">
@@ -57,6 +57,33 @@
 		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute action="PGAssetpublisherConfiguration#assertSelectedLabel" locator-key1="SOURCE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
+	</command>
+
+	<command name="configureAPSelectMoreThanOnePG">
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_WRENCH_ICON" value1="Options" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGAssetpublisherConfiguration#selectFrame" locator-key1="ASSET_PUBLISHER_IFRAME" />
+		<execute action="PGAssetpublisherConfiguration#select" locator-key1="SOURCE_ASSET_TYPE_SELECT" value1="Select More Than One..." />
+
+		<for list="${selectContent}" param="contentName">
+			<var name="key_contentName" value="${contentName}" />
+
+			<execute action="PGAssetpublisherConfiguration#click" locator-key1="SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT" />
+
+			<if>
+				<equals arg1="${moveSelected}" arg2="True" />
+				<then>
+					<execute action="PGAssetpublisherConfiguration#click" locator-key1="SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_SELECTED" />
+				</then>
+				<else>
+					<execute action="PGAssetpublisherConfiguration#click" locator-key1="SELECT_MORE_THAN_ONE_ASSET_TYPE_MOVE_AVAILABLE" />
+				</else>
+			</if>
+		</for>
+
+		<execute action="PGAssetpublisherConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGAssetpublisherConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureSiteScopePG">
@@ -143,6 +170,40 @@
 
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="ARCHIVED_SETUPS_TABLE_NAME" value1="${archiveName}" />
 		<execute action="PGAssetpublisherConfigurationArchivedsetup#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="viewConfigureAPDisplayTemplateFullContentBookmarksPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_TEMPLATE_FULL_CONTENT_TWITTER" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="DISPLAY_TEMPLATE_FULL_CONTENT_GOOGLE_PLUS" />
+	</command>
+
+	<command name="viewConfigureAPDisplayTemplateTableBookmarksPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${bookmarkDescription}" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_BOOKMARK_ICON" />
+	</command>
+
+	<command name="viewConfigureAPDisplayTemplateTitleListBookmarksPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_ABSTRACT_READ_MORE" />
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_SUMMARY" value1="${bookmarkDescription}" />
+		<execute action="PGAssetpublisher#assertElementPresent" locator-key1="ASSET_ABSTRACT_BOOKMARK_ICON" />
+	</command>
+
+	<command name="viewConfigureAPMoveToAvailablePG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextNotPresent" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
+	</command>
+
+	<command name="viewConfigureAPMoveToSelectedPG">
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_ABSTRACT_TITLE" value1="${assetTitle}" />
 	</command>
 
 	<command name="viewConfigureFlaggableDisplaySettingsPG">

@@ -1,0 +1,11 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="BOOKMARKS_FOLDER_SELECT_BUTTON">
+			<execute function="AssertClick#pauseAssertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="SELECT_FOLDER_TABLE_CHOOSE_BUTTON">
+			<execute function="AssertClick#pauseAssertTextClickAtAndWait" />
+		</case>
+	</command>
+</definition>

@@ -13,7 +13,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 	</command>
 
-	<command name="deleteByActionsCP">
+	<command name="deleteViaActionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
@@ -35,6 +35,31 @@
 		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_BUTTON" value1="Actions" />
 		<execute action="CPCategories#assertClick" locator-key1="ACTIONS_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected categories?" />
+		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="CPCategories#assertTextNotPresent" value1="${subcategoryName}" />
+	</command>
+
+	<command name="deleteViaDetailsCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+
+		<var name="key_categoryName" value="${categoryName}" />
+
+		<execute action="CPCategories#assertClick" locator-key1="VOCABULARY_CATEGORY" value1="${categoryName}" />
+
+		<if>
+			<condition action="CPCategories#isElementPresent" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
+			<then>
+				<execute action="CPCategories#click" locator-key1="CATEGORY_DETAILS_DROPDOWN_TREE" />
+			</then>
+		</if>
+
+		<var name="key_subcategoryName" value="${subcategoryName}" />
+
+		<execute action="CPCategories#click" locator-key1="SUBCATEGORY_CHECKBOX" value1="${subcategoryName}" />
+		<execute action="CPCategories#assertClick" locator-key1="SUBCATEGORY_DETAILS_DELETE_BUTTON" value1="Delete" />
+		<execute action="CPCategories#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this category?" />
 		<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute action="CPCategories#assertTextNotPresent" value1="${subcategoryName}" />
 	</command>

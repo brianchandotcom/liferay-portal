@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TO_VOCABULARY_SELECT</td>
+	<td>//select[@id='_147_vocabularyId']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>

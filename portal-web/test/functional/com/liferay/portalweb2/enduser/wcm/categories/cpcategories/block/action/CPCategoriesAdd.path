@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'alert-error')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[@id='_147_categoryName']</td>
 	<td></td>

@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>CPWSRP</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWSRP</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWSRP</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMERS_NAVIGATION</td>
+	<td>//li[contains(@id,'_1_WAR_wsrpportlet_tabs')]/a[contains(.,'Consumers')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCERS_NAVIGATION</td>
+	<td>//li[contains(@id,'_1_WAR_wsrpportlet_tabs')]/a[contains(.,'Producers')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONSUMER_BUTTON</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONSUMER_TABLE-->
+<tr>
+	<td>CONSUMER_TABLE_NAME</td>
+	<td>//tr[contains(.,'$key_consumerName')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMER_TABLE_ACTIONS_BUTTON</td>
+	<td>//div/a[@id='_1_WAR_wsrpportlet_wsrpConsumersSearchContainer_1_menu']/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONSUMER_MENULIST-->
+<tr>
+	<td>CONSUMER_MENULIST_EDIT</td>
+	<td>//div[@class='open']/ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMER_MENULIST_MANAGE_PORTLETS</td>
+	<td>//div[@class='open']/ul/li/a[contains(.,'Manage Portlets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMER_MENULIST_UPDATE_SERVICE_DESCRIPTION</td>
+	<td>//div[@class='open']/ul/li/a[contains(.,'Update Service Description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMER_MENULIST_RESTART_CONSUMER</td>
+	<td>//div[@class='open']/ul/li/a[contains(.,'Restart Consumer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMER_MENULIST_DELETE</td>
+	<td>//div[@class='open']/ul/li/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

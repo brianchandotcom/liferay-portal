@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>CPWSRPProducersAddproducer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWSRPProducersAddproducer</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWSRPProducersAddproducer</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PRODUCER_HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'New Producer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_NAME_FIELD</td>
+	<td>//input[@id='_1_WAR_wsrpportlet_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSION_SELECT</td>
+	<td>//select[@name='_1_WAR_wsrpportlet_version']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WSRP_PORTLETS_MENULIST-->
+<tr>
+	<td>PORTLETS_AVAILABLE_SELECT</td>
+	<td>//select[@name='_1_WAR_wsrpportlet_availablePortletIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_PRODUCER-->
+<tr>
+	<td>MOVE_LEFT_BUTTON</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_RIGHT_BUTTON</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[@type='button']</td>
+	<td>Cancel</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

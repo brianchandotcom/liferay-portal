@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>PGUnitconverter</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGUnitconverter</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGUnitconverter</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FROM_FIELD</td>
+	<td>//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TO_FIELD</td>
+	<td>//input[@name='_27_to_value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNIT_FROM_SELECT</td>
+	<td>//select[@name='_27_fromId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNIT_TO_SELECT</td>
+	<td>//select[@name='_27_toId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNIT_TYPE_SELECT</td>
+	<td>//select[@name='_27_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONVERT_BUTTON</td>
+	<td>//input[@value='Convert']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

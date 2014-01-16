@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>CPWSRPManageportlets</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWSRPManageportlets</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWSRPManageportlets</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PORTLET_BUTTON</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PORTLET_TABLE-->
+<tr>
+	<td>PORTLET_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_consumerPortletName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TABLE_REMOTE_PORTLET</td>
+	<td>//tr[contains(.,'${key_consumerPortletName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TABLE_DELETE</td>
+	<td>//tr[contains(.,'${key_consumerPortletName}')]/td[3]/span/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

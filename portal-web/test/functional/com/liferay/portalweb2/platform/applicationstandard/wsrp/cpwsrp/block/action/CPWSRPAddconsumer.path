@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>CPWSRPAddconsumer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWSRPAddconsumer</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWSRPAddConsumers</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'New Consumer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_FIELD</td>
+	<td>//input[@id='_1_WAR_wsrpportlet_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_FIELD</td>
+	<td>//input[@id='_1_WAR_wsrpportlet_url']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(@class,'btn-cancel')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

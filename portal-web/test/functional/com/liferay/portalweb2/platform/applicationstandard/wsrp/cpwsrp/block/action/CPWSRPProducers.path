@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>CPWSRPProducers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWSRPProducers</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPWSRPProducers</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCERS_NAVIGATION</td>
+	<td>//li[contains(@id,'_1_WAR_wsrpportlet_tabs')]/a[contains(.,'Producers')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PRODUCER_BUTTON</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PRODUCER_TABLE-->
+<tr>
+	<td>PRODUCER_TABLE_PRODUCER</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_URL</td>
+	<td>//tr[contains(.,'localhost:8080/wsrp-portlet')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_VERSION</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_ACTIONS_BUTTON</td>
+	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
+	<td></td>
+</tr>
+<!--PRODUCER_ACTIONS_MENULIST -->
+<tr>
+	<td>PRODUCER_ACTION_EDIT</td>
+	<td>//div[@class='open']/ul/li[contains(.,'Edit')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_ACTION_DELETE</td>
+	<td>//div[@class='open']/ul/li[contains(.,'Delete')]/a/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -8,6 +8,10 @@
 		</layout>
 	</appender>
 
+	<category name="com.liferay.portal.kernel.dao.orm.MVCCVersionCheckerUtil">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.spring.hibernate.DialectDetector">
 		<priority value="INFO" />
 	</category>

@@ -161,8 +161,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ABSTRACT</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_DRAFT</td>
 	<td>//div[contains(@class,'entry') and contains(@class,'draft') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_READ_MORE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/a</td>
 	<td></td>
 </tr>
 <tr>

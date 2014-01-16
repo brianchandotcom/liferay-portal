@@ -140,6 +140,8 @@ public class RolePersistenceTest {
 
 		newRole.setSubtype(ServiceTestUtil.randomString());
 
+		newRole.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newRole);
 
 		Role existingRole = _persistence.findByPrimaryKey(newRole.getPrimaryKey());
@@ -163,6 +165,8 @@ public class RolePersistenceTest {
 			newRole.getDescription());
 		Assert.assertEquals(existingRole.getType(), newRole.getType());
 		Assert.assertEquals(existingRole.getSubtype(), newRole.getSubtype());
+		Assert.assertEquals(existingRole.getMvccVersion(),
+			newRole.getMvccVersion());
 	}
 
 	@Test
@@ -203,7 +207,7 @@ public class RolePersistenceTest {
 			"roleId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "classNameId",
 			true, "classPK", true, "name", true, "title", true, "description",
-			true, "type", true, "subtype", true);
+			true, "type", true, "subtype", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -371,6 +375,8 @@ public class RolePersistenceTest {
 		role.setType(ServiceTestUtil.nextInt());
 
 		role.setSubtype(ServiceTestUtil.randomString());
+
+		role.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(role);
 

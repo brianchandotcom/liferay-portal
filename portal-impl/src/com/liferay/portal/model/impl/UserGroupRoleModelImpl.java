@@ -61,9 +61,10 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "userId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "roleId", Types.BIGINT }
+			{ "roleId", Types.BIGINT },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserGroupRole (userId LONG not null,groupId LONG not null,roleId LONG not null,primary key (userId, groupId, roleId))";
+	public static final String TABLE_SQL_CREATE = "create table UserGroupRole (userId LONG not null,groupId LONG not null,roleId LONG not null,mvccVersion LONG default 0,primary key (userId, groupId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table UserGroupRole";
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroupRole.id.userId ASC, userGroupRole.id.groupId ASC, userGroupRole.id.roleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroupRole.userId ASC, UserGroupRole.groupId ASC, UserGroupRole.roleId ASC";
@@ -99,6 +100,7 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		model.setUserId(soapModel.getUserId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setRoleId(soapModel.getRoleId());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -168,6 +170,7 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		attributes.put("userId", getUserId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -193,6 +196,12 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -275,6 +284,17 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		return _originalRoleId;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -296,6 +316,7 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		userGroupRoleImpl.setUserId(getUserId());
 		userGroupRoleImpl.setGroupId(getGroupId());
 		userGroupRoleImpl.setRoleId(getRoleId());
+		userGroupRoleImpl.setMvccVersion(getMvccVersion());
 
 		userGroupRoleImpl.resetOriginalValues();
 
@@ -375,12 +396,14 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 		userGroupRoleCacheModel.roleId = getRoleId();
 
+		userGroupRoleCacheModel.mvccVersion = getMvccVersion();
+
 		return userGroupRoleCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{userId=");
 		sb.append(getUserId());
@@ -388,6 +411,8 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		sb.append(getGroupId());
 		sb.append(", roleId=");
 		sb.append(getRoleId());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -395,7 +420,7 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserGroupRole");
@@ -412,6 +437,10 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 		sb.append(
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
 		sb.append(getRoleId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -433,6 +462,7 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	private long _roleId;
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private UserGroupRole _escapedModel;
 }

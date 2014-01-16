@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ServiceComponentModel extends BaseModel<ServiceComponent> {
+public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -129,6 +130,22 @@ public interface ServiceComponentModel extends BaseModel<ServiceComponent> {
 	 * @param data the data of this service component
 	 */
 	public void setData(String data);
+
+	/**
+	 * Returns the mvcc version of this service component.
+	 *
+	 * @return the mvcc version of this service component
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this service component.
+	 *
+	 * @param mvccVersion the mvcc version of this service component
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

@@ -35,7 +35,7 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{portletPreferencesId=");
 		sb.append(portletPreferencesId);
@@ -49,6 +49,8 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 		sb.append(portletId);
 		sb.append(", preferences=");
 		sb.append(preferences);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -77,6 +79,8 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 			portletPreferencesImpl.setPreferences(preferences);
 		}
 
+		portletPreferencesImpl.setMvccVersion(mvccVersion);
+
 		portletPreferencesImpl.resetOriginalValues();
 
 		return portletPreferencesImpl;
@@ -90,6 +94,7 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 		plid = objectInput.readLong();
 		portletId = objectInput.readUTF();
 		preferences = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -113,6 +118,8 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 		else {
 			objectOutput.writeUTF(preferences);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long portletPreferencesId;
@@ -121,4 +128,5 @@ public class PortletPreferencesCacheModel implements CacheModel<PortletPreferenc
 	public long plid;
 	public String portletId;
 	public String preferences;
+	public long mvccVersion;
 }

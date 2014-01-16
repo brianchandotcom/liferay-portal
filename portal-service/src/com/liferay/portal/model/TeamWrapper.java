@@ -60,6 +60,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -118,6 +119,12 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -341,6 +348,26 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	@Override
 	public void setDescription(java.lang.String description) {
 		_team.setDescription(description);
+	}
+
+	/**
+	* Returns the mvcc version of this team.
+	*
+	* @return the mvcc version of this team
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _team.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this team.
+	*
+	* @param mvccVersion the mvcc version of this team
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_team.setMvccVersion(mvccVersion);
 	}
 
 	@Override

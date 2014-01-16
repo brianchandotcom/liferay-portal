@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps> {
+public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -172,6 +173,22 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps> 
 	 * @param props the props of this web d a v props
 	 */
 	public void setProps(String props);
+
+	/**
+	 * Returns the mvcc version of this web d a v props.
+	 *
+	 * @return the mvcc version of this web d a v props
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this web d a v props.
+	 *
+	 * @param mvccVersion the mvcc version of this web d a v props
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

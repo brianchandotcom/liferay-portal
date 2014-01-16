@@ -4864,6 +4864,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		portletPreferencesImpl.setPlid(portletPreferences.getPlid());
 		portletPreferencesImpl.setPortletId(portletPreferences.getPortletId());
 		portletPreferencesImpl.setPreferences(portletPreferences.getPreferences());
+		portletPreferencesImpl.setMvccVersion(portletPreferences.getMvccVersion());
 
 		return portletPreferencesImpl;
 	}

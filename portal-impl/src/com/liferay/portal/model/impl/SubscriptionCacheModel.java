@@ -37,7 +37,7 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{subscriptionId=");
 		sb.append(subscriptionId);
@@ -57,6 +57,8 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		sb.append(classPK);
 		sb.append(", frequency=");
 		sb.append(frequency);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,6 +103,8 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 			subscriptionImpl.setFrequency(frequency);
 		}
 
+		subscriptionImpl.setMvccVersion(mvccVersion);
+
 		subscriptionImpl.resetOriginalValues();
 
 		return subscriptionImpl;
@@ -117,6 +121,7 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		frequency = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -144,6 +149,8 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		else {
 			objectOutput.writeUTF(frequency);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long subscriptionId;
@@ -155,4 +162,5 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	public long classNameId;
 	public long classPK;
 	public String frequency;
+	public long mvccVersion;
 }

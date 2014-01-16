@@ -857,6 +857,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		orgLaborImpl.setFriClose(orgLabor.getFriClose());
 		orgLaborImpl.setSatOpen(orgLabor.getSatOpen());
 		orgLaborImpl.setSatClose(orgLabor.getSatClose());
+		orgLaborImpl.setMvccVersion(orgLabor.getMvccVersion());
 
 		return orgLaborImpl;
 	}

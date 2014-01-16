@@ -57,6 +57,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 		attributes.put("plid", getPlid());
 		attributes.put("portletId", getPortletId());
 		attributes.put("preferences", getPreferences());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -97,6 +98,12 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 
 		if (preferences != null) {
 			setPreferences(preferences);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -238,6 +245,26 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	@Override
 	public void setPreferences(java.lang.String preferences) {
 		_portletPreferences.setPreferences(preferences);
+	}
+
+	/**
+	* Returns the mvcc version of this portlet preferences.
+	*
+	* @return the mvcc version of this portlet preferences
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _portletPreferences.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this portlet preferences.
+	*
+	* @param mvccVersion the mvcc version of this portlet preferences
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_portletPreferences.setMvccVersion(mvccVersion);
 	}
 
 	@Override

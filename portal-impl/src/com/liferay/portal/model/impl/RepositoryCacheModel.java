@@ -37,7 +37,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -67,6 +67,8 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		sb.append(typeSettings);
 		sb.append(", dlFolderId=");
 		sb.append(dlFolderId);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,6 +142,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		}
 
 		repositoryImpl.setDlFolderId(dlFolderId);
+		repositoryImpl.setMvccVersion(mvccVersion);
 
 		repositoryImpl.resetOriginalValues();
 
@@ -162,6 +165,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		portletId = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
 		dlFolderId = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -219,6 +223,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		}
 
 		objectOutput.writeLong(dlFolderId);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -235,4 +240,5 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	public String portletId;
 	public String typeSettings;
 	public long dlFolderId;
+	public long mvccVersion;
 }

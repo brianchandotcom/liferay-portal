@@ -55,6 +55,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		attributes.put("name", getName());
 		attributes.put("clusterNodeIds", getClusterNodeIds());
 		attributes.put("wholeCluster", getWholeCluster());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class ClusterGroupWrapper implements ClusterGroup,
 
 		if (wholeCluster != null) {
 			setWholeCluster(wholeCluster);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -194,6 +201,26 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	@Override
 	public void setWholeCluster(boolean wholeCluster) {
 		_clusterGroup.setWholeCluster(wholeCluster);
+	}
+
+	/**
+	* Returns the mvcc version of this cluster group.
+	*
+	* @return the mvcc version of this cluster group
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _clusterGroup.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this cluster group.
+	*
+	* @param mvccVersion the mvcc version of this cluster group
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_clusterGroup.setMvccVersion(mvccVersion);
 	}
 
 	@Override

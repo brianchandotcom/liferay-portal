@@ -1903,6 +1903,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		userTrackerImpl.setRemoteAddr(userTracker.getRemoteAddr());
 		userTrackerImpl.setRemoteHost(userTracker.getRemoteHost());
 		userTrackerImpl.setUserAgent(userTracker.getUserAgent());
+		userTrackerImpl.setMvccVersion(userTracker.getMvccVersion());
 
 		return userTrackerImpl;
 	}

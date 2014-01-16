@@ -136,6 +136,8 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		newLayoutFriendlyURL.setLanguageId(ServiceTestUtil.randomString());
 
+		newLayoutFriendlyURL.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newLayoutFriendlyURL);
 
 		LayoutFriendlyURL existingLayoutFriendlyURL = _persistence.findByPrimaryKey(newLayoutFriendlyURL.getPrimaryKey());
@@ -166,6 +168,8 @@ public class LayoutFriendlyURLPersistenceTest {
 			newLayoutFriendlyURL.getFriendlyURL());
 		Assert.assertEquals(existingLayoutFriendlyURL.getLanguageId(),
 			newLayoutFriendlyURL.getLanguageId());
+		Assert.assertEquals(existingLayoutFriendlyURL.getMvccVersion(),
+			newLayoutFriendlyURL.getMvccVersion());
 	}
 
 	@Test
@@ -207,7 +211,7 @@ public class LayoutFriendlyURLPersistenceTest {
 			true, "layoutFriendlyURLId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "plid", true, "privateLayout", true,
-			"friendlyURL", true, "languageId", true);
+			"friendlyURL", true, "languageId", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -385,6 +389,8 @@ public class LayoutFriendlyURLPersistenceTest {
 		layoutFriendlyURL.setFriendlyURL(ServiceTestUtil.randomString());
 
 		layoutFriendlyURL.setLanguageId(ServiceTestUtil.randomString());
+
+		layoutFriendlyURL.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(layoutFriendlyURL);
 

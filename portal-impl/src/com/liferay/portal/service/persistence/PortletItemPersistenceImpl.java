@@ -1940,6 +1940,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItemImpl.setName(portletItem.getName());
 		portletItemImpl.setPortletId(portletItem.getPortletId());
 		portletItemImpl.setClassNameId(portletItem.getClassNameId());
+		portletItemImpl.setMvccVersion(portletItem.getMvccVersion());
 
 		return portletItemImpl;
 	}

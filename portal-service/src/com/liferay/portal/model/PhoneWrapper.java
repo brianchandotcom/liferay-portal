@@ -65,6 +65,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		attributes.put("extension", getExtension());
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -147,6 +148,12 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -475,6 +482,26 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	@Override
 	public void setPrimary(boolean primary) {
 		_phone.setPrimary(primary);
+	}
+
+	/**
+	* Returns the mvcc version of this phone.
+	*
+	* @return the mvcc version of this phone
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _phone.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this phone.
+	*
+	* @param mvccVersion the mvcc version of this phone
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_phone.setMvccVersion(mvccVersion);
 	}
 
 	@Override

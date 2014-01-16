@@ -3531,6 +3531,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		layoutSetBranchImpl.setSettings(layoutSetBranch.getSettings());
 		layoutSetBranchImpl.setLayoutSetPrototypeUuid(layoutSetBranch.getLayoutSetPrototypeUuid());
 		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(layoutSetBranch.isLayoutSetPrototypeLinkEnabled());
+		layoutSetBranchImpl.setMvccVersion(layoutSetBranch.getMvccVersion());
 
 		return layoutSetBranchImpl;
 	}

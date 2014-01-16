@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{companyId=");
 		sb.append(companyId);
@@ -56,6 +56,8 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 		sb.append(maxUsers);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -100,6 +102,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 		companyImpl.setSystem(system);
 		companyImpl.setMaxUsers(maxUsers);
 		companyImpl.setActive(active);
+		companyImpl.setMvccVersion(mvccVersion);
 
 		companyImpl.resetOriginalValues();
 
@@ -123,6 +126,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 		system = objectInput.readBoolean();
 		maxUsers = objectInput.readInt();
 		active = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 
 		_keyObj = (java.security.Key)objectInput.readObject();
 		_virtualHostname = (java.lang.String)objectInput.readObject();
@@ -166,6 +170,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 		objectOutput.writeBoolean(system);
 		objectOutput.writeInt(maxUsers);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeObject(_keyObj);
 		objectOutput.writeObject(_virtualHostname);
@@ -181,6 +186,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable {
 	public boolean system;
 	public int maxUsers;
 	public boolean active;
+	public long mvccVersion;
 	public java.security.Key _keyObj;
 	public java.lang.String _virtualHostname;
 }

@@ -620,6 +620,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		webDAVPropsImpl.setClassNameId(webDAVProps.getClassNameId());
 		webDAVPropsImpl.setClassPK(webDAVProps.getClassPK());
 		webDAVPropsImpl.setProps(webDAVProps.getProps());
+		webDAVPropsImpl.setMvccVersion(webDAVProps.getMvccVersion());
 
 		return webDAVPropsImpl;
 	}

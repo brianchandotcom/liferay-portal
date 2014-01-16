@@ -40,7 +40,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MembershipRequestModel extends BaseModel<MembershipRequest> {
+public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -232,6 +233,22 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest> {
 	 * @param statusId the status ID of this membership request
 	 */
 	public void setStatusId(int statusId);
+
+	/**
+	 * Returns the mvcc version of this membership request.
+	 *
+	 * @return the mvcc version of this membership request
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this membership request.
+	 *
+	 * @param mvccVersion the mvcc version of this membership request
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

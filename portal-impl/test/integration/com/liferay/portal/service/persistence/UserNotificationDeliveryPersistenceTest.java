@@ -127,6 +127,8 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		newUserNotificationDelivery.setDeliver(ServiceTestUtil.randomBoolean());
 
+		newUserNotificationDelivery.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newUserNotificationDelivery);
 
 		UserNotificationDelivery existingUserNotificationDelivery = _persistence.findByPrimaryKey(newUserNotificationDelivery.getPrimaryKey());
@@ -147,6 +149,8 @@ public class UserNotificationDeliveryPersistenceTest {
 			newUserNotificationDelivery.getDeliveryType());
 		Assert.assertEquals(existingUserNotificationDelivery.getDeliver(),
 			newUserNotificationDelivery.getDeliver());
+		Assert.assertEquals(existingUserNotificationDelivery.getMvccVersion(),
+			newUserNotificationDelivery.getMvccVersion());
 	}
 
 	@Test
@@ -188,7 +192,7 @@ public class UserNotificationDeliveryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("UserNotificationDelivery",
 			"userNotificationDeliveryId", true, "companyId", true, "userId",
 			true, "portletId", true, "classNameId", true, "notificationType",
-			true, "deliveryType", true, "deliver", true);
+			true, "deliveryType", true, "deliver", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -354,6 +358,8 @@ public class UserNotificationDeliveryPersistenceTest {
 		userNotificationDelivery.setDeliveryType(ServiceTestUtil.nextInt());
 
 		userNotificationDelivery.setDeliver(ServiceTestUtil.randomBoolean());
+
+		userNotificationDelivery.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(userNotificationDelivery);
 

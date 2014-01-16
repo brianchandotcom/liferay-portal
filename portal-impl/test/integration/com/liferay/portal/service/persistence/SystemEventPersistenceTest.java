@@ -137,6 +137,8 @@ public class SystemEventPersistenceTest {
 
 		newSystemEvent.setExtraData(ServiceTestUtil.randomString());
 
+		newSystemEvent.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newSystemEvent);
 
 		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(newSystemEvent.getPrimaryKey());
@@ -170,6 +172,8 @@ public class SystemEventPersistenceTest {
 			newSystemEvent.getType());
 		Assert.assertEquals(existingSystemEvent.getExtraData(),
 			newSystemEvent.getExtraData());
+		Assert.assertEquals(existingSystemEvent.getMvccVersion(),
+			newSystemEvent.getMvccVersion());
 	}
 
 	@Test
@@ -212,7 +216,8 @@ public class SystemEventPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"classNameId", true, "classPK", true, "classUuid", true,
 			"referrerClassNameId", true, "parentSystemEventId", true,
-			"systemEventSetKey", true, "type", true, "extraData", true);
+			"systemEventSetKey", true, "type", true, "extraData", true,
+			"mvccVersion", true);
 	}
 
 	@Test
@@ -357,6 +362,8 @@ public class SystemEventPersistenceTest {
 		systemEvent.setType(ServiceTestUtil.nextInt());
 
 		systemEvent.setExtraData(ServiceTestUtil.randomString());
+
+		systemEvent.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(systemEvent);
 

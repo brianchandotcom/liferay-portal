@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PortalPreferencesModel extends BaseModel<PortalPreferences> {
+public interface PortalPreferencesModel extends BaseModel<PortalPreferences>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,6 +115,22 @@ public interface PortalPreferencesModel extends BaseModel<PortalPreferences> {
 	 * @param preferences the preferences of this portal preferences
 	 */
 	public void setPreferences(String preferences);
+
+	/**
+	 * Returns the mvcc version of this portal preferences.
+	 *
+	 * @return the mvcc version of this portal preferences
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this portal preferences.
+	 *
+	 * @param mvccVersion the mvcc version of this portal preferences
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

@@ -129,6 +129,8 @@ public class MembershipRequestPersistenceTest {
 
 		newMembershipRequest.setStatusId(ServiceTestUtil.nextInt());
 
+		newMembershipRequest.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newMembershipRequest);
 
 		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
@@ -155,6 +157,8 @@ public class MembershipRequestPersistenceTest {
 			newMembershipRequest.getReplierUserId());
 		Assert.assertEquals(existingMembershipRequest.getStatusId(),
 			newMembershipRequest.getStatusId());
+		Assert.assertEquals(existingMembershipRequest.getMvccVersion(),
+			newMembershipRequest.getMvccVersion());
 	}
 
 	@Test
@@ -196,7 +200,7 @@ public class MembershipRequestPersistenceTest {
 			"membershipRequestId", true, "groupId", true, "companyId", true,
 			"userId", true, "createDate", true, "comments", true,
 			"replyComments", true, "replyDate", true, "replierUserId", true,
-			"statusId", true);
+			"statusId", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -334,6 +338,8 @@ public class MembershipRequestPersistenceTest {
 		membershipRequest.setReplierUserId(ServiceTestUtil.nextLong());
 
 		membershipRequest.setStatusId(ServiceTestUtil.nextInt());
+
+		membershipRequest.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(membershipRequest);
 

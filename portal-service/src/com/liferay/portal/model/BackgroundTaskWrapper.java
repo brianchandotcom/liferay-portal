@@ -67,6 +67,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusMessage", getStatusMessage());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -163,6 +164,12 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 
 		if (statusMessage != null) {
 			setStatusMessage(statusMessage);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -516,6 +523,26 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public void setStatusMessage(java.lang.String statusMessage) {
 		_backgroundTask.setStatusMessage(statusMessage);
+	}
+
+	/**
+	* Returns the mvcc version of this background task.
+	*
+	* @return the mvcc version of this background task
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _backgroundTask.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this background task.
+	*
+	* @param mvccVersion the mvcc version of this background task
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_backgroundTask.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -70,9 +70,10 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "repositoryId", Types.BIGINT },
 			{ "mappedId", Types.VARCHAR },
-			{ "manualCheckInRequired", Types.BOOLEAN }
+			{ "manualCheckInRequired", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table RepositoryEntry (uuid_ VARCHAR(75) null,repositoryEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mappedId VARCHAR(75) null,manualCheckInRequired BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table RepositoryEntry (uuid_ VARCHAR(75) null,repositoryEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mappedId VARCHAR(75) null,manualCheckInRequired BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table RepositoryEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY repositoryEntry.repositoryEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RepositoryEntry.repositoryEntryId ASC";
@@ -145,6 +146,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("mappedId", getMappedId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -219,6 +221,12 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 		if (manualCheckInRequired != null) {
 			setManualCheckInRequired(manualCheckInRequired);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -417,6 +425,16 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	}
 
 	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				RepositoryEntry.class.getName()));
@@ -464,6 +482,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		repositoryEntryImpl.setRepositoryId(getRepositoryId());
 		repositoryEntryImpl.setMappedId(getMappedId());
 		repositoryEntryImpl.setManualCheckInRequired(getManualCheckInRequired());
+		repositoryEntryImpl.setMvccVersion(getMvccVersion());
 
 		repositoryEntryImpl.resetOriginalValues();
 
@@ -603,12 +622,14 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 		repositoryEntryCacheModel.manualCheckInRequired = getManualCheckInRequired();
 
+		repositoryEntryCacheModel.mvccVersion = getMvccVersion();
+
 		return repositoryEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -632,6 +653,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		sb.append(getMappedId());
 		sb.append(", manualCheckInRequired=");
 		sb.append(getManualCheckInRequired());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -639,7 +662,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.RepositoryEntry");
@@ -689,6 +712,10 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 			"<column><column-name>manualCheckInRequired</column-name><column-value><![CDATA[");
 		sb.append(getManualCheckInRequired());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -719,6 +746,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	private String _mappedId;
 	private String _originalMappedId;
 	private boolean _manualCheckInRequired;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private RepositoryEntry _escapedModel;
 }

@@ -129,6 +129,8 @@ public class SubscriptionPersistenceTest {
 
 		newSubscription.setFrequency(ServiceTestUtil.randomString());
 
+		newSubscription.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newSubscription);
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
@@ -153,6 +155,8 @@ public class SubscriptionPersistenceTest {
 			newSubscription.getClassPK());
 		Assert.assertEquals(existingSubscription.getFrequency(),
 			newSubscription.getFrequency());
+		Assert.assertEquals(existingSubscription.getMvccVersion(),
+			newSubscription.getMvccVersion());
 	}
 
 	@Test
@@ -193,7 +197,8 @@ public class SubscriptionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Subscription",
 			"subscriptionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "frequency", true);
+			"classNameId", true, "classPK", true, "frequency", true,
+			"mvccVersion", true);
 	}
 
 	@Test
@@ -350,6 +355,8 @@ public class SubscriptionPersistenceTest {
 		subscription.setClassPK(ServiceTestUtil.nextLong());
 
 		subscription.setFrequency(ServiceTestUtil.randomString());
+
+		subscription.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(subscription);
 

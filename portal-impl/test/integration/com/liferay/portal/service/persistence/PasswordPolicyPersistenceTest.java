@@ -180,6 +180,8 @@ public class PasswordPolicyPersistenceTest {
 
 		newPasswordPolicy.setResetTicketMaxAge(ServiceTestUtil.nextLong());
 
+		newPasswordPolicy.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newPasswordPolicy);
 
 		PasswordPolicy existingPasswordPolicy = _persistence.findByPrimaryKey(newPasswordPolicy.getPrimaryKey());
@@ -254,6 +256,8 @@ public class PasswordPolicyPersistenceTest {
 			newPasswordPolicy.getResetFailureCount());
 		Assert.assertEquals(existingPasswordPolicy.getResetTicketMaxAge(),
 			newPasswordPolicy.getResetTicketMaxAge());
+		Assert.assertEquals(existingPasswordPolicy.getMvccVersion(),
+			newPasswordPolicy.getMvccVersion());
 	}
 
 	@Test
@@ -303,7 +307,7 @@ public class PasswordPolicyPersistenceTest {
 			true, "maxAge", true, "warningTime", true, "graceLimit", true,
 			"lockout", true, "maxFailure", true, "lockoutDuration", true,
 			"requireUnlock", true, "resetFailureCount", true,
-			"resetTicketMaxAge", true);
+			"resetTicketMaxAge", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -512,6 +516,8 @@ public class PasswordPolicyPersistenceTest {
 		passwordPolicy.setResetFailureCount(ServiceTestUtil.nextLong());
 
 		passwordPolicy.setResetTicketMaxAge(ServiceTestUtil.nextLong());
+
+		passwordPolicy.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(passwordPolicy);
 

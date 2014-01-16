@@ -59,6 +59,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("props", getProps());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -105,6 +106,12 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 
 		if (props != null) {
 			setProps(props);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -281,6 +288,26 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	@Override
 	public void setProps(java.lang.String props) {
 		_webDAVProps.setProps(props);
+	}
+
+	/**
+	* Returns the mvcc version of this web d a v props.
+	*
+	* @return the mvcc version of this web d a v props
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _webDAVProps.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this web d a v props.
+	*
+	* @param mvccVersion the mvcc version of this web d a v props
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_webDAVProps.setMvccVersion(mvccVersion);
 	}
 
 	@Override

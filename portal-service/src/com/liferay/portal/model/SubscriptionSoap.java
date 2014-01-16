@@ -39,6 +39,7 @@ public class SubscriptionSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setFrequency(model.getFrequency());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -163,6 +164,14 @@ public class SubscriptionSoap implements Serializable {
 		_frequency = frequency;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _subscriptionId;
 	private long _companyId;
 	private long _userId;
@@ -172,4 +181,5 @@ public class SubscriptionSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private String _frequency;
+	private long _mvccVersion;
 }

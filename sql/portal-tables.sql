@@ -14,7 +14,8 @@ create table Account_ (
 	tickerSymbol VARCHAR(75) null,
 	industry VARCHAR(75) null,
 	type_ VARCHAR(75) null,
-	size_ VARCHAR(75) null
+	size_ VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table Address (
@@ -36,7 +37,8 @@ create table Address (
 	countryId LONG,
 	typeId INTEGER,
 	mailing BOOLEAN,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table AnnouncementsDelivery (
@@ -221,7 +223,8 @@ create table BackgroundTask (
 	completed BOOLEAN,
 	completionDate DATE null,
 	status INTEGER,
-	statusMessage TEXT null
+	statusMessage TEXT null,
+	mvccVersion LONG default 0
 );
 
 create table BlogsEntry (
@@ -308,7 +311,8 @@ create table BookmarksFolder (
 create table BrowserTracker (
 	browserTrackerId LONG not null primary key,
 	userId LONG,
-	browserKey LONG
+	browserKey LONG,
+	mvccVersion LONG default 0
 );
 
 create table CalEvent (
@@ -339,14 +343,16 @@ create table CalEvent (
 
 create table ClassName_ (
 	classNameId LONG not null primary key,
-	value VARCHAR(200) null
+	value VARCHAR(200) null,
+	mvccVersion LONG default 0
 );
 
 create table ClusterGroup (
 	clusterGroupId LONG not null primary key,
 	name VARCHAR(75) null,
 	clusterNodeIds VARCHAR(75) null,
-	wholeCluster BOOLEAN
+	wholeCluster BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table Company (
@@ -359,7 +365,8 @@ create table Company (
 	logoId LONG,
 	system BOOLEAN,
 	maxUsers INTEGER,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table Contact_ (
@@ -395,7 +402,8 @@ create table Contact_ (
 	employeeNumber VARCHAR(75) null,
 	jobTitle VARCHAR(100) null,
 	jobClass VARCHAR(75) null,
-	hoursOfOperation VARCHAR(75) null
+	hoursOfOperation VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table Counter (
@@ -411,7 +419,8 @@ create table Country (
 	number_ VARCHAR(75) null,
 	idd_ VARCHAR(75) null,
 	zipRequired BOOLEAN,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table CyrusUser (
@@ -730,7 +739,8 @@ create table EmailAddress (
 	classPK LONG,
 	address VARCHAR(75) null,
 	typeId INTEGER,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table ExpandoColumn (
@@ -788,7 +798,8 @@ create table Group_ (
 	friendlyURL VARCHAR(255) null,
 	site BOOLEAN,
 	remoteStagingGroupCount INTEGER,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table Groups_Orgs (
@@ -815,7 +826,8 @@ create table Image (
 	type_ VARCHAR(75) null,
 	height INTEGER,
 	width INTEGER,
-	size_ INTEGER
+	size_ INTEGER,
+	mvccVersion LONG default 0
 );
 
 create table JournalArticle (
@@ -958,7 +970,8 @@ create table Layout (
 	priority INTEGER,
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
-	sourcePrototypeLayoutUuid VARCHAR(75) null
+	sourcePrototypeLayoutUuid VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table LayoutBranch (
@@ -971,7 +984,8 @@ create table LayoutBranch (
 	plid LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	master BOOLEAN
+	master BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table LayoutFriendlyURL (
@@ -986,7 +1000,8 @@ create table LayoutFriendlyURL (
 	plid LONG,
 	privateLayout BOOLEAN,
 	friendlyURL VARCHAR(255) null,
-	languageId VARCHAR(75) null
+	languageId VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table LayoutPrototype (
@@ -1000,7 +1015,8 @@ create table LayoutPrototype (
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table LayoutRevision (
@@ -1033,7 +1049,8 @@ create table LayoutRevision (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	mvccVersion LONG default 0
 );
 
 create table LayoutSet (
@@ -1052,7 +1069,8 @@ create table LayoutSet (
 	pageCount INTEGER,
 	settings_ TEXT null,
 	layoutSetPrototypeUuid VARCHAR(75) null,
-	layoutSetPrototypeLinkEnabled BOOLEAN
+	layoutSetPrototypeLinkEnabled BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table LayoutSetBranch (
@@ -1075,7 +1093,8 @@ create table LayoutSetBranch (
 	css TEXT null,
 	settings_ TEXT null,
 	layoutSetPrototypeUuid VARCHAR(75) null,
-	layoutSetPrototypeLinkEnabled BOOLEAN
+	layoutSetPrototypeLinkEnabled BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table LayoutSetPrototype (
@@ -1089,13 +1108,15 @@ create table LayoutSetPrototype (
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table ListType (
 	listTypeId INTEGER not null primary key,
 	name VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table Lock_ (
@@ -1109,7 +1130,8 @@ create table Lock_ (
 	key_ VARCHAR(200) null,
 	owner VARCHAR(255) null,
 	inheritable BOOLEAN,
-	expirationDate DATE null
+	expirationDate DATE null,
+	mvccVersion LONG default 0
 );
 
 create table MBBan (
@@ -1333,7 +1355,8 @@ create table MembershipRequest (
 	replyComments STRING null,
 	replyDate DATE null,
 	replierUserId LONG,
-	statusId INTEGER
+	statusId INTEGER,
+	mvccVersion LONG default 0
 );
 
 create table Organization_ (
@@ -1353,13 +1376,15 @@ create table Organization_ (
 	countryId LONG,
 	statusId INTEGER,
 	comments STRING null,
-	logoId LONG
+	logoId LONG,
+	mvccVersion LONG default 0
 );
 
 create table OrgGroupRole (
 	organizationId LONG not null,
 	groupId LONG not null,
 	roleId LONG not null,
+	mvccVersion LONG default 0,
 	primary key (organizationId, groupId, roleId)
 );
 
@@ -1380,7 +1405,8 @@ create table OrgLabor (
 	friOpen INTEGER,
 	friClose INTEGER,
 	satOpen INTEGER,
-	satClose INTEGER
+	satClose INTEGER,
+	mvccVersion LONG default 0
 );
 
 create table PasswordPolicy (
@@ -1417,21 +1443,24 @@ create table PasswordPolicy (
 	lockoutDuration LONG,
 	requireUnlock BOOLEAN,
 	resetFailureCount LONG,
-	resetTicketMaxAge LONG
+	resetTicketMaxAge LONG,
+	mvccVersion LONG default 0
 );
 
 create table PasswordPolicyRel (
 	passwordPolicyRelId LONG not null primary key,
 	passwordPolicyId LONG,
 	classNameId LONG,
-	classPK LONG
+	classPK LONG,
+	mvccVersion LONG default 0
 );
 
 create table PasswordTracker (
 	passwordTrackerId LONG not null primary key,
 	userId LONG,
 	createDate DATE null,
-	password_ VARCHAR(75) null
+	password_ VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table Phone (
@@ -1447,7 +1476,8 @@ create table Phone (
 	number_ VARCHAR(75) null,
 	extension VARCHAR(75) null,
 	typeId INTEGER,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table PluginSetting (
@@ -1456,7 +1486,8 @@ create table PluginSetting (
 	pluginId VARCHAR(75) null,
 	pluginType VARCHAR(75) null,
 	roles STRING null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table PollsChoice (
@@ -1506,7 +1537,8 @@ create table PortalPreferences (
 	portalPreferencesId LONG not null primary key,
 	ownerId LONG,
 	ownerType INTEGER,
-	preferences TEXT null
+	preferences TEXT null,
+	mvccVersion LONG default 0
 );
 
 create table Portlet (
@@ -1514,7 +1546,8 @@ create table Portlet (
 	companyId LONG,
 	portletId VARCHAR(200) null,
 	roles STRING null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table PortletItem (
@@ -1527,7 +1560,8 @@ create table PortletItem (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	portletId VARCHAR(200) null,
-	classNameId LONG
+	classNameId LONG,
+	mvccVersion LONG default 0
 );
 
 create table PortletPreferences (
@@ -1536,7 +1570,8 @@ create table PortletPreferences (
 	ownerType INTEGER,
 	plid LONG,
 	portletId VARCHAR(200) null,
-	preferences TEXT null
+	preferences TEXT null,
+	mvccVersion LONG default 0
 );
 
 create table RatingsEntry (
@@ -1565,7 +1600,8 @@ create table Region (
 	countryId LONG,
 	regionCode VARCHAR(75) null,
 	name VARCHAR(75) null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table Release_ (
@@ -1577,7 +1613,8 @@ create table Release_ (
 	buildDate DATE null,
 	verified BOOLEAN,
 	state_ INTEGER,
-	testString VARCHAR(1024) null
+	testString VARCHAR(1024) null,
+	mvccVersion LONG default 0
 );
 
 create table Repository (
@@ -1594,7 +1631,8 @@ create table Repository (
 	description STRING null,
 	portletId VARCHAR(200) null,
 	typeSettings TEXT null,
-	dlFolderId LONG
+	dlFolderId LONG,
+	mvccVersion LONG default 0
 );
 
 create table RepositoryEntry (
@@ -1608,14 +1646,16 @@ create table RepositoryEntry (
 	modifiedDate DATE null,
 	repositoryId LONG,
 	mappedId VARCHAR(75) null,
-	manualCheckInRequired BOOLEAN
+	manualCheckInRequired BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table ResourceAction (
 	resourceActionId LONG not null primary key,
 	name VARCHAR(255) null,
 	actionId VARCHAR(75) null,
-	bitwiseValue LONG
+	bitwiseValue LONG,
+	mvccVersion LONG default 0
 );
 
 create table ResourceBlock (
@@ -1624,14 +1664,16 @@ create table ResourceBlock (
 	groupId LONG,
 	name VARCHAR(75) null,
 	permissionsHash VARCHAR(75) null,
-	referenceCount LONG
+	referenceCount LONG,
+	mvccVersion LONG default 0
 );
 
 create table ResourceBlockPermission (
 	resourceBlockPermissionId LONG not null primary key,
 	resourceBlockId LONG,
 	roleId LONG,
-	actionIds LONG
+	actionIds LONG,
+	mvccVersion LONG default 0
 );
 
 create table ResourcePermission (
@@ -1642,7 +1684,8 @@ create table ResourcePermission (
 	primKey VARCHAR(255) null,
 	roleId LONG,
 	ownerId LONG,
-	actionIds LONG
+	actionIds LONG,
+	mvccVersion LONG default 0
 );
 
 create table ResourceTypePermission (
@@ -1651,7 +1694,8 @@ create table ResourceTypePermission (
 	groupId LONG,
 	name VARCHAR(75) null,
 	roleId LONG,
-	actionIds LONG
+	actionIds LONG,
+	mvccVersion LONG default 0
 );
 
 create table Role_ (
@@ -1668,7 +1712,8 @@ create table Role_ (
 	title STRING null,
 	description STRING null,
 	type_ INTEGER,
-	subtype VARCHAR(75) null
+	subtype VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table SCFrameworkVersi_SCProductVers (
@@ -1755,14 +1800,16 @@ create table ServiceComponent (
 	buildNamespace VARCHAR(75) null,
 	buildNumber LONG,
 	buildDate LONG,
-	data_ TEXT null
+	data_ TEXT null,
+	mvccVersion LONG default 0
 );
 
 create table Shard (
 	shardId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table ShoppingCart (
@@ -2052,7 +2099,8 @@ create table Subscription (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	frequency VARCHAR(75) null
+	frequency VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table SystemEvent (
@@ -2069,7 +2117,8 @@ create table SystemEvent (
 	parentSystemEventId LONG,
 	systemEventSetKey LONG,
 	type_ INTEGER,
-	extraData TEXT null
+	extraData TEXT null,
+	mvccVersion LONG default 0
 );
 
 create table Team (
@@ -2081,7 +2130,8 @@ create table Team (
 	modifiedDate DATE null,
 	groupId LONG,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	mvccVersion LONG default 0
 );
 
 create table Ticket (
@@ -2093,7 +2143,8 @@ create table Ticket (
 	key_ VARCHAR(75) null,
 	type_ INTEGER,
 	extraInfo TEXT null,
-	expirationDate DATE null
+	expirationDate DATE null,
+	mvccVersion LONG default 0
 );
 
 create table TrashEntry (
@@ -2127,7 +2178,8 @@ create table UserNotificationDelivery (
 	classNameId LONG,
 	notificationType INTEGER,
 	deliveryType INTEGER,
-	deliver BOOLEAN
+	deliver BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table User_ (
@@ -2170,7 +2222,8 @@ create table User_ (
 	lockoutDate DATE null,
 	agreedToTermsOfUse BOOLEAN,
 	emailAddressVerified BOOLEAN,
-	status INTEGER
+	status INTEGER,
+	mvccVersion LONG default 0
 );
 
 create table UserGroup (
@@ -2184,13 +2237,15 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	addedByLDAPImport BOOLEAN
+	addedByLDAPImport BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table UserGroupGroupRole (
 	userGroupId LONG not null,
 	groupId LONG not null,
 	roleId LONG not null,
+	mvccVersion LONG default 0,
 	primary key (userGroupId, groupId, roleId)
 );
 
@@ -2198,6 +2253,7 @@ create table UserGroupRole (
 	userId LONG not null,
 	groupId LONG not null,
 	roleId LONG not null,
+	mvccVersion LONG default 0,
 	primary key (userId, groupId, roleId)
 );
 
@@ -2212,7 +2268,8 @@ create table UserIdMapper (
 	userId LONG,
 	type_ VARCHAR(75) null,
 	description VARCHAR(75) null,
-	externalUserId VARCHAR(75) null
+	externalUserId VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table UserNotificationEvent (
@@ -2225,7 +2282,8 @@ create table UserNotificationEvent (
 	deliverBy LONG,
 	delivered BOOLEAN,
 	payload TEXT null,
-	archived BOOLEAN
+	archived BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table Users_Groups (
@@ -2266,21 +2324,24 @@ create table UserTracker (
 	sessionId VARCHAR(200) null,
 	remoteAddr VARCHAR(75) null,
 	remoteHost VARCHAR(75) null,
-	userAgent VARCHAR(200) null
+	userAgent VARCHAR(200) null,
+	mvccVersion LONG default 0
 );
 
 create table UserTrackerPath (
 	userTrackerPathId LONG not null primary key,
 	userTrackerId LONG,
 	path_ STRING null,
-	pathDate DATE null
+	pathDate DATE null,
+	mvccVersion LONG default 0
 );
 
 create table VirtualHost (
 	virtualHostId LONG not null primary key,
 	companyId LONG,
 	layoutSetId LONG,
-	hostname VARCHAR(75) null
+	hostname VARCHAR(75) null,
+	mvccVersion LONG default 0
 );
 
 create table WebDAVProps (
@@ -2290,7 +2351,8 @@ create table WebDAVProps (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	props TEXT null
+	props TEXT null,
+	mvccVersion LONG default 0
 );
 
 create table Website (
@@ -2305,7 +2367,8 @@ create table Website (
 	classPK LONG,
 	url STRING null,
 	typeId INTEGER,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	mvccVersion LONG default 0
 );
 
 create table WikiNode (
@@ -2371,7 +2434,8 @@ create table WorkflowDefinitionLink (
 	classPK LONG,
 	typePK LONG,
 	workflowDefinitionName VARCHAR(75) null,
-	workflowDefinitionVersion INTEGER
+	workflowDefinitionVersion INTEGER,
+	mvccVersion LONG default 0
 );
 
 create table WorkflowInstanceLink (
@@ -2384,5 +2448,6 @@ create table WorkflowInstanceLink (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	workflowInstanceId LONG
+	workflowInstanceId LONG,
+	mvccVersion LONG default 0
 );

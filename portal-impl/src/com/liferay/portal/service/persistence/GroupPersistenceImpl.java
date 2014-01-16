@@ -7930,6 +7930,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		groupImpl.setSite(group.isSite());
 		groupImpl.setRemoteStagingGroupCount(group.getRemoteStagingGroupCount());
 		groupImpl.setActive(group.isActive());
+		groupImpl.setMvccVersion(group.getMvccVersion());
 
 		return groupImpl;
 	}

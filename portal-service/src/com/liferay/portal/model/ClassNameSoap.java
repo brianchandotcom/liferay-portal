@@ -32,6 +32,7 @@ public class ClassNameSoap implements Serializable {
 
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setValue(model.getValue());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -100,6 +101,15 @@ public class ClassNameSoap implements Serializable {
 		_value = value;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _classNameId;
 	private String _value;
+	private long _mvccVersion;
 }

@@ -36,7 +36,7 @@ import java.util.Date;
 public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -98,6 +98,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		sb.append(layoutPrototypeLinkEnabled);
 		sb.append(", sourcePrototypeLayoutUuid=");
 		sb.append(sourcePrototypeLayoutUuid);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -257,6 +259,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 			layoutImpl.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
 		}
 
+		layoutImpl.setMvccVersion(mvccVersion);
+
 		layoutImpl.resetOriginalValues();
 
 		return layoutImpl;
@@ -294,6 +298,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		layoutPrototypeUuid = objectInput.readUTF();
 		layoutPrototypeLinkEnabled = objectInput.readBoolean();
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -436,6 +441,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 		else {
 			objectOutput.writeUTF(sourcePrototypeLayoutUuid);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -468,4 +475,5 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable {
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;
+	public long mvccVersion;
 }

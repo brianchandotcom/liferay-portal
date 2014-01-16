@@ -74,9 +74,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 			{ "parentSystemEventId", Types.BIGINT },
 			{ "systemEventSetKey", Types.BIGINT },
 			{ "type_", Types.INTEGER },
-			{ "extraData", Types.CLOB }
+			{ "extraData", Types.CLOB },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SystemEvent (systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table SystemEvent (systemEventId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table SystemEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY systemEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SystemEvent.createDate DESC";
@@ -152,6 +153,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		attributes.put("systemEventSetKey", getSystemEventSetKey());
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -243,6 +245,12 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 		if (extraData != null) {
 			setExtraData(extraData);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -493,6 +501,16 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		_extraData = extraData;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -538,6 +556,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		systemEventImpl.setSystemEventSetKey(getSystemEventSetKey());
 		systemEventImpl.setType(getType());
 		systemEventImpl.setExtraData(getExtraData());
+		systemEventImpl.setMvccVersion(getMvccVersion());
 
 		systemEventImpl.resetOriginalValues();
 
@@ -680,12 +699,14 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 			systemEventCacheModel.extraData = null;
 		}
 
+		systemEventCacheModel.mvccVersion = getMvccVersion();
+
 		return systemEventCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{systemEventId=");
 		sb.append(getSystemEventId());
@@ -715,6 +736,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		sb.append(getType());
 		sb.append(", extraData=");
 		sb.append(getExtraData());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -722,7 +745,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.SystemEvent");
@@ -784,6 +807,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 			"<column><column-name>extraData</column-name><column-value><![CDATA[");
 		sb.append(getExtraData());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -819,6 +846,7 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	private int _originalType;
 	private boolean _setOriginalType;
 	private String _extraData;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private SystemEvent _escapedModel;
 }

@@ -39,6 +39,7 @@ public class ReleaseSoap implements Serializable {
 		soapModel.setVerified(model.getVerified());
 		soapModel.setState(model.getState());
 		soapModel.setTestString(model.getTestString());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -167,6 +168,14 @@ public class ReleaseSoap implements Serializable {
 		_testString = testString;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _releaseId;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -176,4 +185,5 @@ public class ReleaseSoap implements Serializable {
 	private boolean _verified;
 	private int _state;
 	private String _testString;
+	private long _mvccVersion;
 }

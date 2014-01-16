@@ -79,9 +79,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			{ "description", Types.VARCHAR },
 			{ "portletId", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
-			{ "dlFolderId", Types.BIGINT }
+			{ "dlFolderId", Types.BIGINT },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Repository (uuid_ VARCHAR(75) null,repositoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,name VARCHAR(75) null,description STRING null,portletId VARCHAR(200) null,typeSettings TEXT null,dlFolderId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Repository (uuid_ VARCHAR(75) null,repositoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,name VARCHAR(75) null,description STRING null,portletId VARCHAR(200) null,typeSettings TEXT null,dlFolderId LONG,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Repository";
 	public static final String ORDER_BY_JPQL = " ORDER BY repository.repositoryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Repository.repositoryId ASC";
@@ -131,6 +132,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		model.setPortletId(soapModel.getPortletId());
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setDlFolderId(soapModel.getDlFolderId());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -209,6 +211,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		attributes.put("portletId", getPortletId());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("dlFolderId", getDlFolderId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -300,6 +303,12 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 		if (dlFolderId != null) {
 			setDlFolderId(dlFolderId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -569,6 +578,17 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_dlFolderId = dlFolderId;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -620,6 +640,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		repositoryImpl.setPortletId(getPortletId());
 		repositoryImpl.setTypeSettings(getTypeSettings());
 		repositoryImpl.setDlFolderId(getDlFolderId());
+		repositoryImpl.setMvccVersion(getMvccVersion());
 
 		repositoryImpl.resetOriginalValues();
 
@@ -781,12 +802,14 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 		repositoryCacheModel.dlFolderId = getDlFolderId();
 
+		repositoryCacheModel.mvccVersion = getMvccVersion();
+
 		return repositoryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -816,6 +839,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		sb.append(getTypeSettings());
 		sb.append(", dlFolderId=");
 		sb.append(getDlFolderId());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -823,7 +848,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Repository");
@@ -885,6 +910,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			"<column><column-name>dlFolderId</column-name><column-value><![CDATA[");
 		sb.append(getDlFolderId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -917,6 +946,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private String _originalPortletId;
 	private String _typeSettings;
 	private long _dlFolderId;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Repository _escapedModel;
 }

@@ -36,7 +36,7 @@ import java.util.Date;
 public class UserCacheModel implements CacheModel<User>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(81);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -118,6 +118,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		sb.append(emailAddressVerified);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -324,6 +326,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		userImpl.setAgreedToTermsOfUse(agreedToTermsOfUse);
 		userImpl.setEmailAddressVerified(emailAddressVerified);
 		userImpl.setStatus(status);
+		userImpl.setMvccVersion(mvccVersion);
 
 		userImpl.resetOriginalValues();
 
@@ -372,6 +375,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		agreedToTermsOfUse = objectInput.readBoolean();
 		emailAddressVerified = objectInput.readBoolean();
 		status = objectInput.readInt();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -532,6 +536,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 		objectOutput.writeBoolean(agreedToTermsOfUse);
 		objectOutput.writeBoolean(emailAddressVerified);
 		objectOutput.writeInt(status);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -574,4 +579,5 @@ public class UserCacheModel implements CacheModel<User>, Externalizable {
 	public boolean agreedToTermsOfUse;
 	public boolean emailAddressVerified;
 	public int status;
+	public long mvccVersion;
 }

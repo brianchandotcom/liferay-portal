@@ -57,6 +57,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
 		attributes.put("size", getSize());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -97,6 +98,12 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -238,6 +245,26 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public void setSize(int size) {
 		_image.setSize(size);
+	}
+
+	/**
+	* Returns the mvcc version of this image.
+	*
+	* @return the mvcc version of this image
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _image.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this image.
+	*
+	* @param mvccVersion the mvcc version of this image
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_image.setMvccVersion(mvccVersion);
 	}
 
 	@Override

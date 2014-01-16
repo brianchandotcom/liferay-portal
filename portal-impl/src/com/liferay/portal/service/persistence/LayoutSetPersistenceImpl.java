@@ -1715,6 +1715,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSetImpl.setSettings(layoutSet.getSettings());
 		layoutSetImpl.setLayoutSetPrototypeUuid(layoutSet.getLayoutSetPrototypeUuid());
 		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(layoutSet.isLayoutSetPrototypeLinkEnabled());
+		layoutSetImpl.setMvccVersion(layoutSet.getMvccVersion());
 
 		return layoutSetImpl;
 	}

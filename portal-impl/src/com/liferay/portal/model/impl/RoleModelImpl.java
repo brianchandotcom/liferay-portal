@@ -84,9 +84,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
-			{ "subtype", Types.VARCHAR }
+			{ "subtype", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Role_ (uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Role_ (uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 	public static final String ORDER_BY_JPQL = " ORDER BY role.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Role_.name ASC";
@@ -137,6 +138,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		model.setDescription(soapModel.getDescription());
 		model.setType(soapModel.getType());
 		model.setSubtype(soapModel.getSubtype());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -231,6 +233,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("subtype", getSubtype());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -322,6 +325,12 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 		if (subtype != null) {
 			setSubtype(subtype);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -785,6 +794,17 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		return GetterUtil.getString(_originalSubtype);
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -909,6 +929,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		roleImpl.setDescription(getDescription());
 		roleImpl.setType(getType());
 		roleImpl.setSubtype(getSubtype());
+		roleImpl.setMvccVersion(getMvccVersion());
 
 		roleImpl.resetOriginalValues();
 
@@ -1076,12 +1097,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			roleCacheModel.subtype = null;
 		}
 
+		roleCacheModel.mvccVersion = getMvccVersion();
+
 		return roleCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1111,6 +1134,8 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		sb.append(getType());
 		sb.append(", subtype=");
 		sb.append(getSubtype());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -1118,7 +1143,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Role");
@@ -1180,6 +1205,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			"<column><column-name>subtype</column-name><column-value><![CDATA[");
 		sb.append(getSubtype());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1216,6 +1245,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private boolean _setOriginalType;
 	private String _subtype;
 	private String _originalSubtype;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Role _escapedModel;
 }

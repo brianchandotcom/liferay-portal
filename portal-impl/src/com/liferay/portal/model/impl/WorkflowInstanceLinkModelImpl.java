@@ -70,9 +70,10 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "workflowInstanceId", Types.BIGINT }
+			{ "workflowInstanceId", Types.BIGINT },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table WorkflowInstanceLink (workflowInstanceLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,workflowInstanceId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table WorkflowInstanceLink (workflowInstanceLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,workflowInstanceId LONG,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table WorkflowInstanceLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY workflowInstanceLink.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY WorkflowInstanceLink.createDate DESC";
@@ -143,6 +144,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("workflowInstanceId", getWorkflowInstanceId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -211,6 +213,12 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 		if (workflowInstanceId != null) {
 			setWorkflowInstanceId(workflowInstanceId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -399,6 +407,16 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		_workflowInstanceId = workflowInstanceId;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -440,6 +458,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		workflowInstanceLinkImpl.setClassNameId(getClassNameId());
 		workflowInstanceLinkImpl.setClassPK(getClassPK());
 		workflowInstanceLinkImpl.setWorkflowInstanceId(getWorkflowInstanceId());
+		workflowInstanceLinkImpl.setMvccVersion(getMvccVersion());
 
 		workflowInstanceLinkImpl.resetOriginalValues();
 
@@ -566,12 +585,14 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 		workflowInstanceLinkCacheModel.workflowInstanceId = getWorkflowInstanceId();
 
+		workflowInstanceLinkCacheModel.mvccVersion = getMvccVersion();
+
 		return workflowInstanceLinkCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{workflowInstanceLinkId=");
 		sb.append(getWorkflowInstanceLinkId());
@@ -593,6 +614,8 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		sb.append(getClassPK());
 		sb.append(", workflowInstanceId=");
 		sb.append(getWorkflowInstanceId());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -600,7 +623,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.WorkflowInstanceLink");
@@ -646,6 +669,10 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 			"<column><column-name>workflowInstanceId</column-name><column-value><![CDATA[");
 		sb.append(getWorkflowInstanceId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -675,6 +702,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private long _workflowInstanceId;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private WorkflowInstanceLink _escapedModel;
 }

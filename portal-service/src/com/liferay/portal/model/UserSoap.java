@@ -71,6 +71,7 @@ public class UserSoap implements Serializable {
 		soapModel.setAgreedToTermsOfUse(model.getAgreedToTermsOfUse());
 		soapModel.setEmailAddressVerified(model.getEmailAddressVerified());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -467,6 +468,14 @@ public class UserSoap implements Serializable {
 		_status = status;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private String _uuid;
 	private long _userId;
 	private long _companyId;
@@ -507,4 +516,5 @@ public class UserSoap implements Serializable {
 	private boolean _agreedToTermsOfUse;
 	private boolean _emailAddressVerified;
 	private int _status;
+	private long _mvccVersion;
 }

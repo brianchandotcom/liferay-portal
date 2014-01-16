@@ -873,6 +873,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		listTypeImpl.setListTypeId(listType.getListTypeId());
 		listTypeImpl.setName(listType.getName());
 		listTypeImpl.setType(listType.getType());
+		listTypeImpl.setMvccVersion(listType.getMvccVersion());
 
 		return listTypeImpl;
 	}

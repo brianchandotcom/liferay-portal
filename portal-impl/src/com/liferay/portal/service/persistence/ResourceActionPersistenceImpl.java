@@ -1239,6 +1239,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		resourceActionImpl.setName(resourceAction.getName());
 		resourceActionImpl.setActionId(resourceAction.getActionId());
 		resourceActionImpl.setBitwiseValue(resourceAction.getBitwiseValue());
+		resourceActionImpl.setMvccVersion(resourceAction.getMvccVersion());
 
 		return resourceActionImpl;
 	}

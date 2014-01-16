@@ -56,6 +56,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 		attributes.put("userTrackerId", getUserTrackerId());
 		attributes.put("path", getPath());
 		attributes.put("pathDate", getPathDate());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 
 		if (pathDate != null) {
 			setPathDate(pathDate);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -185,6 +192,26 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	@Override
 	public void setPathDate(java.util.Date pathDate) {
 		_userTrackerPath.setPathDate(pathDate);
+	}
+
+	/**
+	* Returns the mvcc version of this user tracker path.
+	*
+	* @return the mvcc version of this user tracker path
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _userTrackerPath.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this user tracker path.
+	*
+	* @param mvccVersion the mvcc version of this user tracker path
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_userTrackerPath.setMvccVersion(mvccVersion);
 	}
 
 	@Override

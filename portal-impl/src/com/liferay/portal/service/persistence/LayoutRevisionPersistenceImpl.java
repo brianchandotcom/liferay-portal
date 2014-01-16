@@ -6234,6 +6234,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevisionImpl.setStatusByUserId(layoutRevision.getStatusByUserId());
 		layoutRevisionImpl.setStatusByUserName(layoutRevision.getStatusByUserName());
 		layoutRevisionImpl.setStatusDate(layoutRevision.getStatusDate());
+		layoutRevisionImpl.setMvccVersion(layoutRevision.getMvccVersion());
 
 		return layoutRevisionImpl;
 	}

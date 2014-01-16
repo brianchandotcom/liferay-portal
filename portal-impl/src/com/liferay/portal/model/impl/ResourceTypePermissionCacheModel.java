@@ -35,7 +35,7 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{resourceTypePermissionId=");
 		sb.append(resourceTypePermissionId);
@@ -49,6 +49,8 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 		sb.append(roleId);
 		sb.append(", actionIds=");
 		sb.append(actionIds);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -71,6 +73,7 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 
 		resourceTypePermissionImpl.setRoleId(roleId);
 		resourceTypePermissionImpl.setActionIds(actionIds);
+		resourceTypePermissionImpl.setMvccVersion(mvccVersion);
 
 		resourceTypePermissionImpl.resetOriginalValues();
 
@@ -85,6 +88,7 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 		name = objectInput.readUTF();
 		roleId = objectInput.readLong();
 		actionIds = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -103,6 +107,7 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 
 		objectOutput.writeLong(roleId);
 		objectOutput.writeLong(actionIds);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long resourceTypePermissionId;
@@ -111,4 +116,5 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 	public String name;
 	public long roleId;
 	public long actionIds;
+	public long mvccVersion;
 }

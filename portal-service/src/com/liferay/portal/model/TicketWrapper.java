@@ -60,6 +60,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		attributes.put("type", getType());
 		attributes.put("extraInfo", getExtraInfo());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -118,6 +119,12 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -334,6 +341,26 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	@Override
 	public void setExpirationDate(java.util.Date expirationDate) {
 		_ticket.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Returns the mvcc version of this ticket.
+	*
+	* @return the mvcc version of this ticket
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _ticket.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this ticket.
+	*
+	* @param mvccVersion the mvcc version of this ticket
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_ticket.setMvccVersion(mvccVersion);
 	}
 
 	@Override

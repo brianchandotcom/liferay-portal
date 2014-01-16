@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PortletPreferencesModel extends BaseModel<PortletPreferences> {
+public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -143,6 +144,22 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences> {
 	 * @param preferences the preferences of this portlet preferences
 	 */
 	public void setPreferences(String preferences);
+
+	/**
+	 * Returns the mvcc version of this portlet preferences.
+	 *
+	 * @return the mvcc version of this portlet preferences
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this portlet preferences.
+	 *
+	 * @param mvccVersion the mvcc version of this portlet preferences
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

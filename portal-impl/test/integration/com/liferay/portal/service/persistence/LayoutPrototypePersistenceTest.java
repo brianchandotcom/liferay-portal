@@ -131,6 +131,8 @@ public class LayoutPrototypePersistenceTest {
 
 		newLayoutPrototype.setActive(ServiceTestUtil.randomBoolean());
 
+		newLayoutPrototype.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newLayoutPrototype);
 
 		LayoutPrototype existingLayoutPrototype = _persistence.findByPrimaryKey(newLayoutPrototype.getPrimaryKey());
@@ -159,6 +161,8 @@ public class LayoutPrototypePersistenceTest {
 			newLayoutPrototype.getSettings());
 		Assert.assertEquals(existingLayoutPrototype.getActive(),
 			newLayoutPrototype.getActive());
+		Assert.assertEquals(existingLayoutPrototype.getMvccVersion(),
+			newLayoutPrototype.getMvccVersion());
 	}
 
 	@Test
@@ -199,7 +203,8 @@ public class LayoutPrototypePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("LayoutPrototype", "uuid",
 			true, "layoutPrototypeId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true, "settings", true, "active", true);
+			true, "description", true, "settings", true, "active", true,
+			"mvccVersion", true);
 	}
 
 	@Test
@@ -338,6 +343,8 @@ public class LayoutPrototypePersistenceTest {
 		layoutPrototype.setSettings(ServiceTestUtil.randomString());
 
 		layoutPrototype.setActive(ServiceTestUtil.randomBoolean());
+
+		layoutPrototype.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(layoutPrototype);
 

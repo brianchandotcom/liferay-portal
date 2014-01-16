@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface BrowserTrackerModel extends BaseModel<BrowserTracker> {
+public interface BrowserTrackerModel extends BaseModel<BrowserTracker>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,6 +114,22 @@ public interface BrowserTrackerModel extends BaseModel<BrowserTracker> {
 	 * @param browserKey the browser key of this browser tracker
 	 */
 	public void setBrowserKey(long browserKey);
+
+	/**
+	 * Returns the mvcc version of this browser tracker.
+	 *
+	 * @return the mvcc version of this browser tracker
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this browser tracker.
+	 *
+	 * @param mvccVersion the mvcc version of this browser tracker
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

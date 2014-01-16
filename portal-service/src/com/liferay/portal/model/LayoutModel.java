@@ -43,7 +43,8 @@ import java.util.Map;
  * @generated
  */
 @ProviderType
-public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel {
+public interface LayoutModel extends BaseModel<Layout>, MVCCModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -976,6 +977,22 @@ public interface LayoutModel extends BaseModel<Layout>, StagedGroupedModel {
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid of this layout
 	 */
 	public void setSourcePrototypeLayoutUuid(String sourcePrototypeLayoutUuid);
+
+	/**
+	 * Returns the mvcc version of this layout.
+	 *
+	 * @return the mvcc version of this layout
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this layout.
+	 *
+	 * @param mvccVersion the mvcc version of this layout
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

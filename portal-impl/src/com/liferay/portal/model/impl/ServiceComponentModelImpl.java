@@ -60,9 +60,10 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			{ "buildNamespace", Types.VARCHAR },
 			{ "buildNumber", Types.BIGINT },
 			{ "buildDate", Types.BIGINT },
-			{ "data_", Types.CLOB }
+			{ "data_", Types.CLOB },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
 	public static final String ORDER_BY_JPQL = " ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ServiceComponent.buildNamespace DESC, ServiceComponent.buildNumber DESC";
@@ -125,6 +126,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
 		attributes.put("data", getData());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -162,6 +164,12 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -247,6 +255,16 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		_data = data;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -283,6 +301,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		serviceComponentImpl.setBuildNumber(getBuildNumber());
 		serviceComponentImpl.setBuildDate(getBuildDate());
 		serviceComponentImpl.setData(getData());
+		serviceComponentImpl.setMvccVersion(getMvccVersion());
 
 		serviceComponentImpl.resetOriginalValues();
 
@@ -397,12 +416,14 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			serviceComponentCacheModel.data = null;
 		}
 
+		serviceComponentCacheModel.mvccVersion = getMvccVersion();
+
 		return serviceComponentCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{serviceComponentId=");
 		sb.append(getServiceComponentId());
@@ -414,6 +435,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		sb.append(getBuildDate());
 		sb.append(", data=");
 		sb.append(getData());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -421,7 +444,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ServiceComponent");
@@ -447,6 +470,10 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			"<column><column-name>data</column-name><column-value><![CDATA[");
 		sb.append(getData());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -465,6 +492,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private boolean _setOriginalBuildNumber;
 	private long _buildDate;
 	private String _data;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private ServiceComponent _escapedModel;
 }

@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
-	GroupedModel {
+	GroupedModel, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -402,6 +402,22 @@ public interface LayoutSetBranchModel extends BaseModel<LayoutSetBranch>,
 	 */
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled);
+
+	/**
+	 * Returns the mvcc version of this layout set branch.
+	 *
+	 * @return the mvcc version of this layout set branch
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this layout set branch.
+	 *
+	 * @param mvccVersion the mvcc version of this layout set branch
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

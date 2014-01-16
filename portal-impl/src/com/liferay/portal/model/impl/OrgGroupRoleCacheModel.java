@@ -34,7 +34,7 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{organizationId=");
 		sb.append(organizationId);
@@ -42,6 +42,8 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 		sb.append(groupId);
 		sb.append(", roleId=");
 		sb.append(roleId);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -54,6 +56,7 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 		orgGroupRoleImpl.setOrganizationId(organizationId);
 		orgGroupRoleImpl.setGroupId(groupId);
 		orgGroupRoleImpl.setRoleId(roleId);
+		orgGroupRoleImpl.setMvccVersion(mvccVersion);
 
 		orgGroupRoleImpl.resetOriginalValues();
 
@@ -65,6 +68,7 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 		organizationId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		roleId = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -73,9 +77,11 @@ public class OrgGroupRoleCacheModel implements CacheModel<OrgGroupRole>,
 		objectOutput.writeLong(organizationId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(roleId);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long organizationId;
 	public long groupId;
 	public long roleId;
+	public long mvccVersion;
 }

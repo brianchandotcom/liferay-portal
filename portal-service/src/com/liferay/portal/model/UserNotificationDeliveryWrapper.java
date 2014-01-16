@@ -61,6 +61,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 		attributes.put("notificationType", getNotificationType());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliver", getDeliver());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -114,6 +115,12 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 
 		if (deliver != null) {
 			setDeliver(deliver);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -342,6 +349,26 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	@Override
 	public void setDeliver(boolean deliver) {
 		_userNotificationDelivery.setDeliver(deliver);
+	}
+
+	/**
+	* Returns the mvcc version of this user notification delivery.
+	*
+	* @return the mvcc version of this user notification delivery
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _userNotificationDelivery.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this user notification delivery.
+	*
+	* @param mvccVersion the mvcc version of this user notification delivery
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_userNotificationDelivery.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -203,6 +203,14 @@ public class VerifyGroup extends VerifyProcess {
 				long groupId = rs.getLong("groupId");
 				String name = rs.getString("name");
 
+				if (name.endsWith(
+						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX) ||
+					name.endsWith(
+						GroupLocalServiceImpl.ORGANIZATION_STAGING_SUFFIX)) {
+
+					continue;
+				}
+
 				int pos = name.indexOf(
 					GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 

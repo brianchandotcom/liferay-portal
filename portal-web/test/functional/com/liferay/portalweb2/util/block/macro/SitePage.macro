@@ -120,6 +120,31 @@
 		</if>
 	</command>
 
+	<command name="viewDefaultSiteTemplatePagesPG">
+		<execute macro="Page#openURL">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Home#click" locator-key1="PAGE_NAVIGATION_BAR" />
+
+		<if>
+			<equals arg1="${siteTemplate}" arg2="Community" />
+			<then>
+				<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_1" value1="Home" />
+				<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_2" value1="Wiki" />
+			</then>
+			<elseif>
+				<equals arg1="${siteTemplate}" arg2="Intranet" />
+				<then>
+					<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_1" value1="Home" />
+					<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_2" value1="Documents and Media" />
+					<execute action="Home#assertTextEquals" locator-key1="PAGE_TEMPLATE_3" value1="News" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="viewChildPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${sitePageName}" />

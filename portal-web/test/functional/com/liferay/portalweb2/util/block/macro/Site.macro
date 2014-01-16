@@ -255,7 +255,7 @@
 		<execute action="CPUsersandorganizationsUser#selectFrame" value1="relative=top" />
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command> 
+	</command>
 
 	<command name="addVirtualHostsURLCP">
 		<execute action="CPSitesettings#assertClick" locator-key1="MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
@@ -302,12 +302,12 @@
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search"/>
+		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
 		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
 		<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
-			
+
 		<if>
 			<equals arg1="${successMessage}" arg2="true" />
 			<then>
@@ -420,36 +420,33 @@
 	</command>
 
 	<command name="manageMembershipOptions">
-        <execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
-        <execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
 
-        <var name="key_orgName" value="${orgName}" />
-
-        <execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-        <execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
-        <execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_MANAGE_SITE" value1="Manage Site" />
-
-        <execute action="CPSitesettings#assertTextEquals" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL" value1="Membership Type" />
-         <execute action="CPSitesettings#select" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE" value1="Open" /> 
-        <execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-    </command>
-
-	<command name="manualMembershipManagementCP">
 		<if>
-			<equals arg1="${manualMembershipManagement}" arg2="Yes" />
+			<equals arg1="${selectMembershipType}" arg2="true" />
 			<then>
-				<execute action="CPSitesAdd#check" locator-key1="MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
+				<execute action="CPSitesettings#assertTextEquals" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL" value1="Membership Type" />
+				<execute action="CPSitesettings#select" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE" value1="${membershipType}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${allowManualMembershipManagement}" arg2="true" />
+			<then>
+				<execute action="CPSitesEdit#check" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
 			</then>
 			<elseif>
-				<equals arg1="${manualMembershipManagement}" arg2="No" />
+				<equals arg1="${allowManualMembershipManagement}" arg2="false" />
 				<then>
-					<execute action="CPSitesAdd#uncheck" locator-key1="MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
+					<execute action="CPSitesEdit#uncheck" locator-key1="MEMBERSHIP_OPTIONS_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" />
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesettings#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="removeMemberCP">

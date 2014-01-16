@@ -152,6 +152,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_1</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[1]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_1_CHILD_PAGE_1</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[1]/ul[contains(@class,'child-menu')]/li/a</td>
 	<td></td>
@@ -172,6 +177,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_2</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[2]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_2_GUEST_VIEW</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-item')])[2]/a</td>
 	<td></td>
@@ -184,6 +194,11 @@
 <tr>
 	<td>PAGE_3</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_3</td>
+	<td>xpath=(//li[contains(@class,'lfr-nav-updateable')])[3]/a</td>
 	<td></td>
 </tr>
 <tr>

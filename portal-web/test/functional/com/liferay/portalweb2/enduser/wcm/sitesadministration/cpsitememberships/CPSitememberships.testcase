@@ -516,6 +516,7 @@
 		</execute>
 
 		<execute macro="User#addCP">
+			<var name="allowManualMembershipManagement" value="true" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -538,7 +539,9 @@
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
-		<execute macro="Organization#allowMembershipManagementCP" />
+		<execute macro="Organization#manageMembershipOptionsInSites">
+			<var name="allowManualMembershipManagement" value="${allowManualMembershipManagement}" />
+		</execute>
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="siteScopeName" value="${orgName1}" />
@@ -672,24 +675,16 @@
 	</command>
 
 	<command name="ViewNoManualMembershipManagement" priority="5">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#manualMembershipManagementCP">
-			<var name="manualMembershipManagement" value="Yes" />
+		<execute macro="Site#manageMembershipOptions">
+			<var name="allowManualMembershipManagement" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-		</execute>
-
-		<execute macro="Site#manualMembershipManagementCP">
-			<var name="manualMembershipManagement" value="No" />
+		<execute macro="Site#manageMembershipOptions">
+			<var name="allowManualMembershipManagement" value="false" />
 		</execute>
 
 		<execute macro="Page#openURL" />

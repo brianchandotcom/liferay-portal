@@ -401,6 +401,7 @@
 	</command>
 
 	<command name="AddOrganizationTeam" priority="5">
+		<var name="allowManualMembershipManagement" value="true" />
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="${orgName}" />
@@ -430,7 +431,8 @@
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
-		<execute macro="Organization#allowMembershipManagementCP">
+		<execute macro="Organization#manageMembershipOptionsInSites">
+			<var name="allowManualMembershipManagement" value="${allowManualMembershipManagement}" />
 			<var name="orgName" value="${orgName}" />
 		</execute>
 
@@ -1620,6 +1622,7 @@
 	</command>
 
 	<command name="EditOrganizationSiteTeam" priority="3">
+		<var name="allowManualMembershipManagement" value="true" />
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="${orgName}" />
@@ -1651,7 +1654,8 @@
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
-		<execute macro="Organization#allowMembershipManagementCP">
+		<execute macro="Organization#manageMembershipOptionsInSites">
+			<var name="allowManualMembershipManagement" value="${allowManualMembershipManagement}" />
 			<var name="orgName" value="${orgName}" />
 		</execute>
 

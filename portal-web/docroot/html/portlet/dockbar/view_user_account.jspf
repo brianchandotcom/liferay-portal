@@ -46,7 +46,7 @@
 				String impersonatingUserLabel = "you-are-impersonating-the-guest-user";
 
 				if (themeDisplay.isSignedIn()) {
-					impersonatingUserLabel = LanguageUtil.format(pageContext, "you-are-impersonating-x", new Object[] {HtmlUtil.escape(user.getFullName())}, false);
+					impersonatingUserLabel = LanguageUtil.format(pageContext, "you-are-impersonating-x", HtmlUtil.escape(user.getFullName()), false);
 				}
 				%>
 

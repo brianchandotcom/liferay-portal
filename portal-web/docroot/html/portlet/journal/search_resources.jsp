@@ -96,7 +96,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 				if (advancedSearch) {
 					if (folder != null) {
-						message = LanguageUtil.format(pageContext, "advanced-search-in-x", new Object[] {folder.getName()}, false);
+						message = LanguageUtil.format(pageContext, "advanced-search-in-x", folder.getName(), false);
 					}
 					else {
 						message = LanguageUtil.get(pageContext, "advanced-search-everywhere");

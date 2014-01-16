@@ -45,7 +45,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 			assetTags = AssetTagLocalServiceUtil.getSocialActivityCounterOffsetTags(scopeGroupId, displayActivityCounterName, -12, 0);
 		}
 
-		title = title + LanguageUtil.format(pageContext, "tag-cloud-for-x", new Object[] {LanguageUtil.get(pageContext, "group.statistics.title." + displayActivityCounterName)}, false);
+		title = title + LanguageUtil.format(pageContext, "tag-cloud-for-x", LanguageUtil.get(pageContext, "group.statistics.title." + displayActivityCounterName), false);
 
 		dataSize = assetTags.size();
 	}

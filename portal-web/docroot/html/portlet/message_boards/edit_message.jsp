@@ -290,7 +290,7 @@ else {
 						if (priorityValue > 0) {
 				%>
 
-							<aui:option label="<%= priorityName %>" selected="<%= (threadPriority == priorityValue) %>" value="<%= priorityValue %>" />
+							<aui:option label="<%= HtmlUtil.escape(priorityName) %>" selected="<%= (threadPriority == priorityValue) %>" value="<%= priorityValue %>" />
 
 				<%
 						}

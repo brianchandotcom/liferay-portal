@@ -59,6 +59,52 @@ showSearch = showSearch && !results.isEmpty();
 	</aui:nav-bar>
 </c:if>
 
+<div class="subscribe">
+	<c:if test="<%= enableRSS %>">
+		<liferay-portlet:resourceURL varImpl="rssURL">
+			<portlet:param name="struts_action" value="/blogs/rss" />
+		</liferay-portlet:resourceURL>
+
+		<liferay-ui:rss
+			delta="<%= rssDelta %>"
+			displayStyle="<%= rssDisplayStyle %>"
+			feedType="<%= rssFeedType %>"
+			resourceURL="<%= rssURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= showSubscribeButton %>">
+		<c:choose>
+			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
+				<portlet:actionURL var="unsubscribeURL">
+					<portlet:param name="struts_action" value="/blogs/edit_entry" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="unsubscribe"
+					label="<%= true %>"
+					url="<%= unsubscribeURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL var="subscribeURL">
+					<portlet:param name="struts_action" value="/blogs/edit_entry" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="subscribe"
+					label="<%= true %>"
+					url="<%= subscribeURL %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
+
 <liferay-ui:categorization-filter
 	assetType="entries"
 	portletURL="<%= portletURL %>"
@@ -112,52 +158,6 @@ else {
 	}
 }
 %>
-
-<div class="subscribe">
-	<c:if test="<%= enableRSS %>">
-		<liferay-portlet:resourceURL varImpl="rssURL">
-			<portlet:param name="struts_action" value="/blogs/rss" />
-		</liferay-portlet:resourceURL>
-
-		<liferay-ui:rss
-			delta="<%= rssDelta %>"
-			displayStyle="<%= rssDisplayStyle %>"
-			feedType="<%= rssFeedType %>"
-			resourceURL="<%= rssURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= showSubscribeButton %>">
-		<c:choose>
-			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
-				<portlet:actionURL var="unsubscribeURL">
-					<portlet:param name="struts_action" value="/blogs/edit_entry" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					image="unsubscribe"
-					label="<%= true %>"
-					url="<%= unsubscribeURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/blogs/edit_entry" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					image="subscribe"
-					label="<%= true %>"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-</div>
 
 <liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 

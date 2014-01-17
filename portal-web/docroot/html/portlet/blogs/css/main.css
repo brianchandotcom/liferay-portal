@@ -139,6 +139,7 @@
 
 	.subscribe {
 		margin-bottom: 1.5em;
+		float: right;
 	}
 
 	.taglib-flags {

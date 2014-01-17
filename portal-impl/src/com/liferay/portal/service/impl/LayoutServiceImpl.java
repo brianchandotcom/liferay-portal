@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
@@ -30,8 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
-import com.liferay.portal.messaging.LayoutsRemotePublisherRequest;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -51,6 +52,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -1192,23 +1194,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Trigger trigger = new CronTrigger(
 			jobName, groupName, schedulerStartDate, schedulerEndDate, cronText);
 
-		String command = StringPool.BLANK;
+		Map<String, Serializable> configurationContextMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				getUserId(), sourceGroupId, targetGroupId, privateLayout,
+				layoutIdMap, parameterMap, startDate, endDate);
 
-		if (scope.equals("all-pages")) {
-			command = LayoutsLocalPublisherRequest.COMMAND_ALL_PAGES;
-		}
-		else if (scope.equals("selected-pages")) {
-			command = LayoutsLocalPublisherRequest.COMMAND_SELECTED_PAGES;
-		}
-
-		LayoutsLocalPublisherRequest publisherRequest =
-			new LayoutsLocalPublisherRequest(
-				command, getUserId(), sourceGroupId, targetGroupId,
-				privateLayout, layoutIdMap, parameterMap, startDate, endDate);
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationLocalService.addExportImportConfiguration(
+				getUserId(), sourceGroupId, jobName, description,
+				ExportImportConfigurationConstants.
+					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
+				configurationContextMap, new ServiceContext());
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
-			DestinationNames.LAYOUTS_LOCAL_PUBLISHER, publisherRequest, 0);
+			DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
+			exportImportConfiguration.getExportImportConfigurationId(), 0);
 	}
 
 	/**
@@ -1255,21 +1256,29 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), sourceGroupId, ActionKeys.PUBLISH_STAGING);
 
-		LayoutsRemotePublisherRequest publisherRequest =
-			new LayoutsRemotePublisherRequest(
-				getUserId(), sourceGroupId, privateLayout, layoutIdMap,
-				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
-				endDate);
-
 		String jobName = PortalUUIDUtil.generate();
 
 		Trigger trigger = new CronTrigger(
 			jobName, groupName, schedulerStartDate, schedulerEndDate, cronText);
 
+		Map<String, Serializable> configurationContextMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				getUserId(), sourceGroupId, privateLayout, layoutIdMap,
+				parameterMap, remoteAddress, remotePort, remotePathContext,
+				secureConnection, remoteGroupId, remotePrivateLayout, startDate,
+				endDate);
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationLocalService.addExportImportConfiguration(
+				getUserId(), sourceGroupId, jobName, description,
+				ExportImportConfigurationConstants.
+					TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
+				configurationContextMap, new ServiceContext());
+
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
-			DestinationNames.LAYOUTS_REMOTE_PUBLISHER, publisherRequest, 0);
+			DestinationNames.LAYOUTS_REMOTE_PUBLISHER,
+			exportImportConfiguration.getExportImportConfigurationId(), 0);
 	}
 
 	/**

@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -68,6 +70,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
@@ -76,8 +79,7 @@ import com.liferay.portal.lar.backgroundtask.BackgroundTaskContextMapFactory;
 import com.liferay.portal.lar.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
-import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
-import com.liferay.portal.messaging.LayoutsRemotePublisherRequest;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -99,6 +101,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -2272,13 +2275,8 @@ public class StagingImpl implements Staging {
 
 			messageStatus.startTimer();
 
-			String command =
-				LayoutsLocalPublisherRequest.COMMAND_SELECTED_PAGES;
-
 			try {
 				if (scope.equals("all-pages")) {
-					command = LayoutsLocalPublisherRequest.COMMAND_ALL_PAGES;
-
 					publishLayouts(
 						themeDisplay.getUserId(), sourceGroupId, targetGroupId,
 						privateLayout, parameterMap, dateRange.getStartDate(),
@@ -2299,13 +2297,24 @@ public class StagingImpl implements Staging {
 			finally {
 				messageStatus.stopTimer();
 
-				LayoutsLocalPublisherRequest publisherRequest =
-					new LayoutsLocalPublisherRequest(
-						command, themeDisplay.getUserId(), sourceGroupId,
-						targetGroupId, privateLayout, layoutIdMap, parameterMap,
-						dateRange.getStartDate(), dateRange.getEndDate());
+				Map<String, Serializable> configurationContextMap =
+					ExportImportConfigurationSettingsMapFactory.
+						buildSettingsMap(
+							themeDisplay.getUserId(), sourceGroupId,
+							targetGroupId, privateLayout, layoutIdMap,
+							parameterMap, dateRange.getStartDate(),
+							dateRange.getEndDate());
 
-				messageStatus.setPayload(publisherRequest);
+				ExportImportConfiguration exportImportConfiguration =
+					ExportImportConfigurationLocalServiceUtil.
+						addExportImportConfiguration(
+							themeDisplay.getUserId(), sourceGroupId,
+							PortalUUIDUtil.generate(), StringPool.BLANK,
+							ExportImportConfigurationConstants.
+								TYPE_PUBLISH_LAYOUT_LOCAL,
+							configurationContextMap, new ServiceContext());
+
+				messageStatus.setPayload(exportImportConfiguration);
 
 				MessageBusUtil.sendMessage(
 					DestinationNames.MESSAGE_BUS_MESSAGE_STATUS, messageStatus);
@@ -2441,15 +2450,25 @@ public class StagingImpl implements Staging {
 			finally {
 				messageStatus.stopTimer();
 
-				LayoutsRemotePublisherRequest publisherRequest =
-					new LayoutsRemotePublisherRequest(
-						themeDisplay.getUserId(), groupId, privateLayout,
-						layoutIdMap, parameterMap, remoteAddress, remotePort,
-						remotePathContext, secureConnection, remoteGroupId,
-						remotePrivateLayout, dateRange.getStartDate(),
-						dateRange.getEndDate());
+				Map<String, Serializable> configurationContextMap =
+					ExportImportConfigurationSettingsMapFactory.
+						buildSettingsMap(
+							themeDisplay.getUserId(), groupId, privateLayout,
+							layoutIdMap, parameterMap, remoteAddress,
+							remotePort, remotePathContext, secureConnection,
+							remoteGroupId, remotePrivateLayout,
+							dateRange.getStartDate(), dateRange.getEndDate());
 
-				messageStatus.setPayload(publisherRequest);
+				ExportImportConfiguration exportImportConfiguration =
+					ExportImportConfigurationLocalServiceUtil.
+						addExportImportConfiguration(
+							themeDisplay.getUserId(), groupId,
+							PortalUUIDUtil.generate(), StringPool.BLANK,
+							ExportImportConfigurationConstants.
+								TYPE_PUBLISH_LAYOUT_REMOTE,
+							configurationContextMap, new ServiceContext());
+
+				messageStatus.setPayload(exportImportConfiguration);
 
 				MessageBusUtil.sendMessage(
 					DestinationNames.MESSAGE_BUS_MESSAGE_STATUS, messageStatus);

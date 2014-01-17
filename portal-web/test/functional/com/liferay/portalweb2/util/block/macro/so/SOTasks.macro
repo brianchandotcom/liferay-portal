@@ -11,7 +11,7 @@
 
 		<execute action="SOTasksAdd#type" locator-key1="TASK_DESCRIPTION_FIELD" value1="${taskDescription}" />
 		<execute action="SOTasksAdd#select" locator-key1="TASK_ASSIGNEE_SELECT_MENU" value1="${taskAssignee}" />
-		
+
 		<if>
 			<isset var="taskPriority" />
 			<then>
@@ -115,7 +115,7 @@
 		<execute action="SOTasks#pause" value1="1000" />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
-		
+
 		<if>
 			<equals arg1="${percentCompletion}" arg2="100" />
 			<then>
@@ -234,7 +234,7 @@
 			</then>
 		</if>
 
-		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}" />	
+		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}" />
 
 		<execute action="SOTasks#click" locator-key1="I_HAVE_CREATED_LINK" />
 		<execute action="SOTasks#check" locator-key1="SHOW_COMPLETED_TASKS_CHECKBOX" />
@@ -246,7 +246,7 @@
 			</then>
 		</if>
 
-		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}" />		
+		<execute action="SOTasks#assertTextNotPresent" value1="${taskDescription}" />
 	</command>
 
 	<command name="editTask">
@@ -402,10 +402,10 @@
 					</then>
 				</if>
 
-				<execute action="SOTasks#assertTextEquals" locator-key1="TASK_REPORTER" value1="Reporter: ${taskReporter}" />	
+				<execute action="SOTasks#assertTextEquals" locator-key1="TASK_REPORTER" value1="Reporter: ${taskReporter}" />
 
 				<var name="key_taskDescription" value="${taskDescription}" />
-	
+
 				<if>
 					<equals arg1="${taskPriority}" arg2="High" />
 					<then>
@@ -421,7 +421,7 @@
 						<execute action="SOTasks#assertClick" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 					</else>
 				</if>
-				
+
 				<execute macro="SOTasks#viewTaskDetails" />
 			</then>
 			<else>
@@ -455,7 +455,7 @@
 					</then>
 				</if>
 
-				<execute action="SOTasks#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assignee: ${taskAssignee}" />	
+				<execute action="SOTasks#assertTextEquals" locator-key1="TASK_ASSIGNEE" value1="Assignee: ${taskAssignee}" />
 
 				<var name="key_taskDescription" value="${taskDescription}" />
 
@@ -474,7 +474,7 @@
 						<execute action="SOTasks#assertClick" locator-key1="TASK_DESCRIPTION_NORMAL" value1="${taskDescription}" />
 					</else>
 				</if>
-				
+
 				<execute macro="SOTasks#viewTaskDetails" />
 			</then>
 			<else>
@@ -504,7 +504,7 @@
 			<else>
 				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_STATUS" value1="Open" />
 			</else>
-		</if>						
+		</if>
 
 		<if>
 			<isset var="taskPriority" />
@@ -530,7 +530,7 @@
 		<if>
 			<equals arg1="${dueDate}" arg2="true" />
 			<then>
-				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DUE_DATE" value1="3/16/16" />						
+				<execute action="SOTasksTask#assertTextEquals" locator-key1="TASK_DUE_DATE" value1="3/16/16" />
 			</then>
 			<elseif>
 				<equals arg1="${dueDateEdit}" arg2="true" />
@@ -539,7 +539,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute action="SOTasksTask#assertElementNotPresent" locator-key1="TASK_DUE_DATE" />		
+				<execute action="SOTasksTask#assertElementNotPresent" locator-key1="TASK_DUE_DATE" />
 			</else>
 		</if>
 
@@ -609,6 +609,6 @@
 			</else>
 		</if>
 
-		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_REPORTER" value1="Reporter: ${taskReporter}" />	
+		<execute action="SOTasks#assertTextEquals" locator-key1="TASK_REPORTER" value1="Reporter: ${taskReporter}" />
 	</command>
 </definition>

@@ -5,7 +5,7 @@
 		<if>
 			<equals arg1="${enableAcrossSite}" arg2="true" />
 			<then>
-           		if
+				if
 				<execute action="CPPortalsettingsContentsharing#check" locator-key1="CONTENT_SHARING_CHECKBOX" />
 				<execute action="CPPortalsettingsContentsharing#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 				<execute action="CPPortalsettingsContentsharing#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

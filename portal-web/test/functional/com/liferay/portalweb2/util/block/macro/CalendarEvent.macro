@@ -24,7 +24,7 @@
 				<var name="startDate" path="PGCalendarAddevent" locator-key="START_DATE" />
 				<var name="startDateTime" path="PGCalendarAddevent" locator-key="START_DATE_TIME" />
 
-				<execute macro="CalendarEvent#selectCalendarPG" />				
+				<execute macro="CalendarEvent#selectCalendarPG" />
 
 				<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
 				<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -55,7 +55,7 @@
 					<var name="endDate" path="PGCalendarAddevent" locator-key="END_DATE" />
 					<var name="startDate" path="PGCalendarAddevent" locator-key="START_DATE" />
 
-					<execute macro="CalendarEvent#selectCalendarPG" />	
+					<execute macro="CalendarEvent#selectCalendarPG" />
 
 					<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -96,7 +96,7 @@
 					<execute action="PGCalendarAddevent#check" locator-key1="REPEAT_CHECKBOX" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="REPEAT_SUMMARY_1" value1="Daily, 1 Times" />
 
-					<execute macro="CalendarEvent#selectCalendarPG" />	
+					<execute macro="CalendarEvent#selectCalendarPG" />
 
 					<execute action="PGCalendarAddevent#click" locator-key1="SAVE_BUTTON" />
 					<execute action="PGCalendarAddevent#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -189,11 +189,11 @@
 				<if>
 					<condition action="PGCalendarAddevent#isElementPresent" locator-key1="DETAILS_PANEL_COLLAPSED" />
 					<then>
-						<execute action="PGCalendarAddevent#click" locator-key1="DETAILS_PANEL_COLLAPSED" />	
+						<execute action="PGCalendarAddevent#click" locator-key1="DETAILS_PANEL_COLLAPSED" />
 						<execute action="PGCalendarAddevent#assertElementPresent" locator-key1="DETAILS_PANEL_EXPANDED" />
 					</then>
 				</if>
-					
+
 				<execute action="PGCalendarAddevent#select" locator-key1="DETAILS_CALENDAR_SELECT" value1="${calendarName}" />
 			</then>
 		</if>

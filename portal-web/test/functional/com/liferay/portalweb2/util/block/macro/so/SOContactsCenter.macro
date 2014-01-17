@@ -37,9 +37,9 @@
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
-	
+
 		<execute action="SOContactscenter#assertClick" locator-key1="ADD_CONTACT_BUTTON" value1="Add Contact" />
-	
+
 		<execute action="SOContactscenterAddcontact#type" locator-key1="NAME_FIELD" value1="${contactName}" />
 		<execute action="SOContactscenterAddcontact#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${contactEmailAddress}" />
 		<execute action="SOContactscenterAddcontact#type" locator-key1="COMMENTS_FIELD" value1="${contactName} Comments" />
@@ -242,9 +242,9 @@
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute action="SODashboard#click" locator-key1="NAVIGATION_CONTACTS_CENTER" />
-	
+
 		<execute action="SOContactscenter#type" locator-key1="CONTACTS_LIST_SEARCH" value1="${contactName}" />
-		<execute action="SOContactscenter#pause" value1="1000" />	
+		<execute action="SOContactscenter#pause" value1="1000" />
 		<execute action="SOContactscenter#assertClick" locator-key1="CONTACTS_LIST_NAME" value1="${contactName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACT_DETAILS_NAME" value1="${contactName}" />
 		<execute action="SOContactscenter#assertTextEquals" locator-key1="CONTACT_DETAILS_EMAIL" value1="${contactEmailAddress}" />

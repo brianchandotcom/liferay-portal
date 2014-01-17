@@ -185,7 +185,7 @@
 		</if>
 
 		<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
-	
+
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 
 		<execute action="SOActivities#makeVisible" locator-key1="ACTIVITIES_BOTTOM_BAR" />
@@ -278,7 +278,7 @@
 				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="Reposted a microblog entry from ${microblogsEntryAuthorFirstName}." />
 			</then>
 			<else>
-				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="Reposted a microblog entry from ${microblogsEntryAuthorName}." />	
+				<execute action="SOActivities#assertTextEquals" locator-key1="ACTIVITIES_ACTION" value1="Reposted a microblog entry from ${microblogsEntryAuthorName}." />
 			</else>
 		</if>
 

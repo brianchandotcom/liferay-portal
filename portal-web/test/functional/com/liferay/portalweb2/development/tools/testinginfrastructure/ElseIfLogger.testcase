@@ -5,7 +5,7 @@
 
 	<command name="TestCaseElseClauseEvaluated" priority="5">
 		<var name="switch" value="5" />
-		
+
 		<if>
 			<equals arg1="${switch}" arg2="1" />
 			<then>
@@ -37,7 +37,7 @@
 
 	<command name="TestCaseElseIfClauseEvaluated" priority="5">
 		<var name="switch" value="4" />
-		
+
 		<if>
 			<equals arg1="${switch}" arg2="1" />
 			<then>

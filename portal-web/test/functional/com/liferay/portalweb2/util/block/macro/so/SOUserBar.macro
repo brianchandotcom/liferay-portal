@@ -121,7 +121,7 @@
 		<execute action="SOUserBar#click" locator-key1="GO_TO_SITES_DIRECTORY_BUTTON" />
 
 		<execute action="SOUserBarSitesDirectory#type" locator-key1="SITE_SEARCH_FIELD" value1="${siteName}" />
-	
+
 		<if>
 			<equals arg1="${siteType}" arg2="Private Restricted" />
 			<then>

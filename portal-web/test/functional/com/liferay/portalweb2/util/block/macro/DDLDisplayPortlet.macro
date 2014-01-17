@@ -4,7 +4,7 @@
 		<execute action="PGDynamicdatalists#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		
+
 		<if>
 			<equals arg1="${configureChecked}" arg2="false" />
 			<then>

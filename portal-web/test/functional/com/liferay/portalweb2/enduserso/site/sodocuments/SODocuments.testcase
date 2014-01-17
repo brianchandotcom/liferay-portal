@@ -78,7 +78,7 @@
 		<execute macro="DMDocument#viewPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
-	</command> 
+	</command>
 
 	<command name="AddDMFolderImage" priority="5">
 		<var name="dmDocumentFile" value="${dmImageFile}" />
@@ -623,7 +623,7 @@
 		<execute macro="DMDocument#viewPG">
 			<var name="versionNumber" value="${dmDocumentVersionNumber}" />
 		</execute>
-	</command> 
+	</command>
 
 	<command name="SaveAndCheckinMajorDMFolderDocument" priority="5">
 		<var name="dmDocumentFile" value="${dmDocumentFile}" />
@@ -968,8 +968,8 @@
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
-		</execute>		
-		
+		</execute>
+
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
 	</command>
 

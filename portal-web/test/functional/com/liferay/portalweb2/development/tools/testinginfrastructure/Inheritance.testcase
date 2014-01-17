@@ -5,7 +5,7 @@
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
-		
+
 		<execute test-case="super#set-up" />
 
 		<if>

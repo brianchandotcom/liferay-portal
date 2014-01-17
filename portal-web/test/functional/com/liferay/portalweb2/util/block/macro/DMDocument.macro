@@ -662,7 +662,7 @@
 				<execute action="SODocuments#assertElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />	
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />
 			</else>
 		</if>
 
@@ -778,7 +778,7 @@
 				<execute action="SODocuments#assertElementPresent" locator-key1="DOCUMENT_BREADCRUMBS" />
 			</then>
 			<else>
-				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />	
+				<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="BACK_BUTTON" value1="Back" />
 			</else>
 		</if>
 

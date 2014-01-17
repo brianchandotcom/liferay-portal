@@ -23,7 +23,7 @@
 		<case locator-key1="USER_TABLE_SCREEN_NAME">
 			<execute function="AssertTextEquals#assertText" />
 		</case>
-		
+
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
 		</case>

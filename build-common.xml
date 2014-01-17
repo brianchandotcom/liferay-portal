@@ -851,27 +851,38 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</fileset>
 		</cobertura-merge>
 
-		<cobertura-report
-			datafile="${sonar.cobertura.reportPath}"
-			destdir="${sonar.cobertura.report.folder}"
-			format="${junit.cobertura.report.format}"
-		>
-			<fileset dir="${project.dir}/portal-impl/src">
-				<include name="**/*.java" />
-			</fileset>
-			<fileset dir="${project.dir}/portal-service/src">
-				<include name="**/*.java" />
-			</fileset>
-			<fileset dir="${project.dir}/util-java/src">
-				<include name="**/*.java" />
-			</fileset>
-			<fileset dir="${project.dir}/util-taglib/src">
-				<include name="**/*.java" />
-			</fileset>
-		</cobertura-report>
-
 		<for list="${sonar.modules}" delimiter="," param="module">
 			<sequential>
+				<if>
+					<available file="@{module}/${sonar.cobertura.itReportPath}/cobertura.ser" />
+					<then>
+						<cobertura-report
+							datafile="@{module}/${sonar.cobertura.itReportPath}/cobertura.ser"
+							destdir="@{module}/${sonar.cobertura.itReportPath}"
+							format="${junit.cobertura.report.format}"
+						>
+							<fileset dir="@{module}/src">
+								<include name="**/*.java" />
+							</fileset>
+						</cobertura-report>
+					</then>
+				</if>
+
+				<if>
+					<available file="@{module}/${sonar.cobertura.reportPath}/cobertura.ser" />
+					<then>
+						<cobertura-report
+							datafile="@{module}/${sonar.cobertura.reportPath}/cobertura.ser"
+							destdir="@{module}/${sonar.cobertura.reportPath}"
+							format="${junit.cobertura.report.format}"
+						>
+							<fileset dir="@{module}/src">
+								<include name="**/*.java" />
+							</fileset>
+						</cobertura-report>
+					</then>
+				</if>
+
 				<if>
 					<available file="@{module}/test-results/integration" type="dir" />
 					<then>

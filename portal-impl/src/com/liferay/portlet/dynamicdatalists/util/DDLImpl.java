@@ -34,15 +34,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -353,9 +348,7 @@ public class DDLImpl implements DDL {
 			HttpServletRequest request, String portletId, long groupId)
 		throws Exception {
 
-		boolean defaultValue = ParamUtil.getBoolean(request, "editable", true);
-
-		return isEditable(portletId, groupId, defaultValue);
+		return true;
 	}
 
 	@Override
@@ -363,10 +356,7 @@ public class DDLImpl implements DDL {
 			PortletPreferences preferences, String portletId, long groupId)
 		throws Exception {
 
-		boolean defaultValue = GetterUtil.getBoolean(
-			preferences.getValue("editable", null), true);
-
-		return isEditable(portletId, groupId, defaultValue);
+		return true;
 	}
 
 	@Override
@@ -376,17 +366,6 @@ public class DDLImpl implements DDL {
 		throws Exception {
 
 		DDLRecord record = DDLRecordLocalServiceUtil.fetchRecord(recordId);
-
-		PortletPreferences preferences =
-			PortletPreferencesLocalServiceUtil.getPreferences(
-				serviceContext.getPortletPreferencesIds());
-
-		if (!isEditable(
-				preferences, serviceContext.getPortletId(),
-				serviceContext.getScopeGroupId())) {
-
-			return record;
-		}
 
 		boolean majorVersion = ParamUtil.getBoolean(
 			serviceContext, "majorVersion");
@@ -469,25 +448,6 @@ public class DDLImpl implements DDL {
 				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
 				"content");
 		}
-	}
-
-	protected boolean isEditable(
-			String portletId, long groupId, boolean defaultValue)
-		throws Exception {
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (rootPortletId.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
-			return true;
-		}
-
-		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-		if ((group == null) || group.isInStagingPortlet(portletId)) {
-			return false;
-		}
-
-		return defaultValue;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DDLImpl.class);

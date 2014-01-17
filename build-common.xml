@@ -877,6 +877,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<copy todir="@{module}/test-results">
 							<fileset dir="@{module}/test-results/integration">
 								<include name="TEST*.xml"/>
+								<size value="0" when="more"/>
 							</fileset>
 							<globmapper from="TEST*" to="TEST-integration*"/>
 						</copy>
@@ -889,6 +890,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						<copy todir="@{module}/test-results">
 							<fileset dir="@{module}/test-results/unit">
 								<include name="TEST*.xml"/>
+								<size value="0" when="more"/>
 							</fileset>
 							<globmapper from="TEST*" to="TEST-unit*"/>
 						</copy>

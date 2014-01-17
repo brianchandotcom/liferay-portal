@@ -560,9 +560,7 @@ public class AssetCategoryLocalServiceImpl
 
 						addCategoryProperty = false;
 
-						if ((userId != oldCategoryProperty.getUserId()) ||
-							!value.equals(oldCategoryProperty.getValue())) {
-
+						if (!value.equals(oldCategoryProperty.getValue())) {
 							assetCategoryPropertyLocalService.
 								updateCategoryProperty(
 									userId,

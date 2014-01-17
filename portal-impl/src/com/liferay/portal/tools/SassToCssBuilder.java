@@ -199,7 +199,7 @@ public class SassToCssBuilder {
 		File rtlCacheFile = getCacheFile(
 			docrootDirName.concat(fileName), "_rtl");
 
-		String rtlCss = RTLCSSUtil.getRtlCss(fileName, parsedContent);
+		String rtlCss = RTLCSSUtil.getRtlCss(parsedContent);
 
 		// Append custom CSS for RTL
 

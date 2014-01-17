@@ -16,8 +16,12 @@
 
 <%@ include file="/html/portlet/polls/init.jsp" %>
 
+<%
+String referer = request.getHeader(HttpHeaders.REFERER);
+%>
+
 <liferay-ui:header
-	backURL="<%= request.getHeader(HttpHeaders.REFERER) %>"
+	backURL='<%= Validator.isNotNull(referer) ? referer : "javascript:history.go(-1);" %>'
 	title="error"
 />
 

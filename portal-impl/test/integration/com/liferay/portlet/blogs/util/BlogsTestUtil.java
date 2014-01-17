@@ -26,6 +26,8 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.io.InputStream;
 
+import org.junit.Assert;
+
 /**
  * @author Zsolt Berentey
  */
@@ -105,6 +107,28 @@ public class BlogsTestUtil {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	public static void assertEqualEntry(
+		BlogsEntry blogsEntry, BlogsEntry blogEntryOther) {
+			Assert.assertEquals(
+				blogsEntry.getUserId(), blogEntryOther.getUserId());
+			Assert.assertEquals(
+				blogsEntry.getTitle(), blogEntryOther.getTitle());
+			Assert.assertEquals(
+				blogsEntry.getDescription(), blogEntryOther.getDescription());
+			Assert.assertEquals(
+				blogsEntry.getContent(), blogEntryOther.getContent());
+			Assert.assertEquals(
+				blogsEntry.getDisplayDate(), blogEntryOther.getDisplayDate());
+			Assert.assertEquals(
+				blogsEntry.isAllowPingbacks(),
+				blogEntryOther.isAllowPingbacks());
+			Assert.assertEquals(
+				blogsEntry.isAllowTrackbacks(),
+				blogEntryOther.isAllowTrackbacks());
+			Assert.assertEquals(
+				blogsEntry.isSmallImage(), blogEntryOther.isSmallImage());
 	}
 
 }

@@ -75,27 +75,10 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 
-		BlogsEntry blogsEntryRecovered =
+		BlogsEntry blogsEntryObtained =
 			BlogsEntryLocalServiceUtil.getBlogsEntry(blogsEntry.getEntryId());
 
-		Assert.assertEquals(
-			blogsEntry.getUserId(), blogsEntryRecovered.getUserId());
-		Assert.assertEquals(
-			blogsEntry.getTitle(), blogsEntryRecovered.getTitle());
-		Assert.assertEquals(
-			blogsEntry.getDescription(), blogsEntryRecovered.getDescription());
-		Assert.assertEquals(
-			blogsEntry.getContent(), blogsEntryRecovered.getContent());
-		Assert.assertEquals(
-			blogsEntry.getDisplayDate(), blogsEntryRecovered.getDisplayDate());
-		Assert.assertEquals(
-			blogsEntry.isAllowPingbacks(),
-			blogsEntryRecovered.isAllowPingbacks());
-		Assert.assertEquals(
-			blogsEntry.isAllowTrackbacks(),
-			blogsEntryRecovered.isAllowTrackbacks());
-		Assert.assertEquals(
-			blogsEntry.isSmallImage(), blogsEntryRecovered.isSmallImage());
+		BlogsTestUtil.assertEqualEntry(blogsEntry, blogsEntryObtained);
 	}
 
 	@Test
@@ -243,20 +226,21 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry[] entriesPrevAndNextForCenter =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
 				entryCenter.getEntryId());
-		
-		Assert.assertNotNull("The previous element for the blog " + 
-			entryCenter.getEntryId() + " should be " +
-			entryPrevious.getEntryId() + " but is null instead",
+
+		Assert.assertNotNull(
+			"The previous element for the blog " + entryCenter.getEntryId() +
+			" should be " + entryPrevious.getEntryId() + " but is null instead",
 			entriesPrevAndNextForCenter[0]);
 
-		Assert.assertNotNull("The center element for the blog " +
-			entryCenter.getEntryId() + " should be " +
-			entryCenter.getEntryId() + " but is null instead",
+		Assert.assertNotNull(
+			"The center element for the blog " + entryCenter.getEntryId() +
+			" should be " + entryCenter.getEntryId() + " but is null instead",
 			entriesPrevAndNextForCenter[1]);
 
-		Assert.assertNotNull("The next element for the blog " +
-			entryCenter.getEntryId() + " should be " + entryNext.getEntryId() +
-			" but is null instead", entriesPrevAndNextForCenter[2]);
+		Assert.assertNotNull(
+			"The next element for the blog " + entryCenter.getEntryId() +
+			" should be " + entryNext.getEntryId() + " but is null instead",
+			entriesPrevAndNextForCenter[2]);
 
 		Assert.assertEquals(
 			"The left element " + entriesPrevAndNextForCenter[0].getEntryId() +
@@ -271,11 +255,11 @@ public class BlogsEntryLocalServiceTest {
 			entryNext.getEntryId());
 
 		Assert.assertEquals(
-			"The center element " + entriesPrevAndNextForCenter[1].getEntryId() +
+			"The center element " +
+			entriesPrevAndNextForCenter[1].getEntryId() +
 			" should be " + entryCenter.getEntryId(),
 			entriesPrevAndNextForCenter[1].getEntryId(),
 			entryCenter.getEntryId());
-
 	}
 
 	@Test
@@ -286,39 +270,226 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
 			TestPropsValues.getUserId(), group, true);
 
-		BlogsEntry entryNext = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
 
 		BlogsEntry[] entriesPrevAndNextForTopLeft =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
 				entryPrevious.getEntryId());
 
-		Assert.assertNull("The previous element for the blog " +
-			entryPrevious.getEntryId() + " should be null", entriesPrevAndNextForTopLeft[0]);
+		Assert.assertNull(
+			"The previous element for the blog " + entryPrevious.getEntryId() +
+			" should be null", entriesPrevAndNextForTopLeft[0]);
 
-		Assert.assertNotNull("The center element for the blog " +
-			entryPrevious.getEntryId() + " should be " + entryPrevious.getEntryId() +
+		Assert.assertNotNull(
+			"The center element for the blog " + entryPrevious.getEntryId() +
+			" should be " + entryPrevious.getEntryId() +
 			" but is null instead",entriesPrevAndNextForTopLeft[1]);
 
-		Assert.assertNotNull("The next element for the blog " +
-			entryCenter.getEntryId() + " should be " + entryCenter.getEntryId() +
-			" but is null instead",entriesPrevAndNextForTopLeft[2]);
+		Assert.assertNotNull(
+			"The next element for the blog " + entryCenter.getEntryId() +
+			" should be " + entryCenter.getEntryId() + " but is null instead",
+			entriesPrevAndNextForTopLeft[2]);
 
 		Assert.assertEquals(
-			"The right element " + entriesPrevAndNextForTopLeft[2].getEntryId() +
-				" should be " + entryCenter.getEntryId(),
+			"The right element " +
+			entriesPrevAndNextForTopLeft[2].getEntryId() +
+			" should be " + entryCenter.getEntryId(),
 			entriesPrevAndNextForTopLeft[2].getEntryId(),
 			entryCenter.getEntryId());
 
 		Assert.assertEquals(
-			"The center element " + entriesPrevAndNextForTopLeft[1].getEntryId() +
-				" should be " + entryPrevious.getEntryId(),
+			"The center element " +
+			entriesPrevAndNextForTopLeft[1].getEntryId() +
+			" should be " + entryPrevious.getEntryId(),
 			entriesPrevAndNextForTopLeft[1].getEntryId(),
 			entryPrevious.getEntryId());
-
 	}
 
+	@Test
+	public void testGetEntriesPrevAndNextTopRightElement() throws Exception {
+		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
 
+		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntry entryNext = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntry[] entriesPrevAndNextForTopLeft =
+			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
+				entryNext.getEntryId());
+
+		Assert.assertNull(
+			"The next element for the blog " +
+			entryNext.getEntryId() + " should be null",
+			entriesPrevAndNextForTopLeft[2]);
+
+		Assert.assertNotNull(
+			"The center element for the blog " + entryNext.getEntryId() +
+			" should be " + entryNext.getEntryId() + " but is null instead",
+			entriesPrevAndNextForTopLeft[1]);
+
+		Assert.assertNotNull(
+			"The previous element for the blog " + entryNext.getEntryId() +
+			" should be " + entryCenter.getEntryId() + " but is null instead",
+			entriesPrevAndNextForTopLeft[0]);
+
+		Assert.assertEquals(
+			"The left element " + entriesPrevAndNextForTopLeft[0].getEntryId() +
+			" should be " + entryCenter.getEntryId(),
+			entriesPrevAndNextForTopLeft[0].getEntryId(),
+			entryCenter.getEntryId());
+
+		Assert.assertEquals(
+			"The center element " +
+			entriesPrevAndNextForTopLeft[1].getEntryId() + " should be " +
+			entryNext.getEntryId(),
+			entriesPrevAndNextForTopLeft[1].getEntryId(),
+			entryNext.getEntryId());
+	}
+
+	@Test
+	public void testGetEntryByUrlAndGroup() throws Exception {
+		BlogsEntry entry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntry entryObtained = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getGroupId(), entry.getUrlTitle());
+
+		BlogsTestUtil.assertEqualEntry(entry, entryObtained);
+	}
+
+	@Test
+	public void testGetGroupEntriesCountInTrash() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		QueryDefinition queryDefinitionInTrash = new QueryDefinition(
+			WorkflowConstants.STATUS_IN_TRASH);
+		queryDefinitionInTrash.setStart(QueryUtil.ALL_POS);
+		queryDefinitionInTrash.setEnd(QueryUtil.ALL_POS);
+
+		int initialCount =
+			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				group.getGroupId(), new Date(), queryDefinitionInTrash);
+
+		BlogsEntry entryInTrash = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(
+			user.getUserId(), entryInTrash);
+
+		BlogsTestUtil.addEntry(user.getUserId(), group, true);
+
+		int actualCount =
+			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				group.getGroupId(), new Date(), queryDefinitionInTrash);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+	}
+
+	@Test
+	public void testGetGroupEntriesCountNotInTrash() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		QueryDefinition queryDefinitionNotInTrash = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+		queryDefinitionNotInTrash.setStart(QueryUtil.ALL_POS);
+		queryDefinitionNotInTrash.setEnd(QueryUtil.ALL_POS);
+
+		int initialCount =
+			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				group.getGroupId(), new Date(), queryDefinitionNotInTrash);
+
+		BlogsEntry entryInTrash = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(
+			user.getUserId(), entryInTrash);
+
+		BlogsTestUtil.addEntry(user.getUserId(), group, true);
+
+		int actualCount =
+			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				group.getGroupId(), new Date(), queryDefinitionNotInTrash);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+	}
+
+	@Test
+	public void testGetGroupEntriesInTrash() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		QueryDefinition queryDefinitionNotInTrash = new QueryDefinition(
+			WorkflowConstants.STATUS_IN_TRASH);
+		queryDefinitionNotInTrash.setStart(QueryUtil.ALL_POS);
+		queryDefinitionNotInTrash.setEnd(QueryUtil.ALL_POS);
+
+		List<BlogsEntry> groupEntries =
+			BlogsEntryLocalServiceUtil.getGroupEntries(
+				group.getGroupId(), new Date(), queryDefinitionNotInTrash);
+
+		int initialCount = groupEntries.size();
+
+		BlogsEntry entryInTrash = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(
+			user.getUserId(), entryInTrash);
+
+		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
+
+		List<BlogsEntry> groupEntriesInTrash =
+			BlogsEntryLocalServiceUtil.getGroupEntries(
+				group.getGroupId(), new Date(), queryDefinitionNotInTrash);
+
+		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
+
+		for (BlogsEntry groupEntry : groupEntriesInTrash) {
+			if (WorkflowConstants.STATUS_IN_TRASH != groupEntry.getStatus()) {
+				Assert.fail(
+					"The blogEntry " + groupEntry.getEntryId() +
+						" is not in trash");
+			}
+		}
+	}
+
+	@Test
+	public void testGetGroupEntriesNotInTrash() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		QueryDefinition queryDefinitionNotInTrash = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+		queryDefinitionNotInTrash.setStart(QueryUtil.ALL_POS);
+		queryDefinitionNotInTrash.setEnd(QueryUtil.ALL_POS);
+
+		List<BlogsEntry> groupEntries =
+			BlogsEntryLocalServiceUtil.getGroupEntries(
+				group.getGroupId(), new Date(), queryDefinitionNotInTrash);
+
+		int initialCount = groupEntries.size();
+
+		BlogsEntry entryInTrash = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(
+			user.getUserId(), entryInTrash);
+
+		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
+
+		List<BlogsEntry> groupEntriesNotInTrash =
+			BlogsEntryLocalServiceUtil.getGroupEntries(
+				group.getGroupId(), new Date(), queryDefinitionNotInTrash);
+
+		Assert.assertEquals(initialCount + 1, groupEntriesNotInTrash.size());
+
+		for (BlogsEntry groupEntry : groupEntriesNotInTrash) {
+			if (WorkflowConstants.STATUS_IN_TRASH == groupEntry.getStatus()) {
+				Assert.fail(
+					"The blogEntry " + groupEntry.getEntryId() +
+						" is in trash");
+			}
+		}
+	}
 
 	protected static final long DEFAULT_PARENT_CONTAINER_MODEL_ID = 0;
 

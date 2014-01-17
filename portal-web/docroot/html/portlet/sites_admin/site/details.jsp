@@ -594,7 +594,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		Liferay.Util.toggleBoxes('<portlet:namespace />privateLayoutSetPrototypeLinkEnabledCheckbox','<portlet:namespace />privateLayoutSetPrototypeMergeAlert');
 	</aui:script>
 
-	<aui:script use="escape,liferay-search-container">
+	<aui:script use="liferay-search-container">
 		var createURL = function(href, value, onclick) {
 			return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
 		};
@@ -620,7 +620,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 						var href = "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=" + event.groupid;
 
-						rowColumns.push(createURL(href, A.Escape.html(event.groupdescriptivename)));
+						rowColumns.push(createURL(href, event.groupdescriptivename));
 						rowColumns.push(event.grouptype);
 						rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 

@@ -485,6 +485,16 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							buffer.append("\" />");
 						}
 
+						if (thread.isLocked()) {
+							buffer.append("<img class=\"thread-priority\" alt=\"");
+							buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
+							buffer.append("\" src=\"");
+							buffer.append(themeDisplay.getPathThemeImages() + "/common/lock.png");
+							buffer.append("\" title=\"");
+							buffer.append(LanguageUtil.get(pageContext, "thread-locked"));
+							buffer.append("\" />");
+						}
+
 						buffer.append(message.getSubject());
 						%>
 

@@ -291,7 +291,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					statement, matcher.group(1), sb.toString());
 
 				content = StringUtil.replaceFirst(
-					content, statement, newStatement);
+					content, statement, newStatement, matcher.start());
 			}
 
 			if (openingTagMatcher.find() && !closingTagMatcher.find() &&

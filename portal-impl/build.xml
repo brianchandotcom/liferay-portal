@@ -495,6 +495,8 @@ public class Creole10Parser]]></replacevalue>
 		<copy file="${liferay.doclet.dir}/liferay-doclet.jar" todir="${project.dir}/lib/development" />
 	</target>
 
+	<!-- Requires nodejs, npm and browserify -->
+
 	<target name="build-r2-js">
 		<property name="dependencies.dir" value="${project.dir}/portal-impl/src/com/liferay/portal/servlet/filters/dynamiccss/dependencies" />
 		<property name="r2.version" value="liferay-0.1" />

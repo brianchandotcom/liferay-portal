@@ -23,6 +23,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		border-width: 1px 0;
 	}
 
+	input[type="file"] {
+		max-width: 220px;
+	}
+
 	#wrapper {
 		position: relative;
 	}

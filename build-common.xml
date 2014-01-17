@@ -906,8 +906,12 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<sonar:sonar />
 
-		<delete dir="${sonar.cobertura.report.folder}" />
-		<delete dir="${sonar.surefire.reportsPath}" />
+		<for list="${sonar.modules}" delimiter="," param="module">
+			<sequential>
+				<delete dir="@{module}/${sonar.cobertura.report.folder}" />
+				<delete dir="@{module}/${sonar.junit.reportsPath}" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="test">

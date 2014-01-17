@@ -157,7 +157,7 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 		localizeTitle= false;
 	}
 	else if (dlFileEntryType != null) {
-		headerTitle = LanguageUtil.format(pageContext, "new-x", new Object[] {dlFileEntryType.getName(locale)}, false);
+		headerTitle = LanguageUtil.format(pageContext, "new-x", dlFileEntryType.getName(locale), false);
 	}
 	%>
 

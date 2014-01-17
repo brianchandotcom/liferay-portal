@@ -22,6 +22,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -78,6 +80,57 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getBlogsEntry(blogsEntry.getEntryId());
 
 		BlogsTestUtil.assertEqualEntry(blogsEntry, blogsEntryObtained);
+	}
+
+	@Test
+	public void testAddEntryResourcesEntry() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.addEntryResources(blogsEntry, true, true);
+	}
+
+	@Test
+	public void testAddEntryResourcesEntryId() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.addEntryResources(
+			blogsEntry.getEntryId(), true, true);
+	}
+
+	@Test
+	public void testAddEntryResourcesEntryIdListPermissions() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.addEntryResources(
+			blogsEntry.getEntryId(), serviceContext.getGroupPermissions(),
+			serviceContext.getGuestPermissions());
+	}
+
+	@Test
+	public void testAddEntryResourcesEntryListPermissions() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.addEntryResources(
+			blogsEntry, serviceContext.getGroupPermissions(),
+			serviceContext.getGuestPermissions());
 	}
 
 	@Test
@@ -312,6 +365,44 @@ public class BlogsEntryLocalServiceTest {
 			entry.getGroupId(), entry.getUrlTitle());
 
 		BlogsTestUtil.assertEqualEntry(entry, entryObtained);
+	}
+
+	@Test
+	public void testGetGroupEntriesCompany() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		List<BlogsEntry> groupEntries =
+			BlogsEntryLocalServiceUtil.getGroupsEntries(
+				user.getCompanyId(), group.getGroupId(), new Date(),
+				QUERY_IN_TRASH);
+
+		int initialCount = groupEntries.size();
+
+		addEntryTrashAndEntryNotTrash(user);
+
+		List<BlogsEntry> groupEntriesInTrash =
+			BlogsEntryLocalServiceUtil.getGroupsEntries(
+				user.getCompanyId(), group.getGroupId(), new Date(),
+				QUERY_IN_TRASH);
+
+		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
+
+		for (BlogsEntry groupEntry : groupEntriesInTrash) {
+			if (WorkflowConstants.STATUS_IN_TRASH != groupEntry.getStatus()) {
+				Assert.fail(
+					"The blogEntry " + groupEntry.getEntryId() +
+						" is not in trash");
+			}
+
+			Assert.assertNotEquals(groupEntry.getCompanyId(), 0);
+
+			if (groupEntry.getCompanyId() != user.getCompanyId()) {
+				Assert.fail(
+					"The companyId of the BlogEntry" + groupEntry.getEntryId() +
+					" should be " + user.getCompanyId() + " bus is " +
+					groupEntry.getCompanyId() + " instead");
+			}
+		}
 	}
 
 	@Test

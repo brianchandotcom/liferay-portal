@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -385,8 +386,17 @@ public class PortalImplCanonicalURLTest {
 			expectedGroupFriendlyURL = group.getFriendlyURL();
 		}
 
+		String expectedDomain = virtualHostname;
+
+		if (!Validator.isBlank(expectedDomain) &&
+			StringUtil.equalsIgnoreCase(expectedDomain, "localhost") &&
+			!StringUtil.equalsIgnoreCase(portalDomain, "localhost")) {
+
+			expectedDomain = portalDomain;
+		}
+
 		String expectedCanonicalURL = generateURL(
-			virtualHostname, StringPool.BLANK, expectedGroupFriendlyURL,
+			expectedDomain, StringPool.BLANK, expectedGroupFriendlyURL,
 			expectedLayoutFriendlyURL);
 
 		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL);

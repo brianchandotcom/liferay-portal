@@ -16,8 +16,12 @@
 
 <%@ include file="/html/portlet/workflow_instances/init.jsp" %>
 
+<%
+String referer = request.getHeader(HttpHeaders.REFERER);
+%>
+
 <liferay-ui:header
-	backURL="javascript:history.go(-1);"
+	backURL='<%= Validator.isNotNull(referer) ? referer : "javascript:history.go(-1);" %>'
 	title="error"
 />
 

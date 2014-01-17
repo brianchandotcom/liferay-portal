@@ -5655,7 +5655,7 @@ public class JournalArticleLocalServiceImpl
 
 			serviceContext.setScopeGroupId(article.getGroupId());
 
-			updateStatus(
+			journalArticleLocalService.updateStatus(
 				article.getUserId(), article, WorkflowConstants.STATUS_APPROVED,
 				null, new HashMap<String, Serializable>(), serviceContext);
 		}

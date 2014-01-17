@@ -38,11 +38,13 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		String name2 = javaTerm2.getName();
 
 		if (type1 == JavaSourceProcessor.TYPE_VARIABLE_PRIVATE_STATIC) {
-			if (name2.equals("_log")) {
+			if (name2.equals("_log") || name2.equals("_logger")) {
 				return 1;
 			}
 
-			if (name1.equals("_instance") || name1.equals("_log")) {
+			if (name1.equals("_instance") || name1.equals("_log") ||
+				name1.equals("_logger")) {
+
 				return -1;
 			}
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -26,7 +27,9 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.OrganizationTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
@@ -399,6 +402,25 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetGroupUserEntriesCountInTrash() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		int initialCount =
+			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
+				group.getGroupId(), user.getUserId(), new Date(),
+				QUERY_IN_TRASH);
+
+		addEntryTrashAndEntryNotTrash(user);
+
+		int actualCount =
+			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
+				group.getGroupId(), user.getUserId(), new Date(),
+				QUERY_IN_TRASH);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+	}
+
+	@Test
 	public void testGetGroupUserEntriesCountNotInTrash() throws Exception {
 		User user = TestPropsValues.getUser();
 
@@ -476,39 +498,113 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGroupUserEntriesCountInTrash() throws Exception {
-		User user = TestPropsValues.getUser();
+	public void testGetOrganizationEntriesCountInTrash() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+		User user = UserTestUtil.addOrganizationOwnerUser(organization);
 
 		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				group.getGroupId(), user.getUserId(), new Date(),
-				QUERY_IN_TRASH);
+			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
+				organization.getOrganizationId(), new Date(), QUERY_IN_TRASH);
 
 		addEntryTrashAndEntryNotTrash(user);
 
 		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				group.getGroupId(), user.getUserId(), new Date(),
-				QUERY_IN_TRASH);
+			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
+				organization.getOrganizationId(), new Date(), QUERY_IN_TRASH);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
-	protected BlogsEntry[] addEntryTrashAndEntryNotTrash(User user)
-		throws Exception {
-			BlogsEntry[] blogs = new BlogsEntry[2];
+	@Test
+	public void testGetOrganizationEntriesCountNotInTrash() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+		User user = UserTestUtil.addOrganizationOwnerUser(organization);
 
-			blogs[0] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+		int initialCount =
+			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
+				organization.getOrganizationId(), new Date(),
+				QUERY_NOT_IN_TRASH);
 
-			BlogsEntryLocalServiceUtil.moveEntryToTrash(
-				user.getUserId(), blogs[0]);
+		addEntryTrashAndEntryNotTrash(user);
 
-			blogs[1] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+		int actualCount =
+			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
+				organization.getOrganizationId(), new Date(),
+				QUERY_NOT_IN_TRASH);
 
-			return blogs;
+		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
-	protected static final long DEFAULT_PARENT_CONTAINER_MODEL_ID = 0;
+	@Test
+	public void testGetOrganizationEntriesInTrash() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+		User user = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		List<BlogsEntry> groupEntries =
+			BlogsEntryLocalServiceUtil.getOrganizationEntries(
+				organization.getOrganizationId(), new Date(), QUERY_IN_TRASH);
+
+		int initialCount = groupEntries.size();
+
+		addEntryTrashAndEntryNotTrash(user);
+
+		List<BlogsEntry> groupEntriesInTrash =
+			BlogsEntryLocalServiceUtil.getOrganizationEntries(
+				organization.getOrganizationId(), new Date(), QUERY_IN_TRASH);
+
+		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
+
+		for (BlogsEntry groupEntry : groupEntriesInTrash) {
+			if (WorkflowConstants.STATUS_IN_TRASH != groupEntry.getStatus()) {
+				Assert.fail(
+					"The blogEntry " + groupEntry.getEntryId() +
+						" is not in trash");
+			}
+		}
+	}
+
+	@Test
+	public void testGetOrganizationEntriesNotInTrash() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+		User user = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		List<BlogsEntry> groupEntries =
+			BlogsEntryLocalServiceUtil.getOrganizationEntries(
+				organization.getOrganizationId(), new Date(),
+				QUERY_NOT_IN_TRASH);
+
+		int initialCount = groupEntries.size();
+
+		addEntryTrashAndEntryNotTrash(user);
+
+		List<BlogsEntry> groupEntriesNotInTrash =
+			BlogsEntryLocalServiceUtil.getOrganizationEntries(
+				organization.getOrganizationId(), new Date(),
+				QUERY_NOT_IN_TRASH);
+
+		Assert.assertEquals(initialCount + 1, groupEntriesNotInTrash.size());
+
+		for (BlogsEntry groupEntry : groupEntriesNotInTrash) {
+			if (WorkflowConstants.STATUS_IN_TRASH == groupEntry.getStatus()) {
+				Assert.fail(
+					"The blogEntry " + groupEntry.getEntryId() +
+						" is in trash");
+			}
+		}
+	}
+
+	protected BlogsEntry[] addEntryTrashAndEntryNotTrash(User user)
+		throws Exception {
+		BlogsEntry[] blogs = new BlogsEntry[2];
+
+		blogs[0] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(user.getUserId(), blogs[0]);
+
+		blogs[1] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+
+		return blogs;
+	}
 
 	protected static final QueryDefinition QUERY_IN_TRASH =
 		new QueryDefinition(

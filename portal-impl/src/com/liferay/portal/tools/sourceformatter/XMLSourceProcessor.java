@@ -365,7 +365,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					 portalSource && fileName.endsWith(".macro") ||
 					 portalSource && fileName.endsWith(".testcase")) {
 
-				newContent = formatPoshiXML(fileName, content);
+				newContent = formatPoshiXML(content);
 			}
 			else if (portalSource && fileName.endsWith("/service.xml")) {
 				formatServiceXML(fileName, newContent);
@@ -631,7 +631,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return document.formattedString();
 	}
 
-	protected String formatPoshiXML(String fileName, String content) {
+	protected String formatPoshiXML(String content) {
 		String newContent = content;
 
 		newContent = fixPoshiXMLElementWithNoChild(newContent);

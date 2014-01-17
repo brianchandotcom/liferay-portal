@@ -3,6 +3,7 @@
 <project name="build-common"
 	xmlns:antelope="antlib:ise.antelope.tasks"
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	xmlns:sonar="antlib:org.sonar.ant"
 >
 	<dirname file="${ant.file.build-common}" property="project.dir" />
 
@@ -903,11 +904,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<classpath path="lib/development/sonar-ant-task.jar" />
 		</taskdef>
 
-		<sonar:sonar
-			key="com.liferay:liferay-portal"
-			version="0.1-SNAPSHOT"
-			xmlns:sonar="antlib:org.sonar.ant"
-		/>
+		<sonar:sonar />
 
 		<delete dir="${sonar.cobertura.report.folder}" />
 		<delete dir="${sonar.surefire.reportsPath}" />

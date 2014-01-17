@@ -28,9 +28,7 @@ import org.mozilla.javascript.ScriptableObject;
  */
 public class RTLCSSUtil {
 
-	public static String getRtlCss(String fileName, String css)
-		throws Exception {
-
+	public static String getRtlCss(String css) throws Exception {
 		Context context = Context.enter();
 
 		String rtlCss = css;
@@ -38,17 +36,6 @@ public class RTLCSSUtil {
 		try {
 			ScriptableObject scope = context.initStandardObjects();
 
-			// Prepare the context to execute the script with Rhino 1.7
-
-			context.evaluateString(
-				scope, "var module = {exports: {}};", "module", 1, null);
-			context.evaluateString(
-				scope, "function require() {}", "require", 1, null);
-			context.evaluateString(
-				scope,
-				"String.prototype.trim = function() {return " +
-					"this.replace(/^\\s+|\\s+$/g, '');}",
-				"trim", 1, null);
 			context.evaluateString(scope, _jsScript, "script", 1, null);
 
 			Function function = (Function)scope.get("r2", scope);
@@ -57,11 +44,6 @@ public class RTLCSSUtil {
 				context, scope, scope, new Object[] {css});
 
 			rtlCss = (String)Context.jsToJava(result, String.class);
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse " + fileName + " to RTL");
-			}
 		}
 		finally {
 			Context.exit();

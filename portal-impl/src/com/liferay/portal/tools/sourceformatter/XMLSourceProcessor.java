@@ -632,19 +632,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatPoshiXML(String content) {
-		String newContent = content;
+		content = fixPoshiXMLElementWithNoChild(content);
 
-		newContent = fixPoshiXMLElementWithNoChild(newContent);
+		content = fixPoshiXMLEndLinesAfterClosingElement(content);
 
-		newContent = fixPoshiXMLEndLinesAfterClosingElement(newContent);
+		content = fixPoshiXMLEndLinesBeforeClosingElement(content);
 
-		newContent = fixPoshiXMLEndLinesBeforeClosingElement(newContent);
+		content = fixPoshiXMLEndLines(content);
 
-		newContent = fixPoshiXMLEndLines(newContent);
-
-		newContent = fixPoshiXMLNumberOfTabs(newContent);
-
-		return newContent.trim();
+		return fixPoshiXMLNumberOfTabs(content);
 	}
 
 	protected void formatServiceXML(String fileName, String content)

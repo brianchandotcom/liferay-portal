@@ -155,6 +155,12 @@ public class EhcacheStreamBootstrapHelpUtil {
 			return;
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Start to load cache data from cluster node " +
+					clusterNodeResponse.getClusterNode());
+		}
+
 		Socket socket = null;
 		ObjectInputStream objectInputStream = null;
 
@@ -211,6 +217,11 @@ public class EhcacheStreamBootstrapHelpUtil {
 							object);
 				}
 			}
+		}
+		catch (Exception e) {
+			throw new Exception(
+				"Unable to load cache data from cluster node " +
+					clusterNodeResponse.getClusterNode(), e);
 		}
 		finally {
 			if (objectInputStream != null) {

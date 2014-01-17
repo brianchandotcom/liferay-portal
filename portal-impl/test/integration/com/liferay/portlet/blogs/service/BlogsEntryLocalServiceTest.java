@@ -22,6 +22,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -593,17 +594,53 @@ public class BlogsEntryLocalServiceTest {
 		}
 	}
 
+	@Test
+	public void testSubscribe() throws Exception {
+		int initialCount =
+			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
+				TestPropsValues.getUserId());
+
+		BlogsEntryLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId());
+
+		int actualCount =
+			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
+				TestPropsValues.getUserId());
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+	}
+
+	@Test
+	public void testUnsubscribe() throws Exception {
+		int initialCount =
+			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
+				TestPropsValues.getUserId());
+
+		BlogsEntryLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId());
+
+		BlogsEntryLocalServiceUtil.unsubscribe(
+			TestPropsValues.getUserId(), group.getGroupId());
+
+		int actualCount =
+			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
+				TestPropsValues.getUserId());
+
+		Assert.assertEquals(initialCount, actualCount);
+	}
+
 	protected BlogsEntry[] addEntryTrashAndEntryNotTrash(User user)
 		throws Exception {
-		BlogsEntry[] blogs = new BlogsEntry[2];
+			BlogsEntry[] blogs = new BlogsEntry[2];
 
-		blogs[0] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+			blogs[0] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
 
-		BlogsEntryLocalServiceUtil.moveEntryToTrash(user.getUserId(), blogs[0]);
+			BlogsEntryLocalServiceUtil.moveEntryToTrash(
+				user.getUserId(), blogs[0]);
 
-		blogs[1] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+			blogs[1] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
 
-		return blogs;
+			return blogs;
 	}
 
 	protected static final QueryDefinition QUERY_IN_TRASH =

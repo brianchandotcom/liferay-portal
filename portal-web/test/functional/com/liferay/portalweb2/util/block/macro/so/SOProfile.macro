@@ -76,14 +76,14 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginFullName" value="${userName}" />
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
-		</execute>	
+		</execute>
 
 		<execute macro="SOContactsCenter#confirmRequestToConnect">
 			<var name="senderName" value="${adminName}" />
 			<var name="userName" value="${userName}" />
 		</execute>
 	</command>
-	
+
 	<command name="addIntroduction">
 		<execute action="Dockbar#click" locator-key1="USER_NAME" />
 		<execute action="Dockbar#click" locator-key1="USER_MY_PROFILE" value1="My Profile" />
@@ -206,7 +206,7 @@
 
 		<execute action="SOProfile#selectFrame" value1="relative=top" />
 
-		<var name="key_userName" value="${userName}" />		
+		<var name="key_userName" value="${userName}" />
 
 		<execute action="SOProfile#assertElementPresent" locator-key1="USER_PROFILE_PICTURE" />
 		<execute action="SOProfile#assertElementNotPresent" locator-key1="DEFAULT_PROFILE_PICTURE" />
@@ -701,7 +701,7 @@
 
 		<execute action="SOProfile#click" locator-key1="PROFILE_INFO_SOCIAL_NETWORK_TITLE" />
 		<execute action="SOProfile#selectFrame" locator-key1="ADD_CONTENT_IFRAME" />
-		
+
 		<execute action="SOProfileAddSocialNetwork#type" locator-key1="FACEBOOK_FIELD" value1="" />
 		<execute action="SOProfileAddSocialNetwork#type" locator-key1="TWITTER_FIELD" value1="" />
 		<execute action="SOProfileAddSocialNetwork#click" locator-key1="SAVE_BUTTON" />

@@ -15,7 +15,7 @@
 		<case locator-key1="TOOLBAR_ADD_MEMBERS">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-		
+
 		<case locator-key1="TOOLBAR_ADD_SITE_ROLES_TO">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
@@ -24,7 +24,7 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
-	
+
 	<command name="assertTextEquals">
 		<case locator-key1="ORGANIZATION_TABLE_NAME">
 			<execute function="AssertTextEquals#assertPartialText" />

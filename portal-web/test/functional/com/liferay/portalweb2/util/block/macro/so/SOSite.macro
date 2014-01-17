@@ -276,7 +276,7 @@
 				<execute action="SOUserBar#assertElementPresent" locator-key1="GO_TO_SITE_NAME_LINK" />
 			</else>
 		</if>
-			
+
 		<execute action="SOUserBar#click" locator-key1="DASHBOARD" />
 		<execute action="SOUserBar#click" locator-key1="GO_TO" />
 		<execute action="SOUserBar#select" locator-key1="GO_TO_SITE_CATEGORY_SELECT" value1="My Sites" />
@@ -341,7 +341,7 @@
 				<execute action="SOUserBarSitesDirectory#click" locator-key1="SITE_NAME_LINK" value1="${siteName}" />
 
 				<execute action="SOSiteHome#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
-				
+
 				<if>
 					<equals arg1="${siteType}" arg2="Open" />
 					<then>

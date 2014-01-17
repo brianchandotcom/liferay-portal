@@ -138,7 +138,7 @@
 			<equals arg1="${soPage}" arg2="true" />
 			<then>
 				<var name="key_pageName" value="${pageName}" />
-	
+
 				<execute action="SOSiteHome#click" locator-key1="NAVIGATION_PAGE" />
 			</then>
 			<else>

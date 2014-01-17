@@ -55,7 +55,7 @@
 						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
 					</else>
 				</if>
 			</then>
@@ -72,7 +72,7 @@
 							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
 						</then>
 						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
 						</else>
 					</if>
 				</then>
@@ -95,7 +95,7 @@
 						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
 					</else>
 				</if>
 			</then>
@@ -103,7 +103,7 @@
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
 					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
-						
+
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_DOCUMENT_LOCKED" />
 
 					<if>
@@ -112,7 +112,7 @@
 							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
 						</then>
 						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
 						</else>
 					</if>
 				</then>
@@ -130,8 +130,8 @@
 							<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_DOCUMENT_STATUS" value1="Draft" />
 						</then>
 						<else>
-							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
-						</else>		
+							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+						</else>
 					</if>
 				</then>
 			</elseif>
@@ -152,15 +152,15 @@
 						<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="LIST_ENTRIES_DOCUMENT_WORKFLOW" value1="Draft" />
 					</then>
 					<else>
-						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />					
-					</else>						
+						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
+					</else>
 				</if>
 			</then>
 			<elseif>
 				<equals arg1="${workflow}" arg2="Checkedout" />
 				<then>
 					<var name="currentUser" path="Dockbar" locator-key="USER_NAME" />
-	
+
 					<if>
 						<equals arg1="${dmDocumentUploader}" arg2="${currentUser}" />
 						<then>
@@ -168,7 +168,7 @@
 						</then>
 						<else>
 							<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
-						</else>	
+						</else>
 					</if>
 
 					<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="LIST_ENTRIES_DOCUMENT_LOCKED" />
@@ -202,7 +202,7 @@
 					</then>
 					<else>
 						<execute action="PGDocumentsandmedia#assertTextNotPresent" value1="Draft" />
-					</else>	
+					</else>
 				</if>
 			</then>
 		</if>

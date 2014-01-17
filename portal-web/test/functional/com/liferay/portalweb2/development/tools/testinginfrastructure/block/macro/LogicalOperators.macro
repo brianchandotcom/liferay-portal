@@ -46,8 +46,8 @@
 									<equals arg1="true" arg2="true" />
 									<equals arg1="true" arg2="false" />
 									<equals arg1="true" arg2="false" />
-								</or>						
-							</and>							
+								</or>
+							</and>
 						</not>
 					</and>
 					<then>

@@ -842,7 +842,7 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-		</execute>	
+		</execute>
 
 		<execute macro="DMDocument#searchPG">
 			<var name="dmDocumentContent" value="${dmDocumentContent}" />

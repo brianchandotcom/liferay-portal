@@ -2,7 +2,7 @@
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
-	
+
 	<var name="commitMessage" value="LPS-41076" />
 	<var name="ticketSummary" value="LIFERAYQA-5866: Enable selecting multiple choices from a dropdown" />
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5866" />

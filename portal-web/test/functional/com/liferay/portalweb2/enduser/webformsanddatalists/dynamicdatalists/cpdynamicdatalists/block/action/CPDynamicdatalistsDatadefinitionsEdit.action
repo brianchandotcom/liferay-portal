@@ -12,7 +12,7 @@
 			<execute function="AssertClick#pauseAssertTextClickAtAndWait" />
 		</case>
 	</command>
-	
+
 	<command name="assertTextEquals">
 		<case comparator="startsWith" locator-key1="FORM_">
 			<execute function="AssertTextEquals#assertPartialText" />

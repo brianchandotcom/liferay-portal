@@ -138,6 +138,7 @@
 	}
 
 	.subscribe {
+		float: right;
 		margin-bottom: 1.5em;
 	}
 

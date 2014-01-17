@@ -3,6 +3,7 @@
 <project name="build-common"
 	xmlns:antelope="antlib:ise.antelope.tasks"
 	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+	xmlns:sonar="antlib:org.sonar.ant"
 >
 	<dirname file="${ant.file.build-common}" property="project.dir" />
 
@@ -850,52 +851,78 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</fileset>
 		</cobertura-merge>
 
-		<cobertura-report
-			datafile="${sonar.cobertura.reportPath}"
-			destdir="${sonar.cobertura.report.folder}"
-			format="${junit.cobertura.report.format}"
-		>
-			<fileset dir="${project.dir}/portal-impl/src">
-				<include name="**/*.java" />
-			</fileset>
-			<fileset dir="${project.dir}/portal-service/src">
-				<include name="**/*.java" />
-			</fileset>
-			<fileset dir="${project.dir}/util-java/src">
-				<include name="**/*.java" />
-			</fileset>
-			<fileset dir="${project.dir}/util-taglib/src">
-				<include name="**/*.java" />
-			</fileset>
-		</cobertura-report>
+		<for list="${sonar.modules}" delimiter="," param="module">
+			<sequential>
+				<if>
+					<available file="@{module}/${sonar.cobertura.itReportPath}/cobertura.ser" />
+					<then>
+						<cobertura-report
+							datafile="@{module}/${sonar.cobertura.itReportPath}/cobertura.ser"
+							destdir="@{module}/${sonar.cobertura.itReportPath}"
+							format="${junit.cobertura.report.format}"
+						>
+							<fileset dir="@{module}/src">
+								<include name="**/*.java" />
+							</fileset>
+						</cobertura-report>
+					</then>
+				</if>
 
-		<copy todir="${sonar.surefire.reportsPath}" failonerror="false">
-			<fileset dir="${project.dir}/portal-impl/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-			<fileset dir="${project.dir}/portal-service/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-			<fileset dir="${project.dir}/util-java/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-			<fileset dir="${project.dir}/util-taglib/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-		</copy>
+				<if>
+					<available file="@{module}/${sonar.cobertura.reportPath}/cobertura.ser" />
+					<then>
+						<cobertura-report
+							datafile="@{module}/${sonar.cobertura.reportPath}/cobertura.ser"
+							destdir="@{module}/${sonar.cobertura.reportPath}"
+							format="${junit.cobertura.report.format}"
+						>
+							<fileset dir="@{module}/src">
+								<include name="**/*.java" />
+							</fileset>
+						</cobertura-report>
+					</then>
+				</if>
+
+				<if>
+					<available file="@{module}/test-results/integration" type="dir" />
+					<then>
+						<copy todir="@{module}/test-results">
+							<fileset dir="@{module}/test-results/integration">
+								<include name="TEST*.xml"/>
+								<size value="0" when="more"/>
+							</fileset>
+							<globmapper from="TEST*" to="TEST-integration*"/>
+						</copy>
+					</then>
+				</if>
+
+				<if>
+					<available file="@{module}/test-results/unit" type="dir" />
+					<then>
+						<copy todir="@{module}/test-results">
+							<fileset dir="@{module}/test-results/unit">
+								<include name="TEST*.xml"/>
+								<size value="0" when="more"/>
+							</fileset>
+							<globmapper from="TEST*" to="TEST-unit*"/>
+						</copy>
+					</then>
+				</if>
+			</sequential>
+		</for>
 
 		<taskdef resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant">
 			<classpath path="lib/development/sonar-ant-task.jar" />
 		</taskdef>
 
-		<sonar:sonar
-			key="com.liferay:liferay-portal"
-			version="0.1-SNAPSHOT"
-			xmlns:sonar="antlib:org.sonar.ant"
-		/>
+		<sonar:sonar />
 
-		<delete dir="${sonar.cobertura.report.folder}" />
-		<delete dir="${sonar.surefire.reportsPath}" />
+		<for list="${sonar.modules}" delimiter="," param="module">
+			<sequential>
+				<delete dir="@{module}/${sonar.cobertura.report.folder}" />
+				<delete dir="@{module}/${sonar.junit.reportsPath}" />
+			</sequential>
+		</for>
 	</target>
 
 	<target name="test">

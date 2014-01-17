@@ -6,8 +6,8 @@ function getGlobal() {
 
 var console = {
 	log: function(data) {
-   		java.lang.System.out.println(data);
- 	}
+		java.lang.System.out.println(data);
+	}
 };
 
 var global = getGlobal();

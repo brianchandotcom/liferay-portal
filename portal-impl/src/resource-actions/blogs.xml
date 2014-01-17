@@ -57,7 +57,9 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 			</supports>
-			<site-member-defaults />
+			<site-member-defaults>
+				<action-key>SUBSCRIBE</action-key>
+			</site-member-defaults>
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_ENTRY</action-key>

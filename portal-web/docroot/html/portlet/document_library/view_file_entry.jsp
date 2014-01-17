@@ -252,6 +252,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 				<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
+
+					<%
+					boolean showImageContainer = true;
+					%>
+
 					<%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>
 				</c:if>
 

@@ -110,15 +110,22 @@
 					<liferay-util:include page="/html/portlet/document_library/player.jsp" />
 				</c:when>
 				<c:when test="<%= hasImages %>">
-					<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
-						<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
-							<div class="lfr-preview-file-image-current-column">
-								<div class="lfr-preview-file-image-container">
-									<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
+					<c:choose>
+						<c:when test="<%= showImageContainer %>">
+							<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace />previewFile">
+								<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace />previewFileContent">
+									<div class="lfr-preview-file-image-current-column">
+										<div class="lfr-preview-file-image-container">
+											<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						</c:when>
+						<c:otherwise>
+							<img class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:when test="<%= hasVideo %>">
 					<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">

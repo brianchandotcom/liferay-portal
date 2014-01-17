@@ -30,6 +30,8 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
+import java.util.Date;
+
 import org.junit.runner.RunWith;
 
 /**
@@ -43,6 +45,19 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
 public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
+
+	@Override
+	protected BaseModel<?> addBaseModel(
+			BaseModel<?> parentBaseModel, String keywords, Date expirationDate,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		return JournalTestUtil.addArticle(
+			serviceContext.getScopeGroupId(), keywords, "Content",
+			expirationDate, serviceContext);
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(

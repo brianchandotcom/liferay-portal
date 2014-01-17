@@ -237,7 +237,7 @@
 </tr>
 <tr>
 	<td>SITES_SELECT_CHOOSE_BUTTON</td>
-	<td>//button[contains(.,'Choose')]</td>
+	<td>//tr[contains(.,'${key_siteName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -321,6 +321,27 @@
 <tr>
 	<td>ROLES_SITE_ROLES_SELECT_LINK</td>
 	<td>//a[@id='_125_selectSiteRoleLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLES_REGULAR_SELECT-->
+<tr>
+	<td>ROLES_REGULAR_SELECT_IFRAME</td>
+	<td>//iframe[@id='_125_selectRegularRole_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES_REGULAR_SELECT_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_roleName}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES_REGULAR_SELECT_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_roleName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

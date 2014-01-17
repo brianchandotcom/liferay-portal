@@ -335,13 +335,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MY_SITES_MY_PUBLIC_PAGES</td>
-	<td>//span[@class='site-name' and contains(.,'My Public Pages')]</td>
+	<td>MY_SITES_PUBLIC_SITE</td>
+	<td>//span[@class='site-name' and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MY_SITES_MY_PRIVATE_PAGES</td>
-	<td>//span[@class='site-name' and contains(.,'My Private Pages')]</td>
+	<td>MY_SITES_PRIVATE_SITE</td>
+	<td>//span[@class='site-name' and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

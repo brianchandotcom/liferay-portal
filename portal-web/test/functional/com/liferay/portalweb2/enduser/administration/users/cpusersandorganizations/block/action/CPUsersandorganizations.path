@@ -128,6 +128,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_MENULIST_MANAGE_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Site')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATION_MENULIST_ASSIGN_ORGANIZATION_ROLES</td>
 	<td>//a[@role='menuitem' and contains(.,'Assign Organization Roles')]</td>
 	<td></td>

@@ -869,20 +869,33 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</fileset>
 		</cobertura-report>
 
-		<copy todir="${sonar.surefire.reportsPath}" failonerror="false">
-			<fileset dir="${project.dir}/portal-impl/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-			<fileset dir="${project.dir}/portal-service/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-			<fileset dir="${project.dir}/util-java/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-			<fileset dir="${project.dir}/util-taglib/test-results">
-				<include name="**/*.xml" />
-			</fileset>
-		</copy>
+		<for list="${sonar.modules}" delimiter="," param="module">
+			<sequential>
+				<if>
+					<available file="@{module}/test-results/integration" type="dir" />
+					<then>
+						<copy todir="@{module}/test-results">
+							<fileset dir="@{module}/test-results/integration">
+								<include name="TEST*.xml"/>
+							</fileset>
+							<globmapper from="TEST*" to="TEST-integration*"/>
+						</copy>
+					</then>
+				</if>
+
+				<if>
+					<available file="@{module}/test-results/unit" type="dir" />
+					<then>
+						<copy todir="@{module}/test-results">
+							<fileset dir="@{module}/test-results/unit">
+								<include name="TEST*.xml"/>
+							</fileset>
+							<globmapper from="TEST*" to="TEST-unit*"/>
+						</copy>
+					</then>
+				</if>
+			</sequential>
+		</for>
 
 		<taskdef resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant">
 			<classpath path="lib/development/sonar-ant-task.jar" />

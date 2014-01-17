@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 
@@ -60,7 +59,9 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 					new Ehcache[_deferredEhcaches.size()]));
 		}
 		catch (Exception e) {
-			throw new CacheException(e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to load cache data from cluster", e);
+			}
 		}
 		finally {
 			_deferredEhcaches.clear();
@@ -100,7 +101,9 @@ public class EhcacheStreamBootstrapCacheLoader implements BootstrapCacheLoader {
 			EhcacheStreamBootstrapHelpUtil.loadCachesFromCluster(ehcache);
 		}
 		catch (Exception e) {
-			throw new CacheException(e);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to load cache data from cluster", e);
+			}
 		}
 	}
 

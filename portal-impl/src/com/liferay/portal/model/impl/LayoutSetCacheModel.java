@@ -37,7 +37,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{layoutSetId=");
 		sb.append(layoutSetId);
@@ -71,6 +71,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		sb.append(layoutSetPrototypeUuid);
 		sb.append(", layoutSetPrototypeLinkEnabled=");
 		sb.append(layoutSetPrototypeLinkEnabled);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -153,6 +155,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		}
 
 		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		layoutSetImpl.setMvccVersion(mvccVersion);
 
 		layoutSetImpl.resetOriginalValues();
 
@@ -180,6 +183,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		settings = objectInput.readUTF();
 		layoutSetPrototypeUuid = objectInput.readUTF();
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 
 		_virtualHostname = (java.lang.String)objectInput.readObject();
 	}
@@ -247,6 +251,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		}
 
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
+		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeObject(_virtualHostname);
 	}
@@ -267,5 +272,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
+	public long mvccVersion;
 	public java.lang.String _virtualHostname;
 }

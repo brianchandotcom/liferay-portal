@@ -65,9 +65,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 			{ "countryId", Types.BIGINT },
 			{ "regionCode", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Region (regionId LONG not null primary key,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Region (regionId LONG not null primary key,countryId LONG,regionCode VARCHAR(75) null,name VARCHAR(75) null,active_ BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Region";
 	public static final String ORDER_BY_JPQL = " ORDER BY region.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Region.name ASC";
@@ -106,6 +107,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		model.setRegionCode(soapModel.getRegionCode());
 		model.setName(soapModel.getName());
 		model.setActive(soapModel.getActive());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -175,6 +177,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		attributes.put("regionCode", getRegionCode());
 		attributes.put("name", getName());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -212,6 +215,12 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -321,6 +330,17 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return _originalActive;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -357,6 +377,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		regionImpl.setRegionCode(getRegionCode());
 		regionImpl.setName(getName());
 		regionImpl.setActive(getActive());
+		regionImpl.setMvccVersion(getMvccVersion());
 
 		regionImpl.resetOriginalValues();
 
@@ -456,12 +477,14 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 		regionCacheModel.active = getActive();
 
+		regionCacheModel.mvccVersion = getMvccVersion();
+
 		return regionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{regionId=");
 		sb.append(getRegionId());
@@ -473,6 +496,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		sb.append(getName());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -480,7 +505,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Region");
@@ -506,6 +531,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -524,6 +553,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Region _escapedModel;
 }

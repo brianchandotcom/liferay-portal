@@ -175,6 +175,8 @@ public class ContactPersistenceTest {
 
 		newContact.setHoursOfOperation(ServiceTestUtil.randomString());
 
+		newContact.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newContact);
 
 		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
@@ -241,6 +243,8 @@ public class ContactPersistenceTest {
 			newContact.getJobClass());
 		Assert.assertEquals(existingContact.getHoursOfOperation(),
 			newContact.getHoursOfOperation());
+		Assert.assertEquals(existingContact.getMvccVersion(),
+			newContact.getMvccVersion());
 	}
 
 	@Test
@@ -287,7 +291,7 @@ public class ContactPersistenceTest {
 			"icqSn", true, "jabberSn", true, "msnSn", true, "mySpaceSn", true,
 			"skypeSn", true, "twitterSn", true, "ymSn", true,
 			"employeeStatusId", true, "employeeNumber", true, "jobTitle", true,
-			"jobClass", true, "hoursOfOperation", true);
+			"jobClass", true, "hoursOfOperation", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -468,6 +472,8 @@ public class ContactPersistenceTest {
 		contact.setJobClass(ServiceTestUtil.randomString());
 
 		contact.setHoursOfOperation(ServiceTestUtil.randomString());
+
+		contact.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(contact);
 

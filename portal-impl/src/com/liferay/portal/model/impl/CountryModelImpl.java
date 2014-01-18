@@ -68,9 +68,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			{ "number_", Types.VARCHAR },
 			{ "idd_", Types.VARCHAR },
 			{ "zipRequired", Types.BOOLEAN },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Country (countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Country (countryId LONG not null primary key,name VARCHAR(75) null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,number_ VARCHAR(75) null,idd_ VARCHAR(75) null,zipRequired BOOLEAN,active_ BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Country";
 	public static final String ORDER_BY_JPQL = " ORDER BY country.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Country.name ASC";
@@ -112,6 +113,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		model.setIdd(soapModel.getIdd());
 		model.setZipRequired(soapModel.getZipRequired());
 		model.setActive(soapModel.getActive());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -184,6 +186,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		attributes.put("idd", getIdd());
 		attributes.put("zipRequired", getZipRequired());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -239,6 +242,12 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -407,6 +416,17 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return _originalActive;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -446,6 +466,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		countryImpl.setIdd(getIdd());
 		countryImpl.setZipRequired(getZipRequired());
 		countryImpl.setActive(getActive());
+		countryImpl.setMvccVersion(getMvccVersion());
 
 		countryImpl.resetOriginalValues();
 
@@ -569,12 +590,14 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 		countryCacheModel.active = getActive();
 
+		countryCacheModel.mvccVersion = getMvccVersion();
+
 		return countryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{countryId=");
 		sb.append(getCountryId());
@@ -592,6 +615,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		sb.append(getZipRequired());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -599,7 +624,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Country");
@@ -637,6 +662,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -660,6 +689,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Country _escapedModel;
 }

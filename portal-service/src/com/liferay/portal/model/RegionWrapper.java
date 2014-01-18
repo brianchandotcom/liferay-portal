@@ -55,6 +55,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		attributes.put("regionCode", getRegionCode());
 		attributes.put("name", getName());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -89,6 +90,12 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -220,6 +227,26 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	@Override
 	public void setActive(boolean active) {
 		_region.setActive(active);
+	}
+
+	/**
+	* Returns the mvcc version of this region.
+	*
+	* @return the mvcc version of this region
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _region.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this region.
+	*
+	* @param mvccVersion the mvcc version of this region
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_region.setMvccVersion(mvccVersion);
 	}
 
 	@Override

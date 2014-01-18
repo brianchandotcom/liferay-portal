@@ -45,6 +45,7 @@ public class RoleSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
 		soapModel.setSubtype(model.getSubtype());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -209,6 +210,14 @@ public class RoleSoap implements Serializable {
 		_subtype = subtype;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private String _uuid;
 	private long _roleId;
 	private long _companyId;
@@ -223,4 +232,5 @@ public class RoleSoap implements Serializable {
 	private String _description;
 	private int _type;
 	private String _subtype;
+	private long _mvccVersion;
 }

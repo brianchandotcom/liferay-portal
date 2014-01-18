@@ -37,7 +37,7 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{portletItemId=");
 		sb.append(portletItemId);
@@ -59,6 +59,8 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		sb.append(portletId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -109,6 +111,7 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		}
 
 		portletItemImpl.setClassNameId(classNameId);
+		portletItemImpl.setMvccVersion(mvccVersion);
 
 		portletItemImpl.resetOriginalValues();
 
@@ -127,6 +130,7 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		name = objectInput.readUTF();
 		portletId = objectInput.readUTF();
 		classNameId = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -162,6 +166,7 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 		}
 
 		objectOutput.writeLong(classNameId);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long portletItemId;
@@ -174,4 +179,5 @@ public class PortletItemCacheModel implements CacheModel<PortletItem>,
 	public String name;
 	public String portletId;
 	public long classNameId;
+	public long mvccVersion;
 }

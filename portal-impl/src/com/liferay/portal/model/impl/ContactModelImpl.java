@@ -97,9 +97,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			{ "employeeNumber", Types.VARCHAR },
 			{ "jobTitle", Types.VARCHAR },
 			{ "jobClass", Types.VARCHAR },
-			{ "hoursOfOperation", Types.VARCHAR }
+			{ "hoursOfOperation", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Contact_ (contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId INTEGER,suffixId INTEGER,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,aimSn VARCHAR(75) null,facebookSn VARCHAR(75) null,icqSn VARCHAR(75) null,jabberSn VARCHAR(75) null,msnSn VARCHAR(75) null,mySpaceSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,ymSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Contact_ (contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId INTEGER,suffixId INTEGER,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,aimSn VARCHAR(75) null,facebookSn VARCHAR(75) null,icqSn VARCHAR(75) null,jabberSn VARCHAR(75) null,msnSn VARCHAR(75) null,mySpaceSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,ymSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 	public static final String ORDER_BY_JPQL = " ORDER BY contact.contactId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Contact_.contactId ASC";
@@ -167,6 +168,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		model.setJobTitle(soapModel.getJobTitle());
 		model.setJobClass(soapModel.getJobClass());
 		model.setHoursOfOperation(soapModel.getHoursOfOperation());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -264,6 +266,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("jobClass", getJobClass());
 		attributes.put("hoursOfOperation", getHoursOfOperation());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -469,6 +472,12 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		if (hoursOfOperation != null) {
 			setHoursOfOperation(hoursOfOperation);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -1018,6 +1027,17 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		_hoursOfOperation = hoursOfOperation;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -1082,6 +1102,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		contactImpl.setJobTitle(getJobTitle());
 		contactImpl.setJobClass(getJobClass());
 		contactImpl.setHoursOfOperation(getHoursOfOperation());
+		contactImpl.setMvccVersion(getMvccVersion());
 
 		contactImpl.resetOriginalValues();
 
@@ -1374,12 +1395,14 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			contactCacheModel.hoursOfOperation = null;
 		}
 
+		contactCacheModel.mvccVersion = getMvccVersion();
+
 		return contactCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{contactId=");
 		sb.append(getContactId());
@@ -1447,6 +1470,8 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(getJobClass());
 		sb.append(", hoursOfOperation=");
 		sb.append(getHoursOfOperation());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -1454,7 +1479,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(103);
+		StringBundler sb = new StringBundler(106);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Contact");
@@ -1592,6 +1617,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			"<column><column-name>hoursOfOperation</column-name><column-value><![CDATA[");
 		sb.append(getHoursOfOperation());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1644,6 +1673,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private String _jobTitle;
 	private String _jobClass;
 	private String _hoursOfOperation;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Contact _escapedModel;
 }

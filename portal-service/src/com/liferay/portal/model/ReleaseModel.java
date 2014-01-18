@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ReleaseModel extends BaseModel<Release> {
+public interface ReleaseModel extends BaseModel<Release>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -194,6 +194,22 @@ public interface ReleaseModel extends BaseModel<Release> {
 	 * @param testString the test string of this release
 	 */
 	public void setTestString(String testString);
+
+	/**
+	 * Returns the mvcc version of this release.
+	 *
+	 * @return the mvcc version of this release
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this release.
+	 *
+	 * @param mvccVersion the mvcc version of this release
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

@@ -35,7 +35,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -57,6 +57,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		sb.append(payload);
 		sb.append(", archived=");
 		sb.append(archived);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,6 +98,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		userNotificationEventImpl.setArchived(archived);
+		userNotificationEventImpl.setMvccVersion(mvccVersion);
 
 		userNotificationEventImpl.resetOriginalValues();
 
@@ -114,6 +117,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		delivered = objectInput.readBoolean();
 		payload = objectInput.readUTF();
 		archived = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -149,6 +153,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		objectOutput.writeBoolean(archived);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -161,4 +166,5 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public boolean delivered;
 	public String payload;
 	public boolean archived;
+	public long mvccVersion;
 }

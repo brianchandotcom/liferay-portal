@@ -38,6 +38,7 @@ public class UserTrackerSoap implements Serializable {
 		soapModel.setRemoteAddr(model.getRemoteAddr());
 		soapModel.setRemoteHost(model.getRemoteHost());
 		soapModel.setUserAgent(model.getUserAgent());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -154,6 +155,14 @@ public class UserTrackerSoap implements Serializable {
 		_userAgent = userAgent;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _userTrackerId;
 	private long _companyId;
 	private long _userId;
@@ -162,4 +171,5 @@ public class UserTrackerSoap implements Serializable {
 	private String _remoteAddr;
 	private String _remoteHost;
 	private String _userAgent;
+	private long _mvccVersion;
 }

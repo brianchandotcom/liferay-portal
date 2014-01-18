@@ -192,6 +192,8 @@ public class UserPersistenceTest {
 
 		newUser.setStatus(ServiceTestUtil.nextInt());
 
+		newUser.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newUser);
 
 		User existingUser = _persistence.findByPrimaryKey(newUser.getPrimaryKey());
@@ -266,6 +268,8 @@ public class UserPersistenceTest {
 		Assert.assertEquals(existingUser.getEmailAddressVerified(),
 			newUser.getEmailAddressVerified());
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
+		Assert.assertEquals(existingUser.getMvccVersion(),
+			newUser.getMvccVersion());
 	}
 
 	@Test
@@ -317,7 +321,7 @@ public class UserPersistenceTest {
 			"lastLoginIP", true, "lastFailedLoginDate", true,
 			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
 			"agreedToTermsOfUse", true, "emailAddressVerified", true, "status",
-			true);
+			true, "mvccVersion", true);
 	}
 
 	@Test
@@ -563,6 +567,8 @@ public class UserPersistenceTest {
 		user.setEmailAddressVerified(ServiceTestUtil.randomBoolean());
 
 		user.setStatus(ServiceTestUtil.nextInt());
+
+		user.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(user);
 

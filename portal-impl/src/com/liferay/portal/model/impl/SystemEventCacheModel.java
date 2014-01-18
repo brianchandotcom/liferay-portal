@@ -37,7 +37,7 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{systemEventId=");
 		sb.append(systemEventId);
@@ -67,6 +67,8 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		sb.append(type);
 		sb.append(", extraData=");
 		sb.append(extraData);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -117,6 +119,8 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 			systemEventImpl.setExtraData(extraData);
 		}
 
+		systemEventImpl.setMvccVersion(mvccVersion);
+
 		systemEventImpl.resetOriginalValues();
 
 		return systemEventImpl;
@@ -138,6 +142,7 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		systemEventSetKey = objectInput.readLong();
 		type = objectInput.readInt();
 		extraData = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -177,6 +182,8 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		else {
 			objectOutput.writeUTF(extraData);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long systemEventId;
@@ -193,4 +200,5 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 	public long systemEventSetKey;
 	public int type;
 	public String extraData;
+	public long mvccVersion;
 }

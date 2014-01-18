@@ -42,6 +42,7 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setActive(model.getActive());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -189,6 +190,14 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private String _uuid;
 	private long _layoutSetPrototypeId;
 	private long _companyId;
@@ -200,4 +209,5 @@ public class LayoutSetPrototypeSoap implements Serializable {
 	private String _description;
 	private String _settings;
 	private boolean _active;
+	private long _mvccVersion;
 }

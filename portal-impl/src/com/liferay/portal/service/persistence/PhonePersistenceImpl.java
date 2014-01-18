@@ -4255,6 +4255,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		phoneImpl.setExtension(phone.getExtension());
 		phoneImpl.setTypeId(phone.getTypeId());
 		phoneImpl.setPrimary(phone.isPrimary());
+		phoneImpl.setMvccVersion(phone.getMvccVersion());
 
 		return phoneImpl;
 	}

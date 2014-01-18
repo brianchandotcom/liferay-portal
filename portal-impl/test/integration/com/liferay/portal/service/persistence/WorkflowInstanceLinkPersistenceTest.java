@@ -129,6 +129,8 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 		newWorkflowInstanceLink.setWorkflowInstanceId(ServiceTestUtil.nextLong());
 
+		newWorkflowInstanceLink.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newWorkflowInstanceLink);
 
 		WorkflowInstanceLink existingWorkflowInstanceLink = _persistence.findByPrimaryKey(newWorkflowInstanceLink.getPrimaryKey());
@@ -155,6 +157,8 @@ public class WorkflowInstanceLinkPersistenceTest {
 			newWorkflowInstanceLink.getClassPK());
 		Assert.assertEquals(existingWorkflowInstanceLink.getWorkflowInstanceId(),
 			newWorkflowInstanceLink.getWorkflowInstanceId());
+		Assert.assertEquals(existingWorkflowInstanceLink.getMvccVersion(),
+			newWorkflowInstanceLink.getMvccVersion());
 	}
 
 	@Test
@@ -197,7 +201,7 @@ public class WorkflowInstanceLinkPersistenceTest {
 			"workflowInstanceLinkId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"workflowInstanceId", true);
+			"workflowInstanceId", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -338,6 +342,8 @@ public class WorkflowInstanceLinkPersistenceTest {
 		workflowInstanceLink.setClassPK(ServiceTestUtil.nextLong());
 
 		workflowInstanceLink.setWorkflowInstanceId(ServiceTestUtil.nextLong());
+
+		workflowInstanceLink.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(workflowInstanceLink);
 

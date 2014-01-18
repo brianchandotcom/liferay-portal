@@ -55,6 +55,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		attributes.put("portletId", getPortletId());
 		attributes.put("roles", getRoles());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -89,6 +90,12 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -220,6 +227,26 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setActive(boolean active) {
 		_portlet.setActive(active);
+	}
+
+	/**
+	* Returns the mvcc version of this portlet.
+	*
+	* @return the mvcc version of this portlet
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _portlet.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this portlet.
+	*
+	* @param mvccVersion the mvcc version of this portlet
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_portlet.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -2734,6 +2734,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		subscriptionImpl.setClassNameId(subscription.getClassNameId());
 		subscriptionImpl.setClassPK(subscription.getClassPK());
 		subscriptionImpl.setFrequency(subscription.getFrequency());
+		subscriptionImpl.setMvccVersion(subscription.getMvccVersion());
 
 		return subscriptionImpl;
 	}

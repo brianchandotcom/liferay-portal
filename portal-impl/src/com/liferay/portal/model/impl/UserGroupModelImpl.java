@@ -75,9 +75,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			{ "parentUserGroupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "addedByLDAPImport", Types.BOOLEAN }
+			{ "addedByLDAPImport", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserGroup (uuid_ VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserGroup (uuid_ VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroup.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroup.name ASC";
@@ -122,6 +123,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setAddedByLDAPImport(soapModel.getAddedByLDAPImport());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -221,6 +223,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("addedByLDAPImport", getAddedByLDAPImport());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -294,6 +297,12 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		if (addedByLDAPImport != null) {
 			setAddedByLDAPImport(addedByLDAPImport);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -495,6 +504,17 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		_addedByLDAPImport = addedByLDAPImport;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -543,6 +563,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		userGroupImpl.setName(getName());
 		userGroupImpl.setDescription(getDescription());
 		userGroupImpl.setAddedByLDAPImport(getAddedByLDAPImport());
+		userGroupImpl.setMvccVersion(getMvccVersion());
 
 		userGroupImpl.resetOriginalValues();
 
@@ -682,12 +703,14 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		userGroupCacheModel.addedByLDAPImport = getAddedByLDAPImport();
 
+		userGroupCacheModel.mvccVersion = getMvccVersion();
+
 		return userGroupCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -711,6 +734,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		sb.append(getDescription());
 		sb.append(", addedByLDAPImport=");
 		sb.append(getAddedByLDAPImport());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -718,7 +743,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserGroup");
@@ -768,6 +793,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			"<column><column-name>addedByLDAPImport</column-name><column-value><![CDATA[");
 		sb.append(getAddedByLDAPImport());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -796,6 +825,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private String _originalName;
 	private String _description;
 	private boolean _addedByLDAPImport;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private UserGroup _escapedModel;
 }

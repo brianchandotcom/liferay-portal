@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserTrackerPathModel extends BaseModel<UserTrackerPath> {
+public interface UserTrackerPathModel extends BaseModel<UserTrackerPath>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -116,6 +117,22 @@ public interface UserTrackerPathModel extends BaseModel<UserTrackerPath> {
 	 * @param pathDate the path date of this user tracker path
 	 */
 	public void setPathDate(Date pathDate);
+
+	/**
+	 * Returns the mvcc version of this user tracker path.
+	 *
+	 * @return the mvcc version of this user tracker path
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this user tracker path.
+	 *
+	 * @param mvccVersion the mvcc version of this user tracker path
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

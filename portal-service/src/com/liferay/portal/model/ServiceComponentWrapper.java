@@ -56,6 +56,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
 		attributes.put("data", getData());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -90,6 +91,12 @@ public class ServiceComponentWrapper implements ServiceComponent,
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -211,6 +218,26 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public void setData(java.lang.String data) {
 		_serviceComponent.setData(data);
+	}
+
+	/**
+	* Returns the mvcc version of this service component.
+	*
+	* @return the mvcc version of this service component
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _serviceComponent.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this service component.
+	*
+	* @param mvccVersion the mvcc version of this service component
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_serviceComponent.setMvccVersion(mvccVersion);
 	}
 
 	@Override

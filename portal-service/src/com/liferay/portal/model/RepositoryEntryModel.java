@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
-	StagedGroupedModel {
+	MVCCModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -256,6 +256,22 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 * @param manualCheckInRequired the manual check in required of this repository entry
 	 */
 	public void setManualCheckInRequired(boolean manualCheckInRequired);
+
+	/**
+	 * Returns the mvcc version of this repository entry.
+	 *
+	 * @return the mvcc version of this repository entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this repository entry.
+	 *
+	 * @param mvccVersion the mvcc version of this repository entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

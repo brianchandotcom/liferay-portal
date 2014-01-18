@@ -59,9 +59,10 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 			{ "virtualHostId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "layoutSetId", Types.BIGINT },
-			{ "hostname", Types.VARCHAR }
+			{ "hostname", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table VirtualHost (virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table VirtualHost (virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(75) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 	public static final String ORDER_BY_JPQL = " ORDER BY virtualHost.virtualHostId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY VirtualHost.virtualHostId ASC";
@@ -125,6 +126,7 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("layoutSetId", getLayoutSetId());
 		attributes.put("hostname", getHostname());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -156,6 +158,12 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 
 		if (hostname != null) {
 			setHostname(hostname);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -238,6 +246,16 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		return GetterUtil.getString(_originalHostname);
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -273,6 +291,7 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		virtualHostImpl.setCompanyId(getCompanyId());
 		virtualHostImpl.setLayoutSetId(getLayoutSetId());
 		virtualHostImpl.setHostname(getHostname());
+		virtualHostImpl.setMvccVersion(getMvccVersion());
 
 		virtualHostImpl.resetOriginalValues();
 
@@ -366,12 +385,14 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 			virtualHostCacheModel.hostname = null;
 		}
 
+		virtualHostCacheModel.mvccVersion = getMvccVersion();
+
 		return virtualHostCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{virtualHostId=");
 		sb.append(getVirtualHostId());
@@ -381,6 +402,8 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 		sb.append(getLayoutSetId());
 		sb.append(", hostname=");
 		sb.append(getHostname());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -388,7 +411,7 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.VirtualHost");
@@ -410,6 +433,10 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 			"<column><column-name>hostname</column-name><column-value><![CDATA[");
 		sb.append(getHostname());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -429,6 +456,7 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 	private boolean _setOriginalLayoutSetId;
 	private String _hostname;
 	private String _originalHostname;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private VirtualHost _escapedModel;
 }

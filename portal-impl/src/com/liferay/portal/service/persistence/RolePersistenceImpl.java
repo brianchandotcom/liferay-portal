@@ -8980,6 +8980,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		roleImpl.setDescription(role.getDescription());
 		roleImpl.setType(role.getType());
 		roleImpl.setSubtype(role.getSubtype());
+		roleImpl.setMvccVersion(role.getMvccVersion());
 
 		return roleImpl;
 	}

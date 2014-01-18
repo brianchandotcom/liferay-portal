@@ -130,6 +130,8 @@ public class TicketPersistenceTest {
 
 		newTicket.setExpirationDate(ServiceTestUtil.nextDate());
 
+		newTicket.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newTicket);
 
 		Ticket existingTicket = _persistence.findByPrimaryKey(newTicket.getPrimaryKey());
@@ -151,6 +153,8 @@ public class TicketPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingTicket.getExpirationDate()),
 			Time.getShortTimestamp(newTicket.getExpirationDate()));
+		Assert.assertEquals(existingTicket.getMvccVersion(),
+			newTicket.getMvccVersion());
 	}
 
 	@Test
@@ -190,7 +194,7 @@ public class TicketPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Ticket", "ticketId", true,
 			"companyId", true, "createDate", true, "classNameId", true,
 			"classPK", true, "key", true, "type", true, "extraInfo", true,
-			"expirationDate", true);
+			"expirationDate", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -339,6 +343,8 @@ public class TicketPersistenceTest {
 		ticket.setExtraInfo(ServiceTestUtil.randomString());
 
 		ticket.setExpirationDate(ServiceTestUtil.nextDate());
+
+		ticket.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(ticket);
 

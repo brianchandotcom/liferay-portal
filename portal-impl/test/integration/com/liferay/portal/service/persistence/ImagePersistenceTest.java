@@ -121,6 +121,8 @@ public class ImagePersistenceTest {
 
 		newImage.setSize(ServiceTestUtil.nextInt());
 
+		newImage.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newImage);
 
 		Image existingImage = _persistence.findByPrimaryKey(newImage.getPrimaryKey());
@@ -133,6 +135,8 @@ public class ImagePersistenceTest {
 		Assert.assertEquals(existingImage.getHeight(), newImage.getHeight());
 		Assert.assertEquals(existingImage.getWidth(), newImage.getWidth());
 		Assert.assertEquals(existingImage.getSize(), newImage.getSize());
+		Assert.assertEquals(existingImage.getMvccVersion(),
+			newImage.getMvccVersion());
 	}
 
 	@Test
@@ -171,7 +175,7 @@ public class ImagePersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Image", "imageId", true,
 			"modifiedDate", true, "type", true, "height", true, "width", true,
-			"size", true);
+			"size", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -298,6 +302,8 @@ public class ImagePersistenceTest {
 		image.setWidth(ServiceTestUtil.nextInt());
 
 		image.setSize(ServiceTestUtil.nextInt());
+
+		image.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(image);
 

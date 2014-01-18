@@ -54,9 +54,10 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "organizationId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "roleId", Types.BIGINT }
+			{ "roleId", Types.BIGINT },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table OrgGroupRole (organizationId LONG not null,groupId LONG not null,roleId LONG not null,primary key (organizationId, groupId, roleId))";
+	public static final String TABLE_SQL_CREATE = "create table OrgGroupRole (organizationId LONG not null,groupId LONG not null,roleId LONG not null,mvccVersion LONG default 0,primary key (organizationId, groupId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table OrgGroupRole";
 	public static final String ORDER_BY_JPQL = " ORDER BY orgGroupRole.id.organizationId ASC, orgGroupRole.id.groupId ASC, orgGroupRole.id.roleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OrgGroupRole.organizationId ASC, OrgGroupRole.groupId ASC, OrgGroupRole.roleId ASC";
@@ -120,6 +121,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -145,6 +147,12 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -202,6 +210,16 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		return _originalRoleId;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -223,6 +241,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		orgGroupRoleImpl.setOrganizationId(getOrganizationId());
 		orgGroupRoleImpl.setGroupId(getGroupId());
 		orgGroupRoleImpl.setRoleId(getRoleId());
+		orgGroupRoleImpl.setMvccVersion(getMvccVersion());
 
 		orgGroupRoleImpl.resetOriginalValues();
 
@@ -298,12 +317,14 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 		orgGroupRoleCacheModel.roleId = getRoleId();
 
+		orgGroupRoleCacheModel.mvccVersion = getMvccVersion();
+
 		return orgGroupRoleCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{organizationId=");
 		sb.append(getOrganizationId());
@@ -311,6 +332,8 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		sb.append(getGroupId());
 		sb.append(", roleId=");
 		sb.append(getRoleId());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -318,7 +341,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.OrgGroupRole");
@@ -335,6 +358,10 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		sb.append(
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
 		sb.append(getRoleId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -353,6 +380,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	private long _roleId;
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private OrgGroupRole _escapedModel;
 }

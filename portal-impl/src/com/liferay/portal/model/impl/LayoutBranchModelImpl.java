@@ -72,9 +72,10 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 			{ "plid", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "master", Types.BOOLEAN }
+			{ "master", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (LayoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutBranch (LayoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutBranch.LayoutBranchId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutBranch.LayoutBranchId ASC";
@@ -119,6 +120,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setMaster(soapModel.getMaster());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -193,6 +195,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("master", getMaster());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -260,6 +263,12 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 		if (master != null) {
 			setMaster(master);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -449,6 +458,17 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return _originalMaster;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -490,6 +510,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		layoutBranchImpl.setName(getName());
 		layoutBranchImpl.setDescription(getDescription());
 		layoutBranchImpl.setMaster(getMaster());
+		layoutBranchImpl.setMvccVersion(getMvccVersion());
 
 		layoutBranchImpl.resetOriginalValues();
 
@@ -611,12 +632,14 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 		layoutBranchCacheModel.master = getMaster();
 
+		layoutBranchCacheModel.mvccVersion = getMvccVersion();
+
 		return layoutBranchCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{LayoutBranchId=");
 		sb.append(getLayoutBranchId());
@@ -638,6 +661,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		sb.append(getDescription());
 		sb.append(", master=");
 		sb.append(getMaster());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -645,7 +670,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutBranch");
@@ -691,6 +716,10 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 			"<column><column-name>master</column-name><column-value><![CDATA[");
 		sb.append(getMaster());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -719,6 +748,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	private boolean _master;
 	private boolean _originalMaster;
 	private boolean _setOriginalMaster;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private LayoutBranch _escapedModel;
 }

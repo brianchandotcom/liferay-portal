@@ -66,6 +66,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 		attributes.put("portletId", getPortletId());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("dlFolderId", getDlFolderId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 
 		if (dlFolderId != null) {
 			setDlFolderId(dlFolderId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -492,6 +499,26 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	@Override
 	public void setDlFolderId(long dlFolderId) {
 		_repository.setDlFolderId(dlFolderId);
+	}
+
+	/**
+	* Returns the mvcc version of this repository.
+	*
+	* @return the mvcc version of this repository
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _repository.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this repository.
+	*
+	* @param mvccVersion the mvcc version of this repository
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_repository.setMvccVersion(mvccVersion);
 	}
 
 	@Override

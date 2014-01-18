@@ -130,6 +130,8 @@ public class ReleasePersistenceTest {
 
 		newRelease.setTestString(ServiceTestUtil.randomString());
 
+		newRelease.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newRelease);
 
 		Release existingRelease = _persistence.findByPrimaryKey(newRelease.getPrimaryKey());
@@ -154,6 +156,8 @@ public class ReleasePersistenceTest {
 		Assert.assertEquals(existingRelease.getState(), newRelease.getState());
 		Assert.assertEquals(existingRelease.getTestString(),
 			newRelease.getTestString());
+		Assert.assertEquals(existingRelease.getMvccVersion(),
+			newRelease.getMvccVersion());
 	}
 
 	@Test
@@ -193,7 +197,8 @@ public class ReleasePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Release_", "releaseId",
 			true, "createDate", true, "modifiedDate", true,
 			"servletContextName", true, "buildNumber", true, "buildDate", true,
-			"verified", true, "state", true, "testString", true);
+			"verified", true, "state", true, "testString", true, "mvccVersion",
+			true);
 	}
 
 	@Test
@@ -343,6 +348,8 @@ public class ReleasePersistenceTest {
 		release.setState(ServiceTestUtil.nextInt());
 
 		release.setTestString(ServiceTestUtil.randomString());
+
+		release.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(release);
 

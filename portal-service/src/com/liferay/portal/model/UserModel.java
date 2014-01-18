@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserModel extends BaseModel<User>, StagedModel {
+public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -703,6 +703,22 @@ public interface UserModel extends BaseModel<User>, StagedModel {
 	 * @param status the status of this user
 	 */
 	public void setStatus(int status);
+
+	/**
+	 * Returns the mvcc version of this user.
+	 *
+	 * @return the mvcc version of this user
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this user.
+	 *
+	 * @param mvccVersion the mvcc version of this user
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

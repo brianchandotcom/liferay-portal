@@ -35,7 +35,7 @@ public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{pluginSettingId=");
 		sb.append(pluginSettingId);
@@ -49,6 +49,8 @@ public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 		sb.append(roles);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -83,6 +85,7 @@ public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 		}
 
 		pluginSettingImpl.setActive(active);
+		pluginSettingImpl.setMvccVersion(mvccVersion);
 
 		pluginSettingImpl.resetOriginalValues();
 
@@ -97,6 +100,7 @@ public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 		pluginType = objectInput.readUTF();
 		roles = objectInput.readUTF();
 		active = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -127,6 +131,7 @@ public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 		}
 
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long pluginSettingId;
@@ -135,4 +140,5 @@ public class PluginSettingCacheModel implements CacheModel<PluginSetting>,
 	public String pluginType;
 	public String roles;
 	public boolean active;
+	public long mvccVersion;
 }

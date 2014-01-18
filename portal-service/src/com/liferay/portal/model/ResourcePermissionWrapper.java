@@ -59,6 +59,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 		attributes.put("roleId", getRoleId());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -111,6 +112,12 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 
 		if (actionIds != null) {
 			setActionIds(actionIds);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -292,6 +299,26 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	@Override
 	public void setActionIds(long actionIds) {
 		_resourcePermission.setActionIds(actionIds);
+	}
+
+	/**
+	* Returns the mvcc version of this resource permission.
+	*
+	* @return the mvcc version of this resource permission
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _resourcePermission.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this resource permission.
+	*
+	* @param mvccVersion the mvcc version of this resource permission
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_resourcePermission.setMvccVersion(mvccVersion);
 	}
 
 	@Override

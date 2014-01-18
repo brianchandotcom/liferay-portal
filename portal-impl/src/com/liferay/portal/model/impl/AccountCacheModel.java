@@ -36,7 +36,7 @@ import java.util.Date;
 public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{accountId=");
 		sb.append(accountId);
@@ -70,6 +70,8 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		sb.append(type);
 		sb.append(", size=");
 		sb.append(size);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -169,6 +171,8 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 			accountImpl.setSize(size);
 		}
 
+		accountImpl.setMvccVersion(mvccVersion);
+
 		accountImpl.resetOriginalValues();
 
 		return accountImpl;
@@ -192,6 +196,7 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		industry = objectInput.readUTF();
 		type = objectInput.readUTF();
 		size = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -274,6 +279,8 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 		else {
 			objectOutput.writeUTF(size);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long accountId;
@@ -292,4 +299,5 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable {
 	public String industry;
 	public String type;
 	public String size;
+	public long mvccVersion;
 }

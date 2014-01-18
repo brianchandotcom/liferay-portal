@@ -38,7 +38,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface GroupModel extends AttachedModel, BaseModel<Group> {
+public interface GroupModel extends AttachedModel, BaseModel<Group>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -380,6 +380,22 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 	 * @param active the active of this group
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the mvcc version of this group.
+	 *
+	 * @return the mvcc version of this group
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this group.
+	 *
+	 * @param mvccVersion the mvcc version of this group
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

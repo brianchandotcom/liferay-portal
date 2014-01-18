@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserTrackerModel extends BaseModel<UserTracker> {
+public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -191,6 +191,22 @@ public interface UserTrackerModel extends BaseModel<UserTracker> {
 	 * @param userAgent the user agent of this user tracker
 	 */
 	public void setUserAgent(String userAgent);
+
+	/**
+	 * Returns the mvcc version of this user tracker.
+	 *
+	 * @return the mvcc version of this user tracker
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this user tracker.
+	 *
+	 * @param mvccVersion the mvcc version of this user tracker
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

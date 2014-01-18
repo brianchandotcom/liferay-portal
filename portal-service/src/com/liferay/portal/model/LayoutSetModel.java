@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutSetModel extends BaseModel<LayoutSet> {
+public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -305,6 +305,22 @@ public interface LayoutSetModel extends BaseModel<LayoutSet> {
 	 */
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled);
+
+	/**
+	 * Returns the mvcc version of this layout set.
+	 *
+	 * @return the mvcc version of this layout set
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this layout set.
+	 *
+	 * @param mvccVersion the mvcc version of this layout set
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

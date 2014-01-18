@@ -64,6 +64,7 @@ public class ContactSoap implements Serializable {
 		soapModel.setJobTitle(model.getJobTitle());
 		soapModel.setJobClass(model.getJobClass());
 		soapModel.setHoursOfOperation(model.getHoursOfOperation());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -384,6 +385,14 @@ public class ContactSoap implements Serializable {
 		_hoursOfOperation = hoursOfOperation;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _contactId;
 	private long _companyId;
 	private long _userId;
@@ -417,4 +426,5 @@ public class ContactSoap implements Serializable {
 	private String _jobTitle;
 	private String _jobClass;
 	private String _hoursOfOperation;
+	private long _mvccVersion;
 }

@@ -893,6 +893,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		shardImpl.setClassNameId(shard.getClassNameId());
 		shardImpl.setClassPK(shard.getClassPK());
 		shardImpl.setName(shard.getName());
+		shardImpl.setMvccVersion(shard.getMvccVersion());
 
 		return shardImpl;
 	}

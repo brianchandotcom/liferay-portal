@@ -60,9 +60,10 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			{ "userTrackerPathId", Types.BIGINT },
 			{ "userTrackerId", Types.BIGINT },
 			{ "path_", Types.VARCHAR },
-			{ "pathDate", Types.TIMESTAMP }
+			{ "pathDate", Types.TIMESTAMP },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserTrackerPath (userTrackerPathId LONG not null primary key,userTrackerId LONG,path_ STRING null,pathDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table UserTrackerPath (userTrackerPathId LONG not null primary key,userTrackerId LONG,path_ STRING null,pathDate DATE null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table UserTrackerPath";
 	public static final String ORDER_BY_JPQL = " ORDER BY userTrackerPath.userTrackerPathId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserTrackerPath.userTrackerPathId ASC";
@@ -124,6 +125,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		attributes.put("userTrackerId", getUserTrackerId());
 		attributes.put("path", getPath());
 		attributes.put("pathDate", getPathDate());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -155,6 +157,12 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 		if (pathDate != null) {
 			setPathDate(pathDate);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -215,6 +223,16 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		_pathDate = pathDate;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -250,6 +268,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		userTrackerPathImpl.setUserTrackerId(getUserTrackerId());
 		userTrackerPathImpl.setPath(getPath());
 		userTrackerPathImpl.setPathDate(getPathDate());
+		userTrackerPathImpl.setMvccVersion(getMvccVersion());
 
 		userTrackerPathImpl.resetOriginalValues();
 
@@ -344,12 +363,14 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			userTrackerPathCacheModel.pathDate = Long.MIN_VALUE;
 		}
 
+		userTrackerPathCacheModel.mvccVersion = getMvccVersion();
+
 		return userTrackerPathCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{userTrackerPathId=");
 		sb.append(getUserTrackerPathId());
@@ -359,6 +380,8 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		sb.append(getPath());
 		sb.append(", pathDate=");
 		sb.append(getPathDate());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -366,7 +389,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserTrackerPath");
@@ -388,6 +411,10 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			"<column><column-name>pathDate</column-name><column-value><![CDATA[");
 		sb.append(getPathDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -404,6 +431,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	private boolean _setOriginalUserTrackerId;
 	private String _path;
 	private Date _pathDate;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private UserTrackerPath _escapedModel;
 }

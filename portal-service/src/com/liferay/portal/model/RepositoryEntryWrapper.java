@@ -64,6 +64,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("mappedId", getMappedId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -135,6 +136,12 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 
 		if (manualCheckInRequired != null) {
 			setManualCheckInRequired(manualCheckInRequired);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -408,6 +415,26 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	@Override
 	public void setManualCheckInRequired(boolean manualCheckInRequired) {
 		_repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
+	}
+
+	/**
+	* Returns the mvcc version of this repository entry.
+	*
+	* @return the mvcc version of this repository entry
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _repositoryEntry.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this repository entry.
+	*
+	* @param mvccVersion the mvcc version of this repository entry
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_repositoryEntry.setMvccVersion(mvccVersion);
 	}
 
 	@Override

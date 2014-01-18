@@ -171,6 +171,8 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setStatusDate(ServiceTestUtil.nextDate());
 
+		newLayoutRevision.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newLayoutRevision);
 
 		LayoutRevision existingLayoutRevision = _persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey());
@@ -238,6 +240,8 @@ public class LayoutRevisionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutRevision.getStatusDate()),
 			Time.getShortTimestamp(newLayoutRevision.getStatusDate()));
+		Assert.assertEquals(existingLayoutRevision.getMvccVersion(),
+			newLayoutRevision.getMvccVersion());
 	}
 
 	@Test
@@ -285,7 +289,7 @@ public class LayoutRevisionPersistenceTest {
 			"typeSettings", true, "iconImageId", true, "themeId", true,
 			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
 			true, "css", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"statusByUserName", true, "statusDate", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -482,6 +486,8 @@ public class LayoutRevisionPersistenceTest {
 		layoutRevision.setStatusByUserName(ServiceTestUtil.randomString());
 
 		layoutRevision.setStatusDate(ServiceTestUtil.nextDate());
+
+		layoutRevision.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(layoutRevision);
 

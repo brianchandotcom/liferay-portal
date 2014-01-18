@@ -113,22 +113,6 @@ public class StartupAction extends SimpleAction {
 		intraband.registerDatagramReceiveHandler(
 			SystemDataType.RPC.getValue(), new RPCDatagramReceiveHandler());
 
-		// Clear locks
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Clear locks");
-		}
-
-		try {
-			LockLocalServiceUtil.clear();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to clear locks because Lock table does not exist");
-			}
-		}
-
 		// Shutdown hook
 
 		if (_log.isDebugEnabled()) {
@@ -159,6 +143,22 @@ public class StartupAction extends SimpleAction {
 		}
 
 		DBUpgrader.upgrade();
+
+		// Clear locks
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Clear locks");
+		}
+
+		try {
+			LockLocalServiceUtil.clear();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to clear locks because Lock table does not exist");
+			}
+		}
 
 		// Messaging
 

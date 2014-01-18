@@ -40,6 +40,7 @@ public class PortletItemSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -172,6 +173,14 @@ public class PortletItemSoap implements Serializable {
 		_classNameId = classNameId;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _portletItemId;
 	private long _groupId;
 	private long _companyId;
@@ -182,4 +191,5 @@ public class PortletItemSoap implements Serializable {
 	private String _name;
 	private String _portletId;
 	private long _classNameId;
+	private long _mvccVersion;
 }

@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ContactModel extends AttachedModel, AuditedModel,
-	BaseModel<Contact> {
+	BaseModel<Contact>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -591,6 +591,22 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	 * @param hoursOfOperation the hours of operation of this contact
 	 */
 	public void setHoursOfOperation(String hoursOfOperation);
+
+	/**
+	 * Returns the mvcc version of this contact.
+	 *
+	 * @return the mvcc version of this contact
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this contact.
+	 *
+	 * @param mvccVersion the mvcc version of this contact
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

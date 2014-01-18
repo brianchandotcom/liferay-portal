@@ -65,9 +65,10 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			{ "buildDate", Types.TIMESTAMP },
 			{ "verified", Types.BOOLEAN },
 			{ "state_", Types.INTEGER },
-			{ "testString", Types.VARCHAR }
+			{ "testString", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Release_ (releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
+	public static final String TABLE_SQL_CREATE = "create table Release_ (releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table Release_";
 	public static final String ORDER_BY_JPQL = " ORDER BY release.releaseId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Release_.releaseId ASC";
@@ -134,6 +135,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		attributes.put("verified", getVerified());
 		attributes.put("state", getState());
 		attributes.put("testString", getTestString());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -195,6 +197,12 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 		if (testString != null) {
 			setTestString(testString);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -313,6 +321,16 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		_testString = testString;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -353,6 +371,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		releaseImpl.setVerified(getVerified());
 		releaseImpl.setState(getState());
 		releaseImpl.setTestString(getTestString());
+		releaseImpl.setMvccVersion(getMvccVersion());
 
 		releaseImpl.resetOriginalValues();
 
@@ -475,12 +494,14 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			releaseCacheModel.testString = null;
 		}
 
+		releaseCacheModel.mvccVersion = getMvccVersion();
+
 		return releaseCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{releaseId=");
 		sb.append(getReleaseId());
@@ -500,6 +521,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		sb.append(getState());
 		sb.append(", testString=");
 		sb.append(getTestString());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -507,7 +530,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Release");
@@ -549,6 +572,10 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			"<column><column-name>testString</column-name><column-value><![CDATA[");
 		sb.append(getTestString());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -569,6 +596,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private boolean _verified;
 	private int _state;
 	private String _testString;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private Release _escapedModel;
 }

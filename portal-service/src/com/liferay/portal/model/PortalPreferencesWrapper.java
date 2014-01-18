@@ -55,6 +55,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("ownerType", getOwnerType());
 		attributes.put("preferences", getPreferences());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 
 		if (preferences != null) {
 			setPreferences(preferences);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -184,6 +191,26 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	@Override
 	public void setPreferences(java.lang.String preferences) {
 		_portalPreferences.setPreferences(preferences);
+	}
+
+	/**
+	* Returns the mvcc version of this portal preferences.
+	*
+	* @return the mvcc version of this portal preferences
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _portalPreferences.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this portal preferences.
+	*
+	* @param mvccVersion the mvcc version of this portal preferences
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_portalPreferences.setMvccVersion(mvccVersion);
 	}
 
 	@Override

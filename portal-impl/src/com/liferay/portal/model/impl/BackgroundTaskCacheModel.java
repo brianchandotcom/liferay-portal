@@ -37,7 +37,7 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{backgroundTaskId=");
 		sb.append(backgroundTaskId);
@@ -69,6 +69,8 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		sb.append(status);
 		sb.append(", statusMessage=");
 		sb.append(statusMessage);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -150,6 +152,8 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 			backgroundTaskImpl.setStatusMessage(statusMessage);
 		}
 
+		backgroundTaskImpl.setMvccVersion(mvccVersion);
+
 		backgroundTaskImpl.resetOriginalValues();
 
 		return backgroundTaskImpl;
@@ -172,6 +176,7 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		completionDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusMessage = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -230,6 +235,8 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		else {
 			objectOutput.writeUTF(statusMessage);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long backgroundTaskId;
@@ -247,4 +254,5 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	public long completionDate;
 	public int status;
 	public String statusMessage;
+	public long mvccVersion;
 }

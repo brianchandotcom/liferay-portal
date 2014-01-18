@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AccountModel extends AuditedModel, BaseModel<Account> {
+public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -321,6 +321,22 @@ public interface AccountModel extends AuditedModel, BaseModel<Account> {
 	 * @param size the size of this account
 	 */
 	public void setSize(String size);
+
+	/**
+	 * Returns the mvcc version of this account.
+	 *
+	 * @return the mvcc version of this account
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this account.
+	 *
+	 * @param mvccVersion the mvcc version of this account
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

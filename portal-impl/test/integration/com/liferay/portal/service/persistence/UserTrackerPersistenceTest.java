@@ -125,6 +125,8 @@ public class UserTrackerPersistenceTest {
 
 		newUserTracker.setUserAgent(ServiceTestUtil.randomString());
 
+		newUserTracker.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newUserTracker);
 
 		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
@@ -146,6 +148,8 @@ public class UserTrackerPersistenceTest {
 			newUserTracker.getRemoteHost());
 		Assert.assertEquals(existingUserTracker.getUserAgent(),
 			newUserTracker.getUserAgent());
+		Assert.assertEquals(existingUserTracker.getMvccVersion(),
+			newUserTracker.getMvccVersion());
 	}
 
 	@Test
@@ -186,7 +190,7 @@ public class UserTrackerPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("UserTracker",
 			"userTrackerId", true, "companyId", true, "userId", true,
 			"modifiedDate", true, "sessionId", true, "remoteAddr", true,
-			"remoteHost", true, "userAgent", true);
+			"remoteHost", true, "userAgent", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -319,6 +323,8 @@ public class UserTrackerPersistenceTest {
 		userTracker.setRemoteHost(ServiceTestUtil.randomString());
 
 		userTracker.setUserAgent(ServiceTestUtil.randomString());
+
+		userTracker.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(userTracker);
 

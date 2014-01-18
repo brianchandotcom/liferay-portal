@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class ShardCacheModel implements CacheModel<Shard>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{shardId=");
 		sb.append(shardId);
@@ -44,6 +44,8 @@ public class ShardCacheModel implements CacheModel<Shard>, Externalizable {
 		sb.append(classPK);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -64,6 +66,8 @@ public class ShardCacheModel implements CacheModel<Shard>, Externalizable {
 			shardImpl.setName(name);
 		}
 
+		shardImpl.setMvccVersion(mvccVersion);
+
 		shardImpl.resetOriginalValues();
 
 		return shardImpl;
@@ -75,6 +79,7 @@ public class ShardCacheModel implements CacheModel<Shard>, Externalizable {
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -90,10 +95,13 @@ public class ShardCacheModel implements CacheModel<Shard>, Externalizable {
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long shardId;
 	public long classNameId;
 	public long classPK;
 	public String name;
+	public long mvccVersion;
 }

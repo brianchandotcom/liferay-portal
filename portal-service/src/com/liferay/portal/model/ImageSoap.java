@@ -37,6 +37,7 @@ public class ImageSoap implements Serializable {
 		soapModel.setHeight(model.getHeight());
 		soapModel.setWidth(model.getWidth());
 		soapModel.setSize(model.getSize());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -137,10 +138,19 @@ public class ImageSoap implements Serializable {
 		_size = size;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _imageId;
 	private Date _modifiedDate;
 	private String _type;
 	private int _height;
 	private int _width;
 	private int _size;
+	private long _mvccVersion;
 }

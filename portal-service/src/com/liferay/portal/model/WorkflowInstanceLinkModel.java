@@ -41,7 +41,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WorkflowInstanceLinkModel extends AttachedModel,
-	BaseModel<WorkflowInstanceLink>, GroupedModel {
+	BaseModel<WorkflowInstanceLink>, GroupedModel, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -245,6 +245,22 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 	 * @param workflowInstanceId the workflow instance ID of this workflow instance link
 	 */
 	public void setWorkflowInstanceId(long workflowInstanceId);
+
+	/**
+	 * Returns the mvcc version of this workflow instance link.
+	 *
+	 * @return the mvcc version of this workflow instance link
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this workflow instance link.
+	 *
+	 * @param mvccVersion the mvcc version of this workflow instance link
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

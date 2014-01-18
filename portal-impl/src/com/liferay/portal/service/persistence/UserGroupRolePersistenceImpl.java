@@ -2956,6 +2956,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		userGroupRoleImpl.setUserId(userGroupRole.getUserId());
 		userGroupRoleImpl.setGroupId(userGroupRole.getGroupId());
 		userGroupRoleImpl.setRoleId(userGroupRole.getRoleId());
+		userGroupRoleImpl.setMvccVersion(userGroupRole.getMvccVersion());
 
 		return userGroupRoleImpl;
 	}

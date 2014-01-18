@@ -44,7 +44,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
-	GroupedModel, WorkflowedModel {
+	GroupedModel, MVCCModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -995,6 +995,22 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the mvcc version of this layout revision.
+	 *
+	 * @return the mvcc version of this layout revision
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this layout revision.
+	 *
+	 * @param mvccVersion the mvcc version of this layout revision
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}

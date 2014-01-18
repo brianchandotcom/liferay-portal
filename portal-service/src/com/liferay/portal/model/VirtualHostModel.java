@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface VirtualHostModel extends BaseModel<VirtualHost> {
+public interface VirtualHostModel extends BaseModel<VirtualHost>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,6 +114,22 @@ public interface VirtualHostModel extends BaseModel<VirtualHost> {
 	 * @param hostname the hostname of this virtual host
 	 */
 	public void setHostname(String hostname);
+
+	/**
+	 * Returns the mvcc version of this virtual host.
+	 *
+	 * @return the mvcc version of this virtual host
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this virtual host.
+	 *
+	 * @param mvccVersion the mvcc version of this virtual host
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

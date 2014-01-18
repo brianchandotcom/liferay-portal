@@ -679,6 +679,15 @@ public class StringUtil {
 		return _highlight(s, pattern, highlight1, highlight2);
 	}
 
+	/**
+	 * Returns the string <code>s</code> in highlighted HTML format if the
+	 * string is present in the query.
+	 *
+	 * @param  s the string to highlight
+	 * @param  queryTerms the query results to search
+	 * @return the string <code>s</code> in highlighted HTML format if the
+	 *         string is present in the query
+	 */
 	public static String highlight(String s, String[] queryTerms) {
 		return highlight(
 			s, queryTerms, "<span class=\"highlight\">", "</span>");
@@ -1999,6 +2008,11 @@ public class StringUtil {
 		return quote.concat(s).concat(quote);
 	}
 
+	/**
+	 * Returns a randomized string of four lower case, alphabetic characters.
+	 *
+	 * @return the randomized string of four lower case, alphabetic characters
+	 */
 	public static String randomId() {
 		Random random = new Random();
 
@@ -2023,10 +2037,25 @@ public class StringUtil {
 		return RandomUtil.shuffle(s);
 	}
 
+	/**
+	 * Returns a randomized string of eight characters consisting of lower case
+	 * letters, upper case letters, and single-digit whole numbers.
+	 *
+	 * @return the randomized string of eight characters consisting of lower
+	 *         case letters, upper case letters, and single-digit whole numbers
+	 */
 	public static String randomString() {
 		return randomString(8);
 	}
 
+	/**
+	 * Returns a randomized string of the specified length consisting of lower
+	 * case letters, upper case letters, and single-digit whole numbers.
+	 *
+	 * @param  length the character length of the randomized string
+	 * @return the randomized string of the specified length consisting of lower
+	 *         case letters, upper case letters, and single-digit whole numbers
+	 */
 	public static String randomString(int length) {
 		Random random = new Random();
 

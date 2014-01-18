@@ -118,7 +118,6 @@ if (reminderAttempts == null) {
 					</div>
 
 					<aui:input autoFocus="<%= true %>" label="<%= HtmlUtil.escape(LanguageUtil.get(pageContext, user2.getReminderQueryQuestion())) %>" name="answer" type="text" />
-
 				</c:if>
 
 				<c:choose>

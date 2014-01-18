@@ -1,4 +1,4 @@
-<definition component-name="portal-administration">
+<definition component-name="portal-permissions">
 	<var name="siteName" value="Site Name" />
 
 	<set-up>

@@ -1,4 +1,4 @@
-<definition component-name="portal-administration">
+<definition component-name="portal-permissions">
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>

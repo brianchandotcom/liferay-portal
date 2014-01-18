@@ -227,24 +227,18 @@ $editLayoutPanelWidth: 460px;
 									}
 								}
 
-								&.user-avatar {
-									.user-avatar-link {
-										padding: 15px 13px 12px;
+								&.user-avatar .user-avatar-link .nav-item-label {
+									display: inline;
 
-										.nav-item-label {
-											display: inline;
+									.user-avatar-image {
+										background-size: auto 26px;
+										height: 26px;
+										margin-top: 0;
+										width: 26px;
+									}
 
-											.user-avatar-image {
-												background-size: auto 26px;
-												height: 26px;
-												margin-top: 0;
-												width: 26px;
-											}
-
-											.user-full-name {
-												display: none;
-											}
-										}
+									.user-full-name {
+										display: none;
 									}
 								}
 

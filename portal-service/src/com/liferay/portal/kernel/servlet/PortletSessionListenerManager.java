@@ -238,12 +238,12 @@ public class PortletSessionListenerManager
 
 	@Override
 	public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent) {
+		if (_httpSessionBindingListeners.isEmpty()) {
+			return;
+		}
+
 		httpSessionBindingEvent = getHttpSessionBindingEvent(
 			httpSessionBindingEvent);
-
-		HttpSession session = httpSessionBindingEvent.getSession();
-
-		PortletSessionTracker.invalidate(session.getId());
 
 		for (HttpSessionBindingListener httpSessionBindingListener :
 				_httpSessionBindingListeners) {

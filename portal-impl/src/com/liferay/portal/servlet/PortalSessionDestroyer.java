@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
-import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -123,15 +122,6 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-
-		try {
-			PortletSessionTracker.invalidate(session.getId());
-		}
-		catch (IllegalStateException ise) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(ise, ise);
-			}
 		}
 
 		// Process session destroyed events

@@ -17,7 +17,6 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.servlet.NullSession;
 
@@ -48,29 +47,6 @@ public class SharedSessionWrapper implements HttpSession {
 
 		_portalSession = portalSession;
 		_portletSession = portletSession;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SharedSessionWrapper)) {
-			return false;
-		}
-
-		SharedSessionWrapper sharedSessionWrapper = (SharedSessionWrapper)obj;
-
-		if (Validator.equals(
-				_portalSession, sharedSessionWrapper._portalSession) &&
-			Validator.equals(
-				_portletSession, sharedSessionWrapper._portletSession)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -162,19 +138,6 @@ public class SharedSessionWrapper implements HttpSession {
 		List<String> names = ListUtil.fromEnumeration(getAttributeNames());
 
 		return names.toArray(new String[names.size()]);
-	}
-
-	@Override
-	public int hashCode() {
-		if (_portletSession == null) {
-
-			// LPS-35558
-
-			return _portalSession.hashCode();
-		}
-		else {
-			return _portalSession.hashCode() ^ _portletSession.hashCode();
-		}
 	}
 
 	@Override

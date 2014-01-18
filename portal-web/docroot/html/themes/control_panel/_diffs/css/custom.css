@@ -301,8 +301,19 @@ $dockbarOpenGradientStart: #0EA6F9;
 						float: right;
 					}
 
-					> .nav li.dropdown ul.dropdown-menu {
-						margin-top: 0;
+					> .nav {
+						li.dropdown ul.dropdown-menu {
+							margin-top: 0;
+						}
+
+						&.nav-navigation ul.dropdown-menu > li > a {
+							line-height: 31px;
+							padding: 6px 15px;
+
+							&:focus, &:hover {
+								color: #FFF;
+							}
+						}
 					}
 				}
 

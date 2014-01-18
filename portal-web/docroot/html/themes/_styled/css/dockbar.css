@@ -295,7 +295,7 @@ $editLayoutPanelWidth: 460px;
 								background: transparent;
 								border-width: 0;
 								display: inline-block;
-								letter-spacing: 1px;
+								margin: 0;
 								padding: 0 5px;
 								position: static;
 								z-index: 350;
@@ -336,10 +336,8 @@ $editLayoutPanelWidth: 460px;
 									}
 
 									> a {
-										font-size: 14px;
-										line-height: 31px;
 										margin: 0;
-										padding: 6px 15px;
+										padding: 10px 15px;
 										white-space: nowrap;
 
 										@include respond-to(phone, tablet) {
@@ -350,6 +348,12 @@ $editLayoutPanelWidth: 460px;
 												background: #555;
 												color: #FFF;
 											}
+										}
+
+										&:focus, &:hover {
+											background-color: transparent;
+											background-image: none;
+											color: #0077B3;
 										}
 
 										> .nav-item-icon {

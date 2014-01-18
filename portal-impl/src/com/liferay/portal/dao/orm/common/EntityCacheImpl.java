@@ -199,17 +199,12 @@ public class EntityCacheImpl
 					session = sessionFactory.openSession();
 
 					loadResult = (Serializable)session.load(clazz, primaryKey);
-				}
-				finally {
-					if (loadResult == null) {
-						result = StringPool.BLANK;
-					}
-					else {
-						result = ((BaseModel<?>)loadResult).toCacheModel();
-					}
+
+					result = ((BaseModel<?>)loadResult).toCacheModel();
 
 					portalCache.put(cacheKey, result);
-
+				}
+				finally {
 					sessionFactory.closeSession(session);
 				}
 			}

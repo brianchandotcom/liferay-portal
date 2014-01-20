@@ -274,7 +274,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 				</c:if>
 
 				boundingBox: '#<portlet:namespace />translationManager',
-				defaultLocale: '<%= defaultLanguageId %>',
+				defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
 				localesMap: <%= localesMapJSONObject.toString() %>,
 				srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'
 			},

@@ -84,7 +84,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 			<c:if test="<%= Validator.isNotNull(item.getDescription()) %>">
 				<br />
 
-				<%= item.getDescription() %>
+				<%= HtmlUtil.escape(item.getDescription()) %>
 			</c:if>
 
 			<%
@@ -167,14 +167,14 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 			%>
 
 				<aui:fieldset>
-					<aui:select label="<%= fieldName %>" name='<%= "fieldName" + fieldName %>'>
+					<aui:select id='<%= "fieldId" + itemField.getItemFieldId() %>' label="<%= HtmlUtil.escape(fieldName) %>" name='<%= "fieldName" + HtmlUtil.escapeAttribute(fieldName) %>'>
 						<aui:option label="select-option" value="" />
 
 						<%
 						for (int j = 0; j < fieldValues.length; j++) {
 						%>
 
-							<aui:option label="<%= fieldValues[j] %>" />
+							<aui:option label="<%= HtmlUtil.escape(fieldValues[j]) %>" />
 
 						<%
 						}
@@ -183,7 +183,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 					</aui:select>
 
 					<c:if test="<%= Validator.isNotNull(fieldDescription) %>">
-						<%= fieldDescription %>
+						<%= HtmlUtil.escape(fieldDescription) %>
 					</c:if>
 				</aui:fieldset>
 
@@ -231,13 +231,13 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 			String[] fieldValues = itemField.getValuesArray();
 		%>
 
-			if (document.<portlet:namespace />fm.<portlet:namespace />fieldName<%= fieldName %>.value == "") {
+			if (document.<portlet:namespace />fm['<portlet:namespace />fieldName<%= HtmlUtil.escapeJS(fieldName) %>'].value == "") {
 				alert("<%= UnicodeLanguageUtil.get(pageContext, "please-select-all-options") %>");
 
 				return;
 			}
 
-			document.<portlet:namespace />fm.<portlet:namespace />fields.value = document.<portlet:namespace />fm.<portlet:namespace />fields.value + '<%= fieldName %>=' + document.<portlet:namespace />fm.<portlet:namespace />fieldName<%= fieldName %>.value + '&';
+			document.<portlet:namespace />fm.<portlet:namespace />fields.value = document.<portlet:namespace />fm.<portlet:namespace />fields.value + '<%= HtmlUtil.escapeJS(fieldName) %>=' + document.<portlet:namespace />fm['<portlet:namespace />fieldName<%= HtmlUtil.escapeJS(fieldName) %>'].value + '&';
 
 		<%
 		}

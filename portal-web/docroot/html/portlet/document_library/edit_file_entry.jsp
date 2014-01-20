@@ -21,6 +21,8 @@ String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRedirect", currentURL);
+
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
 String referringPortletResourceRootPortletId = PortletConstants.getRootPortletId(referringPortletResource);
@@ -170,7 +172,7 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 
 <liferay-portlet:actionURL varImpl="editFileEntryURL">
 	<liferay-portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= currentURL %>" />
+	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </liferay-portlet:actionURL>
 
 <aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>'>

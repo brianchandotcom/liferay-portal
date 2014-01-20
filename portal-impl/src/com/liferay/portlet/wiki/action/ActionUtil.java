@@ -124,7 +124,10 @@ public class ActionUtil {
 		return node;
 	}
 
-	public static void getPage(HttpServletRequest request) throws Exception {
+	public static void getPage(PortletRequest portletRequest) throws Exception {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -197,13 +200,6 @@ public class ActionUtil {
 		}
 
 		request.setAttribute(WebKeys.WIKI_PAGE, page);
-	}
-
-	public static void getPage(PortletRequest portletRequest) throws Exception {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		getPage(request);
 	}
 
 }

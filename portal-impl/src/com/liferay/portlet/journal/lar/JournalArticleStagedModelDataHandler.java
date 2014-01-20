@@ -203,6 +203,31 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
+	public boolean validateReference(
+			PortletDataContext portletDataContext, Element referenceElement) {
+
+		String artcleResourceUuid = referenceElement.attributeValue(
+			"article-resource-uuid");
+
+		try {
+			boolean valid = validateMissingReference(
+				artcleResourceUuid, portletDataContext.getCompanyId(),
+				portletDataContext.getScopeGroupId());
+
+			if (!valid) {
+				valid = validateMissingReference(
+					artcleResourceUuid, portletDataContext.getCompanyId(),
+					portletDataContext.getCompanyGroupId());
+			}
+
+			return valid;
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
@@ -792,9 +817,17 @@ public class JournalArticleStagedModelDataHandler
 			String uuid, long companyId, long groupId)
 		throws Exception {
 
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
-				uuid, groupId);
+		JournalArticleResource articleResource =
+			JournalArticleResourceLocalServiceUtil.
+				fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
+
+		if (articleResource == null) {
+			return false;
+		}
+
+		JournalArticle article = fetchExistingArticle(
+			articleResource.getUuid(), groupId, articleResource.getArticleId(),
+			null, 0.0, false);
 
 		if (article == null) {
 			return false;

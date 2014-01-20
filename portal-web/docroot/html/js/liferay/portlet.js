@@ -285,7 +285,7 @@
 				Util.addInputType(portletBound);
 
 				if (window.location.hash) {
-					window.location.hash = 'p_' + portletId;
+					window.location.hash = 'p_p_id_' + portletId + '_';
 				}
 
 				portletBoundary = portletBound;
@@ -430,13 +430,6 @@
 						}
 					}
 
-					var html = '';
-					var portletBody = content.one('.portlet-body');
-
-					if (portletBody) {
-						html = portletBody.html();
-					}
-
 					A.io.request(
 						themeDisplay.getPathMain() + '/portal/update_layout',
 						{
@@ -447,13 +440,13 @@
 											doAsUserId: doAsUserId,
 											p_l_id: plid,
 											p_p_boundary: false,
-											p_p_decorate: false,
-											p_p_id: portlet.portletId
+											p_p_id: portlet.portletId,
+											p_p_isolated: true
 										};
 
-										content.plug(A.Plugin.ParseContent);
+										portlet.plug(A.Plugin.ParseContent);
 
-										content.load(themeDisplay.getPathMain() + '/portal/render_portlet?' + A.QueryString.stringify(data));
+										portlet.load(themeDisplay.getPathMain() + '/portal/render_portlet?' + A.QueryString.stringify(data));
 									}
 								}
 							},

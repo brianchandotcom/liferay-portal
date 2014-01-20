@@ -591,6 +591,14 @@ public class LayoutTypePortletImpl
 			return false;
 		}
 
+		if (isCustomizable() && isCustomizedView()) {
+			LayoutTypePortletImpl defaultLayoutTypePortlet = getDefault();
+
+			if (defaultLayoutTypePortlet.hasNonstaticPortletId(portletId)) {
+				return false;
+			}
+		}
+
 		if (!strict &&
 			((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
@@ -1431,6 +1439,24 @@ public class LayoutTypePortletImpl
 		Layout layout = getLayout();
 
 		return layout.getCompanyId();
+	}
+
+	protected LayoutTypePortletImpl getDefault() {
+		if (!isCustomizedView()) {
+			return this;
+		}
+
+		LayoutTypePortletImpl defaultLayoutType = new LayoutTypePortletImpl(
+			getLayout());
+
+		defaultLayoutType._customizedView = false;
+		defaultLayoutType._portalPreferences = null;
+
+		defaultLayoutType._embeddedPortlets = _embeddedPortlets;
+		defaultLayoutType._layoutSetPrototypeLayout = _layoutSetPrototypeLayout;
+		defaultLayoutType._updatePermission = _updatePermission;
+
+		return defaultLayoutType;
 	}
 
 	protected List<Portlet> getEmbeddedPortlets(

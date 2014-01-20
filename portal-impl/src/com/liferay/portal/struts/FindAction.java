@@ -148,6 +148,9 @@ public abstract class FindAction extends Action {
 			String noSuchEntryRedirect = ParamUtil.getString(
 				request, "noSuchEntryRedirect");
 
+			noSuchEntryRedirect = PortalUtil.escapeRedirect(
+				noSuchEntryRedirect);
+
 			if (Validator.isNotNull(noSuchEntryRedirect) &&
 				(e instanceof NoSuchLayoutException)) {
 

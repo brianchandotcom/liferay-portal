@@ -134,6 +134,13 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 <aui:script use="liferay-journal-navigation">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
+<%
+	String[] escapedDisplayViews = new String[displayViews.length];
+	for (int i = 0; i < displayViews.length; i++) {
+		escapedDisplayViews[i] = HtmlUtil.escapeJS(displayViews[1]);
+	}
+%>
+
 	new Liferay.Portlet.JournalNavigation(
 		{
 			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
@@ -178,7 +185,7 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 			portletId: '<%= portletDisplay.getId() %>',
 			rowIds: '<%= RowChecker.ROW_IDS %>',
 			select: {
-				displayViews: ['<%= StringUtil.merge(displayViews, "','") %>']
+				displayViews: ['<%= StringUtil.merge(escapedDisplayViews, "','") %>']
 			}
 		}
 	);

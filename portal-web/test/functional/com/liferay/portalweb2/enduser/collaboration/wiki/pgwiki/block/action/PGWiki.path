@@ -19,18 +19,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>BasePortlet</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
+	<td>BACK_BUTTON</td>
+	<td>//a[@title='Back']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_BODY</td>
+	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORLET_BODY_TITLE_HEADER</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,11 +79,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WIKI_NODE_MAIN</td>
+	<td>//span[@class='nav-item-label' and contains(.,'Main')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_NODE</td>
+	<td>//span[@class='nav-item-label' and contains(.,'${key_wikiNodeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
+<!--MAIN_NAVIGATION-->
 <tr>
 	<td>NAVIGATION_FRONTPAGE</td>
 	<td>//div[@class='navbar ']//li/a[contains(.,'FrontPage')]</td>
@@ -97,6 +117,16 @@
 <tr>
 	<td>NAVIGATION_DRAFT_PAGES</td>
 	<td>//div[@class='navbar ']//li/a[contains(.,'Draft Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SEARCH_FIELD</td>
+	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SEARCH_BUTTON</td>
+	<td>//div[@class='form-search']//div/button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>

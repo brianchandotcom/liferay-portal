@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGWikidisplay</title>
+<title>PGWikiWikipageRedirect</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGWikidisplay</td></tr>
+<tr><td rowspan="1" colspan="3">PGWikiWikipageRedirect</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGWikidisplay</td>
+	<td>PGWikiWikipageRedirect</td>
 </tr>
 <tr>
 	<td></td>
@@ -24,13 +24,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_CONFIGURATION_MESSAGE</td>
-	<td>//div[@class='alert alert-info portlet-configuration']/a</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//a[contains(@id,'_menu_configuration')]</td>
+	<td>REMOVE_REDIRECT_BUTTON</td>
+	<td>//button[contains(.,'Remove Redirect')]</td>
 	<td></td>
 </tr>
 </tbody>

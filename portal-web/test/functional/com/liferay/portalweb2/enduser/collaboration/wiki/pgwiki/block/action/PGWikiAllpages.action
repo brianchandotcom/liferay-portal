@@ -8,6 +8,10 @@
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 
+		<case locator-key1="NAVIGATION_ALL_PAGES">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
 		<case locator-key1="NAVIGATION_DRAFT_PAGES">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWiki</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -31,47 +36,6 @@
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
 	<td>//button[@id='_36_addPageButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_FRONTPAGE</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'FrontPage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_RECENT_CHANGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Recent Changes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ALL_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'All Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_ORPHAN_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Orphan Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DRAFT_PAGES</td>
-	<td>//div[@class='navbar ']//li/a[contains(.,'Draft Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SEARCH_FIELD</td>
-	<td>//div[@class='form-search']//div/input[contains(@id, 'keywords1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SEARCH_BUTTON</td>
-	<td>//div[@class='form-search']//div/button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>

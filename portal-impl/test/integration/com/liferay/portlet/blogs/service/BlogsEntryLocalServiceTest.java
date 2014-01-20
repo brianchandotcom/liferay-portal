@@ -17,7 +17,6 @@ package com.liferay.portlet.blogs.service;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -47,7 +46,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
@@ -80,6 +78,32 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddEntryOnlyGroupPermissions() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		serviceContext.setGroupPermissions(new String[] {ActionKeys.VIEW});
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(false);
+
+		addEntry(false);
+	}
+
+	@Test
+	public void testAddEntryOnlyGuestPermissions() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(true);
+
+		addEntry(false);
+	}
+
+	@Test
 	public void testAddEntryResourcesEntry() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
@@ -88,10 +112,9 @@ public class BlogsEntryLocalServiceTest {
 			new String[] {ActionKeys.ADD_DISCUSSION});
 		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		BlogsEntry entry = addEntry(false);
 
-		BlogsEntryLocalServiceUtil.addEntryResources(blogsEntry, true, true);
+		BlogsEntryLocalServiceUtil.addEntryResources(entry, true, true);
 	}
 
 	@Test
@@ -103,11 +126,10 @@ public class BlogsEntryLocalServiceTest {
 			new String[] {ActionKeys.ADD_DISCUSSION});
 		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		BlogsEntry entry = addEntry(false);
 
 		BlogsEntryLocalServiceUtil.addEntryResources(
-			blogsEntry.getEntryId(), true, true);
+			entry.getEntryId(), true, true);
 	}
 
 	@Test
@@ -115,43 +137,32 @@ public class BlogsEntryLocalServiceTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		BlogsEntry entry = addEntry(false);
 
 		BlogsEntryLocalServiceUtil.addEntryResources(
-			blogsEntry.getEntryId(), serviceContext.getGroupPermissions(),
+			entry.getEntryId(), serviceContext.getGroupPermissions(),
 			serviceContext.getGuestPermissions());
 	}
 
 	@Test
 	public void testAddEntryResourcesEntryListPermissions() throws Exception {
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+		BlogsEntry entry = addEntry(false);
 
 		BlogsEntryLocalServiceUtil.addEntryResources(
-			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION},
+			entry, new String[] {ActionKeys.ADD_DISCUSSION},
 			new String[] {ActionKeys.VIEW});
 	}
 
 	@Test
 	public void testAddEntryWithoutSmallImage() throws Exception {
-		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
-
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
-
-		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		BlogsEntry entryInserted = addEntry(false);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-			blogsEntry.getEntryId());
+			entryInserted.getEntryId());
 
 		Assert.assertFalse(entry.isSmallImage());
 
-		BlogsTestUtil.assertEqualEntry(blogsEntry, entry);
+		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
 
 		Assert.assertFalse(entry.getSmallImage());
 
@@ -170,23 +181,14 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddEntryWithSmallImage() throws Exception {
-		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
+		BlogsEntry entryInserted = addEntry(true);
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true, true);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+				entryInserted.getEntryId());
 
-		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
+		Assert.assertTrue(entry.getSmallImage());
 
-		Assert.assertEquals(initialCount + 1, actualCount);
-
-		BlogsEntry blogsEntryObtained =
-			BlogsEntryLocalServiceUtil.getBlogsEntry(blogsEntry.getEntryId());
-
-		Assert.assertTrue(blogsEntryObtained.getSmallImage());
-
-		BlogsTestUtil.assertEqualEntry(blogsEntry, blogsEntryObtained);
+		BlogsTestUtil.assertEqualEntry(entryInserted, entry);
 	}
 
 	@Test
@@ -884,6 +886,21 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.updateEntryResources(
 			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION},
 			null);
+	}
+
+	protected BlogsEntry addEntry(boolean smallImage) throws Exception {
+		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			group.getGroupId(), queryStatusApproved);
+
+		BlogsEntry entry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true, smallImage);
+
+		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			group.getGroupId(), queryStatusApproved);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+
+		return entry;
 	}
 
 	protected BlogsEntry[] addEntryTrashAndEntryNotTrash(User user)

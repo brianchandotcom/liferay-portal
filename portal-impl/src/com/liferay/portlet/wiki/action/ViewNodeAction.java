@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.wiki.NoSuchNodeException;
+import com.liferay.portlet.wiki.model.WikiNode;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -40,7 +41,9 @@ public class ViewNodeAction extends PortletAction {
 		throws Exception {
 
 		try {
-			ActionUtil.getNode(renderRequest);
+			WikiNode node = ActionUtil.getNode(renderRequest);
+
+			ActionUtil.getFirstVisiblePage(node.getNodeId(), renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

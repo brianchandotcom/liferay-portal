@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.service;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -36,6 +37,7 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -45,6 +47,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
@@ -74,25 +77,6 @@ public class BlogsEntryLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(group);
-	}
-
-	@Test
-	public void testAddEntryNotSmallImage() throws Exception {
-		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
-
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
-
-		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
-
-		BlogsEntry blogsEntryObtained =
-			BlogsEntryLocalServiceUtil.getBlogsEntry(blogsEntry.getEntryId());
-
-		BlogsTestUtil.assertEqualEntry(blogsEntry, blogsEntryObtained);
 	}
 
 	@Test
@@ -147,6 +131,62 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.addEntryResources(
 			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION},
 			new String[] {ActionKeys.VIEW});
+	}
+
+	@Test
+	public void testAddEntryWithoutSmallImage() throws Exception {
+		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			group.getGroupId(), queryStatusApproved);
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true);
+
+		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			group.getGroupId(), queryStatusApproved);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+			blogsEntry.getEntryId());
+
+		Assert.assertFalse(entry.isSmallImage());
+
+		BlogsTestUtil.assertEqualEntry(blogsEntry, entry);
+
+		Assert.assertFalse(entry.getSmallImage());
+
+		try {
+			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				BlogsEntry.class.getName(), entry.getEntryId(),
+				WorkflowConstants.STATUS_ANY);
+		}
+		catch (Exception e) {
+			Assert.fail(
+				"The initial discussion has not been found for the blog " +
+					entry.getEntryId());
+		}
+	}
+
+	@Test
+	public void testAddEntryWithSmallImage() throws Exception {
+		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			group.getGroupId(), queryStatusApproved);
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			TestPropsValues.getUserId(), group, true, true);
+
+		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			group.getGroupId(), queryStatusApproved);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+
+		BlogsEntry blogsEntryObtained =
+			BlogsEntryLocalServiceUtil.getBlogsEntry(blogsEntry.getEntryId());
+
+		Assert.assertTrue(blogsEntryObtained.getSmallImage());
+
+		BlogsTestUtil.assertEqualEntry(blogsEntry, blogsEntryObtained);
 	}
 
 	@Test

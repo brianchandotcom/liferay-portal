@@ -21,12 +21,8 @@ String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRedirect");
+String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRedirect", currentURL);
 
-if (Validator.isNull(uploadExceptionRedirect)) {
-	uploadExceptionRedirect = currentURL;
-}
-		 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
 String referringPortletResourceRootPortletId = PortletConstants.getRootPortletId(referringPortletResource);

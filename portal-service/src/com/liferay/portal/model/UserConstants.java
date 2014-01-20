@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -103,7 +104,7 @@ public class UserConstants {
 				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
 
 			sb.append("&img_id_token=");
-			sb.append(DigesterUtil.digest(userUuid));
+			sb.append(HttpUtil.encodeURL(DigesterUtil.digest(userUuid)));
 		}
 
 		sb.append("&t=");

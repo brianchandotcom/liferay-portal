@@ -30,7 +30,7 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiPage#addPageCP">
+		<execute macro="WikiPage#addCP">
 			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />

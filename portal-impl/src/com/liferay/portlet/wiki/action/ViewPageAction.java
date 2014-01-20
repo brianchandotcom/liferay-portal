@@ -91,7 +91,9 @@ public class ViewPageAction extends PortletAction {
 			return;
 		}
 
-		ActionUtil.getFirstVisibleNode(renderRequest);
+		node = ActionUtil.getFirstVisibleNode(renderRequest);
+
+		renderRequest.setAttribute(WebKeys.WIKI_NODE, node);
 	}
 
 	@Override

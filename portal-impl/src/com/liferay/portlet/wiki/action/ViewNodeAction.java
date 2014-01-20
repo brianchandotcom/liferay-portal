@@ -43,9 +43,7 @@ public class ViewNodeAction extends PortletAction {
 		try {
 			WikiNode node = ActionUtil.getNode(renderRequest);
 
-			if (node == null) {
-				ActionUtil.getFirstVisibleNode(renderRequest);
-			}
+			ActionUtil.getFirstVisiblePage(node.getNodeId(), renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchNodeException ||

@@ -203,6 +203,12 @@ String socialBookmarkTypes = portletPreferences.getValue("socialBookmarksTypes",
 
 				<dl>
 					<dt>
+						[$BLOGS_ENTRY_TITLE$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-blog-entry-title" />
+					</dd>
+					<dt>
 						[$BLOGS_ENTRY_USER_ADDRESS$]
 					</dt>
 					<dd>

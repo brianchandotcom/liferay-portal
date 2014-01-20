@@ -496,10 +496,25 @@ public class Creole10Parser]]></replacevalue>
 	</target>
 
 	<target name="build-r2-js">
-		<get
-			dest="${project.dir}/portal-impl/src/com/liferay/portal/servlet/filters/dynamiccss/dependencies/r2.js"
-			src="https://raw.github.com/ded/R2/1.3.1/r2.js"
-		/>
+		<property name="dependencies.dir" value="${project.dir}/portal-impl/src/com/liferay/portal/servlet/filters/dynamiccss/dependencies" />
+		<property name="r2.version" value="liferay-0.1" />
+		<property name="r2.temp" value="${dependencies.dir}/temp/R2-${r2.version}" />
+
+		<unzip src="${project.dir}/portal-web/third-party/R2-${r2.version}.zip" dest="${dependencies.dir}/temp" />
+
+		<exec dir="${r2.temp}" executable="npm">
+			<arg value="install" />
+		</exec>
+
+		<copy file="${dependencies.dir}/r2_wrapper.js" tofile="${r2.temp}/r2_wrapper.js" />
+
+		<exec dir="${r2.temp}" executable="browserify">
+			<arg value="r2_wrapper.js" />
+			<arg value="-o" />
+			<arg value="${dependencies.dir}/r2.js" />
+		</exec>
+
+		<delete dir="${dependencies.dir}/temp" />
 	</target>
 
 	<target name="build-releaseinfo" if="release.info">

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BaseModel;
@@ -31,6 +30,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
+import com.liferay.portal.util.FileTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -48,8 +48,6 @@ import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.util.TrashUtil;
-
-import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +80,10 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 				group.getGroupId());
 
 		String xsd = StringUtil.read(
-			getFile("test-ddm-structure-image-field.xml"));
+			FileTestUtil.getFileInputStream(
+				getClass(),
+				_JOURNAL_DEPENDENCIES_PATH +
+					"test-ddm-structure-image-field.xml"));
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			serviceContext.getScopeGroupId(), JournalArticle.class.getName(),
@@ -92,12 +93,17 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
 
 		String content = StringUtil.read(
-			getFile("test-journal-content-image-field.xml"));
+			FileTestUtil.getFileInputStream(
+				getClass(),
+				_JOURNAL_DEPENDENCIES_PATH +
+					"test-journal-content-image-field.xml"));
 
 		Map<String, byte[]> images = new HashMap<String, byte[]>();
 
 		images.put(
-			"_image_1_0_en_US", FileUtil.getBytes(getFile("liferay.png")));
+			"_image_1_0_en_US",
+			FileTestUtil.getBytes(
+				getClass(), _JOURNAL_DEPENDENCIES_PATH + "liferay.png"));
 
 		baseModel = JournalTestUtil.addArticleWithXMLContent(
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, content,
@@ -210,17 +216,6 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		return JournalArticleLocalServiceUtil.getArticles(
 			folder.getGroupId(), folder.getFolderId());
-	}
-
-	protected InputStream getFile(String fileName) throws Exception {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portlet/journal/dependencies/" + fileName);
-
-		return inputStream;
 	}
 
 	@Override
@@ -336,5 +331,8 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
+
+	private static final String _JOURNAL_DEPENDENCIES_PATH =
+		"com/liferay/portlet/journal/dependencies/";
 
 }

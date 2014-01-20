@@ -86,8 +86,6 @@ public class ActionUtil {
 			return node;
 		}
 
-		portletRequest.setAttribute(WebKeys.WIKI_NODE, node);
-
 		return node;
 	}
 

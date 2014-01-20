@@ -84,7 +84,7 @@ ShoppingItem[] prevAndNext = ShoppingItemServiceUtil.getItemsPrevAndNext(item.ge
 			<c:if test="<%= Validator.isNotNull(item.getDescription()) %>">
 				<br />
 
-				<%= HtmlUtil.escape(item.getDescription()) %>
+				<%= item.getDescription() %>
 			</c:if>
 
 			<%

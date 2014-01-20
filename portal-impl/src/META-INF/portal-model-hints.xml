@@ -221,6 +221,7 @@
 		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.ExportImportConfiguration">
+		<field name="mvccVersion" type="long" />
 		<field name="exportImportConfigurationId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

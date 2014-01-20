@@ -1,4 +1,5 @@
 create table ExportImportConfiguration (
+	mvccVersion LONG default 0,
 	exportImportConfigurationId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -9,7 +10,7 @@ create table ExportImportConfiguration (
 	name VARCHAR(75) null,
 	description STRING null,
 	type_ INTEGER,
-	settings TEXT null
+	settings_ TEXT null
 );
 
 alter table Layout drop column iconImage;

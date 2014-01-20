@@ -29,6 +29,8 @@
 	<bean id="com.liferay.portal.service.EmailAddressLocalService" class="com.liferay.portal.service.impl.EmailAddressLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.EmailAddressService" class="com.liferay.portal.service.impl.EmailAddressServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.EmailAddressPersistence" class="com.liferay.portal.service.persistence.EmailAddressPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.ExportImportConfigurationLocalService" class="com.liferay.portal.service.impl.ExportImportConfigurationLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.persistence.ExportImportConfigurationPersistence" class="com.liferay.portal.service.persistence.ExportImportConfigurationPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.GroupLocalService" class="com.liferay.portal.service.impl.GroupLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.GroupService" class="com.liferay.portal.service.impl.GroupServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.GroupPersistence" class="com.liferay.portal.service.persistence.GroupPersistenceImpl" parent="basePersistence" />

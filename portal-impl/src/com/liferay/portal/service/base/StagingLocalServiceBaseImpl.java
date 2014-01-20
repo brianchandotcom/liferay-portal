@@ -34,6 +34,7 @@ import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.ContactPersistence;
 import com.liferay.portal.service.persistence.CountryPersistence;
 import com.liferay.portal.service.persistence.EmailAddressPersistence;
+import com.liferay.portal.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
@@ -653,6 +654,44 @@ public abstract class StagingLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setEmailAddressPersistence(
 		EmailAddressPersistence emailAddressPersistence) {
 		this.emailAddressPersistence = emailAddressPersistence;
+	}
+
+	/**
+	 * Returns the export import configuration local service.
+	 *
+	 * @return the export import configuration local service
+	 */
+	public com.liferay.portal.service.ExportImportConfigurationLocalService getExportImportConfigurationLocalService() {
+		return exportImportConfigurationLocalService;
+	}
+
+	/**
+	 * Sets the export import configuration local service.
+	 *
+	 * @param exportImportConfigurationLocalService the export import configuration local service
+	 */
+	public void setExportImportConfigurationLocalService(
+		com.liferay.portal.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
+		this.exportImportConfigurationLocalService = exportImportConfigurationLocalService;
+	}
+
+	/**
+	 * Returns the export import configuration persistence.
+	 *
+	 * @return the export import configuration persistence
+	 */
+	public ExportImportConfigurationPersistence getExportImportConfigurationPersistence() {
+		return exportImportConfigurationPersistence;
+	}
+
+	/**
+	 * Sets the export import configuration persistence.
+	 *
+	 * @param exportImportConfigurationPersistence the export import configuration persistence
+	 */
+	public void setExportImportConfigurationPersistence(
+		ExportImportConfigurationPersistence exportImportConfigurationPersistence) {
+		this.exportImportConfigurationPersistence = exportImportConfigurationPersistence;
 	}
 
 	/**
@@ -3813,6 +3852,10 @@ public abstract class StagingLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.service.EmailAddressService emailAddressService;
 	@BeanReference(type = EmailAddressPersistence.class)
 	protected EmailAddressPersistence emailAddressPersistence;
+	@BeanReference(type = com.liferay.portal.service.ExportImportConfigurationLocalService.class)
+	protected com.liferay.portal.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
+	@BeanReference(type = ExportImportConfigurationPersistence.class)
+	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
 	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
 	@BeanReference(type = com.liferay.portal.service.GroupService.class)

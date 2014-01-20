@@ -679,6 +679,16 @@ public class StringUtil {
 		return _highlight(s, pattern, highlight1, highlight2);
 	}
 
+	/**
+	 * Returns the string <code>s</code> with any of the query terms found
+	 * within it highlighted with HTML.
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  queryTerms the terms to search for in the string (optionally
+	 *         <code>null</code>)
+	 * @return the string <code>s</code> with any of the query terms found
+	 *         within it highlighted with HTML
+	 */
 	public static String highlight(String s, String[] queryTerms) {
 		return highlight(
 			s, queryTerms, "<span class=\"highlight\">", "</span>");
@@ -1999,6 +2009,11 @@ public class StringUtil {
 		return quote.concat(s).concat(quote);
 	}
 
+	/**
+	 * Returns a randomized string of four lower case, alphabetic characters.
+	 *
+	 * @return a randomized string of four lower case, alphabetic characters
+	 */
 	public static String randomId() {
 		Random random = new Random();
 
@@ -2023,10 +2038,25 @@ public class StringUtil {
 		return RandomUtil.shuffle(s);
 	}
 
+	/**
+	 * Returns a randomized string of eight characters consisting of lower case
+	 * letters, upper case letters, and single-digit whole numbers.
+	 *
+	 * @return a randomized string of eight characters consisting of lower case
+	 *         letters, upper case letters, and single-digit whole numbers
+	 */
 	public static String randomString() {
 		return randomString(8);
 	}
 
+	/**
+	 * Returns a randomized string of the specified length consisting of lower
+	 * case letters, upper case letters, and single-digit whole numbers.
+	 *
+	 * @param  length the character length of the randomized string
+	 * @return a randomized string of the specified length consisting of lower
+	 *         case letters, upper case letters, and single-digit whole numbers
+	 */
 	public static String randomString(int length) {
 		Random random = new Random();
 

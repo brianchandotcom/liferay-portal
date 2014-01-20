@@ -508,10 +508,10 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="install" />
 		</exec>
 
-		<copy file="${dependencies.dir}/r2_wrapper.js" tofile="${r2.temp}/r2_wrapper.js" />
+		<copy file="${dependencies.dir}/r2_liferay.js" tofile="${r2.temp}/r2_liferay.js" />
 
 		<exec dir="${r2.temp}" executable="browserify">
-			<arg value="r2_wrapper.js" />
+			<arg value="r2_liferay.js" />
 			<arg value="-o" />
 			<arg value="${dependencies.dir}/r2.js" />
 		</exec>

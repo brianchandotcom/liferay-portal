@@ -81,11 +81,11 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 					invalidSKUs += ", ";
 				}
 
-				invalidSKUs += "<%= item.getSku() %>";
+				invalidSKUs += "<%= HtmlUtil.escapeJS(item.getSku()) %>";
 			}
 
 			for (var i = 0; i < count; i++) {
-				itemIds += "<%= cartItem.getCartItemId() %>,";
+				itemIds += "<%= HtmlUtil.escapeJS(cartItem.getCartItemId()) %>,";
 			}
 
 			count = 0;
@@ -145,7 +145,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			ShoppingItem item = ShoppingItemServiceUtil.getItem(badItemIds[i]);
 		%>
 
-			<strong><%= item.getSku() %></strong><c:if test="<%= i + 1 < badItemIds.length %>">,</c:if>
+			<strong><%= HtmlUtil.escape(item.getSku()) %></strong><c:if test="<%= i + 1 < badItemIds.length %>">,</c:if>
 
 		<%
 		}
@@ -294,9 +294,9 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 			String fieldValue = fieldsArray[j].substring(pos + 1);
 
 			sb.append("<br />");
-			sb.append(fieldName);
+			sb.append(HtmlUtil.escape(fieldName));
 			sb.append(": ");
-			sb.append(fieldValue);
+			sb.append(HtmlUtil.escape(fieldValue));
 		}
 
 		if (itemPrices.length > 0) {

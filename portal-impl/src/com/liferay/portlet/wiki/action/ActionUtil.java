@@ -89,6 +89,49 @@ public class ActionUtil {
 		return node;
 	}
 
+	public static WikiPage getFirstVisiblePage(
+			long nodeId, PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		WikiPage page = WikiPageLocalServiceUtil.fetchPage(
+			nodeId, WikiPageConstants.FRONT_PAGE, 0);
+
+		if (page == null) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				WikiPage.class.getName(), portletRequest);
+
+			Layout layout = themeDisplay.getLayout();
+
+			serviceContext.setAddGroupPermissions(true);
+
+			if (layout.isPublicLayout()) {
+				serviceContext.setAddGuestPermissions(true);
+			}
+			else {
+				serviceContext.setAddGuestPermissions(false);
+			}
+
+			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+			try {
+				WorkflowThreadLocal.setEnabled(false);
+
+				page = WikiPageLocalServiceUtil.addPage(
+					themeDisplay.getDefaultUserId(), nodeId,
+					WikiPageConstants.FRONT_PAGE, null, WikiPageConstants.NEW,
+					true, serviceContext);
+			}
+			finally {
+				WorkflowThreadLocal.setEnabled(workflowEnabled);
+			}
+		}
+
+		return page;
+	}
+
 	public static WikiNode getNode(PortletRequest portletRequest)
 		throws Exception {
 
@@ -128,9 +171,6 @@ public class ActionUtil {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long nodeId = ParamUtil.getLong(request, "nodeId");
 		String title = ParamUtil.getString(request, "title");
 		double version = ParamUtil.getDouble(request, "version");
@@ -168,31 +208,7 @@ public class ActionUtil {
 		}
 		catch (NoSuchPageException nspe) {
 			if (title.equals(WikiPageConstants.FRONT_PAGE) && (version == 0)) {
-				ServiceContext serviceContext = new ServiceContext();
-
-				Layout layout = themeDisplay.getLayout();
-
-				serviceContext.setAddGroupPermissions(true);
-
-				if (layout.isPublicLayout()) {
-					serviceContext.setAddGuestPermissions(true);
-				}
-				else {
-					serviceContext.setAddGuestPermissions(false);
-				}
-
-				boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-				try {
-					WorkflowThreadLocal.setEnabled(false);
-
-					page = WikiPageLocalServiceUtil.addPage(
-						themeDisplay.getDefaultUserId(), nodeId, title, null,
-						WikiPageConstants.NEW, true, serviceContext);
-				}
-				finally {
-					WorkflowThreadLocal.setEnabled(workflowEnabled);
-				}
+				page = getFirstVisiblePage(nodeId, portletRequest);
 			}
 			else {
 				throw nspe;

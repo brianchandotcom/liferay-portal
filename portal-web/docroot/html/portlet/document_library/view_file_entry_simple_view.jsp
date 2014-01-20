@@ -17,14 +17,22 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-boolean showExtraInfo = ParamUtil.getBoolean(request, "showExtraInfo");
+FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
+
+FileVersion fileVersion = fileEntry.getFileVersion();
+
+boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
+boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
+boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
+boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
+
+boolean showImageContainer = false;
 %>
 
-<c:choose>
-	<c:when test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && !showExtraInfo %>">
-		<liferay-util:include page="/html/portlet/document_library/view_file_entry_simple_view.jsp" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/html/portlet/document_library/view_file_entry.jsp" />
-	</c:otherwise>
-</c:choose>
+<div class="view">
+	<div class="body-row">
+		<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+
+		<%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>
+	</div>
+</div>

@@ -388,8 +388,7 @@ public class PortalImplCanonicalURLTest {
 
 		String expectedDomain = virtualHostname;
 
-		if (!Validator.isBlank(expectedDomain) &&
-			StringUtil.equalsIgnoreCase(expectedDomain, "localhost") &&
+		if (StringUtil.equalsIgnoreCase(virtualHostname, "localhost") &&
 			!StringUtil.equalsIgnoreCase(portalDomain, "localhost")) {
 
 			expectedDomain = portalDomain;

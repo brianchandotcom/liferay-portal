@@ -14,11 +14,130 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ExportImportConfigurationLocalServiceBaseImpl;
+
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Daniel Kocsis
  */
 public class ExportImportConfigurationLocalServiceImpl
 	extends ExportImportConfigurationLocalServiceBaseImpl {
+
+	@Override
+	public ExportImportConfiguration addExportImportConfiguration(
+			long userId, long groupId, String name, String description,
+			int type, Map<String, Serializable> settingsMap,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+		Date now = new Date();
+
+		final long exportImportConfigurationId =
+			counterLocalService.increment();
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationPersistence.create(
+				exportImportConfigurationId);
+
+		exportImportConfiguration.setGroupId(groupId);
+		exportImportConfiguration.setCompanyId(user.getCompanyId());
+		exportImportConfiguration.setUserId(userId);
+		exportImportConfiguration.setUserName(user.getFullName());
+		exportImportConfiguration.setCreateDate(
+			serviceContext.getCreateDate(now));
+		exportImportConfiguration.setModifiedDate(
+			serviceContext.getModifiedDate(now));
+		exportImportConfiguration.setName(name);
+		exportImportConfiguration.setDescription(description);
+		exportImportConfiguration.setType(type);
+
+		if (settingsMap != null) {
+			String settings = JSONFactoryUtil.serialize(settingsMap);
+
+			exportImportConfiguration.setSettings(settings);
+		}
+
+		return exportImportConfigurationPersistence.update(
+			exportImportConfiguration);
+	}
+
+	@Override
+	public void deleteGroupExportImportConfigurations(long groupId)
+		throws PortalException, SystemException {
+
+		List<ExportImportConfiguration> exportImportConfigurations =
+			exportImportConfigurationPersistence.findByGroupId(groupId);
+
+		for (ExportImportConfiguration configuration :
+				exportImportConfigurations) {
+
+			exportImportConfigurationPersistence.remove(configuration);
+		}
+	}
+
+	@Override
+	public List<ExportImportConfiguration> getExportImportConfigurations(
+			long groupId, int type)
+		throws PortalException, SystemException {
+
+		return exportImportConfigurationPersistence.findByG_T(groupId, type);
+	}
+
+	@Override
+	public List<ExportImportConfiguration> getExportImportConfigurations(
+			long groupId, int type, int start, int end,
+			OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		return exportImportConfigurationPersistence.findByG_T(
+			groupId, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getExportImportConfigurationsCount(long groupId, int type)
+		throws PortalException, SystemException {
+
+		return exportImportConfigurationPersistence.countByG_T(groupId, type);
+	}
+
+	@Override
+	public ExportImportConfiguration updateExportImportConfiguration(
+			long configurationId, String name, String description,
+			Map<String, Serializable> settingsMap,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		ExportImportConfiguration exportImportConfiguration =
+			exportImportConfigurationPersistence.findByPrimaryKey(
+				configurationId);
+
+		exportImportConfiguration.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		exportImportConfiguration.setName(name);
+		exportImportConfiguration.setDescription(description);
+
+		if (settingsMap != null) {
+			String settings = JSONFactoryUtil.serialize(settingsMap);
+
+			exportImportConfiguration.setSettings(settings);
+		}
+
+		return exportImportConfigurationPersistence.update(
+			exportImportConfiguration);
+	}
+
 }

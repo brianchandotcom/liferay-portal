@@ -14,13 +14,36 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+
+import java.io.Serializable;
+
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Daniel Kocsis
  */
 public class ExportImportConfigurationImpl
 	extends ExportImportConfigurationBaseImpl {
 
 	public ExportImportConfigurationImpl() {
 	}
+
+	@Override
+	public Map<String, Serializable> getSettingsMap() {
+		if (_settingsMap != null) {
+			return _settingsMap;
+		}
+
+		String settings = getSettings();
+
+		_settingsMap = (Map<String, Serializable>)JSONFactoryUtil.deserialize(
+			settings);
+
+		return _settingsMap;
+	}
+
+	private Map<String, Serializable> _settingsMap;
 
 }

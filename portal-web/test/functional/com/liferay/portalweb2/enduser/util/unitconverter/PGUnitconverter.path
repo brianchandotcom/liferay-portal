@@ -19,13 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_TITLE</td>
-	<td>//h1[@class='portlet-title']/span[contains(@class,'portlet-title-text')]</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS</td>
-	<td>//a[@title='Options']</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>

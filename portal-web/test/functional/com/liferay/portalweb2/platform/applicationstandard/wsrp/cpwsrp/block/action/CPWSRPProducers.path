@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>
@@ -31,6 +26,11 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMERS_NAVIGATION</td>
+	<td>//li[contains(@id,'_1_WAR_wsrpportlet_tabs')]/a[contains(.,'Consumers')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -51,12 +56,12 @@
 <!--PRODUCER_TABLE-->
 <tr>
 	<td>PRODUCER_TABLE_PRODUCER</td>
-	<td>//tr[contains(.,'${key_producerName}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCER_TABLE_URL</td>
-	<td>//tr[contains(.,'localhost:8080/wsrp-portlet')]/td[2]/a</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,17 +71,27 @@
 </tr>
 <tr>
 	<td>PRODUCER_TABLE_ACTIONS_BUTTON</td>
+	<td>//tr[contains(.,'${key_producerName}')]//div[@class='btn-group lfr-icon-menu']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC</td>
 	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
 	<td></td>
 </tr>
-<!--PRODUCER_ACTIONS_MENULIST -->
 <tr>
-	<td>PRODUCER_ACTION_EDIT</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PRODUCER_MENULIST -->
+<tr>
+	<td>PRODUCER_MENULIST_EDIT</td>
 	<td>//div[@class='open']/ul/li[contains(.,'Edit')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCER_ACTION_DELETE</td>
+	<td>PRODUCER_MENULIST_DELETE</td>
 	<td>//div[@class='open']/ul/li[contains(.,'Delete')]/a/span</td>
 	<td></td>
 </tr>

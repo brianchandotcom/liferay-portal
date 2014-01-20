@@ -44,22 +44,10 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--WSRP_PORTLETS_MENULIST-->
-<tr>
 	<td>PORTLETS_AVAILABLE_SELECT</td>
 	<td>//select[@name='_1_WAR_wsrpportlet_availablePortletIds']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ADD_PRODUCER-->
 <tr>
 	<td>MOVE_LEFT_BUTTON</td>
 	<td>//button[@title='Move selected items from Available to Current.']</td>

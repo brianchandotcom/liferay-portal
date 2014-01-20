@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>
@@ -49,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -56,11 +56,16 @@
 <!--CONSUMER_TABLE-->
 <tr>
 	<td>CONSUMER_TABLE_NAME</td>
-	<td>//tr[contains(.,'$key_consumerName')]/td[1]</td>
+	<td>//tr[contains(.,'${key_consumerName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONSUMER_TABLE_ACTIONS_BUTTON</td>
+	<td>//tr[contains(.,'${key_consumerName}')]//div/a[@id='_1_WAR_wsrpportlet_wsrpConsumersSearchContainer_1_menu']/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC</td>
 	<td>//div/a[@id='_1_WAR_wsrpportlet_wsrpConsumersSearchContainer_1_menu']/span</td>
 	<td>Actions</td>
 </tr>

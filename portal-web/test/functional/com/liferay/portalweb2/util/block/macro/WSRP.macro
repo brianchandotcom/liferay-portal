@@ -1,6 +1,39 @@
 <definition>
+	<command name="addConsumerCP">
+		<execute action="CPWSRP#assertClick" locator-key1="PRODUCERS_NAVIGATION" value1="Producers" />
+
+		<var name="key_producerName" value="${producerName}" />
+
+		<execute action="CPWSRPProducers#copy" locator-key1="PRODUCER_TABLE_URL" />
+		<execute action="CPWSRPProducers#assertClick" locator-key1="CONSUMERS_NAVIGATION" value1="Consumers" />
+
+		<execute action="CPWSRP#assertClick" locator-key1="ADD_CONSUMER_BUTTON" value1="Add Consumer" />
+
+		<execute action="CPWSRPAddconsumer#type" locator-key1="NAME_FIELD" value1="${consumerName}" />
+		<execute action="CPWSRPAddconsumer#paste" locator-key1="URL_FIELD" />
+		<execute action="CPWSRPAddconsumer#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPWSRP#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addConsumerPortletCP">
+		<var name="key_consumerName" value="${consumerName}" />
+
+		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON" value1="Actions" />
+		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_MENULIST_MANAGE_PORTLETS" value1="Manage Portlets" />
+
+		<execute action="CPWSRPManageportlets#assertClick" locator-key1="ADD_PORTLET_BUTTON" value1="Add Portlet" />
+
+		<execute action="CPWSRPManageportletsAddportlet#type" locator-key1="NAME_FIELD" value1="${consumerPortletName}" />
+		<execute action="CPWSRPManageportletsAddportlet#select" locator-key1="REMOTE_PORTLET_SELECT" value1="${consumerPortletType}" />
+		<execute action="CPWSRPManageportletsAddportlet#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPWSRPManageportlets#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addProducerCP">
-		<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCERS_NAVIGATION" value1="Producers" />
+		<execute action="CPWSRP#assertClick" locator-key1="PRODUCERS_NAVIGATION" value1="Producers" />
+
 		<execute action="CPWSRPProducers#assertClick" locator-key1="ADD_PRODUCER_BUTTON" value1="Add Producer" />
 
 		<execute action="CPWSRPProducersAddproducer#type" locator-key1="PRODUCER_NAME_FIELD" value1="${producerName}" />
@@ -17,44 +50,26 @@
 		<execute action="CPWSRPProducers#assertElementPresent" locator-key1="PRODUCER_TABLE_URL" />
 	</command>
 
-	<command name="addConsumerCP">
-		<execute action="CPWSRPProducers#copy" locator-key1="PRODUCER_TABLE_URL" />
-
-		<execute action="CPWSRP#assertClick" locator-key1="CONSUMERS_NAVIGATION" value1="Consumers" />
-		<execute action="CPWSRP#assertClick" locator-key1="ADD_CONSUMER_BUTTON" value1="Add Consumer" />
-
-		<execute action="CPWSRPAddconsumer#type" locator-key1="NAME_FIELD" value1="${consumerName}" />
-		<execute action="CPWSRPAddconsumer#paste" locator-key1="URL_FIELD" />
-		<execute action="CPWSRPAddconsumer#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPWSRP#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="addConsumerPortletCP">
-		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_MENULIST_MANAGE_PORTLETS" value1="Manage Portlets" />
-
-		<execute action="CPWSRPManageportlets#assertClick" locator-key1="ADD_PORTLET_BUTTON" value1="Add Portlet" />
-
-		<execute action="CPWSRPManageportletsAddportlet#type" locator-key1="NAME_FIELD" value1="${consumerPortletName}" />
-		<execute action="CPWSRPManageportletsAddportlet#select" locator-key1="REMOTE_PORTLET_SELECT" value1="${consumerPortletType}" />
-		<execute action="CPWSRPManageportletsAddportlet#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPWSRPManageportlets#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="WSRP" />
 		</execute>
 
-		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_TABLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute action="CPWSRP#assertClick" locator-key1="CONSUMER_MENULIST_DELETE" value1="Delete" />
-		<execute action="CPWSRP#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCERS_NAVIGATION" value1="Producers" />
-		<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCER_TABLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCER_ACTION_DELETE" value1="Delete" />
-		<execute action="CPWSRPProducers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPWSRP#assertClick" locator-key1="PRODUCERS_NAVIGATION" value1="Producers" />
+
+		<while>
+			<condition action="CPWSRPProducers#isElementPresent" locator-key1="PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" />
+			<then>
+				<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" value1="Actions" />
+				<execute action="CPWSRPProducers#assertClick" locator-key1="PRODUCER_MENULIST_DELETE" value1="Delete" />
+				<execute action="CPWSRPProducers#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+			</then>
+		</while>
+
+		<execute action="CPWSRPProducers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no producers." />
+		<execute action="CPWSRPProducers#assertClick" locator-key1="CONSUMERS_NAVIGATION" value1="Consumers" />
+
+		<execute action="CPWSRP#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no consumers." />
 	</command>
 
 	<command name="wsrpUnitConverterConvertPG">

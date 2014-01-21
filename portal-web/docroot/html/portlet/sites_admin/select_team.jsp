@@ -79,9 +79,9 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("teamdescription", HtmlUtil.escape(curTeam.getDescription()));
+				data.put("teamdescription", curTeam.getDescription());
 				data.put("teamid", curTeam.getTeamId());
-				data.put("teamname", HtmlUtil.escape(curTeam.getName()));
+				data.put("teamname", curTeam.getName());
 				data.put("teamsearchcontainername", "teams");
 				%>
 

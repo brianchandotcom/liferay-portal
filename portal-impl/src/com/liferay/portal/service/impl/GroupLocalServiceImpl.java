@@ -826,6 +826,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Staging
 
+			exportImportConfigurationLocalService.
+				deleteGroupExportImportConfigurations(group.getGroupId());
+
 			unscheduleStaging(group);
 
 			if (group.hasStagingGroup()) {

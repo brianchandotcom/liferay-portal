@@ -319,6 +319,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_SITE_ADMINISTRATION_CATEGORY</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,' ${key_portletCategoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_CONTROL_PANEL</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Control Panel')]</td>
 	<td></td>

@@ -239,4 +239,75 @@
 			<var name="userRank" value="${user2Rank}" />
 		</execute>
 	</command>
+
+	<command name="Localization" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="French (France)" />
+		</execute>
+
+		<execute macro="Page#gotoSALocalizedCP">
+			<var name="adminLocalized" value="Administration du portail" />
+			<var name="portletCategoryName" value="Paramètres" />
+			<var name="portletName" value="Activité sociale" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Japanese (Japan)" />
+		</execute>
+
+		<execute macro="Page#gotoSALocalizedCP">
+			<var name="adminLocalized" value="システム管理" />
+			<var name="portletCategoryName" value="編集" />
+			<var name="portletName" value="ソーシャルアクティビティ" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Portuguese (Brazil)" />
+		</execute>
+
+		<execute macro="Page#gotoSALocalizedCP">
+			<var name="adminLocalized" value="Administração" />
+			<var name="portletCategoryName" value="Configurar" />
+			<var name="portletName" value="Atividade social" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Social Activity" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute action="Myaccount#assertClick" locator-key1="MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute action="Myaccount#assertSelectedLabel" locator-key1="LANGUAGE_SELECT" value1="English (United States)" />
+	</command>
 </definition>

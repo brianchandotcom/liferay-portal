@@ -12,7 +12,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${language}" arg2="French French (Canada)" />
+				<equals arg1="${language}" arg2="French (France)" />
 				<then>
 					<execute action="PGLanguage#click" locator-key1="LANGUAGE_MENU_FRENCH" />
 				</then>

@@ -147,6 +147,20 @@
 		</if>
 	</command>
 
+	<command name="gotoSALocalizedCP">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="${adminLocalized}" />
+
+		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
+
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute action="Home#assertClick" locator-key1="SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+	</command>
+
 	<command name="gotoUsersCP">
 		<execute macro="Page#gotoCmdCP">
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_USERS" />

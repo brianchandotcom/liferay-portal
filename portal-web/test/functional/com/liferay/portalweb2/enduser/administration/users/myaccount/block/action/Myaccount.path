@@ -152,6 +152,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_MISCELLANEOUS_DISPLAY_SETTINGS</td>
+	<td>//a[@id='_2_displaySettingsLink']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -531,6 +536,11 @@
 </tr>
 <!--ANNOUNCEMENTS-->
 <!--DISPLAY_SETTINGS-->
+<tr>
+	<td>LANGUAGE_SELECT</td>
+	<td>//select[@id='_2_languageId']</td>
+	<td></td>
+</tr>
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_FIELD</td>

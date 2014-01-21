@@ -589,56 +589,51 @@ public class SearchEngineUtil {
 		return indexSearcher.search(searchContext, query);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
 	public static Hits search(
 			String searchEngineId, long companyId, Query query, int start,
 			int end)
 		throws SearchException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + query.toString());
-		}
-
-		SearchEngine searchEngine = getSearchEngine(searchEngineId);
-
-		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
-
-		return indexSearcher.search(
+		return search(
 			searchEngineId, companyId, query, SortFactoryUtil.getDefaultSorts(),
 			start, end);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
 	public static Hits search(
 			String searchEngineId, long companyId, Query query, Sort sort,
 			int start, int end)
 		throws SearchException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + query.toString());
-		}
-
-		SearchEngine searchEngine = getSearchEngine(searchEngineId);
-
-		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
-
-		return indexSearcher.search(
+		return search(
 			searchEngineId, companyId, query, new Sort[] {sort}, start, end);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
 	public static Hits search(
 			String searchEngineId, long companyId, Query query, Sort[] sorts,
 			int start, int end)
 		throws SearchException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Search query " + query.toString());
-		}
+		SearchContext searchContext = new SearchContext();
 
-		SearchEngine searchEngine = getSearchEngine(searchEngineId);
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setSorts(sorts);
+		searchContext.setStart(start);
 
-		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
-
-		return indexSearcher.search(
-			searchEngineId, companyId, query, sorts, start, end);
+		return search(searchContext, query);
 	}
 
 	public static void setDefaultSearchEngineId(String defaultSearchEngineId) {

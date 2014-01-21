@@ -51,6 +51,10 @@ public class IndexSearcherProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 *             Query)}
+	 */
 	@Override
 	public Hits search(
 		String searchEngineId, long companyId, Query query, Sort[] sort,

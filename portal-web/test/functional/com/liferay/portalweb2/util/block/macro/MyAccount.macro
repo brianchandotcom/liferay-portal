@@ -4,7 +4,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_ADDITIONAL_EMAIL_ADDRESSES" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_ADDITIONAL_EMAIL_ADDRESSES" />
 		<execute action="Myaccount#type" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD" value1="${userAdditionalEmailAddress}" />
 		<execute action="Myaccount#select" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT" value1="Email Address" />
 		<execute action="Myaccount#click" locator-key1="ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO_BUTTON" />
@@ -18,7 +18,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_ADDRESSES" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_ADDRESSES" />
 		<execute action="Myaccount#type" locator-key1="ADDRESSES_STREET_1_FIELD" value1="${userAddressStreet1}" />
 
 		<if>
@@ -62,7 +62,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_COMMENTS" />
+		<execute action="Myaccount#click" locator-key1="MENU_MISCELLANEOUS_COMMENTS" />
 		<execute action="Myaccount#type" locator-key1="COMMENTS_FIELD" value1="${userIntroduction}" />
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -74,7 +74,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_INSTANT_MESSENGER" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_INSTANT_MESSENGER" />
 
 		<if>
 			<isset var="userInstantMessengerAIM" />
@@ -128,7 +128,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_PHONE_NUMBERS" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_PHONE_NUMBERS" />
 		<execute action="Myaccount#type" locator-key1="PHONE_NUMBERS_NUMBER_FIELD" value1="${userPhoneNumberNumber}" />
 
 		<if>
@@ -169,7 +169,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_PROJECTS" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_PROJECTS" />
 		<execute action="Myaccount#type" locator-key1="PROJECTS_TITLE_FIELD" value1="${userProjectTitle}" />
 		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_MONTH_SELECT" value1="January" />
 		<execute action="Myaccount#select" locator-key1="PROJECTS_START_DATE_YEAR_SELECT" value1="2012" />
@@ -192,7 +192,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_SMS" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_SMS" />
 		<execute action="Myaccount#type" locator-key1="SMS_SMS_FIELD" value1="${userSMS}" />
 		<execute action="Myaccount#click" locator-key1="SAVE_BUTTON" />
 		<execute action="Myaccount#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -204,7 +204,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_SOCIAL_NETWORK" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_SOCIAL_NETWORK" />
 
 		<if>
 			<isset var="userSocialNetworkFacebook" />
@@ -243,7 +243,7 @@
 		<execute action="Dockbar#click" locator-key1="USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute action="Myaccount#selectFrame" locator-key1="MY_ACCOUNT_IFRAME" />
-		<execute action="Myaccount#click" locator-key1="MENU_USER_INFORMATION_WEBSITES" />
+		<execute action="Myaccount#click" locator-key1="MENU_IDENTIFICATION_WEBSITES" />
 		<execute action="Myaccount#type" locator-key1="WEBSITES_URL_FIELD" value1="${userWebsiteURL}" />
 		<execute action="Myaccount#select" locator-key1="WEBSITES_TYPE_SELECT" value1="${userWebsiteType}" />
 		<execute action="Myaccount#click" locator-key1="WEBSITES_PRIMARY_RADIO_BUTTON" />

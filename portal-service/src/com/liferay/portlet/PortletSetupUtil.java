@@ -34,6 +34,15 @@ import javax.portlet.PortletPreferences;
 public class PortletSetupUtil {
 
 	public static JSONObject cssToJSONObject(
+			PortletPreferences portletSetup)
+		throws Exception {
+
+		String css = portletSetup.getValue("portletSetupCss", StringPool.BLANK);
+
+		return _toJSONObject(portletSetup, css);
+	}
+
+	public static JSONObject cssToJSONObject(
 			PortletPreferences portletSetup, String css)
 		throws Exception {
 

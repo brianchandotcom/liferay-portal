@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.InvokerPortletImpl;
@@ -113,7 +115,14 @@ public class UpdateLookAndFeelAction extends JSONAction {
 				title = GetterUtil.getString(titles.getString(languageId));
 			}
 
-			if (Validator.isNotNull(title)) {
+			String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+			String defaultPortletTitle = PortalUtil.getPortletTitle(
+				rootPortletId, languageId);
+
+			if ((title != null) &&
+				!Validator.equals(defaultPortletTitle, title)) {
+
 				portletSetup.setValue("portletSetupTitle_" + languageId, title);
 			}
 			else {

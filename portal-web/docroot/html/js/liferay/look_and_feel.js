@@ -1257,6 +1257,7 @@ AUI.add(
 									instance._objData = objectData;
 								}
 								else {
+									instance._objData.defaultPortletTitles = objectData.defaultPortletTitles;
 									instance._objData.portletData = objectData.portletData;
 								}
 
@@ -1414,11 +1415,11 @@ AUI.add(
 				if (value == null) {
 					var portletTitle = portletTitles[key];
 
-					if (portletTitle) {
+					if (portletTitle != null) {
 						return portletTitle;
 					}
 
-					return EMPTY;
+					return instance._objData.defaultPortletTitles[key];
 				}
 				else {
 					portletTitles[key] = value;

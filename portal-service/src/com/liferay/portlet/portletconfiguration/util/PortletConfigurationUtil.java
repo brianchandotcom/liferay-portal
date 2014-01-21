@@ -65,14 +65,8 @@ public class PortletConfigurationUtil {
 			return null;
 		}
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
-		String defaultPortletTitle = portletSetup.getValue(
-			"portletSetupTitle_" + defaultLanguageId, StringPool.BLANK);
-
 		String portletTitle = portletSetup.getValue(
-			"portletSetupTitle_" + languageId, defaultPortletTitle);
+			"portletSetupTitle_" + languageId, null);
 
 		if (Validator.isNotNull(portletTitle)) {
 			return portletTitle;
@@ -89,6 +83,9 @@ public class PortletConfigurationUtil {
 			portletTitle = oldPortletTitle;
 
 			try {
+				String defaultLanguageId = LocaleUtil.toLanguageId(
+					LocaleUtil.getSiteDefault());
+
 				portletSetup.setValue(
 					"portletSetupTitle_" + defaultLanguageId, portletTitle);
 				portletSetup.setValue(

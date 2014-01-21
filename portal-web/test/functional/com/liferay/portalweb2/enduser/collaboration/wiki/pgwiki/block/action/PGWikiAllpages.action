@@ -3,30 +3,6 @@
 		<case comparator="startsWith" locator-key1="WIKI_PAGE_TABLE_PAGE_">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-
-		<case locator-key1="ADD_PAGE_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="NAVIGATION_ALL_PAGES">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="NAVIGATION_DRAFT_PAGES">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="WIKI_PAGE_TABLE_ACTIONS">
-			<execute function="AssertClick#pauseAssertTextClickAt" />
-		</case>
-
-		<case locator-key1="WIKI_PAGE_TABLE_PAGE">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
 	</command>
 
 	<command name="assertTextEquals">

@@ -428,7 +428,7 @@ public class ServicePreAction extends Action {
 				layout = null;
 			}
 			else if (!isLoginRequest(request) &&
-					 ((!viewableGroup || !viewableSourceGroup) ||
+					 (!viewableGroup || !viewableSourceGroup ||
 					  (!redirectToDefaultLayout &&
 					   !hasAccessPermission(
 						   permissionChecker, layout, doAsGroupId,

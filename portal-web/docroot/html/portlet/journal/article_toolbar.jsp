@@ -87,8 +87,8 @@ long classNameId = BeanParamUtil.getLong(article, request, "classNameId");
 							Liferay.fire(
 								'previewArticle',
 								{
-									title: '<%= HtmlUtil.escapeJS(article.getTitle(locale)) %>',
-									uri: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>'
+									title: '<%= HtmlUtil.escape(article.getTitle(locale)) %>',
+									uri: '<%= HtmlUtil.escape(previewArticleContentURL.toString()) %>'
 								}
 							);
 						}

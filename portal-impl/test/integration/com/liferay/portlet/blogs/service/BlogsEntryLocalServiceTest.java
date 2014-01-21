@@ -764,62 +764,12 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetOrganizationEntriesInTrash() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
-		User user = UserTestUtil.addOrganizationOwnerUser(organization);
-
-		List<BlogsEntry> groupEntries =
-			BlogsEntryLocalServiceUtil.getOrganizationEntries(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusInTrash);
-
-		int initialCount = groupEntries.size();
-
-		addEntryInTrashAndEntryNotInTrash(user);
-
-		List<BlogsEntry> groupEntriesInTrash =
-			BlogsEntryLocalServiceUtil.getOrganizationEntries(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusInTrash);
-
-		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
-
-		for (BlogsEntry groupEntry : groupEntriesInTrash) {
-			if (WorkflowConstants.STATUS_IN_TRASH != groupEntry.getStatus()) {
-				Assert.fail(
-					"The blogEntry " + groupEntry.getEntryId() +
-						" is not in trash");
-			}
-		}
+		testGetOrganizationEntries(true);
 	}
 
 	@Test
 	public void testGetOrganizationEntriesNotInTrash() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
-		User user = UserTestUtil.addOrganizationOwnerUser(organization);
-
-		List<BlogsEntry> groupEntries =
-			BlogsEntryLocalServiceUtil.getOrganizationEntries(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusNotInTrash);
-
-		int initialCount = groupEntries.size();
-
-		addEntryInTrashAndEntryNotInTrash(user);
-
-		List<BlogsEntry> groupEntriesNotInTrash =
-			BlogsEntryLocalServiceUtil.getOrganizationEntries(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusNotInTrash);
-
-		Assert.assertEquals(initialCount + 1, groupEntriesNotInTrash.size());
-
-		for (BlogsEntry groupEntry : groupEntriesNotInTrash) {
-			if (WorkflowConstants.STATUS_IN_TRASH == groupEntry.getStatus()) {
-				Assert.fail(
-					"The blogEntry " + groupEntry.getEntryId() +
-						" is in trash");
-			}
-		}
+		testGetOrganizationEntries(false);
 	}
 
 	@Test
@@ -900,6 +850,52 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(initialCount + 1, actualCount);
 
 		return entry;
+	}
+
+	protected void testGetOrganizationEntries(boolean statusInTrash)
+		throws Exception {
+
+		QueryDefinition queryDefinition = _queryStatusInTrash;
+
+		if (!statusInTrash) {
+			queryDefinition = _queryStatusNotInTrash;
+		}
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User user = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		List<BlogsEntry> groupEntries =
+			BlogsEntryLocalServiceUtil.getOrganizationEntries(
+				organization.getOrganizationId(), new Date(), queryDefinition);
+
+		int initialCount = groupEntries.size();
+
+		addEntryInTrashAndEntryNotInTrash(user);
+
+		List<BlogsEntry> groupEntriesNotInTrash =
+			BlogsEntryLocalServiceUtil.getOrganizationEntries(
+				organization.getOrganizationId(), new Date(), queryDefinition);
+
+		Assert.assertEquals(initialCount + 1, groupEntriesNotInTrash.size());
+
+		for (BlogsEntry groupEntry : groupEntriesNotInTrash) {
+			if (statusInTrash &&
+				(WorkflowConstants.STATUS_IN_TRASH != groupEntry.getStatus())) {
+
+				Assert.fail(
+					"The blogEntry " + groupEntry.getEntryId() +
+						" is not in trash");
+			}
+			else if (!statusInTrash &&
+					 (WorkflowConstants.STATUS_IN_TRASH ==
+						groupEntry.getStatus())) {
+
+				Assert.fail(
+					"The blogEntry " + groupEntry.getEntryId() +
+						" is in trash");
+			}
+		}
 	}
 
 	private Group _group;

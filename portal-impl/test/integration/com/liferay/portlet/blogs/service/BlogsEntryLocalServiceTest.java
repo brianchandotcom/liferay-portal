@@ -57,30 +57,30 @@ public class BlogsEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		group = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
-		queryStatusInTrash = new QueryDefinition(
+		_queryStatusInTrash = new QueryDefinition(
 				WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		queryStatusNotInTrash = new QueryDefinition(
+		_queryStatusNotInTrash = new QueryDefinition(
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		queryStatusApproved = new QueryDefinition(
+		_queryStatusApproved = new QueryDefinition(
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(group);
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
 	public void testAddEntryOnlyGroupPermissions() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		serviceContext.setGroupPermissions(new String[] {ActionKeys.VIEW});
 
@@ -93,7 +93,7 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testAddEntryOnlyGuestPermissions() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
 
@@ -106,7 +106,7 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testAddEntryResourcesEntry() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		serviceContext.setGroupPermissions(
 			new String[] {ActionKeys.ADD_DISCUSSION});
@@ -120,7 +120,7 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testAddEntryResourcesEntryId() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		serviceContext.setGroupPermissions(
 			new String[] {ActionKeys.ADD_DISCUSSION});
@@ -135,7 +135,7 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testAddEntryResourcesEntryIdListPermissions() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId());
+			_group.getGroupId());
 
 		BlogsEntry entry = addEntry(false);
 
@@ -168,7 +168,7 @@ public class BlogsEntryLocalServiceTest {
 
 		try {
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				TestPropsValues.getUserId(), group.getGroupId(),
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				BlogsEntry.class.getName(), entry.getEntryId(),
 				WorkflowConstants.STATUS_ANY);
 		}
@@ -184,7 +184,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entryInserted = addEntry(true);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-				entryInserted.getEntryId());
+			entryInserted.getEntryId());
 
 		Assert.assertTrue(entry.getSmallImage());
 
@@ -197,13 +197,13 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount =
 			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-				user.getCompanyId(), new Date(), queryStatusInTrash);
+				user.getCompanyId(), new Date(), _queryStatusInTrash);
 
 		addEntryTrashAndEntryNotTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-				user.getCompanyId(), new Date(), queryStatusInTrash);
+				user.getCompanyId(), new Date(), _queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -213,13 +213,13 @@ public class BlogsEntryLocalServiceTest {
 		User user = TestPropsValues.getUser();
 
 		int initialCount = BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-			user.getCompanyId(), new Date(), queryStatusNotInTrash);
+			user.getCompanyId(), new Date(), _queryStatusNotInTrash);
 
 		addEntryTrashAndEntryNotTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-				user.getCompanyId(), new Date(), queryStatusNotInTrash);
+				user.getCompanyId(), new Date(), _queryStatusNotInTrash);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -230,7 +230,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> companyEntries =
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
-				user.getCompanyId(), new Date(), queryStatusInTrash);
+				user.getCompanyId(), new Date(), _queryStatusInTrash);
 
 		int initialCount = companyEntries.size();
 
@@ -238,7 +238,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> companyEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
-				user.getCompanyId(), new Date(), queryStatusInTrash);
+				user.getCompanyId(), new Date(), _queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, companyEntriesInTrash.size());
 
@@ -257,7 +257,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> companyEntries =
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
-				user.getCompanyId(), new Date(), queryStatusNotInTrash);
+				user.getCompanyId(), new Date(), _queryStatusNotInTrash);
 
 		int initialCount = companyEntries.size();
 
@@ -265,7 +265,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> companyEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
-				user.getCompanyId(), new Date(), queryStatusNotInTrash);
+				user.getCompanyId(), new Date(), _queryStatusNotInTrash);
 
 		Assert.assertEquals(initialCount + 1, companyEntriesNotInTrash.size());
 
@@ -281,13 +281,13 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testGetEntriesPrevAndNextCenterElement() throws Exception {
 		BlogsEntry entryPrevious = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry entryNext = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry[] entriesPrevAndNextForCenter =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
@@ -331,12 +331,12 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testGetEntriesPrevAndNextTopLeftElement() throws Exception {
 		BlogsEntry entryPrevious = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
-		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
+		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry[] entriesPrevAndNextForTopLeft =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
@@ -373,13 +373,13 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetEntriesPrevAndNextTopRightElement() throws Exception {
-		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
+		BlogsTestUtil.addEntry(TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry entryCenter = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry entryNext = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry[] entriesPrevAndNextForTopLeft =
 			BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
@@ -417,7 +417,7 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testGetEntryByUrlAndGroup() throws Exception {
 		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntry entryObtained = BlogsEntryLocalServiceUtil.getEntry(
 			entry.getGroupId(), entry.getUrlTitle());
@@ -431,8 +431,8 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getGroupsEntries(
-				user.getCompanyId(), group.getGroupId(), new Date(),
-				queryStatusInTrash);
+				user.getCompanyId(), _group.getGroupId(), new Date(),
+				_queryStatusInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -440,8 +440,8 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupsEntries(
-				user.getCompanyId(), group.getGroupId(), new Date(),
-				queryStatusInTrash);
+				user.getCompanyId(), _group.getGroupId(), new Date(),
+				_queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
 
@@ -470,13 +470,13 @@ public class BlogsEntryLocalServiceTest {
 
 			int initialCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), queryStatusInTrash);
+					_group.getGroupId(), _queryStatusInTrash);
 
 			addEntryTrashAndEntryNotTrash(user);
 
 			int actualCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), queryStatusInTrash);
+					_group.getGroupId(), _queryStatusInTrash);
 
 			Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -488,13 +488,13 @@ public class BlogsEntryLocalServiceTest {
 
 			int initialCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), new Date(), queryStatusInTrash);
+					_group.getGroupId(), new Date(), _queryStatusInTrash);
 
 			addEntryTrashAndEntryNotTrash(user);
 
 			int actualCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), new Date(), queryStatusInTrash);
+					_group.getGroupId(), new Date(), _queryStatusInTrash);
 
 			Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -506,13 +506,13 @@ public class BlogsEntryLocalServiceTest {
 
 			int initialCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), queryStatusNotInTrash);
+					_group.getGroupId(), _queryStatusNotInTrash);
 
 			addEntryTrashAndEntryNotTrash(user);
 
 			int actualCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), queryStatusNotInTrash);
+					_group.getGroupId(), _queryStatusNotInTrash);
 
 			Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -524,13 +524,13 @@ public class BlogsEntryLocalServiceTest {
 
 			int initialCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), new Date(), queryStatusNotInTrash);
+					_group.getGroupId(), new Date(), _queryStatusNotInTrash);
 
 			addEntryTrashAndEntryNotTrash(user);
 
 			int actualCount =
 				BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-					group.getGroupId(), new Date(), queryStatusNotInTrash);
+					_group.getGroupId(), new Date(), _queryStatusNotInTrash);
 
 			Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -541,7 +541,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
-				group.getGroupId(), queryStatusInTrash);
+				_group.getGroupId(), _queryStatusInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -549,7 +549,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
-				group.getGroupId(), queryStatusInTrash);
+				_group.getGroupId(), _queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
 
@@ -568,7 +568,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
-				group.getGroupId(), new Date(), queryStatusInTrash);
+				_group.getGroupId(), new Date(), _queryStatusInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -576,7 +576,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
-				group.getGroupId(), new Date(), queryStatusInTrash);
+				_group.getGroupId(), new Date(), _queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
 
@@ -595,7 +595,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
-				group.getGroupId(), queryStatusNotInTrash);
+				_group.getGroupId(), _queryStatusNotInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -603,7 +603,7 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
-				group.getGroupId(), queryStatusNotInTrash);
+				_group.getGroupId(), _queryStatusNotInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesNotInTrash.size());
 
@@ -623,7 +623,7 @@ public class BlogsEntryLocalServiceTest {
 
 			List<BlogsEntry> groupEntries =
 				BlogsEntryLocalServiceUtil.getGroupEntries(
-					group.getGroupId(), new Date(), queryStatusNotInTrash);
+					_group.getGroupId(), new Date(), _queryStatusNotInTrash);
 
 			int initialCount = groupEntries.size();
 
@@ -631,7 +631,7 @@ public class BlogsEntryLocalServiceTest {
 
 			List<BlogsEntry> groupEntriesNotInTrash =
 				BlogsEntryLocalServiceUtil.getGroupEntries(
-					group.getGroupId(), new Date(), queryStatusNotInTrash);
+					_group.getGroupId(), new Date(), _queryStatusNotInTrash);
 
 			Assert.assertEquals(
 				initialCount + 1, groupEntriesNotInTrash.size());
@@ -653,15 +653,15 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount =
 			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusInTrash);
 
 		addEntryTrashAndEntryNotTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -672,15 +672,15 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount =
 			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusNotInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusNotInTrash);
 
 		addEntryTrashAndEntryNotTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusNotInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusNotInTrash);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -691,8 +691,8 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getGroupUserEntries(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -700,8 +700,8 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupUserEntries(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
 
@@ -720,8 +720,8 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getGroupUserEntries(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusNotInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusNotInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -729,8 +729,8 @@ public class BlogsEntryLocalServiceTest {
 
 		List<BlogsEntry> groupEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getGroupUserEntries(
-				group.getGroupId(), user.getUserId(), new Date(),
-				queryStatusNotInTrash);
+				_group.getGroupId(), user.getUserId(), new Date(),
+				_queryStatusNotInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesNotInTrash.size());
 
@@ -751,14 +751,14 @@ public class BlogsEntryLocalServiceTest {
 		int initialCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
 				organization.getOrganizationId(), new Date(),
-				queryStatusInTrash);
+				_queryStatusInTrash);
 
 		addEntryTrashAndEntryNotTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
 				organization.getOrganizationId(), new Date(),
-				queryStatusInTrash);
+				_queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -771,14 +771,14 @@ public class BlogsEntryLocalServiceTest {
 		int initialCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
 				organization.getOrganizationId(), new Date(),
-				queryStatusNotInTrash);
+				_queryStatusNotInTrash);
 
 		addEntryTrashAndEntryNotTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
 				organization.getOrganizationId(), new Date(),
-				queryStatusNotInTrash);
+				_queryStatusNotInTrash);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -791,7 +791,7 @@ public class BlogsEntryLocalServiceTest {
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
 				organization.getOrganizationId(), new Date(),
-				queryStatusInTrash);
+				_queryStatusInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -800,7 +800,7 @@ public class BlogsEntryLocalServiceTest {
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
 				organization.getOrganizationId(), new Date(),
-				queryStatusInTrash);
+				_queryStatusInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesInTrash.size());
 
@@ -821,7 +821,7 @@ public class BlogsEntryLocalServiceTest {
 		List<BlogsEntry> groupEntries =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
 				organization.getOrganizationId(), new Date(),
-				queryStatusNotInTrash);
+				_queryStatusNotInTrash);
 
 		int initialCount = groupEntries.size();
 
@@ -830,7 +830,7 @@ public class BlogsEntryLocalServiceTest {
 		List<BlogsEntry> groupEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
 				organization.getOrganizationId(), new Date(),
-				queryStatusNotInTrash);
+				_queryStatusNotInTrash);
 
 		Assert.assertEquals(initialCount + 1, groupEntriesNotInTrash.size());
 
@@ -850,7 +850,7 @@ public class BlogsEntryLocalServiceTest {
 				TestPropsValues.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+			TestPropsValues.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
@@ -866,10 +866,10 @@ public class BlogsEntryLocalServiceTest {
 				TestPropsValues.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+			TestPropsValues.getUserId(), _group.getGroupId());
 
 		BlogsEntryLocalServiceUtil.unsubscribe(
-			TestPropsValues.getUserId(), group.getGroupId());
+			TestPropsValues.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
@@ -881,7 +881,7 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testUpdateResources() throws Exception {
 		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true);
+			TestPropsValues.getUserId(), _group, true);
 
 		BlogsEntryLocalServiceUtil.updateEntryResources(
 			blogsEntry, new String[] {ActionKeys.ADD_DISCUSSION},
@@ -890,13 +890,13 @@ public class BlogsEntryLocalServiceTest {
 
 	protected BlogsEntry addEntry(boolean smallImage) throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
+			_group.getGroupId(), _queryStatusApproved);
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), group, true, smallImage);
+			TestPropsValues.getUserId(), _group, true, smallImage);
 
 		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			group.getGroupId(), queryStatusApproved);
+			_group.getGroupId(), _queryStatusApproved);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 
@@ -907,19 +907,19 @@ public class BlogsEntryLocalServiceTest {
 		throws Exception {
 			BlogsEntry[] blogs = new BlogsEntry[2];
 
-			blogs[0] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+			blogs[0] = BlogsTestUtil.addEntry(user.getUserId(), _group, true);
 
 			BlogsEntryLocalServiceUtil.moveEntryToTrash(
 				user.getUserId(), blogs[0]);
 
-			blogs[1] = BlogsTestUtil.addEntry(user.getUserId(), group, true);
+			blogs[1] = BlogsTestUtil.addEntry(user.getUserId(), _group, true);
 
 			return blogs;
 	}
 
-	protected Group group;
-	protected QueryDefinition queryStatusApproved;
-	protected QueryDefinition queryStatusInTrash;
-	protected QueryDefinition queryStatusNotInTrash;
+	private Group _group;
+	private QueryDefinition _queryStatusApproved;
+	private QueryDefinition _queryStatusInTrash;
+	private QueryDefinition _queryStatusNotInTrash;
 
 }

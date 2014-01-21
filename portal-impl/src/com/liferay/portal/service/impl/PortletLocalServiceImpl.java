@@ -1151,10 +1151,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			PortletApp portletApp = portlet.getPortletApp();
 
 			if ((servletContextName != null) && portletApp.isWARFile() &&
-				(portletId.endsWith(
+				portletId.endsWith(
 					PortletConstants.WAR_SEPARATOR +
 						PortalUtil.getJsSafePortletId(servletContextName)) &&
-				 !portletIds.contains(portletId))) {
+				!portletIds.contains(portletId)) {
 
 				undefinedPortletIds.add(portletId);
 			}

@@ -724,42 +724,12 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetOrganizationEntriesCountInTrash() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
-		User user = UserTestUtil.addOrganizationOwnerUser(organization);
-
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusInTrash);
-
-		addEntryInTrashAndEntryNotInTrash(user);
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetOrganizationEntriesCount(true);
 	}
 
 	@Test
 	public void testGetOrganizationEntriesCountNotInTrash() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
-		User user = UserTestUtil.addOrganizationOwnerUser(organization);
-
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusNotInTrash);
-
-		addEntryInTrashAndEntryNotInTrash(user);
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
-				organization.getOrganizationId(), new Date(),
-				_queryStatusNotInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetOrganizationEntriesCount(false);
 	}
 
 	@Test
@@ -896,6 +866,32 @@ public class BlogsEntryLocalServiceTest {
 						" is in trash");
 			}
 		}
+	}
+
+	protected void testGetOrganizationEntriesCount(boolean statusInTrash)
+		throws Exception {
+
+		QueryDefinition queryDefinition = _queryStatusInTrash;
+
+		if (!statusInTrash) {
+			queryDefinition = _queryStatusNotInTrash;
+		}
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User user = UserTestUtil.addOrganizationOwnerUser(organization);
+
+		int initialCount =
+			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
+				organization.getOrganizationId(), new Date(), queryDefinition);
+
+		addEntryInTrashAndEntryNotInTrash(user);
+
+		int actualCount =
+			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
+				organization.getOrganizationId(), new Date(), queryDefinition);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
 	private Group _group;

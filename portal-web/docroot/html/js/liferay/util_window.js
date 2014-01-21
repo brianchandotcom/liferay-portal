@@ -41,12 +41,14 @@ AUI.add(
 			}
 		);
 
+		var MAP_DIR = Liferay.Language.direction;
+
+		var DIR = (MAP_DIR && MAP_DIR[themeDisplay.getLanguageId()]) || 'ltr';
+
 		var RESIZE_HANDLES = {
 			ltr: 'br',
 			rtl: 'bl'
 		};
-
-		var DEFAULT_HANDLES = Liferay.Language.direction ? RESIZE_HANDLES[Liferay.Language.direction[themeDisplay.getLanguageId()]] : 'br';
 
 		A.mix(
 			Window,
@@ -56,7 +58,7 @@ AUI.add(
 					headerContent: '&nbsp;',
 					modal: true,
 					resizable: {
-						handles: DEFAULT_HANDLES
+						handles: RESIZE_HANDLES[DIR]
 					},
 					visible: true,
 					zIndex: Liferay.zIndex.WINDOW

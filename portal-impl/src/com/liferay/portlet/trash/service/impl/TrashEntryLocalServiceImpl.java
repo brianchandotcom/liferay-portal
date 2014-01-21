@@ -17,6 +17,7 @@ package com.liferay.portlet.trash.service.impl;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -36,6 +37,7 @@ import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
+import com.liferay.portlet.trash.util.Trash;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Calendar;
@@ -352,28 +354,64 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		try {
-			SearchContext searchContext = new SearchContext();
-
-			searchContext.setCompanyId(companyId);
-			searchContext.setEnd(end);
-			searchContext.setKeywords(keywords);
-			searchContext.setGroupIds(new long[] {groupId});
-
-			if (sort != null) {
-				searchContext.setSorts(sort);
-			}
-
-			searchContext.setStart(start);
-			searchContext.setUserId(userId);
-
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				TrashEntry.class);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupId, userId, keywords, start, end, sort);
 
 			return indexer.search(searchContext);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	@Override
+	public BaseModelSearchResult<TrashEntry> searchTrashEntries(
+			long companyId, long groupId, long userId, String keywords,
+			int start, int end, Sort sort)
+		throws SystemException {
+
+		try {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				TrashEntry.class);
+
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupId, userId, keywords, start, end, sort);
+
+			Hits hits = indexer.search(
+				searchContext, Trash.SELECTED_FIELD_NAMES);
+
+			List<TrashEntry> trashEntries = TrashUtil.getEntries(hits);
+
+			return new BaseModelSearchResult<TrashEntry>(
+				trashEntries, hits.getLength());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, long userId, String keywords, int start,
+		int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+		searchContext.setKeywords(keywords);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+		searchContext.setUserId(userId);
+
+		return searchContext;
 	}
 
 	protected Date getMaxAge(Group group)

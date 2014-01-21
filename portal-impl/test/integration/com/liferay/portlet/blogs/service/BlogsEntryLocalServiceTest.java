@@ -87,7 +87,7 @@ public class BlogsEntryLocalServiceTest {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(false);
 
-		addEntry(false);
+		testAddEntry(false);
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class BlogsEntryLocalServiceTest {
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(true);
 
-		addEntry(false);
+		testAddEntry(false);
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class BlogsEntryLocalServiceTest {
 			new String[] {ActionKeys.ADD_DISCUSSION});
 		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
 
-		BlogsEntry entry = addEntry(false);
+		BlogsEntry entry = testAddEntry(false);
 
 		BlogsEntryLocalServiceUtil.addEntryResources(entry, true, true);
 	}
@@ -126,7 +126,7 @@ public class BlogsEntryLocalServiceTest {
 			new String[] {ActionKeys.ADD_DISCUSSION});
 		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
 
-		BlogsEntry entry = addEntry(false);
+		BlogsEntry entry = testAddEntry(false);
 
 		BlogsEntryLocalServiceUtil.addEntryResources(
 			entry.getEntryId(), true, true);
@@ -137,7 +137,7 @@ public class BlogsEntryLocalServiceTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
-		BlogsEntry entry = addEntry(false);
+		BlogsEntry entry = testAddEntry(false);
 
 		BlogsEntryLocalServiceUtil.addEntryResources(
 			entry.getEntryId(), serviceContext.getGroupPermissions(),
@@ -146,7 +146,7 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddEntryResourcesEntryListPermissions() throws Exception {
-		BlogsEntry entry = addEntry(false);
+		BlogsEntry entry = testAddEntry(false);
 
 		BlogsEntryLocalServiceUtil.addEntryResources(
 			entry, new String[] {ActionKeys.ADD_DISCUSSION},
@@ -155,7 +155,7 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddEntryWithoutSmallImage() throws Exception {
-		BlogsEntry entryInserted = addEntry(false);
+		BlogsEntry entryInserted = testAddEntry(false);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
 			entryInserted.getEntryId());
@@ -181,7 +181,7 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddEntryWithSmallImage() throws Exception {
-		BlogsEntry entryInserted = addEntry(true);
+		BlogsEntry entryInserted = testAddEntry(true);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getBlogsEntry(
 			entryInserted.getEntryId());
@@ -888,7 +888,7 @@ public class BlogsEntryLocalServiceTest {
 			null);
 	}
 
-	protected BlogsEntry addEntry(boolean smallImage) throws Exception {
+	protected BlogsEntry testAddEntry(boolean smallImage) throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _queryStatusApproved);
 

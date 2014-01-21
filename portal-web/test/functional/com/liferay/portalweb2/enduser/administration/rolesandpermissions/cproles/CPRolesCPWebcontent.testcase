@@ -135,7 +135,7 @@
 		<var name="siteName" value="Site Name" />
 		<var name="sitePagePrivacy" value="Public" />
 		<var name="structureDescription" value="WC Structure Description" />
-		<var name="structureFieldName" value="Text" />
+		<var name="structureFieldNames" value="Text" />
 		<var name="structureFormFieldKey" value="DIAGRAM_BUILDER_TEXT_FIELD_1" />
 		<var name="structureName" value="WC Structure Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -193,7 +193,7 @@
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />
-			<var name="structureFieldName" value="${structureFieldName}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
 			<var name="structureFormFieldKey" value="${structureFormFieldKey}" />
 			<var name="structureName" value="${structureName}" />
 		</execute>

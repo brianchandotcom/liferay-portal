@@ -407,7 +407,7 @@
 
 	<command name="AddWebContentWithStructure" priority="5">
 		<var name="structureDescription" value="WC Structure Description" />
-		<var name="structureFieldName" value="Text" />
+		<var name="structureFieldNames" value="Text" />
 		<var name="structureName" value="WC Structure Name" />
 		<var name="templateDescription" value="WC Template Description" />
 		<var name="templateName" value="WC Template Name" />
@@ -420,7 +420,7 @@
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />
-			<var name="structureFieldName" value="${structureFieldName}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
 			<var name="structureName" value="${structureName}" />
 		</execute>
 
@@ -448,7 +448,7 @@
 
 	<command name="AddWebContentWithTemplateXSL" priority="5">
 		<var name="structureDescription" value="WC Structure Description" />
-		<var name="structureFieldName" value="Text" />
+		<var name="structureFieldNames" value="Text" />
 		<var name="structureName" value="WC Structure Name" />
 		<var name="templateDescription" value="WC Template Description" />
 		<var name="templateFile" value="xsl_template.xsl" />
@@ -463,7 +463,7 @@
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />
-			<var name="structureFieldName" value="${structureFieldName}" />
+			<var name="structureFieldNames" value="${structureFieldNames}" />
 			<var name="structureName" value="${structureName}" />
 		</execute>
 

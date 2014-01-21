@@ -69,7 +69,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 						String url = (String)enu.nextElement();
 					%>
 
-						<strong><%= url %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
+						<strong><%= HtmlUtil.escape(url) %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
 
 					<%
 					}

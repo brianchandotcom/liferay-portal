@@ -195,31 +195,12 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetCompanyEntriesCountInTrash() throws Exception {
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-				_user.getCompanyId(), new Date(), _queryStatusInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-				_user.getCompanyId(), new Date(), _queryStatusInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetCompanyEntriesCount(true);
 	}
 
 	@Test
 	public void testGetCompanyEntriesCountNotInTrash() throws Exception {
-		int initialCount = BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-			_user.getCompanyId(), new Date(), _queryStatusNotInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
-				_user.getCompanyId(), new Date(), _queryStatusNotInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetCompanyEntriesCount(false);
 	}
 
 	@Test
@@ -623,6 +604,27 @@ public class BlogsEntryLocalServiceTest {
 						" is in trash");
 			}
 		}
+	}
+
+	protected void testGetCompanyEntriesCount(boolean statusInTrash)
+		throws Exception {
+
+		QueryDefinition queryDefinition = _queryStatusInTrash;
+
+		if (!statusInTrash) {
+			queryDefinition = _queryStatusNotInTrash;
+		}
+
+		int initialCount = BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
+			_user.getCompanyId(), new Date(), queryDefinition);
+
+		addEntryInTrashAndEntryNotInTrash();
+
+		int actualCount =
+			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
+				_user.getCompanyId(), new Date(), queryDefinition);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
 	protected void testGetGroupEntries(

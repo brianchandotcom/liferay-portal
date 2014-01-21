@@ -95,49 +95,61 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_ADDRESSES</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_IDENTIFICATION-->
+<tr>
+	<td>MENU_IDENTIFICATION_ADDRESSES</td>
 	<td>//a[@id='_2_addressesLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_PHONE_NUMBERS</td>
+	<td>MENU_IDENTIFICATION_PHONE_NUMBERS</td>
 	<td>//a[@id='_2_phoneNumbersLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_ADDITIONAL_EMAIL_ADDRESSES</td>
+	<td>MENU_IDENTIFICATION_ADDITIONAL_EMAIL_ADDRESSES</td>
 	<td>//a[@id='_2_additionalEmailAddressesLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_WEBSITES</td>
+	<td>MENU_IDENTIFICATION_WEBSITES</td>
 	<td>//a[@id='_2_websitesLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_INSTANT_MESSENGER</td>
+	<td>MENU_IDENTIFICATION_INSTANT_MESSENGER</td>
 	<td>//a[@id='_2_instantMessengerLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_SOCIAL_NETWORK</td>
+	<td>MENU_IDENTIFICATION_SOCIAL_NETWORK</td>
 	<td>//a[@id='_2_socialNetworkLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_SMS</td>
+	<td>MENU_IDENTIFICATION_SMS</td>
 	<td>//a[@id='_2_smsLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_PROJECTS</td>
+	<td>MENU_IDENTIFICATION_PROJECTS</td>
 	<td>//a[@id='_2_projectsLink']</td>
-	<td>Projects</td>
+	<td></td>
 </tr>
 <tr>
-	<td>MENU_USER_INFORMATION_COMMENTS</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_MISCELLANEOUS-->
+<tr>
+	<td>MENU_MISCELLANEOUS_COMMENTS</td>
 	<td>//a[@id='_2_commentsLink']</td>
-	<td>Projects</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

@@ -199,7 +199,7 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
 				user.getCompanyId(), new Date(), _queryStatusInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
@@ -215,7 +215,7 @@ public class BlogsEntryLocalServiceTest {
 		int initialCount = BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
 			user.getCompanyId(), new Date(), _queryStatusNotInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getCompanyEntriesCount(
@@ -234,7 +234,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = companyEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> companyEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
@@ -261,7 +261,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = companyEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> companyEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getCompanyEntries(
@@ -436,7 +436,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupsEntries(
@@ -473,7 +473,7 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 				_group.getGroupId(), _queryStatusInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
@@ -492,7 +492,7 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 				_group.getGroupId(), new Date(), _queryStatusInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
@@ -511,7 +511,7 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 				_group.getGroupId(), _queryStatusNotInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
@@ -530,7 +530,7 @@ public class BlogsEntryLocalServiceTest {
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 				_group.getGroupId(), new Date(), _queryStatusNotInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
@@ -549,7 +549,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
@@ -576,7 +576,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
@@ -603,7 +603,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
@@ -632,7 +632,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getGroupEntries(
@@ -660,7 +660,7 @@ public class BlogsEntryLocalServiceTest {
 				_group.getGroupId(), user.getUserId(), new Date(),
 				_queryStatusInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
@@ -679,7 +679,7 @@ public class BlogsEntryLocalServiceTest {
 				_group.getGroupId(), user.getUserId(), new Date(),
 				_queryStatusNotInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
@@ -700,7 +700,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getGroupUserEntries(
@@ -729,7 +729,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getGroupUserEntries(
@@ -757,7 +757,7 @@ public class BlogsEntryLocalServiceTest {
 				organization.getOrganizationId(), new Date(),
 				_queryStatusInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
@@ -777,7 +777,7 @@ public class BlogsEntryLocalServiceTest {
 				organization.getOrganizationId(), new Date(),
 				_queryStatusNotInTrash);
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		int actualCount =
 			BlogsEntryLocalServiceUtil.getOrganizationEntriesCount(
@@ -799,7 +799,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesInTrash =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
@@ -829,7 +829,7 @@ public class BlogsEntryLocalServiceTest {
 
 		int initialCount = groupEntries.size();
 
-		addEntryTrashAndEntryNotTrash(user);
+		addEntryInTrashAndEntryNotInTrash(user);
 
 		List<BlogsEntry> groupEntriesNotInTrash =
 			BlogsEntryLocalServiceUtil.getOrganizationEntries(
@@ -892,7 +892,7 @@ public class BlogsEntryLocalServiceTest {
 			null);
 	}
 
-	protected BlogsEntry[] addEntryTrashAndEntryNotTrash(User user)
+	protected BlogsEntry[] addEntryInTrashAndEntryNotInTrash(User user)
 		throws Exception {
 
 		BlogsEntry[] blogs = new BlogsEntry[2];

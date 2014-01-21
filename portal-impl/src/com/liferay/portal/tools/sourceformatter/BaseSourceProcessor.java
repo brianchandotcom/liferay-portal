@@ -167,6 +167,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
+		if (hasRedundantParentheses(ifClause, "||", "&&") ||
+			hasRedundantParentheses(ifClause, "&&", "||")) {
+
+			processErrorMessage(
+				fileName,
+				"redundant parentheses: " + fileName + " " + lineCount);
+		}
+
 		ifClause = stripRedundantParentheses(ifClause);
 
 		int level = 0;
@@ -826,27 +834,30 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return false;
 		}
 
-		boolean containsAndOrOperator = (s.contains("&&") || s.contains("||"));
+		boolean containsAndOperator = s.contains("&&");
+		boolean containsOrOperator = s.contains("||");
+
+		if (containsAndOperator && containsOrOperator) {
+			return true;
+		}
 
 		boolean containsCompareOperator =
 			(s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
 			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
 			 s.contains(" <= ") || s.contains(" >= "));
-
 		boolean containsMathOperator =
 			(s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
 			 s.contains(" & ") || s.contains(" % ") || s.contains(" * ") ||
 			 s.contains(" / "));
 
 		if (containsCompareOperator &&
-			(containsAndOrOperator ||
+			(containsAndOperator || containsOrOperator ||
 			 (containsMathOperator && !s.contains(StringPool.OPEN_BRACKET)))) {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean hasRedundantParentheses(String s) {
@@ -875,6 +886,35 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		else {
 			return false;
 		}
+	}
+
+	protected boolean hasRedundantParentheses(
+		String s, String operator1, String operator2) {
+
+		String[] parts = StringUtil.split(s, operator1);
+
+		if (parts.length < 3) {
+			return false;
+		}
+
+		for (int i = 1; i < (parts.length - 1); i++) {
+			String part = parts[i];
+
+			if (part.contains(operator2) || part.contains("!(")) {
+				continue;
+			}
+
+			int closeParenthesesCount = StringUtil.count(
+				part, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				part, StringPool.OPEN_PARENTHESIS);
+
+			if (Math.abs(closeParenthesesCount - openParenthesesCount) == 1) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean isAutoFix() {

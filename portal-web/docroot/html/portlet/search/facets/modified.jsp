@@ -43,7 +43,12 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 	<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>">
 		<ul class="modified nav nav-pills nav-stacked">
 			<li class="facet-value default<%= (fieldParamSelection.equals("0") ? " active" : StringPool.BLANK) %>">
-				<aui:a href="javascript:;" onClick='<%= "window[\'" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "clearFacet\'](0);" %>'>
+
+				<%
+				String taglibClearFacet = "window['" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "clearFacet'](0);";
+				%>
+
+				<aui:a href="javascript:;" onClick="<%= taglibClearFacet %>">
 					<aui:icon image="time" /> <liferay-ui:message key="any-time" />
 				</aui:a>
 			</li>
@@ -115,7 +120,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					<aui:input label="to" name='<%= HtmlUtil.escapeAttribute(facet.getFieldId()) + "to" %>' size="14" />
 				</div>
 
-				<aui:button disabled="<%= Validator.isNull(fieldParamFrom) || Validator.isNull(fieldParamTo) %>" name="searchCustomRangeButton" onClick='<%= "window[\'" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "searchCustomRange\'](" + (index + 1) + ");" %>' value="search" />
+				<%
+				String taglibSearchCustomRange = "window['" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "searchCustomRange'](" + (index + 1) + ");";
+				%>
+
+				<aui:button disabled="<%= Validator.isNull(fieldParamFrom) || Validator.isNull(fieldParamTo) %>" name="searchCustomRangeButton" onClick="<%= taglibSearchCustomRange %>" value="search" />
 			</div>
 		</ul>
 	</aui:field-wrapper>

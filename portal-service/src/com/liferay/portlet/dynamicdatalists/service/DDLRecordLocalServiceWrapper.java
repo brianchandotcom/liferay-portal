@@ -561,6 +561,13 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.dynamicdatalists.model.DDLRecord> searchDDLRecords(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordLocalService.searchDDLRecords(searchContext);
+	}
+
+	@Override
 	public void updateAsset(long userId,
 		com.liferay.portlet.dynamicdatalists.model.DDLRecord record,
 		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion recordVersion,

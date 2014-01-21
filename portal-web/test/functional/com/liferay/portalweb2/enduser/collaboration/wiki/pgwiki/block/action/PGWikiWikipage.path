@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>PGWikiWikipage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWikiWikipage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWikiWikipage</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWiki</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE-->
+<tr>
+	<td>WIKI_PAGE_BACK_TO_BUTTON</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BACK_TO_PAGE</td>
+	<td>//span[@class='header-back-to']/a/span[contains(.,'${key_wikiPageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TITLE_HEADER</td>
+	<td>//div[@class='taglib-header ']/h3[contains(.,'${key_wikiPageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_REDIRECT_LINK</td>
+	<td>//div[@class='page-redirect' and contains(.,'${key_wikiPageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY_LINK</td>
+	<td>//div[@class='wiki-body']/p/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE_ACTIONS-->
+<tr>
+	<td>WIKI_PAGE_ACTIONS_MARK_AS_SPAM</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Mark as Spam')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_EDIT</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_DETAILS</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_PRINT</td>
+	<td>//div[contains(@class,'page-actions') and contains(@class,'top-actions')]/span/a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

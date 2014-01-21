@@ -39,7 +39,8 @@
 
 		<var name="wikiPageText" value="PASS" />
 
-		<execute macro="WikiPage#addFrontPagePGHTMLSource">
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="htmlSource" value="true" />
 			<var name="pageName" value="${pageName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageText" value="${wikiPageText}" />

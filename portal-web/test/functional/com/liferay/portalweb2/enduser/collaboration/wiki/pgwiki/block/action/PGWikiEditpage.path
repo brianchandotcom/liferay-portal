@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWiki</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORMAT_DROPDOWN</td>
 	<td>//select[@id='_36_format']</td>
 	<td></td>
@@ -30,7 +40,7 @@
 </tr>
 <tr>
 	<td>VIEW_BODY_FIELD</td>
-	<td>//html/body/p[contains(.,'${wikiPageContent}')]</td>
+	<td>//html/body/p[contains(.,'${key_wikiPageContent}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>PGWikiWikipageHistory</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWikiWikipageHistory</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWikiWikipageHistory</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGWiki</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_CONTENT</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DETAILS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_INCOMING_LINKS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Incoming Links')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_OUTGOING_LINKS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Outgoing Links')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ATTACHMENTS</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIVITIES_TABLE-->
+<tr>
+	<td>ACTIVITIES_TABLE_COMPARE_TO</td>
+	<td>//tr[contains(.,'${key_wikiPageVersionNew}')]//span[@class='compare-to-link']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMPARE_VERSIONS-->
+<tr>
+	<td>COMPARE_VERSIONS_DIFF</td>
+	<td>//span[contains(@class,'diff-html')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSIONS-->
+<tr>
+	<td>VERSIONS_TAB_LINK</td>
+	<td>//li[@class='tab']//a[contains(.,'Versions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_COMPARE_VERSIONS_BUTTON</td>
+	<td>//button[@id='_36_submitButton' and contains(.,'Compare Versions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_SUMMARY</td>
+	<td>//tr[contains(.,'${key_wikiPageRevision}') and contains(.,'${key_wikiPageTitle}')]//td[contains(.,'${key_wikiVersionSummary}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_REVERT_LINK</td>
+	<td>//tr[contains(.,'${key_wikiPageRevision}') and contains(.,'${key_wikiPageTitle}')]//a[contains(.,'Revert')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

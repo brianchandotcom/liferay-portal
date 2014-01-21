@@ -317,7 +317,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#viewPagePGViaWD">
+		<execute macro="WikiPage#viewPGViaWD">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageRevision" value="${wikiPageRevision}" />

@@ -632,38 +632,12 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetGroupUserEntriesCountInTrash() throws Exception {
-
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				_group.getGroupId(), _user.getUserId(), new Date(),
-				_queryStatusInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				_group.getGroupId(), _user.getUserId(), new Date(),
-				_queryStatusInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetGroupUserEntriesCount(true);
 	}
 
 	@Test
 	public void testGetGroupUserEntriesCountNotInTrash() throws Exception {
-
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				_group.getGroupId(), _user.getUserId(), new Date(),
-				_queryStatusNotInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
-				_group.getGroupId(), _user.getUserId(), new Date(),
-				_queryStatusNotInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetGroupUserEntriesCount(false);
 	}
 
 	@Test
@@ -818,6 +792,30 @@ public class BlogsEntryLocalServiceTest {
 						" is in trash");
 			}
 		}
+	}
+
+	protected void testGetGroupUserEntriesCount(boolean statusInTrash)
+		throws Exception {
+
+		QueryDefinition queryDefinition = _queryStatusInTrash;
+
+		if (!statusInTrash) {
+			queryDefinition = _queryStatusNotInTrash;
+		}
+
+		int initialCount =
+			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
+				_group.getGroupId(), _user.getUserId(), new Date(),
+				queryDefinition);
+
+		addEntryInTrashAndEntryNotInTrash();
+
+		int actualCount =
+			BlogsEntryLocalServiceUtil.getGroupUserEntriesCount(
+				_group.getGroupId(), _user.getUserId(), new Date(),
+				queryDefinition);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
 	protected void testGetOrganizationEntries(boolean statusInTrash)

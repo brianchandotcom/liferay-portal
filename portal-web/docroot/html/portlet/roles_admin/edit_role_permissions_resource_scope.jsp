@@ -29,18 +29,18 @@ long[] groupIdsArray = (long[])objArray[7];
 List groupNames = (List)objArray[8];
 %>
 
-<aui:input name='<%= "groupIds" + target %>' type="hidden" value="<%= StringUtil.merge(groupIdsArray) %>" />
-<aui:input name='<%= "groupNames" + target %>' type="hidden" value='<%= StringUtil.merge(groupNames, "@@") %>' />
+<aui:input name='<%= "groupIds" + HtmlUtil.escapeAttribute(target) %>' type="hidden" value="<%= StringUtil.merge(groupIdsArray) %>" />
+<aui:input name='<%= "groupNames" + HtmlUtil.escapeAttribute(target) %>' type="hidden" value='<%= StringUtil.merge(groupNames, "@@") %>' />
 
-<div id="<portlet:namespace />groupDiv<%= target %>">
-	<span class="permission-scopes" id="<portlet:namespace />groupHTML<%= target %>">
+<div id="<portlet:namespace />groupDiv<%= HtmlUtil.escapeAttribute(target) %>">
+	<span class="permission-scopes" id="<portlet:namespace />groupHTML<%= HtmlUtil.escapeAttribute(target) %>">
 
 		<%
 		if (supportsFilterByGroup && !groups.isEmpty()) {
 			for (int i = 0; i < groups.size(); i++) {
 				Group group = (Group)groups.get(i);
 
-				String taglibHREF = "javascript:" + liferayPortletResponse.getNamespace() + "removeGroup(" + i + ", '" + target + "');";
+				String taglibHREF = "javascript:" + liferayPortletResponse.getNamespace() + "removeGroup(" + i + ", '" + HtmlUtil.escapeJS(target) + "');";
 		%>
 
 				<span class="lfr-token">
@@ -76,7 +76,7 @@ List groupNames = (List)objArray[8];
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			id="<%= targetId %>"
+			id="<%= HtmlUtil.escapeAttribute(targetId) %>"
 			image="configuration"
 			label="<%= true %>"
 			message="change"
@@ -84,7 +84,7 @@ List groupNames = (List)objArray[8];
 		/>
 
 		<aui:script use="aui-base">
-			A.one('#<portlet:namespace /><%= targetId %>').on(
+			A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(targetId) %>').on(
 				'click',
 				function(event) {
 					Liferay.Util.selectEntity(
@@ -94,7 +94,7 @@ List groupNames = (List)objArray[8];
 								modal: true,
 								width: 600
 							},
-							id: '<portlet:namespace />selectGroup<%= targetId %>',
+							id: '<portlet:namespace />selectGroup<%= HtmlUtil.escapeJS(targetId) %>',
 							title: '<liferay-ui:message arguments="site" key="select-x" />',
 							uri: '<%= selectCommunityURL.toString() %>'
 						}

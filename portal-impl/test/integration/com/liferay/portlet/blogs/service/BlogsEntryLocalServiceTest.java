@@ -444,8 +444,6 @@ public class BlogsEntryLocalServiceTest {
 						" is not in trash");
 			}
 
-			Assert.assertNotEquals(groupEntry.getCompanyId(), 0);
-
 			if (groupEntry.getCompanyId() != _user.getCompanyId()) {
 				Assert.fail(
 					"The companyId of the BlogEntry" + groupEntry.getEntryId() +

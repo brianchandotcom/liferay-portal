@@ -870,6 +870,7 @@ public class CMISRepository extends BaseCmisRepository {
 				(SessionImpl)_cmisRepositoryHandler.getSession();
 
 			session = sessionImpl.getSession();
+
 			setCachedSession(session);
 		}
 

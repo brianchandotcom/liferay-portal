@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ import java.util.List;
  * @see    com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil
  * @since  6.2
  */
+@ProviderType
 public interface StagedModelDataHandlerRegistry {
 
 	public StagedModelDataHandler<?> getStagedModelDataHandler(

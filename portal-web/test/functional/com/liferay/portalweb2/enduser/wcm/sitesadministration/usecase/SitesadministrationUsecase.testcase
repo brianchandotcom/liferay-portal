@@ -206,4 +206,123 @@
 			<var name="password" value="test" />
 		</execute>
 	</command>
+
+	<command name="ApplicationAdapter" priority="5">
+		<property name="hook.plugins.includes" value="sample-application-adapter-hook" />
+
+		<var name="site1Name" value="Site A" />
+		<var name="site1PageName" value="Test Page A" />
+		<var name="site1PagePrivacy" value="Public" />
+		<var name="site2Name" value="Site B" />
+		<var name="site2PageName" value="Test Page B" />
+		<var name="site2PagePrivacy" value="Public" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${site1Name}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${site1Name}" />
+		</execute>
+
+		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter EE Hook" />
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${site1Name}" />
+			<var name="sitePageName" value="${site1PageName}" />
+			<var name="sitePagePrivacy" value="${site1PagePrivacy}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${site1PageName}" />
+			<var name="siteName" value="${site1Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Navigation" />
+		</execute>
+
+		<var name="key_portletName" value="Navigation" />
+
+		<execute action="PGNavigation#assertTextEquals" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${site2Name}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${site2Name}" />
+			<var name="sitePageName" value="${site2PageName}" />
+			<var name="sitePagePrivacy" value="${site2PagePrivacy}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${site2PageName}" />
+			<var name="siteName" value="${site2Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Navigation" />
+		</execute>
+
+		<var name="key_portletName" value="Navigation" />
+
+		<execute action="PGNavigation#assertTextNotPresent" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${site2Name}" />
+		</execute>
+
+		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter EE Hook" />
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${site2PageName}" />
+			<var name="siteName" value="${site2Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_portletName" value="Navigation" />
+
+		<execute action="PGNavigation#assertTextEquals" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${site2Name}" />
+		</execute>
+
+		<execute action="CPSitesettings#select" locator-key1="APPLICATION_ADAPTER_SELECT" value1="None" />
+		<execute action="CPSitesettings#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${site2PageName}" />
+			<var name="siteName" value="${site2Name}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<var name="key_portletName" value="Navigation" />
+
+		<execute action="PGNavigation#assertTextNotPresent" locator-key1="PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+	</command>
 </definition>

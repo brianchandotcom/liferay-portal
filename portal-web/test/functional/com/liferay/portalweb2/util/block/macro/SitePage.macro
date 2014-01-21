@@ -74,11 +74,13 @@
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
-
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
+				<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+				<var name="key_pageType" value="${pageTemplateName}" />
+
 				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
 
 				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_RADIO" />

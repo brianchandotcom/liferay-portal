@@ -39,11 +39,11 @@ else {
 	searchContext.setKeywords(displayTerms.getKeywords());
 	searchContext.setStart(searchContainer.getStart());
 
-	Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
+	BaseModelSearchResult<DDLRecord> baseModelSearchResult = DDLRecordLocalServiceUtil.searchDDLRecords(searchContext);
 
-	results = DDLUtil.getRecords(hits);
+	results = baseModelSearchResult.getBaseModels();
 
-	total = hits.getLength();
+	total = baseModelSearchResult.getLength();
 
 	searchContainer.setTotal(total);
 }

@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatalists.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -40,6 +41,8 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatalists.util.DDL;
+import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatalists.util.comparator.DDLRecordVersionVersionComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -406,6 +409,27 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				DDLRecord.class);
 
 			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	@Override
+	public BaseModelSearchResult<DDLRecord> searchDDLRecords(
+			SearchContext searchContext)
+		throws SystemException {
+
+		try {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DDLRecord.class);
+
+			Hits hits = indexer.search(searchContext, DDL.SELECTED_FIELD_NAMES);
+
+			List<DDLRecord> ddlRecords = DDLUtil.getRecords(hits);
+
+			return new BaseModelSearchResult<DDLRecord>(
+				ddlRecords, hits.getLength());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -38,6 +39,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ProviderType
 public interface DDL {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.ENTRY_CLASS_PK, Field.UID};
 
 	public JSONObject getRecordJSONObject(DDLRecord record) throws Exception;
 

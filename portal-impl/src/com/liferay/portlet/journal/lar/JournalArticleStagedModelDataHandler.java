@@ -204,7 +204,7 @@ public class JournalArticleStagedModelDataHandler
 
 	@Override
 	public boolean validateReference(
-			PortletDataContext portletDataContext, Element referenceElement) {
+		PortletDataContext portletDataContext, Element referenceElement) {
 
 		String artcleResourceUuid = referenceElement.attributeValue(
 			"article-resource-uuid");

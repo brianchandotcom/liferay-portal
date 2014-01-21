@@ -41,13 +41,25 @@ AUI.add(
 			}
 		);
 
+		var MAP_DIR = Liferay.Language.direction;
+
+		var DIR = (MAP_DIR && MAP_DIR[themeDisplay.getLanguageId()]) || 'ltr';
+
+		var RESIZE_HANDLES = {
+			ltr: 'br',
+			rtl: 'bl'
+		};
+
 		A.mix(
 			Window,
 			{
 				DEFAULTS: {
 					centered: true,
-					modal: true,
 					headerContent: '&nbsp;',
+					modal: true,
+					resizable: {
+						handles: RESIZE_HANDLES[DIR]
+					},
 					visible: true,
 					zIndex: Liferay.zIndex.WINDOW
 				},

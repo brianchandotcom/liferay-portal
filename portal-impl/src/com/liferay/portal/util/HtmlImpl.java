@@ -343,6 +343,34 @@ public class HtmlImpl implements Html {
 	}
 
 	@Override
+	public String replaceNonWordCharacters(String text) {
+		if (Validator.isNull(text)) {
+			return text;
+		}
+
+		StringBundler sb = new StringBundler(text.length());
+
+		for (int i = 0; i < text.length(); i++) {
+			char c = text.charAt(i);
+
+			if (((c >= CharPool.UPPER_CASE_A) &&
+				 (c <= CharPool.UPPER_CASE_Z)) ||
+				((c >= CharPool.LOWER_CASE_A) &&
+				 (c <= CharPool.LOWER_CASE_Z)) ||
+				((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_0)) ||
+				(c == CharPool.UNDERLINE)) {
+
+				sb.append(c);
+			}
+			else {
+				sb.append(Integer.toHexString(c));
+			}
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public String stripBetween(String text, String tag) {
 		return StringUtil.stripBetween(text, "<" + tag, "</" + tag + ">");
 	}

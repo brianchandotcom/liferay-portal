@@ -22,7 +22,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_
 String amPmParam = namespace + request.getAttribute("liferay-ui:input-time:amPmParam");
 int amPmValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:amPmValue"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:cssClass"));
-String dateParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:dateParam"));
+String dateParam = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:dateParam"));
 Date dateValue = (Date)GetterUtil.getObject(request.getAttribute("liferay-ui:input-time:dateValue"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:disabled"));
 String hourParam = namespace + request.getAttribute("liferay-ui:input-time:hourParam");
@@ -30,7 +30,7 @@ int hourValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:i
 String minuteParam = namespace + request.getAttribute("liferay-ui:input-time:minuteParam");
 int minuteValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteValue"));
 int minuteInterval = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteInterval"));
-String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:name"));
+String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:name"));
 
 if (minuteInterval < 1) {
 	minuteInterval = 30;
@@ -60,27 +60,33 @@ if (!DateUtil.isFormatAmPm(locale)) {
 }
 
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
+
+String amPmParamId = HtmlUtil.replaceNonWordCharacters(amPmParam);
+String dateParamId = HtmlUtil.replaceNonWordCharacters(dateParam);
+String hourParamId = HtmlUtil.replaceNonWordCharacters(hourParam);
+String minuteParamId = HtmlUtil.replaceNonWordCharacters(minuteParam);
+String nameId = HtmlUtil.replaceNonWordCharacters(name);
 %>
 
 <span class="lfr-input-time <%= cssClass %>" id="<%= randomNamespace %>displayTime">
 	<c:choose>
 		<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= HtmlUtil.escapeAttribute(name) %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" type="text" placeholder="<%= placeholder %>" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= HtmlUtil.escapeAttribute(name) %>" type="text" placeholder="<%= placeholder %>" value="<%= format.format(calendar.getTime()) %>" />
 		</c:otherwise>
 	</c:choose>
 
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= hourParam %>" name="<%= hourParam %>" type="hidden" value="<%= hourValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= minuteParam %>" name="<%= minuteParam %>" type="hidden" value="<%= minuteValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= amPmParam %>" name="<%= amPmParam %>" type="hidden" value="<%= amPmValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dateParam %>" name="<%= dateParam %>" type="hidden" value="<%= dateValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= hourParamId %>" name="<%= HtmlUtil.escapeAttribute(hourParam) %>" type="hidden" value="<%= hourValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= minuteParamId %>" name="<%= HtmlUtil.escapeAttribute(minuteParam) %>" type="hidden" value="<%= minuteValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= amPmParamId %>" name="<%= HtmlUtil.escapeAttribute(amPmParam) %>" type="hidden" value="<%= amPmValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dateParamId %>" name="<%= HtmlUtil.escapeAttribute(dateParam) %>" type="hidden" value="<%= dateValue %>" />
 </span>
 
 <aui:script use='<%= "aui-timepicker" + (BrowserSnifferUtil.isMobile(request) ? "-native" : StringPool.BLANK) %>'>
 	Liferay.component(
-		'<%= namespace + name %>TimePicker',
+		'<%= nameId %>TimePicker',
 		function() {
 			var timePicker = new A.TimePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
@@ -106,17 +112,17 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							</c:if>
 
 							if (date) {
-								container.one('#<%= hourParam %>').val(hours);
-								container.one('#<%= minuteParam %>').val(date.getMinutes());
-								container.one('#<%= amPmParam %>').val(amPm);
-								container.one('#<%= dateParam %>').val(date);
+								container.one('#<%= hourParamId %>').val(hours);
+								container.one('#<%= minuteParamId %>').val(date.getMinutes());
+								container.one('#<%= amPmParamId %>').val(amPm);
+								container.one('#<%= dateParamId %>').val(date);
 							}
 						}
 					},
 					popover: {
 						zIndex: Liferay.zIndex.TOOLTIP
 					},
-					trigger: '#<%= namespace + name %>',
+					trigger: '#<%= nameId %>',
 					values: <%= _getHoursJSONArray(minuteInterval, locale) %>
 				}
 			);
@@ -126,14 +132,14 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				var container = instance.get('container');
 
-				return A.Date.parse(container.one('#<%= dateParam %>').val());
+				return A.Date.parse(container.one('#<%= dateParamId %>').val());
 			};
 
 			return timePicker;
 		}
 	);
 
-	Liferay.component('<%= namespace + name %>TimePicker');
+	Liferay.component('<%= nameId %>TimePicker');
 </aui:script>
 
 <%!

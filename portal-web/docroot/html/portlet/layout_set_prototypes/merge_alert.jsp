@@ -98,7 +98,7 @@ List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayo
 
 				<li>
 					<aui:a href="<%= editLayoutsURL.toString() %>">
-						<%= mergeFailFriendlyURLLayout.getName(locale) %>
+						<%= HtmlUtil.escape(mergeFailFriendlyURLLayout.getName(locale)) %>
 					</aui:a>
 				</li>
 

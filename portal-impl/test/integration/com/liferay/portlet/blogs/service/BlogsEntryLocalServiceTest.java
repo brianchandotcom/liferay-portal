@@ -509,9 +509,7 @@ public class BlogsEntryLocalServiceTest {
 		return entry;
 	}
 
-	protected void testGetCompanyEntries(boolean isInTrash)
-		throws Exception {
-
+	protected void testGetCompanyEntries(boolean isInTrash) throws Exception {
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
 		if (!isInTrash) {
@@ -556,8 +554,7 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
-	protected void testGetGroupEntries(
-			boolean isInTrash, boolean displayDate)
+	protected void testGetGroupEntries(boolean isInTrash, boolean displayDate)
 		throws Exception {
 
 		QueryDefinition queryDefinition = _queryStatusInTrash;
@@ -634,9 +631,7 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
-	protected void testGetGroupUserEntries(boolean isInTrash)
-		throws Exception {
-
+	protected void testGetGroupUserEntries(boolean isInTrash) throws Exception {
 		QueryDefinition queryDefinition = _queryStatusInTrash;
 
 		if (!isInTrash) {

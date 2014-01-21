@@ -459,68 +459,28 @@ public class BlogsEntryLocalServiceTest {
 	public void testGetGroupEntriesCountInTrashNoDisplayDate()
 		throws Exception {
 
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), _queryStatusInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), _queryStatusInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetGroupEntriesCount(true, false);
 	}
 
 	@Test
 	public void testGetGroupEntriesCountInTrashWithDisplayDate()
 		throws Exception {
 
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), new Date(), _queryStatusInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), new Date(), _queryStatusInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetGroupEntriesCount(true, true);
 	}
 
 	@Test
 	public void testGetGroupEntriesCountNotInTrashNoDisplayDate()
 		throws Exception {
 
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), _queryStatusNotInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), _queryStatusNotInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetGroupEntriesCount(false, false);
 	}
 
 	@Test
 	public void testGetGroupEntriesCountNotInTrashWithDisplayDate()
 		throws Exception {
 
-		int initialCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), new Date(), _queryStatusNotInTrash);
-
-		addEntryInTrashAndEntryNotInTrash();
-
-		int actualCount =
-			BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-				_group.getGroupId(), new Date(), _queryStatusNotInTrash);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
+		testGetGroupEntriesCount(false, true);
 	}
 
 	@Test
@@ -720,6 +680,43 @@ public class BlogsEntryLocalServiceTest {
 						" is in trash");
 			}
 		}
+	}
+
+	protected void testGetGroupEntriesCount(
+			boolean statusInTrash, boolean displayDate)
+		throws Exception {
+
+		QueryDefinition queryDefinition = _queryStatusInTrash;
+
+			if (!statusInTrash) {
+				queryDefinition = _queryStatusNotInTrash;
+			}
+
+		int initialCount = 0;
+
+		if (displayDate) {
+			initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				_group.getGroupId(), new Date(), queryDefinition);
+		}
+		else {
+			initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				_group.getGroupId(), queryDefinition);
+		}
+
+		addEntryInTrashAndEntryNotInTrash();
+
+		int actualCount = 0;
+
+		if (displayDate) {
+			actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				_group.getGroupId(), new Date(), queryDefinition);
+		}
+		else {
+			actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+				_group.getGroupId(), queryDefinition);
+		}
+
+		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
 	protected void testGetGroupUserEntries(boolean statusInTrash)

@@ -139,6 +139,8 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setStatusMessage(ServiceTestUtil.randomString());
 
+		newBackgroundTask.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newBackgroundTask);
 
 		BackgroundTask existingBackgroundTask = _persistence.findByPrimaryKey(newBackgroundTask.getPrimaryKey());
@@ -176,6 +178,8 @@ public class BackgroundTaskPersistenceTest {
 			newBackgroundTask.getStatus());
 		Assert.assertEquals(existingBackgroundTask.getStatusMessage(),
 			newBackgroundTask.getStatusMessage());
+		Assert.assertEquals(existingBackgroundTask.getMvccVersion(),
+			newBackgroundTask.getMvccVersion());
 	}
 
 	@Test
@@ -218,7 +222,8 @@ public class BackgroundTaskPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "servletContextNames", true,
 			"taskExecutorClassName", true, "taskContext", true, "completed",
-			true, "completionDate", true, "status", true, "statusMessage", true);
+			true, "completionDate", true, "status", true, "statusMessage",
+			true, "mvccVersion", true);
 	}
 
 	@Test
@@ -365,6 +370,8 @@ public class BackgroundTaskPersistenceTest {
 		backgroundTask.setStatus(ServiceTestUtil.nextInt());
 
 		backgroundTask.setStatusMessage(ServiceTestUtil.randomString());
+
+		backgroundTask.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(backgroundTask);
 

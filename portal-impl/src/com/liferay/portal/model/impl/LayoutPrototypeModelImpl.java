@@ -82,9 +82,10 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "settings_", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutPrototype (uuid_ VARCHAR(75) null,layoutPrototypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,settings_ STRING null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPrototype (uuid_ VARCHAR(75) null,layoutPrototypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,settings_ STRING null,active_ BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPrototype";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutPrototype.layoutPrototypeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutPrototype.layoutPrototypeId ASC";
@@ -129,6 +130,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		model.setDescription(soapModel.getDescription());
 		model.setSettings(soapModel.getSettings());
 		model.setActive(soapModel.getActive());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -205,6 +207,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -278,6 +281,12 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -557,6 +566,17 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		return _originalActive;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -657,6 +677,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		layoutPrototypeImpl.setDescription(getDescription());
 		layoutPrototypeImpl.setSettings(getSettings());
 		layoutPrototypeImpl.setActive(getActive());
+		layoutPrototypeImpl.setMvccVersion(getMvccVersion());
 
 		layoutPrototypeImpl.resetOriginalValues();
 
@@ -802,12 +823,14 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 		layoutPrototypeCacheModel.active = getActive();
 
+		layoutPrototypeCacheModel.mvccVersion = getMvccVersion();
+
 		return layoutPrototypeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -831,6 +854,8 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		sb.append(getSettings());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -838,7 +863,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutPrototype");
@@ -888,6 +913,10 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -916,6 +945,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private LayoutPrototype _escapedModel;
 }

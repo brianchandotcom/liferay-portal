@@ -38,6 +38,7 @@ public class UserNotificationDeliverySoap implements Serializable {
 		soapModel.setNotificationType(model.getNotificationType());
 		soapModel.setDeliveryType(model.getDeliveryType());
 		soapModel.setDeliver(model.getDeliver());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -161,6 +162,14 @@ public class UserNotificationDeliverySoap implements Serializable {
 		_deliver = deliver;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _userNotificationDeliveryId;
 	private long _companyId;
 	private long _userId;
@@ -169,4 +178,5 @@ public class UserNotificationDeliverySoap implements Serializable {
 	private int _notificationType;
 	private int _deliveryType;
 	private boolean _deliver;
+	private long _mvccVersion;
 }

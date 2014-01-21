@@ -36,7 +36,7 @@ import java.util.Date;
 public class PhoneCacheModel implements CacheModel<Phone>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -64,6 +64,8 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable {
 		sb.append(typeId);
 		sb.append(", primary=");
 		sb.append(primary);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,6 +126,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable {
 
 		phoneImpl.setTypeId(typeId);
 		phoneImpl.setPrimary(primary);
+		phoneImpl.setMvccVersion(mvccVersion);
 
 		phoneImpl.resetOriginalValues();
 
@@ -145,6 +148,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable {
 		extension = objectInput.readUTF();
 		typeId = objectInput.readInt();
 		primary = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -189,6 +193,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable {
 
 		objectOutput.writeInt(typeId);
 		objectOutput.writeBoolean(primary);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -204,4 +209,5 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable {
 	public String extension;
 	public int typeId;
 	public boolean primary;
+	public long mvccVersion;
 }

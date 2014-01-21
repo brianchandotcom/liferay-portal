@@ -66,6 +66,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 		attributes.put("workflowDefinitionName", getWorkflowDefinitionName());
 		attributes.put("workflowDefinitionVersion",
 			getWorkflowDefinitionVersion());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -145,6 +146,12 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 
 		if (workflowDefinitionVersion != null) {
 			setWorkflowDefinitionVersion(workflowDefinitionVersion);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -444,6 +451,26 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	@Override
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion) {
 		_workflowDefinitionLink.setWorkflowDefinitionVersion(workflowDefinitionVersion);
+	}
+
+	/**
+	* Returns the mvcc version of this workflow definition link.
+	*
+	* @return the mvcc version of this workflow definition link
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _workflowDefinitionLink.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this workflow definition link.
+	*
+	* @param mvccVersion the mvcc version of this workflow definition link
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_workflowDefinitionLink.setMvccVersion(mvccVersion);
 	}
 
 	@Override

@@ -4264,6 +4264,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		websiteImpl.setUrl(website.getUrl());
 		websiteImpl.setTypeId(website.getTypeId());
 		websiteImpl.setPrimary(website.isPrimary());
+		websiteImpl.setMvccVersion(website.getMvccVersion());
 
 		return websiteImpl;
 	}

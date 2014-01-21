@@ -58,6 +58,7 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		attributes.put("idd", getIdd());
 		attributes.put("zipRequired", getZipRequired());
 		attributes.put("active", getActive());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -110,6 +111,12 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -311,6 +318,26 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	@Override
 	public void setActive(boolean active) {
 		_country.setActive(active);
+	}
+
+	/**
+	* Returns the mvcc version of this country.
+	*
+	* @return the mvcc version of this country
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _country.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this country.
+	*
+	* @param mvccVersion the mvcc version of this country
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_country.setMvccVersion(mvccVersion);
 	}
 
 	@Override

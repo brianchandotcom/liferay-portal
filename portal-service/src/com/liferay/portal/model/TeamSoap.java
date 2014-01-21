@@ -40,6 +40,7 @@ public class TeamSoap implements Serializable {
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -164,6 +165,14 @@ public class TeamSoap implements Serializable {
 		_description = description;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _teamId;
 	private long _companyId;
 	private long _userId;
@@ -173,4 +182,5 @@ public class TeamSoap implements Serializable {
 	private long _groupId;
 	private String _name;
 	private String _description;
+	private long _mvccVersion;
 }

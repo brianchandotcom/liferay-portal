@@ -37,7 +37,7 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{webDavPropsId=");
 		sb.append(webDavPropsId);
@@ -53,6 +53,8 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 		sb.append(classPK);
 		sb.append(", props=");
 		sb.append(props);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -89,6 +91,8 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 			webDAVPropsImpl.setProps(props);
 		}
 
+		webDAVPropsImpl.setMvccVersion(mvccVersion);
+
 		webDAVPropsImpl.resetOriginalValues();
 
 		return webDAVPropsImpl;
@@ -103,6 +107,7 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		props = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -121,6 +126,8 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 		else {
 			objectOutput.writeUTF(props);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long webDavPropsId;
@@ -130,4 +137,5 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 	public long classNameId;
 	public long classPK;
 	public String props;
+	public long mvccVersion;
 }

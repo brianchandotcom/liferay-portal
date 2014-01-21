@@ -70,6 +70,7 @@ public class OrganizationWrapper implements Organization,
 		attributes.put("statusId", getStatusId());
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -176,6 +177,12 @@ public class OrganizationWrapper implements Organization,
 
 		if (logoId != null) {
 			setLogoId(logoId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -569,6 +576,26 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public void setLogoId(long logoId) {
 		_organization.setLogoId(logoId);
+	}
+
+	/**
+	* Returns the mvcc version of this organization.
+	*
+	* @return the mvcc version of this organization
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _organization.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this organization.
+	*
+	* @param mvccVersion the mvcc version of this organization
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_organization.setMvccVersion(mvccVersion);
 	}
 
 	@Override

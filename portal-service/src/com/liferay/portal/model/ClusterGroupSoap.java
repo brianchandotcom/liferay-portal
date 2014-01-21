@@ -33,6 +33,7 @@ public class ClusterGroupSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setClusterNodeIds(model.getClusterNodeIds());
 		soapModel.setWholeCluster(model.getWholeCluster());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -121,8 +122,17 @@ public class ClusterGroupSoap implements Serializable {
 		_wholeCluster = wholeCluster;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _clusterGroupId;
 	private String _name;
 	private String _clusterNodeIds;
 	private boolean _wholeCluster;
+	private long _mvccVersion;
 }

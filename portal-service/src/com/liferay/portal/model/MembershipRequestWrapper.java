@@ -62,6 +62,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		attributes.put("replyDate", getReplyDate());
 		attributes.put("replierUserId", getReplierUserId());
 		attributes.put("statusId", getStatusId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class MembershipRequestWrapper implements MembershipRequest,
 
 		if (statusId != null) {
 			setStatusId(statusId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -391,6 +398,26 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	@Override
 	public void setStatusId(int statusId) {
 		_membershipRequest.setStatusId(statusId);
+	}
+
+	/**
+	* Returns the mvcc version of this membership request.
+	*
+	* @return the mvcc version of this membership request
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _membershipRequest.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this membership request.
+	*
+	* @param mvccVersion the mvcc version of this membership request
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_membershipRequest.setMvccVersion(mvccVersion);
 	}
 
 	@Override

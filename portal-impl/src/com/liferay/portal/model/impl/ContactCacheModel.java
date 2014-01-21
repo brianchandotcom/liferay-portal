@@ -36,7 +36,7 @@ import java.util.Date;
 public class ContactCacheModel implements CacheModel<Contact>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{contactId=");
 		sb.append(contactId);
@@ -104,6 +104,8 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable {
 		sb.append(jobClass);
 		sb.append(", hoursOfOperation=");
 		sb.append(hoursOfOperation);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -287,6 +289,8 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable {
 			contactImpl.setHoursOfOperation(hoursOfOperation);
 		}
 
+		contactImpl.setMvccVersion(mvccVersion);
+
 		contactImpl.resetOriginalValues();
 
 		return contactImpl;
@@ -327,6 +331,7 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable {
 		jobTitle = objectInput.readUTF();
 		jobClass = objectInput.readUTF();
 		hoursOfOperation = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -487,6 +492,8 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable {
 		else {
 			objectOutput.writeUTF(hoursOfOperation);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long contactId;
@@ -522,4 +529,5 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable {
 	public String jobTitle;
 	public String jobClass;
 	public String hoursOfOperation;
+	public long mvccVersion;
 }

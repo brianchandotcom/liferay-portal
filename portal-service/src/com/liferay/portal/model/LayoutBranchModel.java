@@ -38,7 +38,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface LayoutBranchModel extends BaseModel<LayoutBranch> {
+public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -223,6 +223,22 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch> {
 	 * @param master the master of this layout branch
 	 */
 	public void setMaster(boolean master);
+
+	/**
+	 * Returns the mvcc version of this layout branch.
+	 *
+	 * @return the mvcc version of this layout branch
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this layout branch.
+	 *
+	 * @param mvccVersion the mvcc version of this layout branch
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

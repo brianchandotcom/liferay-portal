@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ClassNameModel extends BaseModel<ClassName>, TypedModel {
+public interface ClassNameModel extends BaseModel<ClassName>, MVCCModel,
+	TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -98,6 +99,22 @@ public interface ClassNameModel extends BaseModel<ClassName>, TypedModel {
 	 * @param value the value of this class name
 	 */
 	public void setValue(String value);
+
+	/**
+	 * Returns the mvcc version of this class name.
+	 *
+	 * @return the mvcc version of this class name
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this class name.
+	 *
+	 * @param mvccVersion the mvcc version of this class name
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

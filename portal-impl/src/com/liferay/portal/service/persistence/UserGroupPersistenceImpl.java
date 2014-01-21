@@ -4453,6 +4453,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		userGroupImpl.setName(userGroup.getName());
 		userGroupImpl.setDescription(userGroup.getDescription());
 		userGroupImpl.setAddedByLDAPImport(userGroup.isAddedByLDAPImport());
+		userGroupImpl.setMvccVersion(userGroup.getMvccVersion());
 
 		return userGroupImpl;
 	}

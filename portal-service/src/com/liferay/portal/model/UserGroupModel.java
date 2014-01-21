@@ -40,7 +40,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserGroupModel extends BaseModel<UserGroup>, StagedAuditedModel {
+public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -254,6 +255,22 @@ public interface UserGroupModel extends BaseModel<UserGroup>, StagedAuditedModel
 	 * @param addedByLDAPImport the added by l d a p import of this user group
 	 */
 	public void setAddedByLDAPImport(boolean addedByLDAPImport);
+
+	/**
+	 * Returns the mvcc version of this user group.
+	 *
+	 * @return the mvcc version of this user group
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this user group.
+	 *
+	 * @param mvccVersion the mvcc version of this user group
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

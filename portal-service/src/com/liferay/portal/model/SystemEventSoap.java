@@ -44,6 +44,7 @@ public class SystemEventSoap implements Serializable {
 		soapModel.setSystemEventSetKey(model.getSystemEventSetKey());
 		soapModel.setType(model.getType());
 		soapModel.setExtraData(model.getExtraData());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -208,6 +209,14 @@ public class SystemEventSoap implements Serializable {
 		_extraData = extraData;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _systemEventId;
 	private long _groupId;
 	private long _companyId;
@@ -222,4 +231,5 @@ public class SystemEventSoap implements Serializable {
 	private long _systemEventSetKey;
 	private int _type;
 	private String _extraData;
+	private long _mvccVersion;
 }

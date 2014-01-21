@@ -1160,6 +1160,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		portletImpl.setPortletId(portlet.getPortletId());
 		portletImpl.setRoles(portlet.getRoles());
 		portletImpl.setActive(portlet.isActive());
+		portletImpl.setMvccVersion(portlet.getMvccVersion());
 
 		return portletImpl;
 	}

@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ImageModel extends BaseModel<Image> {
+public interface ImageModel extends BaseModel<Image>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -144,6 +144,22 @@ public interface ImageModel extends BaseModel<Image> {
 	 * @param size the size of this image
 	 */
 	public void setSize(int size);
+
+	/**
+	 * Returns the mvcc version of this image.
+	 *
+	 * @return the mvcc version of this image
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this image.
+	 *
+	 * @param mvccVersion the mvcc version of this image
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

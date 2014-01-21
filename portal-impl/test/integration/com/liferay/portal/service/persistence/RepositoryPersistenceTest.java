@@ -140,6 +140,8 @@ public class RepositoryPersistenceTest {
 
 		newRepository.setDlFolderId(ServiceTestUtil.nextLong());
 
+		newRepository.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newRepository);
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
@@ -174,6 +176,8 @@ public class RepositoryPersistenceTest {
 			newRepository.getTypeSettings());
 		Assert.assertEquals(existingRepository.getDlFolderId(),
 			newRepository.getDlFolderId());
+		Assert.assertEquals(existingRepository.getMvccVersion(),
+			newRepository.getMvccVersion());
 	}
 
 	@Test
@@ -215,7 +219,8 @@ public class RepositoryPersistenceTest {
 			"repositoryId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "name", true, "description", true,
-			"portletId", true, "typeSettings", true, "dlFolderId", true);
+			"portletId", true, "typeSettings", true, "dlFolderId", true,
+			"mvccVersion", true);
 	}
 
 	@Test
@@ -388,6 +393,8 @@ public class RepositoryPersistenceTest {
 		repository.setTypeSettings(ServiceTestUtil.randomString());
 
 		repository.setDlFolderId(ServiceTestUtil.nextLong());
+
+		repository.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(repository);
 

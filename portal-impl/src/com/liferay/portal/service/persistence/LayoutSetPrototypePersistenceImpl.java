@@ -4162,6 +4162,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		layoutSetPrototypeImpl.setDescription(layoutSetPrototype.getDescription());
 		layoutSetPrototypeImpl.setSettings(layoutSetPrototype.getSettings());
 		layoutSetPrototypeImpl.setActive(layoutSetPrototype.isActive());
+		layoutSetPrototypeImpl.setMvccVersion(layoutSetPrototype.getMvccVersion());
 
 		return layoutSetPrototypeImpl;
 	}

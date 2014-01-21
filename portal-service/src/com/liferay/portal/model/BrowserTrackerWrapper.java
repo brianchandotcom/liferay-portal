@@ -54,6 +54,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		attributes.put("browserTrackerId", getBrowserTrackerId());
 		attributes.put("userId", getUserId());
 		attributes.put("browserKey", getBrowserKey());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -76,6 +77,12 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 
 		if (browserKey != null) {
 			setBrowserKey(browserKey);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -179,6 +186,26 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	@Override
 	public void setBrowserKey(long browserKey) {
 		_browserTracker.setBrowserKey(browserKey);
+	}
+
+	/**
+	* Returns the mvcc version of this browser tracker.
+	*
+	* @return the mvcc version of this browser tracker
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _browserTracker.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this browser tracker.
+	*
+	* @param mvccVersion the mvcc version of this browser tracker
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_browserTracker.setMvccVersion(mvccVersion);
 	}
 
 	@Override

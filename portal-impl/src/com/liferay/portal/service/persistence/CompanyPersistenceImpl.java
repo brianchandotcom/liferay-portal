@@ -1654,6 +1654,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		companyImpl.setSystem(company.isSystem());
 		companyImpl.setMaxUsers(company.getMaxUsers());
 		companyImpl.setActive(company.isActive());
+		companyImpl.setMvccVersion(company.getMvccVersion());
 
 		return companyImpl;
 	}

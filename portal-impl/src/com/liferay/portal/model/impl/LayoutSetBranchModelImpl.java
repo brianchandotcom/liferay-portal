@@ -83,9 +83,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			{ "css", Types.CLOB },
 			{ "settings_", Types.CLOB },
 			{ "layoutSetPrototypeUuid", Types.VARCHAR },
-			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
+			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutSetBranch.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutSetBranch.name ASC";
@@ -139,6 +140,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setSettings(soapModel.getSettings());
 		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
 		model.setLayoutSetPrototypeLinkEnabled(soapModel.getLayoutSetPrototypeLinkEnabled());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -225,6 +227,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
 			getLayoutSetPrototypeLinkEnabled());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -354,6 +357,12 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -699,6 +708,17 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -750,6 +770,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchImpl.setSettings(getSettings());
 		layoutSetBranchImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
 		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(getLayoutSetPrototypeLinkEnabled());
+		layoutSetBranchImpl.setMvccVersion(getMvccVersion());
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -946,12 +967,14 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		layoutSetBranchCacheModel.layoutSetPrototypeLinkEnabled = getLayoutSetPrototypeLinkEnabled();
 
+		layoutSetBranchCacheModel.mvccVersion = getMvccVersion();
+
 		return layoutSetBranchCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{layoutSetBranchId=");
 		sb.append(getLayoutSetBranchId());
@@ -993,6 +1016,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(getLayoutSetPrototypeUuid());
 		sb.append(", layoutSetPrototypeLinkEnabled=");
 		sb.append(getLayoutSetPrototypeLinkEnabled());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -1000,7 +1025,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutSetBranch");
@@ -1086,6 +1111,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			"<column><column-name>layoutSetPrototypeLinkEnabled</column-name><column-value><![CDATA[");
 		sb.append(getLayoutSetPrototypeLinkEnabled());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1124,6 +1153,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private LayoutSetBranch _escapedModel;
 }

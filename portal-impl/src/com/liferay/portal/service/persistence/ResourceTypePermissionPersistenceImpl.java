@@ -1884,6 +1884,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		resourceTypePermissionImpl.setName(resourceTypePermission.getName());
 		resourceTypePermissionImpl.setRoleId(resourceTypePermission.getRoleId());
 		resourceTypePermissionImpl.setActionIds(resourceTypePermission.getActionIds());
+		resourceTypePermissionImpl.setMvccVersion(resourceTypePermission.getMvccVersion());
 
 		return resourceTypePermissionImpl;
 	}

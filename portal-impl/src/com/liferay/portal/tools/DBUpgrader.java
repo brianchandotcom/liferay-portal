@@ -121,11 +121,6 @@ public class DBUpgrader {
 			throw new RuntimeException(msg);
 		}
 
-		// Reload SQL
-
-		CustomSQLUtil.reloadCustomSQL();
-		SQLTransformer.reloadSQLTransformer();
-
 		// Upgrade
 
 		if (_log.isDebugEnabled()) {
@@ -152,6 +147,11 @@ public class DBUpgrader {
 				_enableTransactions();
 			}
 		}
+
+		// Reload SQL
+
+		CustomSQLUtil.reloadCustomSQL();
+		SQLTransformer.reloadSQLTransformer();
 
 		// Update company key
 

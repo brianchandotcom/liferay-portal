@@ -58,9 +58,10 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 			{ "resourceBlockPermissionId", Types.BIGINT },
 			{ "resourceBlockId", Types.BIGINT },
 			{ "roleId", Types.BIGINT },
-			{ "actionIds", Types.BIGINT }
+			{ "actionIds", Types.BIGINT },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (resourceBlockPermissionId LONG not null primary key,resourceBlockId LONG,roleId LONG,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourceBlockPermission (resourceBlockPermissionId LONG not null primary key,resourceBlockId LONG,roleId LONG,actionIds LONG,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceBlockPermission";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourceBlockPermission.resourceBlockPermissionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourceBlockPermission.resourceBlockPermissionId ASC";
@@ -124,6 +125,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("roleId", getRoleId());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -156,6 +158,12 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 		if (actionIds != null) {
 			setActionIds(actionIds);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -223,6 +231,16 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		_actionIds = actionIds;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -258,6 +276,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		resourceBlockPermissionImpl.setResourceBlockId(getResourceBlockId());
 		resourceBlockPermissionImpl.setRoleId(getRoleId());
 		resourceBlockPermissionImpl.setActionIds(getActionIds());
+		resourceBlockPermissionImpl.setMvccVersion(getMvccVersion());
 
 		resourceBlockPermissionImpl.resetOriginalValues();
 
@@ -343,12 +362,14 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 		resourceBlockPermissionCacheModel.actionIds = getActionIds();
 
+		resourceBlockPermissionCacheModel.mvccVersion = getMvccVersion();
+
 		return resourceBlockPermissionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{resourceBlockPermissionId=");
 		sb.append(getResourceBlockPermissionId());
@@ -358,6 +379,8 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 		sb.append(getRoleId());
 		sb.append(", actionIds=");
 		sb.append(getActionIds());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -365,7 +388,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourceBlockPermission");
@@ -387,6 +410,10 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
 		sb.append(getActionIds());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -405,6 +432,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
 	private long _actionIds;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private ResourceBlockPermission _escapedModel;
 }

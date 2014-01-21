@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ResourcePermissionModel extends BaseModel<ResourcePermission> {
+public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -171,6 +172,22 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission> {
 	 * @param actionIds the action IDs of this resource permission
 	 */
 	public void setActionIds(long actionIds);
+
+	/**
+	 * Returns the mvcc version of this resource permission.
+	 *
+	 * @return the mvcc version of this resource permission
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this resource permission.
+	 *
+	 * @param mvccVersion the mvcc version of this resource permission
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

@@ -2339,6 +2339,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		lockImpl.setOwner(lock.getOwner());
 		lockImpl.setInheritable(lock.isInheritable());
 		lockImpl.setExpirationDate(lock.getExpirationDate());
+		lockImpl.setMvccVersion(lock.getMvccVersion());
 
 		return lockImpl;
 	}

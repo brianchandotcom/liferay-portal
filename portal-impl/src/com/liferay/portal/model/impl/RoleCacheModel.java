@@ -36,7 +36,7 @@ import java.util.Date;
 public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -66,6 +66,8 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 		sb.append(type);
 		sb.append(", subtype=");
 		sb.append(subtype);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,6 +142,8 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 			roleImpl.setSubtype(subtype);
 		}
 
+		roleImpl.setMvccVersion(mvccVersion);
+
 		roleImpl.resetOriginalValues();
 
 		return roleImpl;
@@ -161,6 +165,7 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 		description = objectInput.readUTF();
 		type = objectInput.readInt();
 		subtype = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -218,6 +223,8 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 		else {
 			objectOutput.writeUTF(subtype);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -234,4 +241,5 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable {
 	public String description;
 	public int type;
 	public String subtype;
+	public long mvccVersion;
 }

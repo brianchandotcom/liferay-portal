@@ -62,6 +62,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		attributes.put("owner", getOwner());
 		attributes.put("inheritable", getInheritable());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -132,6 +133,12 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -405,6 +412,26 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	@Override
 	public void setExpirationDate(java.util.Date expirationDate) {
 		_lock.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Returns the mvcc version of this lock.
+	*
+	* @return the mvcc version of this lock
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _lock.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this lock.
+	*
+	* @param mvccVersion the mvcc version of this lock
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_lock.setMvccVersion(mvccVersion);
 	}
 
 	@Override

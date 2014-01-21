@@ -794,6 +794,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		imageImpl.setHeight(image.getHeight());
 		imageImpl.setWidth(image.getWidth());
 		imageImpl.setSize(image.getSize());
+		imageImpl.setMvccVersion(image.getMvccVersion());
 
 		return imageImpl;
 	}

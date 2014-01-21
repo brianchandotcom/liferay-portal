@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{listTypeId=");
 		sb.append(listTypeId);
@@ -42,6 +42,8 @@ public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable 
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -67,6 +69,8 @@ public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable 
 			listTypeImpl.setType(type);
 		}
 
+		listTypeImpl.setMvccVersion(mvccVersion);
+
 		listTypeImpl.resetOriginalValues();
 
 		return listTypeImpl;
@@ -77,6 +81,7 @@ public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable 
 		listTypeId = objectInput.readInt();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -97,9 +102,12 @@ public class ListTypeCacheModel implements CacheModel<ListType>, Externalizable 
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public int listTypeId;
 	public String name;
 	public String type;
+	public long mvccVersion;
 }

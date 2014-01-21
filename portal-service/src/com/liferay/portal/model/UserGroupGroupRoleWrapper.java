@@ -54,6 +54,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 		attributes.put("userGroupId", getUserGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -76,6 +77,12 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -158,6 +165,26 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	@Override
 	public void setRoleId(long roleId) {
 		_userGroupGroupRole.setRoleId(roleId);
+	}
+
+	/**
+	* Returns the mvcc version of this user group group role.
+	*
+	* @return the mvcc version of this user group group role
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _userGroupGroupRole.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this user group group role.
+	*
+	* @param mvccVersion the mvcc version of this user group group role
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_userGroupGroupRole.setMvccVersion(mvccVersion);
 	}
 
 	@Override

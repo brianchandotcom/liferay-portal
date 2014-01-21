@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -74,6 +74,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		sb.append(remoteStagingGroupCount);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -141,6 +143,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		groupImpl.setSite(site);
 		groupImpl.setRemoteStagingGroupCount(remoteStagingGroupCount);
 		groupImpl.setActive(active);
+		groupImpl.setMvccVersion(mvccVersion);
 
 		groupImpl.resetOriginalValues();
 
@@ -168,6 +171,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		site = objectInput.readBoolean();
 		remoteStagingGroupCount = objectInput.readInt();
 		active = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -231,6 +235,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		objectOutput.writeBoolean(site);
 		objectOutput.writeInt(remoteStagingGroupCount);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -252,4 +257,5 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	public boolean site;
 	public int remoteStagingGroupCount;
 	public boolean active;
+	public long mvccVersion;
 }

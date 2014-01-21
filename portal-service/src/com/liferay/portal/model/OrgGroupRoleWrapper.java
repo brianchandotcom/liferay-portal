@@ -54,6 +54,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -76,6 +77,12 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -158,6 +165,26 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	@Override
 	public void setRoleId(long roleId) {
 		_orgGroupRole.setRoleId(roleId);
+	}
+
+	/**
+	* Returns the mvcc version of this org group role.
+	*
+	* @return the mvcc version of this org group role
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _orgGroupRole.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this org group role.
+	*
+	* @param mvccVersion the mvcc version of this org group role
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_orgGroupRole.setMvccVersion(mvccVersion);
 	}
 
 	@Override

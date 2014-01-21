@@ -37,7 +37,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{userTrackerPathId=");
 		sb.append(userTrackerPathId);
@@ -47,6 +47,8 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		sb.append(path);
 		sb.append(", pathDate=");
 		sb.append(pathDate);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -73,6 +75,8 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 			userTrackerPathImpl.setPathDate(new Date(pathDate));
 		}
 
+		userTrackerPathImpl.setMvccVersion(mvccVersion);
+
 		userTrackerPathImpl.resetOriginalValues();
 
 		return userTrackerPathImpl;
@@ -84,6 +88,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		userTrackerId = objectInput.readLong();
 		path = objectInput.readUTF();
 		pathDate = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -100,10 +105,12 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		}
 
 		objectOutput.writeLong(pathDate);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long userTrackerPathId;
 	public long userTrackerId;
 	public String path;
 	public long pathDate;
+	public long mvccVersion;
 }

@@ -37,7 +37,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -61,6 +61,8 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		sb.append(description);
 		sb.append(", addedByLDAPImport=");
 		sb.append(addedByLDAPImport);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -119,6 +121,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		}
 
 		userGroupImpl.setAddedByLDAPImport(addedByLDAPImport);
+		userGroupImpl.setMvccVersion(mvccVersion);
 
 		userGroupImpl.resetOriginalValues();
 
@@ -138,6 +141,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		addedByLDAPImport = objectInput.readBoolean();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -180,6 +184,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		}
 
 		objectOutput.writeBoolean(addedByLDAPImport);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public String uuid;
@@ -193,4 +198,5 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	public String name;
 	public String description;
 	public boolean addedByLDAPImport;
+	public long mvccVersion;
 }

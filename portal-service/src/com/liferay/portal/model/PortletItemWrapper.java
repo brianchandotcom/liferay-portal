@@ -62,6 +62,7 @@ public class PortletItemWrapper implements PortletItem,
 		attributes.put("name", getName());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class PortletItemWrapper implements PortletItem,
 
 		if (classNameId != null) {
 			setClassNameId(classNameId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -384,6 +391,26 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public void setClassNameId(long classNameId) {
 		_portletItem.setClassNameId(classNameId);
+	}
+
+	/**
+	* Returns the mvcc version of this portlet item.
+	*
+	* @return the mvcc version of this portlet item
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _portletItem.getMvccVersion();
+	}
+
+	/**
+	* Sets the mvcc version of this portlet item.
+	*
+	* @param mvccVersion the mvcc version of this portlet item
+	*/
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_portletItem.setMvccVersion(mvccVersion);
 	}
 
 	@Override

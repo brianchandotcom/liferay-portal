@@ -98,9 +98,10 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			{ "lockoutDuration", Types.BIGINT },
 			{ "requireUnlock", Types.BOOLEAN },
 			{ "resetFailureCount", Types.BIGINT },
-			{ "resetTicketMaxAge", Types.BIGINT }
+			{ "resetTicketMaxAge", Types.BIGINT },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (uuid_ VARCHAR(75) null,passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex VARCHAR(75) null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordPolicy (uuid_ VARCHAR(75) null,passwordPolicyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultPolicy BOOLEAN,name VARCHAR(75) null,description STRING null,changeable BOOLEAN,changeRequired BOOLEAN,minAge LONG,checkSyntax BOOLEAN,allowDictionaryWords BOOLEAN,minAlphanumeric INTEGER,minLength INTEGER,minLowerCase INTEGER,minNumbers INTEGER,minSymbols INTEGER,minUpperCase INTEGER,regex VARCHAR(75) null,history BOOLEAN,historyCount INTEGER,expireable BOOLEAN,maxAge LONG,warningTime LONG,graceLimit INTEGER,lockout BOOLEAN,maxFailure INTEGER,lockoutDuration LONG,requireUnlock BOOLEAN,resetFailureCount LONG,resetTicketMaxAge LONG,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicy";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordPolicy.passwordPolicyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordPolicy.passwordPolicyId ASC";
@@ -169,6 +170,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		model.setRequireUnlock(soapModel.getRequireUnlock());
 		model.setResetFailureCount(soapModel.getResetFailureCount());
 		model.setResetTicketMaxAge(soapModel.getResetTicketMaxAge());
+		model.setMvccVersion(soapModel.getMvccVersion());
 
 		return model;
 	}
@@ -267,6 +269,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		attributes.put("requireUnlock", getRequireUnlock());
 		attributes.put("resetFailureCount", getResetFailureCount());
 		attributes.put("resetTicketMaxAge", getResetTicketMaxAge());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -479,6 +482,12 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 		if (resetTicketMaxAge != null) {
 			setResetTicketMaxAge(resetTicketMaxAge);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -978,6 +987,17 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		_resetTicketMaxAge = resetTicketMaxAge;
 	}
 
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1049,6 +1069,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		passwordPolicyImpl.setRequireUnlock(getRequireUnlock());
 		passwordPolicyImpl.setResetFailureCount(getResetFailureCount());
 		passwordPolicyImpl.setResetTicketMaxAge(getResetTicketMaxAge());
+		passwordPolicyImpl.setMvccVersion(getMvccVersion());
 
 		passwordPolicyImpl.resetOriginalValues();
 
@@ -1242,12 +1263,14 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 		passwordPolicyCacheModel.resetTicketMaxAge = getResetTicketMaxAge();
 
+		passwordPolicyCacheModel.mvccVersion = getMvccVersion();
+
 		return passwordPolicyCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1317,6 +1340,8 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		sb.append(getResetFailureCount());
 		sb.append(", resetTicketMaxAge=");
 		sb.append(getResetTicketMaxAge());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -1324,7 +1349,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(106);
+		StringBundler sb = new StringBundler(109);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PasswordPolicy");
@@ -1466,6 +1491,10 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 			"<column><column-name>resetTicketMaxAge</column-name><column-value><![CDATA[");
 		sb.append(getResetTicketMaxAge());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1517,6 +1546,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	private boolean _requireUnlock;
 	private long _resetFailureCount;
 	private long _resetTicketMaxAge;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private PasswordPolicy _escapedModel;
 }

@@ -41,6 +41,7 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setWorkflowInstanceId(model.getWorkflowInstanceId());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -176,6 +177,14 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 		_workflowInstanceId = workflowInstanceId;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private long _workflowInstanceLinkId;
 	private long _groupId;
 	private long _companyId;
@@ -186,4 +195,5 @@ public class WorkflowInstanceLinkSoap implements Serializable {
 	private long _classNameId;
 	private long _classPK;
 	private long _workflowInstanceId;
+	private long _mvccVersion;
 }

@@ -35,7 +35,7 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{resourcePermissionId=");
 		sb.append(resourcePermissionId);
@@ -53,6 +53,8 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 		sb.append(ownerId);
 		sb.append(", actionIds=");
 		sb.append(actionIds);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -84,6 +86,7 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 		resourcePermissionImpl.setRoleId(roleId);
 		resourcePermissionImpl.setOwnerId(ownerId);
 		resourcePermissionImpl.setActionIds(actionIds);
+		resourcePermissionImpl.setMvccVersion(mvccVersion);
 
 		resourcePermissionImpl.resetOriginalValues();
 
@@ -100,6 +103,7 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 		roleId = objectInput.readLong();
 		ownerId = objectInput.readLong();
 		actionIds = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -127,6 +131,7 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 		objectOutput.writeLong(roleId);
 		objectOutput.writeLong(ownerId);
 		objectOutput.writeLong(actionIds);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long resourcePermissionId;
@@ -137,4 +142,5 @@ public class ResourcePermissionCacheModel implements CacheModel<ResourcePermissi
 	public long roleId;
 	public long ownerId;
 	public long actionIds;
+	public long mvccVersion;
 }

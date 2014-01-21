@@ -36,7 +36,7 @@ import java.util.Date;
 public class TicketCacheModel implements CacheModel<Ticket>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{ticketId=");
 		sb.append(ticketId);
@@ -56,6 +56,8 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable {
 		sb.append(extraInfo);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,6 +103,8 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable {
 			ticketImpl.setExpirationDate(new Date(expirationDate));
 		}
 
+		ticketImpl.setMvccVersion(mvccVersion);
+
 		ticketImpl.resetOriginalValues();
 
 		return ticketImpl;
@@ -117,6 +121,7 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable {
 		type = objectInput.readInt();
 		extraInfo = objectInput.readUTF();
 		expirationDate = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -145,6 +150,7 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable {
 		}
 
 		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long ticketId;
@@ -156,4 +162,5 @@ public class TicketCacheModel implements CacheModel<Ticket>, Externalizable {
 	public int type;
 	public String extraInfo;
 	public long expirationDate;
+	public long mvccVersion;
 }

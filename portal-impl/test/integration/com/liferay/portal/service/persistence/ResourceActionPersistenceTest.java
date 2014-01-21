@@ -119,6 +119,8 @@ public class ResourceActionPersistenceTest {
 
 		newResourceAction.setBitwiseValue(ServiceTestUtil.nextLong());
 
+		newResourceAction.setMvccVersion(ServiceTestUtil.nextLong());
+
 		_persistence.update(newResourceAction);
 
 		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
@@ -131,6 +133,8 @@ public class ResourceActionPersistenceTest {
 			newResourceAction.getActionId());
 		Assert.assertEquals(existingResourceAction.getBitwiseValue(),
 			newResourceAction.getBitwiseValue());
+		Assert.assertEquals(existingResourceAction.getMvccVersion(),
+			newResourceAction.getMvccVersion());
 	}
 
 	@Test
@@ -170,7 +174,7 @@ public class ResourceActionPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceAction",
 			"resourceActionId", true, "name", true, "actionId", true,
-			"bitwiseValue", true);
+			"bitwiseValue", true, "mvccVersion", true);
 	}
 
 	@Test
@@ -315,6 +319,8 @@ public class ResourceActionPersistenceTest {
 		resourceAction.setActionId(ServiceTestUtil.randomString());
 
 		resourceAction.setBitwiseValue(ServiceTestUtil.nextLong());
+
+		resourceAction.setMvccVersion(ServiceTestUtil.nextLong());
 
 		_persistence.update(resourceAction);
 

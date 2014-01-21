@@ -40,7 +40,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LockModel extends BaseModel<Lock> {
+public interface LockModel extends BaseModel<Lock>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -241,6 +241,22 @@ public interface LockModel extends BaseModel<Lock> {
 	 * @param expirationDate the expiration date of this lock
 	 */
 	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the mvcc version of this lock.
+	 *
+	 * @return the mvcc version of this lock
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this lock.
+	 *
+	 * @param mvccVersion the mvcc version of this lock
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

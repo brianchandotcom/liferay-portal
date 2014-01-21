@@ -33,6 +33,7 @@ public class ListTypeSoap implements Serializable {
 		soapModel.setListTypeId(model.getListTypeId());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
+		soapModel.setMvccVersion(model.getMvccVersion());
 
 		return soapModel;
 	}
@@ -109,7 +110,16 @@ public class ListTypeSoap implements Serializable {
 		_type = type;
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	private int _listTypeId;
 	private String _name;
 	private String _type;
+	private long _mvccVersion;
 }

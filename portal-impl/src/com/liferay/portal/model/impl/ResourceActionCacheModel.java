@@ -35,7 +35,7 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{resourceActionId=");
 		sb.append(resourceActionId);
@@ -45,6 +45,8 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 		sb.append(actionId);
 		sb.append(", bitwiseValue=");
 		sb.append(bitwiseValue);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -71,6 +73,7 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 		}
 
 		resourceActionImpl.setBitwiseValue(bitwiseValue);
+		resourceActionImpl.setMvccVersion(mvccVersion);
 
 		resourceActionImpl.resetOriginalValues();
 
@@ -83,6 +86,7 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 		name = objectInput.readUTF();
 		actionId = objectInput.readUTF();
 		bitwiseValue = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -105,10 +109,12 @@ public class ResourceActionCacheModel implements CacheModel<ResourceAction>,
 		}
 
 		objectOutput.writeLong(bitwiseValue);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long resourceActionId;
 	public String name;
 	public String actionId;
 	public long bitwiseValue;
+	public long mvccVersion;
 }

@@ -71,9 +71,10 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 			{ "plid", Types.BIGINT },
 			{ "privateLayout", Types.BOOLEAN },
 			{ "friendlyURL", Types.VARCHAR },
-			{ "languageId", Types.VARCHAR }
+			{ "languageId", Types.VARCHAR },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table LayoutFriendlyURL (uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutFriendlyURL (uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutFriendlyURL";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutFriendlyURL.layoutFriendlyURLId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutFriendlyURL.layoutFriendlyURLId ASC";
@@ -149,6 +150,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("languageId", getLanguageId());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -228,6 +230,12 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 		if (languageId != null) {
 			setLanguageId(languageId);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -463,6 +471,16 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	}
 
 	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				LayoutFriendlyURL.class.getName()));
@@ -511,6 +529,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		layoutFriendlyURLImpl.setPrivateLayout(getPrivateLayout());
 		layoutFriendlyURLImpl.setFriendlyURL(getFriendlyURL());
 		layoutFriendlyURLImpl.setLanguageId(getLanguageId());
+		layoutFriendlyURLImpl.setMvccVersion(getMvccVersion());
 
 		layoutFriendlyURLImpl.resetOriginalValues();
 
@@ -664,12 +683,14 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 			layoutFriendlyURLCacheModel.languageId = null;
 		}
 
+		layoutFriendlyURLCacheModel.mvccVersion = getMvccVersion();
+
 		return layoutFriendlyURLCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -695,6 +716,8 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		sb.append(getFriendlyURL());
 		sb.append(", languageId=");
 		sb.append(getLanguageId());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -702,7 +725,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.LayoutFriendlyURL");
@@ -756,6 +779,10 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 			"<column><column-name>languageId</column-name><column-value><![CDATA[");
 		sb.append(getLanguageId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -790,6 +817,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	private String _originalFriendlyURL;
 	private String _languageId;
 	private String _originalLanguageId;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private LayoutFriendlyURL _escapedModel;
 }

@@ -37,7 +37,7 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{layoutRevisionId=");
 		sb.append(layoutRevisionId);
@@ -99,6 +99,8 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", mvccVersion=");
+		sb.append(mvccVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -238,6 +240,8 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 			layoutRevisionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		layoutRevisionImpl.setMvccVersion(mvccVersion);
+
 		layoutRevisionImpl.resetOriginalValues();
 
 		return layoutRevisionImpl;
@@ -275,6 +279,7 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		mvccVersion = objectInput.readLong();
 	}
 
 	@Override
@@ -392,6 +397,7 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(mvccVersion);
 	}
 
 	public long layoutRevisionId;
@@ -424,4 +430,5 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long mvccVersion;
 }

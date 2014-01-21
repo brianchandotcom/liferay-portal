@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PluginSettingModel extends BaseModel<PluginSetting> {
+public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -151,6 +151,22 @@ public interface PluginSettingModel extends BaseModel<PluginSetting> {
 	 * @param active the active of this plugin setting
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the mvcc version of this plugin setting.
+	 *
+	 * @return the mvcc version of this plugin setting
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this plugin setting.
+	 *
+	 * @param mvccVersion the mvcc version of this plugin setting
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	@Override
 	public boolean isNew();

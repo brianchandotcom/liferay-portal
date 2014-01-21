@@ -845,6 +845,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTrackerImpl.setUserId(passwordTracker.getUserId());
 		passwordTrackerImpl.setCreateDate(passwordTracker.getCreateDate());
 		passwordTrackerImpl.setPassword(passwordTracker.getPassword());
+		passwordTrackerImpl.setMvccVersion(passwordTracker.getMvccVersion());
 
 		return passwordTrackerImpl;
 	}

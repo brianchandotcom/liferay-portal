@@ -66,9 +66,10 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 			{ "classNameId", Types.BIGINT },
 			{ "notificationType", Types.INTEGER },
 			{ "deliveryType", Types.INTEGER },
-			{ "deliver", Types.BOOLEAN }
+			{ "deliver", Types.BOOLEAN },
+			{ "mvccVersion", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN,mvccVersion LONG default 0)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationDelivery";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationDelivery.userNotificationDeliveryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationDelivery.userNotificationDeliveryId ASC";
@@ -139,6 +140,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		attributes.put("notificationType", getNotificationType());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliver", getDeliver());
+		attributes.put("mvccVersion", getMvccVersion());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -195,6 +197,12 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		if (deliver != null) {
 			setDeliver(deliver);
+		}
+
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
 		}
 	}
 
@@ -376,6 +384,16 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		_deliver = deliver;
 	}
 
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -415,6 +433,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		userNotificationDeliveryImpl.setNotificationType(getNotificationType());
 		userNotificationDeliveryImpl.setDeliveryType(getDeliveryType());
 		userNotificationDeliveryImpl.setDeliver(getDeliver());
+		userNotificationDeliveryImpl.setMvccVersion(getMvccVersion());
 
 		userNotificationDeliveryImpl.resetOriginalValues();
 
@@ -524,12 +543,14 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		userNotificationDeliveryCacheModel.deliver = getDeliver();
 
+		userNotificationDeliveryCacheModel.mvccVersion = getMvccVersion();
+
 		return userNotificationDeliveryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{userNotificationDeliveryId=");
 		sb.append(getUserNotificationDeliveryId());
@@ -547,6 +568,8 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append(getDeliveryType());
 		sb.append(", deliver=");
 		sb.append(getDeliver());
+		sb.append(", mvccVersion=");
+		sb.append(getMvccVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -554,7 +577,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserNotificationDelivery");
@@ -592,6 +615,10 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 			"<column><column-name>deliver</column-name><column-value><![CDATA[");
 		sb.append(getDeliver());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -620,6 +647,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	private int _originalDeliveryType;
 	private boolean _setOriginalDeliveryType;
 	private boolean _deliver;
+	private long _mvccVersion;
 	private long _columnBitmask;
 	private UserNotificationDelivery _escapedModel;
 }

@@ -23,8 +23,6 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -77,82 +75,6 @@ public class BlogsEntryLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(_group);
-	}
-
-	@Test
-	public void testAddEntryOnlyGroupPermissions() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		serviceContext.setGroupPermissions(new String[] {ActionKeys.VIEW});
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(false);
-
-		testAddEntry(false);
-	}
-
-	@Test
-	public void testAddEntryOnlyGuestPermissions() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
-
-		serviceContext.setAddGroupPermissions(false);
-		serviceContext.setAddGuestPermissions(true);
-
-		testAddEntry(false);
-	}
-
-	@Test
-	public void testAddEntryResourcesEntry() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		serviceContext.setGroupPermissions(
-			new String[] {ActionKeys.ADD_DISCUSSION});
-		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
-
-		BlogsEntry entry = testAddEntry(false);
-
-		BlogsEntryLocalServiceUtil.addEntryResources(entry, true, true);
-	}
-
-	@Test
-	public void testAddEntryResourcesEntryId() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		serviceContext.setGroupPermissions(
-			new String[] {ActionKeys.ADD_DISCUSSION});
-		serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
-
-		BlogsEntry entry = testAddEntry(false);
-
-		BlogsEntryLocalServiceUtil.addEntryResources(
-			entry.getEntryId(), true, true);
-	}
-
-	@Test
-	public void testAddEntryResourcesEntryIdListPermissions() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		BlogsEntry entry = testAddEntry(false);
-
-		BlogsEntryLocalServiceUtil.addEntryResources(
-			entry.getEntryId(), serviceContext.getGroupPermissions(),
-			serviceContext.getGuestPermissions());
-	}
-
-	@Test
-	public void testAddEntryResourcesEntryListPermissions() throws Exception {
-		BlogsEntry entry = testAddEntry(false);
-
-		BlogsEntryLocalServiceUtil.addEntryResources(
-			entry, new String[] {ActionKeys.ADD_DISCUSSION},
-			new String[] {ActionKeys.VIEW});
 	}
 
 	@Test

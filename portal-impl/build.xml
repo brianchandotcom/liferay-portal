@@ -500,8 +500,9 @@ public class Creole10Parser]]></replacevalue>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
 
-		<property name="r2.dir" value="${tstamp.value}/R2-${r2.version}" />
+		<property name="css-dependencies.dir" value="${project.dir}/portal-impl/src/com/liferay/portal/servlet/filters/dynamiccss/dependencies" />
 		<property name="r2.version" value="liferay-0.1" />
+		<property name="r2.dir" value="${tstamp.value}/R2-${r2.version}" />
 
 		<unzip
 			dest="${tstamp.value}"
@@ -513,14 +514,14 @@ public class Creole10Parser]]></replacevalue>
 		</exec>
 
 		<copy
-			file="${tstamp.value}/r2_liferay.js"
+			file="${css-dependencies.dir}/r2_liferay.js"
 			tofile="${r2.dir}/r2_liferay.js"
 		/>
 
 		<exec dir="${r2.dir}" executable="browserify">
 			<arg value="r2_liferay.js" />
 			<arg value="-o" />
-			<arg value="${tstamp.value}/r2.js" />
+			<arg value="${css-dependencies.dir}/r2.js" />
 		</exec>
 
 		<delete dir="${tstamp.value}" />

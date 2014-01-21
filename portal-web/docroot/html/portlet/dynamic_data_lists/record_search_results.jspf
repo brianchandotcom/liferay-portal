@@ -43,7 +43,7 @@ else {
 
 	results = DDLUtil.getRecords(hits);
 
-	total = results.size();
+	total = hits.getLength();
 
 	searchContainer.setTotal(total);
 }

@@ -161,7 +161,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 			};
 		</c:when>
 		<c:otherwise>
-			var chartType = '<%= chartType %>';
+			var chartType = '<%= HtmlUtil.escapeJS(chartType) %>';
 
 			var customConfig = {
 				showAreaFill: true,

@@ -287,7 +287,7 @@ else {
 							<liferay-ui:app-view-navigation-entry
 								cssClass="folder structure"
 								dataView="<%= dataView %>"
-								entryTitle="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+								entryTitle="<%= ddmStructure.getName(locale) %>"
 								iconImage="icon-tasks"
 								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
 								viewURL="<%= viewDDMStructureArticlesURL.toString() %>"

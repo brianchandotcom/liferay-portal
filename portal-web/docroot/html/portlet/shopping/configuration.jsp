@@ -90,7 +90,7 @@ else if (tabs3.equals("shipping-email")) {
 					List leftList = new ArrayList();
 
 					for (String ccType : ccTypes2) {
-						leftList.add(new KeyValuePair(ccType, LanguageUtil.get(pageContext, "cc_" + ccType)));
+						leftList.add(new KeyValuePair(HtmlUtil.escapeAttribute(ccType), LanguageUtil.get(pageContext, "cc_" + HtmlUtil.escape(ccType))));
 					}
 
 					// Right list

@@ -121,7 +121,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 					<li class="move-folder">
 						<span class="folder-title">
-							<%= folder.getName() %>
+							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
 					</li>
 
@@ -147,7 +147,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 
 					<li class="move-folder move-error">
 						<span class="folder-title">
-							<%= folder.getName() %>
+							<%= HtmlUtil.escape(folder.getName()) %>
 						</span>
 
 						<span class="error-message">
@@ -185,8 +185,8 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 				%>
 
 					<li class="move-file">
-						<span class="file-title" title="<%= validMoveFileEntry.getTitle() %>">
-							<%= validMoveFileEntry.getTitle() %>
+						<span class="file-title" title="<%= HtmlUtil.escapeAttribute(validMoveFileEntry.getTitle()) %>">
+							<%= HtmlUtil.escape(validMoveFileEntry.getTitle()) %>
 						</span>
 					</li>
 
@@ -212,8 +212,8 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 				%>
 
 					<li class="move-file move-error">
-						<span class="file-title" title="<%= invalidMoveFileEntry.getTitle() %>">
-							<%= invalidMoveFileEntry.getTitle() %>
+						<span class="file-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveFileEntry.getTitle()) %>">
+							<%= HtmlUtil.escape(invalidMoveFileEntry.getTitle()) %>
 						</span>
 
 						<span class="error-message">

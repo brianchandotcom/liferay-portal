@@ -23,7 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 String saveCallback = ParamUtil.getString(request, "saveCallback");
 
 if (Validator.isNotNull(saveCallback)) {
-	saveCallback = "Liferay.Util.getOpener()." + saveCallback + "(Liferay.Util.getWindow());";
+	saveCallback = "Liferay.Util.getOpener()['" + HtmlUtil.escapeJS(saveCallback) + "'](Liferay.Util.getWindow());";
 
 	redirect = null;
 }
@@ -66,7 +66,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 			<div class="rule-group-instance <%= (i == 0) ? "rule-group-instance-first" : StringPool.BLANK %>" data-rule-group-instance-id="<%= ruleGroupInstance.getRuleGroupInstanceId() %>">
 				<span class="rule-group-instance-handle icon icon-grip-dotted-vertical"></span>
 
-				<span class="rule-group-instance-label"><%= ruleGroup.getName(locale) %></span>
+				<span class="rule-group-instance-label"><%= HtmlUtil.escape(ruleGroup.getName(locale)) %></span>
 
 				<span class="rule-group-instance-priority">
 					<liferay-ui:message key="priority" />:

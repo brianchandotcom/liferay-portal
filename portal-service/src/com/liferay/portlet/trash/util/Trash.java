@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
@@ -38,6 +39,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ProviderType
 public interface Trash {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.REMOVED_BY_USER_NAME, Field.REMOVED_DATE,
+				Field.ROOT_ENTRY_CLASS_NAME, Field.ROOT_ENTRY_CLASS_PK};
 
 	public static final String TRASH_TIME_SEPARATOR = "_TRASH_TIME_";
 

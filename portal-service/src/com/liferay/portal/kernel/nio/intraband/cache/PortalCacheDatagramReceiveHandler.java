@@ -82,13 +82,36 @@ public class PortalCacheDatagramReceiveHandler
 
 				break;
 
-			case PUT_TTL:
+			case PUT_QUIET:
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
+				key = deserializer.readObject();
+				value = deserializer.readObject();
+
+				portalCache.putQuiet(key, value);
+
+				break;
+
+			case PUT_QUIET_TTL:
 				portalCache = portalCacheManager.getCache(
 					deserializer.readString());
 
 				key = deserializer.readObject();
 				value = deserializer.readObject();
 				int ttl = deserializer.readInt();
+
+				portalCache.putQuiet(key, value, ttl);
+
+				break;
+
+			case PUT_TTL:
+				portalCache = portalCacheManager.getCache(
+					deserializer.readString());
+
+				key = deserializer.readObject();
+				value = deserializer.readObject();
+				ttl = deserializer.readInt();
 
 				portalCache.put(key, value, ttl);
 

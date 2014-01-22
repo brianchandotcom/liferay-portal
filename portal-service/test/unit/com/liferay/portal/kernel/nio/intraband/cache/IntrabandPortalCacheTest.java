@@ -204,6 +204,70 @@ public class IntrabandPortalCacheTest {
 	}
 
 	@Test
+	public void testPutQuiet() throws Exception {
+		String testKey = "testKey";
+		String testValue = "testValue";
+
+		IntrabandPortalCache<String, String> intrabandPortalCache =
+			new IntrabandPortalCache<String, String>(
+				_testName, _mockRegistrationReference);
+
+		Method bridgePutQuietMethod = ReflectionUtil.getBridgeMethod(
+			IntrabandPortalCache.class, "putQuiet", Serializable.class,
+			Object.class);
+
+		bridgePutQuietMethod.invoke(intrabandPortalCache, testKey, testValue);
+
+		Datagram datagram = _mockIntraband.getDatagram();
+
+		Deserializer deserializer = new Deserializer(
+			datagram.getDataByteBuffer());
+
+		int actionTypeOrdinal = deserializer.readInt();
+
+		PortalCacheActionType[] portalCacheActionTypes =
+			PortalCacheActionType.values();
+
+		Assert.assertEquals(
+			PortalCacheActionType.PUT_QUIET,
+			portalCacheActionTypes[actionTypeOrdinal]);
+		Assert.assertEquals(_testName, deserializer.readString());
+		Assert.assertEquals(testKey, deserializer.readObject());
+		Assert.assertEquals(testValue, deserializer.readObject());
+	}
+
+	@Test
+	public void testPutQuietTTL() throws Exception {
+		String testKey = "testKey";
+		String testValue = "testValue";
+		int testTTL = 100;
+
+		IntrabandPortalCache<String, String> intrabandPortalCache =
+			new IntrabandPortalCache<String, String>(
+				_testName, _mockRegistrationReference);
+
+		intrabandPortalCache.putQuiet(testKey, testValue, testTTL);
+
+		Datagram datagram = _mockIntraband.getDatagram();
+
+		Deserializer deserializer = new Deserializer(
+			datagram.getDataByteBuffer());
+
+		int actionTypeOrdinal = deserializer.readInt();
+
+		PortalCacheActionType[] portalCacheActionTypes =
+			PortalCacheActionType.values();
+
+		Assert.assertEquals(
+			PortalCacheActionType.PUT_QUIET_TTL,
+			portalCacheActionTypes[actionTypeOrdinal]);
+		Assert.assertEquals(_testName, deserializer.readString());
+		Assert.assertEquals(testKey, deserializer.readObject());
+		Assert.assertEquals(testValue, deserializer.readObject());
+		Assert.assertEquals(testTTL, deserializer.readInt());
+	}
+
+	@Test
 	public void testPutTTL() throws Exception {
 		String testKey = "testKey";
 		String testValue = "testValue";

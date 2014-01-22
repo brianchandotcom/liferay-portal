@@ -15,6 +15,7 @@
 package com.liferay.portlet.language.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -123,16 +124,15 @@ public class ViewAction extends PortletAction {
 			layoutURL = redirect.substring(0, pos);
 			queryString = redirect.substring(pos);
 		}
+		else {
+			layoutURL = redirect;
+		}
 
 		Layout layout = themeDisplay.getLayout();
 
 		Group group = layout.getGroup();
 
-		if (Validator.isNull(layoutURL) ||
-			PortalUtil.isGroupFriendlyURL(
-				layoutURL, group.getFriendlyURL(),
-				layout.getFriendlyURL(locale))) {
-
+		if (isGroupFriendlyURL(group, layout, layoutURL, locale)) {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 				redirect = layoutURL;
 			}
@@ -180,6 +180,33 @@ public class ViewAction extends PortletAction {
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	protected boolean isGroupFriendlyURL(
+		Group group, Layout layout, String layoutURL, Locale locale) {
+
+		if (Validator.isNull(layoutURL)) {
+			return true;
+		}
+
+		int pos = layoutURL.lastIndexOf(CharPool.SLASH);
+
+		layoutURL = layoutURL.substring(pos + 1);
+
+		Locale curLocale = LocaleUtil.fromLanguageId(layoutURL, true, false);
+
+		if (curLocale != null) {
+			return true;
+		}
+
+		if (PortalUtil.isGroupFriendlyURL(
+				layoutURL, group.getFriendlyURL(),
+				layout.getFriendlyURL(locale))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

@@ -25278,6 +25278,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(WHERE_AND);
 		}
 
+		boolean bindArticleId = false;
+
 		if (articleId == null) {
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_4);
 		}
@@ -25285,6 +25287,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_6);
 		}
 		else {
+			bindArticleId = true;
+
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_5);
 		}
 
@@ -25355,7 +25359,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			qPos.add(groupId);
 
-			if (articleId != null) {
+			if (bindArticleId) {
 				qPos.add(articleId);
 			}
 
@@ -25493,6 +25497,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				query.append(WHERE_AND);
 			}
 
+			boolean bindArticleId = false;
+
 			if (articleId == null) {
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_4);
 			}
@@ -25500,6 +25506,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_6);
 			}
 			else {
+				bindArticleId = true;
+
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_5);
 			}
 
@@ -25547,7 +25555,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(groupId);
 
-				if (articleId != null) {
+				if (bindArticleId) {
 					qPos.add(articleId);
 				}
 
@@ -25720,6 +25728,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				query.append(WHERE_AND);
 			}
 
+			boolean bindArticleId = false;
+
 			if (articleId == null) {
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_4);
 			}
@@ -25727,6 +25737,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_6);
 			}
 			else {
+				bindArticleId = true;
+
 				query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_5);
 			}
 
@@ -25765,7 +25777,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 				qPos.add(groupId);
 
-				if (articleId != null) {
+				if (bindArticleId) {
 					qPos.add(articleId);
 				}
 
@@ -25900,6 +25912,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(WHERE_AND);
 		}
 
+		boolean bindArticleId = false;
+
 		if (articleId == null) {
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_4);
 		}
@@ -25907,6 +25921,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_6);
 		}
 		else {
+			bindArticleId = true;
+
 			query.append(_FINDER_COLUMN_G_A_ST_ARTICLEID_5);
 		}
 
@@ -25950,7 +25966,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			qPos.add(groupId);
 
-			if (articleId != null) {
+			if (bindArticleId) {
 				qPos.add(articleId);
 			}
 

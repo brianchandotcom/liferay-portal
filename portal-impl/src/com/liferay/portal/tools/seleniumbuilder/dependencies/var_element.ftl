@@ -1,5 +1,7 @@
 <#assign varName = varElement.attributeValue("name")>
 
+<#assign context = contextStack.peek()>
+
 <#if varElement.attributeValue("value")??>
 	<#assign varValue = varElement.attributeValue("value")>
 <#elseif varElement.getText()??>

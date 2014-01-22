@@ -125,5 +125,6 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 	protected Map<String, String> definitionScopeVariables =
 		new HashMap<String, String>();
 	protected Map<String, String> executeScopeVariables;
+	protected Map<String, String> forScopeVariables;
 
 }

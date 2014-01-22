@@ -184,26 +184,14 @@ List<Group> inheritedSites = (List<Group>)request.getAttribute("user.inheritedSi
 		>
 
 			<%
-			long userId = selUser.getUserId();
-			long groupId = inheritedSite.getGroupId();
-
-			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(userId, groupId);
-
-			for (UserGroupRole userGroupRole : userGroupRoles) {
-				Role role = RoleLocalServiceUtil.getRole(userGroupRole.getRoleId());
-
-				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
-				buffer.append(StringPool.COMMA_AND_SPACE);
-			}
-
-			List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(userId, groupId);
+			List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId());
 
 			for (Role role : inheritedRoles) {
 				buffer.append(HtmlUtil.escape(role.getTitle(locale)));
 				buffer.append(StringPool.COMMA_AND_SPACE);
 			}
 
-			if (!inheritedRoles.isEmpty() || !userGroupRoles.isEmpty()) {
+			if (!inheritedRoles.isEmpty()) {
 				buffer.setIndex(buffer.index() - 1);
 			}
 			%>

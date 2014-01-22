@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -38,6 +40,7 @@ import java.util.Set;
  * @author Mate Thurzo
  * @author Zsolt Berentey
  */
+@ProviderType
 public class ManifestSummary implements Serializable {
 
 	public static String getManifestSummaryKey(

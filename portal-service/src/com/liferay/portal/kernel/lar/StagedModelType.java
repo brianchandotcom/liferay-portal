@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,6 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 /**
  * @author Zsolt Berentey
  */
+@ProviderType
 public class StagedModelType {
 
 	public static final int REFERRER_CLASS_NAME_ID_ALL = -1;

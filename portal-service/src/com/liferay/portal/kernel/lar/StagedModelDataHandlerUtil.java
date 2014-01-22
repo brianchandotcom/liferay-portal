@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +38,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
  */
+@ProviderType
 public class StagedModelDataHandlerUtil {
 
 	public static void deleteStagedModel(

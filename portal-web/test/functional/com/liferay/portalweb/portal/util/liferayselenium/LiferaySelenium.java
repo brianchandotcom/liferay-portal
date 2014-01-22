@@ -18,8 +18,6 @@ import com.thoughtworks.selenium.Selenium;
 
 import java.util.Map;
 
-import org.sikuli.script.FindFailed;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -85,7 +83,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void clickAtAndWait(String locator, String coordString);
 
-	public void clickImageElement(String imageUrl) throws FindFailed;
+	public void clickImageElement(String imageUrl) throws Exception;
 
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;
@@ -118,9 +116,13 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getNumberIncrement(String value);
 
+	public String getOutputDir();
+
 	public String getPrimaryTestSuiteName();
 
 	public String getProjectDir();
+
+	public String getSikuliImagesDir();
 
 	public void goBackAndWait();
 
@@ -200,7 +202,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void typeFrame(String locator, String value);
 
-	public void typeImageElement(String image) throws FindFailed;
+	public void typeImageElement(String image, String value) throws Exception;
 
 	public void uploadCommonFile(String locator, String value);
 

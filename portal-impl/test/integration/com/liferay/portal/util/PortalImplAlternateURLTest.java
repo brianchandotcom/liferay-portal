@@ -48,12 +48,13 @@ public class PortalImplAlternateURLTest {
 
 	@Test
 	public void testCustomPortalLocaleAlternateURL() throws Exception {
-		testAlternateURL(null, null, LocaleUtil.SPAIN, "/es");
+		testAlternateURL("localhost", null, null, LocaleUtil.SPAIN, "/es");
 	}
 
 	@Test
 	public void testDefaultPortalLocaleAlternateURL() throws Exception {
-		testAlternateURL(null, null, LocaleUtil.US, StringPool.BLANK);
+		testAlternateURL(
+			"localhost", null, null, LocaleUtil.US, StringPool.BLANK);
 	}
 
 	@Test
@@ -61,6 +62,7 @@ public class PortalImplAlternateURLTest {
 		throws Exception {
 
 		testAlternateURL(
+			"localhost",
 			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
 			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
 	}
@@ -70,16 +72,53 @@ public class PortalImplAlternateURLTest {
 		throws Exception {
 
 		testAlternateURL(
+			"localhost",
 			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
+	@Test
+	public void testNonlocalhostCustomPortalLocaleAlternateURL()
+		throws Exception {
+
+		testAlternateURL("liferay.com", null, null, LocaleUtil.SPAIN, "/es");
+	}
+
+	@Test
+	public void testNonlocalhostDefaultPortalLocaleAlternateURL()
+		throws Exception {
+
+		testAlternateURL(
+			"liferay.com", null, null, LocaleUtil.US, StringPool.BLANK);
+	}
+
+	@Test
+	public void testNonlocalhostLocalizedSiteCustomSiteLocaleAlternateURL()
+		throws Exception {
+
+		testAlternateURL(
+			"liferay.com", new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN,
+			LocaleUtil.GERMANY}, LocaleUtil.SPAIN, LocaleUtil.US, "/en");
+	}
+
+	@Test
+	public void testNonlocalhostLocalizedSiteDefaultSiteLocaleAlternateURL()
+		throws Exception {
+
+		testAlternateURL(
+			"liferay.com", new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN,
+			LocaleUtil.GERMANY}, LocaleUtil.SPAIN, LocaleUtil.SPAIN,
+			StringPool.BLANK);
+	}
+
 	protected String generateURL(
-		String languageId, String groupFriendlyURL, String layoutFriendlyURL) {
+		String portalDomain, String languageId, String groupFriendlyURL,
+		String layoutFriendlyURL) {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("http://localhost");
+		sb.append("http://");
+		sb.append(portalDomain);
 		sb.append(languageId);
 		sb.append(PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 		sb.append(groupFriendlyURL);
@@ -88,7 +127,9 @@ public class PortalImplAlternateURLTest {
 		return sb.toString();
 	}
 
-	protected ThemeDisplay getThemeDisplay(Group group) throws Exception {
+	protected ThemeDisplay getThemeDisplay(Group group, String portalURL)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		Company company = CompanyLocalServiceUtil.getCompany(
@@ -98,12 +139,15 @@ public class PortalImplAlternateURLTest {
 
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
 
+		themeDisplay.setPortalURL(portalURL);
+
 		return themeDisplay;
 	}
 
 	protected void testAlternateURL(
-			Locale[] groupAvailableLocales, Locale groupDefaultLocale,
-			Locale alternateLocale, String expectedI18nPath)
+			String portalDomain, Locale[] groupAvailableLocales,
+			Locale groupDefaultLocale, Locale alternateLocale,
+			String expectedI18nPath)
 		throws Exception {
 
 		Group group = GroupTestUtil.addGroup();
@@ -115,13 +159,16 @@ public class PortalImplAlternateURLTest {
 			group.getGroupId(), "welcome", false);
 
 		String canonicalURL = generateURL(
-			StringPool.BLANK, group.getFriendlyURL(), layout.getFriendlyURL());
+			portalDomain, StringPool.BLANK, group.getFriendlyURL(),
+			layout.getFriendlyURL());
 
 		String actualAlternateURL = PortalUtil.getAlternateURL(
-			canonicalURL, getThemeDisplay(group), alternateLocale, layout);
+			canonicalURL, getThemeDisplay(group, canonicalURL), alternateLocale,
+			layout);
 
 		String expectedAlternateURL = generateURL(
-			expectedI18nPath, group.getFriendlyURL(), layout.getFriendlyURL());
+			portalDomain, expectedI18nPath, group.getFriendlyURL(),
+			layout.getFriendlyURL());
 
 		Assert.assertEquals(expectedAlternateURL, actualAlternateURL);
 	}

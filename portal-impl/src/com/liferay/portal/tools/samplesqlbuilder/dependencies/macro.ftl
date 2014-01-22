@@ -133,19 +133,19 @@
 	_groupModel
 	_publicPageCount
 >
-	insert into Group_ values ('${_groupModel.uuid}', ${_groupModel.groupId}, ${_groupModel.companyId}, ${_groupModel.creatorUserId}, ${_groupModel.classNameId}, ${_groupModel.classPK}, ${_groupModel.parentGroupId}, ${_groupModel.liveGroupId}, '${_groupModel.treePath}', '${_groupModel.name}', '${_groupModel.description}', ${_groupModel.type}, '${_groupModel.typeSettings}', ${_groupModel.manualMembership?string}, ${_groupModel.membershipRestriction}, '${_groupModel.friendlyURL}', ${_groupModel.site?string}, ${_groupModel.remoteStagingGroupCount}, ${_groupModel.active?string});
+	insert into Group_ values (${_groupModel.mvccVersion}, '${_groupModel.uuid}', ${_groupModel.groupId}, ${_groupModel.companyId}, ${_groupModel.creatorUserId}, ${_groupModel.classNameId}, ${_groupModel.classPK}, ${_groupModel.parentGroupId}, ${_groupModel.liveGroupId}, '${_groupModel.treePath}', '${_groupModel.name}', '${_groupModel.description}', ${_groupModel.type}, '${_groupModel.typeSettings}', ${_groupModel.manualMembership?string}, ${_groupModel.membershipRestriction}, '${_groupModel.friendlyURL}', ${_groupModel.site?string}, ${_groupModel.remoteStagingGroupCount}, ${_groupModel.active?string});
 
 	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
 	<#list layoutSetModels as layoutSetModel>
-		insert into LayoutSet values (${layoutSetModel.layoutSetId}, ${layoutSetModel.groupId}, ${layoutSetModel.companyId}, '${dataFactory.getDateString(layoutSetModel.createDate)}', '${dataFactory.getDateString(layoutSetModel.modifiedDate)}', ${layoutSetModel.privateLayout?string}, ${layoutSetModel.logoId}, '${layoutSetModel.themeId}', '${layoutSetModel.colorSchemeId}', '${layoutSetModel.wapThemeId}', '${layoutSetModel.wapColorSchemeId}', '${layoutSetModel.css}', ${layoutSetModel.pageCount}, '${layoutSetModel.settings}', '${layoutSetModel.layoutSetPrototypeUuid}', ${layoutSetModel.layoutSetPrototypeLinkEnabled?string});
+		insert into LayoutSet values (${layoutSetModel.mvccVersion}, ${layoutSetModel.layoutSetId}, ${layoutSetModel.groupId}, ${layoutSetModel.companyId}, '${dataFactory.getDateString(layoutSetModel.createDate)}', '${dataFactory.getDateString(layoutSetModel.modifiedDate)}', ${layoutSetModel.privateLayout?string}, ${layoutSetModel.logoId}, '${layoutSetModel.themeId}', '${layoutSetModel.colorSchemeId}', '${layoutSetModel.wapThemeId}', '${layoutSetModel.wapColorSchemeId}', '${layoutSetModel.css}', ${layoutSetModel.pageCount}, '${layoutSetModel.settings}', '${layoutSetModel.layoutSetPrototypeUuid}', ${layoutSetModel.layoutSetPrototypeLinkEnabled?string});
 	</#list>
 </#macro>
 
 <#macro insertLayout
 	_layoutModel
 >
-	insert into Layout values ('${_layoutModel.uuid}', ${_layoutModel.plid}, ${_layoutModel.groupId}, ${_layoutModel.companyId}, ${_layoutModel.userId}, '${_layoutModel.userName}', '${dataFactory.getDateString(_layoutModel.createDate)}', '${dataFactory.getDateString(_layoutModel.modifiedDate)}', ${_layoutModel.privateLayout?string}, ${_layoutModel.layoutId}, ${_layoutModel.parentLayoutId}, '${_layoutModel.name}', '${_layoutModel.title}', '${_layoutModel.description}', '${_layoutModel.keywords}', '${_layoutModel.robots}', '${_layoutModel.type}', '${_layoutModel.typeSettings}', ${_layoutModel.hidden?string}, '${_layoutModel.friendlyURL}', ${_layoutModel.iconImageId}, '${_layoutModel.themeId}', '${_layoutModel.colorSchemeId}', '${_layoutModel.wapThemeId}', '${_layoutModel.wapColorSchemeId}', '${_layoutModel.css}', ${_layoutModel.priority}, '${_layoutModel.layoutPrototypeUuid}', ${_layoutModel.layoutPrototypeLinkEnabled?string}, '${_layoutModel.sourcePrototypeLayoutUuid}');
+	insert into Layout values (${_layoutModel.mvccVersion}, '${_layoutModel.uuid}', ${_layoutModel.plid}, ${_layoutModel.groupId}, ${_layoutModel.companyId}, ${_layoutModel.userId}, '${_layoutModel.userName}', '${dataFactory.getDateString(_layoutModel.createDate)}', '${dataFactory.getDateString(_layoutModel.modifiedDate)}', ${_layoutModel.privateLayout?string}, ${_layoutModel.layoutId}, ${_layoutModel.parentLayoutId}, '${_layoutModel.name}', '${_layoutModel.title}', '${_layoutModel.description}', '${_layoutModel.keywords}', '${_layoutModel.robots}', '${_layoutModel.type}', '${_layoutModel.typeSettings}', ${_layoutModel.hidden?string}, '${_layoutModel.friendlyURL}', ${_layoutModel.iconImageId}, '${_layoutModel.themeId}', '${_layoutModel.colorSchemeId}', '${_layoutModel.wapThemeId}', '${_layoutModel.wapColorSchemeId}', '${_layoutModel.css}', ${_layoutModel.priority}, '${_layoutModel.layoutPrototypeUuid}', ${_layoutModel.layoutPrototypeLinkEnabled?string}, '${_layoutModel.sourcePrototypeLayoutUuid}');
 
 	<@insertResourcePermissions
 		_entry = _layoutModel
@@ -153,7 +153,7 @@
 
 	<#local layoutFriendlyURLModel = dataFactory.newLayoutFriendlyURLModel(_layoutModel)>
 
-	insert into LayoutFriendlyURL values ('${layoutFriendlyURLModel.uuid}', ${layoutFriendlyURLModel.layoutFriendlyURLId}, ${layoutFriendlyURLModel.groupId}, ${layoutFriendlyURLModel.companyId}, ${layoutFriendlyURLModel.userId}, '${layoutFriendlyURLModel.userName}', '${dataFactory.getDateString(layoutFriendlyURLModel.createDate)}', '${dataFactory.getDateString(layoutFriendlyURLModel.modifiedDate)}', ${layoutFriendlyURLModel.plid}, ${layoutFriendlyURLModel.privateLayout?string}, '${layoutFriendlyURLModel.friendlyURL}', '${layoutFriendlyURLModel.languageId}');
+	insert into LayoutFriendlyURL values (${layoutFriendlyURLModel.mvccVersion}, '${layoutFriendlyURLModel.uuid}', ${layoutFriendlyURLModel.layoutFriendlyURLId}, ${layoutFriendlyURLModel.groupId}, ${layoutFriendlyURLModel.companyId}, ${layoutFriendlyURLModel.userId}, '${layoutFriendlyURLModel.userName}', '${dataFactory.getDateString(layoutFriendlyURLModel.createDate)}', '${dataFactory.getDateString(layoutFriendlyURLModel.modifiedDate)}', ${layoutFriendlyURLModel.plid}, ${layoutFriendlyURLModel.privateLayout?string}, '${layoutFriendlyURLModel.friendlyURL}', '${layoutFriendlyURLModel.languageId}');
 </#macro>
 
 <#macro insertMBDiscussion
@@ -204,7 +204,7 @@
 <#macro insertPortletPreferences
 	_portletPreferencesModel
 >
-	insert into PortletPreferences values (${_portletPreferencesModel.portletPreferencesId}, ${_portletPreferencesModel.ownerId}, ${_portletPreferencesModel.ownerType}, ${_portletPreferencesModel.plid}, '${_portletPreferencesModel.portletId}', '${_portletPreferencesModel.preferences}');
+	insert into PortletPreferences values (${_portletPreferencesModel.mvccVersion}, ${_portletPreferencesModel.portletPreferencesId}, ${_portletPreferencesModel.ownerId}, ${_portletPreferencesModel.ownerType}, ${_portletPreferencesModel.plid}, '${_portletPreferencesModel.portletId}', '${_portletPreferencesModel.preferences}');
 
 	<@insertResourcePermissions
 		_entry = _portletPreferencesModel
@@ -217,7 +217,7 @@
 	<#local resourcePermissionModels = dataFactory.newResourcePermissionModels(_entry)>
 
 	<#list resourcePermissionModels as resourcePermissionModel>
-		insert into ResourcePermission values (${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
+		insert into ResourcePermission values (${resourcePermissionModel.mvccVersion}, ${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
 	</#list>
 </#macro>
 
@@ -234,7 +234,7 @@
 >
 	<#local subscriptionModel = dataFactory.newSubscriptionModel(_entry)>
 
-	insert into Subscription values (${subscriptionModel.subscriptionId}, ${subscriptionModel.companyId}, ${subscriptionModel.userId}, '${subscriptionModel.userName}', '${dataFactory.getDateString(subscriptionModel.createDate)}', '${dataFactory.getDateString(subscriptionModel.modifiedDate)}', '${subscriptionModel.classNameId}', ${subscriptionModel.classPK}, '${subscriptionModel.frequency}');
+	insert into Subscription values (${subscriptionModel.mvccVersion}, ${subscriptionModel.subscriptionId}, ${subscriptionModel.companyId}, ${subscriptionModel.userId}, '${subscriptionModel.userName}', '${dataFactory.getDateString(subscriptionModel.createDate)}', '${dataFactory.getDateString(subscriptionModel.modifiedDate)}', '${subscriptionModel.classNameId}', ${subscriptionModel.classPK}, '${subscriptionModel.frequency}');
 </#macro>
 
 <#macro insertUser
@@ -242,11 +242,11 @@
 	_groupIds = []
 	_roleIds = []
 >
-	insert into User_ values ('${_userModel.uuid}', ${_userModel.userId}, ${_userModel.companyId}, '${dataFactory.getDateString(_userModel.createDate)}', '${dataFactory.getDateString(_userModel.modifiedDate)}', ${_userModel.defaultUser?string}, ${_userModel.contactId}, '${_userModel.password}', ${_userModel.passwordEncrypted?string}, ${_userModel.passwordReset?string}, '${dataFactory.getDateString(_userModel.passwordModifiedDate)}', '${_userModel.digest}', '${_userModel.reminderQueryQuestion}', '${_userModel.reminderQueryAnswer}', ${_userModel.graceLoginCount}, '${_userModel.screenName}', '${_userModel.emailAddress}', ${_userModel.facebookId}, ${_userModel.ldapServerId}, '${_userModel.openId}', ${_userModel.portraitId}, '${_userModel.languageId}', '${_userModel.timeZoneId}', '${_userModel.greeting}', '${_userModel.comments}', '${_userModel.firstName}', '${_userModel.middleName}', '${_userModel.lastName}', '${_userModel.jobTitle}', '${dataFactory.getDateString(_userModel.loginDate)}', '${_userModel.loginIP}', '${dataFactory.getDateString(_userModel.lastLoginDate)}', '${_userModel.lastLoginIP}', '${dataFactory.getDateString(_userModel.lastFailedLoginDate)}', ${_userModel.failedLoginAttempts}, ${_userModel.lockout?string}, '${dataFactory.getDateString(_userModel.lockoutDate)}', ${_userModel.agreedToTermsOfUse?string}, ${_userModel.emailAddressVerified?string}, '${_userModel.status}');
+	insert into User_ values (${_userModel.mvccVersion}, '${_userModel.uuid}', ${_userModel.userId}, ${_userModel.companyId}, '${dataFactory.getDateString(_userModel.createDate)}', '${dataFactory.getDateString(_userModel.modifiedDate)}', ${_userModel.defaultUser?string}, ${_userModel.contactId}, '${_userModel.password}', ${_userModel.passwordEncrypted?string}, ${_userModel.passwordReset?string}, '${dataFactory.getDateString(_userModel.passwordModifiedDate)}', '${_userModel.digest}', '${_userModel.reminderQueryQuestion}', '${_userModel.reminderQueryAnswer}', ${_userModel.graceLoginCount}, '${_userModel.screenName}', '${_userModel.emailAddress}', ${_userModel.facebookId}, ${_userModel.ldapServerId}, '${_userModel.openId}', ${_userModel.portraitId}, '${_userModel.languageId}', '${_userModel.timeZoneId}', '${_userModel.greeting}', '${_userModel.comments}', '${_userModel.firstName}', '${_userModel.middleName}', '${_userModel.lastName}', '${_userModel.jobTitle}', '${dataFactory.getDateString(_userModel.loginDate)}', '${_userModel.loginIP}', '${dataFactory.getDateString(_userModel.lastLoginDate)}', '${_userModel.lastLoginIP}', '${dataFactory.getDateString(_userModel.lastFailedLoginDate)}', ${_userModel.failedLoginAttempts}, ${_userModel.lockout?string}, '${dataFactory.getDateString(_userModel.lockoutDate)}', ${_userModel.agreedToTermsOfUse?string}, ${_userModel.emailAddressVerified?string}, '${_userModel.status}');
 
 	<#local contactModel = dataFactory.newContactModel(_userModel)>
 
-	insert into Contact_ values (${contactModel.contactId}, ${contactModel.companyId}, ${contactModel.userId}, '${contactModel.userName}', '${dataFactory.getDateString(contactModel.createDate)}', '${dataFactory.getDateString(contactModel.modifiedDate)}', ${contactModel.classNameId}, ${contactModel.classPK}, ${contactModel.accountId}, ${contactModel.parentContactId}, '${contactModel.emailAddress}', '${contactModel.firstName}', '${contactModel.middleName}', '${contactModel.lastName}', ${contactModel.prefixId}, ${contactModel.suffixId}, ${contactModel.male?string}, '${dataFactory.getDateString(contactModel.birthday)}', '${contactModel.smsSn}', '${contactModel.aimSn}', '${contactModel.facebookSn}', '${contactModel.icqSn}', '${contactModel.jabberSn}', '${contactModel.msnSn}', '${contactModel.mySpaceSn}', '${contactModel.skypeSn}', '${contactModel.twitterSn}', '${contactModel.ymSn}', '${contactModel.employeeStatusId}', '${contactModel.employeeNumber}', '${contactModel.jobTitle}', '${contactModel.jobClass}', '${contactModel.hoursOfOperation}');
+	insert into Contact_ values (${contactModel.mvccVersion}, ${contactModel.contactId}, ${contactModel.companyId}, ${contactModel.userId}, '${contactModel.userName}', '${dataFactory.getDateString(contactModel.createDate)}', '${dataFactory.getDateString(contactModel.modifiedDate)}', ${contactModel.classNameId}, ${contactModel.classPK}, ${contactModel.accountId}, ${contactModel.parentContactId}, '${contactModel.emailAddress}', '${contactModel.firstName}', '${contactModel.middleName}', '${contactModel.lastName}', ${contactModel.prefixId}, ${contactModel.suffixId}, ${contactModel.male?string}, '${dataFactory.getDateString(contactModel.birthday)}', '${contactModel.smsSn}', '${contactModel.aimSn}', '${contactModel.facebookSn}', '${contactModel.icqSn}', '${contactModel.jabberSn}', '${contactModel.msnSn}', '${contactModel.mySpaceSn}', '${contactModel.skypeSn}', '${contactModel.twitterSn}', '${contactModel.ymSn}', '${contactModel.employeeStatusId}', '${contactModel.employeeNumber}', '${contactModel.jobTitle}', '${contactModel.jobClass}', '${contactModel.hoursOfOperation}');
 
 	<#list _roleIds as roleId>
 		insert into Users_Roles values (${roleId}, ${_userModel.userId});

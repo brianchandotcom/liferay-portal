@@ -3,7 +3,7 @@
 <#assign resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.portlet.journal", groupId)>
 
 <#list resourcePermissionModels as resourcePermissionModel>
-	insert into ResourcePermission values (${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
+	insert into ResourcePermission values (${resourcePermissionModel.mvccVersion}, ${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
 </#list>
 
 <#list journalArticlePageCounts as journalArticlePageCount>

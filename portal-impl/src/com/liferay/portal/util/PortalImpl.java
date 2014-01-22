@@ -7291,7 +7291,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String getCanonicalDomain(
-		String virtualHostname, String portalDomain) {
+		boolean canonicalURL, String virtualHostname, String portalDomain) {
 
 		if (StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) ||
 			!StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST) ||
@@ -7307,6 +7307,12 @@ public class PortalImpl implements Portal {
 		}
 
 		return portalDomain.substring(0, pos);
+	}
+
+	protected String getCanonicalDomain(
+		String virtualHostname, String portalDomain) {
+
+		return getCanonicalDomain(true, virtualHostname, portalDomain);
 	}
 
 	protected Map<String, List<Portlet>> getCategoriesMap(

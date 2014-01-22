@@ -9,7 +9,13 @@
 <#assign cssClass = "">
 
 <#if fieldStructure.width??>
-	<#assign cssClass = "w" + fieldStructure.width>
+	<#if fieldStructure.width == "large">
+		<#assign cssClass = "input-large">
+	<#elseif fieldStructure.width == "medium">
+		<#assign cssClass = "input-medium">
+	<#elseif fieldStructure.width == "small">
+		<#assign cssClass = "input-small">
+	</#if>
 </#if>
 
 <#-- Repeatable -->

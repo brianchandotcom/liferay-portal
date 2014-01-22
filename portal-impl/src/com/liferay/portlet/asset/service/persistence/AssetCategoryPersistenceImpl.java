@@ -8382,6 +8382,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			query.append(WHERE_AND);
 		}
 
+		boolean bindName = false;
+
 		if (name == null) {
 			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
 		}
@@ -8389,6 +8391,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
 		}
 		else {
+			bindName = true;
+
 			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
 		}
 
@@ -8459,7 +8463,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			qPos.add(groupId);
 
-			if (name != null) {
+			if (bindName) {
 				qPos.add(name);
 			}
 
@@ -8597,6 +8601,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				query.append(WHERE_AND);
 			}
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
 			}
@@ -8604,6 +8610,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
 			}
 			else {
+				bindName = true;
+
 				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
 			}
 
@@ -8651,7 +8659,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 				qPos.add(groupId);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -8824,6 +8832,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				query.append(WHERE_AND);
 			}
 
+			boolean bindName = false;
+
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
 			}
@@ -8831,6 +8841,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
 			}
 			else {
+				bindName = true;
+
 				query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
 			}
 
@@ -8869,7 +8881,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 				qPos.add(groupId);
 
-				if (name != null) {
+				if (bindName) {
 					qPos.add(name);
 				}
 
@@ -9004,6 +9016,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			query.append(WHERE_AND);
 		}
 
+		boolean bindName = false;
+
 		if (name == null) {
 			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_4);
 		}
@@ -9011,6 +9025,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_6);
 		}
 		else {
+			bindName = true;
+
 			query.append(_FINDER_COLUMN_G_LIKEN_V_NAME_5);
 		}
 
@@ -9054,7 +9070,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			qPos.add(groupId);
 
-			if (name != null) {
+			if (bindName) {
 				qPos.add(name);
 			}
 

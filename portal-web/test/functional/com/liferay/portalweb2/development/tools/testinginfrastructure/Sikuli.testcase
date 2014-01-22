@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="portal-tools">
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
@@ -27,7 +27,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="Site1" />
 			<var name="sitePageName" value="Page1" />
-			<var name="sitePageType" value="Public" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -45,57 +45,28 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
-			<var name="entryTitle" value="Title" />
 			<var name="entryContent" value="Content" />
-		</execute>
-
-		<execute macro="Page#openURL">
-			<var name="siteName" value="Site1" />
-			<var name="siteURL" value="true" />
+			<var name="entryTitle" value="Title" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
-
-		<var name="key_siteName" value="Site1" />
-
-		<if>
-			<not>
-				<isset var="siteScopeSelected" />
-			</not>
-			<then>
-				<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="Site1" />
-				<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-				<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
-				<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
-			</then>
-		</if>
 
 		<execute macro="Site#exportSite">
-			<var name="fileName" value="test.lar" />
 			<var name="fileDownload" value="test.lar(14k)" />
+			<var name="fileName" value="test.lar" />
+			<var name="siteName" value="Site1" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<var name="key_siteName" value="Site2" />
-
-		<if>
-			<not>
-				<isset var="siteScopeSelected" />
-			</not>
-			<then>
-				<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="Site2" />
-				<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-				<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
-				<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
-			</then>
-		</if>
-
-		<execute macro="Site#importSite" />
+		<execute macro="Site#importSite">
+			<var name="fileName" value="test.lar" />
+			<var name="siteName" value="Site2" />
+		</execute>
 
 		<execute macro="Page#openURL">
 			<var name="siteName" value="Site2" />
@@ -103,8 +74,8 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryTitle" value="Title" />
 			<var name="entryContent" value="Content" />
+			<var name="entryTitle" value="Title" />
 		</execute>
 	</command>
 </definition>

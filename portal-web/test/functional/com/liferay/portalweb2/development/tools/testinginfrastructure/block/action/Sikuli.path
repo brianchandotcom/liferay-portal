@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FILE_DIALOG</td>
-	<td>fileDialog.png</td>
+	<td>file_dialog.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>TESTLAR_FILE</td>
-	<td>testLAR.png</td>
+	<td>test_lar.png</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TYPE_FILE_NAME</td>
-	<td>typeFileName.png</td>
+	<td>type_file_name.png</td>
 	<td></td>
 </tr>
 </tbody>

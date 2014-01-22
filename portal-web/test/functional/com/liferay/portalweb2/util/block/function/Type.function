@@ -39,12 +39,6 @@
 		<execute selenium="type" />
 	</command>
 
-	<command name="typeImageElement">
-		<execute selenium="typeImageElement" />
-
-		<execute selenium="pause" argument1="2000" />
-	</command>
-
 	<command name="typeFrame">
 		<execute selenium="waitForVisible" />
 
@@ -59,6 +53,12 @@
 		<execute function="Type#typeFrame" />
 
 		<execute selenium="pause" argument1="1000" />
+	</command>
+
+	<command name="typeImageElement">
+		<execute selenium="typeImageElement" />
+
+		<execute selenium="pause" argument1="2000" />
 	</command>
 
 	<command name="typeWaitForCKEditor">

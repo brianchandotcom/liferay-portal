@@ -45,7 +45,6 @@
 		<execute action="PGBlogsConfigurationScope#assertTextEquals" locator-key1="SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
-
 	<command name="tearDownConfigurationDisplaySettingsPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -64,6 +63,16 @@
 		<execute action="PGBlogsConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGBlogsConfiguration#assertElementPresent" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="tearDownConfigurationScopePG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#configureScopePG">
+			<var name="scopeSelection" value="Liferay" />
+		</execute>
 	</command>
 
 	<command name="viewNoPermissionCP">

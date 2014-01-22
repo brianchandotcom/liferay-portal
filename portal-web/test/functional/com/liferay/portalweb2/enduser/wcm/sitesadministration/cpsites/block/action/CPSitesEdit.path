@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SITE_TITLE</td>
-	<td>//h1/div/a | //h1[@class='site-title' and not(*)]</td></td>
+	<td>//h1/div/a | //h1[@class='site-title' and not(*)]</td>
 	<td></td>
 </tr>
 <tr>

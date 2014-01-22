@@ -14,9 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/error_header/init.jsp" %>
-
-<liferay-ui:header
-	backURL='<%= ParamUtil.getString(request, "liferay-ui:discussion:backURL") %>'
-	title="error"
-/>
+<%@ include file="/html/taglib/init.jsp" %>

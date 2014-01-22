@@ -14,6 +14,7 @@
 	<import class="com.liferay.portal.model.Contact" />
 	<import class="com.liferay.portal.model.Country" />
 	<import class="com.liferay.portal.model.EmailAddress" />
+	<import class="com.liferay.portal.model.ExportImportConfiguration" />
 	<import class="com.liferay.portal.model.Group" />
 	<import class="com.liferay.portal.model.Image" />
 	<import class="com.liferay.portal.model.Layout" />
@@ -357,6 +358,23 @@
 		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="typeId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
+	</class>
+	<class name="com.liferay.portal.model.impl.ExportImportConfigurationImpl" table="ExportImportConfiguration" dynamic-update="true">
+		<cache usage="read-write" />
+		<id name="exportImportConfigurationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
+		<property name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" column="settings_" />
 	</class>
 	<class name="com.liferay.portal.model.impl.GroupImpl" table="Group_" dynamic-update="true">
 		<cache usage="read-write" />

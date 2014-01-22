@@ -7293,9 +7293,9 @@ public class PortalImpl implements Portal {
 	protected String getCanonicalDomain(
 		boolean canonicalURL, String virtualHostname, String portalDomain) {
 
-		if (StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) ||
-			!StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST) ||
-			Validator.isBlank(portalDomain)) {
+		if (Validator.isBlank(portalDomain) ||
+			StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) ||
+			!StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) {
 
 			return virtualHostname;
 		}
@@ -7303,7 +7303,7 @@ public class PortalImpl implements Portal {
 		int pos = portalDomain.indexOf(CharPool.COLON);
 
 		if (pos == -1) {
-			pos = portalDomain.length();
+			return portalDomain;
 		}
 
 		return portalDomain.substring(0, pos);

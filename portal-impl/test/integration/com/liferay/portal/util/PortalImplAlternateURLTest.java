@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -49,12 +48,13 @@ public class PortalImplAlternateURLTest {
 
 	@Test
 	public void testCustomPortalLocaleAlternateURL() throws Exception {
-		testAlternateURL(null, null, LocaleUtil.SPAIN, "/es");
+		testAlternateURL("localhost", null, null, LocaleUtil.SPAIN, "/es");
 	}
 
 	@Test
 	public void testDefaultPortalLocaleAlternateURL() throws Exception {
-		testAlternateURL(null, null, LocaleUtil.US, StringPool.BLANK);
+		testAlternateURL(
+			"localhost", null, null, LocaleUtil.US, StringPool.BLANK);
 	}
 
 	@Test
@@ -62,6 +62,7 @@ public class PortalImplAlternateURLTest {
 		throws Exception {
 
 		testAlternateURL(
+			"localhost",
 			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
 			LocaleUtil.SPAIN, LocaleUtil.US, "/en");
 	}
@@ -71,6 +72,7 @@ public class PortalImplAlternateURLTest {
 		throws Exception {
 
 		testAlternateURL(
+			"localhost",
 			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
@@ -110,13 +112,6 @@ public class PortalImplAlternateURLTest {
 	}
 
 	protected String generateURL(
-		String languageId, String groupFriendlyURL, String layoutFriendlyURL) {
-
-		return generateURL(
-			"localhost", languageId, groupFriendlyURL, layoutFriendlyURL);
-	}
-
-	protected String generateURL(
 		String portalDomain, String languageId, String groupFriendlyURL,
 		String layoutFriendlyURL) {
 
@@ -132,10 +127,6 @@ public class PortalImplAlternateURLTest {
 		return sb.toString();
 	}
 
-	protected ThemeDisplay getThemeDisplay(Group group) throws Exception {
-		return getThemeDisplay(group, null);
-	}
-
 	protected ThemeDisplay getThemeDisplay(Group group, String portalURL)
 		throws Exception {
 
@@ -148,21 +139,9 @@ public class PortalImplAlternateURLTest {
 
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
 
-		if (Validator.isNotNull(portalURL)) {
-			themeDisplay.setPortalURL(portalURL);
-		}
+		themeDisplay.setPortalURL(portalURL);
 
 		return themeDisplay;
-	}
-
-	protected void testAlternateURL(
-			Locale[] groupAvailableLocales, Locale groupDefaultLocale,
-			Locale alternateLocale, String expectedI18nPath)
-		throws Exception {
-
-		testAlternateURL(
-			"localhost", groupAvailableLocales, groupDefaultLocale,
-			alternateLocale, expectedI18nPath);
 	}
 
 	protected void testAlternateURL(

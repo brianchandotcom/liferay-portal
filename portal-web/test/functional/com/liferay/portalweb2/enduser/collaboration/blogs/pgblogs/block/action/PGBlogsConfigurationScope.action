@@ -1,0 +1,13 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="SCOPE_MENULIST_SELECTION">
+			<execute function="AssertClick#assertPartialTextClickAt" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="SCOPE_MENULIST">
+			<execute function="Click#pauseClickAt" />
+		</case>
+	</command>
+</definition>

@@ -41,8 +41,7 @@ public class SeleniumBuilder {
 	}
 
 	/**
-	 * Constructs a Selenium Builder with an argument array of
-	 * <code>String</code>.
+	 * Constructs a Selenium Builder based on the arguments.
 	 *
 	 * @param  args the command-line arguments
 	 * @throws Exception if an exception occurred
@@ -174,11 +173,14 @@ public class SeleniumBuilder {
 	}
 
 	/**
-	 * Gets the list of all test case method names, sorts them according to
-	 * <code>component-name</code>, and then writes these lists to
-	 * <code>test.case.method.names.properties</code> as properties in this
-	 * format: <code>componentName + "_TEST_CASE_METHOD_NAMES=" + testCaseName +
-	 * "TestCase#test" + commandName</code>.
+	 * Writes lists of all test case method names, aggregated by component, to a
+	 * properties file named <code>test.case.method.names.properties</code>.
+	 *
+	 * <p>
+	 * Each property follows the format: <code>componentName +
+	 * "_TEST_CASE_METHOD_NAMES=" + testCaseName + "TestCase#test" +
+	 * commandName</code>
+	 * </p>
 	 *
 	 * <p>
 	 * Example <code>test.case.method.names.properties</code> output file:
@@ -304,16 +306,20 @@ public class SeleniumBuilder {
 	}
 
 	/**
-	 * Gets the list of all test case method properties scoped to the test case
-	 * definition, and writes them to <code>test.generated.properties </code> in
-	 * this format: <code>testCaseName + "all" + propertyName =
-	 * propertyValue</code>.
+	 * Writes lists of all test case method properties, aggregated by test case
+	 * definition scope and test case command scope, to a properties file named
+	 * <code>test.generated.properties</code>.
 	 *
 	 * <p>
-	 * If the test case method properties are scoped to the test case command,
-	 * then it writes the properties to <code>test.generated.properties</code>
-	 * in this format: <code>testCaseName + "test" + commandName + propertyName
-	 * = propertyValue</code>.
+	 * The test case method properties scoped to test case definitions follow
+	 * the format: <code>testCaseName + "TestCase.all." + propertyName =
+	 * propertyValue</code>
+	 * </p>
+	 *
+	 * <p>
+	 * The test case method properties scoped to test case commands follow the
+	 * format: <code>testCaseName + "TestCase.test" + commandName + "." +
+	 * propertyName = propertyValue</code>
 	 * </p>
 	 *
 	 * <p>

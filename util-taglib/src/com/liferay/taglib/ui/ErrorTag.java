@@ -67,9 +67,14 @@ public class ErrorTag extends TagSupport {
 					Validator.isNotNull(errorMarkerValue)) {
 
 					request.setAttribute(errorMarkerKey, errorMarkerValue);
-					request.setAttribute(
-						"liferay-ui:error:exception",
-						getException(portletRequest));
+
+					Object exception = getException(portletRequest);
+
+					if (exception instanceof Exception) {
+						request.setAttribute(
+							"liferay-ui:error:exception", exception);
+					}
+
 					request.setAttribute(
 						"liferay-ui:error:focusField", _focusField);
 				}

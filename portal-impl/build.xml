@@ -159,6 +159,11 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			strip="1"
 		/>
 
+		<patch patchfile="${project.dir}/lib/portal/bobo-browse/LPS-43688.patch"
+		   dir="${tstamp.value}/bobo-release-3.2.0"
+		   strip="1"
+		/>
+
 		<artifact:mvn pom="${tstamp.value}/bobo-release-3.2.0/bobo-browse/pom.xml">
 			<arg value="package" />
 		</artifact:mvn>

@@ -1,0 +1,13 @@
+diff --git a/bobo-browse/src/main/java/com/browseengine/bobo/sort/SortCollector.java b/bobo-browse/src/main/java/com/browseengine/bobo/sort/SortCollector.java
+index 394d9a9..57f825d 100644
+--- a/bobo-browse/src/main/java/com/browseengine/bobo/sort/SortCollector.java
++++ b/bobo-browse/src/main/java/com/browseengine/bobo/sort/SortCollector.java
+@@ -166,7 +166,7 @@ public abstract class SortCollector extends Collector {
+ 	      return new DocComparatorSource.LongDocComparatorSource(fieldname);
+ 	
+ 	    case SortField.DOUBLE:
+-	      return new DocComparatorSource.LongDocComparatorSource(fieldname);
++	      return new DocComparatorSource.DoubleDocComparatorSource(fieldname);
+ 	
+ 	    case SortField.BYTE:
+ 	      return new DocComparatorSource.ByteDocComparatorSource(fieldname);

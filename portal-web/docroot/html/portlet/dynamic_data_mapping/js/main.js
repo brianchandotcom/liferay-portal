@@ -5,6 +5,8 @@ AUI.add(
 		var Lang = A.Lang;
 		var FormBuilderField = A.FormBuilderField;
 
+		var BODY = A.getBody();
+
 		var instanceOf = A.instanceOf;
 		var isObject = Lang.isObject;
 
@@ -174,6 +176,8 @@ AUI.add(
 						);
 
 						instance.addTarget(Liferay.Util.getOpener().Liferay);
+
+						instance._toggleInputDirection(translationManager.get('defaultLocale'));
 					},
 
 					bindUI: function() {
@@ -265,6 +269,8 @@ AUI.add(
 						instance._updateFieldsLocalizationMap(event.prevVal);
 
 						instance._syncFieldsLocaleUI(event.newVal);
+
+						instance._toggleInputDirection(event.newVal);
 					},
 
 					_appendStructureChildren: function(field, buffer) {
@@ -604,6 +610,13 @@ AUI.add(
 								instance._syncFieldsLocaleUI(locale, field.get('fields'));
 							}
 						);
+					},
+
+					_toggleInputDirection: function(locale) {
+						var rtl = (Liferay.Language.direction[locale] === 'rtl');
+
+						BODY.toggleClass('form-builder-ltr-inputs', !rtl);
+						BODY.toggleClass('form-builder-rtl-inputs', rtl);
 					},
 
 					_updateFieldOptionsLocalizationMap: function(field, locale) {

@@ -93,19 +93,17 @@ public class TransactionalPortalCacheHelper {
 			return null;
 		}
 
-		Object object = uncommittedBuffer.get(key);
+		ValueEntry valueEntry = uncommittedBuffer.get(key);
 
-		if (object instanceof TTLValue) {
-			TTLValue ttLValue = (TTLValue)object;
-
-			object = ttLValue._value;
+		if (valueEntry == null) {
+			return null;
 		}
 
-		return (V)object;
+		return (V)valueEntry._value;
 	}
 
 	protected static <K extends Serializable, V> void put(
-		PortalCache<K, V> portalCache, K key, V value) {
+		PortalCache<K, V> portalCache, K key, V value, boolean quiet, int ttl) {
 
 		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
 
@@ -117,23 +115,7 @@ public class TransactionalPortalCacheHelper {
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedBuffer.put(key, value);
-	}
-
-	protected static <K extends Serializable, V> void put(
-		PortalCache<K, V> portalCache, K key, V value, int ttl) {
-
-		PortalCacheMap portalCacheMap = _peekPortalCacheMap();
-
-		UncommittedBuffer uncommittedBuffer = portalCacheMap.get(portalCache);
-
-		if (uncommittedBuffer == null) {
-			uncommittedBuffer = new UncommittedBuffer();
-
-			portalCacheMap.put(portalCache, uncommittedBuffer);
-		}
-
-		uncommittedBuffer.put(key, new TTLValue(ttl, value));
+		uncommittedBuffer.put(key, new ValueEntry(value, quiet, ttl));
 	}
 
 	protected static <K extends Serializable, V> void removeAll(
@@ -173,6 +155,9 @@ public class TransactionalPortalCacheHelper {
 		portalCacheMaps.add(new PortalCacheMap());
 	}
 
+	private static ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
+		TransactionalPortalCache.NULL_HOLDER, false, -1);
+
 	private static ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
 			new InitialThreadLocal<List<PortalCacheMap>>(
@@ -185,18 +170,6 @@ public class TransactionalPortalCacheHelper {
 			<PortalCache<? extends Serializable, ?>, UncommittedBuffer> {
 	}
 
-	private static class TTLValue {
-
-		public TTLValue(int ttl, Object value) {
-			_ttl = ttl;
-			_value = value;
-		}
-
-		private int _ttl;
-		private Object _value;
-
-	}
-
 	private static class UncommittedBuffer {
 
 		public void commitTo(PortalCache<Serializable, Object> portalCache) {
@@ -204,54 +177,31 @@ public class TransactionalPortalCacheHelper {
 				portalCache.removeAll();
 			}
 
-			for (Map.Entry<? extends Serializable, List<Object>> entry :
+			for (Map.Entry<? extends Serializable, ValueEntry> entry :
 					_uncommittedMap.entrySet()) {
 
-				Serializable key = entry.getKey();
-				List<Object> valueList = entry.getValue();
+				ValueEntry valueEntry = entry.getValue();
 
-				for (Object value : valueList) {
-					if (value == TransactionalPortalCache.NULL_HOLDER) {
-						portalCache.remove(key);
-					}
-					else if (value instanceof TTLValue) {
-						TTLValue ttlValue = (TTLValue)value;
-
-						portalCache.put(key, ttlValue._value, ttlValue._ttl);
-					}
-					else {
-						portalCache.put(key, value);
-					}
-				}
+				valueEntry.commitTo(portalCache, entry.getKey());
 			}
 		}
 
-		public Object get(Serializable key) {
-			List<Object> valueList = _uncommittedMap.get(key);
+		public ValueEntry get(Serializable key) {
+			ValueEntry valueEntry = _uncommittedMap.get(key);
 
-			Object value = null;
-
-			if (valueList != null) {
-				value = valueList.get(valueList.size() - 1);
+			if ((valueEntry == null) && _removeAll) {
+				valueEntry = _NULL_HOLDER_VALUE_ENTRY;
 			}
 
-			if ((value == null) && _removeAll) {
-				value = TransactionalPortalCache.NULL_HOLDER;
-			}
-
-			return value;
+			return valueEntry;
 		}
 
-		public void put(Serializable key, Object value) {
-			List<Object> valueList = _uncommittedMap.get(key);
+		public void put(Serializable key, ValueEntry valueEntry) {
+			ValueEntry oldValueEntry = _uncommittedMap.put(key, valueEntry);
 
-			if (valueList == null) {
-				valueList = new ArrayList<Object>();
+			if (oldValueEntry != null) {
+				oldValueEntry.merge(valueEntry);
 			}
-
-			valueList.add(value);
-
-			_uncommittedMap.put(key, valueList);
 		}
 
 		public void removeAll() {
@@ -261,8 +211,52 @@ public class TransactionalPortalCacheHelper {
 		}
 
 		private boolean _removeAll;
-		private Map<Serializable, List<Object>> _uncommittedMap =
-			new HashMap<Serializable, List<Object>>();
+		private Map<Serializable, ValueEntry> _uncommittedMap =
+			new HashMap<Serializable, ValueEntry>();
+
+	}
+
+	private static class ValueEntry {
+
+		public ValueEntry(Object value, boolean quiet, int ttl) {
+			_value = value;
+			_quiet = quiet;
+			_ttl = ttl;
+		}
+
+		public void commitTo(
+			PortalCache<Serializable, Object> portalCache, Serializable key) {
+
+			if (_value == TransactionalPortalCache.NULL_HOLDER) {
+				portalCache.remove(key);
+			}
+			else if (_quiet) {
+				if (_ttl >= 0) {
+					portalCache.putQuiet(key, _value, _ttl);
+				}
+				else {
+					portalCache.putQuiet(key, _value);
+				}
+			}
+			else {
+				if (_ttl >= 0) {
+					portalCache.put(key, _value, _ttl);
+				}
+				else {
+					portalCache.put(key, _value);
+				}
+			}
+		}
+
+		public void merge(ValueEntry valueEntry) {
+			if (!_quiet) {
+				valueEntry._quiet = false;
+			}
+		}
+
+		private boolean _quiet;
+		private int _ttl;
+		private Object _value;
 
 	}
 

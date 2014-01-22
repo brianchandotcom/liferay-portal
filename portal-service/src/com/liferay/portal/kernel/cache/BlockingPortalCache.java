@@ -79,48 +79,30 @@ public class BlockingPortalCache<K extends Serializable, V>
 
 	@Override
 	public void put(K key, V value) {
-		if (key == null) {
-			throw new IllegalArgumentException("Key is null");
-		}
-
-		if (value == null) {
-			throw new IllegalArgumentException("Value is null");
-		}
-
-		portalCache.put(key, value);
-
-		CompeteLatch competeLatch = _competeLatch.get();
-
-		if (competeLatch != null) {
-			competeLatch.done();
-
-			_competeLatch.set(null);
-		}
-
-		_competeLatchMap.remove(key);
+		doPut(key, value, false, -1);
 	}
 
 	@Override
 	public void put(K key, V value, int timeToLive) {
-		if (key == null) {
-			throw new IllegalArgumentException("Key is null");
+		if (timeToLive < 0) {
+			throw new IllegalArgumentException("Time to live is negative");
 		}
 
-		if (value == null) {
-			throw new IllegalArgumentException("Value is null");
+		doPut(key, value, false, timeToLive);
+	}
+
+	@Override
+	public void putQuiet(K key, V value) {
+		doPut(key, value, true, -1);
+	}
+
+	@Override
+	public void putQuiet(K key, V value, int timeToLive) {
+		if (timeToLive < 0) {
+			throw new IllegalArgumentException("Time to live is negative");
 		}
 
-		portalCache.put(key, value, timeToLive);
-
-		CompeteLatch competeLatch = _competeLatch.get();
-
-		if (competeLatch != null) {
-			competeLatch.done();
-
-			_competeLatch.set(null);
-		}
-
-		_competeLatchMap.remove(key);
+		doPut(key, value, true, timeToLive);
 	}
 
 	@Override
@@ -138,6 +120,43 @@ public class BlockingPortalCache<K extends Serializable, V>
 	public void removeAll() {
 		portalCache.removeAll();
 		_competeLatchMap.clear();
+	}
+
+	protected void doPut(K key, V value, boolean quiet, int timeToLive) {
+		if (key == null) {
+			throw new IllegalArgumentException("Key is null");
+		}
+
+		if (value == null) {
+			throw new IllegalArgumentException("Value is null");
+		}
+
+		if (quiet) {
+			if (timeToLive >= 0) {
+				portalCache.putQuiet(key, value, timeToLive);
+			}
+			else {
+				portalCache.putQuiet(key, value);
+			}
+		}
+		else {
+			if (timeToLive >= 0) {
+				portalCache.put(key, value, timeToLive);
+			}
+			else {
+				portalCache.put(key, value);
+			}
+		}
+
+		CompeteLatch competeLatch = _competeLatch.get();
+
+		if (competeLatch != null) {
+			competeLatch.done();
+
+			_competeLatch.set(null);
+		}
+
+		_competeLatchMap.remove(key);
 	}
 
 	private static ThreadLocal<CompeteLatch> _competeLatch =

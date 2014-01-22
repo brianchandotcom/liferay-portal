@@ -71,6 +71,16 @@ public class MemoryPortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public void putQuiet(K key, V value) {
+		_map.put(key, value);
+	}
+
+	@Override
+	public void putQuiet(K key, V value, int timeToLive) {
+		_map.put(key, value);
+	}
+
+	@Override
 	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 		_cacheListeners.add(cacheListener);
 	}

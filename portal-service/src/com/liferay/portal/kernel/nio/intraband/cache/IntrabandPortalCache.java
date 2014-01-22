@@ -102,6 +102,35 @@ public class IntrabandPortalCache
 	}
 
 	@Override
+	public void putQuiet(K key, V value) {
+		Serializer serializer = _createSerializer(
+			PortalCacheActionType.PUT_QUIET);
+
+		serializer.writeObject(key);
+		serializer.writeObject(value);
+
+		_intraband.sendDatagram(
+			_registrationReference,
+			Datagram.createRequestDatagram(
+				_portalCacheType, serializer.toByteBuffer()));
+	}
+
+	@Override
+	public void putQuiet(K key, V value, int timeToLive) {
+		Serializer serializer = _createSerializer(
+			PortalCacheActionType.PUT_QUIET_TTL);
+
+		serializer.writeObject(key);
+		serializer.writeObject(value);
+		serializer.writeInt(timeToLive);
+
+		_intraband.sendDatagram(
+			_registrationReference,
+			Datagram.createRequestDatagram(
+				_portalCacheType, serializer.toByteBuffer()));
+	}
+
+	@Override
 	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 	}
 

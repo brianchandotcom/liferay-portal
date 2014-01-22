@@ -75,6 +75,22 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public void putQuiet(K key, V value) {
+		Element element = new Element(key, value);
+
+		_ehcache.putQuiet(element);
+	}
+
+	@Override
+	public void putQuiet(K key, V value, int timeToLive) {
+		Element element = new Element(key, value);
+
+		element.setTimeToLive(timeToLive);
+
+		_ehcache.putQuiet(element);
+	}
+
+	@Override
 	public void registerCacheListener(CacheListener<K, V> cacheListener) {
 		registerCacheListener(cacheListener, CacheListenerScope.ALL);
 	}

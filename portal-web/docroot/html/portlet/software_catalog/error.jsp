@@ -16,10 +16,7 @@
 
 <%@ include file="/html/portlet/software_catalog/init.jsp" %>
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+<liferay-ui:error-header/>
 
 <liferay-ui:error exception="<%= NoSuchFrameworkVersionException.class %>" message="the-framework-version-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchLicenseException.class %>" message="the-license-could-not-be-found" />

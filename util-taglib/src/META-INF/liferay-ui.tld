@@ -957,6 +957,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>error-header</name>
+		<tag-class>com.liferay.taglib.ui.ErrorHeaderTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>error-marker</name>
 		<tag-class>com.liferay.taglib.ui.ErrorMarkerTag</tag-class>
 		<body-content>JSP</body-content>

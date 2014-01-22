@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+package com.liferay.taglib.ui;
 
-<liferay-ui:error-header/>
+import com.liferay.taglib.util.IncludeTag;
 
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
-<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-unexpected-error-occurred" />
+/**
+ * @author Roberto Díaz
+ */
+public class ErrorHeaderTag extends IncludeTag {
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	private static final String _PAGE = "/html/taglib/ui/error_header/page.jsp";
+
+}

@@ -16,10 +16,7 @@
 
 <%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+<liferay-ui:error-header/>
 
 <liferay-ui:error exception="<%= NoSuchRecordSetException.class %>" message="the-recordSet-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

@@ -14,9 +14,13 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
+<%@ include file="/html/taglib/ui/error_header/init.jsp" %>
 
-<liferay-ui:error-header/>
+<%
+String referer = request.getHeader(HttpHeaders.REFERER);
+%>
 
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
-<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-unexpected-error-occurred" />
+<liferay-ui:header
+	backURL='<%= Validator.isNotNull(referer) ? referer : "javascript:history.go(-1)" %>'
+	title="error"
+/>

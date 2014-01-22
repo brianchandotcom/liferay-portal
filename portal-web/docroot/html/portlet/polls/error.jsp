@@ -16,10 +16,7 @@
 
 <%@ include file="/html/portlet/polls/init.jsp" %>
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+<liferay-ui:error-header/>
 
 <liferay-ui:error exception="<%= NoSuchQuestionException.class %>" message="the-question-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

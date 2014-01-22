@@ -16,10 +16,7 @@
 
 <%@ include file="/html/portlet/layout_prototypes/init.jsp" %>
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+<liferay-ui:error-header/>
 
 <liferay-ui:error exception="<%= NoSuchLayoutPrototypeException.class %>" message="the-page-template-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

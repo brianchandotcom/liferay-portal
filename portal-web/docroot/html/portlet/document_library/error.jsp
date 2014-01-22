@@ -16,10 +16,7 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+<liferay-ui:error-header/>
 
 <liferay-ui:error exception="<%= DuplicateLockException.class %>">
 

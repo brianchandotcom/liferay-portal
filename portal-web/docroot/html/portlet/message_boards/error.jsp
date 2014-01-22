@@ -16,10 +16,7 @@
 
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+<liferay-ui:error-header/>
 
 <liferay-ui:error exception="<%= BannedUserException.class %>" message="you-have-been-banned-by-the-moderator" />
 <liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />

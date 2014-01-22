@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -35,6 +37,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -100,6 +105,16 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.setLong(26, 0);
 
 			ps.executeUpdate();
+
+			String fileEntryClassName = DLFileEntry.class.getName();
+
+			addDLPermission(
+				companyId, groupId, fileEntryClassName, fileEntryId,
+				getRoleId(RoleConstants.GUEST), 3);
+
+			addDLPermission(
+				companyId, groupId, fileEntryClassName, fileEntryId,
+				getRoleId(RoleConstants.SITE_MEMBER), 3);
 
 			return fileEntryId;
 		}
@@ -234,6 +249,16 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			ps.executeUpdate();
 
+			String folderClassName = DLFolder.class.getName();
+
+			addDLPermission(
+				companyId, groupId, folderClassName, folderId,
+				getRoleId(RoleConstants.GUEST), 1);
+
+			addDLPermission(
+				companyId, groupId, folderClassName, folderId,
+				getRoleId(RoleConstants.SITE_MEMBER), 29);
+
 			return folderId;
 		}
 		catch (Exception e) {
@@ -242,6 +267,50 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			}
 
 			return -1;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void addDLPermission(
+			long companyId, long groupId, String className, long primKey,
+			long roleId, long actionIds)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			long resourcePermissionId = increment();
+
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("insert into ResourcePermission(resourcePermissionId, ");
+			sb.append("companyId, name, scope, primKey, roleId, ownerId, ");
+			sb.append("actionIds) values (?, ?, ?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, resourcePermissionId);
+			ps.setLong(2, companyId);
+			ps.setString(3, className);
+			ps.setInt(4, 4);
+			ps.setLong(5, primKey);
+			ps.setLong(6, roleId);
+			ps.setLong(7, 0);
+			ps.setLong(8, actionIds);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to add permission " + className, e);
+			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -434,6 +503,40 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			portletId);
 	}
 
+	protected long getRoleId(String name) throws Exception {
+		Long roleId = _roleIds.get(name);
+
+		if (roleId != null) {
+			return roleId;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select roleId from role_ where name = ?");
+
+			ps.setString(1, name);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				roleId = rs.getLong(1);
+			}
+
+			_roleIds.put(name, roleId);
+
+			return roleId;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected abstract void updateAttachments() throws Exception;
 
 	protected void updateEntryAttachments(
@@ -524,5 +627,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeAttachments.class);
+
+	private Map<String, Long> _roleIds = new HashMap<String, Long>();
 
 }

@@ -84,7 +84,14 @@ public class UploadImageAction extends PortletAction {
 				addTempImageFile(actionRequest);
 			}
 			else {
-				FileEntry fileEntry = saveTempImageFile(actionRequest);
+				boolean imageUploaded = ParamUtil.getBoolean(
+					actionRequest, "imageUploaded");
+
+				FileEntry fileEntry = null;
+
+				if (imageUploaded) {
+					fileEntry = saveTempImageFile(actionRequest);
+				}
 
 				SessionMessages.add(actionRequest, "imageUploaded", fileEntry);
 

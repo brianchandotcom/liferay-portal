@@ -37,7 +37,9 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		%>
 
 		<aui:script>
-			Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
+		    <c:if test="<%= fileEntry != null%>">
+				Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
+		    </c:if>
 
 			Liferay.Util.getWindow().hide();
 		</aui:script>
@@ -54,6 +56,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<aui:input name="previewURL" type="hidden" value="<%= previewURL %>" />
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 			<aui:input name="tempImageFileName" type="hidden" value="<%= tempImageFileName %>" />
+			<aui:input name="imageUploaded" type="hidden" value='<%= SessionMessages.contains(renderRequest, "imageUploaded") %>' />
 
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
@@ -81,13 +84,17 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 			<portlet:actionURL var="addTempImageURL">
 				<portlet:param name="struts_action" value="/image_uploader/view" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" />
-				<portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />
 			</portlet:actionURL>
+
+			var imageUploadedInput = A.one('#<portlet:namespace />imageUploaded');
 
 			var logoEditor = new Liferay.LogoEditor(
 				{
 					maxFileSize: '<%= maxFileSize %>',
 					namespace: '<portlet:namespace />',
+					on: {
+						uploadComplete: A.bind('val', imageUploadedInput, true)
+					},
 					previewURL: '<%= previewURL %>',
 					uploadURL: '<%= addTempImageURL %>'
 				}

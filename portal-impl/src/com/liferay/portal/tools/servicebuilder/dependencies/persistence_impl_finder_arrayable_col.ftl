@@ -1,4 +1,10 @@
-<#if !finderCol.isPrimitiveType()>
+<#if finderCol.isPrimitiveType()>
+	query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5${finderFieldSuffix});
+<#else>
+	<#if !finderCol.hasArrayableOperator()>
+		boolean bind${finderCol.methodName} = false;
+	</#if>
+
 	if (${finderCol.name} == null) {
 		query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_4${finderFieldSuffix});
 	}
@@ -8,10 +14,10 @@
 		}
 	</#if>
 	else {
-</#if>
+		<#if !finderCol.hasArrayableOperator()>
+			bind${finderCol.methodName} = true;
+		</#if>
 
-query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5${finderFieldSuffix});
-
-<#if !finderCol.isPrimitiveType()>
+		query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5${finderFieldSuffix});
 	}
 </#if>

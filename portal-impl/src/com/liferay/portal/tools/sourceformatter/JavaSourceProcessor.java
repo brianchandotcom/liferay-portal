@@ -821,6 +821,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"source_formatter_javaterm_sort_exclusions.properties");
 		_lineLengthExclusions = getExclusionsProperties(
 			"source_formatter_line_length_exclusions.properties");
+		_secureRandomExclusions = getExclusionsProperties(
+			"source_formatter_secure_random_exclusions.properties");
 		_staticLogVariableExclusions = getExclusionsProperties(
 			"source_formatter_static_log_exclusions.properties");
 		_upgradeServiceUtilExclusions = getExclusionsProperties(
@@ -1072,7 +1074,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-39508
 
-		if (!fileName.contains("SecureRandomUtil") &&
+		excluded = null;
+
+		if (_secureRandomExclusions != null) {
+			excluded = _secureRandomExclusions.getProperty(fileName);
+		}
+
+		if ((excluded == null) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -2782,6 +2790,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Properties _lineLengthExclusions;
 	private Pattern _logPattern = Pattern.compile(
 		"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
+	private Properties _secureRandomExclusions;
 	private Properties _staticLogVariableExclusions;
 	private Properties _upgradeServiceUtilExclusions;
 

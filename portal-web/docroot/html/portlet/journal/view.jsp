@@ -183,7 +183,7 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 				String[] escapedDisplayViews = new String[displayViews.length];
 
 				for (int i = 0; i < displayViews.length; i++) {
-					escapedDisplayViews[i] = HtmlUtil.escapeJS(displayViews[1]);
+					escapedDisplayViews[i] = HtmlUtil.escapeJS(displayViews[i]);
 				}
 				%>
 

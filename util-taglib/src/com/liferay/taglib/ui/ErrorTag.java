@@ -172,7 +172,7 @@ public class ErrorTag extends TagSupport {
 		}
 	}
 
-	protected Exception getException(PortletRequest portletRequest) {
+	protected Object getException(PortletRequest portletRequest) {
 		Object value = null;
 
 		if (_exception != null) {
@@ -182,7 +182,7 @@ public class ErrorTag extends TagSupport {
 			value = SessionErrors.get(portletRequest, _key);
 		}
 
-		return null;
+		return value;
 	}
 
 	protected String getStartPage() {

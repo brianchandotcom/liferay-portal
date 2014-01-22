@@ -377,8 +377,8 @@
 	<command name="ChangeColorCalendarMyCalendarsEventRegular" priority="5">
 		<var name="calendarType" value="My Calendars" />
 		<var name="myCalendarColor" value="668CD9" />
-		<var name="eventBackgroundColorRGB" value="(209, 219, 240)" />
-		<var name="eventFontColorRGB" value="(104, 141, 217)" />
+		<var name="eventBackgroundColorRGB" value="(208, 219, 240)" />
+		<var name="eventFontColorRGB" value="(104, 142, 217)" />
 		<var name="eventTitle" value="Calendar Event Regular Title" />
 		<var name="eventType" value="Regular" />
 		<var name="user" value="Test Test" />

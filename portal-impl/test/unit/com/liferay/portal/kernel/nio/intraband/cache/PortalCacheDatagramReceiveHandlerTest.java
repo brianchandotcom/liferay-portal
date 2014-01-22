@@ -134,8 +134,8 @@ public class PortalCacheDatagramReceiveHandlerTest {
 
 	@AdviseWith(
 		adviceClasses = {
-			PortalExecutorManagerUtilAdvice.class,
-			PortalCacheActionTypeAdvice.class
+			PortalCacheActionTypeAdvice.class,
+			PortalExecutorManagerUtilAdvice.class
 		})
 	@Test
 	public void testMockValue() throws Exception {

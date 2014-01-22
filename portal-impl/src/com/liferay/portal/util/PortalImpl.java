@@ -1015,15 +1015,15 @@ public class PortalImpl implements Portal {
 			virtualHostname = company.getVirtualHostname();
 		}
 
-		if (!StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) {
-			String portalURL = themeDisplay.getPortalURL();
+		String portalURL = themeDisplay.getPortalURL();
 
-			virtualHostname = getCanonicalDomain(
-				virtualHostname, HttpUtil.getDomain(portalURL));
+		String portalDomain = HttpUtil.getDomain(portalURL);
 
-			virtualHostname = getPortalURL(
-				virtualHostname, themeDisplay.getServerPort(),
-				themeDisplay.isSecure());
+		if (!Validator.isBlank(portalDomain) &&
+			!StringUtil.equalsIgnoreCase(portalDomain, _LOCALHOST) &&
+			StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST)) {
+
+			virtualHostname = portalDomain;
 		}
 
 		String i18nPath = buildI18NPath(locale);
@@ -7302,11 +7302,11 @@ public class PortalImpl implements Portal {
 
 		int pos = portalDomain.indexOf(CharPool.COLON);
 
-		if (pos != -1) {
-			virtualHostname = portalDomain.substring(0, pos);
+		if (pos == -1) {
+			pos = portalDomain.length();
 		}
 
-		return virtualHostname;
+		return portalDomain.substring(0, pos);
 	}
 
 	protected Map<String, List<Portlet>> getCategoriesMap(

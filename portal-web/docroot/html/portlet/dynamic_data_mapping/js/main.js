@@ -613,10 +613,10 @@ AUI.add(
 					},
 
 					_toggleInputDirection: function(locale) {
-						var isRTL = (Liferay.Language.direction[locale] === 'rtl');
+						var rtl = (Liferay.Language.direction[locale] === 'rtl');
 
-						BODY.toggleClass('form-builder-ltr-inputs', !isRTL);
-						BODY.toggleClass('form-builder-rtl-inputs', isRTL);
+						BODY.toggleClass('form-builder-ltr-inputs', !rtl);
+						BODY.toggleClass('form-builder-rtl-inputs', rtl);
 					},
 
 					_updateFieldOptionsLocalizationMap: function(field, locale) {

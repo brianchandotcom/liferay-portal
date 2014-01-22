@@ -108,29 +108,34 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--TAGS-->
+<!--CATEGORIZATION-->
 <tr>
-	<td>TAGS_FIELD</td>
+	<td>CATEGORIZATION_TOGGLE</td>
+	<td>//div[@class='accordion-toggle' and contains(.,'Categorization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAGS_FIELD</td>
 	<td>//input[@title='Add Tags']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAG_AUTOCOMPLETE</td>
+	<td>CATEGORIZATION_TAG_AUTOCOMPLETE</td>
 	<td>//div[contains(@class,'autocomplete-results-content')]/div/ul/li[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAGS_ADD_BUTTON</td>
+	<td>CATEGORIZATION_TAGS_ADD_BUTTON</td>
 	<td>//button[@title='Add Tags']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAGS_SELECT_BUTTON</td>
+	<td>CATEGORIZATION_TAGS_SELECT_BUTTON</td>
 	<td>//button[@title='Select Tags']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TAGS_SUGGESTIONS_BUTTON</td>
+	<td>CATEGORIZATION_TAGS_SUGGESTIONS_BUTTON</td>
 	<td>//button[@title='Suggestions']</td>
 	<td></td>
 </tr>

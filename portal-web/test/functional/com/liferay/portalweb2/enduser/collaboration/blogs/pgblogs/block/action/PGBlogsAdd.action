@@ -4,7 +4,7 @@
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
 
-		<case locator-key1="TAGS_SELECT_BUTTON">
+		<case locator-key1="CATEGORIZATION_TAGS_SELECT_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>

@@ -1,6 +1,4 @@
-<#if finderCol.isPrimitiveType()>
-	query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5${finderFieldSuffix});
-<#else>
+<#if !finderCol.isPrimitiveType()>
 	<#if !finderCol.hasArrayableOperator()>
 		boolean bind${finderCol.methodName} = false;
 	</#if>
@@ -17,7 +15,10 @@
 		<#if !finderCol.hasArrayableOperator()>
 			bind${finderCol.methodName} = true;
 		</#if>
+</#if>
 
-		query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5${finderFieldSuffix});
+query.append(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5${finderFieldSuffix});
+
+<#if !finderCol.isPrimitiveType()>
 	}
 </#if>

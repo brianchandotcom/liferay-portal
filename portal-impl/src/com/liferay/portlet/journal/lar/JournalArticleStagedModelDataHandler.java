@@ -206,25 +206,9 @@ public class JournalArticleStagedModelDataHandler
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		String artcleResourceUuid = referenceElement.attributeValue(
-			"article-resource-uuid");
-
-		try {
-			boolean valid = validateMissingReference(
-				artcleResourceUuid, portletDataContext.getCompanyId(),
-				portletDataContext.getScopeGroupId());
-
-			if (!valid) {
-				valid = validateMissingReference(
-					artcleResourceUuid, portletDataContext.getCompanyId(),
-					portletDataContext.getCompanyGroupId());
-			}
-
-			return valid;
-		}
-		catch (Exception e) {
-			return false;
-		}
+		return validateReference(
+			portletDataContext,
+			referenceElement.attributeValue("article-resource-uuid"));
 	}
 
 	@Override

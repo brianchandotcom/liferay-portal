@@ -64,4 +64,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement);
 
+	public boolean validateReference(
+		PortletDataContext portletDataContext, String uuid);
+
 }

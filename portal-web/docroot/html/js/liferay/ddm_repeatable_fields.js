@@ -74,23 +74,6 @@ AUI.add(
 						instance.syncFieldsTreeUI();
 					},
 
-					createFieldTree: function(fieldNode) {
-						var instance = this;
-
-						var fieldName = fieldNode.getData('fieldName');
-						var fieldNamespace = fieldNode.getData('fieldNamespace');
-
-						var tree = [fieldName + fieldNamespace];
-
-						instance.getFieldsList(null, fieldNode).each(
-							function(item, index, collection) {
-								tree = tree.concat(instance.createFieldTree(item));
-							}
-						);
-
-						return tree;
-					},
-
 					getField: function(fieldName, callback) {
 						var instance = this;
 
@@ -131,7 +114,7 @@ AUI.add(
 							container = instance.get('container');
 						}
 
-						var selector = ['>'];
+						var selector = [''];
 
 						selector.push(' .field-wrapper');
 
@@ -220,9 +203,13 @@ AUI.add(
 
 						instance.getFieldsList().each(
 							function(item, index, collection) {
+								var fieldName = item.getData('fieldName');
+
+								var fieldNamespace = item.getData('fieldNamespace');
+
 								instance.renderRepeatableUI(item);
 
-								fieldsDisplay = fieldsDisplay.concat(instance.createFieldTree(item));
+								fieldsDisplay.push(fieldName + fieldNamespace);
 							}
 						);
 

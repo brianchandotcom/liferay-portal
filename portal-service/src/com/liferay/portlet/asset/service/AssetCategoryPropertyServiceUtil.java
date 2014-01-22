@@ -85,14 +85,6 @@ public class AssetCategoryPropertyServiceUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateCategoryProperty(categoryPropertyId, key, value);
-	}
-
-	public static com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
 		long userId, long categoryPropertyId, java.lang.String key,
 		java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -100,6 +92,14 @@ public class AssetCategoryPropertyServiceUtil {
 		return getService()
 				   .updateCategoryProperty(userId, categoryPropertyId, key,
 			value);
+	}
+
+	public static com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateCategoryProperty(categoryPropertyId, key, value);
 	}
 
 	public static AssetCategoryPropertyService getService() {

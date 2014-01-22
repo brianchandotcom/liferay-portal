@@ -290,13 +290,13 @@ public interface AssetCategoryPropertyLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		long userId, long categoryPropertyId, java.lang.String key,
-		java.lang.String value)
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

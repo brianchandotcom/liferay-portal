@@ -125,11 +125,11 @@ public class AssetCategoryPropertyServiceSoap {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategoryPropertySoap updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
-		throws RemoteException {
+		long userId, long categoryPropertyId, java.lang.String key,
+		java.lang.String value) throws RemoteException {
 		try {
-			com.liferay.portlet.asset.model.AssetCategoryProperty returnValue = AssetCategoryPropertyServiceUtil.updateCategoryProperty(categoryPropertyId,
-					key, value);
+			com.liferay.portlet.asset.model.AssetCategoryProperty returnValue = AssetCategoryPropertyServiceUtil.updateCategoryProperty(userId,
+					categoryPropertyId, key, value);
 
 			return com.liferay.portlet.asset.model.AssetCategoryPropertySoap.toSoapModel(returnValue);
 		}
@@ -141,11 +141,11 @@ public class AssetCategoryPropertyServiceSoap {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategoryPropertySoap updateCategoryProperty(
-		long userId, long categoryPropertyId, java.lang.String key,
-		java.lang.String value) throws RemoteException {
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws RemoteException {
 		try {
-			com.liferay.portlet.asset.model.AssetCategoryProperty returnValue = AssetCategoryPropertyServiceUtil.updateCategoryProperty(userId,
-					categoryPropertyId, key, value);
+			com.liferay.portlet.asset.model.AssetCategoryProperty returnValue = AssetCategoryPropertyServiceUtil.updateCategoryProperty(categoryPropertyId,
+					key, value);
 
 			return com.liferay.portlet.asset.model.AssetCategoryPropertySoap.toSoapModel(returnValue);
 		}

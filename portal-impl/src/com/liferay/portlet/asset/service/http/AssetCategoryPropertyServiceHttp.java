@@ -190,7 +190,7 @@ public class AssetCategoryPropertyServiceHttp {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		HttpPrincipal httpPrincipal, long categoryPropertyId,
+		HttpPrincipal httpPrincipal, long userId, long categoryPropertyId,
 		java.lang.String key, java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -199,7 +199,7 @@ public class AssetCategoryPropertyServiceHttp {
 					"updateCategoryProperty",
 					_updateCategoryPropertyParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					categoryPropertyId, key, value);
 
 			Object returnObj = null;
@@ -229,7 +229,7 @@ public class AssetCategoryPropertyServiceHttp {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategoryProperty updateCategoryProperty(
-		HttpPrincipal httpPrincipal, long userId, long categoryPropertyId,
+		HttpPrincipal httpPrincipal, long categoryPropertyId,
 		java.lang.String key, java.lang.String value)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -238,7 +238,7 @@ public class AssetCategoryPropertyServiceHttp {
 					"updateCategoryProperty",
 					_updateCategoryPropertyParameterTypes5);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryPropertyId, key, value);
 
 			Object returnObj = null;
@@ -281,10 +281,10 @@ public class AssetCategoryPropertyServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateCategoryPropertyParameterTypes4 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
-		};
-	private static final Class<?>[] _updateCategoryPropertyParameterTypes5 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class
+		};
+	private static final Class<?>[] _updateCategoryPropertyParameterTypes5 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class
 		};
 }

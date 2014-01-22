@@ -589,18 +589,13 @@ public class AssetPublisherDisplayContext {
 
 	public Boolean isEnablePermissions() {
 		if (_enablePermissions == null) {
-			if (!PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
-				_enablePermissions = false;
-
-				return _enablePermissions;
-			}
-
 			String portletName = getPortletName();
 
-			if (portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) ||
-				portletName.equals(PortletKeys.MOST_VIEWED_ASSETS)) {
+			if (!portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) &&
+				!portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) &&
+				PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) {
 
-				_enablePermissions = false;
+				_enablePermissions = true;
 
 				return _enablePermissions;
 			}

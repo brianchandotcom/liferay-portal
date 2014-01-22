@@ -196,6 +196,58 @@ public class PortalCacheDatagramReceiveHandlerTest {
 
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@Test
+	public void testPutQuiet() throws Exception {
+		Serializer serializer = createSerializer(
+			PortalCacheActionType.PUT_QUIET);
+
+		serializer.writeObject(_TEST_KEY);
+		serializer.writeObject(_TEST_VALUE);
+
+		PortalCacheDatagramReceiveHandler portalCacheDatagramReceiveHandler =
+			new PortalCacheDatagramReceiveHandler();
+
+		portalCacheDatagramReceiveHandler.doReceive(
+			_mockRegistrationReference,
+			Datagram.createRequestDatagram(
+				_portalCacheType, serializer.toByteBuffer()));
+
+		MockPortalCache mockPortalCache =
+			(MockPortalCache)_mockPortalCacheManager.getCache(_TEST_NAME);
+
+		Assert.assertEquals(_TEST_KEY, mockPortalCache._key);
+		Assert.assertEquals(_TEST_VALUE, mockPortalCache._value);
+		Assert.assertTrue(mockPortalCache._quiet);
+	}
+
+	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
+	@Test
+	public void testPutQuietTTL() throws Exception {
+		Serializer serializer = createSerializer(
+			PortalCacheActionType.PUT_QUIET_TTL);
+
+		serializer.writeObject(_TEST_KEY);
+		serializer.writeObject(_TEST_VALUE);
+		serializer.writeInt(100);
+
+		PortalCacheDatagramReceiveHandler portalCacheDatagramReceiveHandler =
+			new PortalCacheDatagramReceiveHandler();
+
+		portalCacheDatagramReceiveHandler.doReceive(
+			_mockRegistrationReference,
+			Datagram.createRequestDatagram(
+				_portalCacheType, serializer.toByteBuffer()));
+
+		MockPortalCache mockPortalCache =
+			(MockPortalCache)_mockPortalCacheManager.getCache(_TEST_NAME);
+
+		Assert.assertEquals(_TEST_KEY, mockPortalCache._key);
+		Assert.assertEquals(_TEST_VALUE, mockPortalCache._value);
+		Assert.assertEquals(100, mockPortalCache._timeToLive);
+		Assert.assertTrue(mockPortalCache._quiet);
+	}
+
+	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
+	@Test
 	public void testPutTTL() throws Exception {
 		Serializer serializer = createSerializer(PortalCacheActionType.PUT_TTL);
 
@@ -428,6 +480,21 @@ public class PortalCacheDatagramReceiveHandlerTest {
 		}
 
 		@Override
+		public void putQuiet(String key, String value) {
+			_key = key;
+			_value = value;
+			_quiet = true;
+		}
+
+		@Override
+		public void putQuiet(String key, String value, int timeToLive) {
+			_key = key;
+			_value = value;
+			_timeToLive = timeToLive;
+			_quiet = true;
+		}
+
+		@Override
 		public void registerCacheListener(
 			CacheListener<String, String> cacheListener) {
 		}
@@ -459,6 +526,7 @@ public class PortalCacheDatagramReceiveHandlerTest {
 
 		private String _key;
 		private String _name;
+		private boolean _quiet;
 		private boolean _removeAll;
 		private int _timeToLive;
 		private String _value;

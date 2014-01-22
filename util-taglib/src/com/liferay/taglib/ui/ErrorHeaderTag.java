@@ -14,11 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
@@ -28,18 +24,6 @@ public class ErrorHeaderTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		String backURL = request.getHeader(HttpHeaders.REFERER);
-
-		if (Validator.isNull(backURL)) {
-			backURL = "javascript:history.go(-1)";
-		}
-
-		request.setAttribute(
-			"liferay-ui:discussion:backURL", String.valueOf(backURL));
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/error_header/page.jsp";

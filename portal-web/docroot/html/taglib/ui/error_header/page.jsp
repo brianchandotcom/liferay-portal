@@ -16,7 +16,11 @@
 
 <%@ include file="/html/taglib/ui/error_header/init.jsp" %>
 
+<%
+String referer = request.getHeader(HttpHeaders.REFERER);
+%>
+
 <liferay-ui:header
-	backURL='<%= ParamUtil.getString(request, "liferay-ui:discussion:backURL") %>'
+	backURL='<%= Validator.isNotNull(referer) ? referer : "javascript:history.go(-1)" %>'
 	title="error"
 />

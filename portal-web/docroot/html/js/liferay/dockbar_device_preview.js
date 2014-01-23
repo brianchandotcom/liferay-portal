@@ -132,6 +132,17 @@ AUI.add(
 							instance._devicePreviewContainer.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance)
 						);
 
+						var resizeHandle = A.getWin().on(
+							'resize',
+							function(event) {
+								if (Liferay.Util.isTablet()) {
+									instance._closePanel();
+
+									resizeHandle.detach();
+								}
+							}
+						);
+
 						var inputWidth = instance.get(STR_INPUT_WIDTH);
 
 						if (inputWidth) {

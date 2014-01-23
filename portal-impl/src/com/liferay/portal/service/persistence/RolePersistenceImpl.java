@@ -9525,9 +9525,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME);
-		}
 	}
 
 	/**
@@ -9797,9 +9794,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 		catch (Exception e) {
 			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(RoleModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
 		}
 	}
 

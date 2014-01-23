@@ -8491,9 +8491,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_ORGS_NAME);
-		}
 	}
 
 	/**
@@ -8763,9 +8760,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 		catch (Exception e) {
 			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_ROLES_NAME);
 		}
 	}
 
@@ -9051,9 +9045,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_GROUPS_USERGROUPS_NAME);
-		}
 	}
 
 	/**
@@ -9323,9 +9314,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 		catch (Exception e) {
 			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(GroupModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
 		}
 	}
 

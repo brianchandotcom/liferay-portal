@@ -3617,9 +3617,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(SCProductEntryModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
 	}
 
 	@Override

@@ -7721,9 +7721,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
-		}
 	}
 
 	/**
@@ -8012,9 +8009,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
-		}
 	}
 
 	/**
@@ -8285,9 +8279,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
-		}
 	}
 
 	/**
@@ -8557,9 +8548,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 		catch (Exception e) {
 			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
 		}
 	}
 
@@ -8843,9 +8831,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		}
 		catch (Exception e) {
 			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
 		}
 	}
 

@@ -2058,9 +2058,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(TeamModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
-		}
 	}
 
 	/**
@@ -2343,9 +2340,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		}
 		catch (Exception e) {
 			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(TeamModelImpl.MAPPING_TABLE_USERGROUPS_TEAMS_NAME);
 		}
 	}
 

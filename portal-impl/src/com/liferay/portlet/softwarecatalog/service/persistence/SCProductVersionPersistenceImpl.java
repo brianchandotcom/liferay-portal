@@ -1764,9 +1764,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(SCProductVersionModelImpl.MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_NAME);
-		}
 	}
 
 	/**

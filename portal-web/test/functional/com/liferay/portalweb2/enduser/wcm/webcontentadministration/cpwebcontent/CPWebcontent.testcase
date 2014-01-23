@@ -149,7 +149,6 @@
 		<var name="templateFile" value="xsl_template.xsl" />
 		<var name="templateLanguage" value="xsl" />
 		<var name="templateName" value="WC Template Name" />
-		<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -166,9 +165,10 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
+
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateFile" value="${templateFile}" />
 			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="templateScript" value="${templateScript}" />

@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>PGMediagalleryImageViewer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMediagalleryImageViewer</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGMediagalleryImageViewer</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEDIA_CAPTION</td>
+	<td>//h4[@class='image-viewer-caption' and contains(.,'{dmDocumentTitle} - {dmDocumentDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEDIA_COUNT</td>
+	<td>//h5[@class='image-viewer-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEDIA_ICON</td>
+	<td>//img[@class='image-viewer-image']</td>
+	<td></td>
+</tr>
+<!--ACTIONS-->
+<tr>
+	<td>ACTIONS_DOWNLOAD</td>
+	<td>//span[contains(.,'Download')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_VIEW</td>
+	<td>//span[contains(.,'View')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_EDIT</td>
+	<td>//span[contains(.,'Edit')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_PERMISSIONS</td>
+	<td>//span[contains(.,'Permissions')]/a/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_RECYCLE_BIN</td>
+	<td>//span[contains(.,'Move to the Recycle Bin')]/a/img</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

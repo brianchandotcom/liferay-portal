@@ -44,6 +44,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${mgFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_DESCRIPTION</td>
+	<td>//div[@class='lfr-asset-description' and contains(.,'${mgFolderDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBFOLDER_NAME</td>
+	<td>//span[@class='image-title' and contains(.,'${mgSubfolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE_1</td>
 	<td>//div[@class='lfr-asset-name']/h4</td>
 	<td></td>
@@ -72,47 +87,47 @@
 <!--FOLDER_MENU-->
 <tr>
 	<td>FOLDER_MENU_EDIT</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Edit')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Edit')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_MOVE</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Move')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Move')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_PERMISSIONS</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Permissions')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Move to the Recycle Bin')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_SUBFOLDER</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Add Subfolder')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Add Subfolder')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_MULTIPLE_MEDIA</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Multiple Media')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Multiple Media')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_MEDIA</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Add Media')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Add Media')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ADD_SHORTCUT</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Add Shortcut')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Add Shortcut')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDER_MENU_ACCESS_FROM_DESKTOP</td>
-	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li/a[contains(.,'Access from Desktop')]</td>
+	<td>//ul[contains(@class,'lfr-menu-expanded') and contains(@class,'lfr-menu-list')]/li[contains(.,'Access from Desktop')]/a/span</td>
 	<td></td>
 </tr>
 </tbody>

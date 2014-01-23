@@ -39,6 +39,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.sikuli.script.Key;
+import org.sikuli.script.Match;
+import org.sikuli.script.Screen;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -354,6 +358,27 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void clickImageElement(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		Screen screen = new Screen();
+
+		Match match = screen.exists(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
+
+		liferaySelenium.pause("1000");
+
+		if (match == null) {
+			return;
+		}
+
+		screen.click(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
+	}
+
 	public static void connectToEmailAccount(
 			String emailAddress, String emailPassword)
 		throws Exception {
@@ -646,6 +671,31 @@ public class LiferaySeleniumHelper {
 			"document.body.innerHTML = \"" + value + "\"");
 
 		liferaySelenium.selectFrame("relative=parent");
+	}
+
+	public static void typeImageElement(
+			LiferaySelenium liferaySelenium, String image, String value)
+		throws Exception {
+
+		Screen screen = new Screen();
+
+		Match match = screen.exists(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
+
+		liferaySelenium.pause("1000");
+
+		if (match == null) {
+			return;
+		}
+
+		screen.click(
+			liferaySelenium.getProjectDir() +
+			liferaySelenium.getSikuliImagesDir() + image);
+
+		screen.type(liferaySelenium.getOutputDir() + value);
+
+		screen.type(Key.ENTER);
 	}
 
 	public static void waitForElementNotPresent(

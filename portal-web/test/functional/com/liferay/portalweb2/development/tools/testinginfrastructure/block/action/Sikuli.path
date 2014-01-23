@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Sikuli</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Sikuli</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Sikuli</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_DIALOG</td>
+	<td>file_dialog.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN</td>
+	<td>open.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TESTLAR_FILE</td>
+	<td>test_lar.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_FILE_NAME</td>
+	<td>type_file_name.png</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

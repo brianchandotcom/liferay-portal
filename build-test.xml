@@ -289,6 +289,10 @@
 		<delete file="portal-web/test-ant-scripts/log" />
 	</target>
 
+	<target name="clean-up-sikuli-libs">
+		<delete dir="lib/development/libs" />
+	</target>
+
 	<target name="copy-log-file">
 		<for param="log.file">
 			<path>
@@ -513,6 +517,7 @@
 				<replace file="${changelog.dir}/git-build-log.html">
 					<replacetoken><![CDATA[<!-- NEXT -->]]></replacetoken>
 					<replacevalue expandproperties="true"><![CDATA[<!-- NEXT -->
+
 		<div id="updateWrapper">
 			<div class="divider"></div>
 			<div id="update">
@@ -1319,6 +1324,15 @@ tck.url=true</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					tear.down.before.test=true
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.assert.liferay.errors=false
 				</echo>
 			</then>
 		</if>
@@ -2381,6 +2395,8 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</exec>
 			</sequential>
 		</parallel>
+
+		<antcall target="clean-up-sikuli-libs" />
 
 		<if>
 			<equals arg1="${test.browser}" arg2="googlechrome" />

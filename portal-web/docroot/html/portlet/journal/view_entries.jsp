@@ -334,7 +334,7 @@ for (int i = 0; i < results.size(); i++) {
 										</dt>
 
 										<dd>
-											<%= group.getDescriptiveName(locale) %>
+											<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 										</dd>
 									</c:if>
 								</dl>

@@ -54,7 +54,7 @@ catch (Exception e) {
 					</c:otherwise>
 				</c:choose>
 
-			<span class="error-message"><%= jsonObject.getString("message") %></span>
+			<span class="error-message"><%= HtmlUtil.escape(jsonObject.getString("message")) %></span>
 
 			<%
 			JSONArray messageListItemsJSONArray = jsonObject.getJSONArray("messageListItems");
@@ -73,10 +73,10 @@ catch (Exception e) {
 						<li>
 							<%= messageListItemJSONArray.getString("type") %>:
 
-							<strong><%= messageListItemJSONArray.getString("name") %></strong>
+							<strong><%= HtmlUtil.escape(messageListItemJSONArray.getString("name")) %></strong>
 
 							<c:if test="<%= Validator.isNotNull(info) %>">
-								<span class="error-info">(<%= messageListItemJSONArray.getString("info") %>)</span>
+								<span class="error-info">(<%= HtmlUtil.escape(messageListItemJSONArray.getString("info")) %>)</span>
 							</c:if>
 						</li>
 
@@ -111,7 +111,7 @@ catch (Exception e) {
 							<strong><%= warningMessageJSONArray.getString("size") %></strong>
 
 							<c:if test="<%= Validator.isNotNull(info) %>">
-								<span class="error-info">(<%= warningMessageJSONArray.getString("info") %>)</span>
+								<span class="error-info">(<%= HtmlUtil.escape(warningMessageJSONArray.getString("info")) %>)</span>
 							</c:if>
 						</li>
 

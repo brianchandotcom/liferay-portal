@@ -97,7 +97,7 @@ portletURL.setParameter("eventName", eventName);
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("roleid", role.getRoleId());
-					data.put("roletitle", HtmlUtil.escapeAttribute(role.getTitle(locale)));
+					data.put("roletitle", role.getTitle(locale));
 					data.put("searchcontainername", "roles");
 					%>
 

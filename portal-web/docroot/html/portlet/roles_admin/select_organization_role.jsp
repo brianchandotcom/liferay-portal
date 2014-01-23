@@ -265,10 +265,10 @@ if (step == 1) {
 							<%
 							Map<String, Object> data = new HashMap<String, Object>();
 
-							data.put("groupdescriptivename", HtmlUtil.escapeAttribute(organization.getGroup().getDescriptiveName(locale)));
+							data.put("groupdescriptivename", organization.getGroup().getDescriptiveName(locale));
 							data.put("groupid", organization.getGroupId());
 							data.put("roleid", role.getRoleId());
-							data.put("roletitle", HtmlUtil.escapeAttribute(role.getTitle(locale)));
+							data.put("roletitle", role.getTitle(locale));
 							data.put("searchcontainername", "organizationRoles");
 							%>
 

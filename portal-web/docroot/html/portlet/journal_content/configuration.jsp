@@ -111,7 +111,7 @@ catch (NoSuchArticleException nsae) {
 						</liferay-portlet:renderURL>
 
 						<liferay-util:buffer var="linkContent">
-							<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= tableIteratorObj.getName() %></aui:a>
+							<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= HtmlUtil.escape(tableIteratorObj.getName(locale)) %></aui:a>
 						</liferay-util:buffer>
 
 						<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "ddmTemplateKey.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
@@ -119,7 +119,7 @@ catch (NoSuchArticleException nsae) {
 						<c:if test="<%= tableIteratorObj.isSmallImage() %>">
 							<br />
 
-							<img border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? tableIteratorObj.getSmallImageURL() : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
+							<img border="0" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? HtmlUtil.escapeHREF(tableIteratorObj.getSmallImageURL()) : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
 						</c:if>
 					</liferay-ui:table-iterator>
 
@@ -189,7 +189,7 @@ catch (NoSuchArticleException nsae) {
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectArticle('");
-		sb.append(HtmlUtil.escapeJS(String.valueOf(curArticle.getGroupId())));
+		sb.append(String.valueOf(curArticle.getGroupId()));
 		sb.append("','");
 		sb.append(HtmlUtil.escapeJS(curArticle.getArticleId()));
 		sb.append("','");

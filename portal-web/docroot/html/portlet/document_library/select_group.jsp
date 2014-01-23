@@ -137,7 +137,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("groupdescriptivename", HtmlUtil.escape(groupDescriptiveName));
+				data.put("groupdescriptivename", groupDescriptiveName);
 				data.put("groupid", group.getGroupId());
 				%>
 

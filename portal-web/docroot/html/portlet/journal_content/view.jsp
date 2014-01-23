@@ -343,7 +343,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				</liferay-portlet:renderURL>
 
 				<%
-				String taglibEditTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escapeJS(ddmTemplate.getName(locale)) + "', uri:'" + HtmlUtil.escapeURL(editTemplateURL.toString()) + "'});";
+				String taglibEditTemplateURL = "javascript:Liferay.Util.openWindow({id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + HtmlUtil.escape(ddmTemplate.getName(locale)) + "', uri:'" + HtmlUtil.escapeURL(editTemplateURL.toString()) + "'});";
 				%>
 
 				<liferay-ui:icon

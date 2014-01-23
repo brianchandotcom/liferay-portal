@@ -1769,7 +1769,8 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		}
 
 		EntityCacheUtil.putResult(RatingsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			RatingsEntryImpl.class, ratingsEntry.getPrimaryKey(), ratingsEntry);
+			RatingsEntryImpl.class, ratingsEntry.getPrimaryKey(), ratingsEntry,
+			false);
 
 		clearUniqueFindersCache(ratingsEntry);
 		cacheUniqueFindersCache(ratingsEntry);

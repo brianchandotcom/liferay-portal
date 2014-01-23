@@ -2527,7 +2527,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 		EntityCacheUtil.putResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleImageImpl.class, journalArticleImage.getPrimaryKey(),
-			journalArticleImage);
+			journalArticleImage, false);
 
 		clearUniqueFindersCache(journalArticleImage);
 		cacheUniqueFindersCache(journalArticleImage);

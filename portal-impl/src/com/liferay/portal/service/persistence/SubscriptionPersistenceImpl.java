@@ -2705,7 +2705,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		}
 
 		EntityCacheUtil.putResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
-			SubscriptionImpl.class, subscription.getPrimaryKey(), subscription);
+			SubscriptionImpl.class, subscription.getPrimaryKey(), subscription,
+			false);
 
 		clearUniqueFindersCache(subscription);
 		cacheUniqueFindersCache(subscription);

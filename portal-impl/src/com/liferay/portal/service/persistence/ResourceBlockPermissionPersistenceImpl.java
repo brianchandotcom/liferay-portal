@@ -1656,7 +1656,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		EntityCacheUtil.putResult(ResourceBlockPermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockPermissionImpl.class,
-			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission);
+			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission,
+			false);
 
 		clearUniqueFindersCache(resourceBlockPermission);
 		cacheUniqueFindersCache(resourceBlockPermission);

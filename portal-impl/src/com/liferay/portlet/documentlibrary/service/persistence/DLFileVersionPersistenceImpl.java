@@ -6067,7 +6067,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		EntityCacheUtil.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileVersionImpl.class, dlFileVersion.getPrimaryKey(),
-			dlFileVersion);
+			dlFileVersion, false);
 
 		clearUniqueFindersCache(dlFileVersion);
 		cacheUniqueFindersCache(dlFileVersion);

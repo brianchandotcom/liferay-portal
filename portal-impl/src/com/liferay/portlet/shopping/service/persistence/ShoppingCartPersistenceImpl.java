@@ -1608,7 +1608,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		}
 
 		EntityCacheUtil.putResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingCartImpl.class, shoppingCart.getPrimaryKey(), shoppingCart);
+			ShoppingCartImpl.class, shoppingCart.getPrimaryKey(), shoppingCart,
+			false);
 
 		clearUniqueFindersCache(shoppingCart);
 		cacheUniqueFindersCache(shoppingCart);

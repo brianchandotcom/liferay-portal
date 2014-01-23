@@ -869,7 +869,7 @@ public class ShardPersistenceImpl extends BasePersistenceImpl<Shard>
 		}
 
 		EntityCacheUtil.putResult(ShardModelImpl.ENTITY_CACHE_ENABLED,
-			ShardImpl.class, shard.getPrimaryKey(), shard);
+			ShardImpl.class, shard.getPrimaryKey(), shard, false);
 
 		clearUniqueFindersCache(shard);
 		cacheUniqueFindersCache(shard);

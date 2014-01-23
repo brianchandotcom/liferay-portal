@@ -595,7 +595,8 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		}
 
 		EntityCacheUtil.putResult(RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
-			RatingsStatsImpl.class, ratingsStats.getPrimaryKey(), ratingsStats);
+			RatingsStatsImpl.class, ratingsStats.getPrimaryKey(), ratingsStats,
+			false);
 
 		clearUniqueFindersCache(ratingsStats);
 		cacheUniqueFindersCache(ratingsStats);

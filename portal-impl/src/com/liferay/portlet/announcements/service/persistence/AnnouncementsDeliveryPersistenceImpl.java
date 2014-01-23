@@ -1155,7 +1155,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 
 		EntityCacheUtil.putResult(AnnouncementsDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsDeliveryImpl.class,
-			announcementsDelivery.getPrimaryKey(), announcementsDelivery);
+			announcementsDelivery.getPrimaryKey(), announcementsDelivery, false);
 
 		clearUniqueFindersCache(announcementsDelivery);
 		cacheUniqueFindersCache(announcementsDelivery);

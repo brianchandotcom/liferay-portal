@@ -2848,7 +2848,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 		EntityCacheUtil.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey(),
-			shoppingOrder);
+			shoppingOrder, false);
 
 		clearUniqueFindersCache(shoppingOrder);
 		cacheUniqueFindersCache(shoppingOrder);

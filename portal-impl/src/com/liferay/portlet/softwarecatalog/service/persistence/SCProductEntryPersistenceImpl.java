@@ -3015,7 +3015,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		EntityCacheUtil.putResult(SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SCProductEntryImpl.class, scProductEntry.getPrimaryKey(),
-			scProductEntry);
+			scProductEntry, false);
 
 		clearUniqueFindersCache(scProductEntry);
 		cacheUniqueFindersCache(scProductEntry);

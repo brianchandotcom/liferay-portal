@@ -4974,7 +4974,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 		EntityCacheUtil.putResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchImpl.class,
-			journalContentSearch.getPrimaryKey(), journalContentSearch);
+			journalContentSearch.getPrimaryKey(), journalContentSearch, false);
 
 		clearUniqueFindersCache(journalContentSearch);
 		cacheUniqueFindersCache(journalContentSearch);

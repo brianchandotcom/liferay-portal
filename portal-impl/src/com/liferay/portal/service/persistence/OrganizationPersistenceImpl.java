@@ -6912,7 +6912,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 
 		EntityCacheUtil.putResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			OrganizationImpl.class, organization.getPrimaryKey(), organization);
+			OrganizationImpl.class, organization.getPrimaryKey(), organization,
+			false);
 
 		clearUniqueFindersCache(organization);
 		cacheUniqueFindersCache(organization);

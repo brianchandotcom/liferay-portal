@@ -1258,7 +1258,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 		EntityCacheUtil.putResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationDeliveryImpl.class,
-			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery);
+			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery,
+			false);
 
 		clearUniqueFindersCache(userNotificationDelivery);
 		cacheUniqueFindersCache(userNotificationDelivery);

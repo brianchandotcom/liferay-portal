@@ -3102,7 +3102,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 		EntityCacheUtil.putResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationEventImpl.class,
-			userNotificationEvent.getPrimaryKey(), userNotificationEvent);
+			userNotificationEvent.getPrimaryKey(), userNotificationEvent, false);
 
 		userNotificationEvent.resetOriginalValues();
 

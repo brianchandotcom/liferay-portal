@@ -8604,7 +8604,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		EntityCacheUtil.putResult(LayoutModelImpl.ENTITY_CACHE_ENABLED,
-			LayoutImpl.class, layout.getPrimaryKey(), layout);
+			LayoutImpl.class, layout.getPrimaryKey(), layout, false);
 
 		clearUniqueFindersCache(layout);
 		cacheUniqueFindersCache(layout);

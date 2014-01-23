@@ -11039,7 +11039,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		}
 
 		EntityCacheUtil.putResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
-			DLFileEntryImpl.class, dlFileEntry.getPrimaryKey(), dlFileEntry);
+			DLFileEntryImpl.class, dlFileEntry.getPrimaryKey(), dlFileEntry,
+			false);
 
 		clearUniqueFindersCache(dlFileEntry);
 		cacheUniqueFindersCache(dlFileEntry);

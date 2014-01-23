@@ -4225,7 +4225,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		}
 
 		EntityCacheUtil.putResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-			PhoneImpl.class, phone.getPrimaryKey(), phone);
+			PhoneImpl.class, phone.getPrimaryKey(), phone, false);
 
 		phone.resetOriginalValues();
 

@@ -1160,7 +1160,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 
 		EntityCacheUtil.putResult(SCProductVersionModelImpl.ENTITY_CACHE_ENABLED,
 			SCProductVersionImpl.class, scProductVersion.getPrimaryKey(),
-			scProductVersion);
+			scProductVersion, false);
 
 		clearUniqueFindersCache(scProductVersion);
 		cacheUniqueFindersCache(scProductVersion);

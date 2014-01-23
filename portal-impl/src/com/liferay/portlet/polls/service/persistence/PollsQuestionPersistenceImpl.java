@@ -2668,7 +2668,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		EntityCacheUtil.putResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
 			PollsQuestionImpl.class, pollsQuestion.getPrimaryKey(),
-			pollsQuestion);
+			pollsQuestion, false);
 
 		clearUniqueFindersCache(pollsQuestion);
 		cacheUniqueFindersCache(pollsQuestion);

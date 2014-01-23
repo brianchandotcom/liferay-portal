@@ -4837,7 +4837,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 		EntityCacheUtil.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortletPreferencesImpl.class, portletPreferences.getPrimaryKey(),
-			portletPreferences);
+			portletPreferences, false);
 
 		clearUniqueFindersCache(portletPreferences);
 		cacheUniqueFindersCache(portletPreferences);

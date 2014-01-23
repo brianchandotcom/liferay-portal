@@ -2026,7 +2026,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 		EntityCacheUtil.putResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
 			ExpandoColumnImpl.class, expandoColumn.getPrimaryKey(),
-			expandoColumn);
+			expandoColumn, false);
 
 		clearUniqueFindersCache(expandoColumn);
 		cacheUniqueFindersCache(expandoColumn);

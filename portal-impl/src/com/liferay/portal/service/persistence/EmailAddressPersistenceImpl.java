@@ -4255,7 +4255,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		}
 
 		EntityCacheUtil.putResult(EmailAddressModelImpl.ENTITY_CACHE_ENABLED,
-			EmailAddressImpl.class, emailAddress.getPrimaryKey(), emailAddress);
+			EmailAddressImpl.class, emailAddress.getPrimaryKey(), emailAddress,
+			false);
 
 		emailAddress.resetOriginalValues();
 

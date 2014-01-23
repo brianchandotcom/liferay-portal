@@ -4461,7 +4461,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 		EntityCacheUtil.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourcePermissionImpl.class, resourcePermission.getPrimaryKey(),
-			resourcePermission);
+			resourcePermission, false);
 
 		clearUniqueFindersCache(resourcePermission);
 		cacheUniqueFindersCache(resourcePermission);

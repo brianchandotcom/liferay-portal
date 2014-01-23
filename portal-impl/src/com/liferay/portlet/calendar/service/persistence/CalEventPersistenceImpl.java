@@ -7900,7 +7900,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		}
 
 		EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
-			CalEventImpl.class, calEvent.getPrimaryKey(), calEvent);
+			CalEventImpl.class, calEvent.getPrimaryKey(), calEvent, false);
 
 		clearUniqueFindersCache(calEvent);
 		cacheUniqueFindersCache(calEvent);

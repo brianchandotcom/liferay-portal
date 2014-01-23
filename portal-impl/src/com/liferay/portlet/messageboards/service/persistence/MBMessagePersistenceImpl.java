@@ -19422,7 +19422,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		}
 
 		EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
-			MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage);
+			MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage, false);
 
 		clearUniqueFindersCache(mbMessage);
 		cacheUniqueFindersCache(mbMessage);

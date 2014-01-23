@@ -11837,7 +11837,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		}
 
 		EntityCacheUtil.putResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-			DDMTemplateImpl.class, ddmTemplate.getPrimaryKey(), ddmTemplate);
+			DDMTemplateImpl.class, ddmTemplate.getPrimaryKey(), ddmTemplate,
+			false);
 
 		clearUniqueFindersCache(ddmTemplate);
 		cacheUniqueFindersCache(ddmTemplate);

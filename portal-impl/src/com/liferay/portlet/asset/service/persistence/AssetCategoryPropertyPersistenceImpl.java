@@ -2279,7 +2279,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 
 		EntityCacheUtil.putResult(AssetCategoryPropertyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryPropertyImpl.class,
-			assetCategoryProperty.getPrimaryKey(), assetCategoryProperty);
+			assetCategoryProperty.getPrimaryKey(), assetCategoryProperty, false);
 
 		clearUniqueFindersCache(assetCategoryProperty);
 		cacheUniqueFindersCache(assetCategoryProperty);

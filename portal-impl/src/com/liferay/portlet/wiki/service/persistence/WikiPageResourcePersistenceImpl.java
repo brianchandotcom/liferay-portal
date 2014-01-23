@@ -1200,7 +1200,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
-			wikiPageResource);
+			wikiPageResource, false);
 
 		clearUniqueFindersCache(wikiPageResource);
 		cacheUniqueFindersCache(wikiPageResource);

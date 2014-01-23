@@ -4128,7 +4128,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		EntityCacheUtil.putResult(LayoutPrototypeModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey(),
-			layoutPrototype);
+			layoutPrototype, false);
 
 		layoutPrototype.resetOriginalValues();
 

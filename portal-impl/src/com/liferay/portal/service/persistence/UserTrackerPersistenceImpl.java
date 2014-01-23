@@ -1878,7 +1878,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		}
 
 		EntityCacheUtil.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-			UserTrackerImpl.class, userTracker.getPrimaryKey(), userTracker);
+			UserTrackerImpl.class, userTracker.getPrimaryKey(), userTracker,
+			false);
 
 		userTracker.resetOriginalValues();
 

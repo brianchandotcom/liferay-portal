@@ -2301,7 +2301,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		}
 
 		EntityCacheUtil.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
-			MDRActionImpl.class, mdrAction.getPrimaryKey(), mdrAction);
+			MDRActionImpl.class, mdrAction.getPrimaryKey(), mdrAction, false);
 
 		clearUniqueFindersCache(mdrAction);
 		cacheUniqueFindersCache(mdrAction);

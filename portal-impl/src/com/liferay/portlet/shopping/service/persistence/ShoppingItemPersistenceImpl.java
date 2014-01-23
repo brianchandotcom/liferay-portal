@@ -2319,7 +2319,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		}
 
 		EntityCacheUtil.putResult(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
-			ShoppingItemImpl.class, shoppingItem.getPrimaryKey(), shoppingItem);
+			ShoppingItemImpl.class, shoppingItem.getPrimaryKey(), shoppingItem,
+			false);
 
 		clearUniqueFindersCache(shoppingItem);
 		cacheUniqueFindersCache(shoppingItem);

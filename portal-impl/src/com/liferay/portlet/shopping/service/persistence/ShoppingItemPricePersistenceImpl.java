@@ -822,7 +822,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 
 		EntityCacheUtil.putResult(ShoppingItemPriceModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingItemPriceImpl.class, shoppingItemPrice.getPrimaryKey(),
-			shoppingItemPrice);
+			shoppingItemPrice, false);
 
 		shoppingItemPrice.resetOriginalValues();
 

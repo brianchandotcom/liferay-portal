@@ -192,45 +192,6 @@ public class BlogsUtil {
 			preferences, companyId, PropsValues.BLOGS_EMAIL_FROM_NAME);
 	}
 
-	public static List<Object> getEntries(Hits hits) {
-		List<Object> entries = new ArrayList<Object>();
-
-		for (Document document : hits.getDocs()) {
-			String entryClassName = GetterUtil.getString(
-				document.get(Field.ENTRY_CLASS_NAME));
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			try {
-				Object obj = null;
-
-				if (entryClassName.equals(BlogsEntry.class.getName())) {
-					obj = BlogsEntryLocalServiceUtil.getEntry(entryClassPK);
-				}
-				else if (entryClassName.equals(MBMessage.class.getName())) {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.CLASS_PK));
-
-					BlogsEntryLocalServiceUtil.getEntry(classPK);
-
-					obj = MBMessageLocalServiceUtil.getMessage(entryClassPK);
-				}
-
-				entries.add(obj);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Blogs search index is stale and contains entry " +
-							"{className=" + entryClassName + ", classPK=" +
-								entryClassPK + "}");
-				}
-			}
-		}
-
-		return entries;
-	}
-
 	public static String getUrlTitle(long entryId, String title) {
 		if (title == null) {
 			return String.valueOf(entryId);

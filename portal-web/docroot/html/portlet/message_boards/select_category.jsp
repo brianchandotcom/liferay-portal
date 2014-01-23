@@ -23,6 +23,8 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectCategory");
 
+long excludedCategoryId = ParamUtil.getLong(request, "excludedCategoryId");
+
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
 
 String categoryName = null;
@@ -54,10 +56,10 @@ else {
 	<liferay-ui:search-container
 		headerNames="category[message-board],num-of-categories,num-of-threads,num-of-posts,"
 		iteratorURL="<%= portletURL %>"
-		total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
+		total="<%= MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, excludedCategoryId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= MBCategoryServiceUtil.getCategories(scopeGroupId, excludedCategoryId, categoryId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

@@ -3241,7 +3241,7 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-},{"__browserify_process":22,"path":23}],17:[function(require,module,exports){
+},{"__browserify_process":23,"path":24}],17:[function(require,module,exports){
 var urlRegexp = /url\s*\(.*(?:right|left)/,
 
 	leftRe = /left/g,
@@ -3305,6 +3305,99 @@ var swapIcons = {
 
 module.exports.plug = plug;
 },{}],19:[function(require,module,exports){
+var resizeHandleRegexp = /.yui3-resize-handle/,
+	resizeHandleInnerRegexp = /.yui3-resize-handle-inner-(tr|tl|br|bl)/,
+	cursorRegexp = /(.*)-resize/,
+
+	swapCursor = {
+		'e-resize' : 'w-resize',
+		'w-resize' : 'e-resize',
+		'ne-resize': 'nw-resize',
+		'nw-resize': 'ne-resize',
+		'se-resize': 'sw-resize',
+		'sw-resize': 'se-resize'
+	},
+
+	swapHandleInnerBg = {
+		'tr': '-47px 0',
+		'br': '-75px 0',
+		'tl': '-58px 0',
+		'bl': '-30px 0'
+	},
+
+	plug = function(r2) {
+		var originalBgPosFn = r2.valueMap['background-position'];
+
+		var yui3ResizeCursor = function(v, ctx) {
+			var swap = false;
+
+			var selectors = ctx.rule.selectors;
+
+			ctx.rule.selectors.forEach(
+				function(selector) {
+					if (resizeHandleRegexp.test(selector) && cursorRegexp.test(v)) {
+						swap = true;
+					}
+				}
+			);
+
+			if (swap) {
+				v = swapCursor[v] || v;
+			}
+
+			return v;
+		};
+
+		var yui3ResizeBgPosition = function(v, ctx) {
+			var swap = '';
+
+			ctx.rule.selectors.some(
+				function(selector) {
+					if (resizeHandleInnerRegexp.test(selector)) {
+						swap = selector;
+						return true;
+					}
+				}
+			);
+
+			if (swap) {
+				var handle = resizeHandleInnerRegexp.exec(swap)[1];
+				v = swapHandleInnerBg[handle] || v;
+			}
+			else {
+				v = originalBgPosFn(v, ctx);
+			}
+
+			return v;
+		};
+
+		var yui3ResizeOffset = function(v, ctx) {
+			var swap = '';
+
+			ctx.rule.selectors.some(
+				function(selector) {
+					if (resizeHandleInnerRegexp.test(selector)) {
+						swap = selector;
+						return true;
+					}
+				}
+			);
+
+			if (swap) {
+				v = '2px';
+			}
+
+			return v;
+		};
+
+		r2.valueMap['background-position'] = yui3ResizeBgPosition;
+		r2.valueMap['cursor'] = yui3ResizeCursor;
+		r2.valueMap['left'] = yui3ResizeOffset;
+		r2.valueMap['right'] = yui3ResizeOffset;
+	};
+
+module.exports.plug = plug;
+},{}],20:[function(require,module,exports){
 var process=require("__browserify_process");/*!
   * R2 - a CSS LTR ∞ RTL converter
   * Copyright Dustin Diaz 2012
@@ -3316,7 +3409,8 @@ var fs = require('fs')
   , parser = require('css-parse')
   , builder = require('css-stringify')
   , fa = require('./plugins/fontawesome')
-  , bg = require('./plugins/bgimage');
+  , bg = require('./plugins/bgimage')
+  , yui3 = require('./plugins/yui3');
 
 function quad(v, m) {
   // 1px 2px 3px 4px => 1px 4px 3px 2px
@@ -3429,12 +3523,14 @@ function processRule(rule, idx, list) {
     return;
 
   if (rule.declarations)
-    rule.declarations.forEach(processDeclaration)
+    rule.declarations.forEach(function(declaration) {
+      processDeclaration(declaration, rule);
+    });
   else if (rule.rules)
     rule.rules.forEach(processRule)
 }
 
-function processDeclaration(declaration) {
+function processDeclaration(declaration, rule) {
   // Ignore comments in declarations
   if (declaration.type !== 'declaration')
     return
@@ -3454,7 +3550,7 @@ function processDeclaration(declaration) {
     asterisk = ''
   }
   prop = propertyMap[prop] || prop
-  val = valueMap[prop] ? valueMap[prop](val) : val
+  val = valueMap[prop] ? valueMap[prop](val, {rule: rule, decl: declaration}) : val
 
   if (!val.match(important) && isImportant) val += '!important'
 
@@ -3524,12 +3620,15 @@ module.exports.valueMap = valueMap;
 
 fa.plug(module.exports);
 bg.plug(module.exports);
+yui3.plug(module.exports);
 
-},{"./plugins/bgimage":17,"./plugins/fontawesome":18,"__browserify_process":22,"css-parse":1,"css-stringify":2,"fs":21}],20:[function(require,module,exports){
+},{"./plugins/bgimage":17,"./plugins/fontawesome":18,"./plugins/yui3":19,"__browserify_process":23,"css-parse":1,"css-stringify":2,"fs":22}],21:[function(require,module,exports){
 function getGlobal() {
-	return (function() {
-		return this;
-	}).call(null);
+	return (
+		function() {
+			return this;
+		}
+	).call(null);
 }
 
 var console = {
@@ -3541,9 +3640,9 @@ var console = {
 var global = getGlobal();
 
 global.r2 = require('./r2.js').swap;
-},{"./r2.js":19}],21:[function(require,module,exports){
+},{"./r2.js":20}],22:[function(require,module,exports){
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -3598,7 +3697,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var process=require("__browserify_process");// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3824,4 +3923,4 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-},{"__browserify_process":22}]},{},[20])
+},{"__browserify_process":23}]},{},[21])

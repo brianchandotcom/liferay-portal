@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
@@ -320,7 +321,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(3);
 
-			sb.append("insert into ResourcePermission(resourcePermissionId, ");
+			sb.append("insert into ResourcePermission (resourcePermissionId, ");
 			sb.append("companyId, name, scope, primKey, roleId, ownerId, ");
 			sb.append("actionIds) values (?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -331,7 +332,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.setLong(1, resourcePermissionId);
 			ps.setLong(2, companyId);
 			ps.setString(3, className);
-			ps.setInt(4, 4);
+			ps.setInt(4, ResourceConstants.SCOPE_INDIVIDUAL);
 			ps.setLong(5, primKey);
 			ps.setLong(6, roleId);
 			ps.setLong(7, 0);

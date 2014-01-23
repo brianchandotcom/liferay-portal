@@ -109,11 +109,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			String fileEntryClassName = DLFileEntry.class.getName();
 
 			addDLPermission(
-				companyId, groupId, fileEntryClassName, fileEntryId,
+				companyId, fileEntryClassName, fileEntryId,
 				getRoleId(companyId, RoleConstants.GUEST), 3);
 
 			addDLPermission(
-				companyId, groupId, fileEntryClassName, fileEntryId,
+				companyId, fileEntryClassName, fileEntryId,
 				getRoleId(companyId, RoleConstants.SITE_MEMBER), 3);
 
 			return fileEntryId;
@@ -252,11 +252,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			String folderClassName = DLFolder.class.getName();
 
 			addDLPermission(
-				companyId, groupId, folderClassName, folderId,
+				companyId, folderClassName, folderId,
 				getRoleId(companyId, RoleConstants.GUEST), 1);
 
 			addDLPermission(
-				companyId, groupId, folderClassName, folderId,
+				companyId, folderClassName, folderId,
 				getRoleId(companyId, RoleConstants.SITE_MEMBER), 29);
 
 			return folderId;
@@ -274,8 +274,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 	}
 
 	protected void addDLPermission(
-			long companyId, long groupId, String className, long primKey,
-			long roleId, long actionIds)
+			long companyId, String className, long primKey, long roleId,
+			long actionIds)
 		throws Exception {
 
 		Connection con = null;

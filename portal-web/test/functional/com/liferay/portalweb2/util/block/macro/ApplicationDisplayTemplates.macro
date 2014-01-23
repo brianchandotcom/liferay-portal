@@ -19,6 +19,8 @@
 	</command>
 
 	<command name="addCP">
+		<var name="key_adtType" value="${adtType}" />
+
 		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
 		<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST" value1="${adtType} Template" />
@@ -46,6 +48,8 @@
 		</if>
 
 		<execute action="PGADTConfiguration#assertClick" locator-key1="MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for Liferay" />
+
+		<var name="key_adtType" value="${adtType}" />
 
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" locator-key1="ADT_IFRAME_TOP" value1="relative=top" />
 		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />

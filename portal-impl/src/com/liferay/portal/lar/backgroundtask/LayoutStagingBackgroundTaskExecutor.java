@@ -74,7 +74,7 @@ public class LayoutStagingBackgroundTaskExecutor
 					targetGroupId, taskContextMap, userId);
 
 			missingReferences = TransactionalCallableUtil.call(
-					_transactionAttribute, layoutStagingCallable);
+				_transactionAttribute, layoutStagingCallable);
 		}
 		catch (Throwable t) {
 			Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);

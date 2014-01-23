@@ -907,8 +907,7 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP, send = false)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false)
 	public JournalArticle deleteArticle(
 			JournalArticle article, String articleURL,
 			ServiceContext serviceContext)

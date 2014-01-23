@@ -1,5 +1,20 @@
 <head>
 	<script type='text/javascript'>
+		function errorLogSizeCheck() {
+			if (document.getElementById("errorLogSizeButton").checked) {
+				document.getElementById("errorLogSize").innerHTML = "Decrease Error Log Size";
+				actionCommandLog.style.height = "37%";
+				errorLog.style.height = "50%";
+				pageObjectXMLLog.style.height = "37%";
+			}
+			else {
+				document.getElementById("errorLogSize").innerHTML = "&nbsp;Increase Error Log Size";
+				actionCommandLog.style.height = "75%";
+				errorLog.style.height = "12%";
+				pageObjectXMLLog.style.height = "75%";
+			}
+		}
+
 		function pauseButtonCheck() {
 			if (document.getElementById("pauseButton").checked) {
 				document.getElementById("pause").innerHTML = "Paused...";

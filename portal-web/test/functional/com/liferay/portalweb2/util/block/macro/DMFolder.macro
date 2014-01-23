@@ -33,8 +33,8 @@
 		<execute action="PGMediagalleryAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="PGMediagalleryAddfolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="PGMediagallery#assertElementPresent" locator-key1="ENTRY_THUMBNAIL_1" />
-		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="FOLDER_THUMBNAIL" value1="${mgFolderName}" />
+		<execute action="PGMediagallery#assertTextEquals" locator-key1="FOLDER_NAME" value1="${mgFolderName}" />
 	</command>
 
 	<command name="addSubfolderPG">
@@ -46,6 +46,25 @@
 		<execute action="PGDocumentsandmediaAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addSubfolderPGViaMG">
+	    <if>
+            <condition action="PGMediagallery#isElementPresent" locator-key1="ENTRY_TITLE_1" />
+            <then>
+                <execute action="PGMediagallery#click" locator-key1="ENTRY_TITLE_1" />
+            </then>
+        </if>
+
+		<execute action="PGMediagallery#assertClick" locator-key1="FOLDER_MENU_ADD_SUBFOLDER" value1="Add Subfolder" />
+
+		<execute action="PGMediagalleryAddfolder#type" locator-key1="NAME_FIELD" value1="${mgSubfolderName}" />
+		<execute action="PGMediagalleryAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${mgSubfolderDescription}" />
+		<execute action="PGMediagalleryAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMediagalleryAddfolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ENTRY_THUMBNAIL_1" />
+		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgSubfolderName}" />
 	</command>
 
 	<command name="deletePG">
@@ -98,12 +117,12 @@
 	<command name="editPGViaMG">
 		<execute action="PGMediagalleryFolder#assertClick" locator-key1="FOLDER_MENU_EDIT" value1="Edit" />
 
-		<execute action="PGMediagalleryEditfolder#type" locator-key1="NAME_FIELD" value1="${mgFolderName} Edit" />
-		<execute action="PGMediagalleryEditfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${mgFolderDescription} Edit" />
+		<execute action="PGMediagalleryEditfolder#type" locator-key1="NAME_FIELD" value1="${mgFolderNameEdit}" />
+		<execute action="PGMediagalleryEditfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${mgFolderDescriptionEdit}" />
 		<execute action="PGMediagalleryEditfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName} Edit" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderNameEdit}" />
 	</command>
 
 	<command name="gotoPG">
@@ -113,8 +132,14 @@
 	</command>
 
 	<command name="gotoPGViaMG">
-		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
-		<execute action="PGMediagallery#assertClick" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
+		<execute action="PGMediagallery#assertTextEquals" locator-key1="FOLDER_NAME" value1="${mgFolderName}" />
+		<execute action="PGMediagallery#assertClick" locator-key1="FOLDER_NAME" value1="${mgFolderName}" />
+	</command>
+
+	<command name="gotoSubfolderPGViaMG">
+		<execute action="PGMediagallery#assertTextEquals" locator-key1="FOLDER_NAME" value1="${mgFolderName}" />
+		<execute action="PGMediagallery#assertClick" locator-key1="FOLDER_NAME" value1="${mgFolderName}" />
+		<execute action="PGMediagalleryFolder#assertClick" locator-key1="SUBFOLDER_NAME" value1="${mgSubfolderName}" />
 	</command>
 
 	<command name="moveToFolderCP">
@@ -280,5 +305,26 @@
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
 
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="BREADCRUMB_FOLDER" value1="${dmFolderName}" />
+	</command>
+
+	<command name="viewPGViaMG">
+	    <if>
+            <condition action="PGMediagallery#isElementPresent" locator-key1="FOLDER_NAME" />
+            <then>
+                <execute action="PGMediagallery#click" locator-key1="FOLDER_NAME" />
+            </then>
+        </if>
+
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_HEADER_TITLE" value1="${mgFolderName}" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_DESCRIPTION" value1="${mgFolderDescription}" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_EDIT" value1="Edit" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_MOVE" value1="Move" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_PERMISSIONS" value1="Permissions" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_ADD_SUBFOLDER" value1="Add Subfolder" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_MULTIPLE_MEDIA" value1="Multiple Media" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_ADD_MEDIA" value1="Add Media" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_ADD_SHORTCUT" value1="Add Shortcut" />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="FOLDER_MENU_ACCESS_FROM_DESKTOP" value1="Access from Desktop" />
 	</command>
 </definition>

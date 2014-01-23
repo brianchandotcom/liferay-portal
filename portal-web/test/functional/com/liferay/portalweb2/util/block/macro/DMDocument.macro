@@ -555,6 +555,21 @@
 		</if>
 	</command>
 
+	<command name="searchPGviaMG">
+		<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${mgDocumentTitle}"/>
+		<execute action="PGMediagallery#click" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ENTRY_THUMBNAIL_1" />
+		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgDocumentTitle}"/>
+
+		<execute macro="Page#gotoPG" />
+
+		<execute action="PGMediagallery#type" locator-key1="SEARCH_FIELD" value1="${mgEntryQuotes}"/>
+		<execute action="PGMediagallery#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="PGMediagallery#assertElementNotPresent" locator-key1="ENTRY_THUMBNAIL_1" />
+		<execute action="PGMediagallery#assertElementNotPresent" locator-key1="ENTRY_TITLE_1" value1="${mgEntryQuotes}"/>
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no media files in this folder." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />

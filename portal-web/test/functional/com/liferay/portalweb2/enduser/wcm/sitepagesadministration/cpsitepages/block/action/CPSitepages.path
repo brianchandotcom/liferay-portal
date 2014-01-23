@@ -162,6 +162,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_PAGE_ARROW_4</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')]/../../i[contains(@class,'tree-hitarea')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PAGE_LINK_4</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

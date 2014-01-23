@@ -119,7 +119,7 @@ if ((group != null) && group.isCompany()) {
 	miscellaneousSections = new String[0];
 }
 
-if ((group != null) && group.hasLocalOrRemoteStagingGroup()) {
+if ((group != null) && (group.hasStagingGroup() || ((group.getRemoteStagingGroupCount() > 0) && !PropsValues.STAGING_LIVE_SITE_STAGING_ENABLED))) {
 	advancedSections = ArrayUtil.remove(advancedSections, "staging");
 }
 

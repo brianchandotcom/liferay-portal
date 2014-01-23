@@ -23,7 +23,7 @@
 		<#if actionElement.attributeValue("locator${i}")??>
 			<#assign actionLocator = actionElement.attributeValue("locator${i}")>
 
-			RuntimeVariables.evaluateVariable("${actionLocator}", commandScopeVariables)
+			RuntimeVariables.evaluateVariable("${actionLocator}", ${variableContext})
 		<#else>
 			""
 		</#if>
@@ -33,7 +33,7 @@
 		<#if actionElement.attributeValue("locator-key${i}")??>
 			<#assign actionLocatorKey = actionElement.attributeValue("locator-key${i}")>
 
-			RuntimeVariables.evaluateVariable("${actionLocatorKey}", commandScopeVariables)
+			RuntimeVariables.evaluateVariable("${actionLocatorKey}", ${variableContext})
 		<#else>
 			""
 		</#if>
@@ -43,7 +43,7 @@
 		<#if actionElement.attributeValue("value${i}")??>
 			<#assign actionValue = actionElement.attributeValue("value${i}")>
 
-			RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(actionValue)}", commandScopeVariables)
+			RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(actionValue)}", ${variableContext})
 		<#else>
 			""
 		</#if>
@@ -59,5 +59,5 @@
 		;
 	</#if>
 <#elseif actionElement.getName() == "echo" || actionElement.getName() == "fail">
-	"${actionElement.getName()} message: \"" + RuntimeVariables.evaluateVariable("${message}", commandScopeVariables) + "\"", new String[] {"", "", ""});
+	"${actionElement.getName()} message: \"" + RuntimeVariables.evaluateVariable("${message}", ${variableContext}) + "\"", new String[] {"", "", ""});
 </#if>

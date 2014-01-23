@@ -1,5 +1,7 @@
 <#assign conditionalCaseNames = ["and", "condition", "contains", "equals", "isset", "not", "or"]>
 
+<#assign variableContext = variableContextStack.peek()>
+
 <#if ifConditionalElement.getName() == "and">
 		<#assign conditionalCases = ifConditionalElement.elements()>
 
@@ -33,19 +35,19 @@
 
 	<#assign substring = ifConditionalElement.attributeValue("substring")>
 
-	(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(string)}", commandScopeVariables)).contains(
-		RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(substring)}", commandScopeVariables))
+	(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(string)}", ${variableContext})).contains(
+		RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(substring)}", ${variableContext}))
 <#elseif ifConditionalElement.getName() == "equals">
 	<#assign arg1 = ifConditionalElement.attributeValue("arg1")>
 
 	<#assign arg2 = ifConditionalElement.attributeValue("arg2")>
 
-	(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(arg1)}", commandScopeVariables)).equals(
-		RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(arg2)}", commandScopeVariables))
+	(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(arg1)}", ${variableContext})).equals(
+		RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(arg2)}", ${variableContext}))
 <#elseif ifConditionalElement.getName() == "isset">
 	<#assign var = ifConditionalElement.attributeValue("var")>
 
-	RuntimeVariables.variableExists(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(var)}", commandScopeVariables), commandScopeVariables)
+	RuntimeVariables.variableExists(RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(var)}", ${variableContext}), ${variableContext})
 <#elseif ifConditionalElement.getName() == "not">
 	!(
 		<#if ifConditionalElement.element("and")??>

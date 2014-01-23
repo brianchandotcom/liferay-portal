@@ -1,5 +1,7 @@
 <#assign varName = varElement.attributeValue("name")>
 
+<#assign variableContext = variableContextStack.peek()>
+
 <#if varElement.attributeValue("value")??>
 	<#assign varValue = varElement.attributeValue("value")>
 <#elseif varElement.getText()??>
@@ -28,7 +30,7 @@
 	<#if varElement.attributeValue("attribute")??>
 		<#assign attributeName = varElement.attributeValue("attribute")>
 
-		${context}.put("${varName}", ${selenium}.getAttribute(RuntimeVariables.evaluateLocator("${locatorValue}", ${context}) + "@" + RuntimeVariables.evaluateVariable("${attributeName}", ${context})));
+		${variableContext}.put("${varName}", ${selenium}.getAttribute(RuntimeVariables.evaluateLocator("${locatorValue}", ${variableContext}) + "@" + RuntimeVariables.evaluateVariable("${attributeName}", ${variableContext})));
 	<#else>
 		<#if locatorValue?contains("/input")>
 			<#assign seleniumMethod = "getValue" />
@@ -36,8 +38,8 @@
 			<#assign seleniumMethod = "getText" />
 		</#if>
 
-		${context}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}(RuntimeVariables.evaluateVariable("${locatorValue}", ${context})), ${context}));
+		${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}(RuntimeVariables.evaluateVariable("${locatorValue}", ${variableContext})), ${variableContext}));
 	</#if>
 <#else>
-	${context}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${context}));
+	${variableContext}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${variableContext}));
 </#if>

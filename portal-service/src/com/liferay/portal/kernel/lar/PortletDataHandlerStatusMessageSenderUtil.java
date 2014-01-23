@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.StagedModel;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public class PortletDataHandlerStatusMessageSenderUtil {
 
 	public static PortletDataHandlerStatusMessageSender

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -26,6 +28,7 @@ import java.util.Set;
 /**
  * @author Zsolt Berentey
  */
+@ProviderType
 public class MissingReference implements Serializable {
 
 	public MissingReference(Element element) {

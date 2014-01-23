@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.StagedModel;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface PortletDataHandlerStatusMessageSender {
 
 	public void sendStatusMessage(

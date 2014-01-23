@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +28,7 @@ import java.io.Serializable;
  * @author Mate Thurzo
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportPathUtil {
 
 	public static final String PATH_PREFIX_COMPANY = "company";

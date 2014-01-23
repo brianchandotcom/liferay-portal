@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.RoleConstants;
@@ -39,6 +41,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -402,6 +405,65 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		}
 
 		return attachments;
+	}
+
+	protected long getBitwiseValue(
+		Map<String, Long> bitwiseValues, List<String> actionIds) {
+
+		long bitwiseValue = 0;
+
+		for (String actionId : actionIds) {
+			Long actionIdBitwiseValue = bitwiseValues.get(actionId);
+
+			if (actionIdBitwiseValue == null) {
+				continue;
+			}
+
+			bitwiseValue |= actionIdBitwiseValue;
+		}
+
+		return bitwiseValue;
+	}
+
+	protected Map<String, Long> getBitwiseValues(String name) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		String currentShardName = null;
+
+		try {
+			currentShardName = ShardUtil.setTargetSource(
+				PropsValues.SHARD_DEFAULT_NAME);
+
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select actionId, bitwiseValue from ResourceAction " +
+					"where name = ?");
+
+			ps.setString(1, name);
+
+			rs = ps.executeQuery();
+
+			Map<String, Long> bitwiseValues = new HashMap<String, Long>();
+
+			while (rs.next()) {
+				String actionId = rs.getString("actionId");
+				long bitwiseValue = rs.getLong("bitwiseValue");
+
+				bitwiseValues.put(actionId, bitwiseValue);
+			}
+
+			return bitwiseValues;
+		}
+		finally {
+			if (Validator.isNotNull(currentShardName)) {
+				ShardUtil.setTargetSource(currentShardName);
+			}
+
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected abstract String getClassName();

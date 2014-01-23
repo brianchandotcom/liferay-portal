@@ -278,6 +278,55 @@ public class ExportImportConfigurationLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addExportImportConfiguration(userId, groupId, name,
+			description, type, settingsMap, serviceContext);
+	}
+
+	public static void deleteGroupExportImportConfigurations(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteGroupExportImportConfigurations(groupId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getExportImportConfigurations(groupId, type);
+	}
+
+	public static java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getExportImportConfigurations(groupId, type, start, end,
+			orderByComparator);
+	}
+
+	public static int getExportImportConfigurationsCount(long groupId, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getExportImportConfigurationsCount(groupId, type);
+	}
+
+	public static com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
+		long configurationId, java.lang.String name,
+		java.lang.String description,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateExportImportConfiguration(configurationId, name,
+			description, settingsMap, serviceContext);
+	}
+
 	public static ExportImportConfigurationLocalService getService() {
 		if (_service == null) {
 			_service = (ExportImportConfigurationLocalService)PortalBeanLocatorUtil.locate(ExportImportConfigurationLocalService.class.getName());

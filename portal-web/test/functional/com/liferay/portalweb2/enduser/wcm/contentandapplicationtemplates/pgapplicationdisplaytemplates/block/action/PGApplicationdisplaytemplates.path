@@ -81,7 +81,7 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_ADT_TEMPLATE</td>
-	<td>//ul/li/a/span[contains(.,'${key_adtTitle} Template')]</td>
+	<td>//ul/li/a/span[contains(.,'${key_adtType} Template')]</td>
 	<td></td>
 </tr>
 <tr>

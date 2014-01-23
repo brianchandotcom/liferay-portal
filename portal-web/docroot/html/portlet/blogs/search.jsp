@@ -35,9 +35,13 @@ String keywords = ParamUtil.getString(request, "keywords");
 		title="search"
 	/>
 
-	<div class="form-search">
-		<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
-	</div>
+	<aui:nav-bar>
+		<aui:nav-bar-search cssClass="pull-right">
+			<div class="form-search">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+			</div>
+		</aui:nav-bar-search>
+	</aui:nav-bar>
 
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();

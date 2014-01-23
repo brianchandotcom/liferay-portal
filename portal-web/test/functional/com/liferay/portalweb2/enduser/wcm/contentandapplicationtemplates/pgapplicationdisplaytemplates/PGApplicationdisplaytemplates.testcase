@@ -30,7 +30,6 @@
 		<var name="adtType" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="key_adtTitle" value="${adtType}" />
 		<var name="portletName" value="Blogs" />
 
 		<execute macro="Page#addPG">
@@ -47,7 +46,7 @@
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
 			<var name="adtFile" value="${adtFile}" />
-			<var name="adtTitle" value="${adtTitle}" />
+			<var name="adtType" value="${adtType}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -55,7 +54,6 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
-			<var name="adtTitle" value="${adtTitle}" />
 			<var name="adtType" value="${adtType}" />
 		</execute>
 
@@ -69,7 +67,6 @@
 		<var name="adtType" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="key_adtTitle" value="${adtType}" />
 		<var name="portletName" value="Blogs" />
 
 		<execute macro="Page#addPG">
@@ -95,7 +92,7 @@
 
 		<execute macro="ApplicationDisplayTemplates#addPG">
 			<var name="adtFile" value="${adtFile}" />
-			<var name="adtTitle" value="${adtTitle}" />
+			<var name="adtType" value="${adtType}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -103,7 +100,6 @@
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
-			<var name="adtTitle" value="${adtTitle}" />
 			<var name="adtType" value="${adtType}" />
 		</execute>
 

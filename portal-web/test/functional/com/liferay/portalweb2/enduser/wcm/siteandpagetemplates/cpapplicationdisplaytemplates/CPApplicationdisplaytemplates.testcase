@@ -26,7 +26,6 @@
 	<command name="addCP" priority="5">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
-		<var name="key_adtTitle" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -60,7 +59,6 @@
 		<var name="adtType" value="Blogs" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="key_adtTitle" value="Blogs" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Application Display Templates" />

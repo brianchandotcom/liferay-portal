@@ -3068,7 +3068,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		}
 
 		EntityCacheUtil.putResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-			MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey(), mbThreadFlag);
+			MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey(), mbThreadFlag,
+			false);
 
 		clearUniqueFindersCache(mbThreadFlag);
 		cacheUniqueFindersCache(mbThreadFlag);

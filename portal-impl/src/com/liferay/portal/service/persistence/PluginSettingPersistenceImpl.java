@@ -1213,7 +1213,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 		EntityCacheUtil.putResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 			PluginSettingImpl.class, pluginSetting.getPrimaryKey(),
-			pluginSetting);
+			pluginSetting, false);
 
 		clearUniqueFindersCache(pluginSetting);
 		cacheUniqueFindersCache(pluginSetting);

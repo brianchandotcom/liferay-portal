@@ -2343,7 +2343,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 		EntityCacheUtil.putResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityLimitImpl.class, socialActivityLimit.getPrimaryKey(),
-			socialActivityLimit);
+			socialActivityLimit, false);
 
 		clearUniqueFindersCache(socialActivityLimit);
 		cacheUniqueFindersCache(socialActivityLimit);

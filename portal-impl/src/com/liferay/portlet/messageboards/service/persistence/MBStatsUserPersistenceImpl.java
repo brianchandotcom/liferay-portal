@@ -2161,7 +2161,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		}
 
 		EntityCacheUtil.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			MBStatsUserImpl.class, mbStatsUser.getPrimaryKey(), mbStatsUser);
+			MBStatsUserImpl.class, mbStatsUser.getPrimaryKey(), mbStatsUser,
+			false);
 
 		clearUniqueFindersCache(mbStatsUser);
 		cacheUniqueFindersCache(mbStatsUser);

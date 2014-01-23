@@ -2575,7 +2575,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		EntityCacheUtil.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 			MBMailingListImpl.class, mbMailingList.getPrimaryKey(),
-			mbMailingList);
+			mbMailingList, false);
 
 		clearUniqueFindersCache(mbMailingList);
 		cacheUniqueFindersCache(mbMailingList);

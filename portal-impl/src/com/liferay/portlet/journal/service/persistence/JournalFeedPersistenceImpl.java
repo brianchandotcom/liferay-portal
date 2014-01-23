@@ -2959,7 +2959,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		}
 
 		EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-			JournalFeedImpl.class, journalFeed.getPrimaryKey(), journalFeed);
+			JournalFeedImpl.class, journalFeed.getPrimaryKey(), journalFeed,
+			false);
 
 		clearUniqueFindersCache(journalFeed);
 		cacheUniqueFindersCache(journalFeed);

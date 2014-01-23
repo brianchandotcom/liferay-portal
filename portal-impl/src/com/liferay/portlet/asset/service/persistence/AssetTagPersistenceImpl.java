@@ -1507,7 +1507,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 
 		EntityCacheUtil.putResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
-			AssetTagImpl.class, assetTag.getPrimaryKey(), assetTag);
+			AssetTagImpl.class, assetTag.getPrimaryKey(), assetTag, false);
 
 		clearUniqueFindersCache(assetTag);
 		cacheUniqueFindersCache(assetTag);

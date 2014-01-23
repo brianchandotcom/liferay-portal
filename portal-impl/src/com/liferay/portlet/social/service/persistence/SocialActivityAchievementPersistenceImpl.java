@@ -3507,7 +3507,8 @@ public class SocialActivityAchievementPersistenceImpl
 
 		EntityCacheUtil.putResult(SocialActivityAchievementModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityAchievementImpl.class,
-			socialActivityAchievement.getPrimaryKey(), socialActivityAchievement);
+			socialActivityAchievement.getPrimaryKey(),
+			socialActivityAchievement, false);
 
 		clearUniqueFindersCache(socialActivityAchievement);
 		cacheUniqueFindersCache(socialActivityAchievement);

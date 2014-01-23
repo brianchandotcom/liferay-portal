@@ -3279,7 +3279,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		}
 
 		EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-			AssetLinkImpl.class, assetLink.getPrimaryKey(), assetLink);
+			AssetLinkImpl.class, assetLink.getPrimaryKey(), assetLink, false);
 
 		clearUniqueFindersCache(assetLink);
 		cacheUniqueFindersCache(assetLink);

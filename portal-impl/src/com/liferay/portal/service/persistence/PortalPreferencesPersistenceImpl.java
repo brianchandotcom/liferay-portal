@@ -609,7 +609,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 		EntityCacheUtil.putResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 			PortalPreferencesImpl.class, portalPreferences.getPrimaryKey(),
-			portalPreferences);
+			portalPreferences, false);
 
 		clearUniqueFindersCache(portalPreferences);
 		cacheUniqueFindersCache(portalPreferences);

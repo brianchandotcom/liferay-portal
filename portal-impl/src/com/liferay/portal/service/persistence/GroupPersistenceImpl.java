@@ -7891,7 +7891,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		EntityCacheUtil.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupImpl.class, group.getPrimaryKey(), group);
+			GroupImpl.class, group.getPrimaryKey(), group, false);
 
 		clearUniqueFindersCache(group);
 		cacheUniqueFindersCache(group);

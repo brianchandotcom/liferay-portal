@@ -4477,7 +4477,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 		EntityCacheUtil.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 			AssetVocabularyImpl.class, assetVocabulary.getPrimaryKey(),
-			assetVocabulary);
+			assetVocabulary, false);
 
 		clearUniqueFindersCache(assetVocabulary);
 		cacheUniqueFindersCache(assetVocabulary);

@@ -40,6 +40,10 @@ public interface EntityCache {
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		Serializable result);
 
+	public void putResult(
+		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
+		Serializable result, boolean quiet);
+
 	public void removeCache(String className);
 
 	public void removeResult(

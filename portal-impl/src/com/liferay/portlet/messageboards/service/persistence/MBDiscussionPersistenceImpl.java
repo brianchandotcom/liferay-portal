@@ -2814,7 +2814,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		}
 
 		EntityCacheUtil.putResult(MBDiscussionModelImpl.ENTITY_CACHE_ENABLED,
-			MBDiscussionImpl.class, mbDiscussion.getPrimaryKey(), mbDiscussion);
+			MBDiscussionImpl.class, mbDiscussion.getPrimaryKey(), mbDiscussion,
+			false);
 
 		clearUniqueFindersCache(mbDiscussion);
 		cacheUniqueFindersCache(mbDiscussion);

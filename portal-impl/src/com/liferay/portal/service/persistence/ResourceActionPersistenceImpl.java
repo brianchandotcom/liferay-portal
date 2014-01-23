@@ -1215,7 +1215,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 		EntityCacheUtil.putResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
-			resourceAction);
+			resourceAction, false);
 
 		clearUniqueFindersCache(resourceAction);
 		cacheUniqueFindersCache(resourceAction);

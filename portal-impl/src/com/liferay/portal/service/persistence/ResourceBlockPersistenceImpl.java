@@ -1963,7 +1963,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 		EntityCacheUtil.putResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockImpl.class, resourceBlock.getPrimaryKey(),
-			resourceBlock);
+			resourceBlock, false);
 
 		clearUniqueFindersCache(resourceBlock);
 		cacheUniqueFindersCache(resourceBlock);

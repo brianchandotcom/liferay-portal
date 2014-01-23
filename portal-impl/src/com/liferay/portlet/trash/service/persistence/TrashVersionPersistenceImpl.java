@@ -1959,7 +1959,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		}
 
 		EntityCacheUtil.putResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-			TrashVersionImpl.class, trashVersion.getPrimaryKey(), trashVersion);
+			TrashVersionImpl.class, trashVersion.getPrimaryKey(), trashVersion,
+			false);
 
 		clearUniqueFindersCache(trashVersion);
 		cacheUniqueFindersCache(trashVersion);

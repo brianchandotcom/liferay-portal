@@ -1893,7 +1893,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 		EntityCacheUtil.putResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowDefinitionLinkImpl.class,
-			workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink);
+			workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink,
+			false);
 
 		clearUniqueFindersCache(workflowDefinitionLink);
 		cacheUniqueFindersCache(workflowDefinitionLink);

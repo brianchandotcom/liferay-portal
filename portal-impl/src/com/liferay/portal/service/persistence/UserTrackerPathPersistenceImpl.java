@@ -835,7 +835,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 		EntityCacheUtil.putResult(UserTrackerPathModelImpl.ENTITY_CACHE_ENABLED,
 			UserTrackerPathImpl.class, userTrackerPath.getPrimaryKey(),
-			userTrackerPath);
+			userTrackerPath, false);
 
 		userTrackerPath.resetOriginalValues();
 

@@ -1114,7 +1114,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 		EntityCacheUtil.putResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 			ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey(),
-			shoppingCoupon);
+			shoppingCoupon, false);
 
 		clearUniqueFindersCache(shoppingCoupon);
 		cacheUniqueFindersCache(shoppingCoupon);

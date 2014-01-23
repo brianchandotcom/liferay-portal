@@ -9462,7 +9462,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		EntityCacheUtil.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-			DLFolderImpl.class, dlFolder.getPrimaryKey(), dlFolder);
+			DLFolderImpl.class, dlFolder.getPrimaryKey(), dlFolder, false);
 
 		clearUniqueFindersCache(dlFolder);
 		cacheUniqueFindersCache(dlFolder);

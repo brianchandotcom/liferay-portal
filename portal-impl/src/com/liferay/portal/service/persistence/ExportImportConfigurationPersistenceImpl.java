@@ -1908,7 +1908,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 		EntityCacheUtil.putResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
-			exportImportConfiguration.getPrimaryKey(), exportImportConfiguration);
+			exportImportConfiguration.getPrimaryKey(),
+			exportImportConfiguration, false);
 
 		exportImportConfiguration.resetOriginalValues();
 

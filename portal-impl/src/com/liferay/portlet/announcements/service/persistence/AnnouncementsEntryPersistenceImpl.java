@@ -5127,7 +5127,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		EntityCacheUtil.putResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsEntryImpl.class, announcementsEntry.getPrimaryKey(),
-			announcementsEntry);
+			announcementsEntry, false);
 
 		announcementsEntry.resetOriginalValues();
 

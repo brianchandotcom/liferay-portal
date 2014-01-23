@@ -1486,7 +1486,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		}
 
 		EntityCacheUtil.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-			TeamImpl.class, team.getPrimaryKey(), team);
+			TeamImpl.class, team.getPrimaryKey(), team, false);
 
 		clearUniqueFindersCache(team);
 		cacheUniqueFindersCache(team);

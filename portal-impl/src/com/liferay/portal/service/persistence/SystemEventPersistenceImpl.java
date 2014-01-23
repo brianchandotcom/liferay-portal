@@ -2584,7 +2584,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		}
 
 		EntityCacheUtil.putResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
-			SystemEventImpl.class, systemEvent.getPrimaryKey(), systemEvent);
+			SystemEventImpl.class, systemEvent.getPrimaryKey(), systemEvent,
+			false);
 
 		systemEvent.resetOriginalValues();
 

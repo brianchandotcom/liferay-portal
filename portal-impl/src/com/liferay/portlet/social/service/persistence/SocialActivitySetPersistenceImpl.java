@@ -3789,7 +3789,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 		EntityCacheUtil.putResult(SocialActivitySetModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivitySetImpl.class, socialActivitySet.getPrimaryKey(),
-			socialActivitySet);
+			socialActivitySet, false);
 
 		socialActivitySet.resetOriginalValues();
 

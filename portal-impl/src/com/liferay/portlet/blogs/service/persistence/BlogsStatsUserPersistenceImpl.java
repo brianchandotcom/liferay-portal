@@ -3240,7 +3240,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 		EntityCacheUtil.putResult(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserImpl.class, blogsStatsUser.getPrimaryKey(),
-			blogsStatsUser);
+			blogsStatsUser, false);
 
 		clearUniqueFindersCache(blogsStatsUser);
 		cacheUniqueFindersCache(blogsStatsUser);

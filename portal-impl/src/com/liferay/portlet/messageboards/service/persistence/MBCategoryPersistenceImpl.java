@@ -7687,7 +7687,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		}
 
 		EntityCacheUtil.putResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
-			MBCategoryImpl.class, mbCategory.getPrimaryKey(), mbCategory);
+			MBCategoryImpl.class, mbCategory.getPrimaryKey(), mbCategory, false);
 
 		clearUniqueFindersCache(mbCategory);
 		cacheUniqueFindersCache(mbCategory);

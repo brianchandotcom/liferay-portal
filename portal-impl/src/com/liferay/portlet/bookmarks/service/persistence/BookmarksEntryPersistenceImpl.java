@@ -12795,7 +12795,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 		EntityCacheUtil.putResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BookmarksEntryImpl.class, bookmarksEntry.getPrimaryKey(),
-			bookmarksEntry);
+			bookmarksEntry, false);
 
 		clearUniqueFindersCache(bookmarksEntry);
 		cacheUniqueFindersCache(bookmarksEntry);

@@ -208,7 +208,7 @@ public class EntityCacheImpl
 						result = ((BaseModel<?>)loadResult).toCacheModel();
 					}
 
-					portalCache.put(cacheKey, result);
+					portalCache.putQuiet(cacheKey, result);
 
 					sessionFactory.closeSession(session);
 				}
@@ -230,6 +230,14 @@ public class EntityCacheImpl
 	public void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		Serializable result) {
+
+		putResult(entityCacheEnabled, clazz, primaryKey, result, true);
+	}
+
+	@Override
+	public void putResult(
+		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
+		Serializable result, boolean quiet) {
 
 		if (!PropsValues.VALUE_OBJECT_ENTITY_CACHE_ENABLED ||
 			!entityCacheEnabled || !CacheRegistryUtil.isActive() ||
@@ -254,7 +262,12 @@ public class EntityCacheImpl
 
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
-		portalCache.put(cacheKey, result);
+		if (quiet) {
+			portalCache.putQuiet(result, result);
+		}
+		else {
+			portalCache.put(cacheKey, result);
+		}
 	}
 
 	@Override

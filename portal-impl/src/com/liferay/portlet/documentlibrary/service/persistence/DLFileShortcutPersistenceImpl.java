@@ -6329,7 +6329,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 		EntityCacheUtil.putResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey(),
-			dlFileShortcut);
+			dlFileShortcut, false);
 
 		clearUniqueFindersCache(dlFileShortcut);
 		cacheUniqueFindersCache(dlFileShortcut);

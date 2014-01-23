@@ -145,6 +145,13 @@ public class FinderCacheImpl
 
 	@Override
 	public void putResult(FinderPath finderPath, Object[] args, Object result) {
+		putResult(finderPath, args, result, true);
+	}
+
+	@Override
+	public void putResult(
+		FinderPath finderPath, Object[] args, Object result, boolean quiet) {
+
 		if (!PropsValues.VALUE_OBJECT_FINDER_CACHE_ENABLED ||
 			!finderPath.isFinderCacheEnabled() ||
 			!CacheRegistryUtil.isActive() ||
@@ -169,7 +176,12 @@ public class FinderCacheImpl
 
 		Serializable cacheKey = finderPath.encodeCacheKey(_shardEnabled, args);
 
-		portalCache.put(cacheKey, primaryKey);
+		if (quiet) {
+			portalCache.putQuiet(cacheKey, primaryKey);
+		}
+		else {
+			portalCache.put(cacheKey, primaryKey);
+		}
 	}
 
 	@Override

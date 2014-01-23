@@ -1475,7 +1475,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		}
 
 		EntityCacheUtil.putResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
-			UserIdMapperImpl.class, userIdMapper.getPrimaryKey(), userIdMapper);
+			UserIdMapperImpl.class, userIdMapper.getPrimaryKey(), userIdMapper,
+			false);
 
 		clearUniqueFindersCache(userIdMapper);
 		cacheUniqueFindersCache(userIdMapper);

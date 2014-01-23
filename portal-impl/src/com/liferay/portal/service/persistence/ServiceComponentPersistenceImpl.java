@@ -1218,7 +1218,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 		EntityCacheUtil.putResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentImpl.class, serviceComponent.getPrimaryKey(),
-			serviceComponent);
+			serviceComponent, false);
 
 		clearUniqueFindersCache(serviceComponent);
 		cacheUniqueFindersCache(serviceComponent);

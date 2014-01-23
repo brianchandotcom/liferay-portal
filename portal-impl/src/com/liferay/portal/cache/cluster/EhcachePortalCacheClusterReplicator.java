@@ -36,7 +36,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 	public EhcachePortalCacheClusterReplicator(Properties properties) {
 		if (properties != null) {
 			_replicatePuts = GetterUtil.getBoolean(
-				properties.getProperty(_REPLICATE_PUTS));
+				properties.getProperty(_REPLICATE_PUTS), true);
 			_replicatePutsViaCopy = GetterUtil.getBoolean(
 				properties.getProperty(_REPLICATE_PUTS_VIA_COPY));
 			_replicateRemovals = GetterUtil.getBoolean(
@@ -169,7 +169,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 	private static final String _REPLICATE_UPDATES_VIA_COPY =
 		"replicateUpdatesViaCopy";
 
-	private boolean _replicatePuts;
+	private boolean _replicatePuts = true;
 	private boolean _replicatePutsViaCopy;
 	private boolean _replicateRemovals = true;
 	private boolean _replicateUpdates = true;

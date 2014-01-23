@@ -1868,7 +1868,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		}
 
 		EntityCacheUtil.putResult(ContactModelImpl.ENTITY_CACHE_ENABLED,
-			ContactImpl.class, contact.getPrimaryKey(), contact);
+			ContactImpl.class, contact.getPrimaryKey(), contact, false);
 
 		contact.resetOriginalValues();
 

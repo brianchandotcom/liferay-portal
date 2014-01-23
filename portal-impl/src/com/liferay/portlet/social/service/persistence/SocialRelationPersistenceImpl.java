@@ -6026,7 +6026,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 		EntityCacheUtil.putResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRelationImpl.class, socialRelation.getPrimaryKey(),
-			socialRelation);
+			socialRelation, false);
 
 		clearUniqueFindersCache(socialRelation);
 		cacheUniqueFindersCache(socialRelation);

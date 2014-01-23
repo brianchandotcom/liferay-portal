@@ -2039,7 +2039,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		EntityCacheUtil.putResult(JournalArticleResourceModelImpl.ENTITY_CACHE_ENABLED,
 			JournalArticleResourceImpl.class,
-			journalArticleResource.getPrimaryKey(), journalArticleResource);
+			journalArticleResource.getPrimaryKey(), journalArticleResource,
+			false);
 
 		clearUniqueFindersCache(journalArticleResource);
 		cacheUniqueFindersCache(journalArticleResource);

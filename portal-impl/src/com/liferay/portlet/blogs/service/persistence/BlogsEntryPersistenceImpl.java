@@ -18484,7 +18484,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		}
 
 		EntityCacheUtil.putResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry);
+			BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry, false);
 
 		clearUniqueFindersCache(blogsEntry);
 		cacheUniqueFindersCache(blogsEntry);

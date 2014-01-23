@@ -1044,7 +1044,8 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		}
 
 		EntityCacheUtil.putResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey(), dlSyncEvent);
+			DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey(), dlSyncEvent,
+			false);
 
 		clearUniqueFindersCache(dlSyncEvent);
 		cacheUniqueFindersCache(dlSyncEvent);

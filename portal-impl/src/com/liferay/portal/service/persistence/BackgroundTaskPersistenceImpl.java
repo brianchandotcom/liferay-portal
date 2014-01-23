@@ -7636,7 +7636,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 		EntityCacheUtil.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 			BackgroundTaskImpl.class, backgroundTask.getPrimaryKey(),
-			backgroundTask);
+			backgroundTask, false);
 
 		backgroundTask.resetOriginalValues();
 

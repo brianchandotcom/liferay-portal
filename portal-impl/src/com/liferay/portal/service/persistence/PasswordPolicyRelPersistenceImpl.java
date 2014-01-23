@@ -1136,7 +1136,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 		EntityCacheUtil.putResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 			PasswordPolicyRelImpl.class, passwordPolicyRel.getPrimaryKey(),
-			passwordPolicyRel);
+			passwordPolicyRel, false);
 
 		clearUniqueFindersCache(passwordPolicyRel);
 		cacheUniqueFindersCache(passwordPolicyRel);

@@ -32,6 +32,9 @@ public interface FinderCache {
 
 	public void putResult(FinderPath finderPath, Object[] args, Object result);
 
+	public void putResult(
+		FinderPath finderPath, Object[] args, Object result, boolean quiet);
+
 	public void removeCache(String className);
 
 	public void removeResult(FinderPath finderPath, Object[] args);

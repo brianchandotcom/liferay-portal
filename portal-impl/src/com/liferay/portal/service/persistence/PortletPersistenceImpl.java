@@ -1135,7 +1135,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		}
 
 		EntityCacheUtil.putResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletImpl.class, portlet.getPrimaryKey(), portlet);
+			PortletImpl.class, portlet.getPrimaryKey(), portlet, false);
 
 		clearUniqueFindersCache(portlet);
 		cacheUniqueFindersCache(portlet);

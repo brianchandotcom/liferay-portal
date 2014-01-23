@@ -7670,7 +7670,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 		EntityCacheUtil.putResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
 			JournalFolderImpl.class, journalFolder.getPrimaryKey(),
-			journalFolder);
+			journalFolder, false);
 
 		clearUniqueFindersCache(journalFolder);
 		cacheUniqueFindersCache(journalFolder);

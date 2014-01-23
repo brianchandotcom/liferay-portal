@@ -1602,7 +1602,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 		EntityCacheUtil.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
-			ddmStructureLink);
+			ddmStructureLink, false);
 
 		clearUniqueFindersCache(ddmStructureLink);
 		cacheUniqueFindersCache(ddmStructureLink);

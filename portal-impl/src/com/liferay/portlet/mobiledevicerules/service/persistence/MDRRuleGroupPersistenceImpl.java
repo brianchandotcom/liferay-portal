@@ -2655,7 +2655,8 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		}
 
 		EntityCacheUtil.putResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
-			MDRRuleGroupImpl.class, mdrRuleGroup.getPrimaryKey(), mdrRuleGroup);
+			MDRRuleGroupImpl.class, mdrRuleGroup.getPrimaryKey(), mdrRuleGroup,
+			false);
 
 		clearUniqueFindersCache(mdrRuleGroup);
 		cacheUniqueFindersCache(mdrRuleGroup);

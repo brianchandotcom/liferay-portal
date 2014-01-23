@@ -5262,7 +5262,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		}
 
 		EntityCacheUtil.putResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoValueImpl.class, expandoValue.getPrimaryKey(), expandoValue);
+			ExpandoValueImpl.class, expandoValue.getPrimaryKey(), expandoValue,
+			false);
 
 		clearUniqueFindersCache(expandoValue);
 		cacheUniqueFindersCache(expandoValue);

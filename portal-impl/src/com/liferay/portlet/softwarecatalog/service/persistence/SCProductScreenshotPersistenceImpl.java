@@ -1660,7 +1660,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 
 		EntityCacheUtil.putResult(SCProductScreenshotModelImpl.ENTITY_CACHE_ENABLED,
 			SCProductScreenshotImpl.class, scProductScreenshot.getPrimaryKey(),
-			scProductScreenshot);
+			scProductScreenshot, false);
 
 		clearUniqueFindersCache(scProductScreenshot);
 		cacheUniqueFindersCache(scProductScreenshot);

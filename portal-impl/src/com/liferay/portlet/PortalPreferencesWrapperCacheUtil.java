@@ -40,7 +40,7 @@ public class PortalPreferencesWrapperCacheUtil {
 		String cacheKey = StringUtil.toHexString(ownerId).concat(
 			StringUtil.toHexString(ownerType));
 
-		_portalPreferencesWrapperPortalCache.put(
+		_portalPreferencesWrapperPortalCache.putQuiet(
 			cacheKey, portalPreferencesWrapper);
 	}
 

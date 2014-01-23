@@ -1149,7 +1149,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 		EntityCacheUtil.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey(),
-			announcementsFlag);
+			announcementsFlag, false);
 
 		clearUniqueFindersCache(announcementsFlag);
 		cacheUniqueFindersCache(announcementsFlag);

@@ -5295,7 +5295,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 		EntityCacheUtil.putResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutFriendlyURLImpl.class, layoutFriendlyURL.getPrimaryKey(),
-			layoutFriendlyURL);
+			layoutFriendlyURL, false);
 
 		clearUniqueFindersCache(layoutFriendlyURL);
 		cacheUniqueFindersCache(layoutFriendlyURL);

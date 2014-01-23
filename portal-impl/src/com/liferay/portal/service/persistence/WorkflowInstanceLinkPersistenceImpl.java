@@ -953,7 +953,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 
 		EntityCacheUtil.putResult(WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
-			workflowInstanceLink.getPrimaryKey(), workflowInstanceLink);
+			workflowInstanceLink.getPrimaryKey(), workflowInstanceLink, false);
 
 		workflowInstanceLink.resetOriginalValues();
 

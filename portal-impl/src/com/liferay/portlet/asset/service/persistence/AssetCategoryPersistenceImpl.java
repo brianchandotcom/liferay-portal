@@ -11111,7 +11111,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		EntityCacheUtil.putResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetCategoryImpl.class, assetCategory.getPrimaryKey(),
-			assetCategory);
+			assetCategory, false);
 
 		clearUniqueFindersCache(assetCategory);
 		cacheUniqueFindersCache(assetCategory);

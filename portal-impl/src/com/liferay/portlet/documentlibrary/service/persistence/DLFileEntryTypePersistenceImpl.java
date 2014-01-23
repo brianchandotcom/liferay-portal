@@ -3460,7 +3460,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 		EntityCacheUtil.putResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryTypeImpl.class, dlFileEntryType.getPrimaryKey(),
-			dlFileEntryType);
+			dlFileEntryType, false);
 
 		clearUniqueFindersCache(dlFileEntryType);
 		cacheUniqueFindersCache(dlFileEntryType);

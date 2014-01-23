@@ -2753,7 +2753,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 		EntityCacheUtil.putResult(DLFileEntryMetadataModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey(),
-			dlFileEntryMetadata);
+			dlFileEntryMetadata, false);
 
 		clearUniqueFindersCache(dlFileEntryMetadata);
 		cacheUniqueFindersCache(dlFileEntryMetadata);

@@ -4422,7 +4422,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		}
 
 		EntityCacheUtil.putResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserGroupImpl.class, userGroup.getPrimaryKey(), userGroup);
+			UserGroupImpl.class, userGroup.getPrimaryKey(), userGroup, false);
 
 		clearUniqueFindersCache(userGroup);
 		cacheUniqueFindersCache(userGroup);

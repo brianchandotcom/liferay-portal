@@ -1622,7 +1622,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 
 		EntityCacheUtil.putResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagStatsImpl.class, assetTagStats.getPrimaryKey(),
-			assetTagStats);
+			assetTagStats, false);
 
 		clearUniqueFindersCache(assetTagStats);
 		cacheUniqueFindersCache(assetTagStats);

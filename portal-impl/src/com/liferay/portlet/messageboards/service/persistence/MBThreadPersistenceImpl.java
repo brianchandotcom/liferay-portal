@@ -13388,7 +13388,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 
 		EntityCacheUtil.putResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
-			MBThreadImpl.class, mbThread.getPrimaryKey(), mbThread);
+			MBThreadImpl.class, mbThread.getPrimaryKey(), mbThread, false);
 
 		clearUniqueFindersCache(mbThread);
 		cacheUniqueFindersCache(mbThread);

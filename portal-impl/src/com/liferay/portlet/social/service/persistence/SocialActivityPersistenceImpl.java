@@ -6564,7 +6564,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 		EntityCacheUtil.putResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityImpl.class, socialActivity.getPrimaryKey(),
-			socialActivity);
+			socialActivity, false);
 
 		clearUniqueFindersCache(socialActivity);
 		cacheUniqueFindersCache(socialActivity);

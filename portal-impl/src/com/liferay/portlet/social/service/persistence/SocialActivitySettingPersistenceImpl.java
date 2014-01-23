@@ -2932,7 +2932,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 
 		EntityCacheUtil.putResult(SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivitySettingImpl.class,
-			socialActivitySetting.getPrimaryKey(), socialActivitySetting);
+			socialActivitySetting.getPrimaryKey(), socialActivitySetting, false);
 
 		clearUniqueFindersCache(socialActivitySetting);
 		cacheUniqueFindersCache(socialActivitySetting);

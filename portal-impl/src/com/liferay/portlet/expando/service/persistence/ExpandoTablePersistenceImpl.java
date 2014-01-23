@@ -1211,7 +1211,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		}
 
 		EntityCacheUtil.putResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
-			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable);
+			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable,
+			false);
 
 		clearUniqueFindersCache(expandoTable);
 		cacheUniqueFindersCache(expandoTable);

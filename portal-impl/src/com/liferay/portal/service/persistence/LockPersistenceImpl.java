@@ -2308,7 +2308,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		}
 
 		EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-			LockImpl.class, lock.getPrimaryKey(), lock);
+			LockImpl.class, lock.getPrimaryKey(), lock, false);
 
 		clearUniqueFindersCache(lock);
 		cacheUniqueFindersCache(lock);

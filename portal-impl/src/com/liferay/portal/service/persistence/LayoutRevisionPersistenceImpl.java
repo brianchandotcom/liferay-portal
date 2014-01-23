@@ -6184,7 +6184,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 		EntityCacheUtil.putResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutRevisionImpl.class, layoutRevision.getPrimaryKey(),
-			layoutRevision);
+			layoutRevision, false);
 
 		clearUniqueFindersCache(layoutRevision);
 		cacheUniqueFindersCache(layoutRevision);

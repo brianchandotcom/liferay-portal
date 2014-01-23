@@ -6696,7 +6696,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 		EntityCacheUtil.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 			SocialRequestImpl.class, socialRequest.getPrimaryKey(),
-			socialRequest);
+			socialRequest, false);
 
 		clearUniqueFindersCache(socialRequest);
 		cacheUniqueFindersCache(socialRequest);

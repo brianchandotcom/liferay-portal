@@ -68,6 +68,14 @@ public class EntityCacheUtil {
 			entityCacheEnabled, clazz, primaryKey, result);
 	}
 
+	public static void putResult(
+		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
+		Serializable result, boolean quiet) {
+
+		getEntityCache().putResult(
+			entityCacheEnabled, clazz, primaryKey, result, quiet);
+	}
+
 	public static void removeCache(String className) {
 		getEntityCache().removeCache(className);
 	}

@@ -2900,7 +2900,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 
 		EntityCacheUtil.putResult(SocialActivityCounterModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivityCounterImpl.class,
-			socialActivityCounter.getPrimaryKey(), socialActivityCounter);
+			socialActivityCounter.getPrimaryKey(), socialActivityCounter, false);
 
 		clearUniqueFindersCache(socialActivityCounter);
 		cacheUniqueFindersCache(socialActivityCounter);

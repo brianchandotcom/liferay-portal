@@ -853,7 +853,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		}
 
 		EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-			ListTypeImpl.class, listType.getPrimaryKey(), listType);
+			ListTypeImpl.class, listType.getPrimaryKey(), listType, false);
 
 		listType.resetOriginalValues();
 

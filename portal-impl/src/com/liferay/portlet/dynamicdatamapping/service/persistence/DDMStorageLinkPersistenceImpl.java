@@ -1648,7 +1648,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 		EntityCacheUtil.putResult(DDMStorageLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMStorageLinkImpl.class, ddmStorageLink.getPrimaryKey(),
-			ddmStorageLink);
+			ddmStorageLink, false);
 
 		clearUniqueFindersCache(ddmStorageLink);
 		cacheUniqueFindersCache(ddmStorageLink);

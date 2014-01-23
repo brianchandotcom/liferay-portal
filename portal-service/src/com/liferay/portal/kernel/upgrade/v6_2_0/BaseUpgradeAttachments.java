@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -42,6 +43,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,15 +113,22 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			ps.executeUpdate();
 
-			String fileEntryClassName = DLFileEntry.class.getName();
+			Map<String, Long> bitwiseValues = getBitwiseValues(
+				DLFileEntry.class.getName());
+
+			List<String> actions = new ArrayList<String>();
+
+			actions.add(ActionKeys.VIEW);
+
+			long bitwiseValue = getBitwiseValue(bitwiseValues, actions);
 
 			addDLPermission(
-				companyId, fileEntryClassName, fileEntryId,
-				getRoleId(companyId, RoleConstants.GUEST), 3);
+				companyId, DLFileEntry.class.getName(), fileEntryId,
+				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
 
 			addDLPermission(
-				companyId, fileEntryClassName, fileEntryId,
-				getRoleId(companyId, RoleConstants.SITE_MEMBER), 3);
+				companyId, DLFileEntry.class.getName(), fileEntryId,
+				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
 
 			return fileEntryId;
 		}
@@ -254,15 +263,33 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			ps.executeUpdate();
 
-			String folderClassName = DLFolder.class.getName();
+			Map<String, Long> bitwiseValues = getBitwiseValues(
+				DLFolder.class.getName());
+
+			List<String> guestActions = new ArrayList<String>();
+
+			guestActions.add(ActionKeys.VIEW);
+
+			long guestBitwiseValue = getBitwiseValue(
+				bitwiseValues, guestActions);
 
 			addDLPermission(
-				companyId, folderClassName, folderId,
-				getRoleId(companyId, RoleConstants.GUEST), 1);
+				companyId, DLFolder.class.getName(), folderId,
+				getRoleId(companyId, RoleConstants.GUEST), guestBitwiseValue);
+
+			List<String> siteMemberActions = new ArrayList<String>();
+
+			siteMemberActions.add(ActionKeys.VIEW);
+			siteMemberActions.add(ActionKeys.ADD_DOCUMENT);
+			siteMemberActions.add(ActionKeys.ADD_SUBFOLDER);
+
+			long siteMemberBitwiseValue = getBitwiseValue(
+				bitwiseValues, siteMemberActions);
 
 			addDLPermission(
-				companyId, folderClassName, folderId,
-				getRoleId(companyId, RoleConstants.SITE_MEMBER), 29);
+				companyId, DLFolder.class.getName(), folderId,
+				getRoleId(companyId, RoleConstants.SITE_MEMBER),
+				siteMemberBitwiseValue);
 
 			return folderId;
 		}

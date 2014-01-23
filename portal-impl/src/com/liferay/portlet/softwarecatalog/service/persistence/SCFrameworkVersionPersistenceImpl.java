@@ -3251,9 +3251,6 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(SCFrameworkVersionModelImpl.MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_NAME);
-		}
 	}
 
 	@Override

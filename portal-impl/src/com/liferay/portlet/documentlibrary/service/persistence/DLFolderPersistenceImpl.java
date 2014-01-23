@@ -10070,9 +10070,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(DLFolderModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME);
-		}
 	}
 
 	@Override

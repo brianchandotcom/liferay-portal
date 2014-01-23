@@ -2705,9 +2705,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
 	}
 
 	@Override

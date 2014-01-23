@@ -11712,9 +11712,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(AssetCategoryModelImpl.MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME);
-		}
 	}
 
 	@Override

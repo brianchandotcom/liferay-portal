@@ -9778,9 +9778,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		catch (Exception e) {
 			throw processException(e);
 		}
-		finally {
-			FinderCacheUtil.clearCache(DDMStructureModelImpl.MAPPING_TABLE_DLFILEENTRYTYPES_DDMSTRUCTURES_NAME);
-		}
 	}
 
 	@Override

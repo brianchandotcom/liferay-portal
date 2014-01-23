@@ -37,20 +37,6 @@
 
 	<cache
 		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
-	<cache
-		eternal="false"
 		maxElementsInMemory="100000"
 		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.AccountImpl"
 		overflowToDisk="false"
@@ -192,20 +178,6 @@
 
 	<!-- FinderCache -->
 
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
 	<cache
 		eternal="false"
 		maxElementsInMemory="50000"
@@ -500,34 +472,6 @@
 		/>
 		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
 	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="200000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.Users_Orgs"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="200000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.Users_Roles"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
 
 	<!-- Other -->
 
@@ -563,34 +507,6 @@
 		eternal="false"
 		maxElementsInMemory="100000"
 		name="com.liferay.portal.security.permission.PermissionCacheUtil_RESOURCE_BLOCK_IDS_BAG"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
-	<cache
-		eternal="true"
-		maxElementsInMemory="0"
-		name="com.liferay.portal.service.impl.PortletLocalServiceImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="0"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.service.impl.PortletPreferencesLocalUtil"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>

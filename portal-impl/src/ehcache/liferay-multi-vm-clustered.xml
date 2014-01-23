@@ -478,6 +478,62 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="100000"
+		name="com.liferay.portal.kernel.template.TemplateResourceLoader.css"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
+	>
+		<cacheEventListenerFactory
+			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			propertySeparator=","
+		/>
+		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
+	</cache>
+	<cache
+		eternal="false"
+		maxElementsInMemory="100000"
+		name="com.liferay.portal.kernel.template.TemplateResourceLoader.ftl"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
+	>
+		<cacheEventListenerFactory
+			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			propertySeparator=","
+		/>
+		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
+	</cache>
+	<cache
+		eternal="false"
+		maxElementsInMemory="100000"
+		name="com.liferay.portal.kernel.template.TemplateResourceLoader.vm"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
+	>
+		<cacheEventListenerFactory
+			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			propertySeparator=","
+		/>
+		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
+	</cache>
+	<cache
+		eternal="false"
+		maxElementsInMemory="100000"
+		name="com.liferay.portal.kernel.template.TemplateResourceLoader.xsl"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
+	>
+		<cacheEventListenerFactory
+			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
+			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
+			propertySeparator=","
+		/>
+		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
+	</cache>
+	<cache
+		eternal="false"
+		maxElementsInMemory="100000"
 		name="com.liferay.portal.security.permission.PermissionCacheUtil_PERMISSION"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"

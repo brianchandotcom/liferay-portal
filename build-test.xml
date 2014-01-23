@@ -37,20 +37,6 @@
 		<attribute name="test.build.fix.pack.zip.file.name" />
 
 		<sequential>
-			<propertyregex
-				input="${test.build.fix.pack.zip.file.name}"
-				property="test.build.fix.pack.build.version"
-				regexp=".+(\d{4})\.zip"
-				replace="\1"
-			/>
-
-			<propertyregex
-				input="${test.build.fix.pack.zip.file.name}"
-				property="test.build.fix.pack.portal.version"
-				regexp=".+(\d)(\d)(\d\d)\.zip"
-				replace="\1.\2.\3"
-			/>
-
 			<mkdir dir="${app.server.dir}/patching-tool/patches/temp" />
 
 			<unzip
@@ -83,18 +69,18 @@
 								regexp="-\d+"
 								replace=""
 							/>
-\
+
 							<if>
 								<equals arg1="${fix.pack.requirement.type}" arg2="hotfix" />
 								<then>
 									<var
-										name="fix.pack.requirement.zip.file.name"
+										name="requirement.fix.pack.zip.file.name"
 										value="liferay-@{fix.pack.requirement}-${test.build.fix.pack.build.version}.zip"
 									/>
 								</then>
 								<else>
 									<var
-										name="fix.pack.requirement.zip.file.name"
+										name="requirement.fix.pack.zip.file.name"
 										value="liferay-fix-pack-@{fix.pack.requirement}-${test.build.fix.pack.build.version}.zip"
 									/>
 								</else>
@@ -102,34 +88,21 @@
 
 							<if>
 								<not>
-									<available file="${app.server.dir}/patching-tool/patches/${fix.pack.requirement.zip.file.name}" />
+									<available file="${app.server.dir}/patching-tool/patches/${requirement.fix.pack.zip.file.name}" />
 								</not>
 								<then>
-									<var
-										name="fix.pack.requirement.zip.url"
-										value="http://mirrors/files.liferay.com/private/ee/fix-packs/${test.build.fix.pack.portal.version}/${fix.pack.requirement.type}/${fix.pack.requirement.zip.file.name}"
+									<get
+										dest="${app.server.dir}/patching-tool/patches"
+										src="http://mirrors/files.liferay.com/private/ee/fix-packs/${test.build.fix.pack.portal.version}/${fix.pack.requirement.type}/${requirement.fix.pack.zip.file.name}"
 									/>
 
-									<get-fix-pack-requirement fix.pack.requirement="@{fix.pack.requirement}" />
+									<check-fix-pack-requirements test.build.fix.pack.zip.file.name="${requirement.fix.pack.zip.file.name}" />
 								</then>
 							</if>
 						</sequential>
 					</for>
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-fix-pack-requirement">
-		<attribute name="fix.pack.requirement" />
-
-		<sequential>
-			<get
-				dest="${app.server.dir}/patching-tool/patches"
-				src="${fix.pack.requirement.zip.url}"
-			/>
-
-			<check-fix-pack-requirements test.build.fix.pack.zip.file.name="${fix.pack.requirement.zip.file.name}" />
 		</sequential>
 	</macrodef>
 
@@ -1830,6 +1803,20 @@ tck.url=true</echo>
 							property="test.build.fix.pack.zip.file.name"
 							regexp=".+/"
 							replace=""
+						/>
+
+						<propertyregex
+							input="${test.build.fix.pack.zip.file.name}"
+							property="test.build.fix.pack.build.version"
+							regexp=".+(\d{4})\.zip"
+							replace="\1"
+						/>
+
+						<propertyregex
+							input="${test.build.fix.pack.zip.file.name}"
+							property="test.build.fix.pack.portal.version"
+							regexp=".+(\d)(\d)(\d\d)\.zip"
+							replace="\1.\2.\3"
 						/>
 
 						<check-fix-pack-requirements test.build.fix.pack.zip.file.name="${test.build.fix.pack.zip.file.name}" />

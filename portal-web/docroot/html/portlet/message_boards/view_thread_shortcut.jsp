@@ -55,7 +55,7 @@ if (threadFlag != null) {
 			String messageURL = null;
 
 			if (portletName.equals(PortletKeys.MESSAGE_BOARDS_ADMIN)) {
-				PortletURL selMessageURL = liferayPortletResponse.createRenderURL();
+				PortletURL selMessageURL = renderResponse.createRenderURL();
 
 				selMessageURL.setParameter("struts_action", "/message_boards/view_message");
 				selMessageURL.setParameter("messageId", String.valueOf(selMessage.getMessageId()));

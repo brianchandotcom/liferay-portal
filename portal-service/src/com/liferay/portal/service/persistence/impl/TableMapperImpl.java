@@ -438,7 +438,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			Arrays.sort(primaryKeys);
 
 			if (updateCache) {
-				portalCache.put(masterPrimaryKey, primaryKeys);
+				portalCache.putQuiet(masterPrimaryKey, primaryKeys);
 			}
 		}
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
@@ -151,6 +152,93 @@ public class ResourcePermissionPersistenceTest {
 			newResourcePermission.getOwnerId());
 		Assert.assertEquals(existingResourcePermission.getActionIds(),
 			newResourcePermission.getActionIds());
+	}
+
+	@Test
+	public void testCountByScope() {
+		try {
+			_persistence.countByScope(ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByScopeArrayable() {
+		try {
+			_persistence.countByScope(new int[] { ServiceTestUtil.nextInt() });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByRoleId() {
+		try {
+			_persistence.countByRoleId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_LikeP() {
+		try {
+			_persistence.countByC_LikeP(ServiceTestUtil.nextLong(),
+				StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_N_S() {
+		try {
+			_persistence.countByC_N_S(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_N_S_P() {
+		try {
+			_persistence.countByC_N_S_P(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextInt(), StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_N_S_P_R() {
+		try {
+			_persistence.countByC_N_S_P_R(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextInt(), StringPool.BLANK,
+				ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_N_S_P_RArrayable() {
+		try {
+			_persistence.countByC_N_S_P_R(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextInt(), StringPool.BLANK,
+				new long[] { ServiceTestUtil.nextLong() });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

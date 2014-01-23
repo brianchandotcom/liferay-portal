@@ -137,6 +137,27 @@ public class PasswordPolicyRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByPasswordPolicyId() {
+		try {
+			_persistence.countByPasswordPolicyId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByC_C() {
+		try {
+			_persistence.countByC_C(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PasswordPolicyRel newPasswordPolicyRel = addPasswordPolicyRel();
 

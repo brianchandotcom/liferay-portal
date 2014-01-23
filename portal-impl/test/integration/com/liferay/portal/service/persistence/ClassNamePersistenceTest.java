@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
@@ -127,6 +128,16 @@ public class ClassNamePersistenceTest {
 			newClassName.getClassNameId());
 		Assert.assertEquals(existingClassName.getValue(),
 			newClassName.getValue());
+	}
+
+	@Test
+	public void testCountByValue() {
+		try {
+			_persistence.countByValue(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

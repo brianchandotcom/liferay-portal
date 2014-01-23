@@ -138,6 +138,27 @@ public class SCLicensePersistenceTest {
 	}
 
 	@Test
+	public void testCountByActive() {
+		try {
+			_persistence.countByActive(ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByA_R() {
+		try {
+			_persistence.countByA_R(ServiceTestUtil.randomBoolean(),
+				ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SCLicense newSCLicense = addSCLicense();
 

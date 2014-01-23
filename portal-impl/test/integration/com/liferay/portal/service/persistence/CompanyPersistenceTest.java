@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.impl.CompanyModelImpl;
@@ -153,6 +154,46 @@ public class CompanyPersistenceTest {
 		Assert.assertEquals(existingCompany.getMaxUsers(),
 			newCompany.getMaxUsers());
 		Assert.assertEquals(existingCompany.getActive(), newCompany.getActive());
+	}
+
+	@Test
+	public void testCountByWebId() {
+		try {
+			_persistence.countByWebId(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByMx() {
+		try {
+			_persistence.countByMx(StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByLogoId() {
+		try {
+			_persistence.countByLogoId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountBySystem() {
+		try {
+			_persistence.countBySystem(ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

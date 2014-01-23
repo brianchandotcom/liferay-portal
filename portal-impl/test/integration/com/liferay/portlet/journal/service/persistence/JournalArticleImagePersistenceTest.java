@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -149,6 +150,49 @@ public class JournalArticleImagePersistenceTest {
 			newJournalArticleImage.getLanguageId());
 		Assert.assertEquals(existingJournalArticleImage.getTempImage(),
 			newJournalArticleImage.getTempImage());
+	}
+
+	@Test
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(ServiceTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByTempImage() {
+		try {
+			_persistence.countByTempImage(ServiceTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_A_V() {
+		try {
+			_persistence.countByG_A_V(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextDouble());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void testCountByG_A_V_E_E_L() {
+		try {
+			_persistence.countByG_A_V_E_E_L(ServiceTestUtil.nextLong(),
+				StringPool.BLANK, ServiceTestUtil.nextDouble(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

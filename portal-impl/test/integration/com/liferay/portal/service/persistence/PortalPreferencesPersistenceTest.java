@@ -137,6 +137,17 @@ public class PortalPreferencesPersistenceTest {
 	}
 
 	@Test
+	public void testCountByO_O() {
+		try {
+			_persistence.countByO_O(ServiceTestUtil.nextLong(),
+				ServiceTestUtil.nextInt());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		PortalPreferences newPortalPreferences = addPortalPreferences();
 

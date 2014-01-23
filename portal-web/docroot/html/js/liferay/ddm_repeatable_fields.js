@@ -203,11 +203,10 @@ AUI.add(
 
 						instance.getFieldsList().each(
 							function(item, index, collection) {
-								var fieldName = item.getData('fieldName');
-
-								var fieldNamespace = item.getData('fieldNamespace');
-
 								instance.renderRepeatableUI(item);
+
+								var fieldName = item.getData('fieldName');
+								var fieldNamespace = item.getData('fieldNamespace');
 
 								fieldsDisplay.push(fieldName + fieldNamespace);
 							}

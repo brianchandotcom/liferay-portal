@@ -39,6 +39,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -641,6 +643,8 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.selectFrame(locator);
 
 		value = value.replace("\\", "\\\\");
+
+		value = StringEscapeUtils.escapeEcmaScript(value);
 
 		liferaySelenium.runScript(
 			"document.body.innerHTML = \"" + value + "\"");

@@ -383,11 +383,11 @@
 		<execute action="CPWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
 		<execute action="CPWikiWikipageDetails#assertClick" locator-key1="NAVIGATION_HISTORY" value1="History" />
 
+		<var name="key_wikiPageVersionNew" value="${wikiPageVersionNew}" />
+
 		<execute action="CPWikiWikipageHistory#assertClick" locator-key1="ACTIVITIES_TABLE_COMPARE_TO" value1="Compare to..." />
 
 		<execute action="CPWikiWikipageHistorySelectversion#selectFrame" locator-key1="SELECT_VERSION_IFRAME" />
-
-		<var name="key_wikiPageVersionNew" value="${wikiPageVersionNew}" />
 
 		<execute action="CPWikiWikipageHistorySelectversion#assertTextEquals" locator-key1="SELECT_VERSION_VERSION_NEW" value1="${wikiPageVersionNew}" />
 		<execute action="CPWikiWikipageHistorySelectversion#assertElementPresent" locator-key1="SELECT_VERSION_DATE_NEW" />
@@ -419,6 +419,7 @@
 		<execute action="PGWikiWikipageHistory#assertClick" locator-key1="ACTIVITIES_TABLE_COMPARE_TO" value1="Compare to..." />
 
 		<execute action="PGWikiWikipageHistorySelectversion#selectFrame" locator-key1="SELECT_VERSION_IFRAME" />
+
 		<execute action="PGWikiWikipageHistorySelectversion#assertTextEquals" locator-key1="SELECT_VERSION_VERSION_NEW" value1="${wikiPageVersionNew}" />
 		<execute action="PGWikiWikipageHistorySelectversion#assertElementPresent" locator-key1="SELECT_VERSION_DATE_NEW" />
 

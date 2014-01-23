@@ -239,7 +239,6 @@ public class UserImpl extends UserBaseImpl {
 		return emailAddress;
 	}
 
-
 	/**
 	 * Returns the user's display URL, discounting the the URL of the user's
 	 * default site intranet home page.

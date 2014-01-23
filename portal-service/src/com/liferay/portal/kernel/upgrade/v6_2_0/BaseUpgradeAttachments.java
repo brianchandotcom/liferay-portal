@@ -428,6 +428,12 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 	}
 
 	protected Map<String, Long> getBitwiseValues(String name) throws Exception {
+		Map<String, Long> bitwiseValues = _bitwiseValues.get(name);
+
+		if (bitwiseValues != null) {
+			return bitwiseValues;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -448,7 +454,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			Map<String, Long> bitwiseValues = new HashMap<String, Long>();
+			bitwiseValues = new HashMap<String, Long>();
 
 			while (rs.next()) {
 				String actionId = rs.getString("actionId");
@@ -456,6 +462,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 				bitwiseValues.put(actionId, bitwiseValue);
 			}
+
+			_bitwiseValues.put(name, bitwiseValues);
 
 			return bitwiseValues;
 		}
@@ -693,6 +701,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeAttachments.class);
 
+	private Map<String, Map<String, Long>> _bitwiseValues =
+		new HashMap<String, Map<String, Long>>();
 	private Map<String, Long> _roleIds = new HashMap<String, Long>();
 
 }

@@ -15,19 +15,27 @@
 package com.liferay.portal.kernel.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
@@ -35,6 +43,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -100,6 +113,23 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.setLong(26, 0);
 
 			ps.executeUpdate();
+
+			Map<String, Long> bitwiseValues = getBitwiseValues(
+				DLFileEntry.class.getName());
+
+			List<String> actions = new ArrayList<String>();
+
+			actions.add(ActionKeys.VIEW);
+
+			long bitwiseValue = getBitwiseValue(bitwiseValues, actions);
+
+			addDLPermission(
+				companyId, DLFileEntry.class.getName(), fileEntryId,
+				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
+
+			addDLPermission(
+				companyId, DLFileEntry.class.getName(), fileEntryId,
+				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
 
 			return fileEntryId;
 		}
@@ -234,6 +264,34 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			ps.executeUpdate();
 
+			Map<String, Long> bitwiseValues = getBitwiseValues(
+				DLFolder.class.getName());
+
+			List<String> guestActions = new ArrayList<String>();
+
+			guestActions.add(ActionKeys.VIEW);
+
+			long guestBitwiseValue = getBitwiseValue(
+				bitwiseValues, guestActions);
+
+			addDLPermission(
+				companyId, DLFolder.class.getName(), folderId,
+				getRoleId(companyId, RoleConstants.GUEST), guestBitwiseValue);
+
+			List<String> siteMemberActions = new ArrayList<String>();
+
+			siteMemberActions.add(ActionKeys.VIEW);
+			siteMemberActions.add(ActionKeys.ADD_DOCUMENT);
+			siteMemberActions.add(ActionKeys.ADD_SUBFOLDER);
+
+			long siteMemberBitwiseValue = getBitwiseValue(
+				bitwiseValues, siteMemberActions);
+
+			addDLPermission(
+				companyId, DLFolder.class.getName(), folderId,
+				getRoleId(companyId, RoleConstants.SITE_MEMBER),
+				siteMemberBitwiseValue);
+
 			return folderId;
 		}
 		catch (Exception e) {
@@ -242,6 +300,50 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			}
 
 			return -1;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	protected void addDLPermission(
+			long companyId, String className, long primKey, long roleId,
+			long actionIds)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			long resourcePermissionId = increment();
+
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("insert into ResourcePermission (resourcePermissionId, ");
+			sb.append("companyId, name, scope, primKey, roleId, ownerId, ");
+			sb.append("actionIds) values (?, ?, ?, ?, ?, ?, ?, ?)");
+
+			String sql = sb.toString();
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, resourcePermissionId);
+			ps.setLong(2, companyId);
+			ps.setString(3, className);
+			ps.setInt(4, ResourceConstants.SCOPE_INDIVIDUAL);
+			ps.setLong(5, primKey);
+			ps.setLong(6, roleId);
+			ps.setLong(7, 0);
+			ps.setLong(8, actionIds);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to add permission " + className, e);
+			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -333,6 +435,73 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 		}
 
 		return attachments;
+	}
+
+	protected long getBitwiseValue(
+		Map<String, Long> bitwiseValues, List<String> actionIds) {
+
+		long bitwiseValue = 0;
+
+		for (String actionId : actionIds) {
+			Long actionIdBitwiseValue = bitwiseValues.get(actionId);
+
+			if (actionIdBitwiseValue == null) {
+				continue;
+			}
+
+			bitwiseValue |= actionIdBitwiseValue;
+		}
+
+		return bitwiseValue;
+	}
+
+	protected Map<String, Long> getBitwiseValues(String name) throws Exception {
+		Map<String, Long> bitwiseValues = _bitwiseValues.get(name);
+
+		if (bitwiseValues != null) {
+			return bitwiseValues;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		String currentShardName = null;
+
+		try {
+			currentShardName = ShardUtil.setTargetSource(
+				PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
+
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select actionId, bitwiseValue from ResourceAction " +
+					"where name = ?");
+
+			ps.setString(1, name);
+
+			rs = ps.executeQuery();
+
+			bitwiseValues = new HashMap<String, Long>();
+
+			while (rs.next()) {
+				String actionId = rs.getString("actionId");
+				long bitwiseValue = rs.getLong("bitwiseValue");
+
+				bitwiseValues.put(actionId, bitwiseValue);
+			}
+
+			_bitwiseValues.put(name, bitwiseValues);
+
+			return bitwiseValues;
+		}
+		finally {
+			if (Validator.isNotNull(currentShardName)) {
+				ShardUtil.setTargetSource(currentShardName);
+			}
+
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected abstract String getClassName();
@@ -434,6 +603,41 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			portletId);
 	}
 
+	protected long getRoleId(long companyId, String name) throws Exception {
+		Long roleId = _roleIds.get(name);
+
+		if (roleId != null) {
+			return roleId;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select roleId from Role_ where companyId = ? and name = ?");
+
+			ps.setLong(1, companyId);
+			ps.setString(2, name);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				roleId = rs.getLong("roleId");
+			}
+
+			_roleIds.put(name, roleId);
+
+			return roleId;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected abstract void updateAttachments() throws Exception;
 
 	protected void updateEntryAttachments(
@@ -524,5 +728,9 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeAttachments.class);
+
+	private Map<String, Map<String, Long>> _bitwiseValues =
+		new HashMap<String, Map<String, Long>>();
+	private Map<String, Long> _roleIds = new HashMap<String, Long>();
 
 }

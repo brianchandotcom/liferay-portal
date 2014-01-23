@@ -110,11 +110,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			addDLPermission(
 				companyId, groupId, fileEntryClassName, fileEntryId,
-				getRoleId(RoleConstants.GUEST), 3);
+				getRoleId(companyId, RoleConstants.GUEST), 3);
 
 			addDLPermission(
 				companyId, groupId, fileEntryClassName, fileEntryId,
-				getRoleId(RoleConstants.SITE_MEMBER), 3);
+				getRoleId(companyId, RoleConstants.SITE_MEMBER), 3);
 
 			return fileEntryId;
 		}
@@ -253,11 +253,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			addDLPermission(
 				companyId, groupId, folderClassName, folderId,
-				getRoleId(RoleConstants.GUEST), 1);
+				getRoleId(companyId, RoleConstants.GUEST), 1);
 
 			addDLPermission(
 				companyId, groupId, folderClassName, folderId,
-				getRoleId(RoleConstants.SITE_MEMBER), 29);
+				getRoleId(companyId, RoleConstants.SITE_MEMBER), 29);
 
 			return folderId;
 		}
@@ -503,7 +503,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			portletId);
 	}
 
-	protected long getRoleId(String name) throws Exception {
+	protected long getRoleId(long companyId, String name) throws Exception {
 		Long roleId = _roleIds.get(name);
 
 		if (roleId != null) {
@@ -518,14 +518,15 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select roleId from role_ where name = ?");
+				"select roleId from Role_ where companyId = ? and name = ?");
 
-			ps.setString(1, name);
+			ps.setLong(1, companyId);
+			ps.setString(2, name);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				roleId = rs.getLong(1);
+			if (rs.next()) {
+				roleId = rs.getLong("roleId");
 			}
 
 			_roleIds.put(name, roleId);

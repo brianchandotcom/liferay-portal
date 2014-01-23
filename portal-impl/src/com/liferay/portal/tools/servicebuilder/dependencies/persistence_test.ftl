@@ -239,6 +239,87 @@ public class ${entity.name}PersistenceTest {
 		</#list>
 	}
 
+	<#list entity.getFinderList() as finder>
+
+		@Test
+		public void testCountBy${finder.name}() {
+			try {
+				_persistence.countBy${finder.name}(
+
+				<#list finder.getColumns() as finderCol>
+					<#if finderCol.type == "boolean">
+						ServiceTestUtil.randomBoolean()
+					<#elseif finderCol.type == "double">
+						ServiceTestUtil.nextDouble()
+					<#elseif finderCol.type == "int">
+						ServiceTestUtil.nextInt()
+					<#elseif finderCol.type == "long">
+						ServiceTestUtil.nextLong()
+					<#elseif finderCol.type == "Date">
+						ServiceTestUtil.nextDate()
+					<#elseif finderCol.type == "String">
+						StringPool.BLANK
+					<#else>
+						null
+					</#if>
+
+					<#if finderCol_has_next >
+						,
+					</#if>
+				</#list>
+
+				);
+			}
+			catch (Exception e) {
+				Assert.fail(e.getMessage());
+			}
+		}
+
+		<#if finder.hasArrayableOperator()>
+			@Test
+			public void testCountBy${finder.name}Arrayable() {
+				try {
+					_persistence.countBy${finder.name}(
+
+					<#list finder.getColumns() as finderCol>
+						<#if finderCol.hasArrayableOperator()>
+							new ${finderCol.type}[]{
+						</#if>
+
+						<#if finderCol.type == "boolean">
+							ServiceTestUtil.randomBoolean()
+						<#elseif finderCol.type == "double">
+							ServiceTestUtil.nextDouble()
+						<#elseif finderCol.type == "int">
+							ServiceTestUtil.nextInt()
+						<#elseif finderCol.type == "long">
+							ServiceTestUtil.nextLong()
+						<#elseif finderCol.type == "Date">
+							ServiceTestUtil.nextDate()
+						<#elseif finderCol.type == "String">
+							StringPool.BLANK
+						<#else>
+							null
+						</#if>
+
+						<#if finderCol.hasArrayableOperator()>
+							}
+						</#if>
+
+						<#if finderCol_has_next>
+							,
+						</#if>
+					</#list>
+
+					);
+				}
+				catch (Exception e) {
+					Assert.fail(e.getMessage());
+				}
+			}
+		</#if>
+	</#list>
+
 	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		${entity.name} new${entity.name} = add${entity.name}();

@@ -785,6 +785,10 @@ public class LayoutTypePortletImpl
 			long userId, String portletId, String columnId, int columnPos)
 		throws PortalException, SystemException {
 
+		if (!hasPortletId(portletId)) {
+			return;
+		}
+
 		_enablePortletLayoutListener = false;
 
 		try {

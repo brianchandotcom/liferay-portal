@@ -104,8 +104,19 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_NotC_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" arrayable-operator="OR" comparator="!=" />
+			<finder-column name="parentCategoryId" arrayable-operator="OR" />
+		</finder>
 		<finder name="G_P_S" return-type="Collection">
 			<finder-column name="groupId" />
+			<finder-column name="parentCategoryId" arrayable-operator="OR" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_NotC_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" arrayable-operator="OR" comparator="!=" />
 			<finder-column name="parentCategoryId" arrayable-operator="OR" />
 			<finder-column name="status" />
 		</finder>

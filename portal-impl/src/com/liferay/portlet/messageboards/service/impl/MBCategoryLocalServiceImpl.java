@@ -331,6 +331,20 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			groupId, parentCategoryId, status, start, end);
 	}
 
+	public List<MBCategory> getCategories(
+			long groupId, long excludedCategoryId, long parentCategoryId,
+			int status, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.findByG_NotC_P(
+				groupId, excludedCategoryId, parentCategoryId, start, end);
+		}
+
+		return mbCategoryPersistence.findByG_NotC_P_S(
+			groupId, excludedCategoryId, parentCategoryId, status, start, end);
+	}
+
 	@Override
 	public List<MBCategory> getCategories(
 			long groupId, long[] parentCategoryIds, int start, int end)
@@ -353,6 +367,21 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		return mbCategoryPersistence.findByG_P_S(
 			groupId, parentCategoryIds, status, start, end);
+	}
+
+	public List<MBCategory> getCategories(
+			long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+			int status, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.findByG_NotC_P(
+				groupId, excludedCategoryIds, parentCategoryIds, start, end);
+		}
+
+		return mbCategoryPersistence.findByG_NotC_P_S(
+			groupId, excludedCategoryIds, parentCategoryIds, status, start,
+			end);
 	}
 
 	@Override
@@ -407,6 +436,20 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			groupId, parentCategoryId, status);
 	}
 
+	public int getCategoriesCount(
+			long groupId, long excludedCategoryId, long parentCategoryId,
+			int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.countByG_NotC_P(
+				groupId, excludedCategoryId, parentCategoryId);
+		}
+
+		return mbCategoryPersistence.countByG_NotC_P_S(
+			groupId, excludedCategoryId, parentCategoryId, status);
+	}
+
 	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds)
 		throws SystemException {
@@ -425,6 +468,20 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		return mbCategoryPersistence.countByG_P_S(
 			groupId, parentCategoryIds, status);
+	}
+
+	public int getCategoriesCount(
+			long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+			int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.countByG_NotC_P(
+				groupId, excludedCategoryIds, parentCategoryIds);
+		}
+
+		return mbCategoryPersistence.countByG_NotC_P_S(
+			groupId, excludedCategoryIds, parentCategoryIds, status);
 	}
 
 	@Override

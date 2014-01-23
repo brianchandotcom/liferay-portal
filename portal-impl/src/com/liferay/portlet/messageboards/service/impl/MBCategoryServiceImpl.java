@@ -133,6 +133,21 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(
+			long groupId, long excludedCategoryId, long parentCategoryId,
+			int status, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.filterFindByG_NotC_P(
+				groupId, excludedCategoryId, parentCategoryId, start, end);
+		}
+
+		return mbCategoryPersistence.filterFindByG_NotC_P_S(
+			groupId, excludedCategoryId, parentCategoryId, status, start, end);
+	}
+
+	@Override
+	public List<MBCategory> getCategories(
 			long groupId, long[] parentCategoryIds, int start, int end)
 		throws SystemException {
 
@@ -153,6 +168,22 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		return mbCategoryPersistence.filterFindByG_P_S(
 			groupId, parentCategoryIds, status, start, end);
+	}
+
+	@Override
+	public List<MBCategory> getCategories(
+			long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+			int status, int start, int end)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.filterFindByG_NotC_P(
+				groupId, excludedCategoryIds, parentCategoryIds, start, end);
+		}
+
+		return mbCategoryPersistence.filterFindByG_NotC_P_S(
+			groupId, excludedCategoryIds, parentCategoryIds, status, start,
+			end);
 	}
 
 	@Override
@@ -178,6 +209,21 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public int getCategoriesCount(
+			long groupId, long excludedCategoryId, long parentCategoryId,
+			int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.filterCountByG_NotC_P(
+				groupId, excludedCategoryId, parentCategoryId);
+		}
+
+		return mbCategoryPersistence.filterCountByG_NotC_P_S(
+			groupId, excludedCategoryId, parentCategoryId, status);
+	}
+
+	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds)
 		throws SystemException {
 
@@ -197,6 +243,21 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		return mbCategoryPersistence.filterCountByG_P_S(
 			groupId, parentCategoryIds, status);
+	}
+
+	@Override
+	public int getCategoriesCount(
+			long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+			int status)
+		throws SystemException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbCategoryPersistence.filterCountByG_NotC_P(
+				groupId, excludedCategoryIds, parentCategoryIds);
+		}
+
+		return mbCategoryPersistence.filterCountByG_NotC_P_S(
+			groupId, excludedCategoryIds, parentCategoryIds, status);
 	}
 
 	@Override

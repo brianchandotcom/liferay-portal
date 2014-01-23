@@ -103,6 +103,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" />
+		<execute action="PGNavigation#assertTextEquals" locator-key1="BREADCRUMB_ENTRY" value1="${pageName}" />
 	</command>
 </definition>

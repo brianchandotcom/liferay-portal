@@ -26,17 +26,11 @@
 		<execute macro="SitePage#expandRootCP" />
 
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_LINK_1" />
-
 		<execute action="CPSitepages#click" locator-key1="TOOLBAR_ADD_CHILD_PAGE" />
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${siteChildPageName}" />
 		<execute action="CPSitepagesAddpage#click" locator-key1="ADD_PAGE_BUTTON" />
 		<execute action="CPSitepages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute macro="SitePage#expandTreeCP" />
-
-		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePageName}" />
-		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_2" value1="${siteChildPageName}" />
 	</command>
 
 	<command name="addCP">
@@ -74,14 +68,14 @@
 
 		<execute action="CPSitepagesAddpage#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${sitePageName}" />
 
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<var name="key_pageType" value="${pageType}" />
+
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
-				<var name="key_pageTemplateName" value="${pageTemplateName}" />
-
-				<var name="key_pageType" value="${pageTemplateName}" />
-
 				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+
 				<execute action="CPSitepagesAddpage#click" locator-key1="PAGE_TYPE_RADIO" />
 				<execute action="CPSitepagesAddpage#assertTextEquals" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
 				<execute action="CPSitepagesAddpage#check" locator-key1="PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
@@ -125,6 +119,41 @@
 		<execute action="CPSitepagesAddpage#assertChecked" locator-key1="PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
+	<command name="copyApplicationsFromPageToPagePG">
+		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
+		<execute action="DockbarEdit#assertClick" locator-key1="TOOLBAR_COPY_APPLICATIONS" value1="Copy Applications" />
+		<execute action="DockbarEdit#assertTextEquals" locator-key1="COPY_APPLICATIONS_MESSAGE_INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
+		<execute action="DockbarEdit#assertTextEquals" locator-key1="COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
+		<execute action="DockbarEdit#click" locator-key1="COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${sitePageName}" />
+		<execute action="DockbarEdit#assertClick" locator-key1="COPY_BUTTON" value1="Copy" />
+
+		<execute action="CPBlogs#assertTextNotPresent" locator-key1="PORTLET_TITLE" value1="Blogs" />
+	</command>
+
+	<command name="deleteSitepagesPG">
+		<execute macro="Page#openURL" />
+
+		<while>
+			<condition action="Home#isElementPresent" locator-key1="PAGE_2" />
+			<then>
+				<execute action="Home#mouseOver" locator-key1="PAGE_2" />
+				<execute action="Home#click" locator-key1="PAGE_DELETE" />
+				<execute action="Home#confirm" locator-key1="PAGE_CONFIRM" value1="Are you sure you want to delete this page?" />
+				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE" />
+			</then>
+		</while>
+	</command>
+
+	<command name="embeddedPageTypePG">
+
+		<execute action="DockbarEdit#click" locator-key1="DOCKBAR_EDIT" value1="Edit" />
+		<execute action="DockbarEdit#assertClick" locator-key1="DETAILS_TYPE_PAGE_OPTIONS" value1="Embedded" />
+		<execute action="DockbarEdit#type" locator-key1="DETAILS_TYPE_PAGE_URL" value1="http://www.liferay.com" />
+		<execute action="DockbarEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="DockbarEdit#assertTextPresent" locator-key1="DOCKBAR_LIFERAY_BANNER" value1="Liferay" />
+	</command>
+
 	<command name="expandRootCP">
 		<execute action="CPSitepages#click" locator-key1="PAGE_TREE_ROOT_ARROW" />
 		<execute action="CPSitepages#assertElementPresent" locator-key1="PAGE_TREE_PAGE_LINK_1" />
@@ -147,20 +176,6 @@
 				<execute action="CPSitepages#click" locator-key1="PAGE_TREE_PAGE_ARROW_1" />
 			</then>
 		</if>
-	</command>
-
-	<command name="viewChildPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${sitePageName}" />
-		</execute>
-
-		<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
-		<execute action="Home#assertClick" locator-key1="PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
-		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${siteChildPageName}" />
-		<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
-		<execute action="Home#assertLocation" value1="${sitePageURL}" />
 	</command>
 
 	<command name="selectSitePageTypeRadioCP">
@@ -187,6 +202,47 @@
 			</elseif>
 			<else>
 				<execute macro="SitePage#addSitePageTypePanelCP" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewChildPG">
+		<var name="childPageCounter" value="1" />
+		<var name="i" value="0" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePageName}" />
+		</execute>
+
+		<if>
+			<equals arg1="${childPageCount}" arg2="1" />
+			<then>
+				<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
+				<execute action="Home#assertClick" locator-key1="PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
+				<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="${siteChildPageName}" />
+				<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+				<execute action="Home#assertLocation" value1="${sitePageURL}" />
+			</then>
+			<else>
+				<while>
+					<not>
+						<equals arg1="${i}" arg2="${childPageCount}" />
+					</not>
+					<then>
+						<execute action="Home#mouseOver" locator-key1="PAGE_1" value1="${sitePageName}" />
+						<execute action="Home#assertClick" locator-key1="PAGE_1_CHILD_PAGE_${childPageCounter}" value1="Site Child Page ${childPageCounter}" />
+						<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_1" value1="${siteName}" />
+						<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${sitePageName}" />
+						<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_3" value1="Site Child Page ${childPageCounter}" />
+						<execute action="Home#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+						<execute action="Home#assertLocation" value1="http://localhost:8080/web/site-name/site-child-page-${childPageCounter}" />
+
+						<var name="childPageCounter" value="${childPageCounter?increment()}" />
+						<var name="i" value="${i?increment()}" />
+					</then>
+				</while>
 			</else>
 		</if>
 	</command>

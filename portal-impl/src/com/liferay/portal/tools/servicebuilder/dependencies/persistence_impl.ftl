@@ -1229,9 +1229,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					catch (Exception e) {
 						throw processException(e);
 					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
-					}
 				}
 			</#if>
 		</#if>

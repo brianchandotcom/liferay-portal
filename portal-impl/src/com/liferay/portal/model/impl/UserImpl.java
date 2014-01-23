@@ -240,8 +240,8 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	/**
-	 * Returns the user's display URL, discounting the the URL of the user's
-	 * default site intranet home page.
+	 * Returns the user's display URL, discounting the URL of the user's default
+	 * site intranet home page.
 	 *
 	 * <p>
 	 * The logic for the display URL to return is as follows:
@@ -349,7 +349,7 @@ public class UserImpl extends UserBaseImpl {
 
 	/**
 	 * Returns the user's display URL based on the theme display, discounting
-	 * the the URL of the user's default site intranet home page.
+	 * the URL of the user's default site intranet home page.
 	 *
 	 * <p>
 	 * The logic for the display URL to return is as follows:

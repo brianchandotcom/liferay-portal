@@ -29,7 +29,9 @@ public class TestCaseConverter extends BaseConverter {
 		Map<String, Object> context = getContext();
 
 		context.put("blockLevelStack", new FreeMarkerStack());
+		context.put("contextStack", new FreeMarkerStack());
 		context.put("elementsStack", new FreeMarkerStack());
+		context.put("forParameterStack", new FreeMarkerStack());
 		context.put("ifTypeStack", new FreeMarkerStack());
 		context.put("logicalOperatorElementStack", new FreeMarkerStack());
 		context.put("macroNameStack", new FreeMarkerStack());

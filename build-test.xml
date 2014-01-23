@@ -513,6 +513,7 @@
 				<replace file="${changelog.dir}/git-build-log.html">
 					<replacetoken><![CDATA[<!-- NEXT -->]]></replacetoken>
 					<replacevalue expandproperties="true"><![CDATA[<!-- NEXT -->
+
 		<div id="updateWrapper">
 			<div class="divider"></div>
 			<div id="update">

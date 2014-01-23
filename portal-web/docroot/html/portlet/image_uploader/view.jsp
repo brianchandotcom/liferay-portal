@@ -37,9 +37,9 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 		%>
 
 		<aui:script>
-		    <c:if test="<%= fileEntry != null%>">
+			<c:if test="<%= fileEntry != null %>">
 				Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo('<%= previewURL %>', '<%= fileEntry.getFileEntryId() %>');
-		    </c:if>
+			</c:if>
 
 			Liferay.Util.getWindow().hide();
 		</aui:script>

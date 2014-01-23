@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -434,7 +436,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 		try {
 			currentShardName = ShardUtil.setTargetSource(
-				PropsValues.SHARD_DEFAULT_NAME);
+				PropsUtil.get(PropsKeys.SHARD_DEFAULT_NAME));
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 

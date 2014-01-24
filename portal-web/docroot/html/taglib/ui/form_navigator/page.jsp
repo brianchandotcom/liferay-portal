@@ -183,6 +183,18 @@ if (Validator.isNotNull(historyKey)) {
 					}
 				).render();
 
+				function onSubmitError() {
+					var instance = this;
+
+					var boundingBox = A.one(instance.get('boundingBox');
+					var field = boundingBox.one(instance.get('errorClass')));
+					var formSection = field.ancestor('.form-section');
+					var sectionId = formSection.get('id');
+
+					selectTabBySectionId(sectionId);
+					updateSectionError();
+				}
+
 				var history = new A.HistoryHash();
 
 				function selectTabBySectionId(sectionId) {
@@ -331,6 +343,23 @@ if (Validator.isNotNull(historyKey)) {
 					formNode.on('blur', updateSectionError, 'input, select, textarea');
 
 					formNode.on('autofields:update', updateSectionError);
+
+					Liferay.after(
+						'form:registered',
+						function(event) {
+							var formId = formNode.attr('id');
+
+							if (event.formName === formId) {
+								if (event.form) {
+									var validator = event.form.formValidator;
+
+									if (A.instanceOf(validator, A.FormValidator)) {
+										validator.on('submitError', A.bind(onSubmitError, validator));
+									}
+								}
+							}
+						}
+					);
 				}
 			</aui:script>
 		</c:otherwise>

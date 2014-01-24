@@ -123,7 +123,7 @@ AUI.add(
 						}
 
 						linkNode.setAttribute('href', url);
-						linkNode.setContent(title);
+						linkNode.setContent(Liferay.Util.escapeHTML(title));
 					},
 
 					_uiSetValue: function(val) {

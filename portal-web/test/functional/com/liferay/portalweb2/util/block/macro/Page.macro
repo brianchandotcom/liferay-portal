@@ -5,11 +5,34 @@
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
 		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+
+		<if>
+			<isset var="pageType" />
+			<then>
+				<execute macro="Page#selectPageTypeRadioPG">
+					<var name="pageType" value="${pageType}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
 
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+	</command>
+
+	<command name="addPageTypePanelPG">
+		<var name="key_componentName" value="${componentName}" />
+
+		<execute action="Dockbar#click" locator-key1="ADD_PAGE_PANEL_COMPONENT_TREE_ARROW" />
+
+		<for list="${portletNameList}" param="portletName" >
+			<var name="key_componentOrPortletName" value="${portletName}" />
+
+			<execute action="Dockbar#click" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
+			<execute action="Dockbar#assertChecked" locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
+		</for>
 	</command>
 
 	<command name="addWithWorkflowPG">
@@ -254,6 +277,16 @@
 		</if>
 	</command>
 
+	<command name="selectPageTypeRadioPG">
+		<var name="key_pageType" value="${pageType}" />
+
+		<execute action="Dockbar#click" locator-key1="ADD_PAGE_TYPE_RADIO" value1="${pageType}" />
+
+		<execute macro="Page#addPageTypePanelPG">
+			<var name="portletNameList" value="${portletNameList}" />
+		</execute>
+	</command>
+
 	<command name="tearDownPG">
 		<execute macro="Page#openURL" />
 
@@ -270,6 +303,23 @@
 
 	<command name="viewPageLayoutColumn">
 		<execute action="Home#assertElementPresent" locator-key1="${pageColumnLayout}" />
+	</command>
+	
+	<command name="viewPanelPortletListPG">
+		<var name="key_componentName" value="${componentName}" />
+
+		<execute action="PGPanel#assertTextEquals" locator-key1="PANEL_TITLE" value1="${componentName}"/>
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="PGPanel#assertTextEquals" locator-key1="PANEL_PAGE_TITLE" value1="${pageName}"/>
+		<execute action="PGPanel#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Please select a tool from the left menu."/>
+
+		<for list="${portletNameList}" param="portletName" >
+			<var name="key_portletName" value="${portletName}" />
+
+			<execute action="PGPanel#assertTextEquals" locator-key1="MENU_ITEM" value1="${portletName}"/>
+		</for>
 	</command>
 
 	<command name="viewPG">

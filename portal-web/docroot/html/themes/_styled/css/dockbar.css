@@ -1107,7 +1107,7 @@ $editLayoutPanelWidth: 460px;
 
 	/* LPS-42547 */
 
-	.dockbar-split .dockbar .nav-collapse {
+	.dockbar .nav-collapse {
 		-webkit-transform: none;
 	}
 }

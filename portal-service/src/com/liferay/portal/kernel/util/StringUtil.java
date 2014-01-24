@@ -695,6 +695,18 @@ public class StringUtil {
 			s, queryTerms, "<span class=\"highlight\">", "</span>");
 	}
 
+	/**
+	 * Returns the string <code>s</code> with any of the query terms found
+	 * within it highlighted with the syntax highlighting tags.
+	 *
+	 * @param  s the string to search (optionally <code>null</code>)
+	 * @param  queryTerms the terms to search for in the string (optionally
+	 *         <code>null</code>)
+	 * @param  highlight1 the beginning highlight tag
+	 * @param  highlight2 the ending highlight tag
+	 * @return the string <code>s</code> with any of the query terms found
+	 *         within it highlighted with the syntax highlighting tags
+	 */
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
@@ -3781,6 +3793,28 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Returns a string representing the hexidecimal character codes of the
+	 * integer.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * toHexString(10) returns "a"
+	 * toHexString(15) returns "f"
+	 * toHexString(10995) returns "2af3"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  i the integer to convert
+	 * @return a string representing the hexidecimal character codes of the
+	 *         integer
+	 */
 	public static String toHexString(int i) {
 		char[] buffer = new char[8];
 
@@ -3796,6 +3830,26 @@ public class StringUtil {
 		return new String(buffer, index, 8 - index);
 	}
 
+	/**
+	 * Returns a string representing the hexidecimal character codes of the long
+	 * integer.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * toHexString(12345678910L) returns "2dfdc1c3e"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  l the long integer to convert
+	 * @return a string representing the hexidecimal character codes of the long
+	 *         integer
+	 */
 	public static String toHexString(long l) {
 		char[] buffer = new char[16];
 
@@ -3811,6 +3865,15 @@ public class StringUtil {
 		return new String(buffer, index, 16 - index);
 	}
 
+	/**
+	 * Returns a string representing the hexidecimal character codes of the
+	 * <code>Integer</code> or <code>Long</code> object type. If the object is
+	 * not an instance of these types, the object's original value is returned.
+	 *
+	 * @param  obj the object to convert
+	 * @return a string representing the hexidecimal character codes of the
+	 *         object
+	 */
 	public static String toHexString(Object obj) {
 		if (obj instanceof Integer) {
 			return toHexString(((Integer)obj).intValue());

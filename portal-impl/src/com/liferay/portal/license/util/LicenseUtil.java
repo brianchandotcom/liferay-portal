@@ -200,98 +200,43 @@ public class LicenseUtil {
 
 		Set<String> macAddresses = new HashSet<String>();
 
-		String osName = System.getProperty("os.name");
-
-		String executable = null;
-		String arguments = null;
-
-		if (StringUtil.startsWith(osName, "win")) {
-			executable = "ipconfig";
-			arguments = "/all";
-		}
-		else {
-			if (StringUtil.startsWith(osName, "aix")) {
-				executable = "netstat";
-				arguments = "-ina";
-			}
-			else {
-				executable = "ifconfig";
-				arguments = "-a";
-			}
-
-			File sbinDir = new File("/sbin", executable);
-
-			if (sbinDir.exists()) {
-				executable = "/sbin/".concat(executable);
-			}
-		}
-
 		try {
-			Runtime runtime = Runtime.getRuntime();
+			List<NetworkInterface> networkInterfaces = Collections.list(
+				NetworkInterface.getNetworkInterfaces());
 
-			Process process = runtime.exec(
-				new String[] {executable, arguments});
+			for (NetworkInterface networkInterface : networkInterfaces) {
+				byte[] hardwareAddress = networkInterface.getHardwareAddress();
 
-			macAddresses = getMacAddresses(osName, process.getInputStream());
+				if (hardwareAddress == null) {
+					continue;
+				}
+
+				int macAddressLength = hardwareAddress.length * 3 - 1;
+				StringBuilder sb = new StringBuilder(macAddressLength);
+
+				String hexString = StringUtil.bytesToHexString(hardwareAddress);
+
+				for (int i = 0; i < hexString.length(); i += 2) {
+					if (i != 0) {
+						sb.append(CharPool.COLON);
+					}
+
+					sb.append(Character.toLowerCase(hexString.charAt(i)));
+					sb.append(Character.toLowerCase(hexString.charAt(i + 1)));
+				}
+
+				String macAddress = sb.toString();
+
+				macAddresses.add(macAddress);
+			}
 		}
 		catch (Exception e) {
+			_log.error("Unable to read local server's MAC addresses");
+
 			_log.error(e, e);
 		}
 
 		_macAddresses = macAddresses;
-
-		return new HashSet<String>(macAddresses);
-	}
-
-	public static Set<String> getMacAddresses(
-			String osName, InputStream processInputStream)
-		throws Exception {
-
-		Set<String> macAddresses = new HashSet<String>();
-
-		Pattern macAddressPattern = _macAddressPattern1;
-
-		if (StringUtil.startsWith(osName, "aix")) {
-			macAddressPattern = _macAddressPattern2;
-		}
-
-		String processOutput = StringUtil.read(processInputStream);
-
-		String[] lines = StringUtil.split(processOutput, CharPool.NEW_LINE);
-
-		for (String line : lines) {
-			Matcher matcher = macAddressPattern.matcher(line);
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String macAddress = matcher.group(1);
-
-			macAddress = StringUtil.toLowerCase(macAddress);
-			macAddress = macAddress.replace(CharPool.DASH, CharPool.COLON);
-			macAddress = macAddress.replace(CharPool.PERIOD, CharPool.COLON);
-
-			StringBuilder sb = new StringBuilder(17);
-
-			sb.append(macAddress);
-
-			for (int i = 1; i < 5; ++i) {
-				int pos = (i * 3) - 1;
-
-				if (sb.charAt(pos) != CharPool.COLON) {
-					sb.insert((i - 1) * 3, CharPool.NUMBER_0);
-				}
-			}
-
-			if (sb.length() < 17) {
-				sb.insert(15, CharPool.NUMBER_0);
-			}
-
-			macAddress = sb.toString();
-
-			macAddresses.add(macAddress);
-		}
 
 		return macAddresses;
 	}
@@ -713,10 +658,6 @@ public class LicenseUtil {
 		new MethodHandler(new MethodKey(LicenseUtil.class, "getServerInfo"));
 	private static Set<String> _ipAddresses;
 	private static Set<String> _macAddresses;
-	private static Pattern _macAddressPattern1 = Pattern.compile(
-		"\\s((\\p{XDigit}{1,2}(-|:)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
-	private static Pattern _macAddressPattern2 = Pattern.compile(
-		"\\s((\\p{XDigit}{1,2}(\\.)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
 	private static MethodKey _registerOrderMethodKey = new MethodKey(
 		LicenseUtil.class, "registerOrder", String.class, String.class,
 		int.class);

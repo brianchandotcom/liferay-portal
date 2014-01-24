@@ -485,6 +485,7 @@
 	</command>
 
 	<command name="OrganizationsView" priority="5">
+		<var name="allowManualMembershipManagement" value="true" />
 		<var name="orgName1" value="Organization Name 1" />
 		<var name="orgName2" value="Organization Name 2" />
 		<var name="orgName3" value="Organization Name 3" />
@@ -534,13 +535,13 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="siteScopeName" value="${orgName1}" />
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#manageMembershipOptionsInSites">
 			<var name="allowManualMembershipManagement" value="${allowManualMembershipManagement}" />
+			<var name="orgName" value="${orgName1}" />
 		</execute>
 
 		<execute macro="Page#gotoUsersCP">

@@ -51,6 +51,7 @@ public abstract class UpgradeProcess extends BaseDBProcess {
 
 	public boolean hasTable(String tableName) throws Exception {
 		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
+			doHasTable(StringUtil.toUpperCase(tableName)) ||
 			doHasTable(tableName)) {
 
 			return true;

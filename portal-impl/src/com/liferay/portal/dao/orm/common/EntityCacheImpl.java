@@ -263,7 +263,7 @@ public class EntityCacheImpl
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
 		if (quiet) {
-			portalCache.putQuiet(result, result);
+			portalCache.putQuiet(cacheKey, result);
 		}
 		else {
 			portalCache.put(cacheKey, result);

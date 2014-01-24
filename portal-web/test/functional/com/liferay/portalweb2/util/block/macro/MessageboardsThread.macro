@@ -169,8 +169,8 @@
 				<execute action="PGMessageboardsMovethread#selectFrame" value1="relative=top" />
 				<execute action="PGMessageboardsMovethread#assertElementPresent" locator-key1="CATEGORY_FIELD" />
 				<execute action="PGMessageboardsMovethread#check" locator-key1="ADD_EXPLANATION_POST_CHECKBOX" />
-				<execute action="PGMessageboardsMovethread#type" locator-key1="ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${mbExplanationSubject}" />
-				<execute action="PGMessageboardsMovethread#type" locator-key1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${mbExplanationBody}" />
+				<execute action="PGMessageboardsMovethread#type" locator-key1="ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
+				<execute action="PGMessageboardsMovethread#type" locator-key1="ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 

@@ -1,15 +1,15 @@
 AUI.add(
 	'liferay-resize-rtl',
 	function(A) {
-		var ARules = A.Resize.RULES;
+		var RULES = A.Resize.RULES;
 
-		var TEMP_L_RULE = ARules.l;
+		var tmpL = RULES.l;
 
-		ARules.l = ARules.r;
-		ARules.r = TEMP_L_RULE;
+		RULES.l = RULES.r;
+		RULES.r = tmpL;
 	},
 	'',
 	{
-		requires: 'resize-base'
+		requires: ['resize-base']
 	}
 );

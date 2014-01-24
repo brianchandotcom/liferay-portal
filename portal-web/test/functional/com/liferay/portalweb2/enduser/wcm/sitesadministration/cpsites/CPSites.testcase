@@ -204,6 +204,84 @@
 		</execute>
 	</command>
 
+	<command name="AddSiteNameWithComma" priority="3">
+		<var name="siteName" value="Site Name," />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="CannotAddDuplicateSiteName" priority="3">
+		<var name="siteName" value="Site Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteNameInvalidCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameInvalid" value="Duplicate" />
+		</execute>
+	</command>
+
+	<command name="CannotAddNullSiteName" priority="3">
+		<var name="siteName" value=" " />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteNameInvalidCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameInvalid" value="Null" />
+		</execute>
+	</command>
+
+	<command name="CannotAddSiteNameWithAsterisk" priority="3">
+		<var name="siteName" value="Site Name*" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteNameInvalidCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="CannotAddSiteNameWithNumbersOnly" priority="3">
+		<var name="siteName" value="22222" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteNameInvalidCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
 	<command name="DeleteSite" priority="5">
 		<var name="siteName" value="Site Name" />
 

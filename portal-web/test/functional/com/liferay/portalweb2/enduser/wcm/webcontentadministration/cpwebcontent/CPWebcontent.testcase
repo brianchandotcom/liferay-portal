@@ -165,13 +165,11 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
-
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
-			<var name="templateScript" value="${templateScript}" />
+			<var name="templateScript"><![CDATA["/root/dynamic-element[@name='text']"]]></var>
 		</execute>
 	</command>
 

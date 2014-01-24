@@ -107,12 +107,6 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 				</aui:form>
 			</div>
 		</aui:nav-bar-search>
-
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook() %>">
-			<aui:script>
-				Liferay.Util.focusFormField(document.getElementById('<portlet:namespace />keywords1'));
-			</aui:script>
-		</c:if>
 	</c:if>
 </aui:nav-bar>
 

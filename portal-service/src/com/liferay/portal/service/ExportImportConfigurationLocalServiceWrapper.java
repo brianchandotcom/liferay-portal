@@ -283,6 +283,64 @@ public class ExportImportConfigurationLocalServiceWrapper
 		_exportImportConfigurationLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	@Override
+	public com.liferay.portal.model.ExportImportConfiguration addExportImportConfiguration(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfigurationLocalService.addExportImportConfiguration(userId,
+			groupId, name, description, type, settingsMap, serviceContext);
+	}
+
+	@Override
+	public void deleteGroupExportImportConfigurations(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_exportImportConfigurationLocalService.deleteGroupExportImportConfigurations(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(groupId,
+			type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.ExportImportConfiguration> getExportImportConfigurations(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfigurationLocalService.getExportImportConfigurations(groupId,
+			type, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getExportImportConfigurationsCount(long groupId, int type)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfigurationLocalService.getExportImportConfigurationsCount(groupId,
+			type);
+	}
+
+	@Override
+	public com.liferay.portal.model.ExportImportConfiguration updateExportImportConfiguration(
+		long configurationId, java.lang.String name,
+		java.lang.String description,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _exportImportConfigurationLocalService.updateExportImportConfiguration(configurationId,
+			name, description, settingsMap, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

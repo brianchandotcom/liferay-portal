@@ -372,6 +372,10 @@ body:first-of-type {
 
 			.taglib-text {
 				@extend %portlet-action-bar-fx-text;
+
+				@include respond-to(phone, tablet) {
+					max-width: 200px;
+				}
 			}
 		}
 	}

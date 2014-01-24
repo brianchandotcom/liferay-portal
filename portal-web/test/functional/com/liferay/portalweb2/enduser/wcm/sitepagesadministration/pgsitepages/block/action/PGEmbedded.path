@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>PGEmbedded</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGEmbedded</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGEmbedded</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_IFRAME</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMBEDDED_LIFERAY_COPYRIGHT_TEXT</td>
+	<td>//p[@class='copyright']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

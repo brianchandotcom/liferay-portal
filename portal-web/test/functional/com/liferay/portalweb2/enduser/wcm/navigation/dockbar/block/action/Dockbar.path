@@ -133,6 +133,43 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ADD_PAGE_TYPE-->
+<tr>
+	<td>ADD_PAGE_TYPE_RADIO</td>
+	<td>//label[@class='radio' and contains(.,'${key_pageType}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_PAGE_TYPE_PANEL-->
+<tr>
+	<td>ADD_PAGE_TYPE_PANEL_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_145_descriptionPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_PANEL_COMPONENT_TREE_ARROW</td>
+	<td>//span[contains(.,'${key_componentName}')]/../i[contains(@class,'tree-hitarea icon-plus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_TYPE_PANEL_CHECKBOX</td>
+	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_TYPE_PANEL_CHECKBOX_INPUT</td>
+	<td>//span[contains(.,'${key_componentOrPortletName}')]/../i[contains(@class,'tree-node-checkbox')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--EDIT-->
 <tr>
 	<td>EDIT</td>

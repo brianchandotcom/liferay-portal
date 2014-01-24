@@ -1,4 +1,10 @@
 <definition>
+	<command name="assertChecked">
+		<case locator-key1="ADD_PAGE_TYPE_PANEL_CHECKBOX_INPUT">
+			<execute function="AssertChecked#assertCheckedIfNotVisible" />
+		</case>
+	</command>
+
 	<command name="assertClick">
 		<case locator-key1="ADD">
 			<execute function="AssertClick#assertTextClickAtClickSidebar" />

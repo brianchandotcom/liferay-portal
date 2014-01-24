@@ -4,4 +4,10 @@
 
 		<execute selenium="assertChecked" />
 	</command>
+
+	<command name="assertCheckedIfNotVisible">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="assertChecked" />
+	</command>
 </definition>

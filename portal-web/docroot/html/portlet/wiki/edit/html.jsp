@@ -30,7 +30,6 @@ String format = "html";
 	editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
 	fileBrowserParams="<%= fileBrowserParams %>"
 	name="content"
-	resizable="<%= false %>"
 	width="100%"
 />
 

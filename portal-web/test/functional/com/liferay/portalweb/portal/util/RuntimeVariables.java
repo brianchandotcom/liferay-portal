@@ -104,12 +104,6 @@ public class RuntimeVariables {
 
 				String operandValue = context.get(operand);
 
-				if ((_forParameterName != null) &&
-					operand.equals(_forParameterName)) {
-
-					operandValue = _forParameterValue;
-				}
-
 				String replaceRegex = "\\$\\{([^}]*?)\\}";
 
 				String result = "";
@@ -141,21 +135,13 @@ public class RuntimeVariables {
 			else {
 				String varName = statement;
 
-				if (!context.containsKey(varName) &&
-					!varName.equals(_forParameterName)) {
-
+				if (!context.containsKey(varName)) {
 					continue;
 				}
 
 				String replaceRegex = "\\$\\{([^}]*?)\\}";
 
 				String result = context.get(varName);
-
-				if ((_forParameterName != null) &&
-					_forParameterName.equals(varName)) {
-
-					result = _forParameterValue;
-				}
 
 				result = Matcher.quoteReplacement(result);
 
@@ -178,18 +164,6 @@ public class RuntimeVariables {
 		return _instance._replace(text);
 	}
 
-	public static void resetForParameter() {
-		_forParameterName = null;
-
-		_forParameterValue = null;
-	}
-
-	public static void setForParameter(String name, String value) {
-		_forParameterName = name;
-
-		_forParameterValue = value;
-	}
-
 	public static void setValue(String key, String value) {
 		_instance._setValue(key, value);
 	}
@@ -197,7 +171,7 @@ public class RuntimeVariables {
 	public static boolean variableExists(
 		String name, Map<String, String> context) {
 
-		return (context.containsKey(name) || name.equals(_forParameterName));
+		return context.containsKey(name);
 	}
 
 	private RuntimeVariables() {
@@ -288,9 +262,6 @@ public class RuntimeVariables {
 	}
 
 	private static RuntimeVariables _instance = new RuntimeVariables();
-
-	private static String _forParameterName;
-	private static String _forParameterValue;
 
 	private ContextReplace _contextReplace;
 	private Map<String, String> _runtimeVariables =

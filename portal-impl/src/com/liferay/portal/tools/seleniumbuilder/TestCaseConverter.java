@@ -30,11 +30,13 @@ public class TestCaseConverter extends BaseConverter {
 
 		context.put("blockLevelStack", new FreeMarkerStack());
 		context.put("elementsStack", new FreeMarkerStack());
+		context.put("forParameterStack", new FreeMarkerStack());
 		context.put("ifTypeStack", new FreeMarkerStack());
 		context.put("logicalOperatorElementStack", new FreeMarkerStack());
 		context.put("macroNameStack", new FreeMarkerStack());
 		context.put("testCaseNameStack", new FreeMarkerStack());
 		context.put("testCaseName", testCaseName);
+		context.put("variableContextStack", new FreeMarkerStack());
 
 		String javaContent = processTemplate("test_case.ftl", context);
 

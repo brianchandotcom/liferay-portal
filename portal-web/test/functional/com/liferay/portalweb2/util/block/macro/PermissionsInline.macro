@@ -8,7 +8,7 @@
 		<execute action="PGBlogs#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute action="PGBlogsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
-		<execute action="PGBlogsConfiguration#assertClick" locator-key1="PERMISSIONS_NAVIGATION" value1="Permissions" />
+		<execute action="PGBlogsConfiguration#assertClick" locator-key1="NAVIGATION_PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="gotoBlogsPG">
@@ -109,8 +109,8 @@
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 		<execute action="Permissions#assertTextEquals" locator-key1="HEADER_TITLE" value1="${webContentTitle}" />
 	</command>
-	
-	<command name="viewNoPermissions">
+
+	<command name="viewPermissionsRemoved">
 		<var name="key_roleName" value="${roleName?replace(' ', '-')}" />
 		<var name="key_roleName" value="${key_roleName?lowercase()}" />
 

@@ -1289,12 +1289,12 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWithGuestPermissions" priority="4">
+	<command name="ViewBlogsEntryWithGuestPermissionsRemoved" priority="4">
 		<var name="entryContent1" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle1" value="Blogs Entry1 Title" />
 		<var name="entryTitle2" value="Blogs Entry2 Title" />
-		<var name="roleName" value="guest" />
+		<var name="roleName" value="Guest" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1318,7 +1318,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addNoViewPermissionsPG">
+		<execute macro="BlogsEntry#removeViewPermissionsPG">
 			<var name="entryTitle" value="${entryTitle1}" />
 			<var name="roleName" value="${roleName}" />
 		</execute>
@@ -1341,12 +1341,9 @@
 		<execute macro="User#firstLoginPG" />
 	</command>
 
-	<command name="ViewBlogsPortletNoPermissions" priority="4">
-		<var name="permissionDefinitionKey1" value="CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX" />
-		<var name="permissionDefinitionKey2" value="CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX" />
-		<var name="permissionDefinitionKey3" value="CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
-		<var name="permissionDefinitionKey4" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-		<var name="permissionDefinitionKey5" value="CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
+	<command name="ViewBlogsPortletWithNoPermissions" priority="4">
+		<var name="permissionDefinitionKeyList" value="CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX,CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX,CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX,CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX,CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
+		<var name="permissionDefinitionKeyView" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 		<var name="roleName1" value="Guest" />
 		<var name="roleName2" value="Owner" />
 		<var name="roleName3" value="Site Member" />
@@ -1355,38 +1352,20 @@
 
 		<execute macro="Role#removePermissionPG">
 			<var name="roleName" value="Guest" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey4}" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey3}" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey4}" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey5}" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
 			<var name="roleName" value="Site Member" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey4}" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />
 		</execute>
+
+		<for list="${permissionDefinitionKeyList}" param="permissionDefinitionKeyValue" >
+			<execute macro="Role#removePermissionPG">
+				<var name="roleName" value="Owner" />
+				<var name="permissionDefinitionKey" value="${permissionDefinitionKeyValue}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1394,39 +1373,21 @@
 
 		<execute macro="PermissionsInline#gotoBlogsConfiguration" />
 
-		<execute macro="PermissionsInline#viewNoPermissions">
+		<execute macro="PermissionsInline#viewPermissionsRemoved">
 			<var name="roleName" value="Guest" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey4}" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />
 		</execute>
 
-		<execute macro="PermissionsInline#viewNoPermissions">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey1}" />
-		</execute>
-
-		<execute macro="PermissionsInline#viewNoPermissions">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey2}" />
-		</execute>
-
-		<execute macro="PermissionsInline#viewNoPermissions">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey3}" />
-		</execute>
-
-		<execute macro="PermissionsInline#viewNoPermissions">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey4}" />
-		</execute>
-
-		<execute macro="PermissionsInline#viewNoPermissions">
-			<var name="roleName" value="Owner" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey5}" />
-		</execute>
-
-		<execute macro="PermissionsInline#viewNoPermissions">
+		<execute macro="PermissionsInline#viewPermissionsRemoved">
 			<var name="roleName" value="Site Member" />
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey4}" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />
 		</execute>
+
+		<for list="${permissionDefinitionKeyList}" param="permissionDefinitionKeyValue" >
+			<execute macro="PermissionsInline#viewPermissionsRemoved">
+				<var name="roleName" value="Owner" />
+				<var name="permissionDefinitionKey" value="${permissionDefinitionKeyValue}" />
+			</execute>
+		</for>
 	</command>
 </definition>

@@ -32,8 +32,6 @@ import java.util.List;
  */
 public interface SchedulerEngine {
 
-	public static final String AUDIT_ACTION = "AUDIT_ACTION";
-
 	public static final String DESCRIPTION = "DESCRIPTION";
 
 	public static final int DESCRIPTION_MAX_LENGTH = GetterUtil.getInteger(
@@ -77,6 +75,8 @@ public interface SchedulerEngine {
 	public static final String PREVIOUS_FIRE_TIME = "PREVIOUS_FIRE_TIME";
 
 	public static final String RECEIVER_KEY = "RECEIVER_KEY";
+
+	public static final String SCHEDULER = "SCHEDULER";
 
 	public static final String SCRIPT = "SCRIPT";
 

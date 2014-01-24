@@ -4,7 +4,13 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="Site#tearDownCP" />
+
 		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="MessageboardsThread#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
@@ -48,5 +54,180 @@
 		<var name="key_pageName" value="${sitePage3Name}" />
 
 		<execute action="Home#assertTextEquals" locator-key1="PAGE" value1="${sitePage3Name}" />
+	</command>
+
+	<command name="WebContentAdministrationSitesPageTypes" priority="3">
+		<var name="componentName" value="Community" />
+		<var name="portletNameList" value="Bookmarks,Friends Directory,Invitation,My Sites,My Sites Directory,Page Comments,Page Flags,Page Ratings,Portal Directory,Site Members Directory" />
+		<var name="siteName" value="Page Type Test Site Name" />
+		<var name="sitePagePrivacy" value="Public" />
+		<var name="sitePage1Name" value="Blank Page" />
+		<var name="sitePage2Description" value="Google" />
+		<var name="sitePage2LinkToURLURL" value="http://www.google.com/" />
+		<var name="sitePage2Name" value="Link to URL Page" />
+		<var name="sitePage2Type" value="Link to URL" />
+		<var name="sitePage3Description" value="Liferay" />
+		<var name="sitePage3EmbeddedURL" value="http://www.liferay.com/" />
+		<var name="sitePage3Name" value="Embedded Page" />
+		<var name="sitePage3Type" value="Embedded" />
+		<var name="sitePage4Name" value="Panel Page" />
+		<var name="sitePage4Type" value="Panel" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePage1Name}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="pageTypeDescription" value="${sitePage2Description}" />
+			<var name="pageTypeURL" value="${sitePage2LinkToURLURL}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePage2Name}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="sitePageType" value="${sitePage2Type}" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute action="CPSitepages#assertClick" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePage1Name}" />
+		<execute action="CPSitepages#assertClick" locator-key1="TOOLBAR_DELETE" value1="Delete" />
+		<execute action="CPSitepages#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected page?" />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="INFO_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="INFO_MESSAGE_2" value1="The first page cannot be of type Link to URL." />
+		<execute action="CPSitepages#assertTextEquals" locator-key1="PAGE_TREE_PAGE_LINK_1" value1="${sitePage1Name}" />
+
+		<execute macro="SitePage#addCP">
+			<var name="pageTypeDescription" value="${sitePage3Description}" />
+			<var name="pageTypeURL" value="${sitePage3EmbeddedURL}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePage3Name}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="sitePageType" value="${sitePage3Type}" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePage4Name}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="sitePageType" value="${sitePage4Type}" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="SitePage#viewPanelPortletListCP">
+			<var name="componentName" value="${componentName}" />
+			<var name="portletNameList" value="${portletNameList}" />
+			<var name="sitePageName" value="${sitePage4Name}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePage2Name}" />
+			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Home#assertLocation" value1="https://www.google.com/" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePage3Name}" />
+			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute action="Home#assertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
+
+		<execute action="PGEmbedded#selectFrame" locator-key1="EMBEDDED_IFRAME" />
+		<execute action="PGEmbedded#assertTextEquals" locator-key1="EMBEDDED_LIFERAY_COPYRIGHT_TEXT" value1="© 2014 LIFERAY INC. ALL RIGHTS RESERVED" />
+		<execute action="PGEmbedded#selectFrame" value1="relative=top" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${sitePage4Name}" />
+			<var name="siteName" value="Page Type Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewPanelPortletListPG">
+			<var name="componentName" value="${componentName}" />
+			<var name="pageName" value="${sitePage4Name}" />
+			<var name="portletNameList" value="${portletNameList}" />
+		</execute>
+	</command>
+
+	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
+		<var name="componentName" value="Collaboration" />
+		<var name="entryContent" value="This is Blog Post 1 Content" />
+		<var name="entryTitle" value="Blog Post 1" />
+		<var name="pageName" value="Panel Test Page" />
+		<var name="pageType" value="Panel" />
+		<var name="portletNameList" value="Blogs,Message Boards" />
+		<var name="portlet1Name" value="Blogs" />
+		<var name="portlet2Name" value="Message Boards" />
+		<var name="postCount" value="1" />
+		<var name="threadBody" value="This is Message Boards Thread 1" />
+		<var name="threadSubject" value="Thread 1" />
+		<var name="userName" value="Test Test" />
+
+		<execute macro="Page#addPG">
+			<var name="componentName" value="${componentName}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageType}" />
+			<var name="portletNameList" value="${portletNameList}" />
+		</execute>
+
+		<execute macro="Page#viewPanelPortletListPG">
+			<var name="componentName" value="${componentName}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletNameList" value="${portletNameList}" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet1Name}" />
+
+		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet1Name}"/>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<var name="key_portletName" value="${portlet2Name}" />
+
+		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet2Name}"/>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGPanel#assertClick" locator-key1="MENU_ITEM" value1="${portlet2Name}"/>
+
+		<execute macro="MessageboardsThread#viewPG">
+			<var name="postCount" value="${postCount}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+			<var name="userName" value="${userName}" />
+		</execute>
 	</command>
 </definition>

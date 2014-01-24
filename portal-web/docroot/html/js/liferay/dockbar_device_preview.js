@@ -4,6 +4,7 @@ AUI.add(
 		var AObject = A.Object;
 		var Dockbar = Liferay.Dockbar;
 		var Lang = A.Lang;
+		var Util = Liferay.Util;
 
 		var BODY = A.getBody();
 
@@ -135,7 +136,7 @@ AUI.add(
 						var resizeHandle = A.getWin().on(
 							'resize',
 							function(event) {
-								if (Liferay.Util.isTablet()) {
+								if (Util.isTablet()) {
 									instance._closePanel();
 
 									resizeHandle.detach();

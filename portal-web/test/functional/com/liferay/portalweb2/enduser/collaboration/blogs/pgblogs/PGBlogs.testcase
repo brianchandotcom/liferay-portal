@@ -1075,9 +1075,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntryComment#viewGuestPG">
+		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${guestEntryComment}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="userFullName" value="${userFirstName}" />
 		</execute>
 
 		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="COMMENTS_ADD" value1="Add Comment" />
@@ -1104,9 +1105,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntryComment#viewGuestPG">
+		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="${guestEntryComment}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="userFullName" value="${userFirstName}" />
 		</execute>
 
 		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="COMMENTS_ADD" value1="Add Comment" />

@@ -275,8 +275,8 @@
 	<command name="AddOrganizationSite" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
-		<var name="siteMember" value="Organization" />
 		<var name="siteName" value="Organization Name" />
+		<var name="siteMember" value="Organization" />
 		<var name="siteType" value="Private" />
 
 		<execute macro="Page#gotoCP">

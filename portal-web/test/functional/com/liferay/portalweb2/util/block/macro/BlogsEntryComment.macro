@@ -144,7 +144,7 @@
 		<execute action="CPBlogsEntry#assertTextNotPresent" value1="${entryComment}" />
 	</command>
 
-	<command name="viewGuestPG">
+	<command name="viewPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
@@ -154,6 +154,7 @@
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="1 Comment" />
 		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="COMMENTS_BE_THE_FIRST" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_USER_NAME" value1="${userFullName}" />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
 	</command>
 </definition>

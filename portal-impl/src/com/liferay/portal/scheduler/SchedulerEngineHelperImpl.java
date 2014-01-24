@@ -126,7 +126,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		try {
 			AuditMessage auditMessage = new AuditMessage(
-				SchedulerEngine.AUDIT_ACTION, CompanyConstants.SYSTEM, 0,
+				SchedulerEngine.SCHEDULER, CompanyConstants.SYSTEM, 0,
 				StringPool.BLANK, SchedulerEngine.class.getName(), "0",
 				triggerState.toString(), new Date(),
 				JSONFactoryUtil.createJSONObject(

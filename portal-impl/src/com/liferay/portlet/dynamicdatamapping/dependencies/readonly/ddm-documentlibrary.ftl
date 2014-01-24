@@ -18,6 +18,7 @@
 	<label>
 		<@liferay_ui.message key=escape(label) />
 	</label>
+
 	<a href="${fileEntryURL}">${escape(fileEntryTitle)}</a>
 </div>
 

@@ -1,110 +1,492 @@
 <definition>
 	<command name="addField">
-		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
-		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
-		<var name="key_fieldName" value="${fieldName}" />
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
 
-		<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_NAME" locator-key2="FORM_BUILDER" value1="${fieldName}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+
+		<var name="key_field" value="${field}" />
+
+		<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
+
+		<var name="key_fieldFieldLabel" value="${field}" />
+
 		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
-		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
-		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_FIELD_LABEL" />
+		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldNameLabel}" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
+		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
 		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editFieldSettingsField">
-		<execute action="Dynamicdatamapping#assertClick" locator-key1="${formFieldKey}" value1="${fieldName}" />
+	<command name="addFieldFormTemplateSpecific">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+
+		<var name="key_field" value="${field}" />
+
+		<execute action="Dynamicdatamapping#dragAndDrop" locator-key1="FIELDS_FIELD" locator-key2="FORM_BUILDER" value1="${field}" />
+
+		<var name="key_fieldFieldLabel" value="${field}" />
 
 		<if>
-			<equals arg1="${settingsFieldKey}" arg2="SETTINGS_NAME" />
+			<equals arg1="${field}" arg2="Fieldset" />
 			<then>
-				<var name="fieldName" value="${fieldName?lowercase()}" />
+				<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELDSET" />
+				<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_FIELD_LABEL" />
+				<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
+				<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</then>
 			<elseif>
-				<equals arg1="${settingsFieldKey}" arg2="SETTINGS_TIP" />
+				<equals arg1="${field}" arg2="Paragraph" />
 				<then>
-					<var name="fieldName" value="" />
+					<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${settingsFieldKey}" arg2="SETTINGS_OPTIONS" />
+				<equals arg1="${field}" arg2="Separator" />
 				<then>
-					<var name="fieldName" value="${optionsNames}" />
+					<execute action="Dynamicdatamapping#click" locator-key1="FORM_SEPARATOR" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${fieldName}" />
-		<execute action="Dynamicdatamapping#doubleClick" locator-key1="${settingsFieldKey}" value1="${fieldName}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="deleteField">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD_DELETE_ICON" />
+		<execute action="Dynamicdatamapping#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editField">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
 
 		<if>
-			<equals arg1="${settingsFieldKey}" arg2="SETTINGS_OPTIONS" />
+			<isset var="fieldFieldLabelEdit" />
 			<then>
-				<var name="fieldOptionsSettingsName" value="${cellEditorFieldName?replace(' ', '')}" />
-				<var name="i" value="0" />
-
-				<for list="${fieldOptionsSettingsName}" param="name">
-					<var name="i" value="${i?increment()}" />
-
-					<execute action="Dynamicdatamapping#type" locator-key1="${cellEditorTypeKey}_${i}" value1="${name}" />
-				</for>
+				<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_FIELD_LABEL" />
+				<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabelEdit}" />
+				<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabelEdit}" />
 			</then>
+		</if>
+
+		<if>
+			<isset var="fieldNameEdit" />
+			<then>
+				<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
+				<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameEdit}" />
+				<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldNameEdit}" />
+			</then>
+		</if>
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldOptions">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_OPTIONS" />
+
+		<var name="i" value="0" />
+
+		<for list="${fieldOptionsNames}" param="fieldOptionsName">
+			<var name="i" value="${i?increment()}" />
+
+			<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
+		</for>
+
+		<var name="j" value="0" />
+
+		<for list="${fieldOptionsValues}" param="fieldOptionsValue">
+			<var name="j" value="${j?increment()}" />
+
+			<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
+		</for>
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
+		<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
+			<var name="field" value="${field}" />
+			<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
+			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
+		</execute>
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldPredefinedValue">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_PREDEFINED_VALUE" />
+
+		<if>
+			<equals arg1="${field}" arg2="Boolean" />
+			<then>
+				<if>
+					<equals arg1="${fieldPredefinedValue}" arg2="Yes" />
+					<then>
+						<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" />
+					</then>
+					<elseif>
+						<equals arg1="${fieldPredefinedValue}" arg2="No" />
+						<then>
+							<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" />
+						</then>
+					</elseif>
+					<else>
+						<fail message="Invalid var fieldPredefinedValue. Must be (true|false)." />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${field}" arg2="Decimal" />
+				<equals arg1="${field}" arg2="HTML" />
+				<equals arg1="${field}" arg2="Integer" />
+				<equals arg1="${field}" arg2="Number" />
+				<equals arg1="${field}" arg2="Text" />
+			</or>
+			<then>
+				<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldPredefinedValue}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Text Box" />
+			<then>
+				<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldPredefinedValue}" />
+			</then>
+		</if>
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_PREDEFINED_VALUE" value1="${fieldPredefinedValue}" />
+
+		<execute macro="DynamicDataMapping#viewFieldPredefinedValueCmd">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+		</execute>
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldShowLabel">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_SHOW_LABEL" />
+
+		<if>
+			<equals arg1="${fieldShowLabel}" arg2="Yes" />
+			<then>
+				<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" />
+			</then>
+			<elseif>
+				<equals arg1="${fieldShowLabel}" arg2="No" />
+				<then>
+					<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" />
+				</then>
+			</elseif>
 			<else>
-				<execute action="Dynamicdatamapping#type" locator-key1="${cellEditorTypeKey}" value1="${cellEditorFieldName}" />
+				<fail message="Invalid var fieldShowLabel. Must be (Yes|No)." />
 			</else>
 		</if>
 
 		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${cellEditorFieldName}" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_SHOW_LABEL" value1="${fieldShowLabel}" />
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editFieldSettingsFieldRadio">
-		<execute action="Dynamicdatamapping#assertClick" locator-key1="${formFieldKey}" value1="${fieldName}" />
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${isValueSet}" />
-		<execute action="Dynamicdatamapping#doubleClick" locator-key1="${settingsFieldKey}" value1="${isValueSet}" />
+	<command name="editFieldTip">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
 
-		<if>
-			<equals arg1="${isValueSet}" arg2="No" />
-			<then>
-				<execute action="Dynamicdatamapping#assertNotChecked" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
-				<execute action="Dynamicdatamapping#assertChecked" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
-				<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
-				<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="${settingsFieldKey}" value1="Yes" />
-			</then>
-			<else>
-				<execute action="Dynamicdatamapping#assertChecked" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
-				<execute action="Dynamicdatamapping#assertNotChecked" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
-				<execute action="Dynamicdatamapping#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
-				<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
-				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="${settingsFieldKey}" value1="No" />
-			</else>
-		</if>
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD" />
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_TIP" />
+		<execute action="Dynamicdatamapping#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldTip}" />
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_TIP" value1="${fieldTip}" />
+
+		<execute action="Dynamicdatamapping#assertClick" locator-key1="FIELDS_LINK" value1="Fields" />
+		<execute action="Dynamicdatamapping#click" locator-key1="NAME_FIELD" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewCanAddField">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_field" value="${field}" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FIELDS_FIELD" value1="${field}" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewCannotAddField">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_field" value="${field}" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FIELDS_FIELD_UNSELECTABLE" value1="${field}" />
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewField">
-		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
-		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
-		<var name="key_fieldName" value="${fieldName}" />
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
 
-		<execute action="Dynamicdatamapping#assertClick" locator-key1="FORM_FIELD" value1="${fieldName}" />
-		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_NAME" />
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
-	</command>
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-	<command name="viewEditFieldSettingsField">
 		<if>
-			<equals arg1="${settingsFieldKey}" arg2="SETTINGS_SHOW_LABEL" />
+			<equals arg1="${fieldShowLabel}" arg2="No" />
 			<then>
-				<execute action="Dynamicdatamapping#click" locator-key1="${formFieldKey}" />
+				<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELD_1_NO_LABEL" />
 			</then>
 			<else>
-				<execute action="Dynamicdatamapping#assertClick" locator-key1="${formFieldKey}" value1="${fieldName}" />
+				<execute action="Dynamicdatamapping#assertClick" locator-key1="FORM_FIELD" value1="${fieldFieldLabel}" />
 			</else>
 		</if>
 
-		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="${settingsFieldKey}" value1="${settingsFieldValue}" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_NAME" value1="${fieldName}" />
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+
+		<if>
+			<isset var="fieldShowLabel" />
+			<then>
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_SHOW_LABEL" value1="${fieldShowLabel}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="fieldReadOnly" />
+			<then>
+				<execute macro="DynamicDataMapping#viewFieldReadOnlyCmd">
+					<var name="dataDefinitionFormTemplateMode" value="${dataDefinitionFormTemplateMode}" />
+					<var name="fieldReadOnly" value="${fieldReadOnly}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="fieldPredefinedValue" />
+			<then>
+				<execute macro="DynamicDataMapping#viewFieldPredefinedValueCmd">
+					<var name="field" value="${field}" />
+					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+					<var name="fieldPredefinedValue" value="${fieldPredefinedValue}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="fieldTip" />
+			<then>
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_TIP" value1="${fieldTip}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="fieldOptionsNames" />
+			<then>
+				<execute macro="DynamicDataMapping#viewFieldOptionsCmd">
+					<var name="field" value="${field}" />
+					<var name="fieldOptionsNames" value="${fieldOptionsNames}" />
+					<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewFieldFormTemplateSpecific">
+		<execute action="Dynamicdatamapping#selectFrame" locator-key1="IFRAME" />
+
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<if>
+			<equals arg1="${field}" arg2="Fieldset" />
+			<then>
+				<execute action="Dynamicdatamapping#click" locator-key1="FORM_FIELDSET" />
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+			</then>
+			<elseif>
+				<equals arg1="${field}" arg2="Paragraph" />
+				<then>
+					<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FORM_FIELD" value1="${field}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${field}" arg2="Separator" />
+				<then>
+					<execute action="Dynamicdatamapping#assertElementPresent" locator-key1="FORM_SEPARATOR" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="Dynamicdatamapping#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewFieldOptionsCmd">
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<for list="${fieldOptionsNames}" param="fieldOptionsName">
+			<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_OPTIONS" value1="${fieldOptionsName}" />
+		</for>
+
+		<execute action="Dynamicdatamapping#doubleClick" locator-key1="SETTINGS_OPTIONS" />
+
+		<var name="i" value="0" />
+
+		<for list="${fieldOptionsNames}" param="fieldOptionsName">
+			<var name="i" value="${i?increment()}" />
+
+			<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}" value1="${fieldOptionsName}" />
+		</for>
+
+		<var name="j" value="0" />
+
+		<for list="${fieldOptionsValues}" param="fieldOptionsValue">
+			<var name="j" value="${j?increment()}" />
+
+			<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}" value1="${fieldOptionsValue}" />
+		</for>
+
+		<if>
+			<equals arg1="${field}" arg2="Radio" />
+			<then>
+				<for list="${fieldOptionsNames}" param="fieldOptionsName">
+					<var name="key_fieldOptionsName" value="${fieldOptionsName}" />
+
+					<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FORM_FIELD_RADIO_LABEL" value1="${fieldOptionsName}" />
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Select" />
+			<then>
+				<for list="${fieldOptionsNames}" param="fieldOptionsName">
+					<var name="key_fieldOptionsName" value="${fieldOptionsName}" />
+
+					<execute action="Dynamicdatamapping#select" locator-key1="FORM_FIELD_SELECT" value1="${fieldOptionsName}" />
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="viewFieldPredefinedValueCmd">
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
+		<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_PREDEFINED_VALUE" value1="${fieldPredefinedValue}" />
+
+		<if>
+			<equals arg1="${field}" arg2="Boolean" />
+			<then>
+				<if>
+					<equals arg1="${fieldPredefinedValue}" arg2="Yes" />
+					<then>
+						<execute action="Dynamicdatamapping#assertChecked" locator-key1="FORM_FIELD_FIELD" />
+					</then>
+					<elseif>
+						<equals arg1="${fieldPredefinedValue}" arg2="No" />
+						<then>
+							<execute action="Dynamicdatamapping#assertNotChecked" locator-key1="FORM_FIELD_FIELD" />
+						</then>
+					</elseif>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${field}" arg2="Decimal" />
+				<equals arg1="${field}" arg2="HTML" />
+				<equals arg1="${field}" arg2="Integer" />
+				<equals arg1="${field}" arg2="Number" />
+				<equals arg1="${field}" arg2="Text" />
+			</or>
+			<then>
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FORM_FIELD_FIELD" value1="${fieldPredefinedValue}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${field}" arg2="Text Box" />
+			<then>
+				<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="FORM_FIELD_TEXT_AREA" value1="${fieldPredefinedValue}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewFieldReadOnlyCmd">
+		<if>
+			<equals arg1="${dataDefinitionFormTemplateMode}" arg2="Create" />
+			<then>
+				<execute action="Dynamicdatamapping#assertElementNotPresent" locator-key1="SETTINGS_READ_ONLY" />
+			</then>
+			<elseif>
+				<equals arg1="${dataDefinitionFormTemplateMode}" arg2="Edit" />
+				<then>
+					<execute action="Dynamicdatamapping#assertTextEquals" locator-key1="SETTINGS_READ_ONLY" value1="${fieldReadOnly}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 </definition>

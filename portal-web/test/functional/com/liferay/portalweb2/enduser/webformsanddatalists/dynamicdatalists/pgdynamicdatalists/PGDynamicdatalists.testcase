@@ -29,8 +29,9 @@
 	<command name="AddList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
 
@@ -41,9 +42,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -53,7 +60,6 @@
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listDescription" value="${listDescription}" />
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -62,18 +68,18 @@
 
 		<execute macro="List#viewPG">
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
-	<command name="AddRecord" priority="5">
+	<command name="AddListRecord" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
-		<var name="recordText" value="Text" />
+		<var name="recordFieldData" value="Text" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -82,9 +88,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -103,20 +115,30 @@
 		<execute macro="ListRecord#addPG">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listName" value="${listName}" />
-			<var name="recordText" value="${recordText}" />
 		</execute>
 
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="${recordFieldData}" />
+		</execute>
+
+		<execute macro="ListRecord#publishPG" />
+
 		<execute macro="ListRecord#viewPG">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="listName" value="${listName}" />
-			<var name="recordText" value="${recordText}" />
+			<var name="recordFieldData" value="${recordFieldData}" />
 		</execute>
 	</command>
 
 	<command name="ConfigureEditableListPG" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
 
@@ -127,9 +149,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -139,7 +167,6 @@
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listDescription" value="${listDescription}" />
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -150,7 +177,6 @@
 			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
 			<var name="configureChecked" value="false" />
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -163,8 +189,9 @@
 	<command name="ConfigureSpreadsheetListPG" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
 
@@ -175,9 +202,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -187,7 +220,6 @@
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listDescription" value="${listDescription}" />
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -198,7 +230,6 @@
 			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
 			<var name="configureChecked" value="true" />
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -211,8 +242,9 @@
 	<command name="DeleteList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
 
@@ -223,9 +255,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="List#addCP">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
@@ -239,18 +277,18 @@
 
 		<execute macro="List#deletePG">
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
-	<command name="DeleteRecord" priority="5">
+	<command name="DeleteListRecord" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
-		<var name="recordText" value="Text" />
+		<var name="recordFieldData" value="Text" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -259,9 +297,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -280,19 +324,26 @@
 		<execute macro="ListRecord#addPG">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listName" value="${listName}" />
-			<var name="recordText" value="${recordText}" />
 		</execute>
 
-		<execute macro="ListRecord#deletePG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="${recordFieldData}" />
 		</execute>
+
+		<execute macro="ListRecord#publishPG" />
+
+		<execute macro="ListRecord#deletePG" />
 	</command>
 
 	<command name="EditList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listDescriptionEdit" value="List Description Edit" />
 		<var name="listName" value="List Name" />
@@ -305,9 +356,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -328,7 +385,6 @@
 			<var name="listDescriptionEdit" value="${listDescriptionEdit}" />
 			<var name="listName" value="${listName}" />
 			<var name="listNameEdit" value="${listNameEdit}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -337,19 +393,19 @@
 
 		<execute macro="List#viewPG">
 			<var name="listName" value="${listNameEdit}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
-	<command name="EditRecord" priority="5">
+	<command name="EditListRecord" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
-		<var name="recordText" value="Text" />
-		<var name="recordTextEdit" value="Text Edit" />
+		<var name="recordFieldData" value="Text" />
+		<var name="recordFieldDataEdit" value="Text Edit" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -358,9 +414,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -375,8 +437,16 @@
 		<execute macro="ListRecord#addPG">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="listName" value="${listName}" />
-			<var name="recordText" value="${recordText}" />
 		</execute>
+
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="${recordFieldData}" />
+		</execute>
+
+		<execute macro="ListRecord#publishPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="portletName" value="${pageName}" />
@@ -384,20 +454,30 @@
 
 		<execute macro="ListRecord#editPG">
 			<var name="listName" value="${listName}" />
-			<var name="recordTextEdit" value="${recordTextEdit}" />
 		</execute>
 
+		<execute macro="ListRecord#populateField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="recordFieldData" value="${recordFieldDataEdit}" />
+		</execute>
+
+		<execute macro="ListRecord#publishPG" />
+
 		<execute macro="ListRecord#viewPG">
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="listName" value="${listName}" />
-			<var name="recordText" value="${recordTextEdit}" />
+			<var name="recordFieldData" value="${recordFieldDataEdit}" />
 		</execute>
 	</command>
 
 	<command name="SelectList" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
+		<var name="field" value="Text" />
+		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
-		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="listDescription" value="List Description" />
 		<var name="listName" value="List Name" />
 
@@ -408,9 +488,15 @@
 		<execute macro="DataDefinition#addCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
 		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DataDefinition#saveCP" />
 
 		<execute macro="List#addCP">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
@@ -424,12 +510,10 @@
 
 		<execute macro="List#selectPG">
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="List#viewPG">
 			<var name="listName" value="${listName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 </definition>

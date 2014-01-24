@@ -1,12 +1,6 @@
 <definition>
-	<command name="assertClick">
-		<case locator-key1="PUBLISH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-	</command>
-
 	<command name="type">
-		<case comparator="startsWith" locator1="//div[contains(@id,'cke__167_">
+		<case locator-key1="HTML_FIELD">
 			<execute function="Type#typeFrameWaitForCKEditor" />
 		</case>
 	</command>

@@ -33,6 +33,86 @@
 	<td>//button[@id='_167_cancelButton']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_LABEL</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOLEAN_CHECKBOX</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/span/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DECIMAL_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_SELECT</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA_CLEAR</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HTML_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//div[@id='cke_1_contents']/iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTEGER_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_TO_PAGE_SELECT</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RADIO_OPTION_RADIO</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/label[contains(.,'${key_recordFieldData}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_SELECT</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_BOX_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/textarea</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

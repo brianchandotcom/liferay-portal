@@ -16,6 +16,8 @@
 
 		<for list="${structureFieldNames}" param="structureFieldName">
 			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="${structureFieldName}" />
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
 				<var name="fieldName" value="${structureFieldName}" />
 			</execute>
 		</for>

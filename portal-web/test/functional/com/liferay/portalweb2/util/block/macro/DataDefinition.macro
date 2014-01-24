@@ -9,14 +9,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
 
-		<execute macro="DynamicDataMapping#addField">
-			<var name="fieldname" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
-		</execute>
-
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteCP">
@@ -70,57 +63,15 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="NAME_FIELD" value1="${dataDefinitionNameEdit}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescriptionEdit}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editFieldSettingsFieldCP">
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
-
+	<command name="saveCP">
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
-		<execute macro="DynamicDataMapping#editFieldSettingsField">
-			<var name="cellEditorFieldName" value="${cellEditorFieldName}" />
-			<var name="cellEditorTypeKey" value="${cellEditorTypeKey}" />
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
-			<var name="optionsNames" value="option 1, option 2, option 3" />
-			<var name="settingsFieldKey" value="${settingsFieldKey}" />
-		</execute>
-
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
-	</command>
-
-	<command name="editFieldSettingsFieldRadioCP">
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
-
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsFieldRadio">
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
-			<var name="isValueSet" value="${isValueSet}" />
-			<var name="settingsFieldKey" value="${settingsFieldKey}" />
-		</execute>
-
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />\
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
@@ -161,29 +112,6 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
 
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
-	</command>
-
-	<command name="viewEditFieldSettingsFieldCP">
-		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
-
-		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
-		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
-		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
-
-		<execute macro="DynamicDataMapping#viewEditFieldSettingsField">
-			<var name="fieldName" value="${fieldName}" />
-			<var name="formFieldKey" value="${formFieldKey}" />
-			<var name="settingsFieldKey" value="${settingsFieldKey}" />
-			<var name="settingsFieldValue" value="${settingsFieldValue}" />
-		</execute>
-
-		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#selectFrame" value1="relative=top" />
 	</command>
 </definition>

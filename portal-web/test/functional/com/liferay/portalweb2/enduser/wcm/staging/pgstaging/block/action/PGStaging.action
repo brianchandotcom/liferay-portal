@@ -17,6 +17,14 @@
 		<case locator-key1="SITE_PAGES_VARIATION">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
+		<case locator-key1="STAGING_MENU_REVISION_DETAILS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+
+		<case locator-key1="LIVE_MENU_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
 	</command>
 
 	<command name="isElementNotPresent">

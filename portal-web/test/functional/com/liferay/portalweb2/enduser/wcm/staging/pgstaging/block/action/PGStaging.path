@@ -39,23 +39,49 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIVE_DROP_DOWN_BUTTON</td>
+	<td>//a[contains(@class,'staging-link') and contains(@class,'dropdown-toggle')]/span[contains(.,'Live')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_VIEW</td>
 	<td>//body[contains(@class,'local-staging')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_VARIATION</td>
-	<td>//div[@class='page-variations-options span5']//a[contains(@id,'_menu')]/span[contains(.,'${key_pageVariationName}')]</td>
+	<td>//div[contains(@class,'page-variations-options')]//span[contains(.,'${key_pageVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_PAGES_VARIATION</td>
-	<td>//div[@class='variations-options']/div/a/span[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td>//div[contains(@class,'site-pages-variation-options')]//span[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PAGES_VARIATION_DROPDOWN</td>
+	<td>//div[contains(@class,'site-pages-variation-options')]//span[contains(.,'${key_sitePagesVariationName}')]/following-sibling::i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANAGE_SITE_PAGES_VARIATIONS</td>
 	<td>//a[@id='_170_manageLayoutSetBranches']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_PAGES_VARIATION_MENULIST-->
+<tr>
+	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>
+	<td>//ul//a[contains(.,'${key_sitePagesVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,6 +98,11 @@
 <tr>
 	<td>LIVE_MENU_HELP</td>
 	<td>//span[@class='staging-live-help']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIVE_MENU_MESSAGE</td>
+	<td>//div[@class='staging-details']</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,8 +152,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_MENU_MANAGE_SITE_PAGE_VARIATION</td>
+	<td>//a[@id='_170_manageLayoutSetBranches']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_MENU_MANAGE_PAGE_VARIATION</td>
 	<td>//a[@id='_170_manageLayoutRevisions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_HISTORY_BUTTON</td>
+	<td>//a[@id='_170_viewHistoryLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_REDO_BUTTON</td>
+	<td>//a[@id='_170_redoLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_UNDO_BUTTON</td>
+	<td>//a[@id='_170_undoLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_REVISION_DETAILS_MESSAGE</td>
+	<td>//div[@id='_170_layoutRevisionDetails']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_MENU_ENABLE_PAGE_BUTTON</td>
+	<td>//a[@id='_170_submitLink']</td>
 	<td></td>
 </tr>
 <tr>

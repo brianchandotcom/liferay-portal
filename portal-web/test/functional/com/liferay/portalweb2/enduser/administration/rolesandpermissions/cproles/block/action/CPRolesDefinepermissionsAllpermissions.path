@@ -344,6 +344,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_CONTENT_BLOGS_GENERAL-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_GENERAL_ALL_CHECKBOX</td>

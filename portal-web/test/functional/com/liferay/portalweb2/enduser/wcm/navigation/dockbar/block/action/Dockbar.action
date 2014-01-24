@@ -77,6 +77,10 @@
 		<case comparator="startsWith" locator1="//div[@id='_145_">
 			<execute function="IsElementNotPresent#isNotVisible" />
 		</case>
+
+		<case locator-key1="EDIT_NAME_FIELD">
+			<execute function="IsElementNotPresent#isNotVisible" />
+		</case>
 	</command>
 
 	<command name="type">

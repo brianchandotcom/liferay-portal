@@ -187,11 +187,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_2_STAGING</td>
-	<td>//nav[@id='navigation']/ul/li[2]/a/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_3</td>
 	<td>xpath=(//li[contains(@class,'lfr-nav-deletable')])[3]/a</td>
 	<td></td>
@@ -235,6 +230,38 @@
 <tr>
 	<td>BREADCRUMB_3</td>
 	<td>xpath=(//nav[@id='breadcrumbs']/ul/li/a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_COLUMN-->
+<tr>
+	<td>PAGE_COLUMN_1</td>
+	<td>//div[@id='content']//div[@id='column-1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_2</td>
+	<td>//div[@id='content']//div[@id='column-2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_COLUMN_PORTLET-->
+<tr>
+	<td>PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE</td>
+	<td>//div[@id='column-1']//h1[@class='portlet-title']//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletTitleName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_TITLE</td>
+	<td>//div[@id='column-2']//h1[@class='portlet-title']//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>

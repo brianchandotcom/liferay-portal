@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>MANAGE_SITE_PAGES_VARIATIONS_IFRAME</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_170_layoutSetBranches_iframe_']</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,14 +45,50 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_PAGES_VARIATIONS_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_sitePagesVariationName}')]/td[3]/div/a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_PAGES_VARIATIONS_TABLE_ACTIONS_MENULIST-->
+<tr>
+	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PAGES_VARIATIONS_TABLE_ACTIONS_MENULIST_MERGE</td>
+	<td>//a[@role='menuitem' and contains(.,'Merge')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--ADD_SITE_PAGES_VARIATION-->
 <tr>
-	<td>ADD_SITE_PAGES_VARIATION_NAME</td>
+	<td>ADD_SITE_PAGES_VARIATION_NAME_FIELD</td>
 	<td>//input[@id='_170_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SITE_PAGES_VARIATION_COPY_PAGES_SELECT</td>
+	<td>//select[@id='_170_copyLayoutSetBranchId']</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,6 +98,43 @@
 </tr>
 <tr>
 	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EDIT_SITE_PAGES_VARIATION-->
+<tr>
+	<td>EDIT_SITE_PAGES_VARIATION_NAME_FIELD</td>
+	<td>//input[@id='_170_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_SITE_PAGES_VARIATION_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_170_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_SITE_PAGES_VARIATION_UPDATE_BUTTON</td>
+	<td>//button[contains(.,'Update')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MERGE_SITE_PAGES_VARIATION_TABLE-->
+<tr>
+	<td>MERGE_SITE_PAGES_VARIATION_TABLE_BRANCH</td>
+	<td>//tbody[@class='table-data']//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK</td>
+	<td>//tbody[@class='table-data']//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td[contains(.,'Select')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MERGE_SITE_PAGES_VARIATION_TABLE_CONFIRMATION</td>
 	<td></td>
 	<td></td>
 </tr>

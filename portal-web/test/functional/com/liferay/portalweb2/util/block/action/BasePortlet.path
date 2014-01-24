@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_TITLE</td>
+	<td>//h1[@class='portlet-title']//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletTitleName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>

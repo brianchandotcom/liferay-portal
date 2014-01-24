@@ -40,7 +40,7 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 
 		<liferay-ui:search-container-column-text
 			name="name"
-			value="<%= workflowDefinition.getName() %>"
+			value="<%= HtmlUtil.escape(workflowDefinition.getName()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text

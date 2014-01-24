@@ -115,7 +115,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 					<c:choose>
 						<c:when test="<%= path == null %>">
-							<%= workflowHandler.getSummary(classPK, locale) %>
+							<%= HtmlUtil.escape(workflowHandler.getSummary(classPK, locale)) %>
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>" />
@@ -177,7 +177,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 								buffer.append("<span class=\"task-name\" id=\"");
 								buffer.append(workflowTask.getWorkflowTaskId());
 								buffer.append("\">");
-								buffer.append(LanguageUtil.get(pageContext, workflowTask.getName()));
+								buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowTask.getName())));
 								buffer.append("</span>");
 								%>
 
@@ -257,7 +257,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 			/>
 
 			<div class="lfr-asset-name">
-				<%= workflowInstance.getWorkflowDefinitionName() %>
+				<%= HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName()) %>
 			</div>
 		</div>
 

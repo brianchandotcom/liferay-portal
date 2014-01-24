@@ -52,7 +52,7 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 			String message = "proceed";
 
 			if (Validator.isNotNull(transitionName)) {
-				message = transitionName;
+				message = HtmlUtil.escape(transitionName);
 			}
 		%>
 

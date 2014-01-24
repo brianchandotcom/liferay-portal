@@ -96,7 +96,7 @@ else if (type.equals("assigned-to-my-roles")) {
 			buffer.append("<span class=\"task-name\" id=\"");
 			buffer.append(workflowTask.getWorkflowTaskId());
 			buffer.append("\">");
-			buffer.append(LanguageUtil.get(pageContext, workflowTask.getName()));
+			buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(workflowTask.getName())));
 			buffer.append("</span>");
 			%>
 

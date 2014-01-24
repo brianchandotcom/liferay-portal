@@ -732,6 +732,11 @@
 				]]></echo>
 			</else>
 		</if>
+
+		<copy
+			file="${changelog.dir}/git-build-log.html"
+			todir="${basedir}"
+		/>
 	</target>
 
 	<target name="generate-test-properties" depends="check-config">

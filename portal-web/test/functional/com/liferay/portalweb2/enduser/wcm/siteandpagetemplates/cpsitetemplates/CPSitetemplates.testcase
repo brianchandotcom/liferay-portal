@@ -34,6 +34,23 @@
 		</execute>
 	</command>
 
+	<command name="DeleteSiteTemplate" priority="5">
+		<var name="siteTemplateActive" value="Yes" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="${siteTemplateActive}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+
+		<execute macro="SiteTemplates#deleteSiteTemplateCP">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+	</command>
+
 	<command name="EditSiteTemplate" priority="5">
 		<var name="siteTemplateActive" value="Yes" />
 		<var name="siteTemplateActiveEdit" value="No" />

@@ -135,6 +135,33 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 		return hashCode;
 	}
 
+	public Boolean redundantTo(IndexMetadata indexMetadata) {
+		String[] anotherColumnNames = indexMetadata._columnNames;
+
+		if (_columnNames.length <= anotherColumnNames.length) {
+			for (int i = 0; i < _columnNames.length; i++) {
+				if (!_columnNames[i].equals(anotherColumnNames[i])) {
+					return null;
+				}
+			}
+
+			if (isUnique()) {
+				return Boolean.FALSE;
+			}
+			else {
+				return Boolean.TRUE;
+			}
+		}
+
+		Boolean redundant = indexMetadata.redundantTo(this);
+
+		if (redundant == null) {
+			return null;
+		}
+
+		return !redundant;
+	}
+
 	@Override
 	public String toString() {
 		return _createSQL;

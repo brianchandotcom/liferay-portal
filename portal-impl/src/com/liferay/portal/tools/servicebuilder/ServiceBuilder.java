@@ -1705,13 +1705,29 @@ public class ServiceBuilder {
 			indexMetadataMap.put(tableName, indexMetadataList);
 		}
 
-		int index = indexMetadataList.indexOf(indexMetadata);
+		Iterator<IndexMetadata> iterator = indexMetadataList.iterator();
 
-		if (index == -1) {
-			indexMetadataList.add(indexMetadata);
+		while (iterator.hasNext()) {
+			IndexMetadata currentIndexMetadata = iterator.next();
+
+			Boolean redundant = currentIndexMetadata.redundantTo(indexMetadata);
+
+			if (redundant == null) {
+				continue;
+			}
+
+			if (redundant) {
+				iterator.remove();
+			}
+			else {
+				indexMetadata = null;
+
+				break;
+			}
 		}
-		else if (indexMetadata.isUnique()) {
-			indexMetadataList.set(index, indexMetadata);
+
+		if (indexMetadata != null) {
+			indexMetadataList.add(indexMetadata);
 		}
 	}
 

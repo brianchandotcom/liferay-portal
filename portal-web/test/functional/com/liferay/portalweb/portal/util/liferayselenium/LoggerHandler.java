@@ -51,6 +51,12 @@ public class LoggerHandler implements InvocationHandler {
 			else if (methodName.equals("sendLogger")) {
 				_logger.send(arguments);
 			}
+			else if (methodName.equals("sendTestCaseCommandLogger")) {
+				_logger.logTestCaseCommand(arguments);
+			}
+			else if (methodName.equals("sendTestCaseHeaderLogger")) {
+				_logger.logTestCaseHeader(arguments);
+			}
 			else if (methodName.equals("startLogger")) {
 				_logger.start();
 			}

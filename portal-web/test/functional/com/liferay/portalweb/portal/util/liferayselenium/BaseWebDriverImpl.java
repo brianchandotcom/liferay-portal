@@ -582,6 +582,14 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void sendTestCaseCommandLogger(String command) {
+	}
+
+	@Override
+	public void sendTestCaseHeaderLogger(String command) {
+	}
+
+	@Override
 	public void setDefaultTimeout() {
 	}
 

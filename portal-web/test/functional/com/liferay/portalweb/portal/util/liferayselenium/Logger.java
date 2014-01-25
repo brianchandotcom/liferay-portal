@@ -257,6 +257,29 @@ public class Logger {
 		log("actionCommandLog", sb.toString(), "selenium");
 	}
 
+	public void logTestCaseCommand(Object[] arguments) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String tesCaseCommand = (String)arguments[0];
+
+		sb.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		sb.append(tesCaseCommand);
+
+		log("actionCommandLog", sb.toString(), "seleniumCommands");
+	}
+
+	public void logTestCaseHeader(Object[] arguments) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		String tesCaseHeader = (String)arguments[0];
+
+		sb.append("<b>");
+		sb.append(tesCaseHeader);
+		sb.append("</b>");
+
+		log("actionCommandLog", sb.toString(), "seleniumCommands");
+	}
+
 	public void pauseLoggerCheck() throws Exception {
 		WebElement webElement = _webDriver.findElement(By.id("pause"));
 

@@ -19,7 +19,7 @@
 		<div class="options">
 			<form>
 				<input id="actionCommandLogButton" name="log" onchange="radioCheck()" type="radio">
-					<label for="actionCommandLogButton">Action Command Log</label>
+					<label for="actionCommandLogButton">Command Log</label>
 				</input>
 
 				<input checked="checked" id="xmlLogButton" name="log" onchange="radioCheck()" type="radio">

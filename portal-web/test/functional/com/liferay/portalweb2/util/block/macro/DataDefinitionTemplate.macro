@@ -122,6 +122,13 @@
 	<command name="editFormTemplateModeCP">
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 
+		<if>
+			<condition action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#isElementNotPresent" locator-key1="DETAILS_MODE_SELECT" />
+			<then>
+				<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#assertClick" locator-key1="DETAILS" value1="Details" />
+			</then>
+		</if>
+
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#select" locator-key1="DETAILS_MODE_SELECT" value1="${dataDefinitionFormTemplateMode}" />
 
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />

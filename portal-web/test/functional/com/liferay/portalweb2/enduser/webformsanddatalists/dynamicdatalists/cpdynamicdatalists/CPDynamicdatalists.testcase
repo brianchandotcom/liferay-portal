@@ -1059,7 +1059,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDisplayTemplateFreeMarkerCP" priority="5">
+	<command name="DeleteDisplayTemplateFreeMarker" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
@@ -1108,7 +1108,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDisplayTemplateVelocityCP" priority="5">
+	<command name="DeleteDisplayTemplateVelocity" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
@@ -2096,7 +2096,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDisplayTemplateFreeMarkerCP" priority="5">
+	<command name="EditDisplayTemplateFreeMarker" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition FreeMarker Display Template Name" />
 		<var name="dataDefinitionDisplayTemplateNameEdit" value="Data Definition FreeMarker Display Template Name Edit" />
@@ -2160,7 +2160,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDisplayTemplateVelocityCP" priority="5">
+	<command name="EditDisplayTemplateVelocity" priority="5">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="dataDefinitionDisplayTemplateNameEdit" value="Data Definition Velocity Display Template Name Edit" />
@@ -2168,7 +2168,7 @@
 		<var name="ddlDisplayTemplateTextFieldScript" value="Text" />
 		<var name="ddlDisplayTemplateTextFieldScriptEdit" value="Text" />
 		<var name="displayTemplateLanguageSelect" value="Velocity (.vm)" />
-		<var name="fieldNames" value="Text" />
+		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.dao.db;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,72 +22,97 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author James Lefeu
  * @author Peter Shin
+ * @author Shuyang Zhou
  */
 public class IndexMetadataFactoryUtil {
 
 	public static IndexMetadata createIndexMetadata(
 		boolean unique, String tableName, String... columnNames) {
 
-		String specification = _getSpecification(tableName, columnNames);
-
-		String indexName = _getIndexName(specification);
-
-		StringBundler sb = new StringBundler(5);
-
-		if (!unique) {
-			sb.append("create ");
-		}
-		else {
-			sb.append("create unique ");
+		if (columnNames == null) {
+			throw new NullPointerException("column names is missing");
 		}
 
-		sb.append("index ");
-		sb.append(indexName);
-		sb.append(" on ");
-		sb.append(specification);
-
-		String createSQL = sb.toString();
-
-		sb.setIndex(0);
-
-		sb.append("drop index ");
-		sb.append(indexName);
-		sb.append(" on ");
-		sb.append(tableName);
-
-		String dropSQL = sb.toString();
-
-		return new IndexMetadata(
-			indexName, tableName, unique, specification, createSQL, dropSQL);
-	}
-
-	private static String _getIndexName(String specification) {
-		String specificationHash = StringUtil.toHexString(
-			specification.hashCode());
-
-		specificationHash = StringUtil.toUpperCase(specificationHash);
-
-		return _INDEX_NAME_PREFIX.concat(specificationHash);
-	}
-
-	private static String _getSpecification(
-		String tableName, String[] columnNames) {
-
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4 + columnNames.length * 2);
 
 		sb.append(tableName);
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		if (ArrayUtil.isNotEmpty(columnNames)) {
-			sb.append(
-				StringUtil.merge(columnNames, StringPool.COMMA_AND_SPACE));
+		for (String columnName : columnNames) {
+			sb.append(columnName);
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 		sb.append(StringPool.SEMICOLON);
 
-		return sb.toString();
+		String specification = sb.toString();
+
+		String specificationHash = StringUtil.toHexString(
+			specification.hashCode());
+
+		specificationHash = StringUtil.toUpperCase(specificationHash);
+
+		return new IndexMetadata(
+			_INDEX_NAME_PREFIX.concat(specificationHash), tableName, unique,
+			columnNames);
+	}
+
+	public static IndexMetadata createIndexMetadata(String createSQL) {
+		boolean unique = createSQL.contains("unique");
+
+		int start = createSQL.indexOf("IX_");
+
+		if (start < 0) {
+			throw new IllegalArgumentException(
+				"Can not find index name start " + createSQL);
+		}
+
+		int end = createSQL.indexOf(CharPool.SPACE, start + 3);
+
+		String indexName = createSQL.substring(start, end);
+
+		start = createSQL.indexOf("on ", end + 1);
+
+		if (start < 0) {
+			throw new IllegalArgumentException(
+				"Can not find table name start " + createSQL);
+		}
+
+		start += 3;
+
+		end = createSQL.indexOf(CharPool.SPACE, start + 1);
+
+		if (end < 0) {
+			throw new IllegalArgumentException(
+				"Can not find table name end " + createSQL);
+		}
+
+		String tableName = createSQL.substring(start, end);
+
+		start = createSQL.indexOf(CharPool.OPEN_PARENTHESIS, end + 1);
+
+		if (start < 0) {
+			throw new IllegalArgumentException(
+				"Can not find column names start " + createSQL);
+		}
+
+		start += 1;
+
+		end = createSQL.indexOf(CharPool.CLOSE_PARENTHESIS, start + 1);
+
+		if (end < 0) {
+			throw new IllegalArgumentException(
+				"Can not find column names end " + createSQL);
+		}
+
+		String[] columnNames = StringUtil.split(
+			createSQL.substring(start, end), StringPool.COMMA_AND_SPACE);
+
+		return new IndexMetadata(indexName, tableName, unique, columnNames);
 	}
 
 	private static final String _INDEX_NAME_PREFIX = "IX_";

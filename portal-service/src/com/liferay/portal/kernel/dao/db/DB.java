@@ -141,7 +141,7 @@ public interface DB {
 
 	public void updateIndexes(
 			Connection con, String tablesSQL, String indexesSQL,
-			String indexesProperties, boolean dropStaleIndexes)
+			boolean dropStaleIndexes)
 		throws IOException, SQLException;
 
 }

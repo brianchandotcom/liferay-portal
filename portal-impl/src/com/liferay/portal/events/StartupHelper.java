@@ -90,13 +90,7 @@ public class StartupHelper {
 				classLoader,
 				"com/liferay/portal/tools/sql/dependencies/indexes.sql");
 
-			String indexesProperties = StringUtil.read(
-				classLoader,
-				"com/liferay/portal/tools/sql/dependencies/indexes.properties");
-
-			db.updateIndexes(
-				connection, tablesSQL, indexesSQL, indexesProperties,
-				dropIndexes);
+			db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

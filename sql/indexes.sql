@@ -46,7 +46,6 @@ create index IX_2ED82CAD on AssetEntries_AssetTags (entryId);
 create index IX_B2A61B55 on AssetEntries_AssetTags (tagId);
 
 create unique index IX_1E9D371D on AssetEntry (classNameId, classPK);
-create index IX_FC1F9C7B on AssetEntry (classUuid);
 create index IX_7306C60 on AssetEntry (companyId);
 create index IX_75D42FF9 on AssetEntry (expirationDate);
 create index IX_1EBA6821 on AssetEntry (groupId, classUuid);
@@ -75,7 +74,7 @@ create unique index IX_56682CC4 on AssetTagStats (tagId, classNameId);
 
 create index IX_B22D908C on AssetVocabulary (companyId);
 create index IX_B6B8CA0E on AssetVocabulary (groupId);
-create index IX_C0AAD74D on AssetVocabulary (groupId, name);
+create unique index IX_C0AAD74D on AssetVocabulary (groupId, name);
 create index IX_55F58818 on AssetVocabulary (uuid_);
 create index IX_C4E6FD10 on AssetVocabulary (uuid_, companyId);
 create unique index IX_1B2B8792 on AssetVocabulary (uuid_, groupId);
@@ -88,7 +87,6 @@ create index IX_C71C3B7 on BackgroundTask (groupId, status);
 create index IX_A73B688A on BackgroundTask (groupId, taskExecutorClassName);
 create index IX_7A9FF471 on BackgroundTask (groupId, taskExecutorClassName, completed);
 create index IX_7E757D70 on BackgroundTask (groupId, taskExecutorClassName, status);
-create index IX_C07CC7F8 on BackgroundTask (name);
 create index IX_75638CDF on BackgroundTask (status);
 create index IX_2FCFE748 on BackgroundTask (taskExecutorClassName, status);
 
@@ -249,7 +247,6 @@ create unique index IX_BC2E7E6A on DLFileEntry (uuid_, groupId);
 
 create unique index IX_7332B44F on DLFileEntryMetadata (DDMStructureId, fileVersionId);
 create index IX_4F40FE5E on DLFileEntryMetadata (fileEntryId);
-create index IX_A44636C9 on DLFileEntryMetadata (fileEntryId, fileVersionId);
 create index IX_F8E90438 on DLFileEntryMetadata (fileEntryTypeId);
 create index IX_1FE9C04 on DLFileEntryMetadata (fileVersionId);
 create index IX_D49AB5D1 on DLFileEntryMetadata (uuid_);
@@ -679,10 +676,7 @@ create unique index IX_12B5E51D on Portlet (companyId, portletId);
 
 create index IX_96BDD537 on PortletItem (groupId, classNameId);
 create index IX_D699243F on PortletItem (groupId, name, portletId, classNameId);
-create index IX_2C61314E on PortletItem (groupId, portletId);
 create index IX_E922D6C0 on PortletItem (groupId, portletId, classNameId);
-create index IX_8E71167F on PortletItem (groupId, portletId, classNameId, name);
-create index IX_33B8CE8D on PortletItem (groupId, portletId, name);
 
 create index IX_E4F13E6E on PortletPreferences (ownerId, ownerType, plid);
 create unique index IX_C7057FF7 on PortletPreferences (ownerId, ownerType, plid, portletId);
@@ -1035,8 +1029,6 @@ create index IX_BE898221 on WikiPageResource (uuid_);
 
 create index IX_A8B0D276 on WorkflowDefinitionLink (companyId);
 create index IX_A4DB1F0F on WorkflowDefinitionLink (companyId, workflowDefinitionName, workflowDefinitionVersion);
-create index IX_B6EE8C9E on WorkflowDefinitionLink (groupId, companyId, classNameId);
-create index IX_1E5B9905 on WorkflowDefinitionLink (groupId, companyId, classNameId, classPK);
 create index IX_705B40EE on WorkflowDefinitionLink (groupId, companyId, classNameId, classPK, typePK);
 
 create index IX_415A7007 on WorkflowInstanceLink (groupId, companyId, classNameId, classPK);

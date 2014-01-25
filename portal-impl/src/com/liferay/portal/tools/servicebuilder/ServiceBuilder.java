@@ -229,7 +229,6 @@ public class ServiceBuilder {
 		String sqlDir = arguments.get("service.sql.dir");
 		String sqlFileName = arguments.get("service.sql.file");
 		String sqlIndexesFileName = arguments.get("service.sql.indexes.file");
-		String sqlIndexesPropertiesFileName = arguments.get("service.sql.indexes.properties.file");
 		String sqlSequencesFileName = arguments.get("service.sql.sequences.file");
 		boolean autoNamespaceTables = GetterUtil.getBoolean(arguments.get("service.auto.namespace.tables"));
 		String beanLocatorUtil = arguments.get("service.bean.locator.util");
@@ -244,10 +243,9 @@ public class ServiceBuilder {
 			new ServiceBuilder(
 				fileName, hbmFileName, modelHintsFileName, springFileName,
 				apiDir, implDir, remotingFileName, sqlDir, sqlFileName,
-				sqlIndexesFileName, sqlIndexesPropertiesFileName,
-				sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
-				propsUtil, pluginName, targetEntityName, testDir, true,
-				buildNumber, buildNumberIncrement);
+				sqlIndexesFileName, sqlSequencesFileName, autoNamespaceTables,
+				beanLocatorUtil, propsUtil, pluginName, targetEntityName,
+				testDir, true, buildNumber, buildNumberIncrement);
 		}
 		catch (RuntimeException re) {
 			System.out.println(
@@ -263,7 +261,6 @@ public class ServiceBuilder {
 				"\tservice.sql.dir=${basedir}/../sql\n" +
 				"\tservice.sql.file=portal-tables.sql\n" +
 				"\tservice.sql.indexes.file=indexes.sql\n" +
-				"\tservice.sql.indexes.properties.file=indexes.properties\n" +
 				"\tservice.sql.sequences.file=sequences.sql\n" +
 				"\tservice.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil\n" +
 				"\tservice.props.util=com.liferay.portal.util.PropsUtil\n" +
@@ -503,28 +500,25 @@ public class ServiceBuilder {
 		String fileName, String hbmFileName, String modelHintsFileName,
 		String springFileName, String apiDir, String implDir,
 		String remotingFileName, String sqlDir, String sqlFileName,
-		String sqlIndexesFileName, String sqlIndexesPropertiesFileName,
-		String sqlSequencesFileName, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir) {
+		String sqlIndexesFileName, String sqlSequencesFileName,
+		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
+		String pluginName, String targetEntityName, String testDir) {
 
 		this(
 			fileName, hbmFileName, modelHintsFileName, springFileName, apiDir,
 			implDir, remotingFileName, sqlDir, sqlFileName, sqlIndexesFileName,
-			sqlIndexesPropertiesFileName, sqlSequencesFileName,
-			autoNamespaceTables, beanLocatorUtil, propsUtil, pluginName,
-			targetEntityName, testDir, true, 1, true);
+			sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
+			propsUtil, pluginName, targetEntityName, testDir, true, 1, true);
 	}
 
 	public ServiceBuilder(
 		String fileName, String hbmFileName, String modelHintsFileName,
 		String springFileName, String apiDir, String implDir,
 		String remotingFileName, String sqlDir, String sqlFileName,
-		String sqlIndexesFileName, String sqlIndexesPropertiesFileName,
-		String sqlSequencesFileName, boolean autoNamespaceTables,
-		String beanLocatorUtil, String propsUtil, String pluginName,
-		String targetEntityName, String testDir, boolean build,
-		long buildNumber, boolean buildNumberIncrement) {
+		String sqlIndexesFileName, String sqlSequencesFileName,
+		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
+		String pluginName, String targetEntityName, String testDir,
+		boolean build, long buildNumber, boolean buildNumberIncrement) {
 
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
@@ -592,7 +586,6 @@ public class ServiceBuilder {
 			_sqlDir = sqlDir;
 			_sqlFileName = sqlFileName;
 			_sqlIndexesFileName = sqlIndexesFileName;
-			_sqlIndexesPropertiesFileName = sqlIndexesPropertiesFileName;
 			_sqlSequencesFileName = sqlSequencesFileName;
 			_autoNamespaceTables = autoNamespaceTables;
 			_beanLocatorUtil = beanLocatorUtil;
@@ -989,10 +982,9 @@ public class ServiceBuilder {
 		ServiceBuilder serviceBuilder = new ServiceBuilder(
 			refFileName, _hbmFileName, _modelHintsFileName, _springFileName,
 			_apiDir, _implDir, _remotingFileName, _sqlDir, _sqlFileName,
-			_sqlIndexesFileName, _sqlIndexesPropertiesFileName,
-			_sqlSequencesFileName, _autoNamespaceTables, _beanLocatorUtil,
-			_propsUtil, _pluginName, _targetEntityName, _testDir, false,
-			_buildNumber, _buildNumberIncrement);
+			_sqlIndexesFileName, _sqlSequencesFileName, _autoNamespaceTables,
+			_beanLocatorUtil, _propsUtil, _pluginName, _targetEntityName,
+			_testDir, false, _buildNumber, _buildNumberIncrement);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -1699,6 +1691,28 @@ public class ServiceBuilder {
 		fileName = fileName.substring(x + 4, y);
 
 		return StringUtil.replace(fileName, "/", ".");
+	}
+
+	private void _addIndexMetadata(
+		Map<String, List<IndexMetadata>> indexMetadataMap, String tableName,
+		IndexMetadata indexMetadata) {
+
+		List<IndexMetadata> indexMetadataList = indexMetadataMap.get(tableName);
+
+		if (indexMetadataList == null) {
+			indexMetadataList = new ArrayList<IndexMetadata>();
+
+			indexMetadataMap.put(tableName, indexMetadataList);
+		}
+
+		int index = indexMetadataList.indexOf(indexMetadata);
+
+		if (index == -1) {
+			indexMetadataList.add(indexMetadata);
+		}
+		else if (indexMetadata.isUnique()) {
+			indexMetadataList.set(index, indexMetadata);
+		}
 	}
 
 	private void _createActionableDynamicQuery(Entity entity) throws Exception {
@@ -3154,7 +3168,7 @@ public class ServiceBuilder {
 			return;
 		}
 
-		// indexes.sql
+		// indexes.sql loading
 
 		File sqlFile = new File(_sqlDir + "/" + _sqlIndexesFileName);
 
@@ -3162,7 +3176,8 @@ public class ServiceBuilder {
 			FileUtil.write(sqlFile, "");
 		}
 
-		Map<String, String> indexSQLs = new TreeMap<String, String>();
+		Map<String, List<IndexMetadata>> indexMetadataMap =
+			new TreeMap<String, List<IndexMetadata>>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new FileReader(sqlFile));
@@ -3174,48 +3189,22 @@ public class ServiceBuilder {
 				break;
 			}
 
-			if (Validator.isNotNull(indexSQL.trim())) {
-				int pos = indexSQL.indexOf(" on ");
+			indexSQL = indexSQL.trim();
 
-				String indexSpec = indexSQL.substring(pos + 4);
-
-				indexSQLs.put(indexSpec, indexSQL);
+			if (Validator.isNull(indexSQL)) {
+				continue;
 			}
+
+			IndexMetadata indexMetadata =
+				IndexMetadataFactoryUtil.createIndexMetadata(indexSQL);
+
+			_addIndexMetadata(
+				indexMetadataMap, indexMetadata.getTableName(), indexMetadata);
 		}
 
 		unsyncBufferedReader.close();
 
-		// indexes.properties
-
-		File propsFile = new File(
-			_sqlDir + "/" + _sqlIndexesPropertiesFileName);
-
-		if (!propsFile.exists()) {
-			FileUtil.write(propsFile, "");
-		}
-
-		Map<String, String> indexProps = new TreeMap<String, String>();
-
-		unsyncBufferedReader = new UnsyncBufferedReader(
-			new FileReader(propsFile));
-
-		while (true) {
-			String indexMapping = unsyncBufferedReader.readLine();
-
-			if (indexMapping == null) {
-				break;
-			}
-
-			if (Validator.isNotNull(indexMapping.trim())) {
-				String[] splitIndexMapping = indexMapping.split("\\=");
-
-				indexProps.put(splitIndexMapping[1], splitIndexMapping[0]);
-			}
-		}
-
-		unsyncBufferedReader.close();
-
-		// indexes.sql
+		// indexes.sql appending
 
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
@@ -3244,21 +3233,19 @@ public class ServiceBuilder {
 						finderColsNames.add(col.getDBName());
 					}
 
+					if (finderColsNames.isEmpty()) {
+						continue;
+					}
+
 					IndexMetadata indexMetadata =
 						IndexMetadataFactoryUtil.createIndexMetadata(
 							finder.isUnique(), entity.getTable(),
 							finderColsNames.toArray(
 								new String[finderColsNames.size()]));
 
-					indexSQLs.put(
-						indexMetadata.getSpecification(),
-						indexMetadata.getCreateSQL());
-
-					String finderName =
-						entity.getTable() + StringPool.PERIOD +
-							finder.getName();
-
-					indexProps.put(finderName, indexMetadata.getIndexName());
+					_addIndexMetadata(
+						indexMetadataMap, indexMetadata.getTableName(),
+						indexMetadata);
 				}
 			}
 		}
@@ -3268,68 +3255,30 @@ public class ServiceBuilder {
 
 			EntityMapping entityMapping = entry.getValue();
 
-			_getCreateMappingTableIndex(entityMapping, indexSQLs, indexProps);
+			_getCreateMappingTableIndex(entityMapping, indexMetadataMap);
 		}
 
 		StringBundler sb = new StringBundler();
 
-		String prevEntityName = null;
+		for (List<IndexMetadata> indexMetadataList :
+				indexMetadataMap.values()) {
 
-		for (String indexSQL : indexSQLs.values()) {
-			int pos = indexSQL.indexOf(" on ");
+			Collections.sort(indexMetadataList);
 
-			String indexSQLSuffix = indexSQL.substring(pos + 4);
+			for (IndexMetadata indexMetadata : indexMetadataList) {
+				sb.append(indexMetadata.getCreateSQL());
 
-			String entityName = indexSQLSuffix.split(" ")[0];
-
-			if ((prevEntityName != null) &&
-				!prevEntityName.equals(entityName)) {
-
-				sb.append("\n");
+				sb.append(StringPool.NEW_LINE);
 			}
 
-			sb.append(indexSQL);
-			sb.append("\n");
-
-			prevEntityName = entityName;
+			sb.append(StringPool.NEW_LINE);
 		}
 
-		if (!indexSQLs.isEmpty()) {
-			sb.setIndex(sb.index() - 1);
+		if (!indexMetadataMap.isEmpty()) {
+			sb.setIndex(sb.index() - 2);
 		}
 
 		FileUtil.write(sqlFile, sb.toString(), true);
-
-		// indexes.properties
-
-		sb.setIndex(0);
-
-		prevEntityName = null;
-
-		for (String finderName : indexProps.keySet()) {
-			String indexName = indexProps.get(finderName);
-
-			String entityName = finderName.split("\\.")[0];
-
-			if ((prevEntityName != null) &&
-				!prevEntityName.equals(entityName)) {
-
-				sb.append("\n");
-			}
-
-			sb.append(indexName);
-			sb.append(StringPool.EQUAL);
-			sb.append(finderName);
-			sb.append("\n");
-
-			prevEntityName = entityName;
-		}
-
-		if (!indexProps.isEmpty()) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		FileUtil.write(propsFile, sb.toString(), true);
 	}
 
 	private void _createSQLMappingTables(
@@ -3801,8 +3750,8 @@ public class ServiceBuilder {
 	}
 
 	private void _getCreateMappingTableIndex(
-			EntityMapping entityMapping, Map<String, String> indexSQLs,
-			Map<String, String> indexProps)
+			EntityMapping entityMapping,
+			Map<String, List<IndexMetadata>> indexMetadataMap)
 		throws IOException {
 
 		Entity[] entities = new Entity[2];
@@ -3815,6 +3764,8 @@ public class ServiceBuilder {
 			}
 		}
 
+		String tableName = entityMapping.getTable();
+
 		for (Entity entity : entities) {
 			List<EntityColumn> pkList = entity.getPKList();
 
@@ -3823,28 +3774,11 @@ public class ServiceBuilder {
 
 				String colDBName = col.getDBName();
 
-				String indexSpec =
-					entityMapping.getTable() + " (" + colDBName + ");";
+				IndexMetadata indexMetadata =
+					IndexMetadataFactoryUtil.createIndexMetadata(
+						false, tableName, colDBName);
 
-				String indexHash = StringUtil.toHexString(indexSpec.hashCode());
-
-				indexHash = StringUtil.toUpperCase(indexHash);
-
-				String indexName = "IX_" + indexHash;
-
-				StringBundler sb = new StringBundler();
-
-				sb.append("create index ");
-				sb.append(indexName);
-				sb.append(" on ");
-				sb.append(indexSpec);
-
-				indexSQLs.put(indexSpec, sb.toString());
-
-				String finderName =
-					entityMapping.getTable() + StringPool.PERIOD + colDBName;
-
-				indexProps.put(finderName, indexName);
+				_addIndexMetadata(indexMetadataMap, tableName, indexMetadata);
 			}
 		}
 	}
@@ -4863,7 +4797,6 @@ public class ServiceBuilder {
 	private String _sqlDir;
 	private String _sqlFileName;
 	private String _sqlIndexesFileName;
-	private String _sqlIndexesPropertiesFileName;
 	private String _sqlSequencesFileName;
 	private String _targetEntityName;
 	private String _testDir;

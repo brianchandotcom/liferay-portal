@@ -529,8 +529,10 @@ public class ValidatorTest extends PowerMockito {
 	protected void testIsNull(String[] strings, boolean valid) {
 		for (String string : strings) {
 			boolean b = Validator.isNull(string);
+			boolean notB = Validator.isNotNull(string);
 
 			Assert.assertEquals(valid, b);
+			Assert.assertEquals(valid, !notB);
 		}
 	}
 
